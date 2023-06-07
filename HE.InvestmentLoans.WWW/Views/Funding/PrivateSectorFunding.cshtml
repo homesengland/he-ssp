@@ -1,0 +1,55 @@
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@inject ModelExpressionProvider modelProvider
+@using HE.InvestmentLoans.BusinessLogic.ViewModel;
+
+@{
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((LoanApplicationViewModel x) => x.Funding.PrivateSectorFunding));
+
+    var (conditionalInputInvalid, inputErrors) = Model.Funding.PrivateSectorFunding == "Yes" ?
+        @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((LoanApplicationViewModel x) => x.Funding.PrivateSectorFundingResult)):
+        @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((LoanApplicationViewModel x) => x.Funding.PrivateSectorFundingReason));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Funding" asp-action="WorkflowPost" asp-route-id="@Model.ID"  asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("GoBack","Funding", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+    <partial name="_ErrorSummaryPartial" model="null" />
+    <gds-field-set>
+        <gds-div-form-group invalid="radioInvalid">
+            <gds-legend class="govuk-fieldset__legend--l">
+                Have you applied for private sector funding?
+            </gds-legend>
+            @if (radioInvalid)
+            {
+                <p class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span> @radioErrors
+                </p>
+            }
+            <gds-radio-yes-no asp-for="Funding.PrivateSectorFunding"
+                value="@Model.Funding.PrivateSectorFunding"
+                with-yes-input
+                with-no-input
+                inner-input-text="Tell us if you were successful or unsuccessful and why Homes England funding is more suitable."
+                second-inner-input-text="Tell us why you have not applied for private sector funding and why Homes England funding is more suitable."
+                inner-input-value="@Model.Funding.PrivateSectorFundingResult"
+                second-inner-input-value="@Model.Funding.PrivateSectorFundingReason"
+                inner-input-for="Funding.PrivateSectorFundingResult"
+                second-inner-input-for="Funding.PrivateSectorFundingReason"
+                class="govuk-!-margin-bottom-8"
+                is-conditional-input-invalid="conditionalInputInvalid"
+                conditional-input-error="@inputErrors">
+            </gds-radio-yes-no>
+        </gds-div-form-group>
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Funding.StateChanged?"Change":"Continue")">
+            Continue
+        </button>
+    </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>
+
+@await Html.YesNoConditionalInputScript(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Funding.PrivateSectorFunding))

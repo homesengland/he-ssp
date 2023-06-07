@@ -1,0 +1,37 @@
+﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.Type));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="Type" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.Id, id = id })" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="inputInvalid">
+                <gds-legend class="govuk-fieldset__legend--l">
+                    What type of project is this?
+                </gds-legend>
+
+                <gds-div-hint class="govuk-!-margin-bottom-6">
+                    Brownfield land is previously developed land. Greenfield land is land that has not previously been developed.
+                </gds-div-hint>
+
+                <gds-radio govuk-formgroup-asp-for="Type"
+                           asp-selectlistitems="TemporaryFormOptions.SiteType"
+                           class="govuk-!-margin-bottom-6">
+                </gds-radio>
+            </gds-div-form-group>
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
+                Continue
+            </button>
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>

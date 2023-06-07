@@ -1,0 +1,10 @@
+
+@{
+    var id = ViewContext.RouteData.Values["id"];
+}
+
+<gds-p>
+    <gds-link href="@Url.Action("Workflow","LoanApplication", new {id = id})">
+        Return to application
+    </gds-link>
+</gds-p>

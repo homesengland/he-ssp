@@ -1,0 +1,40 @@
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.Id, id = id })" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <partial name="_ErrorSummaryPartial" model="null" />
+
+        <gds-h1 class="govuk-heading-xl">
+            Check your answers
+        </gds-h1>
+
+        @await Html.PartialAsync("_SiteAnswers", Model)
+
+
+        <gds-div-form-group>
+            <gds-field-set>
+                <gds-legend class="govuk-fieldset__legend--m">
+                    Have you completed this section?
+                </gds-legend>
+
+
+                <gds-radio govuk-formgroup-asp-for="CheckAnswers"
+                           asp-selectlistitems="TemporaryFormOptions.CheckAnswersCompletion">
+                </gds-radio>
+
+            </gds-field-set>
+        </gds-div-form-group>
+
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+            Continue
+        </button>
+
+    </form>
+</gds-div-grid-column-two-thirds>

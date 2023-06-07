@@ -1,0 +1,79 @@
+@using He.AspNetCore.Mvc.Gds.Components.Enums
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors("GrantFundingMore");
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="GrantFundingMore" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.Id, id = id })" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set role="group">
+            <gds-div-form-group invalid="inputInvalid">
+                <gds-legend class="govuk-fieldset__legend--l">
+                    Provide more information
+                </gds-legend>
+                <gds-div-hint class="govuk-!-margin-bottom-6">
+                    Tell us more about any public sector grant funding this site has received.
+                </gds-div-hint>
+
+                <gds-field-set role="group">
+                    <gds-legend class="govuk-fieldset__legend--m">
+                        Who provided the previous funding?
+                    </gds-legend>
+
+                    <gds-input-wrapper class="govuk-!-margin-bottom-6">
+                        <gds-input govuk-formgroup-asp-for="GrantFundingSource"
+                                   value="@Model.GrantFundingSource"
+                                   type="text" />
+                    </gds-input-wrapper>
+                </gds-field-set>
+
+                <gds-field-set role="group">
+                    <gds-legend class="govuk-fieldset__legend--m">
+                        How much funding have they provided?
+                    </gds-legend>
+
+                    <gds-input-wrapper class="govuk-!-margin-bottom-6">
+                        <gds-input class="govuk-input--width-4"
+                                   govuk-formgroup-asp-for="GrantFundingAmount"
+                                   value="@Model.GrantFundingAmount"
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                                   type="number" />
+                    </gds-input-wrapper>
+                </gds-field-set>
+
+                <gds-field-set role="group">
+                    <gds-legend class="govuk-fieldset__legend--m">
+                        What is the name of the grant or fund?
+                    </gds-legend>
+
+                    <gds-input-wrapper class="govuk-!-margin-bottom-6">
+                        <gds-input govuk-formgroup-asp-for="GrantFundingName"
+                                   value="@Model.GrantFundingName"
+                                   type="text" />
+                    </gds-input-wrapper>
+                </gds-field-set>
+
+                <gds-field-set role="group">
+                    <gds-legend class="govuk-fieldset__legend--m">
+                        What was it for?
+                    </gds-legend>
+                    <gds-text-area asp-for="GrantFundingPurpose"
+                                   rows="5"></gds-text-area>
+                </gds-field-set>
+            </gds-div-form-group>
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
+                Continue
+            </button>
+
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>

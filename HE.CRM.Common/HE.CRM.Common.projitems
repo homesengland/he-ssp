@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>c57c0cf7-dc36-45cd-bfaa-c0f9b632aecb</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>HE.CRM.Common</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\DateTimeExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\Entities\EntityExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AccountRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\ContactRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\LoanApplicationRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\SiteDetailsRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAccountRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\TraceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IContactRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ILoanApplicationRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ISiteDetailsRepository.cs" />
+    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
+  </ItemGroup>
+</Project>

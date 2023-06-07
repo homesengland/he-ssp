@@ -1,0 +1,30 @@
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="CompanyStructure" asp-action="WorkflowPost" asp-route-id="@Model.ID" asp-route-ending="HomesBuilt" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("GoBack","CompanyStructure", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+
+        <gds-field-set>
+            <gds-legend class="govuk-fieldset__legend--l">
+                <gds-fieldset-heading>
+                    How many homes in the past three years has your organisation built?
+                </gds-fieldset-heading>
+            </gds-legend>
+            <gds-div-hint>
+                Enter the number of homes your organisation or any director has built in the past three years or the nearest estimate. Entering 0 will not affect your application.
+            </gds-div-hint>
+
+            <div>
+                <gds-input govuk-formgroup-asp-for="Company.HomesBuilt" type="number" class="govuk-input--width-2 govuk-!-margin-bottom-6" />
+            </div>
+
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Company.StateChanged?"Change":"Continue")">
+                Continue
+            </button>
+        </gds-field-set>
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>

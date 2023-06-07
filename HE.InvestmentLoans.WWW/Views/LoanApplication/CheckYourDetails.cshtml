@@ -1,0 +1,63 @@
+﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="LoanApplication" asp-action="Workflow" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("GoBack","LoanApplication", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <gds-h1 size="HeaderSize.Xl">
+            Check your details
+        </gds-h1>
+        <gds-div-inset-text>
+            Homes England only offers loans to private limited companies.
+            Your account suggests you're not a private limited company.
+            If you have any questions, contact us via telephone: 0800...
+        </gds-div-inset-text>
+        <gds-summary-list class="govuk-!-margin-bottom-9">
+            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            {
+            { "Title", "Registered company name" },
+            { "Value", Model.Account.RegisteredName },
+            { "Link", "#" }
+            })
+
+            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            {
+            { "Title", "Company Registration Number" },
+            { "Value", Model.Account.RegistrationNumber },
+            { "Link", "#" }
+            })
+
+            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            {
+            { "Title", "Company address" },
+            { "Value", LabelHelper.AdresAsHtml(Model.Account.Address) },
+            { "Link", "#" }
+            })
+
+            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            {
+            { "Title", "Contact name" },
+            { "Value", Model.Account.ContactName },
+            { "Link", "#" }
+            })
+
+            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            {
+            { "Title", "Email address" },
+            { "Value", Model.Account.EmailAddress },
+            { "Link", "#" }
+            })
+
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Telephone number" },
+        { "Value", Model.Account.TelephoneNumber },
+        { "Link", "#" }
+        })
+    </gds-summary-list>
+    <gds-button name="action" type="submit" value="Continue">
+        Continue
+    </gds-button>
+</form>
+</gds-div-grid-column-two-thirds>

@@ -1,0 +1,34 @@
+﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.SecurityViewModel
+@{
+    var id = ViewContext.RouteData.Values["id"];
+}
+
+<gds-summary-list class="govuk-!-margin-bottom-9">
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+        { "Title", "Charges outstanding or debt secured on company" },
+        { "Value", Model.ChargesDebtCompany },
+        { "Link", Url.Action("Change","Security", new {id = id,  state = "ChargesDebtCompany" }) }
+    })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+        { "Title", "Debenture" },
+        { "Value",  Model.ChargesDebtCompanyInfo },
+         { "Link", Url.Action("Change","Security", new {id = id,  state = "ChargesDebtCompany" }) }
+    })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+        { "Title", "Director loans" },
+        { "Value",  Model.DirLoans },
+        { "Link", Url.Action("Change","Security", new {id = id,  state = "DirLoans" }) }
+    })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+        { "Title", "Subordinated loans" },
+        { "Value", Model.DirLoansSub != null ? @$"{Model.DirLoansSub}<br/>{Model.DirLoansSubMore}" : null },
+        { "Link", Url.Action("Change","Security", new {id = id,  state = "DirLoansSub" }) }
+    })
+</gds-summary-list>

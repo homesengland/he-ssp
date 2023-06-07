@@ -1,0 +1,15 @@
+{
+  "earlyboundtypes": [
+    {
+      "entities": "account,contact,invln_loanapplication",
+      "actions": "invln_sendinvestmentloansdatatocrm",
+      "generateOptionsetEnums": "true",
+      "generateStateEnums": "true",
+      "generateGlobalOptionsets": false,
+      "filename": "Model\\XrmSvc.cs",
+      "classNamespace": "HE.InvestmentLoans.CRM.Model",
+      "serviceContextName": "XrmSvc",
+      "oneTypePerFile": false
+    }
+  ]
+}

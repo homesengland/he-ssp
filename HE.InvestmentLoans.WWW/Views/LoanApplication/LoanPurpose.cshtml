@@ -1,0 +1,40 @@
+﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel;
+@{
+    var hints = new string[] { "This can include the redevelopment of uninhabitable buildings, or associated infrastructure." };
+
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel.Purpose));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="LoanApplication" asp-action="Workflow" asp-route-id="@Model.ID" asp-route-state="CheckAnswers" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("GoBack","LoanApplication", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="radioInvalid">
+                <gds-legend class="govuk-fieldset__legend--l">
+                    What do you require Homes England funding for?
+                </gds-legend>
+                <gds-p>
+                    We will use this to route you to the correct transaction manager.
+                </gds-p>
+                @if (radioInvalid)
+                {
+                    <p class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> @radioErrors
+                    </p>
+                }
+                <gds-custom-radio id="purpose"
+                                  asp-for="Purpose"
+                                  value="@Model.Purpose"
+                                  radio-items="TemporaryFormOptions.FundingPurpose"
+                                  radio-hints="@hints"
+                                  class="govuk-!-margin-bottom-8">
+                </gds-custom-radio>
+            </gds-div-form-group>
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Continue
+            </button>
+        </gds-field-set>
+    </form>
+</gds-div-grid-column-two-thirds>

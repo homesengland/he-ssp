@@ -1,0 +1,12 @@
+@using System.Text;
+
+@{
+    var radioConditionalInputPairs = (IEnumerable<(string radioId, string conditionalId)>)Model.Radios;
+}
+
+@foreach (var (radioId, conditionalId) in radioConditionalInputPairs)
+{
+    @Html.Hidden("radio", Json.Serialize(new { radioId, conditionalId}));
+}
+
+<script src="/javascripts/radios-with-conditional-input.js"></script>

@@ -1,0 +1,23 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- '*'
+
+pool: "vmss-ado-chs-nonprod-001"
+          
+resources:
+  repositories:
+  - repository: he-invst-deployment
+    type: git
+    name: 'Investments Programme/he-invst-deployment'
+    ref: 'main'
+  - repository: templates
+    type: git
+    name: 'Cloud Hosting Service/Templates'
+    ref: 'master'
+
+stages:
+- template: azure-pipelines-build-1.yml@he-invst-deployment

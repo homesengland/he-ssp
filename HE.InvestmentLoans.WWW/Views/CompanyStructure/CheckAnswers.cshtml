@@ -1,0 +1,44 @@
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@inject ModelExpressionProvider modelProvider
+
+@{
+
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Company.CheckAnswers));
+}
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="CompanyStructure" asp-action="WorkflowPost" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("GoBack","CompanyStructure", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <partial name="_ErrorSummaryPartial" model="null" />
+
+        <gds-h1 size="HeaderSize.L">
+            Check your answers
+        </gds-h1>
+        <gds-h1 size="HeaderSize.M">
+            Company structure and experience
+        </gds-h1>
+
+        @await Html.PartialAsync("_CompanyStructureAnswers", Model.Company)
+
+
+        <gds-div-form-group>
+            <gds-field-set>
+                <gds-legend class="govuk-fieldset__legend--m">
+                    Have you completed this section?
+                </gds-legend>
+                
+                <gds-div-form-group invalid="radioInvalid">
+                <gds-radio govuk-formgroup-asp-for="Company.CheckAnswers"
+                           asp-selectlistitems="TemporaryFormOptions.CheckAnswersCompletion">
+                </gds-radio>
+                </gds-div-form-group>
+            </gds-field-set>
+        </gds-div-form-group>
+
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+            Continue
+        </button>
+
+    </form>
+</gds-div-grid-column-two-thirds>

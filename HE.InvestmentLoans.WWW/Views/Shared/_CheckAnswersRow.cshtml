@@ -1,0 +1,35 @@
+@using System.Web;
+@{
+    var showRow = !(ViewData["Title"] == null || ViewData["Value"] == null || ViewData["Link"] == null);
+
+    var value = ViewData["Value"];
+    var valueList = value as IEnumerable<string>;
+    var valueString = value as string;
+}
+@if (showRow)
+{
+    <gds-summary-list-row-v2>
+        <gds-summary-list-key-v2>
+            @ViewData["Title"]
+        </gds-summary-list-key-v2>
+        <gds-summary-list-value-v2>
+            @if (valueList != null)
+            {
+                foreach (var line in valueList)
+                {
+                    <p>@line</p>
+                }
+            }
+            else if (valueString != null)
+            {
+                <p>@valueString</p>
+            }
+        </gds-summary-list-value-v2>
+        <gds-summary-list-actions-v2>
+            <gds-link href=@ViewData["Link"]>
+                Change
+                <gds-span-visually-hidden> @ViewData["Link"]</gds-span-visually-hidden>
+            </gds-link>
+        </gds-summary-list-actions-v2>
+    </gds-summary-list-row-v2>
+}

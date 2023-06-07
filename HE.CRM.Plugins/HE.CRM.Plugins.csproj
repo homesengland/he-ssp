@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{464F5B11-C934-42C4-B544-40CFCEE6C683}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HE.CRM.Plugins</RootNamespace>
+    <AssemblyName>HE.CRM.Plugins</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.48\lib\net462\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.48\lib\net462\Microsoft.Xrm.Sdk.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.7.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=6.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.6.0.2\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CrmPluginRegistrationAttribute.cs" />
+    <Compile Include="Exceptions\IntegrationApiException.cs" />
+    <Compile Include="Handlers\Account\GenerateRandomAccountNameSampleHandler.cs" />
+    <Compile Include="Handlers\CustomApi\SendInvestmentsLoanDataToCrmHandler.cs" />
+    <Compile Include="Models\AzureAdToken.cs" />
+    <Compile Include="Plugins\Accounts\GenerateRandomAccountNameSamplePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\SendInvestmentsLoanDataToCrmPlugin.cs" />
+    <Compile Include="Services\Accounts\AccountService.cs" />
+    <Compile Include="Services\Accounts\IAccountService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="HE.Base\Common\AssemblyTypesCache.cs" />
+    <Compile Include="HE.Base\Common\Constants\EntityCommonFieldsNames.cs" />
+    <Compile Include="HE.Base\Common\EqualityComparers\EntityIdComparer.cs" />
+    <Compile Include="HE.Base\Common\EqualityComparers\EntityReferenceComparer.cs" />
+    <Compile Include="HE.Base\Common\Extensions\EntityExtensions.cs" />
+    <Compile Include="HE.Base\Common\Extensions\FrameworkExtensions.cs" />
+    <Compile Include="HE.Base\Common\Extensions\QueryExpressionExtensions.cs" />
+    <Compile Include="HE.Base\Common\RegisterAssemblyTypesInCacheAttribute.cs" />
+    <Compile Include="HE.Base\DependencyInjection\ConstructorParameter.cs" />
+    <Compile Include="HE.Base\DependencyInjection\Container.cs" />
+    <Compile Include="HE.Base\DependencyInjection\ContainerException.cs" />
+    <Compile Include="HE.Base\DependencyInjection\ContainerExtensions.cs" />
+    <Compile Include="HE.Base\DependencyInjection\IConstructorParameter.cs" />
+    <Compile Include="HE.Base\DependencyInjection\IContainer.cs" />
+    <Compile Include="HE.Base\DependencyInjection\NamedConstructorParameter.cs" />
+    <Compile Include="HE.Base\DependencyInjection\TypedConstructorParameter.cs" />
+    <Compile Include="HE.Base\Logger\BaseLogger.cs" />
+    <Compile Include="HE.Base\Logger\IBaseLogger.cs" />
+    <Compile Include="HE.Base\Logger\LogLevel.cs" />
+    <Compile Include="HE.Base\Logger\LogSettings.cs" />
+    <Compile Include="HE.Base\Logger\TraceLogContext.cs" />
+    <Compile Include="HE.Base\Logger\TraceParameterData.cs" />
+    <Compile Include="HE.Base\Plugins\Attributes\CrmMessageAttribute.cs" />
+    <Compile Include="HE.Base\Plugins\Attributes\CrmProcessingStageAttribute.cs" />
+    <Compile Include="HE.Base\Plugins\Attributes\FilterAttributesHelper.cs" />
+    <Compile Include="HE.Base\Plugins\CachedOrganizationServiceFactory.cs" />
+    <Compile Include="HE.Base\Plugins\Common\Constants\CrmMessage.cs" />
+    <Compile Include="HE.Base\Plugins\Common\Constants\CrmProcessingStepStages.cs" />
+    <Compile Include="HE.Base\Plugins\Common\HandlerCache.cs" />
+    <Compile Include="HE.Base\Plugins\Common\Helpers\ImageHelper.cs" />
+    <Compile Include="HE.Base\Plugins\Common\Helpers\NameHelper.cs" />
+    <Compile Include="HE.Base\Plugins\Common\PluginContexts\DeletePluginExecutionContext.cs" />
+    <Compile Include="HE.Base\Plugins\Common\PluginContexts\EntityPluginExecutionContext.cs" />
+    <Compile Include="HE.Base\Plugins\Common\PluginContexts\EntityReferencePluginExecutionContext.cs" />
+    <Compile Include="HE.Base\Plugins\Common\PluginContexts\PluginExecutionContext.cs" />
+    <Compile Include="HE.Base\Plugins\Handlers\CrmActionHandlerBase.cs" />
+    <Compile Include="HE.Base\Plugins\Handlers\CrmAssociationHandlerBase.cs" />
+    <Compile Include="HE.Base\Plugins\Handlers\CrmDeleteHandlerBase.cs" />
+    <Compile Include="HE.Base\Plugins\Handlers\CrmEntityHandlerBase.cs" />
+    <Compile Include="HE.Base\Plugins\Handlers\CrmHandlerBase.cs" />
+    <Compile Include="HE.Base\Plugins\Handlers\CrmHandlerFactory.cs" />
+    <Compile Include="HE.Base\Plugins\Handlers\CrmValidationHandlerBase.cs" />
+    <Compile Include="HE.Base\Plugins\Handlers\ICrmHandler.cs" />
+    <Compile Include="HE.Base\Plugins\Handlers\ICrmValidationHandler.cs" />
+    <Compile Include="HE.Base\Plugins\Handlers\ICrmWorkHandler.cs" />
+    <Compile Include="HE.Base\Plugins\PluginBase.cs" />
+    <Compile Include="HE.Base\Plugins\PluginSettings.cs" />
+    <Compile Include="HE.Base\Plugins\ProfilerTracingService.cs" />
+    <Compile Include="HE.Base\Repositories\CrmEntityRepository.cs" />
+    <Compile Include="HE.Base\Repositories\CrmRepositoriesFactory.cs" />
+    <Compile Include="HE.Base\Repositories\CrmRepository.cs" />
+    <Compile Include="HE.Base\Repositories\CrmRepositoryArgs.cs" />
+    <Compile Include="HE.Base\Repositories\ICrmEntityRepository.cs" />
+    <Compile Include="HE.Base\Repositories\ICrmRepositoriesFactory.cs" />
+    <Compile Include="HE.Base\Repositories\ICrmRepository.cs" />
+    <Compile Include="HE.Base\Services\CrmService.cs" />
+    <Compile Include="HE.Base\Services\CrmServiceArgs.cs" />
+    <Compile Include="HE.Base\Services\CrmServicesFactory.cs" />
+    <Compile Include="HE.Base\Services\ICrmService.cs" />
+    <Compile Include="HE.Base\Services\ICrmServicesFactory.cs" />
+    <Compile Include="Services\HttpServices\CalculationApiClientService.cs" />
+    <Compile Include="Services\HttpServices\AzureAdHttpClientService.cs" />
+    <Compile Include="Services\HttpServices\Interfaces\ICalculationApiClientService.cs" />
+    <Compile Include="Services\LoanApplication\ILoanApplicationService.cs" />
+    <Compile Include="Services\LoanApplication\LoanApplicationService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
+    <None Include="app.config" />
+    <None Include="key.snk" />
+    <None Include="packages.config" />
+    <None Include="spkl.json" />
+    <None Include="spkl\deploy-plugins-register.bat" />
+    <None Include="spkl\deploy-plugins.bat" />
+    <None Include="spkl\instrument-plugin-code.bat" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include=".gitignore" />
+  </ItemGroup>
+  <Import Project="..\HE.CRM.Model\HE.CRM.Model.projitems" Label="Shared" />
+  <Import Project="..\HE.CRM.Common\HE.CRM.Common.projitems" Label="Shared" />
+  <Import Project="..\HE.AZURE.CalculationAPI.DTO\HE.AZURE.CalculationAPI.DTO.projitems" Label="Shared" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\System.Text.Json.6.0.2\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.2\build\System.Text.Json.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Text.Json.6.0.2\build\System.Text.Json.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Text.Json.6.0.2\build\System.Text.Json.targets'))" />
+  </Target>
+</Project>

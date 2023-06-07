@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <!--<Nullable>enable</Nullable>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Routing\**" />
+    <EmbeddedResource Remove="Routing\**" />
+    <None Remove="Routing\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HE.InvestmentLoans.CRM\HE.InvestmentLoans.CRM.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.5.2" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
+    <PackageReference Include="MediatR" Version="12.0.1" />
+    <PackageReference Include="Stateless" Version="5.13.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pipelines\" />
+  </ItemGroup>
+
+</Project>

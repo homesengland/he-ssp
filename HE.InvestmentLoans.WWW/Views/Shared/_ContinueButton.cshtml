@@ -1,0 +1,10 @@
+@{
+    if (!ViewData.TryGetValue("continueButtonText", out var continueButtonText))
+    {
+        continueButtonText = "Continue";
+    }
+
+}
+<gds-button class="govuk-!-margin-bottom-8" data-module="govuk-button">
+    @continueButtonText
+</gds-button>

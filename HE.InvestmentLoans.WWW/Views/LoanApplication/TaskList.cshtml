@@ -1,0 +1,165 @@
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
+@using HE.InvestmentLoans.WWW.Controllers
+@using HE.InvestmentLoans.BusinessLogic.ViewModel
+@using System.Globalization
+@inject MediatR.IMediator mediator
+@{
+    var securityWorkflow = new SecurityWorkflow(Model, mediator);
+    var fundingWorkflow = new FundingWorkflow(Model, mediator);
+    var companyStructureWorkflow = new CompanyStructureWorkflow(Model, mediator);
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.Action("GoBack","LoanApplication", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
+
+
+    <gds-h1 size="HeaderSize.L" class="govuk-!-margin-bottom-2">
+        Development loan application
+    </gds-h1>
+    <gds-div-hint class="govuk-!-margin-bottom-8">
+        Last saved on @Model.Timestamp.ToString("d MMMM yyyy 'at' h:mm tt", new CultureInfo("en-US"))
+    </gds-div-hint>
+
+    <ul class="app-task-list">
+        <li>
+            <h2 class="app-task-list__section">
+                <span class="govuk-prototype-kit-task-list__section-number">1 </span> Company structure and experience
+            </h2>
+            <gds-div-hint>This section is about the company structure and experience of building homes</gds-div-hint>
+            <ul class="app-task-list__items">
+                <li class="app-task-list__item">
+                    <span class="app-task-list__task-name">
+                        <a href="@Url.Action("Workflow","CompanyStructure", new {id = Model.ID, ending = companyStructureWorkflow.GetName() })" aria-describedby="eligibility-status">
+                            Complete company information
+                        </a>
+                    </span>
+                    @if (companyStructureWorkflow.IsCompleted())
+                    {
+                        <gds-task-list-item-status completed="true">Completed</gds-task-list-item-status>
+                    } 
+                    else if (companyStructureWorkflow.IsNotStarted())
+                    {
+                        <gds-task-list-item-status completed="false">Not started</gds-task-list-item-status>
+                    }
+                    else
+                    {
+                        <gds-task-list-item-status completed="false">In Progress</gds-task-list-item-status>
+                    }
+                </li>
+            </ul>
+        </li>
+        <li>
+            <h2 class="app-task-list__section">
+                <span class="govuk-prototype-kit-task-list__section-number">2 </span> Project and funding details
+            </h2>
+            <gds-div-hint>Provide information about the type of funding you wish to apply for, and other details about your equity and finances.</gds-div-hint>
+            <ul class="app-task-list__items">
+                <li class="app-task-list__item">
+                    <span class="app-task-list__task-name">
+                        <a href="@Url.Action("Workflow","Funding", new {id = Model.ID, ending = fundingWorkflow.GetName() })" aria-describedby="eligibility-status">
+
+                            Provide details about funding
+                        </a>
+                    </span>
+                    @if (fundingWorkflow.IsCompleted())
+                    {
+                        <gds-task-list-item-status completed="true">Completed</gds-task-list-item-status>
+                    }
+                    else if (fundingWorkflow.IsNotStarted())
+                    {
+                        <gds-task-list-item-status completed="false">Not started</gds-task-list-item-status>
+                    }
+                    else
+                    {
+                        <gds-task-list-item-status completed="false">In Progress</gds-task-list-item-status>
+                    }
+                </li>
+                <li class="app-task-list__item">
+                    <span class="app-task-list__task-name">
+                        <a href="@Url.Action("Workflow","Security", new {id = Model.ID, ending = securityWorkflow.GetName() })" aria-describedby="eligibility-status">
+                            Provide details about security
+                        </a>
+                    </span>
+                    @if (securityWorkflow.IsCompleted())
+                    {
+                        <gds-task-list-item-status completed="true">Completed</gds-task-list-item-status>
+                    }
+                    else if (securityWorkflow.IsNotStarted())
+                    {
+                        <gds-task-list-item-status completed="false">Not started</gds-task-list-item-status>
+                    }
+                    else
+                    {
+                        <gds-task-list-item-status completed="false">In Progress</gds-task-list-item-status>
+                    }
+                </li>
+            </ul>
+        </li>
+        <li>
+            <h2 class="app-task-list__section">
+                <span class="govuk-prototype-kit-task-list__section-number">3 </span> Site details
+            </h2>
+            <gds-div-hint>Tell us about your site or sites. You can add more than one.</gds-div-hint>
+            <ul class="app-task-list__items">
+                @foreach (var site in Model.Sites)
+                {
+                    @if (new SiteWorkflow(Model, mediator, site.Id).IsStarted())
+                    {
+                        <li class="app-task-list__item">
+                            <span class="app-task-list__task-name">
+                                <a href="@Url.Action("Workflow","Site", new {id = Model.ID, site=site.Id, ending = securityWorkflow.GetName() })" aria-describedby="eligibility-status">
+                                    @site.Name
+                                </a>
+                            </span>
+                            @if (new SiteWorkflow(Model, mediator, site.Id).IsCompleted())
+                            {
+                                <gds-task-list-item-status completed="true">Completed</gds-task-list-item-status>
+                            }
+                            else
+                            {
+                                <gds-task-list-item-status completed="false">In Progress</gds-task-list-item-status>
+                            }
+                        </li>
+                    }
+                }
+
+                <li class="app-task-list__item">
+                    <span class="app-task-list__task-name">
+                        <span class="app-task-list__task-name">
+                            <a href="@Url.Action("CreateSite","Site", new {id = Model.ID, ending = securityWorkflow.GetName() })" aria-describedby="eligibility-status">
+                                Add another
+                            </a>
+                        </span>
+
+                    </span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <gds-h2 size="HeaderSize.M">Check and submit</gds-h2>
+    <p>You must complete all sections before you can submit your application.</p>
+    <form asp-controller="LoanApplication" asp-action="Workflow" asp-route-id="@Model.ID" asp-route-ending="TaskList" asp-method="post" novalidate>
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+            Check and submit application
+        </button>
+    </form>
+</gds-div-grid-column-two-thirds>
+
+<div class="govuk-grid-column-one-third govuk-!-margin-top-9">
+
+    <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
+        <h2 class="govuk-heading-m" id="subsection-title">
+            Get help
+        </h2>
+        <p class="govuk-body-s">
+            <span class="govuk-!-font-weight-bold">Telephone</span> <br />
+            0800 389 2500<br />
+            Monday to Friday 8:30 am to 5:30 pm<br />
+            (except public holidays)<br />
+            Free of charge
+        </p>
+    </aside>
+
+</div>
