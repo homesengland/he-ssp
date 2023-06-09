@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
-		help-to-build (1).zip = help-to-build (1).zip
-		packages.zip = packages.zip
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.InvestmentLoans.BusinessLogic", "HE.InvestmentLoans.BusinessLogic\HE.InvestmentLoans.BusinessLogic.csproj", "{6219F273-9B01-4851-8A17-AC30D0305CAE}"

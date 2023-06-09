@@ -11,9 +11,9 @@ RUN find -type d -name bin -prune -exec rm -rf {} \; && find -type d -name obj -
 # Adding missing certificate to allow access to githubusercontent.com below.
 # We don't need to do this for build servers but when building locally the certificates required for
 # checking the Certificate Revocation List are blocked by Homes England and the curl would fail.
-COPY "cisco_umbrella_root_ca.crt" "/usr/local/share/ca-certificates/cisco_umbrella_root_ca.crt"
-RUN chmod 644 /usr/local/share/ca-certificates/cisco_umbrella_root_ca.crt
-RUN update-ca-certificates
+#COPY "cisco_umbrella_root_ca.crt" "/usr/local/share/ca-certificates/cisco_umbrella_root_ca.crt"
+#RUN chmod 644 /usr/local/share/ca-certificates/cisco_umbrella_root_ca.crt
+#RUN update-ca-certificates
 
 RUN curl -Lk "https://raw.githubusercontent.com/Microsoft/artifacts-credprovider/master/helpers/installcredprovider.sh" | sh
 ARG INTERNAL_FEED_ACCESSTOKEN
