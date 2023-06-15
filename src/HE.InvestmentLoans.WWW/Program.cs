@@ -95,6 +95,7 @@ app.UseCookiePolicy(
         Secure = CookieSecurePolicy.Always,
         MinimumSameSitePolicy = SameSiteMode.Strict
     });
+
 app.UseSession();
 app.UseRouting();
 app.UseAuthentication();
