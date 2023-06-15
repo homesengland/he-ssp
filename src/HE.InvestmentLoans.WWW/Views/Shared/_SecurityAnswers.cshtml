@@ -2,9 +2,9 @@
 @{
     var id = ViewContext.RouteData.Values["id"];
 
-    var dirLoansSub = new List<string>() { $"{Model?.DirLoansSub}" };
+    var dirLoansSub = Model?.DirLoansSub is null ? null : new List<string>() { $"{Model?.DirLoansSub}" };
 
-    if (Model?.DirLoansSub == "No")
+    if (dirLoansSub!= null && Model?.DirLoansSub == "No")
     {
         dirLoansSub.Add($"{Model?.DirLoansSubMore}");
     }

@@ -1,4 +1,9 @@
-﻿<gds-div-grid-column-two-thirds>
+﻿@{
+   ViewData["backLinkText"] = "Back to account homepage";
+}
+
+
+<gds-div-grid-column-two-thirds>
     <form asp-route="/" asp-method="post" novalidate>
 
         <partial name="_BackLink" />
