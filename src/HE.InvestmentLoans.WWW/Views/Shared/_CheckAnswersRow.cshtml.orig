@@ -1,0 +1,28 @@
+<<<<<<< HEAD
+@if (ViewData["Value"] != null)
+=======
+@{
+    var showRow = !(ViewData["Title"] == null || ViewData["Value"] == null || ViewData["Link"] == null);
+}
+@if (showRow)
+>>>>>>> f84b840 (WIP)
+{
+    <gds-summary-list-row-v2>
+        <gds-summary-list-key-v2>
+            @ViewData["Title"]
+        </gds-summary-list-key-v2>
+        <gds-summary-list-value-v2>
+            @Html.Raw(@ViewData["Value"])
+        </gds-summary-list-value-v2>
+        <gds-summary-list-actions-v2>
+            <gds-link href=@ViewData["Link"]>
+                Change
+                <gds-span-visually-hidden> @ViewData["Link"]</gds-span-visually-hidden>
+            </gds-link>
+        </gds-summary-list-actions-v2>
+    </gds-summary-list-row-v2>
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> f84b840 (WIP)

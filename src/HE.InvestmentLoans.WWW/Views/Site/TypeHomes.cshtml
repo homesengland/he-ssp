@@ -1,0 +1,53 @@
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.TypeHomes));
+    var (conditionalInputInvalid, conditionalInputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.TypeHomesOther));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="TypeHomes" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.Id, id = id })" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="inputInvalid">
+                <gds-legend class="govuk-fieldset__legend--l">
+                    What type of homes are you building?
+                </gds-legend>
+                <gds-div-hint>
+                    Select all that apply.
+                </gds-div-hint>
+
+                <gds-checkbox govuk-formgroup-asp-for="TypeHomes"
+                              asp-selectlistitems="TemporaryFormOptions.SiteTypeHomesCheckbox"
+                              asp-haschildcheckboxs="false"
+                              asp-ischeckboxgroup="true"
+                              asp-isexcludeheader="true"
+                              asp-excludelabel="true"
+                              asp-condtionalprimaryindexes="5">
+
+                    <gds-div-form-group>
+                        <gds-input govuk-formgroup-asp-for="TypeHomesOther" class="govuk-!-width-two-third" type="text" value=@Model?.TypeHomesOther />
+                    </gds-div-form-group>
+                </gds-checkbox>
+
+                <gds-div-inset-text>
+                    Generally, Homes England do not support the building of leasehold houses.
+                </gds-div-inset-text>
+            </gds-div-form-group>
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
+                Continue
+            </button>
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>
+
+@await Html.CheckboxConditionalInputScript(
+    ("TypeHomes-5", "conditional-TypeHomes-5")
+)

@@ -1,0 +1,39 @@
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.ManyHomes));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="ManyHomes" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.Id, id = id })" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="inputInvalid">
+                <gds-legend class="govuk-fieldset__legend--l">
+                    How many homes are you building?
+                </gds-legend>
+
+                <gds-span-hint>
+                    Enter how many homes you are building or the nearest estimate.
+                </gds-span-hint>
+
+                <gds-input govuk-formgroup-asp-for="ManyHomes" class="govuk-input--width-2" type="number" value=@Model?.ManyHomes />
+
+                <gds-div-inset-text>
+                    Homes England does not provide loans to developers building less than 5 homes.
+                    If you have any questions, contact us via telephone: 0800...
+                </gds-div-inset-text>
+            </gds-div-form-group>
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
+                Continue
+            </button>
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>

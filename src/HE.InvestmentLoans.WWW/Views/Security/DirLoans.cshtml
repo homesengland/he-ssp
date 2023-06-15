@@ -1,0 +1,37 @@
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@inject ModelExpressionProvider modelProvider
+@{
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Security.DirLoans));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Security" asp-action="WorkflowPost" asp-route-id="@Model.ID" asp-route-ending="DirLoans" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("GoBack","Security", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <gds-field-set>
+            <gds-div-form-group invalid="radioInvalid">
+                <gds-legend class="govuk-fieldset__legend--l">
+                    Do you have any director loans against this company?
+                </gds-legend>
+
+                @if (radioInvalid)
+                {
+                    <p id="charges-debt-company-error" class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> @radioErrors
+                    </p>
+                }
+
+                <gds-radio-yes-no asp-for="Security.DirLoans"
+                                  class="govuk-!-margin-bottom-8"></gds-radio-yes-no>
+            </gds-div-form-group>
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Security.StateChanged?"Change":"Continue")">
+                Continue
+            </button>
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>

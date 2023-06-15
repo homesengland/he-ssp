@@ -1,0 +1,61 @@
+﻿[*.cs]
+
+# CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context.
+dotnet_diagnostic.CS8632.severity = none
+
+# CS1998: Async method lacks 'await' operators and will run synchronously
+dotnet_diagnostic.CS1998.severity = none
+
+# SA1633: File must have header
+dotnet_diagnostic.SA1633.severity = none
+
+# SA1652: Enable XML documentation output
+dotnet_diagnostic.SA1652.severity = none
+
+# SA1200: Using directives must be placed correctly
+dotnet_diagnostic.SA1200.severity = none
+
+# SA1101: Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = none
+
+# SA1005: Single line comments must begin with single space
+dotnet_diagnostic.SA1005.severity = none
+
+# SA1515: Single-line comment must be preceded by blank line
+dotnet_diagnostic.SA1515.severity = none
+
+# SA1402: File may only contain a single class
+dotnet_diagnostic.SA1402.severity = none
+
+# SA1649: File name must match first type name
+dotnet_diagnostic.SA1649.severity = none
+
+# SA1204: Static elements must appear before instance elements
+dotnet_diagnostic.SA1204.severity = none
+
+# CA2007: Do not directly await a Task
+dotnet_diagnostic.CA2007.severity = none
+
+# SA1503: Braces must not be omitted
+dotnet_diagnostic.SA1503.severity = none
+
+# SA1000: Keywords must be spaced correctly
+dotnet_diagnostic.SA1000.severity = none
+
+# SA1009: Closing parenthesis must be spaced correctly
+dotnet_diagnostic.SA1009.severity = none
+
+# SA1111: Closing parenthesis must be on line of last parameter
+dotnet_diagnostic.SA1111.severity = none
+
+# SA1512: Single-line comments must not be followed by blank line
+dotnet_diagnostic.SA1512.severity = none
+
+# CA1307: Specify StringComparison
+dotnet_diagnostic.CA1307.severity = none
+
+# CA1801: Parameter xx of method yy is never used.
+dotnet_diagnostic.CA1801.severity = none
+
+# SA1516: Elements must be separated by blank line
+dotnet_diagnostic.SA1516.severity = none

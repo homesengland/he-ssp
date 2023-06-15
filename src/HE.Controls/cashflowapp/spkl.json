@@ -1,0 +1,26 @@
+{
+    "webresources": [{
+        "profile": null,
+        "root": null,
+        "solution": "InvestmentsLoans",
+        "files": [{
+                "uniquename": "invln_/cashflow/js/main.js",
+                "file": "build\\js\\main.js",
+                "description": null,
+                "ts": null
+            },
+            {
+                "uniquename": "invln_/cashflow/css/main.css",
+                "file": "build\\css\\main.css",
+                "description": null,
+                "ts": null
+            },
+            {
+                "uniquename": "invln_/cashflow/index.html",
+                "file": "build\\index.html",
+                "description": null,
+                "ts": null
+            }
+        ]
+    }]
+}

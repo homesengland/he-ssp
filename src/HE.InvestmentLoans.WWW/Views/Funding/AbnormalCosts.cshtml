@@ -1,0 +1,49 @@
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@inject ModelExpressionProvider modelProvider
+@{
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Funding.AbnormalCosts));
+    var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Funding.AbnormalCostsInfo));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Funding" asp-action="WorkflowPost" asp-route-id="@Model.ID"  asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("GoBack","Funding", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="radioInvalid">
+                <gds-legend class="govuk-fieldset__legend--l">
+                    Does this project have any abnormal costs?
+                </gds-legend>
+                <gds-div-hint>
+                    Abnormal costs are additional or unusual costs that you might face when developing a site.
+                </gds-div-hint>
+                @if (radioInvalid)
+                {
+                    <p class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> @radioErrors
+                    </p>
+                }
+                <gds-radio-yes-no asp-for="Funding.AbnormalCosts"
+                                  inner-input-for="Funding.AbnormalCostsInfo"
+                                  with-yes-input
+                                  inner-input-text="Tell us about any abnormal costs this project has."
+                                  inner-input-value="@Model.Funding.AbnormalCostsInfo"
+                                  class="govuk-!-margin-bottom-8"
+                                  value="@Model.Funding.AbnormalCosts"
+                                  is-conditional-input-invalid="conditionalInputInvalid"
+                                  conditional-input-error="@inputErrors">
+                </gds-radio-yes-no>
+            </gds-div-form-group>
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Funding.StateChanged?"Change":"Continue")">
+                Continue
+            </button>
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>
+
+@await Html.YesNoConditionalInputScript(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Funding.AbnormalCosts))

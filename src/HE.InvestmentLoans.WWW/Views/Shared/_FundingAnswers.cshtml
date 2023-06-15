@@ -1,0 +1,41 @@
+﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.FundingViewModel
+@{
+    var id = ViewContext.RouteData.Values["id"];
+}
+<gds-summary-list class="govuk-!-margin-bottom-9">
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+        { "Title", "Gross Development Value " },
+        { "Value", MoneyLabelHelper.Pounds(Model.GrossDevelopmentValue) },
+        { "Link", Url.Action("Change","Funding", new {id = id,  state = "GDV" }) }
+    })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+        { "Title", "Total project costs" },
+        { "Value", MoneyLabelHelper.Pounds(Model.TotalCosts) },
+        { "Link", Url.Action("Change","Funding", new {id = id,  state = "TotalCosts" }) }
+    })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+        { "Title", "Private sector funding" },
+        { "Value", LabelHelper.GetSummaryLabel(Model.PrivateSectorFunding, Model.PrivateSectorFunding == "Yes" ? Model.PrivateSectorFundingResult : Model.PrivateSectorFundingReason) },
+        { "Link", Url.Action("Change","Funding", new {id = id,  state = "PrivateSectorFunding" }) }
+    })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+        { "Title", "Refinance or repay" },
+        { "Value", TemporaryFormOptions.LoanResolution.GetSummaryLabel(Model.Refinance, Model.RefinanceInfo) },
+        { "Link", Url.Action("Change","Funding", new {id = id,  state = "PrivateSectorFunding" }) }
+    })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+        { "Title", "Additional projects" },
+        { "Value", Model.AdditionalProjects },
+         { "Link", Url.Action("Change","Funding", new {id = id,  state = "AdditionalProjects" }) }
+    })
+</gds-summary-list>

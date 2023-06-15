@@ -1,0 +1,12 @@
+@using System.Text;
+
+@{
+    var checkboxConditionalInputPairs = (IEnumerable<(string checkboxId, string conditionalId)>)Model.Checkboxes;
+}
+
+@foreach (var (checkboxId, conditionalId) in checkboxConditionalInputPairs)
+{
+    @Html.Hidden("checkbox", Json.Serialize(new { checkboxId, conditionalId}));
+}
+
+<script src="/javascripts/checkboxes-with-conditional-input.js"></script>

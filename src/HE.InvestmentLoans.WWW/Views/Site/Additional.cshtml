@@ -1,0 +1,107 @@
+@using He.AspNetCore.Mvc.Gds.Components.Enums
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors("Additional");
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="Additional" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.Id, id = id })" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set role="group">
+            <gds-div-form-group invalid="inputInvalid">
+                <gds-legend class="govuk-fieldset__legend--l">
+                    Additional site details
+                </gds-legend>
+
+                <gds-field-set role="group">
+                    <gds-legend class="govuk-fieldset__legend--s">
+                        When was this site purchased?
+                    </gds-legend>
+
+                    <gds-div-hint>
+                        For example, 27 3 2022
+                    </gds-div-hint>
+
+                    <gds-div-date-input id="input-purchase-date">
+                        <gds-div-date-input-item>
+                            <gds-input govuk-formgroup-asp-for="PurchaseDate.Value.Day" name="PurchaseDate.Value.Day"
+                                       type="text"
+                                       asp-autocomplete="on"
+                                       asp-labelclass="govuk-date-input__label"
+                                       asp-excludefieldvalidation="true"
+                                       asp-labeltext="Day"
+                                       pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-2" />
+                        </gds-div-date-input-item>
+                        <gds-div-date-input-item>
+                            <gds-input govuk-formgroup-asp-for="PurchaseDate.Value.Month" name="PurchaseDate.Value.Month"
+                                       type="text"
+                                       asp-autocomplete="on"
+                                       asp-hiddenlabeltext=""
+                                       asp-labelclass="govuk-date-input__label"
+                                       asp-excludefieldvalidation="true"
+                                       asp-labeltext="Month"
+                                       pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-2" />
+                        </gds-div-date-input-item>
+                        <gds-div-date-input-item>
+                            <gds-input govuk-formgroup-asp-for="PurchaseDate.Value.Year" name="PurchaseDate.Value.Year"
+                                       type="text"
+                                       asp-autocomplete="on"
+                                       asp-hiddenlabeltext=""
+                                       asp-labelclass="govuk-date-input__label"
+                                       asp-excludefieldvalidation="true"
+                                       asp-labeltext="Year"
+                                       pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-4" />
+                        </gds-div-date-input-item>
+                    </gds-div-date-input>
+                </gds-field-set>
+
+                <gds-field-set role="group">
+                    <gds-legend class="govuk-fieldset__legend--s">
+                        What was the purchase value of the site?
+                    </gds-legend>
+
+                    <gds-div-hint>
+                        If you do not know, enter the nearest estimate.
+                    </gds-div-hint>
+
+                    <gds-input govuk-formgroup-asp-for="Cost" type="number"
+                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-input--width-2" value=@Model?.Cost />
+                </gds-field-set>
+
+                <gds-field-set role="group">
+                    <gds-legend class="govuk-fieldset__legend--s">
+                        What is the current value of the site?
+                    </gds-legend>
+
+                    <gds-div-hint>
+                        If you do not know, enter the nearest estimate.
+                    </gds-div-hint>
+
+                    <gds-input govuk-formgroup-asp-for="Value" type="number"
+                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-input--width-2" value=@Model?.Value />
+                </gds-field-set>
+
+                <gds-field-set role="group">
+                    <gds-legend class="govuk-fieldset__legend--s">
+                        What is the source of this valuation?
+                    </gds-legend>
+                    <gds-radio govuk-formgroup-asp-for="Source"
+                               asp-selectlistitems="TemporaryFormOptions.SiteAdditionalSource">
+                    </gds-radio>
+                </gds-field-set>
+            </gds-div-form-group>
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
+                Continue
+            </button>
+
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>

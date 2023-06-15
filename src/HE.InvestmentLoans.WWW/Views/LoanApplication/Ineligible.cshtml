@@ -1,0 +1,11 @@
+﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel;
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.Action("GoBack","LoanApplication", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-h1 size="HeaderSize.L">
+        You are not eligible for the a Home Building Loan
+    </gds-h1>
+
+    <gds-p>Based on your answers, you are not eligible to apply for a Development Loan.</gds-p>
+    <gds-p class="govuk-!-margin-bottom-8">However Homes England has these other funding things, you might want to look at. Provide information via our <gds-link href="#">portal (opens in new tab).</gds-link></gds-p>
+</gds-div-grid-column-two-thirds>

@@ -1,0 +1,33 @@
+@{
+    Layout = "_GovukTemplate";
+    //ViewData["HomepageUrl"] = RouteConstants.Homepage;
+    ViewData["ServiceName"] = "Development loan application";
+}
+
+@section AdditionalMeta
+    {
+}
+
+@{
+    var cookieConsent = Context.Request.Cookies["CookieConsent"] == "Yes";
+}
+
+
+
+@section HeadCss
+    {
+    <partial name="_LoadStylesheetPartial" />
+}
+
+@section HeadScripts {
+
+}
+
+<gds-div-grid-row>
+    @RenderBody()
+</gds-div-grid-row>
+
+@section BodyEnd
+    {
+    <partial name="_LoadJavascriptPartial" />
+}
