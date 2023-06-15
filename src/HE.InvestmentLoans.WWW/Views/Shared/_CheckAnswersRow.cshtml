@@ -4,7 +4,6 @@
 
     var value = ViewData["Value"];
     var valueList = value as IEnumerable<string>;
-    var valueString = value as string;
 }
 @if (showRow)
 {
@@ -20,9 +19,9 @@
                     <p>@line</p>
                 }
             }
-            else if (valueString != null)
+            else
             {
-                <p>@valueString</p>
+                <p>@value</p>
             }
         </gds-summary-list-value-v2>
         <gds-summary-list-actions-v2>

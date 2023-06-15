@@ -10,6 +10,8 @@
         <gds-back-link href="@Url.Action("GoBack","Security", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
+        <partial name="_ErrorSummaryPartial" model="null" />
+
         <gds-field-set>
             <gds-div-form-group invalid="radioInvalid">
                 <gds-legend class="govuk-fieldset__legend--l">
