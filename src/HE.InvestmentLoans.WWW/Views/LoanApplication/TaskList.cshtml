@@ -10,7 +10,7 @@
     var companyStructureWorkflow = new CompanyStructureWorkflow(Model, mediator);
 }
 
-<gds-div-grid-column-two-thirds>
+
     <gds-back-link href="@Url.Action("Index","LoanApplication", new {id = Model.ID})" text="Back to account homepage" class="govuk-!-margin-bottom-8">
     </gds-back-link>
 
@@ -21,7 +21,7 @@
     <gds-div-hint class="govuk-!-margin-bottom-8">
         Last saved on @Model.Timestamp.ToString("d MMMM yyyy 'at' h:mm tt", new CultureInfo("en-US"))
     </gds-div-hint>
-
+<gds-div-grid-column-two-thirds>
     <ul class="app-task-list">
         <li>
             <h2 class="app-task-list__section">
@@ -151,7 +151,7 @@
     </gds-link>
 </gds-div-grid-column-two-thirds>
 
-<div class="govuk-grid-column-one-third govuk-!-margin-top-9">
+<div class="govuk-grid-column-one-third govuk-!-margin-top-6">
 
     <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
         <h2 class="govuk-heading-m" id="subsection-title">
