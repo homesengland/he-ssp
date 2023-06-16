@@ -119,30 +119,32 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
 
             var propertyInError = IGdsFormGroupTagHelper.IsPropertyInError(this.ViewContext, name);
 
-            var displayText = this.AspGovFor.Metadata.DisplayName;
-            if (!string.IsNullOrEmpty(this.LabelText))
+            var displayText = AspGovFor.Metadata.DisplayName;
+            if (!string.IsNullOrEmpty(LabelText))
             {
-                displayText += this.LabelText;
+                displayText += LabelText;
             }
 
             IGdsFormGroupTagHelper.GenerateElementWrapperContent(
                 output,
                 fullHtmlFieldName,
                 propertyInError,
-                this.IsDisabled,
-                this.HiddenLabelText,
-                this.IsExcludeFieldValidation,
-                this.HintText,
-                this.LabelClasses,
+                IsDisabled,
+                HiddenLabelText,
+                IsExcludeFieldValidation,
+                HintText,
+                LabelClasses,
                 displayText,
-                this.PrefixText,
-                this.SuffixText,
+                PrefixText,
+                SuffixText,
                 false,
-                this.IsExcludeLabel,
+                IsExcludeLabel,
                 false,
                 false,
                 false,
-                this.LegendClasses);
+                LegendClasses);
+
+            TagConstruct.ConstructId(output, For.Name);
 
             if(IsInvalid)
             {
@@ -153,16 +155,16 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
                 TagConstruct.ConstructClass(output, $"{CssConstants.GovUkInput}");
             }
 
-            if (this.For.Metadata.ValidatorMetadata.OfType<NumericValidationAttribute>().Any())
+            if (For.Metadata.ValidatorMetadata.OfType<NumericValidationAttribute>().Any())
             {
                 // Assumption is that all 'number' style properties will have the 'NumericValidationAttribute' associated with them.
                 TagConstruct.ConstructGenericAttribute(output, "inputmode", "numeric");
                 TagConstruct.ConstructGenericAttribute(output, "pattern", "[0-9]*");
             }
 
-            if (this.Autocomplete.IsNotNullOrEmpty())
+            if (Autocomplete.IsNotNullOrEmpty())
             {
-                TagConstruct.ConstructGenericAttribute(output, "autocomplete", this.Autocomplete);
+                TagConstruct.ConstructGenericAttribute(output, "autocomplete", Autocomplete);
             }
 
             if (propertyInError.isPropertyInError)
@@ -186,7 +188,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
                 output.Attributes.RemoveAt(output.Attributes.IndexOfName("maxlength"));
             }
 
-            if (this.HintText.IsNotNullOrEmpty())
+            if (HintText.IsNotNullOrEmpty())
             {
                 TagConstruct.ConstructGenericAttribute(output, "aria-describedby", $"{fullHtmlFieldName}-hint");
             }

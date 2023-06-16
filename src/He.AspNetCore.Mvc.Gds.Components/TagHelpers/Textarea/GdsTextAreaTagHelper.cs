@@ -56,8 +56,8 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Textarea
                 {
                     var contentBuilder = new StringBuilder();
 
-                    var fullHtmlFieldName = IGdsFormGroupTagHelper.GetFullHtmlFieldName(this.ViewContext, this.For.Name);
-                    var propertyInError = IGdsFormGroupTagHelper.IsPropertyInError(this.ViewContext, fullHtmlFieldName);
+                    var fullHtmlFieldName = IGdsFormGroupTagHelper.GetFullHtmlFieldName(ViewContext, For.Name);
+                    var propertyInError = IGdsFormGroupTagHelper.IsPropertyInError(ViewContext, fullHtmlFieldName);
 
                     if (propertyInError.isPropertyInError)
                     {
@@ -67,7 +67,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Textarea
                                                 $"<span class=\"govuk-visually-hidden\">Error:</span> {propertyInError.entry.Errors.First().ErrorMessage}" +
                                             $"</p>");
 
-                        contentBuilder.Append($"<textarea class=\"govuk-textarea govuk-textarea--error\" rows=\"{Rows ?? "5"}\" id=\"{For.Name}-input\" name=\"{For.Name}\">{For.Model}</textarea>");
+                        contentBuilder.Append($"<textarea class=\"govuk-textarea govuk-textarea--error\" rows=\"{Rows ?? "5"}\" id=\"{For.Name}\" name=\"{For.Name}\">{For.Model}</textarea>");
 
                         output.Content.SetHtmlContent(contentBuilder.ToString());
                         return;
