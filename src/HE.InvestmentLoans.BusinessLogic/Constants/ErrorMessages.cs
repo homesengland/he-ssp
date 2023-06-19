@@ -1,4 +1,7 @@
-﻿namespace HE.InvestmentLoans.BusinessLogic.Constants
+﻿using System.Diagnostics.Metrics;
+using System.Runtime.InteropServices;
+
+namespace HE.InvestmentLoans.BusinessLogic.Constants
 {
     public class ErrorMessages
     {
@@ -17,7 +20,13 @@
         public static ErrorMessages AmountPoundInput(string name) => PoundInput($"The amount of {name} provided");
         public static ErrorMessages PoundInput(string name) => new ErrorMessages($"{name} must be entered as a number, in pounds and pence");
         public static ErrorMessages InvalidXYCoordinates(string invalidCharacters) => new ErrorMessages($"XY coordinates must not include {invalidCharacters}");
-
+        public static ErrorMessages EnterExistingLegal
+        {
+            get
+            {
+                return new ErrorMessages($"Enter any existing legal charges or debt secured on this land");
+            }
+        }
         public override string ToString()
         {
             return Value;

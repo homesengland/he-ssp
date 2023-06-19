@@ -15,6 +15,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
         private string _hintText;
         private string _label;
         private string _forLabel;
+        private string _innerInputId;
         private string _inputLabel;
         private string _inputName;
         private string _innerInputValue;
@@ -68,8 +69,9 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
             return this;
         }
 
-        public RadioBuilder WithConditionalInput(string inputLabel, string inputName, string innerInputValue = null)
+        public RadioBuilder WithConditionalInput(string inputId, string inputLabel, string inputName, string innerInputValue = null)
         {
+            _innerInputId = inputId;
             _inputLabel = inputLabel;
             _inputName = inputName;
             _innerInputValue = innerInputValue;
@@ -138,7 +140,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                         }
 
                         sb.Append( 
-                                $"<textarea class=\"govuk-textarea govuk-textarea--error\" rows=\"5\" id=\"{_id}-input\" name=\"{_inputName ?? "conditional-input"}\" type=\"{(_hintText is null ? "text" : _hintText)}\" spellcheck=\"false\" autocomplete=\"email\">{_innerInputValue}</textarea>" +
+                                $"<textarea class=\"govuk-textarea govuk-textarea--error\" rows=\"5\" id=\"{_innerInputId}\" name=\"{_inputName ?? "conditional-input"}\" type=\"{(_hintText is null ? "text" : _hintText)}\" spellcheck=\"false\" autocomplete=\"email\">{_innerInputValue}</textarea>" +
                             "</div>"
                         );
                     }
@@ -156,7 +158,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                         }
 
                         sb.Append(
-                               $"<textarea class=\"govuk-textarea\" rows=\"5\" id=\"{_id}-input\" name=\"{_inputName ?? "conditional-input"}\" type=\"{(_hintText is null ? "text" : _hintText)}\" spellcheck=\"false\" autocomplete=\"email\">{_innerInputValue}</textarea>"  +
+                               $"<textarea class=\"govuk-textarea\" rows=\"5\" id=\"{_innerInputId}\" name=\"{_inputName ?? "conditional-input"}\" type=\"{(_hintText is null ? "text" : _hintText)}\" spellcheck=\"false\" autocomplete=\"email\">{_innerInputValue}</textarea>"  +
                             "</div>"
                         );
                     }

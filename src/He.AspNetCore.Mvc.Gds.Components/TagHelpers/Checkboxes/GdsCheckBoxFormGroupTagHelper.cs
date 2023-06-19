@@ -190,12 +190,12 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Checkboxes
 
                     var currentValues = this.Generator.GetCurrentValues(this.ViewContext, this.For.ModelExplorer, this.For.Name, allowMultiple);
 
-                    var counter = 1;
+                    var counter = 0;
                     var conditionalPrimaryIndexes = this.ConditionalPrimaryIndexes?.Split(",").Select(int.Parse).ToList();
                     foreach (var selectListItem in this.SelectListItems)
                     {
                         var hasChildContent = conditionalPrimaryIndexes?.Contains(counter);
-                        var html = await this.GenerateContentForOption(fullHtmlFieldName, counter, selectListItem, hasChildContent ?? false, currentValues, output).ConfigureAwait(false);
+                        var html = await this.GenerateContentForOption(fullHtmlFieldName, counter == 0 ? null : (int?)counter, selectListItem, hasChildContent ?? false, currentValues, output).ConfigureAwait(false);
                         output.PostContent.AppendHtml(html);
                         counter++;
                     }
@@ -216,7 +216,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Checkboxes
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Don't want to make static")]
         private async Task<string> GenerateContentForOption(
             string fullHtmlFieldName,
-            int idPostfix,
+            int? idPostfix,
             SelectListItem option,
             bool isConditionalRevealCheckboxsOption,
             IEnumerable<string> currentValues,
@@ -226,7 +226,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Checkboxes
 
             elementInputBuilder.AppendLine($"<div class='{CssConstants.GovUkCheckboxsItem}'>");
 
-            var id = $"{fullHtmlFieldName}-{idPostfix}";
+            var id = idPostfix != null ? $"{fullHtmlFieldName}-{idPostfix}" : fullHtmlFieldName;
             var conditionalId = $"conditional-{id}";
             var ariaControls = string.Empty;
 

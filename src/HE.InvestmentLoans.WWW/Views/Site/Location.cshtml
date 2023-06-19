@@ -1,4 +1,5 @@
 ﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
+@inject ModelExpressionProvider modelProvider;
 @{
     var id = ViewContext.RouteData.Values["id"];
 
@@ -28,6 +29,7 @@
                                   radio-items="TemporaryFormOptions.SiteLocation"
                                   id="location"
                                   value="@Model.LocationOption"
+                                  conditional-input-ids=TemporaryFormOptions.LocationDetailsNames
                                   conditional-input-labels=TemporaryFormOptions.LocationDescription
                                   conditional-input-values="@values"
                                   conditional-input-names=TemporaryFormOptions.LocationDetailsNames
@@ -46,6 +48,6 @@
 </gds-div-grid-column-two-thirds>
 
 @await Html.RadioConditionalInputScript(
-    ("location-0", "location-0-conditional"),
-    ("location-1", "location-1-conditional")
+    ("LocationOption", "LocationOption-conditional"),
+    ("LocationOption-1", "LocationOption-1-conditional")
 )

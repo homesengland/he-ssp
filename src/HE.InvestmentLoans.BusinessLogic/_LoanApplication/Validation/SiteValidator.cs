@@ -159,7 +159,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 When(item => item.ChargesDebt == "Yes",
                     () => RuleFor(item => item.ChargesDebtInfo)
                             .NotEmpty()
-                            .WithMessage(ErrorMessages.EnterMoreDetails.ToString())
+                            .WithMessage(ErrorMessages.EnterExistingLegal.ToString())
                         );
             });
 
