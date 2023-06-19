@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace HE.CRM.Plugins.Tests.CustomApis
 {
@@ -21,6 +22,8 @@ namespace HE.CRM.Plugins.Tests.CustomApis
         private XrmFakedPluginExecutionContext pluginContext;
         private LoanApplicationDto applicationDto;
         private SiteDetailsDto siteDetailsDto;
+        string payload = String.Empty;
+
         [TestInitialize]
         public void Initialize()
         {
@@ -32,18 +35,18 @@ namespace HE.CRM.Plugins.Tests.CustomApis
         [TestMethod]
         public void SendInvesmentsLoanDataToCrm_PayloadDataNull_PayloadDataIsNull_ShouldCreateNothing()
         {
-            string payload = "";
             Exception exception = null;
             try
             {
                 var request = new invln_sendinvestmentloansdatatocrmRequest();
                 pluginContext.InputParameters = new ParameterCollection
                 {
-                    {nameof(request.invln_entityfieldsparameters), payload }
+                    {nameof(request.invln_entityfieldsparameters), String.Empty }
                 };
 
                 fakedContext.ExecutePluginWithConfigurations<SendInvestmentsLoanDataToCrmPlugin>(pluginContext, "", "");
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 exception = ex;
             }
@@ -57,7 +60,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
         [TestMethod]
         public void SendInvesmentsLoanDataToCrm_PayloadDataWithObjects_ShouldCreateNewRecords()
         {
-            string payload = JsonSerializer.Serialize<LoanApplicationDto>(applicationDto);
             Exception exception = null;
             try
             {
@@ -78,6 +80,46 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
             //A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened(); // commented in code currently
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<Contact>.Ignored)).MustHaveHappened();
+        }
+
+        [TestMethod]
+        public void SendInvestmentsLoanDataToCrm_ContactAlreadyExistsInCrm_ShouldDeleteExistingInvestmentLoanAndCreateNew()
+        {
+            Contact contact = new Contact()
+            {
+                Id = Guid.NewGuid(),
+                EMailAddress1 = applicationDto.contactEmailAdress,
+            };
+
+            invln_Loanapplication existingLoan = new invln_Loanapplication()
+            {
+                Id = Guid.NewGuid(),
+                invln_Contact = contact.ToEntityReference(),
+            };
+
+            fakedContext.Initialize(new List<Entity> { existingLoan, contact });
+
+            Exception exception = null;
+            try
+            {
+                var request = new invln_sendinvestmentloansdatatocrmRequest();
+                pluginContext.InputParameters = new ParameterCollection
+                {
+                    {nameof(request.invln_entityfieldsparameters), payload }
+                };
+
+                fakedContext.ExecutePluginWithConfigurations<SendInvestmentsLoanDataToCrmPlugin>(pluginContext, "", "");
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
+
+            Assert.IsNull(exception);
+            A.CallTo(() => fakedContext.GetOrganizationService().Delete(existingLoan.LogicalName, existingLoan.Id)).MustHaveHappened();
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
+            //A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened(); // commented in code currently
+
         }
 
         private void InitData()
@@ -103,7 +145,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 siteCost = "siteCost",
                 siteName = "siteName",
                 siteOwnership = "siteOwnership",
-                typeOfHomes = new string[]{ "typeOfHomes" },
+                typeOfHomes = new string[] { "typeOfHomes" },
                 typeOfSite = "typeOfSite",
                 valuationSource = "valuationSource",
                 whoProvided = "whoProvided",
@@ -131,7 +173,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 confirmationDirectorLoansCanBeSubordinated = "false",
                 reasonForDirectorLoanNotSubordinated = "true",
 
-                siteDetailsList = new List<SiteDetailsDto> { siteDetailsDto},
+                siteDetailsList = new List<SiteDetailsDto> { siteDetailsDto },
 
                 //id = "",
                 name = "name",
@@ -143,6 +185,8 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 contactEmailAdress = "test@test.pl",
                 //accountId = "",
             };
+
+            payload = JsonSerializer.Serialize<LoanApplicationDto>(applicationDto);
         }
     }
 }
