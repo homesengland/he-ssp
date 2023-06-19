@@ -58,8 +58,26 @@ namespace HE.InvestmentLoans.WWW.Controllers
         public async Task<IActionResult> WorkflowPost(Guid id, Guid site, SiteViewModel model, string ending, string action)
         {
             var sessionModel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
+
             SiteWorkflow workflow = new SiteWorkflow(sessionModel, mediator, site);
             var sitemodel = sessionModel.Sites.Where(item => item.Id == site).First();
+            if (Request.Form.Keys.Contains("EstimatedStartDate.Value.Day")
+                && Request.Form.Keys.Contains("EstimatedStartDate.Value.Month")
+                && Request.Form.Keys.Contains("EstimatedStartDate.Value.Year"))
+            {
+                try
+                {
+                    sitemodel.EstimatedStartDate = new DateTime(
+                        int.Parse(Request.Form["EstimatedStartDate.Value.Year"], System.Globalization.CultureInfo.CurrentCulture.NumberFormat),
+                        int.Parse(Request.Form["EstimatedStartDate.Value.Month"], System.Globalization.CultureInfo.CurrentCulture.NumberFormat),
+                        int.Parse(Request.Form["EstimatedStartDate.Value.Day"], System.Globalization.CultureInfo.CurrentCulture.NumberFormat));
+                    model.EstimatedStartDate = sitemodel.EstimatedStartDate;
+                }
+                catch
+                {
+                }
+            }
+
             try
             {
                 var vresult = validator.Validate(model, opt => opt.IncludeRuleSets(workflow.GetName()));

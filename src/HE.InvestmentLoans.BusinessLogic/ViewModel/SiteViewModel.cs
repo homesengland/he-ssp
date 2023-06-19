@@ -1,5 +1,6 @@
 using He.HelpToBuild.Apply.Application.Routing;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
+using Microsoft.Crm.Sdk.Messages;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,11 +42,12 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
         public string Type { get; set; }
         public string ChargesDebt { get; set; }
         public string ChargesDebtInfo { get; set; }
-        public SiteWorkflow.State State { get;  set; }
-        public string Name { get;  set; }
-        public Guid Id { get;  set; }
-        public bool StateChanged { get;  set; }
-
+        public SiteWorkflow.State State { get; set; }
+        public string Name { get; set; }
+        public Guid Id { get; set; }
+        public bool StateChanged { get; set; }
+        public string HaveEstimatedStartDate{get;set;}
+        public DateTime ? EstimatedStartDate { get; set; }
 
         public void RemoveAlternativeRoutesData()
         {

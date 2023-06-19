@@ -27,6 +27,20 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 .WithMessage(ErrorMessages.ManyHomesAmount.ToString());
             });
 
+            RuleSet("StartDate", () =>
+            {
+                RuleFor(item => item.HaveEstimatedStartDate)
+                .NotEmpty()
+                .WithMessage(ErrorMessages.RadioOption.ToString());
+
+                When(item => item.HaveEstimatedStartDate == "Yes",
+                    () => RuleFor(item => item.EstimatedStartDate)
+                            .NotEmpty()
+                            .WithMessage("Enter a valid date. The build start date must include a day, month and year")
+                        );
+            });
+
+
             RuleSet("TypeHomes", () =>
             {
                 RuleFor(item => item.TypeHomes)
@@ -148,6 +162,10 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                             .WithMessage(ErrorMessages.EnterExistingLegal.ToString())
                         );
             });
+
+
+
+
 
             RuleSet("AffordableHomes", () =>
             {

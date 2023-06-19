@@ -13,6 +13,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
         {
             Index,
             Name,
+            StartDate,
             ManyHomes,
             TypeHomes,
             PlanningRef,
@@ -84,13 +85,18 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
                 .Permit(Trigger.Continue, State.Name);
 
             _machine.Configure(State.Name)
-                .Permit(Trigger.Continue, State.ManyHomes)
+                .Permit(Trigger.Continue, State.StartDate)
                 .Permit(Trigger.Back, State.Index)
+                .Permit(Trigger.Change, State.CheckAnswers);
+
+             _machine.Configure(State.StartDate)
+                .Permit(Trigger.Continue, State.ManyHomes)
+                .Permit(Trigger.Back, State.Name)
                 .Permit(Trigger.Change, State.CheckAnswers);
 
             _machine.Configure(State.ManyHomes)
                 .Permit(Trigger.Continue, State.TypeHomes)
-                .Permit(Trigger.Back, State.Name)
+                .Permit(Trigger.Back, State.StartDate)
                 .Permit(Trigger.Change, State.CheckAnswers);
 
             _machine.Configure(State.TypeHomes)
