@@ -41,9 +41,9 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
                 {
                     var siteDetail = new SiteDetailsDto()
                     {
-                        siteName = site.Name,
-                        numberOfHomes = site.HomesToBuild,
-                        typeOfHomes = site.TypeHomes,
+                        siteName = site.Name, // Name
+                        numberOfHomes = site.HomesToBuild, //site/ManyHomes
+                        typeOfHomes = site.TypeHomes, //
                         otherTypeOfHomes = site.TypeHomesOther,
                         typeOfSite = site.Type,
                         haveAPlanningReferenceNumber = site.PlanningRef,
