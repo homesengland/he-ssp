@@ -8,6 +8,7 @@
     var securityWorkflow = new SecurityWorkflow(Model, mediator);
     var fundingWorkflow = new FundingWorkflow(Model, mediator);
     var companyStructureWorkflow = new CompanyStructureWorkflow(Model, mediator);
+    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
 }
 
 
@@ -141,9 +142,19 @@
     <gds-h2 size="HeaderSize.M">Check and submit</gds-h2>
     <p>You must complete all sections before you can submit your application.</p>
     <form asp-controller="LoanApplication" asp-action="Workflow" asp-route-id="@Model.ID" asp-route-ending="TaskList" asp-method="post" novalidate>
-        <button class="govuk-button govuk-button--secondary" data-module="govuk-button" name="action" type="submit" value="Continue">
-            Check and submit application
-        </button>
+       
+        @if (loanApllicationWorkflow.IsFilled())
+        {
+            <button class="govuk-button govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Check and submit application
+            </button>
+        }
+        else
+        {
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button">
+                Check and submit application
+            </button>
+        }
     </form>
     <gds-link href="@Url.Action("Index","LoanApplication", new {id = Model.ID})">
         Report a problem with this page
