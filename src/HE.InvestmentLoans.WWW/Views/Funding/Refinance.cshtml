@@ -2,14 +2,18 @@
 @inject ModelExpressionProvider modelProvider
 @{
     var refinanceInfoName = modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Funding.RefinanceInfo);
-
+    
+    var ids = new string[] { refinanceInfoName };
     var labels = new string[] { "Tell us more about your refinance exit strategy." };
     var names = new string[] { refinanceInfoName };
     var values = new string[] { Model.Funding.RefinanceInfo };
 
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Funding.Refinance));
+    var refinanceName = modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Funding.Refinance);
+
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(refinanceName);
     var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(refinanceInfoName);
 }
+
 <gds-div-grid-column-two-thirds>
 <form asp-controller="Funding" asp-action="WorkflowPost" asp-route-id="@Model.ID"  asp-method="post" novalidate>
     <gds-back-link href="@Url.Action("GoBack","Funding", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
@@ -32,10 +36,10 @@
                 asp-for="Funding.Refinance"
                 value="@Model.Funding.Refinance"
                 radio-items="TemporaryFormOptions.LoanResolution"
+                conditional-input-ids="@ids"
                 conditional-input-labels="@labels"
                 conditional-input-names="@names"
                 conditional-input-values="@values"
-                
                 class="govuk-!-margin-bottom-8"
                 is-conditional-input-invalid="conditionalInputInvalid"
                 conditional-input-error="@inputErrors">
@@ -51,7 +55,4 @@
     <partial name="_HomeAndCheckAnswersLinks" />
 </gds-div-grid-column-two-thirds>
 
-@await Html.RadioConditionalInputScript(
-    ("refinance-0", "refinance-0-conditional"),
-    ("refinance-1", "")
-)
+@await Html.RadioConditionalInputScriptFor(refinanceName, 2);

@@ -172,8 +172,8 @@ namespace HE.InvestmentLoans.WWW.Models
 
         public static List<string> LocationDetailsNames { get; } = new()
         {
-            "locationCoordinates",
-            "locationLandRegistry"
+            "LocationCoordinates",
+            "LocationLandRegistry"
         };
     }
 }

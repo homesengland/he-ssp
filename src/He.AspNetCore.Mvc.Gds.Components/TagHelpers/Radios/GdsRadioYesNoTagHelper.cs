@@ -5,6 +5,7 @@ using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 {
@@ -96,25 +97,26 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
                     }
                     else
                     {
+                        var id = text == "Yes" ? For.Name : $"{For.Name}-1";
                         var builder = TagConstruct.CreateRadio()
-                            .AsRadio($"{For.Name}{text}", For.Name, text)
-                            .WithLabel(text, text);
+                            .AsRadio(id, For.Name, text)
+                            .WithLabel(text, id);
 
-                        if (text == "Yes" && WithYesInput || text == "No" && WithNoInput)
+                        if (HasConditionalInput(text))
                         {
-                            if (text == "No" && !string.IsNullOrEmpty(SecondInnerInputText))
-                                builder.WithConditionalInput(SecondInnerInputText, SecondInnerInputFor?.Name ?? InnerInputFor?.Name, SecondInnerInputValue ?? InnerInputValue);
+                            if (text == "No" && IsSecondInnerInputConfigured())
+                                builder.WithConditionalInput(SecondInnerInputFor?.Name, SecondInnerInputText, SecondInnerInputFor?.Name ?? InnerInputFor?.Name, SecondInnerInputValue ?? InnerInputValue);
                             else
-                                builder.WithConditionalInput(InnerInputText, InnerInputFor?.Name, InnerInputValue);
+                                builder.WithConditionalInput(InnerInputFor?.Name, InnerInputText, InnerInputFor?.Name, InnerInputValue);
                         }
 
-                        if (IsConditionalInputInvalid && text == (string)For.Model)
+                        if (IsConditionalInputInvalid && IsSelected(text))
                             builder.WithConditionalErrorMessage(ConditionalInputError);
 
                         if (WithFileUpload)
                             builder.WithFileUpload(FileUploadHint);
 
-                        if (text == (string)For.Model)
+                        if (IsSelected(text))
                             builder.ThatIsChecked();
 
                         sb.Append(builder.Build());
@@ -123,6 +125,20 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 
                 output.Content.SetHtmlContent(sb.ToString());
             }
+        }
+        private bool HasConditionalInput(string text)
+        {
+            return text == "Yes" && WithYesInput || text == "No" && WithNoInput;
+        }
+
+        private bool IsSecondInnerInputConfigured()
+        {
+            return !string.IsNullOrEmpty(SecondInnerInputText);
+        }
+
+        private bool IsSelected(string text)
+        {
+            return text == (string)For.Model;
         }
     }
 }

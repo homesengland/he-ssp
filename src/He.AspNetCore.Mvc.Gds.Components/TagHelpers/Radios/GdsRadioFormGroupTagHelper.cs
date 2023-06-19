@@ -205,7 +205,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
                             this.HasConditionalChildInput && counter == this.ConditionalChildInputOrder;
 
                         output.PostContent.AppendHtml(await this.GenerateContentForOption(
-                                fullHtmlFieldName, ++counter, selectListItem, currentValues, isConditionalRevealInputOption, output)
+                                fullHtmlFieldName, counter++, selectListItem, currentValues, isConditionalRevealInputOption, output)
                             .ConfigureAwait(false));
                     }
                 }
@@ -241,12 +241,13 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 
             elementInputBuilder.AppendLine($"<div class='{CssConstants.GovUkRadiosItem}'>");
 
+            var inputId = idPostfix == 0 ? fullHtmlFieldName : $"{fullHtmlFieldName}-{idPostfix}"; 
             elementInputBuilder.AppendLine(
-                $"<input id='{fullHtmlFieldName}-{idPostfix}' type='radio' class='{CssConstants.GovUkRadiosInput}' value='{option.Value}' name='{fullHtmlFieldName}' " +
+                $"<input id='{inputId}' type='radio' class='{CssConstants.GovUkRadiosInput}' value='{option.Value}' name='{fullHtmlFieldName}' " +
                 $"{(currentValues?.Contains(option.Value) == true ? "checked" : string.Empty)} {(isConditionalRevealInputOption ? $"data-aria-controls='conditional-children-{idPostfix}'" : string.Empty)}></input>");
 
             elementInputBuilder.AppendLine(
-                $"<label class='{CssConstants.GovUkLabel} {CssConstants.GovUkRadiosLabel}' for='{fullHtmlFieldName}-{idPostfix}'>{option.Text}</label>");
+                $"<label class='{CssConstants.GovUkLabel} {CssConstants.GovUkRadiosLabel}' for='{inputId}'>{option.Text}</label>");
 
             elementInputBuilder.AppendLine("</div>");
 

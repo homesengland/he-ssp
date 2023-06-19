@@ -46,6 +46,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
         public ModelExpression For { get; set; }
 
         public IEnumerable<SelectListItem> RadioItems { get; set; }
+        public IEnumerable<string> ConditionalInputIds { get; set; }
         public IEnumerable<string> ConditionalInputLabels { get; set; }
         public IEnumerable<string> ConditionalInputNames { get; set; }
         public IEnumerable<string> ConditionalInputValues { get; set; }
@@ -76,7 +77,8 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 
                 TagConstruct.ConstructClass(output, css);
 
-                var radioItems = RadioItems.ToArray();
+                var radioItems = RadioItems.ToArray(); 
+                var conditionalInputIds = ConditionalInputIds?.ToArray() ?? new string[0];
                 var conditionalInputLabels = ConditionalInputLabels?.ToArray() ?? new string[0];
                 var conditionalInputNames = ConditionalInputNames?.ToArray() ?? new string[0];
                 var conditionalInputValues = ConditionalInputValues?.ToArray() ?? new string[0];
@@ -90,15 +92,16 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
                     var text = item.Text;
                     var value = item.Value;
 
+                    var id = i == 0 ? For.Name : $"{For.Name}-{i}";
                     var builder = TagConstruct.CreateRadio()
-                            .AsRadio($"{Id}-{i}", For.Name, value)
-                            .WithLabel(text, text);
+                            .AsRadio(id, For.Name, value)
+                            .WithLabel(text, id);
 
                     if (conditionalInputLabels.Length > i && conditionalInputValues.Length > i)
-                        builder.WithConditionalInput(conditionalInputLabels[i], conditionalInputNames[i], conditionalInputValues[i]);
+                        builder.WithConditionalInput(conditionalInputIds[i], conditionalInputLabels[i], conditionalInputNames[i], conditionalInputValues[i]);
 
                     else if (conditionalInputLabels.Length > i)
-                        builder.WithConditionalInput(conditionalInputLabels[i], conditionalInputNames[i]);
+                        builder.WithConditionalInput(conditionalInputIds[i], conditionalInputLabels[i], conditionalInputNames[i]);
 
                     if (IsConditionalInputInvalid && selectRadio)
                         builder.WithConditionalErrorMessage(ConditionalInputError);
