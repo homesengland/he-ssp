@@ -49,7 +49,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
 
         public bool IsNotStarted()
         {
-            return _model.Funding.State == State.Index;
+            return _model.Funding.State == State.Index || (_model.Funding.State == State.GDV && string.IsNullOrEmpty(_model.Funding.GrossDevelopmentValue));
         }
 
         public string GetName()
