@@ -76,7 +76,6 @@ namespace HE.InvestmentLoans.WWW.Controllers
                 catch
                 {
                 }
-
             }
 
             try
