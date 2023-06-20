@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.Routing;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using MediatR;
 using Stateless;
+using System.Linq;
 
 namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
 {
@@ -85,5 +86,15 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
         {
             return System.Enum.GetName(typeof(State), _model.State);
         }
+
+        public bool IsFilled()
+        {
+            return _model.Company.State == CompanyStructureWorkflow.State.Complete
+                && _model.Security.State == SecurityWorkflow.State.Complete
+                && _model.Funding.State == FundingWorkflow.State.Complete
+                && _model.Sites.All(x => x.State == SiteWorkflow.State.Complete);
+
+        }
+
     }
 }
