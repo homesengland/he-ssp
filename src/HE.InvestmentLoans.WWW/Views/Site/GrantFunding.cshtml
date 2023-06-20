@@ -20,7 +20,20 @@
                     This could include any previous Homes England funding.
                 </gds-div-hint>
 
-                <gds-custom-radio asp-for="GrantFunding" class="govuk-!-margin-bottom-6" radio-items="TemporaryFormOptions.GrantFunding"></gds-custom-radio>
+                <div class="govuk-!-margin-bottom-6 govuk-radios">
+                    <div class="govuk-radios__item">
+                        @Html.RadioButtonFor(m => m.GrantFunding,"Yes", new { @class="govuk-radios__input", id="GrantFunding"} )
+                        <label class="govuk-label govuk-radios__label" for="GrantFunding">Yes</label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        @Html.RadioButtonFor(m => m.GrantFunding,"No", new { @class="govuk-radios__input", id="GrantFunding-1"} )
+                        <label class="govuk-label govuk-radios__label" for="GrantFunding-1">No</label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        @Html.RadioButtonFor(m => m.GrantFunding,"doNotKnow", new { @class="govuk-radios__input", id="GrantFunding-2"} )
+                        <label class="govuk-label govuk-radios__label" for="GrantFunding-2">Do not know</label>
+                    </div>
+                </div>
             </gds-div-form-group>
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
                 Continue

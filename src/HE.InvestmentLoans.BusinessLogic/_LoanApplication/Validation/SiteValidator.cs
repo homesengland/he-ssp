@@ -130,12 +130,13 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                             .WithMessage(ErrorMessages.EnterMoreDetails.ToString())
                         );
 
-                When(item => item.GrantFundingAmount == null,
+                When(item => item.GrantFundingAmount != null,
                     () => RuleFor(item => item.GrantFundingAmount)
                             .NotEmpty()
                             .WithMessage(ErrorMessages.AmountPoundInput("funding").ToString())
-                            .Matches(@"^[0-9]*$")
+                            .Matches(@"^\d*[.]?\d?\d?$")
                             .WithMessage(ErrorMessages.AmountPoundInput("funding").ToString())
+                            
                         );
 
                 When(item => item.GrantFundingName == null,
