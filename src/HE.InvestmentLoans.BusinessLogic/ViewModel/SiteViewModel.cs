@@ -29,6 +29,9 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
         public string Value { get; set; }
         public string HomesToBuild { get; set; }
         public string Source { get; set; }
+        public string PurchaseDay { get; set; }
+        public string PurchaseMonth { get; set; }
+        public string PurchaseYear { get; set; }
         public DateTime? PurchaseDate { get; set; }
         public string LocationOption { get; set; }
         public string LocationCoordinates { get; set; }
@@ -47,7 +50,7 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
         public Guid Id { get; set; }
         public bool StateChanged { get; set; }
         public string HaveEstimatedStartDate{get;set;}
-        public DateTime ? EstimatedStartDate { get; set; }
+        public DateTime? EstimatedStartDate { get; set; }
 
         public void RemoveAlternativeRoutesData()
         {

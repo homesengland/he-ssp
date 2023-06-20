@@ -67,6 +67,19 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
             }
         }
 
+        /// <summary>
+        /// Modifies the class attribute of a TagHelperOutput object by appending "--error" to the existing class or setting it as a new class if no class attribute exists.
+        /// </summary>
+        /// <param name="output">The TagHelperOutput object to modify.</param>
+        /// <param name="className">The class name to apply.</param>
+        public static void ChangeClassToError(TagHelperOutput output, string className)
+        {
+            if (output != null)
+            {
+                var taClass = new TagHelperAttribute("class", $"{className}--error");
+                output.Attributes.Add(taClass);
+            }
+        }
 
         public static void ConstructHeaderClass(TagHelperOutput output, HeaderSize size)
         {
