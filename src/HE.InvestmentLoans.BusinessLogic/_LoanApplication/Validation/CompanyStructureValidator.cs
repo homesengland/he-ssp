@@ -45,8 +45,10 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 RuleFor(e => e.HomesBuilt)
                 .NotEmpty()
                 .WithMessage("The amount of homes your organisation has built must be a number")
-                .LessThanOrEqualTo(99999)
-                .WithMessage("The number of homes your organisation has built in the past 3 years must be 99,999 or less");
+                .Matches("^\\d{1,2}[.]\\d*$")
+                .WithMessage("The number of homes your organisation has built in the past 3 years must be 99,999 or less")
+                .Matches("^\\d{1,2}$")
+                .WithMessage("The number of homes your organisation has built must be a whole number");
             });
 
             RuleSet("CheckAnswers", () =>
