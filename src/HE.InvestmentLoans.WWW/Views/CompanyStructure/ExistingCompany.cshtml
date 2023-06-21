@@ -11,16 +11,17 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-error-form-group asp-for="Company.ExistingCompany">
-                <gds-legend class="govuk-fieldset__legend--l">
-                    <gds-fieldset-heading>
+                <gds-label-wrapper>
+                    <gds-label size="@ControlSize.L" for="Company.ExistingCompany">
                         Provide more information about your organisation
-                    </gds-fieldset-heading>
-                </gds-legend>
+                    </gds-label>
+                </gds-label-wrapper>
                 <gds-div-hint>
                     Tell us about your organisation structure, including if your organisation is or has a parent company, or is part of a group structure.
                 </gds-div-hint>
-                <gds-text-area asp-for="Company.ExistingCompany"
-                               rows="5"></gds-text-area>
+                <gds-text-area 
+                    asp-for="Company.ExistingCompany"
+                    rows="5"></gds-text-area>
             </gds-error-form-group>
             <gds-error-form-group asp-for="Company.CompanyInfoFile">
                 <gds-div-hint>
@@ -39,8 +40,6 @@
                     <input class="govuk-file-upload" id="Company.CompanyInfoFile" asp-for="Company.CompanyInfoFile" type="file">
                 </div>
             </gds-error-form-group>
-
-
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Company.StateChanged?"Change":"Continue")">
                 Continue
             </button>

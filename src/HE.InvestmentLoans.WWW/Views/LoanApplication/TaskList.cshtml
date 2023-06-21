@@ -12,11 +12,11 @@
 }
 
 
-    <gds-back-link href="@Url.Action("Index","LoanApplication", new {id = Model.ID})" text="Back to account homepage" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.Action("Index","LoanApplication", new {id = Model.ID})" text="Back to account homepagControlSizegovuk-!-margin-bottom-8">
     </gds-back-link>
 
 
-    <gds-h1 size="HeaderSize.L" class="govuk-!-margin-bottom-2">
+<gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-2">
         Development loan application
     </gds-h1>
     <gds-div-hint class="govuk-!-margin-bottom-8">
@@ -139,7 +139,7 @@
             </ul>
         </li>
     </ul>
-    <gds-h2 size="HeaderSize.M">Check and submit</gds-h2>
+    <gds-h2 size="ControlSize.M">Check and submit</gds-h2>
     <p>You must complete all sections before you can submit your application.</p>
     <form asp-controller="LoanApplication" asp-action="Workflow" asp-route-id="@Model.ID" asp-route-ending="TaskList" asp-method="post" novalidate>
        

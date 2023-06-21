@@ -1,4 +1,5 @@
 using He.AspNetCore.Mvc.Gds.Components.Constants;
+using He.AspNetCore.Mvc.Gds.Components.Enums;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -23,6 +24,8 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Labels
         /// <value>The text.</value>
         public string Text { get; set; }
 
+        public ControlSize? Size { get; set; }
+
         /// <summary>
         /// Synchronously executes the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" /> with the given <paramref name="context" /> and
         /// <paramref name="output" />.
@@ -35,7 +38,12 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Labels
             {
                 output.TagName = HtmlConstants.Label;
                 TagConstruct.ConstructGeneric(output, HtmlConstants.For, this.For);
-                TagConstruct.ConstructClass(output, CssConstants.GovUkLabel);
+
+                if (Size.HasValue)
+                    TagConstruct.ConstructClassForSize(output, CssConstants.GovUkLabel, Size.Value);
+                else
+                    TagConstruct.ConstructClass(output, CssConstants.GovUkLabel);
+
                 output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output, this.Text));
             }
         }
