@@ -20,10 +20,6 @@ variables:
 
 resources:
   repositories:
-  - repository: 'Investments Programme' 
-    type: git
-    name: 'Investments Programme/Investments Programme' 
-    ref: $(branch)
   - repository: he-invst-deployment
     type: git
     name: 'Investments Programme/he-invst-deployment'
