@@ -190,9 +190,7 @@
     <Compile Include="HE.Base\Services\CrmServicesFactory.cs" />
     <Compile Include="HE.Base\Services\ICrmService.cs" />
     <Compile Include="HE.Base\Services\ICrmServicesFactory.cs" />
-    <Compile Include="Services\HttpServices\CalculationApiClientService.cs" />
     <Compile Include="Services\HttpServices\AzureAdHttpClientService.cs" />
-    <Compile Include="Services\HttpServices\Interfaces\ICalculationApiClientService.cs" />
     <Compile Include="Services\LoanApplication\ILoanApplicationService.cs" />
     <Compile Include="Services\LoanApplication\LoanApplicationService.cs" />
   </ItemGroup>
@@ -214,7 +212,6 @@
   </ItemGroup>
   <Import Project="..\HE.CRM.Model\HE.CRM.Model.projitems" Label="Shared" />
   <Import Project="..\HE.CRM.Common\HE.CRM.Common.projitems" Label="Shared" />
-  <Import Project="..\HE.AZURE.CalculationAPI.DTO\HE.AZURE.CalculationAPI.DTO.projitems" Label="Shared" />
   <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Text.Json.6.0.2\build\System.Text.Json.targets" Condition="Exists('..\packages\System.Text.Json.6.0.2\build\System.Text.Json.targets')" />
