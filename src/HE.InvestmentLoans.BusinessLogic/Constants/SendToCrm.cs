@@ -1,4 +1,5 @@
 ﻿using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.BusinessLogic.Enums;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -41,29 +42,30 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
                 {
                     var siteDetail = new SiteDetailsDto()
                     {
-                        siteName = site.Name,
-                        numberOfHomes = site.HomesToBuild,
-                        typeOfHomes = site.TypeHomes,
-                        otherTypeOfHomes = site.TypeHomesOther,
-                        typeOfSite = site.Type,
-                        haveAPlanningReferenceNumber = site.PlanningRef,
-                        planningReferenceNumber = site.PlanningRefEnter,
-                        siteCoordinates = site.LocationCoordinates,
-                        siteOwnership = site.Ownership,
-                        landRegistryTitleNumber = site.LocationLandRegistry,
-                        dateOfPurchase = site.PurchaseDate,
-                        siteCost = site.Cost,
-                        currentValue = site.Value,
-                        valuationSource = site.Source,
-                        publicSectorFunding = site.GrantFunding,
-                        //whoProvided = site.
-                        //howMuch = site.pric
-                        nameOfGrantFund = site.GrantFundingName,
-                        //reason = site.reason
-                        existingLegalCharges = site.ChargesDebt,
-                        existingLegalChargesInformation = site.ChargesDebtInfo,
-                        numberOfAffordableHomes = site.AffordableHomes,
+                        siteName = site.Name, // Name
+                        numberOfHomes = site.ManyHomes, //site/ManyHomes
+                        typeOfHomes = site.TypeHomes, //site/TypeHomes
+                        otherTypeOfHomes = site.TypeHomesOther, //site/TypeHomes
+                        typeOfSite = site.Type, //site/Type
+                        haveAPlanningReferenceNumber = site.PlanningRef, //site/PlanningRef
+                        planningReferenceNumber = site.PlanningRefEnter, //site/PlanningRef
+                        siteCoordinates = site.LocationCoordinates, //site/Location
+                        siteOwnership = site.Ownership, //site/Ownership
+                        landRegistryTitleNumber = site.LocationLandRegistry, //site/Location
+                        dateOfPurchase = site.EstimatedStartDate, //site.PurchaseDate - probably not correct field, //site/Additional
+                        siteCost = site.Cost, //site/Additional
+                        currentValue = site.Value, //site/Additional
+                        valuationSource = site.Source, //site/Additional
+                        publicSectorFunding = site.GrantFunding, //site/GrantFunding
+                        whoProvided = site.GrantFundingSource, //site/GrantFundingMore
+                        howMuch = site.GrantFundingAmount, //site/GrantFundingMore
+                        nameOfGrantFund = site.GrantFundingName, //site/GrantFundingMore
+                        reason = site.GrantFundingPurpose, //site/GrantFundingMore
+                        existingLegalCharges = site.ChargesDebt, //site/ChargesDebt
+                        existingLegalChargesInformation = site.ChargesDebtInfo, //site/ChargesDebt
+                        numberOfAffordableHomes = site.AffordableHomes, //site/AffordableHomes
                     };
+                    siteDetailsDtos.Add(siteDetail);
                 }
 
                 LoanApplicationDto loanApplicationDto = new LoanApplicationDto()
@@ -78,6 +80,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
                     //COMPANY
                     companyPurpose = request.Model.Company.Purpose,//Purpose
                     existingCompany = request.Model.Company.ExistingCompany,//ExistingCompany
+                    fundingReason = MapPurpose(request.Model.Purpose),//LoanPurpose
                     companyExperience = int.Parse( request.Model.Company.HomesBuilt),//HomesBuilt
                                                                          //Company.CompanyInfoFile
 
@@ -86,11 +89,11 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
                     projectEstimatedTotalCost = request.Model.Funding.TotalCosts, //TotalCosts
                     projectAbnormalCosts = request.Model.Funding.AbnormalCosts, //AbnormalCosts
                     projectAbnormalCostsInformation = request.Model.Funding.AbnormalCostsInfo, //AbnormalCosts
-                    privateSectorApproach = request.Model.Funding.PrivateSectorFundingResult, //PrivateSectorFunding
-                    privateSectorApproachInformation = request.Model.Funding.PrivateSectorFundingReason, //PrivateSectorFunding
+                    privateSectorApproach = request.Model.Funding.PrivateSectorFunding, //PrivateSectorFunding
+                    privateSectorApproachInformation = request.Model.Funding.PrivateSectorFundingResult, //PrivateSectorFunding//
                     additionalProjects = request.Model.Funding.AdditionalProjects,//AdditionalProjects
                     refinanceRepayment = request.Model.Funding.Refinance, //Refinance
-                    refinanceRepaymentDetails = request.Model.Funding.RefinanceInfo, //Refinance
+                    refinanceRepaymentDetails = request.Model.Funding.RefinanceInfo, //Refinance//
                                                                                      //Complete
 
                     //SECURITY
@@ -99,17 +102,35 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
                     directorLoans = request.Model.Security.DirLoans, //DirLoans
                     confirmationDirectorLoansCanBeSubordinated = request.Model.Security.DirLoansSub,//DirLoansSub
                     reasonForDirectorLoanNotSubordinated = request.Model.Security.DirLoansSubMore,//DirLoansSub
+
+                    //SITEDETAILS
+                    siteDetailsList = siteDetailsDtos,
                 };
 
-                string test = JsonSerializer.Serialize<LoanApplicationDto>(loanApplicationDto);
+                string loanApplicationSerialized = JsonSerializer.Serialize<LoanApplicationDto>(loanApplicationDto);
                 var req = new OrganizationRequest("invln_sendinvestmentloansdatatocrm")  //Name of Custom API
                 {
-                    ["invln_entityfieldsparameters"] = test  //Input Parameter
+                    ["invln_entityfieldsparameters"] = loanApplicationSerialized  //Input Parameter
                 };
 
                 var resp = _serviceClient.Execute(req);
 
                 return true;
+            }
+
+            public string MapPurpose(FundingPurpose? fundingPurpose)
+            {
+                switch (fundingPurpose)
+                {
+                    case FundingPurpose.BuildingNewHomes:
+                        return "Buildingnewhomes";
+                    case FundingPurpose.BuildingInfrastructure:
+                        return "Buildinginfrastructureonly";
+                    case FundingPurpose.Other:
+                        return "Other";
+                    default:
+                        return String.Empty;
+                }
             }
         }
     }
