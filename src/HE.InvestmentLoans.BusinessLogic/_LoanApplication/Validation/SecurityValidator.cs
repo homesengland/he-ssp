@@ -30,7 +30,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
             {
                 RuleFor(item => item.CheckAnswers)
                 .NotEmpty()
-                .WithMessage(ErrorMessages.CheckAnswersOption.ToString());
+                .WithMessage(ErrorMessages.SecurityCheckAnswers.ToString());
             });
         }
     }
