@@ -80,9 +80,9 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
                     //COMPANY
                     companyPurpose = request.Model.Company.Purpose,//Purpose
                     existingCompany = request.Model.Company.ExistingCompany,//ExistingCompany
-                    companyExperience = request.Model.Company.HomesBuilt,//HomesBuilt
                     fundingReason = MapPurpose(request.Model.Purpose),//LoanPurpose
-                                                                      //Company.CompanyInfoFile
+                    companyExperience = int.Parse( request.Model.Company.HomesBuilt),//HomesBuilt
+                                                                         //Company.CompanyInfoFile
 
                     //FUNDING
                     projectGdv = request.Model.Funding.GrossDevelopmentValue, //GDV
