@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.Constants;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using System;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -14,7 +16,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
             {
                 RuleFor(item => item.Name)
                 .NotEmpty()
-                
+
                 .WithMessage(ErrorMessages.EnterMoreDetails.ToString());
             });
 
@@ -36,10 +38,9 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 When(item => item.HaveEstimatedStartDate == "Yes",
                     () => RuleFor(item => item.EstimatedStartDate)
                             .NotEmpty()
-                            .WithMessage("Enter a valid date. The build start date must include a day, month and year")
+                            .WithMessage(ErrorMessages.InvalidDate.ToString())
                         );
             });
-
 
             RuleSet("TypeHomes", () =>
             {
@@ -184,11 +185,55 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("Additional", () =>
             {
+                When(item => item.PurchaseDay == null && item.PurchaseMonth == null && item.PurchaseYear == null,
+                    () => RuleFor(item => item.PurchaseDate)
+                            .NotEmpty()
+                            .WithMessage(ErrorMessages.NoPurchaseDate.ToString())
+                        );
+
+                When(item => item.PurchaseDay == null && (item.PurchaseMonth != null || item.PurchaseYear != null),
+                    () => RuleFor(item => item.PurchaseDay)
+                            .NotEmpty()
+                            .WithMessage(ErrorMessages.NoPurchaseDay.ToString())
+                        );
+
+                When(item => item.PurchaseMonth == null && (item.PurchaseDay != null || item.PurchaseYear != null),
+                    () => RuleFor(item => item.PurchaseMonth)
+                            .NotEmpty()
+                            .WithMessage(ErrorMessages.NoPurchaseMonth.ToString())
+                        );
+
+                When(item => item.PurchaseYear == null && (item.PurchaseDay != null || item.PurchaseMonth != null),
+                    () => RuleFor(item => item.PurchaseYear)
+                            .NotEmpty()
+                            .WithMessage(ErrorMessages.NoPurchaseYear.ToString())
+                        );
+
+                When(item => item.PurchaseDay != null && item.PurchaseMonth != null && item.PurchaseYear != null, 
+                    () =>
+                {
+                    RuleFor(item => item)
+                    .Must(model =>
+                    {
+                        try
+                        {
+                            var dateString = $"{model.PurchaseDay}/{model.PurchaseMonth}/{model.PurchaseYear}";
+                            return DateTime.TryParseExact(dateString, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+                        }
+                        catch
+                        {
+                            return false;
+                        }
+                    })
+                    .WithMessage(ErrorMessages.IncorrectPurchaseDate.ToString())
+                    .WithName("PurchaseDate");
+                });
+
                 When(item => item.Cost == null,
                     () => RuleFor(item => item.Cost)
                             .NotEmpty()
                             .WithMessage(ErrorMessages.PoundInput("The purchase value of the project").ToString())
-                            .Matches(@"^[0-9]*$")
+                            .Matches(@"^\d*[.]?\d?\d?$")
                             .WithMessage(ErrorMessages.PoundInput("The purchase value of the project").ToString())
                         );
 
@@ -196,7 +241,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                     () => RuleFor(item => item.Value)
                             .NotEmpty()
                             .WithMessage(ErrorMessages.PoundInput("The current value of the project").ToString())
-                            .Matches(@"^[0-9]*$")
+                            .Matches(@"^\d*[.]?\d?\d?$")
                             .WithMessage(ErrorMessages.PoundInput("The current value of the project").ToString())
                         );
 

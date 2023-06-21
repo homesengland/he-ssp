@@ -33,7 +33,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 
                 if (Invalid)
                 {
-                    TagConstruct.ConstructClass(output, $"{CssConstants.GovUkFormGroup} {CssConstants.GovUkFieldSetError}");
+                    TagConstruct.ChangeClassToError(output, CssConstants.GovUkFormGroup);
                 }
                 else
                 {
