@@ -199,6 +199,7 @@
       <Link>.editorconfig</Link>
     </None>
     <None Include="app.config" />
+    <None Include="azure-pipelines-build-export.yml" />
     <None Include="key.snk" />
     <None Include="packages.config" />
     <None Include="spkl.json" />
