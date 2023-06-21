@@ -43,27 +43,27 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
                     var siteDetail = new SiteDetailsDto()
                     {
                         siteName = site.Name, // Name
-                        numberOfHomes = site.ManyHomes, //site/ManyHomes ///
-                        typeOfHomes = site.TypeHomes, //
-                        otherTypeOfHomes = site.TypeHomesOther,
-                        typeOfSite = site.Type,
-                        haveAPlanningReferenceNumber = site.PlanningRef,
-                        planningReferenceNumber = site.PlanningRefEnter,
-                        siteCoordinates = site.LocationCoordinates,
-                        siteOwnership = site.Ownership,
-                        landRegistryTitleNumber = site.LocationLandRegistry,
-                        dateOfPurchase = site.PurchaseDate,
-                        siteCost = site.Cost,
-                        currentValue = site.Value,
-                        valuationSource = site.Source,
-                        publicSectorFunding = site.GrantFunding,
-                        whoProvided = site.GrantFundingSource,
-                        howMuch = site.GrantFundingAmount,
-                        nameOfGrantFund = site.GrantFundingName,
-                        reason = site.GrantFundingPurpose,
-                        existingLegalCharges = site.ChargesDebt,
-                        existingLegalChargesInformation = site.ChargesDebtInfo,
-                        numberOfAffordableHomes = site.AffordableHomes,
+                        numberOfHomes = site.ManyHomes, //site/ManyHomes
+                        typeOfHomes = site.TypeHomes, //site/TypeHomes
+                        otherTypeOfHomes = site.TypeHomesOther, //site/TypeHomes
+                        typeOfSite = site.Type, //site/Type
+                        haveAPlanningReferenceNumber = site.PlanningRef, //site.PlanningRef
+                        planningReferenceNumber = site.PlanningRefEnter, //site.PlanningRef
+                        siteCoordinates = site.LocationCoordinates, //site/Location
+                        siteOwnership = site.Ownership, //site/Ownership
+                        landRegistryTitleNumber = site.LocationLandRegistry, //site/Location
+                        dateOfPurchase = site.PurchaseDate, //site/Additional
+                        siteCost = site.Cost, //site/Additional
+                        currentValue = site.Value, //site/Additional
+                        valuationSource = site.Source, //site/Additional
+                        publicSectorFunding = site.GrantFunding, //site/GrantFunding
+                        whoProvided = site.GrantFundingSource, //site/GrantFundingMore
+                        howMuch = site.GrantFundingAmount, //site/GrantFundingMore
+                        nameOfGrantFund = site.GrantFundingName, //site/GrantFundingMore
+                        reason = site.GrantFundingPurpose, //site/GrantFundingMore
+                        existingLegalCharges = site.ChargesDebt, //site/ChargesDebt
+                        existingLegalChargesInformation = site.ChargesDebtInfo, //site/ChargesDebt
+                        numberOfAffordableHomes = site.AffordableHomes, //site/AffordableHomes
                     };
                     siteDetailsDtos.Add(siteDetail);
                 }
