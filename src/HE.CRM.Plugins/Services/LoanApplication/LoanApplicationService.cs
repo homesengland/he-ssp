@@ -1,13 +1,9 @@
 ﻿using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.CRM.Common.Repositories.Implementations;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
-using System;
 using System.Collections.Generic;
-using System.Drawing.Text;
 using System.Linq;
 using System.Text.Json;
 
@@ -92,9 +88,10 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }*/
 
             this.TracingService.Trace("Setting up invln_Loanapplication");
+
             var loanApplicationToCreate = new invln_Loanapplication()
             {
-                invln_NumberofSites = ParseInt(loanApplicationFromPortal.numberOfSites),
+                //invln_NumberofSites = (loanApplicationFromPortal.siteDetailsList != null && loanApplicationFromPortal.siteDetailsList.Count > 0) ? loanApplicationFromPortal.siteDetailsList.Count : null,
                 invln_FundingReason = MapFundingReason(loanApplicationFromPortal.fundingReason),
 
                 //COMPANY
@@ -111,7 +108,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 invln_Privatesectorapproach = ParseBool(loanApplicationFromPortal.privateSectorApproach), //PrivateSectorFunding
                 invln_Privatesectorapproachinformation = loanApplicationFromPortal.privateSectorApproachInformation, //PrivateSectorFunding
                 invln_Additionalprojects = ParseBool(loanApplicationFromPortal.additionalProjects), //AdditionalProjects
-                //invln_Refinancerepayment = loanApplicationFromPortal.refinanceRepayment, //Refinance
+                invln_Refinancerepayment = MapRefinancePayment(loanApplicationFromPortal.refinanceRepayment), //Refinance
                 invln_Refinancerepaymentdetails = loanApplicationFromPortal.refinanceRepaymentDetails, //Refinance
 
 
@@ -123,65 +120,163 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 invln_Reasonfordirectorloannotsubordinated = loanApplicationFromPortal.reasonForDirectorLoanNotSubordinated, //DirLoansSub
 
                 //OTHER maybe not related
-                //invln_Name = loanApplicationFromPortal.name,
+                invln_Name = loanApplicationFromPortal.name,
                 //invln_Account = account.ToEntityReference(),
                 invln_Contact = contactForPortalUser,
             };
-
             this.TracingService.Trace("Create invln_Loanapplication");
             var loanApplicationGuid = loanApplicationRepository.Create(loanApplicationToCreate);
-            //if (loanApplicationFromPortal.siteDetailsList.Count > 0)
-            //{
-            //    foreach (var siteDetail in loanApplicationFromPortal.siteDetailsList)
-            //    {
-            //        var siteDetailToCreate = new invln_SiteDetails()
-            //        {
-            //            invln_currentvalue = ParseDecimalToMoney(siteDetail.currentValue),
-            //            invln_Dateofpurchase = siteDetail.dateOfPurchase,
-            //            invln_Existinglegalcharges = ParseBool(siteDetail.existingLegalCharges),
-            //            invln_Existinglegalchargesinformation = siteDetail.existingLegalChargesInformation,
-            //            invln_Haveaplanningreferencenumber = ParseBool(siteDetail.haveAPlanningReferenceNumber),
-            //            invln_HowMuch = ParseDecimalToMoney(siteDetail.howMuch),
-            //            invln_Landregistrytitlenumber = siteDetail.landRegistryTitleNumber,
-            //            invln_Loanapplication = new Microsoft.Xrm.Sdk.EntityReference(invln_Loanapplication.EntityLogicalName, loanApplicationGuid),
-            //            invln_Name = siteDetail.Name,
-            //            invln_Nameofgrantfund = siteDetail.nameOfGrantFund,
-            //            //invln_Numberofaffordablehomes = ParseInt(siteDetail.numberOfAffordableHomes),
-            //            invln_Numberofhomes = ParseInt(siteDetail.numberOfHomes),
-            //            invln_OtherTypeofhomes = siteDetail.otherTypeOfHomes,
-            //            invln_Planningreferencenumber = siteDetail.planningReferenceNumber,
-            //            //invln_Publicsectorfunding = siteDetail.publicSectorFunding,
-            //            invln_Reason = siteDetail.reason,
-            //            invln_Sitecoordinates = siteDetail.siteCoordinates,
-            //            invln_Sitecost = ParseDecimalToMoney(siteDetail.siteCost),
-            //            invln_Sitename = siteDetail.siteName,
-            //            invln_Siteownership = ParseBool(siteDetail.siteOwnership),
-            //            //invln_Typeofhomes = siteDetail.typeOfHomes,
-            //            //invln_TypeofSite = siteDetail.typeOfSite,
-            //            //invln_Valuationsource = siteDetail.valuationSource,
-            //            invln_Whoprovided = siteDetail.whoProvided,
-            //        };
-            //        siteDetailsRepository.Create(siteDetailToCreate);
-            //    }
-            //}
+            if (loanApplicationFromPortal.siteDetailsList.Count > 0)
+            {
+                this.TracingService.Trace($"siteDetailsList.Count {loanApplicationFromPortal.siteDetailsList.Count}");
+                foreach (var siteDetail in loanApplicationFromPortal.siteDetailsList)
+                {
+                    this.TracingService.Trace("loop begin");
+                    var siteDetailToCreate = new invln_SiteDetails()
+                    {
+                        invln_currentvalue = ParseDecimalToMoney(siteDetail.currentValue),
+                        invln_Dateofpurchase = siteDetail.dateOfPurchase,
+                        invln_Existinglegalcharges = ParseBool(siteDetail.existingLegalCharges),
+                        invln_Existinglegalchargesinformation = siteDetail.existingLegalChargesInformation,
+                        invln_Haveaplanningreferencenumber = ParseBool(siteDetail.haveAPlanningReferenceNumber),
+                        invln_HowMuch = ParseDecimalToMoney(siteDetail.howMuch),
+                        invln_Landregistrytitlenumber = siteDetail.landRegistryTitleNumber,
+                        invln_Loanapplication = new EntityReference(invln_Loanapplication.EntityLogicalName, loanApplicationGuid),
+                        invln_Name = siteDetail.Name,
+                        invln_Nameofgrantfund = siteDetail.nameOfGrantFund,
+                        //invln_Numberofaffordablehomes = ParseInt(siteDetail.numberOfAffordableHomes),
+                        invln_Numberofhomes = ParseInt(siteDetail.numberOfHomes),
+                        invln_OtherTypeofhomes = siteDetail.otherTypeOfHomes,
+                        invln_Planningreferencenumber = siteDetail.planningReferenceNumber,
+                        invln_Publicsectorfunding = MapPublicSectorFunding(siteDetail.publicSectorFunding),
+                        invln_Reason = siteDetail.reason,
+                        invln_Sitecoordinates = siteDetail.siteCoordinates,
+                        invln_Sitecost = ParseDecimalToMoney(siteDetail.siteCost),
+                        invln_Sitename = siteDetail.siteName,
+                        invln_Siteownership = ParseBool(siteDetail.siteOwnership),
+                        invln_Typeofhomes = MapTypeOfHomes(siteDetail.typeOfHomes),
+                        invln_TypeofSite = MapTypeOfSite(siteDetail.typeOfSite),
+                        invln_Valuationsource = MapValuationSource(siteDetail.valuationSource),
+                        invln_Whoprovided = siteDetail.whoProvided,
+                    };
+                    this.TracingService.Trace("create");
+                    siteDetailsRepository.Create(siteDetailToCreate);
+                    this.TracingService.Trace("after create record");
+                }
+            }
+        }
+
+        private OptionSetValueCollection MapTypeOfHomes(string[] typeOfHomes)
+        {
+            if(typeOfHomes.Length > 0)
+            {
+                var collection = new OptionSetValueCollection();
+                foreach(var home in typeOfHomes)
+                {
+                    switch (home?.ToLower())
+                    {
+                        case "apartmentsorflats":
+                            collection.Add(new OptionSetValue((int)invln_Typeofhomes.Apartmentsorflats));
+                            break;
+                        case "bungalows":
+                            collection.Add(new OptionSetValue((int)invln_Typeofhomes.Bungalows));
+                            break;
+                        case "extracareorassisted":
+                            collection.Add(new OptionSetValue((int)invln_Typeofhomes.Extracareorassisted));
+                            break;
+                        case "houses":
+                            collection.Add(new OptionSetValue((int)invln_Typeofhomes.Houses));
+                            break;
+                        case "other":
+                            collection.Add(new OptionSetValue((int)invln_Typeofhomes.Other));
+                            break;
+                    }
+                }
+                return collection;
+            }
+            return null;
+        }
+
+        private OptionSetValue MapPublicSectorFunding(string publicSectorFunding)
+        {
+            switch (publicSectorFunding?.ToLower())
+            {
+                case "no":
+                    return new OptionSetValue((int)invln_Publicsectorfunding.No);
+                case "donotknow":
+                    return new OptionSetValue((int)invln_Publicsectorfunding.Donotknow);
+                case "yes":
+                    return new OptionSetValue((int)invln_Publicsectorfunding.Yes);
+            }
+
+            return null;
+        }
+
+        private OptionSetValue MapValuationSource(string valuationSource)
+        {
+            switch (valuationSource?.ToLower())
+            {
+                case "customerestimate":
+                    return new OptionSetValue((int)invln_Valuationsource.Customerestimate);
+                case "ricsredbookvaluation":
+                    return new OptionSetValue((int)invln_Valuationsource.RICSRedBookvaluation);
+                case "estateagentestimate":
+                    return new OptionSetValue((int)invln_Valuationsource.Estateagentestimate);
+            }
+
+            return null;
+        }
+
+        private OptionSetValue MapTypeOfSite(string typeOfSite)
+        {
+            switch (typeOfSite?.ToLower())
+            {
+                case "greenfield":
+                    return new OptionSetValue((int)invln_TypeofSite.Greenfield);
+                case "brownfield":
+                    return new OptionSetValue((int)invln_TypeofSite.Brownfield);
+            }
+
+            return null;
         }
 
         private OptionSetValue MapFundingReason(string fundingReason)
         {
-            switch (fundingReason)
+            switch (fundingReason?.ToLower())
             {
-                case "Buildinginfrastructureonly":
+                case "buildinginfrastructureonly":
                     return new OptionSetValue((int)invln_FundingReason.Buildinginfrastructureonly);
-                case "Buildingnewhomes":
+                case "buildingnewhomes":
                     return new OptionSetValue((int)invln_FundingReason.Buildingnewhomes);
-                case "Other":
+                case "other":
                     return new OptionSetValue((int)invln_FundingReason.Other);
+            }
+
+            return null;
+        }
+
+        private OptionSetValue MapRefinancePayment(string refinancePayment)
+        {
+            switch(refinancePayment?.ToLower())
+            {
+                case "refinance":
+                    return new OptionSetValue((int)invln_refinancerepayment.Refinance);
+                case "repay":
+                    return new OptionSetValue((int)invln_refinancerepayment.Repay);
             }
 
             return null;
         }
         private bool? ParseBool(string boolToParse)
         {
+            switch (boolToParse?.ToLower())
+            {
+                case "yes":
+                    return true;
+                case "no":
+                    return false;
+            }
+
             if (bool.TryParse(boolToParse, out bool boolValue))
             {
                 return boolValue;
