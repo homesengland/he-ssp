@@ -27,6 +27,16 @@
         grantFundingMore.Add($"Name of the grant/found: {Model.GrantFundingName}");
         grantFundingMore.Add($"It was for: {Model.GrantFundingPurpose}");
     }
+
+    var additionalProjectDetails = new List<string>();
+
+    if (Model?.Cost != null)
+    {
+        additionalProjectDetails.Add($"Purchased: {Model.PurchaseDay}/{Model.PurchaseMonth}/{Model.PurchaseYear}");
+        additionalProjectDetails.Add($"Purchase cost: {MoneyLabelHelper.Pounds(Model.Cost)}");
+        additionalProjectDetails.Add($"Current value: {MoneyLabelHelper.Pounds(Model.Value)}");
+        additionalProjectDetails.Add($"Source: {TemporaryFormOptions.SiteAdditionalSource.GetSummaryLabel(Model.Source)}");
+    }
 }
 
 <gds-summary-list class="govuk-!-margin-bottom-9">
@@ -115,17 +125,12 @@
     { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Ownership" }) }
     })
 
-    @*    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
     { "Title", "Additional details" },
-    { "Value", Model?.Cost != null ? $@"Purchased: { Model.PurchaseDay }/{ Model.PurchaseMonth }/{ Model.PurchaseYear }<br>
-    Site cost: { MoneyLabelHelper.Pounds(Model.Cost) }<br>
-    Site value: { MoneyLabelHelper.Pounds(Model.Value) }<br>
-    Site source: { TemporaryFormOptions.SiteAdditionalSource.GetSummaryLabel(Model.Source) }"
-    : null
-    },
-    { "Link", $"/site-additional/{Model?.Id}" }
-    })*@
+    { "Value", additionalProjectDetails },
+    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Additional" }) }
+    })
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {

@@ -57,8 +57,8 @@ namespace HE.InvestmentLoans.WWW.Models
         {
             new SelectListItem()
             {
-                Value = "customerEstimate",
-                Text = "Customer estimate"
+                Value = "selfEstimate",
+                Text = "Self estimate"
             },
             new SelectListItem()
             {
