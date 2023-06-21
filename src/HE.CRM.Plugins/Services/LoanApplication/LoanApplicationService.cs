@@ -181,7 +181,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         case "bungalows":
                             collection.Add(new OptionSetValue((int)invln_Typeofhomes.Bungalows));
                             break;
-                        case "extracareorassisted":
+                        case "extracareorassistedliving":
                             collection.Add(new OptionSetValue((int)invln_Typeofhomes.Extracareorassisted));
                             break;
                         case "houses":

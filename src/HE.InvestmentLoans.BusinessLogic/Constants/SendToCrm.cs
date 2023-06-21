@@ -47,12 +47,12 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
                         typeOfHomes = site.TypeHomes, //site/TypeHomes
                         otherTypeOfHomes = site.TypeHomesOther, //site/TypeHomes
                         typeOfSite = site.Type, //site/Type
-                        haveAPlanningReferenceNumber = site.PlanningRef, //site.PlanningRef
-                        planningReferenceNumber = site.PlanningRefEnter, //site.PlanningRef
+                        haveAPlanningReferenceNumber = site.PlanningRef, //site/PlanningRef
+                        planningReferenceNumber = site.PlanningRefEnter, //site/PlanningRef
                         siteCoordinates = site.LocationCoordinates, //site/Location
                         siteOwnership = site.Ownership, //site/Ownership
                         landRegistryTitleNumber = site.LocationLandRegistry, //site/Location
-                        dateOfPurchase = site.PurchaseDate, //site/Additional
+                        dateOfPurchase = site.EstimatedStartDate, //site.PurchaseDate - probably not correct field, //site/Additional
                         siteCost = site.Cost, //site/Additional
                         currentValue = site.Value, //site/Additional
                         valuationSource = site.Source, //site/Additional
