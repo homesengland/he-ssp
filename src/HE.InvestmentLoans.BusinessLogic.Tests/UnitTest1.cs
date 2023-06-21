@@ -1,3 +1,5 @@
+using HE.InvestmentLoans.BusinessLogic.ViewModel;
+
 namespace HE.InvestmentLoans.BusinessLogic.Tests
 {
     [TestClass]
@@ -6,6 +8,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests
         [TestMethod]
         public void TestMethod1()
         {
+            var data = new AddressViewModel();
         }
     }
 }

@@ -38,7 +38,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HE.Common.IntegrationModel"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.Plugins.Tests", "HE.CRM.Plugins.Tests\HE.CRM.Plugins.Tests.csproj", "{87D9EABA-C229-42AF-95B7-B8C100124499}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.InvestmentLoans.BusinessLogic.Tests", "HE.InvestmentLoans.BusinessLogic.Tests\HE.InvestmentLoans.BusinessLogic.Tests.csproj", "{22145ED3-5B37-4F34-964D-C849834D57A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.InvestmentLoans.BusinessLogic.Tests", "HE.InvestmentLoans.BusinessLogic.Tests\HE.InvestmentLoans.BusinessLogic.Tests.csproj", "{22145ED3-5B37-4F34-964D-C849834D57A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
