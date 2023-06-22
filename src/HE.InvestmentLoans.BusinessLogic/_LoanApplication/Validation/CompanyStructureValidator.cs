@@ -40,7 +40,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                   .Must(
                             e => _allowedExtensions.Contains(Path.GetExtension(e.ToLower()))
                         )
-                        .WithMessage("The selected file must be a PDF, Word Doc, JPEG or RTF");
+                        .WithMessage("The selected file must be a PDF, Word Doc, JPEG or RTF").When(e => !string.IsNullOrEmpty(e.CompanyInfoFileName));
 
             });
 
