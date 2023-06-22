@@ -46,17 +46,33 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("HomesBuilt", () =>
             {
-                RuleFor(e => e.HomesBuilt)
-                .NotEmpty()
-                .WithMessage("The amount of homes your organization has built must be a number")
-                .Matches("^\\d*$")
-                .WithMessage("The number of homes your organization has built must be a whole number")
-                .DependentRules(() =>
-                {
-                    RuleFor(e => e.HomesBuilt)
-                        .Must(value => int.Parse(value) <= 99999)
-                        .WithMessage("The number of homes your organization has built in the past 3 years must be 99,999 or less");
-                });
+                RuleFor(c => c.HomesBuilt)
+                    .Cascade(CascadeMode.Stop)
+                    .NotEmpty().WithMessage("The amount of homes your organisation has built must be a number")
+                    .Must(value =>
+                    {
+                        if ((decimal.TryParse(value.Replace('.', ','), out decimal result) || decimal.TryParse(value.Replace(',', '.'), out result)) && result != Math.Floor(result))
+                        {
+                            return false;
+                        }
+                        return true;
+                    }).WithMessage("The number of homes your organisation has built must be a whole number")
+                    .Must(value =>
+                    {
+                        if (!int.TryParse(value, out var intValue))
+                        {
+                            return false;
+                        }
+                        return true;
+                    }).WithMessage("The amount of homes your organisation has built must be a number")
+                    .Must(value =>
+                    {
+                        if (int.TryParse(value, out var intValue))
+                        {
+                            return value.Length <= 5 && intValue <= 99999;
+                        }
+                        return true;
+                    }).WithMessage("The number of homes your organisation has built in the past 3 years must be 99,999 or less");
             });
 
             RuleSet("CheckAnswers", () =>
