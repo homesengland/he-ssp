@@ -28,7 +28,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
         /// Gets or sets the size.
         /// </summary>
         /// <value>The text.</value>
-        public HeaderSize? Size { get; set; }
+        public ControlSize? Size { get; set; }
 
         /// <summary>
         /// Synchronously executes the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" /> with the given <paramref name="context" /> and
@@ -43,7 +43,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
                 output.TagName = HtmlConstants.H2;
 
                 if (Size is null)
-                    TagConstruct.ConstructHeaderClass(output, HeaderSize.M);
+                    TagConstruct.ConstructHeaderClass(output, ControlSize.M);
                 else
                     TagConstruct.ConstructHeaderClass(output, Size.Value);
 

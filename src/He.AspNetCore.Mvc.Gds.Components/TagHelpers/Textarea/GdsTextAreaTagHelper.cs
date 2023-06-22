@@ -76,6 +76,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Textarea
                     {
 
                         TagConstruct.ConstructName(output, For.Name);
+                        TagConstruct.ConstructId(output, For.Name);
                         TagConstruct.ConstructClass(output, $"govuk-textarea");
 
                         TagConstruct.ConstructGeneric(output, HtmlConstants.Rows, Rows);
