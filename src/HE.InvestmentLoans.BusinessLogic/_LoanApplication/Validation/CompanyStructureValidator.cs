@@ -33,7 +33,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                             e => e.Length < 20 * 1024 * 1024
                         )
                         .WithMessage("The selected file must be smaller than or equal to 20MB")
-                      
+
                     );
 
                 RuleFor(e => e.CompanyInfoFileName)
@@ -46,33 +46,40 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("HomesBuilt", () =>
             {
-                RuleFor(c => c.HomesBuilt)
-                    .Cascade(CascadeMode.Stop)
-                    .NotEmpty().WithMessage("The amount of homes your organisation has built must be a number")
-                    .Must(value =>
-                    {
-                        if ((decimal.TryParse(value.Replace('.', ','), out decimal result) || decimal.TryParse(value.Replace(',', '.'), out result)) && result != Math.Floor(result))
-                        {
-                            return false;
-                        }
-                        return true;
-                    }).WithMessage("The number of homes your organisation has built must be a whole number")
-                    .Must(value =>
-                    {
-                        if (!int.TryParse(value, out var intValue))
-                        {
-                            return false;
-                        }
-                        return true;
-                    }).WithMessage("The amount of homes your organisation has built must be a number")
-                    .Must(value =>
-                    {
-                        if (int.TryParse(value, out var intValue))
-                        {
-                            return value.Length <= 5 && intValue <= 99999;
-                        }
-                        return true;
-                    }).WithMessage("The number of homes your organisation has built in the past 3 years must be 99,999 or less");
+            When(item => item.HomesBuilt == null,
+                () => RuleFor(item => item.HomesBuilt)
+                        .NotEmpty()
+                        .WithMessage("The amount of homes your organisation has built must be a number")
+                    );
+
+                When(item => item.HomesBuilt != null,
+                    () => RuleFor(item => item.HomesBuilt)
+                            .Cascade(CascadeMode.Stop)
+                            .Must(value =>
+                            {
+                                if ((decimal.TryParse(value.Replace('.', ','), out decimal result) || decimal.TryParse(value.Replace(',', '.'), out result)) && result != Math.Floor(result))
+                                {
+                                    return false;
+                                }
+                                return true;
+                            }).WithMessage("The number of homes your organisation has built must be a whole number")
+                            .Must(value =>
+                            {
+                                if (!int.TryParse(value, out var intValue))
+                                {
+                                    return false;
+                                }
+                                return true;
+                            }).WithMessage("The amount of homes your organisation has built must be a number")
+                            .Must(value =>
+                            {
+                                if (int.TryParse(value, out var intValue))
+                                {
+                                    return value.Length <= 5 && intValue >= 0 && intValue <= 99999;
+                                }
+                                return true;
+                            }).WithMessage("The number of homes your organisation has built in the past 3 years must be 99,999 or less")
+                    );
             });
 
             RuleSet("CheckAnswers", () =>
