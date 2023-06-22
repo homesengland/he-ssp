@@ -114,7 +114,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                 sb.Append($"<div class=\"{CssConstants.GovUkRadiosItem}\">");
                 sb.Append(TagConstruct.ConstructRadioInput(_id, _name, _value, _checked));
                 sb.Append(TagConstruct.ConstructRadioLabel(_label, _forLabel));
-
+                
                 if (_hintText != null)
                 {
                     sb.Append($"<span class=\"{CssConstants.GovUkHint} {CssConstants.GovUkRadiosHint}\">");
@@ -123,6 +123,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                 }
                 if (_inputLabel != null)
                 {
+                    sb.Append("</div>");
                     if (_isConditionalInvalid)
                     {
                         sb.Append($"<div class=\"govuk-radios__conditional govuk-radios__conditional--hidden \" id=\"{_id}-conditional\">" +
@@ -168,8 +169,6 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                         sb.Append($"<div class=\"govuk-hint\">{_fileUploadLabel}</div>");
                         sb.Append("<div class=\"govuk-form-group\">\r\n  <label class=\"govuk-label\" for=\"file-upload-1\">\r\n    Upload a file\r\n  </label>\r\n  <input class=\"govuk-file-upload\" id=\"file-upload-1\" name=\"file-upload-1\" type=\"file\">\r\n</div>");
                     }
-
-                    sb.Append("</div>");
                 }
 
                 sb.Append("</div>");
