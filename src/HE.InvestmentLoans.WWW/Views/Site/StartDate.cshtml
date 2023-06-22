@@ -26,9 +26,7 @@
                         @Html.RadioButtonFor(m => m.HaveEstimatedStartDate,"Yes", new { @class="govuk-radios__input", id="HaveEstimatedStartDate"})
                         <label class="govuk-label govuk-radios__label" for="HaveEstimatedStartDate">Yes</label>
                         <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="HaveEstimatedStartDate-conditional">
-                            <label class="govuk-label" for="EstimatedStartDate">
-                                Build start date
-                            </label>
+                            <label class="govuk-label" for="EstimatedStartDate">Build start date</label>
                             <gds-div-hint class="govuk-!-margin-bottom-6">
                                 For example, 12 11 2007
                             </gds-div-hint>
@@ -68,19 +66,14 @@
                     </div>
                     <div class="govuk-radios__item">
                         @Html.RadioButtonFor(m => m.HaveEstimatedStartDate,"No", new { @class="govuk-radios__input", id="HaveEstimatedStartDate-1"})
-                     
-                        <label class="govuk-label govuk-radios__label" for="HaveEstimatedStartDate-1">  No, I do not have a build start date yet</label>
+                        <label class="govuk-label govuk-radios__label" for="HaveEstimatedStartDate-1">No, I do not have a build start date yet</label>
                     </div>
                 </div>
 
             </gds-div-form-group>
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
-                Continue
-            </button>
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">Continue</button>
         </gds-field-set>
-
     </form>
-
 
     <partial name="_HomeAndCheckAnswersLinks" />
 </gds-div-grid-column-two-thirds>
