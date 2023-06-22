@@ -22,6 +22,7 @@ import {
     TableSelectionCell,
     ToggleButton,
     ToggleButtonProps,
+    TableRowId,
   } from "@fluentui/react-components";
   import React, { useState, useEffect } from 'react';
   import {
@@ -269,6 +270,8 @@ const [toggleChecked, setToggleChecked] = useState(false);
 
 const [toggleText, setToggleText] = useState("Show selected only")
 
+const [allSelected, setAllSelected] = useState(false)
+
 const renderLeftTableRows = (item : any) => {
   if(searchTerm == "" || item.columnKey.toLowerCase().includes(searchTerm.toLowerCase())){
     const selected = isRowSelected(item.columnKey);
@@ -307,6 +310,20 @@ const renderRightTableRows = (element : any) => {
           </TableRow>
       )
     }
+  }
+}
+
+const selectAllRows = (e: React.MouseEvent) => {
+  setAllSelected(!allSelected)
+  columnsKeyAndLabels.map((element) => (
+    selectSingleRow(e, element)
+  ))
+  
+}
+
+const selectSingleRow= (e: React.MouseEvent, element : any) => {
+  if( (!allSelected && !isRowSelected(element.columnKey)) || (allSelected && isRowSelected(element.columnKey)) ){
+    toggleRow(e, element.columnKey)
   }
 }
 
@@ -349,6 +366,10 @@ useEffect(() => {
   // Update the document title using the browser API
 });
 
+  const [selectedRows, setSelectedRows] = React.useState(
+    () => new Set<TableRowId>([0, 1])
+  );
+
 const {
   getRows,
   selection: {
@@ -358,7 +379,7 @@ const {
     toggleRow,
     isRowSelected,
   },
-} = useTableFeatures( 
+} = useTableFeatures(
   {
     columns,
     items,
@@ -366,11 +387,22 @@ const {
   [
     useTableSelection({
       selectionMode: "multiselect",
-      defaultSelectedItems: new Set([0, 1]),
+      selectedItems: selectedRows,
+      onSelectionChange: (e, data) => setSelectedRows(data.selectedItems),
     }),
   ]
 );
 
+
+const toggleAllKeydown = React.useCallback(
+  (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === " ") {
+      toggleAllRows(e);
+      e.preventDefault();
+    }
+  },
+  [toggleAllRows]
+);
 
 return (
     <div className={styles.container}>
@@ -401,9 +433,15 @@ return (
         <Table>
             <TableHeader>
         <TableRow>
+        <TableSelectionCell
+            checked={
+              allSelected
+            }
+            onClick={(e: React.MouseEvent) => selectAllRows(e)}
+            onKeyDown={toggleAllKeydown}
+            checkboxIndicator={{ "aria-label": "Select all rows " }}
+          />
         <ToggleButton onClick={() => handleToggleChange()}>{toggleText}</ToggleButton>
-            <TableHeaderCell>
-            </TableHeaderCell>
             
         </TableRow>
       </TableHeader>
