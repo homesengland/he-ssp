@@ -1,25 +1,26 @@
 ﻿<gds-div-grid-column-two-thirds>
     <form asp-controller="Funding" asp-action="WorkflowPost" asp-route-id="@Model.ID" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Workflow","LoanApplication", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Workflow","LoanApplication", new {id = Model.ID})" text="Back to application" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
 
-        <gds-h1 size="HeaderSize.L">
+        <gds-h1 size="ControlSize.L">
             Funding details
         </gds-h1>
 
         <gds-p>We need to know about the funding details for this project.</gds-p>
 
-        <gds-p class="govuk-!-margin-0">In this section, you’ll tell us:</gds-p>
-        <gds-ul class="govuk-!-margin-bottom-8 govuk-!-margin-left-2">
-            <li>Gross Development Value (GDV)</li>
-            <li>total project costs</li>
-            <li>if you have approached a private sector provider for funding for this project</li>
-            <li>if you have previously received public sector grant funding for this project</li>
-            <li>if you are working on any additional projects</li>
-            <li>how you plan repay the loan for this project</li>
-        </gds-ul>
-
+        <div class="govuk-!-padding-bottom-8">
+            <gds-p class="govuk-!-margin-bottom-1">In this section, you’ll tell us:</gds-p>
+            <gds-ul>
+                <gds-li>Gross Development Value (GDV)</gds-li>
+                <gds-li>total project costs</gds-li>
+                <gds-li>if you have approached a private sector provider for funding for this project</gds-li>
+                <gds-li>if you have previously received public sector grant funding for this project</gds-li>
+                <gds-li>if you are working on any additional projects</gds-li>
+                <gds-li>how you plan repay the loan for this project</gds-li>
+            </gds-ul>
+        </div>
 
         <gds-button-start data-module="govuk-button" name="action" type="submit" value="Continue">
             Start now

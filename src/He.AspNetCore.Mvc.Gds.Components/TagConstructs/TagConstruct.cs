@@ -81,16 +81,54 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
             }
         }
 
-        public static void ConstructHeaderClass(TagHelperOutput output, HeaderSize size)
+        /// <summary>
+        /// Construct a class by merging any specified class entries on the element.
+        /// </summary>
+        /// <param name="output">The TagHelperOutput.</param>
+        /// <param name="className">The className.</param>
+        public static void ConstructClassForSize(TagHelperOutput output, string className, ControlSize size)
+        {
+            if (output != null)
+            {
+                var existingClass = output.Attributes.FirstOrDefault(f => f.Name == "class");
+                string cssClass;
+
+                var classWithSize = size switch
+                {
+                    ControlSize.S => $"{className} {className}--s",
+                    ControlSize.M => $"{className} {className}--m",
+                    ControlSize.L => $"{className} {className}--l",
+                    ControlSize.Xl => $"{className} {className}--xl",
+                    _ => throw new System.NotImplementedException(),
+                };
+
+                if (existingClass != null)
+                {
+                    output.Attributes.Remove(existingClass);
+                    cssClass = existingClass.Value.ToString();
+                    cssClass = $"{cssClass} {classWithSize}";
+                }
+                else
+                {
+                    cssClass = classWithSize;
+                }
+
+                var taClass = new TagHelperAttribute("class", cssClass);
+                output.Attributes.Add(taClass);
+            }
+        }
+
+
+        public static void ConstructHeaderClass(TagHelperOutput output, ControlSize size)
         {
             if (output != null)
             {
                 var className = size switch
                 {
-                    HeaderSize.S => CssConstants.GovUkHs,
-                    HeaderSize.M => CssConstants.GovUkHm,
-                    HeaderSize.L => CssConstants.GovUkHl,
-                    HeaderSize.Xl => CssConstants.GovUkHxl,
+                    ControlSize.S => CssConstants.GovUkHs,
+                    ControlSize.M => CssConstants.GovUkHm,
+                    ControlSize.L => CssConstants.GovUkHl,
+                    ControlSize.Xl => CssConstants.GovUkHxl,
                     _ => ""
                 };
 

@@ -13,7 +13,7 @@
 
         <partial name="_ErrorSummaryPartial" model="null" />
 
-        <gds-h1 size="HeaderSize.L">
+        <gds-h1 size="ControlSize.L">
             Check your answers
         </gds-h1>
 
@@ -29,7 +29,8 @@
                 <gds-div-form-group invalid="radioInvalid">
                     <gds-radio
                         govuk-formgroup-asp-for="Funding.CheckAnswers"
-                        asp-selectlistitems="TemporaryFormOptions.CheckAnswersCompletion">
+                               asp-selectlistitems="TemporaryFormOptions.CheckAnswersCompletion"
+                               asp-isexcludeheader>
                     </gds-radio>
                 </gds-div-form-group>
             </gds-field-set>

@@ -22,47 +22,51 @@
                 </gds-div-hint>
 
                 <gds-field-set role="group">
-                    <gds-legend class="govuk-fieldset__legend--m">
+                    <gds-label for="GrantFundingSource" size="ControlSize.M">
                         Who provided the previous funding?
-                    </gds-legend>
+                    </gds-label>
 
                     <gds-input-wrapper class="govuk-!-margin-bottom-6">
                         <gds-input govuk-formgroup-asp-for="GrantFundingSource"
                                    value="@Model.GrantFundingSource"
-                                   type="text" />
+                                   type="text"
+                                   asp-excludelabel/>
                     </gds-input-wrapper>
                 </gds-field-set>
 
                 <gds-field-set role="group">
-                    <gds-legend class="govuk-fieldset__legend--m">
+                    <gds-label for="GrantFundingAmount" size="ControlSize.M">
                         How much funding have they provided?
-                    </gds-legend>
+                    </gds-label>
 
                     <gds-input-wrapper class="govuk-!-margin-bottom-6">
                         <gds-input class="govuk-input--width-4"
                                    govuk-formgroup-asp-for="GrantFundingAmount"
                                    value="@Model.GrantFundingAmount"
                                    asp-prefixtext=@(GdsInputPrefixText.Pounds)
-                                   type="number" />
+                                   type="number" 
+                                   asp-excludelabel/>
                     </gds-input-wrapper>
                 </gds-field-set>
 
                 <gds-field-set role="group">
-                    <gds-legend class="govuk-fieldset__legend--m">
+                    <gds-label for="GrantFundingName" size="ControlSize.M">
                         What is the name of the grant or fund?
-                    </gds-legend>
+                    </gds-label>
 
                     <gds-input-wrapper class="govuk-!-margin-bottom-6">
                         <gds-input govuk-formgroup-asp-for="GrantFundingName"
                                    value="@Model.GrantFundingName"
-                                   type="text" />
+                                   type="text"
+                                   asp-excludelabel/>
                     </gds-input-wrapper>
                 </gds-field-set>
 
                 <gds-field-set role="group">
-                    <gds-legend class="govuk-fieldset__legend--m">
+                    <gds-label for="GrantFundingPurpose" size="ControlSize.M">
                         What was it for?
-                    </gds-legend>
+                    </gds-label>
+
                     <gds-text-area asp-for="GrantFundingPurpose"
                                    rows="5"></gds-text-area>
                 </gds-field-set>

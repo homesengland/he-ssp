@@ -16,7 +16,7 @@
     </gds-back-link>
 
 
-    <gds-h1 size="HeaderSize.L" class="govuk-!-margin-bottom-2">
+<gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-2">
         Development loan application
     </gds-h1>
     <gds-div-hint class="govuk-!-margin-bottom-8">
@@ -55,7 +55,7 @@
             <h2 class="app-task-list__section">
                 <span class="govuk-prototype-kit-task-list__section-number">2. </span> Project and funding details
             </h2>
-            <gds-div-hint>Provide information about the type of funding you wish to apply for, and other details about your equity and finances.</gds-div-hint>
+            <gds-div-hint>Complete information about the type of funding you wish to apply for, and other details about your equity and finances.</gds-div-hint>
             <ul class="app-task-list__items">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
@@ -102,7 +102,7 @@
             <h2 class="app-task-list__section">
                 <span class="govuk-prototype-kit-task-list__section-number">3. </span> Project details
             </h2>
-            <gds-div-hint>Tell us about your site or sites. You can add more than one. You will need to start a new application for each company if you have different companies per site.</gds-div-hint>
+            <gds-div-hint>Tell us about your project or projects. You can add more than one. You will need to start a new application for each company if you have different companies per project.</gds-div-hint>
             <ul class="app-task-list__items">
                 @foreach (var site in Model.Sites)
                 {
@@ -139,7 +139,7 @@
             </ul>
         </li>
     </ul>
-    <gds-h2 size="HeaderSize.M">Check and submit</gds-h2>
+    <gds-h2 size="ControlSize.M">Check and submit</gds-h2>
     <p>You must complete all sections before you can submit your application.</p>
     <form asp-controller="LoanApplication" asp-action="Workflow" asp-route-id="@Model.ID" asp-route-ending="TaskList" asp-method="post" novalidate>
        

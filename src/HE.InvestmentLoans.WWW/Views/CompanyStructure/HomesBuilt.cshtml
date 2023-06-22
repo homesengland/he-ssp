@@ -7,17 +7,17 @@
         <partial name="_ErrorSummaryPartial" model="null" />
 
         <gds-field-set>
-            <gds-legend class="govuk-fieldset__legend--l">
-                <gds-fieldset-heading>
+            <gds-label-wrapper>
+                <gds-label size="@ControlSize.L" for="Company.HomesBuilt">
                     How many homes in the past three years has your organisation built?
-                </gds-fieldset-heading>
-            </gds-legend>
+                </gds-label>
+            </gds-label-wrapper>
             <gds-div-hint>
                 Enter the number of homes your organisation or any director has built in the past three years or the nearest estimate. Entering 0 will not affect your application.
             </gds-div-hint>
 
             <div>
-                <gds-input govuk-formgroup-asp-for="Company.HomesBuilt" type="text" class="govuk-input--width-5 govuk-!-margin-bottom-6" />
+                <gds-input govuk-formgroup-asp-for="Company.HomesBuilt" asp-excludelabel type="text" class="govuk-input--width-5 govuk-!-margin-bottom-6" />
             </div>
 
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Company.StateChanged?"Change":"Continue")">

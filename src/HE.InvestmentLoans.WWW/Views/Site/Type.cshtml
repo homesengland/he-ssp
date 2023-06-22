@@ -23,7 +23,8 @@
 
                 <gds-radio govuk-formgroup-asp-for="Type"
                            asp-selectlistitems="TemporaryFormOptions.SiteType"
-                           class="govuk-!-margin-bottom-6">
+                           class="govuk-!-margin-bottom-6"
+                            asp-isexcludeheader>
                 </gds-radio>
             </gds-div-form-group>
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
