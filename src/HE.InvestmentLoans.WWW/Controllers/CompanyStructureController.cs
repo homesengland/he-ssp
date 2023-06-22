@@ -50,6 +50,7 @@ namespace HE.InvestmentLoans.WWW.Controllers
                     sessionModel.Company.CompanyInfoFileName = formFile.FileName;
                 }
             }
+
             CompanyStructureWorkflow workflow = new CompanyStructureWorkflow(sessionModel, mediator);
 
             try
