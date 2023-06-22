@@ -95,10 +95,10 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
 
                 var classWithSize = size switch
                 {
-                    ControlSize.S => $"{className}--s",
-                    ControlSize.M => $"{className}--m",
-                    ControlSize.L => $"{className}--l",
-                    ControlSize.Xl => $"{className}--xl",
+                    ControlSize.S => $"{className} {className}--s",
+                    ControlSize.M => $"{className} {className}--m",
+                    ControlSize.L => $"{className} {className}--l",
+                    ControlSize.Xl => $"{className} {className}--xl",
                     _ => throw new System.NotImplementedException(),
                 };
 

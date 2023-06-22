@@ -14,9 +14,11 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="inputInvalid">
-                <gds-legend class="govuk-fieldset__legend--l">
-                    What are the estimated total costs of this project?
-                </gds-legend>
+                <gds-label-wrapper>
+                    <gds-label size="@ControlSize.L" for="Funding.TotalCosts">
+                        What are the estimated total costs of this project?
+                    </gds-label>
+                </gds-label-wrapper>
 
                 <gds-div-hint>
                     Include land cost, acquisition costs, contingencies, professional fees and total construction costs.
@@ -27,6 +29,7 @@
                                class="govuk-input--width-5"
                                govuk-formgroup-asp-for="Funding.TotalCosts"
                                value="@Model.Funding.TotalCosts"
+                               asp-excludelabel
                                type="number" />
                 </gds-input-wrapper>
             </gds-div-form-group>
