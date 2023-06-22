@@ -138,7 +138,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
                 When(item => item.GrantFundingAmount != null,
                     () => RuleFor(item => item.GrantFundingAmount)
-                            .Matches(@"^[0-9]+(\.[0-9]{1,2})?$")
+                            .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
                             .WithMessage(ErrorMessages.AmountPoundInput("funding").ToString())
                             
                         );
@@ -237,7 +237,11 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                     () => RuleFor(item => item.Cost)
                             .NotEmpty()
                             .WithMessage(ErrorMessages.PoundInput("The purchase value of the project").ToString())
-                            .Matches(@"^\d*[.]?\d?\d?$")
+                        );
+
+                When(item => item.Cost != null,
+                    () => RuleFor(item => item.Cost)
+                            .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
                             .WithMessage(ErrorMessages.PoundInput("The purchase value of the project").ToString())
                         );
 
@@ -245,7 +249,11 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                     () => RuleFor(item => item.Value)
                             .NotEmpty()
                             .WithMessage(ErrorMessages.PoundInput("The current value of the project").ToString())
-                            .Matches(@"^\d*[.]?\d?\d?$")
+                        );
+
+                When(item => item.Value != null,
+                    () => RuleFor(item => item.Value)
+                            .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
                             .WithMessage(ErrorMessages.PoundInput("The current value of the project").ToString())
                         );
 

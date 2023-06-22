@@ -30,7 +30,7 @@
                                govuk-formgroup-asp-for="Funding.TotalCosts"
                                value="@Model.Funding.TotalCosts"
                                asp-excludelabel
-                               type="number" />
+                               type="text" />
                 </gds-input-wrapper>
             </gds-div-form-group>
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Funding.StateChanged?"Change":"Continue")">

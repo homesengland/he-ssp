@@ -10,21 +10,32 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
         {
             RuleSet("GDV", () =>
             {
-                RuleFor(item => item.GrossDevelopmentValue)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.EstimatedPoundInput("GDV").ToString())
-                .Matches(@"^\d+$|^\d+\.\d{2}$")
-                .WithMessage(ErrorMessages.EstimatedPoundInput("GDV").ToString());
+                When(item => item.GrossDevelopmentValue == null,
+                    () => RuleFor(item => item.GrossDevelopmentValue)
+                            .NotEmpty()
+                            .WithMessage(ErrorMessages.EstimatedPoundInput("GDV").ToString())
+                        );
+
+                When(item => item.GrossDevelopmentValue != null,
+                    () => RuleFor(item => item.GrossDevelopmentValue)
+                            .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
+                            .WithMessage(ErrorMessages.EstimatedPoundInput("GDV").ToString())
+                        );
             });
 
             RuleSet("TotalCosts", () =>
             {
-                RuleFor(item => item.TotalCosts)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.EstimatedPoundInput("total cost").ToString())
-                .Matches(@"^\d+$|^\d+\.\d{2}$")
-                .WithMessage(ErrorMessages.EstimatedPoundInput("total cost").ToString());
+                When(item => item.TotalCosts == null,
+                    () => RuleFor(item => item.TotalCosts)
+                            .NotEmpty()
+                            .WithMessage(ErrorMessages.EstimatedPoundInput("total cost").ToString())
+                        );
 
+                When(item => item.TotalCosts != null,
+                    () => RuleFor(item => item.TotalCosts)
+                            .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
+                            .WithMessage(ErrorMessages.EstimatedPoundInput("total cost").ToString())
+                        );
             });
 
             RuleSet("PrivateSectorFunding", () =>
