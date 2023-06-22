@@ -27,17 +27,21 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 .WithMessage(ErrorMessages.EnterMoreDetails.ToString());
 
                 When(
-                    c => c.CompanyInfoFile != null,
+                    c => c.CompanyInfoFileName != null,
                     () => RuleFor(e => e.CompanyInfoFile)
                         .Must(
                             e => e.Length < 20 * 1024 * 1024
                         )
                         .WithMessage("The selected file must be smaller than or equal to 20MB")
-                        .Must(
-                            e => _allowedExtensions.Contains(Path.GetExtension(e.Name))
-                        )
-                        .WithMessage("The selected file must be a PDF, Word Doc, JPEG or RTF")
+                      
                     );
+
+                RuleFor(e => e.CompanyInfoFileName)
+                  .Must(
+                            e => _allowedExtensions.Contains(Path.GetExtension(e.ToLower()))
+                        )
+                        .WithMessage("The selected file must be a PDF, Word Doc, JPEG or RTF");
+
             });
 
             RuleSet("HomesBuilt", () =>
