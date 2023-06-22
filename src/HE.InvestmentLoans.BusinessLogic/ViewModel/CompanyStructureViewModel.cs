@@ -18,7 +18,8 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
         public string ExistingCompanyInfo { get; set; }
         public string HomesBuilt { get; set; }
         public string CheckAnswers { get; set; }
-        public IFormFile CompanyInfoFile { get; set; }
+        public byte[] CompanyInfoFile { get; set; }
+        public string CompanyInfoFileName { get; set; }
         public CompanyStructureWorkflow.State State { get;  set; }
         public bool StateChanged { get;  set; }
     }

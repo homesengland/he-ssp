@@ -36,9 +36,20 @@ namespace HE.InvestmentLoans.WWW.Controllers
 
         [HttpPost]
         [Route("{ending?}")]
-        public async Task<IActionResult> WorkflowPost(Guid id, LoanApplicationViewModel model, string ending, string action)
+        public async Task<IActionResult> WorkflowPost(Guid id, LoanApplicationViewModel model, string ending, string action, [FromForm(Name = "File")] IFormFile formFile)
         {
             var sessionModel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
+            if(formFile != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    formFile.CopyTo(memoryStream);
+                    model.Company.CompanyInfoFile = memoryStream.ToArray();
+                    model.Company.CompanyInfoFileName = formFile.FileName;
+                    sessionModel.Company.CompanyInfoFile = memoryStream.ToArray();
+                    sessionModel.Company.CompanyInfoFileName = formFile.FileName;
+                }
+            }
             CompanyStructureWorkflow workflow = new CompanyStructureWorkflow(sessionModel, mediator);
 
             try
