@@ -24,7 +24,7 @@
                 <div class="govuk-!-margin-bottom-8 govuk-radios">
                     <div class="govuk-radios__item">
                         @Html.RadioButtonFor(m => m.HaveEstimatedStartDate,"Yes", new { @class="govuk-radios__input", id="HaveEstimatedStartDate"})
-                        <label class="govuk-label govuk-radios__label" for="Yes">Yes</label>
+                        <label class="govuk-label govuk-radios__label" for="HaveEstimatedStartDate">Yes</label>
                         <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="HaveEstimatedStartDate-conditional">
                             <label class="govuk-label" for="EstimatedStartDate">
                                 Build start date
@@ -69,7 +69,7 @@
                     <div class="govuk-radios__item">
                         @Html.RadioButtonFor(m => m.HaveEstimatedStartDate,"No", new { @class="govuk-radios__input", id="HaveEstimatedStartDate-1"})
                      
-                        <label class="govuk-label govuk-radios__label" for="No">  No, I do not have a build start date yet</label>
+                        <label class="govuk-label govuk-radios__label" for="HaveEstimatedStartDate-1">  No, I do not have a build start date yet</label>
                     </div>
                 </div>
 

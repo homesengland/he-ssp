@@ -115,6 +115,20 @@ namespace HE.InvestmentLoans.WWW.Models
             }
         };
 
+        public static List<SelectListItem> HaveStartDate { get; } = new List<SelectListItem>
+        {
+            new SelectListItem()
+            {
+                Value = "Yes",
+                Text = "Yes"
+            },
+            new SelectListItem()
+            {
+                Value = "No",
+                Text = "No, I do not have a build start date yet"
+            }
+        };
+
         public static List<SelectListItem> SiteType { get; } = new List<SelectListItem>
         {
             new SelectListItem()
