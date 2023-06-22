@@ -39,14 +39,12 @@
                         How much funding have they provided?
                     </gds-label>
 
-                    <gds-input-wrapper class="govuk-!-margin-bottom-6">
-                        <gds-input class="govuk-input--width-4"
+                    <gds-input class="govuk-!-width-one-quarter govuk-!-margin-bottom-6"
                                    govuk-formgroup-asp-for="GrantFundingAmount"
                                    value="@Model.GrantFundingAmount"
                                    asp-prefixtext=@(GdsInputPrefixText.Pounds)
                                    type="number" 
                                    asp-excludelabel/>
-                    </gds-input-wrapper>
                 </gds-field-set>
 
                 <gds-field-set role="group">
