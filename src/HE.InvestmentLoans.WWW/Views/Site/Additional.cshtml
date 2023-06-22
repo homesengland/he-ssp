@@ -29,9 +29,9 @@
                 </gds-div-hint>
 
                 <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=@isDateFormInvalid>
-                    <gds-legend class="govuk-fieldset__legend--s">
+                    <gds-label size="ControlSize.S">
                         When was this land purchased?
-                    </gds-legend>
+                    </gds-label>
                     <gds-div-hint>
                         If you have purchased multiple areas of land, enter the most recent purchase date.
                     </gds-div-hint>
@@ -92,9 +92,9 @@
                 </gds-field-set>
 
                 <gds-field-set class="govuk-!-margin-bottom-6" role="group">
-                    <gds-legend class="govuk-fieldset__legend--s">
-                        What was the purchase cost of the land?
-                    </gds-legend>
+                        <gds-label for="Cost" size="ControlSize.S">
+                            What was the purchase cost of the land?
+                        </gds-label>
 
                     <gds-div-hint>
                         If there are multiple land areas, include the combined purchase value.
@@ -102,28 +102,29 @@
                     <gds-div-hint>
                         If you do not know, enter the nearest estimate.
                     </gds-div-hint>
-                    <gds-input govuk-formgroup-asp-for="Cost" type="number"
+                    <gds-input govuk-formgroup-asp-for="Cost" type="number" asp-excludelabel
                                asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-input--width-2" value=@Model?.Cost />
                 </gds-field-set>
 
                 <gds-field-set class="govuk-!-margin-bottom-6" role="group">
-                    <gds-legend class="govuk-fieldset__legend--s">
+                    <gds-label for="Value" size="ControlSize.S">
                         What is the current value of the land?
-                    </gds-legend>
+                    </gds-label>
 
                     <gds-div-hint>
                         If you do not know, enter the nearest estimate.
                     </gds-div-hint>
 
-                    <gds-input govuk-formgroup-asp-for="Value" type="number"
+                    <gds-input govuk-formgroup-asp-for="Value" type="number" asp-excludelabel
                                asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-input--width-2" value=@Model?.Value />
                 </gds-field-set>
 
                 <gds-field-set class="govuk-!-margin-bottom-6" role="group">
-                    <gds-legend class="govuk-fieldset__legend--s">
+                    <gds-label size="ControlSize.S">
                         What is the source of this valuation?
-                    </gds-legend>
-                    <gds-radio govuk-formgroup-asp-for="Source"
+                    </gds-label>
+
+                    <gds-radio govuk-formgroup-asp-for="Source" asp-isexcludeheader
                                asp-selectlistitems="TemporaryFormOptions.SiteAdditionalSource">
                     </gds-radio>
                 </gds-field-set>

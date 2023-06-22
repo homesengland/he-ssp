@@ -13,15 +13,17 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="inputInvalid">
-                <gds-legend class="govuk-fieldset__legend--l">
-                    How many homes are you building?
-                </gds-legend>
+                <gds-label-wrapper>
+                    <gds-label size="@ControlSize.L" for="ManyHomes">
+                        How many homes are you building?
+                    </gds-label>
+                </gds-label-wrapper>
 
-                <gds-span-hint>
+                <gds-div-hint class="govuk-!-margin-bottom-6">
                     Enter how many homes you are building or the nearest estimate.
-                </gds-span-hint>
+                </gds-div-hint>
 
-                <gds-input govuk-formgroup-asp-for="ManyHomes" class="govuk-input--width-3" type="number" value=@Model?.ManyHomes />
+                <gds-input govuk-formgroup-asp-for="ManyHomes" class="govuk-input--width-3" type="number" value=@Model?.ManyHomes asp-excludelabel/>
 
                 <gds-div-inset-text>
                     Homes England does not provide loans to developers building less than 5 homes.
