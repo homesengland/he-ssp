@@ -17,7 +17,8 @@
             </gds-div-hint>
 
             <div>
-                <gds-input govuk-formgroup-asp-for="Company.HomesBuilt" asp-excludelabel type="text" class="govuk-input--width-5 govuk-!-margin-bottom-6" />
+                <gds-input govuk-formgroup-asp-for="Company.HomesBuilt" asp-excludelabel type="text" class="govuk-input--width-5 govuk-!-margin-bottom-6" 
+                    value="@Model.Company.HomesBuilt?.TrimStart('0')"/>
             </div>
 
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Company.StateChanged?"Change":"Continue")">
