@@ -44,7 +44,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
 
         public bool IsNotStarted()
         {
-            return _model.Security.State == State.Index;
+            return _model.Security.State == State.Index || (_model.Security.State == State.ChargesDebtCompany && string.IsNullOrEmpty(_model.Security.ChargesDebtCompany));
         }
 
         public string GetName()
