@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using FluentValidation;
+using System.Diagnostics.CodeAnalysis;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests
 {
@@ -60,6 +61,11 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests
 
         private class TestSession : ISession
         {
+            public TestSession()
+            {
+                Id = Guid.NewGuid().ToString();
+            }
+
             private readonly Dictionary<string, byte[]> _store
                 = new Dictionary<string, byte[]>(StringComparer.OrdinalIgnoreCase);
 
@@ -94,7 +100,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests
                 _store[key] = value;
             }
 
-            public bool TryGetValue(string key, out byte[] value)
+            public bool TryGetValue(string key, [NotNullWhen(true)] out byte[] value)
             {
                 return _store.TryGetValue(key, out value);
             }
