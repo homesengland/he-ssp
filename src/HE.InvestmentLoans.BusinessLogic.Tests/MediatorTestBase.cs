@@ -100,7 +100,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests
                 _store[key] = value;
             }
 
-            public bool TryGetValue(string key, [NotNullWhen(true)] out byte[] value)
+            public bool TryGetValue(string key, [MaybeNullWhen(false)] out byte[] value)
             {
                 return _store.TryGetValue(key, out value);
             }
