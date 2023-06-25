@@ -1,5 +1,6 @@
 ﻿using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.Enums;
+using HE.InvestmentLoans.BusinessLogic.Extensions;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -28,9 +29,9 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
 
         public class Handler : IRequestHandler<SendToCrm, bool>
         {
-            private ServiceClient _serviceClient;
+            private IOrganizationService _serviceClient;
 
-            public Handler(ServiceClient serviceClient)
+            public Handler(IOrganizationService serviceClient)
             {
                 _serviceClient = serviceClient;
             }
@@ -81,7 +82,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
                     companyPurpose = request.Model.Company.Purpose,//Purpose
                     existingCompany = request.Model.Company.ExistingCompany,//ExistingCompany
                     fundingReason = MapPurpose(request.Model.Purpose),//LoanPurpose
-                    companyExperience = int.Parse( request.Model.Company.HomesBuilt),//HomesBuilt
+                    companyExperience = request.Model.Company.HomesBuilt.TryParseNullableInt(),//HomesBuilt
                                                                          //Company.CompanyInfoFile
 
                     //FUNDING
