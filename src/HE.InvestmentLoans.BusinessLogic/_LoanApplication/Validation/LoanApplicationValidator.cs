@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 
-namespace HE.InvestmentLoans.BusinessLogic._LoanApplication
+namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 {
     public class LoanApplicationValidator : AbstractValidator<LoanApplicationViewModel>
     {
