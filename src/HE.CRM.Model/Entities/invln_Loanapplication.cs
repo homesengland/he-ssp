@@ -70,6 +70,8 @@ namespace DataverseModel
 			public const string invln_DebentureHolder = "invln_debentureholder";
 			public const string invln_Directorloans = "invln_directorloans";
 			public const string invln_FundingReason = "invln_fundingreason";
+			public const string invln_loanapplication_account = "invln_loanapplication_account";
+			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
 			public const string invln_LoanapplicationId = "invln_loanapplicationid";
 			public const string Id = "invln_loanapplicationid";
 			public const string invln_Name = "invln_name";
@@ -86,6 +88,7 @@ namespace DataverseModel
 			public const string invln_Reasonfordirectorloannotsubordinated = "invln_reasonfordirectorloannotsubordinated";
 			public const string invln_Refinancerepayment = "invln_refinancerepayment";
 			public const string invln_Refinancerepaymentdetails = "invln_refinancerepaymentdetails";
+			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedByName = "modifiedbyname";
 			public const string ModifiedOn = "modifiedon";
@@ -909,6 +912,68 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sitedetails_Loanapplication
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_Loanapplication")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_SiteDetails> invln_sitedetails_Loanapplication
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_SiteDetails>("invln_sitedetails_Loanapplication", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetails_Loanapplication");
+				this.SetRelatedEntities<DataverseModel.invln_SiteDetails>("invln_sitedetails_Loanapplication", null, value);
+				this.OnPropertyChanged("invln_sitedetails_Loanapplication");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_loanapplication_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_account")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_account")]
+		public DataverseModel.Account invln_loanapplication_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Account>("invln_loanapplication_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_account");
+				this.SetRelatedEntity<DataverseModel.Account>("invln_loanapplication_account", null, value);
+				this.OnPropertyChanged("invln_loanapplication_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_loanapplication_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contact")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_contact")]
+		public DataverseModel.Contact invln_loanapplication_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Contact>("invln_loanapplication_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_contact");
+				this.SetRelatedEntity<DataverseModel.Contact>("invln_loanapplication_contact", null, value);
+				this.OnPropertyChanged("invln_loanapplication_contact");
 			}
 		}
 		

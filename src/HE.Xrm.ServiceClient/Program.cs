@@ -7,6 +7,7 @@ using Microsoft.Xrm.Sdk;
 using System;
 using System.Configuration;
 using System.Text.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HE.Xrm.ServiceClientExample
 {
@@ -19,27 +20,34 @@ namespace HE.Xrm.ServiceClientExample
             public string ClientSecret { get; set; }
         }
 
+        static string Url = "https://investmentsdev.crm11.dynamics.com";
+        static string ClientId = "686b9fef-faef-40fa-9195-01f8df059830";
+        static string ClientSecret = "Rvb8Q~9VhOe.fC0CY2vETf8GvrsCwnGjCpICbcNV";
+        static string connectionString = $@"AuthType = ClientSecret; ClientId={ClientId};Url={Url};ClientSecret={ClientSecret};";
+
         static void Main(string[] args)
         {
-            var connectionString = "";
-            using (var reader = new StreamReader(Directory.GetCurrentDirectory() + "../../../../appsettings.json"))
-            {
-                var appSettings = JsonSerializer.Deserialize<AppSettings>(reader.ReadToEnd());
-                if (appSettings != null)
-                {
-                    connectionString = $@"AuthType = ClientSecret; ClientId={appSettings.ClientId};Url={appSettings.Url};ClientSecret={appSettings.ClientSecret};";
-                }
-                else
-                {
-                    throw new ConfigurationException("Missing configuration");
-                }
-            }
+            //var connectionString = "";
+            //using (var reader = new StreamReader(Directory.GetCurrentDirectory() + "../../../../appsettings.json"))
+            //{
+            //    var appSettings = JsonSerializer.Deserialize<AppSettings>(reader.ReadToEnd());
+            //    if (appSettings != null)
+            //    {
+            //        connectionString = $@"AuthType = ClientSecret; ClientId={appSettings.ClientId};Url={appSettings.Url};ClientSecret={appSettings.ClientSecret};";
+            //    }
+            //    else
+            //    {
+            //        throw new ConfigurationException("Missing configuration");
+            //    }
+            //}
+
+
 
             using (ServiceClient serviceClient = new(connectionString))
             {
                 if (serviceClient.IsReady)
                 {
-                    CheckInvestmensDataLoanCustomApi(serviceClient);
+                    GetContactRoleCustomApi(serviceClient);
                 }
                 else
                 {
@@ -49,6 +57,19 @@ namespace HE.Xrm.ServiceClientExample
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
+        }
+
+        private static void GetContactRoleCustomApi(ServiceClient serviceClient)
+        {
+            var req = new OrganizationRequest("invln_getcontactrole")  //Name of Custom API
+            {
+                ["invln_email"] = "testgiga@test.pl",  //Input Parameter
+                ["invln_portalid"] = "858110001",  //Input Parameter
+                ["invln_ssid"] = "e567a79d-1e68-45ca-9c1b-3f1a3650f191"  //Input Parameter
+            };
+
+            var resp = serviceClient.Execute(req);
+            Console.WriteLine();
         }
 
         private static void CheckInvestmensDataLoanCustomApi(ServiceClient serviceClient)

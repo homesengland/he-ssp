@@ -8,6 +8,7 @@ using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk;
 using System.Collections.Generic;
 using Microsoft.Xrm.Sdk.PluginTelemetry;
+using Microsoft.Xrm.Sdk.Messages;
 
 namespace HE.CRM.Common.Repositories.Implementations
 {
@@ -45,6 +46,38 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
 
             return contacts;
+        }
+
+        public Contact GetContactWithGivenEmailAndSSID(string email, Guid ssid)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                var contact = ctx.CreateQuery<Contact>()
+                    .Where(x => x.EMailAddress1 == email && x.Id == ssid).AsEnumerable().FirstOrDefault();
+
+                if (contact != null)
+                {
+                    return contact;
+                }
+                else
+                {
+                    var contactToCreate = new Contact()
+                    {
+                        EMailAddress1 = email,
+                        Id = ssid,
+                    };
+                    service.Create(contactToCreate);
+                    return contactToCreate;
+                }
+            }
+        }
+
+        public AssociateResponse ExecuteAssociateRequest(AssociateRequest request)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return (AssociateResponse)ctx.Execute(request);
+            }
         }
     }
 }

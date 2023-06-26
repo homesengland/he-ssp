@@ -52,6 +52,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Contact_Webrole"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_Contact_Webrole> invln_Contact_WebroleSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_Contact_Webrole>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Loanapplication"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_Loanapplication> invln_LoanapplicationSet
@@ -70,6 +81,17 @@ namespace DataverseModel
 			get
 			{
 				return this.CreateQuery<DataverseModel.invln_SiteDetails>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Webrole"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_Webrole> invln_WebroleSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_Webrole>();
 			}
 		}
 	}

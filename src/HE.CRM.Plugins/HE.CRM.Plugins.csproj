@@ -123,9 +123,11 @@
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Exceptions\IntegrationApiException.cs" />
     <Compile Include="Handlers\Account\GenerateRandomAccountNameSampleHandler.cs" />
+    <Compile Include="Handlers\CustomApi\GetContactRoleHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendInvestmentsLoanDataToCrmHandler.cs" />
     <Compile Include="Models\AzureAdToken.cs" />
     <Compile Include="Plugins\Accounts\GenerateRandomAccountNameSamplePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\GetContactRolePlugin.cs" />
     <Compile Include="Plugins\CustomApi\SendInvestmentsLoanDataToCrmPlugin.cs" />
     <Compile Include="Services\Accounts\AccountService.cs" />
     <Compile Include="Services\Accounts\IAccountService.cs" />
@@ -190,6 +192,8 @@
     <Compile Include="HE.Base\Services\CrmServicesFactory.cs" />
     <Compile Include="HE.Base\Services\ICrmService.cs" />
     <Compile Include="HE.Base\Services\ICrmServicesFactory.cs" />
+    <Compile Include="Services\Contacts\ContactService.cs" />
+    <Compile Include="Services\Contacts\IContactService.cs" />
     <Compile Include="Services\HttpServices\AzureAdHttpClientService.cs" />
     <Compile Include="Services\LoanApplication\ILoanApplicationService.cs" />
     <Compile Include="Services\LoanApplication\LoanApplicationService.cs" />

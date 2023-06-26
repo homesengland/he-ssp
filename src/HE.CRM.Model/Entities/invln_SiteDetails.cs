@@ -80,6 +80,7 @@ namespace DataverseModel
 			public const string invln_Sitecoordinates = "invln_sitecoordinates";
 			public const string invln_Sitecost = "invln_sitecost";
 			public const string invln_sitecost_Base = "invln_sitecost_base";
+			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
 			public const string invln_SiteDetailsId = "invln_sitedetailsid";
 			public const string Id = "invln_sitedetailsid";
 			public const string invln_Sitename = "invln_sitename";
@@ -958,6 +959,27 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sitedetails_Loanapplication
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanapplication")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_Loanapplication")]
+		public DataverseModel.invln_Loanapplication invln_sitedetails_Loanapplication
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_sitedetails_Loanapplication", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetails_Loanapplication");
+				this.SetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_sitedetails_Loanapplication", null, value);
+				this.OnPropertyChanged("invln_sitedetails_Loanapplication");
 			}
 		}
 		

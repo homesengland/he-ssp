@@ -16,11 +16,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\ContactRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\LoanApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\SiteDetailsRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\WebRoleRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAccountRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\TraceHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IContactRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ILoanApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ISiteDetailsRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IWebRoleRepository.cs" />
     <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
   </ItemGroup>
 </Project>

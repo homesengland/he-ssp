@@ -437,6 +437,7 @@ namespace DataverseModel
 		/// </summary>
 		public static partial class Fields
 		{
+			public const string account_primary_contact = "account_primary_contact";
 			public const string AccountId = "accountid";
 			public const string AccountRoleCode = "accountrolecode";
 			public const string Address1_AddressId = "address1_addressid";
@@ -529,6 +530,10 @@ namespace DataverseModel
 			public const string Callback = "callback";
 			public const string ChildrensNames = "childrensnames";
 			public const string Company = "company";
+			public const string contact_customer_accounts = "contact_customer_accounts";
+			public const string Referencingcontact_customer_contacts = "contact_customer_contacts";
+			public const string Referencingcontact_master_contact = "contact_master_contact";
+			public const string Referencingcontact_parent_contact = "contact_parent_contact";
 			public const string ContactId = "contactid";
 			public const string Id = "contactid";
 			public const string CreatedBy = "createdby";
@@ -579,6 +584,8 @@ namespace DataverseModel
 			public const string he_PrefixID = "he_prefixid";
 			public const string Home2 = "home2";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_Contact_Webrole = "invln_Contact_Webrole";
+			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
 			public const string IsBackofficeCustomer = "isbackofficecustomer";
 			public const string JobTitle = "jobtitle";
 			public const string LastName = "lastname";
@@ -641,6 +648,9 @@ namespace DataverseModel
 			public const string PreferredSystemUserId = "preferredsystemuserid";
 			public const string PreferredSystemUserIdName = "preferredsystemuseridname";
 			public const string ProcessId = "processid";
+			public const string Referencedcontact_customer_contacts = "Referencedcontact_customer_contacts";
+			public const string Referencedcontact_master_contact = "Referencedcontact_master_contact";
+			public const string Referencedcontact_parent_contact = "Referencedcontact_parent_contact";
 			public const string Salutation = "salutation";
 			public const string ShippingMethodCode = "shippingmethodcode";
 			public const string SLAId = "slaid";
@@ -4642,6 +4652,203 @@ namespace DataverseModel
 				this.OnPropertyChanging("YomiMiddleName");
 				this.SetAttributeValue("yomimiddlename", value);
 				this.OnPropertyChanged("YomiMiddleName");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N account_primary_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_primary_contact")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Account> account_primary_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Account>("account_primary_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("account_primary_contact");
+				this.SetRelatedEntities<DataverseModel.Account>("account_primary_contact", null, value);
+				this.OnPropertyChanged("account_primary_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_customer_contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Contact> Referencedcontact_customer_contacts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencedcontact_customer_contacts");
+				this.SetRelatedEntities<DataverseModel.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedcontact_customer_contacts");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_master_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Contact> Referencedcontact_master_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencedcontact_master_contact");
+				this.SetRelatedEntities<DataverseModel.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedcontact_master_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_parent_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Contact> Referencedcontact_parent_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencedcontact_parent_contact");
+				this.SetRelatedEntities<DataverseModel.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedcontact_parent_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_loanapplication_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_contact")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Loanapplication> invln_loanapplication_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Loanapplication>("invln_loanapplication_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_contact");
+				this.SetRelatedEntities<DataverseModel.invln_Loanapplication>("invln_loanapplication_contact", null, value);
+				this.OnPropertyChanged("invln_loanapplication_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:N invln_Contact_Webrole
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_Contact_Webrole")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Webrole> invln_Contact_Webrole
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Webrole>("invln_Contact_Webrole", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Contact_Webrole");
+				this.SetRelatedEntities<DataverseModel.invln_Webrole>("invln_Contact_Webrole", null, value);
+				this.OnPropertyChanged("invln_Contact_Webrole");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_customer_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_accounts")]
+		public DataverseModel.Account contact_customer_accounts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Account>("contact_customer_accounts", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("contact_customer_accounts");
+				this.SetRelatedEntity<DataverseModel.Account>("contact_customer_accounts", null, value);
+				this.OnPropertyChanged("contact_customer_accounts");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_customer_contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public DataverseModel.Contact Referencingcontact_customer_contacts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencingcontact_customer_contacts");
+				this.SetRelatedEntity<DataverseModel.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingcontact_customer_contacts");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_master_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public DataverseModel.Contact Referencingcontact_master_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_parent_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parent_contactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public DataverseModel.Contact Referencingcontact_parent_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencingcontact_parent_contact");
+				this.SetRelatedEntity<DataverseModel.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingcontact_parent_contact");
 			}
 		}
 		

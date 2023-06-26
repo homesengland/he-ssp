@@ -8,7 +8,8 @@
   <EntityTypesFolder>..\Entities</EntityTypesFolder>
   <ExtensionConfig>
     <ActionPrefixesWhitelist />
-    <ActionsWhitelist>invln_sendinvestmentloansdatatocrm</ActionsWhitelist>
+    <ActionsWhitelist>invln_getcontactrole|
+invln_sendinvestmentloansdatatocrm</ActionsWhitelist>
     <ActionsToSkip />
     <AddDebuggerNonUserCode>true</AddDebuggerNonUserCode>
     <AddNewFilesToProject>true</AddNewFilesToProject>
@@ -26,8 +27,10 @@
     <EntitiesToSkip />
     <EntitiesWhitelist>account|
 contact|
+invln_contact_webrole|
 invln_loanapplication|
-invln_sitedetails</EntitiesWhitelist>
+invln_sitedetails|
+invln_webrole</EntitiesWhitelist>
     <EntityAttributeSpecifiedNames />
     <EntityPrefixesToSkip />
     <EntityPrefixesWhitelist />
@@ -35,7 +38,7 @@ invln_sitedetails</EntitiesWhitelist>
     <GenerateAttributeNameConsts>true</GenerateAttributeNameConsts>
     <GenerateAnonymousTypeConstructor>true</GenerateAnonymousTypeConstructor>
     <GenerateConstructorsSansLogicalName>false</GenerateConstructorsSansLogicalName>
-    <GenerateEntityRelationships>false</GenerateEntityRelationships>
+    <GenerateEntityRelationships>true</GenerateEntityRelationships>
     <GenerateEntityTypeCode>false</GenerateEntityTypeCode>
     <GenerateEnumProperties>false</GenerateEnumProperties>
     <GenerateGeneratedCodeAttribute>false</GenerateGeneratedCodeAttribute>
@@ -114,7 +117,7 @@ VoiceMail</TokenCapitalizationOverrides>
   <Namespace>DataverseModel</Namespace>
   <ServiceContextName>DataverseContext</ServiceContextName>
   <SuppressGeneratedCodeAttribute>true</SuppressGeneratedCodeAttribute>
-  <SettingsVersion>2.2023.4.24</SettingsVersion>
+  <SettingsVersion>2.2023.5.13</SettingsVersion>
   <UpdateBuilderSettingsJson>true</UpdateBuilderSettingsJson>
   <Version>2.2023.5.13</Version>
 </Config>

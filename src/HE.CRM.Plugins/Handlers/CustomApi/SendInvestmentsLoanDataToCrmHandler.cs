@@ -1,8 +1,6 @@
 ﻿using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Plugins.Services.LoanApplication;
-using Microsoft.Xrm.Sdk;
-using System;
 
 namespace HE.CRM.Plugins.Handlers.CustomApi
 {
