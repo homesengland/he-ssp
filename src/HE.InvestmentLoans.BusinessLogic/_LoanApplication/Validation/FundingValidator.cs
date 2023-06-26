@@ -79,7 +79,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 When(item => item.Refinance == "refinance",
                     () => RuleFor(item => item.RefinanceInfo)
                             .NotEmpty()
-                            .WithMessage(ErrorMessages.EnterMoreDetails.ToString())
+                            .WithMessage("Enter more detail about your refinance exit strategy")
                         );
             });
 

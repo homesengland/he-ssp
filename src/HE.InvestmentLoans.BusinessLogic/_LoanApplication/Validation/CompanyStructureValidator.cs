@@ -4,6 +4,8 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using System;
 using System.IO;
 using System.Linq;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 {
@@ -46,20 +48,18 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("HomesBuilt", () =>
             {
-            When(item => item.HomesBuilt == null,
-                () => RuleFor(item => item.HomesBuilt)
-                        .NotEmpty()
-                        .WithMessage("The amount of homes your organisation has built must be a number")
-                    );
-
                 When(item => item.HomesBuilt != null,
                     () => RuleFor(item => item.HomesBuilt)
                             .Cascade(CascadeMode.Stop)
                             .Must(value =>
                             {
-                                if ((decimal.TryParse(value.Replace('.', ','), out decimal result) || decimal.TryParse(value.Replace(',', '.'), out result)) && result != Math.Floor(result))
+                                CultureInfo culture = CultureInfo.InvariantCulture;
+                                if (decimal.TryParse(value, NumberStyles.Float, culture, out decimal decimalResult))
                                 {
-                                    return false;
+                                    if (decimalResult % 1 != 0)
+                                    {
+                                        return false;
+                                    }
                                 }
                                 return true;
                             }).WithMessage("The number of homes your organisation has built must be a whole number")
