@@ -74,7 +74,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             Assert.IsNull(exception);
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
-            //A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened(); // commented in code currently
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened();
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<Contact>.Ignored)).MustHaveHappened();
         }
 
@@ -114,8 +114,42 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             Assert.IsNull(exception);
             A.CallTo(() => fakedContext.GetOrganizationService().Delete(existingLoan.LogicalName, existingLoan.Id)).MustHaveHappened();
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
-            //A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened(); // commented in code currently
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened();
 
+        }
+
+        [TestMethod]
+        public void SendInvesmentsLoanDataToCrm_PayloadDataWithObjects_ShouldCreateMultipleSiteDetails()
+        {
+            SiteDetailsDto site2 = siteDetailsDto;
+            SiteDetailsDto site3 = siteDetailsDto;
+            SiteDetailsDto site4 = siteDetailsDto;
+            LoanApplicationDto loan = applicationDto;
+            loan.siteDetailsList.Add(site2);
+            loan.siteDetailsList.Add(site3);
+            loan.siteDetailsList.Add(site4);
+            string newPayload = JsonSerializer.Serialize<LoanApplicationDto>(loan);
+            Exception exception = null;
+
+            try
+            {
+                var request = new invln_sendinvestmentloansdatatocrmRequest();
+                pluginContext.InputParameters = new ParameterCollection
+                {
+                    {nameof(request.invln_entityfieldsparameters), newPayload }
+                };
+
+                fakedContext.ExecutePluginWithConfigurations<SendInvestmentsLoanDataToCrmPlugin>(pluginContext, "", "");
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
+
+            Assert.IsNull(exception);
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappenedTwiceOrMore();
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<Contact>.Ignored)).MustHaveHappened();
         }
 
         private void InitData()
