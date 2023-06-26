@@ -20,7 +20,7 @@
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
         { "Title", "Homes in the last three years" },
-        { "Value", Model.HomesBuilt.TrimStart('0') },
+        { "Value", $"{Model.HomesBuilt?.TrimStart('0') ?? "Not provided"}" },
         { "Link", Url.Action("Change","CompanyStructure", new {id = id,  state = "HomesBuilt" }) }
     })
 </gds-summary-list>
