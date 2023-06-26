@@ -19,7 +19,7 @@
         <gds-h2>Security details</gds-h2>
         @await Html.PartialAsync("_SecurityAnswers", Model.Security)
 
-        <gds-h2>Site details</gds-h2>
+        <gds-h2>Project details</gds-h2>
         @foreach (var site in Model.Sites)
         {
             @await Html.PartialAsync("_SiteAnswers", site)
