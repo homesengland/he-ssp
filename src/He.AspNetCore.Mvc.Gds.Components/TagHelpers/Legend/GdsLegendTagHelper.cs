@@ -1,4 +1,5 @@
 using He.AspNetCore.Mvc.Gds.Components.Constants;
+using He.AspNetCore.Mvc.Gds.Components.Enums;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
@@ -11,6 +12,8 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
     /// <seealso cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
     public class GdsLegendTagHelper : TagHelper
     {
+        public ControlSize? Size { get; set; }
+
         /// <summary>
         /// Synchronously executes the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" /> with the given <paramref name="context" /> and
         /// <paramref name="output" />.
@@ -22,7 +25,16 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
             if (output != null)
             {
                 output.TagName = HtmlConstants.Legend;
-                TagConstruct.ConstructClass(output, $"{CssConstants.GovUkFieldSetLegend}");
+
+                if (Size.HasValue)
+                {
+                    TagConstruct.ConstructClassForSize(output, $"{CssConstants.GovUkFieldSetLegend}", Size.Value);
+                }
+                else
+                {
+                    TagConstruct.ConstructClass(output, $"{CssConstants.GovUkFieldSetLegend}");
+                }
+
                 output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output));
             }
         }

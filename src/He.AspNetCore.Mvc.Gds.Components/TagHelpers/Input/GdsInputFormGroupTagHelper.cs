@@ -144,7 +144,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
                 false,
                 LegendClasses);
 
-            TagConstruct.ConstructId(output, For.Name);
+            TagConstruct.ConstructId(output, fullHtmlFieldName);
 
             if(IsInvalid)
             {
