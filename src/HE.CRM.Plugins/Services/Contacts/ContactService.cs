@@ -32,9 +32,9 @@ namespace HE.CRM.Plugins.Services.Contacts
 
         #region Public Methods
 
-        public string GetContactRole(string email, string ssid, string portalId)
+        public string GetContactRole(string email, string ssid, string portal)
         {
-            if (Guid.TryParse(ssid, out Guid ssidAsGuid))
+            if (Guid.TryParse(ssid, out Guid ssidAsGuid) && Guid.TryParse(portal, out Guid portalId))
             {
                 var contact = contactRepository.GetContactWithGivenEmailAndSSID(email, ssidAsGuid);
                 if(contact != null)

@@ -18,6 +18,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Contact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Contact_Webrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanapplication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portalpermissionlevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_SiteDetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Webrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\activityfileattachment_objectcode.cs" />

@@ -1,8 +1,6 @@
 ﻿using DataverseModel;
 using FakeItEasy;
 using FakeXrmEasy;
-using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.CRM.Common.Repositories.Implementations;
 using HE.CRM.Plugins.Plugins.CustomApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
@@ -10,7 +8,6 @@ using Microsoft.Xrm.Sdk.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 
 namespace HE.CRM.Plugins.Tests.CustomApis
 {
@@ -19,6 +16,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
     {
         private XrmFakedContext fakedContext;
         private XrmFakedPluginExecutionContext pluginContext;
+
 
         [TestInitialize]
         public void Initialize()
@@ -36,14 +34,19 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 EMailAddress1 = "test@test.pl",
             };
 
+            invln_portal portal = new invln_portal()
+            {
+                Id = Guid.NewGuid(),
+            };
+
             invln_Webrole defaultRole = new invln_Webrole()
             {
                 Id = Guid.NewGuid(),
-                invln_Portalname = new OptionSetValue(858110001),
+                invln_Portalid = portal.ToEntityReference(),
                 invln_Name = "Default role",
             };
 
-            fakedContext.Initialize(new List<Entity> { contact, defaultRole });
+            fakedContext.Initialize(new List<Entity> { contact, defaultRole, portal });
             fakedContext.AddRelationship("invln_Contact_Webrole", new XrmFakedRelationship("contactid", "invln_webroleid", Contact.EntityLogicalName, invln_Webrole.EntityLogicalName));
 
             Exception exception = null;
@@ -53,7 +56,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 pluginContext.InputParameters = new ParameterCollection
                 {
                     {nameof(request.invln_ssid), contact.Id.ToString() },
-                    {nameof(request.invln_portalid), defaultRole.invln_Portalname.Value.ToString() },
+                    {nameof(request.invln_portalid), defaultRole.invln_Portalid.Id.ToString() },
                     {nameof(request.invln_email), contact.EMailAddress1 },
                 };
 
@@ -79,10 +82,15 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 EMailAddress1 = "test@test.pl",
             };
 
+            invln_portal portal = new invln_portal()
+            {
+                Id = Guid.NewGuid(),
+            };
+
             invln_Webrole role = new invln_Webrole()
             {
                 Id = Guid.NewGuid(),
-                invln_Portalname = new OptionSetValue(858110001),
+                invln_Portalid = portal.ToEntityReference(),
                 invln_Name = "role name",
             };
 
@@ -98,7 +106,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             fakedContext.AddRelationship("invln_Contact_Webrole", new XrmFakedRelationship("contactid", "invln_webroleid", Contact.EntityLogicalName, invln_Webrole.EntityLogicalName));
 
-            fakedContext.Initialize(new List<Entity> { contact, role, relationship });
+            fakedContext.Initialize(new List<Entity> { contact, role, relationship, portal });
 
             Exception exception = null;
             try
@@ -107,7 +115,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 pluginContext.InputParameters = new ParameterCollection
                 {
                     {nameof(request.invln_ssid), contact.Id.ToString() },
-                    {nameof(request.invln_portalid), role.invln_Portalname.Value.ToString() },
+                    {nameof(request.invln_portalid), role.invln_Portalid.Id.ToString() },
                     {nameof(request.invln_email), contact.EMailAddress1 },
                 };
 
@@ -126,16 +134,21 @@ namespace HE.CRM.Plugins.Tests.CustomApis
         [TestMethod]
         public void GetContactRole_ContactDoesNotExistAndDefaultRoleExists_ShouldCreateContactAndAssignDefaultRole()
         {
+            invln_portal portal = new invln_portal()
+            {
+                Id = Guid.NewGuid(),
+            };
+
             invln_Webrole role = new invln_Webrole()
             {
                 Id = Guid.NewGuid(),
-                invln_Portalname = new OptionSetValue(858110001),
+                invln_Portalid = portal.ToEntityReference(),
                 invln_Name = "Default role",
             };
 
             fakedContext.AddRelationship("invln_Contact_Webrole", new XrmFakedRelationship("contactid", "invln_webroleid", Contact.EntityLogicalName, invln_Webrole.EntityLogicalName));
 
-            fakedContext.Initialize(new List<Entity> {  role });
+            fakedContext.Initialize(new List<Entity> {  role, portal });
 
             Exception exception = null;
             try
@@ -144,7 +157,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 pluginContext.InputParameters = new ParameterCollection
                 {
                     {nameof(request.invln_ssid), Guid.NewGuid().ToString() },
-                    {nameof(request.invln_portalid), role.invln_Portalname.Value.ToString() },
+                    {nameof(request.invln_portalid), role.invln_Portalid.Id.ToString() },
                     {nameof(request.invln_email), "test@test.pl" },
                 };
 
@@ -171,10 +184,15 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 EMailAddress1 = "test@test.pl",
             };
 
+            invln_portal portal = new invln_portal()
+            {
+                Id = Guid.NewGuid(),
+            };
+
             invln_Webrole role = new invln_Webrole()
             {
                 Id = Guid.NewGuid(),
-                invln_Portalname = new OptionSetValue(858110001),
+                invln_Portalid = portal.ToEntityReference(),
                 invln_Name = "role name",
             };
             invln_Webrole defaultRole = new invln_Webrole()
@@ -195,7 +213,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             fakedContext.AddRelationship("invln_Contact_Webrole", new XrmFakedRelationship("contactid", "invln_webroleid", Contact.EntityLogicalName, invln_Webrole.EntityLogicalName));
 
-            fakedContext.Initialize(new List<Entity> { contact, role, relationship, defaultRole });
+            fakedContext.Initialize(new List<Entity> { contact, role, relationship, defaultRole, portal });
 
             Exception exception = null;
             try
@@ -204,7 +222,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 pluginContext.InputParameters = new ParameterCollection
                 {
                     {nameof(request.invln_ssid), contact.Id.ToString() },
-                    {nameof(request.invln_portalid), new OptionSetValue(858110002).Value.ToString() },
+                    {nameof(request.invln_portalid), Guid.NewGuid().ToString() },
                     {nameof(request.invln_email), contact.EMailAddress1 },
                 };
 

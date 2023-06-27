@@ -15,21 +15,22 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
-        public invln_Webrole GetContactRole(Guid contactId, string portalName)
+        public invln_Webrole GetContactRole(Guid contactId, Guid portalId)
         {
             string fetchXML = @"<fetch>
                                   <entity name=""invln_webrole"">
                                     <attribute name=""invln_name"" />
-                                    <attribute name=""invln_permissionlevel"" />
-                                    <filter>
-                                      <condition attribute=""invln_portalname"" operator=""eq"" value=""" + portalName + @""" />
-                                    </filter>
                                     <link-entity name=""invln_contact_webrole"" from=""invln_webroleid"" to=""invln_webroleid"" intersect=""true"">
                                       <link-entity name=""contact"" from=""contactid"" to=""contactid"" intersect=""true"">
                                         <filter>
                                           <condition attribute=""contactid"" operator=""eq"" value=""" + contactId + @""" />
                                         </filter>
                                       </link-entity>
+                                    </link-entity>
+                                    <link-entity name=""invln_portal"" from=""invln_portalid"" to=""invln_portalid"">
+                                      <filter>
+                                        <condition attribute=""invln_portalid"" operator=""eq"" value=""" + portalId + @""" />
+                                      </filter>
                                     </link-entity>
                                   </entity>
                                 </fetch>";

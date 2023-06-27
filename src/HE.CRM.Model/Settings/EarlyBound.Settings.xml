@@ -29,6 +29,8 @@ invln_sendinvestmentloansdatatocrm</ActionsWhitelist>
 contact|
 invln_contact_webrole|
 invln_loanapplication|
+invln_portal|
+invln_portalpermissionlevel|
 invln_sitedetails|
 invln_webrole</EntitiesWhitelist>
     <EntityAttributeSpecifiedNames />

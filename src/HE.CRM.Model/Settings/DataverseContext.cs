@@ -74,6 +74,28 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_portal"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_portal> invln_portalSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_portal>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_portalpermissionlevel"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_portalpermissionlevel> invln_portalpermissionlevelSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_portalpermissionlevel>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_SiteDetails"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_SiteDetails> invln_SiteDetailsSet

@@ -14,10 +14,10 @@ namespace DataverseModel
 	
 	
 	/// <summary>
-	/// Status of the Web role
+	/// Status of the Portal
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_webroleState
+	public enum invln_portalState
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -28,10 +28,10 @@ namespace DataverseModel
 	}
 	
 	/// <summary>
-	/// Reason for the status of the Web role
+	/// Reason for the status of the Portal
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_Webrole_StatusCode
+	public enum invln_portal_StatusCode
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -42,34 +42,12 @@ namespace DataverseModel
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_Webrole_invln_Portalname
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		AHP = 858110001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Loans = 858110000,
-	}
-	
-	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_Webrole_invln_Permissionlevel
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Accountadministrator = 858110002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Portalmember = 858110000,
-	}
-	
-	[System.Runtime.Serialization.DataContractAttribute()]
-	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_webrole")]
-	public partial class invln_Webrole : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_portal")]
+	public partial class invln_portal : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
 		/// <summary>
-		/// Available fields, a the time of codegen, for the invln_webrole entity
+		/// Available fields, a the time of codegen, for the invln_portal entity
 		/// </summary>
 		public static partial class Fields
 		{
@@ -79,26 +57,24 @@ namespace DataverseModel
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string ImportSequenceNumber = "importsequencenumber";
-			public const string invln_Contact_Webrole = "invln_Contact_Webrole";
 			public const string invln_invln_portal_invln_webrole_Portalid = "invln_invln_portal_invln_webrole_Portalid";
-			public const string invln_invln_portalpermissionlevel_invln_webrole_Portalpermissionlevelid = "invln_invln_portalpermissionlevel_invln_webrole_Portalpermissionlevelid";
-			public const string invln_Name = "invln_name";
-			public const string invln_Permissionlevel = "invln_permissionlevel";
-			public const string invln_Portalid = "invln_portalid";
-			public const string invln_PortalidName = "invln_portalidname";
-			public const string invln_Portalname = "invln_portalname";
-			public const string invln_Portalpermissionlevelid = "invln_portalpermissionlevelid";
-			public const string invln_PortalpermissionlevelidName = "invln_portalpermissionlevelidname";
-			public const string invln_WebroleId = "invln_webroleid";
-			public const string Id = "invln_webroleid";
+			public const string invln_name = "invln_name";
+			public const string invln_portalId = "invln_portalid";
+			public const string Id = "invln_portalid";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedByName = "modifiedbyname";
 			public const string ModifiedOn = "modifiedon";
 			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
 			public const string ModifiedOnBehalfByName = "modifiedonbehalfbyname";
-			public const string OrganizationId = "organizationid";
-			public const string OrganizationIdName = "organizationidname";
 			public const string OverriddenCreatedOn = "overriddencreatedon";
+			public const string OwnerId = "ownerid";
+			public const string OwnerIdName = "owneridname";
+			public const string OwningBusinessUnit = "owningbusinessunit";
+			public const string OwningBusinessUnitName = "owningbusinessunitname";
+			public const string OwningTeam = "owningteam";
+			public const string OwningTeamName = "owningteamname";
+			public const string OwningUser = "owninguser";
+			public const string OwningUserName = "owningusername";
 			public const string StateCode = "statecode";
 			public const string StatusCode = "statuscode";
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
@@ -110,22 +86,22 @@ namespace DataverseModel
 		/// Default Constructor.
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public invln_Webrole() : 
+		public invln_portal() : 
 				base(EntityLogicalName)
 		{
 		}
 		
-		public const string PrimaryIdAttribute = "invln_webroleid";
+		public const string PrimaryIdAttribute = "invln_portalid";
 		
 		public const string PrimaryNameAttribute = "invln_name";
 		
-		public const string EntitySchemaName = "invln_Webrole";
+		public const string EntitySchemaName = "invln_portal";
 		
-		public const string EntityLogicalName = "invln_webrole";
+		public const string EntityLogicalName = "invln_portal";
 		
-		public const string EntityLogicalCollectionName = "invln_webroles";
+		public const string EntityLogicalCollectionName = "invln_portals";
 		
-		public const string EntitySetName = "invln_webroles";
+		public const string EntitySetName = "invln_portals";
 		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 		
@@ -215,8 +191,11 @@ namespace DataverseModel
 			}
 		}
 		
+		/// <summary>
+		/// The name of the custom entity.
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_name")]
-		public string invln_Name
+		public string invln_name
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
@@ -226,96 +205,28 @@ namespace DataverseModel
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_Name");
+				this.OnPropertyChanging("invln_name");
 				this.SetAttributeValue("invln_name", value);
-				this.OnPropertyChanged("invln_Name");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_permissionlevel")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Permissionlevel
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_permissionlevel");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Permissionlevel");
-				this.SetAttributeValue("invln_permissionlevel", value);
-				this.OnPropertyChanged("invln_Permissionlevel");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_portalid")]
-		public Microsoft.Xrm.Sdk.EntityReference invln_Portalid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_portalid");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Portalid");
-				this.SetAttributeValue("invln_portalid", value);
-				this.OnPropertyChanged("invln_Portalid");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_portalname")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Portalname
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_portalname");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Portalname");
-				this.SetAttributeValue("invln_portalname", value);
-				this.OnPropertyChanged("invln_Portalname");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_portalpermissionlevelid")]
-		public Microsoft.Xrm.Sdk.EntityReference invln_Portalpermissionlevelid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_portalpermissionlevelid");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Portalpermissionlevelid");
-				this.SetAttributeValue("invln_portalpermissionlevelid", value);
-				this.OnPropertyChanged("invln_Portalpermissionlevelid");
+				this.OnPropertyChanged("invln_name");
 			}
 		}
 		
 		/// <summary>
 		/// Unique identifier for entity instances
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_webroleid")]
-		public System.Nullable<System.Guid> invln_WebroleId
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_portalid")]
+		public System.Nullable<System.Guid> invln_portalId
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<System.Guid>>("invln_webroleid");
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("invln_portalid");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_WebroleId");
-				this.SetAttributeValue("invln_webroleid", value);
+				this.OnPropertyChanging("invln_portalId");
+				this.SetAttributeValue("invln_portalid", value);
 				if (value.HasValue)
 				{
 					base.Id = value.Value;
@@ -324,11 +235,11 @@ namespace DataverseModel
 				{
 					base.Id = System.Guid.Empty;
 				}
-				this.OnPropertyChanged("invln_WebroleId");
+				this.OnPropertyChanged("invln_portalId");
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_webroleid")]
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_portalid")]
 		public override System.Guid Id
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
@@ -339,7 +250,7 @@ namespace DataverseModel
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.invln_WebroleId = value;
+				this.invln_portalId = value;
 			}
 		}
 		
@@ -390,19 +301,6 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Unique identifier for the organization
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("organizationid")]
-		public Microsoft.Xrm.Sdk.EntityReference OrganizationId
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("organizationid");
-			}
-		}
-		
-		/// <summary>
 		/// Date and time that the record was migrated.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
@@ -423,7 +321,66 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Status of the Web role
+		/// Owner Id
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
+		public Microsoft.Xrm.Sdk.EntityReference OwnerId
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("ownerid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("OwnerId");
+				this.SetAttributeValue("ownerid", value);
+				this.OnPropertyChanged("OwnerId");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the business unit that owns the record
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningBusinessUnit
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the team that owns the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningTeam
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the user that owns the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningUser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
+			}
+		}
+		
+		/// <summary>
+		/// Status of the Portal
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue StateCode
@@ -443,7 +400,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Reason for the status of the Web role
+		/// Reason for the status of the Portal
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue StatusCode
@@ -516,64 +473,22 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// N:N invln_Contact_Webrole
+		/// 1:N invln_invln_portal_invln_webrole_Portalid
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_Contact_Webrole")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.Contact> invln_Contact_Webrole
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.Contact>("invln_Contact_Webrole", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Contact_Webrole");
-				this.SetRelatedEntities<DataverseModel.Contact>("invln_Contact_Webrole", null, value);
-				this.OnPropertyChanged("invln_Contact_Webrole");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 invln_invln_portal_invln_webrole_Portalid
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_portalid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_portal_invln_webrole_Portalid")]
-		public DataverseModel.invln_portal invln_invln_portal_invln_webrole_Portalid
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Webrole> invln_invln_portal_invln_webrole_Portalid
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.invln_portal>("invln_invln_portal_invln_webrole_Portalid", null);
+				return this.GetRelatedEntities<DataverseModel.invln_Webrole>("invln_invln_portal_invln_webrole_Portalid", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
 				this.OnPropertyChanging("invln_invln_portal_invln_webrole_Portalid");
-				this.SetRelatedEntity<DataverseModel.invln_portal>("invln_invln_portal_invln_webrole_Portalid", null, value);
+				this.SetRelatedEntities<DataverseModel.invln_Webrole>("invln_invln_portal_invln_webrole_Portalid", null, value);
 				this.OnPropertyChanged("invln_invln_portal_invln_webrole_Portalid");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 invln_invln_portalpermissionlevel_invln_webrole_Portalpermissionlevelid
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_portalpermissionlevelid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_portalpermissionlevel_invln_webrole_Portalpermissionlevelid")]
-		public DataverseModel.invln_portalpermissionlevel invln_invln_portalpermissionlevel_invln_webrole_Portalpermissionlevelid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.invln_portalpermissionlevel>("invln_invln_portalpermissionlevel_invln_webrole_Portalpermissionlevelid", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_invln_portalpermissionlevel_invln_webrole_Portalpermissionlevelid");
-				this.SetRelatedEntity<DataverseModel.invln_portalpermissionlevel>("invln_invln_portalpermissionlevel_invln_webrole_Portalpermissionlevelid", null, value);
-				this.OnPropertyChanged("invln_invln_portalpermissionlevel_invln_webrole_Portalpermissionlevelid");
 			}
 		}
 		
@@ -582,7 +497,7 @@ namespace DataverseModel
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public invln_Webrole(object anonymousType) : 
+		public invln_portal(object anonymousType) : 
 				this()
 		{
             foreach (var p in anonymousType.GetType().GetProperties())
@@ -600,9 +515,9 @@ namespace DataverseModel
                 {
                     case "id":
                         base.Id = (System.Guid)value;
-                        Attributes["invln_webroleid"] = base.Id;
+                        Attributes["invln_portalid"] = base.Id;
                         break;
-                    case "invln_webroleid":
+                    case "invln_portalid":
                         var id = (System.Nullable<System.Guid>) value;
                         if(id == null){ continue; }
                         base.Id = id.Value;

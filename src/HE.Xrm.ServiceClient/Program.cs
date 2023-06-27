@@ -64,7 +64,7 @@ namespace HE.Xrm.ServiceClientExample
             var req = new OrganizationRequest("invln_getcontactrole")  //Name of Custom API
             {
                 ["invln_email"] = "testgiga@test.pl",  //Input Parameter
-                ["invln_portalid"] = "858110001",  //Input Parameter
+                ["invln_portalid"] = "c5a66e4a-d314-ee11-9cbe-002248c653e1",  //Input Parameter
                 ["invln_ssid"] = "e567a79d-1e68-45ca-9c1b-3f1a3650f191"  //Input Parameter
             };
 

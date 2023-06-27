@@ -5,6 +5,6 @@ namespace HE.CRM.Plugins.Services.Contacts
     public interface IContactService : ICrmService
     {
 
-        string GetContactRole(string email, string ssid, string portalId);
+        string GetContactRole(string email, string ssid, string portal);
     }
 }
