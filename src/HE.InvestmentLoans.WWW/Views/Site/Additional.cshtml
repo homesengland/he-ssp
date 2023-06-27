@@ -21,19 +21,17 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set role="group">
             <gds-div-form-group>
-                <gds-label-wrapper>
-                    <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
-                        Additional project details
-                    </gds-label>
-                </gds-label-wrapper>
+                <gds-h1 size="ControlSize.L">
+                    Additional project details
+                </gds-h1>
                 <gds-div-hint>
                     The land can include any buildings to be redeveloped or refurbished.
                 </gds-div-hint>
 
                 <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=@isDateFormInvalid>
-                    <gds-label size="ControlSize.S">
+                    <gds-legend size="ControlSize.S">
                         When was this land purchased?
-                    </gds-label>
+                    </gds-legend>
                     <gds-div-hint>
                         If you have purchased multiple areas of land, enter the most recent purchase date.
                     </gds-div-hint>
@@ -122,10 +120,9 @@
                 </gds-field-set>
 
                 <gds-field-set class="govuk-!-margin-bottom-6" role="group">
-                    <gds-label size="ControlSize.S">
+                    <gds-legend size="ControlSize.S">
                         What is the source of this valuation?
-                    </gds-label>
-
+                    </gds-legend>
                     <gds-radio govuk-formgroup-asp-for="Source" asp-isexcludeheader
                                asp-selectlistitems="TemporaryFormOptions.SiteAdditionalSource">
                     </gds-radio>
