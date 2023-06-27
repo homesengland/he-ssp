@@ -38,22 +38,20 @@ namespace HE.InvestmentLoans.WWW.Controllers
 
         [HttpPost]
         [Route("{ending?}")]
-        public async Task<IActionResult> WorkflowPost(Guid id, LoanApplicationViewModel model, string ending, string action)
+        public async Task<IActionResult> WorkflowPost(Guid id, string ending, string action)
         {
             var sessionModel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
             FundingWorkflow workflow = new FundingWorkflow(sessionModel, mediator);
 
             try
             {
-                var vresult = validator.Validate(model.Funding, opt => opt.IncludeRuleSets(workflow.GetName()));
+                await TryUpdateModelAsync(sessionModel);
+                var vresult = validator.Validate(sessionModel.Funding, opt => opt.IncludeRuleSets(workflow.GetName()));
                 if (!vresult.IsValid)
                 {
                     // error messages in the View.
                     vresult.AddToModelState(this.ModelState, "Funding");
                     // re-render the view when validation failed.
-
-                    await TryUpdateModelAsync(sessionModel);
-
                     return View(workflow.GetName(), sessionModel);
                 }
 

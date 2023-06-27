@@ -55,7 +55,7 @@ namespace HE.InvestmentLoans.WWW.Controllers
 
         [HttpPost]
         [Route("{site}/{ending?}")]
-        public async Task<IActionResult> WorkflowPost(Guid id, Guid site, SiteViewModel model, string ending, string action)
+        public async Task<IActionResult> WorkflowPost(Guid id, Guid site,  string ending, string action)
         {
             var sessionModel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
 
@@ -71,7 +71,7 @@ namespace HE.InvestmentLoans.WWW.Controllers
                         int.Parse(Request.Form["EstimatedStartDate.Value.Year"], System.Globalization.CultureInfo.CurrentCulture.NumberFormat),
                         int.Parse(Request.Form["EstimatedStartDate.Value.Month"], System.Globalization.CultureInfo.CurrentCulture.NumberFormat),
                         int.Parse(Request.Form["EstimatedStartDate.Value.Day"], System.Globalization.CultureInfo.CurrentCulture.NumberFormat));
-                    model.EstimatedStartDate = sitemodel.EstimatedStartDate;
+                    sitemodel.EstimatedStartDate = sitemodel.EstimatedStartDate;
                 }
                 catch
                 {
@@ -80,15 +80,13 @@ namespace HE.InvestmentLoans.WWW.Controllers
 
             try
             {
-                var vresult = validator.Validate(model, opt => opt.IncludeRuleSets(workflow.GetName()));
+                await TryUpdateModelAsync(sitemodel);
+                var vresult = validator.Validate(sitemodel, opt => opt.IncludeRuleSets(workflow.GetName()));
                 if (!vresult.IsValid)
                 {
                     // error messages in the View.
                     vresult.AddToModelState(this.ModelState);
                     // re-render the view when validation failed.
-                    model.Id = site;
-
-                    await TryUpdateModelAsync(sitemodel);
                     sitemodel.Id = site;
 
                     return View(workflow.GetName(), sitemodel);
@@ -121,7 +119,7 @@ namespace HE.InvestmentLoans.WWW.Controllers
         }
 
         [Route("GoBack")]
-        public async Task<IActionResult> GoBack(Guid id, Guid site, SiteViewModel model, string action)
+        public async Task<IActionResult> GoBack(Guid id, Guid site, string action)
         {
             var sessionmodel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
             SiteWorkflow workflow = new SiteWorkflow(sessionmodel, mediator, site);
@@ -130,7 +128,7 @@ namespace HE.InvestmentLoans.WWW.Controllers
         }
 
         [Route("{site}/Change")]
-        public async Task<IActionResult> Change(Guid id, Guid site, SiteViewModel model, string state)
+        public async Task<IActionResult> Change(Guid id, Guid site, string state)
         {
             var sessionmodel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
             SiteWorkflow workflow = new SiteWorkflow(sessionmodel, mediator, site);

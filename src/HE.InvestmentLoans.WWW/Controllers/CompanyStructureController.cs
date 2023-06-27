@@ -36,7 +36,7 @@ namespace HE.InvestmentLoans.WWW.Controllers
 
         [HttpPost]
         [Route("{ending?}")]
-        public async Task<IActionResult> WorkflowPost(Guid id, LoanApplicationViewModel model, string ending, string action, [FromForm(Name = "File")] IFormFile formFile)
+        public async Task<IActionResult> WorkflowPost(Guid id, string ending, string action, [FromForm(Name = "File")] IFormFile formFile)
         {
             var sessionModel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
             if(formFile != null)
@@ -44,8 +44,6 @@ namespace HE.InvestmentLoans.WWW.Controllers
                 using (var memoryStream = new MemoryStream())
                 {
                     formFile.CopyTo(memoryStream);
-                    model.Company.CompanyInfoFile = memoryStream.ToArray();
-                    model.Company.CompanyInfoFileName = formFile.FileName;
                     sessionModel.Company.CompanyInfoFile = memoryStream.ToArray();
                     sessionModel.Company.CompanyInfoFileName = formFile.FileName;
                 }
@@ -55,15 +53,13 @@ namespace HE.InvestmentLoans.WWW.Controllers
 
             try
             {
-                var vresult = validator.Validate(model.Company, opt => opt.IncludeRuleSets(workflow.GetName()));
+                await TryUpdateModelAsync(sessionModel);
+                var vresult = validator.Validate(sessionModel.Company, opt => opt.IncludeRuleSets(workflow.GetName()));
                 if (!vresult.IsValid)
                 {
                     // error messages in the View.
                     vresult.AddToModelState(this.ModelState, "Company");
                     // re-render the view when validation failed.
-
-                    await TryUpdateModelAsync(sessionModel);
-
                     return View(workflow.GetName(), sessionModel);
                 }
 

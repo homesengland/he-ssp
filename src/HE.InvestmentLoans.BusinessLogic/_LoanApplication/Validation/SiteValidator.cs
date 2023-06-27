@@ -12,28 +12,18 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
     {
         public SiteValidator()
         {
-            RuleSet("Name", () =>
-            {
-                RuleFor(item => item.Name)
-                .NotEmpty()
-
-                .WithMessage(ErrorMessages.EnterMoreDetails.ToString());
-            });
+          
 
             RuleSet("ManyHomes", () =>
             {
                 RuleFor(item => item.ManyHomes)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.ManyHomesAmount.ToString())
                 .Matches(@"^(?!0)[1-9]\d{0,3}$|^9999$")
                 .WithMessage(ErrorMessages.ManyHomesAmount.ToString());
             });
 
             RuleSet("StartDate", () =>
             {
-                RuleFor(item => item.HaveEstimatedStartDate)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.RadioOption.ToString());
+               
 
                 When(item => item.HaveEstimatedStartDate == "Yes",
                     () => RuleFor(item => item.EstimatedStartDate)
@@ -44,25 +34,16 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("TypeHomes", () =>
             {
-                RuleFor(item => item.TypeHomes)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.CheckboxOption.ToString());
                 When(item => item.TypeHomes != null && item.TypeHomes.Contains("other"), () => RuleFor(item => item.TypeHomesOther).NotEmpty().WithMessage(ErrorMessages.TypeHomesOtherType.ToString()));
             });
 
             RuleSet("Type", () =>
             {
-                RuleFor(item => item.Type)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.RadioOption.ToString());
+              
             });
 
             RuleSet("Location", () =>
             {
-                RuleFor(item => item.LocationOption)
-                    .NotEmpty()
-                    .WithMessage(ErrorMessages.RadioOption.ToString());
-
                 When(item => item.LocationOption == "coordinates", () =>
                 {
                     RuleFor(item => item.LocationCoordinates)
@@ -94,32 +75,24 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("PlanningRef", () =>
             {
-                RuleFor(item => item.PlanningRef)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.RadioOption.ToString());
+
             });
 
             RuleSet("PlanningRefEnter", () =>
             {
                 RuleFor(item => item.PlanningRefEnter)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.InvalidReferenceNumber.ToString())
                 .Matches(@"^\d{2}/[A-Z\d]+/[A-Z\d]+$")
                 .WithMessage(ErrorMessages.InvalidReferenceNumber.ToString());
             });
 
             RuleSet("Ownership", () =>
             {
-                RuleFor(item => item.Ownership)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.RadioOption.ToString());
+              
             });
 
             RuleSet("GrantFunding", () =>
             {
-                RuleFor(item => item.GrantFunding)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.RadioOption.ToString());
+               
             });
 
             RuleSet("GrantFundingMore", () =>
@@ -158,9 +131,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("ChargesDebt", () =>
             {
-                RuleFor(item => item.ChargesDebt)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.RadioOption.ToString());
+                
 
                 When(item => item.ChargesDebt == "Yes",
                     () => RuleFor(item => item.ChargesDebtInfo)
@@ -175,17 +146,10 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("AffordableHomes", () =>
             {
-                RuleFor(item => item.AffordableHomes)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.RadioOption.ToString());
+             
             });
 
-            RuleSet("CheckAnswers", () =>
-            {
-                RuleFor(item => item.CheckAnswers)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.CheckAnswersOption.ToString());
-            });
+          
 
             RuleSet("Additional", () =>
             {
@@ -263,6 +227,33 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                             .WithMessage(ErrorMessages.EnterMoreDetails.ToString())
                         );
             });
+
+            RuleSet("CheckAnswers", () =>
+            {
+                RuleFor(item => item.CheckAnswers)
+                .NotEmpty()
+                .WithMessage(ErrorMessages.SecurityCheckAnswers.ToString());
+
+                When(item => item.CheckAnswers == "Yes", () =>
+                {
+                    RuleFor(m => m).Must(x =>
+                    !string.IsNullOrEmpty(x.Name) &&
+                    !string.IsNullOrEmpty(x.ManyHomes) &&
+                    !string.IsNullOrEmpty(x.HaveEstimatedStartDate) &&
+                    !(x.TypeHomes != null && x.TypeHomes.Length > 0) &&
+                    !string.IsNullOrEmpty(x.Type) &&
+                    !string.IsNullOrEmpty(x.Location) &&
+                    !string.IsNullOrEmpty(x.PlanningRef) &&
+                    (x.PlanningRef == "No" || !string.IsNullOrEmpty(x.PlanningRefEnter)) &&
+                    !string.IsNullOrEmpty(x.GrantFunding) &&
+                    (x.GrantFunding == "No" || !string.IsNullOrEmpty(x.Ownership) ) &&
+                    (x.GrantFunding == "No" || !string.IsNullOrEmpty(x.ChargesDebt)) &&
+                    !string.IsNullOrEmpty(x.AffordableHomes) &&
+                    (x.Ownership == "No" || (!string.IsNullOrEmpty(x.PurchaseYear)))
+                    ).WithMessage(ErrorMessages.CheckAnswersOption.ToString());
+                });
+            });
+
         }
 
         private bool ValidateCoordinates(string coordinates, out string invalidCharacters)

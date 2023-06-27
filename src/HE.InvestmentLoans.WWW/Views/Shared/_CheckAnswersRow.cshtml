@@ -1,6 +1,6 @@
 @using System.Web;
 @{
-    var showRow = !(ViewData["Title"] == null || ViewData["Value"] == null || ViewData["Link"] == null);
+    var showRow = !(ViewData["Title"] == null);
 
     var value = ViewData["Value"];
     var valueList = value as IEnumerable<string>;
@@ -21,7 +21,14 @@
             }
             else
             {
-                <p>@value</p>
+                if (value != null)
+                {
+                    <p>@value</p>
+                }
+                else
+                {
+                    <p>Not provided</p>
+                }
             }
         </gds-summary-list-value-v2>
         <gds-summary-list-actions-v2>
