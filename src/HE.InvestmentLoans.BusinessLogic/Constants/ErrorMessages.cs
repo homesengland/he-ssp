@@ -22,7 +22,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Constants
         public static ErrorMessages NoPurchaseDay { get { return new ErrorMessages("The date you purchased this land must include a day"); } }
         public static ErrorMessages NoPurchaseMonth { get { return new ErrorMessages("The date you purchased this land must include a month"); } }
         public static ErrorMessages NoPurchaseYear { get { return new ErrorMessages("The date you purchased this land must include a year"); } }
-        public static ErrorMessages IncorrectPurchaseDate { get { return new ErrorMessages("The date you purchased this site land must be a real date"); } }
+        public static ErrorMessages IncorrectPurchaseDate { get { return new ErrorMessages("The date you purchased this land must be a real date"); } }
         public static ErrorMessages EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
         public static ErrorMessages AmountPoundInput(string name) => PoundInput($"The amount of {name} provided");
         public static ErrorMessages PoundInput(string name) => new ErrorMessages($"{name} must be entered as a number, in pounds and pence");

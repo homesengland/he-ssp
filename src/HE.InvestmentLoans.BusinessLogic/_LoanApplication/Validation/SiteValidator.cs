@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.Constants;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -23,8 +24,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
             RuleSet("ManyHomes", () =>
             {
                 RuleFor(item => item.ManyHomes)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.ManyHomesAmount.ToString())
                 .Matches(@"^(?!0)[1-9]\d{0,3}$|^9999$")
                 .WithMessage(ErrorMessages.ManyHomesAmount.ToString());
             });
@@ -235,26 +234,26 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
                 When(item => item.Cost == null,
                     () => RuleFor(item => item.Cost)
-                            .NotEmpty()
-                            .WithMessage(ErrorMessages.PoundInput("The purchase value of the project").ToString())
+                    .NotEmpty()
+                            .WithMessage(ErrorMessages.PoundInput("The purchase/current value of the land").ToString())
                         );
 
                 When(item => item.Cost != null,
                     () => RuleFor(item => item.Cost)
                             .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
-                            .WithMessage(ErrorMessages.PoundInput("The purchase value of the project").ToString())
+                            .WithMessage(ErrorMessages.PoundInput("The purchase/current value of the land").ToString())
                         );
 
                 When(item => item.Value == null,
                     () => RuleFor(item => item.Value)
                             .NotEmpty()
-                            .WithMessage(ErrorMessages.PoundInput("The current value of the project").ToString())
+                            .WithMessage(ErrorMessages.PoundInput("The purchase/current value of the land").ToString())
                         );
 
                 When(item => item.Value != null,
                     () => RuleFor(item => item.Value)
                             .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
-                            .WithMessage(ErrorMessages.PoundInput("The current value of the project").ToString())
+                            .WithMessage(ErrorMessages.PoundInput("The purchase/current value of the land").ToString())
                         );
 
                 When(item => item.Source == null,

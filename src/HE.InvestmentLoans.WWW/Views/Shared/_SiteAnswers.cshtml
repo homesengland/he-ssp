@@ -58,7 +58,7 @@
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
     { "Title", "Number of homes" },
-    { "Value", Model?.ManyHomes },
+    { "Value", Model?.ManyHomes ?? "Not provided" },
     { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "ManyHomes" }) }
     })
 

@@ -102,8 +102,8 @@
                     <gds-div-hint>
                         If you do not know, enter the nearest estimate.
                     </gds-div-hint>
-                    <gds-input govuk-formgroup-asp-for="Cost" type="number" asp-excludelabel
-                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-input--width-2" value=@Model?.Cost />
+                    <gds-input govuk-formgroup-asp-for="Cost" type="text" asp-excludelabel
+                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.Cost />
                 </gds-field-set>
 
                 <gds-field-set class="govuk-!-margin-bottom-6" role="group">
@@ -115,8 +115,8 @@
                         If you do not know, enter the nearest estimate.
                     </gds-div-hint>
 
-                    <gds-input govuk-formgroup-asp-for="Value" type="number" asp-excludelabel
-                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-input--width-2" value=@Model?.Value />
+                    <gds-input govuk-formgroup-asp-for="Value" type="text" asp-excludelabel
+                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.Value />
                 </gds-field-set>
 
                 <gds-field-set class="govuk-!-margin-bottom-6" role="group">

@@ -136,7 +136,8 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
             _machine.Configure(State.Ownership)
                 .PermitIf(Trigger.Continue, State.Additional, () => _site.Ownership == "Yes")
                 .PermitIf(Trigger.Continue, State.GrantFunding, () => _site.Ownership != "Yes")
-                .Permit(Trigger.Back, State.Location)
+                .PermitIf(Trigger.Back, State.CheckPlanning, () => _site.PlanningRef == "Yes")
+                .PermitIf(Trigger.Back, State.Location, () => _site.PlanningRef != "Yes")
                 .PermitIf(Trigger.Change, State.Additional, () => _site.Ownership == "Yes")
                 .PermitIf(Trigger.Change, State.GrantFunding, () => _site.Ownership != "Yes");
 

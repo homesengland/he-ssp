@@ -7,14 +7,14 @@
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
         { "Title", "Gross Development Value " },
-        { "Value", MoneyLabelHelper.Pounds(Model.GrossDevelopmentValue) },
+        { "Value", MoneyLabelHelper.Pounds(Model.GrossDevelopmentValue) ?? "Not provided" },
         { "Link", Url.Action("Change","Funding", new {id = id,  state = "GDV" }) }
     })
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
         { "Title", "Total project costs" },
-        { "Value", MoneyLabelHelper.Pounds(Model.TotalCosts) },
+        { "Value", MoneyLabelHelper.Pounds(Model.TotalCosts) ?? "Not provided" },
         { "Link", Url.Action("Change","Funding", new {id = id,  state = "TotalCosts" }) }
     })
 
