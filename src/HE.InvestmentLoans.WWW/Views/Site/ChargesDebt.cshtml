@@ -13,9 +13,11 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="radioInvalid">
-                <gds-legend class="govuk-fieldset__legend--l">
-                    To the best of your knowledge, are there any legal charges outstanding or debt secured on this development land?
-                </gds-legend>
+                <gds-label-wrapper>
+                    <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
+                        To the best of your knowledge, are there any legal charges outstanding or debt secured on this development land?
+                    </gds-label>
+                </gds-label-wrapper>
 
                 <gds-div-hint class="govuk-!-margin-bottom-6">
                     There may be a legal charge over the development as security for funding any development activity or land purchase.

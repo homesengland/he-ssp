@@ -13,9 +13,11 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="radioInvalid">
-                <gds-legend class="govuk-fieldset__legend--l govuk-!-margin-bottom-4">
-                    Does this project have any abnormal costs?
-                </gds-legend>
+                    <gds-label-wrapper>
+                        <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
+                            Does this project have any abnormal costs?
+                        </gds-label>
+                    </gds-label-wrapper>
                 <gds-div-hint class="govuk-!-margin-bottom-8">
                     Abnormal costs are additional or unusual costs that you might face when developing a site.
                 </gds-div-hint>

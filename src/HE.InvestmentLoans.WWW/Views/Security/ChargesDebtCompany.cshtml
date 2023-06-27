@@ -13,9 +13,11 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="radioInvalid">
-                <gds-legend class="govuk-fieldset__legend--l">
-                    Are there any charges outstanding or debt secured on this company?
-                </gds-legend>
+                <gds-label-wrapper>
+                    <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
+                        Are there any charges outstanding or debt secured on this company?
+                    </gds-label>
+                </gds-label-wrapper>
 
                 <gds-div-hint>
                     You may have also taken out a fixed or floating charge over the general assets in the company. This is a charge typically referred to as a Debenture.

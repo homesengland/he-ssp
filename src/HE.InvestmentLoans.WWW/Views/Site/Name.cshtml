@@ -9,9 +9,11 @@
     <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.Id, id = id })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     <partial name="_ErrorSummaryPartial" model="null" />
-    <gds-legend class="govuk-fieldset__legend--l govuk-!-margin-bottom-6">
-        Add a project
-    </gds-legend>
+    <gds-label-wrapper>
+        <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
+            Add a project
+        </gds-label>
+    </gds-label-wrapper>
     <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="Name" asp-method="post" novalidate>
         <gds-field-set>
             <gds-div-form-group invalid="inputInvalid">
