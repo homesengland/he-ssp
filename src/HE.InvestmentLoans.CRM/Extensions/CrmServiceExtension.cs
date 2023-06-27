@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using HE.InvestmentLoans.Common.Models.App;
+using Microsoft.Xrm.Sdk;
 
 namespace HE.InvestmentLoans.CRM.Extensions
 {
@@ -8,7 +9,7 @@ namespace HE.InvestmentLoans.CRM.Extensions
     {
         public static void AddCrmConnection(this IServiceCollection services)
         {
-            services.AddScoped<ServiceClient>(services =>
+            services.AddScoped<IOrganizationService>(services =>
             {
                 var config = services.GetRequiredService<IDataverseConfig>();
                 var connectionString = $@"
