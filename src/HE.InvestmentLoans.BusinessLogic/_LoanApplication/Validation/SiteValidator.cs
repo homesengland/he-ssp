@@ -24,8 +24,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
             RuleSet("ManyHomes", () =>
             {
                 RuleFor(item => item.ManyHomes)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.ManyHomesAmount.ToString())
                 .Matches(@"^(?!0)[1-9]\d{0,3}$|^9999$")
                 .WithMessage(ErrorMessages.ManyHomesAmount.ToString());
             });
