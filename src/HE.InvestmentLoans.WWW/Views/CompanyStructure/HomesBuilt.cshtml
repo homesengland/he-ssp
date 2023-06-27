@@ -6,7 +6,6 @@
         </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
 
-        <gds-field-set>
             <gds-label-wrapper>
                 <gds-label size="@ControlSize.L" for="Company.HomesBuilt">
                     How many homes in the past three years has your organisation built?
@@ -24,7 +23,6 @@
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Company.StateChanged?"Change":"Continue")">
                 Continue
             </button>
-        </gds-field-set>
     </form>
 
     <partial name="_HomeAndCheckAnswersLinks" />

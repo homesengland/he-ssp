@@ -11,11 +11,13 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-error-form-group asp-for="Company.ExistingCompany">
-                <gds-label-wrapper>
-                    <gds-label size="@ControlSize.L" for="Company.ExistingCompany">
-                        Provide more information about your organisation
-                    </gds-label>
-                </gds-label-wrapper>
+                <legend>
+                    <gds-label-wrapper>
+                        <gds-label size="@ControlSize.L" for="Company.ExistingCompany">
+                            Provide more information about your organisation
+                        </gds-label>
+                    </gds-label-wrapper>
+                </legend>
                 <gds-div-hint>
                     Tell us about your organisation structure, including if your organisation is or has a parent company, or is part of a group structure.
                 </gds-div-hint>
