@@ -173,7 +173,8 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
                .Permit(Trigger.Change, State.CheckAnswers);
 
             _machine.Configure(State.CheckAnswers)
-                .Permit(Trigger.Continue, State.Complete)
+                .PermitIf(Trigger.Continue, State.Complete, () => _site.CheckAnswers == "Yes")
+                .IgnoreIf(Trigger.Continue, () => _site.CheckAnswers != "Yes")
                 .Permit(Trigger.Back, State.AffordableHomes);
 
             _machine.Configure(State.Complete)

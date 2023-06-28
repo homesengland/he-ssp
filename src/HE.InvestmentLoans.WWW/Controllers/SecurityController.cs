@@ -68,7 +68,7 @@ namespace HE.InvestmentLoans.WWW.Controllers
                 ex.Results.ForEach(item => item.AddToModelState(ModelState, null));
             }
 
-            if (workflow.IsCompleted() || sessionModel.Security.CheckAnswers == "No")
+            if (workflow.IsCompleted() || (sessionModel.Security.CheckAnswers == "No" && action != "Change"))
             {
                 var loanWorkflow = new LoanApplicationWorkflow(sessionModel, mediator);
                 return RedirectToAction("Workflow", "LoanApplication", new { id = sessionModel.ID, ending = loanWorkflow.GetName() });
