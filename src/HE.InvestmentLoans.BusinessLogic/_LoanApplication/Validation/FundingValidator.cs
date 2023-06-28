@@ -12,16 +12,28 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
             {
              
 
-                When(item => item.GrossDevelopmentValue != null,
-                    () => RuleFor(item => item.GrossDevelopmentValue)
-                            .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
+                            .NotEmpty()
+                            .WithMessage(ErrorMessages.EstimatedPoundInput("GDV").ToString())
+                        );
+
+                            .NotEmpty()
+                            .WithMessage(ErrorMessages.EstimatedPoundInput("GDV").ToString())
+                        );
+
+                            .NotEmpty()
+          
+
                             .WithMessage(ErrorMessages.EstimatedPoundInput("GDV").ToString())
                         );
             });
 
             RuleSet("TotalCosts", () =>
             {
-          
+                When(item => item.TotalCosts == null,
+                    () => RuleFor(item => item.TotalCosts)
+                            .NotEmpty()
+                            .WithMessage(ErrorMessages.EstimatedPoundInput("total cost").ToString())
+                        );
 
                 When(item => item.TotalCosts != null,
                     () => RuleFor(item => item.TotalCosts)

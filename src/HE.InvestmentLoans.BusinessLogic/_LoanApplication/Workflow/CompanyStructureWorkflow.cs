@@ -70,7 +70,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
               .Permit(Trigger.Continue, State.ExistingCompany)
               .Permit(Trigger.Change, State.CheckAnswers)
               .Permit(Trigger.Back, State.Index);
-         
+
             _machine.Configure(State.ExistingCompany)
                 .Permit(Trigger.Continue, State.HomesBuilt)
                 .Permit(Trigger.Back, State.Purpose)
@@ -79,7 +79,18 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
             _machine.Configure(State.HomesBuilt)
                 .Permit(Trigger.Continue, State.CheckAnswers)
                 .Permit(Trigger.Back, State.ExistingCompany)
-                .Permit(Trigger.Change, State.CheckAnswers);
+                .Permit(Trigger.Change, State.CheckAnswers)
+                .OnExit(() =>
+                {
+                    if (_model.Company.HomesBuilt == "0")
+                    {
+                        _model.Company.HomesBuilt = "0";
+                    }
+                    else
+                    {
+                        _model.Company.HomesBuilt = _model.Company.HomesBuilt?.TrimStart('0');
+                    }
+                });
 
             _machine.Configure(State.CheckAnswers)
                .PermitIf(Trigger.Continue, State.Complete, () => _model.Company.CheckAnswers == "Yes")

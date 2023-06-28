@@ -21,17 +21,17 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set role="group">
             <gds-div-form-group>
-                <gds-legend class="govuk-fieldset__legend--l">
+                <gds-h1 size="ControlSize.L">
                     Additional project details
-                </gds-legend>
+                </gds-h1>
                 <gds-div-hint>
                     The land can include any buildings to be redeveloped or refurbished.
                 </gds-div-hint>
 
                 <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=@isDateFormInvalid>
-                    <gds-label size="ControlSize.S">
+                    <gds-legend size="ControlSize.S">
                         When was this land purchased?
-                    </gds-label>
+                    </gds-legend>
                     <gds-div-hint>
                         If you have purchased multiple areas of land, enter the most recent purchase date.
                     </gds-div-hint>
@@ -102,8 +102,8 @@
                     <gds-div-hint>
                         If you do not know, enter the nearest estimate.
                     </gds-div-hint>
-                    <gds-input govuk-formgroup-asp-for="Cost" type="number" asp-excludelabel
-                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-input--width-2" value=@Model?.Cost />
+                    <gds-input govuk-formgroup-asp-for="Cost" type="text" asp-excludelabel
+                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.Cost />
                 </gds-field-set>
 
                 <gds-field-set class="govuk-!-margin-bottom-6" role="group">
@@ -115,15 +115,14 @@
                         If you do not know, enter the nearest estimate.
                     </gds-div-hint>
 
-                    <gds-input govuk-formgroup-asp-for="Value" type="number" asp-excludelabel
-                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-input--width-2" value=@Model?.Value />
+                    <gds-input govuk-formgroup-asp-for="Value" type="text" asp-excludelabel
+                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.Value />
                 </gds-field-set>
 
                 <gds-field-set class="govuk-!-margin-bottom-6" role="group">
-                    <gds-label size="ControlSize.S">
+                    <gds-legend size="ControlSize.S">
                         What is the source of this valuation?
-                    </gds-label>
-
+                    </gds-legend>
                     <gds-radio govuk-formgroup-asp-for="Source" asp-isexcludeheader
                                asp-selectlistitems="TemporaryFormOptions.SiteAdditionalSource">
                     </gds-radio>

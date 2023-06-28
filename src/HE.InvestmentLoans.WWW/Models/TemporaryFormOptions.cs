@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.Enums;
+ï»¿using HE.InvestmentLoans.BusinessLogic.Enums;
 using HE.InvestmentLoans.WWW.Helpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -16,13 +16,13 @@ namespace HE.InvestmentLoans.WWW.Models
             new SelectItemWithSummaryLabel()
             {
                 Value = "refinance",
-                Text = "Refinance - you’re planning to build the homes and let them out, using an investment loan to refinance the proposed Homes England development loan",
+                Text = "Refinance - youâ€™re planning to build the homes and let them out, using an investment loan to refinance the proposed Homes England development loan",
                 SummaryLabel = "Refinance"
             },
             new SelectItemWithSummaryLabel()
             {
                 Value = "repay",
-                Text = "Repay - you’re planning to build the homes and sell them when complete, using the sales income to repay the loan",
+                Text = "Repay - youâ€™re planning to build the homes and sell them when complete, using the sales income to repay the loan",
                 SummaryLabel = "Repay"
             }
         };

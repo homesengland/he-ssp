@@ -13,9 +13,11 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="radioInvalid || conditionalInputInvalid">
-                <gds-legend class="govuk-fieldset__legend--l">
-                    Do you have an estimated build start date for this project?
-                </gds-legend>
+                <gds-label-wrapper>
+                    <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
+                        Do you have an estimated build start date for this project?
+                    </gds-label>
+                </gds-label-wrapper>
 
                 <gds-div-hint class="govuk-!-margin-bottom-6">
                     This is the first ‘spade in ground’ date.

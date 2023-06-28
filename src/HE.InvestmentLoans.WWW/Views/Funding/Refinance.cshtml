@@ -21,10 +21,11 @@
     <partial name="_ErrorSummaryPartial" model="null" />
     <gds-field-set>
         <gds-div-form-group invalid="radioInvalid">
-            <gds-legend class="govuk-fieldset__legend--l">
-                Are you going to refinance or repay this Homes England loan?
-
-            </gds-legend>
+            <gds-label-wrapper>
+                <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
+                    Are you going to refinance or repay this Homes England loan?
+                </gds-label>
+            </gds-label-wrapper>
             @if (radioInvalid)
             {
                 <p class="govuk-error-message">

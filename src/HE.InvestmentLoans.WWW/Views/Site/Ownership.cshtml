@@ -13,9 +13,11 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="inputInvalid">
-                <gds-legend class="govuk-fieldset__legend--l">
-                    Do you have full ownership of this land?
-                </gds-legend>
+                <gds-label-wrapper>
+                    <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
+                        Do you have full ownership of this land?
+                    </gds-label>
+                </gds-label-wrapper>
 
                 <gds-radio-yes-no asp-for="Ownership" class="govuk-!-margin-bottom-6"></gds-radio-yes-no>
             </gds-div-form-group>
