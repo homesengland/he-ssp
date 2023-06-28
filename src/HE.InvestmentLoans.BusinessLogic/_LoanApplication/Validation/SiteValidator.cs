@@ -86,7 +86,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 When(item => item.GrantFundingAmount == null,
                     () => RuleFor(item => item.GrantFundingAmount)
                             .NotEmpty()
-                            .WithMessage(ErrorMessages.AmountPoundInput("funding").ToString())
+                            .WithMessage(ErrorMessages.EnterMoreDetails.ToString())
                         );
 
                 When(item => item.GrantFundingAmount != null,

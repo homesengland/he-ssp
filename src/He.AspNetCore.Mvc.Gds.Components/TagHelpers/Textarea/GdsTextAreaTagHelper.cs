@@ -62,6 +62,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Textarea
                     if (propertyInError.isPropertyInError)
                     {
                         output.TagName = HtmlConstants.Div;
+                        TagConstruct.ConstructClass(output, "govuk-form-group govuk-form-group--error");
 
                         contentBuilder.Append($"<p id=\"contact-by-email-error\" class=\"govuk-error-message\">  " +
                                                 $"<span class=\"govuk-visually-hidden\">Error:</span> {propertyInError.entry.Errors.First().ErrorMessage}" +
