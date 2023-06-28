@@ -12,7 +12,7 @@
         </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
-            <gds-div-form-group invalid="radioInvalid || conditionalInputInvalid">
+            <gds-div-form-group invalid="radioInvalid">
                 <gds-legend size="ControlSize.L">
                     <gds-fieldset-heading>
                         Do you have an estimated build start date for this project?
@@ -26,44 +26,49 @@
                     <div class="govuk-radios__item">
                         @Html.RadioButtonFor(m => m.HaveEstimatedStartDate,"Yes", new { @class="govuk-radios__input", id="HaveEstimatedStartDate"})
                         <label class="govuk-label govuk-radios__label" for="HaveEstimatedStartDate">Yes</label>
-                        <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="HaveEstimatedStartDate-conditional">
-                            <label class="govuk-label" for="EstimatedStartDate">Build start date</label>
-                            <gds-div-hint class="govuk-!-margin-bottom-6">
-                                For example, 12 11 2007
-                            </gds-div-hint>
-                            <gds-div-date-input id="EstimatedStartDate">
-                                <gds-div-date-input-item>
-                                    <gds-input govuk-formgroup-asp-for="EstimatedStartDate.Value.Day" name="EstimatedStartDate.Value.Day"
-                                               type="text"
-                                               asp-autocomplete="on"
-                                               asp-labelclass="govuk-date-input__label"
-                                               asp-excludefieldvalidation="true"
-                                               asp-labeltext="Day"
-                                               pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-2" />
-                                </gds-div-date-input-item>
-                                <gds-div-date-input-item>
-                                    <gds-input govuk-formgroup-asp-for="EstimatedStartDate.Value.Month" name="EstimatedStartDate.Value.Month"
-                                               type="text"
-                                               asp-autocomplete="on"
-                                               asp-hiddenlabeltext=""
-                                               asp-labelclass="govuk-date-input__label"
-                                               asp-excludefieldvalidation="true"
-                                               asp-labeltext="Month"
-                                               pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-2" />
-                                </gds-div-date-input-item>
-                                <gds-div-date-input-item>
-                                    <gds-input govuk-formgroup-asp-for="EstimatedStartDate.Value.Year" name="EstimatedStartDate.Value.Year"
-                                               type="text"
-                                               asp-autocomplete="on"
-                                               asp-hiddenlabeltext=""
-                                               asp-labelclass="govuk-date-input__label"
-                                               asp-excludefieldvalidation="true"
-                                               asp-labeltext="Year"
-                                               pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-4" />
-                                </gds-div-date-input-item>
-                            </gds-div-date-input>
+                    </div>
 
-                        </div>
+                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="HaveEstimatedStartDate-conditional">
+                        <gds-div-form-group invalid="conditionalInputInvalid">
+                        <label class="govuk-label" for="EstimatedStartDate">Build start date</label>
+                        <gds-div-hint class="govuk-!-margin-bottom-6">
+                            For example, 12 11 2007
+                        </gds-div-hint>
+                        <gds-div-date-input id="EstimatedStartDate">
+                            <gds-div-date-input-item>
+                                <gds-input govuk-formgroup-asp-for="EstimatedStartDate.Value.Day" name="EstimatedStartDate.Value.Day"
+                                           type="text"
+                                           asp-autocomplete="on"
+                                           asp-labelclass="govuk-date-input__label"
+                                           asp-excludefieldvalidation="true"
+                                           asp-labeltext="Day"
+                                           is-invalid=conditionalInputInvalid
+                                           pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-2" />
+                            </gds-div-date-input-item>
+                            <gds-div-date-input-item>
+                                <gds-input govuk-formgroup-asp-for="EstimatedStartDate.Value.Month" name="EstimatedStartDate.Value.Month"
+                                           type="text"
+                                           asp-autocomplete="on"
+                                           asp-hiddenlabeltext=""
+                                           asp-labelclass="govuk-date-input__label"
+                                           asp-excludefieldvalidation="true"
+                                           asp-labeltext="Month"
+                                           is-invalid=conditionalInputInvalid
+                                           pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-2" />
+                            </gds-div-date-input-item>
+                            <gds-div-date-input-item>
+                                <gds-input govuk-formgroup-asp-for="EstimatedStartDate.Value.Year" name="EstimatedStartDate.Value.Year"
+                                           type="text"
+                                           asp-autocomplete="on"
+                                           asp-hiddenlabeltext=""
+                                           asp-labelclass="govuk-date-input__label"
+                                           asp-excludefieldvalidation="true"
+                                           asp-labeltext="Year"
+                                           is-invalid=conditionalInputInvalid
+                                           pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-4" />
+                            </gds-div-date-input-item>
+                        </gds-div-date-input>
+                        </gds-div-form-group>
                     </div>
                     <div class="govuk-radios__item">
                         @Html.RadioButtonFor(m => m.HaveEstimatedStartDate,"No", new { @class="govuk-radios__input", id="HaveEstimatedStartDate-1"})
