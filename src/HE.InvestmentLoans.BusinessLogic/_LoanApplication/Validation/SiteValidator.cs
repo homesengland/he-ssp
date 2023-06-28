@@ -166,25 +166,25 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 When(item => item.Cost == null,
                     () => RuleFor(item => item.Cost)
                     .NotEmpty()
-                            .WithMessage(ErrorMessages.PoundInput("The purchase/current value of the land").ToString())
+                            .WithMessage(ErrorMessages.PoundInput("The purchase value of the land").ToString())
                         );
 
                 When(item => item.Cost != null,
                     () => RuleFor(item => item.Cost)
                             .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
-                            .WithMessage(ErrorMessages.PoundInput("The purchase/current value of the land").ToString())
+                            .WithMessage(ErrorMessages.PoundInput("The purchase value of the land").ToString())
                         );
 
                 When(item => item.Value == null,
                     () => RuleFor(item => item.Value)
                             .NotEmpty()
-                            .WithMessage(ErrorMessages.PoundInput("The purchase/current value of the land").ToString())
+                            .WithMessage(ErrorMessages.PoundInput("The current value of the land").ToString())
                         );
 
                 When(item => item.Value != null,
                     () => RuleFor(item => item.Value)
                             .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
-                            .WithMessage(ErrorMessages.PoundInput("The purchase/current value of the land").ToString())
+                            .WithMessage(ErrorMessages.PoundInput("The current value of the land").ToString())
                         );
 
                 When(item => item.Source == null,
