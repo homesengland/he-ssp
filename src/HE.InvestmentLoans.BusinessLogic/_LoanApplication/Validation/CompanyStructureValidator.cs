@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 {
@@ -15,8 +14,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
         public CompanyStructureValidator()
         {
-
-
             RuleSet("ExistingCompany", () =>
             {
                 When(
@@ -65,10 +62,16 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                             {
                                 if (int.TryParse(value, out var intValue))
                                 {
-                                    return value.Length <= 5 && intValue >= 0 && intValue <= 99999;
+                                    return intValue >= 0 && intValue <= 99999;
                                 }
                                 return true;
                             }).WithMessage("The number of homes your organisation has built in the past 3 years must be 99,999 or less")
+                    );
+
+                When(item => item.HomesBuilt != null,
+                    () => RuleFor(item => item.HomesBuilt)
+                    .Matches(@"^0$|^[1-9][0-9]*$")
+                    .WithMessage("The number of homes your organisation has built in the past 3 years must be 99,999 or less")
                     );
             });
 
