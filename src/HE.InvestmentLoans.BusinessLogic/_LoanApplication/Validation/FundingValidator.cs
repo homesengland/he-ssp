@@ -15,13 +15,10 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                               .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
                               .WithMessage(ErrorMessages.EstimatedPoundInput("GDV").ToString())
                           );
-
             });
 
             RuleSet("TotalCosts", () =>
             {
-        
-
                 When(item => item.TotalCosts != null,
                     () => RuleFor(item => item.TotalCosts)
                             .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
@@ -31,8 +28,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("PrivateSectorFunding", () =>
             {
-
-
                 When(item => item.PrivateSectorFunding == "Yes",
                     () => RuleFor(item => item.PrivateSectorFundingResult)
                             .NotEmpty()
@@ -48,8 +43,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("AbnormalCosts", () =>
             {
-
-
                 When(item => item.AbnormalCosts == "Yes",
                     () => RuleFor(item => item.AbnormalCostsInfo)
                             .NotEmpty()
@@ -59,16 +52,12 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("Refinance", () =>
             {
-
-
                 When(item => item.Refinance == "refinance",
                     () => RuleFor(item => item.RefinanceInfo)
                             .NotEmpty()
                             .WithMessage("Enter more detail about your refinance exit strategy")
                         );
             });
-
-
 
             RuleSet("CheckAnswers", () =>
             {

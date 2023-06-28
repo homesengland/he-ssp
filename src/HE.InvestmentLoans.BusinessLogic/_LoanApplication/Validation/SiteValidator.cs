@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.Constants;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -13,8 +12,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
     {
         public SiteValidator()
         {
-          
-
             RuleSet("ManyHomes", () =>
             {
                 RuleFor(item => item.ManyHomes)
@@ -24,23 +21,20 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("StartDate", () =>
             {
-               
-
                 When(item => item.HaveEstimatedStartDate == "Yes",
                     () => RuleFor(item => item.EstimatedStartDate)
-                            .NotEmpty()
-                            .WithMessage(ErrorMessages.InvalidDate.ToString())
-                        );
+                    .NotEmpty()
+                    .WithMessage(ErrorMessages.InvalidDate.ToString())
+                );
             });
 
             RuleSet("TypeHomes", () =>
             {
-                When(item => item.TypeHomes != null && item.TypeHomes.Contains("other"), () => RuleFor(item => item.TypeHomesOther).NotEmpty().WithMessage(ErrorMessages.TypeHomesOtherType.ToString()));
-            });
-
-            RuleSet("Type", () =>
-            {
-              
+                When(item => item.TypeHomes != null && item.TypeHomes.Contains("other"), 
+                    () => RuleFor(item => item.TypeHomesOther)
+                    .NotEmpty()
+                    .WithMessage(ErrorMessages.TypeHomesOtherType.ToString())
+                );
             });
 
             RuleSet("Location", () =>
@@ -74,26 +68,11 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 });
             });
 
-            RuleSet("PlanningRef", () =>
-            {
-
-            });
-
             RuleSet("PlanningRefEnter", () =>
             {
                 RuleFor(item => item.PlanningRefEnter)
                 .Matches(@"^\d{2}/[A-Z\d]+/[A-Z\d]+$")
                 .WithMessage(ErrorMessages.InvalidReferenceNumber.ToString());
-            });
-
-            RuleSet("Ownership", () =>
-            {
-              
-            });
-
-            RuleSet("GrantFunding", () =>
-            {
-               
             });
 
             RuleSet("GrantFundingMore", () =>
@@ -107,14 +86,13 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 When(item => item.GrantFundingAmount == null,
                     () => RuleFor(item => item.GrantFundingAmount)
                             .NotEmpty()
-                            .WithMessage(ErrorMessages.AmountPoundInput("funding").ToString())
+                            .WithMessage(ErrorMessages.EnterMoreDetails.ToString())
                         );
 
                 When(item => item.GrantFundingAmount != null,
                     () => RuleFor(item => item.GrantFundingAmount)
                             .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
                             .WithMessage(ErrorMessages.AmountPoundInput("funding").ToString())
-                            
                         );
 
                 When(item => item.GrantFundingName == null,
@@ -132,25 +110,12 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("ChargesDebt", () =>
             {
-                
-
                 When(item => item.ChargesDebt == "Yes",
                     () => RuleFor(item => item.ChargesDebtInfo)
                             .NotEmpty()
                             .WithMessage(ErrorMessages.EnterExistingLegal.ToString())
                         );
             });
-
-
-
-
-
-            RuleSet("AffordableHomes", () =>
-            {
-             
-            });
-
-          
 
             RuleSet("Additional", () =>
             {
@@ -201,25 +166,25 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 When(item => item.Cost == null,
                     () => RuleFor(item => item.Cost)
                     .NotEmpty()
-                            .WithMessage(ErrorMessages.PoundInput("The purchase/current value of the land").ToString())
+                            .WithMessage(ErrorMessages.PoundInput("The purchase value of the land").ToString())
                         );
 
                 When(item => item.Cost != null,
                     () => RuleFor(item => item.Cost)
                             .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
-                            .WithMessage(ErrorMessages.PoundInput("The purchase/current value of the land").ToString())
+                            .WithMessage(ErrorMessages.PoundInput("The purchase value of the land").ToString())
                         );
 
                 When(item => item.Value == null,
                     () => RuleFor(item => item.Value)
                             .NotEmpty()
-                            .WithMessage(ErrorMessages.PoundInput("The purchase/current value of the land").ToString())
+                            .WithMessage(ErrorMessages.PoundInput("The current value of the land").ToString())
                         );
 
                 When(item => item.Value != null,
                     () => RuleFor(item => item.Value)
                             .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
-                            .WithMessage(ErrorMessages.PoundInput("The purchase/current value of the land").ToString())
+                            .WithMessage(ErrorMessages.PoundInput("The current value of the land").ToString())
                         );
 
                 When(item => item.Source == null,
@@ -254,7 +219,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                     ).WithMessage(ErrorMessages.CheckAnswersOption.ToString());
                 });
             });
-
         }
 
         private bool ValidateCoordinates(string coordinates, out string invalidCharacters)

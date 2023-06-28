@@ -10,20 +10,20 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
         {
             RuleSet("ChargesDebtCompany", () =>
             {
-              
-                When(item => item.ChargesDebtCompany == "Yes", () => RuleFor(item => item.ChargesDebtCompanyInfo).NotEmpty().WithMessage(ErrorMessages.EnterMoreDetails.ToString()));
-            });
-
-            RuleSet("DirLoans", () =>
-            {
-               
+                When(item => item.ChargesDebtCompany == "Yes", 
+                    () => RuleFor(item => item.ChargesDebtCompanyInfo)
+                    .NotEmpty()
+                    .WithMessage(ErrorMessages.EnterMoreDetails.ToString())
+                );
             });
 
             RuleSet("DirLoansSub", () =>
             {
-              
-
-                When(item => item.DirLoansSub == "No", () => RuleFor(item => item.DirLoansSubMore).NotEmpty().WithMessage(ErrorMessages.EnterMoreDetails.ToString()));
+                When(item => item.DirLoansSub == "No", 
+                    () => RuleFor(item => item.DirLoansSubMore)
+                    .NotEmpty()
+                    .WithMessage(ErrorMessages.EnterMoreDetails.ToString())
+                );
             });
 
             RuleSet("CheckAnswers", () =>

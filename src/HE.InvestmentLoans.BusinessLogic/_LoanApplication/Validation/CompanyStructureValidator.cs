@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 {
@@ -15,12 +14,8 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
         public CompanyStructureValidator()
         {
-
-
             RuleSet("ExistingCompany", () =>
             {
-
-
                 When(
                     c => c.CompanyInfoFileName != null,
                     () => RuleFor(e => e.CompanyInfoFile)
@@ -28,15 +23,14 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                             e => e.Length < 20 * 1024 * 1024
                         )
                         .WithMessage("The selected file must be smaller than or equal to 20MB")
-
                     );
 
                 RuleFor(e => e.CompanyInfoFileName)
                   .Must(
                             e => _allowedExtensions.Contains(Path.GetExtension(e.ToLower()))
                         )
-                        .WithMessage("The selected file must be a PDF, Word Doc, JPEG or RTF").When(e => !string.IsNullOrEmpty(e.CompanyInfoFileName));
-
+                        .WithMessage("The selected file must be a PDF, Word Doc, JPEG or RTF")
+                        .When(e => !string.IsNullOrEmpty(e.CompanyInfoFileName));
             });
 
             RuleSet("HomesBuilt", () =>
@@ -68,10 +62,16 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                             {
                                 if (int.TryParse(value, out var intValue))
                                 {
-                                    return value.Length <= 5 && intValue >= 0 && intValue <= 99999;
+                                    return intValue >= 0 && intValue <= 99999;
                                 }
                                 return true;
                             }).WithMessage("The number of homes your organisation has built in the past 3 years must be 99,999 or less")
+                    );
+
+                When(item => item.HomesBuilt != null,
+                    () => RuleFor(item => item.HomesBuilt)
+                    .Matches(@"^0$|^[1-9][0-9]*$")
+                    .WithMessage("The number of homes your organisation has built in the past 3 years must be 99,999 or less")
                     );
             });
 
@@ -87,7 +87,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                     !string.IsNullOrEmpty(x.Purpose) &&
                     !string.IsNullOrEmpty(x.ExistingCompany) &&
                     !string.IsNullOrEmpty(x.HomesBuilt)
-                    
                     ).WithMessage(ErrorMessages.CheckAnswersOption.ToString());
                 });
                 
