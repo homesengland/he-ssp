@@ -16,11 +16,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("TotalCosts", () =>
             {
-                When(item => item.TotalCosts == null,
-                    () => RuleFor(item => item.TotalCosts)
-                            .NotEmpty()
-                            .WithMessage(ErrorMessages.EstimatedPoundInput("total cost").ToString())
-                        );
+        
 
                 When(item => item.TotalCosts != null,
                     () => RuleFor(item => item.TotalCosts)
