@@ -10,7 +10,11 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
         {
             RuleSet("GDV", () =>
             {
-             
+                When(item => item.GrossDevelopmentValue != null,
+                      () => RuleFor(item => item.GrossDevelopmentValue)
+                              .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
+                              .WithMessage(ErrorMessages.EstimatedPoundInput("GDV").ToString())
+                          );
 
             });
 
