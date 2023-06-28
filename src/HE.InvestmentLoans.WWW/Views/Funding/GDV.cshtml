@@ -12,12 +12,13 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="inputInvalid">
-                <gds-label-wrapper>
-                    <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
-                        What is the estimated Gross Development Value (GDV) of this project?
-                    </gds-label>
-                </gds-label-wrapper>
-
+                <legend>
+                    <gds-label-wrapper>
+                        <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
+                            What is the estimated Gross Development Value (GDV) of this project?
+                        </gds-label>
+                    </gds-label-wrapper>
+                </legend>
                 <gds-input-wrapper class="govuk-!-margin-bottom-8">
                     <gds-input asp-prefixtext="GdsInputPrefixText.Pounds"
                                class="govuk-input--width-5"

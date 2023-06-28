@@ -21,11 +21,11 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="radioInvalid">
-                <gds-label-wrapper>
-                    <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>
                         How do you want to provide your project location?
-                    </gds-label>
-                </gds-label-wrapper>
+                    </gds-fieldset-heading>
+                </gds-legend>
                 <gds-custom-radio asp-for="LocationOption"
                                   radio-items="TemporaryFormOptions.SiteLocation"
                                   id="location"
@@ -42,9 +42,7 @@
                 Continue
             </button>
         </gds-field-set>
-
     </form>
-
     <partial name="_HomeAndCheckAnswersLinks" />
 </gds-div-grid-column-two-thirds>
 

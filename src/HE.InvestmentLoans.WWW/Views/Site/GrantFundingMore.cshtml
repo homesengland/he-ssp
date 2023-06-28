@@ -14,19 +14,21 @@
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set role="group">
             <gds-div-form-group invalid="inputInvalid">
-                <gds-label-wrapper>
-                    <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>
                         Provide more information
-                    </gds-label>
-                </gds-label-wrapper>
+                    </gds-fieldset-heading>
+                </gds-legend>
                 <gds-div-hint class="govuk-!-margin-bottom-6">
                     Tell us more about any public sector grant funding this site has received.
                 </gds-div-hint>
 
                 <gds-field-set role="group">
-                    <gds-label for="GrantFundingSource" size="ControlSize.M">
-                        Who provided the previous funding?
-                    </gds-label>
+                    <legend>
+                        <gds-label for="GrantFundingSource" size="ControlSize.M">
+                            Who provided the previous funding?
+                        </gds-label>
+                    </legend>
 
                     <gds-input-wrapper class="govuk-!-margin-bottom-6">
                         <gds-input govuk-formgroup-asp-for="GrantFundingSource"
@@ -37,9 +39,11 @@
                 </gds-field-set>
 
                 <gds-field-set role="group">
-                    <gds-label for="GrantFundingAmount" size="ControlSize.M">
-                        How much funding have they provided?
-                    </gds-label>
+                    <legend>
+                        <gds-label for="GrantFundingAmount" size="ControlSize.M">
+                            How much funding have they provided?
+                        </gds-label>
+                    </legend>
 
                     <gds-input class="govuk-!-width-one-quarter govuk-!-margin-bottom-6"
                                    govuk-formgroup-asp-for="GrantFundingAmount"
@@ -50,9 +54,11 @@
                 </gds-field-set>
 
                 <gds-field-set role="group">
-                    <gds-label for="GrantFundingName" size="ControlSize.M">
-                        What is the name of the grant or fund?
-                    </gds-label>
+                    <legend>
+                        <gds-label for="GrantFundingName" size="ControlSize.M">
+                            What is the name of the grant or fund?
+                        </gds-label>
+                    </legend>
 
                     <gds-input-wrapper class="govuk-!-margin-bottom-6">
                         <gds-input govuk-formgroup-asp-for="GrantFundingName"
@@ -63,10 +69,11 @@
                 </gds-field-set>
 
                 <gds-field-set role="group">
-                    <gds-label for="GrantFundingPurpose" size="ControlSize.M">
-                        What was it for?
-                    </gds-label>
-
+                    <legend>
+                        <gds-label for="GrantFundingPurpose" size="ControlSize.M">
+                            What was it for?
+                        </gds-label>
+                    </legend>
                     <gds-text-area asp-for="GrantFundingPurpose"
                                    rows="5"></gds-text-area>
                 </gds-field-set>

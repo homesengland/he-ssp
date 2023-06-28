@@ -14,11 +14,11 @@
 
         <gds-field-set>
             <gds-div-form-group invalid="radioInvalid">
-                <gds-label-wrapper>
-                    <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>
                         Do you have any director loans against this company?
-                    </gds-label>
-                </gds-label-wrapper>
+                    </gds-fieldset-heading>
+                </gds-legend>
                 @if (radioInvalid)
                 {
                     <p id="charges-debt-company-error" class="govuk-error-message">

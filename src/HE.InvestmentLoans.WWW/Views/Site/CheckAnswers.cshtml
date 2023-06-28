@@ -17,13 +17,11 @@
 
         @await Html.PartialAsync("_SiteAnswers", Model)
 
-
         <gds-div-form-group>
             <gds-field-set>
                 <gds-legend class="govuk-fieldset__legend--m">
                     Have you completed this section?
                 </gds-legend>
-
 
                 <gds-radio govuk-formgroup-asp-for="CheckAnswers"
                            asp-selectlistitems="TemporaryFormOptions.CheckAnswersCompletion"
