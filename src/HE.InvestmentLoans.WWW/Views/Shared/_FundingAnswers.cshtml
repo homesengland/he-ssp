@@ -29,7 +29,7 @@
     {
         { "Title", "Refinance or repay" },
         { "Value", TemporaryFormOptions.LoanResolution.GetSummaryLabel(Model.Refinance, Model.RefinanceInfo) },
-        { "Link", Url.Action("Change","Funding", new {id = id,  state = "PrivateSectorFunding" }) }
+        { "Link", Url.Action("Change","Funding", new {id = id,  state = "Refinance" }) }
     })
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
