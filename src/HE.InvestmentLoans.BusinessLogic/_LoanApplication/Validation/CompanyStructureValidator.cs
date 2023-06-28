@@ -15,18 +15,11 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
         public CompanyStructureValidator()
         {
-            RuleSet("Purpose", () =>
-            {
-                RuleFor(e => e.Purpose)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.RadioOption.ToString());
-            });
+
 
             RuleSet("ExistingCompany", () =>
             {
-                RuleFor(e => e.ExistingCompany)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.EnterMoreDetails.ToString());
+
 
                 When(
                     c => c.CompanyInfoFileName != null,
@@ -85,8 +78,19 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
             RuleSet("CheckAnswers", () =>
             {
                 RuleFor(item => item.CheckAnswers)
-                .NotEmpty()
-                .WithMessage(ErrorMessages.CheckAnswersOption.ToString());
+               .NotEmpty()
+               .WithMessage(ErrorMessages.SecurityCheckAnswers.ToString());
+
+                When(item => item.CheckAnswers == "Yes", () =>
+                {
+                    RuleFor(m => m).Must(x => 
+                    !string.IsNullOrEmpty(x.Purpose) &&
+                    !string.IsNullOrEmpty(x.ExistingCompany) &&
+                    !string.IsNullOrEmpty(x.HomesBuilt)
+                    
+                    ).WithMessage(ErrorMessages.CheckAnswersOption.ToString());
+                });
+                
             });
         }
     }

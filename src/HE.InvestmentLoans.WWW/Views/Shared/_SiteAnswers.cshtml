@@ -50,7 +50,7 @@
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
-    { "Title", "Site name" },
+    { "Title", "Start date" },
     { "Value", Model?.HaveEstimatedStartDate + (Model.EstimatedStartDate.HasValue ? ", "+ Model.EstimatedStartDate.Value.ToShortDateString() : "" ) },
     { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "StartDate" }) }
     })
@@ -83,12 +83,15 @@
     { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "PlanningRef" }) }
     })
 
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    @if (Model.PlanningRef == "Yes")
     {
-    { "Title", "Planning reference number" },
-    { "Value", Model?.PlanningRefEnter },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "PlanningRefEnter" }) }
-    })
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Planning reference number" },
+        { "Value", Model?.PlanningRefEnter },
+        { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "PlanningRefEnter" }) }
+        })
+    }
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
@@ -124,14 +127,15 @@
     { "Value", Model?.Ownership },
     { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Ownership" }) }
     })
-
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    @if (Model.Ownership == "Yes")
     {
-    { "Title", "Additional details" },
-    { "Value", additionalProjectDetails },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Additional" }) }
-    })
-
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Additional details" },
+        { "Value", additionalProjectDetails },
+        { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Additional" }) }
+        })
+    }
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
     { "Title", "Public sector grant funding" },
@@ -139,19 +143,22 @@
     { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "GrantFunding" }) }
     })
 
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    @if (Model.GrantFunding == "Yes")
     {
-    { "Title", "Additional information" },
-    { "Value", grantFundingMore },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "GrantFundingMore" }) }
-    })
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Additional information" },
+        { "Value", grantFundingMore },
+        { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "GrantFundingMore" }) }
+        })
 
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-    {
-    { "Title", "Legal charges" },
-    { "Value", Model?.ChargesDebtInfo != null ? $"{ Model.ChargesDebtInfo }" : $"{ Model.ChargesDebt }" },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "ChargesDebt" }) }
-    })
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Legal charges" },
+        { "Value", Model?.ChargesDebtInfo != null ? $"{ Model.ChargesDebtInfo }" : $"{ Model.ChargesDebt }" },
+        { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "ChargesDebt" }) }
+        })
+    }
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {

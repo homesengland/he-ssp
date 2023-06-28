@@ -111,7 +111,8 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
                 
             _machine.Configure(State.PlanningRef)
                 .PermitIf(Trigger.Continue, State.PlanningRefEnter, () => _site.PlanningRef == "Yes")
-                .PermitIf(Trigger.Continue, State.Location, () => _site.PlanningRef != "Yes")
+                .PermitIf(Trigger.Continue, State.Location, () => _site.PlanningRef == "No")
+                .PermitIf(Trigger.Continue, State.Ownership, () => string.IsNullOrEmpty(_site.PlanningRef) )
                 .PermitIf(Trigger.Change, State.PlanningRefEnter, () => _site.PlanningRef == "Yes")
                 .PermitIf(Trigger.Change, State.Location, () => _site.PlanningRef != "Yes")
 
@@ -136,8 +137,8 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
             _machine.Configure(State.Ownership)
                 .PermitIf(Trigger.Continue, State.Additional, () => _site.Ownership == "Yes")
                 .PermitIf(Trigger.Continue, State.GrantFunding, () => _site.Ownership != "Yes")
-                .PermitIf(Trigger.Back, State.CheckPlanning, () => _site.PlanningRef == "Yes")
-                .PermitIf(Trigger.Back, State.Location, () => _site.PlanningRef != "Yes")
+                .PermitIf(Trigger.Back, State.PlanningRef, () => string.IsNullOrEmpty(_site.PlanningRef) )
+                .Permit(Trigger.Back, State.Location)
                 .PermitIf(Trigger.Change, State.Additional, () => _site.Ownership == "Yes")
                 .PermitIf(Trigger.Change, State.GrantFunding, () => _site.Ownership != "Yes");
 

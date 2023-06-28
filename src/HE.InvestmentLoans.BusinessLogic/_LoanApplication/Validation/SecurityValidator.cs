@@ -10,18 +10,18 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
         {
             RuleSet("ChargesDebtCompany", () =>
             {
-                RuleFor(item => item.ChargesDebtCompany).Must(val => val == "Yes" || val == "No").WithMessage(ErrorMessages.RadioOption.ToString());
+              
                 When(item => item.ChargesDebtCompany == "Yes", () => RuleFor(item => item.ChargesDebtCompanyInfo).NotEmpty().WithMessage(ErrorMessages.EnterMoreDetails.ToString()));
             });
 
             RuleSet("DirLoans", () =>
             {
-                RuleFor(item => item.DirLoans).Must(val => val == "Yes" || val == "No").WithMessage(ErrorMessages.RadioOption.ToString());
+               
             });
 
             RuleSet("DirLoansSub", () =>
             {
-                RuleFor(item => item.DirLoansSub).Must(val => val == "Yes" || val == "No").WithMessage(ErrorMessages.RadioOption.ToString());
+              
 
                 When(item => item.DirLoansSub == "No", () => RuleFor(item => item.DirLoansSubMore).NotEmpty().WithMessage(ErrorMessages.EnterMoreDetails.ToString()));
             });
@@ -31,6 +31,15 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 RuleFor(item => item.CheckAnswers)
                 .NotEmpty()
                 .WithMessage(ErrorMessages.SecurityCheckAnswers.ToString());
+
+                When(item => item.CheckAnswers == "Yes", () =>
+                {
+                    RuleFor(m => m).Must(x =>
+                    !string.IsNullOrEmpty(x.ChargesDebtCompany) &&
+                    !string.IsNullOrEmpty(x.DirLoans) &&
+                        (x.DirLoans == "No" || !string.IsNullOrEmpty(x.DirLoansSub))
+                    ).WithMessage(ErrorMessages.CheckAnswersOption.ToString());
+                });
             });
         }
     }

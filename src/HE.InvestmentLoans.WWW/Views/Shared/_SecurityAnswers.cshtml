@@ -18,12 +18,15 @@
     { "Link", Url.Action("Change","Security", new {id = id,  state = "ChargesDebtCompany" }) }
     })
 
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    @if (Model.ChargesDebtCompany == "Yes")
     {
-    { "Title", "Debenture" },
-    { "Value",  Model.ChargesDebtCompanyInfo },
-    { "Link", Url.Action("Change","Security", new {id = id,  state = "ChargesDebtCompany" }) }
-    })
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Debenture" },
+        { "Value",  Model.ChargesDebtCompanyInfo },
+        { "Link", Url.Action("Change","Security", new {id = id,  state = "ChargesDebtCompany" }) }
+        })
+    }
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
@@ -31,11 +34,13 @@
     { "Value",  Model.DirLoans },
     { "Link", Url.Action("Change","Security", new {id = id,  state = "DirLoans" }) }
     })
-
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    @if (Model.DirLoans=="Yes")
     {
-    { "Title", "Subordinated loans" },
-    { "Value", dirLoansSub },
-    { "Link", Url.Action("Change","Security", new {id = id,  state = "DirLoansSub" }) }
-    })
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Subordinated loans" },
+        { "Value", dirLoansSub },
+        { "Link", Url.Action("Change","Security", new {id = id,  state = "DirLoansSub" }) }
+        })
+    }
 </gds-summary-list>
