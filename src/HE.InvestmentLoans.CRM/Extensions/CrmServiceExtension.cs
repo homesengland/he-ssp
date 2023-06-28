@@ -10,8 +10,6 @@ namespace HE.InvestmentLoans.CRM.Extensions
         public static void AddCrmConnection(this IServiceCollection services)
         {
             services.AddScoped<IOrganizationService>(services =>
-            services.AddScoped<IOrganizationService> (services =>
->>>>>>>>> Temporary merge branch 2
             {
                 var config = services.GetRequiredService<IDataverseConfig>();
                 var connectionString = $@"
