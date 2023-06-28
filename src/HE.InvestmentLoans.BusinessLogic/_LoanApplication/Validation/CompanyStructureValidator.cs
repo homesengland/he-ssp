@@ -19,8 +19,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("ExistingCompany", () =>
             {
-
-
                 When(
                     c => c.CompanyInfoFileName != null,
                     () => RuleFor(e => e.CompanyInfoFile)
@@ -28,15 +26,14 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                             e => e.Length < 20 * 1024 * 1024
                         )
                         .WithMessage("The selected file must be smaller than or equal to 20MB")
-
                     );
 
                 RuleFor(e => e.CompanyInfoFileName)
                   .Must(
                             e => _allowedExtensions.Contains(Path.GetExtension(e.ToLower()))
                         )
-                        .WithMessage("The selected file must be a PDF, Word Doc, JPEG or RTF").When(e => !string.IsNullOrEmpty(e.CompanyInfoFileName));
-
+                        .WithMessage("The selected file must be a PDF, Word Doc, JPEG or RTF")
+                        .When(e => !string.IsNullOrEmpty(e.CompanyInfoFileName));
             });
 
             RuleSet("HomesBuilt", () =>
@@ -87,7 +84,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                     !string.IsNullOrEmpty(x.Purpose) &&
                     !string.IsNullOrEmpty(x.ExistingCompany) &&
                     !string.IsNullOrEmpty(x.HomesBuilt)
-                    
                     ).WithMessage(ErrorMessages.CheckAnswersOption.ToString());
                 });
                 

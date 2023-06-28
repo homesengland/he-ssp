@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.Constants;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -13,8 +12,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
     {
         public SiteValidator()
         {
-          
-
             RuleSet("ManyHomes", () =>
             {
                 RuleFor(item => item.ManyHomes)
@@ -24,23 +21,20 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("StartDate", () =>
             {
-               
-
                 When(item => item.HaveEstimatedStartDate == "Yes",
                     () => RuleFor(item => item.EstimatedStartDate)
-                            .NotEmpty()
-                            .WithMessage(ErrorMessages.InvalidDate.ToString())
-                        );
+                    .NotEmpty()
+                    .WithMessage(ErrorMessages.InvalidDate.ToString())
+                );
             });
 
             RuleSet("TypeHomes", () =>
             {
-                When(item => item.TypeHomes != null && item.TypeHomes.Contains("other"), () => RuleFor(item => item.TypeHomesOther).NotEmpty().WithMessage(ErrorMessages.TypeHomesOtherType.ToString()));
-            });
-
-            RuleSet("Type", () =>
-            {
-              
+                When(item => item.TypeHomes != null && item.TypeHomes.Contains("other"), 
+                    () => RuleFor(item => item.TypeHomesOther)
+                    .NotEmpty()
+                    .WithMessage(ErrorMessages.TypeHomesOtherType.ToString())
+                );
             });
 
             RuleSet("Location", () =>
@@ -74,26 +68,11 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 });
             });
 
-            RuleSet("PlanningRef", () =>
-            {
-
-            });
-
             RuleSet("PlanningRefEnter", () =>
             {
                 RuleFor(item => item.PlanningRefEnter)
                 .Matches(@"^\d{2}/[A-Z\d]+/[A-Z\d]+$")
                 .WithMessage(ErrorMessages.InvalidReferenceNumber.ToString());
-            });
-
-            RuleSet("Ownership", () =>
-            {
-              
-            });
-
-            RuleSet("GrantFunding", () =>
-            {
-               
             });
 
             RuleSet("GrantFundingMore", () =>
@@ -114,7 +93,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                     () => RuleFor(item => item.GrantFundingAmount)
                             .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
                             .WithMessage(ErrorMessages.AmountPoundInput("funding").ToString())
-                            
                         );
 
                 When(item => item.GrantFundingName == null,
@@ -132,25 +110,12 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("ChargesDebt", () =>
             {
-                
-
                 When(item => item.ChargesDebt == "Yes",
                     () => RuleFor(item => item.ChargesDebtInfo)
                             .NotEmpty()
                             .WithMessage(ErrorMessages.EnterExistingLegal.ToString())
                         );
             });
-
-
-
-
-
-            RuleSet("AffordableHomes", () =>
-            {
-             
-            });
-
-          
 
             RuleSet("Additional", () =>
             {
@@ -254,7 +219,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                     ).WithMessage(ErrorMessages.CheckAnswersOption.ToString());
                 });
             });
-
         }
 
         private bool ValidateCoordinates(string coordinates, out string invalidCharacters)
