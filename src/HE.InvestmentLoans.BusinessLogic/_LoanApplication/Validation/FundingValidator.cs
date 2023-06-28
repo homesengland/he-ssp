@@ -12,19 +12,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
             {
              
 
-                            .NotEmpty()
-                            .WithMessage(ErrorMessages.EstimatedPoundInput("GDV").ToString())
-                        );
-
-                            .NotEmpty()
-                            .WithMessage(ErrorMessages.EstimatedPoundInput("GDV").ToString())
-                        );
-
-                            .NotEmpty()
-          
-
-                            .WithMessage(ErrorMessages.EstimatedPoundInput("GDV").ToString())
-                        );
             });
 
             RuleSet("TotalCosts", () =>
