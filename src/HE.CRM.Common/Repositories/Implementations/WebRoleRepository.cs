@@ -20,17 +20,17 @@ namespace HE.CRM.Common.Repositories.Implementations
             string fetchXML = @"<fetch>
                                   <entity name=""invln_webrole"">
                                     <attribute name=""invln_name"" />
-                                    <link-entity name=""invln_contact_webrole"" from=""invln_webroleid"" to=""invln_webroleid"" intersect=""true"">
-                                      <link-entity name=""contact"" from=""contactid"" to=""contactid"" intersect=""true"">
-                                        <filter>
-                                          <condition attribute=""contactid"" operator=""eq"" value=""" + contactId + @""" />
-                                        </filter>
-                                      </link-entity>
-                                    </link-entity>
                                     <link-entity name=""invln_portal"" from=""invln_portalid"" to=""invln_portalid"">
                                       <filter>
-                                        <condition attribute=""invln_portalid"" operator=""eq"" value=""" + portalId + @""" />
+                                        <condition attribute=""invln_portalid"" operator=""eq"" value="""+ portalId + @""" />
                                       </filter>
+                                    </link-entity>
+                                    <link-entity name=""invln_contactwebrole"" from=""invln_webroleid"" to=""invln_webroleid"">
+                                      <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">
+                                        <filter>
+                                          <condition attribute=""contactid"" operator=""eq"" value="""+ contactId + @""" />
+                                        </filter>
+                                      </link-entity>
                                     </link-entity>
                                   </entity>
                                 </fetch>";

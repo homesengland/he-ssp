@@ -87,7 +87,7 @@
   "entityNamesFilter": [
     "account",
     "contact",
-    "invln_contact_webrole",
+    "invln_contactwebrole",
     "invln_loanapplication",
     "invln_portal",
     "invln_portalpermissionlevel",

@@ -52,13 +52,13 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Contact_Webrole"/> entities.
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_contactwebrole"/> entities.
 		/// </summary>
-		public System.Linq.IQueryable<DataverseModel.invln_Contact_Webrole> invln_Contact_WebroleSet
+		public System.Linq.IQueryable<DataverseModel.invln_contactwebrole> invln_contactwebroleSet
 		{
 			get
 			{
-				return this.CreateQuery<DataverseModel.invln_Contact_Webrole>();
+				return this.CreateQuery<DataverseModel.invln_contactwebrole>();
 			}
 		}
 		

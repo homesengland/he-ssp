@@ -5,9 +5,7 @@ using HE.CRM.Common.Repositories.Interfaces;
 using System.Linq;
 using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Query;
-using Microsoft.Xrm.Sdk;
 using System.Collections.Generic;
-using Microsoft.Xrm.Sdk.PluginTelemetry;
 using Microsoft.Xrm.Sdk.Messages;
 
 namespace HE.CRM.Common.Repositories.Implementations

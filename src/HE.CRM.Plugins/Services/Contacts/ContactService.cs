@@ -17,6 +17,7 @@ namespace HE.CRM.Plugins.Services.Contacts
 
         private readonly IContactRepository contactRepository;
         private readonly IWebRoleRepository webRoleRepository;
+        private readonly IContactWebroleRepository contactWebroleRepository;
 
         #endregion
 
@@ -26,6 +27,7 @@ namespace HE.CRM.Plugins.Services.Contacts
         {
             contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
             webRoleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
+            contactWebroleRepository = CrmRepositoriesFactory.Get<IContactWebroleRepository>();
         }
 
         #endregion
@@ -66,12 +68,12 @@ namespace HE.CRM.Plugins.Services.Contacts
 
         private void AssignRoleToContact(Contact contact, invln_Webrole role)
         {
-            AssociateRequest associateRequest = new AssociateRequest();
-            associateRequest.RelatedEntities = new EntityReferenceCollection();
-            associateRequest.RelatedEntities.Add(contact.ToEntityReference());
-            associateRequest.Relationship = new Relationship("invln_Contact_Webrole");
-            associateRequest.Target = role.ToEntityReference();
-            contactRepository.ExecuteAssociateRequest(associateRequest);
+            var contactRoleToCreate = new invln_contactwebrole()
+            {
+                invln_Contactid = contact.ToEntityReference(),
+                invln_Webroleid = role.ToEntityReference(),
+            };
+            contactWebroleRepository.Create(contactRoleToCreate);
         }
     }
 }

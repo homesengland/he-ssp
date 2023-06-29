@@ -47,7 +47,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             };
 
             fakedContext.Initialize(new List<Entity> { contact, defaultRole, portal });
-            fakedContext.AddRelationship("invln_Contact_Webrole", new XrmFakedRelationship("contactid", "invln_webroleid", Contact.EntityLogicalName, invln_Webrole.EntityLogicalName));
 
             Exception exception = null;
             try
@@ -69,7 +68,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             Assert.IsNull(exception);
             Assert.AreEqual(pluginContext.OutputParameters.Values.ElementAt(0), defaultRole.invln_Name);
-            A.CallTo(() => fakedContext.GetOrganizationService().Execute(A<AssociateRequest>.Ignored)).MustHaveHappened();
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_contactwebrole>.Ignored)).MustHaveHappened();
 
         }
 
@@ -94,17 +93,12 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 invln_Name = "role name",
             };
 
-            var relationship = new Entity()
+            var relationship = new invln_contactwebrole()
             {
                 Id = Guid.NewGuid(),
-                LogicalName = "invln_contact_webrole",
-                Attributes = {
-                    {"contactid", contact.Id },
-                    {"invln_webroleid", role.Id}
-                },
+                invln_Contactid = contact.ToEntityReference(),
+                invln_Webroleid = role.ToEntityReference(),
             };
-
-            fakedContext.AddRelationship("invln_Contact_Webrole", new XrmFakedRelationship("contactid", "invln_webroleid", Contact.EntityLogicalName, invln_Webrole.EntityLogicalName));
 
             fakedContext.Initialize(new List<Entity> { contact, role, relationship, portal });
 
@@ -146,8 +140,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 invln_Name = "Default role",
             };
 
-            fakedContext.AddRelationship("invln_Contact_Webrole", new XrmFakedRelationship("contactid", "invln_webroleid", Contact.EntityLogicalName, invln_Webrole.EntityLogicalName));
-
             fakedContext.Initialize(new List<Entity> {  role, portal });
 
             Exception exception = null;
@@ -171,7 +163,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             Assert.IsNull(exception);
             Assert.AreEqual(pluginContext.OutputParameters.Values.ElementAt(0), role.invln_Name);
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<Contact>.Ignored)).MustHaveHappened();
-            A.CallTo(() => fakedContext.GetOrganizationService().Execute(A<AssociateRequest>.Ignored)).MustHaveHappened();
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_contactwebrole>.Ignored)).MustHaveHappened();
 
         }
 
@@ -201,17 +193,12 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 invln_Name = "Default role",
             };
 
-            var relationship = new Entity()
+            var relationship = new invln_contactwebrole()
             {
                 Id = Guid.NewGuid(),
-                LogicalName = "invln_contact_webrole",
-                Attributes = {
-                    {"contactid", contact.Id },
-                    {"invln_webroleid", role.Id}
-                },
+                invln_Contactid = contact.ToEntityReference(),
+                invln_Webroleid = role.ToEntityReference(),
             };
-
-            fakedContext.AddRelationship("invln_Contact_Webrole", new XrmFakedRelationship("contactid", "invln_webroleid", Contact.EntityLogicalName, invln_Webrole.EntityLogicalName));
 
             fakedContext.Initialize(new List<Entity> { contact, role, relationship, defaultRole, portal });
 
@@ -235,7 +222,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             Assert.IsNull(exception);
             Assert.AreEqual(pluginContext.OutputParameters.Values.ElementAt(0), defaultRole.invln_Name);
-            A.CallTo(() => fakedContext.GetOrganizationService().Execute(A<AssociateRequest>.Ignored)).MustHaveHappened();
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_contactwebrole>.Ignored)).MustHaveHappened();
         }
 
     }

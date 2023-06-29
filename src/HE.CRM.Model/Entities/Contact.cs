@@ -584,6 +584,7 @@ namespace DataverseModel
 			public const string he_PrefixID = "he_prefixid";
 			public const string Home2 = "home2";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_contact_invln_contactwebrole_Contactid = "invln_contact_invln_contactwebrole_Contactid";
 			public const string invln_Contact_Webrole = "invln_Contact_Webrole";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
 			public const string IsBackofficeCustomer = "isbackofficecustomer";
@@ -4732,6 +4733,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("Referencedcontact_parent_contact");
 				this.SetRelatedEntities<DataverseModel.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedcontact_parent_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_contact_invln_contactwebrole_Contactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_contactwebrole_Contactid")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_contactwebrole> invln_contact_invln_contactwebrole_Contactid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_contactwebrole>("invln_contact_invln_contactwebrole_Contactid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_contactwebrole_Contactid");
+				this.SetRelatedEntities<DataverseModel.invln_contactwebrole>("invln_contact_invln_contactwebrole_Contactid", null, value);
+				this.OnPropertyChanged("invln_contact_invln_contactwebrole_Contactid");
 			}
 		}
 		
