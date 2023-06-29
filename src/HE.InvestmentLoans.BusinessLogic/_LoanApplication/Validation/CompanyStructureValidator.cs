@@ -22,14 +22,14 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                         .Must(
                             e => e.Length < 20 * 1024 * 1024
                         )
-                        .WithMessage("The selected file must be smaller than or equal to 20MB")
+                        .WithMessage(ErrorMessages.FileIncorrectSize.ToString())
                     );
 
                 RuleFor(e => e.CompanyInfoFileName)
                   .Must(
                             e => _allowedExtensions.Contains(Path.GetExtension(e.ToLower()))
                         )
-                        .WithMessage("The selected file must be a PDF, Word Doc, JPEG or RTF")
+                        .WithMessage(ErrorMessages.FileIncorrectFormat.ToString())
                         .When(e => !string.IsNullOrEmpty(e.CompanyInfoFileName));
             });
 
@@ -49,7 +49,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                                     }
                                 }
                                 return true;
-                            }).WithMessage("The number of homes your organisation has built must be a whole number")
+                            }).WithMessage(ErrorMessages.HomesBuiltDecimalNumber.ToString())
                             .Must(value =>
                             {
                                 if (!int.TryParse(value, out var intValue))
@@ -57,7 +57,9 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                                     return false;
                                 }
                                 return true;
-                            }).WithMessage("The amount of homes your organisation has built must be a number")
+                            }).WithMessage(ErrorMessages.HomesBuiltIncorretInput.ToString())
+                            .Matches(@"^0$|^[1-9][0-9]*$")
+                            .WithMessage(ErrorMessages.HomesBuiltIncorrectNumber.ToString())
                             .Must(value =>
                             {
                                 if (int.TryParse(value, out var intValue))
@@ -65,13 +67,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                                     return intValue >= 0 && intValue <= 99999;
                                 }
                                 return true;
-                            }).WithMessage("The number of homes your organisation has built in the past 3 years must be 99,999 or less")
-                    );
-
-                When(item => item.HomesBuilt != null,
-                    () => RuleFor(item => item.HomesBuilt)
-                    .Matches(@"^0$|^[1-9][0-9]*$")
-                    .WithMessage("The number of homes your organisation has built in the past 3 years must be 99,999 or less")
+                            }).WithMessage(ErrorMessages.HomesBuiltIncorrectNumber.ToString())
                     );
             });
 

@@ -28,13 +28,13 @@ namespace HE.InvestmentLoans.BusinessLogic.Constants
         public static ErrorMessages AmountPoundInput(string name) => PoundInput($"The amount of {name} provided");
         public static ErrorMessages PoundInput(string name) => new ErrorMessages($"{name} must be entered as a number, in pounds and pence");
         public static ErrorMessages InvalidXYCoordinates(string invalidCharacters) => new ErrorMessages($"XY coordinates must not include {invalidCharacters}");
-        public static ErrorMessages EnterExistingLegal
-        {
-            get
-            {
-                return new ErrorMessages($"Enter any existing legal charges or debt secured on this land");
-            }
-        }
+        public static ErrorMessages EnterExistingLegal { get { return new ErrorMessages($"Enter any existing legal charges or debt secured on this land"); } }
+        public static ErrorMessages HomesBuiltDecimalNumber { get { return new ErrorMessages("The number of homes your organisation has built must be a whole number"); } }
+        public static ErrorMessages HomesBuiltIncorretInput { get { return new ErrorMessages("The amount of homes your organisation has built must be a number"); } }
+        public static ErrorMessages HomesBuiltIncorrectNumber { get { return new ErrorMessages("The number of homes your organisation has built in the past 3 years must be 99,999 or less"); } }
+        public static ErrorMessages FileIncorrectSize { get { return new ErrorMessages("The selected file must be smaller than or equal to 20MB"); } }
+        public static ErrorMessages FileIncorrectFormat { get { return new ErrorMessages("The selected file must be a PDF, Word Doc, JPEG or RTF"); } }
+
         public override string ToString()
         {
             return Value;
