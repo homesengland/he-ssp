@@ -50,8 +50,10 @@
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
-    { "Title", "Start date" },
-    { "Value", Model?.HaveEstimatedStartDate + (Model.EstimatedStartDate.HasValue ? ", "+ Model.EstimatedStartDate.Value.ToShortDateString() : "" ) },
+    { "Title", "Do you have start date?" },
+    { "Value", DateHelper.ConvertToDateStringWithDescription(
+                              Model?.EstimatedStartDay, Model?.EstimatedStartMonth, 
+                              Model?.EstimatedStartYear, Model?.HasEstimatedStartDate) },
     { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "StartDate" }) }
     })
 

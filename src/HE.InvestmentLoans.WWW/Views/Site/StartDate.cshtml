@@ -1,8 +1,8 @@
 ﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
 @{
     var id = ViewContext.RouteData.Values["id"];
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.HaveEstimatedStartDate));
-    var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.EstimatedStartDate));
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.HasEstimatedStartDate));
+    var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.EstimatedStartDay));
 }
 
 <gds-div-grid-column-two-thirds>
@@ -24,11 +24,11 @@
 
                 <div class="govuk-!-margin-bottom-8 govuk-radios">
                     <div class="govuk-radios__item">
-                        @Html.RadioButtonFor(m => m.HaveEstimatedStartDate,"Yes", new { @class="govuk-radios__input", id="HaveEstimatedStartDate"})
-                        <label class="govuk-label govuk-radios__label" for="HaveEstimatedStartDate">Yes</label>
+                        @Html.RadioButtonFor(m => m.HasEstimatedStartDate,"Yes", new { @class="govuk-radios__input", id="HasEstimatedStartDate"})
+                        <label class="govuk-label govuk-radios__label" for="HasEstimatedStartDate">Yes</label>
                     </div>
 
-                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="HaveEstimatedStartDate-conditional">
+                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="HasEstimatedStartDate-conditional">
                         <gds-div-form-group invalid="conditionalInputInvalid">
                         <label class="govuk-label" for="EstimatedStartDate">Build start date</label>
                         <gds-div-hint class="govuk-!-margin-bottom-6">
@@ -36,7 +36,7 @@
                         </gds-div-hint>
                         <gds-div-date-input id="EstimatedStartDate">
                             <gds-div-date-input-item>
-                                <gds-input govuk-formgroup-asp-for="EstimatedStartDate.Value.Day" name="EstimatedStartDate.Value.Day"
+                                    <gds-input govuk-formgroup-asp-for="EstimatedStartDay" name="EstimatedStartDay"
                                            type="text"
                                            asp-autocomplete="on"
                                            asp-labelclass="govuk-date-input__label"
@@ -46,7 +46,7 @@
                                            pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-2" />
                             </gds-div-date-input-item>
                             <gds-div-date-input-item>
-                                <gds-input govuk-formgroup-asp-for="EstimatedStartDate.Value.Month" name="EstimatedStartDate.Value.Month"
+                                    <gds-input govuk-formgroup-asp-for="EstimatedStartMonth" name="EstimatedStartMonth"
                                            type="text"
                                            asp-autocomplete="on"
                                            asp-hiddenlabeltext=""
@@ -57,7 +57,7 @@
                                            pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-2" />
                             </gds-div-date-input-item>
                             <gds-div-date-input-item>
-                                <gds-input govuk-formgroup-asp-for="EstimatedStartDate.Value.Year" name="EstimatedStartDate.Value.Year"
+                                    <gds-input govuk-formgroup-asp-for="EstimatedStartYear" name="EstimatedStartYear"
                                            type="text"
                                            asp-autocomplete="on"
                                            asp-hiddenlabeltext=""
@@ -71,8 +71,8 @@
                         </gds-div-form-group>
                     </div>
                     <div class="govuk-radios__item">
-                        @Html.RadioButtonFor(m => m.HaveEstimatedStartDate,"No", new { @class="govuk-radios__input", id="HaveEstimatedStartDate-1"})
-                        <label class="govuk-label govuk-radios__label" for="HaveEstimatedStartDate-1">No, I do not have a build start date yet</label>
+                        @Html.RadioButtonFor(m => m.HasEstimatedStartDate,"No", new { @class="govuk-radios__input", id="HasEstimatedStartDate-1"})
+                        <label class="govuk-label govuk-radios__label" for="HasEstimatedStartDate-1">No, I do not have a build start date yet</label>
                     </div>
                 </div>
 
@@ -84,4 +84,4 @@
     <partial name="_HomeAndCheckAnswersLinks" />
 </gds-div-grid-column-two-thirds>
 
-@await Html.YesNoConditionalInputScript(nameof(Model.HaveEstimatedStartDate))
+@await Html.YesNoConditionalInputScript(nameof(Model.HasEstimatedStartDate))

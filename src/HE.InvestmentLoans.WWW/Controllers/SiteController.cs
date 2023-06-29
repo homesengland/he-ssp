@@ -61,22 +61,6 @@ namespace HE.InvestmentLoans.WWW.Controllers
 
             SiteWorkflow workflow = new SiteWorkflow(sessionModel, mediator, site);
             var sitemodel = sessionModel.Sites.Where(item => item.Id == site).First();
-            if (Request.Form.Keys.Contains("EstimatedStartDate.Value.Day")
-                && Request.Form.Keys.Contains("EstimatedStartDate.Value.Month")
-                && Request.Form.Keys.Contains("EstimatedStartDate.Value.Year"))
-            {
-                try
-                {
-                    sitemodel.EstimatedStartDate = new DateTime(
-                        int.Parse(Request.Form["EstimatedStartDate.Value.Year"], System.Globalization.CultureInfo.CurrentCulture.NumberFormat),
-                        int.Parse(Request.Form["EstimatedStartDate.Value.Month"], System.Globalization.CultureInfo.CurrentCulture.NumberFormat),
-                        int.Parse(Request.Form["EstimatedStartDate.Value.Day"], System.Globalization.CultureInfo.CurrentCulture.NumberFormat));
-                    sitemodel.EstimatedStartDate = sitemodel.EstimatedStartDate;
-                }
-                catch
-                {
-                }
-            }
 
             try
             {

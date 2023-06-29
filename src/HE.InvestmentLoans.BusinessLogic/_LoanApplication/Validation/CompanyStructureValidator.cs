@@ -10,7 +10,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 {
     public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewModel>
     {
-        private string[] _allowedExtensions = new string[] { ".pdf", ".dic", ".jpeg", ".rtf" };
+        private string[] _allowedExtensions = new string[] { ".pdf", ".doc", ".docx", ".jpeg", ".jpg", ".rtf" };
 
         public CompanyStructureValidator()
         {
