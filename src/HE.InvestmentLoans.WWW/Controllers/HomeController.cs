@@ -17,7 +17,20 @@ namespace HE.InvestmentLoans.WWW.Controllers
         public IActionResult Index()
         {
             var x = this.User.Claims.ToList();
-            // var list = _mediator.Send(new BusinessLogic._Account.GetAll());
+
+            return View();
+        }
+
+        [Route("/callback")]
+        public IActionResult Callback()
+        {
+            return RedirectToAction(nameof(Dashboard));
+        }
+
+        [Route("/dashboard")]
+        [Authorize]
+        public IActionResult Dashboard()
+        {
             return View();
         }
 
