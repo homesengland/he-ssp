@@ -78,9 +78,6 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
-}
-else
-{
     app.Use((context, next) =>
     {
         // assume all non-development requests are https
