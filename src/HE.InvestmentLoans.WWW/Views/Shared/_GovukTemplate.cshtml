@@ -75,20 +75,14 @@
                 <a href=@(ViewData["HomepageUrl"] ?? RouteConstants.Homepage) class="govuk-header__link govuk-header__link--service-name">
                     @serviceName
                 </a>
-                <ul id="navigation" class="govuk-header__navigation " aria-label="Navigation menu">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="govuk-header__navigation-item">
-                            <a class="govuk-header__link govuk-link--no-visited-state" href="@signOutUrl">Sign out</a>
-                        </li>
+                        <a class="govuk-header__link govuk-header__signin govuk-link--no-visited-state" href="@signOutUrl">Sign out</a>
                     }
                     else
                     {
-                        <li class="govuk-header__navigation-item">
-                            <a class="govuk-header__link govuk-link--no-visited-state" href="@signInUrl">Sign in</a>
-                        </li>
+                        <a class="govuk-header__link govuk-header__signin govuk-link--no-visited-state" href="@signInUrl">Sign in</a>
                     }
-                </ul>
             </div>
         </div>
         @RenderSection("PhaseBanner", required: false)

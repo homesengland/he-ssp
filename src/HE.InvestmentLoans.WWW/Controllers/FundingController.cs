@@ -3,12 +3,14 @@ using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BL = HE.InvestmentLoans.BusinessLogic;
 
 namespace HE.InvestmentLoans.WWW.Controllers
 {
     [Route("application/{id}/funding")]
+    [Authorize]
     public class FundingController : Controller
     {
         private readonly ILogger<FundingController> logger;

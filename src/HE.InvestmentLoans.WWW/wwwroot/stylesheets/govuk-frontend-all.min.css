@@ -4295,6 +4295,12 @@ p + .govuk-heading-s,
     }
 }
 
+
+.govuk-header__signin {
+    float: right;
+    vertical-align: middle;
+}
+
 .govuk-header__logotype:last-child {
     margin-right: 0;
 }
