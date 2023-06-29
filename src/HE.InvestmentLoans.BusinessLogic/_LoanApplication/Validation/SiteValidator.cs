@@ -21,11 +21,51 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("StartDate", () =>
             {
-                When(item => item.HaveEstimatedStartDate == "Yes",
-                    () => RuleFor(item => item.EstimatedStartDate)
+                When(item => item.HasEstimatedStartDate == "Yes" 
+                    && (item.EstimatedStartDay == null || item.EstimatedStartMonth == null || item.EstimatedStartYear == null),
+                    () => RuleFor(item => item.EstimatedStartDay)
                     .NotEmpty()
-                    .WithMessage(ErrorMessages.InvalidDate.ToString())
+                    .WithMessage(ErrorMessages.NoStartDate.ToString())
                 );
+
+                When(item => item.HasEstimatedStartDate == "Yes"
+                    && (item.EstimatedStartDay != null || item.EstimatedStartMonth != null || item.EstimatedStartYear != null),
+                    () => RuleFor(item => item)
+                    .Must(model =>
+                    {
+                        try
+                        {
+                            var dateString = $"{model.EstimatedStartDay}/{model.EstimatedStartMonth}/{model.EstimatedStartYear}";
+                            return DateTime.TryParseExact(dateString, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+                        }
+                        catch
+                        {
+                            return false;
+                        }
+                    })
+                    .WithMessage(ErrorMessages.InvalidStartDate.ToString())
+                    .WithName("EstimatedStartDay")
+                );
+
+                When(item => item.PurchaseDay != null && item.PurchaseMonth != null && item.PurchaseYear != null,
+                    () =>
+                    {
+                        RuleFor(item => item)
+                        .Must(model =>
+                        {
+                            try
+                            {
+                                var dateString = $"{model.PurchaseDay}/{model.PurchaseMonth}/{model.PurchaseYear}";
+                                return DateTime.TryParseExact(dateString, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        })
+                        .WithMessage(ErrorMessages.IncorrectPurchaseDate.ToString())
+                        .WithName("PurchaseDate");
+                    });
             });
 
             RuleSet("TypeHomes", () =>
@@ -205,7 +245,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                     RuleFor(m => m).Must(x =>
                     !string.IsNullOrEmpty(x.Name) &&
                     !string.IsNullOrEmpty(x.ManyHomes) &&
-                    !string.IsNullOrEmpty(x.HaveEstimatedStartDate) &&
+                    !string.IsNullOrEmpty(x.HasEstimatedStartDate) &&
                     !(x.TypeHomes != null && x.TypeHomes.Length > 0) &&
                     !string.IsNullOrEmpty(x.Type) &&
                     !string.IsNullOrEmpty(x.Location) &&

@@ -49,8 +49,10 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
         public string Name { get; set; }
         public Guid Id { get; set; }
         public bool StateChanged { get; set; }
-        public string HaveEstimatedStartDate{get;set;}
-        public DateTime? EstimatedStartDate { get; set; }
+        public string HasEstimatedStartDate {get;set;}
+        public string EstimatedStartDay {get;set;}
+        public string EstimatedStartMonth {get;set;}
+        public string EstimatedStartYear {get;set;}
 
         public void RemoveAlternativeRoutesData()
         {

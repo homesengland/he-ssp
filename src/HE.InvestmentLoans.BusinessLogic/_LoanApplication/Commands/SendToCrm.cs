@@ -53,7 +53,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
                         siteCoordinates = site.LocationCoordinates, //site/Location
                         siteOwnership = site.Ownership, //site/Ownership
                         landRegistryTitleNumber = site.LocationLandRegistry, //site/Location
-                        dateOfPurchase = site.EstimatedStartDate, //site.PurchaseDate - probably not correct field, //site/Additional
+                        dateOfPurchase = site.PurchaseDate, //site.PurchaseDate - probably not correct field, //site/Additional
                         siteCost = site.Cost, //site/Additional
                         currentValue = site.Value, //site/Additional
                         valuationSource = site.Source, //site/Additional
