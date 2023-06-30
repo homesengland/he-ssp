@@ -21,12 +21,6 @@ namespace HE.InvestmentLoans.WWW.Controllers
             return View();
         }
 
-        [Route("/callback")]
-        public IActionResult Callback()
-        {
-            return RedirectToAction(nameof(Dashboard));
-        }
-
         [Route("/dashboard")]
         [Authorize]
         public IActionResult Dashboard()
