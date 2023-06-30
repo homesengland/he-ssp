@@ -34,6 +34,12 @@
                         <gds-div-hint class="govuk-!-margin-bottom-6">
                             For example, 12 11 2007
                         </gds-div-hint>
+                        @if (conditionalInputInvalid)
+                        {
+                            <p class="govuk-error-message">
+                                <span class="govuk-visually-hidden">Error:</span> @inputErrors
+                            </p>
+                        }
                         <gds-div-date-input id="EstimatedStartDate">
                             <gds-div-date-input-item>
                                     <gds-input govuk-formgroup-asp-for="EstimatedStartDay" name="EstimatedStartDay"
