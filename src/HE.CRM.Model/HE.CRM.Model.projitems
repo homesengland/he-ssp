@@ -12,11 +12,17 @@
     <Content Include="$(MSBuildThisFileDirectory)Settings\EarlyBound.Settings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinvestmentloansdatatocrm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Account.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Contact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_contactwebrole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Contact_Webrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanapplication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portalpermissionlevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_SiteDetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Webrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\activityfileattachment_objectcode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\activitypointer_ActivityTypeCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\activitypointer_DeliveryPriorityCode.cs" />
@@ -140,6 +146,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_CharacteristicType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_ChatAnswerType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_ChatQuestionnaireType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_ci_Locale.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_committype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_competitive.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_ComputableFields.cs" />

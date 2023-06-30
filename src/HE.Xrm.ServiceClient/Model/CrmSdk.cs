@@ -4119,6 +4119,24 @@ namespace HE.Xrm.ServiceClientExample.Model
 		}
 		
 		/// <summary>
+		/// 1:N invln_loanapplication_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_account")]
+		public System.Collections.Generic.IEnumerable<HE.Xrm.ServiceClientExample.Model.invln_Loanapplication> invln_loanapplication_account
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Xrm.ServiceClientExample.Model.invln_Loanapplication>("invln_loanapplication_account", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_account");
+				this.SetRelatedEntities<HE.Xrm.ServiceClientExample.Model.invln_Loanapplication>("invln_loanapplication_account", null, value);
+				this.OnPropertyChanged("invln_loanapplication_account");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 account_master_account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
@@ -7766,6 +7784,24 @@ namespace HE.Xrm.ServiceClientExample.Model
 		}
 		
 		/// <summary>
+		/// For internal use only
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parent_contactid")]
+		public Microsoft.Xrm.Sdk.EntityReference parent_contactid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("parent_contactid");
+			}
+			set
+			{
+				this.OnPropertyChanging("parent_contactid");
+				this.SetAttributeValue("parent_contactid", value);
+				this.OnPropertyChanged("parent_contactid");
+			}
+		}
+		
+		/// <summary>
 		/// Unique identifier of the parent contact.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcontactid")]
@@ -8576,6 +8612,60 @@ namespace HE.Xrm.ServiceClientExample.Model
 		}
 		
 		/// <summary>
+		/// 1:N contact_parent_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<HE.Xrm.ServiceClientExample.Model.Contact> Referencedcontact_parent_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Xrm.ServiceClientExample.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedcontact_parent_contact");
+				this.SetRelatedEntities<HE.Xrm.ServiceClientExample.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedcontact_parent_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_loanapplication_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_contact")]
+		public System.Collections.Generic.IEnumerable<HE.Xrm.ServiceClientExample.Model.invln_Loanapplication> invln_loanapplication_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Xrm.ServiceClientExample.Model.invln_Loanapplication>("invln_loanapplication_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_contact");
+				this.SetRelatedEntities<HE.Xrm.ServiceClientExample.Model.invln_Loanapplication>("invln_loanapplication_contact", null, value);
+				this.OnPropertyChanged("invln_loanapplication_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:N invln_Contact_Webrole
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_Contact_Webrole")]
+		public System.Collections.Generic.IEnumerable<HE.Xrm.ServiceClientExample.Model.invln_Webrole> invln_Contact_Webrole
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Xrm.ServiceClientExample.Model.invln_Webrole>("invln_Contact_Webrole", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Contact_Webrole");
+				this.SetRelatedEntities<HE.Xrm.ServiceClientExample.Model.invln_Webrole>("invln_Contact_Webrole", null, value);
+				this.OnPropertyChanged("invln_Contact_Webrole");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 contact_customer_accounts
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
@@ -8623,6 +8713,25 @@ namespace HE.Xrm.ServiceClientExample.Model
 			get
 			{
 				return this.GetRelatedEntity<HE.Xrm.ServiceClientExample.Model.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_parent_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parent_contactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public HE.Xrm.ServiceClientExample.Model.Contact Referencingcontact_parent_contact
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Xrm.ServiceClientExample.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencingcontact_parent_contact");
+				this.SetRelatedEntity<HE.Xrm.ServiceClientExample.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingcontact_parent_contact");
 			}
 		}
 	}
@@ -8765,6 +8874,42 @@ namespace HE.Xrm.ServiceClientExample.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_account")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Account
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_account");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Account");
+				this.SetAttributeValue("invln_account", value);
+				this.OnPropertyChanged("invln_Account");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_additionalprojects")]
+		public System.Nullable<bool> invln_Additionalprojects
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_additionalprojects");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Additionalprojects");
+				this.SetAttributeValue("invln_additionalprojects", value);
+				this.OnPropertyChanged("invln_Additionalprojects");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_companyexperience")]
 		public System.Nullable<int> invln_CompanyExperience
 		{
@@ -8837,30 +8982,18 @@ namespace HE.Xrm.ServiceClientExample.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_costsforadditionalprojects")]
-		public Microsoft.Xrm.Sdk.Money invln_Costsforadditionalprojects
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contact")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Contact
 		{
 			get
 			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_costsforadditionalprojects");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_contact");
 			}
 			set
 			{
-				this.OnPropertyChanging("invln_Costsforadditionalprojects");
-				this.SetAttributeValue("invln_costsforadditionalprojects", value);
-				this.OnPropertyChanged("invln_Costsforadditionalprojects");
-			}
-		}
-		
-		/// <summary>
-		/// Value of the Costs for additional projects in base currency.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_costsforadditionalprojects_base")]
-		public Microsoft.Xrm.Sdk.Money invln_costsforadditionalprojects_Base
-		{
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_costsforadditionalprojects_base");
+				this.OnPropertyChanging("invln_Contact");
+				this.SetAttributeValue("invln_contact", value);
+				this.OnPropertyChanged("invln_Contact");
 			}
 		}
 		
@@ -8903,24 +9036,6 @@ namespace HE.Xrm.ServiceClientExample.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_existingcompany")]
-		public System.Nullable<bool> invln_ExistingCompany
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_existingcompany");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_ExistingCompany");
-				this.SetAttributeValue("invln_existingcompany", value);
-				this.OnPropertyChanged("invln_ExistingCompany");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundingreason")]
 		public Microsoft.Xrm.Sdk.OptionSetValue invln_FundingReason
 		{
@@ -8933,24 +9048,6 @@ namespace HE.Xrm.ServiceClientExample.Model
 				this.OnPropertyChanging("invln_FundingReason");
 				this.SetAttributeValue("invln_fundingreason", value);
 				this.OnPropertyChanged("invln_FundingReason");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundingtypeforadditionalprojects")]
-		public Microsoft.Xrm.Sdk.OptionSetValue invln_Fundingtypeforadditionalprojects
-		{
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_fundingtypeforadditionalprojects");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_Fundingtypeforadditionalprojects");
-				this.SetAttributeValue("invln_fundingtypeforadditionalprojects", value);
-				this.OnPropertyChanged("invln_Fundingtypeforadditionalprojects");
 			}
 		}
 		
@@ -9490,6 +9587,44 @@ namespace HE.Xrm.ServiceClientExample.Model
 				this.OnPropertyChanged("invln_sitedetails_Loanapplication");
 			}
 		}
+		
+		/// <summary>
+		/// N:1 invln_loanapplication_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_account")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_account")]
+		public HE.Xrm.ServiceClientExample.Model.Account invln_loanapplication_account
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Xrm.ServiceClientExample.Model.Account>("invln_loanapplication_account", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_account");
+				this.SetRelatedEntity<HE.Xrm.ServiceClientExample.Model.Account>("invln_loanapplication_account", null, value);
+				this.OnPropertyChanged("invln_loanapplication_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_loanapplication_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contact")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_contact")]
+		public HE.Xrm.ServiceClientExample.Model.Contact invln_loanapplication_contact
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Xrm.ServiceClientExample.Model.Contact>("invln_loanapplication_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_contact");
+				this.SetRelatedEntity<HE.Xrm.ServiceClientExample.Model.Contact>("invln_loanapplication_contact", null, value);
+				this.OnPropertyChanged("invln_loanapplication_contact");
+			}
+		}
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -9624,6 +9759,24 @@ namespace HE.Xrm.ServiceClientExample.Model
 				this.OnPropertyChanging("ImportSequenceNumber");
 				this.SetAttributeValue("importsequencenumber", value);
 				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_affordablehousing")]
+		public System.Nullable<bool> invln_Affordablehousing
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_affordablehousing");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Affordablehousing");
+				this.SetAttributeValue("invln_affordablehousing", value);
+				this.OnPropertyChanged("invln_Affordablehousing");
 			}
 		}
 		
@@ -9828,24 +9981,6 @@ namespace HE.Xrm.ServiceClientExample.Model
 				this.OnPropertyChanging("invln_Nameofgrantfund");
 				this.SetAttributeValue("invln_nameofgrantfund", value);
 				this.OnPropertyChanged("invln_Nameofgrantfund");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_numberofaffordablehomes")]
-		public System.Nullable<int> invln_Numberofaffordablehomes
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<int>>("invln_numberofaffordablehomes");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_Numberofaffordablehomes");
-				this.SetAttributeValue("invln_numberofaffordablehomes", value);
-				this.OnPropertyChanged("invln_Numberofaffordablehomes");
 			}
 		}
 		
@@ -10394,6 +10529,475 @@ namespace HE.Xrm.ServiceClientExample.Model
 		}
 	}
 	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_webrole_invln_permissionlevel
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Portalmember = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Accountadministrator = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_webrole_invln_portalname
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Loans = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AHP = 858110001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_WebroleState
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_webrole_statuscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 2,
+	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_webrole")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_Webrole : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		public invln_Webrole() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "invln_webrole";
+		
+		public const string EntityLogicalCollectionName = "invln_webroles";
+		
+		public const string EntitySetName = "invln_webroles";
+		
+		public const int EntityTypeCode = 10748;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Sequence number of the import that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_name")]
+		public string invln_Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_name");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Name");
+				this.SetAttributeValue("invln_name", value);
+				this.OnPropertyChanged("invln_Name");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_permissionlevel")]
+		public System.Nullable<HE.Xrm.ServiceClientExample.Model.invln_webrole_invln_permissionlevel> invln_Permissionlevel
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_permissionlevel");
+				if ((optionSet != null))
+				{
+					return ((HE.Xrm.ServiceClientExample.Model.invln_webrole_invln_permissionlevel)(System.Enum.ToObject(typeof(HE.Xrm.ServiceClientExample.Model.invln_webrole_invln_permissionlevel), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Permissionlevel");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_permissionlevel", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_permissionlevel", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_Permissionlevel");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_portalname")]
+		public System.Nullable<HE.Xrm.ServiceClientExample.Model.invln_webrole_invln_portalname> invln_Portalname
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_portalname");
+				if ((optionSet != null))
+				{
+					return ((HE.Xrm.ServiceClientExample.Model.invln_webrole_invln_portalname)(System.Enum.ToObject(typeof(HE.Xrm.ServiceClientExample.Model.invln_webrole_invln_portalname), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Portalname");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_portalname", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_portalname", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_Portalname");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for entity instances
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_webroleid")]
+		public System.Nullable<System.Guid> invln_WebroleId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("invln_webroleid");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_WebroleId");
+				this.SetAttributeValue("invln_webroleid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("invln_WebroleId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_webroleid")]
+		public override System.Guid Id
+		{
+			get
+			{
+				return base.Id;
+			}
+			set
+			{
+				this.invln_WebroleId = value;
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the record was modified.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the organization
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("organizationid")]
+		public Microsoft.Xrm.Sdk.EntityReference OrganizationId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("organizationid");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time that the record was migrated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+		public System.Nullable<System.DateTime> OverriddenCreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+			}
+			set
+			{
+				this.OnPropertyChanging("OverriddenCreatedOn");
+				this.SetAttributeValue("overriddencreatedon", value);
+				this.OnPropertyChanged("OverriddenCreatedOn");
+			}
+		}
+		
+		/// <summary>
+		/// Status of the Web role
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+		public System.Nullable<HE.Xrm.ServiceClientExample.Model.invln_WebroleState> statecode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Xrm.ServiceClientExample.Model.invln_WebroleState)(System.Enum.ToObject(typeof(HE.Xrm.ServiceClientExample.Model.invln_WebroleState), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("statecode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("statecode");
+			}
+		}
+		
+		/// <summary>
+		/// Reason for the status of the Web role
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public System.Nullable<HE.Xrm.ServiceClientExample.Model.invln_webrole_statuscode> statuscode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Xrm.ServiceClientExample.Model.invln_webrole_statuscode)(System.Enum.ToObject(typeof(HE.Xrm.ServiceClientExample.Model.invln_webrole_statuscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("statuscode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statuscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statuscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("statuscode");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timezoneruleversionnumber")]
+		public System.Nullable<int> TimeZoneRuleVersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("timezoneruleversionnumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("TimeZoneRuleVersionNumber");
+				this.SetAttributeValue("timezoneruleversionnumber", value);
+				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Time zone code that was in use when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("utcconversiontimezonecode")]
+		public System.Nullable<int> UTCConversionTimeZoneCode
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("utcconversiontimezonecode");
+			}
+			set
+			{
+				this.OnPropertyChanging("UTCConversionTimeZoneCode");
+				this.SetAttributeValue("utcconversiontimezonecode", value);
+				this.OnPropertyChanged("UTCConversionTimeZoneCode");
+			}
+		}
+		
+		/// <summary>
+		/// Version Number
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:N invln_Contact_Webrole
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_Contact_Webrole")]
+		public System.Collections.Generic.IEnumerable<HE.Xrm.ServiceClientExample.Model.Contact> invln_Contact_Webrole
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Xrm.ServiceClientExample.Model.Contact>("invln_Contact_Webrole", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Contact_Webrole");
+				this.SetRelatedEntities<HE.Xrm.ServiceClientExample.Model.Contact>("invln_Contact_Webrole", null, value);
+				this.OnPropertyChanged("invln_Contact_Webrole");
+			}
+		}
+	}
+	
 	/// <summary>
 	/// Represents a source of entities bound to a CRM service. It tracks and manages changes made to the retrieved entities.
 	/// </summary>
@@ -10452,6 +11056,17 @@ namespace HE.Xrm.ServiceClientExample.Model
 				return this.CreateQuery<HE.Xrm.ServiceClientExample.Model.invln_SiteDetails>();
 			}
 		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="HE.Xrm.ServiceClientExample.Model.invln_Webrole"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<HE.Xrm.ServiceClientExample.Model.invln_Webrole> invln_WebroleSet
+		{
+			get
+			{
+				return this.CreateQuery<HE.Xrm.ServiceClientExample.Model.invln_Webrole>();
+			}
+		}
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
@@ -10494,6 +11109,104 @@ namespace HE.Xrm.ServiceClientExample.Model
 		
 		public invln_sendinvestmentloansdatatocrmResponse()
 		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getcontactrole")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getcontactroleRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_email
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_email"))
+				{
+					return ((string)(this.Parameters["invln_email"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_email"] = value;
+			}
+		}
+		
+		public string invln_ssid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_ssid"))
+				{
+					return ((string)(this.Parameters["invln_ssid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_ssid"] = value;
+			}
+		}
+		
+		public string invln_portalid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_portalid"))
+				{
+					return ((string)(this.Parameters["invln_portalid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_portalid"] = value;
+			}
+		}
+		
+		public invln_getcontactroleRequest()
+		{
+			this.RequestName = "invln_getcontactrole";
+			this.invln_email = default(string);
+			this.invln_ssid = default(string);
+			this.invln_portalid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getcontactrole")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getcontactroleResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getcontactroleResponse()
+		{
+		}
+		
+		public string invln_rolename
+		{
+			get
+			{
+				if (this.Results.Contains("invln_rolename"))
+				{
+					return ((string)(this.Results["invln_rolename"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
 		}
 	}
 }

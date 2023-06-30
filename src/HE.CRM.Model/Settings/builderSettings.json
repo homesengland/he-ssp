@@ -20,7 +20,7 @@
     "generateAttributeNameConsts": true,
     "generateAnonymousTypeConstructor": true,
     "generateConstructorsSansLogicalName": false,
-    "generateEntityRelationships": false,
+    "generateEntityRelationships": true,
     "generateEntityTypeCode": false,
     "generateOptionSetProperties": true,
     "generateOptionSetMetadataAttribute": false,
@@ -87,13 +87,18 @@
   "entityNamesFilter": [
     "account",
     "contact",
+    "invln_contactwebrole",
     "invln_loanapplication",
-    "invln_sitedetails"
+    "invln_portal",
+    "invln_portalpermissionlevel",
+    "invln_sitedetails",
+    "invln_webrole"
   ],
   "entityTypesFolder": "..\\Entities",
   "generateActions": true,
   "generateGlobalOptionSets": true,
   "messageNamesFilter": [
+    "invln_getcontactrole*",
     "invln_sendinvestmentloansdatatocrm*"
   ],
   "messagesTypesFolder": "..\\Actions",

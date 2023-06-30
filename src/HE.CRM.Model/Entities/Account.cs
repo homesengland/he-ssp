@@ -586,6 +586,9 @@ namespace DataverseModel
 		/// </summary>
 		public static partial class Fields
 		{
+			public const string Referencingaccount_master_account = "account_master_account";
+			public const string Referencingaccount_parent_account = "account_parent_account";
+			public const string account_primary_contact = "account_primary_contact";
 			public const string AccountCategoryCode = "accountcategorycode";
 			public const string AccountClassificationCode = "accountclassificationcode";
 			public const string AccountId = "accountid";
@@ -647,6 +650,7 @@ namespace DataverseModel
 			public const string Aging90 = "aging90";
 			public const string Aging90_Base = "aging90_base";
 			public const string BusinessTypeCode = "businesstypecode";
+			public const string contact_customer_accounts = "contact_customer_accounts";
 			public const string CreatedBy = "createdby";
 			public const string CreatedByExternalParty = "createdbyexternalparty";
 			public const string CreatedByExternalPartyName = "createdbyexternalpartyname";
@@ -681,6 +685,7 @@ namespace DataverseModel
 			public const string Fax = "fax";
 			public const string FollowEmail = "followemail";
 			public const string FtpSiteURL = "ftpsiteurl";
+			public const string Referencinghe_account_account_UltimateParent = "he_account_account_UltimateParent";
 			public const string he_automaticsearch = "he_automaticsearch";
 			public const string he_CompaniesHouseNumber = "he_companieshousenumber";
 			public const string he_companysearch = "he_companysearch";
@@ -706,6 +711,7 @@ namespace DataverseModel
 			public const string he_UltimateParentName = "he_ultimateparentname";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string IndustryCode = "industrycode";
+			public const string invln_loanapplication_account = "invln_loanapplication_account";
 			public const string LastOnHoldTime = "lastonholdtime";
 			public const string LastUsedInCampaign = "lastusedincampaign";
 			public const string MarketCap = "marketcap";
@@ -769,6 +775,9 @@ namespace DataverseModel
 			public const string PrimarySatoriId = "primarysatoriid";
 			public const string PrimaryTwitterId = "primarytwitterid";
 			public const string ProcessId = "processid";
+			public const string Referencedaccount_master_account = "Referencedaccount_master_account";
+			public const string Referencedaccount_parent_account = "Referencedaccount_parent_account";
+			public const string Referencedhe_account_account_UltimateParent = "Referencedhe_account_account_UltimateParent";
 			public const string Revenue = "revenue";
 			public const string Revenue_Base = "revenue_base";
 			public const string SharesOutstanding = "sharesoutstanding";
@@ -802,9 +811,9 @@ namespace DataverseModel
 			public const string YomiName = "yominame";
 		}
 		
-		public const string AlternateKeys = "he_socialhousingproviderregistrationnumber|he_localauthoritycode|he_companieshous" +
-			"enumber|he_esriid|he_id|he_homesenglandcombinedauthoritycode|he_homesenglandcent" +
-			"ralgovernmentorganisationcode";
+		public const string AlternateKeys = "he_socialhousingproviderregistrationnumber|he_homesenglandcombinedauthoritycode|h" +
+			"e_companieshousenumber|he_esriid|he_id|he_homesenglandcentralgovernmentorganisat" +
+			"ioncode|he_localauthoritycode";
 		
 		/// <summary>
 		/// Default Constructor.
@@ -4254,6 +4263,183 @@ namespace DataverseModel
 				this.OnPropertyChanging("YomiName");
 				this.SetAttributeValue("yominame", value);
 				this.OnPropertyChanged("YomiName");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N account_master_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Account> Referencedaccount_master_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Account>("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencedaccount_master_account");
+				this.SetRelatedEntities<DataverseModel.Account>("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedaccount_master_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N account_parent_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Account> Referencedaccount_parent_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencedaccount_parent_account");
+				this.SetRelatedEntities<DataverseModel.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedaccount_parent_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_customer_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_accounts")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Contact> contact_customer_accounts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Contact>("contact_customer_accounts", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("contact_customer_accounts");
+				this.SetRelatedEntities<DataverseModel.Contact>("contact_customer_accounts", null, value);
+				this.OnPropertyChanged("contact_customer_accounts");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N he_account_account_UltimateParent
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Account> Referencedhe_account_account_UltimateParent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencedhe_account_account_UltimateParent");
+				this.SetRelatedEntities<DataverseModel.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedhe_account_account_UltimateParent");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_loanapplication_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Loanapplication> invln_loanapplication_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Loanapplication>("invln_loanapplication_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_account");
+				this.SetRelatedEntities<DataverseModel.invln_Loanapplication>("invln_loanapplication_account", null, value);
+				this.OnPropertyChanged("invln_loanapplication_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 account_master_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public DataverseModel.Account Referencingaccount_master_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Account>("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 account_parent_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentaccountid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public DataverseModel.Account Referencingaccount_parent_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencingaccount_parent_account");
+				this.SetRelatedEntity<DataverseModel.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingaccount_parent_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 account_primary_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("primarycontactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_primary_contact")]
+		public DataverseModel.Contact account_primary_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Contact>("account_primary_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("account_primary_contact");
+				this.SetRelatedEntity<DataverseModel.Contact>("account_primary_contact", null, value);
+				this.OnPropertyChanged("account_primary_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 he_account_account_UltimateParent
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_ultimateparent")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public DataverseModel.Account Referencinghe_account_account_UltimateParent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencinghe_account_account_UltimateParent");
+				this.SetRelatedEntity<DataverseModel.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencinghe_account_account_UltimateParent");
 			}
 		}
 		
