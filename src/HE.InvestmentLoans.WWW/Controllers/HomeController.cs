@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace HE.InvestmentLoans.WWW.Controllers
 {
@@ -16,8 +17,8 @@ namespace HE.InvestmentLoans.WWW.Controllers
         public IActionResult Index()
         {
             var x = this.User.Claims.ToList();
-            // var list = _mediator.Send(new BusinessLogic._Account.GetAll());
-            return Redirect("application");
+
+            return View();
         }
 
         public IActionResult Privacy()

@@ -5,10 +5,12 @@ namespace HE.InvestmentLoans.WWW.Controllers
     using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
     using HE.InvestmentLoans.BusinessLogic.ViewModel;
     using MediatR;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using BL = BusinessLogic;
 
     [Route("application/{id}/security")]
+    [Authorize]
     public class SecurityController : Controller
     {
         private readonly ILogger<SecurityController> logger;
