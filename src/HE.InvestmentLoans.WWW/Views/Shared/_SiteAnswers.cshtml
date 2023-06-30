@@ -32,7 +32,8 @@
 
     if (Model?.Cost != null)
     {
-        additionalProjectDetails.Add($"Purchased: {Model.PurchaseDay}/{Model.PurchaseMonth}/{Model.PurchaseYear}");
+        var purchaseDate = DateHelper.ConvertToDateString(Model.PurchaseDay, Model.PurchaseMonth, Model.PurchaseYear);
+        additionalProjectDetails.Add($"Purchased: {purchaseDate}");
         additionalProjectDetails.Add($"Purchase cost: {MoneyLabelHelper.Pounds(Model.Cost)}");
         additionalProjectDetails.Add($"Current value: {MoneyLabelHelper.Pounds(Model.Value)}");
         additionalProjectDetails.Add($"Source: {TemporaryFormOptions.SiteAdditionalSource.GetSummaryLabel(Model.Source)}");
