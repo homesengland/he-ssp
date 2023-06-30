@@ -42,9 +42,10 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
             return _model.Security.State == State.Complete;
         }
 
-        public bool IsNotStarted()
+        public bool IsStarted()
         {
-            return _model.Security.State == State.Index || (_model.Security.State == State.ChargesDebtCompany && string.IsNullOrEmpty(_model.Security.ChargesDebtCompany));
+            return _model.Security.ChargesDebtCompany != null
+                || _model.Security.DirLoans != null;
         }
 
         public string GetName()
