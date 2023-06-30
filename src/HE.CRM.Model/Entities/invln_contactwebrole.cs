@@ -57,6 +57,9 @@ namespace DataverseModel
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_account_invln_contactwebrole_Accountid = "invln_account_invln_contactwebrole_Accountid";
+			public const string invln_Accountid = "invln_accountid";
+			public const string invln_AccountidName = "invln_accountidname";
 			public const string invln_contact_invln_contactwebrole_Contactid = "invln_contact_invln_contactwebrole_Contactid";
 			public const string invln_Contactid = "invln_contactid";
 			public const string invln_ContactidName = "invln_contactidname";
@@ -193,6 +196,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("ImportSequenceNumber");
 				this.SetAttributeValue("importsequencenumber", value);
 				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_accountid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Accountid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_accountid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Accountid");
+				this.SetAttributeValue("invln_accountid", value);
+				this.OnPropertyChanged("invln_Accountid");
 			}
 		}
 		
@@ -508,6 +528,27 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_account_invln_contactwebrole_Accountid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_accountid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_account_invln_contactwebrole_Accountid")]
+		public DataverseModel.Account invln_account_invln_contactwebrole_Accountid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Account>("invln_account_invln_contactwebrole_Accountid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_account_invln_contactwebrole_Accountid");
+				this.SetRelatedEntity<DataverseModel.Account>("invln_account_invln_contactwebrole_Accountid", null, value);
+				this.OnPropertyChanged("invln_account_invln_contactwebrole_Accountid");
 			}
 		}
 		

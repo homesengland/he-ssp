@@ -59,6 +59,7 @@ namespace DataverseModel
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_invln_portal_invln_webrole_Portalid = "invln_invln_portal_invln_webrole_Portalid";
 			public const string invln_name = "invln_name";
+			public const string invln_Portal = "invln_portal";
 			public const string invln_portalId = "invln_portalid";
 			public const string Id = "invln_portalid";
 			public const string ModifiedBy = "modifiedby";
@@ -208,6 +209,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_name");
 				this.SetAttributeValue("invln_name", value);
 				this.OnPropertyChanged("invln_name");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_portal")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Portal
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_portal");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Portal");
+				this.SetAttributeValue("invln_portal", value);
+				this.OnPropertyChanged("invln_Portal");
 			}
 		}
 		

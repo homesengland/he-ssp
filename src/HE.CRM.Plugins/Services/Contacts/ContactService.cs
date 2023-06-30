@@ -48,7 +48,7 @@ namespace HE.CRM.Plugins.Services.Contacts
                     }
                     else
                     {
-                        var defaultRole = webRoleRepository.GetRoleByName("Default role");
+                        var defaultRole = webRoleRepository.GetDefaultPortalRole(portalId);
                         if(defaultRole != null)
                         {
                             AssignRoleToContact(contact, defaultRole); //trzeba przypisać default role dla konta

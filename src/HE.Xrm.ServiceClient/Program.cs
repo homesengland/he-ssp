@@ -63,9 +63,10 @@ namespace HE.Xrm.ServiceClientExample
         {
             var req = new OrganizationRequest("invln_getcontactrole")  //Name of Custom API
             {
-                ["invln_email"] = "testgiga@test.pl",  //Input Parameter
-                ["invln_portalid"] = "c5a66e4a-d314-ee11-9cbe-002248c653e1",  //Input Parameter
-                ["invln_ssid"] = "e567a79d-1e68-45ca-9c1b-3f1a3650f191"  //Input Parameter
+                ["invln_email"] = "testcustomapi@test.pl",  //Input Parameter
+                //["invln_portalid"] = "c5a66e4a-d314-ee11-9cbe-002248c653e1",  //Input Parameter - loans
+                ["invln_portalid"] = "0b617644-d314-ee11-9cbe-002248c653e1",  //Input Parameter - AHP
+                ["invln_ssid"] = "73972af3-3b06-4caa-b254-599ae93801b5"  //Input Parameter
             };
 
             var resp = serviceClient.Execute(req);
