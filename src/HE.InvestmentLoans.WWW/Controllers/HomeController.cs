@@ -21,13 +21,6 @@ namespace HE.InvestmentLoans.WWW.Controllers
             return View();
         }
 
-        [Route("/dashboard")]
-        [Authorize]
-        public IActionResult Dashboard()
-        {
-            return View();
-        }
-
         public IActionResult Privacy()
         {
             return View();
