@@ -23,6 +23,7 @@ namespace HE.InvestmentLoans.Common.Authorization
             
             // It is temporary - It will be implemented properly when CRM exposes proper data.
             AccountId = UserGlobalId;
+            Roles = new List<string>();
         }
 
         public string UserGlobalId { get; init; }
