@@ -2,6 +2,7 @@
 using HE.InvestmentLoans.BusinessLogic.Enums;
 using HE.InvestmentLoans.BusinessLogic.Extensions;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.CRM.Model;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -109,12 +110,19 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
                 };
 
                 string loanApplicationSerialized = JsonSerializer.Serialize<LoanApplicationDto>(loanApplicationDto);
-                var req = new OrganizationRequest("invln_sendinvestmentloansdatatocrm")  //Name of Custom API
+                //var req = new OrganizationRequest("invln_sendinvestmentloansdatatocrm")  //Name of Custom API
+                //{
+                //    ["invln_entityfieldsparameters"] = loanApplicationSerialized  //Input Parameter
+                //};
+
+                //var resp = _serviceClient.Execute(req);
+
+                var req = new invln_sendinvestmentloansdatatocrmRequest  //Name of Custom API
                 {
-                    ["invln_entityfieldsparameters"] = loanApplicationSerialized  //Input Parameter
+                    invln_entityfieldsparameters = loanApplicationSerialized  //Input Parameter
                 };
 
-                var resp = _serviceClient.Execute(req);
+                var resp = (invln_sendinvestmentloansdatatocrmResponse)_serviceClient.Execute(req);
 
                 return true;
             }

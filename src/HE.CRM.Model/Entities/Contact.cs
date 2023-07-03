@@ -585,6 +585,7 @@ namespace DataverseModel
 			public const string Home2 = "home2";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_contact_invln_contactwebrole_Contactid = "invln_contact_invln_contactwebrole_Contactid";
+			public const string invln_externalid = "invln_externalid";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
 			public const string IsBackofficeCustomer = "isbackofficecustomer";
 			public const string JobTitle = "jobtitle";
@@ -682,6 +683,8 @@ namespace DataverseModel
 			public const string YomiLastName = "yomilastname";
 			public const string YomiMiddleName = "yomimiddlename";
 		}
+		
+		public const string AlternateKeys = "invln_externalid";
 		
 		/// <summary>
 		/// Default Constructor.
@@ -3320,6 +3323,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("ImportSequenceNumber");
 				this.SetAttributeValue("importsequencenumber", value);
 				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalid")]
+		public string invln_externalid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_externalid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_externalid");
+				this.SetAttributeValue("invln_externalid", value);
+				this.OnPropertyChanged("invln_externalid");
 			}
 		}
 		

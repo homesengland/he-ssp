@@ -20,20 +20,20 @@ namespace DataverseModel
 		
 		public static class Fields
 		{
-			public const string invln_email = "invln_email";
-			public const string invln_ssid = "invln_ssid";
-			public const string invln_portalid = "invln_portalid";
+			public const string invln_contactemail = "invln_contactemail";
+			public const string invln_portaltype = "invln_portaltype";
+			public const string invln_contactexternalid = "invln_contactexternalid";
 		}
 		
 		public const string ActionLogicalName = "invln_getcontactrole";
 		
-		public string invln_email
+		public string invln_contactemail
 		{
 			get
 			{
-				if (this.Parameters.Contains("invln_email"))
+				if (this.Parameters.Contains("invln_contactemail"))
 				{
-					return ((string)(this.Parameters["invln_email"]));
+					return ((string)(this.Parameters["invln_contactemail"]));
 				}
 				else
 				{
@@ -42,17 +42,17 @@ namespace DataverseModel
 			}
 			set
 			{
-				this.Parameters["invln_email"] = value;
+				this.Parameters["invln_contactemail"] = value;
 			}
 		}
 		
-		public string invln_ssid
+		public string invln_portaltype
 		{
 			get
 			{
-				if (this.Parameters.Contains("invln_ssid"))
+				if (this.Parameters.Contains("invln_portaltype"))
 				{
-					return ((string)(this.Parameters["invln_ssid"]));
+					return ((string)(this.Parameters["invln_portaltype"]));
 				}
 				else
 				{
@@ -61,17 +61,17 @@ namespace DataverseModel
 			}
 			set
 			{
-				this.Parameters["invln_ssid"] = value;
+				this.Parameters["invln_portaltype"] = value;
 			}
 		}
 		
-		public string invln_portalid
+		public string invln_contactexternalid
 		{
 			get
 			{
-				if (this.Parameters.Contains("invln_portalid"))
+				if (this.Parameters.Contains("invln_contactexternalid"))
 				{
-					return ((string)(this.Parameters["invln_portalid"]));
+					return ((string)(this.Parameters["invln_contactexternalid"]));
 				}
 				else
 				{
@@ -80,16 +80,16 @@ namespace DataverseModel
 			}
 			set
 			{
-				this.Parameters["invln_portalid"] = value;
+				this.Parameters["invln_contactexternalid"] = value;
 			}
 		}
 		
 		public invln_getcontactroleRequest()
 		{
 			this.RequestName = "invln_getcontactrole";
-			this.invln_email = default(string);
-			this.invln_ssid = default(string);
-			this.invln_portalid = default(string);
+			this.invln_contactemail = default(string);
+			this.invln_portaltype = default(string);
+			this.invln_contactexternalid = default(string);
 		}
 	}
 	
@@ -100,7 +100,7 @@ namespace DataverseModel
 		
 		public static class Fields
 		{
-			public const string invln_rolename = "invln_rolename";
+			public const string invln_portalroles = "invln_portalroles";
 		}
 		
 		public const string ActionLogicalName = "invln_getcontactrole";
@@ -109,13 +109,13 @@ namespace DataverseModel
 		{
 		}
 		
-		public string invln_rolename
+		public string invln_portalroles
 		{
 			get
 			{
-				if (this.Results.Contains("invln_rolename"))
+				if (this.Results.Contains("invln_portalroles"))
 				{
-					return ((string)(this.Results["invln_rolename"]));
+					return ((string)(this.Results["invln_portalroles"]));
 				}
 				else
 				{
