@@ -80,6 +80,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_DefineTenure.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FundingReason.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Fundingtypeforadditionalprojects.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Permission.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_portal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Publicsectorfunding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_refinancerepayment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Repaymenttype.cs" />

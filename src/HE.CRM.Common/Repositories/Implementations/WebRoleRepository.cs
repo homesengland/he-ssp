@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Xml.Linq;
 using DataverseModel;
 using HE.Base.Repositories;
 using HE.CRM.Common.Repositories.Interfaces;
@@ -37,6 +38,15 @@ namespace HE.CRM.Common.Repositories.Implementations
 
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXML));
             return result.Entities.Select(x => x.ToEntity<invln_Webrole>()).AsEnumerable().FirstOrDefault();
+        }
+
+        public invln_Webrole GetDefaultPortalRole(Guid portalId)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<invln_Webrole>()
+                    .Where(x => x.invln_Portalid.Id == portalId && x.invln_Isdefaultrole == true).AsEnumerable().FirstOrDefault();
+            }
         }
 
         public invln_Webrole GetRoleByName(string name)

@@ -53,17 +53,6 @@ namespace DataverseModel
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_Webrole_invln_Permissionlevel
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Accountadministrator = 858110002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Portalmember = 858110000,
-	}
-	
-	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_webrole")]
 	public partial class invln_Webrole : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
@@ -79,12 +68,11 @@ namespace DataverseModel
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string ImportSequenceNumber = "importsequencenumber";
-			public const string invln_Contact_Webrole = "invln_Contact_Webrole";
 			public const string invln_invln_portal_invln_webrole_Portalid = "invln_invln_portal_invln_webrole_Portalid";
 			public const string invln_invln_portalpermissionlevel_invln_webrole_Portalpermissionlevelid = "invln_invln_portalpermissionlevel_invln_webrole_Portalpermissionlevelid";
 			public const string invln_invln_webrole_invln_contactwebrole_Webroleid = "invln_invln_webrole_invln_contactwebrole_Webroleid";
+			public const string invln_Isdefaultrole = "invln_isdefaultrole";
 			public const string invln_Name = "invln_name";
-			public const string invln_Permissionlevel = "invln_permissionlevel";
 			public const string invln_Portalid = "invln_portalid";
 			public const string invln_PortalidName = "invln_portalidname";
 			public const string invln_Portalname = "invln_portalname";
@@ -216,6 +204,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_isdefaultrole")]
+		public System.Nullable<bool> invln_Isdefaultrole
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_isdefaultrole");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Isdefaultrole");
+				this.SetAttributeValue("invln_isdefaultrole", value);
+				this.OnPropertyChanged("invln_Isdefaultrole");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_name")]
 		public string invln_Name
 		{
@@ -230,23 +235,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Name");
 				this.SetAttributeValue("invln_name", value);
 				this.OnPropertyChanged("invln_Name");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_permissionlevel")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Permissionlevel
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_permissionlevel");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Permissionlevel");
-				this.SetAttributeValue("invln_permissionlevel", value);
-				this.OnPropertyChanged("invln_Permissionlevel");
 			}
 		}
 		
@@ -533,26 +521,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_webrole_invln_contactwebrole_Webroleid");
 				this.SetRelatedEntities<DataverseModel.invln_contactwebrole>("invln_invln_webrole_invln_contactwebrole_Webroleid", null, value);
 				this.OnPropertyChanged("invln_invln_webrole_invln_contactwebrole_Webroleid");
-			}
-		}
-		
-		/// <summary>
-		/// N:N invln_Contact_Webrole
-		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_Contact_Webrole")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.Contact> invln_Contact_Webrole
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.Contact>("invln_Contact_Webrole", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Contact_Webrole");
-				this.SetRelatedEntities<DataverseModel.Contact>("invln_Contact_Webrole", null, value);
-				this.OnPropertyChanged("invln_Contact_Webrole");
 			}
 		}
 		

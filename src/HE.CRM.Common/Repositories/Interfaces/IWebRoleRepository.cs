@@ -10,5 +10,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         invln_Webrole GetContactRole(Guid contactId, Guid portalId);
 
         invln_Webrole GetRoleByName(string name);
+        invln_Webrole GetDefaultPortalRole(Guid portalId);
     }
 }
