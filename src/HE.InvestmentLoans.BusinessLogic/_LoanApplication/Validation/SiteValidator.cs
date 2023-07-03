@@ -269,6 +269,13 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 .ToList();
 
             invalidCharacters = new string(invalidCharactersList.ToArray());
+
+            if (invalidCharactersList.Contains(' '))
+            {
+                invalidCharacters = invalidCharacters.Replace(" ", string.Empty);
+                invalidCharacters = invalidCharacters.Length > 0 ? "space and " + invalidCharacters : "space";
+            }
+
             return invalidCharactersList.Count == 0;
         }
     }

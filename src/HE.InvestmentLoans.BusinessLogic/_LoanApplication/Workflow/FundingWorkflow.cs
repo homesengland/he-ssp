@@ -47,9 +47,14 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
             return _model.Funding.State == State.Complete;
         }
 
-        public bool IsNotStarted()
+        public bool IsStarted()
         {
-            return _model.Funding.State == State.Index || (_model.Funding.State == State.GDV && string.IsNullOrEmpty(_model.Funding.GrossDevelopmentValue));
+            return _model.Funding.GrossDevelopmentValue != null
+                || _model.Funding.TotalCosts != null
+                || _model.Funding.AbnormalCosts != null
+                || _model.Funding.PrivateSectorFunding != null
+                || _model.Funding.Refinance != null
+                || _model.Funding.AdditionalProjects != null;
         }
 
         public string GetName()

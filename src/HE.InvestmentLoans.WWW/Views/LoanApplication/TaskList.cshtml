@@ -40,13 +40,13 @@
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     } 
-                    else if (companyStructureWorkflow.IsNotStarted())
+                    else if (companyStructureWorkflow.IsStarted())
                     {
-                        <gds-task-list-item-status status=NotStarted>Not started</gds-task-list-item-status>
+                        <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
                     }
                     else
                     {
-                        <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
+                        <gds-task-list-item-status status=NotStarted>Not started</gds-task-list-item-status>
                     }
                 </li>
             </ul>
@@ -68,13 +68,13 @@
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
-                    else if (fundingWorkflow.IsNotStarted())
+                    else if (fundingWorkflow.IsStarted())
                     {
-                        <gds-task-list-item-status status=NotStarted>Not started</gds-task-list-item-status>
+                        <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
                     }
                     else
                     {
-                        <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
+                        <gds-task-list-item-status status=NotStarted>Not started</gds-task-list-item-status>
                     }
                 </li>
                 <li class="app-task-list__item">
@@ -87,13 +87,13 @@
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
-                    else if (securityWorkflow.IsNotStarted())
+                    else if (securityWorkflow.IsStarted())
                     {
-                        <gds-task-list-item-status status=NotStarted>Not started</gds-task-list-item-status>
+                        <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
                     }
                     else
                     {
-                        <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
+                        <gds-task-list-item-status status=NotStarted>Not started</gds-task-list-item-status>
                     }
                 </li>
             </ul>

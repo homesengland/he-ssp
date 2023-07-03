@@ -43,9 +43,11 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
             return _model.Company.State == State.Complete;
         }
 
-        public bool IsNotStarted()
+        public bool IsStarted()
         {
-            return _model.Company.State == State.Index || (_model.Company.State == State.Purpose && string.IsNullOrEmpty(_model.Company.Purpose));
+            return _model.Company.Purpose != null
+                || _model.Company.ExistingCompany != null
+                || _model.Company.HomesBuilt != null;
         }
 
         public string GetName()
