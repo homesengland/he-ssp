@@ -5,6 +5,7 @@ using HE.InvestmentLoans.BusinessLogic.Extensions;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.CRM.Extensions;
+using HE.InvestmentLoans.WWW.Config;
 using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Middlewares;
 using HE.InvestmentLoans.WWW.Models;
@@ -29,20 +30,10 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddRedis(config.RedisConnectionString, sessionCookieName);
 
-builder.Services.AddCrmConnection();
-builder.Services.AddMediatR(cfg =>
-{
-    cfg.RegisterServicesFromAssembly(typeof(LoanApplicationViewModel).Assembly);
-});
 builder.Services.AddApplicationInsightsTelemetry();
 
-builder.Services.AddValidatorsFromAssemblyContaining<LoanApplicationViewModel>();
-
-builder.Services.AddScoped<NonceModel>();
-builder.Services.AddBusinessLogic();
-
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddWebModule();
 
 var mvcbuilder = builder.Services.AddControllersWithViews();
 
