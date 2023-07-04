@@ -117,34 +117,10 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
             RuleSet("GrantFundingMore", () =>
             {
-                When(item => item.GrantFundingSource == null,
-                    () => RuleFor(item => item.GrantFundingSource)
-                            .NotEmpty()
-                            .WithMessage(ErrorMessages.EnterMoreDetails.ToString())
-                        );
-
-                When(item => item.GrantFundingAmount == null,
-                    () => RuleFor(item => item.GrantFundingAmount)
-                            .NotEmpty()
-                            .WithMessage(ErrorMessages.EnterMoreDetails.ToString())
-                        );
-
                 When(item => item.GrantFundingAmount != null,
                     () => RuleFor(item => item.GrantFundingAmount)
                             .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
                             .WithMessage(ErrorMessages.AmountPoundInput("funding").ToString())
-                        );
-
-                When(item => item.GrantFundingName == null,
-                    () => RuleFor(item => item.GrantFundingName)
-                            .NotEmpty()
-                            .WithMessage(ErrorMessages.EnterMoreDetails.ToString())
-                        );
-
-                When(item => item.GrantFundingPurpose == null,
-                    () => RuleFor(item => item.GrantFundingPurpose)
-                            .NotEmpty()
-                            .WithMessage(ErrorMessages.EnterMoreDetails.ToString())
                         );
             });
 
@@ -252,7 +228,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                     !string.IsNullOrEmpty(x.PlanningRef) &&
                     (x.PlanningRef == "No" || !string.IsNullOrEmpty(x.PlanningRefEnter)) &&
                     !string.IsNullOrEmpty(x.GrantFunding) &&
-                    (x.GrantFunding == "No" || !string.IsNullOrEmpty(x.Ownership) ) &&
+                    (x.GrantFunding == "No" || !string.IsNullOrEmpty(x.Ownership)) &&
                     (x.GrantFunding == "No" || !string.IsNullOrEmpty(x.ChargesDebt)) &&
                     !string.IsNullOrEmpty(x.AffordableHomes) &&
                     (x.Ownership == "No" || (!string.IsNullOrEmpty(x.PurchaseYear)))
