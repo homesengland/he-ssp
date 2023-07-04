@@ -17,9 +17,6 @@ namespace HE.InvestmentLoans.WWW.Controllers
         public IActionResult Index()
         {
             var x = this.User.Claims.ToList();
-            var contactuserroles = mediator.Send(new BusinessLogic._LoanApplication.Commands.GetUserRolesFromCrm() { contactEmail = "aa2@aa.aa", contactExternalId = "{27B157CC-4BB0-4B76-B1F0-C6D8AE1BEAFA}" }).GetAwaiter().GetResult();
-
-
             return View();
         }
 
