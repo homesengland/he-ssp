@@ -42,17 +42,6 @@ namespace DataverseModel
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_Webrole_invln_Portalname
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		AHP = 858110001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Loans = 858110000,
-	}
-	
-	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_webrole")]
 	public partial class invln_Webrole : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
@@ -75,7 +64,6 @@ namespace DataverseModel
 			public const string invln_Name = "invln_name";
 			public const string invln_Portalid = "invln_portalid";
 			public const string invln_PortalidName = "invln_portalidname";
-			public const string invln_Portalname = "invln_portalname";
 			public const string invln_Portalpermissionlevelid = "invln_portalpermissionlevelid";
 			public const string invln_PortalpermissionlevelidName = "invln_portalpermissionlevelidname";
 			public const string invln_WebroleId = "invln_webroleid";
@@ -252,23 +240,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Portalid");
 				this.SetAttributeValue("invln_portalid", value);
 				this.OnPropertyChanged("invln_Portalid");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_portalname")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Portalname
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_portalname");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Portalname");
-				this.SetAttributeValue("invln_portalname", value);
-				this.OnPropertyChanged("invln_Portalname");
 			}
 		}
 		

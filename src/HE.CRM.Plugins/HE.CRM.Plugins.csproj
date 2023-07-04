@@ -123,10 +123,12 @@
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Exceptions\IntegrationApiException.cs" />
     <Compile Include="Handlers\Account\GenerateRandomAccountNameSampleHandler.cs" />
+    <Compile Include="Handlers\CustomApi\GenerateRichTextDocumentHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetContactRoleHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendInvestmentsLoanDataToCrmHandler.cs" />
     <Compile Include="Models\AzureAdToken.cs" />
     <Compile Include="Plugins\Accounts\GenerateRandomAccountNameSamplePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\GenerateRichTextDocumentPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetContactRolePlugin.cs" />
     <Compile Include="Plugins\CustomApi\SendInvestmentsLoanDataToCrmPlugin.cs" />
     <Compile Include="Services\Accounts\AccountService.cs" />
@@ -197,6 +199,8 @@
     <Compile Include="Services\HttpServices\AzureAdHttpClientService.cs" />
     <Compile Include="Services\LoanApplication\ILoanApplicationService.cs" />
     <Compile Include="Services\LoanApplication\LoanApplicationService.cs" />
+    <Compile Include="Services\RichTextService\IRichTextService.cs" />
+    <Compile Include="Services\RichTextService\RichTextService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">

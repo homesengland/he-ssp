@@ -57,6 +57,7 @@ namespace DataverseModel
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_externalid = "invln_externalid";
 			public const string invln_invln_portal_invln_webrole_Portalid = "invln_invln_portal_invln_webrole_Portalid";
 			public const string invln_name = "invln_name";
 			public const string invln_Portal = "invln_portal";
@@ -82,6 +83,8 @@ namespace DataverseModel
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
 		}
+		
+		public const string AlternateKeys = "invln_externalid";
 		
 		/// <summary>
 		/// Default Constructor.
@@ -189,6 +192,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("ImportSequenceNumber");
 				this.SetAttributeValue("importsequencenumber", value);
 				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalid")]
+		public string invln_externalid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_externalid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_externalid");
+				this.SetAttributeValue("invln_externalid", value);
+				this.OnPropertyChanged("invln_externalid");
 			}
 		}
 		
