@@ -23,8 +23,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication
             base.AddAditionalServices(collection);
         }
 
-
-
         [TestMethod]
         [DataRow(LoanApplicationWorkflow.State.Index, LoanApplicationWorkflow.State.AboutLoan)]
         [DataRow(LoanApplicationWorkflow.State.AboutLoan, LoanApplicationWorkflow.State.CheckYourDetails)]
@@ -35,11 +33,16 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication
         public async Task Workflow_Continue_Test(LoanApplicationWorkflow.State begin, LoanApplicationWorkflow.State expcected)
         {
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
+
             var model = await mediator.Send(new Create());
+
             model.State = begin;
             model.Purpose = Enums.FundingPurpose.BuildingNewHomes;
-            LoanApplicationWorkflow workflow = new LoanApplicationWorkflow(model, mediator);
+
+            var workflow = new LoanApplicationWorkflow(model, mediator);
+
             workflow.NextState(Routing.Trigger.Continue);
+
             Assert.AreEqual(model.State, expcected);
         }
 

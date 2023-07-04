@@ -15,8 +15,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
             AbnormalCosts,
             PrivateSectorFunding,
             AdditionalProjects,
-            AdditionalProjectsCosts,
-            AdditionalProjectsFunding,
             Refinance,
             CheckAnswers,
             Complete
@@ -119,8 +117,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
 
                 _model.Funding.RemoveAlternativeRoutesData();
 
-                return _mediator.Send(new BusinessLogic._LoanApplication.Commands.Update() { Model = _model });
-
+                return _mediator.Send(new Commands.Update() { Model = _model });
             });
         }
     }

@@ -21,8 +21,6 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
         public string PrivateSectorFundingResult { get; set; }
         public string PrivateSectorFundingReason { get; set; }
         public string AdditionalProjects { get; set; }
-        public string AdditionalProjectsCosts { get; set; }
-        public string[] AdditionalProjectsFunding { get; set; }
         public string Refinance { get; set; }
         public string RefinanceInfo { get; set; }
         public string CheckAnswers { get; set; }
