@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using DataverseModel;
@@ -16,37 +17,44 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
-        public invln_Webrole GetContactRole(Guid contactId, Guid portalId)
+        public List<invln_contactwebrole> GetContactWebRole(Guid contactId, string portalType)
         {
-            string fetchXML = @"<fetch>
-                                  <entity name=""invln_webrole"">
-                                    <attribute name=""invln_name"" />
-                                    <link-entity name=""invln_portal"" from=""invln_portalid"" to=""invln_portalid"">
-                                      <filter>
-                                        <condition attribute=""invln_portalid"" operator=""eq"" value="""+ portalId + @""" />
-                                      </filter>
-                                    </link-entity>
-                                    <link-entity name=""invln_contactwebrole"" from=""invln_webroleid"" to=""invln_webroleid"">
-                                      <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">
-                                        <filter>
-                                          <condition attribute=""contactid"" operator=""eq"" value="""+ contactId + @""" />
-                                        </filter>
-                                      </link-entity>
-                                    </link-entity>
-                                  </entity>
+            string fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+	                                <entity name='invln_contactwebrole'>
+		                                <attribute name='invln_contactwebroleid'/>
+		                                <attribute name='invln_name'/>
+		                                <attribute name='createdon'/>
+		                                <attribute name='invln_webroleid'/>
+		                                <attribute name='invln_accountid'/>
+		                                <attribute name='statuscode'/>
+		                                <attribute name='statecode'/>
+		                                <order attribute='invln_name' descending='false'/>
+		                                <filter type='and'>
+			                                <condition attribute='invln_contactid' operator='eq' uitype='contact' value='" + contactId + @"'/>
+		                                </filter>
+		                                <link-entity name='invln_webrole' from='invln_webroleid' to='invln_webroleid' link-type='inner' alias='ae'>
+			                                <attribute name='invln_portalpermissionlevelid'/>
+			                                <link-entity name='invln_portal' from='invln_portalid' to='invln_portalid' link-type='inner' alias='ag'>
+				                                <filter type='and'>
+					                                <condition attribute='invln_portal' operator='eq' value='" + portalType + @"'/>
+				                                </filter>
+			                                </link-entity>
+		                                </link-entity>
+	                                </entity>
                                 </fetch>";
 
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXML));
-            return result.Entities.Select(x => x.ToEntity<invln_Webrole>()).AsEnumerable().FirstOrDefault();
+            return result.Entities.Select(x => x.ToEntity<invln_contactwebrole>()).ToList();
         }
 
-        public invln_Webrole GetDefaultPortalRole(Guid portalId)
+        public invln_Webrole GetDefaultPortalRole(Guid portalType)
         {
-            using (var ctx = new OrganizationServiceContext(service))
-            {
-                return ctx.CreateQuery<invln_Webrole>()
-                    .Where(x => x.invln_Portalid.Id == portalId && x.invln_Isdefaultrole == true).AsEnumerable().FirstOrDefault();
-            }
+            //using (var ctx = new OrganizationServiceContext(service))
+            //{
+            //    return ctx.CreateQuery<invln_Webrole>()
+            //        .Where(x => x.invln_Portalid.Id == portalId && x.invln_Isdefaultrole == true).AsEnumerable().FirstOrDefault();
+            //}
+            throw new NotImplementedException();
         }
 
         public invln_Webrole GetRoleByName(string name)

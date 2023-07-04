@@ -11,7 +11,7 @@ namespace HE.CRM.Common.Repositories.Interfaces
     {
         Contact GetFirstContactWithGivenEmail(string email);
         List<Contact> GetAllContactsWithGivenEmail(string email);
-        Contact GetContactWithGivenEmailAndSSID(string email, Guid ssid);
+        Contact GetContactWithGivenEmailAndExternalId(string contactEmail, string contactExternalId);
         AssociateResponse ExecuteAssociateRequest(AssociateRequest request);
     }
 }

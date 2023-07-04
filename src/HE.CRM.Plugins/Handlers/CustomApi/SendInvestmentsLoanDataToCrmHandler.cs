@@ -8,6 +8,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
     {
         #region Fields
 
+        private string ssid => ExecutionData.GetInputParameter<string>(invln_sendinvestmentloansdatatocrmRequest.Fields.invln_entityfieldsparameters);
         private string requestStringMessage => ExecutionData.GetInputParameter<string>(invln_sendinvestmentloansdatatocrmRequest.Fields.invln_entityfieldsparameters);
 
         #endregion

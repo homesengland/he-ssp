@@ -46,12 +46,12 @@ namespace HE.CRM.Common.Repositories.Implementations
             return contacts;
         }
 
-        public Contact GetContactWithGivenEmailAndSSID(string email, Guid ssid)
+        public Contact GetContactWithGivenEmailAndExternalId(string contactEmail, string contactExternalId)
         {
             using (var ctx = new OrganizationServiceContext(service))
             {
                 var contact = ctx.CreateQuery<Contact>()
-                    .Where(x => x.EMailAddress1 == email && x.Id == ssid).AsEnumerable().FirstOrDefault();
+                    .Where(x => x.EMailAddress1 == contactEmail && x.invln_externalid == contactExternalId).AsEnumerable().FirstOrDefault();
 
                 if (contact != null)
                 {
@@ -61,8 +61,8 @@ namespace HE.CRM.Common.Repositories.Implementations
                 {
                     var contactToCreate = new Contact()
                     {
-                        EMailAddress1 = email,
-                        Id = ssid,
+                        EMailAddress1 = contactEmail,
+                        invln_externalid = contactExternalId,
                     };
                     service.Create(contactToCreate);
                     return contactToCreate;

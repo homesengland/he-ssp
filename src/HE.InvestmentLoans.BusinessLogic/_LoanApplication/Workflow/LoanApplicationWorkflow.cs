@@ -65,7 +65,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
             _machine.Configure(State.ApplicationSubmitted).OnEntry(x =>
             {
                 _mediator.Send(new BusinessLogic._LoanApplication.Commands.SendToCrm() { Model = _model }).GetAwaiter().GetResult();
-
+ 
             });
 
             _machine.OnTransitionCompletedAsync(x =>

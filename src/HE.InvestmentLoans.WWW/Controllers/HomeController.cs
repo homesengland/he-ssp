@@ -17,7 +17,6 @@ namespace HE.InvestmentLoans.WWW.Controllers
         public IActionResult Index()
         {
             var x = this.User.Claims.ToList();
-
             return View();
         }
 

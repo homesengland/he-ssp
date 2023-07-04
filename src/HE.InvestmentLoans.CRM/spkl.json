@@ -2,7 +2,7 @@
   "earlyboundtypes": [
     {
       "entities": "account,contact,invln_loanapplication",
-      "actions": "invln_sendinvestmentloansdatatocrm",
+      "actions": "invln_sendinvestmentloansdatatocrm,invln_getcontactrole",
       "generateOptionsetEnums": "true",
       "generateStateEnums": "true",
       "generateGlobalOptionsets": false,
