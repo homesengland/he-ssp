@@ -12,521 +12,521 @@
 
 namespace HE.InvestmentLoans.CRM.Model
 {
-
-
+	
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_accountcategorycode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PreferredCustomer = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Standard = 2,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_accountclassificationcode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_accountratingcode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_address1_addresstypecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		BillTo = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ShipTo = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Primary = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Other = 4,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_address1_freighttermscode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		FOB = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		NoCharge = 2,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_address1_shippingmethodcode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Airborne = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DHL = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		FedEx = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		UPS = 4,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PostalMail = 5,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		FullLoad = 6,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		WillCall = 7,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_address2_addresstypecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_address2_freighttermscode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_address2_shippingmethodcode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_businesstypecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_customersizecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_customertypecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Competitor = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Consultant = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Customer = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Investor = 4,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Partner = 5,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Influencer = 6,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Press = 7,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Prospect = 8,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Reseller = 9,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Supplier = 10,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Vendor = 11,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Other = 12,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum he_account_he_partnertype
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Consultant = 134370002,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CountyCouncil = 134370006,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DistrictCouncil = 134370007,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		FinancialInstitution = 134370001,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		GovernmentPolicyMaker = 134370008,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		HomesDeveloper = 134370005,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		HousingAssociation = 134370000,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Landowner = 134370003,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PrivateContractor = 134370009,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PrivateSectorHousebuild = 134370004,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum he_account_he_primaryoperatingregion
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Midlands = 134370001,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		MultipleRegions = 134370002,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		National = 134370003,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		NorthEastYorkshireandHumber = 134370004,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		NorthWest = 134370005,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		SouthEast = 134370006,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		SouthWest = 134370007,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		London = 134370000,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum he_account_he_sector
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		HomesDeveloper = 134370000,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CountyCouncil = 134370001,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DistrictCouncil = 134370002,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		GovernmentPolicyMaker = 134370003,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PrivateContractor = 134370004,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		HousingAssociation = 134370005,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Consultant = 134370006,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_industrycode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Accounting = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		AgricultureandNonpetrolNaturalResourceExtraction = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		BroadcastingPrintingandPublishing = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Brokers = 4,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		BuildingSupplyRetail = 5,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		BusinessServices = 6,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Consulting = 7,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ConsumerServices = 8,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DesignDirectionandCreativeManagement = 9,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DistributorsDispatchersandProcessors = 10,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DoctorsOfficesandClinics = 11,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DurableManufacturing = 12,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		EatingandDrinkingPlaces = 13,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		EntertainmentRetail = 14,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		EquipmentRentalandLeasing = 15,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Financial = 16,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		FoodandTobaccoProcessing = 17,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		InboundCapitalIntensiveProcessing = 18,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		InboundRepairandServices = 19,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Insurance = 20,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		LegalServices = 21,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		NonDurableMerchandiseRetail = 22,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		OutboundConsumerService = 23,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PetrochemicalExtractionandDistribution = 24,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ServiceRetail = 25,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		SIGAffiliations = 26,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		SocialServices = 27,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		SpecialOutboundTradeContractors = 28,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		SpecialtyRealty = 29,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Transportation = 30,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		UtilityCreationandDistribution = 31,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		VehicleRetail = 32,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Wholesale = 33,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_ownershipcode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Public = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Private = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Subsidiary = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Other = 4,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_paymenttermscode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Net30 = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Number_210Net30 = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Net45 = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Net60 = 4,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_preferredappointmentdaycode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Sunday = 0,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Monday = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Tuesday = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Wednesday = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Thursday = 4,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Friday = 5,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Saturday = 6,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_preferredappointmenttimecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Morning = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Afternoon = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Evening = 3,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_preferredcontactmethodcode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Any = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Email = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Phone = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Fax = 4,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Mail = 5,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_shippingmethodcode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum AccountState
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Active = 0,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_statuscode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Active = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_territorycode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	/// <summary>
 	/// Business that represents a customer or potential customer. The company that is billed in business transactions.
 	/// </summary>
@@ -535,27 +535,27 @@ namespace HE.InvestmentLoans.CRM.Model
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public partial class Account : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
-
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
-		public Account() :
+		public Account() : 
 				base(EntityLogicalName)
 		{
 		}
-
+		
 		public const string EntityLogicalName = "account";
-
+		
 		public const string EntityLogicalCollectionName = "accounts";
-
+		
 		public const string EntitySetName = "accounts";
-
+		
 		public const int EntityTypeCode = 1;
-
+		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-
+		
 		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
-
+		
 		private void OnPropertyChanged(string propertyName)
 		{
 			if ((this.PropertyChanged != null))
@@ -563,7 +563,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
 			}
 		}
-
+		
 		private void OnPropertyChanging(string propertyName)
 		{
 			if ((this.PropertyChanging != null))
@@ -571,7 +571,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
 			}
 		}
-
+		
 		/// <summary>
 		/// Select a category to indicate whether the customer account is standard or preferred.
 		/// </summary>
@@ -604,7 +604,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("AccountCategoryCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select a classification code to indicate the potential value of the customer account based on the projected return on investment, cooperation level, sales cycle length or other criteria.
 		/// </summary>
@@ -637,7 +637,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("AccountClassificationCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the account.
 		/// </summary>
@@ -663,7 +663,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("AccountId");
 			}
 		}
-
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountid")]
 		public override System.Guid Id
 		{
@@ -676,7 +676,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.AccountId = value;
 			}
 		}
-
+		
 		/// <summary>
 		/// Type an ID number or code for the account to quickly search and identify the account in system views.
 		/// </summary>
@@ -694,7 +694,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("AccountNumber");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select a rating to indicate the value of the customer account.
 		/// </summary>
@@ -727,7 +727,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("AccountRatingCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier for address 1.
 		/// </summary>
@@ -745,7 +745,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_AddressId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the primary address type.
 		/// </summary>
@@ -778,7 +778,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_AddressTypeCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the city for the primary address.
 		/// </summary>
@@ -796,7 +796,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_City");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the complete primary address.
 		/// </summary>
@@ -808,7 +808,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<string>("address1_composite");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the country or region for the primary address.
 		/// </summary>
@@ -826,7 +826,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Country");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the county for the primary address.
 		/// </summary>
@@ -844,7 +844,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_County");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the fax number associated with the primary address.
 		/// </summary>
@@ -862,7 +862,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Fax");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the freight terms for the primary address to make sure shipping orders are processed correctly.
 		/// </summary>
@@ -895,7 +895,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_FreightTermsCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the latitude value for the primary address for use in mapping and other applications.
 		/// </summary>
@@ -913,7 +913,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Latitude");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the first line of the primary address.
 		/// </summary>
@@ -931,7 +931,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Line1");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the second line of the primary address.
 		/// </summary>
@@ -949,7 +949,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Line2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the third line of the primary address.
 		/// </summary>
@@ -967,7 +967,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Line3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the longitude value for the primary address for use in mapping and other applications.
 		/// </summary>
@@ -985,7 +985,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Longitude");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a descriptive name for the primary address, such as Corporate Headquarters.
 		/// </summary>
@@ -1003,7 +1003,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Name");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the ZIP Code or postal code for the primary address.
 		/// </summary>
@@ -1021,7 +1021,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_PostalCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the post office box number of the primary address.
 		/// </summary>
@@ -1039,7 +1039,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_PostOfficeBox");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the name of the main contact at the account's primary address.
 		/// </summary>
@@ -1057,7 +1057,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_PrimaryContactName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select a shipping method for deliveries sent to this address.
 		/// </summary>
@@ -1090,7 +1090,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_ShippingMethodCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the state or province of the primary address.
 		/// </summary>
@@ -1108,7 +1108,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_StateOrProvince");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the main phone number associated with the primary address.
 		/// </summary>
@@ -1126,7 +1126,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Telephone1");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a second phone number associated with the primary address.
 		/// </summary>
@@ -1144,7 +1144,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Telephone2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a third phone number associated with the primary address.
 		/// </summary>
@@ -1162,7 +1162,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Telephone3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the UPS zone of the primary address to make sure shipping charges are calculated correctly and deliveries are made promptly, if shipped by UPS.
 		/// </summary>
@@ -1180,7 +1180,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_UPSZone");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the time zone, or UTC offset, for this address so that other people can reference it when they contact someone at this address.
 		/// </summary>
@@ -1198,7 +1198,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_UTCOffset");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier for address 2.
 		/// </summary>
@@ -1216,7 +1216,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_AddressId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the secondary address type.
 		/// </summary>
@@ -1249,7 +1249,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_AddressTypeCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the city for the secondary address.
 		/// </summary>
@@ -1267,7 +1267,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_City");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the complete secondary address.
 		/// </summary>
@@ -1279,7 +1279,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<string>("address2_composite");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the country or region for the secondary address.
 		/// </summary>
@@ -1297,7 +1297,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Country");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the county for the secondary address.
 		/// </summary>
@@ -1315,7 +1315,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_County");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the fax number associated with the secondary address.
 		/// </summary>
@@ -1333,7 +1333,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Fax");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the freight terms for the secondary address to make sure shipping orders are processed correctly.
 		/// </summary>
@@ -1366,7 +1366,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_FreightTermsCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the latitude value for the secondary address for use in mapping and other applications.
 		/// </summary>
@@ -1384,7 +1384,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Latitude");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the first line of the secondary address.
 		/// </summary>
@@ -1402,7 +1402,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Line1");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the second line of the secondary address.
 		/// </summary>
@@ -1420,7 +1420,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Line2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the third line of the secondary address.
 		/// </summary>
@@ -1438,7 +1438,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Line3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the longitude value for the secondary address for use in mapping and other applications.
 		/// </summary>
@@ -1456,7 +1456,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Longitude");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a descriptive name for the secondary address, such as Corporate Headquarters.
 		/// </summary>
@@ -1474,7 +1474,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Name");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the ZIP Code or postal code for the secondary address.
 		/// </summary>
@@ -1492,7 +1492,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_PostalCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the post office box number of the secondary address.
 		/// </summary>
@@ -1510,7 +1510,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_PostOfficeBox");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the name of the main contact at the account's secondary address.
 		/// </summary>
@@ -1528,7 +1528,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_PrimaryContactName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select a shipping method for deliveries sent to this address.
 		/// </summary>
@@ -1561,7 +1561,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_ShippingMethodCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the state or province of the secondary address.
 		/// </summary>
@@ -1579,7 +1579,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_StateOrProvince");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the main phone number associated with the secondary address.
 		/// </summary>
@@ -1597,7 +1597,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Telephone1");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a second phone number associated with the secondary address.
 		/// </summary>
@@ -1615,7 +1615,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Telephone2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a third phone number associated with the secondary address.
 		/// </summary>
@@ -1633,7 +1633,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Telephone3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the UPS zone of the secondary address to make sure shipping charges are calculated correctly and deliveries are made promptly, if shipped by UPS.
 		/// </summary>
@@ -1651,7 +1651,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_UPSZone");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the time zone, or UTC offset, for this address so that other people can reference it when they contact someone at this address.
 		/// </summary>
@@ -1669,7 +1669,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_UTCOffset");
 			}
 		}
-
+		
 		/// <summary>
 		/// For system use only.
 		/// </summary>
@@ -1681,7 +1681,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging30");
 			}
 		}
-
+		
 		/// <summary>
 		/// The base currency equivalent of the aging 30 field.
 		/// </summary>
@@ -1693,7 +1693,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging30_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// For system use only.
 		/// </summary>
@@ -1705,7 +1705,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging60");
 			}
 		}
-
+		
 		/// <summary>
 		/// The base currency equivalent of the aging 60 field.
 		/// </summary>
@@ -1717,7 +1717,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging60_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// For system use only.
 		/// </summary>
@@ -1729,7 +1729,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging90");
 			}
 		}
-
+		
 		/// <summary>
 		/// The base currency equivalent of the aging 90 field.
 		/// </summary>
@@ -1741,7 +1741,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging90_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the legal designation or other business type of the account for contracts or reporting purposes.
 		/// </summary>
@@ -1774,7 +1774,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("BusinessTypeCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows who created the record.
 		/// </summary>
@@ -1786,7 +1786,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the external party who created the record.
 		/// </summary>
@@ -1798,7 +1798,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdbyexternalparty");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the date and time when the record was created. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
 		/// </summary>
@@ -1810,7 +1810,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows who created the record on behalf of another user.
 		/// </summary>
@@ -1822,7 +1822,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the credit limit of the account. This is a useful reference when you address invoice and accounting issues with the customer.
 		/// </summary>
@@ -1840,7 +1840,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("CreditLimit");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the credit limit converted to the system's default base currency for reporting purposes.
 		/// </summary>
@@ -1852,7 +1852,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("creditlimit_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the credit for the account is on hold. This is a useful reference while addressing the invoice and accounting issues with the customer.
 		/// </summary>
@@ -1870,7 +1870,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("CreditOnHold");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the size category or range of the account for segmentation and reporting purposes.
 		/// </summary>
@@ -1903,7 +1903,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("CustomerSizeCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the category that best describes the relationship between the account and your organization.
 		/// </summary>
@@ -1936,7 +1936,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("CustomerTypeCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the default price list associated with the account to make sure the correct product prices for this customer are applied in sales opportunities, quotes, and orders.
 		/// </summary>
@@ -1954,7 +1954,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DefaultPriceLevelId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type additional information to describe the account, such as an excerpt from the company's website.
 		/// </summary>
@@ -1972,7 +1972,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Description");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the account allows bulk email sent through campaigns. If Do Not Allow is selected, the account can be added to marketing lists, but is excluded from email.
 		/// </summary>
@@ -1990,7 +1990,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotBulkEMail");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the account allows bulk postal mail sent through marketing campaigns or quick campaigns. If Do Not Allow is selected, the account can be added to marketing lists, but will be excluded from the postal mail.
 		/// </summary>
@@ -2008,7 +2008,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotBulkPostalMail");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the account allows direct email sent from Microsoft Dynamics 365.
 		/// </summary>
@@ -2026,7 +2026,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotEMail");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the account allows faxes. If Do Not Allow is selected, the account will be excluded from fax activities distributed in marketing campaigns.
 		/// </summary>
@@ -2044,7 +2044,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotFax");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the account allows phone calls. If Do Not Allow is selected, the account will be excluded from phone call activities distributed in marketing campaigns.
 		/// </summary>
@@ -2062,7 +2062,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotPhone");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the account allows direct mail. If Do Not Allow is selected, the account will be excluded from letter activities distributed in marketing campaigns.
 		/// </summary>
@@ -2080,7 +2080,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotPostalMail");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the account accepts marketing materials, such as brochures or catalogs.
 		/// </summary>
@@ -2098,7 +2098,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotSendMM");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the primary email address for the account.
 		/// </summary>
@@ -2116,7 +2116,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("EMailAddress1");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the secondary email address for the account.
 		/// </summary>
@@ -2134,7 +2134,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("EMailAddress2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type an alternate email address for the account.
 		/// </summary>
@@ -2152,7 +2152,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("EMailAddress3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the default image for the record.
 		/// </summary>
@@ -2170,7 +2170,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("EntityImage");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -2182,7 +2182,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<long>>("entityimage_timestamp");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -2194,7 +2194,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<string>("entityimage_url");
 			}
 		}
-
+		
 		/// <summary>
 		/// For internal use only.
 		/// </summary>
@@ -2206,7 +2206,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<System.Guid>>("entityimageid");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the conversion rate of the record's currency. The exchange rate is used to convert all money fields in the record from the local currency to the system's default currency.
 		/// </summary>
@@ -2224,7 +2224,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ExchangeRate");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the fax number for the account.
 		/// </summary>
@@ -2242,7 +2242,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Fax");
 			}
 		}
-
+		
 		/// <summary>
 		/// Information about whether to allow following email activity like opens, attachment views and link clicks for emails sent to the account.
 		/// </summary>
@@ -2260,7 +2260,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("FollowEmail");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the URL for the account's FTP site to enable users to access data and share documents.
 		/// </summary>
@@ -2278,7 +2278,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("FtpSiteURL");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -2296,7 +2296,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_automaticsearch");
 			}
 		}
-
+		
 		/// <summary>
 		/// Companies House Number
 		/// </summary>
@@ -2314,7 +2314,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_CompaniesHouseNumber");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -2332,7 +2332,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_companysearch");
 			}
 		}
-
+		
 		/// <summary>
 		/// Single Pipeline Esri ID
 		/// </summary>
@@ -2350,7 +2350,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_EsriID");
 			}
 		}
-
+		
 		/// <summary>
 		/// Homes England Central Government Organisation Code
 		/// </summary>
@@ -2368,7 +2368,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_HomesEnglandCentralGovernmentOrganisationCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Homes England Combined Authority Code
 		/// </summary>
@@ -2386,7 +2386,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_HomesEnglandCombinedAuthorityCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique ID without the Prefix
 		/// </summary>
@@ -2404,7 +2404,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_ID");
 			}
 		}
-
+		
 		/// <summary>
 		/// Whether the partner is Key Account or not
 		/// </summary>
@@ -2422,7 +2422,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_KeyAccount");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -2440,7 +2440,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_lmvbindicator");
 			}
 		}
-
+		
 		/// <summary>
 		/// ONS (Office for National Statistics) GSS (Government Statistical Service) Local Authority Code
 		/// </summary>
@@ -2458,7 +2458,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_LocalAuthorityCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -2476,7 +2476,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_PartnerSector");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -2509,7 +2509,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_PartnerType");
 			}
 		}
-
+		
 		/// <summary>
 		/// ID containing unique prefix
 		/// </summary>
@@ -2527,7 +2527,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_prefixid");
 			}
 		}
-
+		
 		/// <summary>
 		/// Primary Operating Region of the partner
 		/// </summary>
@@ -2560,7 +2560,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_PrimaryOperatingRegion");
 			}
 		}
-
+		
 		/// <summary>
 		/// HE User who owns the relationship with Partner
 		/// </summary>
@@ -2578,7 +2578,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_RelationshipOwner");
 			}
 		}
-
+		
 		/// <summary>
 		/// Sector in which partner operates
 		/// </summary>
@@ -2611,7 +2611,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_Sector");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -2629,7 +2629,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_SectorTextforPowerBI");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -2647,7 +2647,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_smeindicator");
 			}
 		}
-
+		
 		/// <summary>
 		/// Social Housing Provider Registration Number
 		/// </summary>
@@ -2665,7 +2665,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_SocialHousingProviderRegistrationNumber");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -2683,7 +2683,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_tempdataid");
 			}
 		}
-
+		
 		/// <summary>
 		/// Holds the ultimate parent of partner
 		/// </summary>
@@ -2701,7 +2701,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_UltimateParent");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the data import or data migration that created this record.
 		/// </summary>
@@ -2719,7 +2719,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ImportSequenceNumber");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the account's primary industry for use in marketing segmentation and demographic analysis.
 		/// </summary>
@@ -2752,7 +2752,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("IndustryCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Contains the date and time stamp of the last on hold time.
 		/// </summary>
@@ -2770,7 +2770,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("LastOnHoldTime");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the date when the account was last included in a marketing campaign or quick campaign.
 		/// </summary>
@@ -2788,7 +2788,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("LastUsedInCampaign");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the market capitalization of the account to identify the company's equity, used as an indicator in financial performance analysis.
 		/// </summary>
@@ -2806,7 +2806,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("MarketCap");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the market capitalization converted to the system's default base currency.
 		/// </summary>
@@ -2818,7 +2818,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("marketcap_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// Whether is only for marketing
 		/// </summary>
@@ -2836,7 +2836,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("MarketingOnly");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the master account that the account was merged with.
 		/// </summary>
@@ -2848,7 +2848,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("masterid");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows whether the account has been merged with another account.
 		/// </summary>
@@ -2860,7 +2860,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<bool>>("merged");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows who last updated the record.
 		/// </summary>
@@ -2872,7 +2872,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the external party who modified the record.
 		/// </summary>
@@ -2884,7 +2884,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedbyexternalparty");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the date and time when the record was last updated. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
 		/// </summary>
@@ -2896,7 +2896,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows who created the record on behalf of another user.
 		/// </summary>
@@ -2908,7 +2908,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -2926,7 +2926,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("msdyn_accountkpiid");
 			}
 		}
-
+		
 		/// <summary>
 		/// Describes whether account is opted out or not
 		/// </summary>
@@ -2944,7 +2944,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("msdyn_gdproptout");
 			}
 		}
-
+		
 		/// <summary>
 		/// Sales Acceleration Insights ID
 		/// </summary>
@@ -2962,7 +2962,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("msdyn_salesaccelerationinsightid");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier for Segment associated with account.
 		/// </summary>
@@ -2980,7 +2980,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("msdyn_segmentid");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -2992,7 +2992,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msft_datastate");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the company or business name.
 		/// </summary>
@@ -3010,7 +3010,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Name");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the number of employees that work at the account for use in marketing segmentation and demographic analysis.
 		/// </summary>
@@ -3028,7 +3028,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("NumberOfEmployees");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows how long, in minutes, that the record was on hold.
 		/// </summary>
@@ -3040,7 +3040,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<int>>("onholdtime");
 			}
 		}
-
+		
 		/// <summary>
 		/// Number of open opportunities against an account and its child accounts.
 		/// </summary>
@@ -3052,7 +3052,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<int>>("opendeals");
 			}
 		}
-
+		
 		/// <summary>
 		/// Last Updated time of rollup field Open Deals.
 		/// </summary>
@@ -3064,7 +3064,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<System.DateTime>>("opendeals_date");
 			}
 		}
-
+		
 		/// <summary>
 		/// State of rollup field Open Deals.
 		/// </summary>
@@ -3076,7 +3076,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<int>>("opendeals_state");
 			}
 		}
-
+		
 		/// <summary>
 		/// Sum of open revenue against an account and its child accounts.
 		/// </summary>
@@ -3088,7 +3088,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("openrevenue");
 			}
 		}
-
+		
 		/// <summary>
 		/// Value of the Open Revenue in base currency.
 		/// </summary>
@@ -3100,7 +3100,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("openrevenue_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// Last Updated time of rollup field Open Revenue.
 		/// </summary>
@@ -3112,7 +3112,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<System.DateTime>>("openrevenue_date");
 			}
 		}
-
+		
 		/// <summary>
 		/// State of rollup field Open Revenue.
 		/// </summary>
@@ -3124,7 +3124,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<int>>("openrevenue_state");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the lead that the account was created from if the account was created by converting a lead in Microsoft Dynamics 365. This is used to relate the account to data on the originating lead for use in reporting and analytics.
 		/// </summary>
@@ -3142,7 +3142,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("OriginatingLeadId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Date and time that the record was migrated.
 		/// </summary>
@@ -3160,7 +3160,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("OverriddenCreatedOn");
 			}
 		}
-
+		
 		/// <summary>
 		/// Enter the user or team who is assigned to manage the record. This field is updated every time the record is assigned to a different user.
 		/// </summary>
@@ -3178,7 +3178,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("OwnerId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the account's ownership structure, such as public or private.
 		/// </summary>
@@ -3211,7 +3211,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("OwnershipCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the business unit that the record owner belongs to.
 		/// </summary>
@@ -3223,7 +3223,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the team who owns the account.
 		/// </summary>
@@ -3235,7 +3235,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the user who owns the account.
 		/// </summary>
@@ -3247,7 +3247,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the parent account associated with this account to show parent and child businesses in reporting and analytics.
 		/// </summary>
@@ -3265,7 +3265,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ParentAccountId");
 			}
 		}
-
+		
 		/// <summary>
 		/// For system use only. Legacy Microsoft Dynamics CRM 3.0 workflow data.
 		/// </summary>
@@ -3283,7 +3283,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ParticipatesInWorkflow");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the payment terms to indicate when the customer needs to pay the total amount.
 		/// </summary>
@@ -3316,7 +3316,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PaymentTermsCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the preferred day of the week for service appointments.
 		/// </summary>
@@ -3349,7 +3349,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PreferredAppointmentDayCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the preferred time of day for service appointments.
 		/// </summary>
@@ -3382,7 +3382,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PreferredAppointmentTimeCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the preferred method of contact.
 		/// </summary>
@@ -3415,7 +3415,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PreferredContactMethodCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the account's preferred service facility or equipment to make sure services are scheduled correctly for the customer.
 		/// </summary>
@@ -3433,7 +3433,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PreferredEquipmentId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the account's preferred service for reference when you schedule service activities.
 		/// </summary>
@@ -3451,7 +3451,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PreferredServiceId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the preferred service representative for reference when you schedule service activities for the account.
 		/// </summary>
@@ -3469,7 +3469,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PreferredSystemUserId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the primary contact for the account to provide quick access to contact details.
 		/// </summary>
@@ -3487,7 +3487,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PrimaryContactId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Primary Satori ID for Account
 		/// </summary>
@@ -3505,7 +3505,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PrimarySatoriId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Primary Twitter ID for Account
 		/// </summary>
@@ -3523,7 +3523,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PrimaryTwitterId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the ID of the process.
 		/// </summary>
@@ -3541,7 +3541,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ProcessId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the annual revenue for the account, used as an indicator in financial performance analysis.
 		/// </summary>
@@ -3559,7 +3559,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Revenue");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the annual revenue converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
 		/// </summary>
@@ -3571,7 +3571,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("revenue_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the number of shares available to the public for the account. This number is used as an indicator in financial performance analysis.
 		/// </summary>
@@ -3589,7 +3589,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("SharesOutstanding");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select a shipping method for deliveries sent to the account's address to designate the preferred carrier or other delivery option.
 		/// </summary>
@@ -3622,7 +3622,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ShippingMethodCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the Standard Industrial Classification (SIC) code that indicates the account's primary industry of business, for use in marketing segmentation and demographic analysis.
 		/// </summary>
@@ -3640,7 +3640,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("SIC");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the service level agreement (SLA) that you want to apply to the Account record.
 		/// </summary>
@@ -3658,7 +3658,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("SLAId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Last SLA that was applied to this case. This field is for internal use only.
 		/// </summary>
@@ -3670,7 +3670,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("slainvokedid");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the ID of the stage.
 		/// </summary>
@@ -3688,7 +3688,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("StageId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows whether the account is active or inactive. Inactive accounts are read-only and can't be edited unless they are reactivated.
 		/// </summary>
@@ -3721,7 +3721,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("StateCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the account's status.
 		/// </summary>
@@ -3754,7 +3754,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("StatusCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the stock exchange at which the account is listed to track their stock and financial performance of the company.
 		/// </summary>
@@ -3772,7 +3772,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("StockExchange");
 			}
 		}
-
+		
 		/// <summary>
 		/// Number of users or conversations followed the record
 		/// </summary>
@@ -3790,7 +3790,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TeamsFollowed");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the main phone number for this account.
 		/// </summary>
@@ -3808,7 +3808,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Telephone1");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a second phone number for this account.
 		/// </summary>
@@ -3826,7 +3826,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Telephone2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a third phone number for this account.
 		/// </summary>
@@ -3844,7 +3844,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Telephone3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select a region or territory for the account for use in segmentation and analysis.
 		/// </summary>
@@ -3877,7 +3877,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TerritoryCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the sales region or territory for the account to make sure the account is assigned to the correct representative and for use in segmentation and analysis.
 		/// </summary>
@@ -3895,7 +3895,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TerritoryId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the stock exchange symbol for the account to track financial performance of the company. You can click the code entered in this field to access the latest trading information from MSN Money.
 		/// </summary>
@@ -3913,7 +3913,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TickerSymbol");
 			}
 		}
-
+		
 		/// <summary>
 		/// Total time spent for emails (read and write) and meetings by me in relation to account record.
 		/// </summary>
@@ -3925,7 +3925,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<string>("timespentbymeonemailandmeetings");
 			}
 		}
-
+		
 		/// <summary>
 		/// For internal use only.
 		/// </summary>
@@ -3943,7 +3943,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the local currency for the record to make sure budgets are reported in the correct currency.
 		/// </summary>
@@ -3961,7 +3961,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TransactionCurrencyId");
 			}
 		}
-
+		
 		/// <summary>
 		/// For internal use only.
 		/// </summary>
@@ -3979,7 +3979,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TraversedPath");
 			}
 		}
-
+		
 		/// <summary>
 		/// Time zone code that was in use when the record was created.
 		/// </summary>
@@ -3997,7 +3997,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("UTCConversionTimeZoneCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Version number of the account.
 		/// </summary>
@@ -4009,7 +4009,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the account's website URL to get quick details about the company profile.
 		/// </summary>
@@ -4027,7 +4027,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("WebSiteURL");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the phonetic spelling of the company name, if specified in Japanese, to make sure the name is pronounced correctly in phone calls and other communications.
 		/// </summary>
@@ -4045,7 +4045,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("YomiName");
 			}
 		}
-
+		
 		/// <summary>
 		/// 1:N account_master_account
 		/// </summary>
@@ -4063,7 +4063,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Referencedaccount_master_account");
 			}
 		}
-
+		
 		/// <summary>
 		/// 1:N account_parent_account
 		/// </summary>
@@ -4081,7 +4081,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Referencedaccount_parent_account");
 			}
 		}
-
+		
 		/// <summary>
 		/// 1:N contact_customer_accounts
 		/// </summary>
@@ -4099,7 +4099,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("contact_customer_accounts");
 			}
 		}
-
+		
 		/// <summary>
 		/// 1:N he_account_account_UltimateParent
 		/// </summary>
@@ -4117,7 +4117,25 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Referencedhe_account_account_UltimateParent");
 			}
 		}
-
+		
+		/// <summary>
+		/// 1:N invln_loanapplication_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_account")]
+		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.invln_Loanapplication> invln_loanapplication_account
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.invln_Loanapplication>("invln_loanapplication_account", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_account");
+				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.invln_Loanapplication>("invln_loanapplication_account", null, value);
+				this.OnPropertyChanged("invln_loanapplication_account");
+			}
+		}
+		
 		/// <summary>
 		/// N:1 account_master_account
 		/// </summary>
@@ -4130,7 +4148,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 		}
-
+		
 		/// <summary>
 		/// N:1 account_parent_account
 		/// </summary>
@@ -4149,7 +4167,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Referencingaccount_parent_account");
 			}
 		}
-
+		
 		/// <summary>
 		/// N:1 account_primary_contact
 		/// </summary>
@@ -4168,7 +4186,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("account_primary_contact");
 			}
 		}
-
+		
 		/// <summary>
 		/// N:1 he_account_account_UltimateParent
 		/// </summary>
@@ -4188,364 +4206,364 @@ namespace HE.InvestmentLoans.CRM.Model
 			}
 		}
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_accountrolecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DecisionMaker = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Employee = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Influencer = 3,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_address1_addresstypecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		BillTo = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ShipTo = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Primary = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Other = 4,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_address1_freighttermscode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		FOB = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		NoCharge = 2,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_address1_shippingmethodcode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Airborne = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DHL = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		FedEx = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		UPS = 4,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PostalMail = 5,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		FullLoad = 6,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		WillCall = 7,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_address2_addresstypecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_address2_freighttermscode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_address2_shippingmethodcode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_address3_addresstypecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_address3_freighttermscode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_address3_shippingmethodcode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_customersizecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_customertypecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_educationcode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_familystatuscode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Single = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Married = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Divorced = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Widowed = 4,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_gendercode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Male = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Female = 2,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_haschildrencode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_leadsourcecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_msdyn_decisioninfluencetag
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Decisionmaker = 0,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Influencer = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Blocker = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Unknown = 3,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_msdyn_orgchangestatus
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		NoFeedback = 0,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		NotatCompany = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Ignore = 2,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_paymenttermscode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Net30 = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Number_210Net30 = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Net45 = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Net60 = 4,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_preferredappointmentdaycode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Sunday = 0,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Monday = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Tuesday = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Wednesday = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Thursday = 4,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Friday = 5,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Saturday = 6,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_preferredappointmenttimecode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Morning = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Afternoon = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Evening = 3,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_preferredcontactmethodcode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Any = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Email = 2,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Phone = 3,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Fax = 4,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Mail = 5,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_shippingmethodcode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum ContactState
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Active = 0,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_statuscode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Active = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum contact_territorycode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DefaultValue = 1,
 	}
-
+	
 	/// <summary>
 	/// Person with whom a business unit has a relationship, such as customer, supplier, and colleague.
 	/// </summary>
@@ -4554,27 +4572,27 @@ namespace HE.InvestmentLoans.CRM.Model
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public partial class Contact : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
-
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
-		public Contact() :
+		public Contact() : 
 				base(EntityLogicalName)
 		{
 		}
-
+		
 		public const string EntityLogicalName = "contact";
-
+		
 		public const string EntityLogicalCollectionName = "contacts";
-
+		
 		public const string EntitySetName = "contacts";
-
+		
 		public const int EntityTypeCode = 2;
-
+		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-
+		
 		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
-
+		
 		private void OnPropertyChanged(string propertyName)
 		{
 			if ((this.PropertyChanged != null))
@@ -4582,7 +4600,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
 			}
 		}
-
+		
 		private void OnPropertyChanging(string propertyName)
 		{
 			if ((this.PropertyChanging != null))
@@ -4590,7 +4608,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the account with which the contact is associated.
 		/// </summary>
@@ -4602,7 +4620,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("accountid");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the contact's role within the company or sales process, such as decision maker, employee, or influencer.
 		/// </summary>
@@ -4635,7 +4653,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("AccountRoleCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier for address 1.
 		/// </summary>
@@ -4653,7 +4671,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_AddressId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the primary address type.
 		/// </summary>
@@ -4686,7 +4704,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_AddressTypeCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the city for the primary address.
 		/// </summary>
@@ -4704,7 +4722,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_City");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the complete primary address.
 		/// </summary>
@@ -4716,7 +4734,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<string>("address1_composite");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the country or region for the primary address.
 		/// </summary>
@@ -4734,7 +4752,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Country");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the county for the primary address.
 		/// </summary>
@@ -4752,7 +4770,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_County");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the fax number associated with the primary address.
 		/// </summary>
@@ -4770,7 +4788,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Fax");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the freight terms for the primary address to make sure shipping orders are processed correctly.
 		/// </summary>
@@ -4803,7 +4821,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_FreightTermsCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the latitude value for the primary address for use in mapping and other applications.
 		/// </summary>
@@ -4821,7 +4839,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Latitude");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the first line of the primary address.
 		/// </summary>
@@ -4839,7 +4857,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Line1");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the second line of the primary address.
 		/// </summary>
@@ -4857,7 +4875,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Line2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the third line of the primary address.
 		/// </summary>
@@ -4875,7 +4893,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Line3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the longitude value for the primary address for use in mapping and other applications.
 		/// </summary>
@@ -4893,7 +4911,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Longitude");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a descriptive name for the primary address, such as Corporate Headquarters.
 		/// </summary>
@@ -4911,7 +4929,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Name");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the ZIP Code or postal code for the primary address.
 		/// </summary>
@@ -4929,7 +4947,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_PostalCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the post office box number of the primary address.
 		/// </summary>
@@ -4947,7 +4965,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_PostOfficeBox");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the name of the main contact at the account's primary address.
 		/// </summary>
@@ -4965,7 +4983,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_PrimaryContactName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select a shipping method for deliveries sent to this address.
 		/// </summary>
@@ -4998,7 +5016,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_ShippingMethodCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the state or province of the primary address.
 		/// </summary>
@@ -5016,7 +5034,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_StateOrProvince");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the main phone number associated with the primary address.
 		/// </summary>
@@ -5034,7 +5052,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Telephone1");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a second phone number associated with the primary address.
 		/// </summary>
@@ -5052,7 +5070,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Telephone2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a third phone number associated with the primary address.
 		/// </summary>
@@ -5070,7 +5088,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_Telephone3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the UPS zone of the primary address to make sure shipping charges are calculated correctly and deliveries are made promptly, if shipped by UPS.
 		/// </summary>
@@ -5088,7 +5106,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_UPSZone");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the time zone, or UTC offset, for this address so that other people can reference it when they contact someone at this address.
 		/// </summary>
@@ -5106,7 +5124,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address1_UTCOffset");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier for address 2.
 		/// </summary>
@@ -5124,7 +5142,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_AddressId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the secondary address type.
 		/// </summary>
@@ -5157,7 +5175,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_AddressTypeCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the city for the secondary address.
 		/// </summary>
@@ -5175,7 +5193,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_City");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the complete secondary address.
 		/// </summary>
@@ -5187,7 +5205,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<string>("address2_composite");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the country or region for the secondary address.
 		/// </summary>
@@ -5205,7 +5223,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Country");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the county for the secondary address.
 		/// </summary>
@@ -5223,7 +5241,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_County");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the fax number associated with the secondary address.
 		/// </summary>
@@ -5241,7 +5259,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Fax");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the freight terms for the secondary address to make sure shipping orders are processed correctly.
 		/// </summary>
@@ -5274,7 +5292,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_FreightTermsCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the latitude value for the secondary address for use in mapping and other applications.
 		/// </summary>
@@ -5292,7 +5310,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Latitude");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the first line of the secondary address.
 		/// </summary>
@@ -5310,7 +5328,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Line1");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the second line of the secondary address.
 		/// </summary>
@@ -5328,7 +5346,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Line2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the third line of the secondary address.
 		/// </summary>
@@ -5346,7 +5364,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Line3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the longitude value for the secondary address for use in mapping and other applications.
 		/// </summary>
@@ -5364,7 +5382,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Longitude");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a descriptive name for the secondary address, such as Corporate Headquarters.
 		/// </summary>
@@ -5382,7 +5400,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Name");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the ZIP Code or postal code for the secondary address.
 		/// </summary>
@@ -5400,7 +5418,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_PostalCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the post office box number of the secondary address.
 		/// </summary>
@@ -5418,7 +5436,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_PostOfficeBox");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the name of the main contact at the account's secondary address.
 		/// </summary>
@@ -5436,7 +5454,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_PrimaryContactName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select a shipping method for deliveries sent to this address.
 		/// </summary>
@@ -5469,7 +5487,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_ShippingMethodCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the state or province of the secondary address.
 		/// </summary>
@@ -5487,7 +5505,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_StateOrProvince");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the main phone number associated with the secondary address.
 		/// </summary>
@@ -5505,7 +5523,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Telephone1");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a second phone number associated with the secondary address.
 		/// </summary>
@@ -5523,7 +5541,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Telephone2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a third phone number associated with the secondary address.
 		/// </summary>
@@ -5541,7 +5559,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_Telephone3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the UPS zone of the secondary address to make sure shipping charges are calculated correctly and deliveries are made promptly, if shipped by UPS.
 		/// </summary>
@@ -5559,7 +5577,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_UPSZone");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the time zone, or UTC offset, for this address so that other people can reference it when they contact someone at this address.
 		/// </summary>
@@ -5577,7 +5595,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address2_UTCOffset");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier for address 3.
 		/// </summary>
@@ -5595,7 +5613,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_AddressId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the third address type.
 		/// </summary>
@@ -5628,7 +5646,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_AddressTypeCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the city for the 3rd address.
 		/// </summary>
@@ -5646,7 +5664,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_City");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the complete third address.
 		/// </summary>
@@ -5658,7 +5676,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<string>("address3_composite");
 			}
 		}
-
+		
 		/// <summary>
 		/// the country or region for the 3rd address.
 		/// </summary>
@@ -5676,7 +5694,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_Country");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the county for the third address.
 		/// </summary>
@@ -5694,7 +5712,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_County");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the fax number associated with the third address.
 		/// </summary>
@@ -5712,7 +5730,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_Fax");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the freight terms for the third address to make sure shipping orders are processed correctly.
 		/// </summary>
@@ -5745,7 +5763,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_FreightTermsCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the latitude value for the third address for use in mapping and other applications.
 		/// </summary>
@@ -5763,7 +5781,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_Latitude");
 			}
 		}
-
+		
 		/// <summary>
 		/// the first line of the 3rd address.
 		/// </summary>
@@ -5781,7 +5799,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_Line1");
 			}
 		}
-
+		
 		/// <summary>
 		/// the second line of the 3rd address.
 		/// </summary>
@@ -5799,7 +5817,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_Line2");
 			}
 		}
-
+		
 		/// <summary>
 		/// the third line of the 3rd address.
 		/// </summary>
@@ -5817,7 +5835,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_Line3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the longitude value for the third address for use in mapping and other applications.
 		/// </summary>
@@ -5835,7 +5853,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_Longitude");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a descriptive name for the third address, such as Corporate Headquarters.
 		/// </summary>
@@ -5853,7 +5871,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_Name");
 			}
 		}
-
+		
 		/// <summary>
 		/// the ZIP Code or postal code for the 3rd address.
 		/// </summary>
@@ -5871,7 +5889,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_PostalCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// the post office box number of the 3rd address.
 		/// </summary>
@@ -5889,7 +5907,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_PostOfficeBox");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the name of the main contact at the account's third address.
 		/// </summary>
@@ -5907,7 +5925,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_PrimaryContactName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select a shipping method for deliveries sent to this address.
 		/// </summary>
@@ -5940,7 +5958,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_ShippingMethodCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// the state or province of the third address.
 		/// </summary>
@@ -5958,7 +5976,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_StateOrProvince");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the main phone number associated with the third address.
 		/// </summary>
@@ -5976,7 +5994,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_Telephone1");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a second phone number associated with the third address.
 		/// </summary>
@@ -5994,7 +6012,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_Telephone2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a third phone number associated with the primary address.
 		/// </summary>
@@ -6012,7 +6030,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_Telephone3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the UPS zone of the third address to make sure shipping charges are calculated correctly and deliveries are made promptly, if shipped by UPS.
 		/// </summary>
@@ -6030,7 +6048,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_UPSZone");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the time zone, or UTC offset, for this address so that other people can reference it when they contact someone at this address.
 		/// </summary>
@@ -6048,7 +6066,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Address3_UTCOffset");
 			}
 		}
-
+		
 		/// <summary>
 		/// For system use only.
 		/// </summary>
@@ -6060,7 +6078,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging30");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the Aging 30 field converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
 		/// </summary>
@@ -6072,7 +6090,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging30_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// For system use only.
 		/// </summary>
@@ -6084,7 +6102,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging60");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the Aging 60 field converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
 		/// </summary>
@@ -6096,7 +6114,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging60_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// For system use only.
 		/// </summary>
@@ -6108,7 +6126,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging90");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the Aging 90 field converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
 		/// </summary>
@@ -6120,7 +6138,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging90_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// Enter the date of the contact's wedding or service anniversary for use in customer gift programs or other communications.
 		/// </summary>
@@ -6138,7 +6156,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Anniversary");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the contact's annual income for use in profiling and financial analysis.
 		/// </summary>
@@ -6156,7 +6174,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("AnnualIncome");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the Annual Income field converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
 		/// </summary>
@@ -6168,7 +6186,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("annualincome_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the name of the contact's assistant.
 		/// </summary>
@@ -6186,7 +6204,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("AssistantName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the phone number for the contact's assistant.
 		/// </summary>
@@ -6204,7 +6222,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("AssistantPhone");
 			}
 		}
-
+		
 		/// <summary>
 		/// Enter the contact's birthday for use in customer gift programs or other communications.
 		/// </summary>
@@ -6222,7 +6240,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("BirthDate");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a second business phone number for this contact.
 		/// </summary>
@@ -6240,7 +6258,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Business2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Stores Image of the Business Card
 		/// </summary>
@@ -6258,7 +6276,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("BusinessCard");
 			}
 		}
-
+		
 		/// <summary>
 		/// Stores Business Card Control Properties.
 		/// </summary>
@@ -6276,7 +6294,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("BusinessCardAttributes");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a callback phone number for this contact.
 		/// </summary>
@@ -6294,7 +6312,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Callback");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the names of the contact's children for reference in communications and client programs.
 		/// </summary>
@@ -6312,7 +6330,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ChildrensNames");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the company phone of the contact.
 		/// </summary>
@@ -6330,7 +6348,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Company");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the contact.
 		/// </summary>
@@ -6356,7 +6374,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ContactId");
 			}
 		}
-
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("contactid")]
 		public override System.Guid Id
 		{
@@ -6369,7 +6387,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.ContactId = value;
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows who created the record.
 		/// </summary>
@@ -6381,7 +6399,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the external party who created the record.
 		/// </summary>
@@ -6393,7 +6411,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdbyexternalparty");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the date and time when the record was created. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
 		/// </summary>
@@ -6405,7 +6423,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows who created the record on behalf of another user.
 		/// </summary>
@@ -6417,7 +6435,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the credit limit of the contact for reference when you address invoice and accounting issues with the customer.
 		/// </summary>
@@ -6435,7 +6453,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("CreditLimit");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the Credit Limit field converted to the system's default base currency for reporting purposes. The calculations use the exchange rate specified in the Currencies area.
 		/// </summary>
@@ -6447,7 +6465,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("creditlimit_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the contact is on a credit hold, for reference when addressing invoice and accounting issues.
 		/// </summary>
@@ -6465,7 +6483,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("CreditOnHold");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the size of the contact's company for segmentation and reporting purposes.
 		/// </summary>
@@ -6498,7 +6516,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("CustomerSizeCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the category that best describes the relationship between the contact and your organization.
 		/// </summary>
@@ -6531,7 +6549,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("CustomerTypeCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the default price list associated with the contact to make sure the correct product prices for this customer are applied in sales opportunities, quotes, and orders.
 		/// </summary>
@@ -6549,7 +6567,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DefaultPriceLevelId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the department or business unit where the contact works in the parent company or business.
 		/// </summary>
@@ -6567,7 +6585,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Department");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type additional information to describe the contact, such as an excerpt from the company's website.
 		/// </summary>
@@ -6585,7 +6603,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Description");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the contact accepts bulk email sent through marketing campaigns or quick campaigns. If Do Not Allow is selected, the contact can be added to marketing lists, but will be excluded from the email.
 		/// </summary>
@@ -6603,7 +6621,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotBulkEMail");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the contact accepts bulk postal mail sent through marketing campaigns or quick campaigns. If Do Not Allow is selected, the contact can be added to marketing lists, but will be excluded from the letters.
 		/// </summary>
@@ -6621,7 +6639,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotBulkPostalMail");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the contact allows direct email sent from Microsoft Dynamics 365. If Do Not Allow is selected, Microsoft Dynamics 365 will not send the email.
 		/// </summary>
@@ -6639,7 +6657,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotEMail");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the contact allows faxes. If Do Not Allow is selected, the contact will be excluded from any fax activities distributed in marketing campaigns.
 		/// </summary>
@@ -6657,7 +6675,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotFax");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the contact accepts phone calls. If Do Not Allow is selected, the contact will be excluded from any phone call activities distributed in marketing campaigns.
 		/// </summary>
@@ -6675,7 +6693,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotPhone");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the contact allows direct mail. If Do Not Allow is selected, the contact will be excluded from letter activities distributed in marketing campaigns.
 		/// </summary>
@@ -6693,7 +6711,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotPostalMail");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the contact accepts marketing materials, such as brochures or catalogs. Contacts that opt out can be excluded from marketing initiatives.
 		/// </summary>
@@ -6711,7 +6729,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("DoNotSendMM");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the contact's highest level of education for use in segmentation and analysis.
 		/// </summary>
@@ -6744,7 +6762,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("EducationCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the primary email address for the contact.
 		/// </summary>
@@ -6762,7 +6780,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("EMailAddress1");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the secondary email address for the contact.
 		/// </summary>
@@ -6780,7 +6798,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("EMailAddress2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type an alternate email address for the contact.
 		/// </summary>
@@ -6798,7 +6816,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("EMailAddress3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the employee ID or number for the contact for reference in orders, service cases, or other communications with the contact's organization.
 		/// </summary>
@@ -6816,7 +6834,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("EmployeeId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the default image for the record.
 		/// </summary>
@@ -6834,7 +6852,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("EntityImage");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -6846,7 +6864,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<long>>("entityimage_timestamp");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -6858,7 +6876,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<string>("entityimage_url");
 			}
 		}
-
+		
 		/// <summary>
 		/// For internal use only.
 		/// </summary>
@@ -6870,7 +6888,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<System.Guid>>("entityimageid");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the conversion rate of the record's currency. The exchange rate is used to convert all money fields in the record from the local currency to the system's default currency.
 		/// </summary>
@@ -6882,7 +6900,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<decimal>>("exchangerate");
 			}
 		}
-
+		
 		/// <summary>
 		/// Identifier for an external user.
 		/// </summary>
@@ -6900,7 +6918,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ExternalUserIdentifier");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the marital status of the contact for reference in follow-up phone calls and other communications.
 		/// </summary>
@@ -6933,7 +6951,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("FamilyStatusCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the fax number for the contact.
 		/// </summary>
@@ -6951,7 +6969,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Fax");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the contact's first name to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
 		/// </summary>
@@ -6969,7 +6987,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("FirstName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Information about whether to allow following email activity like opens, attachment views and link clicks for emails sent to the contact.
 		/// </summary>
@@ -6987,7 +7005,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("FollowEmail");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the URL for the contact's FTP site to enable users to access data and share documents.
 		/// </summary>
@@ -7005,7 +7023,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("FtpSiteUrl");
 			}
 		}
-
+		
 		/// <summary>
 		/// Combines and shows the contact's first and last names so that the full name can be displayed in views and reports.
 		/// </summary>
@@ -7017,7 +7035,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<string>("fullname");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the contact's gender to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
 		/// </summary>
@@ -7050,7 +7068,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("GenderCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the passport number or other government ID for the contact for use in documents or reports.
 		/// </summary>
@@ -7068,7 +7086,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("GovernmentId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select whether the contact has any children for reference in follow-up phone calls and other communications.
 		/// </summary>
@@ -7101,7 +7119,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("HasChildrenCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// ID without the prefix for Contacts
 		/// </summary>
@@ -7119,7 +7137,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_ID");
 			}
 		}
-
+		
 		/// <summary>
 		/// ID that contains the unique prefix for Contacts
 		/// </summary>
@@ -7137,7 +7155,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("he_PrefixID");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a second home phone number for this contact.
 		/// </summary>
@@ -7155,7 +7173,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Home2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the data import or data migration that created this record.
 		/// </summary>
@@ -7173,7 +7191,25 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ImportSequenceNumber");
 			}
 		}
-
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalid")]
+		public string invln_externalid
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_externalid");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_externalid");
+				this.SetAttributeValue("invln_externalid", value);
+				this.OnPropertyChanged("invln_externalid");
+			}
+		}
+		
 		/// <summary>
 		/// Select whether the contact exists in a separate accounting or other system, such as Microsoft Dynamics GP or another ERP database, for use in integration processes.
 		/// </summary>
@@ -7191,7 +7227,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("IsBackofficeCustomer");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the job title of the contact to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
 		/// </summary>
@@ -7209,7 +7245,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("JobTitle");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the contact's last name to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
 		/// </summary>
@@ -7227,7 +7263,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("LastName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Contains the date and time stamp of the last on hold time.
 		/// </summary>
@@ -7245,7 +7281,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("LastOnHoldTime");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the date when the contact was last included in a marketing campaign or quick campaign.
 		/// </summary>
@@ -7263,7 +7299,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("LastUsedInCampaign");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the primary marketing source that directed the contact to your organization.
 		/// </summary>
@@ -7296,7 +7332,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("LeadSourceCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the name of the contact's manager for use in escalating issues or other follow-up communications with the contact.
 		/// </summary>
@@ -7314,7 +7350,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ManagerName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the phone number for the contact's manager.
 		/// </summary>
@@ -7332,7 +7368,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ManagerPhone");
 			}
 		}
-
+		
 		/// <summary>
 		/// Whether is only for marketing
 		/// </summary>
@@ -7350,7 +7386,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("MarketingOnly");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the master contact for merge.
 		/// </summary>
@@ -7362,7 +7398,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("masterid");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows whether the account has been merged with a master contact.
 		/// </summary>
@@ -7374,7 +7410,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<bool>>("merged");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the contact's middle name or initial to make sure the contact is addressed correctly.
 		/// </summary>
@@ -7392,7 +7428,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("MiddleName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the mobile phone number for the contact.
 		/// </summary>
@@ -7410,7 +7446,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("MobilePhone");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows who last updated the record.
 		/// </summary>
@@ -7422,7 +7458,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the external party who modified the record.
 		/// </summary>
@@ -7434,7 +7470,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedbyexternalparty");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the date and time when the record was last updated. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
 		/// </summary>
@@ -7446,7 +7482,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows who last updated the record on behalf of another user.
 		/// </summary>
@@ -7458,7 +7494,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
 			}
 		}
-
+		
 		/// <summary>
 		/// Maps to contact KPI records
 		/// </summary>
@@ -7476,7 +7512,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("msdyn_contactkpiid");
 			}
 		}
-
+		
 		/// <summary>
 		/// Indicate buying influence using tags
 		/// </summary>
@@ -7509,7 +7545,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("msdyn_decisioninfluencetag");
 			}
 		}
-
+		
 		/// <summary>
 		/// Describes whether contact is opted out or not
 		/// </summary>
@@ -7527,7 +7563,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("msdyn_gdproptout");
 			}
 		}
-
+		
 		/// <summary>
 		/// Describes if the contact is an assistant in org chart
 		/// </summary>
@@ -7545,7 +7581,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("msdyn_isassistantinorgchart");
 			}
 		}
-
+		
 		/// <summary>
 		/// Whether or not the contact belongs to the associated account
 		/// </summary>
@@ -7578,7 +7614,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("msdyn_orgchangestatus");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier for Segment associated with contact.
 		/// </summary>
@@ -7596,7 +7632,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("msdyn_segmentid");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -7608,7 +7644,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msft_datastate");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the contact's nickname.
 		/// </summary>
@@ -7626,7 +7662,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("NickName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the number of children the contact has for reference in follow-up phone calls and other communications.
 		/// </summary>
@@ -7644,7 +7680,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("NumberOfChildren");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows how long, in minutes, that the record was on hold.
 		/// </summary>
@@ -7656,7 +7692,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<int>>("onholdtime");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the lead that the contact was created if the contact was created by converting a lead in Microsoft Dynamics 365. This is used to relate the contact to the data on the originating lead for use in reporting and analytics.
 		/// </summary>
@@ -7674,7 +7710,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("OriginatingLeadId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Date and time that the record was migrated.
 		/// </summary>
@@ -7692,7 +7728,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("OverriddenCreatedOn");
 			}
 		}
-
+		
 		/// <summary>
 		/// Enter the user or team who is assigned to manage the record. This field is updated every time the record is assigned to a different user.
 		/// </summary>
@@ -7710,7 +7746,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("OwnerId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the business unit that owns the contact.
 		/// </summary>
@@ -7722,7 +7758,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the team who owns the contact.
 		/// </summary>
@@ -7734,7 +7770,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the user who owns the contact.
 		/// </summary>
@@ -7746,7 +7782,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the pager number for the contact.
 		/// </summary>
@@ -7764,7 +7800,25 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Pager");
 			}
 		}
-
+		
+		/// <summary>
+		/// For internal use only
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parent_contactid")]
+		public Microsoft.Xrm.Sdk.EntityReference parent_contactid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("parent_contactid");
+			}
+			set
+			{
+				this.OnPropertyChanging("parent_contactid");
+				this.SetAttributeValue("parent_contactid", value);
+				this.OnPropertyChanged("parent_contactid");
+			}
+		}
+		
 		/// <summary>
 		/// Unique identifier of the parent contact.
 		/// </summary>
@@ -7776,7 +7830,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("parentcontactid");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the parent account or parent contact for the contact to provide a quick link to additional details, such as financial information, activities, and opportunities.
 		/// </summary>
@@ -7794,7 +7848,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ParentCustomerId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows whether the contact participates in workflow rules.
 		/// </summary>
@@ -7812,7 +7866,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ParticipatesInWorkflow");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the payment terms to indicate when the customer needs to pay the total amount.
 		/// </summary>
@@ -7845,7 +7899,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PaymentTermsCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the preferred day of the week for service appointments.
 		/// </summary>
@@ -7878,7 +7932,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PreferredAppointmentDayCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the preferred time of day for service appointments.
 		/// </summary>
@@ -7911,7 +7965,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PreferredAppointmentTimeCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the preferred method of contact.
 		/// </summary>
@@ -7944,7 +7998,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PreferredContactMethodCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the contact's preferred service facility or equipment to make sure services are scheduled correctly for the customer.
 		/// </summary>
@@ -7962,7 +8016,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PreferredEquipmentId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the contact's preferred service to make sure services are scheduled correctly for the customer.
 		/// </summary>
@@ -7980,7 +8034,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PreferredServiceId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the regular or preferred customer service representative for reference when scheduling service activities for the contact.
 		/// </summary>
@@ -7998,7 +8052,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("PreferredSystemUserId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the ID of the process.
 		/// </summary>
@@ -8016,7 +8070,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ProcessId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the salutation of the contact to make sure the contact is addressed correctly in sales calls, email messages, and marketing campaigns.
 		/// </summary>
@@ -8034,7 +8088,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Salutation");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select a shipping method for deliveries sent to this address.
 		/// </summary>
@@ -8067,7 +8121,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ShippingMethodCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the service level agreement (SLA) that you want to apply to the Contact record.
 		/// </summary>
@@ -8085,7 +8139,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("SLAId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Last SLA that was applied to this case. This field is for internal use only.
 		/// </summary>
@@ -8097,7 +8151,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("slainvokedid");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the name of the contact's spouse or partner for reference during calls, events, or other communications with the contact.
 		/// </summary>
@@ -8115,7 +8169,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("SpousesName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the ID of the stage.
 		/// </summary>
@@ -8133,7 +8187,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("StageId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows whether the contact is active or inactive. Inactive contacts are read-only and can't be edited unless they are reactivated.
 		/// </summary>
@@ -8166,7 +8220,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("StateCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select the contact's status.
 		/// </summary>
@@ -8199,7 +8253,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("StatusCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// For internal use only.
 		/// </summary>
@@ -8217,7 +8271,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("SubscriptionId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the suffix used in the contact's name, such as Jr. or Sr. to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
 		/// </summary>
@@ -8235,7 +8289,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Suffix");
 			}
 		}
-
+		
 		/// <summary>
 		/// Number of users or conversations followed the record
 		/// </summary>
@@ -8253,7 +8307,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TeamsFollowed");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the main phone number for this contact.
 		/// </summary>
@@ -8271,7 +8325,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Telephone1");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a second phone number for this contact.
 		/// </summary>
@@ -8289,7 +8343,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Telephone2");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type a third phone number for this contact.
 		/// </summary>
@@ -8307,7 +8361,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Telephone3");
 			}
 		}
-
+		
 		/// <summary>
 		/// Select a region or territory for the contact for use in segmentation and analysis.
 		/// </summary>
@@ -8340,7 +8394,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TerritoryCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Total time spent for emails (read and write) and meetings by me in relation to the contact record.
 		/// </summary>
@@ -8352,7 +8406,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<string>("timespentbymeonemailandmeetings");
 			}
 		}
-
+		
 		/// <summary>
 		/// For internal use only.
 		/// </summary>
@@ -8370,7 +8424,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
 			}
 		}
-
+		
 		/// <summary>
 		/// Choose the local currency for the record to make sure budgets are reported in the correct currency.
 		/// </summary>
@@ -8388,7 +8442,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TransactionCurrencyId");
 			}
 		}
-
+		
 		/// <summary>
 		/// For internal use only.
 		/// </summary>
@@ -8406,7 +8460,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TraversedPath");
 			}
 		}
-
+		
 		/// <summary>
 		/// Time zone code that was in use when the record was created.
 		/// </summary>
@@ -8424,7 +8478,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("UTCConversionTimeZoneCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Version number of the contact.
 		/// </summary>
@@ -8436,7 +8490,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the contact's professional or personal website or blog URL.
 		/// </summary>
@@ -8454,7 +8508,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("WebSiteUrl");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the phonetic spelling of the contact's first name, if the name is specified in Japanese, to make sure the name is pronounced correctly in phone calls with the contact.
 		/// </summary>
@@ -8472,7 +8526,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("YomiFirstName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Shows the combined Yomi first and last names of the contact so that the full phonetic name can be displayed in views and reports.
 		/// </summary>
@@ -8484,7 +8538,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<string>("yomifullname");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the phonetic spelling of the contact's last name, if the name is specified in Japanese, to make sure the name is pronounced correctly in phone calls with the contact.
 		/// </summary>
@@ -8502,7 +8556,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("YomiLastName");
 			}
 		}
-
+		
 		/// <summary>
 		/// Type the phonetic spelling of the contact's middle name, if the name is specified in Japanese, to make sure the name is pronounced correctly in phone calls with the contact.
 		/// </summary>
@@ -8520,7 +8574,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("YomiMiddleName");
 			}
 		}
-
+		
 		/// <summary>
 		/// 1:N account_primary_contact
 		/// </summary>
@@ -8538,7 +8592,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("account_primary_contact");
 			}
 		}
-
+		
 		/// <summary>
 		/// 1:N contact_customer_contacts
 		/// </summary>
@@ -8556,7 +8610,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Referencedcontact_customer_contacts");
 			}
 		}
-
+		
 		/// <summary>
 		/// 1:N contact_master_contact
 		/// </summary>
@@ -8574,7 +8628,43 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Referencedcontact_master_contact");
 			}
 		}
-
+		
+		/// <summary>
+		/// 1:N contact_parent_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Contact> Referencedcontact_parent_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedcontact_parent_contact");
+				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedcontact_parent_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_loanapplication_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_contact")]
+		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.invln_Loanapplication> invln_loanapplication_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.invln_Loanapplication>("invln_loanapplication_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_contact");
+				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.invln_Loanapplication>("invln_loanapplication_contact", null, value);
+				this.OnPropertyChanged("invln_loanapplication_contact");
+			}
+		}
+		
 		/// <summary>
 		/// N:1 contact_customer_accounts
 		/// </summary>
@@ -8593,7 +8683,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("contact_customer_accounts");
 			}
 		}
-
+		
 		/// <summary>
 		/// N:1 contact_customer_contacts
 		/// </summary>
@@ -8612,7 +8702,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Referencingcontact_customer_contacts");
 			}
 		}
-
+		
 		/// <summary>
 		/// N:1 contact_master_contact
 		/// </summary>
@@ -8625,32 +8715,51 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 		}
+		
+		/// <summary>
+		/// N:1 contact_parent_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parent_contactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public HE.InvestmentLoans.CRM.Model.Contact Referencingcontact_parent_contact
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencingcontact_parent_contact");
+				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingcontact_parent_contact");
+			}
+		}
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_LoanapplicationState
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Active = 0,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 1,
 	}
-
+	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_loanapplication_statuscode
 	{
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Active = 1,
-
+		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
 	}
-
+	
 	/// <summary>
 	/// 
 	/// </summary>
@@ -8659,27 +8768,27 @@ namespace HE.InvestmentLoans.CRM.Model
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public partial class invln_Loanapplication : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
-
+		
 		/// <summary>
 		/// Default Constructor.
 		/// </summary>
-		public invln_Loanapplication() :
+		public invln_Loanapplication() : 
 				base(EntityLogicalName)
 		{
 		}
-
+		
 		public const string EntityLogicalName = "invln_loanapplication";
-
+		
 		public const string EntityLogicalCollectionName = "invln_loanapplications";
-
+		
 		public const string EntitySetName = "invln_loanapplications";
-
+		
 		public const int EntityTypeCode = 10603;
-
+		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-
+		
 		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
-
+		
 		private void OnPropertyChanged(string propertyName)
 		{
 			if ((this.PropertyChanged != null))
@@ -8687,7 +8796,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
 			}
 		}
-
+		
 		private void OnPropertyChanging(string propertyName)
 		{
 			if ((this.PropertyChanging != null))
@@ -8695,7 +8804,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the user who created the record.
 		/// </summary>
@@ -8707,7 +8816,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
 			}
 		}
-
+		
 		/// <summary>
 		/// Date and time when the record was created.
 		/// </summary>
@@ -8719,7 +8828,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the delegate user who created the record.
 		/// </summary>
@@ -8731,7 +8840,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
 			}
 		}
-
+		
 		/// <summary>
 		/// Exchange rate for the currency associated with the entity with respect to the base currency.
 		/// </summary>
@@ -8743,7 +8852,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<decimal>>("exchangerate");
 			}
 		}
-
+		
 		/// <summary>
 		/// Sequence number of the import that created this record.
 		/// </summary>
@@ -8761,7 +8870,43 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("ImportSequenceNumber");
 			}
 		}
-
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_account")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Account
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_account");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Account");
+				this.SetAttributeValue("invln_account", value);
+				this.OnPropertyChanged("invln_Account");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_additionalprojects")]
+		public System.Nullable<bool> invln_Additionalprojects
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_additionalprojects");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Additionalprojects");
+				this.SetAttributeValue("invln_additionalprojects", value);
+				this.OnPropertyChanged("invln_Additionalprojects");
+			}
+		}
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -8779,7 +8924,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_CompanyExperience");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -8797,7 +8942,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_CompanyPurpose");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -8815,7 +8960,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_Companystructureinformation");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -8833,37 +8978,25 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_Confirmationdirectorloanscanbesubordinated");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_costsforadditionalprojects")]
-		public Microsoft.Xrm.Sdk.Money invln_Costsforadditionalprojects
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contact")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Contact
 		{
 			get
 			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_costsforadditionalprojects");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_contact");
 			}
 			set
 			{
-				this.OnPropertyChanging("invln_Costsforadditionalprojects");
-				this.SetAttributeValue("invln_costsforadditionalprojects", value);
-				this.OnPropertyChanged("invln_Costsforadditionalprojects");
+				this.OnPropertyChanging("invln_Contact");
+				this.SetAttributeValue("invln_contact", value);
+				this.OnPropertyChanged("invln_Contact");
 			}
 		}
-
-		/// <summary>
-		/// Value of the Costs for additional projects in base currency.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_costsforadditionalprojects_base")]
-		public Microsoft.Xrm.Sdk.Money invln_costsforadditionalprojects_Base
-		{
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_costsforadditionalprojects_base");
-			}
-		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -8881,7 +9014,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_DebentureHolder");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -8899,25 +9032,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_Directorloans");
 			}
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_existingcompany")]
-		public System.Nullable<bool> invln_ExistingCompany
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_existingcompany");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_ExistingCompany");
-				this.SetAttributeValue("invln_existingcompany", value);
-				this.OnPropertyChanged("invln_ExistingCompany");
-			}
-		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -8935,25 +9050,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_FundingReason");
 			}
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundingtypeforadditionalprojects")]
-		public Microsoft.Xrm.Sdk.OptionSetValue invln_Fundingtypeforadditionalprojects
-		{
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_fundingtypeforadditionalprojects");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_Fundingtypeforadditionalprojects");
-				this.SetAttributeValue("invln_fundingtypeforadditionalprojects", value);
-				this.OnPropertyChanged("invln_Fundingtypeforadditionalprojects");
-			}
-		}
-
+		
 		/// <summary>
 		/// Unique identifier for entity instances
 		/// </summary>
@@ -8979,7 +9076,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_LoanapplicationId");
 			}
 		}
-
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanapplicationid")]
 		public override System.Guid Id
 		{
@@ -8992,7 +9089,43 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.invln_LoanapplicationId = value;
 			}
 		}
-
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanportaldata")]
+		public string invln_loanportaldata
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_loanportaldata");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanportaldata");
+				this.SetAttributeValue("invln_loanportaldata", value);
+				this.OnPropertyChanged("invln_loanportaldata");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanportaldataid")]
+		public string invln_loanportaldataid
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_loanportaldataid");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanportaldataid");
+				this.SetAttributeValue("invln_loanportaldataid", value);
+				this.OnPropertyChanged("invln_loanportaldataid");
+			}
+		}
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -9010,7 +9143,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_Name");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -9028,7 +9161,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_NumberofSites");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -9046,7 +9179,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_Outstandinglegalchargesordebt");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -9064,7 +9197,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_Privatesectorapproach");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -9082,7 +9215,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_Privatesectorapproachinformation");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -9100,7 +9233,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_Projectabnormalcosts");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -9118,7 +9251,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_Projectabnormalcostsinformation");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -9136,7 +9269,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_Projectestimatedtotalcost");
 			}
 		}
-
+		
 		/// <summary>
 		/// Value of the Project estimated total cost in base currency.
 		/// </summary>
@@ -9148,7 +9281,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_projectestimatedtotalcost_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -9166,7 +9299,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_ProjectGDV");
 			}
 		}
-
+		
 		/// <summary>
 		/// Value of the Project GDV in base currency.
 		/// </summary>
@@ -9178,7 +9311,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_projectgdv_base");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -9196,7 +9329,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_Reasonfordirectorloannotsubordinated");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -9214,7 +9347,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_Refinancerepayment");
 			}
 		}
-
+		
 		/// <summary>
 		/// 
 		/// </summary>
@@ -9232,7 +9365,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("invln_Refinancerepaymentdetails");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the user who modified the record.
 		/// </summary>
@@ -9244,7 +9377,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
 			}
 		}
-
+		
 		/// <summary>
 		/// Date and time when the record was modified.
 		/// </summary>
@@ -9256,7 +9389,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the delegate user who modified the record.
 		/// </summary>
@@ -9268,7 +9401,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
 			}
 		}
-
+		
 		/// <summary>
 		/// Date and time that the record was migrated.
 		/// </summary>
@@ -9286,7 +9419,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("OverriddenCreatedOn");
 			}
 		}
-
+		
 		/// <summary>
 		/// Owner Id
 		/// </summary>
@@ -9304,7 +9437,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("OwnerId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier for the business unit that owns the record
 		/// </summary>
@@ -9316,7 +9449,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier for the team that owns the record.
 		/// </summary>
@@ -9328,7 +9461,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier for the user that owns the record.
 		/// </summary>
@@ -9340,7 +9473,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
 			}
 		}
-
+		
 		/// <summary>
 		/// Status of the Loan application
 		/// </summary>
@@ -9373,7 +9506,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("statecode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Reason for the status of the Loan application
 		/// </summary>
@@ -9406,7 +9539,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("statuscode");
 			}
 		}
-
+		
 		/// <summary>
 		/// For internal use only.
 		/// </summary>
@@ -9424,7 +9557,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
 			}
 		}
-
+		
 		/// <summary>
 		/// Unique identifier of the currency associated with the entity.
 		/// </summary>
@@ -9442,7 +9575,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("TransactionCurrencyId");
 			}
 		}
-
+		
 		/// <summary>
 		/// Time zone code that was in use when the record was created.
 		/// </summary>
@@ -9460,7 +9593,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("UTCConversionTimeZoneCode");
 			}
 		}
-
+		
 		/// <summary>
 		/// Version Number
 		/// </summary>
@@ -9472,23 +9605,61 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
 			}
 		}
+		
+		/// <summary>
+		/// N:1 invln_loanapplication_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_account")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_account")]
+		public HE.InvestmentLoans.CRM.Model.Account invln_loanapplication_account
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("invln_loanapplication_account", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_account");
+				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("invln_loanapplication_account", null, value);
+				this.OnPropertyChanged("invln_loanapplication_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_loanapplication_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contact")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_contact")]
+		public HE.InvestmentLoans.CRM.Model.Contact invln_loanapplication_contact
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("invln_loanapplication_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_contact");
+				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("invln_loanapplication_contact", null, value);
+				this.OnPropertyChanged("invln_loanapplication_contact");
+			}
+		}
 	}
-
+	
 	/// <summary>
 	/// Represents a source of entities bound to a CRM service. It tracks and manages changes made to the retrieved entities.
 	/// </summary>
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public partial class XrmSvc : Microsoft.Xrm.Sdk.Client.OrganizationServiceContext
 	{
-
+		
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public XrmSvc(Microsoft.Xrm.Sdk.IOrganizationService service) :
+		public XrmSvc(Microsoft.Xrm.Sdk.IOrganizationService service) : 
 				base(service)
 		{
 		}
-
+		
 		/// <summary>
 		/// Gets a binding to the set of all <see cref="HE.InvestmentLoans.CRM.Model.Account"/> entities.
 		/// </summary>
@@ -9499,7 +9670,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.CreateQuery<HE.InvestmentLoans.CRM.Model.Account>();
 			}
 		}
-
+		
 		/// <summary>
 		/// Gets a binding to the set of all <see cref="HE.InvestmentLoans.CRM.Model.Contact"/> entities.
 		/// </summary>
@@ -9510,7 +9681,7 @@ namespace HE.InvestmentLoans.CRM.Model
 				return this.CreateQuery<HE.InvestmentLoans.CRM.Model.Contact>();
 			}
 		}
-
+		
 		/// <summary>
 		/// Gets a binding to the set of all <see cref="HE.InvestmentLoans.CRM.Model.invln_Loanapplication"/> entities.
 		/// </summary>
@@ -9522,47 +9693,145 @@ namespace HE.InvestmentLoans.CRM.Model
 			}
 		}
 	}
-
-	[System.Runtime.Serialization.DataContractAttribute(Namespace = "http://schemas.microsoft.com/xrm/2011/new/")]
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
 	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_sendinvestmentloansdatatocrm")]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public partial class invln_sendinvestmentloansdatatocrmRequest : Microsoft.Xrm.Sdk.OrganizationRequest
 	{
-
-		public string[] invln_recordparameters
+		
+		public string invln_entityfieldsparameters
 		{
 			get
 			{
-				if (this.Parameters.Contains("invln_recordparameters"))
+				if (this.Parameters.Contains("invln_entityfieldsparameters"))
 				{
-					return ((string[])(this.Parameters["invln_recordparameters"]));
+					return ((string)(this.Parameters["invln_entityfieldsparameters"]));
 				}
 				else
 				{
-					return default(string[]);
+					return default(string);
 				}
 			}
 			set
 			{
-				this.Parameters["invln_recordparameters"] = value;
+				this.Parameters["invln_entityfieldsparameters"] = value;
 			}
 		}
-
+		
 		public invln_sendinvestmentloansdatatocrmRequest()
 		{
 			this.RequestName = "invln_sendinvestmentloansdatatocrm";
-			this.invln_recordparameters = default(string[]);
+			this.invln_entityfieldsparameters = default(string);
 		}
 	}
-
-	[System.Runtime.Serialization.DataContractAttribute(Namespace = "http://schemas.microsoft.com/xrm/2011/new/")]
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
 	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_sendinvestmentloansdatatocrm")]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public partial class invln_sendinvestmentloansdatatocrmResponse : Microsoft.Xrm.Sdk.OrganizationResponse
 	{
-
+		
 		public invln_sendinvestmentloansdatatocrmResponse()
 		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getcontactrole")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getcontactroleRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_contactemail
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactemail"))
+				{
+					return ((string)(this.Parameters["invln_contactemail"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactemail"] = value;
+			}
+		}
+		
+		public string invln_portaltype
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_portaltype"))
+				{
+					return ((string)(this.Parameters["invln_portaltype"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_portaltype"] = value;
+			}
+		}
+		
+		public string invln_contactexternalid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactexternalid"))
+				{
+					return ((string)(this.Parameters["invln_contactexternalid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactexternalid"] = value;
+			}
+		}
+		
+		public invln_getcontactroleRequest()
+		{
+			this.RequestName = "invln_getcontactrole";
+			this.invln_contactemail = default(string);
+			this.invln_portaltype = default(string);
+			this.invln_contactexternalid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getcontactrole")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getcontactroleResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getcontactroleResponse()
+		{
+		}
+		
+		public string invln_portalroles
+		{
+			get
+			{
+				if (this.Results.Contains("invln_portalroles"))
+				{
+					return ((string)(this.Results["invln_portalroles"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
 		}
 	}
 }

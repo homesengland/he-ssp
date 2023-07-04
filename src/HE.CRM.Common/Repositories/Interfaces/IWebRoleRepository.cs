@@ -1,13 +1,14 @@
 using System;
 using HE.Base.Repositories;
 using DataverseModel;
+using System.Collections.Generic;
 
 namespace HE.CRM.Common.Repositories.Interfaces
 {
 
     public interface IWebRoleRepository : ICrmEntityRepository<invln_Webrole, DataverseContext>
     {
-        invln_Webrole GetContactRole(Guid contactId, Guid portalId);
+        List<invln_contactwebrole> GetContactWebRole(Guid contactId, string portalType);
 
         invln_Webrole GetRoleByName(string name);
         invln_Webrole GetDefaultPortalRole(Guid portalId);
