@@ -2,6 +2,7 @@
 using HE.Base.Plugins.Handlers;
 using HE.Base.Services;
 using HE.CRM.Plugins.Services.Contacts;
+using HE.CRM.Plugins.Services.RichTextService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
 
         public override void DoWork()
         {
-            var roleName = CrmServicesFactory.Get<IContactService>().GetContactRole(email, ssid, portalId);
-            ExecutionData.SetOutputParameter(invln_getcontactroleResponse.Fields.invln_rolename, roleName);
+            var roleName = CrmServicesFactory.Get<IRichTextService>().GenerateRichTextDocument(entityId, entityName, richText);
+            ExecutionData.SetOutputParameter(invln_generaterichtextdocumentResponse.Fields.invln_generatedrichtext, roleName);
         }
 
         #endregion

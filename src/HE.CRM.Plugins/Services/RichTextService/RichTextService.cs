@@ -25,6 +25,7 @@ namespace HE.CRM.Plugins.Services.RichTextService
             {
                 Console.WriteLine(match.Value);
             }
+            return String.Empty;
         }
     }
 }
