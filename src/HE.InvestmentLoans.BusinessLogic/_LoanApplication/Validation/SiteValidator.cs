@@ -83,7 +83,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 {
                     RuleFor(item => item.LocationCoordinates)
                         .NotEmpty()
-                        .WithMessage(ErrorMessages.EnterMoreDetails.ToString());
+                        .WithMessage("Enter your XY coordinates");
 
                     When(item => item.LocationCoordinates != null, () =>
                     {
@@ -104,7 +104,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 {
                     RuleFor(item => item.LocationLandRegistry)
                         .NotEmpty()
-                        .WithMessage(ErrorMessages.EnterMoreDetails.ToString());
+                        .WithMessage("Enter your Land Registry title number");
                 });
             });
 

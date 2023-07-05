@@ -7,6 +7,7 @@ namespace HE.InvestmentLoans.WWW.Controllers
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Crm.Sdk.Messages;
     using BL = BusinessLogic;
 
     [Route("application/{id}/security")]
@@ -28,8 +29,10 @@ namespace HE.InvestmentLoans.WWW.Controllers
         [Route("{ending?}")]
         public async Task<IActionResult> Workflow(Guid id, string ending)
         {
-            var model = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
-            SecurityWorkflow workflow = new SecurityWorkflow(model, mediator);
+            var model = await mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
+
+            var workflow = new SecurityWorkflow(model, mediator);
+
             if (workflow.IsCompleted())
             {
                 workflow.NextState(BL.Routing.Trigger.Back);
@@ -70,9 +73,9 @@ namespace HE.InvestmentLoans.WWW.Controllers
                 ex.Results.ForEach(item => item.AddToModelState(ModelState, null));
             }
 
-            if (workflow.IsCompleted() || (sessionModel.Security.CheckAnswers == "No" && action != "Change"))
+            var loanWorkflow = new LoanApplicationWorkflow(sessionModel, mediator);
+            if (loanWorkflow.IsBeingChecked() || workflow.IsCompleted() || (sessionModel.Security.CheckAnswers == "No" && action != "Change"))
             {
-                var loanWorkflow = new LoanApplicationWorkflow(sessionModel, mediator);
                 return RedirectToAction("Workflow", "LoanApplication", new { id = sessionModel.ID, ending = loanWorkflow.GetName() });
             }
             else

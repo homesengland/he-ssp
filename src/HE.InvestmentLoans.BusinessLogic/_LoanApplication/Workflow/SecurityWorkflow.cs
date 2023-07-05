@@ -62,10 +62,8 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
 
         private void ConfigureTransitions()
         {
-
             _machine.Configure(State.Index)
               .Permit(Trigger.Continue, State.ChargesDebtCompany);
-
 
             _machine.Configure(State.ChargesDebtCompany)
                 .Permit(Trigger.Continue, State.DirLoans)

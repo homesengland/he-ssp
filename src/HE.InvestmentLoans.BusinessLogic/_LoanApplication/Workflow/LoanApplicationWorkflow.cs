@@ -4,6 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using MediatR;
 using Stateless;
 using System.Linq;
+using System.Threading.Tasks.Dataflow;
 
 namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
 {
@@ -97,5 +98,9 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
 
         }
 
+        public bool IsBeingChecked()
+        {
+            return _model.State == State.CheckAnswers;
+        }
     }
 }
