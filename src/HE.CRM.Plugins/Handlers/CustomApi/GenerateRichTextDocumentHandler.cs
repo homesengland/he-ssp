@@ -29,8 +29,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
 
         public override void DoWork()
         {
-            var roleName = CrmServicesFactory.Get<IRichTextService>().GenerateRichTextDocument(entityId, entityName, richText);
-            ExecutionData.SetOutputParameter(invln_generaterichtextdocumentResponse.Fields.invln_generatedrichtext, roleName);
+            var generatedDocument = CrmServicesFactory.Get<IRichTextService>().GenerateRichTextDocument(entityId, entityName, richText);
+            ExecutionData.SetOutputParameter(invln_generaterichtextdocumentResponse.Fields.invln_generatedrichtext, generatedDocument);
         }
 
         #endregion

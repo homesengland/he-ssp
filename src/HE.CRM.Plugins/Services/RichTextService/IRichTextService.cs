@@ -1,4 +1,5 @@
 ﻿using HE.Base.Services;
+using System.Collections.Generic;
 
 namespace HE.CRM.Plugins.Services.RichTextService
 {

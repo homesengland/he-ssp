@@ -7,6 +7,7 @@ using Microsoft.Xrm.Sdk;
 using System;
 using System.Configuration;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace HE.Xrm.ServiceClientExample
@@ -47,7 +48,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    GetContactRoleCustomApi(serviceClient);
+                    GenerateRichTextCustomApiTest(serviceClient);
                 }
                 else
                 {
@@ -57,6 +58,24 @@ namespace HE.Xrm.ServiceClientExample
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
+        }
+
+        private static void GenerateRichTextCustomApiTest(ServiceClient serviceClient)
+        {
+            var req = new OrganizationRequest("invln_generaterichtextdocument")  //Name of Custom API
+            {
+                ["invln_entityid"] = "259834c1-351a-ee11-8f6c-6045bd0d7d6d",  //Input Parameter
+                ["invln_entityname"] = "invln_loanapplication",  //Input Parameter 
+                ["invln_richtext"] = "witam {{invln_name}}, jak tam mija zycie? mi dobrze {{invln_companyexperience}}"  //Input Parameter
+            };
+            string text = "witam {{invln_name}}, jak tam mija zycie? mi dobrze {{invln_companyexperience}}";
+            foreach (Match match in Regex.Matches(text, "{[^}]+}"))
+            {
+                Console.WriteLine(match.Value.Trim('{', '}'));
+            }
+
+            var resp = serviceClient.Execute(req);
+            Console.WriteLine();
         }
 
         private static void GetContactRoleCustomApi(ServiceClient serviceClient)

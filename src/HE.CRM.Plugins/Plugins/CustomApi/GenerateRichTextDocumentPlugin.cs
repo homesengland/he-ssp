@@ -13,10 +13,10 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     StageEnum.PostOperation,
     ExecutionModeEnum.Synchronous,
     "",
-    "HE.CRM.Plugins.Plugins.CustomApi.SendInvestmentsLoanDataToCrmPlugin: invln_generaterichtextdocument",
+    "HE.CRM.Plugins.Plugins.CustomApi.GenerateRichTextDocumentPlugin: invln_generaterichtextdocument",
     1,
     IsolationModeEnum.Sandbox,
-    Id = "AC1541B7-EA6A-46E1-A836-2C57C310CB33")]
+    Id = "67dbcb0a-02bb-4a6a-af3a-718b48ffb12a")]
     public class GenerateRichTextDocumentPlugin : PluginBase<DataverseContext>, IPlugin
     {
         public GenerateRichTextDocumentPlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
