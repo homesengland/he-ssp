@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.Constants;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Extensions;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -176,7 +177,19 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                         }
                     })
                     .WithMessage(ErrorMessages.IncorrectPurchaseDate.ToString())
-                    .WithName("PurchaseDate");
+                    .WithName("PurchaseDate")
+                    .DependentRules(() =>
+                    {
+                        RuleFor(item => item).Must(model =>
+                        {
+                            var dateString = $"{model.PurchaseDay}/{model.PurchaseMonth}/{model.PurchaseYear}";
+                            var providedDate = DateTime.ParseExact(dateString, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
+                            return providedDate.Date.IsBeforeOrEqualTo(DateTime.UtcNow.Date);
+                        })
+                        .WithMessage(ErrorMessages.FuturePurchaseDate.ToString())
+                        .WithName("PurchaseDate");
+                    });
                 });
 
                 When(item => item.Cost == null,
