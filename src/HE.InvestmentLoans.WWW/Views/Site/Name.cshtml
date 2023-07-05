@@ -10,11 +10,9 @@
     </gds-back-link>
     <partial name="_ErrorSummaryPartial" model="null" />
     <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="Name" asp-method="post" novalidate>
-            <gds-label-wrapper>
-                <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
+            <gds-h1 size="@ControlSize.L">
                     Add a project
-                </gds-label>
-            </gds-label-wrapper>
+            </gds-h1>
             <gds-div-form-group invalid="inputInvalid">
                 
                 <label for="Name" class="govuk-label--m">What is the project name?</label>
