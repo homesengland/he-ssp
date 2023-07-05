@@ -76,7 +76,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
             _machine.Configure(State.ExistingCompany)
                 .Permit(Trigger.Continue, State.HomesBuilt)
                 .Permit(Trigger.Back, State.Purpose)
-                .Permit(Trigger.Change, State.HomesBuilt);
+                .Permit(Trigger.Change, State.CheckAnswers);
 
             _machine.Configure(State.HomesBuilt)
                 .Permit(Trigger.Continue, State.CheckAnswers)
