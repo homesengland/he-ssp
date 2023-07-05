@@ -32,12 +32,12 @@ namespace HE.CRM.Plugins.Services.RichTextService
                 }
                 if (fields.Count > 0)
                 {
-
                     TracingService.Trace("length");
                     var retrievedEntity = globalRepository.RetrieveEntityOfGivenTypeWithGivenFields(entityName, id, fields.ToArray());
                     List<string> fieldsValues = new List<string>();
                     foreach (string fieldName in fields)
                     {
+                        TracingService.Trace($"Fieldname: {fieldName}");
                         fieldsValues.Append(retrievedEntity.Attributes[fieldName]);
                         richText.Replace($"{{{fieldName}}}", retrievedEntity.Attributes[fieldName].ToString());
                     }

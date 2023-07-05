@@ -20,7 +20,7 @@ namespace HE.Xrm.ServiceClientExample
             public string ClientId { get; set; }
             public string ClientSecret { get; set; }
         }
-
+        //usun¹æ secret
         static string Url = "https://investmentsdev.crm11.dynamics.com";
         static string ClientId = "686b9fef-faef-40fa-9195-01f8df059830";
         static string ClientSecret = "Rvb8Q~9VhOe.fC0CY2vETf8GvrsCwnGjCpICbcNV";
