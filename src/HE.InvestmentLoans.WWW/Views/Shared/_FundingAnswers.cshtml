@@ -20,6 +20,13 @@
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
+        { "Title", "Abnormal costs" },
+        { "Value", LabelHelper.GetSummaryLabel(Model.AbnormalCosts, Model.AbnormalCostsInfo) },
+        { "Link", Url.Action("Change","Funding", new {id = id,  state = "AbnormalCosts" }) }
+    })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
         { "Title", "Private sector funding" },
         { "Value", LabelHelper.GetSummaryLabel(Model.PrivateSectorFunding, Model.PrivateSectorFunding == "Yes" ? Model.PrivateSectorFundingResult : Model.PrivateSectorFundingReason) },
         { "Link", Url.Action("Change","Funding", new {id = id,  state = "PrivateSectorFunding" }) }
