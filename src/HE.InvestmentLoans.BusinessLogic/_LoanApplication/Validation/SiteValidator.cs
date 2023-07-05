@@ -84,20 +84,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                     RuleFor(item => item.LocationCoordinates)
                         .NotEmpty()
                         .WithMessage("Enter your XY coordinates");
-
-                    When(item => item.LocationCoordinates != null, () =>
-                    {
-                        RuleFor(item => item.LocationCoordinates)
-                        .Must(coordinates =>
-                        {
-                            return ValidateCoordinates(coordinates, out string invalidCharacters);
-                        })
-                        .WithMessage((item, coordinates) =>
-                        {
-                            ValidateCoordinates(coordinates, out string invalidCharacters);
-                            return ErrorMessages.InvalidXYCoordinates(invalidCharacters).ToString();
-                        });
-                    });
                 });
 
                 When(item => item.LocationOption == "landRegistryTitleNumber", () =>
@@ -235,24 +221,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                     ).WithMessage(ErrorMessages.CheckAnswersOption.ToString());
                 });
             });
-        }
-
-        private bool ValidateCoordinates(string coordinates, out string invalidCharacters)
-        {
-            var validCharactersRegex = new Regex(@"[^-\d.,]");
-            var invalidCharactersList = validCharactersRegex.Matches(coordinates)
-                .Select(match => match.Value[0])
-                .ToList();
-
-            invalidCharacters = new string(invalidCharactersList.ToArray());
-
-            if (invalidCharactersList.Contains(' '))
-            {
-                invalidCharacters = invalidCharacters.Replace(" ", string.Empty);
-                invalidCharacters = invalidCharacters.Length > 0 ? "space and " + invalidCharacters : "space";
-            }
-
-            return invalidCharactersList.Count == 0;
         }
     }
 }
