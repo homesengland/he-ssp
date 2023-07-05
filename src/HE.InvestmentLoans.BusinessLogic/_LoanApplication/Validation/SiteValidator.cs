@@ -222,23 +222,5 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                 });
             });
         }
-
-        private bool ValidateCoordinates(string coordinates, out string invalidCharacters)
-        {
-            var validCharactersRegex = new Regex(@"[^-\d.,]");
-            var invalidCharactersList = validCharactersRegex.Matches(coordinates)
-                .Select(match => match.Value[0])
-                .ToList();
-
-            invalidCharacters = new string(invalidCharactersList.ToArray());
-
-            if (invalidCharactersList.Contains(' '))
-            {
-                invalidCharacters = invalidCharacters.Replace(" ", string.Empty);
-                invalidCharacters = invalidCharacters.Length > 0 ? "space and " + invalidCharacters : "space";
-            }
-
-            return invalidCharactersList.Count == 0;
-        }
     }
 }
