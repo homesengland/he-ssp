@@ -84,20 +84,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                     RuleFor(item => item.LocationCoordinates)
                         .NotEmpty()
                         .WithMessage("Enter your XY coordinates");
-
-                    When(item => item.LocationCoordinates != null, () =>
-                    {
-                        RuleFor(item => item.LocationCoordinates)
-                        .Must(coordinates =>
-                        {
-                            return ValidateCoordinates(coordinates, out string invalidCharacters);
-                        })
-                        .WithMessage((item, coordinates) =>
-                        {
-                            ValidateCoordinates(coordinates, out string invalidCharacters);
-                            return ErrorMessages.InvalidXYCoordinates(invalidCharacters).ToString();
-                        });
-                    });
                 });
 
                 When(item => item.LocationOption == "landRegistryTitleNumber", () =>
