@@ -20,15 +20,15 @@ namespace HE.CRM.Plugins.Services.RichTextService
         public string GenerateRichTextDocument(string entityId, string entityName, string richText)
         {
             TracingService.Trace("method");
+            TracingService.Trace($"richtext: {richText}");
             if (Guid.TryParse(entityId, out Guid id))
             {
                 TracingService.Trace("if");
                 List<string>fields = new List<string>();
                 foreach (Match match in Regex.Matches(richText, "{[^}]+}"))
                 {
-                    fields.Append(match.Value.Trim('{', '}'));
+                    fields.Add(match.Value.Trim('{', '}'));
                     TracingService.Trace(match.Value.Trim('{', '}'));
-                    Console.WriteLine(match.Value.Trim('{', '}'));
                 }
                 if (fields.Count > 0)
                 {
@@ -38,8 +38,10 @@ namespace HE.CRM.Plugins.Services.RichTextService
                     foreach (string fieldName in fields)
                     {
                         TracingService.Trace($"Fieldname: {fieldName}");
-                        fieldsValues.Append(retrievedEntity.Attributes[fieldName]);
-                        richText.Replace($"{{{fieldName}}}", retrievedEntity.Attributes[fieldName].ToString());
+                        TracingService.Trace($"value: {retrievedEntity.Attributes[fieldName].ToString()}");
+                        TracingService.Trace($"newname: {{{{{fieldName}}}}}");
+                        fieldsValues.Add(retrievedEntity.Attributes[fieldName].ToString());
+                        richText = richText.Replace($"{{{{{fieldName}}}}}", retrievedEntity.Attributes[fieldName].ToString());
                     }
                 }
             }

@@ -18,7 +18,7 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
             QueryExpression qe = new QueryExpression(entityName);
             qe.ColumnSet = new ColumnSet(fields);
-            qe.Criteria.AddCondition(nameof(Entity.Id).ToLower(), ConditionOperator.Equal, entityId);
+            qe.Criteria.AddCondition($"{entityName}id".ToLower(), ConditionOperator.Equal, entityId);
             var result = service.RetrieveMultiple(qe);
             if (result != null && result.Entities.Count > 0)
             {
