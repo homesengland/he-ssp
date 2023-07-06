@@ -7,7 +7,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Common.DateTimeExtensionTests
     public class IsBeforeOrEqualToTests
     {
         [TestMethod]
-        public void Return_true_when_provided_date_is_before_other_date()
+        public void ReturnTrueWhenProvidedDateIsBeforeOtherDate()
         {
             var date = new DateTime(2023, 7, 5);
             var otherDate = date.AddSeconds(1);
@@ -16,7 +16,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Common.DateTimeExtensionTests
         }
 
         [TestMethod]
-        public void Return_true_when_provided_date_is_equal_to_other_date()
+        public void ReturnTrueWhenProvidedDateIsEqualToOtherDate()
         {
             var date = new DateTime(2023, 7, 5);
             var otherDate = new DateTime(2023, 7, 5);
@@ -25,7 +25,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Common.DateTimeExtensionTests
         }
 
         [TestMethod]
-        public void Return_false_when_provided_date_is_after_other_date()
+        public void ReturnFalseWhenProvidedDateIsAfterOtherDate()
         {
             var date = new DateTime(2023, 7, 5);
             var otherDate = date.AddSeconds(-1);
