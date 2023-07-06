@@ -67,7 +67,7 @@ public class SendToCrm : IRequest<bool>
 
             LoanApplicationDto loanApplicationDto = new LoanApplicationDto()
             {
-                accountId = await _loanUserContext.GetAccountId(),
+                accountId = await _loanUserContext.GetSelectedAccountId(),
                 externalId = _loanUserContext.UserGlobalId,
                 name = request.Model.Account.RegisteredName,
                 //sessionModel.Account.RegistrationNumber
