@@ -28,7 +28,7 @@ public class LoanUserContext : ILoanUserContext
 
     public string? Email => _userContext.Email;
 
-    public IList<string> Roles { get; private set; }
+    public IReadOnlyCollection<string> Roles { get; }
 
     public async Task<Guid> GetSelectedAccountId()
     {

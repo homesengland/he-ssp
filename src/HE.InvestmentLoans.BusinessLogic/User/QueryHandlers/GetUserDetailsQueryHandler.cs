@@ -1,5 +1,5 @@
 ﻿using HE.InvestmentLoans.Common.Authorization;
-using HE.InvestmentLoans.Contract.Users;
+using HE.InvestmentLoans.Contract.User;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,9 +18,9 @@ public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, G
     public async Task<GetUserDetailsResponse> Handle(GetUserDetailsQuery request, CancellationToken cancellationToken)
     {
         return new GetUserDetailsResponse(
-                                    _loanUserContext.Email,
-                                    _loanUserContext.UserGlobalId,
-                                    await _loanUserContext.GetSelectedAccountId(),
-                                    await _loanUserContext.GetAllAccountIds());
+                            _loanUserContext.Email,
+                            _loanUserContext.UserGlobalId,
+                            await _loanUserContext.GetSelectedAccountId(),
+                            await _loanUserContext.GetAllAccountIds());
     }
 }

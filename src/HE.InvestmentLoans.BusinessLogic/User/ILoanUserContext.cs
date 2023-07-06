@@ -10,7 +10,7 @@ public interface ILoanUserContext
 
     public string? Email { get; }
 
-    public IList<string> Roles { get; }
+    public IReadOnlyCollection<string> Roles { get; }
 
     public Task<Guid> GetSelectedAccountId();
 
