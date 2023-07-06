@@ -1,0 +1,34 @@
+﻿using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.CRM.Model;
+using Microsoft.Xrm.Sdk;
+using System.Text.Json;
+
+namespace HE.InvestmentLoans.BusinessLogic.User.Repositories;
+
+public class LoanUserRepository : ILoanUserRepository
+{
+    private readonly IOrganizationService _serviceClient;
+
+    public LoanUserRepository(IOrganizationService serviceClient)
+    {
+        _serviceClient = serviceClient;
+    }
+
+    public ContactRolesDto GetUserDetails(string userGlobalId, string userEmail)
+    {
+        var req = new invln_getcontactroleRequest()
+        {
+            invln_contactemail = userEmail,
+            invln_contactexternalid = userGlobalId,
+            invln_portaltype = "858110001"
+        };
+
+        var resp = (invln_getcontactroleResponse)_serviceClient.Execute(req);
+        if (resp.invln_portalroles != null)
+        {
+            return JsonSerializer.Deserialize<ContactRolesDto>(resp.invln_portalroles);
+        }
+
+        return null;
+    }
+}
