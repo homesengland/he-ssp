@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace HE.InvestmentLoans.Contract.Users;
+namespace HE.InvestmentLoans.Contract.User;
 
 public record GetUserDetailsQuery : IRequest<GetUserDetailsResponse>;
 
