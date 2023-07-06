@@ -12,5 +12,7 @@ public interface ILoanUserContext
 
     public IList<string> Roles { get; }
 
-    public Task<Guid> GetAccountId();
+    public Task<Guid> GetSelectedAccountId();
+
+    Task<IList<Guid>> GetAllAccountIds();
 }
