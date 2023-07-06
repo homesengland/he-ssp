@@ -86,7 +86,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
             _machine.Configure(State.CheckAnswers)
                .PermitIf(Trigger.Continue, State.Complete, () => _model.Company.CheckAnswers == "Yes")
                .IgnoreIf(Trigger.Continue, () => _model.Company.CheckAnswers != "Yes")
-               .PermitIf(Trigger.Back, State.HomesBuilt, () => _model.Company.Purpose != "Yes");
+               .PermitIf(Trigger.Back, State.HomesBuilt);
 
             _machine.Configure(State.Complete)
              .Permit(Trigger.Back, State.CheckAnswers);
