@@ -1,29 +1,32 @@
 ﻿using FluentAssertions;
+using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
 {
     [TestClass]
     public class AllDataIsProvidedTests
     {
+        private SiteViewModel model;
+
+        [TestInitialize]
+        public void Init()
+        {
+            model = SiteViewModelObjectBuilder
+                .NewObject()
+                .ThatPassesCheckAnswersValidation()
+                .Build();
+        }
+
         [TestMethod] 
         public void AllDataIsProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.AllInformationIsProvided().Should().BeTrue();
         }
 
         [TestMethod]
         public void FailWhenBasicDataIsNotProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.Name = "";
             model.ManyHomes = "";
             model.TypeHomes = new string[0];
@@ -38,8 +41,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void FailReferenceNumberIsNotProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.PlanningRef = null;
 
             model.AllInformationIsProvided().Should().BeFalse();
@@ -48,8 +49,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void FailWhenPlanningRefIsNoAndNoLocationWasProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.PlanningRef = "No";
             model.LocationOption = "coordinates";
             model.LocationCoordinates = "";
@@ -60,8 +59,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void FailWhenPlanningRefIsNoAndLandRegistryIsNotProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.PlanningRef = "No";
             model.LocationOption = "landRegistryTitleNumber";
             model.LocationLandRegistry = "";
@@ -72,8 +69,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void FailWhenPlanningRefIsYesAndReferenceNumberIsNotProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.PlanningRef = "Yes";
             model.PlanningRefEnter = "";
 
@@ -83,8 +78,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void FailWhenPlanningRefIsYesAndPlanningStatusIsNotProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.PlanningRef = "Yes";
             model.PlanningRefEnter = "number";
             model.PlanningStatus = "";
@@ -95,8 +88,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void FailWhenPlanningRefIsYesAndLocationIsNotProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.PlanningRef = "Yes";
             model.PlanningRefEnter = "number";
             model.PlanningStatus = "status";
@@ -108,9 +99,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
 
         [TestMethod]
         public void FailWhenPlanningRefIsYesAndCoordinatesAreNotProvided()
-        {
-            var model = ModelThatPassesValidation();
-
+        {   
             model.PlanningRef = "Yes";
             model.PlanningRefEnter = "number";
             model.PlanningStatus = "status";
@@ -124,8 +113,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void FailWhenPlanningRefIsYesAndLandRegistryIsNotProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.PlanningRef = "Yes";
             model.PlanningRefEnter = "number";
             model.PlanningStatus = "status";
@@ -139,8 +126,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void PassWhenAllPlanningRefDataIsProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.PlanningRef = "Yes";
             model.PlanningRefEnter = "number";
             model.PlanningStatus = "status";
@@ -151,8 +136,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void FailWhenOwnershipIsNotProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.Ownership = "";
 
             model.AllInformationIsProvided().Should().BeFalse();
@@ -161,8 +144,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void FailWhenOwnershipIsYesAndAdditionalDataIsNotProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.Ownership = "Yes";
 
             model.PurchaseDate = null;
@@ -176,8 +157,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void PassWhenOwnershipIsYesAndAdditionalDataIsProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.Ownership = "Yes";
 
             model.PurchaseDate = new DateTime(2023, 7, 7);
@@ -191,8 +170,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void PassWhenOwnershipIsNoAndAdditionalDataIsNotProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.Ownership = "No";
 
             model.PurchaseDate = null;
@@ -206,8 +183,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void FailWhenGrantFundingIsNotProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.GrantFunding = "";
 
             model.AllInformationIsProvided().Should().BeFalse();
@@ -216,8 +191,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void FailWhenGrantFundingIsYesAndNoAdditionalInformationIsProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.GrantFunding = "Yes";
 
             model.GrantFundingName = "";
@@ -232,8 +205,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void PassWhenGrantFundingIsYesAndAllAdditionalInformationIsProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.GrantFunding = "Yes";
 
             model.GrantFundingName = "name";
@@ -247,8 +218,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
         [TestMethod]
         public void PassWhenGrantFundingIsNoAndNoAdditionalInformationIsProvided()
         {
-            var model = ModelThatPassesValidation();
-
             model.GrantFunding = "No";
 
             model.GrantFundingName = "";
@@ -259,25 +228,5 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
             model.AllInformationIsProvided().Should().BeTrue();
         }
 
-        private static SiteViewModel ModelThatPassesValidation()
-        {
-            return new SiteViewModel
-            {
-                Name = "Test",
-                ManyHomes = "12",
-                HasEstimatedStartDate = "No",
-                TypeHomes = new string[] { "tmp" },
-                Type = "greenfield",
-                AffordableHomes = "No",
-                ChargesDebt = "No",
-                HomesToBuild = "12",
-
-                GrantFunding = "No",
-                PlanningRef = "No",
-                LocationOption = "coordinates",
-                LocationCoordinates = "12,12 12,12",
-                Ownership = "No"
-            };
-        }
     }
 }
