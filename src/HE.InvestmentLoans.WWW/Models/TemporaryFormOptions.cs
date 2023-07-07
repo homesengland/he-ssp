@@ -143,6 +143,30 @@ namespace HE.InvestmentLoans.WWW.Models
             }
         };
 
+        public static List<SelectListItem> PermissionStatus { get; } = new List<SelectListItem>
+        {
+            new SelectListItem()
+            {
+                Value = "notSubmitted",
+                Text = "Application has not been submitted"
+            },
+            new SelectListItem()
+            {
+                Value = "notReceived",
+                Text = "Not yet received result"
+            },
+            new SelectListItem()
+            {
+                Value = "outlineOrConsent",
+                Text = "Received outline or reserved matters consent"
+            },
+            new SelectListItem()
+            {
+                Value = "receivedFull",
+                Text = "Received full planning permission"
+            }
+        };
+
         public static List<SelectListItem> SiteLocation { get; } = new List<SelectListItem>
         {
             new SelectListItem()
