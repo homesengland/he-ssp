@@ -94,35 +94,34 @@
         { "Value", Model?.PlanningRefEnter },
         { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "PlanningRefEnter" }) }
         })
+
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Planning status" },
+        { "Value", TemporaryFormOptions.PermissionStatus.GetSummaryLabel(Model?.PlanningStatus) },
+        { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "PlanningPermissionStatus" }) }
+        })
     }
 
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    @if(Model.LocationOption == null || Model.LocationOption == "coordinates")
     {
-    { "Title", "Location" },
-    { "Value", Model?.Location },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "CheckPlanning" }) }
-    })
-
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Location Coordinates" },
+        { "Value", Model?.LocationCoordinates },
+        { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Location" }) }
+        })
+    }
+    
+    @if (Model.LocationOption == null || Model.LocationOption == "landRegistryTitleNumber")
     {
-    { "Title", "Planning status" },
-    { "Value", Model?.PlanningStatus },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "CheckPlanning" }) }
-    })
-
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-    {
-    { "Title", "Location Coordinates" },
-    { "Value", Model?.LocationCoordinates },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Location" }) }
-    })
-
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-    {
-    { "Title", "Land Registry title number" },
-    { "Value", Model?.LocationLandRegistry },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Location" }) }
-    })
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Land Registry title number" },
+        { "Value", Model?.LocationLandRegistry },
+        { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Location" }) }
+        })
+    }
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {

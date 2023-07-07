@@ -217,21 +217,9 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
                 When(item => item.CheckAnswers == "Yes", () =>
                 {
-                    RuleFor(m => m).Must(x =>
-                    !string.IsNullOrEmpty(x.Name) &&
-                    !string.IsNullOrEmpty(x.ManyHomes) &&
-                    !string.IsNullOrEmpty(x.HasEstimatedStartDate) &&
-                    !(x.TypeHomes != null && x.TypeHomes.Length > 0) &&
-                    !string.IsNullOrEmpty(x.Type) &&
-                    !string.IsNullOrEmpty(x.Location) &&
-                    !string.IsNullOrEmpty(x.PlanningRef) &&
-                    (x.PlanningRef == "No" || !string.IsNullOrEmpty(x.PlanningRefEnter)) &&
-                    !string.IsNullOrEmpty(x.GrantFunding) &&
-                    (x.GrantFunding == "No" || !string.IsNullOrEmpty(x.Ownership)) &&
-                    (x.GrantFunding == "No" || !string.IsNullOrEmpty(x.ChargesDebt)) &&
-                    !string.IsNullOrEmpty(x.AffordableHomes) &&
-                    (x.Ownership == "No" || (!string.IsNullOrEmpty(x.PurchaseYear)))
-                    ).WithMessage(ErrorMessages.CheckAnswersOption.ToString());
+                    RuleFor(m => m)
+                        .Must(x => x.AllInformationIsProvided())
+                        .WithMessage(ErrorMessages.CheckAnswersOption.ToString());
                 });
             });
         }
