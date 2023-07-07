@@ -1,5 +1,7 @@
 ﻿using HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Queries;
+using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
+using HE.InvestmentLoans.Common.Authorization;
 using MediatR;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +22,10 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication
         public override void AddAditionalServices(ServiceCollection collection)
         {
             var orgService = new Mock<IOrganizationService>();
-            collection.AddTransient<IOrganizationService>(x =>(new Mock<IOrganizationService>()).Object);
+            collection.AddTransient(x =>(new Mock<IOrganizationService>()).Object);
+            collection.AddTransient(x => new Mock<ILoanApplicationRepository>().Object);
+            collection.AddTransient(x => new Mock<ILoanUserContext>().Object);
+
             base.AddAditionalServices(collection);
         }
 
@@ -49,19 +54,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication
         }
 
         [TestMethod]
-        public async Task SendToCrm_Command_Execute_CheckIDAsync()
-        {
-            
-            var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
-            var model = await mediator.Send(new Create());
-            model.Company.HomesBuilt = "5";
-            await mediator.Send(new SendToCrm() {  Model = model });
-            Assert.IsNotNull(model);
-            Assert.AreNotEqual(model.ID, Guid.Empty, model.ID.ToString());
-        }
-
-
-        [TestMethod]
         public async Task Update_Command_Execute_CheckIDAsync()
         {
             var mediator = (IMediator)serviceProvider.GetService(typeof(IMediator));
@@ -73,11 +65,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication
             var modelToCheck = await mediator.Send(new GetSingle() { Id= model.ID });
             Assert.IsNotNull(modelToCheck);
             Assert.AreEqual(model.Purpose, modelToCheck.Purpose);
-
-
         }
-
-
-
     }
 }

@@ -4,5 +4,5 @@ public interface IUserContext
 {
     public string UserGlobalId { get; }
 
-    public IList<string> Roles { get; }
+    public string? Email { get; }
 }

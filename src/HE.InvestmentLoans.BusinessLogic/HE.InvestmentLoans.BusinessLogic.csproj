@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -12,18 +12,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.5.2" />
+    <PackageReference Include="FluentValidation" Version="11.6.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.6.0" />
     <PackageReference Include="MediatR" Version="12.0.1" />
     <PackageReference Include="Stateless" Version="5.13.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pipelines\" />
+    <Folder Include="_LoanApplication\Pipelines\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HE.InvestmentLoans.Contract\HE.InvestmentLoans.Contract.csproj" />
     <ProjectReference Include="..\HE.InvestmentLoans.CRM\HE.InvestmentLoans.CRM.csproj" />
   </ItemGroup>
 

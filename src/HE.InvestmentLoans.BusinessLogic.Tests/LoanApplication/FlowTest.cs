@@ -1,15 +1,11 @@
 ﻿using HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands;
-using HE.InvestmentLoans.BusinessLogic._LoanApplication.Queries;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
+using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
+using HE.InvestmentLoans.Common.Authorization;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Xrm.Sdk;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication
 {
@@ -19,7 +15,9 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication
         public override void AddAditionalServices(ServiceCollection collection)
         {
             var orgService = new Mock<IOrganizationService>();
-            collection.AddTransient<IOrganizationService>(x => (new Mock<IOrganizationService>()).Object);
+            collection.AddTransient(x => new Mock<IOrganizationService>().Object);
+            collection.AddTransient(x => new Mock<ILoanApplicationRepository>().Object);
+            collection.AddTransient(x => new Mock<ILoanUserContext>().Object);
             base.AddAditionalServices(collection);
         }
 

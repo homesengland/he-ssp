@@ -8,9 +8,10 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
     using Microsoft.PowerPlatform.Dataverse.Client;
     using HE.InvestmentLoans.BusinessLogic.Exceptions;
     using Microsoft.AspNetCore.Http;
-    using HE.InvestmentLoans.BusinessLogic.Extensions;
     using System.Collections.Generic;
     using System.Linq;
+    using HE.InvestmentLoans.Common.Exceptions;
+    using HE.InvestmentLoans.BusinessLogic._LoanApplication.Extensions;
 
     public class Update : IRequest<LoanApplicationViewModel>
     {

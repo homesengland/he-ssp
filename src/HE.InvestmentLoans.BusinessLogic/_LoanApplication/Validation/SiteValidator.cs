@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.Constants;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Extensions;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -162,7 +163,19 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
                         }
                     })
                     .WithMessage(ErrorMessages.IncorrectPurchaseDate.ToString())
-                    .WithName("PurchaseDate");
+                    .WithName("PurchaseDate")
+                    .DependentRules(() =>
+                    {
+                        RuleFor(item => item).Must(model =>
+                        {
+                            var dateString = $"{model.PurchaseDay}/{model.PurchaseMonth}/{model.PurchaseYear}";
+                            var providedDate = DateTime.ParseExact(dateString, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
+                            return providedDate.Date.IsBeforeOrEqualTo(DateTime.UtcNow.Date);
+                        })
+                        .WithMessage(ErrorMessages.FuturePurchaseDate.ToString())
+                        .WithName("PurchaseDate");
+                    });
                 });
 
                 When(item => item.Cost == null,
@@ -204,21 +217,9 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 
                 When(item => item.CheckAnswers == "Yes", () =>
                 {
-                    RuleFor(m => m).Must(x =>
-                    !string.IsNullOrEmpty(x.Name) &&
-                    !string.IsNullOrEmpty(x.ManyHomes) &&
-                    !string.IsNullOrEmpty(x.HasEstimatedStartDate) &&
-                    !(x.TypeHomes != null && x.TypeHomes.Length > 0) &&
-                    !string.IsNullOrEmpty(x.Type) &&
-                    !string.IsNullOrEmpty(x.Location) &&
-                    !string.IsNullOrEmpty(x.PlanningRef) &&
-                    (x.PlanningRef == "No" || !string.IsNullOrEmpty(x.PlanningRefEnter)) &&
-                    !string.IsNullOrEmpty(x.GrantFunding) &&
-                    (x.GrantFunding == "No" || !string.IsNullOrEmpty(x.Ownership)) &&
-                    (x.GrantFunding == "No" || !string.IsNullOrEmpty(x.ChargesDebt)) &&
-                    !string.IsNullOrEmpty(x.AffordableHomes) &&
-                    (x.Ownership == "No" || (!string.IsNullOrEmpty(x.PurchaseYear)))
-                    ).WithMessage(ErrorMessages.CheckAnswersOption.ToString());
+                    RuleFor(m => m)
+                        .Must(x => x.AllInformationIsProvided())
+                        .WithMessage(ErrorMessages.CheckAnswersOption.ToString());
                 });
             });
         }

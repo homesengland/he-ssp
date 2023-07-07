@@ -31,7 +31,7 @@ namespace HE.InvestmentLoans.WWW.Extensions
 
         public static string GetSummaryLabel(this List<SelectListItem> options, IEnumerable<string> values)
         {
-            if (values is null)
+            if (values is null || values.Count() == 0)
                 return null;
 
             return values

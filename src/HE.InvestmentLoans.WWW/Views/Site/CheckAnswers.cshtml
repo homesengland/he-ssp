@@ -1,6 +1,10 @@
 @model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
+@inject ModelExpressionProvider modelProvider
+
 @{
     var id = ViewContext.RouteData.Values["id"];
+
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel x) => x.CheckAnswers));
 }
 
 <gds-div-grid-column-two-thirds>

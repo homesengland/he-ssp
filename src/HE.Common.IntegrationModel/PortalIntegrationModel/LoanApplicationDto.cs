@@ -46,5 +46,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public Guid accountId { get; set; }
 
         public string loanApplicationStatus { get; set; }
+        public string externalId { get; set; }
     }
 }
