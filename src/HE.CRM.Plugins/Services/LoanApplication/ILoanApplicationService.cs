@@ -4,6 +4,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 {
     public interface ILoanApplicationService : ICrmService
     {
-        void CreateRecordFromPortal(string payload);
+        string CreateRecordFromPortal(string contactExternalId, string accountId, string loanApplicationId, string loanApplicationPayload);
     }
 }

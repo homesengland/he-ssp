@@ -66,10 +66,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_howcouldweimprovethecrm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_HoweasywasittousetheCRM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_InteractionPipelineOpportunity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_MarketingSend.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_NetPromoterScores.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Overallhowsatisfiedordissatisfied.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Physicalorcognitiveconditions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_PrimaryOperatingRegion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_Sector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_SMEIndicator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_UserSatisfactionSurveyDoyouwantto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\he_YesorNo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\IncidentResolutionFormType.cs" />
@@ -78,8 +81,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\InitialCommunication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConstructionMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_DefineTenure.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FundingReason.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Fundingtypeforadditionalprojects.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_InternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Permission.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_portal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Publicsectorfunding.cs" />

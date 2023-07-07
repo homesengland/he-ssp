@@ -21,6 +21,9 @@ namespace DataverseModel
 		public static class Fields
 		{
 			public const string invln_entityfieldsparameters = "invln_entityfieldsparameters";
+			public const string invln_contactexternalid = "invln_contactexternalid";
+			public const string invln_accountid = "invln_accountid";
+			public const string invln_loanapplicationid = "invln_loanapplicationid";
 		}
 		
 		public const string ActionLogicalName = "invln_sendinvestmentloansdatatocrm";
@@ -44,10 +47,69 @@ namespace DataverseModel
 			}
 		}
 		
+		public string invln_contactexternalid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactexternalid"))
+				{
+					return ((string)(this.Parameters["invln_contactexternalid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactexternalid"] = value;
+			}
+		}
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
 		public invln_sendinvestmentloansdatatocrmRequest()
 		{
 			this.RequestName = "invln_sendinvestmentloansdatatocrm";
 			this.invln_entityfieldsparameters = default(string);
+			this.invln_contactexternalid = default(string);
+			this.invln_accountid = default(string);
 		}
 	}
 	
@@ -56,10 +118,30 @@ namespace DataverseModel
 	public partial class invln_sendinvestmentloansdatatocrmResponse : Microsoft.Xrm.Sdk.OrganizationResponse
 	{
 		
+		public static class Fields
+		{
+			public const string invln_loanapplicationid = "invln_loanapplicationid";
+		}
+		
 		public const string ActionLogicalName = "invln_sendinvestmentloansdatatocrm";
 		
 		public invln_sendinvestmentloansdatatocrmResponse()
 		{
+		}
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Results.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Results["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
 		}
 	}
 }

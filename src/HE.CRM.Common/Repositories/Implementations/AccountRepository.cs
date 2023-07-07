@@ -21,6 +21,15 @@ namespace HE.CRM.Common.Repositories.Implementations
 
         #region Interface Implementation
 
+        public Account GetDefaultAccount()
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<Account>()
+                    .Where(x => x.Name == "DO_NOT_DELETE_DEFAULT_ACCOUNT").FirstOrDefault();
+            }
+        }
+
         public Account RetrieveAccountById(EntityReference accountId, ColumnSet columnSet = null)
         {
             logger.Trace("RetrieveAccountById");

@@ -3,6 +3,7 @@ using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -35,63 +36,22 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         #region Public Methods
 
 
-        public void CreateRecordFromPortal(string loanApplicationPayload)
+        public string CreateRecordFromPortal(string contactExternalId, string accountId, string loanApplicationId, string loanApplicationPayload)
         {
             this.TracingService.Trace("PAYLOAD:" + loanApplicationPayload);
             LoanApplicationDto loanApplicationFromPortal = JsonSerializer.Deserialize<LoanApplicationDto>(loanApplicationPayload);
-            List<Contact> relatedContacts = contactRepository.GetAllContactsWithGivenEmail(loanApplicationFromPortal.contactEmailAdress);
-            EntityReference contactForPortalUser = null;
+            Contact contact = contactRepository.GetContactViaExternalId(contactExternalId);
 
-            foreach (var contact in relatedContacts)
+            int numberOfSites = 0;
+            if (loanApplicationFromPortal.siteDetailsList != null && loanApplicationFromPortal.siteDetailsList.Count > 0)
             {
-                var loanApplications = loanApplicationRepository.GetContactLoans(contact.ToEntityReference());
-                foreach(var loanApp in loanApplications)
-                {
-                    this.TracingService.Trace("Delete existing Loan Application");
-                    var loanToDelete = new invln_Loanapplication()
-                    {
-                        Id = loanApp.Id,
-                    };
-
-                    loanApplicationRepository.Delete(loanToDelete);
-                }
+                numberOfSites = loanApplicationFromPortal.siteDetailsList.Count;
             }
-
-            if(relatedContacts.Count == 0)
-            {
-                this.TracingService.Trace("Create contact");
-                var createdContact = contactRepository.Create(new Contact()
-                {
-                    EMailAddress1 = loanApplicationFromPortal.contactEmailAdress
-                });
-
-                contactForPortalUser = new EntityReference(Contact.EntityLogicalName.ToLower(), createdContact);
-            }
-            else
-            {
-                this.TracingService.Trace("Assign existing contact");
-                contactForPortalUser = relatedContacts.First().ToEntityReference();
-            }
-
-            /*Account account = PrepareAccount(loanApplicationFromPortal);
-            var accountExists = accountRepository.AccountWithGivenIdExists(loanApplicationFromPortal.accountId);
-            if (accountExists)
-            {
-                //Update existing account
-                account.Id = loanApplicationFromPortal.accountId;
-                accountRepository.Update(account);
-            }
-            else
-            {
-                //Create new account
-                account.Id = accountRepository.Create(account);
-            }*/
 
             this.TracingService.Trace("Setting up invln_Loanapplication");
-
             var loanApplicationToCreate = new invln_Loanapplication()
             {
-                //invln_NumberofSites = (loanApplicationFromPortal.siteDetailsList != null && loanApplicationFromPortal.siteDetailsList.Count > 0) ? loanApplicationFromPortal.siteDetailsList.Count : null,
+                invln_NumberofSites = numberOfSites,
                 invln_FundingReason = MapFundingReason(loanApplicationFromPortal.fundingReason),
 
                 //COMPANY
@@ -121,11 +81,25 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
                 //OTHER maybe not related
                 invln_Name = loanApplicationFromPortal.name,
-                //invln_Account = account.ToEntityReference(),
-                invln_Contact = contactForPortalUser,
+                invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference("account", accountid) : null,
+                invln_Contact = contact != null ? contact.ToEntityReference() : null,
             };
-            this.TracingService.Trace("Create invln_Loanapplication");
-            var loanApplicationGuid = loanApplicationRepository.Create(loanApplicationToCreate);
+
+            Guid loanApplicationGuid = Guid.NewGuid();
+            if (!string.IsNullOrEmpty(loanApplicationId) && Guid.TryParse(loanApplicationId, out Guid loanAppId))
+            {
+                this.TracingService.Trace("Update invln_Loanapplication");
+                loanApplicationGuid = loanAppId;
+                loanApplicationToCreate.Id = loanAppId;
+                loanApplicationRepository.Update(loanApplicationToCreate);
+                siteDetailsRepository.DeleteSiteDetailsRelatedToLoanApplication(new EntityReference(invln_Loanapplication.EntityLogicalName, loanAppId));
+            }
+            else
+            {
+                this.TracingService.Trace("Create invln_Loanapplication");
+                loanApplicationGuid = loanApplicationRepository.Create(loanApplicationToCreate);
+            }
+
             if (loanApplicationFromPortal.siteDetailsList.Count > 0)
             {
                 this.TracingService.Trace($"siteDetailsList.Count {loanApplicationFromPortal.siteDetailsList.Count}");
@@ -164,6 +138,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     this.TracingService.Trace("after create record");
                 }
             }
+
+            return loanApplicationGuid.ToString();
         }
 
         private OptionSetValueCollection MapTypeOfHomes(string[] typeOfHomes)

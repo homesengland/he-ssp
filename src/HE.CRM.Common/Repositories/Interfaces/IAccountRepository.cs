@@ -10,6 +10,7 @@ namespace HE.CRM.Common.Repositories.Interfaces
 
     public interface IAccountRepository : ICrmEntityRepository<Account, DataverseContext>
     {
+        Account GetDefaultAccount();
         Account RetrieveAccountById(EntityReference accountId, ColumnSet columnSet = null);
         bool AccountWithGivenIdExists(Guid accountId);
     }

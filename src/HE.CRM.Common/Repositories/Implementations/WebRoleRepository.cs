@@ -47,14 +47,28 @@ namespace HE.CRM.Common.Repositories.Implementations
             return result.Entities.Select(x => x.ToEntity<invln_contactwebrole>()).ToList();
         }
 
-        public invln_Webrole GetDefaultPortalRole(Guid portalType)
+        public List<invln_Webrole> GetDefaultPortalRoles(string portalType)
         {
-            //using (var ctx = new OrganizationServiceContext(service))
-            //{
-            //    return ctx.CreateQuery<invln_Webrole>()
-            //        .Where(x => x.invln_Portalid.Id == portalId && x.invln_Isdefaultrole == true).AsEnumerable().FirstOrDefault();
-            //}
-            throw new NotImplementedException();
+			string fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+									<entity name='invln_webrole'>
+										<attribute name='invln_webroleid'/>
+										<attribute name='invln_portalpermissionlevelid'/>
+										<attribute name='invln_name'/>
+										<attribute name='createdon'/>
+										<order attribute='invln_name' descending='false'/>
+										<filter type='and'>
+											<condition attribute='invln_isdefaultrole' operator='eq' value='1'/>
+										</filter>
+										<link-entity name='invln_portal' from='invln_portalid' to='invln_portalid' link-type='inner' alias='ad'>
+											<filter type='and'>
+												<condition attribute='invln_portal' operator='eq' value='" + portalType + @"'/>
+											</filter>
+										</link-entity>
+									</entity>
+								</fetch>";
+
+            EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));
+            return result.Entities.Select(x => x.ToEntity<invln_Webrole>()).ToList();
         }
 
         public invln_Webrole GetRoleByName(string name)

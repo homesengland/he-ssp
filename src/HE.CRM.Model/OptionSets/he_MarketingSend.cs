@@ -14,23 +14,14 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum he_Sector
+	public enum he_MarketingSend
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Charity = 134370000,
+		DoNotSend = 134370000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Financial = 134370003,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		GovernmentCentral = 134370002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		GovernmentLocal = 134370001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		PrivateSectornonfinancial = 134370004,
+		Send = 134370001,
 	}
 }
 #pragma warning restore CS1591
