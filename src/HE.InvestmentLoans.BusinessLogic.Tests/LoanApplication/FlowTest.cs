@@ -1,6 +1,6 @@
 ﻿using HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
-using HE.InvestmentLoans.BusinessLogic.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
 using HE.InvestmentLoans.Common.Authorization;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

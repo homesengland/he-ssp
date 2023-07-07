@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.Enums;
 using HE.InvestmentLoans.BusinessLogic.Routing;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Contract.Application;
 using MediatR;
 using Stateless;
 using System.Linq;
@@ -65,15 +66,13 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
 
             _machine.Configure(State.ApplicationSubmitted).OnEntry(x =>
             {
-                _mediator.Send(new BusinessLogic._LoanApplication.Commands.SendToCrm() { Model = _model }).GetAwaiter().GetResult();
- 
+                _mediator.Send(new SubmitApplicationCommand(_model)).GetAwaiter().GetResult();
             });
 
             _machine.OnTransitionCompletedAsync(x =>
             {
                 _model.State = x.Destination;
-                return _mediator.Send(new BusinessLogic._LoanApplication.Commands.Update() { Model = _model });
-
+                return _mediator.Send(new Commands.Update() { Model = _model });
             });
         }
 

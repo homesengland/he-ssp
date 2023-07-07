@@ -8,7 +8,8 @@ using Microsoft.PowerPlatform.Dataverse.Client;
 using HE.InvestmentLoans.BusinessLogic.Exceptions;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
-using HE.InvestmentLoans.BusinessLogic.Extensions;
+using HE.InvestmentLoans.BusinessLogic._LoanApplication.Extensions;
+using HE.InvestmentLoans.Common.Exceptions;
 
 namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Queries
 {
