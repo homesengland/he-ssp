@@ -44,5 +44,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string fundingTypeForAdditionalProjects { get; set; }
         public string contactEmailAdress { get; set; }
         public Guid accountId { get; set; }
+
+        public string loanApplicationStatus { get; set; }
     }
 }

@@ -53,6 +53,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             {
                 invln_NumberofSites = numberOfSites,
                 invln_FundingReason = MapFundingReason(loanApplicationFromPortal.fundingReason),
+                invln_ExternalStatus = MapApplicationStatus(loanApplicationFromPortal.loanApplicationStatus),
 
                 //COMPANY
                 invln_CompanyPurpose = ParseBool(loanApplicationFromPortal.companyPurpose), //Purpose
@@ -140,6 +141,19 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
 
             return loanApplicationGuid.ToString();
+        }
+
+        private OptionSetValue MapApplicationStatus(string applicationStatus)
+        {
+            switch (applicationStatus?.ToLower())
+            {
+                case "draft":
+                    return new OptionSetValue((int)invln_ExternalStatus.Draft);
+                case "submitted":
+                    return new OptionSetValue((int)invln_ExternalStatus.Submitted);
+            }
+
+            return null;
         }
 
         private OptionSetValueCollection MapTypeOfHomes(string[] typeOfHomes)
