@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HE.InvestmentLoans.BusinessLogic.Pipelines
+namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Pipelines
 {
     public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
@@ -41,7 +41,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Pipelines
                 if (validiator != null)
                 {
                     var obj = prop.GetValue(request);
-                    var context = new ValidationContext<object>(obj, (PropertyChain)null, selector);
+                    var context = new ValidationContext<object>(obj, null, selector);
                     var result = validiator.Validate(context);
                     if (!result.IsValid)
                     {
@@ -56,7 +56,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Pipelines
             return next();
         }
 
-       
+
 
     }
 }

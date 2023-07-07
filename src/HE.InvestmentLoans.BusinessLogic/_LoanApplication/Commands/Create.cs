@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.Extensions;
+using HE.InvestmentLoans.BusinessLogic._LoanApplication.Extensions;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using MediatR;
 using Microsoft.AspNetCore.Http;
