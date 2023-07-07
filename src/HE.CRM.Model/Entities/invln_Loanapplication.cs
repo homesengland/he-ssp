@@ -69,7 +69,9 @@ namespace DataverseModel
 			public const string invln_ContactName = "invln_contactname";
 			public const string invln_DebentureHolder = "invln_debentureholder";
 			public const string invln_Directorloans = "invln_directorloans";
+			public const string invln_ExternalStatus = "invln_externalstatus";
 			public const string invln_FundingReason = "invln_fundingreason";
+			public const string invln_InternalStatus = "invln_internalstatus";
 			public const string invln_loanapplication_account = "invln_loanapplication_account";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
 			public const string invln_LoanapplicationId = "invln_loanapplicationid";
@@ -389,6 +391,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_ExternalStatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_externalstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ExternalStatus");
+				this.SetAttributeValue("invln_externalstatus", value);
+				this.OnPropertyChanged("invln_ExternalStatus");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundingreason")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_FundingReason
 		{
@@ -403,6 +422,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_FundingReason");
 				this.SetAttributeValue("invln_fundingreason", value);
 				this.OnPropertyChanged("invln_FundingReason");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_internalstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_InternalStatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_internalstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_InternalStatus");
+				this.SetAttributeValue("invln_internalstatus", value);
+				this.OnPropertyChanged("invln_InternalStatus");
 			}
 		}
 		

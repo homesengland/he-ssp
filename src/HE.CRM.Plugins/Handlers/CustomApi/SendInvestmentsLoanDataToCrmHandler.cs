@@ -1,6 +1,8 @@
 ﻿using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Plugins.Services.LoanApplication;
+using System.Text.Json;
+using System.Web.Security;
 
 namespace HE.CRM.Plugins.Handlers.CustomApi
 {
@@ -8,7 +10,9 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
     {
         #region Fields
 
-        private string ssid => ExecutionData.GetInputParameter<string>(invln_sendinvestmentloansdatatocrmRequest.Fields.invln_entityfieldsparameters);
+        private string contactExternalId => ExecutionData.GetInputParameter<string>(invln_sendinvestmentloansdatatocrmRequest.Fields.invln_contactexternalid);
+        private string accountId => ExecutionData.GetInputParameter<string>(invln_sendinvestmentloansdatatocrmRequest.Fields.invln_accountid);
+        private string loanApplicationId => ExecutionData.GetInputParameter<string>(invln_sendinvestmentloansdatatocrmRequest.Fields.invln_loanapplicationid);
         private string requestStringMessage => ExecutionData.GetInputParameter<string>(invln_sendinvestmentloansdatatocrmRequest.Fields.invln_entityfieldsparameters);
 
         #endregion
@@ -16,12 +20,13 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         #region Base Methods Overrides
         public override bool CanWork()
         {
-            return !string.IsNullOrEmpty(requestStringMessage);
+            return !string.IsNullOrEmpty(contactExternalId) && !string.IsNullOrEmpty(accountId) && !string.IsNullOrEmpty(requestStringMessage);
         }
 
         public override void DoWork()
         {
-            CrmServicesFactory.Get<ILoanApplicationService>().CreateRecordFromPortal(requestStringMessage);
+            var appId = CrmServicesFactory.Get<ILoanApplicationService>().CreateRecordFromPortal(contactExternalId, accountId, loanApplicationId, requestStringMessage);
+            ExecutionData.SetOutputParameter(invln_sendinvestmentloansdatatocrmResponse.Fields.invln_loanapplicationid, appId);
         }
 
         #endregion

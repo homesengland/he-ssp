@@ -19,14 +19,14 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         #region Base Methods Overrides
         public override bool CanWork()
         {
-            return !string.IsNullOrEmpty(contactEmail) && !string.IsNullOrEmpty(portalType) && !string.IsNullOrEmpty(contactExternalId);
+            return !string.IsNullOrEmpty(portalType) && !string.IsNullOrEmpty(contactExternalId);
         }
 
         public override void DoWork()
         {
             this.TracingService.Trace("GetContactRoles");
             var roles = CrmServicesFactory.Get<IContactService>().GetContactRoles(contactEmail, contactExternalId, portalType);
-            this.TracingService.Trace("Send Response");
+            this.TracingService.Trace("Send Response: " + JsonSerializer.Serialize(roles));
             if (roles != null)
             {
                 ExecutionData.SetOutputParameter(invln_getcontactroleResponse.Fields.invln_portalroles, JsonSerializer.Serialize(roles));

@@ -280,35 +280,6 @@ namespace DataverseModel
 	}
 	
 	/// <summary>
-	/// Sector in which partner operates
-	/// </summary>
-	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum Account_he_Sector
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Consultant = 134370006,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CountyCouncil = 134370001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		DistrictCouncil = 134370002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		GovernmentPolicyMaker = 134370003,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		HomesDeveloper = 134370000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		HousingAssociation = 134370005,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		PrivateContractor = 134370004,
-	}
-	
-	/// <summary>
 	/// Primary Operating Region of the partner
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -345,13 +316,13 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ALMOArmsLengthManagementOrganisation = 134370011,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CharitableOrganisation = 134370010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Consultant = 134370002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CountyCouncil = 134370006,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		DistrictCouncil = 134370007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		FinancialInstitution = 134370001,
@@ -360,19 +331,36 @@ namespace DataverseModel
 		GovernmentPolicyMaker = 134370008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		HomesDeveloper = 134370005,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
 		HousingAssociation = 134370000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Landowner = 134370003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LocalAuthority = 134370007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Other = 134370012,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PrivateContractor = 134370009,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		PrivateSectorHousebuild = 134370004,
+		PrivateSectorHousebuilder = 134370004,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	public enum Account_he_LATier
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Tier1 = 134370001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Tier2 = 134370002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Tier3 = 134370003,
 	}
 	
 	/// <summary>
@@ -689,23 +677,29 @@ namespace DataverseModel
 			public const string he_automaticsearch = "he_automaticsearch";
 			public const string he_CompaniesHouseNumber = "he_companieshousenumber";
 			public const string he_companysearch = "he_companysearch";
+			public const string he_Created = "he_created";
 			public const string he_EsriID = "he_esriid";
 			public const string he_HomesEnglandCentralGovernmentOrganisationCode = "he_homesenglandcentralgovernmentorganisationcode";
 			public const string he_HomesEnglandCombinedAuthorityCode = "he_homesenglandcombinedauthoritycode";
 			public const string he_ID = "he_id";
+			public const string he_IsVerified = "he_isverified";
 			public const string he_KeyAccount = "he_keyaccount";
-			public const string he_lmvbindicator = "he_lmvbindicator";
+			public const string he_keyaccountmanager = "he_keyaccountmanager";
+			public const string he_keyaccountmanagerName = "he_keyaccountmanagername";
+			public const string he_LATier = "he_latier";
 			public const string he_LocalAuthorityCode = "he_localauthoritycode";
+			public const string he_Partner_Sector = "he_partner_sector";
 			public const string he_PartnerSector = "he_partnersector";
 			public const string he_PartnerType = "he_partnertype";
 			public const string he_prefixid = "he_prefixid";
 			public const string he_PrimaryOperatingRegion = "he_primaryoperatingregion";
+			public const string he_primaryoperatingregionchoice = "he_primaryoperatingregionchoice";
 			public const string he_RelationshipOwner = "he_relationshipowner";
 			public const string he_RelationshipOwnerName = "he_relationshipownername";
-			public const string he_Sector = "he_sector";
 			public const string he_SectorTextforPowerBI = "he_sectortextforpowerbi";
-			public const string he_smeindicator = "he_smeindicator";
+			public const string he_smeindicatorchoice = "he_smeindicatorchoice";
 			public const string he_SocialHousingProviderRegistrationNumber = "he_socialhousingproviderregistrationnumber";
+			public const string he_specifypartnertype = "he_specifypartnertype";
 			public const string he_tempdataid = "he_tempdataid";
 			public const string he_UltimateParent = "he_ultimateparent";
 			public const string he_UltimateParentName = "he_ultimateparentname";
@@ -812,9 +806,9 @@ namespace DataverseModel
 			public const string YomiName = "yominame";
 		}
 		
-		public const string AlternateKeys = "he_socialhousingproviderregistrationnumber|he_homesenglandcombinedauthoritycode|h" +
-			"e_companieshousenumber|he_esriid|he_id|he_homesenglandcentralgovernmentorganisat" +
-			"ioncode|he_localauthoritycode";
+		public const string AlternateKeys = "he_socialhousingproviderregistrationnumber|he_localauthoritycode|he_companieshous" +
+			"enumber|he_esriid|he_id|he_homesenglandcombinedauthoritycode|he_homesenglandcent" +
+			"ralgovernmentorganisationcode";
 		
 		/// <summary>
 		/// Default Constructor.
@@ -2606,6 +2600,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Keeps information about record author - for case the record created from Partner Service
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_created")]
+		public string he_Created
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("he_created");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_Created");
+				this.SetAttributeValue("he_created", value);
+				this.OnPropertyChanged("he_Created");
+			}
+		}
+		
+		/// <summary>
 		/// Single Pipeline Esri ID
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_esriid")]
@@ -2685,6 +2699,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_isverified")]
+		public System.Nullable<bool> he_IsVerified
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("he_isverified");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_IsVerified");
+				this.SetAttributeValue("he_isverified", value);
+				this.OnPropertyChanged("he_IsVerified");
+			}
+		}
+		
 		/// <summary>
 		/// Whether the partner is Key Account or not
 		/// </summary>
@@ -2705,20 +2736,40 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_lmvbindicator")]
-		public System.Nullable<bool> he_lmvbindicator
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_keyaccountmanager")]
+		public Microsoft.Xrm.Sdk.EntityReference he_keyaccountmanager
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<bool>>("he_lmvbindicator");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("he_keyaccountmanager");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("he_lmvbindicator");
-				this.SetAttributeValue("he_lmvbindicator", value);
-				this.OnPropertyChanged("he_lmvbindicator");
+				this.OnPropertyChanging("he_keyaccountmanager");
+				this.SetAttributeValue("he_keyaccountmanager", value);
+				this.OnPropertyChanged("he_keyaccountmanager");
+			}
+		}
+		
+		/// <summary>
+		/// Local authority classification field. Is synchronized from SharePoint site
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_latier")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue he_LATier
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_latier");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_LATier");
+				this.SetAttributeValue("he_latier", value);
+				this.OnPropertyChanged("he_LATier");
 			}
 		}
 		
@@ -2739,6 +2790,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("he_LocalAuthorityCode");
 				this.SetAttributeValue("he_localauthoritycode", value);
 				this.OnPropertyChanged("he_LocalAuthorityCode");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_partner_sector")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue he_Partner_Sector
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_partner_sector");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_Partner_Sector");
+				this.SetAttributeValue("he_partner_sector", value);
+				this.OnPropertyChanged("he_Partner_Sector");
 			}
 		}
 		
@@ -2816,6 +2884,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_primaryoperatingregionchoice")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValueCollection he_primaryoperatingregionchoice
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValueCollection>("he_primaryoperatingregionchoice");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_primaryoperatingregionchoice");
+				this.SetAttributeValue("he_primaryoperatingregionchoice", value);
+				this.OnPropertyChanged("he_primaryoperatingregionchoice");
+			}
+		}
+		
 		/// <summary>
 		/// HE User who owns the relationship with Partner
 		/// </summary>
@@ -2836,26 +2921,6 @@ namespace DataverseModel
 			}
 		}
 		
-		/// <summary>
-		/// Sector in which partner operates
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_sector")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue he_Sector
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_sector");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_Sector");
-				this.SetAttributeValue("he_sector", value);
-				this.OnPropertyChanged("he_Sector");
-			}
-		}
-		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_sectortextforpowerbi")]
 		public string he_SectorTextforPowerBI
 		{
@@ -2873,20 +2938,20 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_smeindicator")]
-		public System.Nullable<bool> he_smeindicator
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_smeindicatorchoice")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue he_smeindicatorchoice
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<bool>>("he_smeindicator");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_smeindicatorchoice");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("he_smeindicator");
-				this.SetAttributeValue("he_smeindicator", value);
-				this.OnPropertyChanged("he_smeindicator");
+				this.OnPropertyChanging("he_smeindicatorchoice");
+				this.SetAttributeValue("he_smeindicatorchoice", value);
+				this.OnPropertyChanged("he_smeindicatorchoice");
 			}
 		}
 		
@@ -2910,6 +2975,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_specifypartnertype")]
+		public string he_specifypartnertype
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("he_specifypartnertype");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_specifypartnertype");
+				this.SetAttributeValue("he_specifypartnertype", value);
+				this.OnPropertyChanged("he_specifypartnertype");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_tempdataid")]
 		public System.Nullable<int> he_tempdataid
 		{
@@ -2928,7 +3010,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Holds the ultimate parent of partner
+		/// This will be the top partner in the partner hierarchy.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_ultimateparent")]
 		public Microsoft.Xrm.Sdk.EntityReference he_UltimateParent
@@ -3516,7 +3598,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Choose the parent account associated with this account to show parent and child businesses in reporting and analytics.
+		/// Choose parent partner associated with this partner to show partner hierarchy.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentaccountid")]
 		public Microsoft.Xrm.Sdk.EntityReference ParentAccountId

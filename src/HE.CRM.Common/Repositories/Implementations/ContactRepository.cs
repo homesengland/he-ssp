@@ -51,22 +51,38 @@ namespace HE.CRM.Common.Repositories.Implementations
             using (var ctx = new OrganizationServiceContext(service))
             {
                 var contact = ctx.CreateQuery<Contact>()
-                    .Where(x => x.EMailAddress1 == contactEmail && x.invln_externalid == contactExternalId).AsEnumerable().FirstOrDefault();
+                    //.Where(x => x.EMailAddress1 == contactEmail && x.invln_externalid == contactExternalId).AsEnumerable().FirstOrDefault();
+                    .Where(x => x.invln_externalid == contactExternalId).AsEnumerable().FirstOrDefault();
 
                 if (contact != null)
                 {
+                    logger.Trace("Contact exists");
                     return contact;
                 }
                 else
                 {
+                    logger.Trace("Create contact");
                     var contactToCreate = new Contact()
                     {
+                        Id = Guid.NewGuid(),
                         EMailAddress1 = contactEmail,
                         invln_externalid = contactExternalId,
+                        Telephone1 = "123123123"
                     };
                     service.Create(contactToCreate);
                     return contactToCreate;
                 }
+            }
+        }
+
+        public Contact GetContactViaExternalId(string contactExternalId)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                var contact = ctx.CreateQuery<Contact>()
+                    .Where(x => x.invln_externalid == contactExternalId).AsEnumerable().FirstOrDefault();
+
+                return contact;
             }
         }
 

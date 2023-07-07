@@ -580,7 +580,10 @@ namespace DataverseModel
 			public const string GenderCode = "gendercode";
 			public const string GovernmentId = "governmentid";
 			public const string HasChildrenCode = "haschildrencode";
+			public const string he_Created = "he_created";
 			public const string he_ID = "he_id";
+			public const string he_IsVerified = "he_isverified";
+			public const string he_marketingsend = "he_marketingsend";
 			public const string he_PrefixID = "he_prefixid";
 			public const string Home2 = "home2";
 			public const string ImportSequenceNumber = "importsequencenumber";
@@ -3247,6 +3250,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Keeps information about record author - for case the record created from Partner Service
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_created")]
+		public string he_Created
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("he_created");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_Created");
+				this.SetAttributeValue("he_created", value);
+				this.OnPropertyChanged("he_Created");
+			}
+		}
+		
+		/// <summary>
 		/// ID without the prefix for Contacts
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_id")]
@@ -3263,6 +3286,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("he_ID");
 				this.SetAttributeValue("he_id", value);
 				this.OnPropertyChanged("he_ID");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_isverified")]
+		public System.Nullable<bool> he_IsVerified
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("he_isverified");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_IsVerified");
+				this.SetAttributeValue("he_isverified", value);
+				this.OnPropertyChanged("he_IsVerified");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_marketingsend")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue he_marketingsend
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_marketingsend");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_marketingsend");
+				this.SetAttributeValue("he_marketingsend", value);
+				this.OnPropertyChanged("he_marketingsend");
 			}
 		}
 		

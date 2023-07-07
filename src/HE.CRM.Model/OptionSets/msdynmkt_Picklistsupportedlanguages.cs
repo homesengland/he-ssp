@@ -63,7 +63,7 @@ namespace DataverseModel
 		EnglishCanada = 4105,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		EnglishGreatBritain = 2057,
+		EnglishUnitedKingdom = 2057,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		EstonianEstonia = 1061,

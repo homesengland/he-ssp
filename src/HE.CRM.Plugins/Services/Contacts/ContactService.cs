@@ -15,7 +15,7 @@ namespace HE.CRM.Plugins.Services.Contacts
     public class ContactService : CrmService, IContactService
     {
         #region Fields
-
+        private readonly IAccountRepository accountRepository;
         private readonly IContactRepository contactRepository;
         private readonly IWebRoleRepository webRoleRepository;
         private readonly IPortalPermissionRepository portalPermissionRepository;
@@ -27,6 +27,7 @@ namespace HE.CRM.Plugins.Services.Contacts
 
         public ContactService(CrmServiceArgs args) : base(args)
         {
+            accountRepository = CrmRepositoriesFactory.Get<IAccountRepository>();
             contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
             webRoleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
             contactWebroleRepository = CrmRepositoriesFactory.Get<IContactWebroleRepository>();
@@ -44,23 +45,41 @@ namespace HE.CRM.Plugins.Services.Contacts
             if (contact != null)
             {
                 var contactWebRole = webRoleRepository.GetContactWebRole(contact.Id, portalType);
+                List<ContactRoleDto> roles = new List<ContactRoleDto>();
+                var portalPermissionLevels = portalPermissionRepository.RetrieveAll();
                 this.TracingService.Trace("Contact webroles: " + contactWebRole.Count);
                 if (contactWebRole.Count == 0)
                 {
-                    //var defaultRole = webRoleRepository.GetDefaultPortalRole(portalType);
-                    //if (defaultRole != null)
-                    //{
-                    //    AssignRoleToContact(contact, defaultRole); //trzeba przypisać default role dla konta
-                    //    return defaultRole.invln_Name;
-                    //}
-                    //else
-                    //{
-                        return null;
-                    //}
-                }
+                    // TODO: Should return null when no role
+                    var defaultRoles = webRoleRepository.GetDefaultPortalRoles(portalType);
+                    var defaultRole = defaultRoles.Count > 0 ? defaultRoles[0] : null;
+                    var defaultAccount = accountRepository.GetDefaultAccount();
 
-                List<ContactRoleDto> roles = new List<ContactRoleDto>();
-                var portalPermissionLevels = portalPermissionRepository.RetrieveAll();
+                    this.TracingService.Trace("Create new contactwebrole");
+                    contactWebroleRepository.Create(new invln_contactwebrole()
+                    {
+                        invln_Accountid = defaultAccount != null ? defaultAccount.ToEntityReference() : null,
+                        invln_Webroleid = defaultRole != null ? defaultRole.ToEntityReference() : null,
+                        invln_Contactid = contact.ToEntityReference()
+                    });
+
+                    string permissionLevelValue = null;
+                    if(defaultRole != null && defaultRole.invln_Portalpermissionlevelid != null)
+                    {
+                        this.TracingService.Trace("Default role permissions: " + defaultRole.invln_Portalpermissionlevelid.Id);
+                        var ppLevel = portalPermissionLevels.Where(x => x.invln_portalpermissionlevelId == defaultRole.invln_Portalpermissionlevelid.Id).FirstOrDefault();
+                        permissionLevelValue = ppLevel.invln_Permission != null ? ppLevel.invln_Permission.Value.ToString() : null;
+                    }
+
+                    this.TracingService.Trace("Add ContactRoleDto");
+                    roles.Add(new ContactRoleDto()
+                    {
+                        accountId = defaultAccount != null ? defaultAccount.Id : Guid.Empty,
+                        accountName = defaultAccount != null ? defaultAccount.Name : "account_not_set_CRM",
+                        permissionLevel = permissionLevelValue != null ? permissionLevelValue : "permission_level_not_set_CRM",
+                        webRoleName = defaultRole != null && defaultRole.invln_Name != null ? defaultRole.invln_Name : "default_role_not_set_CRM",
+                    });
+                }
 
                 this.TracingService.Trace("Going through roles...");
                 foreach (var contactRole in contactWebRole)
@@ -75,10 +94,10 @@ namespace HE.CRM.Plugins.Services.Contacts
                     this.TracingService.Trace("Add role");
                     roles.Add(new ContactRoleDto()
                     {
-                        accountId = contactRole.invln_Accountid.Id,
-                        accountName = contactRole.invln_Accountid.Name,
-                        permissionLevel = permissionLevel != null ? permissionLevel.invln_Permission.Value.ToString() : null,
-                        webRoleName = contactRole.invln_Webroleid.Name,
+                        accountId = contactRole.invln_Accountid != null ? contactRole.invln_Accountid.Id : Guid.Empty,
+                        accountName = contactRole.invln_Accountid != null ? contactRole.invln_Accountid.Name : null,
+                        permissionLevel = permissionLevel != null && permissionLevel.invln_Permission != null ? permissionLevel.invln_Permission.Value.ToString() : null,
+                        webRoleName = contactRole.invln_Webroleid != null ? contactRole.invln_Webroleid.Name : null,
                     });
                 }
 
@@ -92,6 +111,7 @@ namespace HE.CRM.Plugins.Services.Contacts
 
                 return contactRolesDto;
             }
+
             return null;
         }
 
