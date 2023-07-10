@@ -1,8 +1,8 @@
 ﻿using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.InvestmentLoans.BusinessLogic.Enums;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.Xrm.Sdk;
 using System;

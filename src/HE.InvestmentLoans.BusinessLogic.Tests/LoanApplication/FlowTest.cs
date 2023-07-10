@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
 using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Xrm.Sdk;
@@ -36,7 +37,7 @@ public class FlowTest : MediatorTestBase
         var model = await mediator.Send(new Create());
 
         model.State = begin;
-        model.Purpose = Enums.FundingPurpose.BuildingNewHomes;
+        model.Purpose = FundingPurpose.BuildingNewHomes;
 
         var workflow = new LoanApplicationWorkflow(model, mediator);
 
@@ -55,7 +56,7 @@ public class FlowTest : MediatorTestBase
         var mediator = (IMediator)ServiceProvider.GetService(typeof(IMediator));
         var model = await mediator.Send(new Create());
         model.State = begin;
-        model.Purpose = Enums.FundingPurpose.BuildingNewHomes;
+        model.Purpose = FundingPurpose.BuildingNewHomes;
         var workflow = new LoanApplicationWorkflow(model, mediator);
         workflow.NextState(Trigger.Back);
         Assert.AreEqual(model.State, expcected);
@@ -72,7 +73,7 @@ public class FlowTest : MediatorTestBase
         var mediator = (IMediator)ServiceProvider.GetService(typeof(IMediator));
         var model = await mediator.Send(new Create());
         model.State = begin;
-        model.Purpose = Enums.FundingPurpose.Other;
+        model.Purpose = FundingPurpose.Other;
         var workflow = new LoanApplicationWorkflow(model, mediator);
         workflow.NextState(Trigger.Continue);
         Assert.AreEqual(model.State, expcected);
@@ -88,7 +89,7 @@ public class FlowTest : MediatorTestBase
         var mediator = (IMediator)ServiceProvider.GetService(typeof(IMediator));
         var model = await mediator.Send(new Create());
         model.State = begin;
-        model.Purpose = Enums.FundingPurpose.Other;
+        model.Purpose = FundingPurpose.Other;
         var workflow = new LoanApplicationWorkflow(model, mediator);
         workflow.NextState(Trigger.Back);
         Assert.AreEqual(model.State, expcected);

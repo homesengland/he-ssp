@@ -2,6 +2,7 @@ using HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Queries;
 using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
 using HE.InvestmentLoans.Common.Authorization;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Xrm.Sdk;
@@ -53,7 +54,7 @@ public class CommandsTest : MediatorTestBase
         var model = await mediator.Send(new Create());
         Assert.IsNotNull(model);
         Assert.AreNotEqual(model.ID, Guid.Empty, model.ID.ToString());
-        model.Purpose = Enums.FundingPurpose.Other;
+        model.Purpose = FundingPurpose.Other;
         await mediator.Send(new Update() { Model = model });
         var modelToCheck = await mediator.Send(new GetSingle() { Id = model.ID });
         Assert.IsNotNull(modelToCheck);
