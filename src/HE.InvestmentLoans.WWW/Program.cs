@@ -1,14 +1,9 @@
-using FluentValidation;
 using He.Identity.Auth0;
 using He.Identity.Mvc;
-using HE.InvestmentLoans.BusinessLogic.Extensions;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Models.App;
-using HE.InvestmentLoans.CRM.Extensions;
 using HE.InvestmentLoans.WWW.Config;
 using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Middlewares;
-using HE.InvestmentLoans.WWW.Models;
 
 #pragma warning disable CA1812
 var builder = WebApplication.CreateBuilder(args);
