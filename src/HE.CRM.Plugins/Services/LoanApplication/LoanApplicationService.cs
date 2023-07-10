@@ -69,9 +69,13 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             {
                 this.TracingService.Trace("Update invln_Loanapplication");
                 loanApplicationGuid = loanAppId;
+                this.TracingService.Trace("1");
                 loanApplicationToCreate.Id = loanAppId;
+                this.TracingService.Trace("2");
                 loanApplicationRepository.Update(loanApplicationToCreate);
+                this.TracingService.Trace("3");
                 siteDetailsRepository.DeleteSiteDetailsRelatedToLoanApplication(new EntityReference(invln_Loanapplication.EntityLogicalName, loanAppId));
+                this.TracingService.Trace("4");
             }
             else
             {
@@ -79,7 +83,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 loanApplicationGuid = loanApplicationRepository.Create(loanApplicationToCreate);
             }
 
-            if (loanApplicationFromPortal.siteDetailsList.Count > 0)
+            if (loanApplicationFromPortal.siteDetailsList != null && loanApplicationFromPortal.siteDetailsList.Count > 0)
             {
                 this.TracingService.Trace($"siteDetailsList.Count {loanApplicationFromPortal.siteDetailsList.Count}");
                 foreach (var siteDetail in loanApplicationFromPortal.siteDetailsList)
@@ -131,7 +135,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
                 //OTHER maybe not related
                 invln_Name = loanApplicationDto.name,
-                invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference("account", accountid) : null,
+                invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference("account", accountid) : null, //pusty account?
                 invln_Contact = contact != null ? contact.ToEntityReference() : null,
             };
             return loanApplication;
@@ -181,14 +185,14 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 companyExperience = loanApplication.invln_CompanyExperience,
 
                 //funding
-                projectGdv = loanApplication.invln_ProjectGDV?.ToString(),
-                projectEstimatedTotalCost = loanApplication.invln_Projectestimatedtotalcost?.ToString(),
+                projectGdv = ((int)loanApplication.invln_ProjectGDV?.Value).ToString(),
+                projectEstimatedTotalCost = ((int)loanApplication.invln_Projectestimatedtotalcost?.Value).ToString(),
                 projectAbnormalCosts = loanApplication.invln_Projectabnormalcosts?.ToString(),
                 projectAbnormalCostsInformation = loanApplication.invln_Projectabnormalcostsinformation?.ToString(),
                 privateSectorApproach = loanApplication.invln_Privatesectorapproach?.ToString(),
                 privateSectorApproachInformation = loanApplication.invln_Privatesectorapproachinformation?.ToString(),
                 additionalProjects = loanApplication.invln_Additionalprojects?.ToString(),
-                refinanceRepayment = loanApplication.invln_Refinancerepayment?.ToString(),
+                refinanceRepayment = MapRefinancePaymentOptionSetToString(loanApplication.invln_Refinancerepayment),
                 refinanceRepaymentDetails = loanApplication.invln_Refinancerepaymentdetails?.ToString(),
 
                 //security
@@ -199,6 +203,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 reasonForDirectorLoanNotSubordinated = loanApplication.invln_Reasonfordirectorloannotsubordinated?.ToString(),
 
                 name = loanApplication.invln_Name,
+                accountId = loanApplication.invln_Account.Id,
             };
             return loanApplicationDto;
         }
@@ -348,6 +353,23 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     return new OptionSetValue((int)invln_refinancerepayment.Refinance);
                 case "repay":
                     return new OptionSetValue((int)invln_refinancerepayment.Repay);
+            }
+
+            return null;
+        }
+
+        private string MapRefinancePaymentOptionSetToString(OptionSetValue refinancePayment)
+        {
+            if (refinancePayment == null)
+            {
+                return null;
+            }
+            switch (refinancePayment.Value)
+            {
+                case (int)invln_refinancerepayment.Refinance:
+                    return "refinance";
+                case (int)invln_refinancerepayment.Repay:
+                    return "repay";
             }
 
             return null;

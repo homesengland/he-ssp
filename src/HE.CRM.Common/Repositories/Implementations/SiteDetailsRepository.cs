@@ -19,10 +19,12 @@ public class SiteDetailsRepository : CrmEntityRepository<invln_SiteDetails, Data
             {
                 var siteDetails = ctx.CreateQuery<invln_SiteDetails>()
                     .Where(x => x.invln_Loanapplication.Id == loanApplicationId.Id).ToList();
-
-                foreach (var site in siteDetails)
+                if (siteDetails != null)
                 {
-                    service.Delete(invln_SiteDetails.EntityLogicalName, site.Id);
+                    foreach (var site in siteDetails)
+                    {
+                        service.Delete(invln_SiteDetails.EntityLogicalName, site.Id);
+                    }
                 }
             }
         }

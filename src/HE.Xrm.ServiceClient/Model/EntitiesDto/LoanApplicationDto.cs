@@ -4,46 +4,45 @@ using Microsoft.Xrm.Sdk;
 
 public class LoanApplicationDto
 {
-    public Guid id { get; set; }
-    public string name { get; set; }
+    //COMPANY
+    public string companyPurpose { get; set; } //Purpose
+    public string existingCompany { get; set; } //ExistingCompany
+    public int? companyExperience { get; set; } //HomesBuilt
+                                                //Company.CompanyInfoFile
 
-    public int? numberOfSites { get; set; }
+    //FUNDING
+    public string projectGdv { get; set; } //GDV
+    public string projectEstimatedTotalCost { get; set; } //TotalCosts
+    public string projectAbnormalCosts { get; set; } //AbnormalCosts
+    public string projectAbnormalCostsInformation { get; set; } //AbnormalCosts
+    public string privateSectorApproach { get; set; } //PrivateSectorFunding
+    public string privateSectorApproachInformation { get; set; } //PrivateSectorFunding
+    public string additionalProjects { get; set; } //AdditionalProjects
+    public string refinanceRepayment { get; set; } //Refinance
+    public string refinanceRepaymentDetails { get; set; } //Refinance
+                                                          //Complete
 
-    public int? companyExperience { get; set; }
-    public bool? companyPurpose { get; set; }
-    public string companyStructureInformation { get; set; }
+    //SECURITY
+    public string outstandingLegalChargesOrDebt { get; set; } //ChargesDebtCompany
+    public string debentureHolder { get; set; } //ChargesDebtCompany
+    public string directorLoans { get; set; } //DirLoans
+    public string confirmationDirectorLoansCanBeSubordinated { get; set; } //DirLoansSub
+    public string reasonForDirectorLoanNotSubordinated { get; set; } //DirLoansSub
 
-    public bool confirmationDirectorLoansCanBeSubordinated { get; set; }
-
-    public Money costsForAdditionalProjects { get; set; }
-
-    public string debentureHolder { get; set; }
-    public bool? directorLoads { get; set; }
-    public bool? existingCompany { get; set; }
-
-    public OptionSetValue fundingReason { get; set; }
-
-    public OptionSetValue fundingTypeForAdditionalProjects { get; set; }
-
-    public bool? outstandingLegalChargesOrDebt { get; set; }
-
-    public bool? privateSectorApproach { get; set; }
-
-    public string privateSectorApproachInformation { get; set; }
-    public bool? projectAbnormalCosts { get; set; }
-
-    public string projectAbnormalCostsInformation { get; set; }
-
-    public Money projectEstimatedTotalCost { get; set; }
-
-    public Money projectGdv { get; set; }
-
-    public string reasonForDirectorLoanNotSubordinated { get; set; }
-
-    public OptionSetValue refinanceRepayment { get; set; }
-
-    public string refinanceRepaymentDetails { get; set; }
+    //SITES
     public List<SiteDetailsDto> siteDetailsList { get; set; }
+
+    //OTHER ATTRIBUTES
+    public string id { get; set; }
+    public string name { get; set; }
+    public string numberOfSites { get; set; }
+    public string companyStructureInformation { get; set; }
+    public string costsForAdditionalProjects { get; set; }
+    public string fundingReason { get; set; }
+    public string fundingTypeForAdditionalProjects { get; set; }
     public string contactEmailAdress { get; set; }
     public Guid accountId { get; set; }
+
+    public string loanApplicationStatus { get; set; }
+    public string externalId { get; set; }
 }
