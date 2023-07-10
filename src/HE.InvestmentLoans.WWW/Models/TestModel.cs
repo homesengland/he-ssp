@@ -1,4 +1,4 @@
-using He.HelpToBuild.Apply.Application.Routing;
+using HE.InvestmentLoans.Common.Routing;
 using Microsoft.AspNetCore.Components;
 
 namespace HE.InvestmentLoans.WWW.Models

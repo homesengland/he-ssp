@@ -1,6 +1,6 @@
-namespace HE.InvestmentLoans.Common.Models.App;
+﻿namespace HE.InvestmentLoans.Common.Models.App;
 
-public class Auth0Config : IAuth0Config
+public interface IAuth0Config
 {
     public string? ClientId { get; set; }
 

@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.Enums;
-using HE.InvestmentLoans.BusinessLogic.Routing;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application;
 using MediatR;
 using Stateless;

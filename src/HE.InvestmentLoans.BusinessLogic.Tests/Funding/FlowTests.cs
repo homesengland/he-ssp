@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Routing;
 using MediatR;
 using Moq;
 
@@ -27,7 +28,7 @@ public class FlowTests : MediatorTestBase
 
         var workflow = new FundingWorkflow(model, mediator);
 
-        workflow.NextState(Routing.Trigger.Continue);
+        workflow.NextState(Trigger.Continue);
 
         Assert.AreEqual(model.Funding.State, expected);
     }
@@ -44,7 +45,7 @@ public class FlowTests : MediatorTestBase
 
         var workflow = new FundingWorkflow(model, mediator);
 
-        workflow.NextState(Routing.Trigger.Continue);
+        workflow.NextState(Trigger.Continue);
 
         Assert.AreEqual(model.Funding.State, FundingWorkflow.State.Complete);
     }
@@ -61,7 +62,7 @@ public class FlowTests : MediatorTestBase
 
         var workflow = new FundingWorkflow(model, mediator);
 
-        workflow.NextState(Routing.Trigger.Continue);
+        workflow.NextState(Trigger.Continue);
 
         Assert.AreEqual(model.Funding.State, FundingWorkflow.State.CheckAnswers);
     }
@@ -85,7 +86,7 @@ public class FlowTests : MediatorTestBase
 
         var workflow = new FundingWorkflow(model, mediator);
 
-        workflow.NextState(Routing.Trigger.Back);
+        workflow.NextState(Trigger.Back);
 
         Assert.AreEqual(model.Funding.State, expected);
     }
@@ -107,7 +108,7 @@ public class FlowTests : MediatorTestBase
 
         var workflow = new FundingWorkflow(model, mediator);
 
-        workflow.NextState(Routing.Trigger.Change);
+        workflow.NextState(Trigger.Change);
 
         Assert.AreEqual(model.Funding.State, FundingWorkflow.State.CheckAnswers);
     }
@@ -134,7 +135,7 @@ public class FlowTests : MediatorTestBase
 
         var workflow = new FundingWorkflow(model, mediatorMock.Object);
 
-        workflow.NextState(Routing.Trigger.Continue);
+        workflow.NextState(Trigger.Continue);
 
         mediatorMock.Verify(c => c.Send(It.IsAny<Update>(), It.IsAny<CancellationToken>()), Times.Once);
     }
@@ -160,7 +161,7 @@ public class FlowTests : MediatorTestBase
 
         var workflow = new FundingWorkflow(model, mediatorMock.Object);
 
-        workflow.NextState(Routing.Trigger.Back);
+        workflow.NextState(Trigger.Back);
 
         mediatorMock.Verify(c => c.Send(It.IsAny<Update>(), It.IsAny<CancellationToken>()), Times.Once);
     }
@@ -186,7 +187,7 @@ public class FlowTests : MediatorTestBase
 
         var workflow = new FundingWorkflow(model, mediatorMock.Object);
 
-        workflow.NextState(Routing.Trigger.Change);
+        workflow.NextState(Trigger.Change);
 
         mediatorMock.Verify(c => c.Send(It.IsAny<Update>(), It.IsAny<CancellationToken>()), Times.Once);
     }

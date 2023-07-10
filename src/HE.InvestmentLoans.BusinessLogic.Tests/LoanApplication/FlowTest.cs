@@ -2,6 +2,7 @@ using HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
 using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
 using HE.InvestmentLoans.Common.Authorization;
+using HE.InvestmentLoans.Common.Routing;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Xrm.Sdk;
@@ -39,7 +40,7 @@ public class FlowTest : MediatorTestBase
 
         var workflow = new LoanApplicationWorkflow(model, mediator);
 
-        workflow.NextState(Routing.Trigger.Continue);
+        workflow.NextState(Trigger.Continue);
 
         Assert.AreEqual(model.State, expcected);
     }
@@ -56,7 +57,7 @@ public class FlowTest : MediatorTestBase
         model.State = begin;
         model.Purpose = Enums.FundingPurpose.BuildingNewHomes;
         var workflow = new LoanApplicationWorkflow(model, mediator);
-        workflow.NextState(Routing.Trigger.Back);
+        workflow.NextState(Trigger.Back);
         Assert.AreEqual(model.State, expcected);
     }
 
@@ -73,7 +74,7 @@ public class FlowTest : MediatorTestBase
         model.State = begin;
         model.Purpose = Enums.FundingPurpose.Other;
         var workflow = new LoanApplicationWorkflow(model, mediator);
-        workflow.NextState(Routing.Trigger.Continue);
+        workflow.NextState(Trigger.Continue);
         Assert.AreEqual(model.State, expcected);
     }
 
@@ -89,7 +90,7 @@ public class FlowTest : MediatorTestBase
         model.State = begin;
         model.Purpose = Enums.FundingPurpose.Other;
         var workflow = new LoanApplicationWorkflow(model, mediator);
-        workflow.NextState(Routing.Trigger.Back);
+        workflow.NextState(Trigger.Back);
         Assert.AreEqual(model.State, expcected);
     }
 }

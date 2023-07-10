@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,7 @@ namespace HE.InvestmentLoans.WWW.Controllers
             FundingWorkflow workflow = new FundingWorkflow(model, mediator);
             if (workflow.IsCompleted())
             {
-                workflow.NextState(BL.Routing.Trigger.Back);
+                workflow.NextState(Trigger.Back);
             }
 
             return View(workflow.GetName(), model);
@@ -63,9 +64,9 @@ namespace HE.InvestmentLoans.WWW.Controllers
                     TryUpdateModelAction = x => this.TryUpdateModelAsync(x)
                 }).ConfigureAwait(false);
 
-                workflow.NextState(Enum.Parse<BL.Routing.Trigger>(action));
+                workflow.NextState(Enum.Parse<Trigger>(action));
             }
-            catch (BL.Exceptions.ValidationException ex)
+            catch (Common.Exceptions.ValidationException ex)
             {
                 ex.Results.ForEach(item => item.AddToModelState(ModelState, null));
             }
@@ -86,7 +87,7 @@ namespace HE.InvestmentLoans.WWW.Controllers
         {
             model = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
             FundingWorkflow workflow = new FundingWorkflow(model, mediator);
-            workflow.NextState(BL.Routing.Trigger.Back);
+            workflow.NextState(Trigger.Back);
             return RedirectToAction("Workflow", new { id = model.ID, ending = workflow.GetName() });
         }
 

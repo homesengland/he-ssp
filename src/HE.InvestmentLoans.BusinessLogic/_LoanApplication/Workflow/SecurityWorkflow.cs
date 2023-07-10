@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.BusinessLogic.Routing;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Routing;
 using MediatR;
 using Stateless;
 
