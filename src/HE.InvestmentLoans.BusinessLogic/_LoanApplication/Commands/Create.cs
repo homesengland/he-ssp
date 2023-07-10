@@ -2,7 +2,6 @@ using HE.InvestmentLoans.BusinessLogic._LoanApplication.Extensions;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.PowerPlatform.Dataverse.Client;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

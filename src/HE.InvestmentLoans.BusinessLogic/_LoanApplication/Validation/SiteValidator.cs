@@ -5,7 +5,6 @@ using HE.InvestmentLoans.Common.Extensions;
 using System;
 using System.Globalization;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation
 {

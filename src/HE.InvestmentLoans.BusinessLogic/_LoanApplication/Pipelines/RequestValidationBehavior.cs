@@ -1,7 +1,6 @@
 using FluentValidation;
 using FluentValidation.Internal;
 using FluentValidation.Results;
-using He.HelpToBuild.Apply.Application.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -51,7 +50,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Pipelines
             }
             if (results.Count() > 0)
             {
-                throw new Exceptions.ValidationException(results);
+                throw new Common.Exceptions.ValidationException(results);
             }
             return next();
         }

@@ -1,12 +1,8 @@
 using MediatR;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using Microsoft.PowerPlatform.Dataverse.Client;
-using HE.InvestmentLoans.BusinessLogic.Exceptions;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Extensions;
 using HE.InvestmentLoans.Common.Exceptions;
