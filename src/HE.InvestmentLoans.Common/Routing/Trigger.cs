@@ -7,6 +7,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Routing
         Continue,
         Back,
         Redirect,
-        Change
+        Change,
+        Delete
     }
 }

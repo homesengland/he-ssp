@@ -47,6 +47,11 @@ namespace HE.InvestmentLoans.WWW.Controllers
             var model = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
             var sitemodel = model.Sites.Where(item => item.Id == site).First();
             SiteWorkflow workflow = new SiteWorkflow(model, mediator, site);
+            if (ending == "DeleteProject")
+            {
+                workflow.ChangeState(SiteWorkflow.State.DeleteProject);
+            }
+
             if (workflow.IsCompleted())
             {
                 workflow.NextState(BL.Routing.Trigger.Back);
@@ -116,6 +121,17 @@ namespace HE.InvestmentLoans.WWW.Controllers
         [Route("{site}/Change")]
         public async Task<IActionResult> Change(Guid id, Guid site, string state)
         {
+            var sessionmodel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
+            SiteWorkflow workflow = new SiteWorkflow(sessionmodel, mediator, site);
+            workflow.ChangeState(Enum.Parse<HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow.SiteWorkflow.State>(state));
+            return RedirectToAction("Workflow", new { id = sessionmodel.ID, site = site, ending = workflow.GetName() });
+        }
+
+        [HttpDelete]
+        [Route("{site}/Delete")]
+        public async Task<IActionResult> Delete(Guid id, Guid site, string state)
+        {
+            return View();
             var sessionmodel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
             SiteWorkflow workflow = new SiteWorkflow(sessionmodel, mediator, site);
             workflow.ChangeState(Enum.Parse<HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow.SiteWorkflow.State>(state));

@@ -29,7 +29,8 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
             CheckAnswers,
             Complete,
             Type,
-            ChargesDebt
+            ChargesDebt,
+            DeleteProject
         }
 
 
@@ -72,7 +73,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
 
         public bool IsStarted()
         {
-            return _site.State != State.Index && _site.Name != null;
+            return _site.State != State.Index;
         }
 
         public string GetName()
@@ -181,7 +182,11 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
                 .Permit(Trigger.Back, State.AffordableHomes);
 
             _machine.Configure(State.Complete)
-            .Permit(Trigger.Back, State.CheckAnswers);
+                .Permit(Trigger.Back, State.CheckAnswers);
+
+            _machine.Configure(State.DeleteProject)
+                .PermitIf(Trigger.Continue, State.Name, () => _site.DeleteProject == "Yes")
+                .PermitIf(Trigger.Continue, State.Name, () => _site.DeleteProject != "Yes");
 
             _machine.OnTransitionCompletedAsync(x =>
             {

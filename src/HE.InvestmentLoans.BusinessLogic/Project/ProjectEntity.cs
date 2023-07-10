@@ -1,18 +1,19 @@
-using He.HelpToBuild.Apply.Application.Routing;
-using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
-using Microsoft.Crm.Sdk.Messages;
+﻿using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace HE.InvestmentLoans.BusinessLogic.ViewModel
+namespace HE.InvestmentLoans.BusinessLogic.Project
 {
-    public class SiteViewModel
+    public class ProjectEntity
     {
         private static int counter = 0;
 
-        public SiteViewModel() 
+        public ProjectEntity()
         {
+            Id = Guid.NewGuid();
             State = SiteWorkflow.State.Index;
             StateChanged = false;
             counter++;
@@ -44,8 +45,8 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
         public string LocationCoordinates { get; set; }
         public string LocationLandRegistry { get; set; }
         public string Location { get; set; }
-        public string PlanningStatus { get; set; } 
-        
+        public string PlanningStatus { get; set; }
+
         public string GrantFundingName { get; set; }
         public string GrantFundingSource { get; set; }
         public string GrantFundingAmount { get; set; }
@@ -58,15 +59,15 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
         public string Name { get; set; }
         public Guid Id { get; set; }
         public bool StateChanged { get; set; }
-        public string HasEstimatedStartDate {get;set;}
-        public string EstimatedStartDay {get;set;}
-        public string EstimatedStartMonth {get;set;}
-        public string EstimatedStartYear {get;set;}
-        public string DeleteProject {get;set;}
+        public string HasEstimatedStartDate { get; set; }
+        public string EstimatedStartDay { get; set; }
+        public string EstimatedStartMonth { get; set; }
+        public string EstimatedStartYear { get; set; }
+        public string DeleteProject { get; set; }
 
         public void RemoveAlternativeRoutesData()
         {
-            if(TypeHomes != null && !TypeHomes.Contains("other"))
+            if (TypeHomes != null && !TypeHomes.Contains("other"))
             {
                 TypeHomesOther = null;
             }
@@ -78,16 +79,16 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
                 PlanningStatus = null;
             }
 
-            if(LocationOption == "coordinates")
+            if (LocationOption == "coordinates")
             {
                 LocationLandRegistry = null;
             }
-            else if(LocationOption == "landRegistryTitleNumber")
+            else if (LocationOption == "landRegistryTitleNumber")
             {
                 LocationCoordinates = null;
             }
 
-            if(Ownership == "No")
+            if (Ownership == "No")
             {
                 PurchaseDate = null;
                 Cost = null;
@@ -103,7 +104,7 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
                 GrantFundingPurpose = null;
             }
 
-            if(ChargesDebt == "No")
+            if (ChargesDebt == "No")
             {
                 ChargesDebtInfo = null;
             }
@@ -161,10 +162,10 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
 
         private bool OwnershipInformationProvided()
         {
-            if(string.IsNullOrEmpty(Ownership))
+            if (string.IsNullOrEmpty(Ownership))
                 return false;
 
-            if(Ownership == "No")
+            if (Ownership == "No")
                 return true;
 
             return PurchaseDate != null && !string.IsNullOrEmpty(Cost) && !string.IsNullOrEmpty(Value) && !string.IsNullOrEmpty(Source);
@@ -178,9 +179,9 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
             if (GrantFunding == "No")
                 return true;
 
-            return !string.IsNullOrEmpty(GrantFundingName) && 
-                !string.IsNullOrEmpty(GrantFundingSource) && 
-                !string.IsNullOrEmpty(GrantFundingAmount) && 
+            return !string.IsNullOrEmpty(GrantFundingName) &&
+                !string.IsNullOrEmpty(GrantFundingSource) &&
+                !string.IsNullOrEmpty(GrantFundingAmount) &&
                 !string.IsNullOrEmpty(GrantFundingPurpose);
         }
     }

@@ -1,0 +1,35 @@
+﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.DeleteProject));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="DeleteProject" asp-method="delete" novalidate>
+        <gds-back-link href="@Url.Action("Workflow","LoanApplication", new {id = @id })" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="inputInvalid">
+                <gds-legend size="ControlSize.M" class="govuk-!-margin-bottom-6">
+                    <gds-fieldset-heading>
+                        Are you sure you want to remove @Model.Name?
+                    </gds-fieldset-heading>
+                </gds-legend>
+
+                <gds-p class="govuk-!-margin-bottom-6">Something about it being permanent.</gds-p>
+
+                <gds-radio-yes-no asp-for="DeleteProject" class="govuk-!-margin-bottom-6"></gds-radio-yes-no>
+            </gds-div-form-group>
+
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Continue
+            </button>
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>
