@@ -59,7 +59,8 @@ namespace HE.Xrm.ServiceClientExample
             {
                 ["invln_accountid"] = "429d11ab-15fe-ed11-8f6c-002248c653e1",  //Input Parameter
                 ["invln_externalcontactid"] = "auth0|64a28c7fb67ed30b288d6ff7",  //Input Parameter
-                ["invln_loanapplicationid"] = "9ecd7050-3c1c-ee11-8f6d-002248c653e1"  //Input Parameter
+                //["invln_externalcontactid"] = "auth0|64a28c7fb67ed30b288d6ff7",  //Input Parameter
+                ["invln_loanapplicationid"] = "njkkjk" //Input Parameter
             };
 
             var resp = serviceClient.Execute(req);
