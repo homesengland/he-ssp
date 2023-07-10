@@ -41,7 +41,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    GenerateRichTextCustomApiTest(serviceClient);
+                    GetLoanFromContactAndAccountCustomApi(serviceClient);
                 }
                 else
                 {
@@ -53,11 +53,24 @@ namespace HE.Xrm.ServiceClientExample
             Console.ReadLine();
         }
 
+        private static void GetLoanFromContactAndAccountCustomApi(ServiceClient serviceClient)
+        {
+            var req = new OrganizationRequest("invln_getsingleloanapplicationforaccountandcontact")  //Name of Custom API
+            {
+                ["invln_accountid"] = "429d11ab-15fe-ed11-8f6c-002248c653e1",  //Input Parameter
+                ["invln_externalcontactid"] = "auth0|64a28c7fb67ed30b288d6ff7",  //Input Parameter
+                ["invln_loanapplicationid"] = "9ecd7050-3c1c-ee11-8f6d-002248c653e1"  //Input Parameter
+            };
+
+            var resp = serviceClient.Execute(req);
+            Console.WriteLine();
+        }
+
         private static void GenerateRichTextCustomApiTest(ServiceClient serviceClient)
         {
             var req = new OrganizationRequest("invln_generaterichtextdocument")  //Name of Custom API
             {
-                ["invln_entityid"] = "259834c1-351a-ee11-8f6c-6045bd0d7d6d",  //Input Parameter
+                ["invln_entityid"] = "9ecd7050-3c1c-ee11-8f6d-002248c653e1",  //Input Parameter
                 ["invln_entityname"] = invln_Loanapplication.EntityLogicalName,  //Input Parameter 
                 ["invln_richtext"] = "witam {{invln_name}}, jak tam mija zycie? mi dobrze {{invln_companyexperience}}"  //Input Parameter
             };

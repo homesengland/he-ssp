@@ -35,6 +35,19 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
         #region Public Methods
 
+        public string GetLoanApplicationsForAccountAndContact(string externalContactId, string accountId, string loanApplicationId = null)
+        {
+            List<LoanApplicationDto> entityCollection = new List<LoanApplicationDto>();
+            if (Guid.TryParse(accountId, out Guid accountGuid))
+            {
+                var loanApplicationsForAccountAndContact = loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId);
+                foreach (var element in loanApplicationsForAccountAndContact)
+                {
+                    entityCollection.Add(MapLoanApplicationToDto(element));
+                }
+            }
+            return JsonSerializer.Serialize(entityCollection);
+        }
 
         public string CreateRecordFromPortal(string contactExternalId, string accountId, string loanApplicationId, string loanApplicationPayload)
         {
@@ -49,42 +62,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
 
             this.TracingService.Trace("Setting up invln_Loanapplication");
-            var loanApplicationToCreate = new invln_Loanapplication()
-            {
-                invln_NumberofSites = numberOfSites,
-                invln_FundingReason = MapFundingReason(loanApplicationFromPortal.fundingReason),
-                invln_ExternalStatus = MapApplicationStatus(loanApplicationFromPortal.loanApplicationStatus),
-
-                //COMPANY
-                invln_CompanyPurpose = ParseBool(loanApplicationFromPortal.companyPurpose), //Purpose
-                invln_Companystructureinformation = loanApplicationFromPortal.existingCompany, //ExistingCompany
-                invln_CompanyExperience = loanApplicationFromPortal.companyExperience, //HomesBuilt
-                                                                                       //Company.CompanyInfoFile
-
-                //FUNDING
-                invln_ProjectGDV = ParseDecimalToMoney(loanApplicationFromPortal.projectGdv), //GDV
-                invln_Projectestimatedtotalcost = ParseDecimalToMoney(loanApplicationFromPortal.projectEstimatedTotalCost), //TotalCosts
-                invln_Projectabnormalcosts = ParseBool(loanApplicationFromPortal.projectAbnormalCosts), //AbnormalCosts
-                invln_Projectabnormalcostsinformation = loanApplicationFromPortal.projectAbnormalCostsInformation, //AbnormalCosts
-                invln_Privatesectorapproach = ParseBool(loanApplicationFromPortal.privateSectorApproach), //PrivateSectorFunding
-                invln_Privatesectorapproachinformation = loanApplicationFromPortal.privateSectorApproachInformation, //PrivateSectorFunding
-                invln_Additionalprojects = ParseBool(loanApplicationFromPortal.additionalProjects), //AdditionalProjects
-                invln_Refinancerepayment = MapRefinancePayment(loanApplicationFromPortal.refinanceRepayment), //Refinance
-                invln_Refinancerepaymentdetails = loanApplicationFromPortal.refinanceRepaymentDetails, //Refinance
-
-
-                //SECURITY
-                invln_Outstandinglegalchargesordebt = ParseBool(loanApplicationFromPortal.outstandingLegalChargesOrDebt), //ChargesDebtCompany
-                invln_DebentureHolder = loanApplicationFromPortal.debentureHolder, //ChargesDebtCompany
-                invln_Directorloans = ParseBool(loanApplicationFromPortal.directorLoans), //DirLoans
-                invln_Confirmationdirectorloanscanbesubordinated = ParseBool(loanApplicationFromPortal.confirmationDirectorLoansCanBeSubordinated), //DirLoansSub
-                invln_Reasonfordirectorloannotsubordinated = loanApplicationFromPortal.reasonForDirectorLoanNotSubordinated, //DirLoansSub
-
-                //OTHER maybe not related
-                invln_Name = loanApplicationFromPortal.name,
-                invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference("account", accountid) : null,
-                invln_Contact = contact != null ? contact.ToEntityReference() : null,
-            };
+            var loanApplicationToCreate = MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal);
+            loanApplicationToCreate.invln_Contact = contact != null ? contact.ToEntityReference() : null;
+           
 
             Guid loanApplicationGuid = Guid.NewGuid();
             if (!string.IsNullOrEmpty(loanApplicationId) && Guid.TryParse(loanApplicationId, out Guid loanAppId))
@@ -107,33 +87,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 foreach (var siteDetail in loanApplicationFromPortal.siteDetailsList)
                 {
                     this.TracingService.Trace("loop begin");
-                    var siteDetailToCreate = new invln_SiteDetails()
-                    {
-                        invln_currentvalue = ParseDecimalToMoney(siteDetail.currentValue),
-                        invln_Dateofpurchase = siteDetail.dateOfPurchase,
-                        invln_Existinglegalcharges = ParseBool(siteDetail.existingLegalCharges),
-                        invln_Existinglegalchargesinformation = siteDetail.existingLegalChargesInformation,
-                        invln_Haveaplanningreferencenumber = ParseBool(siteDetail.haveAPlanningReferenceNumber),
-                        invln_HowMuch = ParseDecimalToMoney(siteDetail.howMuch),
-                        invln_Landregistrytitlenumber = siteDetail.landRegistryTitleNumber,
-                        invln_Loanapplication = new EntityReference(invln_Loanapplication.EntityLogicalName, loanApplicationGuid),
-                        invln_Name = siteDetail.Name,
-                        invln_Nameofgrantfund = siteDetail.nameOfGrantFund,
-                        //invln_Numberofaffordablehomes = ParseInt(siteDetail.numberOfAffordableHomes),
-                        invln_Numberofhomes = ParseInt(siteDetail.numberOfHomes),
-                        invln_OtherTypeofhomes = siteDetail.otherTypeOfHomes,
-                        invln_Planningreferencenumber = siteDetail.planningReferenceNumber,
-                        invln_Publicsectorfunding = MapPublicSectorFunding(siteDetail.publicSectorFunding),
-                        invln_Reason = siteDetail.reason,
-                        invln_Sitecoordinates = siteDetail.siteCoordinates,
-                        invln_Sitecost = ParseDecimalToMoney(siteDetail.siteCost),
-                        invln_Sitename = siteDetail.siteName,
-                        invln_Siteownership = ParseBool(siteDetail.siteOwnership),
-                        invln_Typeofhomes = MapTypeOfHomes(siteDetail.typeOfHomes),
-                        invln_TypeofSite = MapTypeOfSite(siteDetail.typeOfSite),
-                        invln_Valuationsource = MapValuationSource(siteDetail.valuationSource),
-                        invln_Whoprovided = siteDetail.whoProvided,
-                    };
+                    var siteDetailToCreate = MapSiteDetailsDtoToRegularEntity(siteDetail);
+                    siteDetailToCreate.invln_Loanapplication = new EntityReference(invln_Loanapplication.EntityLogicalName, loanApplicationGuid);
                     this.TracingService.Trace("create");
                     siteDetailsRepository.Create(siteDetailToCreate);
                     this.TracingService.Trace("after create record");
@@ -141,6 +96,124 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
 
             return loanApplicationGuid.ToString();
+        }
+
+        private invln_Loanapplication MapLoanApplicationDtoToRegularEntity(LoanApplicationDto loanApplicationDto)
+        {
+            var loanApplication = new invln_Loanapplication()
+            {
+                invln_FundingReason = MapFundingReason(loanApplicationDto.fundingReason),
+                //COMPANY
+                invln_CompanyPurpose = ParseBool(loanApplicationDto.companyPurpose), //Purpose
+                invln_Companystructureinformation = loanApplicationDto.existingCompany, //ExistingCompany
+                invln_CompanyExperience = loanApplicationDto.companyExperience, //HomesBuilt
+                //FUNDING
+                invln_ProjectGDV = ParseDecimalToMoney(loanApplicationDto.projectGdv), //GDV
+                invln_Projectestimatedtotalcost = ParseDecimalToMoney(loanApplicationDto.projectEstimatedTotalCost), //TotalCosts
+                invln_Projectabnormalcosts = ParseBool(loanApplicationDto.projectAbnormalCosts), //AbnormalCosts
+                invln_Projectabnormalcostsinformation = loanApplicationDto.projectAbnormalCostsInformation, //AbnormalCosts
+                invln_Privatesectorapproach = ParseBool(loanApplicationDto.privateSectorApproach), //PrivateSectorFunding
+                invln_Privatesectorapproachinformation = loanApplicationDto.privateSectorApproachInformation, //PrivateSectorFunding
+                invln_Additionalprojects = ParseBool(loanApplicationDto.additionalProjects), //AdditionalProjects
+                invln_Refinancerepayment = MapRefinancePayment(loanApplicationDto.refinanceRepayment), //Refinance
+                invln_Refinancerepaymentdetails = loanApplicationDto.refinanceRepaymentDetails, //Refinance
+                //SECURITY
+                invln_Outstandinglegalchargesordebt = ParseBool(loanApplicationDto.outstandingLegalChargesOrDebt), //ChargesDebtCompany
+                invln_DebentureHolder = loanApplicationDto.debentureHolder, //ChargesDebtCompany
+                invln_Directorloans = ParseBool(loanApplicationDto.directorLoans), //DirLoans
+                invln_Confirmationdirectorloanscanbesubordinated = ParseBool(loanApplicationDto.confirmationDirectorLoansCanBeSubordinated), //DirLoansSub
+                invln_Reasonfordirectorloannotsubordinated = loanApplicationDto.reasonForDirectorLoanNotSubordinated, //DirLoansSub
+                                                                                                                      //OTHER maybe not related
+                invln_Name = loanApplicationDto.name,
+                //invln_Contact = contactForPortalUser,
+                //invln_Account = account.ToEntityReference(),
+            };
+            return loanApplication;
+        }
+
+        private invln_SiteDetails MapSiteDetailsDtoToRegularEntity(SiteDetailsDto siteDetail)
+        {
+            var siteDetailToReturn = new invln_SiteDetails()
+            {
+                invln_currentvalue = ParseDecimalToMoney(siteDetail.currentValue),
+                invln_Dateofpurchase = siteDetail.dateOfPurchase,
+                invln_Existinglegalcharges = ParseBool(siteDetail.existingLegalCharges),
+                invln_Existinglegalchargesinformation = siteDetail.existingLegalChargesInformation,
+                invln_Haveaplanningreferencenumber = ParseBool(siteDetail.haveAPlanningReferenceNumber),
+                invln_HowMuch = ParseDecimalToMoney(siteDetail.howMuch),
+                invln_Landregistrytitlenumber = siteDetail.landRegistryTitleNumber,
+                //invln_Loanapplication = new EntityReference(invln_Loanapplication.EntityLogicalName, loanApplicationGuid),
+                invln_Name = siteDetail.Name,
+                invln_Nameofgrantfund = siteDetail.nameOfGrantFund,
+                //invln_Numberofaffordablehomes = ParseInt(siteDetail.numberOfAffordableHomes),
+                invln_Numberofhomes = ParseInt(siteDetail.numberOfHomes),
+                invln_OtherTypeofhomes = siteDetail.otherTypeOfHomes,
+                invln_Planningreferencenumber = siteDetail.planningReferenceNumber,
+                invln_Publicsectorfunding = MapPublicSectorFunding(siteDetail.publicSectorFunding),
+                invln_Reason = siteDetail.reason,
+                invln_Sitecoordinates = siteDetail.siteCoordinates,
+                invln_Sitecost = ParseDecimalToMoney(siteDetail.siteCost),
+                invln_Sitename = siteDetail.siteName,
+                invln_Siteownership = ParseBool(siteDetail.siteOwnership),
+                invln_Typeofhomes = MapTypeOfHomes(siteDetail.typeOfHomes),
+                invln_TypeofSite = MapTypeOfSite(siteDetail.typeOfSite),
+                invln_Valuationsource = MapValuationSource(siteDetail.valuationSource),
+                invln_Whoprovided = siteDetail.whoProvided,
+            };
+            return siteDetailToReturn;
+        }
+
+        private LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication)
+        {
+            var loanApplicationDto = new LoanApplicationDto()
+            {
+                fundingReason = MapFundingReasonOptionSetToString(loanApplication.invln_FundingReason),
+
+                //company
+                companyPurpose = loanApplication.invln_CompanyPurpose?.ToString(),
+                existingCompany = loanApplication.invln_Companystructureinformation?.ToString(),
+                companyExperience = loanApplication.invln_CompanyExperience,
+
+                //funding
+                projectGdv = loanApplication.invln_ProjectGDV?.ToString(),
+                projectEstimatedTotalCost = loanApplication.invln_Projectestimatedtotalcost?.ToString(),
+                projectAbnormalCosts = loanApplication.invln_Projectabnormalcosts?.ToString(),
+                projectAbnormalCostsInformation = loanApplication.invln_Projectabnormalcostsinformation?.ToString(),
+                privateSectorApproach = loanApplication.invln_Privatesectorapproach?.ToString(),
+                privateSectorApproachInformation = loanApplication.invln_Privatesectorapproachinformation?.ToString(),
+                additionalProjects = loanApplication.invln_Additionalprojects?.ToString(),
+                refinanceRepayment = loanApplication.invln_Refinancerepayment?.ToString(),
+                refinanceRepaymentDetails = loanApplication.invln_Refinancerepaymentdetails?.ToString(),
+
+                //security
+                outstandingLegalChargesOrDebt = loanApplication.invln_Outstandinglegalchargesordebt?.ToString(),
+                debentureHolder = loanApplication.invln_DebentureHolder?.ToString(),
+                directorLoans = loanApplication.invln_Directorloans?.ToString(),
+                confirmationDirectorLoansCanBeSubordinated = loanApplication.invln_Confirmationdirectorloanscanbesubordinated?.ToString(),
+                reasonForDirectorLoanNotSubordinated = loanApplication.invln_Reasonfordirectorloannotsubordinated?.ToString(),
+
+                name = loanApplication.invln_Name,
+            };
+            return loanApplicationDto;
+        }
+
+        private string MapFundingReasonOptionSetToString(OptionSetValue fundingReason)
+        {
+            if (fundingReason == null)
+            {
+                return null;
+            }
+            switch (fundingReason.Value)
+            {
+                case (int)invln_FundingReason.Buildinginfrastructureonly:
+                    return "buildinginfrastructureonly";
+                case (int)invln_FundingReason.Buildingnewhomes:
+                    return "buildingnewhomes";
+                case (int)invln_FundingReason.Other:
+                    return "other";
+                default:
+                    return null;
+            }
         }
 
         private OptionSetValue MapApplicationStatus(string applicationStatus)

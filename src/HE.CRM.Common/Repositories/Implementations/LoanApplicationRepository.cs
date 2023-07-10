@@ -49,7 +49,33 @@ namespace HE.CRM.Common.Repositories.Implementations
             return loanapplications;
         }
 
-       
+        public List<invln_Loanapplication> GetLoanApplicationsForGivenAccountAndContact(Guid accountId, string externalContactId, string loanApplicationId = null)
+        {
+            using (DataverseContext ctx = new DataverseContext(service))
+            {
+                if (loanApplicationId == null)
+                {
+                    return (from la in ctx.invln_LoanapplicationSet
+                            join cnt in ctx.ContactSet on la.invln_Contact.Id equals cnt.ContactId
+                            where la.invln_Account.Id == accountId && cnt.invln_externalid == externalContactId
+                            select la).ToList();
+                }
+                else
+                {
+                    if (Guid.TryParse(loanApplicationId, out Guid loanApplicationGuid))
+                    {
+                        return (from la in ctx.invln_LoanapplicationSet
+                                join cnt in ctx.ContactSet on la.invln_Contact.Id equals cnt.ContactId
+                                where la.invln_Account.Id == accountId && cnt.invln_externalid == externalContactId && la.invln_LoanapplicationId == loanApplicationGuid
+                                select la).ToList();
+                    }
+                    else
+                    {
+                        return new List<invln_Loanapplication>();
+                    }
+                }
+            }
+        }
 
         #endregion
 
