@@ -69,13 +69,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             {
                 this.TracingService.Trace("Update invln_Loanapplication");
                 loanApplicationGuid = loanAppId;
-                this.TracingService.Trace("1");
                 loanApplicationToCreate.Id = loanAppId;
-                this.TracingService.Trace("2");
                 loanApplicationRepository.Update(loanApplicationToCreate);
-                this.TracingService.Trace("3");
                 siteDetailsRepository.DeleteSiteDetailsRelatedToLoanApplication(new EntityReference(invln_Loanapplication.EntityLogicalName, loanAppId));
-                this.TracingService.Trace("4");
             }
             else
             {
