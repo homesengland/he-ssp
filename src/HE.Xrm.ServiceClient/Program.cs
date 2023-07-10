@@ -55,8 +55,7 @@ namespace HE.Xrm.ServiceClientExample
             var req = new OrganizationRequest("invln_getsingleloanapplicationforaccountandcontact")  //Name of Custom API
             {
                 ["invln_accountid"] = "429d11ab-15fe-ed11-8f6c-002248c653e1",  //Input Parameter
-                ["invln_externalcontactid"] = "auth0|64a28c7fb67ed30b288d6ff7",  //Input Parameter
-                //["invln_externalcontactid"] = "auth0|64a28c7fb67ed30b288d6ff7",  //Input Parameter
+                ["invln_externalcontactid"] = "",  //Input Parameter
                 ["invln_loanapplicationid"] = "njkkjk" //Input Parameter
             };
 
