@@ -27,7 +27,9 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
             public async Task<LoanApplicationViewModel> Handle(Create request, CancellationToken cancellationToken)
             {
                 LoanApplicationViewModel model = new LoanApplicationViewModel() { Timestamp = DateTime.Now };
-                model.Sites.Add(new SiteViewModel());
+                
+                model.AddNewSite();
+                
                 var result = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationViewModel>(model.ID.ToString());
 
                 if (result == null)

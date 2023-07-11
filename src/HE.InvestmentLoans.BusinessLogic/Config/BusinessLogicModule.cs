@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Pipelines;
+using HE.InvestmentLoans.BusinessLogic.Application.Project.Repositories;
 
 namespace HE.InvestmentLoans.BusinessLogic.Config;
 
@@ -20,6 +21,6 @@ public static class BusinessLogicModule
         services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
         services.AddScoped<ILoanUserRepository, LoanUserRepository>();
         services.AddScoped<ILoanUserContext, LoanUserContext>();
-
+        services.AddScoped<IApplicationProjectsRepository, ApplicationProjectsRepository>();
     }
 }

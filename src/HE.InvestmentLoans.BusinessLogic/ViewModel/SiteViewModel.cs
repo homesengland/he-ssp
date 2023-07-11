@@ -9,14 +9,10 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
 {
     public class SiteViewModel
     {
-        private static int counter = 0;
-
         public SiteViewModel() 
         {
             State = SiteWorkflow.State.Index;
             StateChanged = false;
-            counter++;
-            Name = "Project " + counter.ToString("D2");
         }
 
         public string CheckAnswers { get; set; }
@@ -55,6 +51,7 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
         public string ChargesDebt { get; set; }
         public string ChargesDebtInfo { get; set; }
         public SiteWorkflow.State State { get; set; }
+        public SiteWorkflow.State PreviousState { get; set; }
         public string Name { get; set; }
         public Guid Id { get; set; }
         public bool StateChanged { get; set; }

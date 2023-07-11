@@ -58,13 +58,12 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
 
         }
 
-        public async void ChangeState(State state)
+        public async void ChangeState(State state, bool isChangeView)
         {
             _site.State = state;
-            _site.StateChanged = true;
+            _site.StateChanged = isChangeView;
             await _mediator.Send(new BusinessLogic._LoanApplication.Commands.Update() { Model = _model });
         }
-
 
         public bool IsCompleted()
         {
@@ -183,10 +182,6 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
 
             _machine.Configure(State.Complete)
                 .Permit(Trigger.Back, State.CheckAnswers);
-
-            _machine.Configure(State.DeleteProject)
-                .PermitIf(Trigger.Continue, State.Name, () => _site.DeleteProject == "Yes")
-                .PermitIf(Trigger.Continue, State.Name, () => _site.DeleteProject != "Yes");
 
             _machine.OnTransitionCompletedAsync(x =>
             {

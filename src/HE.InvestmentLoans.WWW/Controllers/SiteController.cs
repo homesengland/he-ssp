@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
+using HE.InvestmentLoans.BusinessLogic.Application.Project.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -29,8 +30,7 @@ namespace HE.InvestmentLoans.WWW.Controllers
         public async Task<IActionResult> CreateSite(Guid id)
         {
             var model = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
-            var site = new SiteViewModel() { Id = Guid.NewGuid() };
-            model.Sites.Add(site);
+            var site = model.AddNewSite();
             SiteWorkflow workflow = new SiteWorkflow(model, mediator, site.Id);
             var result = await this.mediator.Send(new BL._LoanApplication.Commands.Update()
             {
@@ -49,7 +49,8 @@ namespace HE.InvestmentLoans.WWW.Controllers
             SiteWorkflow workflow = new SiteWorkflow(model, mediator, site);
             if (ending == "DeleteProject")
             {
-                workflow.ChangeState(SiteWorkflow.State.DeleteProject);
+                sitemodel.PreviousState = sitemodel.State;
+                workflow.ChangeState(SiteWorkflow.State.DeleteProject, false);
             }
 
             if (workflow.IsCompleted())
@@ -123,19 +124,28 @@ namespace HE.InvestmentLoans.WWW.Controllers
         {
             var sessionmodel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
             SiteWorkflow workflow = new SiteWorkflow(sessionmodel, mediator, site);
-            workflow.ChangeState(Enum.Parse<HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow.SiteWorkflow.State>(state));
+            workflow.ChangeState(Enum.Parse<HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow.SiteWorkflow.State>(state), true);
             return RedirectToAction("Workflow", new { id = sessionmodel.ID, site = site, ending = workflow.GetName() });
         }
 
-        [HttpDelete]
-        [Route("{site}/Delete")]
+        [HttpPost]
+        [Route("{site}/DeleteProject")]
         public async Task<IActionResult> Delete(Guid id, Guid site, string state)
         {
-            return View();
-            var sessionmodel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
-            SiteWorkflow workflow = new SiteWorkflow(sessionmodel, mediator, site);
-            workflow.ChangeState(Enum.Parse<HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow.SiteWorkflow.State>(state));
-            return RedirectToAction("Workflow", new { id = sessionmodel.ID, site = site, ending = workflow.GetName() });
+            var model = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
+            var sitemodel = model.Sites.FirstOrDefault(item => item.Id == site);
+
+            if (Request.Form["DeleteProject"] == "Yes")
+            {
+                await this.mediator.Send(new DeleteProjectCommand(id, site));
+            }
+            else
+            {
+                SiteWorkflow workflow = new SiteWorkflow(model, mediator, site);
+                workflow.ChangeState(sitemodel.PreviousState, false);
+            }
+
+            return RedirectToAction("Workflow", "LoanApplication", new { id, ending = "TaskList" });
         }
     }
 }

@@ -6,10 +6,10 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="DeleteProject" asp-method="delete" novalidate>
-        <gds-back-link href="@Url.Action("Workflow","LoanApplication", new {id = @id })" text="Back" class="govuk-!-margin-bottom-8">
-        </gds-back-link>
+    <gds-back-link href="@Url.Action("Workflow","LoanApplication", new {id = @id })" text="Back" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
 
+    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="DeleteProject" asp-method="post" novalidate>
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="inputInvalid">
