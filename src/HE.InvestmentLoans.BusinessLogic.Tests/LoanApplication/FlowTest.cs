@@ -1,7 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
 using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
-using HE.InvestmentLoans.Common.Authorization;
+using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using MediatR;

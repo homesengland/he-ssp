@@ -1,5 +1,4 @@
-﻿using HE.InvestmentLoans.Common.Authorization;
-using HE.InvestmentLoans.Contract.User;
+﻿using HE.InvestmentLoans.Contract.User;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

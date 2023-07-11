@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Pipelines;
+using HE.InvestmentLoans.BusinessLogic.User;
 
 namespace HE.InvestmentLoans.BusinessLogic.Config;
 

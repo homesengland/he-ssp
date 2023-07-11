@@ -6,35 +6,30 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
+namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands;
+
+public class Create : IRequest<LoanApplicationViewModel>
 {
-    public class Create : IRequest<LoanApplicationViewModel>
+    public class Handler : IRequestHandler<Create, LoanApplicationViewModel>
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-
-        public class Handler : IRequestHandler<Create, LoanApplicationViewModel>
+        public Handler(IHttpContextAccessor httpContextAccessor)
         {
-         
-            private IHttpContextAccessor _httpContextAccessor;
+            _httpContextAccessor = httpContextAccessor;
+        }
 
-            public Handler(IHttpContextAccessor httpContextAccessor)
+        public Task<LoanApplicationViewModel> Handle(Create request, CancellationToken cancellationToken)
+        {
+            var model = new LoanApplicationViewModel() { Timestamp = DateTime.Now };
+            var result = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationViewModel>(model.ID.ToString());
+
+            if (result == null)
             {
-               
-                _httpContextAccessor = httpContextAccessor;
+                _httpContextAccessor.HttpContext?.Session.Set(model.ID.ToString(), model);
             }
 
-            public async Task<LoanApplicationViewModel> Handle(Create request, CancellationToken cancellationToken)
-            {
-                LoanApplicationViewModel model = new LoanApplicationViewModel() { Timestamp = DateTime.Now };
-                var result = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationViewModel>(model.ID.ToString());
-
-                if (result == null)
-                {
-                    _httpContextAccessor.HttpContext?.Session.Set(model.ID.ToString(), model);
-                }
-
-                return model;
-            }
+            return Task.FromResult(model);
         }
     }
 }

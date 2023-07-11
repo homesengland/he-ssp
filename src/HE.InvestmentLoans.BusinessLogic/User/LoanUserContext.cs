@@ -1,4 +1,5 @@
-﻿using HE.InvestmentLoans.BusinessLogic.User.Repositories;
+﻿using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using System;

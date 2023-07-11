@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HE.InvestmentLoans.Common.Authorization;
+namespace HE.InvestmentLoans.BusinessLogic.User;
 
 public interface ILoanUserContext
 {
     public string UserGlobalId { get; }
 
-    public string? Email { get; }
+    public string Email { get; }
 
     public IReadOnlyCollection<string> Roles { get; }
 
