@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
@@ -8,119 +9,118 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BL = HE.InvestmentLoans.BusinessLogic;
 
-namespace HE.InvestmentLoans.WWW.Controllers
-{
-    [Route("application/{id}/site")]
-    [Authorize]
-    public class SiteController : Controller
-    {
-        private readonly ILogger<SecurityController> logger;
-        private readonly IMediator mediator;
-        private readonly IValidator<SiteViewModel> validator;
+namespace HE.InvestmentLoans.WWW.Controllers;
 
-        public SiteController(IValidator<SiteViewModel> validator, ILogger<SecurityController> logger, IMediator mediator)
-            : base()
+[SuppressMessage("Usage", "CA1801", Justification = "It should be fixed in the future")]
+[Route("application/{id}/site")]
+[Authorize]
+public class SiteController : Controller
+{
+    private readonly IMediator _mediator;
+    private readonly IValidator<SiteViewModel> _validator;
+
+    public SiteController(IValidator<SiteViewModel> validator, IMediator mediator)
+        : base()
+    {
+        this._mediator = mediator;
+        this._validator = validator;
+    }
+
+    [Route("Create")]
+    public async Task<IActionResult> CreateSite(Guid id)
+    {
+        var model = await this._mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
+        var site = new SiteViewModel() { Id = Guid.NewGuid() };
+        model.Sites.Add(site);
+        var workflow = new SiteWorkflow(model, _mediator, site.Id);
+        await this._mediator.Send(new BL._LoanApplication.Commands.Update()
         {
-            this.logger = logger;
-            this.mediator = mediator;
-            this.validator = validator;
+            Model = model,
+            TryUpdateModelAction = null,
+        }).ConfigureAwait(false);
+
+        return RedirectToAction("Workflow", new { id = model.ID, site = site.Id, ending = workflow.GetName() });
+    }
+
+    [Route("{site}/{ending?}")]
+    public async Task<IActionResult> Workflow(Guid id, Guid site, string ending)
+    {
+        var model = await this._mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
+        var sitemodel = model.Sites.First(item => item.Id == site);
+        var workflow = new SiteWorkflow(model, _mediator, site);
+        if (workflow.IsCompleted())
+        {
+            workflow.NextState(Trigger.Back);
         }
 
-        [Route("Create")]
-        public async Task<IActionResult> CreateSite(Guid id)
+        return View(workflow.GetName(), sitemodel);
+    }
+
+    [HttpPost]
+    [Route("{site}/{ending?}")]
+    public async Task<IActionResult> WorkflowPost(Guid id, Guid site, string ending, string action)
+    {
+        var sessionModel = await this._mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
+
+        var workflow = new SiteWorkflow(sessionModel, _mediator, site);
+        var sitemodel = sessionModel.Sites.First(item => item.Id == site);
+
+        try
         {
-            var model = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
-            var site = new SiteViewModel() { Id = Guid.NewGuid() };
-            model.Sites.Add(site);
-            SiteWorkflow workflow = new SiteWorkflow(model, mediator, site.Id);
-            var result = await this.mediator.Send(new BL._LoanApplication.Commands.Update()
+            await TryUpdateModelAsync(sitemodel);
+            var vresult = _validator.Validate(sitemodel, opt => opt.IncludeRuleSets(workflow.GetName()));
+            if (!vresult.IsValid)
             {
-                Model = model,
-                TryUpdateModelAction = null
+                // error messages in the View.
+                vresult.AddToModelState(this.ModelState);
+
+                // re-render the view when validation failed.
+                sitemodel.Id = site;
+
+                return View(workflow.GetName(), sitemodel);
+            }
+
+            await TryUpdateModelAsync(sitemodel);
+            sitemodel.Id = site;
+            var result = await this._mediator.Send(new BL._LoanApplication.Commands.Update()
+            {
+                Model = sessionModel,
+                TryUpdateModelAction = null,
             }).ConfigureAwait(false);
 
-            return RedirectToAction("Workflow", new { id = model.ID, site = site.Id, ending = workflow.GetName() });
+            workflow.NextState(Enum.Parse<Trigger>(action));
         }
-
-        [Route("{site}/{ending?}")]
-        public async Task<IActionResult> Workflow(Guid id, Guid site, string ending)
+        catch (Common.Exceptions.ValidationException ex)
         {
-            var model = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
-            var sitemodel = model.Sites.Where(item => item.Id == site).First();
-            SiteWorkflow workflow = new SiteWorkflow(model, mediator, site);
-            if (workflow.IsCompleted())
-            {
-                workflow.NextState(Trigger.Back);
-            }
-
-            return View(workflow.GetName(), sitemodel);
+            ex.Results.ForEach(item => item.AddToModelState(ModelState, null));
         }
 
-        [HttpPost]
-        [Route("{site}/{ending?}")]
-        public async Task<IActionResult> WorkflowPost(Guid id, Guid site,  string ending, string action)
+        var loanWorkflow = new LoanApplicationWorkflow(sessionModel, _mediator);
+        if (loanWorkflow.IsBeingChecked() || workflow.IsCompleted() || (sitemodel.CheckAnswers == "No" && action != "Change"))
         {
-            var sessionModel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
-
-            SiteWorkflow workflow = new SiteWorkflow(sessionModel, mediator, site);
-            var sitemodel = sessionModel.Sites.Where(item => item.Id == site).First();
-
-            try
-            {
-                await TryUpdateModelAsync(sitemodel);
-                var vresult = validator.Validate(sitemodel, opt => opt.IncludeRuleSets(workflow.GetName()));
-                if (!vresult.IsValid)
-                {
-                    // error messages in the View.
-                    vresult.AddToModelState(this.ModelState);
-                    // re-render the view when validation failed.
-                    sitemodel.Id = site;
-
-                    return View(workflow.GetName(), sitemodel);
-                }
-
-                await TryUpdateModelAsync(sitemodel);
-                sitemodel.Id = site;
-                var result = await this.mediator.Send(new BL._LoanApplication.Commands.Update()
-                {
-                    Model = sessionModel,
-                    TryUpdateModelAction = null
-                }).ConfigureAwait(false);
-
-                workflow.NextState(Enum.Parse<Trigger>(action));
-            }
-            catch (Common.Exceptions.ValidationException ex)
-            {
-                ex.Results.ForEach(item => item.AddToModelState(ModelState, null));
-            }
-
-            var loanWorkflow = new LoanApplicationWorkflow(sessionModel, mediator);
-            if (loanWorkflow.IsBeingChecked() || workflow.IsCompleted() || (sitemodel.CheckAnswers == "No" && action != "Change"))
-            {
-                return RedirectToAction("Workflow", "LoanApplication", new { id = sessionModel.ID, ending = loanWorkflow.GetName() });
-            }
-            else
-            {
-                return RedirectToAction("Workflow", new { id = sessionModel.ID, site = sitemodel.Id, ending = workflow.GetName() });
-            }
+            return RedirectToAction("Workflow", "LoanApplication", new { id = sessionModel.ID, ending = loanWorkflow.GetName() });
         }
-
-        [Route("GoBack")]
-        public async Task<IActionResult> GoBack(Guid id, Guid site, string action)
+        else
         {
-            var sessionmodel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
-            SiteWorkflow workflow = new SiteWorkflow(sessionmodel, mediator, site);
-            workflow.NextState(Trigger.Back);
-            return RedirectToAction("Workflow", new { id = sessionmodel.ID, site = site, ending = workflow.GetName() });
+            return RedirectToAction("Workflow", new { id = sessionModel.ID, site = sitemodel.Id, ending = workflow.GetName() });
         }
+    }
 
-        [Route("{site}/Change")]
-        public async Task<IActionResult> Change(Guid id, Guid site, string state)
-        {
-            var sessionmodel = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
-            SiteWorkflow workflow = new SiteWorkflow(sessionmodel, mediator, site);
-            workflow.ChangeState(Enum.Parse<HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow.SiteWorkflow.State>(state));
-            return RedirectToAction("Workflow", new { id = sessionmodel.ID, site = site, ending = workflow.GetName() });
-        }
+    [Route("GoBack")]
+    public async Task<IActionResult> GoBack(Guid id, Guid site, string action)
+    {
+        var sessionmodel = await this._mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
+        var workflow = new SiteWorkflow(sessionmodel, _mediator, site);
+        workflow.NextState(Trigger.Back);
+        return RedirectToAction("Workflow", new { id = sessionmodel.ID, site, ending = workflow.GetName() });
+    }
+
+    [Route("{site}/Change")]
+    public async Task<IActionResult> Change(Guid id, Guid site, string state)
+    {
+        var sessionmodel = await this._mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
+        var workflow = new SiteWorkflow(sessionmodel, _mediator, site);
+        workflow.ChangeState(Enum.Parse<SiteWorkflow.State>(state));
+        return RedirectToAction("Workflow", new { id = sessionmodel.ID, site, ending = workflow.GetName() });
     }
 }

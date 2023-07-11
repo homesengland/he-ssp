@@ -8,15 +8,15 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 [Authorize]
 public class UserController : Controller
 {
-    private readonly IMediator mediator;
+    private readonly IMediator _mediator;
 
     public UserController(IMediator mediator)
     {
-        this.mediator = mediator;
+        this._mediator = mediator;
     }
 
     public async Task<GetUserDetailsResponse> Index()
     {
-        return await mediator.Send(new GetUserDetailsQuery());
+        return await _mediator.Send(new GetUserDetailsQuery());
     }
 }

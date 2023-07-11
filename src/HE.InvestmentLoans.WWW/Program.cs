@@ -34,14 +34,14 @@ var mvcbuilder = builder.Services.AddControllersWithViews();
 
 builder.Services.ConfigureHeCookieSettings(
     mvcbuilder,
-    configure => { configure.WithAspNetCore().WithHeIdentity(); });
+    configure => configure.WithAspNetCore().WithHeIdentity());
 
 var heIdentityConfiguration = new HeIdentityCookieConfiguration
 {
     Domain = config.Auth0.Domain,
     ClientId = config.Auth0.ClientId,
     ClientSecret = config.Auth0.ClientSecret,
-    SupportEmail = config.SupportEmail
+    SupportEmail = config.SupportEmail,
 };
 mvcbuilder.AddHeIdentityCookieAuth(heIdentityConfiguration, builder.Environment);
 
@@ -85,7 +85,7 @@ app.UseCookiePolicy(
     new CookiePolicyOptions
     {
         Secure = CookieSecurePolicy.Always,
-        MinimumSameSitePolicy = SameSiteMode.Strict
+        MinimumSameSitePolicy = SameSiteMode.Strict,
     });
 app.UseSession();
 app.UseRouting();

@@ -5,16 +5,16 @@ namespace HE.InvestmentLoans.WWW.Middlewares;
 
 public class CrossSiteScriptingMiddleware
 {
-    private readonly RequestDelegate next;
+    private readonly RequestDelegate _next;
 
     public CrossSiteScriptingMiddleware(RequestDelegate next)
     {
-        this.next = next;
+        this._next = next;
     }
 
     public async Task InvokeAsync(HttpContext context, NonceModel nonce)
     {
-        StringBuilder contenSecurityPolicy = new StringBuilder();
+        var contenSecurityPolicy = new StringBuilder();
 
         contenSecurityPolicy.Append("default-src 'self';");
 #pragma warning disable CA1305 // Specify IFormatProvider
@@ -37,15 +37,6 @@ public class CrossSiteScriptingMiddleware
             context.Response.Headers.Add(referrerPolicy, "none");
         }
 
-        await next(context);
-    }
-}
-
-public static partial class HeaderSecurityMiddlewareExtensions
-{
-    public static IApplicationBuilder UseCrossSiteScriptingSecurity(
-        this IApplicationBuilder builder)
-    {
-        return builder.UseMiddleware<CrossSiteScriptingMiddleware>();
+        await _next(context);
     }
 }
