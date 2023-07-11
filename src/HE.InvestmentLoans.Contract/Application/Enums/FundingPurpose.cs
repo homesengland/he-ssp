@@ -1,9 +1,8 @@
-﻿namespace HE.InvestmentLoans.BusinessLogic.Enums
+namespace HE.InvestmentLoans.Contract.Application.Enums;
+
+public enum FundingPurpose
 {
-    public enum FundingPurpose
-    {
-        BuildingNewHomes,
-        BuildingInfrastructure,
-        Other
-    }
+    BuildingNewHomes,
+    BuildingInfrastructure,
+    Other,
 }

@@ -1,7 +1,7 @@
-﻿using FluentAssertions;
+using System.Collections.ObjectModel;
+using FluentAssertions;
 using HE.InvestmentLoans.Common.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.ObjectModel;
 
 namespace HE.InvestmentLoans.Common.Tests.Extensions.CollectionExtensionsTests;
 
@@ -17,7 +17,7 @@ public class AddRangeTests
             };
 
         // when
-        listWithOneElement.AddRange(null);
+        listWithOneElement.AddRange(null!);
 
         // then
         listWithOneElement.Should().OnlyContain(x => x == 1);
@@ -69,7 +69,7 @@ public class AddRangeTests
                 5,
                 4,
                 4,
-            };
+        };
 
         // when
         listWithTwoElements.AddRange(elementsToAdd);
@@ -120,7 +120,7 @@ public class AddRangeTests
     public void ShouldThrowException_WhenAddingToNullObject()
     {
         // when
-        Action action = () => ((IList<int>)null).AddRange(null);
+        Action action = () => ((IList<int>)null!).AddRange(null!);
 
         // then
         action.Should().Throw<ArgumentNullException>();

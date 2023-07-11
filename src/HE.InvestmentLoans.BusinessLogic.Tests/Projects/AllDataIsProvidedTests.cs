@@ -1,232 +1,229 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects
+namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects;
+
+[TestClass]
+public class AllDataIsProvidedTests
 {
-    [TestClass]
-    public class AllDataIsProvidedTests
+    private SiteViewModel _model;
+
+    [TestInitialize]
+    public void Init()
     {
-        private SiteViewModel model;
+        _model = SiteViewModelObjectBuilder
+            .NewObject()
+            .ThatPassesCheckAnswersValidation()
+            .Build();
+    }
 
-        [TestInitialize]
-        public void Init()
-        {
-            model = SiteViewModelObjectBuilder
-                .NewObject()
-                .ThatPassesCheckAnswersValidation()
-                .Build();
-        }
+    [TestMethod]
+    public void AllDataIsProvided()
+    {
+        _model.AllInformationIsProvided().Should().BeTrue();
+    }
 
-        [TestMethod] 
-        public void AllDataIsProvided()
-        {
-            model.AllInformationIsProvided().Should().BeTrue();
-        }
+    [TestMethod]
+    public void FailWhenBasicDataIsNotProvided()
+    {
+        _model.Name = string.Empty;
+        _model.ManyHomes = string.Empty;
+        _model.TypeHomes = Array.Empty<string>();
+        _model.Type = string.Empty;
+        _model.AffordableHomes = string.Empty;
+        _model.ChargesDebt = string.Empty;
+        _model.HomesToBuild = string.Empty;
 
-        [TestMethod]
-        public void FailWhenBasicDataIsNotProvided()
-        {
-            model.Name = "";
-            model.ManyHomes = "";
-            model.TypeHomes = new string[0];
-            model.Type = "";
-            model.AffordableHomes = "";
-            model.ChargesDebt = "";
-            model.HomesToBuild = "";
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void FailReferenceNumberIsNotProvided()
+    {
+        _model.PlanningRef = null;
 
-        [TestMethod]
-        public void FailReferenceNumberIsNotProvided()
-        {
-            model.PlanningRef = null;
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void FailWhenPlanningRefIsNoAndNoLocationWasProvided()
+    {
+        _model.PlanningRef = "No";
+        _model.LocationOption = "coordinates";
+        _model.LocationCoordinates = string.Empty;
 
-        [TestMethod]
-        public void FailWhenPlanningRefIsNoAndNoLocationWasProvided()
-        {
-            model.PlanningRef = "No";
-            model.LocationOption = "coordinates";
-            model.LocationCoordinates = "";
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void FailWhenPlanningRefIsNoAndLandRegistryIsNotProvided()
+    {
+        _model.PlanningRef = "No";
+        _model.LocationOption = "landRegistryTitleNumber";
+        _model.LocationLandRegistry = string.Empty;
 
-        [TestMethod]
-        public void FailWhenPlanningRefIsNoAndLandRegistryIsNotProvided()
-        {
-            model.PlanningRef = "No";
-            model.LocationOption = "landRegistryTitleNumber";
-            model.LocationLandRegistry = "";
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void FailWhenPlanningRefIsYesAndReferenceNumberIsNotProvided()
+    {
+        _model.PlanningRef = "Yes";
+        _model.PlanningRefEnter = string.Empty;
 
-        [TestMethod]
-        public void FailWhenPlanningRefIsYesAndReferenceNumberIsNotProvided()
-        {
-            model.PlanningRef = "Yes";
-            model.PlanningRefEnter = "";
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void FailWhenPlanningRefIsYesAndPlanningStatusIsNotProvided()
+    {
+        _model.PlanningRef = "Yes";
+        _model.PlanningRefEnter = "number";
+        _model.PlanningStatus = string.Empty;
 
-        [TestMethod]
-        public void FailWhenPlanningRefIsYesAndPlanningStatusIsNotProvided()
-        {
-            model.PlanningRef = "Yes";
-            model.PlanningRefEnter = "number";
-            model.PlanningStatus = "";
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void FailWhenPlanningRefIsYesAndLocationIsNotProvided()
+    {
+        _model.PlanningRef = "Yes";
+        _model.PlanningRefEnter = "number";
+        _model.PlanningStatus = "status";
 
-        [TestMethod]
-        public void FailWhenPlanningRefIsYesAndLocationIsNotProvided()
-        {
-            model.PlanningRef = "Yes";
-            model.PlanningRefEnter = "number";
-            model.PlanningStatus = "status";
+        _model.LocationOption = string.Empty;
 
-            model.LocationOption = "";
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void FailWhenPlanningRefIsYesAndCoordinatesAreNotProvided()
+    {
+        _model.PlanningRef = "Yes";
+        _model.PlanningRefEnter = "number";
+        _model.PlanningStatus = "status";
 
-        [TestMethod]
-        public void FailWhenPlanningRefIsYesAndCoordinatesAreNotProvided()
-        {   
-            model.PlanningRef = "Yes";
-            model.PlanningRefEnter = "number";
-            model.PlanningStatus = "status";
+        _model.LocationOption = "coordinates";
+        _model.LocationCoordinates = string.Empty;
 
-            model.LocationOption = "coordinates";
-            model.LocationCoordinates = "";
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void FailWhenPlanningRefIsYesAndLandRegistryIsNotProvided()
+    {
+        _model.PlanningRef = "Yes";
+        _model.PlanningRefEnter = "number";
+        _model.PlanningStatus = "status";
 
-        [TestMethod]
-        public void FailWhenPlanningRefIsYesAndLandRegistryIsNotProvided()
-        {
-            model.PlanningRef = "Yes";
-            model.PlanningRefEnter = "number";
-            model.PlanningStatus = "status";
+        _model.LocationOption = "landRegistryTitleNumber";
+        _model.LocationCoordinates = string.Empty;
 
-            model.LocationOption = "landRegistryTitleNumber";
-            model.LocationCoordinates = "";
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void PassWhenAllPlanningRefDataIsProvided()
+    {
+        _model.PlanningRef = "Yes";
+        _model.PlanningRefEnter = "number";
+        _model.PlanningStatus = "status";
 
-        [TestMethod]
-        public void PassWhenAllPlanningRefDataIsProvided()
-        {
-            model.PlanningRef = "Yes";
-            model.PlanningRefEnter = "number";
-            model.PlanningStatus = "status";
+        _model.AllInformationIsProvided().Should().BeTrue();
+    }
 
-            model.AllInformationIsProvided().Should().BeTrue();
-        }
+    [TestMethod]
+    public void FailWhenOwnershipIsNotProvided()
+    {
+        _model.Ownership = string.Empty;
 
-        [TestMethod]
-        public void FailWhenOwnershipIsNotProvided()
-        {
-            model.Ownership = "";
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void FailWhenOwnershipIsYesAndAdditionalDataIsNotProvided()
+    {
+        _model.Ownership = "Yes";
 
-        [TestMethod]
-        public void FailWhenOwnershipIsYesAndAdditionalDataIsNotProvided()
-        {
-            model.Ownership = "Yes";
+        _model.PurchaseDate = null;
+        _model.Cost = string.Empty;
+        _model.Value = string.Empty;
+        _model.Type = string.Empty;
 
-            model.PurchaseDate = null;
-            model.Cost = "";
-            model.Value = "";
-            model.Type = "";
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void PassWhenOwnershipIsYesAndAdditionalDataIsProvided()
+    {
+        _model.Ownership = "Yes";
 
-        [TestMethod]
-        public void PassWhenOwnershipIsYesAndAdditionalDataIsProvided()
-        {
-            model.Ownership = "Yes";
+        _model.PurchaseDate = new DateTime(2023, 7, 7);
+        _model.Cost = "123";
+        _model.Value = "123";
+        _model.Type = "type";
 
-            model.PurchaseDate = new DateTime(2023, 7, 7);
-            model.Cost = "123";
-            model.Value = "123";
-            model.Type = "type";
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void PassWhenOwnershipIsNoAndAdditionalDataIsNotProvided()
+    {
+        _model.Ownership = "No";
 
-        [TestMethod]
-        public void PassWhenOwnershipIsNoAndAdditionalDataIsNotProvided()
-        {
-            model.Ownership = "No";
+        _model.PurchaseDate = null;
+        _model.Cost = string.Empty;
+        _model.Value = string.Empty;
+        _model.Source = string.Empty;
 
-            model.PurchaseDate = null;
-            model.Cost = "";
-            model.Value = "";
-            model.Source = "";
+        _model.AllInformationIsProvided().Should().BeTrue();
+    }
 
-            model.AllInformationIsProvided().Should().BeTrue();
-        }
+    [TestMethod]
+    public void FailWhenGrantFundingIsNotProvided()
+    {
+        _model.GrantFunding = string.Empty;
 
-        [TestMethod]
-        public void FailWhenGrantFundingIsNotProvided()
-        {
-            model.GrantFunding = "";
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void FailWhenGrantFundingIsYesAndNoAdditionalInformationIsProvided()
+    {
+        _model.GrantFunding = "Yes";
 
-        [TestMethod]
-        public void FailWhenGrantFundingIsYesAndNoAdditionalInformationIsProvided()
-        {
-            model.GrantFunding = "Yes";
+        _model.GrantFundingName = string.Empty;
+        _model.GrantFundingSource = string.Empty;
+        _model.GrantFundingAmount = string.Empty;
+        _model.GrantFundingPurpose = string.Empty;
 
-            model.GrantFundingName = "";
-            model.GrantFundingSource = "";
-            model.GrantFundingAmount = "";
-            model.GrantFundingPurpose = "";
+        _model.AllInformationIsProvided().Should().BeFalse();
+    }
 
-            model.AllInformationIsProvided().Should().BeFalse();
-        }
+    [TestMethod]
+    public void PassWhenGrantFundingIsYesAndAllAdditionalInformationIsProvided()
+    {
+        _model.GrantFunding = "Yes";
 
+        _model.GrantFundingName = "name";
+        _model.GrantFundingSource = "source";
+        _model.GrantFundingAmount = "12";
+        _model.GrantFundingPurpose = "purpose";
 
-        [TestMethod]
-        public void PassWhenGrantFundingIsYesAndAllAdditionalInformationIsProvided()
-        {
-            model.GrantFunding = "Yes";
+        _model.AllInformationIsProvided().Should().BeTrue();
+    }
 
-            model.GrantFundingName = "name";
-            model.GrantFundingSource = "source";
-            model.GrantFundingAmount = "12";
-            model.GrantFundingPurpose = "purpose";
+    [TestMethod]
+    public void PassWhenGrantFundingIsNoAndNoAdditionalInformationIsProvided()
+    {
+        _model.GrantFunding = "No";
 
-            model.AllInformationIsProvided().Should().BeTrue();
-        }
+        _model.GrantFundingName = string.Empty;
+        _model.GrantFundingSource = string.Empty;
+        _model.GrantFundingAmount = string.Empty;
+        _model.GrantFundingPurpose = string.Empty;
 
-        [TestMethod]
-        public void PassWhenGrantFundingIsNoAndNoAdditionalInformationIsProvided()
-        {
-            model.GrantFunding = "No";
-
-            model.GrantFundingName = "";
-            model.GrantFundingSource = "";
-            model.GrantFundingAmount = "";
-            model.GrantFundingPurpose = "";
-
-            model.AllInformationIsProvided().Should().BeTrue();
-        }
-
+        _model.AllInformationIsProvided().Should().BeTrue();
     }
 }

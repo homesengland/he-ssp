@@ -1,49 +1,43 @@
-﻿using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HE.InvestmentLoans.BusinessLogic.ViewModel;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders
+namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
+
+internal sealed class SiteViewModelObjectBuilder
 {
-    internal class SiteViewModelObjectBuilder
+    private SiteViewModel _object;
+
+    public SiteViewModelObjectBuilder()
     {
-        private SiteViewModel _object;
+        _object = new SiteViewModel();
+    }
 
-        public SiteViewModelObjectBuilder()
+    public static SiteViewModelObjectBuilder NewObject() => new();
+
+    public SiteViewModelObjectBuilder ThatPassesCheckAnswersValidation()
+    {
+        _object = new SiteViewModel
         {
-            _object = new SiteViewModel();
-        }
+            Name = "Test",
+            ManyHomes = "12",
+            HasEstimatedStartDate = "No",
+            TypeHomes = new string[] { "tmp" },
+            Type = "greenfield",
+            AffordableHomes = "No",
+            ChargesDebt = "No",
+            HomesToBuild = "12",
 
-        public static SiteViewModelObjectBuilder NewObject() {  return new SiteViewModelObjectBuilder(); }
+            GrantFunding = "No",
+            PlanningRef = "No",
+            LocationOption = "coordinates",
+            LocationCoordinates = "12,12 12,12",
+            Ownership = "No",
+        };
 
-        public SiteViewModelObjectBuilder ThatPassesCheckAnswersValidation()
-        {
-            _object = new SiteViewModel
-            {
-                Name = "Test",
-                ManyHomes = "12",
-                HasEstimatedStartDate = "No",
-                TypeHomes = new string[] { "tmp" },
-                Type = "greenfield",
-                AffordableHomes = "No",
-                ChargesDebt = "No",
-                HomesToBuild = "12",
+        return this;
+    }
 
-                GrantFunding = "No",
-                PlanningRef = "No",
-                LocationOption = "coordinates",
-                LocationCoordinates = "12,12 12,12",
-                Ownership = "No"
-            };
-
-            return this;
-        }
-
-        public SiteViewModel Build()
-        {
-            return _object;
-        }
+    public SiteViewModel Build()
+    {
+        return _object;
     }
 }

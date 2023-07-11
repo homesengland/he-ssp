@@ -1,4 +1,4 @@
-namespace He.HelpToBuild.Apply.Ui.Config;
+namespace HE.InvestmentLoans.WWW.Config;
 
 public static class RouteConstants
 {

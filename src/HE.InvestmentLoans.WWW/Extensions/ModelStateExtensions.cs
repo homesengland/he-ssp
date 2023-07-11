@@ -1,42 +1,41 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace HE.InvestmentLoans.WWW.Extensions
+namespace HE.InvestmentLoans.WWW.Extensions;
+
+public static class ModelStateExtensions
 {
-    public static class ModelStateExtensions
+    public static (bool HasAnyError, string Messge) GetErrors(this ModelStateDictionary modelState, string key)
     {
-        public static(bool hasAnyError, string messge) GetErrors(this ModelStateDictionary modelState, string key)
+        if (modelState is null)
         {
-            if (modelState is null)
-            {
-                return (false, string.Empty);
-            }
-
-            var hasError = modelState.GetFieldValidationState(key) == ModelValidationState.Invalid;
-
-            if (!hasError)
-            {
-                return (false, string.Empty);
-            }
-
-            return (true, modelState[key].GetErrorMessage());
+            return (false, string.Empty);
         }
 
-        public static string GetErrorMessage(this ModelStateEntry modelStateEntry)
+        var hasError = modelState.GetFieldValidationState(key) == ModelValidationState.Invalid;
+
+        if (!hasError)
         {
-            if (modelStateEntry is null)
-            {
-                return string.Empty;
-            }
-
-            var hasError = modelStateEntry.ValidationState == ModelValidationState.Invalid;
-
-            if (!hasError)
-            {
-                return string.Empty;
-            }
-
-            return modelStateEntry.Errors.Aggregate(new StringBuilder(), (sb, next) => sb.AppendLine(next.ErrorMessage)).ToString();
+            return (false, string.Empty);
         }
+
+        return (true, modelState[key]!.GetErrorMessage());
+    }
+
+    public static string GetErrorMessage(this ModelStateEntry modelStateEntry)
+    {
+        if (modelStateEntry is null)
+        {
+            return string.Empty;
+        }
+
+        var hasError = modelStateEntry.ValidationState == ModelValidationState.Invalid;
+
+        if (!hasError)
+        {
+            return string.Empty;
+        }
+
+        return modelStateEntry.Errors.Aggregate(new StringBuilder(), (sb, next) => sb.AppendLine(next.ErrorMessage)).ToString();
     }
 }

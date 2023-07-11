@@ -1,8 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
-using HE.InvestmentLoans.BusinessLogic.Enums;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel
 {

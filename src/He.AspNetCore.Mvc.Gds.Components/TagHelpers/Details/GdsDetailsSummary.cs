@@ -1,4 +1,4 @@
-﻿using He.AspNetCore.Mvc.Gds.Components.Constants;
+using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Text;
@@ -10,7 +10,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Details
     {
         public string Label { get; set; }
 
-        public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
+        public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             if (output != null)
             {
@@ -31,6 +31,8 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Details
 
                 output.Content.SetHtmlContent(contentBuilder.ToString());
             }
+
+            return Task.CompletedTask;
         }
     }
 }

@@ -14,7 +14,7 @@ public static class CollectionExtensions
             return;
         }
 
-        foreach (var item in itemsToAdd) 
+        foreach (var item in itemsToAdd)
         {
             source.Add(item);
         }

@@ -1,6 +1,6 @@
-namespace HE.InvestmentLoans.Common.Models.App;
+﻿namespace HE.InvestmentLoans.Common.Models.App;
 
-public class AppConfig : IAppConfig
+public interface IAppConfig
 {
     public string? SupportEmail { get; set; }
 
