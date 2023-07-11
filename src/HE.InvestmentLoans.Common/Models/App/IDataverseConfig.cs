@@ -1,6 +1,6 @@
-namespace HE.InvestmentLoans.Common.Models.App;
+﻿namespace HE.InvestmentLoans.Common.Models.App;
 
-public class DataverseConfig : IDataverseConfig
+public interface IDataverseConfig
 {
     public string? BaseUri { get; set; }
 

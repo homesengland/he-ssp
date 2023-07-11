@@ -1,13 +1,11 @@
-namespace HE.InvestmentLoans.BusinessLogic.Routing
+namespace HE.InvestmentLoans.Common.Routing;
+
+public enum Trigger
 {
-    public enum Trigger
-    {
-        Yes,
-        No,
-        Continue,
-        Back,
-        Redirect,
-        Change,
-        Delete
-    }
+    Yes,
+    No,
+    Continue,
+    Back,
+    Redirect,
+    Change,
 }

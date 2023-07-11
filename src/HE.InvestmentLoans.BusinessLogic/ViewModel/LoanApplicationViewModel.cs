@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.BusinessLogic.Application.Project;
 using HE.InvestmentLoans.BusinessLogic.Enums;
 using System;

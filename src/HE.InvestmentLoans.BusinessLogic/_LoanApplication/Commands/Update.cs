@@ -5,11 +5,7 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands
     using System.Threading.Tasks;
     using System;
     using HE.InvestmentLoans.BusinessLogic.ViewModel;
-    using Microsoft.PowerPlatform.Dataverse.Client;
-    using HE.InvestmentLoans.BusinessLogic.Exceptions;
     using Microsoft.AspNetCore.Http;
-    using System.Collections.Generic;
-    using System.Linq;
     using HE.InvestmentLoans.Common.Exceptions;
     using HE.InvestmentLoans.BusinessLogic._LoanApplication.Extensions;
 

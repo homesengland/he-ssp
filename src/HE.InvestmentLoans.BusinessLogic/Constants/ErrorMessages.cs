@@ -1,7 +1,4 @@
-﻿using System.Diagnostics.Metrics;
-using System.Runtime.InteropServices;
-
-namespace HE.InvestmentLoans.BusinessLogic.Constants
+﻿namespace HE.InvestmentLoans.BusinessLogic.Constants
 {
     public class ErrorMessages
     {
