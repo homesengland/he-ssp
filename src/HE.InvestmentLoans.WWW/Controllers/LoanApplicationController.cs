@@ -26,7 +26,7 @@ namespace HE.InvestmentLoans.WWW.Controllers
         }
 
         [Route("")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View("Index");
         }
