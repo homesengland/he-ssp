@@ -2,7 +2,6 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
-using HE.InvestmentLoans.Common.Authorization;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation;
