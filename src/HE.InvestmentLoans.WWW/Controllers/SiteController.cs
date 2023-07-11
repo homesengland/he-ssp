@@ -53,6 +53,7 @@ public class SiteController : Controller
             sitemodel.PreviousState = sitemodel.State;
             workflow.ChangeState(SiteWorkflow.State.DeleteProject, false);
         }
+
         if (workflow.IsCompleted())
         {
             workflow.NextState(Trigger.Back);
