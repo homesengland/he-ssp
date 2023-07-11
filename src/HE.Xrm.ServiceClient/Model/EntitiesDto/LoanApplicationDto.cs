@@ -4,7 +4,6 @@ using Microsoft.Xrm.Sdk;
 
 public class LoanApplicationDto
 {
-    //COMPANY
     public string companyPurpose { get; set; } //Purpose
     public string existingCompany { get; set; } //ExistingCompany
     public int? companyExperience { get; set; } //HomesBuilt
@@ -33,7 +32,7 @@ public class LoanApplicationDto
     public List<SiteDetailsDto> siteDetailsList { get; set; }
 
     //OTHER ATTRIBUTES
-    public string id { get; set; }
+    public string loanApplicationId { get; set; }
     public string name { get; set; }
     public string numberOfSites { get; set; }
     public string companyStructureInformation { get; set; }

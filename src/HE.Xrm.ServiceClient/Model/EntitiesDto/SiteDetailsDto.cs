@@ -5,7 +5,7 @@ namespace HE.Xrm.ServiceClientExample.Model.EntitiesDto
     public class SiteDetailsDto
     {
 
-        public string id { get; set; }
+        public string siteDetailsId { get; set; }
         public string currentValue { get; set; }
         public DateTime? dateOfPurchase { get; set; }
         public string existingLegalCharges { get; set; }

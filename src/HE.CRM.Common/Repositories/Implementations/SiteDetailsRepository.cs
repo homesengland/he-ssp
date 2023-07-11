@@ -3,6 +3,7 @@ using HE.Base.Repositories;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
+using System.Collections.Generic;
 using System.Linq;
 
 public class SiteDetailsRepository : CrmEntityRepository<invln_SiteDetails, DataverseContext>, ISiteDetailsRepository
@@ -27,6 +28,15 @@ public class SiteDetailsRepository : CrmEntityRepository<invln_SiteDetails, Data
                     }
                 }
             }
+        }
+    }
+
+    public List<invln_SiteDetails> GetSiteDetailRelatedToLoanApplication(EntityReference loanApplicationId)
+    {
+        using (var ctx = new OrganizationServiceContext(service))
+        {
+            return ctx.CreateQuery<invln_SiteDetails>()
+                .Where(x => x.invln_Loanapplication.Id == loanApplicationId.Id).ToList();
         }
     }
 }

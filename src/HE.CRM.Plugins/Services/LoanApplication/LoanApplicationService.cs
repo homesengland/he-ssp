@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Windows.Forms.VisualStyles;
 
 namespace HE.CRM.Plugins.Services.LoanApplication
 {
@@ -43,7 +44,16 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 var loanApplicationsForAccountAndContact = loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId);
                 foreach (var element in loanApplicationsForAccountAndContact)
                 {
-                    entityCollection.Add(MapLoanApplicationToDto(element));
+                    List<SiteDetailsDto> siteDetailsDtoList = new List<SiteDetailsDto>();
+                    var siteDetailsList = siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(element.ToEntityReference());
+                    if(siteDetailsList != null)
+                    {
+                        foreach(var siteDetail in siteDetailsList)
+                        {
+                            siteDetailsDtoList.Add(MapSiteDetailsToDto(siteDetail));
+                        }
+                    }
+                    entityCollection.Add(MapLoanApplicationToDto(element, siteDetailsDtoList));
                 }
             }
             return JsonSerializer.Serialize(entityCollection);
@@ -71,7 +81,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 loanApplicationGuid = loanAppId;
                 loanApplicationToCreate.Id = loanAppId;
                 loanApplicationRepository.Update(loanApplicationToCreate);
-                siteDetailsRepository.DeleteSiteDetailsRelatedToLoanApplication(new EntityReference(invln_Loanapplication.EntityLogicalName, loanAppId));
+               // siteDetailsRepository.DeleteSiteDetailsRelatedToLoanApplication(new EntityReference(invln_Loanapplication.EntityLogicalName, loanAppId));
             }
             else
             {
@@ -87,7 +97,14 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     this.TracingService.Trace("loop begin");
                     var siteDetailToCreate = MapSiteDetailsDtoToRegularEntity(siteDetail, loanApplicationGuid);
                     this.TracingService.Trace("create");
-                    siteDetailsRepository.Create(siteDetailToCreate);
+                    if(siteDetail.siteDetailsId != null)
+                    {
+                        siteDetailsRepository.Update(siteDetailToCreate);
+                    }
+                    else
+                    {
+                        siteDetailsRepository.Create(siteDetailToCreate);
+                    }
                     this.TracingService.Trace("after create record");
                 }
             }
@@ -133,6 +150,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 invln_Name = loanApplicationDto.name,
                 invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference("account", accountid) : null, //pusty account?
                 invln_Contact = contact != null ? contact.ToEntityReference() : null,
+                Id = Guid.TryParse(loanApplicationDto.loanApplicationId, out Guid loanApplicationId) ? loanApplicationId : Guid.NewGuid(),
             };
             return loanApplication;
         }
@@ -164,11 +182,43 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 invln_TypeofSite = MapTypeOfSite(siteDetail.typeOfSite),
                 invln_Valuationsource = MapValuationSource(siteDetail.valuationSource),
                 invln_Whoprovided = siteDetail.whoProvided,
+                Id = Guid.TryParse(siteDetail.siteDetailsId, out Guid detailId) ? detailId : Guid.NewGuid(),
             };
             return siteDetailToReturn;
         }
 
-        private LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication)
+        private SiteDetailsDto MapSiteDetailsToDto(invln_SiteDetails siteDetails)
+        {
+            var siteDetailToReturn = new SiteDetailsDto()
+            {
+               siteDetailsId = siteDetails.invln_SiteDetailsId?.ToString(),
+               currentValue = (siteDetails.invln_currentvalue?.Value)?.ToString(),
+               dateOfPurchase = siteDetails.invln_Dateofpurchase,
+               existingLegalCharges = siteDetails.invln_Existinglegalcharges?.ToString(),
+               existingLegalChargesInformation = siteDetails.invln_Existinglegalchargesinformation,
+               haveAPlanningReferenceNumber = siteDetails.invln_Haveaplanningreferencenumber?.ToString(),
+               howMuch = (siteDetails.invln_HowMuch?.Value)?.ToString(),
+               landRegistryTitleNumber = siteDetails.invln_Landregistrytitlenumber,
+               Name = siteDetails.invln_Name,
+               nameOfGrantFund = siteDetails.invln_Nameofgrantfund,
+               numberOfHomes = siteDetails.invln_Numberofhomes?.ToString(),
+               otherTypeOfHomes = siteDetails.invln_OtherTypeofhomes,
+               planningReferenceNumber = siteDetails.invln_Planningreferencenumber,
+               publicSectorFunding = MapPublicSectorFundingOptionSetToString(siteDetails.invln_Publicsectorfunding),
+               reason = siteDetails.invln_Reason,
+               siteCoordinates = siteDetails.invln_Sitecoordinates,
+               siteCost = siteDetails.invln_Sitecost?.Value.ToString(),
+               siteName = siteDetails.invln_Sitename,
+               siteOwnership = siteDetails.invln_Siteownership?.ToString(),
+               typeOfHomes = MapTypeOfHomesOptionSetToString(siteDetails.invln_Typeofhomes),
+               typeOfSite = MapTypeOfSiteOptionSetToString(siteDetails.invln_TypeofSite),
+               valuationSource = MapValuationSourceOptionSetToString(siteDetails.invln_Valuationsource),
+               whoProvided = siteDetails.invln_Whoprovided,
+            };
+            return siteDetailToReturn;
+        }
+
+        private LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList)
         {
             var loanApplicationDto = new LoanApplicationDto()
             {
@@ -200,6 +250,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
                 name = loanApplication.invln_Name,
                 accountId = loanApplication.invln_Account.Id,
+                loanApplicationId = loanApplication.invln_LoanapplicationId.ToString(),
+                siteDetailsList = siteDetailsDtoList,
             };
             return loanApplicationDto;
         }
@@ -283,6 +335,37 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return null;
         }
 
+        private string[] MapTypeOfHomesOptionSetToString(OptionSetValueCollection typeOfHomes)
+        {
+            if (typeOfHomes.Count > 0)
+            {
+                List<string> collection = new List<string>();
+                foreach (var home in typeOfHomes)
+                {
+                    switch (home?.Value)
+                    {
+                        case (int)invln_Typeofhomes.Apartmentsorflats:
+                            collection.Add("apartmentsorflats");
+                            break;
+                        case (int)invln_Typeofhomes.Bungalows:
+                            collection.Add("bungalows");
+                            break;
+                        case (int)invln_Typeofhomes.Extracareorassisted:
+                            collection.Add("extracareorassistedliving");
+                            break;
+                        case (int)invln_Typeofhomes.Houses:
+                            collection.Add("houses");
+                            break;
+                        case (int)invln_Typeofhomes.Other:
+                            collection.Add("other");
+                            break;
+                    }
+                }
+                return collection.ToArray();
+            }
+            return null;
+        }
+
         private OptionSetValue MapPublicSectorFunding(string publicSectorFunding)
         {
             switch (publicSectorFunding?.ToLower())
@@ -293,6 +376,21 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     return new OptionSetValue((int)invln_Publicsectorfunding.Donotknow);
                 case "yes":
                     return new OptionSetValue((int)invln_Publicsectorfunding.Yes);
+            }
+
+            return null;
+        }
+
+        private string MapPublicSectorFundingOptionSetToString(OptionSetValue publicSectorFunding)
+        {
+            switch (publicSectorFunding?.Value)
+            {
+                case (int)invln_Publicsectorfunding.No:
+                    return "no";
+                case (int)invln_Publicsectorfunding.Donotknow:
+                    return "donotknow";
+                case (int)invln_Publicsectorfunding.Yes:
+                    return "yes";
             }
 
             return null;
@@ -313,6 +411,21 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return null;
         }
 
+        private string MapValuationSourceOptionSetToString(OptionSetValue valuationSource)
+        {
+            switch (valuationSource?.Value)
+            {
+                case (int)invln_Valuationsource.Customerestimate:
+                    return "customerestimate";
+                case (int)invln_Valuationsource.RICSRedBookvaluation:
+                    return "ricsredbookvaluation";
+                case (int)invln_Valuationsource.Estateagentestimate:
+                    return "estateagentestimate";
+            }
+
+            return null;
+        }
+
         private OptionSetValue MapTypeOfSite(string typeOfSite)
         {
             switch (typeOfSite?.ToLower())
@@ -321,6 +434,19 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     return new OptionSetValue((int)invln_TypeofSite.Greenfield);
                 case "brownfield":
                     return new OptionSetValue((int)invln_TypeofSite.Brownfield);
+            }
+
+            return null;
+        }
+
+        private string MapTypeOfSiteOptionSetToString(OptionSetValue typeOfSite)
+        {
+            switch (typeOfSite?.Value)
+            {
+                case (int)invln_TypeofSite.Greenfield:
+                    return "greenfield";
+                case (int)invln_TypeofSite.Brownfield:
+                    return "brownfield";
             }
 
             return null;
