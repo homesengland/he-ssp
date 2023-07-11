@@ -97,7 +97,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     this.TracingService.Trace("loop begin");
                     var siteDetailToCreate = MapSiteDetailsDtoToRegularEntity(siteDetail, loanApplicationGuid);
                     this.TracingService.Trace("create");
-                    if(siteDetail.siteDetailsId != null)
+                    if(siteDetailToCreate.Id != null)
                     {
                         siteDetailsRepository.Update(siteDetailToCreate);
                     }
@@ -150,8 +150,11 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 invln_Name = loanApplicationDto.name,
                 invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference("account", accountid) : null, //pusty account?
                 invln_Contact = contact != null ? contact.ToEntityReference() : null,
-                Id = Guid.TryParse(loanApplicationDto.loanApplicationId, out Guid loanApplicationId) ? loanApplicationId : Guid.NewGuid(),
             };
+            if(Guid.TryParse(loanApplicationDto.loanApplicationId, out Guid loanApplicationId))
+            {
+                loanApplication.Id = loanApplicationId;
+            }
             return loanApplication;
         }
 
@@ -182,8 +185,11 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 invln_TypeofSite = MapTypeOfSite(siteDetail.typeOfSite),
                 invln_Valuationsource = MapValuationSource(siteDetail.valuationSource),
                 invln_Whoprovided = siteDetail.whoProvided,
-                Id = Guid.TryParse(siteDetail.siteDetailsId, out Guid detailId) ? detailId : Guid.NewGuid(),
             };
+            if(Guid.TryParse(siteDetail.siteDetailsId, out Guid detailId))
+            {
+                siteDetailToReturn.Id = detailId;
+            }
             return siteDetailToReturn;
         }
 
