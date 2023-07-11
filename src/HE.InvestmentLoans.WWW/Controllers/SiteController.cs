@@ -31,7 +31,6 @@ public class SiteController : Controller
     public async Task<IActionResult> CreateSite(Guid id)
     {
         var model = await this._mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
-        var site = new SiteViewModel() { Id = Guid.NewGuid() };
         var site = model.AddNewSite();
         var workflow = new SiteWorkflow(model, _mediator, site.Id);
         await this._mediator.Send(new BL._LoanApplication.Commands.Update()
@@ -121,33 +120,32 @@ public class SiteController : Controller
         return RedirectToAction("Workflow", new { id = sessionmodel.ID, site, ending = workflow.GetName() });
     }
 
-        [Route("{site}/Change")]
-        public async Task<IActionResult> Change(Guid id, Guid site, string state)
+    [Route("{site}/Change")]
+    public async Task<IActionResult> Change(Guid id, Guid site, string state)
+    {
+        var sessionmodel = await this._mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
+        var workflow = new SiteWorkflow(sessionmodel, _mediator, site);
+        workflow.ChangeState(Enum.Parse<SiteWorkflow.State>(state), true);
+        return RedirectToAction("Workflow", new { id = sessionmodel.ID, site, ending = workflow.GetName() });
+    }
+
+    [HttpPost]
+    [Route("{site}/DeleteProject")]
+    public async Task<IActionResult> Delete(Guid id, Guid site, string state)
+    {
+        var model = await this._mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
+        var sitemodel = model.Sites.FirstOrDefault(item => item.Id == site);
+
+        if (Request.Form["DeleteProject"] == "Yes")
         {
-            var sessionmodel = await this._mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
-            var workflow = new SiteWorkflow(sessionmodel, _mediator, site);
-            workflow.ChangeState(Enum.Parse<HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow.SiteWorkflow.State>(state), true);
-            return RedirectToAction("Workflow", new { id = sessionmodel.ID, site = site, ending = workflow.GetName() });
+            await this._mediator.Send(new DeleteProjectCommand(id, site));
+        }
+        else
+        {
+            var workflow = new SiteWorkflow(model, _mediator, site);
+            workflow.ChangeState(sitemodel.PreviousState, false);
         }
 
-        [HttpPost]
-        [Route("{site}/DeleteProject")]
-        public async Task<IActionResult> Delete(Guid id, Guid site, string state)
-        {
-            var model = await this.mediator.Send(new BL._LoanApplication.Queries.GetSingle() { Id = id });
-            var sitemodel = model.Sites.FirstOrDefault(item => item.Id == site);
-
-            if (Request.Form["DeleteProject"] == "Yes")
-            {
-                await this.mediator.Send(new DeleteProjectCommand(id, site));
-            }
-            else
-            {
-                var workflow = new SiteWorkflow(model, mediator, site);
-                workflow.ChangeState(sitemodel.PreviousState, false);
-            }
-
-            return RedirectToAction("Workflow", "LoanApplication", new { id, ending = "TaskList" });
-        }
+        return RedirectToAction("Workflow", "LoanApplication", new { id, ending = "TaskList" });
     }
 }
