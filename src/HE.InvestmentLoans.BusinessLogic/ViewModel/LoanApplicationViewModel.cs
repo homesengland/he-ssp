@@ -49,7 +49,6 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
         public FundingViewModel Funding { get; set; }
         public SecurityViewModel Security { get; set; }
         public List<SiteViewModel> Sites { get; set; }
-        public List<ProjectEntity> Projects { get; set; }
 
         public AccountDetailsViewModel Account { get; set; }
         public FundingPurpose? Purpose { get; set; }
