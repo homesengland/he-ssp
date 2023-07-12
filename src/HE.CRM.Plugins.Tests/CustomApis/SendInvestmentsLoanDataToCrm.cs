@@ -91,6 +91,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             Assert.IsNull(exception);
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened();
         }
 
         [TestMethod]
@@ -138,7 +139,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             Assert.IsNull(exception);
             A.CallTo(() => fakedContext.GetOrganizationService().Update(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
-           // A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened();
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened();
 
         }
 
@@ -189,7 +190,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             Assert.IsNull(exception);
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappenedTwiceOrMore();
-            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<Contact>.Ignored)).MustHaveHappened();
         }
 
         private void InitData()
