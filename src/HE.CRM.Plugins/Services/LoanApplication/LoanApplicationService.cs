@@ -1,13 +1,11 @@
-﻿using DataverseModel;
+using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
-using System.Windows.Forms.VisualStyles;
 
 namespace HE.CRM.Plugins.Services.LoanApplication
 {
@@ -81,7 +79,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 loanApplicationGuid = loanAppId;
                 loanApplicationToCreate.Id = loanAppId;
                 loanApplicationRepository.Update(loanApplicationToCreate);
-               // siteDetailsRepository.DeleteSiteDetailsRelatedToLoanApplication(new EntityReference(invln_Loanapplication.EntityLogicalName, loanAppId));
             }
             else
             {
@@ -112,6 +109,23 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return loanApplicationGuid.ToString();
         }
 
+
+        public void ChangeLoanApplicationExternalStatus(string externalStatus, string loanApplicationId)
+        {
+            TracingService.Trace($"loan id {loanApplicationId}");
+            TracingService.Trace($"new external status {externalStatus}");
+            if (Guid.TryParse(loanApplicationId, out Guid loanId) && !String.IsNullOrEmpty(externalStatus))
+            {
+                invln_Loanapplication loanToUpdate = new invln_Loanapplication()
+                {
+                    Id = loanId,
+                    invln_ExternalStatus = MapApplicationExternalStatus(externalStatus),
+                };
+                TracingService.Trace("update loan application");
+                loanApplicationRepository.Update(loanToUpdate);
+            }
+        }
+
         private invln_Loanapplication MapLoanApplicationDtoToRegularEntity(LoanApplicationDto loanApplicationDto, int numberOfSites, Contact contact, 
             string accountId)
         {
@@ -119,7 +133,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             {
                 invln_NumberofSites = numberOfSites,
                 invln_FundingReason = MapFundingReason(loanApplicationDto.fundingReason),
-                invln_ExternalStatus = MapApplicationStatus(loanApplicationDto.loanApplicationStatus),
+                invln_ExternalStatus = MapApplicationExternalStatus(loanApplicationDto.loanApplicationStatus),
 
                 //COMPANY
                 invln_CompanyPurpose = ParseBool(loanApplicationDto.companyPurpose), //Purpose
@@ -278,22 +292,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     return "other";
                 default:
                     return null;
-            }
-        }
-
-        public void ChangeLoanApplicationExternalStatus(string externalStatus, string loanApplicationId)
-        {
-            TracingService.Trace($"loan id {loanApplicationId}");
-            TracingService.Trace($"new external status {externalStatus}");
-            if (Guid.TryParse(loanApplicationId, out Guid loanId) && !String.IsNullOrEmpty(externalStatus))
-            {
-                invln_Loanapplication loanToUpdate = new invln_Loanapplication()
-                {
-                    Id = loanId,
-                    invln_ExternalStatus = MapApplicationExternalStatus(externalStatus),
-                };
-                TracingService.Trace("update loan application");
-                loanApplicationRepository.Update(loanToUpdate);
             }
         }
 
