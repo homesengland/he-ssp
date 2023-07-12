@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Extensions;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
@@ -23,10 +24,12 @@ public class Update : IRequest<LoanApplicationViewModel>
     public class Handler : IRequestHandler<Update, LoanApplicationViewModel>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IDateTimeProvider _dateTime;
 
-        public Handler(IHttpContextAccessor httpContextAccessor)
+        public Handler(IHttpContextAccessor httpContextAccessor, IDateTimeProvider dateTime)
         {
             _httpContextAccessor = httpContextAccessor;
+            _dateTime = dateTime;
         }
 
         public async Task<LoanApplicationViewModel> Handle(Update request, CancellationToken cancellationToken)
@@ -36,7 +39,7 @@ public class Update : IRequest<LoanApplicationViewModel>
                 throw new NotFoundException(nameof(LoanApplicationViewModel), string.Empty);
             }
 
-            request.Model.Timestamp = DateTime.Now;
+            request.Model.Timestamp = _dateTime.Now;
 
             if (request.TryUpdateModelAction != null)
             {

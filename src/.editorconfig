@@ -95,7 +95,7 @@ indent_style = space
 # Default .NET Code Style Severities
 # https://docs.microsoft.com/dotnet/fundamentals/code-analysis/configuration-options#scope
 ##########################################
-[HE.Common.IntegrationModel/**/**.{cs,csx,cake,vb,vbx}]
+[{HE.Common.IntegrationModel,HE.Xrm.ServiceClient}/**/**.{cs,csx,cake,vb,vbx}]
 dotnet_analyzer_diagnostic.severity = none
 generated_code = true
 dotnet_diagnostic.ide0005.severity = none
