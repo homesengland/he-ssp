@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests;
 public class MediatorTestBase
 {
     private readonly Mock<IHttpContextAccessor> _httpContextAccessor = new(MockBehavior.Strict);
+    private readonly Mock<IDateTimeProvider> _dateTimeProvider = new(MockBehavior.Strict);
 
     [SuppressMessage("Usage", "CA2214", Justification = "Allowed in tests")]
     public MediatorTestBase()
@@ -20,6 +22,9 @@ public class MediatorTestBase
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(LoanApplicationViewModel).Assembly));
         services.AddValidatorsFromAssemblyContaining<LoanApplicationViewModel>();
         services.AddTransient(x => _httpContextAccessor.Object);
+
+        _dateTimeProvider.Setup(d => d.Now).Returns(new DateTime(2023, 7, 12));
+        services.AddSingleton(x => _dateTimeProvider.Object);
 
         AddAditionalServices(services);
         ServiceProvider = services.BuildServiceProvider();
