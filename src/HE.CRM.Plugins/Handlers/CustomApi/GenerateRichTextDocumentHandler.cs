@@ -1,13 +1,6 @@
 ﻿using DataverseModel;
 using HE.Base.Plugins.Handlers;
-using HE.Base.Services;
-using HE.CRM.Plugins.Services.Contacts;
 using HE.CRM.Plugins.Services.RichTextService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HE.CRM.Plugins.Handlers.CustomApi
 {

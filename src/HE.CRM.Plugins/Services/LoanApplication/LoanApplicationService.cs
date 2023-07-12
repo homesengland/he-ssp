@@ -53,7 +53,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             {
                 invln_NumberofSites = numberOfSites,
                 invln_FundingReason = MapFundingReason(loanApplicationFromPortal.fundingReason),
-                invln_ExternalStatus = MapApplicationStatus(loanApplicationFromPortal.loanApplicationStatus),
+                invln_ExternalStatus = MapApplicationExternalStatus(loanApplicationFromPortal.loanApplicationStatus),
 
                 //COMPANY
                 invln_CompanyPurpose = ParseBool(loanApplicationFromPortal.companyPurpose), //Purpose
@@ -143,7 +143,23 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return loanApplicationGuid.ToString();
         }
 
-        private OptionSetValue MapApplicationStatus(string applicationStatus)
+        public void ChangeLoanApplicationExternalStatus(string externalStatus, string loanApplicationId)
+        {
+            TracingService.Trace($"loan id {loanApplicationId}");
+            TracingService.Trace($"new external status {externalStatus}");
+            if (Guid.TryParse(loanApplicationId, out Guid loanId) && !String.IsNullOrEmpty(externalStatus))
+            {
+                invln_Loanapplication loanToUpdate = new invln_Loanapplication()
+                {
+                    Id = loanId,
+                    invln_ExternalStatus = MapApplicationExternalStatus(externalStatus),
+                };
+                TracingService.Trace("update loan application");
+                loanApplicationRepository.Update(loanToUpdate);
+            }
+        }
+
+        private OptionSetValue MapApplicationExternalStatus(string applicationStatus)
         {
             switch (applicationStatus?.ToLower())
             {
@@ -151,8 +167,33 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     return new OptionSetValue((int)invln_ExternalStatus.Draft);
                 case "submitted":
                     return new OptionSetValue((int)invln_ExternalStatus.Submitted);
+                case "under review":
+                    return new OptionSetValue((int)invln_ExternalStatus.Underreview);
+                case "in due diligence":
+                    return new OptionSetValue((int)invln_ExternalStatus.Induediligence);
+                case "contract signed subject to cp":
+                    return new OptionSetValue((int)invln_ExternalStatus.ContractSignedsubjecttoCP);
+                case "cps satisfied":
+                    return new OptionSetValue((int)invln_ExternalStatus.CPssatisfied);
+                case "loan available":
+                    return new OptionSetValue((int)invln_ExternalStatus.Loanavailable);
+                case "hold requested":
+                    return new OptionSetValue((int)invln_ExternalStatus.Holdrequested);
+                case "on hold":
+                    return new OptionSetValue((int)invln_ExternalStatus.Onhold);
+                case "referred back to applicant":
+                    return new OptionSetValue((int)invln_ExternalStatus.Referredbacktoapplicant);
+                case "n/a":
+                    return new OptionSetValue((int)invln_ExternalStatus.NA);
+                case "withdrawn":
+                    return new OptionSetValue((int)invln_ExternalStatus.Withdrawn);
+                case "not approved":
+                    return new OptionSetValue((int)invln_ExternalStatus.Notapproved);
+                case "application declined":
+                    return new OptionSetValue((int)invln_ExternalStatus.Applicationdeclined);
+                case "approved subject to contract":
+                    return new OptionSetValue((int)invln_ExternalStatus.Approvedsubjecttocontract);
             }
-
             return null;
         }
 
@@ -328,7 +369,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
             return preparedAccount;
         }
-
         #endregion
     }
 }

@@ -98,6 +98,7 @@
   "generateActions": true,
   "generateGlobalOptionSets": true,
   "messageNamesFilter": [
+    "invln_changeloanapplicationexternalstatus*",
     "invln_generaterichtextdocument*",
     "invln_getcontactrole*",
     "invln_sendinvestmentloansdatatocrm*"

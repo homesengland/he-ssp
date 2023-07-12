@@ -8,7 +8,8 @@
   <EntityTypesFolder>..\Entities</EntityTypesFolder>
   <ExtensionConfig>
     <ActionPrefixesWhitelist />
-    <ActionsWhitelist>invln_generaterichtextdocument|
+    <ActionsWhitelist>invln_changeloanapplicationexternalstatus|
+invln_generaterichtextdocument|
 invln_getcontactrole|
 invln_sendinvestmentloansdatatocrm</ActionsWhitelist>
     <ActionsToSkip />
