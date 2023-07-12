@@ -205,7 +205,12 @@ public class SiteViewModel
             return true;
         }
 
-        return PurchaseDate != null && !string.IsNullOrEmpty(Cost) && !string.IsNullOrEmpty(Value) && !string.IsNullOrEmpty(Source);
+        return !string.IsNullOrEmpty(PurchaseDay)
+                && !string.IsNullOrEmpty(PurchaseMonth)
+                && !string.IsNullOrEmpty(PurchaseYear)
+                && !string.IsNullOrEmpty(Cost)
+                && !string.IsNullOrEmpty(Value)
+                && !string.IsNullOrEmpty(Source);
     }
 
     private bool GrantFundingInformationProvided()
