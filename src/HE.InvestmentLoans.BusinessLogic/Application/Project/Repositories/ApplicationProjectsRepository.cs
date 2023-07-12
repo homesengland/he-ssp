@@ -1,4 +1,4 @@
-﻿using HE.InvestmentLoans.BusinessLogic._LoanApplication.Extensions;
+using HE.InvestmentLoans.BusinessLogic._LoanApplication.Extensions;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
 using Microsoft.AspNetCore.Http;
@@ -25,7 +25,7 @@ internal class ApplicationProjectsRepository : IApplicationProjectsRepository
 
         if (projectToDelete == null)
         {
-            throw new DeleteFailureException(projectToDelete.GetType().ToString(), projectId, "Project doesn't exist.");
+            throw new NotFoundException(projectToDelete.GetType().ToString(), projectId);
         }
 
         loanApplicationSessionModel.Timestamp = DateTime.Now;
