@@ -94,7 +94,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     this.TracingService.Trace("loop begin");
                     var siteDetailToCreate = MapSiteDetailsDtoToRegularEntity(siteDetail, loanApplicationGuid);
                     this.TracingService.Trace("create");
-                    if(siteDetailToCreate.Id != null)
+                    if(!String.IsNullOrEmpty(siteDetail.siteDetailsId) && Guid.TryParse(siteDetail.siteDetailsId, out Guid result))
                     {
                         siteDetailsRepository.Update(siteDetailToCreate);
                     }
