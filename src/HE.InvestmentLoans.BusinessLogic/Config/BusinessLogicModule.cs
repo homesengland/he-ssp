@@ -8,6 +8,7 @@ using HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Pipelines;
 using HE.InvestmentLoans.BusinessLogic.Application.Project.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.Common.Utils;
 
 namespace HE.InvestmentLoans.BusinessLogic.Config;
 
@@ -22,5 +23,6 @@ public static class BusinessLogicModule
         services.AddScoped<ILoanUserRepository, LoanUserRepository>();
         services.AddScoped<ILoanUserContext, LoanUserContext>();
         services.AddScoped<IApplicationProjectsRepository, ApplicationProjectsRepository>();
+        services.AddScoped<IDateTimeProvider, DateTimeProvider>();
     }
 }
