@@ -1,7 +1,6 @@
-﻿using DataverseModel;
+using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Plugins.Services.LoanApplication;
-using HE.CRM.Plugins.Services.RichTextService;
 
 namespace HE.CRM.Plugins.Handlers.CustomApi
 {
@@ -9,7 +8,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
     {
         #region Fields
 
-        private string externalStatus => ExecutionData.GetInputParameter<string>(invln_changeloanapplicationexternalstatusRequest.Fields.invln_externalstatus);
+        private int externalStatus => ExecutionData.GetInputParameter<int>(invln_changeloanapplicationexternalstatusRequest.Fields.invln_statusexternal);
         private string loanApplicationId => ExecutionData.GetInputParameter<string>(invln_changeloanapplicationexternalstatusRequest.Fields.invln_loanapplicationid);
 
         #endregion
@@ -17,7 +16,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         #region Base Methods Overrides
         public override bool CanWork()
         {
-            return !string.IsNullOrEmpty(externalStatus) && !string.IsNullOrEmpty(loanApplicationId);
+            return externalStatus != null && !string.IsNullOrEmpty(loanApplicationId);
         }
 
         public override void DoWork()

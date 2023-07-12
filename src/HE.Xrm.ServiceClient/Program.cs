@@ -1,9 +1,8 @@
 using HE.Xrm.ServiceClientExample.Model;
+using HE.Xrm.ServiceClientExample.Model.EntitiesDto;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using Microsoft.Xrm.Sdk;
 using System.Configuration;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 
 namespace HE.Xrm.ServiceClientExample
 {
@@ -36,7 +35,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-
+                    //TestCustomApi(serviceClient);
                 }
                 else
                 {
@@ -48,23 +47,6 @@ namespace HE.Xrm.ServiceClientExample
             Console.ReadLine();
         }
 
-        private static void TestCustomApi(ServiceClient serviceClient)
-        {
-            var req = new OrganizationRequest("invln_generaterichtextdocument")  //Name of Custom API
-            {
-                ["invln_entityid"] = "9ecd7050-3c1c-ee11-8f6d-002248c653e1",  //Input Parameter
-                ["invln_entityname"] = invln_Loanapplication.EntityLogicalName,  //Input Parameter 
-                ["invln_richtext"] = "witam {{invln_name}}, jak tam mija zycie? mi dobrze {{invln_companyexperience}}"  //Input Parameter
-            };
-            string text = "witam {{invln_name}}, jak tam mija zycie? mi dobrze {{invln_companyexperience}}";
-            foreach (Match match in Regex.Matches(text, "{[^}]+}"))
-            {
-                Console.WriteLine(match.Value.Trim('{', '}'));
-            }
-
-            var resp = serviceClient.Execute(req);
-            Console.WriteLine();
-        }
 
     }
 }

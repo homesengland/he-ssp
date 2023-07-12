@@ -21,7 +21,7 @@ namespace DataverseModel
 		public static class Fields
 		{
 			public const string invln_loanapplicationid = "invln_loanapplicationid";
-			public const string invln_externalstatus = "invln_externalstatus";
+			public const string invln_statusexternal = "invln_statusexternal";
 		}
 		
 		public const string ActionLogicalName = "invln_changeloanapplicationexternalstatus";
@@ -45,22 +45,22 @@ namespace DataverseModel
 			}
 		}
 		
-		public string invln_externalstatus
+		public int invln_statusexternal
 		{
 			get
 			{
-				if (this.Parameters.Contains("invln_externalstatus"))
+				if (this.Parameters.Contains("invln_statusexternal"))
 				{
-					return ((string)(this.Parameters["invln_externalstatus"]));
+					return ((int)(this.Parameters["invln_statusexternal"]));
 				}
 				else
 				{
-					return default(string);
+					return default(int);
 				}
 			}
 			set
 			{
-				this.Parameters["invln_externalstatus"] = value;
+				this.Parameters["invln_statusexternal"] = value;
 			}
 		}
 		
@@ -68,7 +68,7 @@ namespace DataverseModel
 		{
 			this.RequestName = "invln_changeloanapplicationexternalstatus";
 			this.invln_loanapplicationid = default(string);
-			this.invln_externalstatus = default(string);
+			this.invln_statusexternal = default(int);
 		}
 	}
 	

@@ -12568,4 +12568,67 @@ namespace HE.Xrm.ServiceClientExample.Model
 			}
 		}
 	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_changeloanapplicationexternalstatus")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_changeloanapplicationexternalstatusRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public int invln_statusexternal
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_statusexternal"))
+				{
+					return ((int)(this.Parameters["invln_statusexternal"]));
+				}
+				else
+				{
+					return default(int);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_statusexternal"] = value;
+			}
+		}
+		
+		public invln_changeloanapplicationexternalstatusRequest()
+		{
+			this.RequestName = "invln_changeloanapplicationexternalstatus";
+			this.invln_loanapplicationid = default(string);
+			this.invln_statusexternal = default(int);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_changeloanapplicationexternalstatus")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_changeloanapplicationexternalstatusResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_changeloanapplicationexternalstatusResponse()
+		{
+		}
+	}
 }

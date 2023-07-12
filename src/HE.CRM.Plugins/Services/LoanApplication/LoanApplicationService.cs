@@ -51,7 +51,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                             siteDetailsDtoList.Add(MapSiteDetailsToDto(siteDetail));
                         }
                     }
-                    entityCollection.Add(MapLoanApplicationToDto(element, siteDetailsDtoList));
+                    entityCollection.Add(MapLoanApplicationToDto(element, siteDetailsDtoList, externalContactId));
                 }
             }
             return JsonSerializer.Serialize(entityCollection);
@@ -110,16 +110,16 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         }
 
 
-        public void ChangeLoanApplicationExternalStatus(string externalStatus, string loanApplicationId)
+        public void ChangeLoanApplicationExternalStatus(int externalStatus, string loanApplicationId)
         {
             TracingService.Trace($"loan id {loanApplicationId}");
             TracingService.Trace($"new external status {externalStatus}");
-            if (Guid.TryParse(loanApplicationId, out Guid loanId) && !String.IsNullOrEmpty(externalStatus))
+            if (Guid.TryParse(loanApplicationId, out Guid loanId) && externalStatus != null)
             {
                 invln_Loanapplication loanToUpdate = new invln_Loanapplication()
                 {
                     Id = loanId,
-                    invln_ExternalStatus = MapApplicationExternalStatus(externalStatus),
+                    invln_ExternalStatus = new OptionSetValue(externalStatus),
                 };
                 TracingService.Trace("update loan application");
                 loanApplicationRepository.Update(loanToUpdate);
@@ -238,7 +238,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return siteDetailToReturn;
         }
 
-        private LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList)
+        private LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList, string externalContactId)
         {
             var loanApplicationDto = new LoanApplicationDto()
             {
@@ -272,6 +272,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 accountId = loanApplication.invln_Account.Id,
                 loanApplicationId = loanApplication.invln_LoanapplicationId.ToString(),
                 siteDetailsList = siteDetailsDtoList,
+                externalId = externalContactId,
             };
             return loanApplicationDto;
         }
