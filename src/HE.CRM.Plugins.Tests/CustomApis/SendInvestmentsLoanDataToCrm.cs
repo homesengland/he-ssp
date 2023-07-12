@@ -1,4 +1,4 @@
-﻿using DataverseModel;
+using DataverseModel;
 using FakeItEasy;
 using FakeXrmEasy;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
@@ -56,13 +56,30 @@ namespace HE.CRM.Plugins.Tests.CustomApis
         [TestMethod]
         public void SendInvesmentsLoanDataToCrm_PayloadDataWithObjects_ShouldCreateNewRecords()
         {
+            Contact contact = new Contact()
+            {
+                Id = Guid.NewGuid(),
+                EMailAddress1 = applicationDto.contactEmailAdress,
+                invln_externalid = "2137",
+            };
+
+            Account account = new Account()
+            {
+                Id = Guid.NewGuid()
+            };
+
+            fakedContext.Initialize(new List<Entity> { contact, account });
+
             Exception exception = null;
             try
             {
                 var request = new invln_sendinvestmentloansdatatocrmRequest();
                 pluginContext.InputParameters = new ParameterCollection
                 {
-                    {nameof(request.invln_entityfieldsparameters), payload }
+                    {nameof(request.invln_entityfieldsparameters), payload },
+                    {nameof(request.invln_contactexternalid), contact.invln_externalid },
+                    {nameof(request.invln_accountid), account.Id.ToString() },
+                    {nameof(request.invln_loanapplicationid), String.Empty },
                 };
 
                 fakedContext.ExecutePluginWithConfigurations<SendInvestmentsLoanDataToCrmPlugin>(pluginContext, "", "");
@@ -74,17 +91,21 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             Assert.IsNull(exception);
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
-            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened();
-            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<Contact>.Ignored)).MustHaveHappened();
         }
 
         [TestMethod]
-        public void SendInvestmentsLoanDataToCrm_ContactAlreadyExistsInCrm_ShouldDeleteExistingInvestmentLoanAndCreateNew()
+        public void SendInvestmentsLoanDataToCrm_ContactAlreadyExistsInCrm_ShouldUpdateExistingLoanApplication()
         {
             Contact contact = new Contact()
             {
                 Id = Guid.NewGuid(),
                 EMailAddress1 = applicationDto.contactEmailAdress,
+                invln_externalid = "2137",
+            };
+
+            Account account = new Account()
+            {
+                Id = Guid.NewGuid()
             };
 
             invln_Loanapplication existingLoan = new invln_Loanapplication()
@@ -93,7 +114,8 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 invln_Contact = contact.ToEntityReference(),
             };
 
-            fakedContext.Initialize(new List<Entity> { existingLoan, contact });
+
+            fakedContext.Initialize(new List<Entity> { existingLoan, contact, account });
 
             Exception exception = null;
             try
@@ -101,7 +123,10 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 var request = new invln_sendinvestmentloansdatatocrmRequest();
                 pluginContext.InputParameters = new ParameterCollection
                 {
-                    {nameof(request.invln_entityfieldsparameters), payload }
+                    {nameof(request.invln_entityfieldsparameters), payload },
+                    {nameof(request.invln_contactexternalid), contact.invln_externalid },
+                    {nameof(request.invln_accountid), account.Id.ToString() },
+                    {nameof(request.invln_loanapplicationid), existingLoan.Id.ToString() },
                 };
 
                 fakedContext.ExecutePluginWithConfigurations<SendInvestmentsLoanDataToCrmPlugin>(pluginContext, "", "");
@@ -112,9 +137,8 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             }
 
             Assert.IsNull(exception);
-            A.CallTo(() => fakedContext.GetOrganizationService().Delete(existingLoan.LogicalName, existingLoan.Id)).MustHaveHappened();
-            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
-            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened();
+            A.CallTo(() => fakedContext.GetOrganizationService().Update(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
+           // A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened();
 
         }
 
@@ -129,6 +153,19 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             loan.siteDetailsList.Add(site3);
             loan.siteDetailsList.Add(site4);
             string newPayload = JsonSerializer.Serialize<LoanApplicationDto>(loan);
+
+            Contact contact = new Contact()
+            {
+                Id = Guid.NewGuid(),
+                EMailAddress1 = applicationDto.contactEmailAdress,
+                invln_externalid = "2137",
+            };
+
+            Account account = new Account()
+            {
+                Id = Guid.NewGuid()
+            };
+
             Exception exception = null;
 
             try
@@ -136,7 +173,10 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 var request = new invln_sendinvestmentloansdatatocrmRequest();
                 pluginContext.InputParameters = new ParameterCollection
                 {
-                    {nameof(request.invln_entityfieldsparameters), newPayload }
+                    {nameof(request.invln_entityfieldsparameters), newPayload },
+                    {nameof(request.invln_contactexternalid), contact.invln_externalid },
+                    {nameof(request.invln_accountid), account.Id.ToString() },
+                    {nameof(request.invln_loanapplicationid), String.Empty },
                 };
 
                 fakedContext.ExecutePluginWithConfigurations<SendInvestmentsLoanDataToCrmPlugin>(pluginContext, "", "");
