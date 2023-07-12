@@ -1,42 +1,47 @@
-using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
 
-namespace HE.InvestmentLoans.BusinessLogic.ViewModel
+namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
+
+public class SecurityViewModel
 {
-    public class SecurityViewModel 
+    public SecurityViewModel()
     {
-      
-        public SecurityViewModel()
+        State = SecurityWorkflow.State.Index;
+    }
+
+    public string CheckAnswers { get; set; }
+
+    public string ChargesDebtCompany { get; set; }
+
+    public string? ChargesDebtCompanyInfo { get; set; }
+
+    public string DirLoans { get; set; }
+
+    public string? DirLoansSub { get; set; }
+
+    public string? DirLoansSubMore { get; set; }
+
+    public string Name { get; set; }
+
+    public SecurityWorkflow.State State { get; set; }
+
+    public bool StateChanged { get; set; }
+
+    public void RemoveAlternativeRoutesData()
+    {
+        if (ChargesDebtCompany == "No")
         {
-            State = SecurityWorkflow.State.Index;
+            ChargesDebtCompanyInfo = null;
         }
 
-        public string CheckAnswers { get; set; }
-        public string ChargesDebtCompany { get; set; }
-        public string ChargesDebtCompanyInfo { get; set; }
-        public string DirLoans { get; set; }
-        public string DirLoansSub { get; set; }
-        public string DirLoansSubMore { get; set; }
-        public string Name { get; set; }
-        public SecurityWorkflow.State State { get;  set; }
-        public bool StateChanged { get; set; }
-
-
-        public void RemoveAlternativeRoutesData()
+        if (DirLoans == "No")
         {
-            if(ChargesDebtCompany == "No")
-            {
-                ChargesDebtCompanyInfo = null;
-            }
-
-            if (DirLoans == "No")
-            {
-                DirLoansSub = null;
-                DirLoansSubMore = null;
-            }
-            else if(DirLoansSub == "Yes")
-            {
-                DirLoansSubMore = null;
-            }
+            DirLoansSub = null;
+            DirLoansSubMore = null;
+        }
+        else if (DirLoansSub == "Yes")
+        {
+            DirLoansSubMore = null;
         }
     }
 }

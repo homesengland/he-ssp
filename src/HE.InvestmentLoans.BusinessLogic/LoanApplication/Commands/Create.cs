@@ -1,12 +1,10 @@
-using HE.InvestmentLoans.BusinessLogic._LoanApplication.Extensions;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Extensions;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands;
+namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Commands;
 
 public class Create : IRequest<LoanApplicationViewModel>
 {

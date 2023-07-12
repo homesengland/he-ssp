@@ -1,49 +1,60 @@
-using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
 
-namespace HE.InvestmentLoans.BusinessLogic.ViewModel
+namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
+
+public class FundingViewModel
 {
-    public class FundingViewModel
+    public FundingViewModel()
     {
-        public FundingViewModel() {
-            State = FundingWorkflow.State.Index;
-            StateChanged = false;
+        State = FundingWorkflow.State.Index;
+        StateChanged = false;
+    }
+
+    public string GrossDevelopmentValue { get; set; }
+
+    public string TotalCosts { get; set; }
+
+    public string AbnormalCosts { get; set; }
+
+    public string? AbnormalCostsInfo { get; set; }
+
+    public string PrivateSectorFunding { get; set; }
+
+    public string? PrivateSectorFundingResult { get; set; }
+
+    public string? PrivateSectorFundingReason { get; set; }
+
+    public string AdditionalProjects { get; set; }
+
+    public string Refinance { get; set; }
+
+    public string? RefinanceInfo { get; set; }
+
+    public string CheckAnswers { get; set; }
+
+    public FundingWorkflow.State State { get; set; }
+
+    public bool StateChanged { get; set; }
+
+    public void RemoveAlternativeRoutesData()
+    {
+        if (PrivateSectorFunding == "Yes")
+        {
+            PrivateSectorFundingReason = null;
+        }
+        else if (PrivateSectorFunding == "No")
+        {
+            PrivateSectorFundingResult = null;
         }
 
-        public string GrossDevelopmentValue { get; set; }
-        public string TotalCosts { get; set; }
-        public string AbnormalCosts { get; set; }
-        public string AbnormalCostsInfo { get; set; }
-        public string PrivateSectorFunding { get; set; }
-        public string PrivateSectorFundingResult { get; set; }
-        public string PrivateSectorFundingReason { get; set; }
-        public string AdditionalProjects { get; set; }
-        public string Refinance { get; set; }
-        public string RefinanceInfo { get; set; }
-        public string CheckAnswers { get; set; }
-        public FundingWorkflow.State State { get;  set; }
-        public bool StateChanged { get;  set; }
-
-
-        public void RemoveAlternativeRoutesData()
+        if (AbnormalCosts == "No")
         {
-            if(PrivateSectorFunding == "Yes")
-            {
-                PrivateSectorFundingReason = null;
-            }
-            else if(PrivateSectorFunding == "No")
-            {
-                PrivateSectorFundingResult = null;
-            }
+            AbnormalCostsInfo = null;
+        }
 
-            if(AbnormalCosts == "No")
-            {
-                AbnormalCostsInfo = null;
-            }
-
-            if(Refinance == "repay")
-            {
-                RefinanceInfo = null;
-            }
+        if (Refinance == "repay")
+        {
+            RefinanceInfo = null;
         }
     }
 }

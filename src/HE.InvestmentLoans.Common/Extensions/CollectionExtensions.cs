@@ -1,8 +1,8 @@
-﻿namespace HE.InvestmentLoans.Common.Extensions;
+namespace HE.InvestmentLoans.Common.Extensions;
 
 public static class CollectionExtensions
 {
-    public static void AddRange<T>(this IList<T> source, IList<T> itemsToAdd)
+    public static void AddRange<T>(this IList<T> source, IList<T>? itemsToAdd)
     {
         if (source == null)
         {

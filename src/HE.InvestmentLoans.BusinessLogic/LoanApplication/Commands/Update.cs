@@ -1,14 +1,11 @@
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using System;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Extensions;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using Microsoft.AspNetCore.Http;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.BusinessLogic._LoanApplication.Extensions;
 using HE.InvestmentLoans.Common.Utils;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 
-namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands;
+namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Commands;
 
 public class Update : IRequest<LoanApplicationViewModel>
 {
@@ -39,7 +36,7 @@ public class Update : IRequest<LoanApplicationViewModel>
         {
             if (request.Model == null)
             {
-                throw new NotFoundException(nameof(LoanApplicationViewModel), "");
+                throw new NotFoundException(nameof(LoanApplicationViewModel), string.Empty);
             }
 
             request.Model.Timestamp = _dateTime.Now;
@@ -48,7 +45,6 @@ public class Update : IRequest<LoanApplicationViewModel>
             {
                 _ = await request.TryUpdateModelAction(request.Model);
             }
-
 
             _httpContextAccessor.HttpContext?.Session.Set(request.Model.ID.ToString(), request.Model);
 

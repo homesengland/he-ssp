@@ -2,10 +2,6 @@ using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HE.InvestmentLoans.BusinessLogic.User;
 
@@ -17,7 +13,7 @@ public class LoanUserContext : ILoanUserContext
 
     private readonly IList<Guid> _accountIds = new List<Guid>();
 
-    private Guid? _selectedAccountId = null;
+    private Guid? _selectedAccountId;
 
     public LoanUserContext(IUserContext userContext, ILoanUserRepository loanUserRepository)
     {
@@ -27,7 +23,7 @@ public class LoanUserContext : ILoanUserContext
 
     public string UserGlobalId => _userContext.UserGlobalId;
 
-    public string Email => _userContext.Email;
+    public string Email => _userContext.Email ?? string.Empty;
 
     public IReadOnlyCollection<string> Roles { get; }
 
@@ -38,7 +34,7 @@ public class LoanUserContext : ILoanUserContext
             await LoadUserDetails();
         }
 
-        return _selectedAccountId.Value;
+        return _selectedAccountId!.Value;
     }
 
     public async Task<IList<Guid>> GetAllAccountIds()

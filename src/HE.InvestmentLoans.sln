@@ -30,8 +30,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Xrm.ServiceClientExample
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "He.AspNetCore.Mvc.Gds.Components", "He.AspNetCore.Mvc.Gds.Components\He.AspNetCore.Mvc.Gds.Components.csproj", "{3095AEE3-B6F8-46EF-9E6D-4BE529EC3847}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controls", "Controls", "{1CDB1CDE-C0A9-4937-8752-CB23ADC1B58C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{49D82160-DF00-41AA-A4F1-C6A32CF38179}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HE.Common.IntegrationModel", "HE.Common.IntegrationModel\HE.Common.IntegrationModel.shproj", "{F4CF4046-1578-49F6-9AB9-E2ACD2765ECF}"
@@ -40,9 +38,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.CRM.Plugins.Tests", "HE.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.InvestmentLoans.BusinessLogic.Tests", "HE.InvestmentLoans.BusinessLogic.Tests\HE.InvestmentLoans.BusinessLogic.Tests.csproj", "{22145ED3-5B37-4F34-964D-C849834D57A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.InvestmentLoans.Contract", "HE.InvestmentLoans.Contract\HE.InvestmentLoans.Contract.csproj", "{DD7D83CE-18D8-4A2E-B689-015747C850E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.InvestmentLoans.Contract", "HE.InvestmentLoans.Contract\HE.InvestmentLoans.Contract.csproj", "{DD7D83CE-18D8-4A2E-B689-015747C850E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.InvestmentLoans.Common.Tests", "HE.InvestmentLoans.Common.Tests\HE.InvestmentLoans.Common.Tests.csproj", "{73C15AF7-C996-497A-8D60-5D85F7F56876}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.InvestmentLoans.Common.Tests", "HE.InvestmentLoans.Common.Tests\HE.InvestmentLoans.Common.Tests.csproj", "{73C15AF7-C996-497A-8D60-5D85F7F56876}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

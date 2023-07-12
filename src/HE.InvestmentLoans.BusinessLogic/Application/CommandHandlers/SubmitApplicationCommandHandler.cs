@@ -1,9 +1,6 @@
-﻿using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Contract.Application;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace HE.InvestmentLoans.BusinessLogic.Application.CommandHandlers;
 

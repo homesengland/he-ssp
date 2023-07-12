@@ -1,8 +1,6 @@
 ﻿using HE.InvestmentLoans.BusinessLogic.Application.Project.Repositories;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace HE.InvestmentLoans.BusinessLogic.Application.Project.CommandHandlers;
 

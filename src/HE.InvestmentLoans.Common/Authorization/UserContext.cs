@@ -17,16 +17,13 @@ public class UserContext : IUserContext
         }
 
         var httpUser = httpContext.User;
-        Email = GetClaimValue(httpUser, EmailClaimName);
+        Email = GetClaimValue(httpUser, EmailClaimName) ?? string.Empty;
         UserGlobalId = GetRequiredClaimValue(httpUser, IdentifierClaimName);
     }
 
     public string UserGlobalId { get; init; }
 
-    public string? Email
-    {
-        get; init;
-    }
+    public string Email { get; init; }
 
     private string GetRequiredClaimValue(ClaimsPrincipal claimsPrincipal, string claimType)
     {
