@@ -34,7 +34,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public List<SiteDetailsDto> siteDetailsList { get; set; }
 
         //OTHER ATTRIBUTES
-        public string id { get; set; }
+        public string loanApplicationId { get; set; }
         public string name { get; set; }
         public string numberOfSites { get; set; }
         public string companyStructureInformation { get; set; }

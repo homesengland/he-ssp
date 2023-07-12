@@ -4,7 +4,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
     public class SiteDetailsDto
     {
-        public string id { get; set; }
+        public string siteDetailsId { get; set; }
         public string currentValue { get; set; }
         public DateTime? dateOfPurchase { get; set; }
         public string existingLegalCharges { get; set; }
