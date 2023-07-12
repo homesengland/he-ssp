@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.BusinessLogic._LoanApplication.Commands;
-using HE.InvestmentLoans.BusinessLogic._LoanApplication.Queries;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Commands;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Queries;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication;

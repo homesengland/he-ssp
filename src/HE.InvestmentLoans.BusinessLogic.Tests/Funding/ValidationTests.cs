@@ -1,7 +1,7 @@
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
-using HE.InvestmentLoans.BusinessLogic._LoanApplication.Validation;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Validation;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Funding;

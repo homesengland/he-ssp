@@ -1,13 +1,10 @@
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-using System;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Extensions;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using Microsoft.AspNetCore.Http;
-using HE.InvestmentLoans.BusinessLogic._LoanApplication.Extensions;
 using HE.InvestmentLoans.Common.Exceptions;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 
-namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Queries;
+namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Queries;
 
 public class GetSingle : IRequest<LoanApplicationViewModel>
 {
@@ -26,15 +23,9 @@ public class GetSingle : IRequest<LoanApplicationViewModel>
             _httpContextAccessor = httpContextAccessor;
         }
 
-
         public Task<LoanApplicationViewModel> Handle(GetSingle request, CancellationToken cancellationToken)
         {
-            var model = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationViewModel>(request.Id.ToString());
-
-            if (model == null)
-            {
-                throw new NotFoundException(nameof(LoanApplicationViewModel), request.Id);
-            }
+            var model = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationViewModel>(request.Id.ToString()) ?? throw new NotFoundException(nameof(LoanApplicationViewModel), request.Id);
 
             return Task.FromResult(model);
         }

@@ -1,5 +1,4 @@
 ﻿using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using System;
 
 namespace HE.InvestmentLoans.BusinessLogic.Application.Project.Repositories;
 

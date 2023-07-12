@@ -1,7 +1,5 @@
 ﻿using HE.InvestmentLoans.Contract.User;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace HE.InvestmentLoans.BusinessLogic.User.QueryHandlers;
 

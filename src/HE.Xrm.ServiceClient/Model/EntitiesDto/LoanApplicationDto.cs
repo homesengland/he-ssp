@@ -1,6 +1,4 @@
-using HE.Xrm.ServiceClientExample.Model;
 using HE.Xrm.ServiceClientExample.Model.EntitiesDto;
-using Microsoft.Xrm.Sdk;
 
 public class LoanApplicationDto
 {

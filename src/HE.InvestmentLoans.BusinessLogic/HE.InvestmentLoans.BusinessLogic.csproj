@@ -2,9 +2,29 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <!--<Nullable>enable</Nullable>-->
-    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>Default</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'!='DEBUG'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Routing\**" />
@@ -18,10 +38,6 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.6.0" />
     <PackageReference Include="MediatR" Version="12.0.1" />
     <PackageReference Include="Stateless" Version="5.13.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="_LoanApplication\Pipelines\" />
   </ItemGroup>
 
   <ItemGroup>

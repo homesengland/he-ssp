@@ -1,6 +1,6 @@
-﻿using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using MediatR;
 
-namespace HE.InvestmentLoans.Contract.Application;
+namespace HE.InvestmentLoans.BusinessLogic.Application.CommandHandlers;
 
 public record SubmitApplicationCommand(LoanApplicationViewModel Model) : IRequest;
