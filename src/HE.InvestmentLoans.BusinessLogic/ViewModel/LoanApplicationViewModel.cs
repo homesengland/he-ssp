@@ -1,8 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow;
-using HE.InvestmentLoans.BusinessLogic.Enums;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel
 {
@@ -52,5 +51,18 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
 
         public AccountDetailsViewModel Account { get; set; }
         public FundingPurpose? Purpose { get; set; }
+
+        public SiteViewModel AddNewSite()
+        {
+            var site = new SiteViewModel
+            {
+                Id = Guid.NewGuid(),
+                Name = "Project " + (Sites.Count + 1).ToString("D2")
+            };
+
+            Sites.Add(site);
+
+            return site;
+        }
     }
 }

@@ -4,6 +4,7 @@
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<!--<TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
 		<!--<GenerateDocumentationFile>true</GenerateDocumentationFile>-->
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
 	</PropertyGroup>
 
 	<!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

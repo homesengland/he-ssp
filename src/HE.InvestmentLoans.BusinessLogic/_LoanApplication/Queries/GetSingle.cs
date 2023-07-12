@@ -1,47 +1,42 @@
 using MediatR;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using Microsoft.PowerPlatform.Dataverse.Client;
-using HE.InvestmentLoans.BusinessLogic.Exceptions;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using HE.InvestmentLoans.BusinessLogic._LoanApplication.Extensions;
 using HE.InvestmentLoans.Common.Exceptions;
 
-namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Queries
+namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Queries;
+
+public class GetSingle : IRequest<LoanApplicationViewModel>
 {
-    public class GetSingle : IRequest<LoanApplicationViewModel>
+    public Guid Id
     {
-        public Guid Id
+        get;
+        set;
+    }
+
+    public class Handler : IRequestHandler<GetSingle, LoanApplicationViewModel>
+    {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public Handler(IHttpContextAccessor httpContextAccessor)
         {
-            get;
-            set;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public class Handler : IRequestHandler<GetSingle, LoanApplicationViewModel>
+
+        public Task<LoanApplicationViewModel> Handle(GetSingle request, CancellationToken cancellationToken)
         {
-            private IHttpContextAccessor _httpContextAccessor;
+            var model = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationViewModel>(request.Id.ToString());
 
-            public Handler(IHttpContextAccessor httpContextAccessor)
+            if (model == null)
             {
-                _httpContextAccessor = httpContextAccessor;
+                throw new NotFoundException(nameof(LoanApplicationViewModel), request.Id);
             }
 
-
-            public async Task<LoanApplicationViewModel> Handle(GetSingle request, CancellationToken cancellationToken)
-            {
-                var model = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationViewModel>(request.Id.ToString());
-
-                if (model == null)
-                {
-                    throw new NotFoundException(nameof(LoanApplicationViewModel), request.Id);
-                }
-
-                return model;
-            }
+            return Task.FromResult(model);
         }
     }
 }

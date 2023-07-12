@@ -1,6 +1,5 @@
 ﻿using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Contract.Application;
 using MediatR;
 using System.Threading;

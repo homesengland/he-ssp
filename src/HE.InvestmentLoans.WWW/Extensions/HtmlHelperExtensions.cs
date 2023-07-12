@@ -1,40 +1,43 @@
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace HE.InvestmentLoans.WWW.Extensions
+namespace HE.InvestmentLoans.WWW.Extensions;
+
+public static class HtmlHelperExtensions
 {
-    public static class HtmlHelperExtensions
+    public static Task<IHtmlContent> YesNoConditionalInputScript(this IHtmlHelper html, string propertyName)
     {
-        public static Task<IHtmlContent> YesNoConditionalInputScript(this IHtmlHelper html, string propertyName)
-        {
-            return html.RadioConditionalInputScript(
-                    ($"{propertyName}", $"{propertyName}-conditional"),
-                    ($"{propertyName}-1", $"{propertyName}-1-conditional"));
-        }
+        return html.RadioConditionalInputScript(
+                ($"{propertyName}", $"{propertyName}-conditional"),
+                ($"{propertyName}-1", $"{propertyName}-1-conditional"));
+    }
 
-        public static Task<IHtmlContent> RadioConditionalInputScriptFor(this IHtmlHelper html, string propertyName, int optionsCount)
-        {
-            var radioConditionalInutIds = new List<(string, string)>();
+    public static Task<IHtmlContent> RadioConditionalInputScriptFor(this IHtmlHelper html, string propertyName, int optionsCount)
+    {
+        var radioConditionalInutIds = new List<(string, string)>();
 
-            for (int i = 0; i < optionsCount; i++)
+        for (var i = 0; i < optionsCount; i++)
+        {
+            if (i == 0)
             {
-                if (i == 0)
-                    radioConditionalInutIds.Add((propertyName, $"{propertyName}-conditional"));
-                else
-                    radioConditionalInutIds.Add(($"{propertyName}-{i}", $"{propertyName}-{i}-conditional"));
+                radioConditionalInutIds.Add((propertyName, $"{propertyName}-conditional"));
             }
-
-            return html.PartialAsync("_RadiosWithConditionalInputScript", new { Radios = radioConditionalInutIds });
-         }
-
-        public static Task<IHtmlContent> RadioConditionalInputScript(this IHtmlHelper html, params(string radioId, string conditionalInputId)[] radioConditionalInutIds)
-        {
-            return html.PartialAsync("_RadiosWithConditionalInputScript", new { Radios = radioConditionalInutIds });
+            else
+            {
+                radioConditionalInutIds.Add(($"{propertyName}-{i}", $"{propertyName}-{i}-conditional"));
+            }
         }
 
-        public static Task<IHtmlContent> CheckboxConditionalInputScript(this IHtmlHelper html, params(string checkboxId, string conditionalInputId)[] checkboxConditionalInutIds)
-        {
-            return html.PartialAsync("_CheckboxesWithConditionalInputScript", new { Checkboxes = checkboxConditionalInutIds });
-        }
+        return html.PartialAsync("_RadiosWithConditionalInputScript", new { Radios = radioConditionalInutIds });
+    }
+
+    public static Task<IHtmlContent> RadioConditionalInputScript(this IHtmlHelper html, params (string RadioId, string ConditionalInputId)[] radioConditionalInutIds)
+    {
+        return html.PartialAsync("_RadiosWithConditionalInputScript", new { Radios = radioConditionalInutIds });
+    }
+
+    public static Task<IHtmlContent> CheckboxConditionalInputScript(this IHtmlHelper html, params (string CheckboxId, string ConditionalInputId)[] checkboxConditionalInutIds)
+    {
+        return html.PartialAsync("_CheckboxesWithConditionalInputScript", new { Checkboxes = checkboxConditionalInutIds });
     }
 }

@@ -1,17 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace HE.InvestmentLoans.WWW.Helpers
+namespace HE.InvestmentLoans.WWW.Helpers;
+
+public static class SelectListHelper
 {
-    public static class SelectListHelper
+    public static SelectListItem FromEnum<TEnum>(TEnum value, string label)
+        where TEnum : struct
     {
-        public static SelectListItem FromEnum<TEnum>(TEnum value, string label)
-            where TEnum : struct
+        return new SelectListItem
         {
-            return new SelectListItem
-            {
-                Value = value.ToString(),
-                Text = label
-            };
-        }
+            Value = value.ToString(),
+            Text = label,
+        };
     }
 }

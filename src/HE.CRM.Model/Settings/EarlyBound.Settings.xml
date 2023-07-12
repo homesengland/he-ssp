@@ -11,6 +11,8 @@
     <ActionsWhitelist>invln_changeloanapplicationexternalstatus|
 invln_generaterichtextdocument|
 invln_getcontactrole|
+invln_getloanapplicationsforaccountandcontact|
+invln_getsingleloanapplicationforaccountandcontact|
 invln_sendinvestmentloansdatatocrm</ActionsWhitelist>
     <ActionsToSkip />
     <AddDebuggerNonUserCode>true</AddDebuggerNonUserCode>

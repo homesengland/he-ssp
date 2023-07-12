@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace HE.InvestmentLoans.Common.Authorization;
 
@@ -23,8 +23,10 @@ public class UserContext : IUserContext
 
     public string UserGlobalId { get; init; }
 
-    public string? Email { get; init; }
-
+    public string? Email
+    {
+        get; init;
+    }
 
     private string GetRequiredClaimValue(ClaimsPrincipal claimsPrincipal, string claimType)
     {

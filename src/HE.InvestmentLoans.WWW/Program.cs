@@ -1,14 +1,9 @@
-using FluentValidation;
 using He.Identity.Auth0;
 using He.Identity.Mvc;
-using HE.InvestmentLoans.BusinessLogic.Extensions;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Models.App;
-using HE.InvestmentLoans.CRM.Extensions;
 using HE.InvestmentLoans.WWW.Config;
 using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Middlewares;
-using HE.InvestmentLoans.WWW.Models;
 
 #pragma warning disable CA1812
 var builder = WebApplication.CreateBuilder(args);
@@ -39,14 +34,14 @@ var mvcbuilder = builder.Services.AddControllersWithViews();
 
 builder.Services.ConfigureHeCookieSettings(
     mvcbuilder,
-    configure => { configure.WithAspNetCore().WithHeIdentity(); });
+    configure => configure.WithAspNetCore().WithHeIdentity());
 
 var heIdentityConfiguration = new HeIdentityCookieConfiguration
 {
     Domain = config.Auth0.Domain,
     ClientId = config.Auth0.ClientId,
     ClientSecret = config.Auth0.ClientSecret,
-    SupportEmail = config.SupportEmail
+    SupportEmail = config.SupportEmail,
 };
 mvcbuilder.AddHeIdentityCookieAuth(heIdentityConfiguration, builder.Environment);
 
@@ -90,7 +85,7 @@ app.UseCookiePolicy(
     new CookiePolicyOptions
     {
         Secure = CookieSecurePolicy.Always,
-        MinimumSameSitePolicy = SameSiteMode.Strict
+        MinimumSameSitePolicy = SameSiteMode.Strict,
     });
 app.UseSession();
 app.UseRouting();

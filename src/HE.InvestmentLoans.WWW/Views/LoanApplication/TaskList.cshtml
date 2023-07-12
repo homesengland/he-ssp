@@ -106,24 +106,32 @@
             <ul class="app-task-list__items">
                 @foreach (var site in Model.Sites)
                 {
-                    @if (new SiteWorkflow(Model, mediator, site.Id).IsStarted())
-                    {
-                        <li class="app-task-list__item">
-                            <span class="app-task-list__task-name">
-                                <a href="@Url.Action("Workflow","Site", new {id = Model.ID, site=site.Id, ending = securityWorkflow.GetName() })">
-                                    @site.Name
-                                </a>
-                            </span>
-                            @if (new SiteWorkflow(Model, mediator, site.Id).IsCompleted())
-                            {
-                                <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
-                            }
-                            else
-                            {
-                                <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
-                            }
-                        </li>
-                    }
+                    <li class="app-task-list__item">
+                        <span class="app-task-list__task-name">
+                            <a href="@Url.Action("Workflow","Site", new {id = Model.ID, site=site.Id, ending = securityWorkflow.GetName() })">
+                                @site.Name
+                            </a>
+                        </span>
+                        
+                        @if (new SiteWorkflow(Model, mediator, site.Id).IsCompleted())
+                        {
+                            <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
+                        }
+                        else if (!new SiteWorkflow(Model, mediator, site.Id).IsStarted())
+                        {
+                            <gds-task-list-item-status status=NotStarted>Not Started</gds-task-list-item-status>
+                        }
+                        else
+                        {
+                            <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
+                        }
+
+                        <span class="app-task-list__task-completed govuk-!-margin-right-3">
+                            <a href="@Url.Action("Workflow","Site", new {id = Model.ID, site=site.Id, ending = "DeleteProject" })">
+                                Remove
+                            </a>
+                        </span>
+                    </li>
                 }
 
                 <li class="app-task-list__item">
