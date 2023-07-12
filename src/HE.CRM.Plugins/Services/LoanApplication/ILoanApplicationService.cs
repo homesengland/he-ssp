@@ -1,4 +1,4 @@
-﻿using HE.Base.Services;
+using HE.Base.Services;
 
 namespace HE.CRM.Plugins.Services.LoanApplication
 {
@@ -6,5 +6,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
     {
         string CreateRecordFromPortal(string contactExternalId, string accountId, string loanApplicationId, string loanApplicationPayload);
         string GetLoanApplicationsForAccountAndContact(string externalContactId, string accountId, string loanApplicationId = null);
+        void ChangeLoanApplicationExternalStatus(int externalStatus, string loanApplicationId);
     }
 }

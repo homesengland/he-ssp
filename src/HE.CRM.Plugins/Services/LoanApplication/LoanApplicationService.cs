@@ -1,13 +1,11 @@
-﻿using DataverseModel;
+using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
-using System.Windows.Forms.VisualStyles;
 
 namespace HE.CRM.Plugins.Services.LoanApplication
 {
@@ -53,7 +51,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                             siteDetailsDtoList.Add(MapSiteDetailsToDto(siteDetail));
                         }
                     }
-                    entityCollection.Add(MapLoanApplicationToDto(element, siteDetailsDtoList));
+                    entityCollection.Add(MapLoanApplicationToDto(element, siteDetailsDtoList, externalContactId));
                 }
             }
             return JsonSerializer.Serialize(entityCollection);
@@ -81,7 +79,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 loanApplicationGuid = loanAppId;
                 loanApplicationToCreate.Id = loanAppId;
                 loanApplicationRepository.Update(loanApplicationToCreate);
-               // siteDetailsRepository.DeleteSiteDetailsRelatedToLoanApplication(new EntityReference(invln_Loanapplication.EntityLogicalName, loanAppId));
             }
             else
             {
@@ -112,6 +109,23 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return loanApplicationGuid.ToString();
         }
 
+
+        public void ChangeLoanApplicationExternalStatus(int externalStatus, string loanApplicationId)
+        {
+            TracingService.Trace($"loan id {loanApplicationId}");
+            TracingService.Trace($"new external status {externalStatus}");
+            if (Guid.TryParse(loanApplicationId, out Guid loanId) && externalStatus != null)
+            {
+                invln_Loanapplication loanToUpdate = new invln_Loanapplication()
+                {
+                    Id = loanId,
+                    invln_ExternalStatus = new OptionSetValue(externalStatus),
+                };
+                TracingService.Trace("update loan application");
+                loanApplicationRepository.Update(loanToUpdate);
+            }
+        }
+
         private invln_Loanapplication MapLoanApplicationDtoToRegularEntity(LoanApplicationDto loanApplicationDto, int numberOfSites, Contact contact, 
             string accountId)
         {
@@ -119,7 +133,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             {
                 invln_NumberofSites = numberOfSites,
                 invln_FundingReason = MapFundingReason(loanApplicationDto.fundingReason),
-                invln_ExternalStatus = MapApplicationStatus(loanApplicationDto.loanApplicationStatus),
+                invln_ExternalStatus = MapApplicationExternalStatus(loanApplicationDto.loanApplicationStatus),
 
                 //COMPANY
                 invln_CompanyPurpose = ParseBool(loanApplicationDto.companyPurpose), //Purpose
@@ -224,7 +238,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return siteDetailToReturn;
         }
 
-        private LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList)
+        private LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList, string externalContactId)
         {
             var loanApplicationDto = new LoanApplicationDto()
             {
@@ -258,6 +272,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 accountId = loanApplication.invln_Account.Id,
                 loanApplicationId = loanApplication.invln_LoanapplicationId.ToString(),
                 siteDetailsList = siteDetailsDtoList,
+                externalId = externalContactId,
             };
             return loanApplicationDto;
         }
@@ -281,7 +296,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
         }
 
-        private OptionSetValue MapApplicationStatus(string applicationStatus)
+        private OptionSetValue MapApplicationExternalStatus(string applicationStatus)
         {
             switch (applicationStatus?.ToLower())
             {
@@ -289,6 +304,32 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     return new OptionSetValue((int)invln_ExternalStatus.Draft);
                 case "submitted":
                     return new OptionSetValue((int)invln_ExternalStatus.Submitted);
+                case "under review":
+                    return new OptionSetValue((int)invln_ExternalStatus.Underreview);
+                case "in due diligence":
+                    return new OptionSetValue((int)invln_ExternalStatus.Induediligence);
+                case "contract signed subject to cp":
+                    return new OptionSetValue((int)invln_ExternalStatus.ContractSignedsubjecttoCP);
+                case "cps satisfied":
+                    return new OptionSetValue((int)invln_ExternalStatus.CPssatisfied);
+                case "loan available":
+                    return new OptionSetValue((int)invln_ExternalStatus.Loanavailable);
+                case "hold requested":
+                    return new OptionSetValue((int)invln_ExternalStatus.Holdrequested);
+                case "on hold":
+                    return new OptionSetValue((int)invln_ExternalStatus.Onhold);
+                case "referred back to applicant":
+                    return new OptionSetValue((int)invln_ExternalStatus.Referredbacktoapplicant);
+                case "n/a":
+                    return new OptionSetValue((int)invln_ExternalStatus.NA);
+                case "withdrawn":
+                    return new OptionSetValue((int)invln_ExternalStatus.Withdrawn);
+                case "not approved":
+                    return new OptionSetValue((int)invln_ExternalStatus.Notapproved);
+                case "application declined":
+                    return new OptionSetValue((int)invln_ExternalStatus.Applicationdeclined);
+                case "approved subject to contract":
+                    return new OptionSetValue((int)invln_ExternalStatus.Approvedsubjecttocontract);
             }
 
             return null;
@@ -573,7 +614,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
             return preparedAccount;
         }
-
         #endregion
     }
 }
