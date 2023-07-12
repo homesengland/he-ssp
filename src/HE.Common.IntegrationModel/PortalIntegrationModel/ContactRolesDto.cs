@@ -1,5 +1,8 @@
+
+#pragma warning disable IDE0005 // Using directive is unnecessary.
 using System;
 using System.Collections.Generic;
+#pragma warning restore IDE0005 // Using directive is unnecessary.
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
