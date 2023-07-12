@@ -92,7 +92,8 @@ namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Workflow
             return _model.Company.State == CompanyStructureWorkflow.State.Complete
                 && _model.Security.State == SecurityWorkflow.State.Complete
                 && _model.Funding.State == FundingWorkflow.State.Complete
-                && _model.Sites.All(x => x.State == SiteWorkflow.State.Complete);
+                && _model.Sites.All(x => x.State == SiteWorkflow.State.Complete)
+                && _model.Sites.Count > 0;
 
         }
 

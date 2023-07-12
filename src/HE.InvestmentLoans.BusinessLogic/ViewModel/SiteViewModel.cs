@@ -6,7 +6,8 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
 {
     public class SiteViewModel
     {
-        public SiteViewModel() {
+        public SiteViewModel() 
+        {
             State = SiteWorkflow.State.Index;
             StateChanged = false;
         }
@@ -47,6 +48,7 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
         public string ChargesDebt { get; set; }
         public string ChargesDebtInfo { get; set; }
         public SiteWorkflow.State State { get; set; }
+        public SiteWorkflow.State PreviousState { get; set; }
         public string Name { get; set; }
         public Guid Id { get; set; }
         public bool StateChanged { get; set; }
@@ -54,6 +56,7 @@ namespace HE.InvestmentLoans.BusinessLogic.ViewModel
         public string EstimatedStartDay {get;set;}
         public string EstimatedStartMonth {get;set;}
         public string EstimatedStartYear {get;set;}
+        public string DeleteProject {get;set;}
 
         public void RemoveAlternativeRoutesData()
         {
