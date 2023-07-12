@@ -39,7 +39,7 @@
                     @if (companyStructureWorkflow.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
-                    } 
+                    }
                     else if (companyStructureWorkflow.IsStarted())
                     {
                         <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
@@ -142,7 +142,7 @@
     <gds-h2 size="ControlSize.M">Check and submit</gds-h2>
     <p>You must complete all sections before you can submit your application.</p>
     <form asp-controller="LoanApplication" asp-action="Workflow" asp-route-id="@Model.ID" asp-route-ending="TaskList" asp-method="post" novalidate>
-       
+
         @if (loanApllicationWorkflow.IsFilled())
         {
             <button class="govuk-button govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
@@ -160,9 +160,9 @@
         Report a problem with this page
         <gds-span-visually-hidden> @Url.Action("Index","LoanApplication", new {id = Model.ID})</gds-span-visually-hidden>
     </gds-link>
-</gds-div-grid-column-two-thirds>
+    </gds-div-grid-column-two-thirds>
 
-<div class="govuk-grid-column-one-third govuk-!-margin-top-6">
+<div class="govuk-grid-column-one-third-from-desktop govuk-grid-column-two-thirds govuk-!-margin-top-6">
 
     <aside class="govuk-prototype-kit-common-templates-related-items" role="complementary">
         <h2 class="govuk-heading-m" id="subsection-title">
