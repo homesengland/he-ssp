@@ -1,4 +1,4 @@
-﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel
 @{
     var id = ViewContext.RouteData.Values["id"];
     var typeHomesList = new List<string>();
@@ -44,14 +44,14 @@
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
-    { "Title", "Site name" },
+    { "Title", "Project name" },
     { "Value", Model?.Name },
     { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Name" }) }
     })
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
-    { "Title", "Do you have start date?" },
+    { "Title", "Build start date" },
     { "Value", DateHelper.ConvertToDateStringWithDescription(
                               Model?.EstimatedStartDay, Model?.EstimatedStartMonth, 
                               Model?.EstimatedStartYear, Model?.HasEstimatedStartDate) },
@@ -74,7 +74,7 @@
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
-    { "Title", "Type of site" },
+    { "Title", "Type of project" },
     { "Value", TemporaryFormOptions.SiteType.GetSummaryLabel(Model?.Type) },
     { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Type" }) }
     })
@@ -125,7 +125,7 @@
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
-    { "Title", "Site ownership" },
+    { "Title", "Land ownership" },
     { "Value", Model?.Ownership },
     { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Ownership" }) }
     })
