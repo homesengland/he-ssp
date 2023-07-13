@@ -10079,4 +10079,341 @@ namespace HE.InvestmentLoans.CRM.Model
 			}
 		}
 	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_changeloanapplicationexternalstatus")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_changeloanapplicationexternalstatusRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public int invln_statusexternal
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_statusexternal"))
+				{
+					return ((int)(this.Parameters["invln_statusexternal"]));
+				}
+				else
+				{
+					return default(int);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_statusexternal"] = value;
+			}
+		}
+		
+		public invln_changeloanapplicationexternalstatusRequest()
+		{
+			this.RequestName = "invln_changeloanapplicationexternalstatus";
+			this.invln_loanapplicationid = default(string);
+			this.invln_statusexternal = default(int);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_changeloanapplicationexternalstatus")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_changeloanapplicationexternalstatusResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_changeloanapplicationexternalstatusResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_generaterichtextdocument")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_generaterichtextdocumentRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_richtext
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_richtext"))
+				{
+					return ((string)(this.Parameters["invln_richtext"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_richtext"] = value;
+			}
+		}
+		
+		public string invln_entityname
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_entityname"))
+				{
+					return ((string)(this.Parameters["invln_entityname"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_entityname"] = value;
+			}
+		}
+		
+		public string invln_entityid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_entityid"))
+				{
+					return ((string)(this.Parameters["invln_entityid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_entityid"] = value;
+			}
+		}
+		
+		public invln_generaterichtextdocumentRequest()
+		{
+			this.RequestName = "invln_generaterichtextdocument";
+			this.invln_richtext = default(string);
+			this.invln_entityname = default(string);
+			this.invln_entityid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_generaterichtextdocument")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_generaterichtextdocumentResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_generaterichtextdocumentResponse()
+		{
+		}
+		
+		public string invln_generatedrichtext
+		{
+			get
+			{
+				if (this.Results.Contains("invln_generatedrichtext"))
+				{
+					return ((string)(this.Results["invln_generatedrichtext"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getloanapplicationsforaccountandcontact")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getloanapplicationsforaccountandcontactRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public string invln_externalcontactid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_externalcontactid"))
+				{
+					return ((string)(this.Parameters["invln_externalcontactid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_externalcontactid"] = value;
+			}
+		}
+		
+		public invln_getloanapplicationsforaccountandcontactRequest()
+		{
+			this.RequestName = "invln_getloanapplicationsforaccountandcontact";
+			this.invln_accountid = default(string);
+			this.invln_externalcontactid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getloanapplicationsforaccountandcontact")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getloanapplicationsforaccountandcontactResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getloanapplicationsforaccountandcontactResponse()
+		{
+		}
+		
+		public string invln_loanapplications
+		{
+			get
+			{
+				if (this.Results.Contains("invln_loanapplications"))
+				{
+					return ((string)(this.Results["invln_loanapplications"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getsingleloanapplicationforaccountandcontact")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsingleloanapplicationforaccountandcontactRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public string invln_externalcontactid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_externalcontactid"))
+				{
+					return ((string)(this.Parameters["invln_externalcontactid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_externalcontactid"] = value;
+			}
+		}
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public invln_getsingleloanapplicationforaccountandcontactRequest()
+		{
+			this.RequestName = "invln_getsingleloanapplicationforaccountandcontact";
+			this.invln_accountid = default(string);
+			this.invln_externalcontactid = default(string);
+			this.invln_loanapplicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getsingleloanapplicationforaccountandcontact")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsingleloanapplicationforaccountandcontactResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getsingleloanapplicationforaccountandcontactResponse()
+		{
+		}
+		
+		public string invln_loanapplication
+		{
+			get
+			{
+				if (this.Results.Contains("invln_loanapplication"))
+				{
+					return ((string)(this.Results["invln_loanapplication"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
 }
