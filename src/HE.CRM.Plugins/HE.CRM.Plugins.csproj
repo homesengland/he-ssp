@@ -129,6 +129,7 @@
     <Compile Include="Handlers\CustomApi\GetInvestmentsLoansForAccountAndContactHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetSingleInvestmentLoanForAccountAndContactHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendInvestmentsLoanDataToCrmHandler.cs" />
+    <Compile Include="Handlers\CustomApi\UpdateSingleSiteDetailsHandler.cs" />
     <Compile Include="Models\AzureAdToken.cs" />
     <Compile Include="Plugins\Accounts\GenerateRandomAccountNameSamplePlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeLoanApplicationExternalStatusPlugin.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Plugins\CustomApi\GetInvestmentsLoansForAccountAndContactPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleInvestmentLoanForAccountAndContactPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SendInvestmentsLoanDataToCrmPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\UpdateSingleSiteDetailsPlugin.cs" />
     <Compile Include="Services\Accounts\AccountService.cs" />
     <Compile Include="Services\Accounts\IAccountService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -207,6 +209,8 @@
     <Compile Include="Services\LoanApplication\LoanApplicationService.cs" />
     <Compile Include="Services\RichTextService\IRichTextService.cs" />
     <Compile Include="Services\RichTextService\RichTextService.cs" />
+    <Compile Include="Services\SiteDetails\ISiteDetailsService.cs" />
+    <Compile Include="Services\SiteDetails\SiteDetailsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">
