@@ -32,7 +32,7 @@ public class SiteController : Controller
     {
         var model = await this._mediator.Send(new BL.LoanApplication.Queries.GetSingle() { Id = id });
         var site = model.AddNewSite();
-        var workflow = new SiteWorkflow(model, _mediator, site.Id);
+        var workflow = new SiteWorkflow(model, _mediator, site.Id.Value);
         await this._mediator.Send(new BL.LoanApplication.Commands.Update()
         {
             Model = model,

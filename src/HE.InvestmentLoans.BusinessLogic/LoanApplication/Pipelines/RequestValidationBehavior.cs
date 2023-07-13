@@ -2,60 +2,63 @@ using FluentValidation;
 using FluentValidation.Internal;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Pipelines;
-
-public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+namespace HE.InvestmentLoans.BusinessLogic._LoanApplication.Pipelines
 {
-    private readonly IServiceProvider _provider;
-
-    public RequestValidationBehavior(IServiceProvider provider)
+    public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : IRequest<TResponse>
     {
-        _provider = provider;
-    }
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        IServiceProvider _provider;
 
-    public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
-    {
-        var results = new List<ValidationResult>();
-
-        foreach (var prop in typeof(TRequest).GetProperties())
+        public RequestValidationBehavior(IServiceProvider provider, IHttpContextAccessor httpContextAccessor)
         {
-            var rulsets = new List<string>() { "Basic" };
+            _provider = provider;
+            _httpContextAccessor = httpContextAccessor;
+        }
 
-            if (typeof(TRequest).Name.Contains("Create"))
-            {
-                rulsets.Add("Create");
-            }
+        public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+        {
+            List<ValidationResult> results = new List<ValidationResult>();
 
-            if (typeof(TRequest).Name.Contains("Delete"))
+            foreach (var prop in typeof(TRequest).GetProperties())
             {
-                rulsets.Add("Delete");
-            }
+                List<string> rulsets = new List<string>() { "Basic" };
 
-            if (typeof(TRequest).Name.Contains("Update"))
-            {
-                rulsets.Add("Update");
-            }
+                if (typeof(TRequest).Name.Contains("Create"))
+                { rulsets.Add("Create"); }
+                if (typeof(TRequest).Name.Contains("Delete"))
+                { rulsets.Add("Delete"); }
+                if (typeof(TRequest).Name.Contains("Update"))
+                { rulsets.Add("Update"); }
 
-            var selector = new RulesetValidatorSelector(rulsets.ToArray());
-            if (_provider.GetService(typeof(IValidator<>).MakeGenericType(prop.PropertyType)) is IValidator validiator)
-            {
-                var obj = prop.GetValue(request);
-                var context = new ValidationContext<object>(obj!, null, selector);
-                var result = validiator.Validate(context);
-                if (!result.IsValid)
+                var selector = new RulesetValidatorSelector(rulsets.ToArray());
+                var validiator = (IValidator)_provider.GetService(typeof(IValidator<>).MakeGenericType(prop.PropertyType));
+                if (validiator != null)
                 {
-                    results.Add(result);
+                    var obj = prop.GetValue(request);
+                    var context = new ValidationContext<object>(obj, null, selector);
+                    var result = validiator.Validate(context);
+                    if (!result.IsValid)
+                    {
+                        results.Add(result);
+                    }
                 }
             }
+            if (results.Count() > 0)
+            {
+                throw new Common.Exceptions.ValidationException(results);
+            }
+            return next();
         }
 
-        if (results.Count > 0)
-        {
-            throw new Common.Exceptions.ValidationException(results);
-        }
 
-        return next();
+
     }
 }

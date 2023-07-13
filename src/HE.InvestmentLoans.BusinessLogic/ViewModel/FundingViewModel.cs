@@ -10,27 +10,27 @@ public class FundingViewModel
         StateChanged = false;
     }
 
-    public string GrossDevelopmentValue { get; set; }
+    public string? GrossDevelopmentValue { get; set; }
 
-    public string TotalCosts { get; set; }
+    public string? TotalCosts { get; set; }
 
-    public string AbnormalCosts { get; set; }
+    public string? AbnormalCosts { get; set; }
 
     public string? AbnormalCostsInfo { get; set; }
 
-    public string PrivateSectorFunding { get; set; }
+    public string? PrivateSectorFunding { get; set; }
 
     public string? PrivateSectorFundingResult { get; set; }
 
     public string? PrivateSectorFundingReason { get; set; }
 
-    public string AdditionalProjects { get; set; }
+    public string? AdditionalProjects { get; set; }
 
-    public string Refinance { get; set; }
+    public string? Refinance { get; set; }
 
     public string? RefinanceInfo { get; set; }
 
-    public string CheckAnswers { get; set; }
+    public string? CheckAnswers { get; set; }
 
     public FundingWorkflow.State State { get; set; }
 
