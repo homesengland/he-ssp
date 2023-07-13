@@ -61,7 +61,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             companyPurpose = loanApplication.Company.Purpose,
             existingCompany = loanApplication.Company.ExistingCompany,
             fundingReason = MapPurpose(loanApplication.Purpose),
-            companyExperience = loanApplication.Company.HomesBuilt.TryParseNullableInt(),
+            companyExperience = loanApplication.Company.HomesBuilt?.TryParseNullableInt(),
 
             // FUNDING
             projectGdv = loanApplication.Funding.GrossDevelopmentValue,

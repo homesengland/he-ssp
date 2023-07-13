@@ -27,17 +27,17 @@ public class LoanApplicationViewModel
 
     public DateTime Timestamp { get; set; }
 
-    public CompanyStructureViewModel? Company { get; set; }
+    public CompanyStructureViewModel Company { get; set; }
 
-    public FundingViewModel? Funding { get; set; }
+    public FundingViewModel Funding { get; set; }
 
-    public SecurityViewModel? Security { get; set; }
+    public SecurityViewModel Security { get; set; }
 
     public List<SiteViewModel> Sites { get; set; }
 
-    public AccountDetailsViewModel? Account { get; set; }
+    public AccountDetailsViewModel Account { get; set; }
 
-    public FundingPurpose? Purpose { get; set; }
+    public FundingPurpose Purpose { get; set; }
 
     public SiteViewModel AddNewSite()
     {
