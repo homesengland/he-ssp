@@ -37,7 +37,7 @@ public class LoanApplicationViewModel
 
     public AccountDetailsViewModel Account { get; set; }
 
-    public FundingPurpose? Purpose { get; set; }
+    public FundingPurpose Purpose { get; set; }
 
     public SiteViewModel AddNewSite()
     {

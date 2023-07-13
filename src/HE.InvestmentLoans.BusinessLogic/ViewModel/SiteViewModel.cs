@@ -10,35 +10,35 @@ public class SiteViewModel
         StateChanged = false;
     }
 
-    public string CheckAnswers { get; set; }
+    public string? CheckAnswers { get; set; }
 
-    public string AffordableHomes { get; set; }
+    public string? AffordableHomes { get; set; }
 
     public string? PlanningRef { get; set; }
 
     public string? PlanningRefEnter { get; set; }
 
-    public string SitePurchaseFrom { get; set; }
+    public string? SitePurchaseFrom { get; set; }
 
-    public string Ownership { get; set; }
+    public string? Ownership { get; set; }
 
-    public string ManyHomes { get; set; }
+    public string? ManyHomes { get; set; }
 
-    public string GrantFunding { get; set; }
+    public string? GrantFunding { get; set; }
 
-    public string TitleNumber { get; set; }
+    public string? TitleNumber { get; set; }
 
-    public string[] TypeHomes { get; set; }
+    public string[]? TypeHomes { get; set; }
 
     public string? TypeHomesOther { get; set; }
 
-    public string HomesToBuild { get; set; }
+    public string? HomesToBuild { get; set; }
 
-    public string PurchaseDay { get; set; }
+    public string? PurchaseDay { get; set; }
 
-    public string PurchaseMonth { get; set; }
+    public string? PurchaseMonth { get; set; }
 
-    public string PurchaseYear { get; set; }
+    public string? PurchaseYear { get; set; }
 
     public DateTime? PurchaseDate { get; set; }
 
@@ -48,7 +48,7 @@ public class SiteViewModel
 
     public string? Source { get; set; }
 
-    public string LocationOption { get; set; }
+    public string? LocationOption { get; set; }
 
     public string? LocationCoordinates { get; set; }
 
@@ -66,9 +66,9 @@ public class SiteViewModel
 
     public string? GrantFundingPurpose { get; set; }
 
-    public string Type { get; set; }
+    public string? Type { get; set; }
 
-    public string ChargesDebt { get; set; }
+    public string? ChargesDebt { get; set; }
 
     public string? ChargesDebtInfo { get; set; }
 
@@ -76,21 +76,21 @@ public class SiteViewModel
 
     public SiteWorkflow.State PreviousState { get; set; }
 
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
 
     public bool StateChanged { get; set; }
 
-    public string HasEstimatedStartDate { get; set; }
+    public string? HasEstimatedStartDate { get; set; }
 
-    public string EstimatedStartDay { get; set; }
+    public string? EstimatedStartDay { get; set; }
 
-    public string EstimatedStartMonth { get; set; }
+    public string? EstimatedStartMonth { get; set; }
 
-    public string EstimatedStartYear { get; set; }
+    public string? EstimatedStartYear { get; set; }
 
-    public string DeleteProject { get; set; }
+    public string? DeleteProject { get; set; }
 
     public void RemoveAlternativeRoutesData()
     {

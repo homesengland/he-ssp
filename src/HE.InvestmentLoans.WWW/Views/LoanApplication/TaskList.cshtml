@@ -113,11 +113,11 @@
                             </a>
                         </span>
                         
-                        @if (new SiteWorkflow(Model, mediator, site.Id).IsCompleted())
+                        @if (new SiteWorkflow(Model, mediator, site.Id.Value).IsCompleted())
                         {
                             <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                         }
-                        else if (!new SiteWorkflow(Model, mediator, site.Id).IsStarted())
+                        else if (!new SiteWorkflow(Model, mediator, site.Id.Value).IsStarted())
                         {
                             <gds-task-list-item-status status=NotStarted>Not Started</gds-task-list-item-status>
                         }
