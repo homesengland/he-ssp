@@ -220,7 +220,7 @@ public class SiteViewModel
             return false;
         }
 
-        if (GrantFunding == "No")
+        if (GrantFunding is "No" or "doNotKnow")
         {
             return true;
         }
