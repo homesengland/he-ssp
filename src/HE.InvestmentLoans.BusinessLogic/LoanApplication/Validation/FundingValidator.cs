@@ -53,14 +53,16 @@ public class FundingValidator : AbstractValidator<FundingViewModel>
             .NotEmpty()
             .WithMessage(ErrorMessages.SecurityCheckAnswers.ToString());
 
-            When(item => item.CheckAnswers == "Yes", () => RuleFor(m => m).Must(x =>
-                !string.IsNullOrEmpty(x.GrossDevelopmentValue) &&
-                !string.IsNullOrEmpty(x.TotalCosts) &&
-                !string.IsNullOrEmpty(x.PrivateSectorFunding) &&
-                !string.IsNullOrEmpty(x.AdditionalProjects) &&
-                !string.IsNullOrEmpty(x.AbnormalCosts) &&
-                !string.IsNullOrEmpty(x.Refinance))
-                .WithMessage(ErrorMessages.CheckAnswersOption.ToString()));
+            When(item => item.CheckAnswers == "Yes", () => RuleFor(m => m)
+                    .Must(x =>
+                        !string.IsNullOrEmpty(x.GrossDevelopmentValue) &&
+                        !string.IsNullOrEmpty(x.TotalCosts) &&
+                        !string.IsNullOrEmpty(x.PrivateSectorFunding) &&
+                        !string.IsNullOrEmpty(x.AdditionalProjects) &&
+                        !string.IsNullOrEmpty(x.AbnormalCosts) &&
+                        !string.IsNullOrEmpty(x.Refinance))
+                    .WithMessage(ErrorMessages.CheckAnswersOption.ToString())
+                    .OverridePropertyName(nameof(FundingViewModel.CheckAnswers)));
         });
     }
 }

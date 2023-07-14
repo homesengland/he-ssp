@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.Constants;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 
@@ -30,7 +30,8 @@ public class SecurityValidator : AbstractValidator<SecurityViewModel>
                 !string.IsNullOrEmpty(x.ChargesDebtCompany) &&
                 !string.IsNullOrEmpty(x.DirLoans) &&
                     (x.DirLoans == "No" || !string.IsNullOrEmpty(x.DirLoansSub)))
-                .WithMessage(ErrorMessages.CheckAnswersOption.ToString()));
+                .WithMessage(ErrorMessages.CheckAnswersOption.ToString())
+                .OverridePropertyName(nameof(SecurityViewModel.CheckAnswers)));
         });
     }
 }

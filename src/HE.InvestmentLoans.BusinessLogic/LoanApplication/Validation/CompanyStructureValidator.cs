@@ -75,7 +75,8 @@ public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewM
                 !string.IsNullOrEmpty(x.Purpose) &&
                 !string.IsNullOrEmpty(x.ExistingCompany) &&
                 !string.IsNullOrEmpty(x.HomesBuilt))
-                .WithMessage(ErrorMessages.CheckAnswersOption.ToString()));
+                .WithMessage(ErrorMessages.CheckAnswersOption.ToString())
+                .OverridePropertyName(nameof(CompanyStructureViewModel.CheckAnswers)));
         });
     }
 }
