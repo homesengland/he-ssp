@@ -80,10 +80,6 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                     .WithMessage("Enter your Land Registry title number"));
         });
 
-        RuleSet("PlanningRefEnter", () => RuleFor(item => item.PlanningRefEnter)
-            .Matches(@"^\d{2}/[A-Z\d]+/[A-Z\d]+$")
-            .WithMessage(ErrorMessages.InvalidReferenceNumber.ToString()));
-
         RuleSet("GrantFundingMore", () => When(
                 item => item.GrantFundingAmount != null,
                 () => RuleFor(item => item.GrantFundingAmount)

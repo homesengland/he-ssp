@@ -7,13 +7,7 @@ public class ErrorMessages
 {
     private ErrorMessages(string value) { Value = value; }
 
-    public static ErrorMessages RadioOption => new("Select one option");
-
-    public static ErrorMessages CheckboxOption => new("Select at least one option");
-
     public static ErrorMessages EnterMoreDetails => new("Enter more details");
-
-    public static ErrorMessages InvalidReferenceNumber => new("Enter a valid planning reference number");
 
     public static ErrorMessages ManyHomesAmount => new("The amount of homes must be a number containing no more than 4 digits (1 - 9999)");
 
@@ -58,8 +52,6 @@ public class ErrorMessages
     public static ErrorMessages AmountPoundInput(string name) => PoundInput($"The amount of {name} provided");
 
     public static ErrorMessages PoundInput(string name) => new($"{name} must be entered as a number, in pounds and pence");
-
-    public static ErrorMessages InvalidXYCoordinates(string invalidCharacters) => new($"XY coordinates must not include {invalidCharacters}");
 
     public override string ToString()
     {
