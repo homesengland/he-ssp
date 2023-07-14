@@ -24,12 +24,12 @@ namespace HE.CRM.Plugins.Services.SiteDetails
         }
 
         #endregion
-        public void UpdateSiteDetails(string siteDetailsId, string siteDetail, string fieldsToUpdate)
+        public void UpdateSiteDetails(string siteDetailsId, string siteDetail, string fieldsToUpdate, string loanApplicationId)
         {
             if(Guid.TryParse(siteDetailsId, out Guid detailsId))
             {
                 var deserilizedSiteDetail = JsonSerializer.Deserialize<SiteDetailsDto>(siteDetail);
-                var siteDetailsMapped = SiteDetailsDtoMapper.MapSiteDetailsDtoToRegularEntity(deserilizedSiteDetail, null);
+                var siteDetailsMapped = SiteDetailsDtoMapper.MapSiteDetailsDtoToRegularEntity(deserilizedSiteDetail, loanApplicationId);
                 invln_SiteDetails siteDetailToUpdate = new invln_SiteDetails();
                 if (string.IsNullOrEmpty(fieldsToUpdate))
                 {

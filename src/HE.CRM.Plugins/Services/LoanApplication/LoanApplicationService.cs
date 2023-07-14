@@ -93,7 +93,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 foreach (var siteDetail in loanApplicationFromPortal.siteDetailsList)
                 {
                     this.TracingService.Trace("loop begin");
-                    var siteDetailToCreate = SiteDetailsDtoMapper.MapSiteDetailsDtoToRegularEntity(siteDetail, loanApplicationGuid);
+                    var siteDetailToCreate = SiteDetailsDtoMapper.MapSiteDetailsDtoToRegularEntity(siteDetail, loanApplicationGuid.ToString());
                     this.TracingService.Trace("create");
                     if (!String.IsNullOrEmpty(siteDetail.siteDetailsId) && Guid.TryParse(siteDetail.siteDetailsId, out Guid result))
                     {

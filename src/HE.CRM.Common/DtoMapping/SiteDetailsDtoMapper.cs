@@ -9,7 +9,7 @@ namespace HE.CRM.Common.DtoMapping
     public class SiteDetailsDtoMapper
     {
         public SiteDetailsDtoMapper() { }
-        public static invln_SiteDetails MapSiteDetailsDtoToRegularEntity(SiteDetailsDto siteDetail, Guid? loanApplicationGuid)
+        public static invln_SiteDetails MapSiteDetailsDtoToRegularEntity(SiteDetailsDto siteDetail, string loanApplicationGuid)
         {
             var siteDetailToReturn = new invln_SiteDetails()
             {
@@ -36,9 +36,9 @@ namespace HE.CRM.Common.DtoMapping
                 invln_Valuationsource = MapValuationSource(siteDetail.valuationSource),
                 invln_Whoprovided = siteDetail.whoProvided,
             };
-            if (loanApplicationGuid.HasValue)
+            if (Guid.TryParse(loanApplicationGuid, out Guid applicationId))
             {
-                siteDetailToReturn.invln_Loanapplication = new EntityReference(invln_Loanapplication.EntityLogicalName, loanApplicationGuid.Value);
+                siteDetailToReturn.invln_Loanapplication = new EntityReference(invln_Loanapplication.EntityLogicalName, applicationId);
             }
             if (Guid.TryParse(siteDetail.siteDetailsId, out Guid detailId))
             {

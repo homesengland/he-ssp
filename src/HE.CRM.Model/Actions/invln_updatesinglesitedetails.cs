@@ -23,6 +23,7 @@ namespace DataverseModel
 			public const string invln_sitedetailsid = "invln_sitedetailsid";
 			public const string invln_sitedetail = "invln_sitedetail";
 			public const string invln_fieldstoupdate = "invln_fieldstoupdate";
+			public const string invln_loanapplicationid = "invln_loanapplicationid";
 		}
 		
 		public const string ActionLogicalName = "invln_updatesinglesitedetails";
@@ -84,11 +85,31 @@ namespace DataverseModel
 			}
 		}
 		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
 		public invln_updatesinglesitedetailsRequest()
 		{
 			this.RequestName = "invln_updatesinglesitedetails";
 			this.invln_sitedetailsid = default(string);
 			this.invln_sitedetail = default(string);
+			this.invln_loanapplicationid = default(string);
 		}
 	}
 	

@@ -11,6 +11,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         private string siteDetailsId => ExecutionData.GetInputParameter<string>(invln_updatesinglesitedetailsRequest.Fields.invln_sitedetailsid);
         private string siteDetail => ExecutionData.GetInputParameter<string>(invln_updatesinglesitedetailsRequest.Fields.invln_sitedetail);
         private string fieldsToUpdate => ExecutionData.GetInputParameter<string>(invln_updatesinglesitedetailsRequest.Fields.invln_fieldstoupdate);
+        private string loanApplicationId => ExecutionData.GetInputParameter<string>(invln_updatesinglesitedetailsRequest.Fields.invln_loanapplicationid);
 
         #endregion
 
@@ -22,7 +23,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
 
         public override void DoWork()
         {
-            CrmServicesFactory.Get<ISiteDetailsService>().UpdateSiteDetails(siteDetailsId, siteDetail, fieldsToUpdate);
+            CrmServicesFactory.Get<ISiteDetailsService>().UpdateSiteDetails(siteDetailsId, siteDetail, fieldsToUpdate, loanApplicationId);
         }
 
         #endregion
