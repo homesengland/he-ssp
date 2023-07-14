@@ -184,7 +184,8 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
 
             When(item => item.CheckAnswers == "Yes", () => RuleFor(m => m)
                     .Must(x => x.AllInformationIsProvided())
-                    .WithMessage(ErrorMessages.CheckAnswersOption.ToString()));
+                    .WithMessage(ErrorMessages.CheckAnswersOption.ToString())
+                    .OverridePropertyName(nameof(SiteViewModel.CheckAnswers)));
         });
     }
 }
