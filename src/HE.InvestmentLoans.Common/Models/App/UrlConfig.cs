@@ -7,4 +7,6 @@ public class UrlConfig : IUrlConfig
     public string? Feedback { get; set; }
 
     public string? SmartSurvey { get; set; }
+
+    public string? SignOutRedirect { get; set; }
 }

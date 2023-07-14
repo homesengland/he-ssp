@@ -1,12 +1,12 @@
-﻿namespace HE.InvestmentLoans.Common.Models.App;
+namespace HE.InvestmentLoans.Common.Models.App;
 
 public interface IAppConfig
 {
     public string? SupportEmail { get; set; }
 
-    public string? RedisConnectionString { get; set; }
-
     public bool HttpHeaderSecurityDisabled { get; set; }
+
+    public RedisConfig? Redis { get; set; }
 
     public DataverseConfig? Dataverse { get; set; }
 
