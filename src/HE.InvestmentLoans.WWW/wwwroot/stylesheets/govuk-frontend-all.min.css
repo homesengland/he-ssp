@@ -9229,7 +9229,7 @@ p + .govuk-heading-s,
 
 @media (min-width: 40.0625em) {
     .app-task-list {
-        min-width: 500px;
+        min-width: 480px;
     }
 }
 
