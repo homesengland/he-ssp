@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
+using HE.InvestmentLoans.Common.Utils;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
 
@@ -99,7 +100,7 @@ public class SiteViewModel
             TypeHomesOther = null;
         }
 
-        if (PlanningRef == "No")
+        if (PlanningRef == CommonResponse.No)
         {
             PlanningRefEnter = null;
             Location = null;
@@ -115,7 +116,7 @@ public class SiteViewModel
             LocationCoordinates = null;
         }
 
-        if (Ownership == "No")
+        if (Ownership == CommonResponse.No)
         {
             PurchaseDate = null;
             Cost = null;
@@ -123,7 +124,7 @@ public class SiteViewModel
             Source = null;
         }
 
-        if (GrantFunding != "Yes")
+        if (GrantFunding != CommonResponse.Yes)
         {
             GrantFundingSource = null;
             GrantFundingAmount = null;
@@ -131,7 +132,7 @@ public class SiteViewModel
             GrantFundingPurpose = null;
         }
 
-        if (ChargesDebt == "No")
+        if (ChargesDebt == CommonResponse.No)
         {
             ChargesDebtInfo = null;
         }
@@ -163,7 +164,7 @@ public class SiteViewModel
             return false;
         }
 
-        if (PlanningRef == "Yes" && !PlanningInformationProvided())
+        if (PlanningRef == CommonResponse.Yes && !PlanningInformationProvided())
         {
             return false;
         }
@@ -200,7 +201,7 @@ public class SiteViewModel
             return false;
         }
 
-        if (Ownership == "No")
+        if (Ownership == CommonResponse.No)
         {
             return true;
         }
@@ -220,7 +221,7 @@ public class SiteViewModel
             return false;
         }
 
-        if (GrantFunding == "No")
+        if (GrantFunding is CommonResponse.No or CommonResponse.DoNotKnow)
         {
             return true;
         }
