@@ -9,6 +9,8 @@
     <Import_RootNamespace>HE.CRM.Common</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)dtomapping\LoanApplicationDtoMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)dtomapping\SiteDetailsDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DateTimeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\Entities\EntityExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringHelper.cs" />
@@ -30,5 +32,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ISiteDetailsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IWebRoleRepository.cs" />
     <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
+    <Folder Include="$(MSBuildThisFileDirectory)DtoMapping\" />
   </ItemGroup>
 </Project>

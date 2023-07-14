@@ -13,7 +13,8 @@ invln_generaterichtextdocument|
 invln_getcontactrole|
 invln_getloanapplicationsforaccountandcontact|
 invln_getsingleloanapplicationforaccountandcontact|
-invln_sendinvestmentloansdatatocrm</ActionsWhitelist>
+invln_sendinvestmentloansdatatocrm|
+invln_updatesinglesitedetails</ActionsWhitelist>
     <ActionsToSkip />
     <AddDebuggerNonUserCode>true</AddDebuggerNonUserCode>
     <AddNewFilesToProject>true</AddNewFilesToProject>
