@@ -67,7 +67,7 @@ public class SiteWorkflow
 
     public bool IsStarted()
     {
-        return _site.State != State.Index;
+        return _site.AnyBasicInformationIsProvided();
     }
 
     public string GetName()

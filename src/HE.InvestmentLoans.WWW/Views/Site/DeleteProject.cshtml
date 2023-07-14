@@ -15,7 +15,7 @@
             <gds-div-form-group invalid="inputInvalid">
                 <gds-legend size="ControlSize.M" class="govuk-!-margin-bottom-6">
                     <gds-fieldset-heading>
-                        Are you sure you want to remove @Model.Name?
+                        Are you sure you want to remove @(Model.Name ?? Model.DefaultName)?
                     </gds-fieldset-heading>
                 </gds-legend>
 
