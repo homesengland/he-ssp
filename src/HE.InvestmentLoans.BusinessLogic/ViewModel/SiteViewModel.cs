@@ -13,6 +13,10 @@ public class SiteViewModel
 
     public string? CheckAnswers { get; set; }
 
+    public string? DefaultName { get; set; }
+
+    public string? Name { get; set; }
+
     public string? AffordableHomes { get; set; }
 
     public string? PlanningRef { get; set; }
@@ -76,8 +80,6 @@ public class SiteViewModel
     public SiteWorkflow.State State { get; set; }
 
     public SiteWorkflow.State PreviousState { get; set; }
-
-    public string? Name { get; set; }
 
     public Guid? Id { get; set; }
 
@@ -144,6 +146,21 @@ public class SiteViewModel
             PlanningReferenceProvided() &&
             OwnershipInformationProvided() &&
             GrantFundingInformationProvided();
+    }
+
+    public bool AnyBasicInformationIsProvided()
+    {
+        return !string.IsNullOrEmpty(Name) ||
+                !string.IsNullOrEmpty(ManyHomes) ||
+                !string.IsNullOrEmpty(HasEstimatedStartDate) ||
+                TypeHomes != null || TypeHomes?.Length > 0 ||
+                !string.IsNullOrEmpty(Type) ||
+                !string.IsNullOrEmpty(ChargesDebt) ||
+                !string.IsNullOrEmpty(PlanningRef) ||
+                !string.IsNullOrEmpty(Ownership) ||
+                !string.IsNullOrEmpty(GrantFunding) ||
+                !string.IsNullOrEmpty(AffordableHomes) ||
+                !string.IsNullOrEmpty(CheckAnswers);
     }
 
     private bool BasicInformationProvided()

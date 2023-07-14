@@ -109,7 +109,7 @@
                     <li class="app-task-list__item">
                         <span class="app-task-list__task-name">
                             <a href="@Url.Action("Workflow","Site", new {id = Model.ID, site=site.Id, ending = securityWorkflow.GetName() })">
-                                @site.Name
+                                @(site.Name ?? site.DefaultName)
                             </a>
                         </span>
                         
