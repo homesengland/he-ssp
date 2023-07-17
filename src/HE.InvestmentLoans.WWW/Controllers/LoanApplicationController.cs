@@ -40,11 +40,17 @@ public class LoanApplicationController : Controller
         return RedirectToAction("Workflow", new { id = model.ID, ending = workflow.GetName() });
     }
 
-    [Route("{id}/{ending?}")]
-    public async Task<IActionResult> Workflow(Guid id, string ending)
+    [Route("{id}/{ending?}/{deleteProjectName?}")]
+    public async Task<IActionResult> Workflow(Guid id, string ending, string deleteProjectName)
     {
         var model = await this._mediator.Send(new BL.LoanApplication.Queries.GetSingle() { Id = id });
         var workflow = new LoanApplicationWorkflow(model, _mediator);
+
+        if (!string.IsNullOrEmpty(deleteProjectName))
+        {
+            ViewBag.AdditionalData = deleteProjectName;
+        }
+
         return View(workflow.GetName(), model);
     }
 
