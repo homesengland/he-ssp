@@ -1,4 +1,3 @@
-using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Exceptions;

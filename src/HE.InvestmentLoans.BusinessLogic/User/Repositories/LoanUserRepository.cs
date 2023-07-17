@@ -1,6 +1,5 @@
 using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.Xrm.Sdk;
 
