@@ -44,7 +44,8 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             invln_externalcontactid = userAccount.UserGlobalId,
         };
 
-        var response = (invln_getloanapplicationsforaccountandcontactResponse) await _serviceClient.ExecuteAsync(req);
+        var response_async = await _serviceClient.ExecuteAsync(req);
+        var response = response_async != null ? (invln_getloanapplicationsforaccountandcontactResponse)response_async : throw new NotFoundException("Applications list", userAccount.ToString());
         var loanApplicationDtos = JsonSerializer.Deserialize<List<LoanApplicationDto>>(response.invln_loanapplications) ?? throw new NotFoundException("Applications list", userAccount.ToString());
 
         return loanApplicationDtos.Select(x => new UserLoanApplication(LoanApplicationId.From(x.accountId), x.name, x.loanApplicationStatus)).ToList();
