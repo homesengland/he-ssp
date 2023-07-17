@@ -27,7 +27,7 @@ public class MemoryCacheService : ICacheService
 
         if (value != null)
         {
-            var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromSeconds(_config.ExpireMinutes));
+            var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(_config.ExpireMinutes));
 
             _memoryCache.Set(key, value, cacheEntryOptions);
         }
