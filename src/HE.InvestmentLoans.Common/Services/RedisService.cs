@@ -5,7 +5,7 @@ using StackExchange.Redis;
 
 namespace HE.InvestmentLoans.Common.Services;
 
-public class RedisService : IRedisService
+public class RedisService : ICacheService
 {
     private readonly IRedisConfig _config;
     private readonly ConnectionMultiplexer _connection;

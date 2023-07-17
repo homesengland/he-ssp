@@ -1,6 +1,6 @@
 namespace HE.InvestmentLoans.Common.Services.Interfaces;
 
-public interface IRedisService
+public interface ICacheService
 {
     public bool Exists(string key);
 

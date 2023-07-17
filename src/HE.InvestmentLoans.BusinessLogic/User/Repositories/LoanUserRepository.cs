@@ -9,12 +9,12 @@ namespace HE.InvestmentLoans.BusinessLogic.User.Repositories;
 public class LoanUserRepository : ILoanUserRepository
 {
     private readonly IOrganizationService _serviceClient;
-    private readonly IRedisService _redisService;
+    private readonly ICacheService _cacheService;
 
-    public LoanUserRepository(IOrganizationService serviceClient, IRedisService redisService)
+    public LoanUserRepository(IOrganizationService serviceClient, ICacheService cacheService)
     {
         _serviceClient = serviceClient;
-        _redisService = redisService;
+        _cacheService = cacheService;
     }
 
     public ContactRolesDto? GetUserDetails(string userGlobalId, string userEmail)
@@ -23,9 +23,9 @@ public class LoanUserRepository : ILoanUserRepository
 
         var redisKey = $"loanUser_{portalType}_{userGlobalId}_{userEmail}";
 
-        if (_redisService.Exists(redisKey))
+        if (_cacheService.Exists(redisKey))
         {
-            return _redisService.ObjectGet<ContactRolesDto>(redisKey);
+            return _cacheService.ObjectGet<ContactRolesDto>(redisKey);
         }
 
         var req = new invln_getcontactroleRequest()
@@ -42,7 +42,7 @@ public class LoanUserRepository : ILoanUserRepository
 
             if (roles != null)
             {
-                _redisService.ObjectSet(redisKey, roles, 30);
+                _cacheService.ObjectSet(redisKey, roles);
             }
 
             return roles;

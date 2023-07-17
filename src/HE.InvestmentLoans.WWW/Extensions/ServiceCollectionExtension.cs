@@ -19,7 +19,7 @@ public static class ServiceCollectionExtension
 
     public static void AddRedis(this IServiceCollection services, IRedisConfig config, string sessionCookieName)
     {
-        services.AddSingleton<IRedisService, RedisService>();
+        services.AddSingleton<ICacheService, RedisService>();
 
         services.AddDataProtection()
                 .SetApplicationName(sessionCookieName)
