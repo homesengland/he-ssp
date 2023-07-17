@@ -1,9 +1,13 @@
 using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.BusinessLogic.Application.Entities;
+using HE.InvestmentLoans.BusinessLogic.Application.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.Xrm.Sdk;
 
@@ -16,6 +20,39 @@ public class LoanApplicationRepository : ILoanApplicationRepository
     public LoanApplicationRepository(IOrganizationService serviceClient)
     {
         _serviceClient = serviceClient;
+    }
+
+    public LoanApplicationEntity Load(LoanApplicationId id, UserAccount userAccount)
+    {
+        var req = new invln_getsingleloanapplicationforaccountandcontactRequest
+        {
+            invln_accountid = userAccount.AccountId.ToString(),
+            invln_externalcontactid = userAccount.UserGlobalId,
+            invln_loanapplicationid = id.ToString(),
+        };
+
+        var response = (invln_getsingleloanapplicationforaccountandcontactResponse)_serviceClient.Execute(req);
+
+        // TODO: It will be fullfilled with next PR.
+        return new LoanApplicationEntity(id, new LoanApplicationViewModel());
+    }
+
+    public IList<UserLoanApplication> LoadAllLoanApplications(UserAccount userAccount)
+    {
+        var req = new invln_getloanapplicationsforaccountandcontactRequest()
+        {
+            invln_accountid = userAccount.AccountId.ToString(),
+            invln_externalcontactid = userAccount.UserGlobalId,
+        };
+
+        var response = (invln_getloanapplicationsforaccountandcontactResponse)_serviceClient.Execute(req);
+        var loanApplicationDtos = JsonSerializer.Deserialize<List<LoanApplicationDto>>(response.invln_loanapplications);
+        if (loanApplicationDtos is null)
+        {
+            throw new NotFoundException("Applications list", userAccount.ToString());
+        }
+
+        return loanApplicationDtos.Select(x => new UserLoanApplication(LoanApplicationId.From(x.accountId), x.name, x.loanApplicationStatus)).ToList();
     }
 
     public void Save(LoanApplicationViewModel loanApplication, UserAccount userAccount)
@@ -53,8 +90,6 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         var loanApplicationDto = new LoanApplicationDto()
         {
             name = loanApplication.Account.RegisteredName,
-            accountId = userAccount.AccountId,
-            externalId = userAccount.UserGlobalId,
             contactEmailAdress = loanApplication.Account.EmailAddress,
 
             // COMPANY
@@ -89,10 +124,9 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         var req = new invln_sendinvestmentloansdatatocrmRequest
         {
             invln_entityfieldsparameters = loanApplicationSerialized,
+            invln_accountid = userAccount.AccountId.ToString(),
+            invln_contactexternalid = userAccount.UserGlobalId,
         };
-
-        req.Parameters.Add("invln_contactexternalid", userAccount.UserGlobalId);
-        req.Parameters.Add("invln_accountid", userAccount.AccountId.ToString());
 
         _serviceClient.Execute(req);
     }
@@ -107,4 +141,5 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             _ => string.Empty,
         };
     }
+
 }
