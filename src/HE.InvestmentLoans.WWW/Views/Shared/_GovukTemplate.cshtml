@@ -1,18 +1,16 @@
-﻿@using HE.InvestmentLoans.Common.Models.App;
+@using HE.InvestmentLoans.Common.Models.App;
 @using HE.InvestmentLoans.WWW.Config;
 @using Microsoft.Extensions.Options
 
-@inject IConfiguration configuration
 @inject IUrlConfig urlConfig
 @{
     var currentUri = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.PathBase}{Context.Request.Path}{Context.Request.QueryString}";
     var redirectUri = Context.Request.Query.ContainsKey("redirectUri") ? Context.Request.Query["redirectUri"].ToString() : currentUri;
     redirectUri = Uri.EscapeDataString(redirectUri);
 
-    var urlConfig = configuration.GetSection("AppConfiguration").GetSection("Url");
     var standardSignInUrl = Url.Action("SignIn", "HeIdentity");
     var signInUrl = Context.Request.Path == "/verify-email" ? Url.Action("SignOut", "HeIdentity", new { redirectUri = standardSignInUrl }) : standardSignInUrl;
-    var signOutUrl = Url.Action("SignOut", "HeIdentity", new { redirectUri = urlConfig.GetValue<string>("SignOutRedirect") });
+    var signOutUrl = Url.Action("SignOut", "HeIdentity", new { redirectUri = urlConfig.SignOutRedirect });
 }
 
 <!DOCTYPE html>

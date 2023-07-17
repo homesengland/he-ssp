@@ -16,11 +16,13 @@ public class LoanUserRepository : ILoanUserRepository
 
     public ContactRolesDto? GetUserDetails(string userGlobalId, string userEmail)
     {
+        var portalType = "858110001";
+
         var req = new invln_getcontactroleRequest()
         {
             invln_contactemail = userEmail,
             invln_contactexternalid = userGlobalId,
-            invln_portaltype = "858110001",
+            invln_portaltype = portalType,
         };
 
         var resp = (invln_getcontactroleResponse)_serviceClient.Execute(req);

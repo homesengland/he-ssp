@@ -1,4 +1,6 @@
 using HE.InvestmentLoans.Common.Models.App;
+using HE.InvestmentLoans.Common.Services;
+using HE.InvestmentLoans.Common.Services.Interfaces;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Options;
 using StackExchange.Redis;
@@ -12,20 +14,29 @@ public static class ServiceCollectionExtension
         services.AddSingleton<IAppConfig>(x => x.GetRequiredService<IOptions<AppConfig>>().Value);
         services.AddSingleton<IDataverseConfig>(x => x.GetRequiredService<IAppConfig>().Dataverse);
         services.AddSingleton<IUrlConfig>(x => x.GetRequiredService<IAppConfig>().Url);
+        services.AddSingleton<ICacheConfig>(x => x.GetRequiredService<IAppConfig>().Cache);
     }
 
-    public static void AddRedis(this IServiceCollection services, string redisConnectionString, string sessionCookieName)
+    public static void AddCache(this IServiceCollection services, ICacheConfig config, string sessionCookieName)
     {
-        services.AddDataProtection()
-                .SetApplicationName(sessionCookieName)
-                .PersistKeysToStackExchangeRedis(
-                    ConnectionMultiplexer.Connect(redisConnectionString),
-                    "DataProtection-Keys");
-
-        services.AddStackExchangeRedisCache(action =>
+        if (!string.IsNullOrEmpty(config.RedisConnectionString))
         {
-            action.InstanceName = "redis";
-            action.Configuration = redisConnectionString;
-        });
+            services.AddSingleton<ICacheService, RedisService>();
+            services.AddDataProtection()
+                    .SetApplicationName(sessionCookieName)
+                    .PersistKeysToStackExchangeRedis(
+                        ConnectionMultiplexer.Connect(config.RedisConnectionString),
+                        "DataProtection-Keys");
+
+            services.AddStackExchangeRedisCache(action =>
+            {
+                action.InstanceName = "redis";
+                action.Configuration = config.RedisConnectionString;
+            });
+        }
+        else
+        {
+            services.AddSingleton<ICacheService, MemoryCacheService>();
+        }
     }
 }

@@ -71,7 +71,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
             this.TracingService.Trace("Setting up invln_Loanapplication");
             var loanApplicationToCreate = MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, numberOfSites, contact, accountId);
-           
+
             Guid loanApplicationGuid = Guid.NewGuid();
             if (!string.IsNullOrEmpty(loanApplicationId) && Guid.TryParse(loanApplicationId, out Guid loanAppId))
             {
@@ -108,7 +108,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
             return loanApplicationGuid.ToString();
         }
-
 
         public void ChangeLoanApplicationExternalStatus(int externalStatus, string loanApplicationId)
         {
