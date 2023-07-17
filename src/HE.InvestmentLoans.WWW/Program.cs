@@ -75,11 +75,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-if (!config.HttpHeaderSecurityDisabled)
-{
-    app.UseHeaderSecurity();
-    app.UseCrossSiteScriptingSecurity();
-}
+app.UseHeaderSecurity();
+app.UseCrossSiteScriptingSecurity();
 
 app.UseCookiePolicy(
     new CookiePolicyOptions
