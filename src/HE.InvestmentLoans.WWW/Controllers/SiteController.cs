@@ -146,12 +146,14 @@ public class SiteController : Controller
     [Route("{site}/DeleteProject")]
     public async Task<IActionResult> Delete(Guid id, Guid site, string state)
     {
+        var projectName = string.Empty;
         var model = await this._mediator.Send(new BL.LoanApplication.Queries.GetSingle() { Id = id });
         var sitemodel = model.Sites.FirstOrDefault(item => item.Id == site);
 
         if (Request.Form["DeleteProject"] == "Yes")
         {
             await this._mediator.Send(new DeleteProjectCommand(id, site));
+            projectName = sitemodel.Name ?? sitemodel.DefaultName;
         }
         else
         {
@@ -159,6 +161,6 @@ public class SiteController : Controller
             workflow.ChangeState(sitemodel.PreviousState, false);
         }
 
-        return RedirectToAction("Workflow", "LoanApplication", new { id, ending = "TaskList" });
+        return RedirectToAction("Workflow", "LoanApplication", new { id, ending = "TaskList", deleteProjectName = projectName });
     }
 }
