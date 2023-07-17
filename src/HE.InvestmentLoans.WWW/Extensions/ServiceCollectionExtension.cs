@@ -14,23 +14,29 @@ public static class ServiceCollectionExtension
         services.AddSingleton<IAppConfig>(x => x.GetRequiredService<IOptions<AppConfig>>().Value);
         services.AddSingleton<IDataverseConfig>(x => x.GetRequiredService<IAppConfig>().Dataverse);
         services.AddSingleton<IUrlConfig>(x => x.GetRequiredService<IAppConfig>().Url);
-        services.AddSingleton<IRedisConfig>(x => x.GetRequiredService<IAppConfig>().Redis);
+        services.AddSingleton<ICacheConfig>(x => x.GetRequiredService<IAppConfig>().Cache);
     }
 
-    public static void AddRedis(this IServiceCollection services, IRedisConfig config, string sessionCookieName)
+    public static void AddCache(this IServiceCollection services, ICacheConfig config, string sessionCookieName)
     {
-        services.AddSingleton<ICacheService, RedisService>();
-
-        services.AddDataProtection()
-                .SetApplicationName(sessionCookieName)
-                .PersistKeysToStackExchangeRedis(
-                    ConnectionMultiplexer.Connect(config.ConnectionString),
-                    "DataProtection-Keys");
-
-        services.AddStackExchangeRedisCache(action =>
+        if (!string.IsNullOrEmpty(config.RedisConnectionString))
         {
-            action.InstanceName = "redis";
-            action.Configuration = config.ConnectionString;
-        });
+            services.AddSingleton<ICacheService, RedisService>();
+            services.AddDataProtection()
+                    .SetApplicationName(sessionCookieName)
+                    .PersistKeysToStackExchangeRedis(
+                        ConnectionMultiplexer.Connect(config.RedisConnectionString),
+                        "DataProtection-Keys");
+
+            services.AddStackExchangeRedisCache(action =>
+            {
+                action.InstanceName = "redis";
+                action.Configuration = config.RedisConnectionString;
+            });
+        }
+        else
+        {
+            services.AddSingleton<ICacheService, MemoryCacheService>();
+        }
     }
 }

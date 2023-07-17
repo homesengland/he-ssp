@@ -4,7 +4,7 @@ public interface IAppConfig
 {
     public string? SupportEmail { get; set; }
 
-    public RedisConfig? Redis { get; set; }
+    public CacheConfig? Cache { get; set; }
 
     public DataverseConfig? Dataverse { get; set; }
 

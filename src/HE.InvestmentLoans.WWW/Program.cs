@@ -21,9 +21,9 @@ var sessionCookieName = ".AspNetCore.Session";
 builder.Services.AddSession(options =>
 {
     options.Cookie.Name = sessionCookieName;
-    options.IdleTimeout = TimeSpan.FromMinutes(config.Redis.ExpireMinutes);
+    options.IdleTimeout = TimeSpan.FromMinutes(config.Cache.SessionExpireMinutes);
 });
-builder.Services.AddRedis(config.Redis, sessionCookieName);
+builder.Services.AddCache(config.Cache, sessionCookieName);
 
 builder.Services.AddApplicationInsightsTelemetry();
 
