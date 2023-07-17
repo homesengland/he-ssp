@@ -9,19 +9,19 @@ public class SecurityViewModel
         State = SecurityWorkflow.State.Index;
     }
 
-    public string CheckAnswers { get; set; }
+    public string? CheckAnswers { get; set; }
 
-    public string ChargesDebtCompany { get; set; }
+    public string? ChargesDebtCompany { get; set; }
 
     public string? ChargesDebtCompanyInfo { get; set; }
 
-    public string DirLoans { get; set; }
+    public string? DirLoans { get; set; }
 
     public string? DirLoansSub { get; set; }
 
     public string? DirLoansSubMore { get; set; }
 
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     public SecurityWorkflow.State State { get; set; }
 

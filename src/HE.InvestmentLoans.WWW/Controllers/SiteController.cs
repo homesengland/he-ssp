@@ -8,6 +8,7 @@ using HE.InvestmentLoans.Common.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow.SiteWorkflow;
 using BL = HE.InvestmentLoans.BusinessLogic;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
@@ -32,7 +33,7 @@ public class SiteController : Controller
     {
         var model = await this._mediator.Send(new BL.LoanApplication.Queries.GetSingle() { Id = id });
         var site = model.AddNewSite();
-        var workflow = new SiteWorkflow(model, _mediator, site.Id);
+        var workflow = new SiteWorkflow(model, _mediator, site.Id.Value);
         await this._mediator.Send(new BL.LoanApplication.Commands.Update()
         {
             Model = model,
@@ -116,9 +117,20 @@ public class SiteController : Controller
     public async Task<IActionResult> GoBack(Guid id, Guid site, string action)
     {
         var sessionmodel = await this._mediator.Send(new BL.LoanApplication.Queries.GetSingle() { Id = id });
+        var sitemodel = sessionmodel.Sites.FirstOrDefault(item => item.Id == site);
+
         var workflow = new SiteWorkflow(sessionmodel, _mediator, site);
         workflow.NextState(Trigger.Back);
-        return RedirectToAction("Workflow", new { id = sessionmodel.ID, site, ending = workflow.GetName() });
+
+        if (workflow.GetName() == State.TaskList.ToString())
+        {
+            workflow.ChangeState(sitemodel.PreviousState, false);
+            return RedirectToAction("Workflow", "LoanApplication", new { id, ending = "TaskList" });
+        }
+        else
+        {
+            return RedirectToAction("Workflow", new { id = sessionmodel.ID, site, ending = workflow.GetName() });
+        }
     }
 
     [Route("{site}/Change")]

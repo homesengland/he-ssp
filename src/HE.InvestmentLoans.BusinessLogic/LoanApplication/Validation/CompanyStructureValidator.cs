@@ -17,12 +17,12 @@ public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewM
                 c => c.CompanyInfoFileName != null,
                 () => RuleFor(e => e.CompanyInfoFile)
                     .Must(
-                        e => e.Length < 20 * 1024 * 1024)
+                        e => e?.Length < 20 * 1024 * 1024)
                     .WithMessage(ErrorMessages.FileIncorrectSize.ToString()));
 
             RuleFor(e => e.CompanyInfoFileName)
               .Must(
-                        e => _allowedExtensions.Contains(Path.GetExtension(e.ToLower(CultureInfo.InvariantCulture))))
+                        e => _allowedExtensions.Contains(Path.GetExtension(e?.ToLower(CultureInfo.InvariantCulture))))
                     .WithMessage(ErrorMessages.FileIncorrectFormat.ToString())
                     .When(e => !string.IsNullOrEmpty(e.CompanyInfoFileName));
         });
@@ -75,7 +75,8 @@ public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewM
                 !string.IsNullOrEmpty(x.Purpose) &&
                 !string.IsNullOrEmpty(x.ExistingCompany) &&
                 !string.IsNullOrEmpty(x.HomesBuilt))
-                .WithMessage(ErrorMessages.CheckAnswersOption.ToString()));
+                .WithMessage(ErrorMessages.CheckAnswersOption.ToString())
+                .OverridePropertyName(nameof(CompanyStructureViewModel.CheckAnswers)));
         });
     }
 }

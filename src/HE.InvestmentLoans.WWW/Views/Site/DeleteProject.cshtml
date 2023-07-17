@@ -6,7 +6,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("Workflow","LoanApplication", new {id = @id })" text="Back" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.Id, id = id })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
 
     <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="DeleteProject" asp-method="post" novalidate>
@@ -15,7 +15,7 @@
             <gds-div-form-group invalid="inputInvalid">
                 <gds-legend size="ControlSize.M" class="govuk-!-margin-bottom-6">
                     <gds-fieldset-heading>
-                        Are you sure you want to remove @Model.Name?
+                        Are you sure you want to remove @(Model.Name ?? Model.DefaultName)?
                     </gds-fieldset-heading>
                 </gds-legend>
 
@@ -31,5 +31,6 @@
 
     </form>
 
-    <partial name="_HomeAndCheckAnswersLinks" />
+    <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.Id, id = id })" text="Return to application" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
 </gds-div-grid-column-two-thirds>

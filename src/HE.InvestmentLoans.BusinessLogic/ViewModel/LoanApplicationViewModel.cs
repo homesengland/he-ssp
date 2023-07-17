@@ -44,7 +44,7 @@ public class LoanApplicationViewModel
         var site = new SiteViewModel
         {
             Id = Guid.NewGuid(),
-            Name = "Project " + (Sites.Count + 1).ToString("D2", CultureInfo.InvariantCulture),
+            DefaultName = "Project " + (Sites.Count + 1).ToString("D2", CultureInfo.InvariantCulture),
         };
 
         Sites.Add(site);

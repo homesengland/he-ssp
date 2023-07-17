@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
+using HE.InvestmentLoans.Common.Utils;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
 
@@ -10,35 +11,39 @@ public class SiteViewModel
         StateChanged = false;
     }
 
-    public string CheckAnswers { get; set; }
+    public string? CheckAnswers { get; set; }
 
-    public string AffordableHomes { get; set; }
+    public string? DefaultName { get; set; }
+
+    public string? Name { get; set; }
+
+    public string? AffordableHomes { get; set; }
 
     public string? PlanningRef { get; set; }
 
     public string? PlanningRefEnter { get; set; }
 
-    public string SitePurchaseFrom { get; set; }
+    public string? SitePurchaseFrom { get; set; }
 
-    public string Ownership { get; set; }
+    public string? Ownership { get; set; }
 
-    public string ManyHomes { get; set; }
+    public string? ManyHomes { get; set; }
 
-    public string GrantFunding { get; set; }
+    public string? GrantFunding { get; set; }
 
-    public string TitleNumber { get; set; }
+    public string? TitleNumber { get; set; }
 
-    public string[] TypeHomes { get; set; }
+    public string[]? TypeHomes { get; set; }
 
     public string? TypeHomesOther { get; set; }
 
-    public string HomesToBuild { get; set; }
+    public string? HomesToBuild { get; set; }
 
-    public string PurchaseDay { get; set; }
+    public string? PurchaseDay { get; set; }
 
-    public string PurchaseMonth { get; set; }
+    public string? PurchaseMonth { get; set; }
 
-    public string PurchaseYear { get; set; }
+    public string? PurchaseYear { get; set; }
 
     public DateTime? PurchaseDate { get; set; }
 
@@ -48,7 +53,7 @@ public class SiteViewModel
 
     public string? Source { get; set; }
 
-    public string LocationOption { get; set; }
+    public string? LocationOption { get; set; }
 
     public string? LocationCoordinates { get; set; }
 
@@ -66,9 +71,9 @@ public class SiteViewModel
 
     public string? GrantFundingPurpose { get; set; }
 
-    public string Type { get; set; }
+    public string? Type { get; set; }
 
-    public string ChargesDebt { get; set; }
+    public string? ChargesDebt { get; set; }
 
     public string? ChargesDebtInfo { get; set; }
 
@@ -76,21 +81,19 @@ public class SiteViewModel
 
     public SiteWorkflow.State PreviousState { get; set; }
 
-    public string Name { get; set; }
-
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
 
     public bool StateChanged { get; set; }
 
-    public string HasEstimatedStartDate { get; set; }
+    public string? HasEstimatedStartDate { get; set; }
 
-    public string EstimatedStartDay { get; set; }
+    public string? EstimatedStartDay { get; set; }
 
-    public string EstimatedStartMonth { get; set; }
+    public string? EstimatedStartMonth { get; set; }
 
-    public string EstimatedStartYear { get; set; }
+    public string? EstimatedStartYear { get; set; }
 
-    public string DeleteProject { get; set; }
+    public string? DeleteProject { get; set; }
 
     public void RemoveAlternativeRoutesData()
     {
@@ -99,7 +102,7 @@ public class SiteViewModel
             TypeHomesOther = null;
         }
 
-        if (PlanningRef == "No")
+        if (PlanningRef == CommonResponse.No)
         {
             PlanningRefEnter = null;
             Location = null;
@@ -115,7 +118,7 @@ public class SiteViewModel
             LocationCoordinates = null;
         }
 
-        if (Ownership == "No")
+        if (Ownership == CommonResponse.No)
         {
             PurchaseDate = null;
             Cost = null;
@@ -123,7 +126,7 @@ public class SiteViewModel
             Source = null;
         }
 
-        if (GrantFunding != "Yes")
+        if (GrantFunding != CommonResponse.Yes)
         {
             GrantFundingSource = null;
             GrantFundingAmount = null;
@@ -131,7 +134,7 @@ public class SiteViewModel
             GrantFundingPurpose = null;
         }
 
-        if (ChargesDebt == "No")
+        if (ChargesDebt == CommonResponse.No)
         {
             ChargesDebtInfo = null;
         }
@@ -143,6 +146,21 @@ public class SiteViewModel
             PlanningReferenceProvided() &&
             OwnershipInformationProvided() &&
             GrantFundingInformationProvided();
+    }
+
+    public bool AnyBasicInformationIsProvided()
+    {
+        return !string.IsNullOrEmpty(Name) ||
+                !string.IsNullOrEmpty(ManyHomes) ||
+                !string.IsNullOrEmpty(HasEstimatedStartDate) ||
+                TypeHomes != null || TypeHomes?.Length > 0 ||
+                !string.IsNullOrEmpty(Type) ||
+                !string.IsNullOrEmpty(ChargesDebt) ||
+                !string.IsNullOrEmpty(PlanningRef) ||
+                !string.IsNullOrEmpty(Ownership) ||
+                !string.IsNullOrEmpty(GrantFunding) ||
+                !string.IsNullOrEmpty(AffordableHomes) ||
+                !string.IsNullOrEmpty(CheckAnswers);
     }
 
     private bool BasicInformationProvided()
@@ -163,7 +181,7 @@ public class SiteViewModel
             return false;
         }
 
-        if (PlanningRef == "Yes" && !PlanningInformationProvided())
+        if (PlanningRef == CommonResponse.Yes && !PlanningInformationProvided())
         {
             return false;
         }
@@ -200,7 +218,7 @@ public class SiteViewModel
             return false;
         }
 
-        if (Ownership == "No")
+        if (Ownership == CommonResponse.No)
         {
             return true;
         }
@@ -220,7 +238,7 @@ public class SiteViewModel
             return false;
         }
 
-        if (GrantFunding == "No")
+        if (GrantFunding is CommonResponse.No or CommonResponse.DoNotKnow)
         {
             return true;
         }
