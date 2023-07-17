@@ -47,9 +47,9 @@ public class LoanUserContext : ILoanUserContext
         return _accountIds;
     }
 
-    private Task LoadUserDetails()
+    private async Task<Task> LoadUserDetails()
     {
-        var userDetails = _loanUserRepository.GetUserDetails(_userContext.UserGlobalId, _userContext.Email);
+        var userDetails = await _loanUserRepository.GetUserDetails(_userContext.UserGlobalId, _userContext.Email);
         _accountIds.AddRange(userDetails?.contactRoles.OrderBy(x => x.accountId).Select(x => x.accountId).ToList());
         _selectedAccountId = _accountIds.FirstOrDefault(Guid.Parse("429d11ab-15fe-ed11-8f6c-002248c653e1"));
 

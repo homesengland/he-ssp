@@ -4,5 +4,5 @@ namespace HE.InvestmentLoans.BusinessLogic.User.Repositories;
 
 public interface ILoanUserRepository
 {
-    public ContactRolesDto? GetUserDetails(string userGlobalId, string userEmail);
+    public Task<ContactRolesDto?> GetUserDetails(string userGlobalId, string userEmail);
 }

@@ -1,20 +1,20 @@
 using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.CRM.Model;
-using Microsoft.Xrm.Sdk;
+using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.User.Repositories;
 
 public class LoanUserRepository : ILoanUserRepository
 {
-    private readonly IOrganizationService _serviceClient;
+    private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    public LoanUserRepository(IOrganizationService serviceClient)
+    public LoanUserRepository(IOrganizationServiceAsync2 serviceClient)
     {
         _serviceClient = serviceClient;
     }
 
-    public ContactRolesDto? GetUserDetails(string userGlobalId, string userEmail)
+    public async Task<ContactRolesDto?> GetUserDetails(string userGlobalId, string userEmail)
     {
         var req = new invln_getcontactroleRequest()
         {
@@ -23,7 +23,7 @@ public class LoanUserRepository : ILoanUserRepository
             invln_portaltype = "858110001",
         };
 
-        var resp = (invln_getcontactroleResponse)_serviceClient.Execute(req);
+        var resp = (invln_getcontactroleResponse) await _serviceClient.ExecuteAsync(req);
         if (resp.invln_portalroles != null)
         {
             return JsonSerializer.Deserialize<ContactRolesDto>(resp.invln_portalroles);
