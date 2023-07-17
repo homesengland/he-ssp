@@ -1,7 +1,9 @@
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Services.Interfaces;
 
 namespace HE.InvestmentLoans.BusinessLogic.User;
 
@@ -11,14 +13,17 @@ public class LoanUserContext : ILoanUserContext
 
     private readonly ILoanUserRepository _loanUserRepository;
 
+    private readonly ICacheService _cacheService;
+
     private readonly IList<Guid> _accountIds = new List<Guid>();
 
     private Guid? _selectedAccountId;
 
-    public LoanUserContext(IUserContext userContext, ILoanUserRepository loanUserRepository)
+    public LoanUserContext(IUserContext userContext, ILoanUserRepository loanUserRepository, ICacheService cacheService)
     {
         _userContext = userContext;
         _loanUserRepository = loanUserRepository;
+        _cacheService = cacheService;
     }
 
     public string UserGlobalId => _userContext.UserGlobalId;
@@ -49,7 +54,7 @@ public class LoanUserContext : ILoanUserContext
 
     private Task LoadUserDetails()
     {
-        var userDetails = _loanUserRepository.GetUserDetails(_userContext.UserGlobalId, _userContext.Email);
+        var userDetails = _cacheService.GetValue($"{nameof(this.LoadUserDetails)}_{_userContext.UserGlobalId}", () => _loanUserRepository.GetUserDetails(_userContext.UserGlobalId, _userContext.Email));
         _accountIds.AddRange(userDetails?.contactRoles.OrderBy(x => x.accountId).Select(x => x.accountId).ToList());
         _selectedAccountId = _accountIds.FirstOrDefault(Guid.Parse("429d11ab-15fe-ed11-8f6c-002248c653e1"));
 

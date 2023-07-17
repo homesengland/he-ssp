@@ -8,6 +8,7 @@ namespace HE.InvestmentLoans.Common.Services;
 public class RedisService : ICacheService
 {
     private readonly IRedisConfig _config;
+
     private readonly ConnectionMultiplexer _connection;
 
     public RedisService(IRedisConfig config)
@@ -18,21 +19,31 @@ public class RedisService : ICacheService
 
     private IDatabase Cache => _connection.GetDatabase();
 
-    public bool Exists(string key) => Cache.KeyExists(key);
+    public T? GetValue<T>(string key, Func<T> loadValue)
+    {
+        if (Cache.KeyExists(key))
+        {
+            return ObjectGet<T>(key);
+        }
 
-    public T? ObjectGet<T>(string key)
+        var value = loadValue();
+
+        if (value != null)
+        {
+            ObjectSet(key, value);
+        }
+
+        return value;
+    }
+
+    private T? ObjectGet<T>(string key)
     {
         string? resp = Cache.StringGet(key);
         return resp != null ? JsonConvert.DeserializeObject<T>(resp) : default;
     }
 
-    public bool ObjectSet(string key, object value)
+    private bool ObjectSet(string key, object value)
     {
         return Cache.StringSet(key, JsonConvert.SerializeObject(value), TimeSpan.FromMinutes(_config.ExpireMinutes));
-    }
-
-    public bool ObjectSet(string key, object value, int expireMinutes)
-    {
-        return Cache.StringSet(key, JsonConvert.SerializeObject(value), TimeSpan.FromMinutes(expireMinutes));
     }
 }
