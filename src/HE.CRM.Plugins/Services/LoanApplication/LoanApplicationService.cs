@@ -111,7 +111,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return loanApplicationGuid.ToString();
         }
 
-
         public void ChangeLoanApplicationExternalStatus(int externalStatus, string loanApplicationId)
         {
             TracingService.Trace($"loan id {loanApplicationId}");

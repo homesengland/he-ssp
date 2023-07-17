@@ -4,9 +4,7 @@ public class AppConfig : IAppConfig
 {
     public string? SupportEmail { get; set; }
 
-    public string? RedisConnectionString { get; set; }
-
-    public bool HttpHeaderSecurityDisabled { get; set; }
+    public CacheConfig? Cache { get; set; }
 
     public DataverseConfig? Dataverse { get; set; }
 

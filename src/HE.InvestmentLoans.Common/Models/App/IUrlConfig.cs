@@ -1,4 +1,4 @@
-﻿namespace HE.InvestmentLoans.Common.Models.App;
+namespace HE.InvestmentLoans.Common.Models.App;
 
 /// <summary>
 /// FeedBackUrl Configurations.
@@ -19,4 +19,9 @@ public interface IUrlConfig
     /// Gets or sets the Smart Survey Url.
     /// </summary>
     public string? SmartSurvey { get; set; }
+
+    /// <summary>
+    /// Gets or sets the Smart SignOut redirect.
+    /// </summary>
+    public string? SignOutRedirect { get; set; }
 }
