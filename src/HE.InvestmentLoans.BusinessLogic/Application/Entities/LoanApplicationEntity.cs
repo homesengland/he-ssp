@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.BusinessLogic.Application.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Application.Entities;
 

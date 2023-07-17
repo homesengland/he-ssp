@@ -1,7 +1,6 @@
 using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.Application.Entities;
-using HE.InvestmentLoans.BusinessLogic.Application.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
@@ -31,7 +30,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             invln_loanapplicationid = id.ToString(),
         };
 
-        var response = (invln_getsingleloanapplicationforaccountandcontactResponse)_serviceClient.Execute(req);
+        _serviceClient.Execute(req);
 
         // TODO: It will be fullfilled with next PR.
         return new LoanApplicationEntity(id, new LoanApplicationViewModel());
@@ -46,11 +45,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         };
 
         var response = (invln_getloanapplicationsforaccountandcontactResponse)_serviceClient.Execute(req);
-        var loanApplicationDtos = JsonSerializer.Deserialize<List<LoanApplicationDto>>(response.invln_loanapplications);
-        if (loanApplicationDtos is null)
-        {
-            throw new NotFoundException("Applications list", userAccount.ToString());
-        }
+        var loanApplicationDtos = JsonSerializer.Deserialize<List<LoanApplicationDto>>(response.invln_loanapplications) ?? throw new NotFoundException("Applications list", userAccount.ToString());
 
         return loanApplicationDtos.Select(x => new UserLoanApplication(LoanApplicationId.From(x.accountId), x.name, x.loanApplicationStatus)).ToList();
     }
@@ -141,5 +136,4 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             _ => string.Empty,
         };
     }
-
 }

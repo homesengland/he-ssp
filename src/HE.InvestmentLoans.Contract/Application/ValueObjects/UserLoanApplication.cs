@@ -1,5 +1,4 @@
 using Dawn;
-using HE.InvestmentLoans.BusinessLogic.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.Contract.Application.ValueObjects;

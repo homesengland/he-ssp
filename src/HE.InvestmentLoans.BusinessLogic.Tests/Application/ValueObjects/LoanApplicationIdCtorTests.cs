@@ -1,6 +1,6 @@
 using FluentAssertions;
-using HE.InvestmentLoans.BusinessLogic.Application.ValueObjects;
 using HE.InvestmentLoans.Common.Tests.TestData;
+using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Application.ValueObjects;
 

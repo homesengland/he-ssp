@@ -1,7 +1,7 @@
 using Dawn;
 using HE.InvestmentLoans.Contract.Domain;
 
-namespace HE.InvestmentLoans.BusinessLogic.Application.ValueObjects;
+namespace HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 public class LoanApplicationId : ValueObject
 {
