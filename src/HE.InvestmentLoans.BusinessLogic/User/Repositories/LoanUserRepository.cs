@@ -1,5 +1,6 @@
 using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
@@ -24,7 +25,7 @@ public class LoanUserRepository : ILoanUserRepository
         };
 
         var resp_async = await _serviceClient.ExecuteAsync(req);
-        var resp = resp_async != null ? (invln_getcontactroleResponse)resp_async : throw new Exception("invln_getcontactroleResponse exception");
+        var resp = resp_async != null ? (invln_getcontactroleResponse)resp_async : throw new NotFoundException("Contact role", userGlobalId);
         if (resp.invln_portalroles != null)
         {
             return JsonSerializer.Deserialize<ContactRolesDto>(resp.invln_portalroles);
