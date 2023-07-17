@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
+using HE.InvestmentLoans.Common.Utils;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
 
@@ -11,6 +12,10 @@ public class SiteViewModel
     }
 
     public string? CheckAnswers { get; set; }
+
+    public string? DefaultName { get; set; }
+
+    public string? Name { get; set; }
 
     public string? AffordableHomes { get; set; }
 
@@ -76,8 +81,6 @@ public class SiteViewModel
 
     public SiteWorkflow.State PreviousState { get; set; }
 
-    public string? Name { get; set; }
-
     public Guid? Id { get; set; }
 
     public bool StateChanged { get; set; }
@@ -99,7 +102,7 @@ public class SiteViewModel
             TypeHomesOther = null;
         }
 
-        if (PlanningRef == "No")
+        if (PlanningRef == CommonResponse.No)
         {
             PlanningRefEnter = null;
             Location = null;
@@ -115,7 +118,7 @@ public class SiteViewModel
             LocationCoordinates = null;
         }
 
-        if (Ownership == "No")
+        if (Ownership == CommonResponse.No)
         {
             PurchaseDate = null;
             Cost = null;
@@ -123,7 +126,7 @@ public class SiteViewModel
             Source = null;
         }
 
-        if (GrantFunding != "Yes")
+        if (GrantFunding != CommonResponse.Yes)
         {
             GrantFundingSource = null;
             GrantFundingAmount = null;
@@ -131,7 +134,7 @@ public class SiteViewModel
             GrantFundingPurpose = null;
         }
 
-        if (ChargesDebt == "No")
+        if (ChargesDebt == CommonResponse.No)
         {
             ChargesDebtInfo = null;
         }
@@ -143,6 +146,21 @@ public class SiteViewModel
             PlanningReferenceProvided() &&
             OwnershipInformationProvided() &&
             GrantFundingInformationProvided();
+    }
+
+    public bool AnyBasicInformationIsProvided()
+    {
+        return !string.IsNullOrEmpty(Name) ||
+                !string.IsNullOrEmpty(ManyHomes) ||
+                !string.IsNullOrEmpty(HasEstimatedStartDate) ||
+                TypeHomes != null || TypeHomes?.Length > 0 ||
+                !string.IsNullOrEmpty(Type) ||
+                !string.IsNullOrEmpty(ChargesDebt) ||
+                !string.IsNullOrEmpty(PlanningRef) ||
+                !string.IsNullOrEmpty(Ownership) ||
+                !string.IsNullOrEmpty(GrantFunding) ||
+                !string.IsNullOrEmpty(AffordableHomes) ||
+                !string.IsNullOrEmpty(CheckAnswers);
     }
 
     private bool BasicInformationProvided()
@@ -163,7 +181,7 @@ public class SiteViewModel
             return false;
         }
 
-        if (PlanningRef == "Yes" && !PlanningInformationProvided())
+        if (PlanningRef == CommonResponse.Yes && !PlanningInformationProvided())
         {
             return false;
         }
@@ -200,7 +218,7 @@ public class SiteViewModel
             return false;
         }
 
-        if (Ownership == "No")
+        if (Ownership == CommonResponse.No)
         {
             return true;
         }
@@ -220,7 +238,7 @@ public class SiteViewModel
             return false;
         }
 
-        if (GrantFunding == "No")
+        if (GrantFunding is CommonResponse.No or CommonResponse.DoNotKnow)
         {
             return true;
         }

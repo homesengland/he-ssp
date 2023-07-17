@@ -81,7 +81,7 @@ public class CompanyStructureController : Controller
         }
 
         var loanWorkflow = new LoanApplicationWorkflow(sessionModel, _mediator);
-        if (loanWorkflow.IsBeingChecked() || workflow.IsCompleted() || (sessionModel.Funding.CheckAnswers == "No" && action != "Change"))
+        if (loanWorkflow.IsBeingChecked() || workflow.IsCompleted() || (sessionModel.Company.CheckAnswers == "No" && action != "Change"))
         {
             return RedirectToAction("Workflow", "LoanApplication", new { id = sessionModel.ID, ending = loanWorkflow.GetName() });
         }

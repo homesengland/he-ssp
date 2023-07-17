@@ -80,10 +80,6 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                     .WithMessage("Enter your Land Registry title number"));
         });
 
-        RuleSet("PlanningRefEnter", () => RuleFor(item => item.PlanningRefEnter)
-            .Matches(@"^\d{2}/[A-Z\d]+/[A-Z\d]+$")
-            .WithMessage(ErrorMessages.InvalidReferenceNumber.ToString()));
-
         RuleSet("GrantFundingMore", () => When(
                 item => item.GrantFundingAmount != null,
                 () => RuleFor(item => item.GrantFundingAmount)
@@ -188,7 +184,8 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
 
             When(item => item.CheckAnswers == "Yes", () => RuleFor(m => m)
                     .Must(x => x.AllInformationIsProvided())
-                    .WithMessage(ErrorMessages.CheckAnswersOption.ToString()));
+                    .WithMessage(ErrorMessages.CheckAnswersOption.ToString())
+                    .OverridePropertyName(nameof(SiteViewModel.CheckAnswers)));
         });
     }
 }

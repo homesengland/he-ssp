@@ -31,6 +31,7 @@ public class SiteWorkflow
         Type,
         ChargesDebt,
         DeleteProject,
+        TaskList,
     }
 
     private readonly LoanApplicationViewModel _model;
@@ -67,7 +68,7 @@ public class SiteWorkflow
 
     public bool IsStarted()
     {
-        return _site.State != State.Index;
+        return _site.AnyBasicInformationIsProvided();
     }
 
     public string GetName()
@@ -176,6 +177,9 @@ public class SiteWorkflow
 
         _machine.Configure(State.Complete)
             .Permit(Trigger.Back, State.CheckAnswers);
+
+        _machine.Configure(State.DeleteProject)
+            .Permit(Trigger.Back, State.TaskList);
 
         _machine.OnTransitionCompletedAsync(x =>
         {
