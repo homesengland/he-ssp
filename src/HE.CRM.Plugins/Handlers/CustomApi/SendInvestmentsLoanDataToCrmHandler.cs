@@ -1,4 +1,4 @@
-﻿using DataverseModel;
+using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Plugins.Services.LoanApplication;
 using System.Text.Json;
@@ -6,7 +6,7 @@ using System.Web.Security;
 
 namespace HE.CRM.Plugins.Handlers.CustomApi
 {
-    internal class SendInvestmentsLoanDataToCrmHandler : CrmActionHandlerBase<invln_sendinvestmentloansdatatocrmRequest, DataverseContext>
+    public class SendInvestmentsLoanDataToCrmHandler : CrmActionHandlerBase<invln_sendinvestmentloansdatatocrmRequest, DataverseContext>
     {
         #region Fields
 
