@@ -8,12 +8,11 @@ namespace HE.CRM.Common.DtoMapping
 {
     public class LoanApplicationDtoMapper
     {
-        public static invln_Loanapplication MapLoanApplicationDtoToRegularEntity(LoanApplicationDto loanApplicationDto, int numberOfSites, Contact contact,
-            string accountId)
+        public static invln_Loanapplication MapLoanApplicationDtoToRegularEntity(LoanApplicationDto loanApplicationDto, Contact contact, string accountId)
         {
             var loanApplication = new invln_Loanapplication()
             {
-                invln_NumberofSites = numberOfSites,
+                invln_NumberofSites = ParseInt(loanApplicationDto.numberOfSites),
                 invln_FundingReason = MapFundingReason(loanApplicationDto.fundingReason),
                 invln_ExternalStatus = MapApplicationExternalStatus(loanApplicationDto.loanApplicationStatus),
 

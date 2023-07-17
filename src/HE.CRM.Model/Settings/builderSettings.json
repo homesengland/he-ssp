@@ -104,6 +104,7 @@
     "invln_getloanapplicationsforaccountandcontact*",
     "invln_getsingleloanapplicationforaccountandcontact*",
     "invln_sendinvestmentloansdatatocrm*",
+    "invln_updatesingleloanapplication*",
     "invln_updatesinglesitedetails*"
   ],
   "messagesTypesFolder": "..\\Actions",

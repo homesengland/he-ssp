@@ -71,7 +71,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
 
             this.TracingService.Trace("Setting up invln_Loanapplication");
-            var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, numberOfSites, contact, accountId);
+            loanApplicationFromPortal.numberOfSites = numberOfSites.ToString();
+            var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, contact, accountId);
 
             Guid loanApplicationGuid = Guid.NewGuid();
             if (!string.IsNullOrEmpty(loanApplicationId) && Guid.TryParse(loanApplicationId, out Guid loanAppId))
@@ -124,6 +125,34 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 };
                 TracingService.Trace("update loan application");
                 loanApplicationRepository.Update(loanToUpdate);
+            }
+        }
+
+        public void UpdateLoanApplication(string loanApplicationId, string loanApplication, string fieldsToUpdate, string accountId, string contactExternalId)
+        {
+            if (Guid.TryParse(loanApplicationId, out Guid applicationId))
+            {
+                var deserializedLoanApplication = JsonSerializer.Deserialize<LoanApplicationDto>(loanApplication);
+                Contact contact = contactRepository.GetContactViaExternalId(contactExternalId);
+                var loanApplicationMapped = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(deserializedLoanApplication, contact, accountId);
+                invln_Loanapplication loanApplicationToUpdate = new invln_Loanapplication();
+                if (string.IsNullOrEmpty(fieldsToUpdate))
+                {
+                    loanApplicationToUpdate = loanApplicationMapped;
+                }
+                else
+                {
+                    var fields = fieldsToUpdate.Split(',');
+                    if (fields.Length > 0)
+                    {
+                        foreach (var field in fields)
+                        {
+                            loanApplicationToUpdate[field] = loanApplicationMapped[field];
+                        }
+                    }
+                }
+                loanApplicationToUpdate.Id = applicationId;
+                loanApplicationRepository.Update(loanApplicationToUpdate);
             }
         }
         #endregion
