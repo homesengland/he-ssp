@@ -18,6 +18,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleloanapplicationforaccountandcontact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinvestmentloansdatatocrm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesingleloanapplication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesinglesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Account.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Contact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_contactwebrole.cs" />

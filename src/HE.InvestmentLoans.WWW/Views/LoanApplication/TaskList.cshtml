@@ -12,16 +12,17 @@
 }
 
 
-    <gds-back-link href="@Url.Action("Index","LoanApplication", new {id = Model.ID})" text="Back to account homepage" class="govuk-!-margin-bottom-8">
-    </gds-back-link>
+<gds-back-link class="govuk-grid-column-full" href="@Url.Action("Index","LoanApplication", new {id = Model.ID})" text="Back to account homepage">
+</gds-back-link>
 
+@await Html.PartialAsync("_DeleteNotification")
 
-<gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-2">
-        Development loan application
-    </gds-h1>
-    <gds-div-hint class="govuk-!-margin-bottom-8">
-        Last saved on @Model.Timestamp.ToString("d MMMM yyyy 'at' h:mm tt", new CultureInfo("en-US"))
-    </gds-div-hint>
+<gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-2 govuk-!-margin-top-8 govuk-grid-column-full">
+    Development loan application
+</gds-h1>
+<gds-div-hint class="govuk-!-margin-bottom-8 govuk-grid-column-full">
+    Last saved on @Model.Timestamp.ToString("d MMMM yyyy 'at' h:mm tt", new CultureInfo("en-US"))
+</gds-div-hint>
 <gds-div-grid-column-two-thirds>
     <ul class="app-task-list">
         <li>
@@ -112,7 +113,7 @@
                                 @(site.Name ?? site.DefaultName)
                             </a>
                         </span>
-                        
+
                         @if (new SiteWorkflow(Model, mediator, site.Id.Value).IsCompleted())
                         {
                             <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
@@ -168,7 +169,7 @@
         Report a problem with this page
         <gds-span-visually-hidden> @Url.Action("Index","LoanApplication", new {id = Model.ID})</gds-span-visually-hidden>
     </gds-link>
-    </gds-div-grid-column-two-thirds>
+</gds-div-grid-column-two-thirds>
 
 <div class="govuk-grid-column-one-third-from-desktop govuk-grid-column-two-thirds govuk-!-margin-top-6">
 
