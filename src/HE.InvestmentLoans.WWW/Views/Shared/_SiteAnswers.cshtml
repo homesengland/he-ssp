@@ -107,7 +107,7 @@
     {
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
         {
-        { "Title", "Location Coordinates" },
+        { "Title", "Location coordinates" },
         { "Value", Model?.LocationCoordinates },
         { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Location" }) }
         })
@@ -117,7 +117,7 @@
     {
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
         {
-        { "Title", "Land Registry title number" },
+        { "Title", "Land registry title number" },
         { "Value", Model?.LocationLandRegistry },
         { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Location" }) }
         })

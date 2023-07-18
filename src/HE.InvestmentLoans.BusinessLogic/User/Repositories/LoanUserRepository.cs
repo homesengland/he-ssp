@@ -17,11 +17,13 @@ public class LoanUserRepository : ILoanUserRepository
 
     public async Task<ContactRolesDto?> GetUserDetails(string userGlobalId, string userEmail)
     {
+        var portalType = "858110001";
+
         var req = new invln_getcontactroleRequest()
         {
             invln_contactemail = userEmail,
             invln_contactexternalid = userGlobalId,
-            invln_portaltype = "858110001",
+            invln_portaltype = portalType,
         };
 
         var resp_async = await _serviceClient.ExecuteAsync(req);

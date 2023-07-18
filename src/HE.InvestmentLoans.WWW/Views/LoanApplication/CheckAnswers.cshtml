@@ -1,4 +1,4 @@
-﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="LoanApplication" asp-action="Workflow" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
@@ -26,11 +26,15 @@
         }
 
 
-        <gds-h2 size="ControlSize.M">Check and submit</gds-h2>
-        <p>You must complete all sections before you can submit your application.</p>
+        <gds-h2 size="ControlSize.M">Now submit your application</gds-h2>
+        <p>By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
 
         <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
-            Check and submit application
+            Accept and submit
         </button>
     </form>
+
+    <gds-link href="@Url.Action("GoBack","LoanApplication", new {id = Model.ID})">
+        Return to application
+    </gds-link>
 </gds-div-grid-column-two-thirds>

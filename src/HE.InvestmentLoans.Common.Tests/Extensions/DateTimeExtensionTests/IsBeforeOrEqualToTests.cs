@@ -1,7 +1,8 @@
 using FluentAssertions;
 using HE.InvestmentLoans.Common.Extensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.Common.DateTimeExtensionTests;
+namespace HE.InvestmentLoans.Common.Tests.Extensions.DateTimeExtensionTests;
 
 [TestClass]
 public class IsBeforeOrEqualToTests

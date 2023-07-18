@@ -21,9 +21,9 @@ var sessionCookieName = ".AspNetCore.Session";
 builder.Services.AddSession(options =>
 {
     options.Cookie.Name = sessionCookieName;
-    options.IdleTimeout = TimeSpan.FromMinutes(120);
+    options.IdleTimeout = TimeSpan.FromMinutes(config.Cache.SessionExpireMinutes);
 });
-builder.Services.AddRedis(config.RedisConnectionString, sessionCookieName);
+builder.Services.AddCache(config.Cache, sessionCookieName);
 
 builder.Services.AddApplicationInsightsTelemetry();
 
@@ -75,11 +75,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-if (!config.HttpHeaderSecurityDisabled)
-{
-    app.UseHeaderSecurity();
-    app.UseCrossSiteScriptingSecurity();
-}
+app.UseHeaderSecurity();
+app.UseCrossSiteScriptingSecurity();
 
 app.UseCookiePolicy(
     new CookiePolicyOptions
