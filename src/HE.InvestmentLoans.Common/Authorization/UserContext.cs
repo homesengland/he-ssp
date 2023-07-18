@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using HE.InvestmentLoans.Common.Extensions;
 using Microsoft.AspNetCore.Http;
 
 namespace HE.InvestmentLoans.Common.Authorization;
@@ -17,21 +18,16 @@ public class UserContext : IUserContext
         }
 
         var httpUser = httpContext.User;
-        Email = GetClaimValue(httpUser, EmailClaimName) ?? string.Empty;
+        Email = httpUser.GetClaimValue(EmailClaimName) ?? string.Empty;
         UserGlobalId = GetRequiredClaimValue(httpUser, IdentifierClaimName);
     }
 
-    public string UserGlobalId { get; init; }
+    public string UserGlobalId { get; }
 
-    public string Email { get; init; }
+    public string Email { get; }
 
     private string GetRequiredClaimValue(ClaimsPrincipal claimsPrincipal, string claimType)
     {
-        return GetClaimValue(claimsPrincipal, claimType) ?? throw new ArgumentNullException(claimType);
-    }
-
-    private string? GetClaimValue(ClaimsPrincipal claimsPrincipal, string claimType)
-    {
-        return claimsPrincipal.Claims.FirstOrDefault(x => x.Type == claimType)?.Value;
+        return claimsPrincipal.GetClaimValue(claimType) ?? throw new ArgumentNullException(claimType);
     }
 }
