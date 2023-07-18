@@ -8,8 +8,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CrmSdk.CoreTools" Version="9.1.0.92" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-    <PackageReference Include="Microsoft.PowerPlatform.Dataverse.Client" Version="1.0.39" />
+    <PackageReference Include="Microsoft.PowerPlatform.Dataverse.Client" Version="1.1.12" />
     <PackageReference Include="spkl" Version="1.0.640" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>
 
   <ItemGroup>
