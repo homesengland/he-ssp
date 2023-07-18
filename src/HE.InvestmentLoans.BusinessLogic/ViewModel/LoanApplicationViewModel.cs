@@ -1,5 +1,6 @@
 using System.Globalization;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Contract.Application.Enums;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
@@ -34,6 +35,8 @@ public class LoanApplicationViewModel
     public SecurityViewModel Security { get; set; }
 
     public List<SiteViewModel> Sites { get; set; }
+
+    public List<Project> Projects { get; set; }
 
     public AccountDetailsViewModel Account { get; set; }
 

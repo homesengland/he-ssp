@@ -1,6 +1,6 @@
-using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Commands;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Commands;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Xrm.Sdk;
 using Moq;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication;
+namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplicationLegacy;
 
 [TestClass]
 public class FlowTest : MediatorTestBase

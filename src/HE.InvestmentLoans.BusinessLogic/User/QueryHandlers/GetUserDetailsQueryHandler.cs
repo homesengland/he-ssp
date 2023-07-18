@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.Contract.User;
 using MediatR;
 

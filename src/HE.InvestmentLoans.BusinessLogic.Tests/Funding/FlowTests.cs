@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Commands;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Commands;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using MediatR;

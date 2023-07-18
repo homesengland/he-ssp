@@ -1,12 +1,13 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Utils;
 
-namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
+namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
 
-public class SiteViewModel
+public class Project
 {
-    public SiteViewModel()
+    public Project()
     {
+        Id = Guid.NewGuid();
         State = SiteWorkflow.State.Index;
         StateChanged = false;
     }
