@@ -89,6 +89,7 @@ namespace HE.CRM.Common.DtoMapping
                 loanApplicationId = loanApplication.invln_LoanapplicationId.ToString(),
                 siteDetailsList = siteDetailsDtoList,
                 externalId = externalContactId,
+                LastModificationOn = loanApplication.ModifiedOn,
             };
             return loanApplicationDto;
         }
