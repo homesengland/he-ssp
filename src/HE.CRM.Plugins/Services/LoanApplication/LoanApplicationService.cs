@@ -154,6 +154,14 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 loanApplicationRepository.Update(loanApplicationToUpdate);
             }
         }
+
+        public void DeleteLoanApplication(string loanApplicationId)
+        {
+            if (Guid.TryParse(loanApplicationId, out Guid applicationId))
+            {
+                loanApplicationRepository.Delete(new invln_Loanapplication() { Id = applicationId });
+            }
+        }
         #endregion
     }
 }

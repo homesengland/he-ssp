@@ -806,9 +806,9 @@ namespace DataverseModel
 			public const string YomiName = "yominame";
 		}
 		
-		public const string AlternateKeys = "he_socialhousingproviderregistrationnumber|he_localauthoritycode|he_companieshous" +
-			"enumber|he_esriid|he_id|he_homesenglandcombinedauthoritycode|he_homesenglandcent" +
-			"ralgovernmentorganisationcode";
+		public const string AlternateKeys = "he_socialhousingproviderregistrationnumber|he_homesenglandcombinedauthoritycode|h" +
+			"e_companieshousenumber|he_esriid|he_id|he_homesenglandcentralgovernmentorganisat" +
+			"ioncode|he_localauthoritycode";
 		
 		/// <summary>
 		/// Default Constructor.

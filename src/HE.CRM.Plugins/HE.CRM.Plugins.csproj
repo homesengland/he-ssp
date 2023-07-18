@@ -124,6 +124,8 @@
     <Compile Include="Exceptions\IntegrationApiException.cs" />
     <Compile Include="Handlers\Account\GenerateRandomAccountNameSampleHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeLoanApplicationExternalStatusHandler.cs" />
+    <Compile Include="Handlers\CustomApi\DeleteLoanApplicationHandler.cs" />
+    <Compile Include="Handlers\CustomApi\DeleteSiteDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\GenerateRichTextDocumentHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetContactRoleHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetInvestmentsLoansForAccountAndContactHandler.cs" />
@@ -134,6 +136,8 @@
     <Compile Include="Models\AzureAdToken.cs" />
     <Compile Include="Plugins\Accounts\GenerateRandomAccountNameSamplePlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeLoanApplicationExternalStatusPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\DeleteLoanApplicationPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\DeleteSiteDetailsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GenerateRichTextDocumentPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetContactRolePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetInvestmentsLoansForAccountAndContactPlugin.cs" />

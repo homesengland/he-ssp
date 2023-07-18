@@ -13,6 +13,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_changeloanapplicationexternalstatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deleteloanapplication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deletesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_generaterichtextdocument.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
