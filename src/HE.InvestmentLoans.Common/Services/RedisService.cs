@@ -23,27 +23,27 @@ public class RedisService : ICacheService
     {
         if (Cache.KeyExists(key))
         {
-            return ObjectGet<T>(key);
+            return GetValue<T>(key);
         }
 
         var value = loadValue();
 
         if (value != null)
         {
-            ObjectSet(key, value);
+            SetValue(key, value);
         }
 
         return value;
     }
 
-    private T? ObjectGet<T>(string key)
+    public T? GetValue<T>(string key)
     {
         string? resp = Cache.StringGet(key);
         return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
     }
 
-    private bool ObjectSet(string key, object value)
+    public void SetValue<T>(string key, T value)
     {
-        return Cache.StringSet(key, JsonSerializer.Serialize(value), TimeSpan.FromMinutes(_config.ExpireMinutes));
+        Cache.StringSet(key, JsonSerializer.Serialize(value), TimeSpan.FromMinutes(_config.ExpireMinutes));
     }
 }
