@@ -36,6 +36,23 @@ public class RedisService : ICacheService
         return value;
     }
 
+    public async Task<T?> GetValueAsync<T>(string key, Func<Task<T>> loadValue)
+    {
+        if (Cache.KeyExists(key))
+        {
+            return ObjectGet<T>(key);
+        }
+
+        var value = await loadValue();
+
+        if (value != null)
+        {
+            ObjectSet(key, value);
+        }
+
+        return value;
+    }
+
     private T? ObjectGet<T>(string key)
     {
         string? resp = Cache.StringGet(key);
