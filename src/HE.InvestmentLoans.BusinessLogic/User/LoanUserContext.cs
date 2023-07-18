@@ -53,7 +53,7 @@ public class LoanUserContext : ILoanUserContext
 
     private async Task<Task> LoadUserDetails()
     {
-        var userDetails = _cacheService.GetValue($"{nameof(this.LoadUserDetails)}_{_userContext.UserGlobalId}", () => _loanUserRepository.GetUserDetails(_userContext.UserGlobalId, _userContext.Email ?? null));
+        var userDetails = _cacheService.GetValue($"{nameof(this.LoadUserDetails)}_{_userContext.UserGlobalId}", () => _loanUserRepository.GetUserDetails(_userContext.UserGlobalId, _userContext.Email));
         _accountIds.AddRange(userDetails?.Result?.contactRoles.OrderBy(x => x.accountId).Select(x => x.accountId).ToList());
         _selectedAccountId = _accountIds.FirstOrDefault(Guid.Parse("429d11ab-15fe-ed11-8f6c-002248c653e1"));
 
