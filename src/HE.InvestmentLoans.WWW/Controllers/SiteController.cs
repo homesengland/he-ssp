@@ -138,7 +138,7 @@ public class SiteController : Controller
     {
         var sessionmodel = await this._mediator.Send(new BL.LoanApplication.Queries.GetSingle() { Id = id });
         var workflow = new SiteWorkflow(sessionmodel, _mediator, site);
-        workflow.ChangeState(Enum.Parse<SiteWorkflow.State>(state), true);
+        workflow.ChangeState(Enum.Parse<State>(state), true);
         return RedirectToAction("Workflow", new { id = sessionmodel.ID, site, ending = workflow.GetName() });
     }
 

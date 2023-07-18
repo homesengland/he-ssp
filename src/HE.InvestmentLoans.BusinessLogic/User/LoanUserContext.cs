@@ -16,7 +16,7 @@ public class LoanUserContext : ILoanUserContext
 
     private readonly IList<Guid> _accountIds = new List<Guid>();
 
-    private Guid? _selectedAccountId;
+    private UserAccount _selectedAccount;
 
     public LoanUserContext(IUserContext userContext, ILoanUserRepository loanUserRepository, ICacheService cacheService)
     {
@@ -33,17 +33,17 @@ public class LoanUserContext : ILoanUserContext
 
     public async Task<Guid> GetSelectedAccountId()
     {
-        if (_selectedAccountId is null)
+        if (_selectedAccount is null)
         {
             await LoadUserDetails();
         }
 
-        return _selectedAccountId!.Value;
+        return _selectedAccount!.AccountId;
     }
 
     public async Task<IList<Guid>> GetAllAccountIds()
     {
-        if (_selectedAccountId is null)
+        if (_selectedAccount is null)
         {
             await LoadUserDetails();
         }
@@ -51,15 +51,40 @@ public class LoanUserContext : ILoanUserContext
         return _accountIds;
     }
 
-    private async Task<Task> LoadUserDetails()
+    public async Task<UserAccount> GetSelectedAccount()
+    {
+        if (_selectedAccount is null)
+        {
+            await LoadUserDetails();
+        }
+
+        return _selectedAccount!;
+    }
+
+    private Task LoadUserDetails()
     {
         var userDetails = await _cacheService.GetValueAsync($"{nameof(this.LoadUserDetails)}_{_userContext.UserGlobalId}", async () => await _loanUserRepository.GetUserDetails(_userContext.UserGlobalId, _userContext.Email));
         _accountIds.AddRange(userDetails?.contactRoles.OrderBy(x => x.accountId).Select(x => x.accountId).ToList());
         _selectedAccountId = _accountIds.FirstOrDefault(Guid.Parse("429d11ab-15fe-ed11-8f6c-002248c653e1"));
 
-        if (_selectedAccountId is null)
+        if (userDetails is null)
         {
             throw new LoanUserAccountIsMissingException();
+        }
+
+        var accounts = userDetails.contactRoles.OrderBy(x => x.accountId);
+
+        _accountIds.AddRange(accounts.Select(x => x.accountId).ToList());
+
+        var selectedAccount = accounts.FirstOrDefault();
+
+        if (selectedAccount is null)
+        {
+            _selectedAccount = new UserAccount(UserGlobalId, Guid.Parse("429d11ab-15fe-ed11-8f6c-002248c653e1"), "Default account");
+        }
+        else
+        {
+            _selectedAccount = new UserAccount(UserGlobalId, selectedAccount.accountId, selectedAccount.accountName);
         }
 
         return Task.CompletedTask;

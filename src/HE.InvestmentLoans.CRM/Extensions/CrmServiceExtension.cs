@@ -59,8 +59,6 @@ public static class CrmServiceExtension
                     ClientId={config.ClientId};
                     ClientSecret={config.ClientSecret};";
 
-        var serviceClient = new ServiceClient(connectionString, serviceProvider.GetRequiredService<ILogger<ServiceClient>>());
-        cacheService.SetValue(cacheKey, serviceClient.CurrentAccessToken);
-        return serviceClient;
+        return new ServiceClient(connectionString);
     }
 }
