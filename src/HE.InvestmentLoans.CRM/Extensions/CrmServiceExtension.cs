@@ -16,7 +16,7 @@ public static class CrmServiceExtension
 {
     public static void AddCrmConnection(this IServiceCollection services)
     {
-        services.AddScoped<IOrganizationService>(serviceProvider =>
+        services.AddScoped<IOrganizationServiceAsync2>(serviceProvider =>
         {
             const string cacheKey = "OrganizationServiceAuthToken";
             var cacheService = serviceProvider.GetRequiredService<ICacheService>();

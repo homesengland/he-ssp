@@ -19,6 +19,12 @@ public class RedisService : ICacheService
 
     private IDatabase Cache => _connection.GetDatabase();
 
+    public T? GetValue<T>(string key)
+    {
+        string? resp = Cache.StringGet(key);
+        return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
+    }
+
     public T? GetValue<T>(string key, Func<T> loadValue)
     {
         if (Cache.KeyExists(key))
@@ -36,10 +42,21 @@ public class RedisService : ICacheService
         return value;
     }
 
-    public T? GetValue<T>(string key)
+    public async Task<T?> GetValueAsync<T>(string key, Func<Task<T>> loadValue)
     {
-        string? resp = Cache.StringGet(key);
-        return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
+        if (Cache.KeyExists(key))
+        {
+            return GetValue<T>(key);
+        }
+
+        var value = await loadValue();
+
+        if (value != null)
+        {
+            SetValue(key, value);
+        }
+
+        return value;
     }
 
     public void SetValue<T>(string key, T value)

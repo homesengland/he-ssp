@@ -4,6 +4,8 @@ public interface ICacheService
 {
     public T? GetValue<T>(string key, Func<T> loadValue);
 
+    public Task<T?> GetValueAsync<T>(string key, Func<Task<T>> loadValue);
+
     public T? GetValue<T>(string key);
 
     public void SetValue<T>(string key, T value);
