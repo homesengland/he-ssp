@@ -8,15 +8,15 @@ using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
-using Microsoft.Xrm.Sdk;
+using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 
 public class LoanApplicationRepository : ILoanApplicationRepository
 {
-    private readonly IOrganizationService _serviceClient;
+    private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    public LoanApplicationRepository(IOrganizationService serviceClient)
+    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient)
     {
         _serviceClient = serviceClient;
     }
@@ -30,13 +30,13 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             invln_loanapplicationid = id.ToString(),
         };
 
-        _serviceClient.Execute(req);
+        _serviceClient.ExecuteAsync(req);
 
         // TODO: It will be fullfilled with next PR.
         return new LoanApplicationEntity(id, new LoanApplicationViewModel());
     }
 
-    public IList<UserLoanApplication> LoadAllLoanApplications(UserAccount userAccount)
+    public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount)
     {
         var req = new invln_getloanapplicationsforaccountandcontactRequest()
         {
@@ -44,7 +44,8 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             invln_externalcontactid = userAccount.UserGlobalId,
         };
 
-        var response = (invln_getloanapplicationsforaccountandcontactResponse)_serviceClient.Execute(req);
+        var response_async = await _serviceClient.ExecuteAsync(req);
+        var response = response_async != null ? (invln_getloanapplicationsforaccountandcontactResponse)response_async : throw new NotFoundException("Applications list", userAccount.ToString());
         var loanApplicationDtos = JsonSerializer.Deserialize<List<LoanApplicationDto>>(response.invln_loanapplications) ?? throw new NotFoundException("Applications list", userAccount.ToString());
 
         return loanApplicationDtos.Select(x => new UserLoanApplication(LoanApplicationId.From(x.accountId), x.name, x.loanApplicationStatus)).ToList();
@@ -123,7 +124,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             invln_contactexternalid = userAccount.UserGlobalId,
         };
 
-        _serviceClient.Execute(req);
+        _serviceClient.ExecuteAsync(req);
     }
 
     public string MapPurpose(FundingPurpose? fundingPurpose)
