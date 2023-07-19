@@ -1,7 +1,7 @@
-﻿@{
+﻿@using HE.InvestmentLoans.BusinessLogic
+@{
     ViewData["backLinkText"] = "Back to account homepage";
 }
-
 
 <gds-div-grid-column-two-thirds>
     <form asp-route="/" asp-method="post" novalidate>
@@ -24,11 +24,23 @@
                 <gds-li>your organisation’s address</gds-li>
             </gds-ul>
         </div>
-        <button class="govuk-button govuk-button--start" data-module="govuk-button" name="action" type="submit" value="Continue">
-            Start now
-            <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-                <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-            </svg>
-        </button>
+        <feature name=@LoansFeatureFlags.SaveApplicationDraftInCrm>
+            <a href="@Url.Action("Index", "LoanApplicationV2")">
+                <button type="button" class="govuk-button govuk-button--start" data-module="govuk-button" name="action">
+                    Start now
+                    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"/>
+                    </svg>
+                </button>
+            </a>
+        </feature>
+        <feature name=@LoansFeatureFlags.SaveApplicationDraftInCrm negate="true">
+            <button class="govuk-button govuk-button--start" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Start now
+                <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                    <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"/>
+                </svg>
+            </button>
+        </feature>
     </form>
 </gds-div-grid-column-two-thirds>
