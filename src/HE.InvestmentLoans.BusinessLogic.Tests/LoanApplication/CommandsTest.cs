@@ -6,7 +6,6 @@ using HE.InvestmentLoans.Contract.Application.Enums;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using Microsoft.Xrm.Sdk;
 using Moq;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication;

@@ -1,4 +1,3 @@
-using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
 using HE.InvestmentLoans.Contract.User;
 using MediatR;
 
@@ -8,7 +7,7 @@ public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, G
 {
     private readonly ILoanUserContext _loanUserContext;
 
-    public GetUserDetailsQueryHandler(ILoanUserContext loanUserContext, ILoanApplicationRepository loanApplicationRepository)
+    public GetUserDetailsQueryHandler(ILoanUserContext loanUserContext)
     {
         _loanUserContext = loanUserContext;
     }
