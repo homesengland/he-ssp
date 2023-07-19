@@ -10,8 +10,6 @@ public class ProjectController : Controller
 
     public IActionResult Add()
     {
-        // loanApp = load
-        // add (pass loaded loanApp)
         return View();
     }
 }

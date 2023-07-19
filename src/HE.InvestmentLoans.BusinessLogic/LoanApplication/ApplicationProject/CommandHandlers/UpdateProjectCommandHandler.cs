@@ -17,9 +17,12 @@ public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand>
 
     public async Task Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
     {
-        _applicationProjectsRepository.UpdateProject(
-            request.LoanApplicationEntity,
-            request.Project,
-            new UserAccount(_loanUserContext.UserGlobalId, await _loanUserContext.GetSelectedAccountId().ConfigureAwait(false)));
+        var applicationProjects = _applicationProjectsRepository.GetAll(
+                                                                    request.LoanApplicationId,
+                                                                    new UserAccount(_loanUserContext.UserGlobalId, await _loanUserContext.GetSelectedAccountId()));
+
+        _applicationProjectsRepository.Update(applicationProjects, request.Project);
+
+        _applicationProjectsRepository.Save(applicationProjects);
     }
 }

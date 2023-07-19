@@ -1,5 +1,4 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
@@ -7,13 +6,15 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Re
 
 public interface IApplicationProjectsRepository
 {
-    public void AddAnotherProject(LoanApplicationEntity loanApplicationEntity, UserAccount userAccount);
+    public void Add(ApplicationProjects applicationProjects);
 
-    public void UpdateProject(LoanApplicationEntity loanApplicationEntity, Project project, UserAccount userAccount);
+    public void Update(ApplicationProjects applicationProjects, Project project);
 
-    public void DeleteProject(LoanApplicationEntity loanApplicationEntity, Guid projectId, UserAccount userAccount);
+    public void Delete(ApplicationProjects applicationProjects, ProjectId projectId);
 
-    public ApplicationProjects GetAllProjects(LoanApplicationId loanApplicationId, UserAccount userAccount);
+    public ApplicationProjects GetAll(LoanApplicationId loanApplicationId, UserAccount userAccount);
 
-    public Project GetProjectDetails(LoanApplicationId loanApplicationId, Guid projectId, UserAccount userAccount);
+    public Project GetById(LoanApplicationId loanApplicationId, ProjectId projectId, UserAccount userAccount);
+
+    public void Save(ApplicationProjects applicationProjects);
 }

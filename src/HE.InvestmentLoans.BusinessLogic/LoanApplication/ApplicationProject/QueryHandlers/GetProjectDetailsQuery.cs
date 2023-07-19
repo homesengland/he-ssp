@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.QueryHandlers;
 
-public record GetProjectDetailsQuery(LoanApplicationId LoanApplicationId, Guid ProjectId) : IRequest<Project>;
+public record GetProjectDetailsQuery(LoanApplicationId LoanApplicationId, ProjectId ProjectId) : IRequest<Project>;

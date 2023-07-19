@@ -15,7 +15,12 @@ public class LoanApplicationEntity
 
     public LoanApplicationId Id { get; }
 
-    public ApplicationProjects ApplicationProjects { get; }
+    public ApplicationProjects ApplicationProjects { get; private set; }
 
     public LoanApplicationViewModel LegacyModel { get; }
+
+    public void SaveApplicationProjects(ApplicationProjects applicationProjects)
+    {
+        ApplicationProjects = applicationProjects;
+    }
 }

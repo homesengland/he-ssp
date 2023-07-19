@@ -26,7 +26,7 @@ public class LoanApplicationViewModel
         set;
     }
 
-    public DateTime Timestamp { get; set; }
+    public DateTime Timestamp { get; private set; }
 
     public CompanyStructureViewModel Company { get; set; }
 
@@ -53,6 +53,11 @@ public class LoanApplicationViewModel
         Sites.Add(site);
 
         return site;
+    }
+
+    public void SetTimestamp(DateTime timestamp)
+    {
+        Timestamp = timestamp;
     }
 
     private AccountDetailsViewModel TemporaryAccount() => new()

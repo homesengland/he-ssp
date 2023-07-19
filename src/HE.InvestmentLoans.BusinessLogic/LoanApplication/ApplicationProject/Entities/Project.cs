@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Utils;
+using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
 
@@ -7,7 +8,7 @@ public class Project
 {
     public Project()
     {
-        Id = Guid.NewGuid();
+        Id = new ProjectId(Guid.NewGuid());
         State = SiteWorkflow.State.Index;
         StateChanged = false;
     }
@@ -78,11 +79,13 @@ public class Project
 
     public string? ChargesDebtInfo { get; set; }
 
+    public bool IsSoftDeleted { get; private set; }
+
     public SiteWorkflow.State State { get; set; }
 
     public SiteWorkflow.State PreviousState { get; set; }
 
-    public Guid? Id { get; set; }
+    public ProjectId? Id { get; set; }
 
     public bool StateChanged { get; set; }
 
@@ -162,6 +165,11 @@ public class Project
                 !string.IsNullOrEmpty(GrantFunding) ||
                 !string.IsNullOrEmpty(AffordableHomes) ||
                 !string.IsNullOrEmpty(CheckAnswers);
+    }
+
+    public void MarkAsDeleted()
+    {
+        IsSoftDeleted = true;
     }
 
     private bool BasicInformationProvided()

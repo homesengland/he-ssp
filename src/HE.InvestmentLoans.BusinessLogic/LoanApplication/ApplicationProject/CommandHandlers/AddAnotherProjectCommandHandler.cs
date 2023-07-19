@@ -17,8 +17,12 @@ public class AddAnotherProjectCommandHandler : IRequestHandler<AddAnotherProject
 
     public async Task Handle(AddAnotherProjectCommand request, CancellationToken cancellationToken)
     {
-        _applicationProjectsRepository.AddAnotherProject(
-            request.LoanApplicationEntity,
-            new UserAccount(_loanUserContext.UserGlobalId, await _loanUserContext.GetSelectedAccountId().ConfigureAwait(false)));
+        var applicationProjects = _applicationProjectsRepository.GetAll(
+                                                                    request.LoanApplicationId,
+                                                                    new UserAccount(_loanUserContext.UserGlobalId, await _loanUserContext.GetSelectedAccountId()));
+
+        _applicationProjectsRepository.Add(applicationProjects);
+
+        _applicationProjectsRepository.Save(applicationProjects);
     }
 }

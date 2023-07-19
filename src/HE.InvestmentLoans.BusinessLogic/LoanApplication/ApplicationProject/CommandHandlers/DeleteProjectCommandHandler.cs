@@ -17,9 +17,12 @@ public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand>
 
     public async Task Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
     {
-        _applicationProjectsRepository.DeleteProject(
-            request.LoanApplicationEntity,
-            request.ProjectId,
-            new UserAccount(_loanUserContext.UserGlobalId, await _loanUserContext.GetSelectedAccountId().ConfigureAwait(false)));
+        var applicationProjects = _applicationProjectsRepository.GetAll(
+                                                                    request.LoanApplicationId,
+                                                                    new UserAccount(_loanUserContext.UserGlobalId, await _loanUserContext.GetSelectedAccountId()));
+
+        _applicationProjectsRepository.Delete(applicationProjects, request.ProjectId);
+
+        _applicationProjectsRepository.Save(applicationProjects);
     }
 }
