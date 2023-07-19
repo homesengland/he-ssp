@@ -12,7 +12,5 @@ public static class RouteConstants
 
     public const string ErrorPageNotFound = "/page-not-found";
 
-    public const string ErrorServiceUnavailable = "/service-unavailable";
-
     public const string ErrorProblemWithTheService = "/problem-with-the-service";
 }

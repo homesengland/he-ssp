@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Models.Error;
+using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.WWW.Config;
 
 namespace HE.InvestmentLoans.WWW.Middlewares;
@@ -28,20 +30,18 @@ public class ErrorHandlerMiddleware
         }
         catch (Exception ex)
         {
-            switch (ex)
+            var hostEnvironment = context.RequestServices.GetRequiredService<IHostEnvironment>();
+            var cache = context.RequestServices.GetRequiredService<ICacheService>();
+
+            var key = ex switch
             {
-                case LoanUserAccountIsMissingException:
-                case NotFoundException:
-                    context.Response.Redirect(RouteConstants.ErrorPageNotFound);
-                    break;
-                case DeleteFailureException:
-                case ValidationException:
-                    context.Response.Redirect(RouteConstants.ErrorProblemWithTheService);
-                    break;
-                default:
-                    context.Response.Redirect(RouteConstants.ErrorServiceUnavailable);
-                    break;
-            }
+                NotFoundException => $"{RouteConstants.ErrorPageNotFound}?key={Guid.NewGuid()}",
+                _ => $"{RouteConstants.ErrorProblemWithTheService}?key={Guid.NewGuid()}",
+            };
+
+            var error = hostEnvironment.IsDevelopment() ? new ErrorModel(ex.Message, ex.StackTrace) : new ErrorModel(ex.Message);
+            cache.SetValue(key, error, 600);
+            context.Response.Redirect(key);
         }
     }
 }

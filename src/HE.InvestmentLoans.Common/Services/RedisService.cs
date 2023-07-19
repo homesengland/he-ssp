@@ -21,6 +21,17 @@ public class RedisService : ICacheService
 
     public T? GetValue<T>(string key)
     {
+        if (Cache.KeyExists(key))
+        {
+            string? resp = Cache.StringGet(key);
+            return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
+        }
+
+        return default;
+    }
+
+    public T? GetValue<T>(string key)
+    {
         string? resp = Cache.StringGet(key);
         return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
     }
@@ -29,7 +40,8 @@ public class RedisService : ICacheService
     {
         if (Cache.KeyExists(key))
         {
-            return GetValue<T>(key);
+            string? resp = Cache.StringGet(key);
+            return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
         }
 
         var value = loadValue();
@@ -58,9 +70,10 @@ public class RedisService : ICacheService
 
         return value;
     }
+    public void SetValue(string key, object value) => SetValue(key, value, _config.ExpireMinutes);
 
-    public void SetValue<T>(string key, T value)
+    public void SetValue(string key, object value, int expireMinutes)
     {
-        Cache.StringSet(key, JsonSerializer.Serialize(value), TimeSpan.FromMinutes(_config.ExpireMinutes));
+        Cache.StringSet(key, JsonSerializer.Serialize(value), TimeSpan.FromMinutes(expireMinutes));
     }
 }
