@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Moq;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplicationLegacy;
+namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication;
 
 [TestClass]
 public class FlowTest : MediatorTestBase
