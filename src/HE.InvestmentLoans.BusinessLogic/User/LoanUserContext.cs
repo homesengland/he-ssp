@@ -61,16 +61,9 @@ public class LoanUserContext : ILoanUserContext
         return _selectedAccount!;
     }
 
-    private Task LoadUserDetails()
+    private async Task LoadUserDetails()
     {
-        var userDetails = await _cacheService.GetValueAsync($"{nameof(this.LoadUserDetails)}_{_userContext.UserGlobalId}", async () => await _loanUserRepository.GetUserDetails(_userContext.UserGlobalId, _userContext.Email));
-        _accountIds.AddRange(userDetails?.contactRoles.OrderBy(x => x.accountId).Select(x => x.accountId).ToList());
-        _selectedAccountId = _accountIds.FirstOrDefault(Guid.Parse("429d11ab-15fe-ed11-8f6c-002248c653e1"));
-
-        if (userDetails is null)
-        {
-            throw new LoanUserAccountIsMissingException();
-        }
+        var userDetails = await _cacheService.GetValueAsync($"{nameof(this.LoadUserDetails)}_{_userContext.UserGlobalId}", async () => await _loanUserRepository.GetUserDetails(_userContext.UserGlobalId, _userContext.Email)) ?? throw new LoanUserAccountIsMissingException();
 
         var accounts = userDetails.contactRoles.OrderBy(x => x.accountId);
 
@@ -86,7 +79,5 @@ public class LoanUserContext : ILoanUserContext
         {
             _selectedAccount = new UserAccount(UserGlobalId, selectedAccount.accountId, selectedAccount.accountName);
         }
-
-        return Task.CompletedTask;
     }
 }

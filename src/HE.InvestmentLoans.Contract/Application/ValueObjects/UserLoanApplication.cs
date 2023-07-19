@@ -1,15 +1,15 @@
-using Dawn;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 public class UserLoanApplication : ValueObject
 {
-    public UserLoanApplication(LoanApplicationId id, string applicationName, string status, DateTime? lastModificationDate)
+    public UserLoanApplication(LoanApplicationId id, string applicationName, ApplicationStatus status, DateTime? lastModificationDate)
     {
         Id = id;
         ApplicationName = applicationName;
-        Status = Guard.Argument(status, nameof(Status)).NotEmpty();
+        Status = status;
         LastModificationDate = lastModificationDate;
     }
 
@@ -17,7 +17,7 @@ public class UserLoanApplication : ValueObject
 
     public string ApplicationName { get; }
 
-    public string Status { get; }
+    public ApplicationStatus Status { get; }
 
     public DateTime? LastModificationDate { get; }
 

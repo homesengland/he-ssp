@@ -1,14 +1,12 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.PowerPlatform.Dataverse.Client;
-using HE.InvestmentLoans.Common.Models.App;
-using Microsoft.Xrm.Sdk;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Common.Utils;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.CRM.Extensions;
 

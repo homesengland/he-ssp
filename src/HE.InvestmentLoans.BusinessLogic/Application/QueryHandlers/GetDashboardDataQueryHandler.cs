@@ -20,8 +20,8 @@ public class GetDashboardDataQueryHandler : IRequestHandler<GetDashboardDataQuer
     public async Task<GetDashboardDataQueryResponse> Handle(GetDashboardDataQuery request, CancellationToken cancellationToken)
     {
         var selectedAccount = await _loanUserContext.GetSelectedAccount();
-        var userLoanApplications = await _loanApplicationRepository.LoadAllLoanApplications(selectedAccount).OrderByDescending(application => application.LastModificationDate).ToList();
+        var userLoanApplications = (await _loanApplicationRepository.LoadAllLoanApplications(selectedAccount)).OrderByDescending(application => application.LastModificationDate).ToList();
 
-        return new GetDashboardDataQueryResponse(userLoanApplications, selectedAccount.Name);
+        return new GetDashboardDataQueryResponse(userLoanApplications, selectedAccount.AccountName);
     }
 }
