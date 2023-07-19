@@ -2,6 +2,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entiti
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Extensions;
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
@@ -42,6 +43,20 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             ?? throw new NotFoundException(nameof(LoanApplicationEntity).ToString(), loanApplicationId.ToString());
 
         return loanApplication.ApplicationProjects;
+    }
+
+    public LoanApplicationViewModel LegacyDeleteProject(Guid loanApplicationId, Guid projectId)
+    {
+        var loanApplicationSessionModel = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationViewModel>(loanApplicationId.ToString())!;
+
+        var projectToDelete = loanApplicationSessionModel.Sites.FirstOrDefault(p => p.Id == projectId) ?? throw new NotFoundException(nameof(SiteViewModel).ToString(), projectId);
+
+        loanApplicationSessionModel!.SetTimestamp(_dateTime.Now);
+        loanApplicationSessionModel!.Sites.Remove(projectToDelete);
+
+        _httpContextAccessor.HttpContext?.Session.Set(loanApplicationId.ToString(), loanApplicationSessionModel);
+
+        return loanApplicationSessionModel;
     }
 
     public Project GetById(LoanApplicationId loanApplicationId, ProjectId projectId, UserAccount userAccount)

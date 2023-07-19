@@ -2,11 +2,9 @@ using System.Diagnostics.CodeAnalysis;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.CommandHandlers;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -154,7 +152,7 @@ public class SiteController : Controller
 
         if (Request.Form["DeleteProject"] == "Yes")
         {
-            await this._mediator.Send(new DeleteProjectCommand(new LoanApplicationEntity(new LoanApplicationId(id), model), site));
+            await this._mediator.Send(new LegacyDeleteProjectCommand(id, site));
             projectName = sitemodel.Name ?? sitemodel.DefaultName;
         }
         else
