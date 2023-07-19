@@ -76,6 +76,8 @@ if (!app.Environment.IsDevelopment())
     });
 }
 
+app.UseMiddleware<ErrorHandlerMiddleware>();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
