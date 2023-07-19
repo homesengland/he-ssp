@@ -21,7 +21,8 @@ public class Create : IRequest<LoanApplicationViewModel>
 
         public Task<LoanApplicationViewModel> Handle(Create request, CancellationToken cancellationToken)
         {
-            var model = new LoanApplicationViewModel() { Timestamp = _dateTime.Now };
+            var model = new LoanApplicationViewModel();
+            model.SetTimestamp(_dateTime.Now);
             model.AddNewSite();
             var result = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationViewModel>(model.ID.ToString());
 

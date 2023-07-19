@@ -39,7 +39,7 @@ public class Update : IRequest<LoanApplicationViewModel>
                 throw new NotFoundException(nameof(LoanApplicationViewModel), string.Empty);
             }
 
-            request.Model.Timestamp = _dateTime.Now;
+            request.Model.SetTimestamp(_dateTime.Now);
 
             if (request.TryUpdateModelAction != null)
             {
