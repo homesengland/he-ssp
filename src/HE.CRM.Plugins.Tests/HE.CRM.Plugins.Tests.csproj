@@ -125,6 +125,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomApis\ChangeLoanApplicationExternalStatusTest.cs" />
     <Compile Include="CustomApis\GetContactRole.cs" />
     <Compile Include="CustomApis\SendInvestmentsLoanDataToCrm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
