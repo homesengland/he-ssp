@@ -1,5 +1,5 @@
 using FluentValidation;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 

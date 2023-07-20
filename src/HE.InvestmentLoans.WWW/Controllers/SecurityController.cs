@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using MediatR;
@@ -29,7 +29,7 @@ public class SecurityController : Controller
     [Route("{ending?}")]
     public async Task<IActionResult> Workflow(Guid id, string ending)
     {
-        var model = await _mediator.Send(new BL.LoanApplication.Queries.GetSingle() { Id = id });
+        var model = await _mediator.Send(new BL.LoanApplicationLegacy.Queries.GetSingle() { Id = id });
 
         var workflow = new SecurityWorkflow(model, _mediator);
 
@@ -45,7 +45,7 @@ public class SecurityController : Controller
     [Route("{ending?}")]
     public async Task<IActionResult> WorkflowPost(Guid id, string ending, string action)
     {
-        var sessionModel = await this._mediator.Send(new BL.LoanApplication.Queries.GetSingle() { Id = id });
+        var sessionModel = await this._mediator.Send(new BL.LoanApplicationLegacy.Queries.GetSingle() { Id = id });
         var workflow = new SecurityWorkflow(sessionModel, _mediator);
 
         try
@@ -61,7 +61,7 @@ public class SecurityController : Controller
                 return View(workflow.GetName(), sessionModel);
             }
 
-            var result = await this._mediator.Send(new BL.LoanApplication.Commands.Update()
+            var result = await this._mediator.Send(new BL.LoanApplicationLegacy.Commands.Update()
             {
                 Model = sessionModel,
                 TryUpdateModelAction = x => this.TryUpdateModelAsync(x),
@@ -88,7 +88,7 @@ public class SecurityController : Controller
     [Route("GoBack")]
     public async Task<IActionResult> GoBack(Guid id, LoanApplicationViewModel model, string action)
     {
-        model = await this._mediator.Send(new BL.LoanApplication.Queries.GetSingle() { Id = id });
+        model = await this._mediator.Send(new BL.LoanApplicationLegacy.Queries.GetSingle() { Id = id });
         var workflow = new SecurityWorkflow(model, _mediator);
         workflow.NextState(Trigger.Back);
         return RedirectToAction("Workflow", new { id = model.ID, ending = workflow.GetName() });
@@ -97,7 +97,7 @@ public class SecurityController : Controller
     [Route("Change")]
     public async Task<IActionResult> Change(Guid id, string state)
     {
-        var sessionmodel = await this._mediator.Send(new BL.LoanApplication.Queries.GetSingle() { Id = id });
+        var sessionmodel = await this._mediator.Send(new BL.LoanApplicationLegacy.Queries.GetSingle() { Id = id });
         var workflow = new SecurityWorkflow(sessionmodel, _mediator);
         workflow.ChangeState(Enum.Parse<SecurityWorkflow.State>(state));
         return RedirectToAction("Workflow", new { id = sessionmodel.ID, ending = workflow.GetName() });

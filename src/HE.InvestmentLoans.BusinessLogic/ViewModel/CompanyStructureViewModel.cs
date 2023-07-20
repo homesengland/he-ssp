@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
 
