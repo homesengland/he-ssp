@@ -26,10 +26,6 @@ public class UserLoanApplication : ValueObject
         yield return Id;
         yield return ApplicationName;
         yield return Status;
-
-        if (LastModificationDate.HasValue)
-        {
-            yield return LastModificationDate.Value;
-        }
+        yield return LastModificationDate!;
     }
 }
