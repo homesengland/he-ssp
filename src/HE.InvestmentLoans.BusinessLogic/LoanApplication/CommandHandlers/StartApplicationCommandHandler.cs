@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.Application.Entities;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Application.Commands;
@@ -21,7 +21,7 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
 
     public async Task<LoanApplicationId> Handle(StartApplicationCommand request, CancellationToken cancellationToken)
     {
-        var userAccount = new UserAccount(_loanUserContext.UserGlobalId, await _loanUserContext.GetSelectedAccountId());
+        var userAccount = await _loanUserContext.GetSelectedAccount();
         var newLoanApplication = LoanApplicationEntity.New(userAccount);
 
         await _applicationRepository.Save(newLoanApplication);

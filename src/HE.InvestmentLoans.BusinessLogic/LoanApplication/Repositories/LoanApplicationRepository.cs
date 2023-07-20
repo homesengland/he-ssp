@@ -1,6 +1,6 @@
 using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.InvestmentLoans.BusinessLogic.Application.Entities;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
@@ -10,7 +10,7 @@ using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
-namespace HE.InvestmentLoans.BusinessLogic.Application.Repositories;
+namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 
 public class LoanApplicationRepository : ILoanApplicationRepository
 {
@@ -21,7 +21,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         _serviceClient = serviceClient;
     }
 
-    public LoanApplicationEntity Load(LoanApplicationId id, UserAccount userAccount)
+    public async Task<LoanApplicationEntity> Load(LoanApplicationId id, UserAccount userAccount)
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
@@ -30,10 +30,10 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             invln_loanapplicationid = id.ToString(),
         };
 
-        _serviceClient.ExecuteAsync(req);
+        await _serviceClient.ExecuteAsync(req);
 
         // TODO: It will be fullfilled with next PR.
-        return new LoanApplicationEntity(id, new LoanApplicationViewModel());
+        return new LoanApplicationEntity(id, userAccount);
     }
 
     public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount)
@@ -48,7 +48,12 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         var response = response_async != null ? (invln_getloanapplicationsforaccountandcontactResponse)response_async : throw new NotFoundException("Applications list", userAccount.ToString());
         var loanApplicationDtos = JsonSerializer.Deserialize<List<LoanApplicationDto>>(response.invln_loanapplications) ?? throw new NotFoundException("Applications list", userAccount.ToString());
 
-        return loanApplicationDtos.Select(x => new UserLoanApplication(LoanApplicationId.From(x.accountId), x.name, x.loanApplicationStatus)).ToList();
+        return loanApplicationDtos.Select(x =>
+            new UserLoanApplication(
+                LoanApplicationId.From(x.loanApplicationId),
+                x.name,
+                ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationStatus),
+                x.LastModificationOn)).ToList();
     }
 
     public void Save(LoanApplicationViewModel loanApplication, UserAccount userAccount)
