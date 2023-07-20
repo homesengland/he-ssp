@@ -6,6 +6,7 @@ using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text.Json;
 
 namespace HE.CRM.Plugins.Services.LoanApplication
@@ -85,6 +86,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             else
             {
                 this.TracingService.Trace("Create invln_Loanapplication");
+                loanApplicationToCreate.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Draft);
                 loanApplicationGuid = loanApplicationRepository.Create(loanApplicationToCreate);
             }
 
@@ -117,6 +119,11 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             TracingService.Trace($"new external status {externalStatus}");
             if (Guid.TryParse(loanApplicationId, out Guid loanId) && externalStatus != null)
             {
+
+                var retrievedLoanApplicationStatus = loanApplicationRepository.GetById(loanId, new string[] { nameof(invln_Loanapplication.invln_ExternalStatus).ToLower() }).invln_ExternalStatus;
+
+                int oldStatus = retrievedLoanApplicationStatus != null ? retrievedLoanApplicationStatus.Value : 0;
+                CheckIfExternalStatusCanBeChanged(oldStatus, externalStatus);
                 invln_Loanapplication loanToUpdate = new invln_Loanapplication()
                 {
                     Id = loanId,
@@ -126,6 +133,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 loanApplicationRepository.Update(loanToUpdate);
             }
         }
+
 
         public void UpdateLoanApplication(string loanApplicationId, string loanApplication, string fieldsToUpdate, string accountId, string contactExternalId)
         {
@@ -146,6 +154,12 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     {
                         foreach (var field in fields)
                         {
+                            if (string.Equals(field.ToLower(), nameof(invln_Loanapplication.invln_ExternalStatus).ToLower()))
+                            {
+                                var retrievedLoanApplicationStatus = loanApplicationRepository.GetById(applicationId, new string[] { nameof(invln_Loanapplication.invln_ExternalStatus).ToLower() }).invln_ExternalStatus;
+                                int oldStatus = retrievedLoanApplicationStatus != null ? retrievedLoanApplicationStatus.Value : 0;
+                                CheckIfExternalStatusCanBeChanged(oldStatus, loanApplicationMapped.invln_ExternalStatus.Value);
+                            }
                             loanApplicationToUpdate[field] = loanApplicationMapped[field];
                         }
                     }
@@ -154,6 +168,27 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 loanApplicationRepository.Update(loanApplicationToUpdate);
             }
         }
+
+        private bool CheckIfExternalStatusCanBeChanged(int oldStatus, int newStatus)
+        {
+            if (oldStatus != (int)invln_ExternalStatus.Draft)
+            {
+                if (newStatus == (int)invln_ExternalStatus.Submitted || newStatus == (int)invln_ExternalStatus.Inactive)
+                {
+                    throw new ArgumentException("You can change status to Submitted or Inactive only when previous status was Draft");
+                }
+            }
+            if (oldStatus != (int)invln_ExternalStatus.Submitted)
+            {
+                if (newStatus == (int)invln_ExternalStatus.Withdrawn)
+                {
+                    throw new ArgumentException("You can change status to Withdrawn only when previous status was Submitted");
+                }
+            }
+
+            return true;
+        }
+
         #endregion
     }
 }

@@ -61,17 +61,24 @@ namespace DataverseModel
 			public const string invln_Account = "invln_account";
 			public const string invln_AccountName = "invln_accountname";
 			public const string invln_Additionalprojects = "invln_additionalprojects";
+			public const string invln_Applicationdatareviewed = "invln_applicationdatareviewed";
+			public const string invln_Cashflowchecked = "invln_cashflowchecked";
+			public const string invln_Cashflowsubmitted = "invln_cashflowsubmitted";
 			public const string invln_CompanyExperience = "invln_companyexperience";
 			public const string invln_CompanyPurpose = "invln_companypurpose";
 			public const string invln_Companystructureinformation = "invln_companystructureinformation";
 			public const string invln_Confirmationdirectorloanscanbesubordinated = "invln_confirmationdirectorloanscanbesubordinated";
 			public const string invln_Contact = "invln_contact";
 			public const string invln_ContactName = "invln_contactname";
+			public const string invln_CPssatisfied = "invln_cpssatisfied";
 			public const string invln_DebentureHolder = "invln_debentureholder";
 			public const string invln_Directorloans = "invln_directorloans";
 			public const string invln_ExternalStatus = "invln_externalstatus";
 			public const string invln_FundingReason = "invln_fundingreason";
 			public const string invln_InternalStatus = "invln_internalstatus";
+			public const string invln_ISPapproved = "invln_ispapproved";
+			public const string invln_ISPassignedtotheRiskteam = "invln_ispassignedtotheriskteam";
+			public const string invln_ISPReviewedfinished = "invln_ispreviewedfinished";
 			public const string invln_loanapplication_account = "invln_loanapplication_account";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
 			public const string invln_LoanapplicationId = "invln_loanapplicationid";
@@ -81,6 +88,9 @@ namespace DataverseModel
 			public const string invln_Name = "invln_name";
 			public const string invln_NumberofSites = "invln_numberofsites";
 			public const string invln_Outstandinglegalchargesordebt = "invln_outstandinglegalchargesordebt";
+			public const string invln_OwnerSelected = "invln_ownerselected";
+			public const string invln_PreCompletereportApproved = "invln_precompletereportapproved";
+			public const string invln_PreCompletereportsubmitted = "invln_precompletereportsubmitted";
 			public const string invln_Privatesectorapproach = "invln_privatesectorapproach";
 			public const string invln_Privatesectorapproachinformation = "invln_privatesectorapproachinformation";
 			public const string invln_Projectabnormalcosts = "invln_projectabnormalcosts";
@@ -93,6 +103,7 @@ namespace DataverseModel
 			public const string invln_Refinancerepayment = "invln_refinancerepayment";
 			public const string invln_Refinancerepaymentdetails = "invln_refinancerepaymentdetails";
 			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
+			public const string invln_SubjecttocontractApproved = "invln_subjecttocontractapproved";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedByName = "modifiedbyname";
 			public const string ModifiedOn = "modifiedon";
@@ -107,11 +118,15 @@ namespace DataverseModel
 			public const string OwningTeamName = "owningteamname";
 			public const string OwningUser = "owninguser";
 			public const string OwningUserName = "owningusername";
+			public const string processid = "processid";
+			public const string stageid = "stageid";
+			public const string stageidName = "stageidname";
 			public const string StateCode = "statecode";
 			public const string StatusCode = "statuscode";
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
 			public const string TransactionCurrencyId = "transactioncurrencyid";
 			public const string TransactionCurrencyIdName = "transactioncurrencyidname";
+			public const string traversedpath = "traversedpath";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
 		}
@@ -272,6 +287,63 @@ namespace DataverseModel
 			}
 		}
 		
+		/// <summary>
+		/// Have you reviewed the loan application data to send cashflow request?
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_applicationdatareviewed")]
+		public System.Nullable<bool> invln_Applicationdatareviewed
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_applicationdatareviewed");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Applicationdatareviewed");
+				this.SetAttributeValue("invln_applicationdatareviewed", value);
+				this.OnPropertyChanged("invln_Applicationdatareviewed");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowchecked")]
+		public System.Nullable<bool> invln_Cashflowchecked
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_cashflowchecked");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Cashflowchecked");
+				this.SetAttributeValue("invln_cashflowchecked", value);
+				this.OnPropertyChanged("invln_Cashflowchecked");
+			}
+		}
+		
+		/// <summary>
+		/// Cashflow submitted by the borrower anc status can be changed to "Cashflow under review"
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowsubmitted")]
+		public System.Nullable<bool> invln_Cashflowsubmitted
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_cashflowsubmitted");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Cashflowsubmitted");
+				this.SetAttributeValue("invln_cashflowsubmitted", value);
+				this.OnPropertyChanged("invln_Cashflowsubmitted");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_companyexperience")]
 		public System.Nullable<int> invln_CompanyExperience
 		{
@@ -357,6 +429,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cpssatisfied")]
+		public System.Nullable<bool> invln_CPssatisfied
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_cpssatisfied");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CPssatisfied");
+				this.SetAttributeValue("invln_cpssatisfied", value);
+				this.OnPropertyChanged("invln_CPssatisfied");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_debentureholder")]
 		public string invln_DebentureHolder
 		{
@@ -439,6 +528,57 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_InternalStatus");
 				this.SetAttributeValue("invln_internalstatus", value);
 				this.OnPropertyChanged("invln_InternalStatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ispapproved")]
+		public System.Nullable<bool> invln_ISPapproved
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_ispapproved");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ISPapproved");
+				this.SetAttributeValue("invln_ispapproved", value);
+				this.OnPropertyChanged("invln_ISPapproved");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ispassignedtotheriskteam")]
+		public System.Nullable<bool> invln_ISPassignedtotheRiskteam
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_ispassignedtotheriskteam");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ISPassignedtotheRiskteam");
+				this.SetAttributeValue("invln_ispassignedtotheriskteam", value);
+				this.OnPropertyChanged("invln_ISPassignedtotheRiskteam");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ispreviewedfinished")]
+		public System.Nullable<bool> invln_ISPReviewedfinished
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_ispreviewedfinished");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ISPReviewedfinished");
+				this.SetAttributeValue("invln_ispreviewedfinished", value);
+				this.OnPropertyChanged("invln_ISPReviewedfinished");
 			}
 		}
 		
@@ -567,6 +707,57 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Outstandinglegalchargesordebt");
 				this.SetAttributeValue("invln_outstandinglegalchargesordebt", value);
 				this.OnPropertyChanged("invln_Outstandinglegalchargesordebt");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ownerselected")]
+		public System.Nullable<bool> invln_OwnerSelected
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_ownerselected");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_OwnerSelected");
+				this.SetAttributeValue("invln_ownerselected", value);
+				this.OnPropertyChanged("invln_OwnerSelected");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_precompletereportapproved")]
+		public System.Nullable<bool> invln_PreCompletereportApproved
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_precompletereportapproved");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PreCompletereportApproved");
+				this.SetAttributeValue("invln_precompletereportapproved", value);
+				this.OnPropertyChanged("invln_PreCompletereportApproved");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_precompletereportsubmitted")]
+		public System.Nullable<bool> invln_PreCompletereportsubmitted
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_precompletereportsubmitted");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PreCompletereportsubmitted");
+				this.SetAttributeValue("invln_precompletereportsubmitted", value);
+				this.OnPropertyChanged("invln_PreCompletereportsubmitted");
 			}
 		}
 		
@@ -749,6 +940,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subjecttocontractapproved")]
+		public System.Nullable<bool> invln_SubjecttocontractApproved
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_subjecttocontractapproved");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SubjecttocontractApproved");
+				this.SetAttributeValue("invln_subjecttocontractapproved", value);
+				this.OnPropertyChanged("invln_SubjecttocontractApproved");
+			}
+		}
+		
 		/// <summary>
 		/// Unique identifier of the user who modified the record.
 		/// </summary>
@@ -875,6 +1083,46 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Contains the id of the process associated with the entity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("processid")]
+		public System.Nullable<System.Guid> processid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("processid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("processid");
+				this.SetAttributeValue("processid", value);
+				this.OnPropertyChanged("processid");
+			}
+		}
+		
+		/// <summary>
+		/// Contains the id of the stage where the entity is located.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("stageid")]
+		public System.Nullable<System.Guid> stageid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("stageid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("stageid");
+				this.SetAttributeValue("stageid", value);
+				this.OnPropertyChanged("stageid");
+			}
+		}
+		
+		/// <summary>
 		/// Status of the Loan application
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
@@ -951,6 +1199,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("TransactionCurrencyId");
 				this.SetAttributeValue("transactioncurrencyid", value);
 				this.OnPropertyChanged("TransactionCurrencyId");
+			}
+		}
+		
+		/// <summary>
+		/// A comma separated list of string values representing the unique identifiers of stages in a Business Process Flow Instance in the order that they occur.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("traversedpath")]
+		public string traversedpath
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("traversedpath");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("traversedpath");
+				this.SetAttributeValue("traversedpath", value);
+				this.OnPropertyChanged("traversedpath");
 			}
 		}
 		

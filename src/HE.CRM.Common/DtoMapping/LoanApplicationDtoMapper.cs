@@ -137,8 +137,8 @@ namespace HE.CRM.Common.DtoMapping
                     return new OptionSetValue((int)invln_ExternalStatus.Onhold);
                 case "referred back to applicant":
                     return new OptionSetValue((int)invln_ExternalStatus.Referredbacktoapplicant);
-                case "n/a":
-                    return new OptionSetValue((int)invln_ExternalStatus.NA);
+                case "inactive":
+                    return new OptionSetValue((int)invln_ExternalStatus.Inactive);
                 case "withdrawn":
                     return new OptionSetValue((int)invln_ExternalStatus.Withdrawn);
                 case "not approved":
@@ -180,8 +180,8 @@ namespace HE.CRM.Common.DtoMapping
                     return "on hold";
                 case (int)invln_ExternalStatus.Referredbacktoapplicant:
                     return "referred back to applicant";
-                case (int)invln_ExternalStatus.NA:
-                    return "n/a";
+                case (int)invln_ExternalStatus.Inactive:
+                    return "inactive";
                 case (int)invln_ExternalStatus.Withdrawn:
                     return "withdrawn";
                 case (int)invln_ExternalStatus.Notapproved:
