@@ -21,7 +21,7 @@ public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand>
                                                                     request.LoanApplicationId,
                                                                     new UserAccount(_loanUserContext.UserGlobalId, await _loanUserContext.GetSelectedAccountId()));
 
-        _applicationProjectsRepository.Update(applicationProjects, request.Project);
+        applicationProjects.UpdateProject(request.Project);
 
         _applicationProjectsRepository.Save(applicationProjects);
     }

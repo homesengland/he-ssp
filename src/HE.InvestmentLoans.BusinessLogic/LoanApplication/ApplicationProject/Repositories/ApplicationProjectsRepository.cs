@@ -22,21 +22,6 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         _dateTime = dateTime;
     }
 
-    public void Add(ApplicationProjects applicationProjects)
-    {
-        applicationProjects.AddAnotherProject();
-    }
-
-    public void Update(ApplicationProjects applicationProjects, Project project)
-    {
-        applicationProjects.UpdateProject(project);
-    }
-
-    public void Delete(ApplicationProjects applicationProjects, ProjectId projectId)
-    {
-        applicationProjects.DeleteProject(projectId);
-    }
-
     public ApplicationProjects GetAll(LoanApplicationId loanApplicationId, UserAccount userAccount)
     {
         var loanApplication = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationEntity>(loanApplicationId.ToString())

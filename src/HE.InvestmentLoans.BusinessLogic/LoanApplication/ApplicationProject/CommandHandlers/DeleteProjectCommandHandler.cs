@@ -21,7 +21,7 @@ public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand>
                                                                     request.LoanApplicationId,
                                                                     new UserAccount(_loanUserContext.UserGlobalId, await _loanUserContext.GetSelectedAccountId()));
 
-        _applicationProjectsRepository.Delete(applicationProjects, request.ProjectId);
+        applicationProjects.DeleteProject(request.ProjectId);
 
         _applicationProjectsRepository.Save(applicationProjects);
     }

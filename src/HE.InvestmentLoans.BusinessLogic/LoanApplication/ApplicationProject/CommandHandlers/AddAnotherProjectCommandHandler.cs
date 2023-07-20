@@ -21,7 +21,7 @@ public class AddAnotherProjectCommandHandler : IRequestHandler<AddAnotherProject
                                                                     request.LoanApplicationId,
                                                                     new UserAccount(_loanUserContext.UserGlobalId, await _loanUserContext.GetSelectedAccountId()));
 
-        _applicationProjectsRepository.Add(applicationProjects);
+        applicationProjects.AddAnotherProject();
 
         _applicationProjectsRepository.Save(applicationProjects);
     }
