@@ -11,19 +11,20 @@ public class LoanApplicationIdCtorTests
     public void LoanApplicationIdShouldBeCreated()
     {
         // given & when
-        Func<LoanApplicationId> action = () => new LoanApplicationId(GuidTestData.GuidOne);
+        var action = () => new LoanApplicationId(GuidTestData.GuidOne);
 
         // then
         action.Should().NotThrow();
     }
 
     [TestMethod]
-    public void LoanThrowException_WhenGuidDefault()
+    public void LoanApplicationIdShouldBeCreatedasNew_WhenGuidDefault()
     {
         // given & when
-        Func<LoanApplicationId> action = () => new LoanApplicationId(Guid.Empty);
+        var action = () => new LoanApplicationId(Guid.Empty);
 
         // then
-        action.Should().Throw<ArgumentException>();
+        action.Should().NotThrow();
+        action().IsNew().Should().BeTrue();
     }
 }
