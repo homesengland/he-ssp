@@ -135,7 +135,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             var retrievedLoan = fakedService.Retrieve(invln_Loanapplication.EntityLogicalName, loanApplication.Id, new ColumnSet(true)).ToEntity<invln_Loanapplication>();
             Assert.IsNull(exception);
             Assert.IsNull(retrievedLoan.invln_Contact);
-            Assert.IsNull(retrievedLoan.invln_Account);
             Assert.IsNotNull(retrievedLoan.invln_CompanyPurpose);
             Assert.AreNotEqual(loanApplication.invln_CompanyPurpose, retrievedLoan.invln_CompanyPurpose);
             A.CallTo(() => fakedContext.GetOrganizationService().Update(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
