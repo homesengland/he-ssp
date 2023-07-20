@@ -1,5 +1,5 @@
 using FluentAssertions;
-using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.Contract.Application.Enums;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Application.Mappers;

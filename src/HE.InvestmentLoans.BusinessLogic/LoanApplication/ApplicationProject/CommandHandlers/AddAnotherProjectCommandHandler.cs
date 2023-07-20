@@ -17,9 +17,7 @@ public class AddAnotherProjectCommandHandler : IRequestHandler<AddAnotherProject
 
     public async Task Handle(AddAnotherProjectCommand request, CancellationToken cancellationToken)
     {
-        var applicationProjects = _applicationProjectsRepository.GetAll(
-                                                                    request.LoanApplicationId,
-                                                                    new UserAccount(_loanUserContext.UserGlobalId, await _loanUserContext.GetSelectedAccountId()));
+        var applicationProjects = _applicationProjectsRepository.GetAll(request.LoanApplicationId, await _loanUserContext.GetSelectedAccount());
 
         applicationProjects.AddAnotherProject();
 

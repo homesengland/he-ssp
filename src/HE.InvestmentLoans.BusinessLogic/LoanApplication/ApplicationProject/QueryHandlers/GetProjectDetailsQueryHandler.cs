@@ -18,9 +18,6 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
 
     public async Task<Project> Handle(GetProjectDetailsQuery request, CancellationToken cancellationToken)
     {
-        return _applicationProjectsRepository.GetById(
-                                                request.LoanApplicationId,
-                                                request.ProjectId,
-                                                new UserAccount(_loanUserContext.UserGlobalId, await _loanUserContext.GetSelectedAccountId()));
+        return _applicationProjectsRepository.GetById(request.LoanApplicationId, request.ProjectId, await _loanUserContext.GetSelectedAccount());
     }
 }
