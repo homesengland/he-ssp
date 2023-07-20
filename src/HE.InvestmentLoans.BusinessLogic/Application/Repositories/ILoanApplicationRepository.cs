@@ -7,9 +7,11 @@ namespace HE.InvestmentLoans.BusinessLogic.Application.Repositories;
 
 public interface ILoanApplicationRepository
 {
-    LoanApplicationEntity Load(LoanApplicationId id, UserAccount userAccount);
+    Task<LoanApplicationEntity> Load(LoanApplicationId id, UserAccount userAccount);
 
     Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount);
 
     void Save(LoanApplicationViewModel loanApplication, UserAccount userAccount);
+
+    Task Save(LoanApplicationEntity loanApplication);
 }

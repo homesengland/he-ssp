@@ -21,7 +21,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         _serviceClient = serviceClient;
     }
 
-    public LoanApplicationEntity Load(LoanApplicationId id, UserAccount userAccount)
+    public async Task<LoanApplicationEntity> Load(LoanApplicationId id, UserAccount userAccount)
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
@@ -30,10 +30,10 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             invln_loanapplicationid = id.ToString(),
         };
 
-        _serviceClient.ExecuteAsync(req);
+        await _serviceClient.ExecuteAsync(req);
 
         // TODO: It will be fullfilled with next PR.
-        return new LoanApplicationEntity(id, new LoanApplicationViewModel());
+        return new LoanApplicationEntity(id, userAccount);
     }
 
     public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount)
@@ -125,6 +125,22 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         };
 
         _serviceClient.ExecuteAsync(req);
+    }
+
+    public async Task Save(LoanApplicationEntity loanApplication)
+    {
+        var loanApplicationDto = new LoanApplicationDto();
+        var loanApplicationSerialized = JsonSerializer.Serialize(loanApplicationDto);
+        var req = new invln_sendinvestmentloansdatatocrmRequest
+        {
+            invln_entityfieldsparameters = loanApplicationSerialized,
+            invln_accountid = loanApplication.UserAccount.AccountId.ToString(),
+            invln_contactexternalid = loanApplication.UserAccount.UserGlobalId,
+        };
+
+        var response = (invln_sendinvestmentloansdatatocrmResponse)await _serviceClient.ExecuteAsync(req);
+        var newLoanApplicationId = LoanApplicationId.From(response.invln_loanapplicationid);
+        loanApplication.SetId(newLoanApplicationId);
     }
 
     public string MapPurpose(FundingPurpose? fundingPurpose)

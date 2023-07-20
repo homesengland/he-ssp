@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using HE.InvestmentLoans.Common.Models.App;
-using Microsoft.Xrm.Sdk;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;

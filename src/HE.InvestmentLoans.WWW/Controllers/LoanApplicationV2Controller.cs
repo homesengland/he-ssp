@@ -1,4 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic;
+using HE.InvestmentLoans.Contract.Application.Commands;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement.Mvc;
@@ -10,9 +12,17 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 [Authorize]
 public class LoanApplicationV2Controller : Controller
 {
-    // GET
-    public string Index()
+    private readonly IMediator _mediator;
+
+    public LoanApplicationV2Controller(IMediator mediator)
     {
-        return "it-works";
+        _mediator = mediator;
+    }
+
+    [HttpGet("start-new")]
+    public async Task<IActionResult> StartNew()
+    {
+        var loanApplicationId = await _mediator.Send(new StartApplicationCommand());
+        return RedirectToAction("Workflow", "LoanApplication", new { id = loanApplicationId, ending = "AboutLoan" });
     }
 }
