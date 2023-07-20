@@ -19,31 +19,48 @@ public class RedisService : ICacheService
 
     private IDatabase Cache => _connection.GetDatabase();
 
+    public T? GetValue<T>(string key)
+    {
+        string? resp = Cache.StringGet(key);
+        return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
+    }
+
     public T? GetValue<T>(string key, Func<T> loadValue)
     {
         if (Cache.KeyExists(key))
         {
-            return ObjectGet<T>(key);
+            return GetValue<T>(key);
         }
 
         var value = loadValue();
 
         if (value != null)
         {
-            ObjectSet(key, value);
+            SetValue(key, value);
         }
 
         return value;
     }
 
-    private T? ObjectGet<T>(string key)
+    public async Task<T?> GetValueAsync<T>(string key, Func<Task<T>> loadValue)
     {
-        string? resp = Cache.StringGet(key);
-        return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
+        if (Cache.KeyExists(key))
+        {
+            return GetValue<T>(key);
+        }
+
+        var value = await loadValue();
+
+        if (value != null)
+        {
+            SetValue(key, value);
+        }
+
+        return value;
     }
 
-    private bool ObjectSet(string key, object value)
+    public void SetValue<T>(string key, T value)
     {
-        return Cache.StringSet(key, JsonSerializer.Serialize(value), TimeSpan.FromMinutes(_config.ExpireMinutes));
+        Cache.StringSet(key, JsonSerializer.Serialize(value), TimeSpan.FromMinutes(_config.ExpireMinutes));
     }
 }

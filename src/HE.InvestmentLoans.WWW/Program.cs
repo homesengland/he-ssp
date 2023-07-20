@@ -4,6 +4,7 @@ using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.WWW.Config;
 using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Middlewares;
+using Microsoft.FeatureManagement;
 
 #pragma warning disable CA1812
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,7 @@ builder.Services.AddApplicationInsightsTelemetry();
 
 builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
+builder.Services.AddFeatureManagement();
 
 var mvcbuilder = builder.Services.AddControllersWithViews();
 

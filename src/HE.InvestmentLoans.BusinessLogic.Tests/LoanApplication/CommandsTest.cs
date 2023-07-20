@@ -5,7 +5,7 @@ using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Xrm.Sdk;
+using Microsoft.PowerPlatform.Dataverse.Client;
 using Moq;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication;
@@ -15,8 +15,8 @@ public class CommandsTest : MediatorTestBase
 {
     public override void AddAditionalServices(ServiceCollection collection)
     {
-        var orgService = new Mock<IOrganizationService>();
-        collection.AddTransient(x => new Mock<IOrganizationService>().Object);
+        var orgService = new Mock<IOrganizationServiceAsync2>();
+        collection.AddTransient(x => new Mock<IOrganizationServiceAsync2>().Object);
         collection.AddTransient(x => new Mock<ILoanApplicationRepository>().Object);
         collection.AddTransient(x => new Mock<ILoanUserContext>().Object);
 
