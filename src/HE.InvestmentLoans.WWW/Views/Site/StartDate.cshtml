@@ -1,4 +1,4 @@
-﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
 @{
     var id = ViewContext.RouteData.Values["id"];
     var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.HasEstimatedStartDate));
@@ -36,7 +36,7 @@
                         </gds-div-hint>
                         @if (conditionalInputInvalid)
                         {
-                            <p class="govuk-error-message">
+                            <p id="EstimatedStartDay-error" class="govuk-error-message">
                                 <span class="govuk-visually-hidden">Error:</span> @inputErrors
                             </p>
                         }
