@@ -129,6 +129,7 @@
     <Compile Include="CustomApis\GetContactRole.cs" />
     <Compile Include="CustomApis\SendInvestmentsLoanDataToCrm.cs" />
     <Compile Include="CustomApis\UpdateSingleLoanApplicationTest.cs" />
+    <Compile Include="CustomApis\UpdateSingleSiteDetailsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
