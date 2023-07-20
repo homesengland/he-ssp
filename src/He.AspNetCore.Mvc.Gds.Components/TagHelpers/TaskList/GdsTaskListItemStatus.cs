@@ -4,13 +4,13 @@ using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Abstraction;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Strong
+namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.TaskList
 {
     /// <summary>
     /// Class GdsSpanAppListTaskCompletedTagHelper.
-    /// Implements the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />.
+    /// Implements the <see cref="TagHelper" />.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
+    /// <seealso cref="TagHelper" />
     public class GdsTaskListItemStatus : TextWithIdTagHelper
     {
         public GdsTaskListItemStatusText Status { get; set; }

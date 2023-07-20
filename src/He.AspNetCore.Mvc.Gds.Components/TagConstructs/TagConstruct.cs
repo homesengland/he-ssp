@@ -312,7 +312,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                     sb.Append($"{hintText}");
                     sb.Append("</span>");
                 }
-                if(inputText != null)
+                if (inputText != null)
                 {
                     sb.Append(
                             $"<div class=\"govuk-radios__conditional govuk-radios__conditional--hidden\" id=\"{id}-conditional\">\r\n " +
@@ -323,9 +323,11 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                                     $"<textarea class=\"govuk-textarea\" rows=\"5\" id=\"{id}-input\" name=\"{inputText}\" type=\"{(hintText is null ? "text" : hintText)}\" spellcheck=\"false\" autocomplete=\"email\"></textarea> \r\n        " +
                                 "</div>" +
                                 $"<div class=\"govuk-hint\">{fileUploadHint}</div>");
-                    
-                    if(fileUploadHint != null)
+
+                    if (fileUploadHint != null)
+                    {
                         sb.Append("<div class=\"govuk-form-group\">\r\n  <label class=\"govuk-label\" for=\"file-upload-1\">\r\n    Upload a file\r\n  </label>\r\n  <input class=\"govuk-file-upload\" id=\"file-upload-1\" name=\"file-upload-1\" type=\"file\">\r\n</div>");
+                    }
 
                     sb.Append("</div>");
                 }
