@@ -23,6 +23,7 @@
 	</ItemGroup>
 
 	  <ItemGroup>
+	    <Folder Include="TagHelpers\Dashboard\" />
 	    <Folder Include="Validation\" />
 	    <Folder Include="Views\Shared\" />
 	  </ItemGroup>

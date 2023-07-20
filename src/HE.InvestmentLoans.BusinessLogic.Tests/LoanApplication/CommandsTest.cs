@@ -1,6 +1,6 @@
-using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Commands;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Queries;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Commands;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Queries;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using MediatR;

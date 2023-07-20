@@ -12,11 +12,20 @@
                 Dashboard
             </gds-h1>
 
-            <a href="/application">
-                <gds-button-start type="button">
-                    Start application
-                </gds-button-start>
-            </a>
+            <div>
+                <a href="/application">
+                    <gds-button-start type="button">
+                        Start application
+                    </gds-button-start>
+                </a>
+            </div>
+            <div>
+                <a href="@Url.Action("Dashboard","Home")">
+                    <gds-button-start type="button">
+                        Go to dashboard
+                    </gds-button-start>
+                </a>
+            </div>
         </form>
     }
     else

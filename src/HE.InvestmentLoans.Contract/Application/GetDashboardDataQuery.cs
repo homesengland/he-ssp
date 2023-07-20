@@ -5,4 +5,4 @@ namespace HE.InvestmentLoans.Contract.Application;
 
 public record GetDashboardDataQuery : IRequest<GetDashboardDataQueryResponse>;
 
-public record GetDashboardDataQueryResponse(IList<UserLoanApplication> LoanApplications);
+public record GetDashboardDataQueryResponse(IList<UserLoanApplication> LoanApplications, string AccountName);

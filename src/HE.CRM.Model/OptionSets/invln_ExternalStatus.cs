@@ -36,13 +36,13 @@ namespace DataverseModel
 		Holdrequested = 858110008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 858110011,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Induediligence = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Loanavailable = 858110007,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		NA = 858110011,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Notapproved = 858110013,

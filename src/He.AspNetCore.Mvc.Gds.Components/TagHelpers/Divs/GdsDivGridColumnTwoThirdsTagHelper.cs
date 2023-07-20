@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 {
+
     /// <summary>
     /// Class GdsDivGridColumnTwoThirdsTagHelper.
-    /// Implements the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />.
+    /// Implements the <see cref="TagHelper" />.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
+    /// <seealso cref="TagHelper" />
     public class GdsDivGridColumnTwoThirdsTagHelper : TagHelper
     {
         /// <summary>
@@ -22,7 +23,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
         /// </summary>
         /// <param name="context">Contains information associated with the current HTML tag.</param>
         /// <param name="output">A stateful HTML element used to generate an HTML tag.</param>
-        /// <remarks>By default this calls into <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper.Process(Microsoft.AspNetCore.Razor.TagHelpers.TagHelperContext,Microsoft.AspNetCore.Razor.TagHelpers.TagHelperOutput)" />.</remarks>
+        /// <remarks>By default this calls into <see cref="TagHelper.Process(TagHelperContext, TagHelperOutput)" />.</remarks>
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             if (output != null)

@@ -1,9 +1,9 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using HE.InvestmentLoans.BusinessLogic.Application.Project.Repositories;
-using HE.InvestmentLoans.BusinessLogic.Application.Repositories;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Pipelines;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Validation;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Pipelines;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Validation;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Utils;

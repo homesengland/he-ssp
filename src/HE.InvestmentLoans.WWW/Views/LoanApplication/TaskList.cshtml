@@ -1,5 +1,5 @@
 @model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
-@using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
+@using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 @using HE.InvestmentLoans.WWW.Controllers
 @using HE.InvestmentLoans.BusinessLogic.ViewModel
 @using System.Globalization
@@ -12,7 +12,7 @@
 }
 
 
-<gds-back-link class="govuk-grid-column-full" href="@Url.Action("Index","LoanApplication", new {id = Model.ID})" text="Back to account homepage">
+<gds-back-link class="govuk-grid-column-full" href="@Url.Action("Dashboard","Home")" text="Back to account homepage">
 </gds-back-link>
 
 @await Html.PartialAsync("_DeleteNotification")
