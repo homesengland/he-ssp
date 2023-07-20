@@ -23,7 +23,7 @@ namespace HE.Xrm.ServiceClientExample
                 var appSettings = JsonSerializer.Deserialize<AppSettings>(reader.ReadToEnd());
                 if (appSettings != null)
                 {
-                    connectionString = $@"AuthType = ClientSecret; ClientId={appSettings.ClientId};Url={appSettings.Url};ClientSecret={appSettings.ClientSecret};";
+                    connectionString = $@"AuthType = ClientSecret; ClientId={appSettings.ClientId};Url={appSettings.Url};ClientSecret={appSettings.ClientSecret};"; //crm connection string
                 }
                 else
                 {
@@ -35,7 +35,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    //TestCustomApi(serviceClient);
+                    TestUpdateLoanApplication(serviceClient); //method to call
                 }
                 else
                 {
@@ -47,6 +47,139 @@ namespace HE.Xrm.ServiceClientExample
             Console.ReadLine();
         }
 
+        private static void TestUpdateLoanApplicationExternalStatus(ServiceClient serviceClient)
+        {
+            //change loan application status
+            var req4 = new invln_changeloanapplicationexternalstatusRequest()
+            {
+                invln_loanapplicationid = "1d01e285-9915-ee11-9cbe-002248c652b4", //loan id
+                invln_statusexternal = 858110009, // external status as int
+            };
+
+            serviceClient.Execute(req4);
+        }
+
+        private static void TestDeleteRecord(ServiceClient serviceClient)
+        {
+            //At the moment not in main
+            //var req1 = new invln_deleteloanapplicationRequest()
+            //{
+            //    invln_loanapplicationid = "988d6645-9e24-ee11-9965-002248c653e1"
+            //};
+            //var req1 = new invln_deletesitedetailsRequest()
+            //{
+            //    invln_sitedetailsid = "3f7464dc-6f0f-ee11-8f6e-002248c653e1"
+            //};
+            //serviceClient.Execute(req1);
+        }
+
+        private static void TestUpdateLoanApplication(ServiceClient serviceClient)
+        {
+
+            var loanApp = new LoanApplicationDto() //new fields values
+            {
+                additionalProjects = "yes", 
+                name = "name pluginddd",
+                numberOfSites = "27",
+                fundingReason = "buildinginfrastructureonly",
+                loanApplicationStatus = null,
+            };
+
+
+            var req1 = new invln_updatesingleloanapplicationRequest() //api is not updating related site details, for site details we have another api
+            {
+                invln_loanapplicationid = "1d01e285-9915-ee11-9cbe-002248c652b4", //application to update
+                invln_fieldstoupdate = "invln_name,invln_additionalprojects,invln_fundingreason,invln_externalstatus,invln_numberofsites", //columns to modify
+                invln_accountid = "429d11ab-15fe-ed11-8f6c-002248c653e1", // account related to loan application
+                invln_contactexternalid = "auth0|64a28c7fb67ed30b288d6ff7", // contact external id related to loan applicaiton
+                invln_loanapplication = JsonSerializer.Serialize(loanApp), // loan application serialized DTO data
+            };
+            serviceClient.Execute(req1);
+        }
+
+        private static void TestUpdateSiteDetails(ServiceClient serviceClient)
+        {
+            var siteDetailsNewValues = new SiteDetailsDto() //fields to update
+            {
+                landRegistryTitleNumber = "land registry numbzxasadasd",
+                currentValue = null,
+                Name = "Name",
+                dateOfPurchase = DateTime.Now,
+                existingLegalCharges = "true",
+                existingLegalChargesInformation = "info",
+                haveAPlanningReferenceNumber = "true",
+                howMuch = "2137",
+                nameOfGrantFund = "name of grand fund",
+                numberOfAffordableHomes = "3223",
+                numberOfHomes = "4343",
+                otherTypeOfHomes = "other",
+                planningReferenceNumber = "11112233",
+                publicSectorFunding = "no",
+                reason = "reason",
+                siteCoordinates = "122",
+                siteCost = "33341",
+                siteName = "Name site",
+                siteOwnership = "true",
+                typeOfHomes = new string[]{ "apartmentsorflats", "houses" },
+                typeOfSite = "greenfield",
+                valuationSource = "estateagentestimate",
+                whoProvided = "provided",
+            };
+            var req1 = new invln_updatesinglesitedetailsRequest()
+            {
+                invln_sitedetail = JsonSerializer.Serialize(siteDetailsNewValues), //site details serialized DTO data
+                invln_sitedetailsid = "6d6b7b09-770f-ee11-8f6e-002248c653e1", // site details id to update
+                invln_fieldstoupdate = "invln_currentvalue,invln_landregistrytitlenumber,invln_loanapplication", //fields to update
+                invln_loanapplicationid = "cd7198e6-381c-ee11-8f6d-002248c653e1", // related loan application
+            };
+            serviceClient.Execute(req1);
+        }
+
+        private static void TestCustomApiCallingPath(ServiceClient serviceClient)
+        {
+            var req1 = new invln_getcontactroleRequest() //get contact role
+            {
+                invln_contactemail = "",
+                invln_contactexternalid = "auth0|64a28c7fb67ed30b288d6ff7",
+                invln_portaltype = "858110001",
+            };
+
+            var resp1 = (invln_getcontactroleResponse)serviceClient.Execute(req1);
+            var resp1Deserialized = JsonSerializer.Deserialize<ContactRolesDto>(resp1.invln_portalroles);
+
+            //var req2 = new invln_getsingleloanapplicationforaccountandcontactRequest() //get single loan application
+            //{
+            //    invln_accountid = resp1Deserialized.contactRoles[0].accountId.ToString(), //accountid
+            //    invln_externalcontactid = resp1Deserialized.externalId, //external contact id
+            //    invln_loanapplicationid = "78484240-37f6-46ae-9094-d0246e44bf6d" //loan application id
+            //};
+            var req2 = new invln_getloanapplicationsforaccountandcontactRequest() //get loan applications related to account and contact with given data
+            {
+                invln_accountid = resp1Deserialized.contactRoles[0].accountId.ToString(), //account id
+                invln_externalcontactid = resp1Deserialized.externalId, // contact external id
+            };
+            var resp2 = (invln_getsingleloanapplicationforaccountandcontactResponse)serviceClient.Execute(req2);
+            var resp2Deserialized = JsonSerializer.Deserialize<List<LoanApplicationDto>>(resp2.invln_loanapplication); //list deserialization
+            foreach (var resp2Element in resp2Deserialized) //for every element in deserialized list
+            {
+                var req3 = new invln_sendinvestmentloansdatatocrmRequest() //create or update loan application and create or update related site details
+                {
+                    invln_contactexternalid = resp2Element.externalId, //contact external id
+                    invln_loanapplicationid = resp2Element.loanApplicationId, //loan app id
+                    invln_accountid = resp2Element.accountId.ToString(), //account
+                    invln_entityfieldsparameters = JsonSerializer.Serialize(resp2Element), //serialized Loan Application DTO
+                };
+                var resp3 = (invln_sendinvestmentloansdatatocrmResponse)serviceClient.Execute(req3);
+
+                //var req4 = new invln_changeloanapplicationexternalstatusRequest() //change status
+                //{
+                //    invln_loanapplicationid = resp2Element.loanApplicationId,
+                //    invln_statusexternal = 858110003,
+                //};
+
+                //serviceClient.Execute(req4);
+            }
+        }
 
     }
 }
