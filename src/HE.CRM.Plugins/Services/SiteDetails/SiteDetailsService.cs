@@ -50,5 +50,17 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 siteDetailsRepository.Update(siteDetailToUpdate);
             }
         }
+        public void DeleteSiteDetails(string siteDetailsId)
+        {
+            if (Guid.TryParse(siteDetailsId, out Guid detailsId))
+            {
+                var siteDetailsToUpdate = new invln_SiteDetails()
+                {
+                    Id = detailsId,
+                    StateCode = new Microsoft.Xrm.Sdk.OptionSetValue(1),
+                };
+                siteDetailsRepository.Update(siteDetailsToUpdate);
+            }
+        }
     }
 }

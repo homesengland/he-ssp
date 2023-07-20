@@ -169,6 +169,34 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
         }
 
+        public void DeleteLoanApplication(string loanApplicationId)
+        {
+            if (Guid.TryParse(loanApplicationId, out Guid applicationId))
+            {
+                var loanApplicationToUpdate = new invln_Loanapplication()
+                {
+                    Id = applicationId,
+                    invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Withdrawn),
+                    StateCode = new OptionSetValue(1)
+                };
+                loanApplicationRepository.Update(loanApplicationToUpdate);
+
+                var relatedSiteDetails = siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(loanApplicationToUpdate.ToEntityReference());
+                if(relatedSiteDetails != null && relatedSiteDetails.Count > 0)
+                {
+                    foreach(var siteDetail in relatedSiteDetails)
+                    {
+                        var siteDetailToUpdate = new invln_SiteDetails()
+                        {
+                            Id = siteDetail.Id,
+                            StateCode = new OptionSetValue(1),
+                        };
+                        siteDetailsRepository.Update(siteDetailToUpdate);
+                    }
+                }
+            }
+        }
+
         private bool CheckIfExternalStatusCanBeChanged(int oldStatus, int newStatus)
         {
             if (oldStatus != (int)invln_ExternalStatus.Draft)
