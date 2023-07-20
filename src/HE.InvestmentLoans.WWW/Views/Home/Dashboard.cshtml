@@ -1,0 +1,73 @@
+@using HE.InvestmentLoans.Contract.Application;
+@using HE.InvestmentLoans.Contract.Application.Enums;
+@model GetDashboardDataQueryResponse
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<gds-column width="ColumnWidth.Full">
+
+    <gds-h1 class="govuk-!-margin-top-9" size="ControlSize.L">
+        @Model.AccountName home page
+    </gds-h1>
+
+    <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+            <gds-column width="ColumnWidth.ThreeQuarters" class="govuk-!-padding-left-0">
+                    Your applications
+            </gds-column>
+            <gds-column width="ColumnWidth.OneQuarter" class="govuk-!-padding-right-0">
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="sort">
+                        Sort by
+                    </label>
+                    <select class="govuk-select" id="sort" name="sort">
+                        <option value="published">Recently published</option>
+                        <option value="updated" selected>Recently updated</option>
+                        <option value="views">Most views</option>
+                        <option value="comments">Most comments</option>
+                    </select>
+                </div>
+            </gds-column>
+        </caption>
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header govuk-!-width-one-half">Name</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Stage</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Status</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter"></th>
+            </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+            @foreach (var application in Model.LoanApplications)
+            {
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">
+                        <span class="app-task-list__task-name"><a>@application.ApplicationName</a></span>
+                    </td>
+                    <td class="govuk-table__cell">Application</td>
+
+                    @if (application.Status == ApplicationStatus.Submitted)
+                    {
+                        <td class="govuk-table__cell"><gds-tag colour="Blue">Submitted</gds-tag></td>
+                    }
+                    else if (application.Status == ApplicationStatus.Withdrawn)
+                    {
+                        <td class="govuk-table__cell"><gds-tag colour="Red">Withdrawn</gds-tag></td>
+                    }
+                    else
+                    {
+                        <td class="govuk-table__cell"><gds-tag colour="Grey">Not yet started</gds-tag></td>
+                    }
+                    <td class="govuk-table__cell"><gds-link>Action</gds-link></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a href="/application">
+        <gds-button-start type="button">
+            Start application
+        </gds-button-start>
+    </a>
+</gds-column>
