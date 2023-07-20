@@ -1,5 +1,6 @@
 using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
+using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Enums;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
@@ -50,6 +51,22 @@ public class LoanApplicationViewModel
         Sites.Add(site);
 
         return site;
+    }
+
+    public Tuple<bool, string> ToggleDeleteProjectName(ICacheService cacheService, string passedDeleteProjectName = "")
+    {
+        var deleteProjectKey = "DeleteProject";
+        var isDeletedProjectInCache = true;
+        var deletedProjectFromCache = cacheService.GetValue<string>(deleteProjectKey) ?? string.Empty;
+
+        if (string.IsNullOrEmpty(deletedProjectFromCache))
+        {
+            isDeletedProjectInCache = false;
+        }
+
+        cacheService.SetValue(deleteProjectKey, passedDeleteProjectName);
+
+        return Tuple.Create(isDeletedProjectInCache, deletedProjectFromCache);
     }
 
     private AccountDetailsViewModel TemporaryAccount() => new()

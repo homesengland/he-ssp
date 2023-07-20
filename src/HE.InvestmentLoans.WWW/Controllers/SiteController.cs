@@ -5,6 +5,7 @@ using HE.InvestmentLoans.BusinessLogic.Application.Project.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Common.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +21,14 @@ public class SiteController : Controller
 {
     private readonly IMediator _mediator;
     private readonly IValidator<SiteViewModel> _validator;
+    private readonly ICacheService _cacheService;
 
-    public SiteController(IValidator<SiteViewModel> validator, IMediator mediator)
+    public SiteController(IValidator<SiteViewModel> validator, IMediator mediator, ICacheService cacheService)
         : base()
     {
         this._mediator = mediator;
         this._validator = validator;
+        this._cacheService = cacheService;
     }
 
     [Route("Create")]
@@ -154,6 +157,7 @@ public class SiteController : Controller
         {
             await this._mediator.Send(new DeleteProjectCommand(id, site));
             projectName = sitemodel.Name ?? sitemodel.DefaultName;
+            model.ToggleDeleteProjectName(_cacheService, projectName);
         }
         else
         {
@@ -161,6 +165,6 @@ public class SiteController : Controller
             workflow.ChangeState(sitemodel.PreviousState, false);
         }
 
-        return RedirectToAction("Workflow", "LoanApplication", new { id, ending = "TaskList", deleteProjectName = projectName });
+        return RedirectToAction("Workflow", "LoanApplication", new { id, ending = "TaskList" });
     }
 }
