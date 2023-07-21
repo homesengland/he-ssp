@@ -3,7 +3,7 @@ using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
+namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Warning
 {
     /// <summary>
     /// GDS Warning text.
@@ -23,7 +23,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
         public string AssistiveText { get; set; }
 
         /// <summary>
-        /// Synchronously executes the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" /> with the given <paramref name="context" /> and
+        /// Synchronously executes the <see cref="TagHelper" /> with the given <paramref name="context" /> and
         /// <paramref name="output" />.
         /// </summary>
         /// <param name="context">Contains information associated with the current HTML tag.</param>
@@ -37,7 +37,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
 
                 var icon = new TagBuilder(HtmlConstants.Span);
                 icon.AddCssClass(CssConstants.GovUkWarningTextIcon);
-                icon.Attributes.Add("aria-hidden", "true");
+                icon.Attributes.Add(HtmlAttributes.AriaAttributes.Hidden, "true");
                 icon.InnerHtml.Append("!");
 
                 var text = new TagBuilder(HtmlConstants.Strong);
@@ -45,10 +45,10 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
 
                 var assistive = new TagBuilder(HtmlConstants.Span);
                 assistive.AddCssClass(CssConstants.GovUkWarningTextAssistive);
-                assistive.InnerHtml.Append(this.AssistiveText ?? "Warning");
+                assistive.InnerHtml.Append(AssistiveText ?? "Warning");
 
                 text.InnerHtml.AppendHtml(assistive);
-                text.InnerHtml.Append(this.Text);
+                text.InnerHtml.Append(Text);
 
                 output.Content.SetHtmlContent(string.Empty);
                 output.Content.AppendHtml(icon);

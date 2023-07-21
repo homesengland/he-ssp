@@ -1,3 +1,4 @@
+using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Abstraction;
 
 namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary.V2
@@ -9,7 +10,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary.V2
     /// <seealso cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
     public class GdsSummaryListActionsV2TagHelper : TextWithIdTagHelper
     {
-        public GdsSummaryListActionsV2TagHelper() : base("dd", "govuk-summary-list__actions")
+        public GdsSummaryListActionsV2TagHelper() : base(HtmlConstants.DD, CssConstants.GovUkSummaryListActions)
         {
         }
     }

@@ -31,6 +31,11 @@ namespace He.AspNetCore.Mvc.Gds.Components.Constants
         public const string GovUkLabel = "govuk-label";
 
         /// <summary>
+        /// The gov uk label wrapper.
+        /// </summary>
+        public const string GovUkLabelWrapper = "govuk-label-wrapper";
+
+        /// <summary>
         /// The gov uk back link.
         /// </summary>
         public const string GovUkBackLink = "govuk-back-link";
@@ -112,6 +117,11 @@ namespace He.AspNetCore.Mvc.Gds.Components.Constants
         public const string GovUkInputError = "govuk-input--error";
 
         /// <summary>
+        /// The gov uk input validation error.
+        /// </summary>
+        public const string InputValidationError = "input-validation-error";
+
+        /// <summary>
         /// The gov uk radios input.
         /// </summary>
         public const string GovUkRadiosInput = "govuk-radios__input";
@@ -170,7 +180,12 @@ namespace He.AspNetCore.Mvc.Gds.Components.Constants
         /// The gov uk tag.
         /// </summary>
         public const string GovUkTag = "govuk-tag";
-        
+
+        /// <summary>
+        /// The gov uk tag.
+        /// </summary>
+        public const string GovUkTagGrey = "govuk-tag--grey";
+
         /// <summary>
         /// The gov uk tag.
         /// </summary>
@@ -406,5 +421,70 @@ namespace He.AspNetCore.Mvc.Gds.Components.Constants
         /// GovukWarningTextAssistive.
         /// </summary>
         public const string GovUkWarningTextAssistive = "govuk-warning-text__assistive";
+
+        /// <summary>
+        /// GovUkDateInput.
+        /// </summary>
+        public const string GovUkDateInput = "govuk-date-input";
+
+        /// <summary>
+        /// GovUkDateInputItem.
+        /// </summary>
+        public const string GovUkDateInputItem = "govuk-date-input__item";
+
+        /// <summary>
+        /// GovUkErrorSummary.
+        /// </summary>
+        public const string GovUkErrorSummary = "govuk-error-summary";
+
+        /// <summary>
+        /// GovUkErrorSummaryTitle.
+        /// </summary>
+        public const string GovUkErrorSummaryTitle = "govuk-error-summary__title";
+
+        /// <summary>
+        /// GovUkErrorSummaryBody.
+        /// </summary>
+        public const string GovUkErrorSummaryBody = "govuk-error-summary__body";
+
+        /// <summary>
+        /// GovUkErrorSummaryList.
+        /// </summary>
+        public const string GovUkErrorSummaryList = "govuk-error-summary__list";
+
+        /// <summary>
+        ///  The gov uk summary card.
+        /// </summary>
+        public const string GovUkSummaryCard = "govuk-summary-card";
+
+        /// <summary>
+        ///  The gov uk summary card title.
+        /// </summary>
+        public const string GovUkSummaryCardTitle = "govuk-summary-card__title";
+
+        /// <summary>
+        ///  The gov uk summary card title wrapper.
+        /// </summary>
+        public const string GovUkSummaryCardTitleWrapper = "govuk-summary-card__title-wrapper";
+
+        /// <summary>
+        ///  The gov uk summary card action.
+        /// </summary>
+        public const string GovUkSummaryCardAction = "govuk-summary-card__action";
+
+        /// <summary>
+        ///  The gov uk summary card actions.
+        /// </summary>
+        public const string GovUkSummaryCardActions = "govuk-summary-card__actions";
+
+        /// <summary>
+        ///  The gov uk summary card content.
+        /// </summary>
+        public const string GovUkSummaryCardContent = "govuk-summary-card__content";
+
+        /// <summary>
+        ///  The gov uk text area.
+        /// </summary>
+        public const string GovUkTextArea = "govuk-textarea";
     }
 }

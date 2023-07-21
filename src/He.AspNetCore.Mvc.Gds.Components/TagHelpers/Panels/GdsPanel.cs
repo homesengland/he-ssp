@@ -1,4 +1,4 @@
-﻿using He.AspNetCore.Mvc.Gds.Components.Constants;
+using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Text;
@@ -17,7 +17,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Panels
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            output.TagName = "div";
+            output.TagName = HtmlConstants.Div;
 
             if(Confirmation)
             {

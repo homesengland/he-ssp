@@ -5,7 +5,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 {
     public class GdsDivHint : StyledTag
     {
-        public GdsDivHint() : base(HtmlConstants.Div, "govuk-hint")
+        public GdsDivHint() : base(HtmlConstants.Div, CssConstants.GovUkHint)
         {
         }
     }

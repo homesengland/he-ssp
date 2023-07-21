@@ -5,7 +5,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.SummaryCard
 {
     public class GdsSummaryCardActions : TextWithIdTagHelper
     {
-        public GdsSummaryCardActions() : base(HtmlConstants.Ul, "govuk-summary-card__actions")
+        public GdsSummaryCardActions() : base(HtmlConstants.Ul, CssConstants.GovUkSummaryCardActions)
         {
         }
     }

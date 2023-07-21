@@ -49,7 +49,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
         {
             if (output != null)
             {
-                var existingClass = output.Attributes.FirstOrDefault(f => f.Name == "class");
+                var existingClass = output.Attributes.FirstOrDefault(f => f.Name == HtmlAttributes.Class);
                 string cssClass;
                 if (existingClass != null)
                 {
@@ -62,7 +62,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                     cssClass = className;
                 }
 
-                var taClass = new TagHelperAttribute("class", cssClass);
+                var taClass = new TagHelperAttribute(HtmlAttributes.Class, cssClass);
                 output.Attributes.Add(taClass);
             }
         }
@@ -76,7 +76,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
         {
             if (output != null)
             {
-                var taClass = new TagHelperAttribute("class", $"{className}--error");
+                var taClass = new TagHelperAttribute(HtmlAttributes.Class, $"{className}--error");
                 output.Attributes.Add(taClass);
             }
         }
@@ -90,7 +90,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
         {
             if (output != null)
             {
-                var existingClass = output.Attributes.FirstOrDefault(f => f.Name == "class");
+                var existingClass = output.Attributes.FirstOrDefault(f => f.Name == HtmlAttributes.Class);
                 string cssClass;
 
                 var classWithSize = size switch
@@ -113,7 +113,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                     cssClass = classWithSize;
                 }
 
-                var taClass = new TagHelperAttribute("class", cssClass);
+                var taClass = new TagHelperAttribute(HtmlAttributes.Class, cssClass);
                 output.Attributes.Add(taClass);
             }
         }
@@ -145,7 +145,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
         {
             if (output != null)
             {
-                var existingClass = output.Attributes.FirstOrDefault(f => f.Name == "class");
+                var existingClass = output.Attributes.FirstOrDefault(f => f.Name == HtmlAttributes.Class);
                 var cssClass = string.Empty;
                 if (existingClass != null)
                 {
@@ -153,7 +153,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                     cssClass = existingClass.Value.ToString().Replace(className, string.Empty);
                 }
 
-                var taClass = new TagHelperAttribute("class", cssClass);
+                var taClass = new TagHelperAttribute(HtmlAttributes.Class, cssClass);
                 output.Attributes.Add(taClass);
             }
         }
@@ -170,7 +170,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                 return;
             }
 
-            var tag = new TagHelperAttribute("id", id);
+            var tag = new TagHelperAttribute(HtmlAttributes.Id, id);
             output?.Attributes.Add(tag);
         }
 
@@ -186,7 +186,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                 return;
             }
 
-            var tag = new TagHelperAttribute("name", name);
+            var tag = new TagHelperAttribute(HtmlAttributes.Name, name);
             output?.Attributes.Add(tag);
         }
 
@@ -202,7 +202,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                 return;
             }
 
-            var tag = new TagHelperAttribute("href", href);
+            var tag = new TagHelperAttribute(HtmlAttributes.Href, href);
             output?.Attributes.Add(tag);
         }
 
@@ -218,7 +218,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                 return;
             }
 
-            var tag = new TagHelperAttribute("value", value);
+            var tag = new TagHelperAttribute(HtmlAttributes.Value, value);
             output?.Attributes.Add(tag);
         }
 
@@ -234,7 +234,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                 return;
             }
 
-            var tag = new TagHelperAttribute("type", type);
+            var tag = new TagHelperAttribute(HtmlAttributes.Type, type);
             output?.Attributes.Add(tag);
         }
 

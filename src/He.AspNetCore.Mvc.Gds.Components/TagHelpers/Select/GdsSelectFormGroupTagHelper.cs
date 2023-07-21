@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.SelectControl
+namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Select
 {
     /// <summary>
     /// Extend existing behaviour of *asp-for*
@@ -84,8 +84,8 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.SelectControl
         [HtmlAttributeName(InputTagHelperConstants.GdsFormGroupTagHelperForAttributeName)]
         public ModelExpression AspGovFor
         {
-            get => this.For;
-            set => this.For = value;
+            get => For;
+            set => For = value;
         }
 
         /// <inheritdoc/>
@@ -94,31 +94,31 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.SelectControl
             TagConstruct.RemoveGdsFromTagName(output);
             base.Process(context, output);
 
-            var fullHtmlFieldName = TagConstruct.RemoveSymbolsHtmFieldName(IGdsFormGroupTagHelper.GetFullHtmlFieldName(this.ViewContext, this.For.Name));
-            var name = IGdsFormGroupTagHelper.GetFullHtmlFieldName(this.ViewContext, this.For.Name);
+            var fullHtmlFieldName = TagConstruct.RemoveSymbolsHtmFieldName(IGdsFormGroupTagHelper.GetFullHtmlFieldName(ViewContext, For.Name));
+            var name = IGdsFormGroupTagHelper.GetFullHtmlFieldName(ViewContext, For.Name);
 
-            var displayText = this.AspGovFor.Metadata.DisplayName;
-            if (!string.IsNullOrEmpty(this.LabelText))
+            var displayText = AspGovFor.Metadata.DisplayName;
+            if (!string.IsNullOrEmpty(LabelText))
             {
-                displayText += this.LabelText;
+                displayText += LabelText;
             }
 
-            var propertyInError = IGdsFormGroupTagHelper.IsPropertyInError(this.ViewContext, name);
+            var propertyInError = IGdsFormGroupTagHelper.IsPropertyInError(ViewContext, name);
 
             IGdsFormGroupTagHelper.GenerateElementWrapperContent(
                 output,
                 fullHtmlFieldName,
                 propertyInError,
-                this.IsDisabled,
-                this.HiddenLabelText,
-                this.IsExcludeFieldValidation,
-                this.HintText,
-                this.LabelClasses,
+                IsDisabled,
+                HiddenLabelText,
+                IsExcludeFieldValidation,
+                HintText,
+                LabelClasses,
                 displayText,
                 null,
                 null,
                 false,
-                this.IsExcludeLabel);
+                IsExcludeLabel);
 
             TagConstruct.ConstructClass(output, $"{CssConstants.GovUkSelect}");
 
@@ -126,18 +126,18 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.SelectControl
             {
                 // Applies GDS error class to the invalid <select>
                 TagConstruct.ConstructClass(output, $"{CssConstants.GovUkSelectError}");
-                output.RemoveClass("input-validation-error", HtmlEncoder.Default);
+                output.RemoveClass(CssConstants.InputValidationError, HtmlEncoder.Default);
             }
 
-            if (this.SelectListItems?.Any() == true)
+            if (SelectListItems?.Any() == true)
             {
                 // This code is taken from the .Net Core SelectTagHelper.cs: https://github.com/dotnet/aspnetcore/blob/master/src/Mvc/Mvc.TagHelpers/src/SelectTagHelper.cs
-                var realModelType = this.For.ModelExplorer.ModelType;
+                var realModelType = For.ModelExplorer.ModelType;
                 var allowMultiple = typeof(string) != realModelType &&
                                  typeof(IEnumerable).IsAssignableFrom(realModelType);
-                var currentValues = this.Generator.GetCurrentValues(this.ViewContext, this.For.ModelExplorer, this.For.Name, allowMultiple);
+                var currentValues = Generator.GetCurrentValues(ViewContext, For.ModelExplorer, For.Name, allowMultiple);
 
-                foreach (var selectListItem in this.SelectListItems)
+                foreach (var selectListItem in SelectListItems)
                 {
                     output?.PostContent.AppendHtml(
                         $"<option value='{selectListItem.Value}' {(currentValues?.Contains(selectListItem.Value) == true ? "selected='selected'" : string.Empty)}'>{selectListItem.Text}</option>");

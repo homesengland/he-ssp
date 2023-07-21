@@ -5,7 +5,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Errors
 {
     public class GdsErrorSummary : TextWithIdTagHelper
     {
-        public GdsErrorSummary() : base(HtmlConstants.Div, "govuk-error-summary")
+        public GdsErrorSummary() : base(HtmlConstants.Div, CssConstants.GovUkErrorSummary)
         {
         }
     }

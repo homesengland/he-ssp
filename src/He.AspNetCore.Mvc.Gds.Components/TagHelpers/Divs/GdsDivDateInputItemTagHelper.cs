@@ -10,7 +10,7 @@ namespace HE.InvestmentLoans.WWW.Controls
     /// <seealso cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
     public class GdsDivDateInputItemTagHelper : TextTagHelper
     {
-        public GdsDivDateInputItemTagHelper() : base(HtmlConstants.Div, "govuk-date-input__item")
+        public GdsDivDateInputItemTagHelper() : base(HtmlConstants.Div, CssConstants.GovUkDateInputItem)
         {
         }
     }

@@ -10,7 +10,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary.V2
     /// <seealso cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
     public class GdsSummaryListValueV2TagHelper : TextWithIdTagHelper
     {
-        public GdsSummaryListValueV2TagHelper() : base(HtmlConstants.DD, "govuk-summary-list__value")
+        public GdsSummaryListValueV2TagHelper() : base(HtmlConstants.DD, CssConstants.GovUkSummaryListValue)
         {
         }
     }

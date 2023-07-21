@@ -10,7 +10,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
     /// <seealso cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
     public class GdsDivDateInputTagHelper : TextTagHelper
     {
-        public GdsDivDateInputTagHelper() : base(HtmlConstants.Div, "govuk-date-input")
+        public GdsDivDateInputTagHelper() : base(HtmlConstants.Div, CssConstants.GovUkDateInput)
         {
         }
     }
