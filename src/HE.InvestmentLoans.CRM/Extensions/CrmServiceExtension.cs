@@ -1,12 +1,13 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.PowerPlatform.Dataverse.Client;
+using HE.InvestmentLoans.Common.Models.App;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Common.Utils;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.PowerPlatform.Dataverse.Client;
+using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.CRM.Extensions;
 
@@ -57,6 +58,8 @@ public static class CrmServiceExtension
                     ClientId={config.ClientId};
                     ClientSecret={config.ClientSecret};";
 
-        return new ServiceClient(connectionString);
+        var serviceClient = new ServiceClient(connectionString, serviceProvider.GetRequiredService<ILogger<ServiceClient>>());
+        cacheService.SetValue(cacheKey, serviceClient.CurrentAccessToken);
+        return serviceClient;
     }
 }

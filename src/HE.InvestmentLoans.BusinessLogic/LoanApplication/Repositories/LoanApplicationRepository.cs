@@ -21,7 +21,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         _serviceClient = serviceClient;
     }
 
-    public LoanApplicationEntity Load(LoanApplicationId id, UserAccount userAccount)
+    public async Task<LoanApplicationEntity> Load(LoanApplicationId id, UserAccount userAccount)
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
@@ -30,13 +30,13 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             invln_loanapplicationid = id.ToString(),
         };
 
-        _serviceClient.ExecuteAsync(req);
+        await _serviceClient.ExecuteAsync(req);
 
         // TODO: It will be fullfilled with next PR.
-        return new LoanApplicationEntity(id, new LoanApplicationViewModel());
+        return new LoanApplicationEntity(id, userAccount);
     }
 
-    public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount)
+    public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount, CancellationToken cancellationToken)
     {
         var req = new invln_getloanapplicationsforaccountandcontactRequest()
         {
@@ -44,11 +44,17 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             invln_externalcontactid = userAccount.UserGlobalId,
         };
 
-        var response_async = await _serviceClient.ExecuteAsync(req);
-        var response = response_async != null ? (invln_getloanapplicationsforaccountandcontactResponse)response_async : throw new NotFoundException("Applications list", userAccount.ToString());
+        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getloanapplicationsforaccountandcontactResponse
+                       ?? throw new NotFoundException("Applications list", userAccount.ToString());
+
         var loanApplicationDtos = JsonSerializer.Deserialize<List<LoanApplicationDto>>(response.invln_loanapplications) ?? throw new NotFoundException("Applications list", userAccount.ToString());
 
-        return loanApplicationDtos.Select(x => new UserLoanApplication(LoanApplicationId.From(x.accountId), x.name, new ApplicationStatusMapper().MapToPortalStatus(x.loanApplicationStatus), x.LastModificationOn)).ToList();
+        return loanApplicationDtos.Select(x =>
+            new UserLoanApplication(
+                LoanApplicationId.From(x.loanApplicationId),
+                x.name,
+                ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationStatus),
+                x.LastModificationOn)).ToList();
     }
 
     public void Save(LoanApplicationViewModel loanApplication, UserAccount userAccount)
@@ -87,8 +93,6 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         {
             name = loanApplication.Account.RegisteredName,
             contactEmailAdress = loanApplication.Account.EmailAddress,
-
-            loanApplicationStatus = new ApplicationStatusMapper().MapToCrmStatus(ApplicationStatus.Submitted),
 
             // COMPANY
             companyPurpose = loanApplication.Company.Purpose,
@@ -129,7 +133,24 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         _serviceClient.ExecuteAsync(req);
     }
 
-    private string MapPurpose(FundingPurpose? fundingPurpose)
+    public async Task Save(LoanApplicationEntity loanApplication, CancellationToken cancellationToken)
+    {
+        var loanApplicationDto = new LoanApplicationDto();
+        var loanApplicationSerialized = JsonSerializer.Serialize(loanApplicationDto);
+        var req = new invln_sendinvestmentloansdatatocrmRequest
+        {
+            invln_entityfieldsparameters = loanApplicationSerialized,
+            invln_accountid = loanApplication.UserAccount.AccountId.ToString(),
+            invln_contactexternalid = loanApplication.UserAccount.UserGlobalId,
+        };
+
+        var response = (invln_sendinvestmentloansdatatocrmResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);
+        var newLoanApplicationId = LoanApplicationId.From(response.invln_loanapplicationid);
+        loanApplication.SetId(newLoanApplicationId);
+        Save(loanApplication.LegacyModel, loanApplication.UserAccount);
+    }
+
+    public string MapPurpose(FundingPurpose? fundingPurpose)
     {
         return fundingPurpose switch
         {
