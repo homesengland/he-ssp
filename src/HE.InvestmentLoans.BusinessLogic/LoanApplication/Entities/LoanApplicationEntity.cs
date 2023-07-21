@@ -33,11 +33,20 @@ public class LoanApplicationEntity
 
     public void SetId(LoanApplicationId newId)
     {
-        if (Id.IsNew() is false)
+        if (Id.IsSaved())
         {
             throw new DomainException("Id cannot be modified", CommonErrorCodes.IdCannotBeModified);
         }
 
         Id = newId;
+        SyncToLegacyModel();
+    }
+
+    private void SyncToLegacyModel()
+    {
+        LegacyModel = new LoanApplicationViewModel()
+        {
+            ID = Id.Value,
+        };
     }
 }

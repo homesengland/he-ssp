@@ -36,7 +36,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         return new LoanApplicationEntity(id, userAccount);
     }
 
-    public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount)
+    public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount, CancellationToken cancellationToken)
     {
         var req = new invln_getloanapplicationsforaccountandcontactRequest()
         {
@@ -44,8 +44,12 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             invln_externalcontactid = userAccount.UserGlobalId,
         };
 
-        var response_async = await _serviceClient.ExecuteAsync(req);
-        var response = response_async != null ? (invln_getloanapplicationsforaccountandcontactResponse)response_async : throw new NotFoundException("Applications list", userAccount.ToString());
+        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getloanapplicationsforaccountandcontactResponse;
+        if (response is null)
+        {
+            throw new NotFoundException("Applications list", userAccount.ToString());
+        }
+
         var loanApplicationDtos = JsonSerializer.Deserialize<List<LoanApplicationDto>>(response.invln_loanapplications) ?? throw new NotFoundException("Applications list", userAccount.ToString());
 
         return loanApplicationDtos.Select(x =>
@@ -132,7 +136,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         _serviceClient.ExecuteAsync(req);
     }
 
-    public async Task Save(LoanApplicationEntity loanApplication)
+    public async Task Save(LoanApplicationEntity loanApplication, CancellationToken cancellationToken)
     {
         var loanApplicationDto = new LoanApplicationDto();
         var loanApplicationSerialized = JsonSerializer.Serialize(loanApplicationDto);
@@ -143,9 +147,10 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             invln_contactexternalid = loanApplication.UserAccount.UserGlobalId,
         };
 
-        var response = (invln_sendinvestmentloansdatatocrmResponse)await _serviceClient.ExecuteAsync(req);
+        var response = (invln_sendinvestmentloansdatatocrmResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);
         var newLoanApplicationId = LoanApplicationId.From(response.invln_loanapplicationid);
         loanApplication.SetId(newLoanApplicationId);
+        Save(loanApplication.LegacyModel, loanApplication.UserAccount);
     }
 
     public string MapPurpose(FundingPurpose? fundingPurpose)

@@ -9,9 +9,9 @@ public interface ILoanApplicationRepository
 {
     Task<LoanApplicationEntity> Load(LoanApplicationId id, UserAccount userAccount);
 
-    Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount);
+    Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount, CancellationToken cancellationToken);
 
     void Save(LoanApplicationViewModel loanApplication, UserAccount userAccount);
 
-    Task Save(LoanApplicationEntity loanApplication);
+    Task Save(LoanApplicationEntity loanApplication, CancellationToken cancellationToken);
 }

@@ -18,7 +18,7 @@ public class LoanApplicationId : ValueObject
 
     public static LoanApplicationId New() => new(Guid.Empty);
 
-    public bool IsNew() => Value == Guid.Empty;
+    public bool IsSaved() => Value != Guid.Empty;
 
     public override string ToString()
     {

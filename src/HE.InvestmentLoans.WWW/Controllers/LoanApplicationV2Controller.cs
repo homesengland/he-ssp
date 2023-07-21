@@ -8,7 +8,7 @@ using Microsoft.FeatureManagement.Mvc;
 namespace HE.InvestmentLoans.WWW.Controllers;
 
 [FeatureGate(LoansFeatureFlags.SaveApplicationDraftInCrm)]
-[Route("loan-application")]
+[Route("application")]
 [Authorize]
 public class LoanApplicationV2Controller : Controller
 {
@@ -20,9 +20,9 @@ public class LoanApplicationV2Controller : Controller
     }
 
     [HttpGet("start-new")]
-    public async Task<IActionResult> StartNew()
+    public async Task<IActionResult> StartNew(CancellationToken cancellationToken)
     {
-        var loanApplicationId = await _mediator.Send(new StartApplicationCommand());
+        var loanApplicationId = await _mediator.Send(new StartApplicationCommand(), cancellationToken);
         return RedirectToAction("Workflow", "LoanApplication", new { id = loanApplicationId, ending = "AboutLoan" });
     }
 }

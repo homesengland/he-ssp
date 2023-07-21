@@ -18,13 +18,13 @@ public class LoanApplicationIdCtorTests
     }
 
     [TestMethod]
-    public void LoanApplicationIdShouldBeCreatedasNew_WhenGuidDefault()
+    public void LoanApplicationIdShouldBeCreatedAsNew_WhenGuidDefault()
     {
         // given & when
         var action = () => new LoanApplicationId(Guid.Empty);
 
         // then
         action.Should().NotThrow();
-        action().IsNew().Should().BeTrue();
+        action().IsSaved().Should().BeFalse();
     }
 }
