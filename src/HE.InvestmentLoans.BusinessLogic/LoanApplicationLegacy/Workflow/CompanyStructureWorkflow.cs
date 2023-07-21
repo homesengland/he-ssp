@@ -42,7 +42,7 @@ public class CompanyStructureWorkflow
         return _model.Company.State == State.Complete;
     }
 
-    public bool IsWorkflowCompleted()
+    public bool IsCompleted()
     {
         return IsStateComplete() || _model.Company.IsFlowCompleted;
     }

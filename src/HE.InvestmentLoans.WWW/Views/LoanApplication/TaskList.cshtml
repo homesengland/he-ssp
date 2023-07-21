@@ -37,7 +37,7 @@
                             Complete company information
                         </a>
                     </span>
-                    @if (companyStructureWorkflow.IsWorkflowCompleted())
+                    @if (companyStructureWorkflow.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
@@ -65,7 +65,7 @@
                             Provide details about funding
                         </a>
                     </span>
-                    @if (fundingWorkflow.IsWorkflowCompleted())
+                    @if (fundingWorkflow.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
@@ -84,7 +84,7 @@
                             Provide details about security
                         </a>
                     </span>
-                    @if (securityWorkflow.IsWorkflowCompleted())
+                    @if (securityWorkflow.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
@@ -114,7 +114,7 @@
                             </a>
                         </span>
 
-                        @if (new SiteWorkflow(Model, mediator, site.Id.Value).IsWorkflowCompleted())
+                        @if (new SiteWorkflow(Model, mediator, site.Id.Value).IsCompleted())
                         {
                             <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                         }

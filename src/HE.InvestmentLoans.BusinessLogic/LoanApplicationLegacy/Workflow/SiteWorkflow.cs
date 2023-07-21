@@ -66,7 +66,7 @@ public class SiteWorkflow
         return _site.State == State.Complete;
     }
 
-    public bool IsWorkflowCompleted()
+    public bool IsCompleted()
     {
         return IsStateComplete() || _site.IsFlowCompleted;
     }

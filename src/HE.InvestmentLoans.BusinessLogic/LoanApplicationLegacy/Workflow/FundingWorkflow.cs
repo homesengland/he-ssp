@@ -45,7 +45,7 @@ public class FundingWorkflow
         return _model.Funding.State == State.Complete;
     }
 
-    public bool IsWorkflowCompleted()
+    public bool IsCompleted()
     {
         return IsStateComplete() || _model.Funding.IsFlowCompleted;
     }

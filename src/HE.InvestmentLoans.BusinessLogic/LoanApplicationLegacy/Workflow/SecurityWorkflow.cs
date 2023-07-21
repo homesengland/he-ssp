@@ -42,7 +42,7 @@ public class SecurityWorkflow
         return _model.Security.State == State.Complete;
     }
 
-    public bool IsWorkflowCompleted()
+    public bool IsCompleted()
     {
         return IsStateComplete() || _model.Security.IsFlowCompleted;
     }
