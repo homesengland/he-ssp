@@ -232,7 +232,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Checkboxes
 
             if (isConditionalRevealCheckboxsOption)
             {
-                ariaControls = $"aria-controls='{conditionalId}' aria-expanded='false'";
+                ariaControls = $"aria-controls='{conditionalId}' aria-expanded='false' role='button'";
             }
 
             elementInputBuilder.AppendLine(

@@ -1,14 +1,22 @@
 var activeConditionalInput = null;
 
 const onChange = (checkbox, thisInput) => () => {
+  const checkboxHasAriaExpandedAttribute = checkbox.getAttribute('aria-expanded');
+    
     if (checkbox.checked) {
         if (thisInput !== null) {
-            thisInput.classList.remove("govuk-checkboxes__conditional--hidden");
+          thisInput.classList.remove("govuk-checkboxes__conditional--hidden");
+
+          if (checkboxHasAriaExpandedAttribute)
+            checkbox.setAttribute('aria-expanded', true);
         }
     }
     else {
         if (thisInput !== null) {
-            thisInput.classList.add("govuk-checkboxes__conditional--hidden");
+          thisInput.classList.add("govuk-checkboxes__conditional--hidden");
+
+          if (checkboxHasAriaExpandedAttribute)
+            checkbox.setAttribute('aria-expanded', false);
         }
     }
 }
