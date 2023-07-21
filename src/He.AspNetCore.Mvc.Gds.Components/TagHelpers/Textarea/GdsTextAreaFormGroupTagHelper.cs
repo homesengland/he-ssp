@@ -136,29 +136,29 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Textarea
             if (this.For.Metadata.ValidatorMetadata.OfType<NumericValidationAttribute>().Any())
             {
                 // Assumption is that all 'number' style properties will have the 'NumericValidationAttribute' associated with them.
-                TagConstruct.ConstructGenericAttribute(output, "inputmode", "numeric");
-                TagConstruct.ConstructGenericAttribute(output, "pattern", "[0-9]*");
+                TagConstruct.ConstructGenericAttribute(output, HtmlAttributes.InputMode, HtmlAttributes.InputTypes.Numeric);
+                TagConstruct.ConstructGenericAttribute(output, HtmlAttributes.Pattern, "[0-9]*");
             }
 
             if (this.Autocomplete.IsNotNullOrEmpty())
             {
-                TagConstruct.ConstructGenericAttribute(output, "autocomplete", this.Autocomplete);
+                TagConstruct.ConstructGenericAttribute(output, HtmlAttributes.Autocomplete, this.Autocomplete);
             }
 
             if (propertyInError.isPropertyInError)
             {
                 // Applies GDS error class to the invalid <input>
                 TagConstruct.ConstructClass(output, $"{CssConstants.GovUkInputError}");
-                output.RemoveClass("input-validation-error", HtmlEncoder.Default);
+                output.RemoveClass(CssConstants.InputValidationError, HtmlEncoder.Default);
             }
 
             base.Process(context, output);
 
             // Removing maxlength in lieu of being able to disable HTML5 attributes
             // https://github.com/dotnet/aspnetcore/issues/18607
-            if (output != null && output.Attributes.ContainsName("maxlength"))
+            if (output != null && output.Attributes.ContainsName(HtmlAttributes.MaxLength))
             {
-                output.Attributes.RemoveAt(output.Attributes.IndexOfName("maxlength"));
+                output.Attributes.RemoveAt(output.Attributes.IndexOfName(HtmlAttributes.MaxLength));
             }
         }
     }

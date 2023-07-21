@@ -168,18 +168,18 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Checkboxes
             {
                 if (this.HasConditionalChildCheckboxs)
                 {
-                    TagConstruct.ConstructGenericAttribute(output, "data-module", CssConstants.GovUkCheckboxs);
+                    TagConstruct.ConstructGenericAttribute(output, HtmlAttributes.DataModule, CssConstants.GovUkCheckboxs);
                 }
             }
 
             if (output != null)
             {
-                output.TagName = "div";
+                output.TagName = HtmlConstants.Div;
                 if (propertyInError.isPropertyInError)
                 {
                     // Applies GDS error class to the invalid field
                     TagConstruct.ConstructClass(output, CssConstants.GovUkCheckboxsError);
-                    output.RemoveClass("input-validation-error", HtmlEncoder.Default);
+                    output.RemoveClass(CssConstants.InputValidationError, HtmlEncoder.Default);
                 }
 
                 if (this.SelectListItems?.Any() == true)

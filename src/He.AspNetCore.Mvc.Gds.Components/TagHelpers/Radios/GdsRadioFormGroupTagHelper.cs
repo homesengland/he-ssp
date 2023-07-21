@@ -174,19 +174,19 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 
                 if (this.HasConditionalChildInput)
                 {
-                    TagConstruct.ConstructGenericAttribute(output, "data-module", CssConstants.GovUkRadios);
+                    TagConstruct.ConstructGenericAttribute(output, HtmlAttributes.DataModule, CssConstants.GovUkRadios);
                 }
             }
 
             if (output != null)
             {
-                output.TagName = "div";
+                output.TagName = HtmlConstants.Div;
 
                 if (propertyInError.isPropertyInError)
                 {
                     // Applies GDS error class to the invalid field
                     TagConstruct.ConstructClass(output, CssConstants.GovUkRadiosError);
-                    output.RemoveClass("input-validation-error", HtmlEncoder.Default);
+                    output.RemoveClass(CssConstants.InputValidationError, HtmlEncoder.Default);
                 }
 
                 if (this.SelectListItems?.Any() == true)

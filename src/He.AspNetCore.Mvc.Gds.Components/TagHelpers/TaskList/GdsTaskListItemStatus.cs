@@ -27,11 +27,11 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.TaskList
             }
             else if (Status == GdsTaskListItemStatusText.InProgress)
             {
-                TagConstruct.ConstructClass(output, $"{CssConstants.GovUkTag} {CssConstants.GovUkAppTaskListTag} govuk-tag--blue");
+                TagConstruct.ConstructClass(output, $"{CssConstants.GovUkTag} {CssConstants.GovUkAppTaskListTag} {CssConstants.GovUkTag}--blue");
             }
             else
             {
-                TagConstruct.ConstructClass(output, $"{CssConstants.GovUkTag} {CssConstants.GovUkAppTaskListTag} govuk-tag--grey");
+                TagConstruct.ConstructClass(output, $"{CssConstants.GovUkTag} {CssConstants.GovUkAppTaskListTag} {CssConstants.GovUkTag}--grey");
             }
         }
     }

@@ -45,8 +45,8 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
         {
             if (output != null)
             {
-                output.TagName = "input";
-                var taType = new TagHelperAttribute("type", "radio");
+                output.TagName = HtmlConstants.Input;
+                var taType = new TagHelperAttribute(HtmlAttributes.Type, HtmlAttributes.InputTypes.Radio);
                 output.Attributes.Add(taType);
 
                 TagConstruct.ConstructId(output, this.Id);

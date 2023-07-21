@@ -5,7 +5,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
 {
     public class GdsSingleLiTagHelper : TextTagHelper
     {
-        public GdsSingleLiTagHelper() : base("li", $"{CssConstants.GovUkList} {CssConstants.GovUkListBullet}")
+        public GdsSingleLiTagHelper() : base(HtmlConstants.Li, $"{CssConstants.GovUkList} {CssConstants.GovUkListBullet}")
         {
         }
     }

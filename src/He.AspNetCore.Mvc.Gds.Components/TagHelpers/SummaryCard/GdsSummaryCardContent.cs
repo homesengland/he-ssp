@@ -5,7 +5,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.SummaryCard
 {
     public class GdsSummaryCardContent : StyledTag
     {
-        public GdsSummaryCardContent() : base(HtmlConstants.Div, "govuk-summary-card__content")
+        public GdsSummaryCardContent() : base(HtmlConstants.Div, CssConstants.GovUkSummaryCardContent)
         {
         }
     }

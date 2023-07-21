@@ -1,19 +1,16 @@
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 {
     /// <summary>
     /// Class GdsRadioYesNoTagHelper.
-    /// Implements the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />.
+    /// Implements the <see cref="TagHelper" />.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
+    /// <seealso cref="TagHelper" />
     public class GdsRadioYesNoTagHelper : TagHelper
     {
         /// <summary>
@@ -40,34 +37,35 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
         /// <value><c>true</c> if inline; otherwise, <c>false</c>.</value>
         public bool Inline { get; set; }
 
-
         [HtmlAttributeName("asp-for")]
         public ModelExpression For { get; set; }
 
         public ModelExpression InnerInputFor { get; set; }
+
         public ModelExpression SecondInnerInputFor { get; set; }
 
         public string InnerInputValue { get; set; }
+
         public string SecondInnerInputValue { get; set; }
 
-        public bool WithYesInput{ get; set; }
+        public bool WithYesInput { get; set; }
 
-        public bool WithNoInput{ get; set; }
+        public bool WithNoInput { get; set; }
 
-        public bool WithFileUpload{ get; set; }
+        public bool WithFileUpload { get; set; }
 
-        public string FileUploadHint{ get; set; } 
+        public string FileUploadHint { get; set; }
 
-        public string InnerInputText{ get; set; } 
+        public string InnerInputText { get; set; }
 
-        public string SecondInnerInputText{ get; set; } 
+        public string SecondInnerInputText { get; set; }
 
         public bool IsConditionalInputInvalid { get; set; }
 
         public string ConditionalInputError { get; set; }
 
         /// <summary>
-        /// Synchronously executes the <see cref="Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" /> with the given <paramref name="context" /> and
+        /// Synchronously executes the <see cref="TagHelper" /> with the given <paramref name="context" /> and
         /// <paramref name="output" />.
         /// </summary>
         /// <param name="context">Contains information associated with the current HTML tag.</param>
@@ -85,7 +83,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
                 }
 
                 TagConstruct.ConstructClass(output, css);
-                var texts = new List<string> { "Yes", "No" };
+                var texts = CommonResponse.YesNoAnswers();
 
                 var sb = new StringBuilder();
                 foreach (var text in texts)
@@ -97,27 +95,37 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
                     }
                     else
                     {
-                        var id = text == "Yes" ? For.Name : $"{For.Name}-1";
+                        var id = text == CommonResponse.Yes ? For.Name : $"{For.Name}-1";
                         var builder = TagConstruct.CreateRadio()
                             .AsRadio(id, For.Name, text)
                             .WithLabel(text, id);
 
                         if (HasConditionalInput(text))
                         {
-                            if (text == "No" && IsSecondInnerInputConfigured())
+                            if (text == CommonResponse.No && IsSecondInnerInputConfigured())
+                            {
                                 builder.WithConditionalInput(SecondInnerInputFor?.Name, SecondInnerInputText, SecondInnerInputFor?.Name ?? InnerInputFor?.Name, SecondInnerInputValue ?? InnerInputValue);
+                            }
                             else
+                            {
                                 builder.WithConditionalInput(InnerInputFor?.Name, InnerInputText, InnerInputFor?.Name, InnerInputValue);
+                            }
                         }
 
                         if (IsConditionalInputInvalid && IsSelected(text))
+                        {
                             builder.WithConditionalErrorMessage(ConditionalInputError);
+                        }
 
                         if (WithFileUpload)
+                        {
                             builder.WithFileUpload(FileUploadHint);
+                        }
 
                         if (IsSelected(text))
+                        {
                             builder.ThatIsChecked();
+                        }
 
                         sb.Append(builder.Build());
                     }
@@ -128,7 +136,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
         }
         private bool HasConditionalInput(string text)
         {
-            return text == "Yes" && WithYesInput || text == "No" && WithNoInput;
+            return (text == CommonResponse.Yes && WithYesInput) || (text == CommonResponse.No && WithNoInput);
         }
 
         private bool IsSecondInnerInputConfigured()

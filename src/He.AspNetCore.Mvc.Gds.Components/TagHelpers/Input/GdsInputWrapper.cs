@@ -5,7 +5,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
 {
     public class GdsInputWrapper : StyledTag
     {
-        public GdsInputWrapper() : base(HtmlConstants.Div, "govuk-input__wrapper")
+        public GdsInputWrapper() : base(HtmlConstants.Div, CssConstants.GovUkInputWrapper)
         {
         }
     }

@@ -39,8 +39,8 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
         {
             if (output != null)
             {
-                output.TagName = "input";
-                var taType = new TagHelperAttribute("type", "text");
+                output.TagName = HtmlConstants.Input;
+                var taType = new TagHelperAttribute(HtmlAttributes.Type, HtmlAttributes.InputTypes.Text);
                 output.Attributes.Add(taType);
 
 

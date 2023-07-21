@@ -10,7 +10,7 @@ namespace HE.InvestmentLoans.WWW.Controls
     /// <seealso cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
     public class GdsSummaryListKeyV2TagHelper : TextWithIdTagHelper
     {
-        public GdsSummaryListKeyV2TagHelper() : base(HtmlConstants.Dt, "govuk-summary-list__key")
+        public GdsSummaryListKeyV2TagHelper() : base(HtmlConstants.Dt, CssConstants.GovUkSummaryListKey)
         {
         }
     }

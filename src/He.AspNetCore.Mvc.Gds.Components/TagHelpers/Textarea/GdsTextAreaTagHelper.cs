@@ -62,7 +62,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Textarea
                     if (propertyInError.isPropertyInError)
                     {
                         output.TagName = HtmlConstants.Div;
-                        TagConstruct.ConstructClass(output, "govuk-form-group govuk-form-group--error");
+                        TagConstruct.ConstructClass(output, $"{CssConstants.GovUkFormGroup} {CssConstants.GovUkFormGroupError}");
 
                         contentBuilder.Append($"<p id=\"contact-by-email-error\" class=\"govuk-error-message\">  " +
                                                 $"<span class=\"govuk-visually-hidden\">Error:</span> {propertyInError.entry.Errors.First().ErrorMessage}" +
@@ -78,7 +78,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Textarea
 
                         TagConstruct.ConstructName(output, For.Name);
                         TagConstruct.ConstructId(output, For.Name);
-                        TagConstruct.ConstructClass(output, $"govuk-textarea");
+                        TagConstruct.ConstructClass(output, CssConstants.GovUkTextArea);
 
                         TagConstruct.ConstructGeneric(output, HtmlConstants.Rows, Rows);
 
@@ -90,7 +90,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Textarea
                 {
                     TagConstruct.ConstructName(output, Name);
                     TagConstruct.ConstructValue(output, Value);
-                    TagConstruct.ConstructClass(output, $"govuk-textarea");
+                    TagConstruct.ConstructClass(output, CssConstants.GovUkTextArea);
                     TagConstruct.ConstructGeneric(output, HtmlConstants.Rows, Rows);
 
                     output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output, Text));

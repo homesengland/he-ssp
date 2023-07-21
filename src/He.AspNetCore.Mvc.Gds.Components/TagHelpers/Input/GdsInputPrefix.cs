@@ -6,7 +6,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
     public class GdsInputPrefix : StyledTag
     {
 
-        public GdsInputPrefix() : base(HtmlConstants.Div, "govuk-input__prefix")
+        public GdsInputPrefix() : base(HtmlConstants.Div, CssConstants.GovUkInputPrefix)
         {
         }
     }
