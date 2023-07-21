@@ -27,6 +27,8 @@ public class SecurityViewModel
 
     public bool StateChanged { get; set; }
 
+    public bool IsFlowCompleted { get; set; }
+
     public void RemoveAlternativeRoutesData()
     {
         if (ChargesDebtCompany == "No")
@@ -43,5 +45,10 @@ public class SecurityViewModel
         {
             DirLoansSubMore = null;
         }
+    }
+
+    public void SetFlowCompletion(bool value)
+    {
+        IsFlowCompleted = value;
     }
 }

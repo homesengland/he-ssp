@@ -27,4 +27,11 @@ public class CompanyStructureViewModel
     public CompanyStructureWorkflow.State State { get; set; }
 
     public bool StateChanged { get; set; }
+
+    public bool IsFlowCompleted { get; set; }
+
+    public void SetFlowCompletion(bool value)
+    {
+        IsFlowCompleted = value;
+    }
 }

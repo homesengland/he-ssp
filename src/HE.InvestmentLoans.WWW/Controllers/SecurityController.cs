@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Common.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,7 @@ public class SecurityController : Controller
 
         var workflow = new SecurityWorkflow(model, _mediator);
 
-        if (workflow.IsCompleted())
+        if (workflow.IsStateComplete())
         {
             workflow.NextState(Trigger.Back);
         }
@@ -50,6 +51,7 @@ public class SecurityController : Controller
 
         try
         {
+            var originalSessionModel = ObjectUtilities.DeepCopy(sessionModel);
             await TryUpdateModelAsync(sessionModel);
             var vresult = _validator.Validate(sessionModel.Security, opt => opt.IncludeRuleSets(workflow.GetName()));
             if (!vresult.IsValid)
@@ -59,6 +61,11 @@ public class SecurityController : Controller
 
                 // re-render the view when validation failed.
                 return View(workflow.GetName(), sessionModel);
+            }
+
+            if (!sessionModel.Equals(originalSessionModel))
+            {
+                sessionModel.Security.SetFlowCompletion(false);
             }
 
             var result = await this._mediator.Send(new BL.LoanApplicationLegacy.Commands.Update()
@@ -75,8 +82,9 @@ public class SecurityController : Controller
         }
 
         var loanWorkflow = new LoanApplicationWorkflow(sessionModel, _mediator);
-        if (loanWorkflow.IsBeingChecked() || workflow.IsCompleted() || (sessionModel.Security.CheckAnswers == "No" && action != "Change"))
+        if (loanWorkflow.IsBeingChecked() || workflow.IsStateComplete() || (sessionModel.Security.CheckAnswers == "No" && action != "Change"))
         {
+            loanWorkflow.ChangeState(LoanApplicationWorkflow.State.TaskList);
             return RedirectToAction("Workflow", "LoanApplication", new { id = sessionModel.ID, ending = loanWorkflow.GetName() });
         }
         else

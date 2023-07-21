@@ -61,9 +61,14 @@ public class SiteWorkflow
         await _mediator.Send(new Commands.Update() { Model = _model });
     }
 
-    public bool IsCompleted()
+    public bool IsStateComplete()
     {
         return _site.State == State.Complete;
+    }
+
+    public bool IsWorkflowCompleted()
+    {
+        return IsStateComplete() || _site.IsFlowCompleted;
     }
 
     public bool IsStarted()
@@ -173,7 +178,14 @@ public class SiteWorkflow
         _machine.Configure(State.CheckAnswers)
             .PermitIf(Trigger.Continue, State.Complete, () => _site.CheckAnswers == "Yes")
             .IgnoreIf(Trigger.Continue, () => _site.CheckAnswers != "Yes")
-            .Permit(Trigger.Back, State.AffordableHomes);
+            .Permit(Trigger.Back, State.AffordableHomes)
+            .OnExit(() =>
+            {
+                if (_site.CheckAnswers == "Yes")
+                {
+                    _site.SetFlowCompletion(true);
+                }
+            });
 
         _machine.Configure(State.Complete)
             .Permit(Trigger.Back, State.CheckAnswers);
