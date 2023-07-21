@@ -95,6 +95,8 @@ public class SiteViewModel
 
     public string? DeleteProject { get; set; }
 
+    public bool IsFlowCompleted { get; set; }
+
     public void RemoveAlternativeRoutesData()
     {
         if (TypeHomes != null && !TypeHomes.Contains("other"))
@@ -161,6 +163,11 @@ public class SiteViewModel
                 !string.IsNullOrEmpty(GrantFunding) ||
                 !string.IsNullOrEmpty(AffordableHomes) ||
                 !string.IsNullOrEmpty(CheckAnswers);
+    }
+
+    public void SetFlowCompletion(bool value)
+    {
+        IsFlowCompleted = value;
     }
 
     private bool BasicInformationProvided()

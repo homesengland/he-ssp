@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Common.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ public class CompanyStructureController : Controller
     {
         var model = await this._mediator.Send(new BL.LoanApplicationLegacy.Queries.GetSingle() { Id = id });
         var workflow = new CompanyStructureWorkflow(model, _mediator);
-        if (workflow.IsCompleted())
+        if (workflow.IsStateComplete())
         {
             workflow.NextState(Trigger.Back);
         }
@@ -56,6 +57,7 @@ public class CompanyStructureController : Controller
 
         try
         {
+            var originalSessionModel = ObjectUtilities.DeepCopy(sessionModel);
             await TryUpdateModelAsync(sessionModel);
             var vresult = _validator.Validate(sessionModel.Company, opt => opt.IncludeRuleSets(workflow.GetName()));
             if (!vresult.IsValid)
@@ -65,6 +67,11 @@ public class CompanyStructureController : Controller
 
                 // re-render the view when validation failed.
                 return View(workflow.GetName(), sessionModel);
+            }
+
+            if (!sessionModel.Equals(originalSessionModel))
+            {
+                sessionModel.Company.SetFlowCompletion(false);
             }
 
             var result = await this._mediator.Send(new BL.LoanApplicationLegacy.Commands.Update()
@@ -81,8 +88,9 @@ public class CompanyStructureController : Controller
         }
 
         var loanWorkflow = new LoanApplicationWorkflow(sessionModel, _mediator);
-        if (loanWorkflow.IsBeingChecked() || workflow.IsCompleted() || (sessionModel.Company.CheckAnswers == "No" && action != "Change"))
+        if (loanWorkflow.IsBeingChecked() || workflow.IsStateComplete() || (sessionModel.Company.CheckAnswers == "No" && action != "Change"))
         {
+            loanWorkflow.ChangeState(LoanApplicationWorkflow.State.TaskList);
             return RedirectToAction("Workflow", "LoanApplication", new { id = sessionModel.ID, ending = loanWorkflow.GetName() });
         }
         else

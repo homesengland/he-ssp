@@ -37,9 +37,14 @@ public class CompanyStructureWorkflow
         await _machine.FireAsync(trigger);
     }
 
-    public bool IsCompleted()
+    public bool IsStateComplete()
     {
         return _model.Company.State == State.Complete;
+    }
+
+    public bool IsCompleted()
+    {
+        return IsStateComplete() || _model.Company.IsFlowCompleted;
     }
 
     public bool IsStarted()
@@ -84,7 +89,14 @@ public class CompanyStructureWorkflow
         _machine.Configure(State.CheckAnswers)
            .PermitIf(Trigger.Continue, State.Complete, () => _model.Company.CheckAnswers == "Yes")
            .IgnoreIf(Trigger.Continue, () => _model.Company.CheckAnswers != "Yes")
-           .PermitIf(Trigger.Back, State.HomesBuilt);
+           .PermitIf(Trigger.Back, State.HomesBuilt)
+           .OnExit(() =>
+           {
+               if (_model.Company.CheckAnswers == "Yes")
+               {
+                   _model.Company.SetFlowCompletion(true);
+               }
+           });
 
         _machine.Configure(State.Complete)
          .Permit(Trigger.Back, State.CheckAnswers);
