@@ -67,8 +67,8 @@ namespace HE.CRM.Common.DtoMapping
                 companyExperience = loanApplication.invln_CompanyExperience,
 
                 //funding
-                projectGdv = ((int)loanApplication.invln_ProjectGDV?.Value).ToString(),
-                projectEstimatedTotalCost = ((int)loanApplication.invln_Projectestimatedtotalcost?.Value).ToString(),
+                projectGdv = (loanApplication.invln_ProjectGDV?.Value).ToString(),
+                projectEstimatedTotalCost = (loanApplication.invln_Projectestimatedtotalcost?.Value).ToString(),
                 projectAbnormalCosts = loanApplication.invln_Projectabnormalcosts?.ToString(),
                 projectAbnormalCostsInformation = loanApplication.invln_Projectabnormalcostsinformation?.ToString(),
                 privateSectorApproach = loanApplication.invln_Privatesectorapproach?.ToString(),

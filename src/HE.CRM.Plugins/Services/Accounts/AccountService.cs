@@ -14,6 +14,7 @@ using HE.CRM.Common.Repositories;
 using DataverseModel;
 using HE.CRM.Common.Repositories.Interfaces;
 using HE.CRM.Common.Repositories.Implementations;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.CRM.Plugins.Services.Accounts
 {
@@ -21,7 +22,8 @@ namespace HE.CRM.Plugins.Services.Accounts
     {
         #region Fields
 
-        private readonly IAccountRepository accountRepository;
+        private readonly IAccountRepository _accountRepository;
+        private readonly IContactRepository _contactRepository;
 
         #endregion
 
@@ -29,7 +31,8 @@ namespace HE.CRM.Plugins.Services.Accounts
 
         public AccountService(CrmServiceArgs args) : base(args)
         {
-            accountRepository = CrmRepositoriesFactory.Get<IAccountRepository>();
+            _accountRepository = CrmRepositoriesFactory.Get<IAccountRepository>();
+            _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
         }
 
         #endregion
@@ -39,6 +42,46 @@ namespace HE.CRM.Plugins.Services.Accounts
         public string GenerateRandomAccountSampleName()
         {
             return this.GenerateRandomNumber().ToString();
+        }
+
+        public OrganizationDetailsDto GetOrganizationDetails(string accountid, string contactExternalId)
+        {
+            var organizationDetailsDto = new OrganizationDetailsDto();
+            if (Guid.TryParse(accountid, out var organizationId))
+            {
+                var contact = _contactRepository.GetContactViaExternalId(contactExternalId, new string[]
+                {
+                    nameof(Contact.FullName).ToLower(),
+                    nameof(Account.EMailAddress1).ToLower(),
+                    nameof(Account.Telephone1).ToLower(),
+                });
+
+                var account = _accountRepository.GetById(organizationId, new string[] {
+                    nameof(Account.Name).ToLower(),
+                    nameof(Account.SIC).ToLower(),
+                    nameof(Account.Address1_Line1).ToLower(),
+                    nameof(Account.Address1_Line2).ToLower(),
+                    nameof(Account.Address1_Line3).ToLower(),
+                    nameof(Account.Address1_City).ToLower(),
+                    nameof(Account.Address1_PostalCode).ToLower(),
+                    nameof(Account.Address1_Country).ToLower(),
+                });
+                organizationDetailsDto.registeredCompanyName = account.Name;
+                organizationDetailsDto.companyRegistrationNumber = account.SIC;
+
+                organizationDetailsDto.addressLine1 = account.Address1_Line1;
+                organizationDetailsDto.addressLine2 = account.Address1_Line2;
+                organizationDetailsDto.addressLine3 = account.Address1_Line3;
+                organizationDetailsDto.city = account.Address1_City;
+                organizationDetailsDto.postalcode = account.Address1_PostalCode;
+                organizationDetailsDto.country = account.Address1_Country;
+
+                organizationDetailsDto.contactName = contact.FullName;
+                organizationDetailsDto.contactEmail = contact.EMailAddress1;
+                organizationDetailsDto.contactTelephone = contact.Telephone1;
+            }
+
+            return organizationDetailsDto;
         }
 
         #endregion

@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ContactRolesDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\LoanApplicationDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\OrganizationDetailsDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\SiteDetailsDto.cs" />
   </ItemGroup>
 </Project>

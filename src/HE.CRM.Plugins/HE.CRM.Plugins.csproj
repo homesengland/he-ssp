@@ -129,6 +129,7 @@
     <Compile Include="Handlers\CustomApi\GenerateRichTextDocumentHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetContactRoleHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetInvestmentsLoansForAccountAndContactHandler.cs" />
+    <Compile Include="Handlers\CustomApi\GetOrganizationDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetSingleInvestmentLoanForAccountAndContactHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendInvestmentsLoanDataToCrmHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleLoanApplicationHandler.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Plugins\CustomApi\GenerateRichTextDocumentPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetContactRolePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetInvestmentsLoansForAccountAndContactPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\GetOrganizationDetailsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleInvestmentLoanForAccountAndContactPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SendInvestmentsLoanDataToCrmPlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateSingleLoanApplicationPlugin.cs" />

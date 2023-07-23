@@ -21,4 +21,6 @@
     <Folder Include="spkl\" />
   </ItemGroup>
 
+  <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
+
 </Project>

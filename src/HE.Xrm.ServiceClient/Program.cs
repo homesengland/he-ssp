@@ -1,5 +1,5 @@
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Xrm.ServiceClientExample.Model;
-using HE.Xrm.ServiceClientExample.Model.EntitiesDto;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using System.Configuration;
 using System.Text.Json;
@@ -35,7 +35,8 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestUpdateLoanApplication(serviceClient); //method to call
+                    TestCustomApiCallingPath(serviceClient);
+                    //TestUpdateLoanApplication(serviceClient); //method to call
                 }
                 else
                 {
@@ -139,27 +140,50 @@ namespace HE.Xrm.ServiceClientExample
         {
             var req1 = new invln_getcontactroleRequest() //get contact role
             {
-                invln_contactemail = "",
-                invln_contactexternalid = "auth0|64a28c7fb67ed30b288d6ff7",
+                invln_contactemail = "abc@wp.pl",
+                invln_contactexternalid = "auth0|64a28c7fb67ed30b288d6fggi",
                 invln_portaltype = "858110001",
             };
 
             var resp1 = (invln_getcontactroleResponse)serviceClient.Execute(req1);
             var resp1Deserialized = JsonSerializer.Deserialize<ContactRolesDto>(resp1.invln_portalroles);
 
-            //var req2 = new invln_getsingleloanapplicationforaccountandcontactRequest() //get single loan application
-            //{
-            //    invln_accountid = resp1Deserialized.contactRoles[0].accountId.ToString(), //accountid
-            //    invln_externalcontactid = resp1Deserialized.externalId, //external contact id
-            //    invln_loanapplicationid = "78484240-37f6-46ae-9094-d0246e44bf6d" //loan application id
-            //};
+            var req09 = new invln_getorganizationdetailsRequest() //get contact role
+            {
+                invln_contactexternalid = resp1Deserialized.externalId,
+                invln_accountid = resp1Deserialized.contactRoles[0].accountId.ToString(), //account
+            };
+
+            var resp09 = (invln_getorganizationdetailsResponse)serviceClient.Execute(req09);
+            var resp09Deserialized = JsonSerializer.Deserialize<OrganizationDetailsDto>(resp09.invln_organizationdetails);
+
+
+            var req10 = new invln_sendinvestmentloansdatatocrmRequest() //create or update loan application and create or update related site details
+            {
+                invln_contactexternalid = resp1Deserialized.externalId, //contact external id
+                //invln_loanapplicationid = resp2Element.loanApplicationId, //loan app id
+                invln_accountid = resp1Deserialized.contactRoles[0].accountId.ToString(), //account
+                invln_entityfieldsparameters = JsonSerializer.Serialize(new LoanApplicationDto()), //serialized Loan Application DTO
+            };
+
+            var resp10 = (invln_sendinvestmentloansdatatocrmResponse)serviceClient.Execute(req10);
+
+            var req11 = new invln_getsingleloanapplicationforaccountandcontactRequest() //get single loan application
+            {
+                invln_accountid = resp1Deserialized.contactRoles[0].accountId.ToString(), //accountid
+                invln_externalcontactid = resp1Deserialized.externalId, //external contact id
+                invln_loanapplicationid = resp10.invln_loanapplicationid //loan application id
+            };
+            var resp11 = (invln_getsingleloanapplicationforaccountandcontactResponse)serviceClient.Execute(req11);
+
             var req2 = new invln_getloanapplicationsforaccountandcontactRequest() //get loan applications related to account and contact with given data
             {
                 invln_accountid = resp1Deserialized.contactRoles[0].accountId.ToString(), //account id
                 invln_externalcontactid = resp1Deserialized.externalId, // contact external id
             };
-            var resp2 = (invln_getsingleloanapplicationforaccountandcontactResponse)serviceClient.Execute(req2);
-            var resp2Deserialized = JsonSerializer.Deserialize<List<LoanApplicationDto>>(resp2.invln_loanapplication); //list deserialization
+            var resp2 = (invln_getloanapplicationsforaccountandcontactResponse)serviceClient.Execute(req2);
+
+            var resp2Deserialized = JsonSerializer.Deserialize<List<LoanApplicationDto>>(resp2.invln_loanapplications); //list deserialization
             foreach (var resp2Element in resp2Deserialized) //for every element in deserialized list
             {
                 var req3 = new invln_sendinvestmentloansdatatocrmRequest() //create or update loan application and create or update related site details

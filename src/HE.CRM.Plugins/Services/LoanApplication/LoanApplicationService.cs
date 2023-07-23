@@ -41,21 +41,27 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             List<LoanApplicationDto> entityCollection = new List<LoanApplicationDto>();
             if (Guid.TryParse(accountId, out Guid accountGuid))
             {
+                this.TracingService.Trace("GetLoanApplicationsForGivenAccountAndContact");
                 var loanApplicationsForAccountAndContact = loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId);
                 foreach (var element in loanApplicationsForAccountAndContact)
                 {
                     List<SiteDetailsDto> siteDetailsDtoList = new List<SiteDetailsDto>();
+                    this.TracingService.Trace("GetSiteDetailRelatedToLoanApplication");
                     var siteDetailsList = siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(element.ToEntityReference());
                     if (siteDetailsList != null)
                     {
                         foreach (var siteDetail in siteDetailsList)
                         {
+                            this.TracingService.Trace("MapSiteDetailsToDto");
                             siteDetailsDtoList.Add(SiteDetailsDtoMapper.MapSiteDetailsToDto(siteDetail));
                         }
                     }
+                    this.TracingService.Trace("MapLoanApplicationToDto");
                     entityCollection.Add(LoanApplicationDtoMapper.MapLoanApplicationToDto(element, siteDetailsDtoList, externalContactId));
                 }
             }
+
+            this.TracingService.Trace("Serialize");
             return JsonSerializer.Serialize(entityCollection);
         }
 

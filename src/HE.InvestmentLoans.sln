@@ -162,6 +162,7 @@ Global
 		SolutionGuid = {44D30F0B-F008-4D12-95FB-E893E3AFB749}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{36e8826b-dd73-4a11-b523-486f3c54f1f4}*SharedItemsImports = 5
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
 		HE.CRM.Common\HE.CRM.Common.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4
 		HE.CRM.Model\HE.CRM.Model.projitems*{464f5b11-c934-42c4-b544-40cfcee6c683}*SharedItemsImports = 4

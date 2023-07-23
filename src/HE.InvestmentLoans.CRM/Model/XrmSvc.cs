@@ -9043,6 +9043,60 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
+		/// Have you reviewed the loan application data to send cashflow request?
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_applicationdatareviewed")]
+		public System.Nullable<bool> invln_Applicationdatareviewed
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_applicationdatareviewed");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Applicationdatareviewed");
+				this.SetAttributeValue("invln_applicationdatareviewed", value);
+				this.OnPropertyChanged("invln_Applicationdatareviewed");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowchecked")]
+		public System.Nullable<bool> invln_Cashflowchecked
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_cashflowchecked");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Cashflowchecked");
+				this.SetAttributeValue("invln_cashflowchecked", value);
+				this.OnPropertyChanged("invln_Cashflowchecked");
+			}
+		}
+		
+		/// <summary>
+		/// Cashflow submitted by the borrower anc status can be changed to "Cashflow under review"
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowsubmitted")]
+		public System.Nullable<bool> invln_Cashflowsubmitted
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_cashflowsubmitted");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Cashflowsubmitted");
+				this.SetAttributeValue("invln_cashflowsubmitted", value);
+				this.OnPropertyChanged("invln_Cashflowsubmitted");
+			}
+		}
+		
+		/// <summary>
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_companyexperience")]
@@ -9135,6 +9189,24 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cpssatisfied")]
+		public System.Nullable<bool> invln_CPssatisfied
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_cpssatisfied");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_CPssatisfied");
+				this.SetAttributeValue("invln_cpssatisfied", value);
+				this.OnPropertyChanged("invln_CPssatisfied");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_debentureholder")]
 		public string invln_DebentureHolder
 		{
@@ -9219,6 +9291,60 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanging("invln_InternalStatus");
 				this.SetAttributeValue("invln_internalstatus", value);
 				this.OnPropertyChanged("invln_InternalStatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ispapproved")]
+		public System.Nullable<bool> invln_ISPapproved
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_ispapproved");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_ISPapproved");
+				this.SetAttributeValue("invln_ispapproved", value);
+				this.OnPropertyChanged("invln_ISPapproved");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ispassignedtotheriskteam")]
+		public System.Nullable<bool> invln_ISPassignedtotheRiskteam
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_ispassignedtotheriskteam");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_ISPassignedtotheRiskteam");
+				this.SetAttributeValue("invln_ispassignedtotheriskteam", value);
+				this.OnPropertyChanged("invln_ISPassignedtotheRiskteam");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ispreviewedfinished")]
+		public System.Nullable<bool> invln_ISPReviewedfinished
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_ispreviewedfinished");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_ISPReviewedfinished");
+				this.SetAttributeValue("invln_ispreviewedfinished", value);
+				this.OnPropertyChanged("invln_ISPReviewedfinished");
 			}
 		}
 		
@@ -9348,6 +9474,60 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanging("invln_Outstandinglegalchargesordebt");
 				this.SetAttributeValue("invln_outstandinglegalchargesordebt", value);
 				this.OnPropertyChanged("invln_Outstandinglegalchargesordebt");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ownerselected")]
+		public System.Nullable<bool> invln_OwnerSelected
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_ownerselected");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_OwnerSelected");
+				this.SetAttributeValue("invln_ownerselected", value);
+				this.OnPropertyChanged("invln_OwnerSelected");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_precompletereportapproved")]
+		public System.Nullable<bool> invln_PreCompletereportApproved
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_precompletereportapproved");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_PreCompletereportApproved");
+				this.SetAttributeValue("invln_precompletereportapproved", value);
+				this.OnPropertyChanged("invln_PreCompletereportApproved");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_precompletereportsubmitted")]
+		public System.Nullable<bool> invln_PreCompletereportsubmitted
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_precompletereportsubmitted");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_PreCompletereportsubmitted");
+				this.SetAttributeValue("invln_precompletereportsubmitted", value);
+				this.OnPropertyChanged("invln_PreCompletereportsubmitted");
 			}
 		}
 		
@@ -9538,6 +9718,24 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subjecttocontractapproved")]
+		public System.Nullable<bool> invln_SubjecttocontractApproved
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_subjecttocontractapproved");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_SubjecttocontractApproved");
+				this.SetAttributeValue("invln_subjecttocontractapproved", value);
+				this.OnPropertyChanged("invln_SubjecttocontractApproved");
+			}
+		}
+		
+		/// <summary>
 		/// Unique identifier of the user who modified the record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
@@ -9646,6 +9844,42 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
+		/// Contains the id of the process associated with the entity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("processid")]
+		public System.Nullable<System.Guid> processid
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("processid");
+			}
+			set
+			{
+				this.OnPropertyChanging("processid");
+				this.SetAttributeValue("processid", value);
+				this.OnPropertyChanged("processid");
+			}
+		}
+		
+		/// <summary>
+		/// Contains the id of the stage where the entity is located.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("stageid")]
+		public System.Nullable<System.Guid> stageid
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("stageid");
+			}
+			set
+			{
+				this.OnPropertyChanging("stageid");
+				this.SetAttributeValue("stageid", value);
+				this.OnPropertyChanged("stageid");
+			}
+		}
+		
+		/// <summary>
 		/// Status of the Loan application
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
@@ -9744,6 +9978,24 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanging("TransactionCurrencyId");
 				this.SetAttributeValue("transactioncurrencyid", value);
 				this.OnPropertyChanged("TransactionCurrencyId");
+			}
+		}
+		
+		/// <summary>
+		/// A comma separated list of string values representing the unique identifiers of stages in a Business Process Flow Instance in the order that they occur.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("traversedpath")]
+		public string traversedpath
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("traversedpath");
+			}
+			set
+			{
+				this.OnPropertyChanging("traversedpath");
+				this.SetAttributeValue("traversedpath", value);
+				this.OnPropertyChanged("traversedpath");
 			}
 		}
 		
@@ -10408,6 +10660,393 @@ namespace HE.InvestmentLoans.CRM.Model
 				if (this.Results.Contains("invln_loanapplication"))
 				{
 					return ((string)(this.Results["invln_loanapplication"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_deleteloanapplication")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_deleteloanapplicationRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public invln_deleteloanapplicationRequest()
+		{
+			this.RequestName = "invln_deleteloanapplication";
+			this.invln_loanapplicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_deleteloanapplication")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_deleteloanapplicationResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_deleteloanapplicationResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_deletesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_deletesitedetailsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_sitedetailsid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_sitedetailsid"))
+				{
+					return ((string)(this.Parameters["invln_sitedetailsid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_sitedetailsid"] = value;
+			}
+		}
+		
+		public invln_deletesitedetailsRequest()
+		{
+			this.RequestName = "invln_deletesitedetails";
+			this.invln_sitedetailsid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_deletesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_deletesitedetailsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_deletesitedetailsResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_updatesingleloanapplication")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_updatesingleloanapplicationRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public string invln_loanapplication
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplication"))
+				{
+					return ((string)(this.Parameters["invln_loanapplication"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplication"] = value;
+			}
+		}
+		
+		public string invln_fieldstoupdate
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoupdate"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoupdate"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoupdate"] = value;
+			}
+		}
+		
+		public string invln_contactexternalid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactexternalid"))
+				{
+					return ((string)(this.Parameters["invln_contactexternalid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactexternalid"] = value;
+			}
+		}
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public invln_updatesingleloanapplicationRequest()
+		{
+			this.RequestName = "invln_updatesingleloanapplication";
+			this.invln_loanapplicationid = default(string);
+			this.invln_loanapplication = default(string);
+			this.invln_contactexternalid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_updatesingleloanapplication")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_updatesingleloanapplicationResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_updatesingleloanapplicationResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_updatesinglesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_updatesinglesitedetailsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_sitedetailsid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_sitedetailsid"))
+				{
+					return ((string)(this.Parameters["invln_sitedetailsid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_sitedetailsid"] = value;
+			}
+		}
+		
+		public string invln_sitedetail
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_sitedetail"))
+				{
+					return ((string)(this.Parameters["invln_sitedetail"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_sitedetail"] = value;
+			}
+		}
+		
+		public string invln_fieldstoupdate
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoupdate"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoupdate"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoupdate"] = value;
+			}
+		}
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public invln_updatesinglesitedetailsRequest()
+		{
+			this.RequestName = "invln_updatesinglesitedetails";
+			this.invln_sitedetailsid = default(string);
+			this.invln_sitedetail = default(string);
+			this.invln_loanapplicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_updatesinglesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_updatesinglesitedetailsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_updatesinglesitedetailsResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getorganizationdetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getorganizationdetailsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_contactexternalid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactexternalid"))
+				{
+					return ((string)(this.Parameters["invln_contactexternalid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactexternalid"] = value;
+			}
+		}
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public invln_getorganizationdetailsRequest()
+		{
+			this.RequestName = "invln_getorganizationdetails";
+			this.invln_contactexternalid = default(string);
+			this.invln_accountid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getorganizationdetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getorganizationdetailsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getorganizationdetailsResponse()
+		{
+		}
+		
+		public string invln_organizationdetails
+		{
+			get
+			{
+				if (this.Results.Contains("invln_organizationdetails"))
+				{
+					return ((string)(this.Results["invln_organizationdetails"]));
 				}
 				else
 				{
