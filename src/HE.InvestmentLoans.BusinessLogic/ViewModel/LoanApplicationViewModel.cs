@@ -14,6 +14,7 @@ public class LoanApplicationViewModel
         Funding = new FundingViewModel();
         Security = new SecurityViewModel();
         Sites = new List<SiteViewModel>();
+        Projects = new List<Project>();
         ID = Guid.NewGuid();
         State = LoanApplicationWorkflow.State.AboutLoan;
         Account = TemporaryAccount();
