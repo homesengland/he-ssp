@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic;
+using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -23,6 +24,12 @@ public class LoanApplicationV2Controller : Controller
     public async Task<IActionResult> StartNew(CancellationToken cancellationToken)
     {
         var loanApplicationId = await _mediator.Send(new StartApplicationCommand(), cancellationToken);
-        return RedirectToAction("Workflow", "LoanApplication", new { id = loanApplicationId, ending = "AboutLoan" });
+        return RedirectToAction("AboutLoan", new { id = loanApplicationId.Value });
+    }
+
+    [Route("{id}/about-loan")]
+    public IActionResult AboutLoan(Guid id)
+    {
+        return View("~/Views/LoanApplication/AboutLoan.cshtml", new LoanApplicationViewModel() { ID = id });
     }
 }

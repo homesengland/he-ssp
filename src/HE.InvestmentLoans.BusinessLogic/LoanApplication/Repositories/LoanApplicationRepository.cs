@@ -1,6 +1,8 @@
 using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Extensions;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
@@ -8,6 +10,7 @@ using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
@@ -16,12 +19,15 @@ public class LoanApplicationRepository : ILoanApplicationRepository
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient)
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IHttpContextAccessor httpContextAccessor)
     {
         _serviceClient = serviceClient;
+        _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<LoanApplicationEntity> Load(LoanApplicationId id, UserAccount userAccount)
+    public async Task<LoanApplicationEntity> GetLoanApplication(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
@@ -30,10 +36,19 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             invln_loanapplicationid = id.ToString(),
         };
 
-        await _serviceClient.ExecuteAsync(req);
+        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
+                       ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
 
-        // TODO: It will be fullfilled with next PR.
-        return new LoanApplicationEntity(id, userAccount);
+        var loanApplicationDto = JsonSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
+                        ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
+
+        return new LoanApplicationEntity(id, userAccount)
+        {
+            LegacyModel = new LoanApplicationViewModel
+            {
+                Purpose = FundingPurposeMapper.Map(loanApplicationDto.companyPurpose),
+            },
+        };
     }
 
     public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount, CancellationToken cancellationToken)
@@ -47,7 +62,8 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getloanapplicationsforaccountandcontactResponse
                        ?? throw new NotFoundException("Applications list", userAccount.ToString());
 
-        var loanApplicationDtos = JsonSerializer.Deserialize<List<LoanApplicationDto>>(response.invln_loanapplications) ?? throw new NotFoundException("Applications list", userAccount.ToString());
+        var loanApplicationDtos = JsonSerializer.Deserialize<List<LoanApplicationDto>>(response.invln_loanapplications)
+                                  ?? throw new NotFoundException("Applications list", userAccount.ToString());
 
         return loanApplicationDtos.Select(x =>
             new UserLoanApplication(
@@ -147,7 +163,12 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         var response = (invln_sendinvestmentloansdatatocrmResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);
         var newLoanApplicationId = LoanApplicationId.From(response.invln_loanapplicationid);
         loanApplication.SetId(newLoanApplicationId);
-        Save(loanApplication.LegacyModel, loanApplication.UserAccount);
+        LegacySave(loanApplication.LegacyModel);
+    }
+
+    public void LegacySave(LoanApplicationViewModel legacyModel)
+    {
+        _httpContextAccessor.HttpContext?.Session.Set(legacyModel.ID.ToString(), legacyModel);
     }
 
     public string MapPurpose(FundingPurpose? fundingPurpose)
