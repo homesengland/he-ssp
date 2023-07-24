@@ -28,7 +28,7 @@ public class LoanApplicationViewModel
         set;
     }
 
-    public DateTime Timestamp { get; private set; }
+    public DateTime Timestamp { get; set; }
 
     public CompanyStructureViewModel Company { get; set; }
 
