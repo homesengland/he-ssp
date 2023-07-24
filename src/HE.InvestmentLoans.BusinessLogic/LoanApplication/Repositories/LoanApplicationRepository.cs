@@ -7,7 +7,6 @@ using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.AspNetCore.Http;
@@ -113,7 +112,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             // COMPANY
             companyPurpose = loanApplication.Company.Purpose,
             existingCompany = loanApplication.Company.ExistingCompany,
-            fundingReason = MapPurpose(loanApplication.Purpose),
+            fundingReason = FundingPurposeMapper.Map(loanApplication.Purpose),
             companyExperience = loanApplication.Company.HomesBuilt?.TryParseNullableInt(),
 
             // FUNDING
@@ -169,16 +168,5 @@ public class LoanApplicationRepository : ILoanApplicationRepository
     public void LegacySave(LoanApplicationViewModel legacyModel)
     {
         _httpContextAccessor.HttpContext?.Session.Set(legacyModel.ID.ToString(), legacyModel);
-    }
-
-    public string MapPurpose(FundingPurpose? fundingPurpose)
-    {
-        return fundingPurpose switch
-        {
-            FundingPurpose.BuildingNewHomes => "Buildingnewhomes",
-            FundingPurpose.BuildingInfrastructure => "Buildinginfrastructureonly",
-            FundingPurpose.Other => "Other",
-            _ => string.Empty,
-        };
     }
 }

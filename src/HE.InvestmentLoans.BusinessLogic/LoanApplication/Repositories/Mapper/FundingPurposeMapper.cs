@@ -14,4 +14,15 @@ public static class FundingPurposeMapper
             _ => null,
         };
     }
+
+    public static string Map(FundingPurpose? fundingPurpose)
+    {
+        return fundingPurpose switch
+        {
+            FundingPurpose.BuildingNewHomes => "Buildingnewhomes",
+            FundingPurpose.BuildingInfrastructure => "Buildinginfrastructureonly",
+            FundingPurpose.Other => "Other",
+            _ => string.Empty,
+        };
+    }
 }
