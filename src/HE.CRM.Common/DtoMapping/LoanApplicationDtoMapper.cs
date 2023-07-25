@@ -54,7 +54,7 @@ namespace HE.CRM.Common.DtoMapping
         }
 
 
-        public static LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList, string externalContactId, Contact contact)// == null)
+        public static LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList, string externalContactId, Contact contact = null)
         {
             var loanApplicationDto = new LoanApplicationDto()
             {
