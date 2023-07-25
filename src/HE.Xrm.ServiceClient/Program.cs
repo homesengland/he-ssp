@@ -142,7 +142,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 invln_contactemail = "abc5@wp.pll",
                 invln_contactexternalid = "auth0|64a28c7fb67ed30b288d6fggijk",
-                invln_portaltype = "858110001",
+                invln_portaltype = ((int)invln_Portal1.Loans).ToString(),
             };
 
             var resp1 = (invln_getcontactroleResponse)serviceClient.Execute(req1);
@@ -178,6 +178,21 @@ namespace HE.Xrm.ServiceClientExample
                 invln_loanapplicationid = resp10.invln_loanapplicationid //loan application id
             };
             var resp11 = (invln_getsingleloanapplicationforaccountandcontactResponse)serviceClient.Execute(req11);
+            //Console.WriteLine("Status: " + resp11.invln_loanapplication);
+            var req11_1 = new invln_changeloanapplicationexternalstatusRequest()
+            {
+                invln_loanapplicationid = resp10.invln_loanapplicationid,
+                invln_statusexternal = (int)invln_ExternalStatus.Submitted
+            };
+            var resp11_1 = (invln_changeloanapplicationexternalstatusResponse)serviceClient.Execute(req11_1);
+
+            var req112 = new invln_getsingleloanapplicationforaccountandcontactRequest() //get single loan application
+            {
+                invln_accountid = resp1Deserialized.contactRoles[0].accountId.ToString(), //accountid
+                invln_externalcontactid = resp1Deserialized.externalId, //external contact id
+                invln_loanapplicationid = resp10.invln_loanapplicationid //loan application id
+            };
+            var resp112 = (invln_getsingleloanapplicationforaccountandcontactResponse)serviceClient.Execute(req11);
 
             var req2 = new invln_getloanapplicationsforaccountandcontactRequest() //get loan applications related to account and contact with given data
             {
