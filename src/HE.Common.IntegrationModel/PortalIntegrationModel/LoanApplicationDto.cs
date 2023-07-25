@@ -72,6 +72,8 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         public string externalId { get; set; }
 
+        public UserAccountDto LoanApplicationContact { get; set; }
+
         public DateTime? LastModificationOn { get; set; }
     }
 }
