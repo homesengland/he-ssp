@@ -10,15 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Model\CrmSdk.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.PowerPlatform.Dataverse.Client" Version="1.1.12" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="spkl\" />
   </ItemGroup>
 
   <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
