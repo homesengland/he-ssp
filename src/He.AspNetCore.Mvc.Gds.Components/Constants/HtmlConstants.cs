@@ -86,6 +86,11 @@ namespace He.AspNetCore.Mvc.Gds.Components.Constants
         public const string For = "for";
 
         /// <summary>
+        /// Input tag.
+        /// </summary>
+        public const string Input = "input";
+
+        /// <summary>
         /// The textarea tag.
         /// </summary>
         public const string Textarea = "textarea";

@@ -36,6 +36,8 @@ public class FundingViewModel
 
     public bool StateChanged { get; set; }
 
+    public bool IsFlowCompleted { get; set; }
+
     public void RemoveAlternativeRoutesData()
     {
         if (PrivateSectorFunding == "Yes")
@@ -56,5 +58,10 @@ public class FundingViewModel
         {
             RefinanceInfo = null;
         }
+    }
+
+    public void SetFlowCompletion(bool value)
+    {
+        IsFlowCompleted = value;
     }
 }

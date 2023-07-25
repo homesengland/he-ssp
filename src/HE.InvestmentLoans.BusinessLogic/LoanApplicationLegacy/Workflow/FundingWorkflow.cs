@@ -40,9 +40,14 @@ public class FundingWorkflow
         await _machine.FireAsync(trigger);
     }
 
-    public bool IsCompleted()
+    public bool IsStateComplete()
     {
         return _model.Funding.State == State.Complete;
+    }
+
+    public bool IsCompleted()
+    {
+        return IsStateComplete() || _model.Funding.IsFlowCompleted;
     }
 
     public bool IsStarted()
@@ -105,7 +110,14 @@ public class FundingWorkflow
         _machine.Configure(State.CheckAnswers)
            .PermitIf(Trigger.Continue, State.Complete, () => _model.Funding.CheckAnswers == "Yes")
            .IgnoreIf(Trigger.Continue, () => _model.Funding.CheckAnswers != "Yes")
-           .Permit(Trigger.Back, State.AdditionalProjects);
+           .Permit(Trigger.Back, State.AdditionalProjects)
+           .OnExit(() =>
+           {
+               if (_model.Funding.CheckAnswers == "Yes")
+               {
+                   _model.Funding.SetFlowCompletion(true);
+               }
+           });
 
         _machine.Configure(State.Complete)
             .Permit(Trigger.Back, State.CheckAnswers);

@@ -10,7 +10,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.SummaryCard
     /// <seealso cref="T:Microsoft.AspNetCore.Razor.TagHelpers.TagHelper" />
     public class GdsSummaryCardTagHelper : TextWithIdTagHelper
     {
-        public GdsSummaryCardTagHelper() : base(HtmlConstants.Div, "govuk-summary-card")
+        public GdsSummaryCardTagHelper() : base(HtmlConstants.Div, CssConstants.GovUkSummaryCard)
         {
         }
     }

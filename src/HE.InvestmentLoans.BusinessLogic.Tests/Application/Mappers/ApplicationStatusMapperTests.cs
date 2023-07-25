@@ -24,7 +24,7 @@ public class ApplicationStatusMapperTests
     [DataRow(ApplicationStatus.ApprovedSubjectToContract, "approved subject to contract")]
     public void MapPortalStatus_ToCRMStatus(ApplicationStatus status, string expectedStatus)
     {
-        var crmStatus = new ApplicationStatusMapper().MapToCrmStatus(status);
+        var crmStatus = ApplicationStatusMapper.MapToCrmStatus(status);
 
         crmStatus.Should().Be(expectedStatus);
     }
@@ -46,7 +46,7 @@ public class ApplicationStatusMapperTests
     [DataRow("approved subject to contract", ApplicationStatus.ApprovedSubjectToContract)]
     public void MapCrmStatus_ToPortalStatus(string crmStatus, ApplicationStatus expectedStatus)
     {
-        var portalStatus = new ApplicationStatusMapper().MapToPortalStatus(crmStatus);
+        var portalStatus = ApplicationStatusMapper.MapToPortalStatus(crmStatus);
 
         portalStatus.Should().Be(expectedStatus);
     }

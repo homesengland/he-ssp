@@ -5,7 +5,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Input
 {
     public class GdsInputSuffix : StyledTag
     {
-        public GdsInputSuffix() : base(HtmlConstants.Div, "govuk-input__suffix")
+        public GdsInputSuffix() : base(HtmlConstants.Div, CssConstants.GovUkInputSuffix)
         {
         }
     }

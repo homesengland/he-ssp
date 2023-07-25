@@ -3,7 +3,7 @@ using HE.InvestmentLoans.Contract.Application.Enums;
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 public class ApplicationStatusMapper
 {
-    public string MapToCrmStatus(ApplicationStatus status)
+    public static string MapToCrmStatus(ApplicationStatus status)
     {
         return status switch
         {
@@ -25,7 +25,7 @@ public class ApplicationStatusMapper
         };
     }
 
-    public ApplicationStatus MapToPortalStatus(string crmStatus)
+    public static ApplicationStatus MapToPortalStatus(string crmStatus)
     {
         return crmStatus switch
         {

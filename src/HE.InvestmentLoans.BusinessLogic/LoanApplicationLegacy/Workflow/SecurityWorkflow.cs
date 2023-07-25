@@ -37,9 +37,14 @@ public class SecurityWorkflow
         await _machine.FireAsync(trigger);
     }
 
-    public bool IsCompleted()
+    public bool IsStateComplete()
     {
         return _model.Security.State == State.Complete;
+    }
+
+    public bool IsCompleted()
+    {
+        return IsStateComplete() || _model.Security.IsFlowCompleted;
     }
 
     public bool IsStarted()
@@ -86,7 +91,14 @@ public class SecurityWorkflow
            .PermitIf(Trigger.Continue, State.Complete, () => _model.Security.CheckAnswers == "Yes")
            .IgnoreIf(Trigger.Continue, () => _model.Security.CheckAnswers != "Yes")
            .PermitIf(Trigger.Back, State.DirLoansSub, () => _model.Security.DirLoans == "Yes")
-           .PermitIf(Trigger.Back, State.DirLoans, () => _model.Security.DirLoans != "Yes");
+           .PermitIf(Trigger.Back, State.DirLoans, () => _model.Security.DirLoans != "Yes")
+           .OnExit(() =>
+           {
+               if (_model.Security.CheckAnswers == "Yes")
+               {
+                   _model.Security.SetFlowCompletion(true);
+               }
+           });
 
         _machine.Configure(State.Complete)
           .Permit(Trigger.Back, State.CheckAnswers);

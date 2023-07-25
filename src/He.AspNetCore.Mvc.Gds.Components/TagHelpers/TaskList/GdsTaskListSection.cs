@@ -29,7 +29,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.TaskList
 
     public class GdsTaskListSection : StyledTag
     {
-        public GdsTaskListSection() : base(HtmlConstants.H2, "app-task-list__section")
+        public GdsTaskListSection() : base(HtmlConstants.H2, CssConstants.GovUkAppTaskListSection)
         {
         }
     }

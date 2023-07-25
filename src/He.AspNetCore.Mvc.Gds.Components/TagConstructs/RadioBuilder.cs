@@ -57,7 +57,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
         public RadioBuilder WithHint(string hintText)
         {
             _hintText = hintText;
-            
+
             return this;
         }
 
@@ -114,7 +114,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                 sb.Append($"<div class=\"{CssConstants.GovUkRadiosItem}\">");
                 sb.Append(TagConstruct.ConstructRadioInput(_id, _name, _value, _checked));
                 sb.Append(TagConstruct.ConstructRadioLabel(_label, _forLabel));
-                
+
                 if (_hintText != null)
                 {
                     sb.Append($"<span class=\"{CssConstants.GovUkHint} {CssConstants.GovUkRadiosHint}\">");
@@ -135,7 +135,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagConstructs
                                             $"</p>" +
                                         "</label>");
 
-                        if(!string.IsNullOrEmpty(_radioHint))
+                        if (!string.IsNullOrEmpty(_radioHint))
                         {
                             sb.Append($"<div id=\"sign-in-hint\" class=\"govuk-hint\">{_radioHint}</div>");
                         }

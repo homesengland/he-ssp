@@ -41,6 +41,12 @@ public class LoanApplicationWorkflow
         _model.State = _machine.State;
     }
 
+    public async void ChangeState(State state)
+    {
+        _model.State = state;
+        await _mediator.Send(new Commands.Update() { Model = _model });
+    }
+
     public string GetName()
     {
         return Enum.GetName(typeof(State), _model.State) ?? string.Empty;
@@ -48,10 +54,10 @@ public class LoanApplicationWorkflow
 
     public bool IsFilled()
     {
-        return _model.Company.State == CompanyStructureWorkflow.State.Complete
-            && _model.Security.State == SecurityWorkflow.State.Complete
-            && _model.Funding.State == FundingWorkflow.State.Complete
-            && _model.Sites.All(x => x.State == SiteWorkflow.State.Complete)
+        return (_model.Company.State == CompanyStructureWorkflow.State.Complete || _model.Company.IsFlowCompleted)
+            && (_model.Security.State == SecurityWorkflow.State.Complete || _model.Security.IsFlowCompleted)
+            && (_model.Funding.State == FundingWorkflow.State.Complete || _model.Funding.IsFlowCompleted)
+            && (_model.Sites.All(x => x.State == SiteWorkflow.State.Complete) || _model.Sites.All(x => x.IsFlowCompleted))
             && _model.Sites.Count > 0;
     }
 
