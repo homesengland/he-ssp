@@ -51,7 +51,7 @@ namespace HE.CRM.Plugins.Services.Accounts
             {
                 var account = _accountRepository.GetById(organizationId, new string[] {
                     nameof(Account.Name).ToLower(),
-                    nameof(Account.SIC).ToLower(),
+                    nameof(Account.he_CompaniesHouseNumber).ToLower(),
                     nameof(Account.Address1_Line1).ToLower(),
                     nameof(Account.Address1_Line2).ToLower(),
                     nameof(Account.Address1_Line3).ToLower(),
@@ -62,7 +62,7 @@ namespace HE.CRM.Plugins.Services.Accounts
                 });
 
                 organizationDetailsDto.registeredCompanyName = account.Name;
-                organizationDetailsDto.companyRegistrationNumber = account.SIC;
+                organizationDetailsDto.companyRegistrationNumber = account.he_CompaniesHouseNumber;
                 organizationDetailsDto.addressLine1 = account.Address1_Line1;
                 organizationDetailsDto.addressLine2 = account.Address1_Line2;
                 organizationDetailsDto.addressLine3 = account.Address1_Line3;

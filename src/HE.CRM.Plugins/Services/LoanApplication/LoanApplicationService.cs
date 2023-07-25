@@ -57,7 +57,15 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         }
                     }
                     this.TracingService.Trace("MapLoanApplicationToDto");
-                    entityCollection.Add(LoanApplicationDtoMapper.MapLoanApplicationToDto(element, siteDetailsDtoList, externalContactId));
+                    var loanApplicationContact = this.contactRepository.GetById(element.invln_Contact.Id, new string[]
+                    {
+                        nameof(Contact.EMailAddress1).ToLower(),
+                        nameof(Contact.FirstName).ToLower(),
+                        nameof(Contact.LastName).ToLower(),
+                        nameof(Contact.invln_externalid).ToLower(),
+                        nameof(Contact.Telephone1).ToLower(),
+                    });
+                    entityCollection.Add(LoanApplicationDtoMapper.MapLoanApplicationToDto(element, siteDetailsDtoList, externalContactId, loanApplicationContact));
                 }
             }
 
@@ -68,9 +76,25 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         public string CreateRecordFromPortal(string contactExternalId, string accountId, string loanApplicationId, string loanApplicationPayload)
         {
             this.TracingService.Trace("PAYLOAD:" + loanApplicationPayload);
-            LoanApplicationDto loanApplicationFromPortal = JsonSerializer.Deserialize<LoanApplicationDto>(loanApplicationPayload);
-            Contact contact = contactRepository.GetContactViaExternalId(contactExternalId);
 
+            LoanApplicationDto loanApplicationFromPortal = JsonSerializer.Deserialize<LoanApplicationDto>(loanApplicationPayload);
+            var contact = contactRepository.GetContactViaExternalId(contactExternalId);
+
+            //Update Contact on Loan Application
+            if (loanApplicationFromPortal?.LoanApplicationContact != null && loanApplicationFromPortal.LoanApplicationContact.ContactExternalId != null)
+            {
+                var loanApplicationContact = contactRepository.GetContactViaExternalId(loanApplicationFromPortal.LoanApplicationContact.ContactExternalId);
+                contactRepository.Update(new Contact()
+                {
+                    Id = loanApplicationContact.Id,
+                    FirstName = loanApplicationFromPortal.LoanApplicationContact.ContactFirstName,
+                    LastName = loanApplicationFromPortal.LoanApplicationContact.ContactLastName,
+                    EMailAddress1 = loanApplicationFromPortal.LoanApplicationContact.ContactEmail,
+                    Telephone1 = loanApplicationFromPortal.LoanApplicationContact.ContactTelephoneNumber,
+                });
+            }
+
+            //Number of sites
             int numberOfSites = 0;
             if (loanApplicationFromPortal.siteDetailsList != null && loanApplicationFromPortal.siteDetailsList.Count > 0)
             {
@@ -79,8 +103,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
             this.TracingService.Trace("Setting up invln_Loanapplication");
             loanApplicationFromPortal.numberOfSites = numberOfSites.ToString();
-            var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, contact, accountId);
+            //
 
+            var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, contact, accountId);
             Guid loanApplicationGuid = Guid.NewGuid();
             if (!string.IsNullOrEmpty(loanApplicationId) && Guid.TryParse(loanApplicationId, out Guid loanAppId))
             {
@@ -188,9 +213,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 loanApplicationRepository.Update(loanApplicationToUpdate);
 
                 var relatedSiteDetails = siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(loanApplicationToUpdate.ToEntityReference());
-                if(relatedSiteDetails != null && relatedSiteDetails.Count > 0)
+                if (relatedSiteDetails != null && relatedSiteDetails.Count > 0)
                 {
-                    foreach(var siteDetail in relatedSiteDetails)
+                    foreach (var siteDetail in relatedSiteDetails)
                     {
                         var siteDetailToUpdate = new invln_SiteDetails()
                         {

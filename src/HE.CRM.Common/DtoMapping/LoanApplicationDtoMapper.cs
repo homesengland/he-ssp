@@ -54,7 +54,7 @@ namespace HE.CRM.Common.DtoMapping
         }
 
 
-        public static LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList, string externalContactId)
+        public static LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList, string externalContactId, Contact contact)// == null)
         {
             var loanApplicationDto = new LoanApplicationDto()
             {
@@ -91,6 +91,20 @@ namespace HE.CRM.Common.DtoMapping
                 externalId = externalContactId,
                 LastModificationOn = loanApplication.ModifiedOn,
             };
+
+            if (contact != null)
+            {
+                loanApplicationDto.LoanApplicationContact = new UserAccountDto()
+                {
+                    ContactEmail = contact.EMailAddress1,
+                    ContactFirstName = contact.FirstName,
+                    ContactLastName = contact.LastName,
+                    ContactExternalId = contact.invln_externalid,
+                    ContactTelephoneNumber = contact.Telephone1,
+                    AccountId = loanApplication.invln_Account.Id
+                };
+            }
+
             return loanApplicationDto;
         }
 

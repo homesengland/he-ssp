@@ -140,8 +140,8 @@ namespace HE.Xrm.ServiceClientExample
         {
             var req1 = new invln_getcontactroleRequest() //get contact role
             {
-                invln_contactemail = "abc5@wp.pl",
-                invln_contactexternalid = "auth0|64a28c7fb67ed30b288d6fggij",
+                invln_contactemail = "abc5@wp.pll",
+                invln_contactexternalid = "auth0|64a28c7fb67ed30b288d6fggijk",
                 invln_portaltype = "858110001",
             };
 
@@ -163,7 +163,10 @@ namespace HE.Xrm.ServiceClientExample
                 invln_contactexternalid = resp1Deserialized.externalId, //contact external id
                 //invln_loanapplicationid = resp2Element.loanApplicationId, //loan app id
                 invln_accountid = resp1Deserialized.contactRoles[0].accountId.ToString(), //account
-                invln_entityfieldsparameters = JsonSerializer.Serialize(new LoanApplicationDto()), //serialized Loan Application DTO
+                invln_entityfieldsparameters = JsonSerializer.Serialize(new LoanApplicationDto()
+                {
+                    LoanApplicationContact = new UserAccountDto() { ContactEmail = "abcd@aa.cc", ContactExternalId  = resp1Deserialized.externalId, ContactFirstName= "Ala", ContactLastName = "Test", AccountId = Guid.Parse(req09.invln_accountid), ContactTelephoneNumber = "8888"},
+                }), //serialized Loan Application DTO
             };
 
             var resp10 = (invln_sendinvestmentloansdatatocrmResponse)serviceClient.Execute(req10);
