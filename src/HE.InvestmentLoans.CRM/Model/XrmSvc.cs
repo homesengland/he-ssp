@@ -7346,6 +7346,24 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_pep")]
+		public System.Nullable<bool> invln_PEP
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_pep");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_PEP");
+				this.SetAttributeValue("invln_pep", value);
+				this.OnPropertyChanged("invln_PEP");
+			}
+		}
+		
+		/// <summary>
 		/// Select whether the contact exists in a separate accounting or other system, such as Microsoft Dynamics GP or another ERP database, for use in integration processes.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isbackofficecustomer")]

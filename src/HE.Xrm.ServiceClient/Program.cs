@@ -1,5 +1,5 @@
+using DataverseModel;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Xrm.ServiceClientExample.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using System.Configuration;
 using System.Text.Json;
@@ -140,8 +140,8 @@ namespace HE.Xrm.ServiceClientExample
         {
             var req1 = new invln_getcontactroleRequest() //get contact role
             {
-                invln_contactemail = "abc@wp.pl",
-                invln_contactexternalid = "auth0|64a28c7fb67ed30b288d6fggi",
+                invln_contactemail = "abc5@wp.pl",
+                invln_contactexternalid = "auth0|64a28c7fb67ed30b288d6fggij",
                 invln_portaltype = "858110001",
             };
 

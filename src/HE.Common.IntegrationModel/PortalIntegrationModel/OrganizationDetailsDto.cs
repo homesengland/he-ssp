@@ -18,9 +18,9 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string postalcode { get; set; }
         public string country { get; set; }
 
-        //LOGGED CONTACT
-        public string contactName { get; set; }
-        public string contactEmail { get; set; }
-        public string contactTelephone { get; set; }
+        //COMPANY ADMIN CONTACT
+        public string compayAdminContactName { get; set; }
+        public string compayAdminContactEmail { get; set; }
+        public string compayAdminContactTelephone { get; set; }
     }
 }
