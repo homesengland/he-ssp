@@ -78,12 +78,16 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             this.TracingService.Trace("PAYLOAD:" + loanApplicationPayload);
 
             LoanApplicationDto loanApplicationFromPortal = JsonSerializer.Deserialize<LoanApplicationDto>(loanApplicationPayload);
-            var contact = contactRepository.GetContactViaExternalId(contactExternalId);
+            //THIS IS CONTACT WHO IS SENDING MESSAGE
+            //var contact = contactRepository.GetContactViaExternalId(contactExternalId);
 
             //Update Contact on Loan Application
+            Contact loanApplicationContact = null;
             if (loanApplicationFromPortal?.LoanApplicationContact != null && loanApplicationFromPortal.LoanApplicationContact.ContactExternalId != null)
             {
-                var loanApplicationContact = contactRepository.GetContactViaExternalId(loanApplicationFromPortal.LoanApplicationContact.ContactExternalId);
+                //THIS IS CONTACT FOR WHICH LOAN IS CREATED
+                var contactExternalid = loanApplicationFromPortal?.LoanApplicationContact?.ContactExternalId ?? contactExternalId;
+                loanApplicationContact = contactRepository.GetContactViaExternalId(contactExternalid);
                 contactRepository.Update(new Contact()
                 {
                     Id = loanApplicationContact.Id,
@@ -105,7 +109,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             loanApplicationFromPortal.numberOfSites = numberOfSites.ToString();
             //
 
-            var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, contact, accountId);
+            var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, loanApplicationContact, accountId);
             Guid loanApplicationGuid = Guid.NewGuid();
             if (!string.IsNullOrEmpty(loanApplicationId) && Guid.TryParse(loanApplicationId, out Guid loanAppId))
             {
@@ -171,7 +175,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             if (Guid.TryParse(loanApplicationId, out Guid applicationId))
             {
                 var deserializedLoanApplication = JsonSerializer.Deserialize<LoanApplicationDto>(loanApplication);
-                Contact contact = contactRepository.GetContactViaExternalId(contactExternalId);
+                var contactExternalid = deserializedLoanApplication?.LoanApplicationContact?.ContactExternalId ?? contactExternalId;
+                Contact contact = contactRepository.GetContactViaExternalId(contactExternalid);
                 var loanApplicationMapped = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(deserializedLoanApplication, contact, accountId);
                 invln_Loanapplication loanApplicationToUpdate = new invln_Loanapplication();
                 if (string.IsNullOrEmpty(fieldsToUpdate))

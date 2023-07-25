@@ -54,6 +54,8 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         public DateTime? LastModificationOn { get; set; }
 
+        public int? loanApplicationExternalStatus { get; set; } //LOAN APPLICATION EXTERNAL STATUS IN INT VALUE
+
 
         //TO DELETE IN SOME TIME???
         public string loanApplicationId { get; set; }

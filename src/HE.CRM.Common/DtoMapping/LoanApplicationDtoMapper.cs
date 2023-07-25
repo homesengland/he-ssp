@@ -41,6 +41,9 @@ namespace HE.CRM.Common.DtoMapping
                 invln_Confirmationdirectorloanscanbesubordinated = ParseBool(loanApplicationDto.confirmationDirectorLoansCanBeSubordinated), //DirLoansSub
                 invln_Reasonfordirectorloannotsubordinated = loanApplicationDto.reasonForDirectorLoanNotSubordinated, //DirLoansSub
 
+                //OTHER ATTRIBUTES
+                //CHANGE IN STATUS ONLY VIA STATUS CHANGE ENDPOINT
+
                 //OTHER maybe not related
                 invln_Name = loanApplicationDto.name,
                 invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference("account", accountid) : null, //pusty account?
@@ -61,6 +64,7 @@ namespace HE.CRM.Common.DtoMapping
                 fundingReason = MapFundingReasonOptionSetToString(loanApplication.invln_FundingReason),
                 numberOfSites = loanApplication.invln_NumberofSites?.ToString(),
                 loanApplicationStatus = MapApplicationStatusFromDtoToRegular(loanApplication.invln_ExternalStatus),
+
                 //company
                 companyPurpose = loanApplication.invln_CompanyPurpose?.ToString(),
                 existingCompany = loanApplication.invln_Companystructureinformation?.ToString(),
@@ -84,12 +88,18 @@ namespace HE.CRM.Common.DtoMapping
                 confirmationDirectorLoansCanBeSubordinated = loanApplication.invln_Confirmationdirectorloanscanbesubordinated?.ToString(),
                 reasonForDirectorLoanNotSubordinated = loanApplication.invln_Reasonfordirectorloannotsubordinated?.ToString(),
 
+                //SITE DETAILS
+                siteDetailsList = siteDetailsDtoList,
+
+                //OTHRER ATTRIBUTES
+                LastModificationOn = loanApplication.ModifiedOn,
+                loanApplicationExternalStatus = loanApplication.invln_ExternalStatus?.Value,
+
+
                 name = loanApplication.invln_Name,
                 accountId = loanApplication.invln_Account.Id,
                 loanApplicationId = loanApplication.invln_LoanapplicationId.ToString(),
-                siteDetailsList = siteDetailsDtoList,
                 externalId = externalContactId,
-                LastModificationOn = loanApplication.ModifiedOn,
             };
 
             if (contact != null)
