@@ -43,10 +43,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
 
         return new LoanApplicationEntity(id, userAccount)
         {
-            LegacyModel = new LoanApplicationViewModel
-            {
-                Purpose = FundingPurposeMapper.Map(loanApplicationDto.companyPurpose),
-            },
+            LegacyModel = LoanApplicationMapper.Map(loanApplicationDto),
         };
     }
 
@@ -108,11 +105,11 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         {
             name = loanApplication.Account.RegisteredName,
             contactEmailAdress = loanApplication.Account.EmailAddress,
+            fundingReason = FundingPurposeMapper.Map(loanApplication.Purpose),
 
             // COMPANY
             companyPurpose = loanApplication.Company.Purpose,
             existingCompany = loanApplication.Company.ExistingCompany,
-            fundingReason = FundingPurposeMapper.Map(loanApplication.Purpose),
             companyExperience = loanApplication.Company.HomesBuilt?.TryParseNullableInt(),
 
             // FUNDING

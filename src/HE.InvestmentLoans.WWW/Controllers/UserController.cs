@@ -1,4 +1,6 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.Contract.Application;
+using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.User;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -26,5 +28,11 @@ public class UserController : Controller
     public async Task<GetDashboardDataQueryResponse> Dashboard()
     {
         return await _mediator.Send(new GetDashboardDataQuery());
+    }
+
+    [Route("application-loan/{id}")]
+    public async Task<GetLoanApplicationQueryResponse> ApplicationLoan(string id)
+    {
+        return await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
     }
 }
