@@ -44,7 +44,7 @@ public class LoanApplicationEntity
 
     private void SyncToLegacyModel()
     {
-        LegacyModel = new LoanApplicationViewModel()
+        LegacyModel = new LoanApplicationViewModel
         {
             ID = Id.Value,
         };

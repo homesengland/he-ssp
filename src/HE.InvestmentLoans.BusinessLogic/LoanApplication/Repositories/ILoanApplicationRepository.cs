@@ -7,7 +7,7 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 
 public interface ILoanApplicationRepository
 {
-    Task<LoanApplicationEntity> Load(LoanApplicationId id, UserAccount userAccount);
+    Task<LoanApplicationEntity> GetLoanApplication(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 
     Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount, CancellationToken cancellationToken);
 
