@@ -30,12 +30,6 @@ public class RedisService : ICacheService
         return default;
     }
 
-    public T? GetValue<T>(string key)
-    {
-        string? resp = Cache.StringGet(key);
-        return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
-    }
-
     public T? GetValue<T>(string key, Func<T> loadValue)
     {
         if (Cache.KeyExists(key))
@@ -70,10 +64,16 @@ public class RedisService : ICacheService
 
         return value;
     }
+
     public void SetValue(string key, object value) => SetValue(key, value, _config.ExpireMinutes);
 
     public void SetValue(string key, object value, int expireMinutes)
     {
         Cache.StringSet(key, JsonSerializer.Serialize(value), TimeSpan.FromMinutes(expireMinutes));
+    }
+
+    public void SetValue<T>(string key, T value)
+    {
+        SetValue(key, (object)value!);
     }
 }

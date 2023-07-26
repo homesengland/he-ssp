@@ -2,11 +2,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 
-<<<<<<<< HEAD:src/HE.InvestmentLoans.BusinessLogic/LoanApplicationLegacy/Extensions/SessionExtensions.cs
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Extensions;
-========
 namespace HE.InvestmentLoans.Common.Extensions;
->>>>>>>> 3bc1fb6 (Error handler redirect):src/HE.InvestmentLoans.Common/Extensions/SessionExtensions.cs
 
 public static class SessionExtensions
 {

@@ -1,4 +1,3 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Extensions;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;

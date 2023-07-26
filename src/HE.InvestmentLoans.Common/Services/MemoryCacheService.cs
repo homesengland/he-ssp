@@ -18,16 +18,6 @@ public class MemoryCacheService : ICacheService
 
     public T? GetValue<T>(string key) => _memoryCache.TryGetValue(key, out T cacheValue) ? cacheValue : default;
 
-    public T? GetValue<T>(string key)
-    {
-        if (_memoryCache.TryGetValue(key, out T cacheValue))
-        {
-            return cacheValue;
-        }
-
-        return default;
-    }
-
     public T? GetValue<T>(string key, Func<T> loadValue)
     {
         if (_memoryCache.TryGetValue(key, out T cacheValue))

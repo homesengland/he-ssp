@@ -8,8 +8,6 @@ public interface ICacheService
 
     public Task<T?> GetValueAsync<T>(string key, Func<Task<T>> loadValue);
 
-    public T? GetValue<T>(string key);
-
     public void SetValue<T>(string key, T value);
 
     public void SetValue(string key, object value);

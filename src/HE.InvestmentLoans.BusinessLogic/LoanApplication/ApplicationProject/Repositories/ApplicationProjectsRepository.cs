@@ -1,9 +1,9 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Extensions;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using Microsoft.AspNetCore.Http;
