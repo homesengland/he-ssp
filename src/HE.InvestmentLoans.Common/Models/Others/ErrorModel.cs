@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.Common.Models.Error;
+namespace HE.InvestmentLoans.Common.Models.Others;
 
 public class ErrorModel
 {
