@@ -29,7 +29,7 @@ public static class HtmlHelperExtensions
             }
         }
 
-        return html.PartialAsync("_RadiosWithConditionalInputScript", new { Radios = radioConditionalInutIds });
+        return html.PartialAsync("_RadiosWithConditionalInputScript", new ConditionalModel { Radios = radioConditionalInutIds });
     }
 
     public static Task<IHtmlContent> RadioConditionalInputScript(this IHtmlHelper html, params (string RadioId, string ConditionalInputId)[] radioConditionalInutIds)
