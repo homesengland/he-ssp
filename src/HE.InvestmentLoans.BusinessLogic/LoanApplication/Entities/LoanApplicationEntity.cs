@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
@@ -47,6 +48,7 @@ public class LoanApplicationEntity
         LegacyModel = new LoanApplicationViewModel
         {
             ID = Id.Value,
+            State = LoanApplicationWorkflow.State.CheckYourDetails,
         };
     }
 }

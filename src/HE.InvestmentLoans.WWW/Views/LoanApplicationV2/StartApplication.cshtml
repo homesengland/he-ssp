@@ -1,0 +1,34 @@
+﻿@using HE.InvestmentLoans.BusinessLogic
+@{
+    ViewData["backLinkText"] = "Back to account homepage";
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="LoanApplicationV2" asp-action="StartNow" asp-method="post" novalidate>
+
+        <partial name="_BackLink" />
+
+        <gds-h1 class="govuk-heading-xl">
+            Apply for a development loan
+        </gds-h1>
+
+        <gds-p>Before you progress, we want to check the details we hold for you are correct.</gds-p>
+
+        <div class="govuk-!-padding-bottom-8">
+            <gds-p>In this section, you’ll need to review:</gds-p>
+            <gds-ul>
+                <gds-li>your full name</gds-li>
+                <gds-li>your username</gds-li>
+                <gds-li>your organisation name</gds-li>
+                <gds-li>your telephone number within the organisation</gds-li>
+                <gds-li>your organisation’s address</gds-li>
+            </gds-ul>
+        </div>
+        <button class="govuk-button govuk-button--start" data-module="govuk-button" name="action" type="submit" value="Continue">
+            Start now
+            <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"/>
+            </svg>
+        </button>
+    </form>
+</gds-div-grid-column-two-thirds>
