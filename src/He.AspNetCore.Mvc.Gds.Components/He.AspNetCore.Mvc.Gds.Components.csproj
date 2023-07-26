@@ -19,7 +19,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="5.0.6" />
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="7.0.9" />
 	</ItemGroup>
 
 	  <ItemGroup>
