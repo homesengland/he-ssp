@@ -47,8 +47,13 @@ namespace HE.CRM.Common.DtoMapping
                 //OTHER maybe not related
                 invln_Name = loanApplicationDto.name,
                 invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference("account", accountid) : null, //pusty account?
-                invln_Contact = contact != null ? contact.ToEntityReference() : null,
             };
+
+            if(contact != null)
+            {
+                loanApplication.invln_Contact = contact.ToEntityReference();
+            }
+
             if (Guid.TryParse(loanApplicationDto.loanApplicationId, out Guid loanApplicationId))
             {
                 loanApplication.Id = loanApplicationId;

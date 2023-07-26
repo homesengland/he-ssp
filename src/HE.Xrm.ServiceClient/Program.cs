@@ -35,6 +35,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
+                    QuickTest(serviceClient);
                     TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -46,6 +47,25 @@ namespace HE.Xrm.ServiceClientExample
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
+        }
+
+        private static void QuickTest(ServiceClient serviceClient)
+        {
+
+            //var req112 = new invln_getsingleloanapplicationforaccountandcontactRequest() //get single loan application
+            //{
+            //    invln_accountid = resp1Deserialized.contactRoles[0].accountId.ToString(), //accountid
+            //    invln_externalcontactid = resp1Deserialized.externalId, //external contact id
+            //    invln_loanapplicationid = "77505f38-882b-ee11-9965-002248c653e1" //loan application id
+            //};
+            //var resp112 = (invln_getsingleloanapplicationforaccountandcontactResponse)serviceClient.Execute(req11);
+
+            //var req2 = new invln_getloanapplicationsforaccountandcontactRequest() //get loan applications related to account and contact with given data
+            //{
+            //    invln_accountid = resp1Deserialized.contactRoles[0].accountId.ToString(), //account id
+            //    invln_externalcontactid = resp1Deserialized.externalId, // contact external id
+            //};
+            //var resp2 = (invln_getloanapplicationsforaccountandcontactResponse)serviceClient.Execute(req2);
         }
 
         private static void TestUpdateLoanApplicationExternalStatus(ServiceClient serviceClient)
@@ -79,7 +99,7 @@ namespace HE.Xrm.ServiceClientExample
 
             var loanApp = new LoanApplicationDto() //new fields values
             {
-                additionalProjects = "yes", 
+                additionalProjects = "yes",
                 name = "name pluginddd",
                 numberOfSites = "27",
                 fundingReason = "buildinginfrastructureonly",
@@ -121,7 +141,7 @@ namespace HE.Xrm.ServiceClientExample
                 siteCost = "33341",
                 siteName = "Name site",
                 siteOwnership = "true",
-                typeOfHomes = new string[]{ "apartmentsorflats", "houses" },
+                typeOfHomes = new string[] { "apartmentsorflats", "houses" },
                 typeOfSite = "greenfield",
                 valuationSource = "estateagentestimate",
                 whoProvided = "provided",
@@ -165,7 +185,7 @@ namespace HE.Xrm.ServiceClientExample
                 invln_accountid = resp1Deserialized.contactRoles[0].accountId.ToString(), //account
                 invln_entityfieldsparameters = JsonSerializer.Serialize(new LoanApplicationDto()
                 {
-                    LoanApplicationContact = new UserAccountDto() { ContactEmail = "abcd@aa.cc", ContactExternalId  = resp1Deserialized.externalId, ContactFirstName= "Ala", ContactLastName = "Test", AccountId = Guid.Parse(req09.invln_accountid), ContactTelephoneNumber = "8888"},
+                    LoanApplicationContact = new UserAccountDto() { ContactEmail = "abcd@aa.cc", ContactExternalId = resp1Deserialized.externalId, ContactFirstName = "Ala", ContactLastName = "Test", AccountId = Guid.Parse(req09.invln_accountid), ContactTelephoneNumber = "8888" },
                 }), //serialized Loan Application DTO
             };
 

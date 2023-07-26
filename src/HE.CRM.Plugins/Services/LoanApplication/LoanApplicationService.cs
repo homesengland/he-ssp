@@ -79,11 +79,11 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
             LoanApplicationDto loanApplicationFromPortal = JsonSerializer.Deserialize<LoanApplicationDto>(loanApplicationPayload);
             //THIS IS CONTACT WHO IS SENDING MESSAGE
-            //var contact = contactRepository.GetContactViaExternalId(contactExternalId);
+            var requestContact = contactRepository.GetContactViaExternalId(contactExternalId);
 
             //Update Contact on Loan Application
             Contact loanApplicationContact = null;
-            if (loanApplicationFromPortal?.LoanApplicationContact != null && loanApplicationFromPortal.LoanApplicationContact.ContactExternalId != null)
+            if (loanApplicationFromPortal.LoanApplicationContact?.ContactExternalId != null)
             {
                 //THIS IS CONTACT FOR WHICH LOAN IS CREATED
                 var contactExternalid = loanApplicationFromPortal?.LoanApplicationContact?.ContactExternalId ?? contactExternalId;
@@ -120,6 +120,11 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
             else
             {
+                if (loanApplicationToCreate.invln_Contact == null)
+                {
+                    loanApplicationToCreate.invln_Contact = requestContact.ToEntityReference();
+                }
+
                 this.TracingService.Trace("Create invln_Loanapplication");
                 loanApplicationToCreate.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Draft);
                 loanApplicationGuid = loanApplicationRepository.Create(loanApplicationToCreate);
