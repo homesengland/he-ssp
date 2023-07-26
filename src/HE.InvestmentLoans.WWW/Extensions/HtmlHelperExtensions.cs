@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.WWW.Models;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -33,11 +34,11 @@ public static class HtmlHelperExtensions
 
     public static Task<IHtmlContent> RadioConditionalInputScript(this IHtmlHelper html, params (string RadioId, string ConditionalInputId)[] radioConditionalInutIds)
     {
-        return html.PartialAsync("_RadiosWithConditionalInputScript", new { Radios = radioConditionalInutIds });
+        return html.PartialAsync("_RadiosWithConditionalInputScript", new ConditionalModel { Radios = radioConditionalInutIds });
     }
 
     public static Task<IHtmlContent> CheckboxConditionalInputScript(this IHtmlHelper html, params (string CheckboxId, string ConditionalInputId)[] checkboxConditionalInutIds)
     {
-        return html.PartialAsync("_CheckboxesWithConditionalInputScript", new { Checkboxes = checkboxConditionalInutIds });
+        return html.PartialAsync("_CheckboxesWithConditionalInputScript", new ConditionalModel { Checkboxes = checkboxConditionalInutIds });
     }
 }
