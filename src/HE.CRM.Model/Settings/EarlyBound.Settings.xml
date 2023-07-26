@@ -14,7 +14,10 @@ invln_deletesitedetails|
 invln_generaterichtextdocument|
 invln_getcontactrole|
 invln_getloanapplicationsforaccountandcontact|
+invln_getorganizationdetails|
 invln_getsingleloanapplicationforaccountandcontact|
+invln_gettemporaryportaldata|
+invln_savetemporaryportaldata|
 invln_sendinvestmentloansdatatocrm|
 invln_updatesingleloanapplication|
 invln_updatesinglesitedetails</ActionsWhitelist>

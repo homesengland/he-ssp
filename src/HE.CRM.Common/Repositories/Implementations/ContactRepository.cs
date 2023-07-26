@@ -7,6 +7,7 @@ using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Query;
 using System.Collections.Generic;
 using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.Common.Repositories.Implementations
 {
@@ -66,8 +67,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                     {
                         Id = Guid.NewGuid(),
                         EMailAddress1 = contactEmail,
-                        invln_externalid = contactExternalId,
-                        Telephone1 = "123123123"
+                        invln_externalid = contactExternalId
                     };
                     service.Create(contactToCreate);
                     return contactToCreate;
@@ -75,14 +75,34 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        public Contact GetContactViaExternalId(string contactExternalId)
+        public Contact GetContactViaExternalId(string contactExternalId, string[] columnSet = null)
         {
-            using (var ctx = new OrganizationServiceContext(service))
-            {
-                var contact = ctx.CreateQuery<Contact>()
-                    .Where(x => x.invln_externalid == contactExternalId).AsEnumerable().FirstOrDefault();
+            var keys = new KeyAttributeCollection
+                {
+                    { "invln_externalid", contactExternalId }
+                };
 
-                return contact;
+            var request = new RetrieveRequest
+            {
+                ColumnSet = new ColumnSet(columnSet),
+                Target = new EntityReference(Contact.EntityLogicalName, keys)
+            };
+
+            try
+            {
+                var response = (RetrieveResponse)service.Execute(request);
+                if (response != null)
+                {
+                    return response.Entity.ToEntity<Contact>();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidPluginExecutionException("Contact with invln_externalid: " + contactExternalId + " does not extst in CRM");
             }
         }
 

@@ -41,30 +41,64 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             List<LoanApplicationDto> entityCollection = new List<LoanApplicationDto>();
             if (Guid.TryParse(accountId, out Guid accountGuid))
             {
+                this.TracingService.Trace("GetLoanApplicationsForGivenAccountAndContact");
                 var loanApplicationsForAccountAndContact = loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId);
                 foreach (var element in loanApplicationsForAccountAndContact)
                 {
                     List<SiteDetailsDto> siteDetailsDtoList = new List<SiteDetailsDto>();
+                    this.TracingService.Trace("GetSiteDetailRelatedToLoanApplication");
                     var siteDetailsList = siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(element.ToEntityReference());
                     if (siteDetailsList != null)
                     {
                         foreach (var siteDetail in siteDetailsList)
                         {
+                            this.TracingService.Trace("MapSiteDetailsToDto");
                             siteDetailsDtoList.Add(SiteDetailsDtoMapper.MapSiteDetailsToDto(siteDetail));
                         }
                     }
-                    entityCollection.Add(LoanApplicationDtoMapper.MapLoanApplicationToDto(element, siteDetailsDtoList, externalContactId));
+                    this.TracingService.Trace("MapLoanApplicationToDto");
+                    var loanApplicationContact = this.contactRepository.GetById(element.invln_Contact.Id, new string[]
+                    {
+                        nameof(Contact.EMailAddress1).ToLower(),
+                        nameof(Contact.FirstName).ToLower(),
+                        nameof(Contact.LastName).ToLower(),
+                        nameof(Contact.invln_externalid).ToLower(),
+                        nameof(Contact.Telephone1).ToLower(),
+                    });
+                    entityCollection.Add(LoanApplicationDtoMapper.MapLoanApplicationToDto(element, siteDetailsDtoList, externalContactId, loanApplicationContact));
                 }
             }
+
+            this.TracingService.Trace("Serialize");
             return JsonSerializer.Serialize(entityCollection);
         }
 
         public string CreateRecordFromPortal(string contactExternalId, string accountId, string loanApplicationId, string loanApplicationPayload)
         {
             this.TracingService.Trace("PAYLOAD:" + loanApplicationPayload);
-            LoanApplicationDto loanApplicationFromPortal = JsonSerializer.Deserialize<LoanApplicationDto>(loanApplicationPayload);
-            Contact contact = contactRepository.GetContactViaExternalId(contactExternalId);
 
+            LoanApplicationDto loanApplicationFromPortal = JsonSerializer.Deserialize<LoanApplicationDto>(loanApplicationPayload);
+            //THIS IS CONTACT WHO IS SENDING MESSAGE
+            var requestContact = contactRepository.GetContactViaExternalId(contactExternalId);
+
+            //Update Contact on Loan Application
+            Contact loanApplicationContact = null;
+            if (loanApplicationFromPortal?.LoanApplicationContact?.ContactExternalId != null)
+            {
+                //THIS IS CONTACT FOR WHICH LOAN IS CREATED
+                var contactExternalid = loanApplicationFromPortal?.LoanApplicationContact?.ContactExternalId ?? contactExternalId;
+                loanApplicationContact = contactRepository.GetContactViaExternalId(contactExternalid);
+                contactRepository.Update(new Contact()
+                {
+                    Id = loanApplicationContact.Id,
+                    FirstName = loanApplicationFromPortal.LoanApplicationContact.ContactFirstName,
+                    LastName = loanApplicationFromPortal.LoanApplicationContact.ContactLastName,
+                    EMailAddress1 = loanApplicationFromPortal.LoanApplicationContact.ContactEmail,
+                    Telephone1 = loanApplicationFromPortal.LoanApplicationContact.ContactTelephoneNumber,
+                });
+            }
+
+            //Number of sites
             int numberOfSites = 0;
             if (loanApplicationFromPortal.siteDetailsList != null && loanApplicationFromPortal.siteDetailsList.Count > 0)
             {
@@ -73,8 +107,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
             this.TracingService.Trace("Setting up invln_Loanapplication");
             loanApplicationFromPortal.numberOfSites = numberOfSites.ToString();
-            var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, contact, accountId);
+            //
 
+            var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, loanApplicationContact, accountId);
             Guid loanApplicationGuid = Guid.NewGuid();
             if (!string.IsNullOrEmpty(loanApplicationId) && Guid.TryParse(loanApplicationId, out Guid loanAppId))
             {
@@ -85,6 +120,11 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
             else
             {
+                if (loanApplicationToCreate.invln_Contact == null)
+                {
+                    loanApplicationToCreate.invln_Contact = requestContact.ToEntityReference();
+                }
+
                 this.TracingService.Trace("Create invln_Loanapplication");
                 loanApplicationToCreate.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Draft);
                 loanApplicationGuid = loanApplicationRepository.Create(loanApplicationToCreate);
@@ -140,7 +180,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             if (Guid.TryParse(loanApplicationId, out Guid applicationId))
             {
                 var deserializedLoanApplication = JsonSerializer.Deserialize<LoanApplicationDto>(loanApplication);
-                Contact contact = contactRepository.GetContactViaExternalId(contactExternalId);
+                var contactExternalid = deserializedLoanApplication?.LoanApplicationContact?.ContactExternalId ?? contactExternalId;
+                Contact contact = contactRepository.GetContactViaExternalId(contactExternalid);
                 var loanApplicationMapped = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(deserializedLoanApplication, contact, accountId);
                 invln_Loanapplication loanApplicationToUpdate = new invln_Loanapplication();
                 if (string.IsNullOrEmpty(fieldsToUpdate))
@@ -182,9 +223,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 loanApplicationRepository.Update(loanApplicationToUpdate);
 
                 var relatedSiteDetails = siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(loanApplicationToUpdate.ToEntityReference());
-                if(relatedSiteDetails != null && relatedSiteDetails.Count > 0)
+                if (relatedSiteDetails != null && relatedSiteDetails.Count > 0)
                 {
-                    foreach(var siteDetail in relatedSiteDetails)
+                    foreach (var siteDetail in relatedSiteDetails)
                     {
                         var siteDetailToUpdate = new invln_SiteDetails()
                         {

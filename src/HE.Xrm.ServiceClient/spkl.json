@@ -2,7 +2,7 @@
   "earlyboundtypes": [
     {
       "entities": "account,contact,invln_loanapplication,invln_sitedetails,invln_webrole,invln_portal,invln_portalpermissionlevel",
-      "actions": "invln_sendinvestmentloansdatatocrm,invln_getcontactrole,invln_getsingleloanapplicationforaccountandcontact,invln_getloanapplicationsforaccountandcontact,invln_changeloanapplicationexternalstatus,invln_updatesinglesitedetails,invln_updatesingleloanapplication,invln_deletesitedetails,invln_deleteloanapplication,invln_generaterichtextdocument",
+      "actions": "invln_sendinvestmentloansdatatocrm,invln_getcontactrole,invln_changeloanapplicationexternalstatus,invln_generaterichtextdocument,invln_getloanapplicationsforaccountandcontact,invln_getsingleloanapplicationforaccountandcontact,invln_organizationdetails,invln_deleteloanapplication,invln_deletesitedetails,invln_updatesingleloanapplication,invln_updatesinglesitedetails,invln_getorganizationdetails",
       "generateOptionsetEnums": "true",
       "generateStateEnums": "true",
       "generateGlobalOptionsets": false,

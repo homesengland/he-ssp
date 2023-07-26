@@ -41,11 +41,19 @@ namespace HE.CRM.Common.DtoMapping
                 invln_Confirmationdirectorloanscanbesubordinated = ParseBool(loanApplicationDto.confirmationDirectorLoansCanBeSubordinated), //DirLoansSub
                 invln_Reasonfordirectorloannotsubordinated = loanApplicationDto.reasonForDirectorLoanNotSubordinated, //DirLoansSub
 
+                //OTHER ATTRIBUTES
+                //CHANGE IN STATUS ONLY VIA STATUS CHANGE ENDPOINT
+
                 //OTHER maybe not related
                 invln_Name = loanApplicationDto.name,
                 invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference("account", accountid) : null, //pusty account?
-                invln_Contact = contact != null ? contact.ToEntityReference() : null,
             };
+
+            if(contact != null)
+            {
+                loanApplication.invln_Contact = contact.ToEntityReference();
+            }
+
             if (Guid.TryParse(loanApplicationDto.loanApplicationId, out Guid loanApplicationId))
             {
                 loanApplication.Id = loanApplicationId;
@@ -54,21 +62,22 @@ namespace HE.CRM.Common.DtoMapping
         }
 
 
-        public static LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList, string externalContactId)
+        public static LoanApplicationDto MapLoanApplicationToDto(invln_Loanapplication loanApplication, List<SiteDetailsDto> siteDetailsDtoList, string externalContactId, Contact contact = null)
         {
             var loanApplicationDto = new LoanApplicationDto()
             {
                 fundingReason = MapFundingReasonOptionSetToString(loanApplication.invln_FundingReason),
                 numberOfSites = loanApplication.invln_NumberofSites?.ToString(),
                 loanApplicationStatus = MapApplicationStatusFromDtoToRegular(loanApplication.invln_ExternalStatus),
+
                 //company
                 companyPurpose = loanApplication.invln_CompanyPurpose?.ToString(),
                 existingCompany = loanApplication.invln_Companystructureinformation?.ToString(),
                 companyExperience = loanApplication.invln_CompanyExperience,
 
                 //funding
-                projectGdv = ((int)loanApplication.invln_ProjectGDV?.Value).ToString(),
-                projectEstimatedTotalCost = ((int)loanApplication.invln_Projectestimatedtotalcost?.Value).ToString(),
+                projectGdv = (loanApplication.invln_ProjectGDV?.Value).ToString(),
+                projectEstimatedTotalCost = (loanApplication.invln_Projectestimatedtotalcost?.Value).ToString(),
                 projectAbnormalCosts = loanApplication.invln_Projectabnormalcosts?.ToString(),
                 projectAbnormalCostsInformation = loanApplication.invln_Projectabnormalcostsinformation?.ToString(),
                 privateSectorApproach = loanApplication.invln_Privatesectorapproach?.ToString(),
@@ -84,13 +93,33 @@ namespace HE.CRM.Common.DtoMapping
                 confirmationDirectorLoansCanBeSubordinated = loanApplication.invln_Confirmationdirectorloanscanbesubordinated?.ToString(),
                 reasonForDirectorLoanNotSubordinated = loanApplication.invln_Reasonfordirectorloannotsubordinated?.ToString(),
 
+                //SITE DETAILS
+                siteDetailsList = siteDetailsDtoList,
+
+                //OTHRER ATTRIBUTES
+                LastModificationOn = loanApplication.ModifiedOn,
+                loanApplicationExternalStatus = loanApplication.invln_ExternalStatus?.Value,
+
+
                 name = loanApplication.invln_Name,
                 accountId = loanApplication.invln_Account.Id,
                 loanApplicationId = loanApplication.invln_LoanapplicationId.ToString(),
-                siteDetailsList = siteDetailsDtoList,
                 externalId = externalContactId,
-                LastModificationOn = loanApplication.ModifiedOn,
             };
+
+            if (contact != null)
+            {
+                loanApplicationDto.LoanApplicationContact = new UserAccountDto()
+                {
+                    ContactEmail = contact.EMailAddress1,
+                    ContactFirstName = contact.FirstName,
+                    ContactLastName = contact.LastName,
+                    ContactExternalId = contact.invln_externalid,
+                    ContactTelephoneNumber = contact.Telephone1,
+                    AccountId = loanApplication.invln_Account.Id
+                };
+            }
+
             return loanApplicationDto;
         }
 

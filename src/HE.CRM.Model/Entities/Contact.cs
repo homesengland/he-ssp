@@ -590,6 +590,7 @@ namespace DataverseModel
 			public const string invln_contact_invln_contactwebrole_Contactid = "invln_contact_invln_contactwebrole_Contactid";
 			public const string invln_externalid = "invln_externalid";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
+			public const string invln_PEP = "invln_pep";
 			public const string IsBackofficeCustomer = "isbackofficecustomer";
 			public const string JobTitle = "jobtitle";
 			public const string LastName = "lastname";
@@ -3397,6 +3398,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_externalid");
 				this.SetAttributeValue("invln_externalid", value);
 				this.OnPropertyChanged("invln_externalid");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_pep")]
+		public System.Nullable<bool> invln_PEP
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_pep");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PEP");
+				this.SetAttributeValue("invln_pep", value);
+				this.OnPropertyChanged("invln_PEP");
 			}
 		}
 		

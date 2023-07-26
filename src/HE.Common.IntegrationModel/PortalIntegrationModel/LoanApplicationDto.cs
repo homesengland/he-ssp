@@ -50,6 +50,14 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public List<SiteDetailsDto> siteDetailsList { get; set; }
 
         //OTHER ATTRIBUTES
+        public UserAccountDto LoanApplicationContact { get; set; }
+
+        public DateTime? LastModificationOn { get; set; }
+
+        public int? loanApplicationExternalStatus { get; set; } //LOAN APPLICATION EXTERNAL STATUS IN INT VALUE
+
+
+        //TO DELETE IN SOME TIME???
         public string loanApplicationId { get; set; }
 
         public string name { get; set; }
@@ -71,9 +79,5 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string loanApplicationStatus { get; set; }
 
         public string externalId { get; set; }
-
-        public UserAccountDto LoanApplicationContact { get; set; }
-
-        public DateTime? LastModificationOn { get; set; }
     }
 }
