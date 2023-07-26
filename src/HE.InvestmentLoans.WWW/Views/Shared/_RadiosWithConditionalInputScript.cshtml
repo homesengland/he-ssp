@@ -1,7 +1,9 @@
 @using System.Text;
 
+@model ConditionalModel
+
 @{
-    var radioConditionalInputPairs = (IEnumerable<(string radioId, string conditionalId)>)Model.Radios;
+    var radioConditionalInputPairs = Model.Radios;
 }
 
 @foreach (var (radioId, conditionalId) in radioConditionalInputPairs)

@@ -1,7 +1,9 @@
 @using System.Text;
 
+@model ConditionalModel
+
 @{
-    var checkboxConditionalInputPairs = (IEnumerable<(string checkboxId, string conditionalId)>)Model.Checkboxes;
+    var checkboxConditionalInputPairs = Model.Checkboxes;
 }
 
 @foreach (var (checkboxId, conditionalId) in checkboxConditionalInputPairs)
