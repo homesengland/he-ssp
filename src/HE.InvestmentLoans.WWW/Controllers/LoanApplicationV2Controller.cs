@@ -1,14 +1,10 @@
-using HE.InvestmentLoans.BusinessLogic;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.FeatureManagement.Mvc;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
 
-[FeatureGate(LoansFeatureFlags.SaveApplicationDraftInCrm)]
 [Route("application")]
 [Authorize]
 public class LoanApplicationV2Controller : Controller
@@ -20,16 +16,34 @@ public class LoanApplicationV2Controller : Controller
         _mediator = mediator;
     }
 
-    [HttpGet("start-new")]
-    public async Task<IActionResult> StartNew(CancellationToken cancellationToken)
+    [Route("")]
+    public IActionResult StartApplication()
     {
-        var loanApplicationId = await _mediator.Send(new StartApplicationCommand(), cancellationToken);
-        return RedirectToAction("AboutLoan", new { id = loanApplicationId.Value });
+        return View("StartApplication");
     }
 
-    [Route("{id}/about-loan")]
-    public IActionResult AboutLoan(Guid id)
+    [HttpPost("start-now")]
+    public IActionResult StartNow()
     {
-        return View("~/Views/LoanApplication/AboutLoan.cshtml", new LoanApplicationViewModel() { ID = id });
+        return RedirectToAction("AboutLoan");
+    }
+
+    [Route("about-loan")]
+    public IActionResult AboutLoan()
+    {
+        return View("AboutLoan");
+    }
+
+    [HttpPost("about-loan")]
+    public async Task<IActionResult> AboutLoanPost(CancellationToken cancellationToken)
+    {
+        var loanApplicationId = await _mediator.Send(new StartApplicationCommand(), cancellationToken);
+        return RedirectToAction("Workflow", "LoanApplication", new { id = loanApplicationId.Value });
+    }
+
+    [Route("back")]
+    public IActionResult AboutLoanBack()
+    {
+        return RedirectToAction(nameof(StartApplication));
     }
 }
