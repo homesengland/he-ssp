@@ -50,5 +50,6 @@ public class LoanApplicationEntity
             ID = Id.Value,
             State = LoanApplicationWorkflow.State.CheckYourDetails,
         };
+        LegacyModel.AddNewSite();
     }
 }
