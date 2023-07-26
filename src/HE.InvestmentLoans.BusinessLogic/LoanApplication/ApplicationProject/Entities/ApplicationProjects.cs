@@ -1,4 +1,3 @@
-using System.Globalization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using Pipelines.Sockets.Unofficial.Arenas;
@@ -10,7 +9,7 @@ public class ApplicationProjects
     {
         LoanApplicationId = loanApplicationId;
         Projects = new List<Project>();
-        AddDefaultProject();
+        AddProject();
     }
 
     public LoanApplicationId LoanApplicationId { get; }
@@ -19,11 +18,11 @@ public class ApplicationProjects
 
     public IList<Project> ActiveProjects => Projects.Where(p => !p.IsSoftDeleted).ToList();
 
-    public void AddAnotherProject()
+    public void AddProject()
     {
         var project = new Project
         {
-            Name = GenerateNextProjectName(),
+            DefaultName = "New project",
         };
         Projects.Add(project);
     }
@@ -39,21 +38,5 @@ public class ApplicationProjects
     {
         var projectToDelete = Projects.FirstOrDefault(p => p.Id == projectId) ?? throw new NotFoundException(nameof(Project).ToString(), projectId);
         projectToDelete.MarkAsDeleted();
-    }
-
-    private void AddDefaultProject()
-    {
-        var project = new Project
-        {
-            Id = new ProjectId(Guid.NewGuid()),
-            Name = "Project 01",
-        };
-
-        Projects.Add(project);
-    }
-
-    private string GenerateNextProjectName()
-    {
-        return $"Project {(Projects.Count + 1).ToString("D2", CultureInfo.InvariantCulture)}";
     }
 }

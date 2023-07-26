@@ -19,7 +19,7 @@ public class AddAnotherProjectCommandHandler : IRequestHandler<AddAnotherProject
     {
         var applicationProjects = _applicationProjectsRepository.GetAll(request.LoanApplicationId, await _loanUserContext.GetSelectedAccount());
 
-        applicationProjects.AddAnotherProject();
+        applicationProjects.AddProject();
 
         _applicationProjectsRepository.Save(applicationProjects);
     }

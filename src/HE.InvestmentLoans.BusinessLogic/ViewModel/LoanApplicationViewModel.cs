@@ -1,4 +1,3 @@
-using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Services.Interfaces;
@@ -49,7 +48,7 @@ public class LoanApplicationViewModel
         var site = new SiteViewModel
         {
             Id = Guid.NewGuid(),
-            DefaultName = "Project " + (Sites.Count + 1).ToString("D2", CultureInfo.InvariantCulture),
+            DefaultName = "New project",
         };
 
         Sites.Add(site);
