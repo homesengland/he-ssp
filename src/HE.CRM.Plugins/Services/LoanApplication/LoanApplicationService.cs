@@ -83,7 +83,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
             //Update Contact on Loan Application
             Contact loanApplicationContact = null;
-            if (loanApplicationFromPortal.LoanApplicationContact?.ContactExternalId != null)
+            if (loanApplicationFromPortal?.LoanApplicationContact?.ContactExternalId != null)
             {
                 //THIS IS CONTACT FOR WHICH LOAN IS CREATED
                 var contactExternalid = loanApplicationFromPortal?.LoanApplicationContact?.ContactExternalId ?? contactExternalId;
