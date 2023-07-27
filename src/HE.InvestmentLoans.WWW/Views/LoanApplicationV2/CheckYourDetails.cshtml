@@ -1,9 +1,15 @@
-﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+﻿@using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
+@model CheckYourDetailsModel
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="LoanApplication" asp-action="Workflow" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("GoBack","LoanApplication", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
-        </gds-back-link>
+    <form asp-controller="LoanApplicationV2" asp-action="CheckYourDetailsPost" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckYourDetails })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
         <gds-h1 size="ControlSize.Xl">
             Check your details
@@ -17,43 +23,40 @@
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Registered company name" },
-            { "Value", Model.Account.RegisteredName },
-            { "Link", "#" }
+            { "Value", Model.OrganizationBasicInformation.RegisteredCompanyName },
             })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Company Registration Number" },
-            { "Value", Model.Account.RegistrationNumber },
-            { "Link", "#" }
+            { "Value", Model.OrganizationBasicInformation.CompanyRegistrationNumber },
             })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Company address" },
-            { "Value", LabelHelper.AddressAsSeparatedLines(Model.Account.Address) },
-            { "Link", "#" }
+            { "Value", Model.OrganizationBasicInformation.Address.Line1 },
             })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Contact name" },
-            { "Value", Model.Account.ContactName },
+            { "Value", Model.LoanApplicationContactName },
             { "Link", "#" }
             })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Email address" },
-            { "Value", Model.Account.EmailAddress },
+            { "Value", Model.LoanApplicationContactEmail },
             { "Link", "#" }
             })
 
-        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-        {
-        { "Title", "Telephone number" },
-        { "Value", Model.Account.TelephoneNumber },
-        { "Link", "#" }
+            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            {
+            { "Title", "Telephone number" },
+            { "Value", Model.LoanApplicationContactTelephoneNumber},
+            { "Link", "#" }
         })
     </gds-summary-list>
     <gds-button name="action" type="submit" value="Continue">

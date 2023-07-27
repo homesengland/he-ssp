@@ -3,6 +3,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Services.Interfaces;
 using MediatR;
@@ -85,6 +86,12 @@ public class LoanApplicationController : Controller
         }
 
         return RedirectToAction("Workflow", new { id = sessionModel.ID, ending = workflow.GetName() });
+    }
+
+    [HttpGet("report-problem")]
+    public IActionResult ReportProblem()
+    {
+        throw new NotFoundException("Site", nameof(ReportProblem));
     }
 
     [Route("GoBack")]

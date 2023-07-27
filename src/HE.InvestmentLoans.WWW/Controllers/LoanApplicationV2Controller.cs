@@ -1,4 +1,11 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application.Commands;
+using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Organization;
+using HE.InvestmentLoans.Contract.User;
+using HE.InvestmentLoans.WWW.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +23,7 @@ public class LoanApplicationV2Controller : Controller
         _mediator = mediator;
     }
 
-    [Route("")]
+    [HttpGet("")]
     public IActionResult StartApplication()
     {
         return View("StartApplication");
@@ -28,22 +35,74 @@ public class LoanApplicationV2Controller : Controller
         return RedirectToAction("AboutLoan");
     }
 
-    [Route("about-loan")]
+    [HttpGet("about-loan")]
     public IActionResult AboutLoan()
     {
         return View("AboutLoan");
     }
 
     [HttpPost("about-loan")]
-    public async Task<IActionResult> AboutLoanPost(CancellationToken cancellationToken)
+    public IActionResult AboutLoanPost()
     {
-        var loanApplicationId = await _mediator.Send(new StartApplicationCommand(), cancellationToken);
-        return RedirectToAction("Workflow", "LoanApplication", new { id = loanApplicationId.Value });
+        return RedirectToAction("CheckYourDetails");
     }
 
-    [Route("back")]
-    public IActionResult AboutLoanBack()
+    [HttpGet("check-your-details")]
+    public async Task<IActionResult> CheckYourDetails(CancellationToken cancellationToken)
     {
-        return RedirectToAction(nameof(StartApplication));
+        var organizationBasicInformationResponse = await _mediator.Send(new GetOrganizationBasicInformationQuery(), cancellationToken);
+        var userDetails = await _mediator.Send(new GetUserDetailsQuery(), cancellationToken);
+        return View(
+            "CheckYourDetails",
+            new CheckYourDetailsModel
+            {
+                OrganizationBasicInformation = organizationBasicInformationResponse.OrganizationBasicInformation,
+                LoanApplicationContactEmail = userDetails.Email,
+            });
+    }
+
+    [HttpPost("check-your-details")]
+    public IActionResult CheckYourDetailsPost()
+    {
+        return RedirectToAction("LoanPurpose");
+    }
+
+    [HttpGet("loan-purpose")]
+    public IActionResult LoanPurpose()
+    {
+        return View("LoanPurpose", new LoanPurposeModel());
+    }
+
+    [HttpPost("loan-purpose")]
+    public async Task<IActionResult> LoanPurposePost(LoanPurposeModel model, CancellationToken cancellationToken)
+    {
+        if (model.FundingPurpose == FundingPurpose.BuildingNewHomes)
+        {
+            var loanApplicationId = await _mediator.Send(new StartApplicationCommand(), cancellationToken);
+            return RedirectToAction("Workflow", "LoanApplication", new { id = loanApplicationId.Value });
+        }
+
+        return RedirectToAction("Ineligible");
+    }
+
+    [HttpGet("ineligible")]
+    public IActionResult Ineligible()
+    {
+        return View("Ineligible");
+    }
+
+    [HttpGet("back")]
+    public async Task<IActionResult> Back(LoanApplicationWorkflow.State currentPage)
+    {
+        var workflow = new LoanApplicationWorkflow(new LoanApplicationViewModel() { State = currentPage, GoodChangeMode = true }, null!);
+        var targetState = await workflow.NextState(Trigger.Back);
+
+        return targetState switch
+        {
+            LoanApplicationWorkflow.State.AboutLoan => RedirectToAction("AboutLoan"),
+            LoanApplicationWorkflow.State.CheckYourDetails => RedirectToAction("CheckYourDetails"),
+            LoanApplicationWorkflow.State.LoanPurpose => RedirectToAction("LoanPurpose"),
+            _ => RedirectToAction("StartApplication"),
+        };
     }
 }

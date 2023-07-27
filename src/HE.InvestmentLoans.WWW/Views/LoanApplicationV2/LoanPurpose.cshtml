@@ -1,4 +1,12 @@
-﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel;
+﻿@using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
+@model LoanPurposeModel;
 @inject ModelExpressionProvider modelProvider
 @{
     var hints = new string[] { "This can include the redevelopment of uninhabitable buildings, or associated infrastructure." };
@@ -7,9 +15,8 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="LoanApplication" asp-action="Workflow" asp-route-id="@Model.ID" asp-route-state="CheckAnswers" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("GoBack","LoanApplication", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
-        </gds-back-link>
+    <form asp-controller="LoanApplicationV2" asp-action="LoanPurposePost"  asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.LoanPurpose })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
                 <gds-legend size="ControlSize.L">
@@ -28,8 +35,8 @@
                         </p>
                     }
                     <gds-custom-radio
-                                  asp-for="Purpose"
-                                  value="@Model.Purpose"
+                                  asp-for="FundingPurpose"
+                                  value="@Model.FundingPurpose"
                                   radio-items="TemporaryFormOptions.FundingPurposes"
                                   radio-hints="@hints"
                                   class="govuk-!-margin-bottom-8">

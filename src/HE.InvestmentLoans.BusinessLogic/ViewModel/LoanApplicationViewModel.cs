@@ -43,6 +43,8 @@ public class LoanApplicationViewModel
 
     public FundingPurpose? Purpose { get; set; }
 
+    public bool GoodChangeMode { get; set; }
+
     public SiteViewModel AddNewSite()
     {
         var site = new SiteViewModel
