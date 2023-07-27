@@ -78,7 +78,7 @@ public class LoanApplicationController : Controller
                 TryUpdateModelAction = x => this.TryUpdateModelAsync(x),
             }).ConfigureAwait(false);
 
-            workflow.NextState(Enum.Parse<Trigger>(action));
+            await workflow.NextState(Enum.Parse<Trigger>(action));
         }
         catch (Common.Exceptions.ValidationException ex)
         {
@@ -99,7 +99,7 @@ public class LoanApplicationController : Controller
     {
         model = await this._mediator.Send(new BL.LoanApplicationLegacy.Queries.GetSingle() { Id = id });
         var workflow = new LoanApplicationWorkflow(model, _mediator);
-        workflow.NextState(Trigger.Back);
+        await workflow.NextState(Trigger.Back);
 
         if (workflow.GetName() == LoanApplicationWorkflow.State.AboutLoan.ToString())
         {
