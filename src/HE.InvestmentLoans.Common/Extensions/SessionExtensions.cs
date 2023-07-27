@@ -2,7 +2,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Extensions;
+namespace HE.InvestmentLoans.Common.Extensions;
 
 public static class SessionExtensions
 {

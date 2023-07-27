@@ -16,33 +16,7 @@ public class MemoryCacheService : ICacheService
         _memoryCache = memoryCache;
     }
 
-    public T? GetValue<T>(string key)
-    {
-        if (_memoryCache.TryGetValue(key, out T cacheValue))
-        {
-            return cacheValue;
-        }
-
-        return default;
-    }
-
-    public T? GetValue<T>(string key, Func<T> loadValue)
-    {
-        if (_memoryCache.TryGetValue(key, out T cacheValue))
-        {
-            return cacheValue;
-        }
-
-        var value = loadValue();
-
-        if (value != null)
-        {
-            var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(_config.ExpireMinutes));
-            _memoryCache.Set(key, value, cacheEntryOptions);
-        }
-
-        return value;
-    }
+    public T? GetValue<T>(string key) => _memoryCache.TryGetValue(key, out T cacheValue) ? cacheValue : default;
 
     public async Task<T?> GetValueAsync<T>(string key, Func<Task<T>> loadValue)
     {
