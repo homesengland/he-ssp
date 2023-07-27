@@ -1,3 +1,4 @@
+using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
@@ -18,9 +19,12 @@ public class LoanApplicationV2Controller : Controller
 {
     private readonly IMediator _mediator;
 
-    public LoanApplicationV2Controller(IMediator mediator)
+    private readonly IValidator<LoanPurposeModel> _validator;
+
+    public LoanApplicationV2Controller(IMediator mediator, IValidator<LoanPurposeModel> validator)
     {
         _mediator = mediator;
+        _validator = validator;
     }
 
     [HttpGet("")]
@@ -76,6 +80,12 @@ public class LoanApplicationV2Controller : Controller
     [HttpPost("loan-purpose")]
     public async Task<IActionResult> LoanPurposePost(LoanPurposeModel model, CancellationToken cancellationToken)
     {
+        var validationResult = await _validator.ValidateAsync(model, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            return View("LoanPurpose", model);
+        }
+
         if (model.FundingPurpose == FundingPurpose.BuildingNewHomes)
         {
             var loanApplicationId = await _mediator.Send(new StartApplicationCommand(), cancellationToken);

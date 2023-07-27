@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
@@ -19,13 +18,11 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 public class LoanApplicationController : Controller
 {
     private readonly IMediator _mediator;
-    private readonly IValidator<LoanApplicationViewModel> _validator;
     private readonly ICacheService _cacheService;
 
-    public LoanApplicationController(IMediator mediator, IValidator<LoanApplicationViewModel> validator, ICacheService cacheService)
+    public LoanApplicationController(IMediator mediator, ICacheService cacheService)
     {
         this._mediator = mediator;
-        this._validator = validator;
         this._cacheService = cacheService;
     }
 
@@ -62,16 +59,6 @@ public class LoanApplicationController : Controller
 
         try
         {
-            var validationResult = _validator.Validate(model, opt => opt.IncludeRuleSets(workflow.GetName()));
-            if (!validationResult.IsValid)
-            {
-                // error messages in the View.
-                validationResult.AddToModelState(ModelState);
-
-                // re-render the view when validation failed.
-                return View(workflow.GetName(), model);
-            }
-
             var result = await this._mediator.Send(new BL.LoanApplicationLegacy.Commands.Update()
             {
                 Model = sessionModel,

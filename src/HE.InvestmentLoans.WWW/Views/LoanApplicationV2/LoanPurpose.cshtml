@@ -9,9 +9,9 @@
 @model LoanPurposeModel;
 @inject ModelExpressionProvider modelProvider
 @{
-    var hints = new string[] { "This can include the redevelopment of uninhabitable buildings, or associated infrastructure." };
+    var hints = new[] { "This can include the redevelopment of uninhabitable buildings, or associated infrastructure." };
 
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Purpose));
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((LoanPurposeModel x) => x.FundingPurpose));
 }
 
 <gds-div-grid-column-two-thirds>
