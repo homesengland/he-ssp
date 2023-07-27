@@ -30,24 +30,6 @@ public class RedisService : ICacheService
         return default;
     }
 
-    public T? GetValue<T>(string key, Func<T> loadValue)
-    {
-        if (Cache.KeyExists(key))
-        {
-            string? resp = Cache.StringGet(key);
-            return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
-        }
-
-        var value = loadValue();
-
-        if (value != null)
-        {
-            SetValue(key, value);
-        }
-
-        return value;
-    }
-
     public async Task<T?> GetValueAsync<T>(string key, Func<Task<T>> loadValue)
     {
         if (Cache.KeyExists(key))
