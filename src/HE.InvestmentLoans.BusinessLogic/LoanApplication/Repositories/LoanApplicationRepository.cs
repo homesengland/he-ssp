@@ -146,7 +146,11 @@ public class LoanApplicationRepository : ILoanApplicationRepository
 
     public async Task Save(LoanApplicationEntity loanApplication, CancellationToken cancellationToken)
     {
-        var loanApplicationDto = new LoanApplicationDto();
+        var loanApplicationDto = new LoanApplicationDto()
+        {
+            LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount),
+        };
+
         var loanApplicationSerialized = JsonSerializer.Serialize(loanApplicationDto);
         var req = new invln_sendinvestmentloansdatatocrmRequest
         {

@@ -1,4 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
@@ -16,6 +17,11 @@ public static class LoanApplicationMapper
             Security = MapToSecurityViewModel(loanApplicationDto),
             Account = MapToAccountDetailsViewModel(loanApplicationDto),
         };
+    }
+
+    public static UserAccountDto MapToUserAccountDto(UserAccount userAccount)
+    {
+        return new UserAccountDto { AccountId = userAccount.AccountId, ContactEmail = userAccount.UserEmail, ContactExternalId = userAccount.UserGlobalId, };
     }
 
     private static AccountDetailsViewModel MapToAccountDetailsViewModel(LoanApplicationDto loanApplicationDto)
