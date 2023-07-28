@@ -32,10 +32,13 @@
             }
         </gds-summary-list-value-v2>
         <gds-summary-list-actions-v2>
-            <gds-link href=@ViewData["Link"]>
-                Change
-                <gds-span-visually-hidden> @ViewData["Link"]</gds-span-visually-hidden>
-            </gds-link>
+            @if (!string.IsNullOrEmpty(ViewData["Link"] as string))
+            {
+                <gds-link href=@ViewData["Link"]>
+                    Change
+                    <gds-span-visually-hidden> @ViewData["Link"]</gds-span-visually-hidden>
+                </gds-link>
+            }
         </gds-summary-list-actions-v2>
     </gds-summary-list-row-v2>
 }

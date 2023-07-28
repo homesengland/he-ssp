@@ -167,9 +167,9 @@
             </button>
         }
     </form>
-    <gds-link href="@Url.Action("Index","LoanApplication", new {id = Model.ID})">
+    <gds-link href="@Url.Action("ReportProblem", "LoanApplication")">
         Report a problem with this page
-        <gds-span-visually-hidden> @Url.Action("Index","LoanApplication", new {id = Model.ID})</gds-span-visually-hidden>
+        <gds-span-visually-hidden> @Url.Action("ReportProblem", "LoanApplication")</gds-span-visually-hidden>
     </gds-link>
 </gds-div-grid-column-two-thirds>
 

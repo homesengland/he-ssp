@@ -2,7 +2,6 @@ using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Extensions;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
@@ -147,7 +146,11 @@ public class LoanApplicationRepository : ILoanApplicationRepository
 
     public async Task Save(LoanApplicationEntity loanApplication, CancellationToken cancellationToken)
     {
-        var loanApplicationDto = new LoanApplicationDto();
+        var loanApplicationDto = new LoanApplicationDto()
+        {
+            LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount),
+        };
+
         var loanApplicationSerialized = JsonSerializer.Serialize(loanApplicationDto);
         var req = new invln_sendinvestmentloansdatatocrmRequest
         {

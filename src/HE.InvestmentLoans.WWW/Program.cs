@@ -3,6 +3,7 @@ using He.Identity.Mvc;
 using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.WWW.Config;
 using HE.InvestmentLoans.WWW.Extensions;
+using HE.InvestmentLoans.WWW.Filters;
 using HE.InvestmentLoans.WWW.Middlewares;
 using Microsoft.FeatureManagement;
 
@@ -34,7 +35,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 
-var mvcbuilder = builder.Services.AddControllersWithViews();
+var mvcbuilder = builder.Services.AddControllersWithViews(config => config.Filters.Add<ExceptionFilter>());
 
 builder.Services.ConfigureHeCookieSettings(
     mvcbuilder,

@@ -35,10 +35,11 @@ public class LoanApplicationWorkflow
         ConfigureTransitions();
     }
 
-    public async void NextState(Trigger trigger)
+    public async Task<State> NextState(Trigger trigger)
     {
         await _machine.FireAsync(trigger);
         _model.State = _machine.State;
+        return _machine.State;
     }
 
     public async void ChangeState(State state)
@@ -99,6 +100,11 @@ public class LoanApplicationWorkflow
 
         _machine.OnTransitionCompletedAsync(x =>
         {
+            if (_model.GoodChangeMode)
+            {
+                return Task.CompletedTask;
+            }
+
             _model.State = x.Destination;
             return _mediator.Send(new Commands.Update() { Model = _model });
         });

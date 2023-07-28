@@ -16,7 +16,7 @@ public class LoanUserContext : ILoanUserContext
 
     private readonly IList<Guid> _accountIds = new List<Guid>();
 
-    private UserAccount _selectedAccount;
+    private UserAccount? _selectedAccount;
 
     public LoanUserContext(IUserContext userContext, ILoanUserRepository loanUserRepository, ICacheService cacheService)
     {
@@ -69,7 +69,7 @@ public class LoanUserContext : ILoanUserContext
 
         var userDetails = await _cacheService.GetValueAsync($"{nameof(this.LoadUserDetails)}_{_userContext.UserGlobalId}", async () => await _loanUserRepository.GetUserDetails(_userContext.UserGlobalId, _userContext.Email)) ?? throw new LoanUserAccountIsMissingException();
 
-        var accounts = userDetails.contactRoles.OrderBy(x => x.accountId);
+        var accounts = userDetails.contactRoles.OrderBy(x => x.accountId).ToList();
 
         _accountIds.AddRange(accounts.Select(x => x.accountId).ToList());
 
@@ -77,11 +77,11 @@ public class LoanUserContext : ILoanUserContext
 
         if (selectedAccount is null)
         {
-            _selectedAccount = new UserAccount(UserGlobalId, Guid.Parse(defaultAccountGuid), defaultAccountName);
+            _selectedAccount = new UserAccount(UserGlobalId, Email, Guid.Parse(defaultAccountGuid), defaultAccountName);
         }
         else
         {
-            _selectedAccount = new UserAccount(UserGlobalId, selectedAccount.accountId, selectedAccount.accountName);
+            _selectedAccount = new UserAccount(UserGlobalId, Email, selectedAccount.accountId, selectedAccount.accountName);
         }
     }
 }

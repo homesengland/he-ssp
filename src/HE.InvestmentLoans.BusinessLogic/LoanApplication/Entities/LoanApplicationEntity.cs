@@ -48,7 +48,7 @@ public class LoanApplicationEntity
         LegacyModel = new LoanApplicationViewModel
         {
             ID = Id.Value,
-            State = LoanApplicationWorkflow.State.CheckYourDetails,
+            State = LoanApplicationWorkflow.State.TaskList,
         };
         LegacyModel.AddNewSite();
     }

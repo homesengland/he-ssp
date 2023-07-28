@@ -40,7 +40,7 @@ public class FlowTest : MediatorTestBase
 
         var workflow = new LoanApplicationWorkflow(model, mediator);
 
-        workflow.NextState(Trigger.Continue);
+        await workflow.NextState(Trigger.Continue);
 
         Assert.AreEqual(model.State, expcected);
     }
@@ -57,7 +57,7 @@ public class FlowTest : MediatorTestBase
         model.State = begin;
         model.Purpose = FundingPurpose.BuildingNewHomes;
         var workflow = new LoanApplicationWorkflow(model, mediator);
-        workflow.NextState(Trigger.Back);
+        await workflow.NextState(Trigger.Back);
         Assert.AreEqual(model.State, expcected);
     }
 
@@ -74,7 +74,7 @@ public class FlowTest : MediatorTestBase
         model.State = begin;
         model.Purpose = FundingPurpose.Other;
         var workflow = new LoanApplicationWorkflow(model, mediator);
-        workflow.NextState(Trigger.Continue);
+        await workflow.NextState(Trigger.Continue);
         Assert.AreEqual(model.State, expcected);
     }
 
@@ -90,7 +90,7 @@ public class FlowTest : MediatorTestBase
         model.State = begin;
         model.Purpose = FundingPurpose.Other;
         var workflow = new LoanApplicationWorkflow(model, mediator);
-        workflow.NextState(Trigger.Back);
+        await workflow.NextState(Trigger.Back);
         Assert.AreEqual(model.State, expcected);
     }
 }
