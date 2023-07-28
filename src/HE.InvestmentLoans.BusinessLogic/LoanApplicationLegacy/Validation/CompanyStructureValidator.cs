@@ -9,7 +9,8 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Validation;
 
 public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewModel>
 {
-    private readonly string[] _allowedExtensions = new string[] {
+    private readonly string[] _allowedExtensions = new string[]
+    {
         AllowedFileExtension.PDF,
         AllowedFileExtension.DOC,
         AllowedFileExtension.DOCX,
