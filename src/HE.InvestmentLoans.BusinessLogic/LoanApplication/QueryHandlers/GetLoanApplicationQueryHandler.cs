@@ -19,6 +19,7 @@ public class GetLoanApplicationQueryHandler : IRequestHandler<GetLoanApplication
     public async Task<GetLoanApplicationQueryResponse> Handle(GetLoanApplicationQuery request, CancellationToken cancellationToken)
     {
         var loanApplication = await _loanApplicationRepository.GetLoanApplication(request.Id, await _loanUserContext.GetSelectedAccount(), cancellationToken);
+
         return new GetLoanApplicationQueryResponse(loanApplication.LegacyModel);
     }
 }

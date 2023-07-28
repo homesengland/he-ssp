@@ -14,9 +14,12 @@ public static class WebModule
     public static void AddWebModule(this IServiceCollection serviceCollections)
     {
         serviceCollections.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(LoanApplicationViewModel).Assembly));
+<<<<<<< Updated upstream
+=======
 
         serviceCollections.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPostProcessorBehavior<,>));
 
+>>>>>>> Stashed changes
         serviceCollections.AddScoped<NonceModel>();
         serviceCollections.AddBusinessLogic();
         serviceCollections.AddCrmConnection();
