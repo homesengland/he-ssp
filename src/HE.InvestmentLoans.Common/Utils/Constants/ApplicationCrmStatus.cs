@@ -1,5 +1,5 @@
 namespace HE.InvestmentLoans.Common.Utils.Constants;
-public static class ApplicationStatusString
+public static class ApplicationCrmStatus
 {
     public const string Draft = "draft";
     public const string Submitted = "submitted";
