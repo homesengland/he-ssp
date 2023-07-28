@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Stateless;
 
@@ -76,10 +77,10 @@ public class SecurityWorkflow
             .Permit(Trigger.Change, State.CheckAnswers);
 
         _machine.Configure(State.DirLoans)
-            .PermitIf(Trigger.Continue, State.DirLoansSub, () => _model.Security.DirLoans == "Yes")
-            .PermitIf(Trigger.Continue, State.CheckAnswers, () => _model.Security.DirLoans != "Yes")
-            .PermitIf(Trigger.Change, State.DirLoansSub, () => _model.Security.DirLoans == "Yes")
-            .PermitIf(Trigger.Change, State.CheckAnswers, () => _model.Security.DirLoans != "Yes")
+            .PermitIf(Trigger.Continue, State.DirLoansSub, () => _model.Security.DirLoans == CommonResponse.Yes)
+            .PermitIf(Trigger.Continue, State.CheckAnswers, () => _model.Security.DirLoans != CommonResponse.Yes)
+            .PermitIf(Trigger.Change, State.DirLoansSub, () => _model.Security.DirLoans == CommonResponse.Yes)
+            .PermitIf(Trigger.Change, State.CheckAnswers, () => _model.Security.DirLoans != CommonResponse.Yes)
             .Permit(Trigger.Back, State.ChargesDebtCompany);
 
         _machine.Configure(State.DirLoansSub)
@@ -88,13 +89,13 @@ public class SecurityWorkflow
             .Permit(Trigger.Change, State.CheckAnswers);
 
         _machine.Configure(State.CheckAnswers)
-           .PermitIf(Trigger.Continue, State.Complete, () => _model.Security.CheckAnswers == "Yes")
-           .IgnoreIf(Trigger.Continue, () => _model.Security.CheckAnswers != "Yes")
-           .PermitIf(Trigger.Back, State.DirLoansSub, () => _model.Security.DirLoans == "Yes")
-           .PermitIf(Trigger.Back, State.DirLoans, () => _model.Security.DirLoans != "Yes")
+           .PermitIf(Trigger.Continue, State.Complete, () => _model.Security.CheckAnswers == CommonResponse.Yes)
+           .IgnoreIf(Trigger.Continue, () => _model.Security.CheckAnswers != CommonResponse.Yes)
+           .PermitIf(Trigger.Back, State.DirLoansSub, () => _model.Security.DirLoans == CommonResponse.Yes)
+           .PermitIf(Trigger.Back, State.DirLoans, () => _model.Security.DirLoans != CommonResponse.Yes)
            .OnExit(() =>
            {
-               if (_model.Security.CheckAnswers == "Yes")
+               if (_model.Security.CheckAnswers == CommonResponse.Yes)
                {
                    _model.Security.SetFlowCompletion(true);
                }

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Stateless;
 
@@ -87,12 +88,12 @@ public class CompanyStructureWorkflow
             .Permit(Trigger.Change, State.CheckAnswers);
 
         _machine.Configure(State.CheckAnswers)
-           .PermitIf(Trigger.Continue, State.Complete, () => _model.Company.CheckAnswers == "Yes")
-           .IgnoreIf(Trigger.Continue, () => _model.Company.CheckAnswers != "Yes")
+           .PermitIf(Trigger.Continue, State.Complete, () => _model.Company.CheckAnswers == CommonResponse.Yes)
+           .IgnoreIf(Trigger.Continue, () => _model.Company.CheckAnswers != CommonResponse.Yes)
            .PermitIf(Trigger.Back, State.HomesBuilt)
            .OnExit(() =>
            {
-               if (_model.Company.CheckAnswers == "Yes")
+               if (_model.Company.CheckAnswers == CommonResponse.Yes)
                {
                    _model.Company.SetFlowCompletion(true);
                }

@@ -17,7 +17,7 @@ public class LoanUserRepository : ILoanUserRepository
 
     public async Task<ContactRolesDto?> GetUserDetails(string userGlobalId, string userEmail)
     {
-        var portalType = "858110001";
+        const string portalType = "858110001";
 
         var req = new invln_getcontactroleRequest()
         {

@@ -1,5 +1,7 @@
 using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Validation;
 
@@ -7,8 +9,8 @@ public class LoanApplicationValidator : AbstractValidator<LoanApplicationViewMod
 {
     public LoanApplicationValidator()
     {
-        RuleSet("LoanPurpose", () => RuleFor(c => c.Purpose)
+        RuleSet(LoanApplicationView.LoanPurpose, () => RuleFor(c => c.Purpose)
                 .NotEmpty()
-                .WithMessage("Select what you need Homes England funding for"));
+                .WithMessage(ValidationErrorMessage.LoanPurpose));
     }
 }

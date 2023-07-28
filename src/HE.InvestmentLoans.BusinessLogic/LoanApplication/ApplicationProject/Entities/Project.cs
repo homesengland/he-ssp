@@ -1,5 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
-using HE.InvestmentLoans.Common.Utils;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
@@ -101,7 +101,7 @@ public class Project
 
     public void RemoveAlternativeRoutesData()
     {
-        if (TypeHomes != null && !TypeHomes.Contains("other"))
+        if (TypeHomes != null && !TypeHomes.Contains(CommonResponse.Other))
         {
             TypeHomesOther = null;
         }
@@ -113,11 +113,11 @@ public class Project
             PlanningStatus = null;
         }
 
-        if (LocationOption == "coordinates")
+        if (LocationOption == ProjectFormOption.Coordinates)
         {
             LocationLandRegistry = null;
         }
-        else if (LocationOption == "landRegistryTitleNumber")
+        else if (LocationOption == ProjectFormOption.LandRegistryTitleNumber)
         {
             LocationCoordinates = null;
         }
@@ -210,7 +210,7 @@ public class Project
             return false;
         }
 
-        if (LocationOption == "coordinates")
+        if (LocationOption == ProjectFormOption.Coordinates)
         {
             return !string.IsNullOrEmpty(LocationCoordinates);
         }

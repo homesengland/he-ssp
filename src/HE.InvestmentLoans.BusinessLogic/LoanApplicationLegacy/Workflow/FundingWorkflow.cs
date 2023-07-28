@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Stateless;
 
@@ -108,12 +109,12 @@ public class FundingWorkflow
             .Permit(Trigger.Change, State.CheckAnswers);
 
         _machine.Configure(State.CheckAnswers)
-           .PermitIf(Trigger.Continue, State.Complete, () => _model.Funding.CheckAnswers == "Yes")
-           .IgnoreIf(Trigger.Continue, () => _model.Funding.CheckAnswers != "Yes")
+           .PermitIf(Trigger.Continue, State.Complete, () => _model.Funding.CheckAnswers == CommonResponse.Yes)
+           .IgnoreIf(Trigger.Continue, () => _model.Funding.CheckAnswers != CommonResponse.Yes)
            .Permit(Trigger.Back, State.AdditionalProjects)
            .OnExit(() =>
            {
-               if (_model.Funding.CheckAnswers == "Yes")
+               if (_model.Funding.CheckAnswers == CommonResponse.Yes)
                {
                    _model.Funding.SetFlowCompletion(true);
                }

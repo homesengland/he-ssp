@@ -1,33 +1,42 @@
 using System.Globalization;
 using FluentValidation;
-using HE.InvestmentLoans.BusinessLogic.Constants;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Validation;
 
 public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewModel>
 {
-    private readonly string[] _allowedExtensions = new string[] { ".pdf", ".doc", ".docx", ".jpeg", ".jpg", ".rtf" };
+    private readonly string[] _allowedExtensions = new string[] {
+        AllowedFileExtension.PDF,
+        AllowedFileExtension.DOC,
+        AllowedFileExtension.DOCX,
+        AllowedFileExtension.JPEG,
+        AllowedFileExtension.JPG,
+        AllowedFileExtension.RTF,
+    };
 
     public CompanyStructureValidator()
     {
-        RuleSet("ExistingCompany", () =>
+        RuleSet(CompanyStructureView.ExistingCompany, () =>
         {
             When(
                 c => c.CompanyInfoFileName != null,
                 () => RuleFor(e => e.CompanyInfoFile)
                     .Must(
                         e => e?.Length < 20 * 1024 * 1024)
-                    .WithMessage(ErrorMessages.FileIncorrectSize.ToString()));
+                    .WithMessage(ValidationErrorMessage.FileIncorrectSize));
 
             RuleFor(e => e.CompanyInfoFileName)
               .Must(
                         e => _allowedExtensions.Contains(Path.GetExtension(e?.ToLower(CultureInfo.InvariantCulture))))
-                    .WithMessage(ErrorMessages.FileIncorrectFormat.ToString())
+                    .WithMessage(ValidationErrorMessage.FileIncorrectFormat)
                     .When(e => !string.IsNullOrEmpty(e.CompanyInfoFileName));
         });
 
-        RuleSet("HomesBuilt", () => When(
+        RuleSet(CompanyStructureView.HomesBuilt, () => When(
                 item => item.HomesBuilt != null,
                 () => RuleFor(item => item.HomesBuilt)
                         .Cascade(CascadeMode.Stop)
@@ -43,7 +52,7 @@ public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewM
                             }
 
                             return true;
-                        }).WithMessage(ErrorMessages.HomesBuiltDecimalNumber.ToString())
+                        }).WithMessage(ValidationErrorMessage.HomesBuiltDecimalNumber)
                         .Must(value =>
                         {
                             if (!int.TryParse(value, out var intValue))
@@ -52,9 +61,9 @@ public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewM
                             }
 
                             return true;
-                        }).WithMessage(ErrorMessages.HomesBuiltIncorretInput.ToString())
+                        }).WithMessage(ValidationErrorMessage.HomesBuiltIncorretInput)
                         .Matches(@"^0$|^[1-9][0-9]*$")
-                        .WithMessage(ErrorMessages.HomesBuiltIncorrectNumber.ToString())
+                        .WithMessage(ValidationErrorMessage.HomesBuiltIncorrectNumber)
                         .Must(value =>
                         {
                             if (int.TryParse(value, out var intValue))
@@ -63,19 +72,19 @@ public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewM
                             }
 
                             return true;
-                        }).WithMessage(ErrorMessages.HomesBuiltIncorrectNumber.ToString())));
+                        }).WithMessage(ValidationErrorMessage.HomesBuiltIncorrectNumber)));
 
-        RuleSet("CheckAnswers", () =>
+        RuleSet(CompanyStructureView.CheckAnswers, () =>
         {
             RuleFor(item => item.CheckAnswers)
            .NotEmpty()
-           .WithMessage(ErrorMessages.SecurityCheckAnswers.ToString());
+           .WithMessage(ValidationErrorMessage.SecurityCheckAnswers);
 
-            When(item => item.CheckAnswers == "Yes", () => RuleFor(m => m).Must(x =>
+            When(item => item.CheckAnswers == CommonResponse.Yes, () => RuleFor(m => m).Must(x =>
                 !string.IsNullOrEmpty(x.Purpose) &&
                 !string.IsNullOrEmpty(x.ExistingCompany) &&
                 !string.IsNullOrEmpty(x.HomesBuilt))
-                .WithMessage(ErrorMessages.CheckAnswersOption.ToString())
+                .WithMessage(ValidationErrorMessage.CheckAnswersOption)
                 .OverridePropertyName(nameof(CompanyStructureViewModel.CheckAnswers)));
         });
     }

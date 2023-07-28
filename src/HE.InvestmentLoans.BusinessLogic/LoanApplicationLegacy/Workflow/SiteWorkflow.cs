@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Stateless;
 
@@ -112,11 +113,11 @@ public class SiteWorkflow
             .Permit(Trigger.Change, State.CheckAnswers);
 
         _machine.Configure(State.PlanningRef)
-            .PermitIf(Trigger.Continue, State.PlanningRefEnter, () => _site.PlanningRef == "Yes")
-            .PermitIf(Trigger.Continue, State.Location, () => _site.PlanningRef == "No")
+            .PermitIf(Trigger.Continue, State.PlanningRefEnter, () => _site.PlanningRef == CommonResponse.Yes)
+            .PermitIf(Trigger.Continue, State.Location, () => _site.PlanningRef == CommonResponse.No)
             .PermitIf(Trigger.Continue, State.Ownership, () => string.IsNullOrEmpty(_site.PlanningRef))
-            .PermitIf(Trigger.Change, State.PlanningRefEnter, () => _site.PlanningRef == "Yes")
-            .PermitIf(Trigger.Change, State.Location, () => _site.PlanningRef != "Yes")
+            .PermitIf(Trigger.Change, State.PlanningRefEnter, () => _site.PlanningRef == CommonResponse.Yes)
+            .PermitIf(Trigger.Change, State.Location, () => _site.PlanningRef != CommonResponse.Yes)
             .Permit(Trigger.Back, State.Type);
 
         _machine.Configure(State.PlanningRefEnter)
@@ -133,18 +134,18 @@ public class SiteWorkflow
 
         _machine.Configure(State.Location)
             .Permit(Trigger.Continue, State.Ownership)
-            .PermitIf(Trigger.Back, State.PlanningPermissionStatus, () => _site.PlanningRef == "Yes")
-            .PermitIf(Trigger.Back, State.PlanningRef, () => _site.PlanningRef != "Yes")
+            .PermitIf(Trigger.Back, State.PlanningPermissionStatus, () => _site.PlanningRef == CommonResponse.Yes)
+            .PermitIf(Trigger.Back, State.PlanningRef, () => _site.PlanningRef != CommonResponse.Yes)
             .Permit(Trigger.Change, State.CheckAnswers);
 
         _machine.Configure(State.Ownership)
-            .PermitIf(Trigger.Continue, State.Additional, () => _site.Ownership == "Yes")
-            .PermitIf(Trigger.Continue, State.GrantFunding, () => _site.Ownership != "Yes")
-            .PermitIf(Trigger.Back, State.Location, () => _site.PlanningRef == "Yes")
-            .PermitIf(Trigger.Back, State.Location, () => _site.PlanningRef == "No")
+            .PermitIf(Trigger.Continue, State.Additional, () => _site.Ownership == CommonResponse.Yes)
+            .PermitIf(Trigger.Continue, State.GrantFunding, () => _site.Ownership != CommonResponse.Yes)
+            .PermitIf(Trigger.Back, State.Location, () => _site.PlanningRef == CommonResponse.Yes)
+            .PermitIf(Trigger.Back, State.Location, () => _site.PlanningRef == CommonResponse.No)
             .PermitIf(Trigger.Back, State.PlanningRef, () => string.IsNullOrEmpty(_site.PlanningRef))
-            .PermitIf(Trigger.Change, State.Additional, () => _site.Ownership == "Yes")
-            .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.Ownership != "Yes");
+            .PermitIf(Trigger.Change, State.Additional, () => _site.Ownership == CommonResponse.Yes)
+            .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.Ownership != CommonResponse.Yes);
 
         _machine.Configure(State.Additional)
             .Permit(Trigger.Continue, State.GrantFunding)
@@ -152,12 +153,12 @@ public class SiteWorkflow
             .Permit(Trigger.Change, State.CheckAnswers);
 
         _machine.Configure(State.GrantFunding)
-           .PermitIf(Trigger.Continue, State.GrantFundingMore, () => _site.GrantFunding == "Yes")
-           .PermitIf(Trigger.Continue, State.ChargesDebt, () => _site.GrantFunding != "Yes")
-           .PermitIf(Trigger.Back, State.Additional, () => _site.Ownership == "Yes")
-           .PermitIf(Trigger.Back, State.Ownership, () => _site.Ownership != "Yes")
-           .PermitIf(Trigger.Change, State.GrantFundingMore, () => _site.GrantFunding == "Yes")
-           .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.GrantFunding != "Yes");
+           .PermitIf(Trigger.Continue, State.GrantFundingMore, () => _site.GrantFunding == CommonResponse.Yes)
+           .PermitIf(Trigger.Continue, State.ChargesDebt, () => _site.GrantFunding != CommonResponse.Yes)
+           .PermitIf(Trigger.Back, State.Additional, () => _site.Ownership == CommonResponse.Yes)
+           .PermitIf(Trigger.Back, State.Ownership, () => _site.Ownership != CommonResponse.Yes)
+           .PermitIf(Trigger.Change, State.GrantFundingMore, () => _site.GrantFunding == CommonResponse.Yes)
+           .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.GrantFunding != CommonResponse.Yes);
 
         _machine.Configure(State.GrantFundingMore)
             .Permit(Trigger.Continue, State.ChargesDebt)
@@ -166,8 +167,8 @@ public class SiteWorkflow
 
         _machine.Configure(State.ChargesDebt)
             .Permit(Trigger.Continue, State.AffordableHomes)
-            .PermitIf(Trigger.Back, State.GrantFundingMore, () => _site.GrantFunding == "Yes")
-            .PermitIf(Trigger.Back, State.GrantFunding, () => _site.GrantFunding != "Yes")
+            .PermitIf(Trigger.Back, State.GrantFundingMore, () => _site.GrantFunding == CommonResponse.Yes)
+            .PermitIf(Trigger.Back, State.GrantFunding, () => _site.GrantFunding != CommonResponse.Yes)
             .Permit(Trigger.Change, State.CheckAnswers);
 
         _machine.Configure(State.AffordableHomes)
@@ -176,12 +177,12 @@ public class SiteWorkflow
            .Permit(Trigger.Change, State.CheckAnswers);
 
         _machine.Configure(State.CheckAnswers)
-            .PermitIf(Trigger.Continue, State.Complete, () => _site.CheckAnswers == "Yes")
-            .IgnoreIf(Trigger.Continue, () => _site.CheckAnswers != "Yes")
+            .PermitIf(Trigger.Continue, State.Complete, () => _site.CheckAnswers == CommonResponse.Yes)
+            .IgnoreIf(Trigger.Continue, () => _site.CheckAnswers != CommonResponse.Yes)
             .Permit(Trigger.Back, State.AffordableHomes)
             .OnExit(() =>
             {
-                if (_site.CheckAnswers == "Yes")
+                if (_site.CheckAnswers == CommonResponse.Yes)
                 {
                     _site.SetFlowCompletion(true);
                 }

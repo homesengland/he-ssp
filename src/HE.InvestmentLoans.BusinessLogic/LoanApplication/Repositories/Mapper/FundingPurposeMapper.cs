@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Application.Enums;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
@@ -8,9 +9,9 @@ public static class FundingPurposeMapper
     {
         return fundingPurposeAsString switch
         {
-            "Buildingnewhomes" => FundingPurpose.BuildingNewHomes,
-            "Buildinginfrastructureonly" => FundingPurpose.BuildingInfrastructure,
-            "Other" => FundingPurpose.Other,
+            FundingPurposeString.BuildingNewHomes => FundingPurpose.BuildingNewHomes,
+            FundingPurposeString.BuildingInfrastructureOnly => FundingPurpose.BuildingInfrastructure,
+            FundingPurposeString.Other => FundingPurpose.Other,
             _ => null,
         };
     }
@@ -19,9 +20,9 @@ public static class FundingPurposeMapper
     {
         return fundingPurpose switch
         {
-            FundingPurpose.BuildingNewHomes => "Buildingnewhomes",
-            FundingPurpose.BuildingInfrastructure => "Buildinginfrastructureonly",
-            FundingPurpose.Other => "Other",
+            FundingPurpose.BuildingNewHomes => FundingPurposeString.BuildingNewHomes,
+            FundingPurpose.BuildingInfrastructure => FundingPurposeString.BuildingInfrastructureOnly,
+            FundingPurpose.Other => FundingPurposeString.Other,
             _ => string.Empty,
         };
     }
