@@ -127,7 +127,7 @@ public class LoanApplicationV2Controller : Controller
 
         await _mediator.Send(new SubmitApplicationCommand(application.ViewModel));
 
-        return RedirectToAction(nameof(ApplicationSubmitted));
+        return RedirectToAction(nameof(ApplicationSubmitted), new { Id = id });
     }
 
     [HttpGet("submitted/{id}")]

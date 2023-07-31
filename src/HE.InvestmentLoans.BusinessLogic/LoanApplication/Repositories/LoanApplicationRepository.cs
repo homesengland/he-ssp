@@ -102,6 +102,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
 
         var loanApplicationDto = new LoanApplicationDto()
         {
+            loanApplicationId = loanApplication.ID.ToString(),
             name = loanApplication.Account.RegisteredName,
             contactEmailAdress = loanApplication.Account.EmailAddress,
             fundingReason = FundingPurposeMapper.Map(loanApplication.Purpose),

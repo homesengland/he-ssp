@@ -1,11 +1,9 @@
 using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.Config;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.CRM.Extensions;
 using HE.InvestmentLoans.WWW.Models;
-using MediatR;
 
 namespace HE.InvestmentLoans.WWW.Config;
 
@@ -14,8 +12,6 @@ public static class WebModule
     public static void AddWebModule(this IServiceCollection serviceCollections)
     {
         serviceCollections.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(LoanApplicationViewModel).Assembly));
-
-        serviceCollections.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPostProcessorBehavior<,>));
 
         serviceCollections.AddScoped<NonceModel>();
         serviceCollections.AddBusinessLogic();

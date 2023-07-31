@@ -82,8 +82,7 @@ public class FundingController : Controller
         var loanWorkflow = new LoanApplicationWorkflow(sessionModel, _mediator);
         if (loanWorkflow.IsBeingChecked() || workflow.IsStateComplete() || (sessionModel.Funding.CheckAnswers == "No" && action != "Change"))
         {
-            loanWorkflow.ChangeState(LoanApplicationWorkflow.State.TaskList);
-            return RedirectToAction("Workflow", "LoanApplication", new { id = sessionModel.ID, ending = loanWorkflow.GetName() });
+            return RedirectToAction("TaskList", "LoanApplicationV2", new { id = sessionModel.ID });
         }
         else
         {

@@ -1,7 +1,6 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Repositories;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Pipelines;
 using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
@@ -9,7 +8,6 @@ using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Utils;
 using MediatR;
-using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.InvestmentLoans.BusinessLogic.Config;
@@ -20,14 +18,12 @@ public static class BusinessLogicModule
     {
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining<LoanApplicationRepository>();
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
         services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
         services.AddScoped<ILoanUserRepository, LoanUserRepository>();
         services.AddScoped<ILoanUserContext, LoanUserContext>();
         services.AddScoped<IApplicationProjectsRepository, ApplicationProjectsRepository>();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
-
-        services.AddTransient<IRequestPostProcessor<GetLoanApplicationQuery, GetLoanApplicationQueryResponse>, CrmSessionMergerBehavior>();
 
         services.AddOrganizationSubmodule();
     }

@@ -153,11 +153,11 @@
     <div>
         @if (loanApllicationWorkflow.IsFilled())
         {
-        <a href="@Url.Action("CheckApplication", "LoanApplicationV2", new {id = Model.ID})">
-            <gds-button data-module="govuk-button" name="action" value="Continue">
-                Check and submit application
-            </gds-button>
-        </a>
+            <a href="@Url.Action("CheckApplication", "LoanApplicationV2", new {id = Model.ID})">
+                <gds-button data-module="govuk-button" name="action" value="Continue">
+                    Check and submit application
+                </gds-button>
+            </a>
         }
         else
         {
