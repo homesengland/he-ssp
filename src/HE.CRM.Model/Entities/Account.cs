@@ -706,7 +706,14 @@ namespace DataverseModel
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string IndustryCode = "industrycode";
 			public const string invln_account_invln_contactwebrole_Accountid = "invln_account_invln_contactwebrole_Accountid";
+			public const string invln_CreditRatingAgency = "invln_creditratingagency";
+			public const string invln_CurrentCRR = "invln_currentcrr";
+			public const string invln_DateofCRRassessment = "invln_dateofcrrassessment";
+			public const string invln_externalcreditrating = "invln_externalcreditrating";
 			public const string invln_loanapplication_account = "invln_loanapplication_account";
+			public const string invln_OriginalCRR = "invln_originalcrr";
+			public const string invln_OtherCreditRatingAgency = "invln_othercreditratingagency";
+			public const string invln_PreviousCRR = "invln_previouscrr";
 			public const string LastOnHoldTime = "lastonholdtime";
 			public const string LastUsedInCampaign = "lastusedincampaign";
 			public const string MarketCap = "marketcap";
@@ -3066,6 +3073,125 @@ namespace DataverseModel
 				this.OnPropertyChanging("IndustryCode");
 				this.SetAttributeValue("industrycode", value);
 				this.OnPropertyChanged("IndustryCode");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_creditratingagency")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_CreditRatingAgency
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_creditratingagency");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CreditRatingAgency");
+				this.SetAttributeValue("invln_creditratingagency", value);
+				this.OnPropertyChanged("invln_CreditRatingAgency");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_currentcrr")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_CurrentCRR
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_currentcrr");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CurrentCRR");
+				this.SetAttributeValue("invln_currentcrr", value);
+				this.OnPropertyChanged("invln_CurrentCRR");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_dateofcrrassessment")]
+		public System.Nullable<System.DateTime> invln_DateofCRRassessment
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_dateofcrrassessment");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_DateofCRRassessment");
+				this.SetAttributeValue("invln_dateofcrrassessment", value);
+				this.OnPropertyChanged("invln_DateofCRRassessment");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalcreditrating")]
+		public System.Nullable<bool> invln_externalcreditrating
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_externalcreditrating");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_externalcreditrating");
+				this.SetAttributeValue("invln_externalcreditrating", value);
+				this.OnPropertyChanged("invln_externalcreditrating");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_originalcrr")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_OriginalCRR
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_originalcrr");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_OriginalCRR");
+				this.SetAttributeValue("invln_originalcrr", value);
+				this.OnPropertyChanged("invln_OriginalCRR");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_othercreditratingagency")]
+		public string invln_OtherCreditRatingAgency
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_othercreditratingagency");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_OtherCreditRatingAgency");
+				this.SetAttributeValue("invln_othercreditratingagency", value);
+				this.OnPropertyChanged("invln_OtherCreditRatingAgency");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_previouscrr")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_PreviousCRR
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_previouscrr");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_PreviousCRR");
+				this.SetAttributeValue("invln_previouscrr", value);
+				this.OnPropertyChanged("invln_PreviousCRR");
 			}
 		}
 		

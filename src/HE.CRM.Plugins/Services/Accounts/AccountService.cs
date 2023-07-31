@@ -88,6 +88,15 @@ namespace HE.CRM.Plugins.Services.Accounts
             return organizationDetailsDto;
         }
 
+        public void OnCurrentCrrFieldUpdate(Account target, Account preImage)
+        {
+            if (target != null && preImage != null)
+            {
+                target.invln_PreviousCRR = preImage.invln_CurrentCRR;
+                target.invln_DateofCRRassessment = DateTime.Now;
+            }
+        }
+
         #endregion
 
         #region Private Methods

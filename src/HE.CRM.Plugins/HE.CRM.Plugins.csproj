@@ -122,7 +122,8 @@
   <ItemGroup>
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Exceptions\IntegrationApiException.cs" />
-    <Compile Include="Handlers\Account\GenerateRandomAccountNameSampleHandler.cs" />
+    <Compile Include="Handlers\Accounts\GenerateRandomAccountNameSampleHandler.cs" />
+    <Compile Include="Handlers\Accounts\OnCurrentCrrFieldUpdateHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeLoanApplicationExternalStatusHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteLoanApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteSiteDetailsHandler.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Plugins\CustomApi\SendInvestmentsLoanDataToCrmPlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateSingleLoanApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateSingleSiteDetailsPlugin.cs" />
+    <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />
     <Compile Include="Services\Accounts\AccountService.cs" />
     <Compile Include="Services\Accounts\IAccountService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -239,6 +241,7 @@
   <ItemGroup>
     <Content Include=".gitignore" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="..\HE.CRM.Common\HE.CRM.Common.projitems" Label="Shared" />
   <Import Project="..\HE.CRM.Model\HE.CRM.Model.projitems" Label="Shared" />
   <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
