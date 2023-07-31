@@ -63,6 +63,10 @@ public class LoanUserContext : ILoanUserContext
 
     private async Task LoadUserDetails()
     {
+        const string defaultAccountGuid = "429d11ab-15fe-ed11-8f6c-002248c653e1";
+
+        const string defaultAccountName = "Default account";
+
         var userDetails = await _cacheService.GetValueAsync($"{nameof(this.LoadUserDetails)}_{_userContext.UserGlobalId}", async () => await _loanUserRepository.GetUserDetails(_userContext.UserGlobalId, _userContext.Email)) ?? throw new LoanUserAccountIsMissingException();
 
         var accounts = userDetails.contactRoles.OrderBy(x => x.accountId).ToList();
@@ -73,7 +77,7 @@ public class LoanUserContext : ILoanUserContext
 
         if (selectedAccount is null)
         {
-            _selectedAccount = new UserAccount(UserGlobalId, Email, Guid.Parse("429d11ab-15fe-ed11-8f6c-002248c653e1"), "Default account");
+            _selectedAccount = new UserAccount(UserGlobalId, Email, Guid.Parse(defaultAccountGuid), defaultAccountName);
         }
         else
         {

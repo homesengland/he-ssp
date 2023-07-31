@@ -20,9 +20,11 @@ public class ApplicationProjects
 
     public void AddProject()
     {
+        const string newProjectName = "New project";
+
         var project = new Project
         {
-            DefaultName = "New project",
+            DefaultName = newProjectName,
         };
         Projects.Add(project);
     }

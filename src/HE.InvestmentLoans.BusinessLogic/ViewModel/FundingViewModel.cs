@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
 
@@ -40,21 +41,21 @@ public class FundingViewModel
 
     public void RemoveAlternativeRoutesData()
     {
-        if (PrivateSectorFunding == "Yes")
+        if (PrivateSectorFunding == CommonResponse.Yes)
         {
             PrivateSectorFundingReason = null;
         }
-        else if (PrivateSectorFunding == "No")
+        else if (PrivateSectorFunding == CommonResponse.No)
         {
             PrivateSectorFundingResult = null;
         }
 
-        if (AbnormalCosts == "No")
+        if (AbnormalCosts == CommonResponse.No)
         {
             AbnormalCostsInfo = null;
         }
 
-        if (Refinance == "repay")
+        if (Refinance == FundingFormOption.Repay)
         {
             RefinanceInfo = null;
         }

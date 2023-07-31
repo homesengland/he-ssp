@@ -1,6 +1,8 @@
 using FluentValidation;
-using HE.InvestmentLoans.BusinessLogic.Constants;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Validation;
 
@@ -8,29 +10,29 @@ public class SecurityValidator : AbstractValidator<SecurityViewModel>
 {
     public SecurityValidator()
     {
-        RuleSet("ChargesDebtCompany", () => When(
-                item => item.ChargesDebtCompany == "Yes",
+        RuleSet(SecurityView.ChargesDebtCompany, () => When(
+                item => item.ChargesDebtCompany == CommonResponse.Yes,
                 () => RuleFor(item => item.ChargesDebtCompanyInfo)
                 .NotEmpty()
-                .WithMessage(ErrorMessages.EnterMoreDetails.ToString())));
+                .WithMessage(ValidationErrorMessage.EnterMoreDetails)));
 
-        RuleSet("DirLoansSub", () => When(
-                item => item.DirLoansSub == "No",
+        RuleSet(SecurityView.DirLoansSub, () => When(
+                item => item.DirLoansSub == CommonResponse.No,
                 () => RuleFor(item => item.DirLoansSubMore)
                 .NotEmpty()
-                .WithMessage(ErrorMessages.EnterMoreDetails.ToString())));
+                .WithMessage(ValidationErrorMessage.EnterMoreDetails)));
 
-        RuleSet("CheckAnswers", () =>
+        RuleSet(SecurityView.CheckAnswers, () =>
         {
             RuleFor(item => item.CheckAnswers)
             .NotEmpty()
-            .WithMessage(ErrorMessages.SecurityCheckAnswers.ToString());
+            .WithMessage(ValidationErrorMessage.SecurityCheckAnswers);
 
-            When(item => item.CheckAnswers == "Yes", () => RuleFor(m => m).Must(x =>
+            When(item => item.CheckAnswers == CommonResponse.Yes, () => RuleFor(m => m).Must(x =>
                 !string.IsNullOrEmpty(x.ChargesDebtCompany) &&
                 !string.IsNullOrEmpty(x.DirLoans) &&
-                    (x.DirLoans == "No" || !string.IsNullOrEmpty(x.DirLoansSub)))
-                .WithMessage(ErrorMessages.CheckAnswersOption.ToString())
+                    (x.DirLoans == CommonResponse.No || !string.IsNullOrEmpty(x.DirLoansSub)))
+                .WithMessage(ValidationErrorMessage.CheckAnswersOption)
                 .OverridePropertyName(nameof(SecurityViewModel.CheckAnswers)));
         });
     }

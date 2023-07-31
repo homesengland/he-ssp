@@ -1,6 +1,8 @@
 using FluentValidation;
-using HE.InvestmentLoans.BusinessLogic.Constants;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Validation;
 
@@ -8,52 +10,52 @@ public class FundingValidator : AbstractValidator<FundingViewModel>
 {
     public FundingValidator()
     {
-        RuleSet("GDV", () => When(
+        RuleSet(FundingView.GDV, () => When(
                 item => item.GrossDevelopmentValue != null,
                 () => RuleFor(item => item.GrossDevelopmentValue)
                           .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
-                          .WithMessage(ErrorMessages.EstimatedPoundInput("GDV").ToString())));
+                          .WithMessage(ValidationErrorMessage.EstimatedPoundInput("GDV"))));
 
-        RuleSet("TotalCosts", () => When(
+        RuleSet(FundingView.TotalCosts, () => When(
                 item => item.TotalCosts != null,
                 () => RuleFor(item => item.TotalCosts)
                         .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
-                        .WithMessage(ErrorMessages.EstimatedPoundInput("total cost").ToString())));
+                        .WithMessage(ValidationErrorMessage.EstimatedPoundInput("total cost"))));
 
-        RuleSet("PrivateSectorFunding", () =>
+        RuleSet(FundingView.PrivateSectorFunding, () =>
         {
             When(
-                item => item.PrivateSectorFunding == "Yes",
+                item => item.PrivateSectorFunding == CommonResponse.Yes,
                 () => RuleFor(item => item.PrivateSectorFundingResult)
                         .NotEmpty()
-                        .WithMessage(ErrorMessages.EnterMoreDetails.ToString()));
+                        .WithMessage(ValidationErrorMessage.EnterMoreDetails));
 
             When(
-                item => item.PrivateSectorFunding == "No",
+                item => item.PrivateSectorFunding == CommonResponse.No,
                 () => RuleFor(item => item.PrivateSectorFundingReason)
                         .NotEmpty()
-                        .WithMessage(ErrorMessages.EnterMoreDetails.ToString()));
+                        .WithMessage(ValidationErrorMessage.EnterMoreDetails));
         });
 
-        RuleSet("AbnormalCosts", () => When(
-                item => item.AbnormalCosts == "Yes",
+        RuleSet(FundingView.AbnormalCosts, () => When(
+                item => item.AbnormalCosts == CommonResponse.Yes,
                 () => RuleFor(item => item.AbnormalCostsInfo)
                         .NotEmpty()
-                        .WithMessage(ErrorMessages.EnterMoreDetails.ToString())));
+                        .WithMessage(ValidationErrorMessage.EnterMoreDetails)));
 
-        RuleSet("Refinance", () => When(
-                item => item.Refinance == "refinance",
+        RuleSet(FundingView.Refinance, () => When(
+                item => item.Refinance == FundingFormOption.Refinance,
                 () => RuleFor(item => item.RefinanceInfo)
                         .NotEmpty()
-                        .WithMessage("Enter more detail about your refinance exit strategy")));
+                        .WithMessage(ValidationErrorMessage.EnterMoreDetailsForRefinanceExitStrategy)));
 
-        RuleSet("CheckAnswers", () =>
+        RuleSet(FundingView.CheckAnswers, () =>
         {
             RuleFor(item => item.CheckAnswers)
             .NotEmpty()
-            .WithMessage(ErrorMessages.SecurityCheckAnswers.ToString());
+            .WithMessage(ValidationErrorMessage.SecurityCheckAnswers);
 
-            When(item => item.CheckAnswers == "Yes", () => RuleFor(m => m)
+            When(item => item.CheckAnswers == CommonResponse.Yes, () => RuleFor(m => m)
                     .Must(x =>
                         !string.IsNullOrEmpty(x.GrossDevelopmentValue) &&
                         !string.IsNullOrEmpty(x.TotalCosts) &&
@@ -61,7 +63,7 @@ public class FundingValidator : AbstractValidator<FundingViewModel>
                         !string.IsNullOrEmpty(x.AdditionalProjects) &&
                         !string.IsNullOrEmpty(x.AbnormalCosts) &&
                         !string.IsNullOrEmpty(x.Refinance))
-                    .WithMessage(ErrorMessages.CheckAnswersOption.ToString())
+                    .WithMessage(ValidationErrorMessage.CheckAnswersOption)
                     .OverridePropertyName(nameof(FundingViewModel.CheckAnswers)));
         });
     }

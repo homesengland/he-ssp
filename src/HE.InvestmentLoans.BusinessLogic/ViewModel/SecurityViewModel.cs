@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
 
@@ -31,17 +32,17 @@ public class SecurityViewModel
 
     public void RemoveAlternativeRoutesData()
     {
-        if (ChargesDebtCompany == "No")
+        if (ChargesDebtCompany == CommonResponse.No)
         {
             ChargesDebtCompanyInfo = null;
         }
 
-        if (DirLoans == "No")
+        if (DirLoans == CommonResponse.No)
         {
             DirLoansSub = null;
             DirLoansSubMore = null;
         }
-        else if (DirLoansSub == "Yes")
+        else if (DirLoansSub == CommonResponse.Yes)
         {
             DirLoansSubMore = null;
         }

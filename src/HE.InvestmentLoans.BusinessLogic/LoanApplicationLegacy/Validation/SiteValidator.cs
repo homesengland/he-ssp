@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using FluentValidation;
-using HE.InvestmentLoans.BusinessLogic.Constants;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Validation;
 
@@ -12,21 +14,21 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
 {
     public SiteValidator()
     {
-        RuleSet("ManyHomes", () => RuleFor(item => item.ManyHomes)
+        RuleSet(ProjectView.ManyHomes, () => RuleFor(item => item.ManyHomes)
             .Matches(@"^(?!0)[1-9]\d{0,3}$|^9999$")
-            .WithMessage(ErrorMessages.ManyHomesAmount.ToString()));
+            .WithMessage(ValidationErrorMessage.ManyHomesAmount));
 
-        RuleSet("StartDate", () =>
+        RuleSet(ProjectView.StartDate, () =>
         {
             When(
-                item => item.HasEstimatedStartDate == "Yes"
+                item => item.HasEstimatedStartDate == CommonResponse.Yes
                 && (item.EstimatedStartDay == null || item.EstimatedStartMonth == null || item.EstimatedStartYear == null),
                 () => RuleFor(item => item.EstimatedStartDay)
                 .NotEmpty()
-                .WithMessage(ErrorMessages.NoStartDate.ToString()));
+                .WithMessage(ValidationErrorMessage.NoStartDate));
 
             When(
-                item => item.HasEstimatedStartDate == "Yes"
+                item => item.HasEstimatedStartDate == CommonResponse.Yes
                 && (item.EstimatedStartDay != null || item.EstimatedStartMonth != null || item.EstimatedStartYear != null),
                 () => RuleFor(item => item)
                 .Must(model =>
@@ -34,15 +36,15 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                     try
                     {
                         var dateString = $"{model.EstimatedStartDay}/{model.EstimatedStartMonth}/{model.EstimatedStartYear}";
-                        return DateTime.TryParseExact(dateString, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+                        return DateTime.TryParseExact(dateString, ProjectFormOption.AllowedDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
                     }
                     catch
                     {
                         return false;
                     }
                 })
-                .WithMessage(ErrorMessages.InvalidStartDate.ToString())
-                .WithName("EstimatedStartDay"));
+                .WithMessage(ValidationErrorMessage.InvalidStartDate)
+                .WithName(ProjectFormOption.EstimatedStartDay));
 
             When(
                 item => item.PurchaseDay != null && item.PurchaseMonth != null && item.PurchaseYear != null,
@@ -52,71 +54,71 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                         try
                         {
                             var dateString = $"{model.PurchaseDay}/{model.PurchaseMonth}/{model.PurchaseYear}";
-                            return DateTime.TryParseExact(dateString, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+                            return DateTime.TryParseExact(dateString, ProjectFormOption.AllowedDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
                         }
                         catch
                         {
                             return false;
                         }
                     })
-                    .WithMessage(ErrorMessages.IncorrectPurchaseDate.ToString())
-                    .WithName("PurchaseDate"));
+                    .WithMessage(ValidationErrorMessage.IncorrectPurchaseDate)
+                    .WithName(ProjectFormOption.PurchaseDate));
         });
 
-        RuleSet("TypeHomes", () => When(
-                item => item.TypeHomes != null && item.TypeHomes.Contains("other"),
+        RuleSet(ProjectView.TypeHomes, () => When(
+                item => item.TypeHomes != null && item.TypeHomes.Contains(CommonResponse.Other),
                 () => RuleFor(item => item.TypeHomesOther)
                 .NotEmpty()
-                .WithMessage(ErrorMessages.TypeHomesOtherType.ToString())));
+                .WithMessage(ValidationErrorMessage.TypeHomesOtherType)));
 
-        RuleSet("Location", () =>
+        RuleSet(ProjectView.Location, () =>
         {
-            When(item => item.LocationOption == "coordinates", () => RuleFor(item => item.LocationCoordinates)
+            When(item => item.LocationOption == ProjectFormOption.Coordinates, () => RuleFor(item => item.LocationCoordinates)
                     .NotEmpty()
-                    .WithMessage("Enter your XY coordinates"));
+                    .WithMessage(ValidationErrorMessage.EnterCoordinates));
 
-            When(item => item.LocationOption == "landRegistryTitleNumber", () => RuleFor(item => item.LocationLandRegistry)
+            When(item => item.LocationOption == ProjectFormOption.LandRegistryTitleNumber, () => RuleFor(item => item.LocationLandRegistry)
                     .NotEmpty()
-                    .WithMessage("Enter your Land Registry title number"));
+                    .WithMessage(ValidationErrorMessage.EnterLandRegistryTitleNumber));
         });
 
-        RuleSet("GrantFundingMore", () => When(
+        RuleSet(ProjectView.GrantFundingMore, () => When(
                 item => item.GrantFundingAmount != null,
                 () => RuleFor(item => item.GrantFundingAmount)
                         .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
-                        .WithMessage(ErrorMessages.AmountPoundInput("funding").ToString())));
+                        .WithMessage(ValidationErrorMessage.IncorrectGrantFundingAmount)));
 
-        RuleSet("ChargesDebt", () => When(
-                item => item.ChargesDebt == "Yes",
+        RuleSet(ProjectView.ChargesDebt, () => When(
+                item => item.ChargesDebt == CommonResponse.Yes,
                 () => RuleFor(item => item.ChargesDebtInfo)
                         .NotEmpty()
-                        .WithMessage(ErrorMessages.EnterExistingLegal.ToString())));
+                        .WithMessage(ValidationErrorMessage.EnterExistingLegal)));
 
-        RuleSet("Additional", () =>
+        RuleSet(ProjectView.Additional, () =>
         {
             When(
                 item => item.PurchaseDay == null && item.PurchaseMonth == null && item.PurchaseYear == null,
                 () => RuleFor(item => item.PurchaseDate)
                         .NotEmpty()
-                        .WithMessage(ErrorMessages.NoPurchaseDate.ToString()));
+                        .WithMessage(ValidationErrorMessage.NoPurchaseDate));
 
             When(
                 item => item.PurchaseDay == null && (item.PurchaseMonth != null || item.PurchaseYear != null),
                 () => RuleFor(item => item.PurchaseDay)
                         .NotEmpty()
-                        .WithMessage(ErrorMessages.NoPurchaseDay.ToString()));
+                        .WithMessage(ValidationErrorMessage.NoPurchaseDay));
 
             When(
                 item => item.PurchaseMonth == null && (item.PurchaseDay != null || item.PurchaseYear != null),
                 () => RuleFor(item => item.PurchaseMonth)
                         .NotEmpty()
-                        .WithMessage(ErrorMessages.NoPurchaseMonth.ToString()));
+                        .WithMessage(ValidationErrorMessage.NoPurchaseMonth));
 
             When(
                 item => item.PurchaseYear == null && (item.PurchaseDay != null || item.PurchaseMonth != null),
                 () => RuleFor(item => item.PurchaseYear)
                         .NotEmpty()
-                        .WithMessage(ErrorMessages.NoPurchaseYear.ToString()));
+                        .WithMessage(ValidationErrorMessage.NoPurchaseYear));
 
             When(
                 item => item.PurchaseDay != null && item.PurchaseMonth != null && item.PurchaseYear != null,
@@ -126,65 +128,65 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                     try
                     {
                         var dateString = $"{model.PurchaseDay}/{model.PurchaseMonth}/{model.PurchaseYear}";
-                        return DateTime.TryParseExact(dateString, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+                        return DateTime.TryParseExact(dateString, ProjectFormOption.AllowedDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
                     }
                     catch
                     {
                         return false;
                     }
                 })
-                .WithMessage(ErrorMessages.IncorrectPurchaseDate.ToString())
-                .WithName("PurchaseDate")
+                .WithMessage(ValidationErrorMessage.IncorrectPurchaseDate)
+                .WithName(ProjectFormOption.PurchaseDate)
                 .DependentRules(() => RuleFor(item => item).Must(model =>
                     {
                         var dateString = $"{model.PurchaseDay}/{model.PurchaseMonth}/{model.PurchaseYear}";
-                        var providedDate = DateTime.ParseExact(dateString, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None);
+                        var providedDate = DateTime.ParseExact(dateString, ProjectFormOption.AllowedDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None);
 
                         return providedDate.Date.IsBeforeOrEqualTo(DateTime.UtcNow.Date);
                     })
-                    .WithMessage(ErrorMessages.FuturePurchaseDate.ToString())
-                    .WithName("PurchaseDate")));
+                    .WithMessage(ValidationErrorMessage.FuturePurchaseDate)
+                    .WithName(ProjectFormOption.PurchaseDate)));
 
             When(
                 item => item.Cost == null,
                 () => RuleFor(item => item.Cost)
                 .NotEmpty()
-                        .WithMessage(ErrorMessages.PoundInput("The purchase value of the land").ToString()));
+                        .WithMessage(ValidationErrorMessage.IncorrectProjectCost));
 
             When(
                 item => item.Cost != null,
                 () => RuleFor(item => item.Cost)
                         .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
-                        .WithMessage(ErrorMessages.PoundInput("The purchase value of the land").ToString()));
+                        .WithMessage(ValidationErrorMessage.IncorrectProjectCost));
 
             When(
                 item => item.Value == null,
                 () => RuleFor(item => item.Value)
                         .NotEmpty()
-                        .WithMessage(ErrorMessages.PoundInput("The current value of the land").ToString()));
+                        .WithMessage(ValidationErrorMessage.IncorrectProjectValue));
 
             When(
                 item => item.Value != null,
                 () => RuleFor(item => item.Value)
                         .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
-                        .WithMessage(ErrorMessages.PoundInput("The current value of the land").ToString()));
+                        .WithMessage(ValidationErrorMessage.IncorrectProjectValue));
 
             When(
                 item => item.Source == null,
                 () => RuleFor(item => item.Source)
                         .NotEmpty()
-                        .WithMessage(ErrorMessages.EnterMoreDetails.ToString()));
+                        .WithMessage(ValidationErrorMessage.EnterMoreDetails));
         });
 
-        RuleSet("CheckAnswers", () =>
+        RuleSet(ProjectView.CheckAnswers, () =>
         {
             RuleFor(item => item.CheckAnswers)
             .NotEmpty()
-            .WithMessage(ErrorMessages.SecurityCheckAnswers.ToString());
+            .WithMessage(ValidationErrorMessage.SecurityCheckAnswers);
 
-            When(item => item.CheckAnswers == "Yes", () => RuleFor(m => m)
+            When(item => item.CheckAnswers == CommonResponse.Yes, () => RuleFor(m => m)
                     .Must(x => x.AllInformationIsProvided())
-                    .WithMessage(ErrorMessages.CheckAnswersOption.ToString())
+                    .WithMessage(ValidationErrorMessage.CheckAnswersOption)
                     .OverridePropertyName(nameof(SiteViewModel.CheckAnswers)));
         });
     }

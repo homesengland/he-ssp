@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Application.Enums;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
@@ -7,20 +8,20 @@ public class ApplicationStatusMapper
     {
         return status switch
         {
-            ApplicationStatus.Draft => "draft",
-            ApplicationStatus.Submitted => "submitted",
-            ApplicationStatus.InDueDiligence => "in due diligence",
-            ApplicationStatus.ContractSigned => "contract signed subject to cp",
-            ApplicationStatus.CspSatisfied => "csp satisfied",
-            ApplicationStatus.LoanAvailable => "loan available",
-            ApplicationStatus.HoldRequested => "hold requested",
-            ApplicationStatus.OnHold => "on hold",
-            ApplicationStatus.ReferredBackToApplicant => "referred back to applicant",
-            ApplicationStatus.NA => "n/a",
-            ApplicationStatus.Withdrawn => "withdrawn",
-            ApplicationStatus.NotApproved => "not approved",
-            ApplicationStatus.ApplicationDeclined => "application declined",
-            ApplicationStatus.ApprovedSubjectToContract => "approved subject to contract",
+            ApplicationStatus.Draft => ApplicationCrmStatus.Draft,
+            ApplicationStatus.Submitted => ApplicationCrmStatus.Submitted,
+            ApplicationStatus.InDueDiligence => ApplicationCrmStatus.InDueDiligence,
+            ApplicationStatus.ContractSigned => ApplicationCrmStatus.ContractSigned,
+            ApplicationStatus.CspSatisfied => ApplicationCrmStatus.CspSatisfied,
+            ApplicationStatus.LoanAvailable => ApplicationCrmStatus.LoanAvailable,
+            ApplicationStatus.HoldRequested => ApplicationCrmStatus.HoldRequested,
+            ApplicationStatus.OnHold => ApplicationCrmStatus.OnHold,
+            ApplicationStatus.ReferredBackToApplicant => ApplicationCrmStatus.ReferredBackToApplicant,
+            ApplicationStatus.NA => ApplicationCrmStatus.NA,
+            ApplicationStatus.Withdrawn => ApplicationCrmStatus.Withdrawn,
+            ApplicationStatus.NotApproved => ApplicationCrmStatus.NotApproved,
+            ApplicationStatus.ApplicationDeclined => ApplicationCrmStatus.ApplicationDeclined,
+            ApplicationStatus.ApprovedSubjectToContract => ApplicationCrmStatus.ApprovedSubjectToContract,
             _ => throw new NotImplementedException(),
         };
     }
@@ -29,20 +30,20 @@ public class ApplicationStatusMapper
     {
         return crmStatus switch
         {
-            "draft" => ApplicationStatus.Draft,
-            "submitted" => ApplicationStatus.Submitted,
-            "in due diligence" => ApplicationStatus.InDueDiligence,
-            "contract signed subject to cp" => ApplicationStatus.ContractSigned,
-            "csp satisfied" => ApplicationStatus.CspSatisfied,
-            "loan available" => ApplicationStatus.LoanAvailable,
-            "hold requested" => ApplicationStatus.HoldRequested,
-            "on hold" => ApplicationStatus.OnHold,
-            "referred back to applicant" => ApplicationStatus.ReferredBackToApplicant,
-            "n/a" => ApplicationStatus.NA,
-            "withdrawn" => ApplicationStatus.Withdrawn,
-            "not approved" => ApplicationStatus.NotApproved,
-            "application declined" => ApplicationStatus.ApplicationDeclined,
-            "approved subject to contract" => ApplicationStatus.ApprovedSubjectToContract,
+            ApplicationCrmStatus.Draft => ApplicationStatus.Draft,
+            ApplicationCrmStatus.Submitted => ApplicationStatus.Submitted,
+            ApplicationCrmStatus.InDueDiligence => ApplicationStatus.InDueDiligence,
+            ApplicationCrmStatus.ContractSigned => ApplicationStatus.ContractSigned,
+            ApplicationCrmStatus.CspSatisfied => ApplicationStatus.CspSatisfied,
+            ApplicationCrmStatus.LoanAvailable => ApplicationStatus.LoanAvailable,
+            ApplicationCrmStatus.HoldRequested => ApplicationStatus.HoldRequested,
+            ApplicationCrmStatus.OnHold => ApplicationStatus.OnHold,
+            ApplicationCrmStatus.ReferredBackToApplicant => ApplicationStatus.ReferredBackToApplicant,
+            ApplicationCrmStatus.NA => ApplicationStatus.NA,
+            ApplicationCrmStatus.Withdrawn => ApplicationStatus.Withdrawn,
+            ApplicationCrmStatus.NotApproved => ApplicationStatus.NotApproved,
+            ApplicationCrmStatus.ApplicationDeclined => ApplicationStatus.ApplicationDeclined,
+            ApplicationCrmStatus.ApprovedSubjectToContract => ApplicationStatus.ApprovedSubjectToContract,
             null => ApplicationStatus.Draft,
             _ => throw new NotImplementedException(),
         };

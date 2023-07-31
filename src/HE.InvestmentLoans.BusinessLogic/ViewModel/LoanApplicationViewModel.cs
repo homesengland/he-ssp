@@ -47,10 +47,12 @@ public class LoanApplicationViewModel
 
     public SiteViewModel AddNewSite()
     {
+        const string newProjectName = "New project";
+
         var site = new SiteViewModel
         {
             Id = Guid.NewGuid(),
-            DefaultName = "New project",
+            DefaultName = newProjectName,
         };
 
         Sites.Add(site);
@@ -60,7 +62,7 @@ public class LoanApplicationViewModel
 
     public Tuple<bool, string> ToggleDeleteProjectName(ICacheService cacheService, string passedDeleteProjectName = "")
     {
-        var deleteProjectKey = "DeleteProject";
+        const string deleteProjectKey = "DeleteProject";
         var isDeletedProjectInCache = true;
         var deletedProjectFromCache = cacheService.GetValue<string>(deleteProjectKey) ?? string.Empty;
 

@@ -1,3 +1,5 @@
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+
 namespace HE.InvestmentLoans.Common.Routing;
 
 /// <summary>
@@ -13,11 +15,11 @@ public class BaseRoutingModel
 
     public bool? AnswerAsBool(string answer)
     {
-        return answer == "Yes" ? true : answer == "No" ? false : null;
+        return answer == CommonResponse.Yes ? true : answer == CommonResponse.No ? false : null;
     }
 
     public bool? AnswerAsBool()
     {
-        return Answer == "Yes" ? true : Answer == "No" ? false : null;
+        return Answer == CommonResponse.Yes ? true : Answer == CommonResponse.No ? false : null;
     }
 }

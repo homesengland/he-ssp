@@ -1,5 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
-using HE.InvestmentLoans.Common.Utils;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
 
@@ -99,7 +99,7 @@ public class SiteViewModel
 
     public void RemoveAlternativeRoutesData()
     {
-        if (TypeHomes != null && !TypeHomes.Contains("other"))
+        if (TypeHomes != null && !TypeHomes.Contains(CommonResponse.Other))
         {
             TypeHomesOther = null;
         }
@@ -111,11 +111,11 @@ public class SiteViewModel
             PlanningStatus = null;
         }
 
-        if (LocationOption == "coordinates")
+        if (LocationOption == ProjectFormOption.Coordinates)
         {
             LocationLandRegistry = null;
         }
-        else if (LocationOption == "landRegistryTitleNumber")
+        else if (LocationOption == ProjectFormOption.LandRegistryTitleNumber)
         {
             LocationCoordinates = null;
         }
@@ -208,7 +208,7 @@ public class SiteViewModel
             return false;
         }
 
-        if (LocationOption == "coordinates")
+        if (LocationOption == ProjectFormOption.Coordinates)
         {
             return !string.IsNullOrEmpty(LocationCoordinates);
         }
