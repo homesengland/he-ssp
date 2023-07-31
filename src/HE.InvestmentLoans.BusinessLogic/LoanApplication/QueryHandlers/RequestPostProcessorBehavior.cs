@@ -3,6 +3,7 @@ using MediatR.Pipeline;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 public class RequestPostProcessorBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest
 {
     private readonly IEnumerable<IRequestPostProcessor<TRequest, TResponse>> _postProcessors;
 

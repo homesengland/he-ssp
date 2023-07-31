@@ -4,7 +4,6 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Common.Utils.ValueObjects;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -23,15 +22,12 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 public class LoanApplicationV2Controller : Controller
 {
     private readonly IMediator _mediator;
-    private readonly ICacheService _cacheService;
-    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IValidator<LoanPurposeModel> _validator;
 
-    public LoanApplicationV2Controller(IMediator mediator, ICacheService cacheService, IHttpContextAccessor httpContextAccessor)
+    public LoanApplicationV2Controller(IMediator mediator, IValidator<LoanPurposeModel> validator)
     {
         _mediator = mediator;
-        _cacheService = cacheService;
-        _httpContextAccessor = httpContextAccessor;
+        _validator = validator;
     }
 
     [HttpGet("")]

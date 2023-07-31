@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -96,8 +95,6 @@ public class LoanApplicationWorkflow
         _machine.Configure(State.CheckApplication)
             .Permit(Trigger.Continue, State.ApplicationSubmitted)
             .Permit(Trigger.Back, State.TaskList);
-
-        //_machine.Configure(State.ApplicationSubmitted).OnEntry(x => _mediator.Send(new SubmitApplicationCommand(_model)).GetAwaiter().GetResult());
 
         _machine.OnTransitionCompletedAsync(x =>
         {

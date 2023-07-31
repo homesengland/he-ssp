@@ -10,7 +10,7 @@ public class ControllerNameTests
     [TestMethod]
     public void ThrowWhenProvidedNameIsEmpty()
     {
-        Action action = () => new ControllerName("");
+        Action action = () => _ = new ControllerName(string.Empty);
 
         action.Should().Throw<ArgumentException>();
     }
@@ -18,11 +18,10 @@ public class ControllerNameTests
     [TestMethod]
     public void ThrowWhenProvidedNameIsNull()
     {
-        Action action = () => new ControllerName(null);
+        Action action = () => _ = new ControllerName(null!);
 
         action.Should().Throw<ArgumentException>();
     }
-
 
     [TestMethod]
     public void ReturnNameWithoutControllerPrefix()
