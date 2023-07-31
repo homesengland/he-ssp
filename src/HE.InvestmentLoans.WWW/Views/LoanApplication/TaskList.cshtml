@@ -122,15 +122,15 @@
                             <div>
                                 @if (new SiteWorkflow(Model, mediator, site.Id.Value).IsCompleted())
                                 {
-                                    <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
+                                    <gds-task-list-item-status class="task-list-project-tag" status=Completed>Completed</gds-task-list-item-status>
                                 }
                                 else if (!new SiteWorkflow(Model, mediator, site.Id.Value).IsStarted())
                                 {
-                                    <gds-task-list-item-status status=NotStarted>Not Started</gds-task-list-item-status>
+                                    <gds-task-list-item-status class="task-list-project-tag" status=NotStarted>Not Started</gds-task-list-item-status>
                                 }
                                 else
                                 {
-                                    <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
+                                    <gds-task-list-item-status class="task-list-project-tag" status=InProgress>In Progress</gds-task-list-item-status>
                                 }
                             </div>
                         </div>
