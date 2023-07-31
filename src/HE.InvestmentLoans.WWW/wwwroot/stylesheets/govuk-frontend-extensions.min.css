@@ -13,8 +13,7 @@
 }
 
 @media (max-width: 28.124em) {
-  .app-task-list__tag,
-  .app-task-list__task-completed {
+  .task-list-project-tag {
     float: right;
     margin-top: 0;
     margin-bottom: 0;
