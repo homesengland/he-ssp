@@ -91,6 +91,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Incident_CaseOriginCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\InitialCommunication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConstructionMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_CreditRatingAgency.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_CRRStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_DefineTenure.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FundingReason.cs" />
