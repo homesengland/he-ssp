@@ -15,5 +15,5 @@ public interface ILoanApplicationRepository
 
     Task Save(LoanApplicationEntity loanApplication, CancellationToken cancellationToken);
 
-    void Submit(LoanApplicationViewModel loanApplication, CancellationToken cancellationToken);
+    void Submit(LoanApplicationEntity loanApplication, CancellationToken cancellationToken);
 }

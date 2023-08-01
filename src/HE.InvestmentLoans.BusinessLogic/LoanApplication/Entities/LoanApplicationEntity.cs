@@ -43,6 +43,15 @@ public class LoanApplicationEntity
         SyncToLegacyModel();
     }
 
+    public bool IsReadyToSubmit()
+    {
+        return (LegacyModel.Company.State == CompanyStructureWorkflow.State.Complete || LegacyModel.Company.IsFlowCompleted)
+            && (LegacyModel.Security.State == SecurityWorkflow.State.Complete || LegacyModel.Security.IsFlowCompleted)
+            && (LegacyModel.Funding.State == FundingWorkflow.State.Complete || LegacyModel.Funding.IsFlowCompleted)
+            && (LegacyModel.Sites.All(x => x.State == SiteWorkflow.State.Complete) || LegacyModel.Sites.All(x => x.IsFlowCompleted))
+            && LegacyModel.Sites.Count > 0;
+    }
+
     private void SyncToLegacyModel()
     {
         LegacyModel = new LoanApplicationViewModel

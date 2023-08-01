@@ -1,13 +1,13 @@
 @using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@model HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities.LoanApplicationEntity
 @inject MediatR.IMediator mediator
 @{
-    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
+    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model.LegacyModel, mediator);
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="LoanApplicationV2" asp-action="Submit" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication, ApplicationId = Model.ID})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <form asp-controller="LoanApplicationV2" asp-action="Submit" asp-route-id="@Model.Id" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication, ApplicationId = Model.Id})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
         <gds-h1 size="ControlSize.Xl">
             Check your answers before submitting your application
@@ -15,16 +15,16 @@
 
 
         <gds-h2>Company structure and experience</gds-h2>
-        @await Html.PartialAsync("_CompanyStructureAnswers", Model.Company)
+        @await Html.PartialAsync("_CompanyStructureAnswers", Model.LegacyModel.Company)
 
         <gds-h2>Funding details</gds-h2>
-        @await Html.PartialAsync("_FundingAnswers", Model.Funding)
+        @await Html.PartialAsync("_FundingAnswers", Model.LegacyModel.Funding)
 
         <gds-h2>Security details</gds-h2>
-        @await Html.PartialAsync("_SecurityAnswers", Model.Security)
+        @await Html.PartialAsync("_SecurityAnswers", Model.LegacyModel.Security)
 
         <gds-h2>Project details</gds-h2>
-        @foreach (var site in Model.Sites)
+        @foreach (var site in Model.LegacyModel.Sites)
         {
             @await Html.PartialAsync("_SiteAnswers", site)
         }
@@ -33,7 +33,7 @@
         <gds-h2 size="ControlSize.M">Now submit your application</gds-h2>
         <p>By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
 
-        @if (loanApllicationWorkflow.IsFilled())
+        @if (Model.IsReadyToSubmit())
         {
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Accept and submit
@@ -47,5 +47,5 @@
         }
     </form>
 
-    <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication, ApplicationId = Model.ID})" text="Return to application" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication, ApplicationId = Model.Id})" text="Return to application" class="govuk-!-margin-bottom-8"></gds-back-link>
 </gds-div-grid-column-two-thirds>

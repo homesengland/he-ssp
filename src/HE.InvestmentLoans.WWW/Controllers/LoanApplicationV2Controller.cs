@@ -4,6 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Common.Utils.ValueObjects;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -23,11 +24,13 @@ public class LoanApplicationV2Controller : Controller
 {
     private readonly IMediator _mediator;
     private readonly IValidator<LoanPurposeModel> _validator;
+    private readonly ICacheService _cacheService;
 
-    public LoanApplicationV2Controller(IMediator mediator, IValidator<LoanPurposeModel> validator)
+    public LoanApplicationV2Controller(IMediator mediator, IValidator<LoanPurposeModel> validator, ICacheService cacheService)
     {
         _mediator = mediator;
         _validator = validator;
+        _cacheService = cacheService;
     }
 
     [HttpGet("")]
@@ -109,7 +112,14 @@ public class LoanApplicationV2Controller : Controller
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        return View("TaskList", response.ViewModel);
+        var (isDeletedProjectInCache, deletedProjectFromCache) = response.LoanApplication.LegacyModel.ToggleDeleteProjectName(_cacheService);
+
+        if (isDeletedProjectInCache)
+        {
+            ViewBag.AdditionalData = deletedProjectFromCache;
+        }
+
+        return View("TaskList", response.LoanApplication);
     }
 
     [HttpGet("check/{id}")]
@@ -117,15 +127,15 @@ public class LoanApplicationV2Controller : Controller
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        return View("CheckApplication", response.ViewModel);
+        return View("CheckApplication", response.LoanApplication);
     }
 
     [HttpPost("submit/{id}")]
     public async Task<IActionResult> Submit(Guid id)
     {
-        var application = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        await _mediator.Send(new SubmitApplicationCommand(application.ViewModel));
+        await _mediator.Send(new SubmitApplicationCommand(response.LoanApplication));
 
         return RedirectToAction(nameof(ApplicationSubmitted), new { Id = id });
     }
@@ -135,7 +145,7 @@ public class LoanApplicationV2Controller : Controller
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        return View("ApplicationSubmitted", response.ViewModel);
+        return View("ApplicationSubmitted", response.LoanApplication.LegacyModel);
     }
 
     [HttpGet("back")]
