@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.ServiceModel;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.CommandHandlers;
@@ -136,7 +137,7 @@ public class SiteController : Controller
         if (workflow.GetName() == State.TaskList.ToString())
         {
             workflow.ChangeState(sitemodel.PreviousState, false);
-            return RedirectToAction("Workflow", "LoanApplication", new { id, ending = "TaskList" });
+            return RedirectToAction("TaskList", "LoanApplicationV2", new { id = sessionmodel.ID });
         }
         else
         {
@@ -173,6 +174,6 @@ public class SiteController : Controller
             workflow.ChangeState(sitemodel.PreviousState, false);
         }
 
-        return RedirectToAction("Workflow", "LoanApplication", new { id, ending = "TaskList" });
+        return RedirectToAction("TaskList", "LoanApplicationV2", new { id = model.ID });
     }
 }
