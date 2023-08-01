@@ -1,0 +1,62 @@
+name: Pull Request Opened
+on:
+  pull_request:
+    types: [opened]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Git PR Details
+      run: |
+          echo "PR creator: ${{ github.event.pull_request.user.login }}"
+          echo "PR title: ${{ github.event.pull_request.title }}"
+          echo "PR number: ${{ github.event.pull_request.number }}"
+          echo "PR url: ${{ github.event.pull_request.html_url }}"
+    - name: Google Chat Notification
+      run: |
+          curl --location --request POST '${{ secrets.WEBHOOK_GOOGLE_CHAT }}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+              "cards": [
+                  {
+                      "header": {
+                          "title": "${{ github.event.pull_request.user.login }} is waiting for CR",
+                          "subtitle": "PR No: #${{ github.event.pull_request.number }}"
+                      },
+                      "sections": [
+                          {
+                              "widgets": [
+                                   {
+                                     "keyValue": {
+                                          "topLabel": "Title",
+                                          "content": "${{ github.event.pull_request.title }}"
+                                      }
+                                   },
+                                   {
+                                     "keyValue": {
+                                          "topLabel": "Description",
+                                          "content": "${{ github.event.pull_request.body }}"
+                                      }
+                                   },
+                                   {
+                                      "buttons": [
+                                          {
+                                              "textButton": {
+                                                  "text": "REVIEW PULL REQUEST",
+                                                  "onClick": {
+                                                      "openLink": {
+                                                          "url": "${{ github.event.pull_request.html_url }}"
+                                                      }
+                                                  }
+                                              }
+                                          }
+                                      ]
+                                  }
+                              ]
+                          }
+                      ]
+                  }
+              ]
+          }'
