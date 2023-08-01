@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.ServiceModel;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.CommandHandlers;

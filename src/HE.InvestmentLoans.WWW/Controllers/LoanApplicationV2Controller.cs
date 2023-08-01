@@ -139,7 +139,7 @@ public class LoanApplicationV2Controller : Controller
     }
 
     [HttpGet("back")]
-    public async Task<IActionResult> Back(LoanApplicationWorkflow.State currentPage)
+    public async Task<IActionResult> Back(LoanApplicationWorkflow.State currentPage, Guid applicationId)
     {
         var workflow = new LoanApplicationWorkflow(new LoanApplicationViewModel() { State = currentPage, GoodChangeMode = true }, null!);
         var targetState = await workflow.NextState(Trigger.Back);
@@ -149,7 +149,7 @@ public class LoanApplicationV2Controller : Controller
             LoanApplicationWorkflow.State.AboutLoan => RedirectToAction(nameof(AboutLoan)),
             LoanApplicationWorkflow.State.CheckYourDetails => RedirectToAction(nameof(CheckYourDetails)),
             LoanApplicationWorkflow.State.LoanPurpose => RedirectToAction(nameof(LoanPurpose)),
-            LoanApplicationWorkflow.State.TaskList => RedirectToAction(nameof(TaskList)),
+            LoanApplicationWorkflow.State.TaskList => RedirectToAction(nameof(TaskList), new { Id = applicationId }),
             LoanApplicationWorkflow.State.Dashboard => RedirectToAction(nameof(HomeController.Dashboard), new ControllerName(nameof(HomeController)).WithoutPrefix()),
             _ => RedirectToAction(nameof(StartApplication)),
         };

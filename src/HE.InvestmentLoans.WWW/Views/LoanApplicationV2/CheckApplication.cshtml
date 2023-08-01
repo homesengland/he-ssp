@@ -3,7 +3,7 @@
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="LoanApplicationV2" asp-action="Submit" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication, ApplicationId = Model.ID})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
         <gds-h1 size="ControlSize.Xl">
             Check your answers before submitting your application
@@ -34,5 +34,5 @@
         </button>
     </form>
 
-    <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication})" text="Return to application" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication, ApplicationId = Model.ID})" text="Return to application" class="govuk-!-margin-bottom-8"></gds-back-link>
 </gds-div-grid-column-two-thirds>
