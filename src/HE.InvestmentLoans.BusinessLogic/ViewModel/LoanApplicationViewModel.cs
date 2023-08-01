@@ -81,6 +81,15 @@ public class LoanApplicationViewModel
         Timestamp = timestamp;
     }
 
+    public void UseSectionsFrom(LoanApplicationViewModel model)
+    {
+        Company = model.Company;
+        Projects = model.Projects;
+        Security = model.Security;
+        Sites = model.Sites;
+        Funding = model.Funding;
+    }
+
     private AccountDetailsViewModel TemporaryAccount() => new()
     {
         RegisteredName = "ABC Developments",

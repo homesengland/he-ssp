@@ -23,8 +23,8 @@ public class CompanyStructureController : Controller
     public CompanyStructureController(IValidator<CompanyStructureViewModel> validator, IMediator mediator)
         : base()
     {
-        this._mediator = mediator;
-        this._validator = validator;
+        _mediator = mediator;
+        _validator = validator;
     }
 
     [Route("{ending?}")]
@@ -90,8 +90,7 @@ public class CompanyStructureController : Controller
         var loanWorkflow = new LoanApplicationWorkflow(sessionModel, _mediator);
         if (loanWorkflow.IsBeingChecked() || workflow.IsStateComplete() || (sessionModel.Company.CheckAnswers == "No" && action != "Change"))
         {
-            loanWorkflow.ChangeState(LoanApplicationWorkflow.State.TaskList);
-            return RedirectToAction("Workflow", "LoanApplication", new { id = sessionModel.ID, ending = loanWorkflow.GetName() });
+            return RedirectToAction("TaskList", "LoanApplicationV2", new { id = sessionModel.ID });
         }
         else
         {

@@ -1,4 +1,4 @@
-﻿@using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow
+@using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
@@ -16,7 +16,7 @@
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="LoanApplicationV2" asp-action="LoanPurposePost"  asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.LoanPurpose })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.LoanPurpose})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
                 <gds-legend size="ControlSize.L">
