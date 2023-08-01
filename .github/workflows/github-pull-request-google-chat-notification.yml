@@ -22,22 +22,22 @@ jobs:
               "cards": [
                   {
                       "header": {
-                          "title": "PR Tracker",
+                          "title": "${{ github.event.pull_request.user.login }} is waiting for CR",
                           "subtitle": "PR No: #${{ github.event.pull_request.number }}"
                       },
                       "sections": [
                           {
                               "widgets": [
-                                  {
-                                     "keyValue": {
-                                          "topLabel": "Creator",
-                                          "content": "${{ github.event.pull_request.user.login }}"
-                                      },
-                                   },
                                    {
                                      "keyValue": {
                                           "topLabel": "Title",
                                           "content": "${{ github.event.pull_request.title }}"
+                                      }
+                                   },
+                                   {
+                                     "keyValue": {
+                                          "topLabel": "Description",
+                                          "content": "${{ github.event.pull_request.body }}"
                                       }
                                    },
                                    {
