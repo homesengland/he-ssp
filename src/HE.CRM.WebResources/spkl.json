@@ -1,0 +1,17 @@
+{
+  "webresources": [
+    {
+      "profile": null,
+      "root": null,
+      "solution": "InvestmentsLoans",
+      "files": [
+        {
+          "uniquename": "invln_/js/main.js",
+          "file": "out\\main.js",
+          "description": "Forms business logic",
+          "ts": null
+        }
+      ]
+    }
+  ]
+}
