@@ -19,5 +19,7 @@ public class SubmitApplicationCommandHandler : IRequestHandler<SubmitApplication
     public async Task Handle(SubmitApplicationCommand request, CancellationToken cancellationToken)
     {
         _loanApplicationRepository.Save(request.Model, await _loanUserContext.GetSelectedAccount());
+
+        _loanApplicationRepository.Submit(request.Model, cancellationToken);
     }
 }

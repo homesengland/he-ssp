@@ -166,6 +166,17 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         LegacySave(loanApplication.LegacyModel);
     }
 
+    public void Submit(LoanApplicationViewModel loanApplication, CancellationToken cancellationToken)
+    {
+        var request = new invln_changeloanapplicationexternalstatusRequest
+        {
+            invln_loanapplicationid = loanApplication.ID.ToString(),
+            invln_statusexternal = 858110001, // that line will be changed
+        };
+
+        _serviceClient.ExecuteAsync(request, cancellationToken);
+    }
+
     public void LegacySave(LoanApplicationViewModel legacyModel)
     {
         _httpContextAccessor.HttpContext?.Session.Set(legacyModel.ID.ToString(), legacyModel);

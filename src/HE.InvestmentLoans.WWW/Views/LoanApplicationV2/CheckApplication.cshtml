@@ -1,5 +1,9 @@
 @using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 @model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@inject MediatR.IMediator mediator
+@{
+    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
+}
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="LoanApplicationV2" asp-action="Submit" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
@@ -29,9 +33,18 @@
         <gds-h2 size="ControlSize.M">Now submit your application</gds-h2>
         <p>By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
 
-        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
-            Accept and submit
-        </button>
+        @if (loanApllicationWorkflow.IsFilled())
+        {
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Accept and submit
+            </button>
+        }
+        else
+        {
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button">
+                Accept and submit
+            </button>
+        }
     </form>
 
     <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication, ApplicationId = Model.ID})" text="Return to application" class="govuk-!-margin-bottom-8"></gds-back-link>
