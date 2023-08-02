@@ -102,14 +102,21 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 invln_Name = "role name",
             };
 
+            var account = new Account()
+            {
+                Id = Guid.NewGuid(),
+                Name = "account name",
+            };
+
             var relationship = new invln_contactwebrole()
             {
                 Id = Guid.NewGuid(),
                 invln_Contactid = contact.ToEntityReference(),
                 invln_Webroleid = role.ToEntityReference(),
+                invln_Accountid = account.ToEntityReference(),
             };
 
-            fakedContext.Initialize(new List<Entity> { contact, role, relationship, portal });
+            fakedContext.Initialize(new List<Entity> { contact, role, relationship, portal, account });
 
             Exception exception = null;
             try
@@ -206,14 +213,14 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             invln_Webrole role = new invln_Webrole()
             {
                 Id = Guid.NewGuid(),
-                invln_Portalid = portal1.ToEntityReference(),
+                invln_Portalid = portal2.ToEntityReference(),
                 invln_Name = "role name",
             };
             invln_Webrole defaultRole = new invln_Webrole()
             {
                 Id = Guid.NewGuid(),
                 invln_Name = "Default role",
-                invln_Portalid = portal2.ToEntityReference(),
+                invln_Portalid = portal1.ToEntityReference(),
                 invln_Isdefaultrole = true,
             };
 
@@ -224,7 +231,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 invln_Webroleid = role.ToEntityReference(),
             };
 
-            fakedContext.Initialize(new List<Entity> { contact, role, relationship, defaultRole, portal1, portal2 });
+            fakedContext.Initialize(new List<Entity> { contact, role, defaultRole, portal1, portal2, relationship });
 
             Exception exception = null;
             try
