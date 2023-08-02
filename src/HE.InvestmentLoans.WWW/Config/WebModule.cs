@@ -12,6 +12,7 @@ public static class WebModule
     public static void AddWebModule(this IServiceCollection serviceCollections)
     {
         serviceCollections.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(LoanApplicationViewModel).Assembly));
+
         serviceCollections.AddScoped<NonceModel>();
         serviceCollections.AddBusinessLogic();
         serviceCollections.AddCrmConnection();

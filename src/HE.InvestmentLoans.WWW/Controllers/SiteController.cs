@@ -116,8 +116,7 @@ public class SiteController : Controller
         var loanWorkflow = new LoanApplicationWorkflow(sessionModel, _mediator);
         if (loanWorkflow.IsBeingChecked() || workflow.IsStateComplete() || (sitemodel.CheckAnswers == "No" && action != "Change"))
         {
-            loanWorkflow.ChangeState(LoanApplicationWorkflow.State.TaskList);
-            return RedirectToAction("Workflow", "LoanApplication", new { id = sessionModel.ID, ending = loanWorkflow.GetName() });
+            return RedirectToAction("TaskList", "LoanApplicationV2", new { id = sessionModel.ID });
         }
         else
         {
@@ -137,7 +136,7 @@ public class SiteController : Controller
         if (workflow.GetName() == State.TaskList.ToString())
         {
             workflow.ChangeState(sitemodel.PreviousState, false);
-            return RedirectToAction("Workflow", "LoanApplication", new { id, ending = "TaskList" });
+            return RedirectToAction("TaskList", "LoanApplicationV2", new { id = sessionmodel.ID });
         }
         else
         {
@@ -174,6 +173,6 @@ public class SiteController : Controller
             workflow.ChangeState(sitemodel.PreviousState, false);
         }
 
-        return RedirectToAction("Workflow", "LoanApplication", new { id, ending = "TaskList" });
+        return RedirectToAction("TaskList", "LoanApplicationV2", new { id = model.ID });
     }
 }

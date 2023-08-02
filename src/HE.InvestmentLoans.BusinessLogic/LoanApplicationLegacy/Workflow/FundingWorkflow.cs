@@ -53,12 +53,12 @@ public class FundingWorkflow
 
     public bool IsStarted()
     {
-        return _model.Funding.GrossDevelopmentValue != null
-            || _model.Funding.TotalCosts != null
-            || _model.Funding.AbnormalCosts != null
-            || _model.Funding.PrivateSectorFunding != null
-            || _model.Funding.Refinance != null
-            || _model.Funding.AdditionalProjects != null;
+        return !string.IsNullOrEmpty(_model.Funding.GrossDevelopmentValue)
+            || !string.IsNullOrEmpty(_model.Funding.TotalCosts)
+            || !string.IsNullOrEmpty(_model.Funding.AbnormalCosts)
+            || !string.IsNullOrEmpty(_model.Funding.PrivateSectorFunding)
+            || !string.IsNullOrEmpty(_model.Funding.Refinance)
+            || !string.IsNullOrEmpty(_model.Funding.AdditionalProjects);
     }
 
     public string GetName()

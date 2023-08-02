@@ -50,9 +50,9 @@ public class CompanyStructureWorkflow
 
     public bool IsStarted()
     {
-        return _model.Company.Purpose != null
-            || _model.Company.ExistingCompany != null
-            || _model.Company.HomesBuilt != null;
+        return !string.IsNullOrEmpty(_model.Company.Purpose)
+            || !string.IsNullOrEmpty(_model.Company.ExistingCompany)
+            || !string.IsNullOrEmpty(_model.Company.HomesBuilt);
     }
 
     public string GetName()
@@ -100,7 +100,7 @@ public class CompanyStructureWorkflow
            });
 
         _machine.Configure(State.Complete)
-         .Permit(Trigger.Back, State.CheckAnswers);
+           .Permit(Trigger.Back, State.CheckAnswers);
 
         _machine.OnTransitionCompletedAsync(x =>
         {

@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -14,11 +13,12 @@ public class LoanApplicationWorkflow
     public enum State : int
     {
         Index = 1,
+        Dashboard,
         AboutLoan,
         CheckYourDetails,
         LoanPurpose,
         TaskList,
-        CheckAnswers,
+        CheckApplication,
         ApplicationSubmitted,
         Ineligible,
     }
@@ -64,7 +64,7 @@ public class LoanApplicationWorkflow
 
     public bool IsBeingChecked()
     {
-        return _model.State == State.CheckAnswers;
+        return _model.State == State.CheckApplication;
     }
 
     private void ConfigureTransitions()
@@ -89,14 +89,12 @@ public class LoanApplicationWorkflow
             .Permit(Trigger.Back, State.LoanPurpose);
 
         _machine.Configure(State.TaskList)
-            .Permit(Trigger.Continue, State.CheckAnswers)
-            .Permit(Trigger.Back, State.LoanPurpose);
+            .Permit(Trigger.Continue, State.CheckApplication)
+            .Permit(Trigger.Back, State.Dashboard);
 
-        _machine.Configure(State.CheckAnswers)
+        _machine.Configure(State.CheckApplication)
             .Permit(Trigger.Continue, State.ApplicationSubmitted)
             .Permit(Trigger.Back, State.TaskList);
-
-        _machine.Configure(State.ApplicationSubmitted).OnEntry(x => _mediator.Send(new SubmitApplicationCommand(_model)).GetAwaiter().GetResult());
 
         _machine.OnTransitionCompletedAsync(x =>
         {

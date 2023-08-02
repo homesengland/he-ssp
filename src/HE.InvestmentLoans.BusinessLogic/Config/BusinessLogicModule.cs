@@ -18,7 +18,7 @@ public static class BusinessLogicModule
     {
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining<LoanApplicationRepository>();
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
         services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
         services.AddScoped<ILoanUserRepository, LoanUserRepository>();
         services.AddScoped<ILoanUserContext, LoanUserContext>();
