@@ -6,6 +6,7 @@ using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.AspNetCore.Http;
@@ -64,7 +65,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             new UserLoanApplication(
                 LoanApplicationId.From(x.loanApplicationId),
                 x.name,
-                ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationStatus),
+                ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
                 x.LastModificationOn)).ToList();
     }
 
@@ -168,10 +169,12 @@ public class LoanApplicationRepository : ILoanApplicationRepository
 
     public void Submit(LoanApplicationEntity loanApplication, CancellationToken cancellationToken)
     {
+        var crmSubmitStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Submitted);
+
         var request = new invln_changeloanapplicationexternalstatusRequest
         {
             invln_loanapplicationid = loanApplication.Id.ToString(),
-            invln_statusexternal = 858110001, // that line will be changed
+            invln_statusexternal = crmSubmitStatus,
         };
 
         _serviceClient.ExecuteAsync(request, cancellationToken);

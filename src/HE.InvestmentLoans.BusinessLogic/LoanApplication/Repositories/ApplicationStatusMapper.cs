@@ -4,7 +4,7 @@ using HE.InvestmentLoans.Contract.Application.Enums;
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 public class ApplicationStatusMapper
 {
-    public static string MapToCrmStatus(ApplicationStatus status)
+    public static int MapToCrmStatus(ApplicationStatus status)
     {
         return status switch
         {
@@ -22,11 +22,12 @@ public class ApplicationStatusMapper
             ApplicationStatus.NotApproved => ApplicationCrmStatus.NotApproved,
             ApplicationStatus.ApplicationDeclined => ApplicationCrmStatus.ApplicationDeclined,
             ApplicationStatus.ApprovedSubjectToContract => ApplicationCrmStatus.ApprovedSubjectToContract,
+            ApplicationStatus.UnderReview => ApplicationCrmStatus.Underreview,
             _ => throw new NotImplementedException(),
         };
     }
 
-    public static ApplicationStatus MapToPortalStatus(string crmStatus)
+    public static ApplicationStatus MapToPortalStatus(int? crmStatus)
     {
         return crmStatus switch
         {
@@ -44,6 +45,7 @@ public class ApplicationStatusMapper
             ApplicationCrmStatus.NotApproved => ApplicationStatus.NotApproved,
             ApplicationCrmStatus.ApplicationDeclined => ApplicationStatus.ApplicationDeclined,
             ApplicationCrmStatus.ApprovedSubjectToContract => ApplicationStatus.ApprovedSubjectToContract,
+            ApplicationCrmStatus.Underreview => ApplicationStatus.UnderReview,
             null => ApplicationStatus.Draft,
             _ => throw new NotImplementedException(),
         };
