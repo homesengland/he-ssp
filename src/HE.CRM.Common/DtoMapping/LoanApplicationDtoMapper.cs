@@ -14,7 +14,7 @@ namespace HE.CRM.Common.DtoMapping
             {
                 invln_NumberofSites = ParseInt(loanApplicationDto.numberOfSites),
                 invln_FundingReason = MapFundingReason(loanApplicationDto.fundingReason),
-                invln_ExternalStatus = MapApplicationExternalStatus(loanApplicationDto.loanApplicationStatus),
+                //invln_ExternalStatus = MapApplicationExternalStatus(loanApplicationDto.loanApplicationStatus),
 
                 //COMPANY
                 invln_CompanyPurpose = ParseBool(loanApplicationDto.companyPurpose), //Purpose
@@ -46,8 +46,13 @@ namespace HE.CRM.Common.DtoMapping
 
                 //OTHER maybe not related
                 invln_Name = loanApplicationDto.name,
-                invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference("account", accountid) : null, //pusty account?
+                invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference(Account.EntityLogicalName, accountid) : null, //pusty account?
             };
+
+            if (loanApplicationDto.loanApplicationExternalStatus.HasValue)
+            {
+                loanApplication.invln_ExternalStatus = new OptionSetValue(loanApplicationDto.loanApplicationExternalStatus.Value);
+            }
 
             if(contact != null)
             {
@@ -68,7 +73,7 @@ namespace HE.CRM.Common.DtoMapping
             {
                 fundingReason = MapFundingReasonOptionSetToString(loanApplication.invln_FundingReason),
                 numberOfSites = loanApplication.invln_NumberofSites?.ToString(),
-                loanApplicationStatus = MapApplicationStatusFromDtoToRegular(loanApplication.invln_ExternalStatus),
+                //loanApplicationStatus = MapApplicationStatusFromDtoToRegular(loanApplication.invln_ExternalStatus),
 
                 //company
                 companyPurpose = loanApplication.invln_CompanyPurpose?.ToString(),

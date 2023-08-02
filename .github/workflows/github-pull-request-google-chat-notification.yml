@@ -22,7 +22,7 @@ jobs:
               "cards": [
                   {
                       "header": {
-                          "title": "${{ github.event.pull_request.user.login }} is waiting for CR",
+                          "title": "${{ github.event.pull_request.user.login }} is waiting for Code Review",
                           "subtitle": "PR No: #${{ github.event.pull_request.number }}"
                       },
                       "sections": [
@@ -32,12 +32,6 @@ jobs:
                                      "keyValue": {
                                           "topLabel": "Title",
                                           "content": "${{ github.event.pull_request.title }}"
-                                      }
-                                   },
-                                   {
-                                     "keyValue": {
-                                          "topLabel": "Description",
-                                          "content": "${{ github.event.pull_request.body }}"
                                       }
                                    },
                                    {
