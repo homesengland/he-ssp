@@ -1,0 +1,61 @@
+@{
+    ViewData["Title"] = "Guidance";
+    ViewData["NextLink"] = Url.Action("Eligibility", "Guidance");
+}
+
+<gds-div-grid-column-two-thirds>
+    <partial name="Guidance/_MainGuidanceNavigation" />
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <partial name="_SignUpAndLoginButton" />
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <gds-h2 size="ControlSize.L">
+        What the Home Building Fund is
+    </gds-h2>
+
+    <gds-p>
+        Homes England is providing a £1.5bn Levelling Up Home Building Fund to support small and medium-sized businesses (SMEs),
+        innovative developers and housebuilders to build more homes and create great communities.
+    </gds-p>
+    <gds-p class="govuk-!-margin-bottom-1">Loans will encourage traditional housebuilding, as well as innovative projects, including:</gds-p>
+    <gds-ul>
+        <gds-li class="govuk-!-margin-left-2">serviced plots for custom and self-builders</gds-li>
+        <gds-li class="govuk-!-margin-left-2">off-site manufacturing</gds-li>
+        <gds-li class="govuk-!-margin-left-2">developments focussing on sustainability and renewable energy generation</gds-li>
+        <gds-li class="govuk-!-margin-left-2">new entrants to the market</gds-li>
+        <gds-li class="govuk-!-margin-left-2">community-led housing projects</gds-li>
+        <gds-li class="govuk-!-margin-left-2">groups of small firms working together to deliver larger sites</gds-li>
+    </gds-ul>
+
+    <gds-h3 size="ControlSize.M">
+        How the fund works
+    </gds-h3>
+
+    <gds-p class="govuk-!-margin-bottom-1">
+        The Levelling Up Home Building Fund offers development finance from £250,000.
+        We will also consider smaller loans for innovative housing solutions.
+    </gds-p>
+    <gds-p class="govuk-!-margin-bottom-1">Note that:</gds-p>
+    <gds-ul>
+        <gds-li class="govuk-!-margin-left-2">typical terms are up to 5 years</gds-li>
+        <gds-li class="govuk-!-margin-left-2">interest is payable at transparent, commercial, pre-agreed rates</gds-li>
+        <gds-li class="govuk-!-margin-left-2">sales income from the homes sold can be recycled to meet future costs and minimise the loan request</gds-li>
+        <gds-li class="govuk-!-margin-left-2">we will consider subordinated lending</gds-li>
+        <gds-li class="govuk-!-margin-left-2">we will discuss eligible costs with each applicant</gds-li>
+    </gds-ul>
+
+    <gds-p>
+        If you have a viable scheme that offers innovative housing solutions, and needs development funding outside of the parameters above,
+        contact us to discuss further.
+    </gds-p>
+
+    <gds-p>All loans are typically secured via fixed charges against the development site, or as floating charges against the development company.</gds-p>
+
+    @await Html.PartialAsync("Guidance/_NextWithLinkName", ViewData)
+
+</gds-div-grid-column-two-thirds>
+
+<partial name="Guidance/_AsideRelatedContentSection" />
