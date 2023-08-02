@@ -1,6 +1,7 @@
 using DataverseModel;
 using FakeItEasy;
 using FakeXrmEasy;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Plugins.Plugins.CustomApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
@@ -8,6 +9,8 @@ using Microsoft.Xrm.Sdk.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Web.Services.Description;
 
 namespace HE.CRM.Plugins.Tests.CustomApis
 {
@@ -37,6 +40,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             invln_portal portal = new invln_portal()
             {
                 Id = Guid.NewGuid(),
+                invln_Portal = new OptionSetValue((int)invln_Portal1.Loans),
             };
 
             invln_Webrole defaultRole = new invln_Webrole()
@@ -56,7 +60,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 pluginContext.InputParameters = new ParameterCollection
                 {
                     {nameof(request.invln_contactexternalid), contact.Id.ToString() },
-                    {nameof(request.invln_portaltype), defaultRole.invln_Portalid.Id.ToString() },
+                    {nameof(request.invln_portaltype), portal.invln_Portal.Value.ToString() },
                     {nameof(request.invln_contactemail), contact.EMailAddress1 },
                 };
 
@@ -67,8 +71,10 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 exception = ex;
             }
 
+            var deserializedContactRoles = JsonSerializer.Deserialize<ContactRolesDto>(pluginContext.OutputParameters.Values.ElementAt(0).ToString());
+
             Assert.IsNull(exception);
-            Assert.AreEqual(pluginContext.OutputParameters.Values.ElementAt(0), defaultRole.invln_Name);
+            Assert.AreEqual(deserializedContactRoles.contactRoles.ElementAt(0).webRoleName, defaultRole.invln_Name);
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_contactwebrole>.Ignored)).MustHaveHappened();
 
         }
@@ -80,11 +86,13 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             {
                 Id = Guid.NewGuid(),
                 EMailAddress1 = "test@test.pl",
+                invln_externalid = "2137",
             };
 
             invln_portal portal = new invln_portal()
             {
                 Id = Guid.NewGuid(),
+                invln_Portal = new OptionSetValue((int)invln_Portal1.Loans),
             };
 
             invln_Webrole role = new invln_Webrole()
@@ -109,9 +117,9 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 var request = new invln_getcontactroleRequest();
                 pluginContext.InputParameters = new ParameterCollection
                 {
-                    {nameof(request.invln_ssid), contact.Id.ToString() },
-                    {nameof(request.invln_portalid), role.invln_Portalid.Id.ToString() },
-                    {nameof(request.invln_email), contact.EMailAddress1 },
+                    {nameof(request.invln_contactexternalid), contact.invln_externalid },
+                    {nameof(request.invln_portaltype), portal.invln_Portal.Value.ToString() },
+                    {nameof(request.invln_contactemail), contact.EMailAddress1 },
                 };
 
                 fakedContext.ExecutePluginWithConfigurations<GetContactRolePlugin>(pluginContext, "", "");
@@ -120,9 +128,12 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             {
                 exception = ex;
             }
+            var deserializedContactRoles = JsonSerializer.Deserialize<ContactRolesDto>(pluginContext.OutputParameters.Values.ElementAt(0).ToString());
 
             Assert.IsNull(exception);
-            Assert.AreEqual(pluginContext.OutputParameters.Values.ElementAt(0), role.invln_Name);
+            Assert.AreEqual(deserializedContactRoles.contactRoles.ElementAt(0).webRoleName, role.invln_Name);
+
+           // Assert.AreEqual(pluginContext.OutputParameters.Values.ElementAt(0), role.invln_Name);
 
         }
 
@@ -132,6 +143,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             invln_portal portal = new invln_portal()
             {
                 Id = Guid.NewGuid(),
+                invln_Portal = new OptionSetValue((int)invln_Portal1.Loans),
             };
 
             invln_Webrole role = new invln_Webrole()
@@ -150,9 +162,9 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 var request = new invln_getcontactroleRequest();
                 pluginContext.InputParameters = new ParameterCollection
                 {
-                    {nameof(request.invln_ssid), Guid.NewGuid().ToString() },
-                    {nameof(request.invln_portalid), role.invln_Portalid.Id.ToString() },
-                    {nameof(request.invln_email), "test@test.pl" },
+                    {nameof(request.invln_contactexternalid), Guid.NewGuid().ToString() },
+                    {nameof(request.invln_portaltype), portal.invln_Portal.Value.ToString() },
+                    {nameof(request.invln_contactemail), string.Empty },
                 };
 
                 fakedContext.ExecutePluginWithConfigurations<GetContactRolePlugin>(pluginContext, "", "");
@@ -162,8 +174,10 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 exception = ex;
             }
 
+            var deserializedContactRoles = JsonSerializer.Deserialize<ContactRolesDto>(pluginContext.OutputParameters.Values.ElementAt(0).ToString());
+
             Assert.IsNull(exception);
-            Assert.AreEqual(pluginContext.OutputParameters.Values.ElementAt(0), role.invln_Name);
+            Assert.AreEqual(deserializedContactRoles.contactRoles.ElementAt(0).webRoleName, role.invln_Name);
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<Contact>.Ignored)).MustHaveHappened();
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_contactwebrole>.Ignored)).MustHaveHappened();
 
@@ -176,11 +190,13 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             {
                 Id = Guid.NewGuid(),
                 EMailAddress1 = "test@test.pl",
+                invln_externalid = "2137",
             };
 
             invln_portal portal1 = new invln_portal()
             {
                 Id = Guid.NewGuid(),
+                invln_Portal = new OptionSetValue((int)invln_Portal1.Loans),
             };
             invln_portal portal2 = new invln_portal()
             {
@@ -208,7 +224,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 invln_Webroleid = role.ToEntityReference(),
             };
 
-            fakedContext.Initialize(new List<Entity> { contact, role, relationship, defaultRole, portal1 });
+            fakedContext.Initialize(new List<Entity> { contact, role, relationship, defaultRole, portal1, portal2 });
 
             Exception exception = null;
             try
@@ -216,9 +232,9 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 var request = new invln_getcontactroleRequest();
                 pluginContext.InputParameters = new ParameterCollection
                 {
-                    {nameof(request.invln_ssid), contact.Id.ToString() },
-                    {nameof(request.invln_portalid), portal2.Id.ToString() },
-                    {nameof(request.invln_email), contact.EMailAddress1 },
+                    {nameof(request.invln_contactexternalid), contact.invln_externalid },
+                    {nameof(request.invln_portaltype), portal1.invln_Portal.Value.ToString() },
+                    {nameof(request.invln_contactemail), contact.EMailAddress1 },
                 };
 
                 fakedContext.ExecutePluginWithConfigurations<GetContactRolePlugin>(pluginContext, "", "");
@@ -228,8 +244,10 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 exception = ex;
             }
 
+            var deserializedContactRoles = JsonSerializer.Deserialize<ContactRolesDto>(pluginContext.OutputParameters.Values.ElementAt(0).ToString());
+
             Assert.IsNull(exception);
-            Assert.AreEqual(pluginContext.OutputParameters.Values.ElementAt(0), defaultRole.invln_Name);
+            Assert.AreEqual(deserializedContactRoles.contactRoles.ElementAt(0).webRoleName, defaultRole.invln_Name);
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_contactwebrole>.Ignored)).MustHaveHappened();
         }
 

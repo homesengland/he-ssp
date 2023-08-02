@@ -1,4 +1,4 @@
-﻿using DataverseModel;
+using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Repositories.interfaces;
@@ -85,12 +85,11 @@ namespace HE.CRM.Plugins.Services.Contacts
                 foreach (var contactRole in contactWebRole)
                 {
                     invln_portalpermissionlevel permissionLevel = null;
-                    if (contactRole["ae.invln_portalpermissionlevelid"] != null && ((dynamic)contactRole["ae.invln_portalpermissionlevelid"]).Value != null)
+                    if (contactRole.Contains("ae.invln_portalpermissionlevelid") && contactRole["ae.invln_portalpermissionlevelid"] != null && ((dynamic)contactRole["ae.invln_portalpermissionlevelid"]).Value != null)
                     {
                         this.TracingService.Trace("PermissionLevel lookup exists");
                         permissionLevel = portalPermissionLevels.Where(x => x.invln_portalpermissionlevelId == ((dynamic)contactRole["ae.invln_portalpermissionlevelid"]).Value.Id).ToList().FirstOrDefault();
                     }
-
                     this.TracingService.Trace("Add role");
                     roles.Add(new ContactRoleDto()
                     {
