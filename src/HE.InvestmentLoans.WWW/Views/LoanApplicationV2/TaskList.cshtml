@@ -32,7 +32,7 @@
             <ul class="app-task-list__items">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("Workflow","CompanyStructure", new {id = Model.ID, ending = companyStructureWorkflow.GetName() })">
+                        <a href="@Url.Action("StartCompanyStructure","CompanyStructureV2", new { id = Model.ID })">
                             Complete company information
                         </a>
                     </span>

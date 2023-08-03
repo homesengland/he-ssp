@@ -21,7 +21,7 @@ public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewM
 
     public CompanyStructureValidator()
     {
-        RuleSet(CompanyStructureView.ExistingCompany, () =>
+        RuleSet(CompanyStructureView.MoreInformationAboutOrganization, () =>
         {
             When(
                 c => c.CompanyInfoFileName != null,

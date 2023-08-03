@@ -31,6 +31,7 @@ public class GetLoanApplicationQueryHandler : IRequestHandler<GetLoanApplication
             loanApplication.LegacyModel.UseSectionsFrom(sessionModel);
         }
 
+        loanApplication.LegacyModel.Company.LoanApplicationId = loanApplication.Id.Value;
         return new GetLoanApplicationQueryResponse(loanApplication.LegacyModel);
     }
 }

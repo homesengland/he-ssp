@@ -1,5 +1,6 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Pipelines;
@@ -26,10 +27,16 @@ public static class BusinessLogicModule
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 
         services.AddOrganizationSubmodule();
+        services.AddCompanyStructureSubmodule();
     }
 
     private static void AddOrganizationSubmodule(this IServiceCollection services)
     {
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+    }
+
+    private static void AddCompanyStructureSubmodule(this IServiceCollection services)
+    {
+        services.AddScoped<ICompanyStructureRepository, CompanyStructureRepository>();
     }
 }

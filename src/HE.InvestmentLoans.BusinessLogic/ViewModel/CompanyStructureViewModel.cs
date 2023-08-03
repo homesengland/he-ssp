@@ -10,6 +10,8 @@ public class CompanyStructureViewModel
         StateChanged = false;
     }
 
+    public Guid LoanApplicationId { get; set; }
+
     public string? Purpose { get; set; }
 
     public string? ExistingCompany { get; set; }

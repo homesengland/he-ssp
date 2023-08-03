@@ -1,19 +1,19 @@
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.CompanyStructureViewModel
 @inject ModelExpressionProvider modelProvider
 @{
-    var (hasError, fileInputError) = ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Company.CompanyInfoFile));
+    var (hasError, fileInputError) = ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.CompanyStructureViewModel x) => x.CompanyInfoFile));
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="CompanyStructure" asp-action="WorkflowPost" asp-route-id="@Model.ID" asp-route-ending="ExistingCompany" enctype="multipart/form-data" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("GoBack","CompanyStructure", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+    <form asp-controller="CompanyStructureV2" asp-action="MoreInformationAboutOrganizationPost" asp-route-id="@Model.LoanApplicationId" enctype="multipart/form-data" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("GoBack","CompanyStructure", new {id = Model.LoanApplicationId})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
-            <gds-error-form-group asp-for="Company.ExistingCompany">
+            <gds-error-form-group asp-for="ExistingCompany">
                 <legend>
                     <gds-label-wrapper>
-                        <gds-label size="@ControlSize.L" for="Company.ExistingCompany">
+                        <gds-label size="@ControlSize.L" for="ExistingCompany">
                             Provide more information about your organisation
                         </gds-label>
                     </gds-label-wrapper>
@@ -21,15 +21,15 @@
                 <gds-div-hint>
                     Tell us about your organisation structure, including if your organisation is or has a parent company, or is part of a group structure.
                 </gds-div-hint>
-                <gds-text-area 
-                    asp-for="Company.ExistingCompany"
+                <gds-text-area
+                    asp-for="ExistingCompany"
                     rows="5"></gds-text-area>
             </gds-error-form-group>
-            <gds-error-form-group asp-for="Company.CompanyInfoFile" id="file-error-form">
+            <gds-error-form-group asp-for="CompanyInfoFile" id="file-error-form">
                 <gds-div-hint>
                     You can also upload any relevant files such as company structure charts.
                 </gds-div-hint>
-             
+
                     <p class="govuk-error-message">
                         <span class="govuk-visually-hidden">Error:</span>
                         @if (hasError)
@@ -48,7 +48,7 @@
                     <input class="govuk-file-upload" id="File" name="File" type="file">
                 </div>
             </gds-error-form-group>
-            <button class="govuk-button" id="continue-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Company.StateChanged?"Change":"Continue")">
+            <button class="govuk-button" id="continue-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
                 Continue
             </button>
         </gds-field-set>
