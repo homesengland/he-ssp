@@ -14,23 +14,17 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum msdyn_ResourceScheduleSource
+	public enum invln_Sectioncompletionstatus
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Manual = 690970003,
+		Completed = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Mobile = 690970002,
+		Inprogress = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ResourceSchedulingOptimization = 192350000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ScheduleAssistant = 690970004,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ScheduleBoard = 690970001,
+		Notstarted = 858110000,
 	}
 }
 #pragma warning restore CS1591

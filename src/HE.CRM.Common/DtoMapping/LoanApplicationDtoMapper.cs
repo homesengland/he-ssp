@@ -41,6 +41,12 @@ namespace HE.CRM.Common.DtoMapping
                 invln_Confirmationdirectorloanscanbesubordinated = ParseBool(loanApplicationDto.confirmationDirectorLoansCanBeSubordinated), //DirLoansSub
                 invln_Reasonfordirectorloannotsubordinated = loanApplicationDto.reasonForDirectorLoanNotSubordinated, //DirLoansSub
 
+                //SECTIONS STATUSES
+                invln_companystructureandexperiencecompletionst = MapNullableIntToOptionSetValue(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus),
+                invln_fundingdetailscompletionstatus = MapNullableIntToOptionSetValue(loanApplicationDto.FundingDetailsCompletionStatus),
+                invln_securitydetailscompletionstatus = MapNullableIntToOptionSetValue(loanApplicationDto.SecurityDetailsCompletionStatus),
+                invln_sitedetailscompletionstatus = MapNullableIntToOptionSetValue(loanApplicationDto.SiteDetailsCompletionStatus),
+
                 //OTHER ATTRIBUTES
                 //CHANGE IN STATUS ONLY VIA STATUS CHANGE ENDPOINT
 
@@ -121,6 +127,15 @@ namespace HE.CRM.Common.DtoMapping
             }
 
             return loanApplicationDto;
+        }
+
+        public static OptionSetValue MapNullableIntToOptionSetValue(int? valueToMap)
+        {
+            if(valueToMap.HasValue)
+            {
+                return new OptionSetValue(valueToMap.Value);
+            }
+            return null;
         }
 
         public static string MapFundingReasonOptionSetToString(OptionSetValue fundingReason)
