@@ -102,6 +102,12 @@ namespace HE.CRM.Common.DtoMapping
                 //SITE DETAILS
                 siteDetailsList = siteDetailsDtoList,
 
+                //SECTIONS COMPLETION STATUS
+                CompanyStructureAndExperienceCompletionStatus = loanApplication.invln_companystructureandexperiencecompletionst?.Value,
+                FundingDetailsCompletionStatus = loanApplication.invln_fundingdetailscompletionstatus?.Value,
+                SecurityDetailsCompletionStatus = loanApplication.invln_securitydetailscompletionstatus?.Value,
+                SiteDetailsCompletionStatus = loanApplication.invln_sitedetailscompletionstatus?.Value,
+
                 //OTHRER ATTRIBUTES
                 LastModificationOn = loanApplication.ModifiedOn,
                 loanApplicationExternalStatus = loanApplication.invln_ExternalStatus?.Value,
