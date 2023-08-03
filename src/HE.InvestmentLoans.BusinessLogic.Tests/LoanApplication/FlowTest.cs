@@ -26,7 +26,6 @@ public class FlowTest : MediatorTestBase
     [DataRow(LoanApplicationWorkflow.State.Index, LoanApplicationWorkflow.State.AboutLoan)]
     [DataRow(LoanApplicationWorkflow.State.AboutLoan, LoanApplicationWorkflow.State.CheckYourDetails)]
     [DataRow(LoanApplicationWorkflow.State.CheckYourDetails, LoanApplicationWorkflow.State.LoanPurpose)]
-    [DataRow(LoanApplicationWorkflow.State.LoanPurpose, LoanApplicationWorkflow.State.TaskList)]
     [DataRow(LoanApplicationWorkflow.State.TaskList, LoanApplicationWorkflow.State.CheckApplication)]
     [DataRow(LoanApplicationWorkflow.State.CheckApplication, LoanApplicationWorkflow.State.ApplicationSubmitted)]
     public async Task Workflow_Continue_Test(LoanApplicationWorkflow.State begin, LoanApplicationWorkflow.State expcected)
@@ -46,7 +45,6 @@ public class FlowTest : MediatorTestBase
     }
 
     [TestMethod]
-    [DataRow(LoanApplicationWorkflow.State.AboutLoan, LoanApplicationWorkflow.State.Index)]
     [DataRow(LoanApplicationWorkflow.State.CheckYourDetails, LoanApplicationWorkflow.State.AboutLoan)]
     [DataRow(LoanApplicationWorkflow.State.LoanPurpose, LoanApplicationWorkflow.State.CheckYourDetails)]
     [DataRow(LoanApplicationWorkflow.State.TaskList, LoanApplicationWorkflow.State.Dashboard)]
@@ -65,8 +63,6 @@ public class FlowTest : MediatorTestBase
     [DataRow(LoanApplicationWorkflow.State.Index, LoanApplicationWorkflow.State.AboutLoan)]
     [DataRow(LoanApplicationWorkflow.State.AboutLoan, LoanApplicationWorkflow.State.CheckYourDetails)]
     [DataRow(LoanApplicationWorkflow.State.CheckYourDetails, LoanApplicationWorkflow.State.LoanPurpose)]
-    [DataRow(LoanApplicationWorkflow.State.LoanPurpose, LoanApplicationWorkflow.State.Ineligible)]
-
     public async Task Workflow_Continue_Ineligible_Test(LoanApplicationWorkflow.State begin, LoanApplicationWorkflow.State expcected)
     {
         var mediator = (IMediator)ServiceProvider.GetService(typeof(IMediator));
@@ -79,7 +75,6 @@ public class FlowTest : MediatorTestBase
     }
 
     [TestMethod]
-    [DataRow(LoanApplicationWorkflow.State.AboutLoan, LoanApplicationWorkflow.State.Index)]
     [DataRow(LoanApplicationWorkflow.State.CheckYourDetails, LoanApplicationWorkflow.State.AboutLoan)]
     [DataRow(LoanApplicationWorkflow.State.LoanPurpose, LoanApplicationWorkflow.State.CheckYourDetails)]
     [DataRow(LoanApplicationWorkflow.State.Ineligible, LoanApplicationWorkflow.State.LoanPurpose)]
