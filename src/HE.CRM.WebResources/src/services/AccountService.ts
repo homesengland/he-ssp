@@ -4,9 +4,9 @@ import { CreditRatingAgency } from "../OptionSet"
 export class AccountService {
   common: CommonLib
 
-  static readonly DateApprovedInFutureMsg: string = "Date approved cannot be in future."
+  static readonly DateApprovedInFutureMsg: string = "Date approved cannot be in future and must be in previous 3 years"
   static readonly DateApprovedInFutureMsgId: string = "DateApprovedInFutureMsgId"
-  static readonly DateDuteForRenewalInPastMsg: string = "Date due for renewal cannot be in past."
+  static readonly DateDuteForRenewalInPastMsg: string = "Date due for renewal cannot be in past and must be in next 3 years"
   static readonly DateDuteForRenewalInPastMsgId: string = "DateDuteForRenewalInPastMsgId"
 
   constructor(eCtx) {
@@ -25,6 +25,7 @@ export class AccountService {
     } else {
       this.common.hideControl('invln_creditratingagency', true)
       this.common.setAttributeValue('invln_creditratingagency', null)
+      this.setFieldsAvailabilityBasedOnCreditRatingAgency()
     }
   }
 
@@ -44,7 +45,8 @@ export class AccountService {
     if (dateApproved != null) {
       dateApproved = dateApproved.setHours(0, 0, 0, 0)
       var today = new Date().setHours(0, 0, 0, 0)
-      if (dateApproved > today) {
+      var threeYearsAgo = new Date().setMonth(new Date().getMonth() - 36)
+      if (dateApproved > today || threeYearsAgo > dateApproved) {
         this.common.setFieldNotification('invln_dateapproved', AccountService.DateApprovedInFutureMsg, AccountService.DateApprovedInFutureMsgId);
       }
     }
@@ -54,10 +56,11 @@ export class AccountService {
     var dateApproved: any = this.common.getAttributeValue('invln_datedueforrenewal')
     if (dateApproved != null) {
       dateApproved = dateApproved.setHours(0, 0, 0, 0)
-      var today = new Date().setHours(0,0,0,0)
-      if (dateApproved < today) {
+      var today = new Date().setHours(0, 0, 0, 0)
+      var dateInThreeYears = new Date().setMonth(new Date().getMonth() + 36)
+      if (dateApproved < today || dateApproved > dateInThreeYears) {
         this.common.setFieldNotification('invln_datedueforrenewal', AccountService.DateDuteForRenewalInPastMsg, AccountService.DateDuteForRenewalInPastMsgId);
-      }
+      } 
     }
   }
   
