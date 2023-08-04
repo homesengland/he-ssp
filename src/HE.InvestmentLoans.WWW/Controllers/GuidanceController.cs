@@ -1,15 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
+
+[Route("guidance")]
 public class GuidanceController : Controller
 {
-    [HttpGet("/guidance-what")]
-    public IActionResult Index()
+    [HttpGet("what-the-home-building-fund-is")]
+    public IActionResult WhatTheHomeBuildingFundIs()
     {
         return View();
     }
 
-    [HttpGet("/guidance-eligibility")]
+    [HttpGet("eligibility")]
     public IActionResult Eligibility()
     {
         return View();
