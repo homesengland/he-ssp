@@ -71,7 +71,7 @@ public class LoanApplicationEntity
                         .Select(manyHomes => int.TryParse(manyHomes, NumberStyles.Integer, cultureInfo, out var parsedValue) ? parsedValue : 0)
                         .Aggregate(0, (x, y) => x + y);
 
-        return result > minimumHomesToBuild;
+        return result >= minimumHomesToBuild;
     }
 
     private bool IsReadyToSubmit()
