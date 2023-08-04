@@ -49,11 +49,11 @@ public class LoanApplicationEntity
         SyncToLegacyModel();
     }
 
-    public void Submit(ICanSubmitLoanApplication canSubmitLoanApplication, CancellationToken cancellationToken)
+    public async void Submit(ICanSubmitLoanApplication canSubmitLoanApplication, CancellationToken cancellationToken)
     {
         if (!IsReadyToSubmit())
         {
-            canSubmitLoanApplication.Submit(Id, cancellationToken);
+            await canSubmitLoanApplication.Submit(Id, cancellationToken);
         }
         else
         {

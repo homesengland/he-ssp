@@ -189,7 +189,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         LegacySave(loanApplication.LegacyModel);
     }
 
-    public void Submit(LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
+    public async Task Submit(LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
     {
         var crmSubmitStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Submitted);
 
@@ -199,7 +199,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             invln_statusexternal = crmSubmitStatus,
         };
 
-        _serviceClient.ExecuteAsync(request, cancellationToken);
+        await _serviceClient.ExecuteAsync(request, cancellationToken);
     }
 
     public void LegacySave(LoanApplicationViewModel legacyModel)
