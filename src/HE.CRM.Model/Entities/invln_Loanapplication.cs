@@ -66,6 +66,7 @@ namespace DataverseModel
 			public const string invln_Cashflowsubmitted = "invln_cashflowsubmitted";
 			public const string invln_CompanyExperience = "invln_companyexperience";
 			public const string invln_CompanyPurpose = "invln_companypurpose";
+			public const string invln_companystructureandexperiencecompletionst = "invln_companystructureandexperiencecompletionst";
 			public const string invln_Companystructureinformation = "invln_companystructureinformation";
 			public const string invln_Confirmationdirectorloanscanbesubordinated = "invln_confirmationdirectorloanscanbesubordinated";
 			public const string invln_Contact = "invln_contact";
@@ -76,6 +77,7 @@ namespace DataverseModel
 			public const string invln_DebentureHolder = "invln_debentureholder";
 			public const string invln_Directorloans = "invln_directorloans";
 			public const string invln_ExternalStatus = "invln_externalstatus";
+			public const string invln_fundingdetailscompletionstatus = "invln_fundingdetailscompletionstatus";
 			public const string invln_FundingReason = "invln_fundingreason";
 			public const string invln_InternalStatus = "invln_internalstatus";
 			public const string invln_ISPapproved = "invln_ispapproved";
@@ -109,7 +111,9 @@ namespace DataverseModel
 			public const string invln_Refinancerepayment = "invln_refinancerepayment";
 			public const string invln_Refinancerepaymentdetails = "invln_refinancerepaymentdetails";
 			public const string invln_Region = "invln_region";
+			public const string invln_securitydetailscompletionstatus = "invln_securitydetailscompletionstatus";
 			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
+			public const string invln_sitedetailscompletionstatus = "invln_sitedetailscompletionstatus";
 			public const string invln_SubjecttocontractApproved = "invln_subjecttocontractapproved";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedByName = "modifiedbyname";
@@ -385,6 +389,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_companystructureandexperiencecompletionst")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_companystructureandexperiencecompletionst
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_companystructureandexperiencecompletionst");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_companystructureandexperiencecompletionst");
+				this.SetAttributeValue("invln_companystructureandexperiencecompletionst", value);
+				this.OnPropertyChanged("invln_companystructureandexperiencecompletionst");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_companystructureinformation")]
 		public string invln_Companystructureinformation
 		{
@@ -535,6 +556,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_ExternalStatus");
 				this.SetAttributeValue("invln_externalstatus", value);
 				this.OnPropertyChanged("invln_ExternalStatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundingdetailscompletionstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_fundingdetailscompletionstatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_fundingdetailscompletionstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_fundingdetailscompletionstatus");
+				this.SetAttributeValue("invln_fundingdetailscompletionstatus", value);
+				this.OnPropertyChanged("invln_fundingdetailscompletionstatus");
 			}
 		}
 		
@@ -1059,6 +1097,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Region");
 				this.SetAttributeValue("invln_region", value);
 				this.OnPropertyChanged("invln_Region");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitydetailscompletionstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_securitydetailscompletionstatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_securitydetailscompletionstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_securitydetailscompletionstatus");
+				this.SetAttributeValue("invln_securitydetailscompletionstatus", value);
+				this.OnPropertyChanged("invln_securitydetailscompletionstatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sitedetailscompletionstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_sitedetailscompletionstatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_sitedetailscompletionstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetailscompletionstatus");
+				this.SetAttributeValue("invln_sitedetailscompletionstatus", value);
+				this.OnPropertyChanged("invln_sitedetailscompletionstatus");
 			}
 		}
 		
