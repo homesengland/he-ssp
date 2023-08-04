@@ -39,10 +39,14 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
             {
                 output.TagName = HtmlConstants.H1;
 
-                if(Size is null)
+                if (Size is null)
+                {
                     TagConstruct.ConstructHeaderClass(output, ControlSize.L);
+                }
                 else
+                {
                     TagConstruct.ConstructHeaderClass(output, Size.Value);
+                }
 
                 TagConstruct.ConstructId(output, this.Id);
                 output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output, this.Text));
