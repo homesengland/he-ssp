@@ -1,29 +1,28 @@
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
-using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 
 public static class CompanyStructureMapper
 {
-    public static Providable<CompanyPurpose> MapCompanyPurpose(string? companyPurpose)
+    public static CompanyPurpose? MapCompanyPurpose(string? companyPurpose)
     {
         if (string.IsNullOrEmpty(companyPurpose))
         {
-            return CompanyPurpose.NotProvided();
+            return null;
         }
 
         return CompanyPurpose.New(companyPurpose.Equals(CommonResponse.Yes, StringComparison.OrdinalIgnoreCase));
     }
 
-    public static string? MapCompanyPurpose(Providable<CompanyPurpose> companyPurpose)
+    public static string? MapCompanyPurpose(CompanyPurpose? companyPurpose)
     {
-        if (companyPurpose.IsNotProvided)
+        if (companyPurpose is null)
         {
             return null;
         }
 
-        return companyPurpose.Value.IsSpv switch
+        return companyPurpose.IsSpv switch
         {
             true => CommonResponse.Yes,
             false => CommonResponse.No,

@@ -539,6 +539,7 @@ dotnet_diagnostic.SA1633.severity = none
 dotnet_diagnostic.SA1600.severity = none
 dotnet_diagnostic.SA1601.severity = none
 dotnet_diagnostic.SA1602.severity = none
+dotnet_diagnostic.SA1623.severity = none
 dotnet_diagnostic.CS1591.severity = none
 tab_width = 4
 end_of_line = crlf

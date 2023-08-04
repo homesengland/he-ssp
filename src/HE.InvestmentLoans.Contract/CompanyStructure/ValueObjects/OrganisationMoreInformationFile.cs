@@ -2,7 +2,7 @@ using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
-public class OrganisationMoreInformationFile : ProvidableValueObject<OrganisationMoreInformationFile>
+public class OrganisationMoreInformationFile : ValueObject
 {
     public OrganisationMoreInformationFile(string fileName, byte[] content)
     {

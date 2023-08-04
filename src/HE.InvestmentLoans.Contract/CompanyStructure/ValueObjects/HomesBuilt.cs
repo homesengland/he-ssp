@@ -2,7 +2,7 @@ using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
-public class HomesBuilt : ProvidableValueObject<HomesBuilt>
+public class HomesBuilt : ValueObject
 {
     public HomesBuilt(int value)
     {

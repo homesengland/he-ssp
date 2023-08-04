@@ -2,16 +2,12 @@ using System.Globalization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.QueryHandlers;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
-using HE.InvestmentLoans.Contract.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -111,11 +107,14 @@ public class CompanyStructureV2Controller : Controller
             return View("HomesBuilt", viewModel);
         }
 
-        await _mediator.Send(
-            new ProvideHowManyHomesBuiltCommand(
-                LoanApplicationId.From(id),
-                viewModel.HomesBuilt is null ? HomesBuilt.NotProvided() : new Providable<HomesBuilt>(new HomesBuilt(int.Parse(viewModel.HomesBuilt, CultureInfo.InvariantCulture)))),
-            cancellationToken);
+        if (viewModel.HomesBuilt is not null)
+        {
+            await _mediator.Send(
+                new ProvideHowManyHomesBuiltCommand(
+                    LoanApplicationId.From(id),
+                    new HomesBuilt(int.Parse(viewModel.HomesBuilt, CultureInfo.InvariantCulture))),
+                cancellationToken);
+        }
 
         return View("HomesBuilt", viewModel);
     }

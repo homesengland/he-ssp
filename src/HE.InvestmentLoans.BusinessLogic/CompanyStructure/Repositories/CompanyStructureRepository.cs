@@ -1,7 +1,6 @@
 using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.CRM.Model;
@@ -41,8 +40,8 @@ public class CompanyStructureRepository : ICompanyStructureRepository
         var loanApplicationDto = new LoanApplicationDto
         {
             companyPurpose = CompanyStructureMapper.MapCompanyPurpose(companyStructure.Purpose),
-            companyStructureInformation = companyStructure.MoreInformation.IsProvided ? companyStructure.MoreInformation.Value.Information : null,
-            companyExperience = companyStructure.HomesBuilt.IsProvided ? companyStructure.HomesBuilt.Value.Value : null,
+            companyStructureInformation = companyStructure.MoreInformation?.Information,
+            companyExperience = companyStructure.HomesBuilt?.Value,
         };
 
         var loanApplicationSerialized = JsonSerializer.Serialize(loanApplicationDto);

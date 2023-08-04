@@ -1,7 +1,6 @@
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
-using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.QueryHandlers;
 
@@ -13,36 +12,36 @@ public static class CompanyStructureViewModelMapper
         {
             Purpose = MapCompanyPurpose(companyStructureEntity.Purpose),
             LoanApplicationId = companyStructureEntity.LoanApplicationId.Value,
-            ExistingCompany = companyStructureEntity.MoreInformation.IsProvided ? companyStructureEntity.MoreInformation.Value.Information : null,
+            ExistingCompany = companyStructureEntity.MoreInformation?.Information,
         };
     }
 
-    public static string? MapCompanyPurpose(Providable<CompanyPurpose> companyPurpose)
+    public static string? MapCompanyPurpose(CompanyPurpose? companyPurpose)
     {
-        if (companyPurpose.IsNotProvided)
+        if (companyPurpose is null)
         {
             return null;
         }
 
-        return companyPurpose.Value.IsSpv ? CommonResponse.Yes : CommonResponse.No;
+        return companyPurpose.IsSpv ? CommonResponse.Yes : CommonResponse.No;
     }
 
-    public static Providable<CompanyPurpose> MapCompanyPurpose(string? companyPurpose)
+    public static CompanyPurpose? MapCompanyPurpose(string? companyPurpose)
     {
-        return companyPurpose is null ? CompanyPurpose.NotProvided() : CompanyPurpose.New(companyPurpose == CommonResponse.Yes);
+        return companyPurpose is null ? null : CompanyPurpose.New(companyPurpose == CommonResponse.Yes);
     }
 
-    public static Providable<OrganisationMoreInformation> MapOrganisationMoreInformation(string? organisationMoreInformation)
+    public static OrganisationMoreInformation? MapOrganisationMoreInformation(string? organisationMoreInformation)
     {
         return organisationMoreInformation is null ?
-            OrganisationMoreInformation.NotProvided() :
-            new Providable<OrganisationMoreInformation>(new OrganisationMoreInformation(organisationMoreInformation));
+            null :
+            new OrganisationMoreInformation(organisationMoreInformation);
     }
 
-    public static Providable<OrganisationMoreInformationFile> MapOrganisationMoreInformationFile(string? fileName, byte[]? content)
+    public static OrganisationMoreInformationFile? MapOrganisationMoreInformationFile(string? fileName, byte[]? content)
     {
         return fileName is null || content is null ?
-            OrganisationMoreInformationFile.NotProvided() :
-            new Providable<OrganisationMoreInformationFile>(new OrganisationMoreInformationFile(fileName, content));
+            null :
+            new OrganisationMoreInformationFile(fileName, content);
     }
 }

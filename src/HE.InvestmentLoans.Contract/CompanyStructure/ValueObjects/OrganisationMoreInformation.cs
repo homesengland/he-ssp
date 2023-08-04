@@ -3,7 +3,7 @@ using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
-public class OrganisationMoreInformation : ProvidableValueObject<OrganisationMoreInformation>
+public class OrganisationMoreInformation : ValueObject
 {
     public OrganisationMoreInformation(string information)
     {

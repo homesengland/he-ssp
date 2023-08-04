@@ -2,7 +2,7 @@ using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
-public class CompanyPurpose : ProvidableValueObject<CompanyPurpose>
+public class CompanyPurpose : ValueObject
 {
     protected CompanyPurpose(bool isSpv)
     {
@@ -10,11 +10,11 @@ public class CompanyPurpose : ProvidableValueObject<CompanyPurpose>
     }
 
     /// <summary>
-    /// Gets an SPV is a limited company set up only for the purpose of holding property and for carrying out buy-to-let activities.
+    /// An SPV is a limited company set up only for the purpose of holding property and for carrying out buy-to-let activities.
     /// </summary>
     public bool IsSpv { get; }
 
-    public static Providable<CompanyPurpose> New(bool isSpv) => new(new CompanyPurpose(isSpv));
+    public static CompanyPurpose New(bool isSpv) => new(isSpv);
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
