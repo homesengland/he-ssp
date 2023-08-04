@@ -14,7 +14,7 @@ using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 
-public class LoanApplicationRepository : ILoanApplicationRepository
+public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitLoanApplication
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
@@ -41,10 +41,32 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         var loanApplicationDto = JsonSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                         ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
 
-        return new LoanApplicationEntity(id, userAccount)
+        var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
+
+        return new LoanApplicationEntity(id, userAccount, externalStatus)
         {
             LegacyModel = LoanApplicationMapper.Map(loanApplicationDto),
         };
+    }
+
+    public async Task<UserLoanApplication> GetLoanApplicationSubmit(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var req = new invln_getsingleloanapplicationforaccountandcontactRequest
+        {
+            invln_accountid = userAccount.AccountId.ToString(),
+            invln_externalcontactid = userAccount.UserGlobalId,
+            invln_loanapplicationid = id.ToString(),
+        };
+
+        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
+                       ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
+
+        var loanApplicationDto = JsonSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
+                        ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
+
+        var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
+
+        return new UserLoanApplication(id, loanApplicationDto.name, externalStatus, null);
     }
 
     public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount, CancellationToken cancellationToken)
@@ -167,13 +189,13 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         LegacySave(loanApplication.LegacyModel);
     }
 
-    public void Submit(LoanApplicationEntity loanApplication, CancellationToken cancellationToken)
+    public void Submit(LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
     {
         var crmSubmitStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Submitted);
 
         var request = new invln_changeloanapplicationexternalstatusRequest
         {
-            invln_loanapplicationid = loanApplication.Id.ToString(),
+            invln_loanapplicationid = loanApplicationId.ToString(),
             invln_statusexternal = crmSubmitStatus,
         };
 

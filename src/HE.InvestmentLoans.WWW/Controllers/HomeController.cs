@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.Contract.Application;
+using HE.InvestmentLoans.Contract.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

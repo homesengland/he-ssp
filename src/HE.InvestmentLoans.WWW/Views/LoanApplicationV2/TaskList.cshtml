@@ -1,18 +1,18 @@
-@model HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities.LoanApplicationEntity
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel;
 @using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 @using HE.InvestmentLoans.WWW.Controllers
 @using HE.InvestmentLoans.BusinessLogic.ViewModel
 @using System.Globalization
 @inject MediatR.IMediator mediator
 @{
-    var securityWorkflow = new SecurityWorkflow(Model.LegacyModel, mediator);
-    var fundingWorkflow = new FundingWorkflow(Model.LegacyModel, mediator);
-    var companyStructureWorkflow = new CompanyStructureWorkflow(Model.LegacyModel, mediator);
-    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model.LegacyModel, mediator);
+    var securityWorkflow = new SecurityWorkflow(Model, mediator);
+    var fundingWorkflow = new FundingWorkflow(Model, mediator);
+    var companyStructureWorkflow = new CompanyStructureWorkflow(Model, mediator);
+    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
 }
 
 
-<gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.Id })" text="Back to account homepage" class="govuk-grid-column-full"></gds-back-link>
+<gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.ID })" text="Back to account homepage" class="govuk-grid-column-full"></gds-back-link>
 
 @await Html.PartialAsync("_DeleteNotification")
 
@@ -20,7 +20,7 @@
     Development loan application
 </gds-h1>
 <gds-div-hint class="govuk-!-margin-bottom-8 govuk-grid-column-full">
-    Last saved on @Model.LegacyModel.Timestamp.ToString("d MMMM yyyy 'at' h:mm tt", new CultureInfo("en-US"))
+    Last saved on @Model.Timestamp.ToString("d MMMM yyyy 'at' h:mm tt", new CultureInfo("en-US"))
 </gds-div-hint>
 <gds-div-grid-column-two-thirds>
     <ul class="app-task-list">
@@ -32,7 +32,7 @@
             <ul class="app-task-list__items">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("Workflow","CompanyStructure", new {id = Model.Id, ending = companyStructureWorkflow.GetName() })">
+                        <a href="@Url.Action("Workflow","CompanyStructure", new {id = Model.ID, ending = companyStructureWorkflow.GetName() })">
                             Complete company information
                         </a>
                     </span>
@@ -59,7 +59,7 @@
             <ul class="app-task-list__items">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("Workflow","Funding", new {id = Model.Id, ending = fundingWorkflow.GetName() })">
+                        <a href="@Url.Action("Workflow","Funding", new {id = Model.ID, ending = fundingWorkflow.GetName() })">
                             Provide details about funding
                         </a>
                     </span>
@@ -78,7 +78,7 @@
                 </li>
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("Workflow","Security", new {id = Model.Id, ending = securityWorkflow.GetName() })">
+                        <a href="@Url.Action("Workflow","Security", new {id = Model.ID, ending = securityWorkflow.GetName() })">
                             Provide details about security
                         </a>
                     </span>
@@ -103,26 +103,26 @@
             </h2>
             <gds-div-hint>Tell us about your project or projects. You can add more than one. You will need to start a new application for each company if you have different companies per project.</gds-div-hint>
             <ul class="app-task-list__items">
-                @foreach (var site in Model.LegacyModel.Sites)
+                @foreach (var site in Model.Sites)
                 {
                     <li class="app-task-list__item">
                         <div class="task-list-grid-container">
                             <span class="app-task-list__task-name task-list-project-name">
-                                <a href="@Url.Action("Workflow","Site", new {id = Model.Id, site=site.Id, ending = securityWorkflow.GetName() })">
+                                <a href="@Url.Action("Workflow","Site", new {id = Model.ID, site=site.Id, ending = securityWorkflow.GetName() })">
                                     @(site.Name ?? site.DefaultName)
                                 </a>
                             </span>
                             <div class="task-list-remove-link">
-                                <a href="@Url.Action("Workflow","Site", new {id = Model.Id, site=site.Id, ending = "DeleteProject" })">
+                                <a href="@Url.Action("Workflow","Site", new {id = Model.ID, site=site.Id, ending = "DeleteProject" })">
                                     Remove
                                 </a>
                             </div>
                             <div>
-                                @if (new SiteWorkflow(Model.LegacyModel, mediator, site.Id.Value).IsCompleted())
+                                @if (new SiteWorkflow(Model, mediator, site.Id.Value).IsCompleted())
                                 {
                                     <gds-task-list-item-status class="task-list-project-tag" status=Completed>Completed</gds-task-list-item-status>
                                 }
-                                else if (!new SiteWorkflow(Model.LegacyModel, mediator, site.Id.Value).IsStarted())
+                                else if (!new SiteWorkflow(Model, mediator, site.Id.Value).IsStarted())
                                 {
                                     <gds-task-list-item-status class="task-list-project-tag" status=NotStarted>Not Started</gds-task-list-item-status>
                                 }
@@ -138,7 +138,7 @@
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
                         <span class="app-task-list__task-name">
-                            <a href="@Url.Action("CreateSite", "Site", new {id = Model.Id, ending = securityWorkflow.GetName() })">
+                            <a href="@Url.Action("CreateSite", "Site", new {id = Model.ID, ending = securityWorkflow.GetName() })">
                                 Add another
                             </a>
                         </span>
@@ -151,9 +151,9 @@
     <gds-h2 size="ControlSize.M">Check and submit</gds-h2>
     <p>You must complete all sections before you can submit your application.</p>
     <div>
-        @if (Model.IsReadyToSubmit())
+        @if (loanApllicationWorkflow.IsFilled())
         {
-            <a href="@Url.Action("CheckApplication", "LoanApplicationV2", new {id = Model.Id})">
+            <a href="@Url.Action("CheckApplication", "LoanApplicationV2", new {id = Model.ID})">
                 <gds-button data-module="govuk-button" name="action" value="Continue">
                     Check and submit application
                 </gds-button>
@@ -166,9 +166,9 @@
             </button>
         }
     </div>
-    <gds-link href="@Url.Action("Index","LoanApplication", new {id = Model.Id})">
+    <gds-link href="@Url.Action("Index","LoanApplication", new {id = Model.ID})">
         Report a problem with this page
-        <gds-span-visually-hidden> @Url.Action("Index","LoanApplication", new {id = Model.Id})</gds-span-visually-hidden>
+        <gds-span-visually-hidden> @Url.Action("Index","LoanApplication", new {id = Model.ID})</gds-span-visually-hidden>
     </gds-link>
 </gds-div-grid-column-two-thirds>
 

@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.CRM.Model;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 public class ApplicationStatusMapper
@@ -8,21 +8,21 @@ public class ApplicationStatusMapper
     {
         return status switch
         {
-            ApplicationStatus.Draft => ApplicationCrmStatus.Draft,
-            ApplicationStatus.Submitted => ApplicationCrmStatus.Submitted,
-            ApplicationStatus.InDueDiligence => ApplicationCrmStatus.InDueDiligence,
-            ApplicationStatus.ContractSigned => ApplicationCrmStatus.ContractSigned,
-            ApplicationStatus.CspSatisfied => ApplicationCrmStatus.CspSatisfied,
-            ApplicationStatus.LoanAvailable => ApplicationCrmStatus.LoanAvailable,
-            ApplicationStatus.HoldRequested => ApplicationCrmStatus.HoldRequested,
-            ApplicationStatus.OnHold => ApplicationCrmStatus.OnHold,
-            ApplicationStatus.ReferredBackToApplicant => ApplicationCrmStatus.ReferredBackToApplicant,
-            ApplicationStatus.NA => ApplicationCrmStatus.NA,
-            ApplicationStatus.Withdrawn => ApplicationCrmStatus.Withdrawn,
-            ApplicationStatus.NotApproved => ApplicationCrmStatus.NotApproved,
-            ApplicationStatus.ApplicationDeclined => ApplicationCrmStatus.ApplicationDeclined,
-            ApplicationStatus.ApprovedSubjectToContract => ApplicationCrmStatus.ApprovedSubjectToContract,
-            ApplicationStatus.UnderReview => ApplicationCrmStatus.Underreview,
+            ApplicationStatus.Draft => (int)invln_externalstatus.Draft,
+            ApplicationStatus.Submitted => (int)invln_externalstatus.Submitted,
+            ApplicationStatus.InDueDiligence => (int)invln_externalstatus.Induediligence,
+            ApplicationStatus.ContractSigned => (int)invln_externalstatus.ContractSignedsubjecttoCP,
+            ApplicationStatus.CspSatisfied => (int)invln_externalstatus.CPssatisfied,
+            ApplicationStatus.LoanAvailable => (int)invln_externalstatus.Loanavailable,
+            ApplicationStatus.HoldRequested => (int)invln_externalstatus.Holdrequested,
+            ApplicationStatus.OnHold => (int)invln_externalstatus.Onhold,
+            ApplicationStatus.ReferredBackToApplicant => (int)invln_externalstatus.Referredbacktoapplicant,
+            ApplicationStatus.NA => (int)invln_externalstatus.Inactive,
+            ApplicationStatus.Withdrawn => (int)invln_externalstatus.Withdrawn,
+            ApplicationStatus.NotApproved => (int)invln_externalstatus.Notapproved,
+            ApplicationStatus.ApplicationDeclined => (int)invln_externalstatus.Applicationdeclined,
+            ApplicationStatus.ApprovedSubjectToContract => (int)invln_externalstatus.Approvedsubjecttocontract,
+            ApplicationStatus.UnderReview => (int)invln_externalstatus.Underreview,
             _ => throw new NotImplementedException(),
         };
     }
@@ -31,21 +31,21 @@ public class ApplicationStatusMapper
     {
         return crmStatus switch
         {
-            ApplicationCrmStatus.Draft => ApplicationStatus.Draft,
-            ApplicationCrmStatus.Submitted => ApplicationStatus.Submitted,
-            ApplicationCrmStatus.InDueDiligence => ApplicationStatus.InDueDiligence,
-            ApplicationCrmStatus.ContractSigned => ApplicationStatus.ContractSigned,
-            ApplicationCrmStatus.CspSatisfied => ApplicationStatus.CspSatisfied,
-            ApplicationCrmStatus.LoanAvailable => ApplicationStatus.LoanAvailable,
-            ApplicationCrmStatus.HoldRequested => ApplicationStatus.HoldRequested,
-            ApplicationCrmStatus.OnHold => ApplicationStatus.OnHold,
-            ApplicationCrmStatus.ReferredBackToApplicant => ApplicationStatus.ReferredBackToApplicant,
-            ApplicationCrmStatus.NA => ApplicationStatus.NA,
-            ApplicationCrmStatus.Withdrawn => ApplicationStatus.Withdrawn,
-            ApplicationCrmStatus.NotApproved => ApplicationStatus.NotApproved,
-            ApplicationCrmStatus.ApplicationDeclined => ApplicationStatus.ApplicationDeclined,
-            ApplicationCrmStatus.ApprovedSubjectToContract => ApplicationStatus.ApprovedSubjectToContract,
-            ApplicationCrmStatus.Underreview => ApplicationStatus.UnderReview,
+            (int)invln_externalstatus.Draft => ApplicationStatus.Draft,
+            (int)invln_externalstatus.Submitted => ApplicationStatus.Submitted,
+            (int)invln_externalstatus.Induediligence => ApplicationStatus.InDueDiligence,
+            (int)invln_externalstatus.ContractSignedsubjecttoCP => ApplicationStatus.ContractSigned,
+            (int)invln_externalstatus.CPssatisfied => ApplicationStatus.CspSatisfied,
+            (int)invln_externalstatus.Loanavailable => ApplicationStatus.LoanAvailable,
+            (int)invln_externalstatus.Holdrequested => ApplicationStatus.HoldRequested,
+            (int)invln_externalstatus.Onhold => ApplicationStatus.OnHold,
+            (int)invln_externalstatus.Referredbacktoapplicant => ApplicationStatus.ReferredBackToApplicant,
+            (int)invln_externalstatus.Inactive => ApplicationStatus.NA,
+            (int)invln_externalstatus.Withdrawn => ApplicationStatus.Withdrawn,
+            (int)invln_externalstatus.Notapproved => ApplicationStatus.NotApproved,
+            (int)invln_externalstatus.Applicationdeclined => ApplicationStatus.ApplicationDeclined,
+            (int)invln_externalstatus.Approvedsubjecttocontract => ApplicationStatus.ApprovedSubjectToContract,
+            (int)invln_externalstatus.Underreview => ApplicationStatus.UnderReview,
             null => ApplicationStatus.Draft,
             _ => throw new NotImplementedException(),
         };
