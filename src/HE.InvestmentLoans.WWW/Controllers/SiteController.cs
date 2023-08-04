@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow.SiteWorkflow;
 using BL = HE.InvestmentLoans.BusinessLogic;
+using ValidationException = HE.InvestmentLoans.Common.Exceptions.ValidationException;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
 
@@ -108,7 +109,7 @@ public class SiteController : Controller
 
             workflow.NextState(Enum.Parse<Trigger>(action));
         }
-        catch (Common.Exceptions.ValidationException ex)
+        catch (ValidationException ex)
         {
             ex.Results.ForEach(item => item.AddToModelState(ModelState, null));
         }

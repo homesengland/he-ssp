@@ -6,6 +6,7 @@ using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.InvestmentLoans.Contract.Exceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Repositories;

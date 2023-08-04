@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract.CompanyStructure;
 using MediatR;
 using Stateless;
 
@@ -10,24 +11,14 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 [SuppressMessage("Ordering Rules", "SA1201", Justification = "Need to refactored in the fure")]
 public class CompanyStructureWorkflow
 {
-    public enum State : int
-    {
-        Index = 1,
-        Purpose,
-        ExistingCompany,
-        HomesBuilt,
-        CheckAnswers,
-        Complete,
-    }
-
     private readonly LoanApplicationViewModel _model;
-    private readonly StateMachine<State, Trigger> _machine;
+    private readonly StateMachine<CompanyStructureState, Trigger> _machine;
     private readonly IMediator _mediator;
 
     public CompanyStructureWorkflow(LoanApplicationViewModel model, IMediator mediator)
     {
         _model = model;
-        _machine = new StateMachine<State, Trigger>(_model.Company.State);
+        _machine = new StateMachine<CompanyStructureState, Trigger>(_model.Company.State);
         _mediator = mediator;
 
         ConfigureTransitions();
@@ -40,7 +31,7 @@ public class CompanyStructureWorkflow
 
     public bool IsStateComplete()
     {
-        return _model.Company.State == State.Complete;
+        return _model.Company.State == CompanyStructureState.Complete;
     }
 
     public bool IsCompleted()
@@ -57,10 +48,10 @@ public class CompanyStructureWorkflow
 
     public string GetName()
     {
-        return Enum.GetName(typeof(State), _model.Company.State) ?? string.Empty;
+        return Enum.GetName(typeof(CompanyStructureState), _model.Company.State) ?? string.Empty;
     }
 
-    public async void ChangeState(State state)
+    public async void ChangeState(CompanyStructureState state)
     {
         _model.Company.State = state;
         _model.Company.StateChanged = true;
@@ -69,28 +60,28 @@ public class CompanyStructureWorkflow
 
     private void ConfigureTransitions()
     {
-        _machine.Configure(State.Index)
-            .Permit(Trigger.Continue, State.Purpose);
+        _machine.Configure(CompanyStructureState.Index)
+            .Permit(Trigger.Continue, CompanyStructureState.Purpose);
 
-        _machine.Configure(State.Purpose)
-          .Permit(Trigger.Continue, State.ExistingCompany)
-          .Permit(Trigger.Change, State.CheckAnswers)
-          .Permit(Trigger.Back, State.Index);
+        _machine.Configure(CompanyStructureState.Purpose)
+          .Permit(Trigger.Continue, CompanyStructureState.ExistingCompany)
+          .Permit(Trigger.Change, CompanyStructureState.CheckAnswers)
+          .Permit(Trigger.Back, CompanyStructureState.Index);
 
-        _machine.Configure(State.ExistingCompany)
-            .Permit(Trigger.Continue, State.HomesBuilt)
-            .Permit(Trigger.Back, State.Purpose)
-            .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(CompanyStructureState.ExistingCompany)
+            .Permit(Trigger.Continue, CompanyStructureState.HomesBuilt)
+            .Permit(Trigger.Back, CompanyStructureState.Purpose)
+            .Permit(Trigger.Change, CompanyStructureState.CheckAnswers);
 
-        _machine.Configure(State.HomesBuilt)
-            .Permit(Trigger.Continue, State.CheckAnswers)
-            .Permit(Trigger.Back, State.ExistingCompany)
-            .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(CompanyStructureState.HomesBuilt)
+            .Permit(Trigger.Continue, CompanyStructureState.CheckAnswers)
+            .Permit(Trigger.Back, CompanyStructureState.ExistingCompany)
+            .Permit(Trigger.Change, CompanyStructureState.CheckAnswers);
 
-        _machine.Configure(State.CheckAnswers)
-           .PermitIf(Trigger.Continue, State.Complete, () => _model.Company.CheckAnswers == CommonResponse.Yes)
+        _machine.Configure(CompanyStructureState.CheckAnswers)
+           .PermitIf(Trigger.Continue, CompanyStructureState.Complete, () => _model.Company.CheckAnswers == CommonResponse.Yes)
            .IgnoreIf(Trigger.Continue, () => _model.Company.CheckAnswers != CommonResponse.Yes)
-           .PermitIf(Trigger.Back, State.HomesBuilt)
+           .PermitIf(Trigger.Back, CompanyStructureState.HomesBuilt)
            .OnExit(() =>
            {
                if (_model.Company.CheckAnswers == CommonResponse.Yes)
@@ -99,13 +90,13 @@ public class CompanyStructureWorkflow
                }
            });
 
-        _machine.Configure(State.Complete)
-           .Permit(Trigger.Back, State.CheckAnswers);
+        _machine.Configure(CompanyStructureState.Complete)
+           .Permit(Trigger.Back, CompanyStructureState.CheckAnswers);
 
         _machine.OnTransitionCompletedAsync(x =>
         {
             _model.Company.State = x.Destination;
-            return _mediator.Send(new Commands.Update() { Model = _model });
+            return _mediator.Send(new Commands.Update { Model = _model });
         });
     }
 }

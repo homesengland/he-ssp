@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Models.Others;
+using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.WWW.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

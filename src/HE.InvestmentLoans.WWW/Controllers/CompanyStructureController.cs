@@ -5,10 +5,12 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils;
+using HE.InvestmentLoans.Contract.CompanyStructure;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BL = HE.InvestmentLoans.BusinessLogic;
+using ValidationException = HE.InvestmentLoans.Common.Exceptions.ValidationException;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
 
@@ -82,7 +84,7 @@ public class CompanyStructureController : Controller
 
             workflow.NextState(Enum.Parse<Trigger>(action));
         }
-        catch (Common.Exceptions.ValidationException ex)
+        catch (ValidationException ex)
         {
             ex.Results.ForEach(item => item.AddToModelState(ModelState, null));
         }
@@ -112,7 +114,7 @@ public class CompanyStructureController : Controller
     {
         var sessionmodel = await this._mediator.Send(new BL.LoanApplicationLegacy.Queries.GetSingle() { Id = id });
         var workflow = new CompanyStructureWorkflow(sessionmodel, _mediator);
-        workflow.ChangeState(Enum.Parse<CompanyStructureWorkflow.State>(state));
+        workflow.ChangeState(Enum.Parse<CompanyStructureState>(state));
         return RedirectToAction("Workflow", new { id = sessionmodel.ID, ending = workflow.GetName() });
     }
 }

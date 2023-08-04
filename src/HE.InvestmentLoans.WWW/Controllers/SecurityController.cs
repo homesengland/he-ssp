@@ -76,7 +76,7 @@ public class SecurityController : Controller
 
             workflow.NextState(Enum.Parse<Trigger>(action));
         }
-        catch (Common.Exceptions.ValidationException ex)
+        catch (HE.InvestmentLoans.Common.Exceptions.ValidationException ex)
         {
             ex.Results.ForEach(item => item.AddToModelState(ModelState, null));
         }

@@ -2,6 +2,7 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
+using HE.InvestmentLoans.Contract.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 

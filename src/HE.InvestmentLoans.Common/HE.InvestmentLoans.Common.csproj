@@ -36,8 +36,4 @@
     <PackageReference Include="FluentValidation" Version="11.6.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\HE.InvestmentLoans.Contract\HE.InvestmentLoans.Contract.csproj" />
-  </ItemGroup>
-
 </Project>

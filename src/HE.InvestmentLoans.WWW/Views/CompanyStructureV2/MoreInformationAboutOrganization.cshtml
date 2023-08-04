@@ -1,7 +1,8 @@
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.CompanyStructureViewModel
+@using HE.InvestmentLoans.Contract.CompanyStructure
+@model HE.InvestmentLoans.Contract.CompanyStructure.CompanyStructureViewModel
 @inject ModelExpressionProvider modelProvider
 @{
-    var (hasError, fileInputError) = ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.CompanyStructureViewModel x) => x.CompanyInfoFile));
+    var (hasError, fileInputError) = ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((CompanyStructureViewModel x) => x.CompanyInfoFile));
 }
 
 <gds-div-grid-column-two-thirds>

@@ -5,4 +5,4 @@ using MediatR;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 
-public record ProvideCompanyPurposeCommand(LoanApplicationId LoanApplicationId, Providable<CompanyPurpose> CompanyPurpose) : IRequest;
+public record ProvideHowManyHomesBuiltCommand(LoanApplicationId LoanApplicationId, Providable<HomesBuilt> HomesBuilt) : IRequest;

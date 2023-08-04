@@ -3,6 +3,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
@@ -40,7 +41,8 @@ public class CompanyStructureRepository : ICompanyStructureRepository
         var loanApplicationDto = new LoanApplicationDto
         {
             companyPurpose = CompanyStructureMapper.MapCompanyPurpose(companyStructure.Purpose),
-            companyStructureInformation = companyStructure.MoreInformation?.Information,
+            companyStructureInformation = companyStructure.MoreInformation.IsProvided ? companyStructure.MoreInformation.Value.Information : null,
+            companyExperience = companyStructure.HomesBuilt.IsProvided ? companyStructure.HomesBuilt.Value.Value : null,
         };
 
         var loanApplicationSerialized = JsonSerializer.Serialize(loanApplicationDto);

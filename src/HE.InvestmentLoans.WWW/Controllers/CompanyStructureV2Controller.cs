@@ -1,11 +1,17 @@
+using System.Globalization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
+using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using HE.InvestmentLoans.Contract.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,22 +47,23 @@ public class CompanyStructureV2Controller : Controller
     [HttpGet("purpose")]
     public async Task<IActionResult> Purpose(Guid id)
     {
-        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
-        return View("Purpose", response.ViewModel.Company);
+        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)));
+        return View("Purpose", response.ViewModel);
     }
 
     [HttpPost("purpose")]
-    public async Task<IActionResult> PurposePost(Guid id)
+    public async Task<IActionResult> PurposePost(Guid id, CompanyStructureViewModel viewModel)
     {
-        await _mediator.Send(new ProvideCompanyPurposeCommand(LoanApplicationId.From(id), new CompanyPurpose(true)));
+        var companyPurpose = CompanyStructureViewModelMapper.MapCompanyPurpose(viewModel.Purpose);
+        await _mediator.Send(new ProvideCompanyPurposeCommand(LoanApplicationId.From(id), companyPurpose));
         return RedirectToAction("MoreInformationAboutOrganization", new { id });
     }
 
     [HttpGet("more-information-about-organization")]
     public async Task<IActionResult> MoreInformationAboutOrganization(Guid id)
     {
-        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
-        return View("MoreInformationAboutOrganization", response.ViewModel.Company);
+        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)));
+        return View("MoreInformationAboutOrganization", response.ViewModel);
     }
 
     [HttpPost("more-information-about-organization")]
@@ -80,8 +87,8 @@ public class CompanyStructureV2Controller : Controller
         await _mediator.Send(
             new ProvideMoreInformationAboutOrganizationCommand(
                 LoanApplicationId.From(id),
-                new OrganisationMoreInformation(),
-                new OrganisationMoreInformationFile()),
+                CompanyStructureViewModelMapper.MapOrganisationMoreInformation(viewModel.ExistingCompanyInfo),
+                CompanyStructureViewModelMapper.MapOrganisationMoreInformationFile(viewModel.CompanyInfoFileName, viewModel.CompanyInfoFile)),
             cancellationToken);
 
         return RedirectToAction("HowManyHomesBuilt", new { id });
@@ -90,14 +97,26 @@ public class CompanyStructureV2Controller : Controller
     [HttpGet("how-many-homes-built")]
     public async Task<IActionResult> HowManyHomesBuilt(Guid id)
     {
-        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
-        return View("HomesBuilt", response.ViewModel.Company);
+        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)));
+        return View("HomesBuilt", response.ViewModel);
     }
 
     [HttpPost("how-many-homes-built")]
-    public async Task<IActionResult> HowManyHomesBuiltPost(Guid id)
+    public async Task<IActionResult> HowManyHomesBuiltPost(Guid id, CompanyStructureViewModel viewModel, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
-        return View("HomesBuilt", response.ViewModel.Company);
+        var validationResult = await _validator.ValidateAsync(viewModel, opt => opt.IncludeRuleSets(CompanyStructureView.HomesBuilt), cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            validationResult.AddToModelState(ModelState, "Company");
+            return View("HomesBuilt", viewModel);
+        }
+
+        await _mediator.Send(
+            new ProvideHowManyHomesBuiltCommand(
+                LoanApplicationId.From(id),
+                viewModel.HomesBuilt is null ? HomesBuilt.NotProvided() : new Providable<HomesBuilt>(new HomesBuilt(int.Parse(viewModel.HomesBuilt, CultureInfo.InvariantCulture)))),
+            cancellationToken);
+
+        return View("HomesBuilt", viewModel);
     }
 }

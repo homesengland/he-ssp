@@ -4,6 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
+using HE.InvestmentLoans.Contract.CompanyStructure;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Validation;
 

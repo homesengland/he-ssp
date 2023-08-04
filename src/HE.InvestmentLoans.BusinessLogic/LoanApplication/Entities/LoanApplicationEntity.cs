@@ -5,6 +5,7 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.InvestmentLoans.Contract.Exceptions;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 

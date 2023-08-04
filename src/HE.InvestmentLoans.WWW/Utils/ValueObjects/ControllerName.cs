@@ -1,7 +1,7 @@
 using Dawn;
 using HE.InvestmentLoans.Contract.Domain;
 
-namespace HE.InvestmentLoans.Common.Utils.ValueObjects;
+namespace HE.InvestmentLoans.WWW.Utils.ValueObjects;
 
 public class ControllerName : ValueObject
 {

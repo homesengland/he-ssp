@@ -1,10 +1,16 @@
+using Dawn;
 using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
-public class OrganisationMoreInformation : ValueObject
+public class OrganisationMoreInformation : ProvidableValueObject<OrganisationMoreInformation>
 {
-    public string Information { get; private set; }
+    public OrganisationMoreInformation(string information)
+    {
+        Information = Guard.Argument(information, nameof(Information)).NotEmpty();
+    }
+
+    public string Information { get; }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
