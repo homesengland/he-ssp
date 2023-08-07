@@ -49,6 +49,16 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         //SITES
         public List<SiteDetailsDto> siteDetailsList { get; set; }
 
+        //SECTIONS STATUSES
+
+        public int? CompanyStructureAndExperienceCompletionStatus { get; set; }
+
+        public int? FundingDetailsCompletionStatus { get; set; }
+
+        public int? SecurityDetailsCompletionStatus { get; set; }
+
+        public int? SiteDetailsCompletionStatus { get; set; }
+
         //OTHER ATTRIBUTES
         public UserAccountDto LoanApplicationContact { get; set; }
 

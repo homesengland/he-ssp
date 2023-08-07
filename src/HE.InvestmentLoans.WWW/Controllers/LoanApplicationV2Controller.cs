@@ -1,12 +1,13 @@
 using FluentValidation;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Common.Utils.ValueObjects;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.User;
@@ -23,11 +24,13 @@ public class LoanApplicationV2Controller : Controller
 {
     private readonly IMediator _mediator;
     private readonly IValidator<LoanPurposeModel> _validator;
+    private readonly ICacheService _cacheService;
 
-    public LoanApplicationV2Controller(IMediator mediator, IValidator<LoanPurposeModel> validator)
+    public LoanApplicationV2Controller(IMediator mediator, IValidator<LoanPurposeModel> validator, ICacheService cacheService)
     {
         _mediator = mediator;
         _validator = validator;
+        _cacheService = cacheService;
     }
 
     [HttpGet("")]
@@ -104,38 +107,43 @@ public class LoanApplicationV2Controller : Controller
         return View("Ineligible");
     }
 
-    [HttpGet("task-list/{id}")]
+    [HttpGet("{id}/task-list")]
     public async Task<IActionResult> TaskList(Guid id)
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        return View("TaskList", response.ViewModel);
+        var (isDeletedProjectInCache, deletedProjectFromCache) = response.LoanApplication.LegacyModel.ToggleDeleteProjectName(_cacheService);
+
+        if (isDeletedProjectInCache)
+        {
+            ViewBag.AdditionalData = deletedProjectFromCache;
+        }
+
+        return View("TaskList", response.LoanApplication.LegacyModel);
     }
 
-    [HttpGet("check/{id}")]
+    [HttpGet("{id}/check")]
     public async Task<IActionResult> CheckApplication(Guid id)
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        return View("CheckApplication", response.ViewModel);
+        return View("CheckApplication", response.LoanApplication.LegacyModel);
     }
 
-    [HttpPost("submit/{id}")]
+    [HttpPost("{id}/submit")]
     public async Task<IActionResult> Submit(Guid id)
     {
-        var application = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
-
-        await _mediator.Send(new SubmitApplicationCommand(application.ViewModel));
+        await _mediator.Send(new SubmitLoanApplicationCommand(LoanApplicationId.From(id)));
 
         return RedirectToAction(nameof(ApplicationSubmitted), new { Id = id });
     }
 
-    [HttpGet("submitted/{id}")]
+    [HttpGet("{id}/submitted")]
     public async Task<IActionResult> ApplicationSubmitted(Guid id)
     {
-        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetSubmitLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        return View("ApplicationSubmitted", response.ViewModel);
+        return View("ApplicationSubmitted", response.LoanApplication);
     }
 
     [HttpGet("back")]

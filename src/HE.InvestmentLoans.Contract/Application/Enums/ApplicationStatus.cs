@@ -16,4 +16,5 @@ public enum ApplicationStatus
     NotApproved,
     ApplicationDeclined,
     ApprovedSubjectToContract,
+    UnderReview,
 }

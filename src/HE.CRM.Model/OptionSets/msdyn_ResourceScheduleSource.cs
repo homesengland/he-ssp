@@ -14,7 +14,7 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum msdyn_resourceschedulesource
+	public enum msdyn_ResourceScheduleSource
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
