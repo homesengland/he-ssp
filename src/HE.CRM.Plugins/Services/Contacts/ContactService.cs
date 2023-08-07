@@ -91,14 +91,12 @@ namespace HE.CRM.Plugins.Services.Contacts
                         permissionLevel = portalPermissionLevels.Where(x => x.invln_portalpermissionlevelId == ((dynamic)contactRole["ae.invln_portalpermissionlevelid"]).Value.Id).ToList().FirstOrDefault();
                     }
                     this.TracingService.Trace("Add role");
-                    var test = contactRole.Contains("ae.invln_name");
                     string webRoleName = contactRole.invln_Webroleid?.Name ?? (contactRole.Contains("ae.invln_name") ? ((dynamic)contactRole["ae.invln_name"]).Value : null);
                     roles.Add(new ContactRoleDto()
                     {
                         accountId = contactRole.invln_Accountid != null ? contactRole.invln_Accountid.Id : Guid.Empty,
                         accountName = contactRole.invln_Accountid != null ? contactRole.invln_Accountid.Name : null,
                         permissionLevel = permissionLevel != null && permissionLevel.invln_Permission != null ? permissionLevel.invln_Permission.Value.ToString() : null,
-                        //webRoleName = contactRole.invln_Webroleid != null ? contactRole.invln_Webroleid.Name : null,
                         webRoleName = webRoleName,
                     });
                 }

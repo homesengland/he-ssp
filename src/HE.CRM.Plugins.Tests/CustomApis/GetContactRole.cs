@@ -139,9 +139,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             Assert.IsNull(exception);
             Assert.AreEqual(deserializedContactRoles.contactRoles.ElementAt(0).webRoleName, role.invln_Name);
-
-           // Assert.AreEqual(pluginContext.OutputParameters.Values.ElementAt(0), role.invln_Name);
-
         }
 
         [TestMethod]
@@ -187,7 +184,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             Assert.AreEqual(deserializedContactRoles.contactRoles.ElementAt(0).webRoleName, role.invln_Name);
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<Contact>.Ignored)).MustHaveHappened();
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_contactwebrole>.Ignored)).MustHaveHappened();
-
         }
 
         [TestMethod]
