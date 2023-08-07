@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Contract.Application;
+using HE.InvestmentLoans.Contract.Application.Queries;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;

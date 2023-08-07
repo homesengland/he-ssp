@@ -31,6 +31,6 @@ public class GetLoanApplicationQueryHandler : IRequestHandler<GetLoanApplication
             loanApplication.LegacyModel.UseSectionsFrom(sessionModel);
         }
 
-        return new GetLoanApplicationQueryResponse(loanApplication.LegacyModel);
+        return new GetLoanApplicationQueryResponse(loanApplication);
     }
 }

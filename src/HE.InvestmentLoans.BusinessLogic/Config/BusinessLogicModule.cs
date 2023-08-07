@@ -20,6 +20,7 @@ public static class BusinessLogicModule
         services.AddValidatorsFromAssemblyContaining<LoanApplicationRepository>();
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
         services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
+        services.AddScoped<ICanSubmitLoanApplication, LoanApplicationRepository>();
         services.AddScoped<ILoanUserRepository, LoanUserRepository>();
         services.AddScoped<ILoanUserContext, LoanUserContext>();
         services.AddScoped<IApplicationProjectsRepository, ApplicationProjectsRepository>();
