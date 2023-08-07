@@ -73,7 +73,6 @@ namespace HE.CRM.Common.DtoMapping
             {
                 fundingReason = MapFundingReasonOptionSetToString(loanApplication.invln_FundingReason),
                 numberOfSites = loanApplication.invln_NumberofSites?.ToString(),
-                //loanApplicationStatus = MapApplicationStatusFromDtoToRegular(loanApplication.invln_ExternalStatus),
 
                 //company
                 companyPurpose = loanApplication.invln_CompanyPurpose?.ToString(),
