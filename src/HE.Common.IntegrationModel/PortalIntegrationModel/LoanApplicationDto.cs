@@ -8,7 +8,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
     public class LoanApplicationDto
     {
         //COMPANY
-        public string companyPurpose { get; set; } //Purpose
+        public bool? companyPurpose { get; set; } //Purpose
 
         public string existingCompany { get; set; } //ExistingCompany
 
@@ -20,15 +20,15 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         public string projectEstimatedTotalCost { get; set; } //TotalCosts
 
-        public string projectAbnormalCosts { get; set; } //AbnormalCosts
+        public bool? projectAbnormalCosts { get; set; } //AbnormalCosts
 
         public string projectAbnormalCostsInformation { get; set; } //AbnormalCosts
 
-        public string privateSectorApproach { get; set; } //PrivateSectorFunding
+        public bool? privateSectorApproach { get; set; } //PrivateSectorFunding
 
         public string privateSectorApproachInformation { get; set; } //PrivateSectorFunding
 
-        public string additionalProjects { get; set; } //AdditionalProjects
+        public bool? additionalProjects { get; set; } //AdditionalProjects
 
         public string refinanceRepayment { get; set; } //Refinance
 
