@@ -16,4 +16,22 @@ public class GuidanceController : Controller
     {
         return View();
     }
+
+    [HttpGet("apply")]
+    public IActionResult Apply()
+    {
+        return View();
+    }
+
+    [HttpGet("what-happens-after-apply")]
+    public IActionResult AfterApply()
+    {
+        return View();
+    }
+
+    [HttpGet("how-we-prioritise-applications")]
+    public IActionResult PrioritiseApplications()
+    {
+        return View();
+    }
 }
