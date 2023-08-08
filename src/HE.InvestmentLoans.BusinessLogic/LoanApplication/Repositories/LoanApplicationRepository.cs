@@ -6,6 +6,7 @@ using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
@@ -20,10 +21,13 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IHttpContextAccessor httpContextAccessor)
+    private readonly IDateTimeProvider _dateTime;
+
+    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IHttpContextAccessor httpContextAccessor, IDateTimeProvider dateTime)
     {
         _serviceClient = serviceClient;
         _httpContextAccessor = httpContextAccessor;
+        _dateTime = dateTime;
     }
 
     public async Task<LoanApplicationEntity> GetLoanApplication(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
@@ -204,6 +208,8 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     public void LegacySave(LoanApplicationViewModel legacyModel)
     {
+        legacyModel.Timestamp = _dateTime.Now;
+
         _httpContextAccessor.HttpContext?.Session.Set(legacyModel.ID.ToString(), legacyModel);
     }
 }

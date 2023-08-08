@@ -90,6 +90,7 @@ public class LoanApplicationViewModel
         Security = model.Security;
         Sites = model.Sites;
         Funding = model.Funding;
+        Timestamp = model.Timestamp;
     }
 
     private AccountDetailsViewModel TemporaryAccount() => new()
