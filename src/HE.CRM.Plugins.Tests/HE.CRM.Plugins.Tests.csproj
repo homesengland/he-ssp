@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomApis\ChangeLoanApplicationExternalStatusTest.cs" />
+    <Compile Include="CustomApis\CustomApiCallingPathTest.cs" />
     <Compile Include="CustomApis\GetContactRole.cs" />
     <Compile Include="CustomApis\SendInvestmentsLoanDataToCrm.cs" />
     <Compile Include="CustomApis\UpdateSingleLoanApplicationTest.cs" />

@@ -30,6 +30,21 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             fakedContext = new XrmFakedContext();
             pluginContext = fakedContext.GetDefaultPluginContext();
             InitData();
+
+            var entityMetadata = new EntityMetadata()
+            {
+                LogicalName = "contact",
+            };
+            var nameAttribute = new StringAttributeMetadata()
+            {
+                LogicalName = "invln_externalid",
+                RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.ApplicationRequired)
+            };
+            entityMetadata.SetAttributeCollection(new[] { nameAttribute });
+
+            fakedContext.InitializeMetadata(entityMetadata);
+            entityMetadata.LogicalName = "invln_loanapplication";
+            fakedContext.InitializeMetadata(entityMetadata);
         }
 
         [TestMethod]
@@ -57,159 +72,180 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             A.CallTo(() => fakedContext.GetOrganizationService().Create(A<Contact>.Ignored)).MustNotHaveHappened();
         }
 
-        //[TestMethod]
-        //public void SendInvesmentsLoanDataToCrm_PayloadDataWithObjects_ShouldCreateNewRecords()
-        //{
-        //    Contact contact = new Contact()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        EMailAddress1 = applicationDto.contactEmailAdress,
-        //        invln_externalid = "2137",
-        //    };
+        [TestMethod]
+        public void SendInvesmentsLoanDataToCrm_PayloadDataWithObjects_ShouldCreateNewRecords()
+        {
+            Contact contact = new Contact()
+            {
+                Id = Guid.NewGuid(),
+                EMailAddress1 = applicationDto.contactEmailAdress,
+                invln_externalid = "2137",
+            };
 
-        //    Account account = new Account()
-        //    {
-        //        Id = Guid.NewGuid()
-        //    };
+            Account account = new Account()
+            {
+                Id = Guid.NewGuid()
+            };
 
-        //    fakedContext.Initialize(new List<Entity> { contact, account });
+            fakedContext.Initialize(new List<Entity> { contact, account });
 
-        //    Exception exception = null;
-        //    try
-        //    {
-        //        var request = new invln_sendinvestmentloansdatatocrmRequest();
-        //        pluginContext.InputParameters = new ParameterCollection
-        //        {
-        //            {nameof(request.invln_entityfieldsparameters), payload },
-        //            {nameof(request.invln_contactexternalid), contact.invln_externalid },
-        //            {nameof(request.invln_accountid), account.Id.ToString() },
-        //            {nameof(request.invln_loanapplicationid), String.Empty },
-        //        };
+            var metadata = fakedContext.GetEntityMetadataByName("contact");
+            var keymetadata = new EntityKeyMetadata[]
+            {
+                new EntityKeyMetadata()
+                {
+                    KeyAttributes = new string[]{ "invln_externalid" }
+                }
+            };
+            metadata.SetFieldValue("_keys", keymetadata);
+            fakedContext.SetEntityMetadata(metadata);
+            contact.KeyAttributes.Add("invln_externalid", "2137");
 
-        //        fakedContext.ExecutePluginWithConfigurations<SendInvestmentsLoanDataToCrmPlugin>(pluginContext, "", "");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        exception = ex;
-        //    }
+            Exception exception = null;
+            try
+            {
+                var request = new invln_sendinvestmentloansdatatocrmRequest();
+                pluginContext.InputParameters = new ParameterCollection
+                {
+                    {nameof(request.invln_entityfieldsparameters), payload },
+                    {nameof(request.invln_contactexternalid), contact.invln_externalid },
+                    {nameof(request.invln_accountid), account.Id.ToString() },
+                    {nameof(request.invln_loanapplicationid), String.Empty },
+                };
 
-        //    Assert.IsNull(exception);
-        //    A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
-        //    A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened();
-        //}
+                fakedContext.ExecutePluginWithConfigurations<SendInvestmentsLoanDataToCrmPlugin>(pluginContext, "", "");
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
 
-        //[TestMethod]
-        //public void SendInvestmentsLoanDataToCrm_ContactAlreadyExistsInCrm_ShouldUpdateExistingLoanApplication()
-        //{
-        //    Contact contact = new Contact()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        EMailAddress1 = applicationDto.contactEmailAdress,
-        //        invln_externalid = "2137",
-        //    };
+            Assert.IsNull(exception);
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened();
+        }
 
-        //    Account account = new Account()
-        //    {
-        //        Id = Guid.NewGuid()
-        //    };
+        [TestMethod]
+        public void SendInvestmentsLoanDataToCrm_ContactAlreadyExistsInCrm_ShouldUpdateExistingLoanApplication()
+        {
+            Contact contact = new Contact()
+            {
+                Id = Guid.NewGuid(),
+                EMailAddress1 = applicationDto.contactEmailAdress,
+                invln_externalid = "2137",
+            };
 
-        //    invln_Loanapplication existingLoan = new invln_Loanapplication()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        invln_Contact = contact.ToEntityReference(),
-        //    };
+            Account account = new Account()
+            {
+                Id = Guid.NewGuid()
+            };
 
-        //    //var userMetadata = new EntityMetadata() { LogicalName = "contact" };
-        //    fakedContext.Initialize(new List<Entity> { existingLoan, contact, account });
-        //    fakedContext.InitializeMetadata(Assembly.GetExecutingAssembly());
-        //    fakedContext.ProxyTypesAssembly = Assembly.GetExecutingAssembly();
-        //    var metadata = fakedContext.GetEntityMetadataByName("contact");
-        //    var keymetadata = new EntityKeyMetadata[]
-        //    {
-        //        new EntityKeyMetadata()
-        //        {
-        //            KeyAttributes = new string[]{ "invln_externalid" }
-        //        }
-        //    };
-        //    metadata.SetFieldValue("_keys", keymetadata);
-        //    fakedContext.SetEntityMetadata(metadata);
-        //    contact.KeyAttributes.Add("invln_externalid", "2137");
+            invln_Loanapplication existingLoan = new invln_Loanapplication()
+            {
+                Id = Guid.NewGuid(),
+                invln_Contact = contact.ToEntityReference(),
+            };
 
-           
+            fakedContext.Initialize(new List<Entity> { existingLoan, contact, account });
 
-        //    Exception exception = null;
-        //    try
-        //    {
-        //        var request = new invln_sendinvestmentloansdatatocrmRequest();
-        //        pluginContext.InputParameters = new ParameterCollection
-        //        {
-        //            {nameof(request.invln_entityfieldsparameters), payload },
-        //            {nameof(request.invln_contactexternalid), contact.invln_externalid },
-        //            {nameof(request.invln_accountid), account.Id.ToString() },
-        //            {nameof(request.invln_loanapplicationid), existingLoan.Id.ToString() },
-        //        };
+            var metadata = fakedContext.GetEntityMetadataByName("contact");
+            var keymetadata = new EntityKeyMetadata[]
+            {
+                new EntityKeyMetadata()
+                {
+                    KeyAttributes = new string[]{ "invln_externalid" }
+                }
+            };
+            metadata.SetFieldValue("_keys", keymetadata);
+            fakedContext.SetEntityMetadata(metadata);
+            contact.KeyAttributes.Add("invln_externalid", "2137");
 
-        //        fakedContext.ExecutePluginWithConfigurations<SendInvestmentsLoanDataToCrmPlugin>(pluginContext, "", "");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        exception = ex;
-        //    }
+            Exception exception = null;
+            try
+            {
+                var request = new invln_sendinvestmentloansdatatocrmRequest();
+                pluginContext.InputParameters = new ParameterCollection
+                {
+                    {nameof(request.invln_entityfieldsparameters), payload },
+                    {nameof(request.invln_contactexternalid), contact.invln_externalid },
+                    {nameof(request.invln_accountid), account.Id.ToString() },
+                    {nameof(request.invln_loanapplicationid), existingLoan.Id.ToString() },
+                };
 
-        //    Assert.IsNull(exception);
-        //    A.CallTo(() => fakedContext.GetOrganizationService().Update(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
-        //    A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened();
+                fakedContext.ExecutePluginWithConfigurations<SendInvestmentsLoanDataToCrmPlugin>(pluginContext, "", "");
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
 
-        //}
+            Assert.IsNull(exception);
+            A.CallTo(() => fakedContext.GetOrganizationService().Update(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappened();
 
-        //[TestMethod]
-        //public void SendInvesmentsLoanDataToCrm_PayloadDataWithObjects_ShouldCreateMultipleSiteDetails()
-        //{
-        //    SiteDetailsDto site2 = siteDetailsDto;
-        //    SiteDetailsDto site3 = siteDetailsDto;
-        //    SiteDetailsDto site4 = siteDetailsDto;
-        //    LoanApplicationDto loan = applicationDto;
-        //    loan.siteDetailsList.Add(site2);
-        //    loan.siteDetailsList.Add(site3);
-        //    loan.siteDetailsList.Add(site4);
-        //    string newPayload = JsonSerializer.Serialize<LoanApplicationDto>(loan);
+        }
 
-        //    Contact contact = new Contact()
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        EMailAddress1 = applicationDto.contactEmailAdress,
-        //        invln_externalid = "2137",
-        //    };
+        [TestMethod]
+        public void SendInvesmentsLoanDataToCrm_PayloadDataWithObjects_ShouldCreateMultipleSiteDetails()
+        {
+            SiteDetailsDto site2 = siteDetailsDto;
+            SiteDetailsDto site3 = siteDetailsDto;
+            SiteDetailsDto site4 = siteDetailsDto;
+            LoanApplicationDto loan = applicationDto;
+            loan.siteDetailsList.Add(site2);
+            loan.siteDetailsList.Add(site3);
+            loan.siteDetailsList.Add(site4);
+            string newPayload = JsonSerializer.Serialize<LoanApplicationDto>(loan);
 
-        //    Account account = new Account()
-        //    {
-        //        Id = Guid.NewGuid()
-        //    };
+            Contact contact = new Contact()
+            {
+                Id = Guid.NewGuid(),
+                EMailAddress1 = applicationDto.contactEmailAdress,
+                invln_externalid = "2137",
+            };
 
-        //    Exception exception = null;
+            Account account = new Account()
+            {
+                Id = Guid.NewGuid()
+            };
+            fakedContext.Initialize(new List<Entity> { contact, account });
 
-        //    try
-        //    {
-        //        var request = new invln_sendinvestmentloansdatatocrmRequest();
-        //        pluginContext.InputParameters = new ParameterCollection
-        //        {
-        //            {nameof(request.invln_entityfieldsparameters), newPayload },
-        //            {nameof(request.invln_contactexternalid), contact.invln_externalid },
-        //            {nameof(request.invln_accountid), account.Id.ToString() },
-        //            {nameof(request.invln_loanapplicationid), String.Empty },
-        //        };
+            var metadata = fakedContext.GetEntityMetadataByName("contact");
+            var keymetadata = new EntityKeyMetadata[]
+            {
+                new EntityKeyMetadata()
+                {
+                    KeyAttributes = new string[]{ "invln_externalid" }
+                }
+            };
+            metadata.SetFieldValue("_keys", keymetadata);
+            fakedContext.SetEntityMetadata(metadata);
+            contact.KeyAttributes.Add("invln_externalid", "2137");
 
-        //        fakedContext.ExecutePluginWithConfigurations<SendInvestmentsLoanDataToCrmPlugin>(pluginContext, "", "");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        exception = ex;
-        //    }
+            Exception exception = null;
 
-        //    Assert.IsNull(exception);
-        //    A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
-        //    A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappenedTwiceOrMore();
-        //}
+            try
+            {
+                var request = new invln_sendinvestmentloansdatatocrmRequest();
+                pluginContext.InputParameters = new ParameterCollection
+                {
+                    {nameof(request.invln_entityfieldsparameters), newPayload },
+                    {nameof(request.invln_contactexternalid), contact.invln_externalid },
+                    {nameof(request.invln_accountid), account.Id.ToString() },
+                    {nameof(request.invln_loanapplicationid), String.Empty },
+                };
+
+                fakedContext.ExecutePluginWithConfigurations<SendInvestmentsLoanDataToCrmPlugin>(pluginContext, "", "");
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
+
+            Assert.IsNull(exception);
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_Loanapplication>.Ignored)).MustHaveHappened();
+            A.CallTo(() => fakedContext.GetOrganizationService().Create(A<invln_SiteDetails>.Ignored)).MustHaveHappenedTwiceOrMore();
+        }
 
         private void InitData()
         {
@@ -253,7 +289,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 privateSectorApproach = "false",
                 privateSectorApproachInformation = "privateSectorApproachInformation",
                 additionalProjects = "true",
-                //refinanceRepayment = "",
+                refinanceRepayment = "",
                 refinanceRepaymentDetails = "refinanceRepaymentDetails",
 
                 outstandingLegalChargesOrDebt = "false",
@@ -264,7 +300,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
                 siteDetailsList = new List<SiteDetailsDto> { siteDetailsDto },
 
-                //id = "",
                 name = "name",
                 numberOfSites = "20",
                 companyStructureInformation = "companyStructureInformation",
@@ -272,7 +307,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 fundingReason = "Buildinginfrastructureonly",
                 fundingTypeForAdditionalProjects = "fundingTypeForAdditionalProjects",
                 contactEmailAdress = "test@test.pl",
-                //accountId = "",
                 LoanApplicationContact = new UserAccountDto()
                 {
                     ContactExternalId = "2137"
