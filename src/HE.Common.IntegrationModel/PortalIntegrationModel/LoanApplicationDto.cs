@@ -36,13 +36,13 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
                                                               //Complete
 
         //SECURITY
-        public string outstandingLegalChargesOrDebt { get; set; } //ChargesDebtCompany
+        public bool? outstandingLegalChargesOrDebt { get; set; } //ChargesDebtCompany
 
         public string debentureHolder { get; set; } //ChargesDebtCompany
 
-        public string directorLoans { get; set; } //DirLoans
+        public bool? directorLoans { get; set; } //DirLoans
 
-        public string confirmationDirectorLoansCanBeSubordinated { get; set; } //DirLoansSub
+        public bool? confirmationDirectorLoansCanBeSubordinated { get; set; } //DirLoansSub
 
         public string reasonForDirectorLoanNotSubordinated { get; set; } //DirLoansSub
 
