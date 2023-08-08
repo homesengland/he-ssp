@@ -1,16 +1,16 @@
 using DataverseModel;
-using FakeItEasy;
 using FakeXrmEasy;
+using FakeXrmEasy.Extensions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Plugins.Plugins.CustomApi;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
 using System.Text.Json;
-using System.Web.Services.Description;
+using System.Windows.Documents;
 
 namespace HE.CRM.Plugins.Tests.CustomApis
 {
@@ -25,6 +25,126 @@ namespace HE.CRM.Plugins.Tests.CustomApis
         {
             fakedContext = new XrmFakedContext();
             pluginContext = fakedContext.GetDefaultPluginContext();
+            var entityMetadata = new EntityMetadata()
+            {
+                LogicalName = "contact",
+            };
+            var nameAttribute = new StringAttributeMetadata()
+            {
+                LogicalName = "invln_externalid",
+                RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.ApplicationRequired)
+            };
+            entityMetadata.SetAttributeCollection(new[] { nameAttribute });
+
+            fakedContext.InitializeMetadata(entityMetadata);
+            entityMetadata.LogicalName = "invln_loanapplication";
+            fakedContext.InitializeMetadata(entityMetadata);
+        }
+
+        [TestMethod]
+        public void RoleRetrieved_OrganizationDetailsRetrieved_SubmitCreatedNewRecord_SingleLoanApplicationRetrieved_LoanApplicationUpdated_LoanStatusChanged_LoanWithNewDataRetrieved()
+        {
+            Contact contact = new Contact()
+            {
+                Id = Guid.NewGuid(),
+                EMailAddress1 = "test@test.pl",
+                invln_externalid = "2137",
+            };
+
+            invln_portal portal = new invln_portal()
+            {
+                Id = Guid.NewGuid(),
+                invln_Portal = new OptionSetValue((int)invln_Portal1.Loans),
+            };
+
+            invln_Webrole role = new invln_Webrole()
+            {
+                Id = Guid.NewGuid(),
+                invln_Portalid = portal.ToEntityReference(),
+                invln_Name = "role name",
+            };
+
+            var account = new Account()
+            {
+                Id = Guid.NewGuid(),
+                Name = "account name",
+            };
+
+            var relationship = new invln_contactwebrole()
+            {
+                Id = Guid.NewGuid(),
+                invln_Contactid = contact.ToEntityReference(),
+                invln_Webroleid = role.ToEntityReference(),
+                invln_Accountid = account.ToEntityReference(),
+            };
+
+            fakedContext.Initialize(new List<Entity> { contact, role, relationship, portal, account });
+
+            var metadata = fakedContext.GetEntityMetadataByName(Contact.EntityLogicalName);
+            var keymetadata = new EntityKeyMetadata[]
+            {
+                new EntityKeyMetadata()
+                {
+                    KeyAttributes = new string[]{ nameof(Contact.invln_externalid) }
+                }
+            };
+            metadata.SetFieldValue("_keys", keymetadata);
+            fakedContext.SetEntityMetadata(metadata);
+            contact.KeyAttributes.Add(nameof(Contact.invln_externalid), contact.invln_externalid);
+
+            var GetContactRoleOutput = this.CallGetContactRolePlugin(contact.invln_externalid, portal.invln_Portal.Value.ToString(), contact.EMailAddress1);
+            Assert.IsNotNull(GetContactRoleOutput);
+            Assert.IsNotNull(GetContactRoleOutput.contactRoles);
+            Assert.AreEqual(role.invln_Name, GetContactRoleOutput.contactRoles.First().webRoleName);
+        }
+
+        private List<LoanApplicationDto> CallGetLoanApplicationForAccountAndcontact(string accountId, string externalContactId)
+        {
+            Exception exception = null;
+            try
+            {
+                var request = new invln_getloanapplicationsforaccountandcontactRequest();
+                pluginContext.InputParameters = new ParameterCollection
+                {
+                    {nameof(request.invln_accountid), accountId },
+                    {nameof(request.invln_externalcontactid), externalContactId },
+                };
+
+                fakedContext.ExecutePluginWithConfigurations<GetInvestmentsLoansForAccountAndContactPlugin>(pluginContext, "", "");
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
+            var deserializedLoanApplicationDtoList = JsonSerializer.Deserialize<List<LoanApplicationDto>>(pluginContext.OutputParameters.Values.ElementAt(0).ToString());
+
+            Assert.IsNull(exception);
+            return deserializedLoanApplicationDtoList;
+        }
+
+        private LoanApplicationDto CallGetSingleLoanApplicationPlugin(string accountId, string externalContactId, string loanApplicationId)
+        {
+            Exception exception = null;
+            try
+            {
+                var request = new invln_getsingleloanapplicationforaccountandcontactRequest();
+                pluginContext.InputParameters = new ParameterCollection
+                {
+                    {nameof(request.invln_accountid), accountId },
+                    {nameof(request.invln_externalcontactid), externalContactId },
+                    {nameof(request.invln_loanapplicationid), loanApplicationId },
+                };
+
+                fakedContext.ExecutePluginWithConfigurations<GetSingleInvestmentLoanForAccountAndContactPlugin>(pluginContext, "", "");
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
+            var deserializedLoanApplicationDtoList = JsonSerializer.Deserialize<List<LoanApplicationDto>>(pluginContext.OutputParameters.Values.ElementAt(0).ToString());
+
+            Assert.IsNull(exception);
+            return deserializedLoanApplicationDtoList?.First();
         }
 
         private OrganizationDetailsDto CallGetOrganizationDetailsPlugin(string accountId, string externalContactId)
