@@ -1,0 +1,53 @@
+@{
+    ViewData["Title"] = "Guidance";
+    ViewData["PreviousLink"] = Url.Action("Apply", "Guidance");
+    ViewData["PreviousLinkName"] = "What happens after you apply";
+}
+
+<gds-div-grid-column-two-thirds>
+    <partial name="Guidance/_MainGuidanceNavigation" />
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <gds-h2 size="ControlSize.L">
+        How we prioritise applications
+    </gds-h2>
+
+    <gds-p class="govuk-!-margin-bottom-1">As a government-backed initiative, the Home Building Fund reflects wider government priorities.
+        This means we are looking for, and will approve, applications based on:</gds-p>
+    <gds-ul>
+        <gds-li class="govuk-!-margin-left-2">the best value for money for the taxpayer</gds-li>
+        <gds-li class="govuk-!-margin-left-2">the greatest potential for early delivery</gds-li>
+        <gds-li class="govuk-!-margin-left-2">clear local support</gds-li>
+        <gds-li class="govuk-!-margin-left-2 govuk-!-margin-bottom-1">projects that support policy priorities such as:</gds-li>
+        <ul class="govuk-list govuk-!-margin-top-1">
+            <gds-li class="govuk-!-margin-left-8">· strengthening the SME developer market</gds-li>
+            <gds-li class="govuk-!-margin-left-8">· greener homes that support net zero carbon</gds-li>
+            <gds-li class="govuk-!-margin-left-8">· brownfield development</gds-li>
+            <gds-li class="govuk-!-margin-left-8">· diversification and innovation in the housing market</gds-li>
+        </ul>
+    </gds-ul>
+
+    <gds-h3 size="ControlSize.M">
+        Funding decisions
+    </gds-h3>
+
+    <gds-p>
+        We reserve the right to change or withdraw any funding decision we make to you until we have completed due diligence and signed agreements with you.
+        We will advise you not to make business decisions until we have signed agreements with you. This applies even if your application has been successful.
+    </gds-p>
+
+    <gds-p class="govuk-!-margin-bottom-9">
+        Homes England are responsible for managing the fund and our lending decisions are final.
+    </gds-p>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <partial name="_SignUpAndLoginButton" />
+
+    <div class="govuk-!-margin-top-9">
+        @await Html.PartialAsync("Guidance/_PreviousWithLinkName", ViewData)
+    </div>
+</gds-div-grid-column-two-thirds>
+
+<partial name="Guidance/_AsideRelatedContentSection" />
