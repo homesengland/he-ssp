@@ -96,6 +96,11 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             Assert.IsNotNull(GetContactRoleOutput);
             Assert.IsNotNull(GetContactRoleOutput.contactRoles);
             Assert.AreEqual(role.invln_Name, GetContactRoleOutput.contactRoles.First().webRoleName);
+
+            var GetOrganizationDetailsOutput = this.CallGetOrganizationDetailsPlugin(account.Id.ToString(), contact.invln_externalid);
+
+            Assert.IsNotNull(GetOrganizationDetailsOutput);
+            Assert.AreEqual(account.Name, GetOrganizationDetailsOutput.registeredCompanyName);
         }
 
         private List<LoanApplicationDto> CallGetLoanApplicationForAccountAndcontact(string accountId, string externalContactId)
