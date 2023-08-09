@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Extensions;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 
@@ -34,10 +35,10 @@ public static class LoanApplicationMapper
     {
         return new SecurityViewModel
         {
-            ChargesDebtCompany = loanApplicationDto.outstandingLegalChargesOrDebt,
+            ChargesDebtCompany = loanApplicationDto.outstandingLegalChargesOrDebt.MapToCommonResponse(),
             ChargesDebtCompanyInfo = loanApplicationDto.debentureHolder,
-            DirLoans = loanApplicationDto.directorLoans,
-            DirLoansSub = loanApplicationDto.confirmationDirectorLoansCanBeSubordinated,
+            DirLoans = loanApplicationDto.directorLoans.MapToCommonResponse(),
+            DirLoansSub = loanApplicationDto.confirmationDirectorLoansCanBeSubordinated.MapToCommonResponse(),
             DirLoansSubMore = loanApplicationDto.reasonForDirectorLoanNotSubordinated,
         };
     }
@@ -48,11 +49,11 @@ public static class LoanApplicationMapper
         {
             GrossDevelopmentValue = loanApplicationDto.projectGdv,
             TotalCosts = loanApplicationDto.projectEstimatedTotalCost,
-            AbnormalCosts = loanApplicationDto.projectAbnormalCosts,
+            AbnormalCosts = loanApplicationDto.projectAbnormalCosts.MapToCommonResponse(),
             AbnormalCostsInfo = loanApplicationDto.projectAbnormalCostsInformation,
-            PrivateSectorFunding = loanApplicationDto.privateSectorApproach,
+            PrivateSectorFunding = loanApplicationDto.privateSectorApproach.MapToCommonResponse(),
             PrivateSectorFundingResult = loanApplicationDto.privateSectorApproachInformation,
-            AdditionalProjects = loanApplicationDto.additionalProjects,
+            AdditionalProjects = loanApplicationDto.additionalProjects.MapToCommonResponse(),
             Refinance = loanApplicationDto.refinanceRepayment,
             RefinanceInfo = loanApplicationDto.refinanceRepaymentDetails,
         };
@@ -62,7 +63,7 @@ public static class LoanApplicationMapper
     {
         return new CompanyStructureViewModel
         {
-            Purpose = loanApplicationDto.companyPurpose,
+            Purpose = loanApplicationDto.companyPurpose.MapToCommonResponse(),
             ExistingCompany = loanApplicationDto.existingCompany,
             HomesBuilt = loanApplicationDto.companyExperience.ToString(),
         };

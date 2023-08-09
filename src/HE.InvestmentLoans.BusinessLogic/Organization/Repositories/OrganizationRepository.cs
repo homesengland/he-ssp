@@ -1,6 +1,6 @@
-using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -25,7 +25,7 @@ public class OrganizationRepository : IOrganizationRepository
         };
 
         var response = (invln_getorganizationdetailsResponse)await _serviceClient.ExecuteAsync(request);
-        var organizationDetailsDto = JsonSerializer.Deserialize<OrganizationDetailsDto>(response.invln_organizationdetails)!;
+        var organizationDetailsDto = CrmResponseSerializer.Deserialize<OrganizationDetailsDto>(response.invln_organizationdetails)!;
         return new OrganizationBasicInformation(
             organizationDetailsDto.registeredCompanyName,
             organizationDetailsDto.companyRegistrationNumber,
