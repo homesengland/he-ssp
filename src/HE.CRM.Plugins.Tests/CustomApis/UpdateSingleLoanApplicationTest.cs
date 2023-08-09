@@ -147,24 +147,24 @@ namespace HE.CRM.Plugins.Tests.CustomApis
         {
             applicationDto = new LoanApplicationDto()
             {
-                companyPurpose = "true",
+                companyPurpose = true,
                 existingCompany = "",
                 companyExperience = 5,
 
                 projectGdv = "22.2",
                 projectEstimatedTotalCost = "33.3",
-                projectAbnormalCosts = "true",
+                projectAbnormalCosts = true,
                 projectAbnormalCostsInformation = "projectAbnormalCostsInformation",
-                privateSectorApproach = "false",
+                privateSectorApproach = false,
                 privateSectorApproachInformation = "privateSectorApproachInformation",
-                additionalProjects = "true",
+                additionalProjects = true,
                 //refinanceRepayment = "",
                 refinanceRepaymentDetails = "refinanceRepaymentDetails",
 
-                outstandingLegalChargesOrDebt = "false",
+                outstandingLegalChargesOrDebt = false,
                 debentureHolder = "debentureHolder",
-                directorLoans = "true",
-                confirmationDirectorLoansCanBeSubordinated = "false",
+                directorLoans = true,
+                confirmationDirectorLoansCanBeSubordinated = false,
                 reasonForDirectorLoanNotSubordinated = "true",
 
                 loanApplicationId = Guid.NewGuid().ToString(),

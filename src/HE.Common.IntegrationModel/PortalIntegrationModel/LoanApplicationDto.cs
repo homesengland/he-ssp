@@ -1,6 +1,7 @@
 #pragma warning disable IDE0005 // Using directive is unnecessary.
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 #pragma warning restore IDE0005 // Using directive is unnecessary.
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
@@ -8,7 +9,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
     public class LoanApplicationDto
     {
         //COMPANY
-        public string companyPurpose { get; set; } //Purpose
+        public bool? companyPurpose { get; set; } //Purpose
 
         public string existingCompany { get; set; } //ExistingCompany
 
@@ -20,15 +21,15 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         public string projectEstimatedTotalCost { get; set; } //TotalCosts
 
-        public string projectAbnormalCosts { get; set; } //AbnormalCosts
+        public bool? projectAbnormalCosts { get; set; } //AbnormalCosts
 
         public string projectAbnormalCostsInformation { get; set; } //AbnormalCosts
 
-        public string privateSectorApproach { get; set; } //PrivateSectorFunding
+        public bool? privateSectorApproach { get; set; } //PrivateSectorFunding
 
         public string privateSectorApproachInformation { get; set; } //PrivateSectorFunding
 
-        public string additionalProjects { get; set; } //AdditionalProjects
+        public bool? additionalProjects { get; set; } //AdditionalProjects
 
         public string refinanceRepayment { get; set; } //Refinance
 
@@ -36,13 +37,13 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
                                                               //Complete
 
         //SECURITY
-        public string outstandingLegalChargesOrDebt { get; set; } //ChargesDebtCompany
+        public bool? outstandingLegalChargesOrDebt { get; set; } //ChargesDebtCompany
 
         public string debentureHolder { get; set; } //ChargesDebtCompany
 
-        public string directorLoans { get; set; } //DirLoans
+        public bool? directorLoans { get; set; } //DirLoans
 
-        public string confirmationDirectorLoansCanBeSubordinated { get; set; } //DirLoansSub
+        public bool? confirmationDirectorLoansCanBeSubordinated { get; set; } //DirLoansSub
 
         public string reasonForDirectorLoanNotSubordinated { get; set; } //DirLoansSub
 

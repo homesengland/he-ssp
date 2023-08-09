@@ -12,11 +12,11 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         public DateTime? dateOfPurchase { get; set; }
 
-        public string existingLegalCharges { get; set; }
+        public bool? existingLegalCharges { get; set; }
 
         public string existingLegalChargesInformation { get; set; }
 
-        public string haveAPlanningReferenceNumber { get; set; }
+        public bool? haveAPlanningReferenceNumber { get; set; }
 
         public string howMuch { get; set; }
 
@@ -44,7 +44,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         public string siteName { get; set; }
 
-        public string siteOwnership { get; set; }
+        public bool? siteOwnership { get; set; }
 
         public string[] typeOfHomes { get; set; }
 
