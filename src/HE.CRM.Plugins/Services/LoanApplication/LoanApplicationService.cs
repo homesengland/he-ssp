@@ -107,7 +107,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
             this.TracingService.Trace("Setting up invln_Loanapplication");
             loanApplicationFromPortal.numberOfSites = numberOfSites.ToString();
-            //
 
             var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, loanApplicationContact, accountId);
             Guid loanApplicationGuid = Guid.NewGuid();
