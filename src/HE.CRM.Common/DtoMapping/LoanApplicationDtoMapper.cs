@@ -14,10 +14,9 @@ namespace HE.CRM.Common.DtoMapping
             {
                 invln_NumberofSites = ParseInt(loanApplicationDto.numberOfSites),
                 invln_FundingReason = MapFundingReason(loanApplicationDto.fundingReason),
-                //invln_ExternalStatus = MapApplicationExternalStatus(loanApplicationDto.loanApplicationStatus),
 
                 //COMPANY
-                invln_CompanyPurpose = ParseBool(loanApplicationDto.companyPurpose), //Purpose
+                invln_CompanyPurpose = loanApplicationDto.companyPurpose, //Purpose
                 invln_Companystructureinformation = loanApplicationDto.existingCompany, //ExistingCompany
                 invln_CompanyExperience = loanApplicationDto.companyExperience, //HomesBuilt
                                                                                 //Company.CompanyInfoFile
@@ -25,20 +24,20 @@ namespace HE.CRM.Common.DtoMapping
                 //FUNDING
                 invln_ProjectGDV = ParseDecimalToMoney(loanApplicationDto.projectGdv), //GDV
                 invln_Projectestimatedtotalcost = ParseDecimalToMoney(loanApplicationDto.projectEstimatedTotalCost), //TotalCosts
-                invln_Projectabnormalcosts = ParseBool(loanApplicationDto.projectAbnormalCosts), //AbnormalCosts
+                invln_Projectabnormalcosts = loanApplicationDto.projectAbnormalCosts, //AbnormalCosts
                 invln_Projectabnormalcostsinformation = loanApplicationDto.projectAbnormalCostsInformation, //AbnormalCosts
-                invln_Privatesectorapproach = ParseBool(loanApplicationDto.privateSectorApproach), //PrivateSectorFunding
+                invln_Privatesectorapproach = loanApplicationDto.privateSectorApproach, //PrivateSectorFunding
                 invln_Privatesectorapproachinformation = loanApplicationDto.privateSectorApproachInformation, //PrivateSectorFunding
-                invln_Additionalprojects = ParseBool(loanApplicationDto.additionalProjects), //AdditionalProjects
+                invln_Additionalprojects = loanApplicationDto.additionalProjects, //AdditionalProjects
                 invln_Refinancerepayment = MapRefinancePayment(loanApplicationDto.refinanceRepayment), //Refinance
                 invln_Refinancerepaymentdetails = loanApplicationDto.refinanceRepaymentDetails, //Refinance
 
 
                 //SECURITY
-                invln_Outstandinglegalchargesordebt = ParseBool(loanApplicationDto.outstandingLegalChargesOrDebt), //ChargesDebtCompany
+                invln_Outstandinglegalchargesordebt = loanApplicationDto.outstandingLegalChargesOrDebt, //ChargesDebtCompany
                 invln_DebentureHolder = loanApplicationDto.debentureHolder, //ChargesDebtCompany
-                invln_Directorloans = ParseBool(loanApplicationDto.directorLoans), //DirLoans
-                invln_Confirmationdirectorloanscanbesubordinated = ParseBool(loanApplicationDto.confirmationDirectorLoansCanBeSubordinated), //DirLoansSub
+                invln_Directorloans = loanApplicationDto.directorLoans, //DirLoans
+                invln_Confirmationdirectorloanscanbesubordinated = loanApplicationDto.confirmationDirectorLoansCanBeSubordinated, //DirLoansSub
                 invln_Reasonfordirectorloannotsubordinated = loanApplicationDto.reasonForDirectorLoanNotSubordinated, //DirLoansSub
 
                 //SECTIONS STATUSES
@@ -81,26 +80,26 @@ namespace HE.CRM.Common.DtoMapping
                 numberOfSites = loanApplication.invln_NumberofSites?.ToString(),
 
                 //company
-                companyPurpose = loanApplication.invln_CompanyPurpose?.ToString(),
+                companyPurpose = loanApplication.invln_CompanyPurpose,
                 existingCompany = loanApplication.invln_Companystructureinformation?.ToString(),
                 companyExperience = loanApplication.invln_CompanyExperience,
 
                 //funding
                 projectGdv = (loanApplication.invln_ProjectGDV?.Value).ToString(),
                 projectEstimatedTotalCost = (loanApplication.invln_Projectestimatedtotalcost?.Value).ToString(),
-                projectAbnormalCosts = loanApplication.invln_Projectabnormalcosts?.ToString(),
+                projectAbnormalCosts = loanApplication.invln_Projectabnormalcosts,
                 projectAbnormalCostsInformation = loanApplication.invln_Projectabnormalcostsinformation?.ToString(),
-                privateSectorApproach = loanApplication.invln_Privatesectorapproach?.ToString(),
+                privateSectorApproach = loanApplication.invln_Privatesectorapproach,
                 privateSectorApproachInformation = loanApplication.invln_Privatesectorapproachinformation?.ToString(),
-                additionalProjects = loanApplication.invln_Additionalprojects?.ToString(),
+                additionalProjects = loanApplication.invln_Additionalprojects,
                 refinanceRepayment = MapRefinancePaymentOptionSetToString(loanApplication.invln_Refinancerepayment),
                 refinanceRepaymentDetails = loanApplication.invln_Refinancerepaymentdetails?.ToString(),
 
                 //security
-                outstandingLegalChargesOrDebt = loanApplication.invln_Outstandinglegalchargesordebt?.ToString(),
+                outstandingLegalChargesOrDebt = loanApplication.invln_Outstandinglegalchargesordebt,
                 debentureHolder = loanApplication.invln_DebentureHolder?.ToString(),
-                directorLoans = loanApplication.invln_Directorloans?.ToString(),
-                confirmationDirectorLoansCanBeSubordinated = loanApplication.invln_Confirmationdirectorloanscanbesubordinated?.ToString(),
+                directorLoans = loanApplication.invln_Directorloans,
+                confirmationDirectorLoansCanBeSubordinated = loanApplication.invln_Confirmationdirectorloanscanbesubordinated,
                 reasonForDirectorLoanNotSubordinated = loanApplication.invln_Reasonfordirectorloannotsubordinated?.ToString(),
 
                 //SITE DETAILS

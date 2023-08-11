@@ -122,7 +122,7 @@ namespace HE.Xrm.ServiceClientExample
 
             var loanApp = new LoanApplicationDto() //new fields values
             {
-                additionalProjects = "yes",
+                additionalProjects = true,
                 name = "name pluginddd",
                 numberOfSites = "27",
                 fundingReason = "buildinginfrastructureonly",
@@ -149,9 +149,9 @@ namespace HE.Xrm.ServiceClientExample
                 currentValue = null,
                 Name = "Name",
                 dateOfPurchase = DateTime.Now,
-                existingLegalCharges = "true",
+                existingLegalCharges = true,
                 existingLegalChargesInformation = "info",
-                haveAPlanningReferenceNumber = "true",
+                haveAPlanningReferenceNumber = true,
                 howMuch = "2137",
                 nameOfGrantFund = "name of grand fund",
                 numberOfAffordableHomes = "3223",
@@ -163,7 +163,7 @@ namespace HE.Xrm.ServiceClientExample
                 siteCoordinates = "122",
                 siteCost = "33341",
                 siteName = "Name site",
-                siteOwnership = "true",
+                siteOwnership = true,
                 typeOfHomes = new string[] { "apartmentsorflats", "houses" },
                 typeOfSite = "greenfield",
                 valuationSource = "estateagentestimate",
