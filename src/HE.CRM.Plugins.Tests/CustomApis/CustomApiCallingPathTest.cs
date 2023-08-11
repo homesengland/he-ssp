@@ -658,9 +658,9 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             {
                 currentValue = "value",
                 dateOfPurchase = DateTime.Now,
-                existingLegalCharges = "existingLegalCharges",
+                existingLegalCharges = true,
                 existingLegalChargesInformation = "existingLegalChargesInformation",
-                haveAPlanningReferenceNumber = "haveAPlanningReferenceNumber",
+                haveAPlanningReferenceNumber = true,
                 howMuch = "howMuch",
                 landRegistryTitleNumber = "landRegistryTitleNumber",
                 Name = "Name",
@@ -674,7 +674,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 siteCoordinates = "siteCoordinates",
                 siteCost = "siteCost",
                 siteName = "siteName",
-                siteOwnership = "siteOwnership",
+                siteOwnership = true,
                 typeOfHomes = new string[] { "typeOfHomes" },
                 typeOfSite = "typeOfSite",
                 valuationSource = "valuationSource",
@@ -683,24 +683,24 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             applicationDto = new LoanApplicationDto()
             {
-                companyPurpose = "true",
+                companyPurpose = true,
                 existingCompany = "",
                 companyExperience = 5,
 
                 projectGdv = "22.2",
                 projectEstimatedTotalCost = "33.3",
-                projectAbnormalCosts = "true",
+                projectAbnormalCosts = true,
                 projectAbnormalCostsInformation = "projectAbnormalCostsInformation",
-                privateSectorApproach = "false",
+                privateSectorApproach = true,
                 privateSectorApproachInformation = "privateSectorApproachInformation",
-                additionalProjects = "true",
+                additionalProjects = true,
                 refinanceRepayment = "",
                 refinanceRepaymentDetails = "refinanceRepaymentDetails",
 
-                outstandingLegalChargesOrDebt = "false",
+                outstandingLegalChargesOrDebt = true,
                 debentureHolder = "debentureHolder",
-                directorLoans = "true",
-                confirmationDirectorLoansCanBeSubordinated = "false",
+                directorLoans = true,
+                confirmationDirectorLoansCanBeSubordinated = true,
                 reasonForDirectorLoanNotSubordinated = "true",
 
                 siteDetailsList = new List<SiteDetailsDto> { siteDetailsDto },
