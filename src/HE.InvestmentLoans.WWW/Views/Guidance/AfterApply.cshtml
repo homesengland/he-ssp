@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Guidance";
+    ViewData["PreviousLink"] = Url.Action("Apply", "Guidance");
+    ViewData["PreviousLinkName"] = "Apply";
+    ViewData["NextLink"] = Url.Action("PrioritiseApplications", "Guidance");
+    ViewData["NextLinkName"] = "How we prioritise applications";
+}
+
+<gds-div-grid-column-two-thirds>
+    <partial name="Guidance/_MainGuidanceNavigation" />
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <gds-h2 size="ControlSize.L">
+        What happens after you apply
+    </gds-h2>
+
+    <gds-h3 size="ControlSize.S">
+        After application
+    </gds-h3>
+
+    <gds-p>After your application, you will be allocated a transaction manager. They will contact you regarding your application.</gds-p>
+
+    <gds-h3 size="ControlSize.S">
+        Next stages
+    </gds-h3>
+
+    <gds-p>We will ask you to complete a dedicated cashflow for each future project.  </gds-p>
+
+    <gds-p>We will also complete a ‘Know your customer’ (KYC) check.</gds-p>
+
+    <gds-p>
+        <gds-link href="https://www.gov.uk/government/publications/know-your-customer-guidance/know-your-customer-guidance-accessible-version">
+            Read more about the documents we may need to see about you and your company.
+        </gds-link>
+    </gds-p>
+
+    <div class="govuk-!-margin-top-9">
+        <a href="@Url.Action("StartApplication", "LoanApplicationV2")">
+            <gds-button-start type="button">
+                Apply Online
+            </gds-button-start>
+        </a>
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <partial name="_SignUpAndLoginButton" />
+
+    @await Html.PartialAsync("Guidance/_PreviousWithLinkName", ViewData)
+
+    @await Html.PartialAsync("Guidance/_NextWithLinkName", ViewData)
+
+</gds-div-grid-column-two-thirds>
+
+<partial name="Guidance/_AsideRelatedContentSection" />

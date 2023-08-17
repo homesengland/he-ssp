@@ -1,13 +1,14 @@
-using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -20,10 +21,13 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IHttpContextAccessor httpContextAccessor)
+    private readonly IDateTimeProvider _dateTime;
+
+    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IHttpContextAccessor httpContextAccessor, IDateTimeProvider dateTime)
     {
         _serviceClient = serviceClient;
         _httpContextAccessor = httpContextAccessor;
+        _dateTime = dateTime;
     }
 
     public async Task<LoanApplicationEntity> GetLoanApplication(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
@@ -38,7 +42,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
                        ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
 
-        var loanApplicationDto = JsonSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
+        var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                         ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
@@ -61,7 +65,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
                        ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
 
-        var loanApplicationDto = JsonSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
+        var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                         ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
@@ -80,7 +84,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getloanapplicationsforaccountandcontactResponse
                        ?? throw new NotFoundException("Applications list", userAccount.ToString());
 
-        var loanApplicationDtos = JsonSerializer.Deserialize<List<LoanApplicationDto>>(response.invln_loanapplications)
+        var loanApplicationDtos = CrmResponseSerializer.Deserialize<List<LoanApplicationDto>>(response.invln_loanapplications)
                                   ?? throw new NotFoundException("Applications list", userAccount.ToString());
 
         return loanApplicationDtos.Select(x =>
@@ -103,10 +107,10 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
                 typeOfHomes = site.TypeHomes,
                 otherTypeOfHomes = site.TypeHomesOther,
                 typeOfSite = site.Type,
-                haveAPlanningReferenceNumber = site.PlanningRef,
+                haveAPlanningReferenceNumber = site.PlanningRef!.MapToBool(),
                 planningReferenceNumber = site.PlanningRefEnter,
                 siteCoordinates = site.LocationCoordinates,
-                siteOwnership = site.Ownership,
+                siteOwnership = site.Ownership!.MapToBool(),
                 landRegistryTitleNumber = site.LocationLandRegistry,
                 dateOfPurchase = site.PurchaseDate,
                 siteCost = site.Cost,
@@ -116,7 +120,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
                 howMuch = site.GrantFundingAmount,
                 nameOfGrantFund = site.GrantFundingName,
                 reason = site.GrantFundingPurpose,
-                existingLegalCharges = site.ChargesDebt,
+                existingLegalCharges = site.ChargesDebt!.MapToBool(),
                 existingLegalChargesInformation = site.ChargesDebtInfo,
                 numberOfAffordableHomes = site.AffordableHomes,
             };
@@ -131,33 +135,33 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             fundingReason = FundingPurposeMapper.Map(loanApplication.Purpose),
 
             // COMPANY
-            companyPurpose = loanApplication.Company.Purpose,
+            companyPurpose = loanApplication.Company.Purpose!.MapToBool(),
             existingCompany = loanApplication.Company.ExistingCompany,
             companyExperience = loanApplication.Company.HomesBuilt?.TryParseNullableInt(),
 
             // FUNDING
             projectGdv = loanApplication.Funding.GrossDevelopmentValue,
             projectEstimatedTotalCost = loanApplication.Funding.TotalCosts,
-            projectAbnormalCosts = loanApplication.Funding.AbnormalCosts,
+            projectAbnormalCosts = loanApplication.Funding.AbnormalCosts!.MapToBool(),
             projectAbnormalCostsInformation = loanApplication.Funding.AbnormalCostsInfo,
-            privateSectorApproach = loanApplication.Funding.PrivateSectorFunding,
+            privateSectorApproach = loanApplication.Funding.PrivateSectorFunding!.MapToBool(),
             privateSectorApproachInformation = loanApplication.Funding.PrivateSectorFundingResult,
-            additionalProjects = loanApplication.Funding.AdditionalProjects,
+            additionalProjects = loanApplication.Funding.AdditionalProjects!.MapToBool(),
             refinanceRepayment = loanApplication.Funding.Refinance,
             refinanceRepaymentDetails = loanApplication.Funding.RefinanceInfo,
 
             // SECURITY
-            outstandingLegalChargesOrDebt = loanApplication.Security.ChargesDebtCompany,
+            outstandingLegalChargesOrDebt = loanApplication.Security.ChargesDebtCompany!.MapToBool(),
             debentureHolder = loanApplication.Security.ChargesDebtCompanyInfo,
-            directorLoans = loanApplication.Security.DirLoans,
-            confirmationDirectorLoansCanBeSubordinated = loanApplication.Security.DirLoansSub,
+            directorLoans = loanApplication.Security.DirLoans!.MapToBool(),
+            confirmationDirectorLoansCanBeSubordinated = loanApplication.Security.DirLoansSub!.MapToBool(),
             reasonForDirectorLoanNotSubordinated = loanApplication.Security.DirLoansSubMore,
 
             // SITEDETAILS
             siteDetailsList = siteDetailsDtos,
         };
 
-        var loanApplicationSerialized = JsonSerializer.Serialize(loanApplicationDto);
+        var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);
         var req = new invln_sendinvestmentloansdatatocrmRequest
         {
             invln_entityfieldsparameters = loanApplicationSerialized,
@@ -175,7 +179,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount),
         };
 
-        var loanApplicationSerialized = JsonSerializer.Serialize(loanApplicationDto);
+        var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);
         var req = new invln_sendinvestmentloansdatatocrmRequest
         {
             invln_entityfieldsparameters = loanApplicationSerialized,
@@ -204,6 +208,8 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     public void LegacySave(LoanApplicationViewModel legacyModel)
     {
+        legacyModel.Timestamp = _dateTime.Now;
+
         _httpContextAccessor.HttpContext?.Session.Set(legacyModel.ID.ToString(), legacyModel);
     }
 }

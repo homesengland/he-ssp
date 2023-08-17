@@ -1,4 +1,4 @@
-﻿using DataverseModel;
+using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.Repositories.interfaces;
@@ -85,19 +85,19 @@ namespace HE.CRM.Plugins.Services.Contacts
                 foreach (var contactRole in contactWebRole)
                 {
                     invln_portalpermissionlevel permissionLevel = null;
-                    if (contactRole["ae.invln_portalpermissionlevelid"] != null && ((dynamic)contactRole["ae.invln_portalpermissionlevelid"]).Value != null)
+                    if (contactRole.Contains("ae.invln_portalpermissionlevelid") && contactRole["ae.invln_portalpermissionlevelid"] != null && ((dynamic)contactRole["ae.invln_portalpermissionlevelid"]).Value != null)
                     {
                         this.TracingService.Trace("PermissionLevel lookup exists");
                         permissionLevel = portalPermissionLevels.Where(x => x.invln_portalpermissionlevelId == ((dynamic)contactRole["ae.invln_portalpermissionlevelid"]).Value.Id).ToList().FirstOrDefault();
                     }
-
                     this.TracingService.Trace("Add role");
+                    string webRoleName = contactRole.invln_Webroleid?.Name ?? (contactRole.Contains("ae.invln_name") ? ((dynamic)contactRole["ae.invln_name"]).Value : null);
                     roles.Add(new ContactRoleDto()
                     {
                         accountId = contactRole.invln_Accountid != null ? contactRole.invln_Accountid.Id : Guid.Empty,
                         accountName = contactRole.invln_Accountid != null ? contactRole.invln_Accountid.Name : null,
                         permissionLevel = permissionLevel != null && permissionLevel.invln_Permission != null ? permissionLevel.invln_Permission.Value.ToString() : null,
-                        webRoleName = contactRole.invln_Webroleid != null ? contactRole.invln_Webroleid.Name : null,
+                        webRoleName = webRoleName,
                     });
                 }
 

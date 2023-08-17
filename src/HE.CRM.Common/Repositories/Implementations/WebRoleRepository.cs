@@ -34,6 +34,7 @@ namespace HE.CRM.Common.Repositories.Implementations
 		                                </filter>
 		                                <link-entity name='invln_webrole' from='invln_webroleid' to='invln_webroleid' link-type='inner' alias='ae'>
 			                                <attribute name='invln_portalpermissionlevelid'/>
+			                                <attribute name='invln_name'/>
 			                                <link-entity name='invln_portal' from='invln_portalid' to='invln_portalid' link-type='inner' alias='ag'>
 				                                <filter type='and'>
 					                                <condition attribute='invln_portal' operator='eq' value='" + portalType + @"'/>
