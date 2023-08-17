@@ -105,18 +105,17 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             A.CallTo(() => fakedContext.GetOrganizationService().Update(A<invln_Loanapplication>.Ignored)).MustNotHaveHappened();
         }
         [TestMethod]
-        [DataRow((int)invln_ExternalStatus.Applicationdeclined)]
+        [DataRow((int)invln_ExternalStatus.ApplicationDeclined)]
         [DataRow((int)invln_ExternalStatus.Approvedsubjecttocontract)]
-        [DataRow((int)invln_ExternalStatus.ContractSignedsubjecttoCP)]
-        [DataRow((int)invln_ExternalStatus.CPssatisfied)]
+        [DataRow((int)invln_ExternalStatus.ContractSignedSubjecttoCP)]
+        [DataRow((int)invln_ExternalStatus.CPsSatisfied)]
         [DataRow((int)invln_ExternalStatus.Draft)]
-        [DataRow((int)invln_ExternalStatus.Holdrequested)]
-        [DataRow((int)invln_ExternalStatus.Inactive)]
-        [DataRow((int)invln_ExternalStatus.Induediligence)]
-        [DataRow((int)invln_ExternalStatus.Loanavailable)]
-        [DataRow((int)invln_ExternalStatus.Onhold)]
-        [DataRow((int)invln_ExternalStatus.Referredbacktoapplicant)]
-        [DataRow((int)invln_ExternalStatus.Submitted)]
+        [DataRow((int)invln_ExternalStatus.HoldRequested)]
+        [DataRow((int)invln_ExternalStatus.InDueDiligence)]
+        [DataRow((int)invln_ExternalStatus.LoanAvailable)]
+        [DataRow((int)invln_ExternalStatus.OnHold)]
+        [DataRow((int)invln_ExternalStatus.ReferredBacktoApplicant)]
+        [DataRow((int)invln_ExternalStatus.ApplicationSubmitted)]
         [DataRow((int)invln_ExternalStatus.Underreview)]
         [DataRow((int)invln_ExternalStatus.Withdrawn)]
         public void ChangeLoanApplicationExternalStatus_ChangeStatusFromDraftToNewValue_ShouldUpdateStatus(int newStatus)
@@ -155,18 +154,17 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             }
         }
         [TestMethod]
-        [DataRow((int)invln_ExternalStatus.Applicationdeclined)]
+        [DataRow((int)invln_ExternalStatus.ApplicationDeclined)]
         [DataRow((int)invln_ExternalStatus.Approvedsubjecttocontract)]
-        [DataRow((int)invln_ExternalStatus.ContractSignedsubjecttoCP)]
-        [DataRow((int)invln_ExternalStatus.CPssatisfied)]
+        [DataRow((int)invln_ExternalStatus.ContractSignedSubjecttoCP)]
+        [DataRow((int)invln_ExternalStatus.CPsSatisfied)]
         [DataRow((int)invln_ExternalStatus.Draft)]
-        [DataRow((int)invln_ExternalStatus.Holdrequested)]
-        [DataRow((int)invln_ExternalStatus.Inactive)]
-        [DataRow((int)invln_ExternalStatus.Induediligence)]
-        [DataRow((int)invln_ExternalStatus.Loanavailable)]
-        [DataRow((int)invln_ExternalStatus.Onhold)]
-        [DataRow((int)invln_ExternalStatus.Referredbacktoapplicant)]
-        [DataRow((int)invln_ExternalStatus.Submitted)]
+        [DataRow((int)invln_ExternalStatus.HoldRequested)]
+        [DataRow((int)invln_ExternalStatus.InDueDiligence)]
+        [DataRow((int)invln_ExternalStatus.LoanAvailable)]
+        [DataRow((int)invln_ExternalStatus.OnHold)]
+        [DataRow((int)invln_ExternalStatus.ReferredBacktoApplicant)]
+        [DataRow((int)invln_ExternalStatus.ApplicationSubmitted)]
         [DataRow((int)invln_ExternalStatus.Underreview)]
         [DataRow((int)invln_ExternalStatus.Withdrawn)]
         public void ChangeLoanApplicationExternalStatus_ChangeStatusFromSubmittedToNewValue_ShouldUpdateStatus(int newStatus)
@@ -174,7 +172,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             invln_Loanapplication application = new invln_Loanapplication()
             {
                 Id = Guid.NewGuid(),
-                invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Submitted),
+                invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationSubmitted),
             };
             fakedContext.Initialize(new List<Entity> { application });
             Exception exception = null;
@@ -193,7 +191,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             {
                 exception = ex;
             }
-            if (newStatus == (int)invln_ExternalStatus.Submitted || newStatus == (int)invln_ExternalStatus.Inactive)
+            if (newStatus == (int)invln_ExternalStatus.ApplicationSubmitted || newStatus == (int)invln_ExternalStatus.NA)
             {
                 Assert.IsNotNull(exception);
                 A.CallTo(() => fakedContext.GetOrganizationService().Update(A<invln_Loanapplication>.Ignored)).MustNotHaveHappened();
@@ -205,18 +203,18 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             }
         }
         [TestMethod]
-        [DataRow((int)invln_ExternalStatus.Applicationdeclined)]
+        [DataRow((int)invln_ExternalStatus.ApplicationDeclined)]
         [DataRow((int)invln_ExternalStatus.Approvedsubjecttocontract)]
-        [DataRow((int)invln_ExternalStatus.ContractSignedsubjecttoCP)]
-        [DataRow((int)invln_ExternalStatus.CPssatisfied)]
+        [DataRow((int)invln_ExternalStatus.ContractSignedSubjecttoCP)]
+        [DataRow((int)invln_ExternalStatus.CPsSatisfied)]
         [DataRow((int)invln_ExternalStatus.Draft)]
-        [DataRow((int)invln_ExternalStatus.Holdrequested)]
-        [DataRow((int)invln_ExternalStatus.Inactive)]
-        [DataRow((int)invln_ExternalStatus.Induediligence)]
-        [DataRow((int)invln_ExternalStatus.Loanavailable)]
-        [DataRow((int)invln_ExternalStatus.Onhold)]
-        [DataRow((int)invln_ExternalStatus.Referredbacktoapplicant)]
-        [DataRow((int)invln_ExternalStatus.Submitted)]
+        [DataRow((int)invln_ExternalStatus.HoldRequested)]
+        [DataRow((int)invln_ExternalStatus.NA)]
+        [DataRow((int)invln_ExternalStatus.InDueDiligence)]
+        [DataRow((int)invln_ExternalStatus.LoanAvailable)]
+        [DataRow((int)invln_ExternalStatus.OnHold)]
+        [DataRow((int)invln_ExternalStatus.ReferredBacktoApplicant)]
+        [DataRow((int)invln_ExternalStatus.ApplicationSubmitted)]
         [DataRow((int)invln_ExternalStatus.Underreview)]
         [DataRow((int)invln_ExternalStatus.Withdrawn)]
         public void ChangeLoanApplicationExternalStatus_ChangeStatusFromInactiveToNewValue_ShouldUpdateStatus(int newStatus)
@@ -224,7 +222,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             invln_Loanapplication application = new invln_Loanapplication()
             {
                 Id = Guid.NewGuid(),
-                invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Inactive),
+                invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.NA),
             };
             fakedContext.Initialize(new List<Entity> { application });
             Exception exception = null;
@@ -243,7 +241,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             {
                 exception = ex;
             }
-            if (newStatus == (int)invln_ExternalStatus.Submitted || newStatus == (int)invln_ExternalStatus.Inactive || newStatus == (int)invln_ExternalStatus.Withdrawn)
+            if (newStatus == (int)invln_ExternalStatus.ApplicationSubmitted || newStatus == (int)invln_ExternalStatus.NA || newStatus == (int)invln_ExternalStatus.Withdrawn)
             {
                 Assert.IsNotNull(exception);
                 A.CallTo(() => fakedContext.GetOrganizationService().Update(A<invln_Loanapplication>.Ignored)).MustNotHaveHappened();

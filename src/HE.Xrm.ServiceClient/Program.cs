@@ -225,7 +225,7 @@ namespace HE.Xrm.ServiceClientExample
             var req11_1 = new invln_changeloanapplicationexternalstatusRequest()
             {
                 invln_loanapplicationid = resp10.invln_loanapplicationid,
-                invln_statusexternal = (int)invln_ExternalStatus.Submitted
+                invln_statusexternal = (int)invln_ExternalStatus.ApplicationSubmitted
             };
             var resp11_1 = (invln_changeloanapplicationexternalstatusResponse)serviceClient.Execute(req11_1);
 

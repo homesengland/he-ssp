@@ -14,86 +14,98 @@ namespace DataverseModel
 	
 	
 	/// <summary>
-	/// Type of activity.
+	/// Power Pages Component Type
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum activitypointer_ActivityTypeCode
+	public enum powerpagecomponenttype
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Appointment = 4201,
+		AdPlacement = 26,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		BookingAlert = 10711,
+		AdvancedForm = 19,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CampaignActivity = 4402,
+		AdvancedFormMetadata = 21,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CampaignResponse = 4401,
+		AdvancedFormStep = 20,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CaseResolution = 4206,
+		BasicForm = 15,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Conversation = 10454,
+		BasicFormMetadata = 16,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CopilotTranscript = 10909,
+		BotConsumer = 27,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CustomerVoicealert = 10343,
+		CloudFlow = 33,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CustomerVoicesurveyinvite = 10353,
+		ColumnPermission = 29,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CustomerVoicesurveyresponse = 10355,
+		ColumnPermissionProfile = 28,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Email = 4202,
+		ContentSnippet = 7,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Fax = 4204,
+		List = 17,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InviteRedemption = 11008,
+		PageTemplate = 6,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Letter = 4207,
+		PollPlacement = 24,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		OpportunityClose = 4208,
+		PublishingState = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		OrderClose = 4209,
+		PublishingStateTransitionRule = 31,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		PhoneCall = 4210,
+		Redirect = 30,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		PortalComment = 11009,
+		Shortcut = 32,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		QuickCampaign = 4406,
+		SiteMarker = 13,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		QuoteClose = 4211,
+		SiteSetting = 9,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		RecurringAppointment = 4251,
+		TablePermission = 18,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ServiceActivity = 4214,
+		WebFile = 3,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Session = 10471,
+		WebLink = 5,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Task = 4212,
+		WebLinkSet = 4,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Teamschat = 10084,
+		WebPage = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WebPageAccessControlRule = 10,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WebRole = 11,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WebsiteAccess = 12,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WebTemplate = 8,
 	}
 }
 #pragma warning restore CS1591

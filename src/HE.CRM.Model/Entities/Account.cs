@@ -631,6 +631,10 @@ namespace DataverseModel
 			public const string Address2_Telephone3 = "address2_telephone3";
 			public const string Address2_UPSZone = "address2_upszone";
 			public const string Address2_UTCOffset = "address2_utcoffset";
+			public const string Adx_CreatedByIPAddress = "adx_createdbyipaddress";
+			public const string Adx_CreatedByUsername = "adx_createdbyusername";
+			public const string Adx_ModifiedByIPAddress = "adx_modifiedbyipaddress";
+			public const string Adx_ModifiedByUsername = "adx_modifiedbyusername";
 			public const string Aging30 = "aging30";
 			public const string Aging30_Base = "aging30_base";
 			public const string Aging60 = "aging60";
@@ -735,6 +739,10 @@ namespace DataverseModel
 			public const string ModifiedOn = "modifiedon";
 			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
 			public const string ModifiedOnBehalfByName = "modifiedonbehalfbyname";
+			public const string Referencingmsa_account_managingpartner = "msa_account_managingpartner";
+			public const string msa_contact_managingpartner = "msa_contact_managingpartner";
+			public const string msa_managingpartnerid = "msa_managingpartnerid";
+			public const string msa_managingpartneridName = "msa_managingpartneridname";
 			public const string msdyn_accountkpiid = "msdyn_accountkpiid";
 			public const string msdyn_accountkpiidName = "msdyn_accountkpiidname";
 			public const string msdyn_gdproptout = "msdyn_gdproptout";
@@ -786,6 +794,7 @@ namespace DataverseModel
 			public const string Referencedaccount_master_account = "Referencedaccount_master_account";
 			public const string Referencedaccount_parent_account = "Referencedaccount_parent_account";
 			public const string Referencedhe_account_account_UltimateParent = "Referencedhe_account_account_UltimateParent";
+			public const string Referencedmsa_account_managingpartner = "Referencedmsa_account_managingpartner";
 			public const string Revenue = "revenue";
 			public const string Revenue_Base = "revenue_base";
 			public const string SharesOutstanding = "sharesoutstanding";
@@ -1932,6 +1941,74 @@ namespace DataverseModel
 				this.OnPropertyChanging("Address2_UTCOffset");
 				this.SetAttributeValue("address2_utcoffset", value);
 				this.OnPropertyChanged("Address2_UTCOffset");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_createdbyipaddress")]
+		public string Adx_CreatedByIPAddress
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_createdbyipaddress");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Adx_CreatedByIPAddress");
+				this.SetAttributeValue("adx_createdbyipaddress", value);
+				this.OnPropertyChanged("Adx_CreatedByIPAddress");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_createdbyusername")]
+		public string Adx_CreatedByUsername
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_createdbyusername");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Adx_CreatedByUsername");
+				this.SetAttributeValue("adx_createdbyusername", value);
+				this.OnPropertyChanged("Adx_CreatedByUsername");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_modifiedbyipaddress")]
+		public string Adx_ModifiedByIPAddress
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_modifiedbyipaddress");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Adx_ModifiedByIPAddress");
+				this.SetAttributeValue("adx_modifiedbyipaddress", value);
+				this.OnPropertyChanged("Adx_ModifiedByIPAddress");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_modifiedbyusername")]
+		public string Adx_ModifiedByUsername
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_modifiedbyusername");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Adx_ModifiedByUsername");
+				this.SetAttributeValue("adx_modifiedbyusername", value);
+				this.OnPropertyChanged("Adx_ModifiedByUsername");
 			}
 		}
 		
@@ -3481,6 +3558,26 @@ namespace DataverseModel
 			}
 		}
 		
+		/// <summary>
+		/// Unique identifier for Account associated with Account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
+		public Microsoft.Xrm.Sdk.EntityReference msa_managingpartnerid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("msa_managingpartnerid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msa_managingpartnerid");
+				this.SetAttributeValue("msa_managingpartnerid", value);
+				this.OnPropertyChanged("msa_managingpartnerid");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_accountkpiid")]
 		public Microsoft.Xrm.Sdk.EntityReference msdyn_accountkpiid
 		{
@@ -4704,6 +4801,46 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N msa_account_managingpartner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Account> Referencedmsa_account_managingpartner
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencedmsa_account_managingpartner");
+				this.SetRelatedEntities<DataverseModel.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedmsa_account_managingpartner");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N msa_contact_managingpartner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_contact_managingpartner")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Contact> msa_contact_managingpartner
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Contact>("msa_contact_managingpartner", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msa_contact_managingpartner");
+				this.SetRelatedEntities<DataverseModel.Contact>("msa_contact_managingpartner", null, value);
+				this.OnPropertyChanged("msa_contact_managingpartner");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 account_master_account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
@@ -4777,6 +4914,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("Referencinghe_account_account_UltimateParent");
 				this.SetRelatedEntity<DataverseModel.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencinghe_account_account_UltimateParent");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 msa_account_managingpartner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public DataverseModel.Account Referencingmsa_account_managingpartner
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencingmsa_account_managingpartner");
+				this.SetRelatedEntity<DataverseModel.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingmsa_account_managingpartner");
 			}
 		}
 		

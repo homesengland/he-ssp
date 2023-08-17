@@ -382,6 +382,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_YearlyRecurrence.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyusd_EnableTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msft_DataState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\mspp_ColumnPermissionValues.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Need.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\officedocument_DocumentType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\OnlineMeetingType.cs" />
@@ -390,6 +391,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\orginsightsconfiguration_PlotOption.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\photo_resolution.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\PowerBIMashupParameterValueSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\powerpagecomponenttype.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\powerpagelanguages.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\PrincipalSyncAttributeMapping_SyncDirection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Processstage_Category.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\PurchaseProcess.cs" />
