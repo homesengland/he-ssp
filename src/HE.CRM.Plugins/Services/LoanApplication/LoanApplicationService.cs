@@ -73,6 +73,22 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return JsonSerializer.Serialize(entityCollection);
         }
 
+        public void ChangeLoanApplicationStatusOnOwnerChange(invln_Loanapplication target, invln_Loanapplication preImage, invln_Loanapplication postImage)
+        {
+            if (preImage?.StatusCode.Value != postImage?.StatusCode.Value)
+            {
+                if (preImage?.StatusCode.Value == (int)invln_Loanapplication_StatusCode.ApplicationSubmitted)
+                {
+                    loanApplicationRepository.Update(new invln_Loanapplication()
+                    {
+                        Id = target.Id,
+                        invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Underreview),
+                        StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Underreview)
+                    });
+                }
+            }
+        }
+
         public string CreateRecordFromPortal(string contactExternalId, string accountId, string loanApplicationId, string loanApplicationPayload)
         {
             this.TracingService.Trace("PAYLOAD:" + loanApplicationPayload);
