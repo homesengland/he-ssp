@@ -242,12 +242,12 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         {
             if (oldStatus != (int)invln_ExternalStatus.Draft)
             {
-                if (newStatus == (int)invln_ExternalStatus.Submitted || newStatus == (int)invln_ExternalStatus.Inactive)
+                if (newStatus == (int)invln_ExternalStatus.ApplicationSubmitted || newStatus == (int)invln_ExternalStatus.NA)
                 {
                     throw new ArgumentException("You can change status to Submitted or Inactive only when previous status was Draft");
                 }
             }
-            if (oldStatus != (int)invln_ExternalStatus.Submitted)
+            if (oldStatus != (int)invln_ExternalStatus.ApplicationSubmitted)
             {
                 if (newStatus == (int)invln_ExternalStatus.Withdrawn)
                 {
