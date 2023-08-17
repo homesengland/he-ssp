@@ -45,7 +45,13 @@ namespace DataverseModel
 		Email = 4202,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InviteRedemption = 11008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PhoneCall = 4210,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PortalComment = 11009,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ServiceActivity = 4214,

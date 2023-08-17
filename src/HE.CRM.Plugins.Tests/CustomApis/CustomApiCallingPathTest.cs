@@ -121,7 +121,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             this.CallUpdateSingleLoanApplication(JsonSerializer.Serialize(loanDtoNewFieldsValues), "invln_projectabnormalcostsinformation", getLoanApplicationOutput1.loanApplicationId, account.Id.ToString(), getContactRoleOutput.externalId, false);
             A.CallTo(() => fakedContext.GetOrganizationService().Update(A<invln_Loanapplication>.That.Matches(x => x.Id.ToString() == getLoanApplicationOutput1.loanApplicationId))).MustHaveHappened();
 
-            this.CallUpdateExternalStatus(getLoanApplicationOutput1.loanApplicationId, (int)invln_ExternalStatus.CPssatisfied, false);
+            this.CallUpdateExternalStatus(getLoanApplicationOutput1.loanApplicationId, (int)invln_ExternalStatus.CPsSatisfied, false);
 
             var getLoanApplicationOutput2 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
             Assert.AreEqual(getLoanApplicationOutput1.loanApplicationId, getLoanApplicationOutput2.loanApplicationId);
@@ -209,7 +209,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             this.CallUpdateSingleLoanApplication(JsonSerializer.Serialize(loanDtoNewFieldsValues), "invln_projectabnormalcostsinformation", getLoanApplicationOutput1.loanApplicationId, account.Id.ToString(), getContactRoleOutput.externalId, false);
             A.CallTo(() => fakedContext.GetOrganizationService().Update(A<invln_Loanapplication>.That.Matches(x => x.Id.ToString() == getLoanApplicationOutput1.loanApplicationId))).MustHaveHappened();
 
-            this.CallUpdateExternalStatus(getLoanApplicationOutput1.loanApplicationId, (int)invln_ExternalStatus.CPssatisfied, false);
+            this.CallUpdateExternalStatus(getLoanApplicationOutput1.loanApplicationId, (int)invln_ExternalStatus.CPsSatisfied, false);
 
             var getLoanApplicationOutput2 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
             Assert.AreEqual(getLoanApplicationOutput1.loanApplicationId, getLoanApplicationOutput2.loanApplicationId);
@@ -302,7 +302,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             this.CallUpdateSingleLoanApplication(JsonSerializer.Serialize(loanDtoNewFieldsValues), "invln_projectabnormalcostsinformation", getLoanApplicationOutput1.loanApplicationId, account.Id.ToString(), getContactRoleOutput.externalId, false);
             A.CallTo(() => fakedContext.GetOrganizationService().Update(A<invln_Loanapplication>.That.Matches(x => x.Id.ToString() == getLoanApplicationOutput1.loanApplicationId))).MustHaveHappened();
 
-            this.CallUpdateExternalStatus(getLoanApplicationOutput1.loanApplicationId, (int)invln_ExternalStatus.CPssatisfied, false);
+            this.CallUpdateExternalStatus(getLoanApplicationOutput1.loanApplicationId, (int)invln_ExternalStatus.CPsSatisfied, false);
 
             var getLoanApplicationOutput2 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
             Assert.AreEqual(getLoanApplicationOutput1.loanApplicationId, getLoanApplicationOutput2.loanApplicationId);
@@ -375,7 +375,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             this.CallUpdateSingleLoanApplication(JsonSerializer.Serialize(loanDtoNewFieldsValues), "invln_projectabnormalcostsinformation", getLoanApplicationOutput1.loanApplicationId, account.Id.ToString(), getContactRoleOutput.externalId, false);
             A.CallTo(() => fakedContext.GetOrganizationService().Update(A<invln_Loanapplication>.That.Matches(x => x.Id.ToString() == getLoanApplicationOutput1.loanApplicationId))).MustHaveHappened();
 
-            this.CallUpdateExternalStatus(getLoanApplicationOutput1.loanApplicationId, (int)invln_ExternalStatus.CPssatisfied, false);
+            this.CallUpdateExternalStatus(getLoanApplicationOutput1.loanApplicationId, (int)invln_ExternalStatus.CPsSatisfied, false);
 
             var getLoanApplicationOutput2 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
             Assert.AreEqual(getLoanApplicationOutput1.loanApplicationId, getLoanApplicationOutput2.loanApplicationId);

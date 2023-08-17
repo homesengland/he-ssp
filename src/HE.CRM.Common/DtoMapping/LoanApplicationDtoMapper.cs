@@ -173,31 +173,31 @@ namespace HE.CRM.Common.DtoMapping
                 case "draft":
                     return new OptionSetValue((int)invln_ExternalStatus.Draft);
                 case "submitted":
-                    return new OptionSetValue((int)invln_ExternalStatus.Submitted);
+                    return new OptionSetValue((int)invln_ExternalStatus.ApplicationSubmitted);
                 case "under review":
                     return new OptionSetValue((int)invln_ExternalStatus.Underreview);
                 case "in due diligence":
-                    return new OptionSetValue((int)invln_ExternalStatus.Induediligence);
+                    return new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
                 case "contract signed subject to cp":
-                    return new OptionSetValue((int)invln_ExternalStatus.ContractSignedsubjecttoCP);
+                    return new OptionSetValue((int)invln_ExternalStatus.ContractSignedSubjecttoCP);
                 case "cps satisfied":
-                    return new OptionSetValue((int)invln_ExternalStatus.CPssatisfied);
+                    return new OptionSetValue((int)invln_ExternalStatus.CPsSatisfied);
                 case "loan available":
-                    return new OptionSetValue((int)invln_ExternalStatus.Loanavailable);
+                    return new OptionSetValue((int)invln_ExternalStatus.LoanAvailable);
                 case "hold requested":
-                    return new OptionSetValue((int)invln_ExternalStatus.Holdrequested);
+                    return new OptionSetValue((int)invln_ExternalStatus.HoldRequested);
                 case "on hold":
-                    return new OptionSetValue((int)invln_ExternalStatus.Onhold);
+                    return new OptionSetValue((int)invln_ExternalStatus.OnHold);
                 case "referred back to applicant":
-                    return new OptionSetValue((int)invln_ExternalStatus.Referredbacktoapplicant);
+                    return new OptionSetValue((int)invln_ExternalStatus.ReferredBacktoApplicant);
                 case "inactive":
-                    return new OptionSetValue((int)invln_ExternalStatus.Inactive);
+                    return new OptionSetValue((int)invln_ExternalStatus.NA);
                 case "withdrawn":
                     return new OptionSetValue((int)invln_ExternalStatus.Withdrawn);
                 case "not approved":
-                    return new OptionSetValue((int)invln_ExternalStatus.Notapproved);
+                    return new OptionSetValue((int)invln_ExternalStatus.Sentforapproval);
                 case "application declined":
-                    return new OptionSetValue((int)invln_ExternalStatus.Applicationdeclined);
+                    return new OptionSetValue((int)invln_ExternalStatus.ApplicationDeclined);
                 case "approved subject to contract":
                     return new OptionSetValue((int)invln_ExternalStatus.Approvedsubjecttocontract);
             }
@@ -215,31 +215,31 @@ namespace HE.CRM.Common.DtoMapping
             {
                 case (int)invln_ExternalStatus.Draft:
                     return "draft";
-                case (int)invln_ExternalStatus.Submitted:
+                case (int)invln_ExternalStatus.ApplicationSubmitted:
                     return "submitted";
                 case (int)invln_ExternalStatus.Underreview:
                     return "under review";
-                case (int)invln_ExternalStatus.Induediligence:
+                case (int)invln_ExternalStatus.InDueDiligence:
                     return "in due diligence";
-                case (int)invln_ExternalStatus.ContractSignedsubjecttoCP:
+                case (int)invln_ExternalStatus.ContractSignedSubjecttoCP:
                     return "contract signed subject to cp";
-                case (int)invln_ExternalStatus.CPssatisfied:
+                case (int)invln_ExternalStatus.CPsSatisfied:
                     return "cps satisfied";
-                case (int)invln_ExternalStatus.Loanavailable:
+                case (int)invln_ExternalStatus.LoanAvailable:
                     return "loan available";
-                case (int)invln_ExternalStatus.Holdrequested:
+                case (int)invln_ExternalStatus.HoldRequested:
                     return "hold requested";
-                case (int)invln_ExternalStatus.Onhold:
+                case (int)invln_ExternalStatus.OnHold:
                     return "on hold";
-                case (int)invln_ExternalStatus.Referredbacktoapplicant:
+                case (int)invln_ExternalStatus.ReferredBacktoApplicant:
                     return "referred back to applicant";
-                case (int)invln_ExternalStatus.Inactive:
+                case (int)invln_ExternalStatus.NA:
                     return "inactive";
                 case (int)invln_ExternalStatus.Withdrawn:
                     return "withdrawn";
-                case (int)invln_ExternalStatus.Notapproved:
+                case (int)invln_ExternalStatus.Sentforapproval:
                     return "not approved";
-                case (int)invln_ExternalStatus.Applicationdeclined:
+                case (int)invln_ExternalStatus.ApplicationDeclined:
                     return "application declined";
                 case (int)invln_ExternalStatus.Approvedsubjecttocontract:
                     return "approved subject to contract";
