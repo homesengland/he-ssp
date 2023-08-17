@@ -75,17 +75,14 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
         public void ChangeLoanApplicationStatusOnOwnerChange(invln_Loanapplication target, invln_Loanapplication preImage, invln_Loanapplication postImage)
         {
-            if (preImage?.StatusCode.Value != postImage?.StatusCode.Value)
+            if (preImage?.StatusCode.Value == (int)invln_Loanapplication_StatusCode.ApplicationSubmitted && preImage.OwnerId.Id != postImage.OwnerId.Id)
             {
-                if (preImage?.StatusCode.Value == (int)invln_Loanapplication_StatusCode.ApplicationSubmitted)
+                loanApplicationRepository.Update(new invln_Loanapplication()
                 {
-                    loanApplicationRepository.Update(new invln_Loanapplication()
-                    {
-                        Id = target.Id,
-                        invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Underreview),
-                        StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Underreview)
-                    });
-                }
+                    Id = target.Id,
+                    invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Underreview),
+                    StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Underreview)
+                });
             }
         }
 
