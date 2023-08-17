@@ -14,7 +14,7 @@ namespace HE.CRM.Common.DtoMapping
             {
                 invln_NumberofSites = ParseInt(loanApplicationDto.numberOfSites),
                 invln_FundingReason = MapFundingReason(loanApplicationDto.fundingReason),
-                invln_ExternalStatus = MapApplicationExternalStatus(loanApplicationDto.loanApplicationStatus),
+                //invln_ExternalStatus = MapApplicationExternalStatus(loanApplicationDto.loanApplicationStatus),
 
                 //COMPANY
                 invln_CompanyPurpose = ParseBool(loanApplicationDto.companyPurpose), //Purpose
@@ -41,13 +41,24 @@ namespace HE.CRM.Common.DtoMapping
                 invln_Confirmationdirectorloanscanbesubordinated = ParseBool(loanApplicationDto.confirmationDirectorLoansCanBeSubordinated), //DirLoansSub
                 invln_Reasonfordirectorloannotsubordinated = loanApplicationDto.reasonForDirectorLoanNotSubordinated, //DirLoansSub
 
+                //SECTIONS STATUSES
+                invln_companystructureandexperiencecompletionst = MapNullableIntToOptionSetValue(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus),
+                invln_fundingdetailscompletionstatus = MapNullableIntToOptionSetValue(loanApplicationDto.FundingDetailsCompletionStatus),
+                invln_securitydetailscompletionstatus = MapNullableIntToOptionSetValue(loanApplicationDto.SecurityDetailsCompletionStatus),
+                invln_sitedetailscompletionstatus = MapNullableIntToOptionSetValue(loanApplicationDto.SiteDetailsCompletionStatus),
+
                 //OTHER ATTRIBUTES
                 //CHANGE IN STATUS ONLY VIA STATUS CHANGE ENDPOINT
 
                 //OTHER maybe not related
                 invln_Name = loanApplicationDto.name,
-                invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference("account", accountid) : null, //pusty account?
+                invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference(Account.EntityLogicalName, accountid) : null, //pusty account?
             };
+
+            if (loanApplicationDto.loanApplicationExternalStatus.HasValue)
+            {
+                loanApplication.invln_ExternalStatus = new OptionSetValue(loanApplicationDto.loanApplicationExternalStatus.Value);
+            }
 
             if(contact != null)
             {
@@ -68,7 +79,6 @@ namespace HE.CRM.Common.DtoMapping
             {
                 fundingReason = MapFundingReasonOptionSetToString(loanApplication.invln_FundingReason),
                 numberOfSites = loanApplication.invln_NumberofSites?.ToString(),
-                loanApplicationStatus = MapApplicationStatusFromDtoToRegular(loanApplication.invln_ExternalStatus),
 
                 //company
                 companyPurpose = loanApplication.invln_CompanyPurpose?.ToString(),
@@ -96,6 +106,12 @@ namespace HE.CRM.Common.DtoMapping
                 //SITE DETAILS
                 siteDetailsList = siteDetailsDtoList,
 
+                //SECTIONS COMPLETION STATUS
+                CompanyStructureAndExperienceCompletionStatus = loanApplication.invln_companystructureandexperiencecompletionst?.Value,
+                FundingDetailsCompletionStatus = loanApplication.invln_fundingdetailscompletionstatus?.Value,
+                SecurityDetailsCompletionStatus = loanApplication.invln_securitydetailscompletionstatus?.Value,
+                SiteDetailsCompletionStatus = loanApplication.invln_sitedetailscompletionstatus?.Value,
+
                 //OTHRER ATTRIBUTES
                 LastModificationOn = loanApplication.ModifiedOn,
                 loanApplicationExternalStatus = loanApplication.invln_ExternalStatus?.Value,
@@ -121,6 +137,15 @@ namespace HE.CRM.Common.DtoMapping
             }
 
             return loanApplicationDto;
+        }
+
+        public static OptionSetValue MapNullableIntToOptionSetValue(int? valueToMap)
+        {
+            if(valueToMap.HasValue)
+            {
+                return new OptionSetValue(valueToMap.Value);
+            }
+            return null;
         }
 
         public static string MapFundingReasonOptionSetToString(OptionSetValue fundingReason)

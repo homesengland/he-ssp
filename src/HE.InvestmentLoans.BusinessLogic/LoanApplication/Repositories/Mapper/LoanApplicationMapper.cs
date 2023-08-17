@@ -17,6 +17,7 @@ public static class LoanApplicationMapper
             Funding = MapToFundingViewModel(loanApplicationDto),
             Security = MapToSecurityViewModel(loanApplicationDto),
             Account = MapToAccountDetailsViewModel(loanApplicationDto),
+            ReferenceNumber = loanApplicationDto.name,
         };
     }
 

@@ -5,6 +5,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.CRM.Model;
@@ -13,7 +14,7 @@ using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 
-public class LoanApplicationRepository : ILoanApplicationRepository
+public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitLoanApplication
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
@@ -40,10 +41,32 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         var loanApplicationDto = JsonSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                         ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
 
-        return new LoanApplicationEntity(id, userAccount)
+        var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
+
+        return new LoanApplicationEntity(id, userAccount, externalStatus)
         {
             LegacyModel = LoanApplicationMapper.Map(loanApplicationDto),
         };
+    }
+
+    public async Task<UserLoanApplication> GetLoanApplicationSubmit(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var req = new invln_getsingleloanapplicationforaccountandcontactRequest
+        {
+            invln_accountid = userAccount.AccountId.ToString(),
+            invln_externalcontactid = userAccount.UserGlobalId,
+            invln_loanapplicationid = id.ToString(),
+        };
+
+        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
+                       ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
+
+        var loanApplicationDto = JsonSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
+                        ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
+
+        var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
+
+        return new UserLoanApplication(id, loanApplicationDto.name, externalStatus, null);
     }
 
     public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount, CancellationToken cancellationToken)
@@ -64,7 +87,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             new UserLoanApplication(
                 LoanApplicationId.From(x.loanApplicationId),
                 x.name,
-                ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationStatus),
+                ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
                 x.LastModificationOn)).ToList();
     }
 
@@ -164,6 +187,19 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         var newLoanApplicationId = LoanApplicationId.From(response.invln_loanapplicationid);
         loanApplication.SetId(newLoanApplicationId);
         LegacySave(loanApplication.LegacyModel);
+    }
+
+    public async Task Submit(LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
+    {
+        var crmSubmitStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Submitted);
+
+        var request = new invln_changeloanapplicationexternalstatusRequest
+        {
+            invln_loanapplicationid = loanApplicationId.ToString(),
+            invln_statusexternal = crmSubmitStatus,
+        };
+
+        await _serviceClient.ExecuteAsync(request, cancellationToken);
     }
 
     public void LegacySave(LoanApplicationViewModel legacyModel)

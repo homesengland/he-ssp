@@ -1,11 +1,11 @@
 using FluentValidation;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.User;
@@ -109,7 +109,7 @@ public class LoanApplicationV2Controller : Controller
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        return View("TaskList", response.ViewModel);
+        return View("TaskList", response.LoanApplication.LegacyModel);
     }
 
     [HttpGet("check/{id}")]
@@ -117,15 +117,13 @@ public class LoanApplicationV2Controller : Controller
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        return View("CheckApplication", response.ViewModel);
+        return View("CheckApplication", response.LoanApplication.LegacyModel);
     }
 
     [HttpPost("submit/{id}")]
     public async Task<IActionResult> Submit(Guid id)
     {
-        var application = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
-
-        await _mediator.Send(new SubmitApplicationCommand(application.ViewModel));
+        await _mediator.Send(new SubmitLoanApplicationCommand(LoanApplicationId.From(id)));
 
         return RedirectToAction(nameof(ApplicationSubmitted), new { Id = id });
     }
@@ -133,9 +131,9 @@ public class LoanApplicationV2Controller : Controller
     [HttpGet("submitted/{id}")]
     public async Task<IActionResult> ApplicationSubmitted(Guid id)
     {
-        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetSubmitLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        return View("ApplicationSubmitted", response.ViewModel);
+        return View("ApplicationSubmitted", response.LoanApplication);
     }
 
     [HttpGet("back")]

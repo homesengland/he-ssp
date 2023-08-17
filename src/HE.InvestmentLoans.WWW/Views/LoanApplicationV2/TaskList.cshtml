@@ -1,4 +1,4 @@
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel;
 @using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 @using HE.InvestmentLoans.WWW.Controllers
 @using HE.InvestmentLoans.BusinessLogic.ViewModel
@@ -12,7 +12,7 @@
 }
 
 
-<gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.ID })" text="Back to account homepage" class="govuk-!-margin-bottom-8"></gds-back-link>
+<gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.ID })" text="Back to account homepage" class="govuk-grid-column-full"></gds-back-link>
 
 @await Html.PartialAsync("_DeleteNotification")
 
@@ -166,9 +166,9 @@
             </button>
         }
     </div>
-    <gds-link href="@Url.Action("Index","LoanApplication", new {id = Model.ID})">
+    <gds-link href="@Url.Action("ReportProblem","LoanApplication", new {id = Model.ID})">
         Report a problem with this page
-        <gds-span-visually-hidden> @Url.Action("Index","LoanApplication", new {id = Model.ID})</gds-span-visually-hidden>
+        <gds-span-visually-hidden> @Url.Action("ReportProblem","LoanApplication", new {id = Model.ID})</gds-span-visually-hidden>
     </gds-link>
 </gds-div-grid-column-two-thirds>
 

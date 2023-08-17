@@ -5,7 +5,7 @@
       "actions": "invln_sendinvestmentloansdatatocrm,invln_getcontactrole,invln_changeloanapplicationexternalstatus,invln_generaterichtextdocument,invln_getloanapplicationsforaccountandcontact,invln_getsingleloanapplicationforaccountandcontact,invln_organizationdetails,invln_deleteloanapplication,invln_deletesitedetails,invln_updatesingleloanapplication,invln_updatesinglesitedetails,invln_getorganizationdetails",
       "generateOptionsetEnums": "true",
       "generateStateEnums": "true",
-      "generateGlobalOptionsets": false,
+      "generateGlobalOptionsets": true,
       "filename": "Model\\XrmSvc.cs",
       "classNamespace": "HE.InvestmentLoans.CRM.Model",
       "serviceContextName": "XrmSvc",

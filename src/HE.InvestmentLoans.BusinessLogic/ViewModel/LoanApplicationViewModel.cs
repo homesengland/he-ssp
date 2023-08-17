@@ -46,6 +46,8 @@ public class LoanApplicationViewModel
 
     public bool GoodChangeMode { get; set; }
 
+    public string ReferenceNumber { get; set; }
+
     public SiteViewModel AddNewSite()
     {
         const string newProjectName = "New project";

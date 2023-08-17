@@ -33,12 +33,6 @@ namespace DataverseModel
 		Attachment = 1001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Case = 112,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Competitor = 123,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CompetitorAddress = 1004,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -82,9 +76,6 @@ namespace DataverseModel
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		IncidentKnowledgeBaseRecord = 9931,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Invoice = 1090,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		InvoiceProduct = 1091,
@@ -144,28 +135,16 @@ namespace DataverseModel
 		LeadProduct = 27,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		LeadToOpportunitySalesProcess = 954,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
 		LoanApplicationBPF = 10998,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Note = 5,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Opportunity = 3,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
 		OpportunityCompetitors = 25,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		OpportunityProduct = 1083,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		OpportunitySalesProcess = 953,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Order = 1088,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		OrderProduct = 1089,
@@ -178,9 +157,6 @@ namespace DataverseModel
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Partner = 1,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		PhoneToCaseProcess = 952,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PriceList = 1022,
@@ -208,12 +184,6 @@ namespace DataverseModel
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Queue = 2020,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		QueueItem = 2029,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Quote = 1084,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		QuoteProduct = 1085,

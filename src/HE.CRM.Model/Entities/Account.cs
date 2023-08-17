@@ -706,14 +706,20 @@ namespace DataverseModel
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string IndustryCode = "industrycode";
 			public const string invln_account_invln_contactwebrole_Accountid = "invln_account_invln_contactwebrole_Accountid";
+			public const string invln_addressverificationtype = "invln_addressverificationtype";
 			public const string invln_CreditRatingAgency = "invln_creditratingagency";
 			public const string invln_CurrentCRR = "invln_currentcrr";
+			public const string invln_dateapproved = "invln_dateapproved";
+			public const string invln_datedueforrenewal = "invln_datedueforrenewal";
 			public const string invln_DateofCRRassessment = "invln_dateofcrrassessment";
 			public const string invln_externalcreditrating = "invln_externalcreditrating";
+			public const string invln_idverificationtype = "invln_idverificationtype";
 			public const string invln_loanapplication_account = "invln_loanapplication_account";
 			public const string invln_OriginalCRR = "invln_originalcrr";
 			public const string invln_OtherCreditRatingAgency = "invln_othercreditratingagency";
+			public const string invln_pepincluded = "invln_pepincluded";
 			public const string invln_PreviousCRR = "invln_previouscrr";
+			public const string invln_rating = "invln_rating";
 			public const string LastOnHoldTime = "lastonholdtime";
 			public const string LastUsedInCampaign = "lastusedincampaign";
 			public const string MarketCap = "marketcap";
@@ -3076,6 +3082,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_addressverificationtype")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_addressverificationtype
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_addressverificationtype");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_addressverificationtype");
+				this.SetAttributeValue("invln_addressverificationtype", value);
+				this.OnPropertyChanged("invln_addressverificationtype");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_creditratingagency")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_CreditRatingAgency
 		{
@@ -3107,6 +3130,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_CurrentCRR");
 				this.SetAttributeValue("invln_currentcrr", value);
 				this.OnPropertyChanged("invln_CurrentCRR");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_dateapproved")]
+		public System.Nullable<System.DateTime> invln_dateapproved
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_dateapproved");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_dateapproved");
+				this.SetAttributeValue("invln_dateapproved", value);
+				this.OnPropertyChanged("invln_dateapproved");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datedueforrenewal")]
+		public System.Nullable<System.DateTime> invln_datedueforrenewal
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datedueforrenewal");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_datedueforrenewal");
+				this.SetAttributeValue("invln_datedueforrenewal", value);
+				this.OnPropertyChanged("invln_datedueforrenewal");
 			}
 		}
 		
@@ -3144,6 +3201,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_idverificationtype")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_idverificationtype
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_idverificationtype");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_idverificationtype");
+				this.SetAttributeValue("invln_idverificationtype", value);
+				this.OnPropertyChanged("invln_idverificationtype");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_originalcrr")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_OriginalCRR
 		{
@@ -3178,6 +3252,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_pepincluded")]
+		public System.Nullable<bool> invln_pepincluded
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_pepincluded");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_pepincluded");
+				this.SetAttributeValue("invln_pepincluded", value);
+				this.OnPropertyChanged("invln_pepincluded");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_previouscrr")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_PreviousCRR
 		{
@@ -3192,6 +3283,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_PreviousCRR");
 				this.SetAttributeValue("invln_previouscrr", value);
 				this.OnPropertyChanged("invln_PreviousCRR");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_rating")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_rating
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_rating");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_rating");
+				this.SetAttributeValue("invln_rating", value);
+				this.OnPropertyChanged("invln_rating");
 			}
 		}
 		
