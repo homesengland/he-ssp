@@ -24,6 +24,6 @@ public class SubmitLoanApplicationCommandHandler : IRequestHandler<SubmitLoanApp
         var loanApplication = await _loanApplicationRepository
                                 .GetLoanApplication(request.LoanApplicationId, await _loanUserContext.GetSelectedAccount(), cancellationToken);
 
-        loanApplication.Submit(_canSubmitLoanApplication, cancellationToken);
+        await loanApplication.Submit(_canSubmitLoanApplication, cancellationToken);
     }
 }
