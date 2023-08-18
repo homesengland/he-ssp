@@ -145,4 +145,10 @@ public class CompanyStructureV2Controller : Controller
 
         return RedirectToAction("TaskList", "LoanApplicationV2", new { id });
     }
+
+    [HttpGet("back")]
+    public IActionResult Back(Guid id, CompanyStructureState currentPage)
+    {
+        return RedirectToAction("Purpose", new { id });
+    }
 }

@@ -8,8 +8,9 @@
 }
 <gds-div-grid-column-two-thirds>
     <form asp-controller="CompanyStructureV2" asp-action="CheckAnswersPost" asp-route-id="@Model.LoanApplicationId" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("GoBack","CompanyStructure", new {id = Model.LoanApplicationId})" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back","CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.CheckAnswers})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
+
 
         <partial name="_ErrorSummaryPartial" model="null" />
 
