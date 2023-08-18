@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 
-public record ProvideHowManyHomesBuiltCommand(LoanApplicationId LoanApplicationId, HomesBuilt HomesBuilt) : IRequest;
+public record ProvideHowManyHomesBuiltCommand(LoanApplicationId LoanApplicationId, HomesBuilt? HomesBuilt) : IRequest;

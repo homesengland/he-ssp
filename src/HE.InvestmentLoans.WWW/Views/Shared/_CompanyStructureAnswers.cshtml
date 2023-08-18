@@ -4,23 +4,23 @@
 }
 <gds-summary-list class="govuk-!-margin-bottom-9">
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-    {
-        { "Title", "Company established for this development" },
-        { "Value", Model.Purpose },
-         { "Link", Url.Action("Change","CompanyStructure", new {id = id,  state = "Purpose" }) }
+           {
+               { "Title", "Company established for this development" },
+               { "Value", Model.Purpose },
+               { "Link", Url.Action("Purpose","CompanyStructureV2", new { id,  state = "Purpose" }) }
     })
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
         { "Title", "Additional information" },
         { "Value", Model.ExistingCompany },
-        { "Link", Url.Action("Change","CompanyStructure", new {id = id,  state = "ExistingCompany" }) }
+        { "Link", Url.Action("MoreInformationAboutOrganization","CompanyStructureV2", new { id,  state = "ExistingCompany" }) }
     })
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
         { "Title", "Homes in the last three years" },
         { "Value", Model.HomesBuilt },
-        { "Link", Url.Action("Change","CompanyStructure", new {id = id,  state = "HomesBuilt" }) }
+        { "Link", Url.Action("HowManyHomesBuilt","CompanyStructureV2", new { id,  state = "HomesBuilt" }) }
     })
 </gds-summary-list>

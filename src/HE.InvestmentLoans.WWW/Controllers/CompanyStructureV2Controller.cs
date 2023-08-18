@@ -1,6 +1,7 @@
 using System.Globalization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.QueryHandlers;
 using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
@@ -83,7 +84,7 @@ public class CompanyStructureV2Controller : Controller
         await _mediator.Send(
             new ProvideMoreInformationAboutOrganizationCommand(
                 LoanApplicationId.From(id),
-                CompanyStructureViewModelMapper.MapOrganisationMoreInformation(viewModel.ExistingCompanyInfo),
+                CompanyStructureViewModelMapper.MapOrganisationMoreInformation(viewModel.ExistingCompany),
                 CompanyStructureViewModelMapper.MapOrganisationMoreInformationFile(viewModel.CompanyInfoFileName, viewModel.CompanyInfoFile)),
             cancellationToken);
 
@@ -107,15 +108,41 @@ public class CompanyStructureV2Controller : Controller
             return View("HomesBuilt", viewModel);
         }
 
-        if (viewModel.HomesBuilt is not null)
+        await _mediator.Send(
+            new ProvideHowManyHomesBuiltCommand(
+                LoanApplicationId.From(id),
+                string.IsNullOrWhiteSpace(viewModel.HomesBuilt) ? null : new HomesBuilt(int.Parse(viewModel.HomesBuilt, CultureInfo.InvariantCulture))),
+            cancellationToken);
+
+        return RedirectToAction("CheckAnswers", new { id });
+    }
+
+    [HttpGet("check-answers")]
+    public async Task<IActionResult> CheckAnswers(Guid id, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)), cancellationToken);
+        return View("CheckAnswers", response.ViewModel);
+    }
+
+    [HttpPost("check-answers")]
+    public async Task<IActionResult> CheckAnswersPost(Guid id, CompanyStructureViewModel viewModel, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)), cancellationToken);
+        response.ViewModel.CheckAnswers = viewModel.CheckAnswers;
+        var validationResult = await _validator.ValidateAsync(response.ViewModel, opt => opt.IncludeRuleSets(CompanyStructureView.CheckAnswers), cancellationToken);
+        if (!validationResult.IsValid)
         {
-            await _mediator.Send(
-                new ProvideHowManyHomesBuiltCommand(
-                    LoanApplicationId.From(id),
-                    new HomesBuilt(int.Parse(viewModel.HomesBuilt, CultureInfo.InvariantCulture))),
-                cancellationToken);
+            validationResult.AddToModelState(ModelState);
+            return View("CheckAnswers", response.ViewModel);
         }
 
-        return View("HomesBuilt", viewModel);
+        await (viewModel.CheckAnswers switch
+        {
+            CommonResponse.Yes => _mediator.Send(new CompanyStructureSectionCommand(LoanApplicationId.From(id)), cancellationToken),
+            CommonResponse.No => _mediator.Send(new UnCompleteCompanyStructureSectionCommand(LoanApplicationId.From(id)), cancellationToken),
+            _ => Task.CompletedTask,
+        });
+
+        return RedirectToAction("TaskList", "LoanApplicationV2", new { id });
     }
 }

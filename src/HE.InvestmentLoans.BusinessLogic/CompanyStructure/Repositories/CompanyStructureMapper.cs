@@ -1,31 +1,56 @@
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 
 public static class CompanyStructureMapper
 {
-    public static CompanyPurpose? MapCompanyPurpose(string? companyPurpose)
+    public static CompanyPurpose? MapCompanyPurpose(bool? companyPurpose)
     {
-        if (string.IsNullOrEmpty(companyPurpose))
+        if (!companyPurpose.HasValue)
         {
             return null;
         }
 
-        return CompanyPurpose.New(companyPurpose.Equals(CommonResponse.Yes, StringComparison.OrdinalIgnoreCase));
+        return CompanyPurpose.New(companyPurpose.Value);
     }
 
-    public static string? MapCompanyPurpose(CompanyPurpose? companyPurpose)
+    public static bool? MapCompanyPurpose(CompanyPurpose? companyPurpose)
     {
         if (companyPurpose is null)
         {
             return null;
         }
 
-        return companyPurpose.IsSpv switch
+        return companyPurpose.IsSpv;
+    }
+
+    public static OrganisationMoreInformation? MapMoreInformation(string? moreInformation)
+    {
+        if (string.IsNullOrWhiteSpace(moreInformation))
         {
-            true => CommonResponse.Yes,
-            false => CommonResponse.No,
-        };
+            return null;
+        }
+
+        return new OrganisationMoreInformation(moreInformation);
+    }
+
+    public static OrganisationMoreInformationFile? MapMoreInformationFile(string? moreInformationFileName, byte[]? moreInformationFileContent)
+    {
+        if (string.IsNullOrWhiteSpace(moreInformationFileName) || moreInformationFileContent is null)
+        {
+            return null;
+        }
+
+        return new OrganisationMoreInformationFile(moreInformationFileName, moreInformationFileContent);
+    }
+
+    public static HomesBuilt? MapHomesBuild(int? homesBuild)
+    {
+        if (homesBuild is null)
+        {
+            return null;
+        }
+
+        return new HomesBuilt(homesBuild.Value);
     }
 }

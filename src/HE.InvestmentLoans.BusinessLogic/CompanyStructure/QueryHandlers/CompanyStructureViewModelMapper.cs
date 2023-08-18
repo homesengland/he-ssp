@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
@@ -13,6 +14,8 @@ public static class CompanyStructureViewModelMapper
             Purpose = MapCompanyPurpose(companyStructureEntity.Purpose),
             LoanApplicationId = companyStructureEntity.LoanApplicationId.Value,
             ExistingCompany = companyStructureEntity.MoreInformation?.Information,
+            HomesBuilt = companyStructureEntity.HomesBuilt?.ToString(),
+            CheckAnswers = companyStructureEntity.Status == SectionStatus.Completed ? CommonResponse.Yes : CommonResponse.No,
         };
     }
 

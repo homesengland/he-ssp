@@ -1,5 +1,6 @@
 using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Exceptions;
@@ -32,7 +33,13 @@ public class CompanyStructureRepository : ICompanyStructureRepository
         var loanApplicationDto = JsonSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                                  ?? throw new NotFoundException(nameof(CompanyStructureEntity), loanApplicationId.ToString());
 
-        return new CompanyStructureEntity(loanApplicationId, CompanyStructureMapper.MapCompanyPurpose(loanApplicationDto.companyPurpose));
+        return new CompanyStructureEntity(
+            loanApplicationId,
+            CompanyStructureMapper.MapCompanyPurpose(loanApplicationDto.companyPurpose),
+            CompanyStructureMapper.MapMoreInformation(loanApplicationDto.existingCompany),
+            CompanyStructureMapper.MapMoreInformationFile(null, null),
+            CompanyStructureMapper.MapHomesBuild(loanApplicationDto.companyExperience),
+            SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus));
     }
 
     public async Task SaveAsync(CompanyStructureEntity companyStructure, UserAccount userAccount, CancellationToken cancellationToken)
@@ -40,8 +47,9 @@ public class CompanyStructureRepository : ICompanyStructureRepository
         var loanApplicationDto = new LoanApplicationDto
         {
             companyPurpose = CompanyStructureMapper.MapCompanyPurpose(companyStructure.Purpose),
-            companyStructureInformation = companyStructure.MoreInformation?.Information,
+            existingCompany = companyStructure.MoreInformation?.Information,
             companyExperience = companyStructure.HomesBuilt?.Value,
+            CompanyStructureAndExperienceCompletionStatus = SectionStatusMapper.Map(companyStructure.Status),
         };
 
         var loanApplicationSerialized = JsonSerializer.Serialize(loanApplicationDto);
@@ -51,7 +59,10 @@ public class CompanyStructureRepository : ICompanyStructureRepository
             invln_loanapplicationid = companyStructure.LoanApplicationId.Value.ToString(),
             invln_accountid = userAccount.AccountId.ToString(),
             invln_contactexternalid = userAccount.UserGlobalId,
-            invln_fieldstoupdate = $"{nameof(invln_Loanapplication.invln_CompanyPurpose).ToLowerInvariant()},{nameof(invln_Loanapplication.invln_Companystructureinformation).ToLowerInvariant()}",
+            invln_fieldstoupdate = $"{nameof(invln_Loanapplication.invln_CompanyPurpose).ToLowerInvariant()}," +
+                                   $"{nameof(invln_Loanapplication.invln_Companystructureinformation).ToLowerInvariant()}," +
+                                   $"invln_companystructureandexperiencecompletionst," +
+                                   $"{nameof(invln_Loanapplication.invln_CompanyExperience).ToLowerInvariant()}",
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
