@@ -18,6 +18,7 @@ invln_getorganizationdetails|
 invln_getsingleloanapplicationforaccountandcontact|
 invln_gettemporaryportaldata|
 invln_savetemporaryportaldata|
+invln_searchorganizationbynameandcompanyhousename|
 invln_sendinvestmentloansdatatocrm|
 invln_updatesingleloanapplication|
 invln_updatesinglesitedetails</ActionsWhitelist>

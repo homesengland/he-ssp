@@ -6,6 +6,7 @@ using Microsoft.Xrm.Sdk;
 using System;
 using Microsoft.Xrm.Sdk.Client;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace HE.CRM.Common.Repositories.Implementations
 {
@@ -50,6 +51,15 @@ namespace HE.CRM.Common.Repositories.Implementations
             {
                 return ctx.CreateQuery<Account>()
                     .Where(x => x.Id == accountId).AsEnumerable().Any();
+            }
+        }
+
+        public List<Account> GetAccountsByOrganizationNameAndCompanyHouseName(string organizationName, string companyHouseName)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<Account>()
+                    .Where(x => x.Name == organizationName && x.he_CompaniesHouseNumber == companyHouseName).AsEnumerable().ToList();
             }
         }
 

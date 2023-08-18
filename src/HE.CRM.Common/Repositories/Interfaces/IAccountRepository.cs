@@ -13,5 +13,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         Account GetDefaultAccount();
         Account RetrieveAccountById(EntityReference accountId, ColumnSet columnSet = null);
         bool AccountWithGivenIdExists(Guid accountId);
+        List<Account> GetAccountsByOrganizationNameAndCompanyHouseName(string organizationName, string companyHouseName);
     }
 }

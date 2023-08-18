@@ -97,6 +97,11 @@ namespace HE.CRM.Plugins.Services.Accounts
             }
         }
 
+        public string SearchOrganizationByNameAndCompanyHouseName(string organizationName, string companyHouseName)
+        {
+            _accountRepository.GetAccountsByOrganizationNameAndCompanyHouseName(organizationName, companyHouseName);
+        }
+
         #endregion
 
         #region Private Methods
