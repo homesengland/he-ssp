@@ -6,6 +6,7 @@ using HE.CRM.Common.Repositories.interfaces;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,7 +121,10 @@ namespace HE.CRM.Plugins.Services.Contacts
         {
             if (!String.IsNullOrEmpty(contactExternalId))
             {
-                var retrievedContact =  contactRepository.GetContactViaExternalId(contactExternalId);
+                string[] fields = { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower(), nameof(Contact.EMailAddress1).ToLower(),
+                    nameof(Contact.Address1_Telephone1).ToLower(), nameof(Contact.invln_externalid).ToLower(), nameof(Contact.JobTitle).ToLower(), nameof(Contact.Address1_City).ToLower(),
+                    nameof(Contact.Address1_County).ToLower(), nameof(Contact.Address1_PostalCode).ToLower(), nameof(Contact.Address1_Country).ToLower() };
+                var retrievedContact =  contactRepository.GetContactViaExternalId(contactExternalId, fields);
                 if(retrievedContact != null)
                 {
                     var mappedContact = ContactDtoMapper.MapRegularEntityToContactDto(retrievedContact);
@@ -128,6 +132,21 @@ namespace HE.CRM.Plugins.Services.Contacts
                 }
             }
             return null;
+        }
+
+        public void UpdateUserProfile(string contactExternalId, string serializedContact)
+        {
+            if(!String.IsNullOrEmpty(serializedContact) && !String.IsNullOrEmpty(contactExternalId))
+            {
+                var retrievedContact = contactRepository.GetContactViaExternalId(contactExternalId);
+                if(retrievedContact!= null)
+                {
+                    var deserializedContact = JsonSerializer.Deserialize<ContactDto>(serializedContact);
+                    var contactToUpdate = ContactDtoMapper.MapContactDtoToRegularEntitry(deserializedContact);
+                    contactToUpdate.Id = retrievedContact.Id;
+                    contactRepository.Update(contactToUpdate);
+                }
+            }
         }
 
         #endregion

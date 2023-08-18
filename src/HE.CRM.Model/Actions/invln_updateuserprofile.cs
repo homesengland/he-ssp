@@ -21,6 +21,7 @@ namespace DataverseModel
 		public static class Fields
 		{
 			public const string invln_contactexternalid = "invln_contactexternalid";
+			public const string invln_contact = "invln_contact";
 		}
 		
 		public const string ActionLogicalName = "invln_updateuserprofile";
@@ -44,10 +45,30 @@ namespace DataverseModel
 			}
 		}
 		
+		public string invln_contact
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contact"))
+				{
+					return ((string)(this.Parameters["invln_contact"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contact"] = value;
+			}
+		}
+		
 		public invln_updateuserprofileRequest()
 		{
 			this.RequestName = "invln_updateuserprofile";
 			this.invln_contactexternalid = default(string);
+			this.invln_contact = default(string);
 		}
 	}
 	

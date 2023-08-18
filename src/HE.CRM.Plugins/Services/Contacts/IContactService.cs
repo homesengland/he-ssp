@@ -8,5 +8,6 @@ namespace HE.CRM.Plugins.Services.Contacts
 
         ContactRolesDto GetContactRoles(string email, string ssid, string portal);
         ContactDto GetUserProfile(string contactExternalId);
+        void UpdateUserProfile(string contactExternalId, string serializedContact);
     }
 }

@@ -35,7 +35,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    QuickTest(serviceClient);
+                    UserProfileTest(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -47,6 +47,27 @@ namespace HE.Xrm.ServiceClientExample
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
+        }
+
+        private static void UserProfileTest(ServiceClient serviceClient)
+        {
+            var req1 = new invln_returnuserprofileRequest()
+            {
+                invln_contactexternalid = "auth0|64a28c7fb67ed30b288d6ff8"
+            };
+
+            var resp1 = (invln_returnuserprofileResponse)serviceClient.Execute(req1);
+            var resp1Deserialized = JsonSerializer.Deserialize<ContactDto>(resp1.invln_userprofile);
+
+            resp1Deserialized.phoneNumber = "test custom api change";
+
+            var req2 = new invln_updateuserprofileRequest()
+            {
+                invln_contactexternalid = req1.invln_contactexternalid,
+                invln_contact = JsonSerializer.Serialize(resp1Deserialized),
+            };
+            serviceClient.Execute(req2);
+            Console.WriteLine("test end.");
         }
 
         private static void QuickTest(ServiceClient serviceClient)

@@ -16,7 +16,7 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     "HE.CRM.Plugins.Plugins.CustomApi.ReturnUserProfile: invln_returnuserprofile",
     1,
     IsolationModeEnum.Sandbox,
-    Id = "257390a9-1cc9-40af-977e-5bddf60fa55b")]
+    Id = "1be484ff-ab9b-4b0b-93c8-bebc330c4118")]
     public class ReturnUserProfilePlugin : PluginBase<DataverseContext>, IPlugin
     {
         public ReturnUserProfilePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
