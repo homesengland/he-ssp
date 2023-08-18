@@ -137,6 +137,7 @@
     <Compile Include="Handlers\CustomApi\SendInvestmentsLoanDataToCrmHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleLoanApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleSiteDetailsHandler.cs" />
+    <Compile Include="Handlers\LoanApplications\ChangeApplicationStatusOnOwnerChangeHandler.cs" />
     <Compile Include="Models\AzureAdToken.cs" />
     <Compile Include="Plugins\Accounts\GenerateRandomAccountNameSamplePlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeLoanApplicationExternalStatusPlugin.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Plugins\CustomApi\UpdateSingleLoanApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateSingleSiteDetailsPlugin.cs" />
     <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />
+    <Compile Include="Plugins\LoanApplications\ChangeApplicationStatusOnOwnerChangePlugin.cs" />
     <Compile Include="Services\Accounts\AccountService.cs" />
     <Compile Include="Services\Accounts\IAccountService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
