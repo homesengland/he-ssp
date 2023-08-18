@@ -641,46 +641,61 @@ namespace HE.InvestmentLoans.CRM.Model
 		Draft = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Submitted = 858110001,
+		ApplicationSubmitted = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Underreview = 858110002,
+		ApplicationunderReview = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Induediligence = 858110003,
+		Withdrawn = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ContractSignedsubjecttoCP = 858110004,
+		HoldRequested = 858110004,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CPssatisfied = 858110006,
+		OnHold = 858110005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Loanavailable = 858110007,
+		Cashflowrequested = 858110006,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Holdrequested = 858110008,
+		Cashflowunderreview = 858110007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Onhold = 858110009,
+		ReferredBacktoApplicant = 858110008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Referredbacktoapplicant = 858110010,
+		Underreview = 858110009,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Inactive = 858110011,
+		Sentforapproval = 858110010,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Withdrawn = 858110012,
+		Approvedsubjecttoduediligence = 858110011,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Notapproved = 858110013,
+		ApplicationDeclined = 858110012,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Applicationdeclined = 858110014,
+		InDueDiligence = 858110013,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Approvedsubjecttocontract = 858110015,
+		Approvedsubjecttocontract = 858110014,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ContractSignedSubjecttoCP = 858110015,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CPsSatisfied = 858110016,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LoanAvailable = 858110017,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		New = 858110018,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NA = 858110019,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -783,6 +798,21 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		VotersrollresearchundertakenbyCDDteam_UKresidentsonlyandsubjecttowrittenconsentfromtheindividual = 858110008,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_sectioncompletionstatus
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Notstarted = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inprogress = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Completed = 858110002,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -1545,6 +1575,147 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		DirectUser_BasicaccesslevelandTeamprivileges = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum powerpagelanguages
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Arabic = 1025,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BasqueBasque = 1069,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BulgarianBulgaria = 1026,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CatalanCatalan = 1027,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ChineseChina = 2052,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ChineseHongKongSAR = 3076,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ChineseTraditional = 1028,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CroatianCroatia = 1050,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CzechCzechRepublic = 1029,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DanishDenmark = 1030,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DutchNetherlands = 1043,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		English = 1033,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		EstonianEstonia = 1061,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FinnishFinland = 1035,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FrenchFrance = 1036,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		GalicianSpain = 1110,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		GermanGermany = 1031,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		GreekGreece = 1032,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Hebrew = 1037,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HindiIndia = 1081,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HungarianHungary = 1038,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		IndonesianIndonesia = 1057,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ItalianItaly = 1040,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		JapaneseJapan = 1041,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		KazakhKazakhstan = 1087,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		KoreanKorea = 1042,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LatvianLatvia = 1062,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LithuanianLithuania = 1063,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		MalayMalaysia = 1086,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Norwegian_BokmlNorway = 1044,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PolishPoland = 1045,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PortugueseBrazil = 1046,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PortuguesePortugal = 2070,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RomanianRomania = 1048,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RussianRussia = 1049,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Serbian_CyrillicSerbia = 3098,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Serbian_LatinSerbia = 2074,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SlovakSlovakia = 1051,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SlovenianSlovenia = 1060,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Spanish_TraditionalSortSpain = 3082,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SwedishSweden = 1053,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ThaiThailand = 1054,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		TurkishTrkiye = 1055,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UkrainianUkraine = 1058,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		VietnameseVietnam = 1066,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -3094,6 +3265,99 @@ namespace HE.InvestmentLoans.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum powerpagecomponenttype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PublishingState = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WebPage = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WebFile = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WebLinkSet = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WebLink = 5,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PageTemplate = 6,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ContentSnippet = 7,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WebTemplate = 8,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SiteSetting = 9,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WebPageAccessControlRule = 10,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WebRole = 11,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WebsiteAccess = 12,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SiteMarker = 13,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BasicForm = 15,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BasicFormMetadata = 16,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		List = 17,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		TablePermission = 18,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AdvancedForm = 19,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AdvancedFormStep = 20,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AdvancedFormMetadata = 21,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PollPlacement = 24,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AdPlacement = 26,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BotConsumer = 27,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ColumnPermissionProfile = 28,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ColumnPermission = 29,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Redirect = 30,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PublishingStateTransitionRule = 31,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Shortcut = 32,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CloudFlow = 33,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum incidentupdateafterresolution
 	{
 		
@@ -4155,6 +4419,12 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CopilotTranscript = 10909,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InviteRedemption = 11008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PortalComment = 11009,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -4897,6 +5167,21 @@ namespace HE.InvestmentLoans.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum mspp_columnpermissionvalues
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Create = 746610000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Read = 746610001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Update = 746610002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum msdyn_dataversecomponenttype
 	{
 		
@@ -5403,6 +5688,12 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CopilotTranscript = 10909,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InviteRedemption = 11008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PortalComment = 11009,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -8973,6 +9264,78 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_createdbyipaddress")]
+		public string Adx_CreatedByIPAddress
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_createdbyipaddress");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_CreatedByIPAddress");
+				this.SetAttributeValue("adx_createdbyipaddress", value);
+				this.OnPropertyChanged("Adx_CreatedByIPAddress");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_createdbyusername")]
+		public string Adx_CreatedByUsername
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_createdbyusername");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_CreatedByUsername");
+				this.SetAttributeValue("adx_createdbyusername", value);
+				this.OnPropertyChanged("Adx_CreatedByUsername");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_modifiedbyipaddress")]
+		public string Adx_ModifiedByIPAddress
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_modifiedbyipaddress");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_ModifiedByIPAddress");
+				this.SetAttributeValue("adx_modifiedbyipaddress", value);
+				this.OnPropertyChanged("Adx_ModifiedByIPAddress");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_modifiedbyusername")]
+		public string Adx_ModifiedByUsername
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_modifiedbyusername");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_ModifiedByUsername");
+				this.SetAttributeValue("adx_modifiedbyusername", value);
+				this.OnPropertyChanged("Adx_ModifiedByUsername");
+			}
+		}
+		
+		/// <summary>
 		/// For system use only.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging30")]
@@ -10671,6 +11034,24 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
+		/// Unique identifier for Account associated with Account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
+		public Microsoft.Xrm.Sdk.EntityReference msa_managingpartnerid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("msa_managingpartnerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("msa_managingpartnerid");
+				this.SetAttributeValue("msa_managingpartnerid", value);
+				this.OnPropertyChanged("msa_managingpartnerid");
+			}
+		}
+		
+		/// <summary>
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_accountkpiid")]
@@ -11906,6 +12287,42 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
+		/// 1:N msa_account_managingpartner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Account> Referencedmsa_account_managingpartner
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedmsa_account_managingpartner");
+				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedmsa_account_managingpartner");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N msa_contact_managingpartner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_contact_managingpartner")]
+		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Contact> msa_contact_managingpartner
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("msa_contact_managingpartner", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("msa_contact_managingpartner");
+				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("msa_contact_managingpartner", null, value);
+				this.OnPropertyChanged("msa_contact_managingpartner");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 account_master_account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
@@ -11972,6 +12389,25 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanging("Referencinghe_account_account_UltimateParent");
 				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencinghe_account_account_UltimateParent");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 msa_account_managingpartner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public HE.InvestmentLoans.CRM.Model.Account Referencingmsa_account_managingpartner
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencingmsa_account_managingpartner");
+				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingmsa_account_managingpartner");
 			}
 		}
 	}
@@ -13837,6 +14273,510 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_confirmremovepassword")]
+		public System.Nullable<bool> adx_ConfirmRemovePassword
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_confirmremovepassword");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_ConfirmRemovePassword");
+				this.SetAttributeValue("adx_confirmremovepassword", value);
+				this.OnPropertyChanged("adx_ConfirmRemovePassword");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_createdbyipaddress")]
+		public string Adx_CreatedByIPAddress
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_createdbyipaddress");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_CreatedByIPAddress");
+				this.SetAttributeValue("adx_createdbyipaddress", value);
+				this.OnPropertyChanged("Adx_CreatedByIPAddress");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_createdbyusername")]
+		public string Adx_CreatedByUsername
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_createdbyusername");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_CreatedByUsername");
+				this.SetAttributeValue("adx_createdbyusername", value);
+				this.OnPropertyChanged("Adx_CreatedByUsername");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the current count of failed password attempts for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_accessfailedcount")]
+		public System.Nullable<int> adx_identity_accessfailedcount
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("adx_identity_accessfailedcount");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_accessfailedcount");
+				this.SetAttributeValue("adx_identity_accessfailedcount", value);
+				this.OnPropertyChanged("adx_identity_accessfailedcount");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if the email is confirmed by the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_emailaddress1confirmed")]
+		public System.Nullable<bool> adx_identity_emailaddress1confirmed
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_emailaddress1confirmed");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_emailaddress1confirmed");
+				this.SetAttributeValue("adx_identity_emailaddress1confirmed", value);
+				this.OnPropertyChanged("adx_identity_emailaddress1confirmed");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates the last date and time the user successfully signed in to a portal.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_lastsuccessfullogin")]
+		public System.Nullable<System.DateTime> adx_identity_lastsuccessfullogin
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_identity_lastsuccessfullogin");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_lastsuccessfullogin");
+				this.SetAttributeValue("adx_identity_lastsuccessfullogin", value);
+				this.OnPropertyChanged("adx_identity_lastsuccessfullogin");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates that the contact can no longer sign in to the portal using the local account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_locallogindisabled")]
+		public System.Nullable<bool> adx_identity_locallogindisabled
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_locallogindisabled");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_locallogindisabled");
+				this.SetAttributeValue("adx_identity_locallogindisabled", value);
+				this.OnPropertyChanged("adx_identity_locallogindisabled");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if this contact will track failed access attempts and become locked after too many failed attempts. To prevent the contact from becoming locked, you can disable this setting.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_lockoutenabled")]
+		public System.Nullable<bool> adx_identity_lockoutenabled
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_lockoutenabled");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_lockoutenabled");
+				this.SetAttributeValue("adx_identity_lockoutenabled", value);
+				this.OnPropertyChanged("adx_identity_lockoutenabled");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the moment in time when the locked contact becomes unlocked again.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_lockoutenddate")]
+		public System.Nullable<System.DateTime> adx_identity_lockoutenddate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_identity_lockoutenddate");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_lockoutenddate");
+				this.SetAttributeValue("adx_identity_lockoutenddate", value);
+				this.OnPropertyChanged("adx_identity_lockoutenddate");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if web authentication is enabled for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_logonenabled")]
+		public System.Nullable<bool> adx_identity_logonenabled
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_logonenabled");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_logonenabled");
+				this.SetAttributeValue("adx_identity_logonenabled", value);
+				this.OnPropertyChanged("adx_identity_logonenabled");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if the phone number is confirmed by the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_mobilephoneconfirmed")]
+		public System.Nullable<bool> adx_identity_mobilephoneconfirmed
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_mobilephoneconfirmed");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_mobilephoneconfirmed");
+				this.SetAttributeValue("adx_identity_mobilephoneconfirmed", value);
+				this.OnPropertyChanged("adx_identity_mobilephoneconfirmed");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_newpassword")]
+		public string adx_identity_newpassword
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_identity_newpassword");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_newpassword");
+				this.SetAttributeValue("adx_identity_newpassword", value);
+				this.OnPropertyChanged("adx_identity_newpassword");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_passwordhash")]
+		public string adx_identity_passwordhash
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_identity_passwordhash");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_passwordhash");
+				this.SetAttributeValue("adx_identity_passwordhash", value);
+				this.OnPropertyChanged("adx_identity_passwordhash");
+			}
+		}
+		
+		/// <summary>
+		/// A token used to manage the web authentication session.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_securitystamp")]
+		public string adx_identity_securitystamp
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_identity_securitystamp");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_securitystamp");
+				this.SetAttributeValue("adx_identity_securitystamp", value);
+				this.OnPropertyChanged("adx_identity_securitystamp");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if two-factor authentication is enabled for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_twofactorenabled")]
+		public System.Nullable<bool> adx_identity_twofactorenabled
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_twofactorenabled");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_twofactorenabled");
+				this.SetAttributeValue("adx_identity_twofactorenabled", value);
+				this.OnPropertyChanged("adx_identity_twofactorenabled");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the user identity for local web authentication.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_username")]
+		public string adx_identity_username
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_identity_username");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_username");
+				this.SetAttributeValue("adx_identity_username", value);
+				this.OnPropertyChanged("adx_identity_username");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_modifiedbyipaddress")]
+		public string Adx_ModifiedByIPAddress
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_modifiedbyipaddress");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_ModifiedByIPAddress");
+				this.SetAttributeValue("adx_modifiedbyipaddress", value);
+				this.OnPropertyChanged("Adx_ModifiedByIPAddress");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_modifiedbyusername")]
+		public string Adx_ModifiedByUsername
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_modifiedbyusername");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_ModifiedByUsername");
+				this.SetAttributeValue("adx_modifiedbyusername", value);
+				this.OnPropertyChanged("Adx_ModifiedByUsername");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_organizationname")]
+		public string Adx_OrganizationName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_organizationname");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_OrganizationName");
+				this.SetAttributeValue("adx_organizationname", value);
+				this.OnPropertyChanged("Adx_OrganizationName");
+			}
+		}
+		
+		/// <summary>
+		/// User’s preferred portal LCID
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_preferredlcid")]
+		public System.Nullable<int> adx_preferredlcid
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("adx_preferredlcid");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_preferredlcid");
+				this.SetAttributeValue("adx_preferredlcid", value);
+				this.OnPropertyChanged("adx_preferredlcid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilealert")]
+		public System.Nullable<bool> adx_profilealert
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_profilealert");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_profilealert");
+				this.SetAttributeValue("adx_profilealert", value);
+				this.OnPropertyChanged("adx_profilealert");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilealertdate")]
+		public System.Nullable<System.DateTime> adx_profilealertdate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_profilealertdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_profilealertdate");
+				this.SetAttributeValue("adx_profilealertdate", value);
+				this.OnPropertyChanged("adx_profilealertdate");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilealertinstructions")]
+		public string adx_profilealertinstructions
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_profilealertinstructions");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_profilealertinstructions");
+				this.SetAttributeValue("adx_profilealertinstructions", value);
+				this.OnPropertyChanged("adx_profilealertinstructions");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profileisanonymous")]
+		public System.Nullable<bool> Adx_ProfileIsAnonymous
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_profileisanonymous");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_ProfileIsAnonymous");
+				this.SetAttributeValue("adx_profileisanonymous", value);
+				this.OnPropertyChanged("Adx_ProfileIsAnonymous");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilelastactivity")]
+		public System.Nullable<System.DateTime> Adx_ProfileLastActivity
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_profilelastactivity");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_ProfileLastActivity");
+				this.SetAttributeValue("adx_profilelastactivity", value);
+				this.OnPropertyChanged("Adx_ProfileLastActivity");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilemodifiedon")]
+		public System.Nullable<System.DateTime> adx_profilemodifiedon
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_profilemodifiedon");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_profilemodifiedon");
+				this.SetAttributeValue("adx_profilemodifiedon", value);
+				this.OnPropertyChanged("adx_profilemodifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_publicprofilecopy")]
+		public string adx_PublicProfileCopy
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_publicprofilecopy");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_PublicProfileCopy");
+				this.SetAttributeValue("adx_publicprofilecopy", value);
+				this.OnPropertyChanged("adx_PublicProfileCopy");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_timezone")]
+		public System.Nullable<int> Adx_TimeZone
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("adx_timezone");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_TimeZone");
+				this.SetAttributeValue("adx_timezone", value);
+				this.OnPropertyChanged("Adx_TimeZone");
+			}
+		}
+		
+		/// <summary>
 		/// For system use only.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging30")]
@@ -15352,6 +16292,24 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
+		/// Unique identifier for Account associated with Contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
+		public Microsoft.Xrm.Sdk.EntityReference msa_managingpartnerid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("msa_managingpartnerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("msa_managingpartnerid");
+				this.SetAttributeValue("msa_managingpartnerid", value);
+				this.OnPropertyChanged("msa_managingpartnerid");
+			}
+		}
+		
+		/// <summary>
 		/// Maps to contact KPI records
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_contactkpiid")]
@@ -15403,6 +16361,24 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
+		/// Indicates that the contact has opted out of web tracking.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_disablewebtracking")]
+		public System.Nullable<bool> msdyn_disablewebtracking
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("msdyn_disablewebtracking");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_disablewebtracking");
+				this.SetAttributeValue("msdyn_disablewebtracking", value);
+				this.OnPropertyChanged("msdyn_disablewebtracking");
+			}
+		}
+		
+		/// <summary>
 		/// Describes whether contact is opted out or not
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_gdproptout")]
@@ -15439,6 +16415,42 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
+		/// Indicates that the contact is considered a minor in their jurisdiction.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_isminor")]
+		public System.Nullable<bool> msdyn_isminor
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("msdyn_isminor");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_isminor");
+				this.SetAttributeValue("msdyn_isminor", value);
+				this.OnPropertyChanged("msdyn_isminor");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates that the contact is considered a minor in their jurisdiction and has parental consent.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_isminorwithparentalconsent")]
+		public System.Nullable<bool> msdyn_isminorwithparentalconsent
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("msdyn_isminorwithparentalconsent");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_isminorwithparentalconsent");
+				this.SetAttributeValue("msdyn_isminorwithparentalconsent", value);
+				this.OnPropertyChanged("msdyn_isminorwithparentalconsent");
+			}
+		}
+		
+		/// <summary>
 		/// Whether or not the contact belongs to the associated account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_orgchangestatus")]
@@ -15468,6 +16480,24 @@ namespace HE.InvestmentLoans.CRM.Model
 					this.SetAttributeValue("msdyn_orgchangestatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
 				}
 				this.OnPropertyChanged("msdyn_orgchangestatus");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates the date and time that the person agreed to the portal terms and conditions.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_portaltermsagreementdate")]
+		public System.Nullable<System.DateTime> msdyn_portaltermsagreementdate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("msdyn_portaltermsagreementdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_portaltermsagreementdate");
+				this.SetAttributeValue("msdyn_portaltermsagreementdate", value);
+				this.OnPropertyChanged("msdyn_portaltermsagreementdate");
 			}
 		}
 		
@@ -15506,6 +16536,39 @@ namespace HE.InvestmentLoans.CRM.Model
 				{
 					return null;
 				}
+			}
+		}
+		
+		/// <summary>
+		/// User’s preferred portal language
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("mspp_userpreferredlcid")]
+		public System.Nullable<HE.InvestmentLoans.CRM.Model.powerpagelanguages> mspp_userpreferredlcid
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("mspp_userpreferredlcid");
+				if ((optionSet != null))
+				{
+					return ((HE.InvestmentLoans.CRM.Model.powerpagelanguages)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.powerpagelanguages), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("mspp_userpreferredlcid");
+				if ((value == null))
+				{
+					this.SetAttributeValue("mspp_userpreferredlcid", null);
+				}
+				else
+				{
+					this.SetAttributeValue("mspp_userpreferredlcid", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("mspp_userpreferredlcid");
 			}
 		}
 		
@@ -16598,6 +17661,25 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanged("Referencingcontact_parent_contact");
 			}
 		}
+		
+		/// <summary>
+		/// N:1 msa_contact_managingpartner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_contact_managingpartner")]
+		public HE.InvestmentLoans.CRM.Model.Account msa_contact_managingpartner
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("msa_contact_managingpartner", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("msa_contact_managingpartner");
+				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("msa_contact_managingpartner", null, value);
+				this.OnPropertyChanged("msa_contact_managingpartner");
+			}
+		}
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -16618,10 +17700,70 @@ namespace HE.InvestmentLoans.CRM.Model
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Active = 1,
+		Draft = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationSubmitted = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive858110002 = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationunderReview = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HoldRequested = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Withdrawn = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Cashflowrequested = 858110007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Cashflowunderreview = 858110008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OnHold = 858110006,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ReferredBacktoApplicant = 858110009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Underreview = 858110010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SentforApproval = 858110011,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotApproved = 858110012,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Approvedsubjecttoduediligence = 858110013,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationDeclined = 858110014,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Induediligence = 858110015,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SentforPreCompleteApproval = 858110016,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedSubjectToContract = 858110017,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AwaitingCPSatisfaction = 858110018,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CPsSatisfied = 858110019,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LoanAvailable = 858110020,
 	}
 	
 	/// <summary>
@@ -16864,6 +18006,39 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_companystructureandexperiencecompletionst")]
+		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus> invln_companystructureandexperiencecompletionst
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_companystructureandexperiencecompletionst");
+				if ((optionSet != null))
+				{
+					return ((HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_companystructureandexperiencecompletionst");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_companystructureandexperiencecompletionst", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_companystructureandexperiencecompletionst", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_companystructureandexperiencecompletionst");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_companystructureinformation")]
 		public string invln_Companystructureinformation
 		{
@@ -17035,6 +18210,39 @@ namespace HE.InvestmentLoans.CRM.Model
 					this.SetAttributeValue("invln_externalstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
 				}
 				this.OnPropertyChanged("invln_ExternalStatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundingdetailscompletionstatus")]
+		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus> invln_fundingdetailscompletionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_fundingdetailscompletionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_fundingdetailscompletionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_fundingdetailscompletionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_fundingdetailscompletionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_fundingdetailscompletionstatus");
 			}
 		}
 		
@@ -17623,6 +18831,72 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanging("invln_Region");
 				this.SetAttributeValue("invln_region", value);
 				this.OnPropertyChanged("invln_Region");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitydetailscompletionstatus")]
+		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus> invln_securitydetailscompletionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_securitydetailscompletionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_securitydetailscompletionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_securitydetailscompletionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_securitydetailscompletionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_securitydetailscompletionstatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sitedetailscompletionstatus")]
+		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus> invln_sitedetailscompletionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_sitedetailscompletionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetailscompletionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_sitedetailscompletionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_sitedetailscompletionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_sitedetailscompletionstatus");
 			}
 		}
 		

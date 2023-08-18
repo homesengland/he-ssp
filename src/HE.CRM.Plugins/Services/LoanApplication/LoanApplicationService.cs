@@ -73,6 +73,19 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return JsonSerializer.Serialize(entityCollection);
         }
 
+        public void ChangeLoanApplicationStatusOnOwnerChange(invln_Loanapplication target, invln_Loanapplication preImage, invln_Loanapplication postImage)
+        {
+            if (preImage?.StatusCode.Value == (int)invln_Loanapplication_StatusCode.ApplicationSubmitted && preImage.OwnerId.Id != postImage.OwnerId.Id)
+            {
+                loanApplicationRepository.Update(new invln_Loanapplication()
+                {
+                    Id = target.Id,
+                    invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Underreview),
+                    StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Underreview)
+                });
+            }
+        }
+
         public string CreateRecordFromPortal(string contactExternalId, string accountId, string loanApplicationId, string loanApplicationPayload)
         {
             this.TracingService.Trace("PAYLOAD:" + loanApplicationPayload);
@@ -107,7 +120,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
             this.TracingService.Trace("Setting up invln_Loanapplication");
             loanApplicationFromPortal.numberOfSites = numberOfSites.ToString();
-            //
 
             var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, loanApplicationContact, accountId);
             Guid loanApplicationGuid = Guid.NewGuid();
@@ -242,12 +254,12 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         {
             if (oldStatus != (int)invln_ExternalStatus.Draft)
             {
-                if (newStatus == (int)invln_ExternalStatus.Submitted || newStatus == (int)invln_ExternalStatus.Inactive)
+                if (newStatus == (int)invln_ExternalStatus.ApplicationSubmitted || newStatus == (int)invln_ExternalStatus.NA)
                 {
                     throw new ArgumentException("You can change status to Submitted or Inactive only when previous status was Draft");
                 }
             }
-            if (oldStatus != (int)invln_ExternalStatus.Submitted)
+            if (oldStatus != (int)invln_ExternalStatus.ApplicationSubmitted)
             {
                 if (newStatus == (int)invln_ExternalStatus.Withdrawn)
                 {

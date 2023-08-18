@@ -512,6 +512,34 @@ namespace DataverseModel
 			public const string Address3_Telephone3 = "address3_telephone3";
 			public const string Address3_UPSZone = "address3_upszone";
 			public const string Address3_UTCOffset = "address3_utcoffset";
+			public const string adx_ConfirmRemovePassword = "adx_confirmremovepassword";
+			public const string Adx_CreatedByIPAddress = "adx_createdbyipaddress";
+			public const string Adx_CreatedByUsername = "adx_createdbyusername";
+			public const string adx_identity_accessfailedcount = "adx_identity_accessfailedcount";
+			public const string adx_identity_emailaddress1confirmed = "adx_identity_emailaddress1confirmed";
+			public const string adx_identity_lastsuccessfullogin = "adx_identity_lastsuccessfullogin";
+			public const string adx_identity_locallogindisabled = "adx_identity_locallogindisabled";
+			public const string adx_identity_lockoutenabled = "adx_identity_lockoutenabled";
+			public const string adx_identity_lockoutenddate = "adx_identity_lockoutenddate";
+			public const string adx_identity_logonenabled = "adx_identity_logonenabled";
+			public const string adx_identity_mobilephoneconfirmed = "adx_identity_mobilephoneconfirmed";
+			public const string adx_identity_newpassword = "adx_identity_newpassword";
+			public const string adx_identity_passwordhash = "adx_identity_passwordhash";
+			public const string adx_identity_securitystamp = "adx_identity_securitystamp";
+			public const string adx_identity_twofactorenabled = "adx_identity_twofactorenabled";
+			public const string adx_identity_username = "adx_identity_username";
+			public const string Adx_ModifiedByIPAddress = "adx_modifiedbyipaddress";
+			public const string Adx_ModifiedByUsername = "adx_modifiedbyusername";
+			public const string Adx_OrganizationName = "adx_organizationname";
+			public const string adx_preferredlcid = "adx_preferredlcid";
+			public const string adx_profilealert = "adx_profilealert";
+			public const string adx_profilealertdate = "adx_profilealertdate";
+			public const string adx_profilealertinstructions = "adx_profilealertinstructions";
+			public const string Adx_ProfileIsAnonymous = "adx_profileisanonymous";
+			public const string Adx_ProfileLastActivity = "adx_profilelastactivity";
+			public const string adx_profilemodifiedon = "adx_profilemodifiedon";
+			public const string adx_PublicProfileCopy = "adx_publicprofilecopy";
+			public const string Adx_TimeZone = "adx_timezone";
 			public const string Aging30 = "aging30";
 			public const string Aging30_Base = "aging30_base";
 			public const string Aging60 = "aging60";
@@ -612,15 +640,23 @@ namespace DataverseModel
 			public const string ModifiedOn = "modifiedon";
 			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
 			public const string ModifiedOnBehalfByName = "modifiedonbehalfbyname";
+			public const string msa_contact_managingpartner = "msa_contact_managingpartner";
+			public const string msa_managingpartnerid = "msa_managingpartnerid";
+			public const string msa_managingpartneridName = "msa_managingpartneridname";
 			public const string msdyn_contactkpiid = "msdyn_contactkpiid";
 			public const string msdyn_contactkpiidName = "msdyn_contactkpiidname";
 			public const string msdyn_decisioninfluencetag = "msdyn_decisioninfluencetag";
+			public const string msdyn_disablewebtracking = "msdyn_disablewebtracking";
 			public const string msdyn_gdproptout = "msdyn_gdproptout";
 			public const string msdyn_isassistantinorgchart = "msdyn_isassistantinorgchart";
+			public const string msdyn_isminor = "msdyn_isminor";
+			public const string msdyn_isminorwithparentalconsent = "msdyn_isminorwithparentalconsent";
 			public const string msdyn_orgchangestatus = "msdyn_orgchangestatus";
+			public const string msdyn_portaltermsagreementdate = "msdyn_portaltermsagreementdate";
 			public const string msdyn_segmentid = "msdyn_segmentid";
 			public const string msdyn_segmentidName = "msdyn_segmentidname";
 			public const string msft_DataState = "msft_datastate";
+			public const string mspp_userpreferredlcid = "mspp_userpreferredlcid";
 			public const string NickName = "nickname";
 			public const string NumberOfChildren = "numberofchildren";
 			public const string OnHoldTime = "onholdtime";
@@ -2185,6 +2221,518 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_confirmremovepassword")]
+		public System.Nullable<bool> adx_ConfirmRemovePassword
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_confirmremovepassword");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_ConfirmRemovePassword");
+				this.SetAttributeValue("adx_confirmremovepassword", value);
+				this.OnPropertyChanged("adx_ConfirmRemovePassword");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_createdbyipaddress")]
+		public string Adx_CreatedByIPAddress
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_createdbyipaddress");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Adx_CreatedByIPAddress");
+				this.SetAttributeValue("adx_createdbyipaddress", value);
+				this.OnPropertyChanged("Adx_CreatedByIPAddress");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_createdbyusername")]
+		public string Adx_CreatedByUsername
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_createdbyusername");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Adx_CreatedByUsername");
+				this.SetAttributeValue("adx_createdbyusername", value);
+				this.OnPropertyChanged("Adx_CreatedByUsername");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the current count of failed password attempts for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_accessfailedcount")]
+		public System.Nullable<int> adx_identity_accessfailedcount
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("adx_identity_accessfailedcount");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_identity_accessfailedcount");
+				this.SetAttributeValue("adx_identity_accessfailedcount", value);
+				this.OnPropertyChanged("adx_identity_accessfailedcount");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if the email is confirmed by the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_emailaddress1confirmed")]
+		public System.Nullable<bool> adx_identity_emailaddress1confirmed
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_emailaddress1confirmed");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_identity_emailaddress1confirmed");
+				this.SetAttributeValue("adx_identity_emailaddress1confirmed", value);
+				this.OnPropertyChanged("adx_identity_emailaddress1confirmed");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates the last date and time the user successfully signed in to a portal.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_lastsuccessfullogin")]
+		public System.Nullable<System.DateTime> adx_identity_lastsuccessfullogin
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_identity_lastsuccessfullogin");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_identity_lastsuccessfullogin");
+				this.SetAttributeValue("adx_identity_lastsuccessfullogin", value);
+				this.OnPropertyChanged("adx_identity_lastsuccessfullogin");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates that the contact can no longer sign in to the portal using the local account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_locallogindisabled")]
+		public System.Nullable<bool> adx_identity_locallogindisabled
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_locallogindisabled");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_identity_locallogindisabled");
+				this.SetAttributeValue("adx_identity_locallogindisabled", value);
+				this.OnPropertyChanged("adx_identity_locallogindisabled");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if this contact will track failed access attempts and become locked after too many failed attempts. To prevent the contact from becoming locked, you can disable this setting.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_lockoutenabled")]
+		public System.Nullable<bool> adx_identity_lockoutenabled
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_lockoutenabled");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_identity_lockoutenabled");
+				this.SetAttributeValue("adx_identity_lockoutenabled", value);
+				this.OnPropertyChanged("adx_identity_lockoutenabled");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the moment in time when the locked contact becomes unlocked again.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_lockoutenddate")]
+		public System.Nullable<System.DateTime> adx_identity_lockoutenddate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_identity_lockoutenddate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_identity_lockoutenddate");
+				this.SetAttributeValue("adx_identity_lockoutenddate", value);
+				this.OnPropertyChanged("adx_identity_lockoutenddate");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if web authentication is enabled for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_logonenabled")]
+		public System.Nullable<bool> adx_identity_logonenabled
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_logonenabled");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_identity_logonenabled");
+				this.SetAttributeValue("adx_identity_logonenabled", value);
+				this.OnPropertyChanged("adx_identity_logonenabled");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if the phone number is confirmed by the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_mobilephoneconfirmed")]
+		public System.Nullable<bool> adx_identity_mobilephoneconfirmed
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_mobilephoneconfirmed");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_identity_mobilephoneconfirmed");
+				this.SetAttributeValue("adx_identity_mobilephoneconfirmed", value);
+				this.OnPropertyChanged("adx_identity_mobilephoneconfirmed");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_newpassword")]
+		public string adx_identity_newpassword
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_identity_newpassword");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_identity_newpassword");
+				this.SetAttributeValue("adx_identity_newpassword", value);
+				this.OnPropertyChanged("adx_identity_newpassword");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_passwordhash")]
+		public string adx_identity_passwordhash
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_identity_passwordhash");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_identity_passwordhash");
+				this.SetAttributeValue("adx_identity_passwordhash", value);
+				this.OnPropertyChanged("adx_identity_passwordhash");
+			}
+		}
+		
+		/// <summary>
+		/// A token used to manage the web authentication session.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_securitystamp")]
+		public string adx_identity_securitystamp
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_identity_securitystamp");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_identity_securitystamp");
+				this.SetAttributeValue("adx_identity_securitystamp", value);
+				this.OnPropertyChanged("adx_identity_securitystamp");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if two-factor authentication is enabled for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_twofactorenabled")]
+		public System.Nullable<bool> adx_identity_twofactorenabled
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_twofactorenabled");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_identity_twofactorenabled");
+				this.SetAttributeValue("adx_identity_twofactorenabled", value);
+				this.OnPropertyChanged("adx_identity_twofactorenabled");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the user identity for local web authentication.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_username")]
+		public string adx_identity_username
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_identity_username");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_identity_username");
+				this.SetAttributeValue("adx_identity_username", value);
+				this.OnPropertyChanged("adx_identity_username");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_modifiedbyipaddress")]
+		public string Adx_ModifiedByIPAddress
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_modifiedbyipaddress");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Adx_ModifiedByIPAddress");
+				this.SetAttributeValue("adx_modifiedbyipaddress", value);
+				this.OnPropertyChanged("Adx_ModifiedByIPAddress");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_modifiedbyusername")]
+		public string Adx_ModifiedByUsername
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_modifiedbyusername");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Adx_ModifiedByUsername");
+				this.SetAttributeValue("adx_modifiedbyusername", value);
+				this.OnPropertyChanged("Adx_ModifiedByUsername");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_organizationname")]
+		public string Adx_OrganizationName
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_organizationname");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Adx_OrganizationName");
+				this.SetAttributeValue("adx_organizationname", value);
+				this.OnPropertyChanged("Adx_OrganizationName");
+			}
+		}
+		
+		/// <summary>
+		/// User’s preferred portal LCID
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_preferredlcid")]
+		public System.Nullable<int> adx_preferredlcid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("adx_preferredlcid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_preferredlcid");
+				this.SetAttributeValue("adx_preferredlcid", value);
+				this.OnPropertyChanged("adx_preferredlcid");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilealert")]
+		public System.Nullable<bool> adx_profilealert
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_profilealert");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_profilealert");
+				this.SetAttributeValue("adx_profilealert", value);
+				this.OnPropertyChanged("adx_profilealert");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilealertdate")]
+		public System.Nullable<System.DateTime> adx_profilealertdate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_profilealertdate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_profilealertdate");
+				this.SetAttributeValue("adx_profilealertdate", value);
+				this.OnPropertyChanged("adx_profilealertdate");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilealertinstructions")]
+		public string adx_profilealertinstructions
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_profilealertinstructions");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_profilealertinstructions");
+				this.SetAttributeValue("adx_profilealertinstructions", value);
+				this.OnPropertyChanged("adx_profilealertinstructions");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profileisanonymous")]
+		public System.Nullable<bool> Adx_ProfileIsAnonymous
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_profileisanonymous");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Adx_ProfileIsAnonymous");
+				this.SetAttributeValue("adx_profileisanonymous", value);
+				this.OnPropertyChanged("Adx_ProfileIsAnonymous");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilelastactivity")]
+		public System.Nullable<System.DateTime> Adx_ProfileLastActivity
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_profilelastactivity");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Adx_ProfileLastActivity");
+				this.SetAttributeValue("adx_profilelastactivity", value);
+				this.OnPropertyChanged("Adx_ProfileLastActivity");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilemodifiedon")]
+		public System.Nullable<System.DateTime> adx_profilemodifiedon
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_profilemodifiedon");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_profilemodifiedon");
+				this.SetAttributeValue("adx_profilemodifiedon", value);
+				this.OnPropertyChanged("adx_profilemodifiedon");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_publicprofilecopy")]
+		public string adx_PublicProfileCopy
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("adx_publicprofilecopy");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("adx_PublicProfileCopy");
+				this.SetAttributeValue("adx_publicprofilecopy", value);
+				this.OnPropertyChanged("adx_PublicProfileCopy");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_timezone")]
+		public System.Nullable<int> Adx_TimeZone
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("adx_timezone");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Adx_TimeZone");
+				this.SetAttributeValue("adx_timezone", value);
+				this.OnPropertyChanged("Adx_TimeZone");
+			}
+		}
+		
 		/// <summary>
 		/// For system use only.
 		/// </summary>
@@ -3724,6 +4272,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Unique identifier for Account associated with Contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
+		public Microsoft.Xrm.Sdk.EntityReference msa_managingpartnerid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("msa_managingpartnerid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msa_managingpartnerid");
+				this.SetAttributeValue("msa_managingpartnerid", value);
+				this.OnPropertyChanged("msa_managingpartnerid");
+			}
+		}
+		
+		/// <summary>
 		/// Maps to contact KPI records
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_contactkpiid")]
@@ -3760,6 +4328,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("msdyn_decisioninfluencetag");
 				this.SetAttributeValue("msdyn_decisioninfluencetag", value);
 				this.OnPropertyChanged("msdyn_decisioninfluencetag");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates that the contact has opted out of web tracking.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_disablewebtracking")]
+		public System.Nullable<bool> msdyn_disablewebtracking
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("msdyn_disablewebtracking");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msdyn_disablewebtracking");
+				this.SetAttributeValue("msdyn_disablewebtracking", value);
+				this.OnPropertyChanged("msdyn_disablewebtracking");
 			}
 		}
 		
@@ -3804,6 +4392,46 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Indicates that the contact is considered a minor in their jurisdiction.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_isminor")]
+		public System.Nullable<bool> msdyn_isminor
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("msdyn_isminor");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msdyn_isminor");
+				this.SetAttributeValue("msdyn_isminor", value);
+				this.OnPropertyChanged("msdyn_isminor");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates that the contact is considered a minor in their jurisdiction and has parental consent.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_isminorwithparentalconsent")]
+		public System.Nullable<bool> msdyn_isminorwithparentalconsent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("msdyn_isminorwithparentalconsent");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msdyn_isminorwithparentalconsent");
+				this.SetAttributeValue("msdyn_isminorwithparentalconsent", value);
+				this.OnPropertyChanged("msdyn_isminorwithparentalconsent");
+			}
+		}
+		
+		/// <summary>
 		/// Whether or not the contact belongs to the associated account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_orgchangestatus")]
@@ -3820,6 +4448,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("msdyn_orgchangestatus");
 				this.SetAttributeValue("msdyn_orgchangestatus", value);
 				this.OnPropertyChanged("msdyn_orgchangestatus");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates the date and time that the person agreed to the portal terms and conditions.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_portaltermsagreementdate")]
+		public System.Nullable<System.DateTime> msdyn_portaltermsagreementdate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("msdyn_portaltermsagreementdate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msdyn_portaltermsagreementdate");
+				this.SetAttributeValue("msdyn_portaltermsagreementdate", value);
+				this.OnPropertyChanged("msdyn_portaltermsagreementdate");
 			}
 		}
 		
@@ -3850,6 +4498,26 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msft_datastate");
+			}
+		}
+		
+		/// <summary>
+		/// User’s preferred portal language
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("mspp_userpreferredlcid")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue mspp_userpreferredlcid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("mspp_userpreferredlcid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("mspp_userpreferredlcid");
+				this.SetAttributeValue("mspp_userpreferredlcid", value);
+				this.OnPropertyChanged("mspp_userpreferredlcid");
 			}
 		}
 		
@@ -4944,6 +5612,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("Referencingcontact_parent_contact");
 				this.SetRelatedEntity<DataverseModel.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingcontact_parent_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 msa_contact_managingpartner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_contact_managingpartner")]
+		public DataverseModel.Account msa_contact_managingpartner
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Account>("msa_contact_managingpartner", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("msa_contact_managingpartner");
+				this.SetRelatedEntity<DataverseModel.Account>("msa_contact_managingpartner", null, value);
+				this.OnPropertyChanged("msa_contact_managingpartner");
 			}
 		}
 		

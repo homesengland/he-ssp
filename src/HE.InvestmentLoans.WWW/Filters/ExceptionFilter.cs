@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace HE.InvestmentLoans.WWW.Filters;
 
-public class ExceptionFilter : IExceptionFilter
+public class ExceptionFilter : ExceptionFilterAttribute
 {
     private readonly IModelMetadataProvider _modelMetadataProvider;
     private readonly IHostEnvironment _hostEnvironment;
@@ -19,7 +19,7 @@ public class ExceptionFilter : IExceptionFilter
         _hostEnvironment = hostEnvironment;
     }
 
-    public void OnException(ExceptionContext context)
+    public override void OnException(ExceptionContext context)
     {
         var exception = context.Exception;
 
@@ -34,6 +34,13 @@ public class ExceptionFilter : IExceptionFilter
 
         context.ExceptionHandled = true;
         context.Result = result;
+    }
+
+    public override Task OnExceptionAsync(ExceptionContext context)
+    {
+        OnException(context);
+
+        return Task.CompletedTask;
     }
 
     private string ViewPathFor(Exception exception)

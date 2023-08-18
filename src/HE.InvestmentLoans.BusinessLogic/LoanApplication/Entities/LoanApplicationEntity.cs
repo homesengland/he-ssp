@@ -4,11 +4,10 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.InvestmentLoans.Contract.CompanyStructure;
-using HE.InvestmentLoans.Contract.Exceptions;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
@@ -50,9 +49,9 @@ public class LoanApplicationEntity
         SyncToLegacyModel();
     }
 
-    public async void Submit(ICanSubmitLoanApplication canSubmitLoanApplication, CancellationToken cancellationToken)
+    public async Task Submit(ICanSubmitLoanApplication canSubmitLoanApplication, CancellationToken cancellationToken)
     {
-        if (!IsReadyToSubmit())
+        if (IsReadyToSubmit())
         {
             await canSubmitLoanApplication.Submit(Id, cancellationToken);
         }
@@ -77,11 +76,7 @@ public class LoanApplicationEntity
 
     private bool IsReadyToSubmit()
     {
-        return (LegacyModel.Company.State == CompanyStructureState.Complete || LegacyModel.Company.IsFlowCompleted)
-            && (LegacyModel.Security.State == SecurityWorkflow.State.Complete || LegacyModel.Security.IsFlowCompleted)
-            && (LegacyModel.Funding.State == FundingWorkflow.State.Complete || LegacyModel.Funding.IsFlowCompleted)
-            && (LegacyModel.Sites.All(x => x.State == SiteWorkflow.State.Complete) || LegacyModel.Sites.All(x => x.IsFlowCompleted))
-            && LegacyModel.Sites.Count > 0;
+        return ExternalStatus != ApplicationStatus.Submitted && LegacyModel.IsReadyToSubmit();
     }
 
     private void SyncToLegacyModel()
