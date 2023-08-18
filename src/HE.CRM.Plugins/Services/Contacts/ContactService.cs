@@ -1,6 +1,7 @@
 using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.interfaces;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
@@ -112,6 +113,20 @@ namespace HE.CRM.Plugins.Services.Contacts
                 return contactRolesDto;
             }
 
+            return null;
+        }
+
+        public ContactDto GetUserProfile(string contactExternalId)
+        {
+            if (!String.IsNullOrEmpty(contactExternalId))
+            {
+                var retrievedContact =  contactRepository.GetContactViaExternalId(contactExternalId);
+                if(retrievedContact != null)
+                {
+                    var mappedContact = ContactDtoMapper.MapRegularEntityToContactDto(retrievedContact);
+                    return mappedContact;
+                }
+            }
             return null;
         }
 

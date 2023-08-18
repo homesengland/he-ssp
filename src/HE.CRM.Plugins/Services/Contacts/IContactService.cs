@@ -1,4 +1,4 @@
-﻿using HE.Base.Services;
+using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.CRM.Plugins.Services.Contacts
@@ -7,5 +7,6 @@ namespace HE.CRM.Plugins.Services.Contacts
     {
 
         ContactRolesDto GetContactRoles(string email, string ssid, string portal);
+        ContactDto GetUserProfile(string contactExternalId);
     }
 }

@@ -39,6 +39,12 @@ namespace DataverseModel
 		Failed = 2,
 		
 		/// <summary>
+		/// In Progress
+		/// </summary>
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InProgress = 4,
+		
+		/// <summary>
 		/// Not created
 		/// </summary>
 		[System.Runtime.Serialization.EnumMemberAttribute()]

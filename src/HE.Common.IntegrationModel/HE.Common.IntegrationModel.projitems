@@ -9,6 +9,7 @@
     <Import_RootNamespace>HE.Common.IntegrationModel</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)portalintegrationmodel\ContactDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ContactRolesDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\LoanApplicationDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\OrganizationDetailsDto.cs" />
