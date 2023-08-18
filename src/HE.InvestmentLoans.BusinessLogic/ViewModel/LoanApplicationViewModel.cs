@@ -96,7 +96,7 @@ public class LoanApplicationViewModel
 
     public bool IsReadyToSubmit()
     {
-        return (Company.State == CompanyStructureWorkflow.State.Complete || Company.IsFlowCompleted)
+        return (Company.State == CompanyStructureState.Complete || Company.IsFlowCompleted)
             && (Security.State == SecurityWorkflow.State.Complete || Security.IsFlowCompleted)
             && (Funding.State == FundingWorkflow.State.Complete || Funding.IsFlowCompleted)
             && (Sites.All(x => x.State == SiteWorkflow.State.Complete) || Sites.All(x => x.IsFlowCompleted))
