@@ -1,10 +1,7 @@
 using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Services.Interfaces;
-using HE.InvestmentLoans.Common.Utils.ValueObjects;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Queries;
@@ -140,13 +137,6 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return Continue(new { Id = id });
     }
 
-    [HttpPost("task-list/{id}")]
-    [WorkflowState(LoanApplicationWorkflow.State.TaskList)]
-    public Task<IActionResult> TaskListPost(Guid id)
-    {
-        return Continue(new { Id = id });
-    }
-
     [HttpGet("{id}/check")]
     [WorkflowState(LoanApplicationWorkflow.State.CheckApplication)]
     public async Task<IActionResult> CheckApplication(Guid id)
@@ -161,8 +151,6 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     public async Task<IActionResult> Submit(Guid id)
     {
         await _mediator.Send(new SubmitLoanApplicationCommand(LoanApplicationId.From(id)));
-
-        await _mediator.Send(new SubmitApplicationCommand(application.ViewModel));
 
         return await Continue(new { Id = id });
     }
@@ -188,6 +176,6 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
         var applicationId = !string.IsNullOrEmpty(id) ? LoanApplicationId.From(Guid.Parse(id)) : null;
 
-        return new LoanApplicationWorkflow(applicationId, _mediator, currentState);
+        return new LoanApplicationWorkflow(currentState, async () => (await _mediator.Send(new GetLoanApplicationQuery(applicationId))).LoanApplication.LegacyModel);
     }
 }

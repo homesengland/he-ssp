@@ -33,7 +33,7 @@ public abstract class WorkflowController<TState> : Controller
             }
             else
             {
-                context.Result = await Back();
+                throw new UnauthorizedAccessException();
             }
         }
     }

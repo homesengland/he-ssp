@@ -1,8 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using MediatR;
 using Stateless;
 
@@ -27,7 +25,8 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
     private readonly StateMachine<State, Trigger> _machine;
     private readonly IMediator _mediator;
     private readonly LoanApplicationViewModel _model;
-    private readonly LoanApplicationId _applicationId;
+
+    private readonly Func<Task<LoanApplicationViewModel>> _modelFactory;
 
     public LoanApplicationWorkflow(LoanApplicationViewModel model, IMediator mediator)
     {
@@ -37,14 +36,13 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         ConfigureTransitions();
     }
 
-    public LoanApplicationWorkflow(LoanApplicationId applicationId, IMediator mediator, State currentState)
+    public LoanApplicationWorkflow(State currentState, Func<Task<LoanApplicationViewModel>> modelFactory)
     {
-        _applicationId = applicationId;
-        _mediator = mediator;
         _model = new LoanApplicationViewModel { GoodChangeMode = true };
         _machine = new StateMachine<State, Trigger>(currentState);
 
         ConfigureTransitions();
+        _modelFactory = modelFactory;
     }
 
     public async Task<State> NextState(Trigger trigger)
@@ -92,13 +90,11 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
     {
         return nextState switch
         {
-            State.CheckApplication => IsFilled(await Application()),
-            State.ApplicationSubmitted => IsFilled(await Application()),
+            State.CheckApplication => IsFilled(await _modelFactory()),
+            State.ApplicationSubmitted => IsFilled(await _modelFactory()),
             _ => true,
         };
     }
-
-    private async Task<LoanApplicationViewModel> Application() => (await _mediator.Send(new GetLoanApplicationQuery(_applicationId))).ViewModel;
 
     private void ConfigureTransitions()
     {
