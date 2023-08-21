@@ -22,7 +22,6 @@ public class Organization : ValueObject
 
     public string CompaniesHouseNumber { get; }
 
-
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Name;
