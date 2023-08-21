@@ -1,7 +1,6 @@
 using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
-using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Queries;
@@ -22,13 +21,11 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 {
     private readonly IMediator _mediator;
     private readonly IValidator<LoanPurposeModel> _validator;
-    private readonly ICacheService _cacheService;
 
-    public LoanApplicationV2Controller(IMediator mediator, IValidator<LoanPurposeModel> validator, ICacheService cacheService)
+    public LoanApplicationV2Controller(IMediator mediator, IValidator<LoanPurposeModel> validator)
     {
         _mediator = mediator;
         _validator = validator;
-        _cacheService = cacheService;
     }
 
     [HttpGet("")]
@@ -54,9 +51,9 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpPost("about-loan")]
     [WorkflowState(LoanApplicationWorkflow.State.AboutLoan)]
-    public Task<IActionResult> AboutLoanPost()
+    public async Task<IActionResult> AboutLoanPost()
     {
-        return Continue();
+        return await Continue();
     }
 
     [HttpGet("check-your-details")]
@@ -120,17 +117,10 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        var (isDeletedProjectInCache, deletedProjectFromCache) = response.LoanApplication.LegacyModel.ToggleDeleteProjectName(_cacheService);
-
-        if (isDeletedProjectInCache)
-        {
-            ViewBag.AdditionalData = deletedProjectFromCache;
-        }
-
         return View("TaskList", response.LoanApplication.LegacyModel);
     }
 
-    [HttpPost("task-list/{id}")]
+    [HttpPost("{id}/task-list")]
     [WorkflowState(LoanApplicationWorkflow.State.TaskList)]
     public Task<IActionResult> TaskListPost(Guid id)
     {
@@ -155,6 +145,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return await Continue(new { Id = id });
     }
 
+    [HttpGet("submitted/{id}")]
     [HttpGet("{id}/submitted")]
     [WorkflowState(LoanApplicationWorkflow.State.ApplicationSubmitted)]
     public async Task<IActionResult> ApplicationSubmitted(Guid id)

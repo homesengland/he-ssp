@@ -1,8 +1,8 @@
-﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+﻿@model HE.InvestmentLoans.Contract.Application.ValueObjects.LoanApplicationId
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="CompanyStructure" asp-action="WorkflowPost" asp-route-id="@Model.ID" asp-route-ending="Index" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Workflow","LoanApplication", new {id = Model.ID})" text="Back to application" class="govuk-!-margin-bottom-8">
+    <form asp-controller="CompanyStructureV2" asp-action="StartCompanyStructurePost" asp-route-id="@Model.Value" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Workflow","LoanApplication", new {id = Model.Value})" text="Back to application" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
         <gds-h1 size="ControlSize.L">

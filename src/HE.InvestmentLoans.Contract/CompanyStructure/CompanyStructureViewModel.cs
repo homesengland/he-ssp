@@ -1,14 +1,13 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
-
-namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
+namespace HE.InvestmentLoans.Contract.CompanyStructure;
 
 public class CompanyStructureViewModel
 {
     public CompanyStructureViewModel()
     {
-        State = CompanyStructureWorkflow.State.Index;
         StateChanged = false;
     }
+
+    public Guid LoanApplicationId { get; set; }
 
     public string? Purpose { get; set; }
 
@@ -24,7 +23,7 @@ public class CompanyStructureViewModel
 
     public string? CompanyInfoFileName { get; set; }
 
-    public CompanyStructureWorkflow.State State { get; set; }
+    public CompanyStructureState State { get; set; }
 
     public bool StateChanged { get; set; }
 

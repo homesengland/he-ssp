@@ -1,14 +1,15 @@
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@using HE.InvestmentLoans.Contract.CompanyStructure
+@model HE.InvestmentLoans.Contract.CompanyStructure.CompanyStructureViewModel
 @inject ModelExpressionProvider modelProvider
 @{
-
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Company.Purpose));
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((CompanyStructureViewModel x) => x.Purpose));
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="CompanyStructure" asp-action="WorkflowPost" asp-route-id="@Model.ID" asp-route-ending="Purpose" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("GoBack","CompanyStructure", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+    <form asp-controller="CompanyStructureV2" asp-action="PurposePost" asp-route-id="@Model.LoanApplicationId"  asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.Purpose})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
+
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="radioInvalid">
@@ -28,10 +29,10 @@
                     </p>
                 }
                 <gds-radio-yes-no class="govuk-!-margin-bottom-8"
-                                  asp-for="Company.Purpose"></gds-radio-yes-no>
+                                  asp-for="Purpose"></gds-radio-yes-no>
             </gds-div-form-group>
 
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Company.StateChanged?"Change":"Continue")">
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
                 Continue
             </button>
         </gds-field-set>

@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Contract.CompanyStructure;
 using MediatR;
 using Stateless;
 
@@ -65,7 +66,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
     public bool IsFilled()
     {
-        return (_model.Company.State == CompanyStructureWorkflow.State.Complete || _model.Company.IsFlowCompleted)
+        return (_model.Company.State == CompanyStructureState.Complete || _model.Company.IsFlowCompleted)
             && (_model.Security.State == SecurityWorkflow.State.Complete || _model.Security.IsFlowCompleted)
             && (_model.Funding.State == FundingWorkflow.State.Complete || _model.Funding.IsFlowCompleted)
             && (_model.Sites.All(x => x.State == SiteWorkflow.State.Complete) || _model.Sites.All(x => x.IsFlowCompleted))
@@ -79,7 +80,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
     public bool IsFilled(LoanApplicationViewModel application)
     {
-        return (application.Company.State == CompanyStructureWorkflow.State.Complete || application.Company.IsFlowCompleted)
+        return (application.Company.State == CompanyStructureState.Complete || application.Company.IsFlowCompleted)
             && (application.Security.State == SecurityWorkflow.State.Complete || application.Security.IsFlowCompleted)
             && (application.Funding.State == FundingWorkflow.State.Complete || application.Funding.IsFlowCompleted)
             && (application.Sites.All(x => x.State == SiteWorkflow.State.Complete) || application.Sites.All(x => x.IsFlowCompleted))

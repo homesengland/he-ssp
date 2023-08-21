@@ -5,6 +5,7 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Services.Interfaces;
+using HE.InvestmentLoans.Contract.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -67,7 +68,7 @@ public class LoanApplicationController : Controller
 
             await workflow.NextState(Enum.Parse<Trigger>(action));
         }
-        catch (Common.Exceptions.ValidationException ex)
+        catch (ValidationException ex)
         {
             ex.Results.ForEach(item => item.AddToModelState(ModelState, null));
         }
