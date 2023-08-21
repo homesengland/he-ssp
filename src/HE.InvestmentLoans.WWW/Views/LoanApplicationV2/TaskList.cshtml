@@ -32,7 +32,7 @@
             <ul class="app-task-list__items">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("StartCompanyStructure","CompanyStructureV2", new { id = Model.ID })">
+                        <a href="@Url.Action("Workflow","CompanyStructure", new {id = Model.ID, ending = companyStructureWorkflow.GetName() })">
                             Complete company information
                         </a>
                     </span>
@@ -150,14 +150,12 @@
     </ul>
     <gds-h2 size="ControlSize.M">Check and submit</gds-h2>
     <p>You must complete all sections before you can submit your application.</p>
-    <div>
+    <form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.ID" asp-method="post" novalidate>
         @if (loanApllicationWorkflow.IsFilled())
         {
-            <a href="@Url.Action("CheckApplication", "LoanApplicationV2", new {id = Model.ID})">
                 <gds-button data-module="govuk-button" name="action" value="Continue">
                     Check and submit application
                 </gds-button>
-            </a>
         }
         else
         {
@@ -165,10 +163,10 @@
                 Check and submit application
             </button>
         }
-    </div>
-    <gds-link href="@Url.Action("ReportProblem","LoanApplication", new {id = Model.ID})">
+    </form>
+    <gds-link href="@Url.Action("Index","LoanApplication", new {id = Model.ID})">
         Report a problem with this page
-        <gds-span-visually-hidden> @Url.Action("ReportProblem","LoanApplication", new {id = Model.ID})</gds-span-visually-hidden>
+        <gds-span-visually-hidden> @Url.Action("Index","LoanApplication", new {id = Model.ID})</gds-span-visually-hidden>
     </gds-link>
 </gds-div-grid-column-two-thirds>
 

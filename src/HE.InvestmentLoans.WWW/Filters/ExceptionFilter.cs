@@ -48,6 +48,7 @@ public class ExceptionFilter : ExceptionFilterAttribute
         return exception switch
         {
             NotFoundException => ViewPaths.PageNotFound,
+            UnauthorizedAccessException => ViewPaths.PageNotFound,
             _ => ViewPaths.ProblemWithTheService,
         };
     }

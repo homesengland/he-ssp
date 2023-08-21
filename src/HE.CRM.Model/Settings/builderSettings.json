@@ -107,10 +107,12 @@
     "invln_getorganizationdetails*",
     "invln_getsingleloanapplicationforaccountandcontact*",
     "invln_gettemporaryportaldata*",
+    "invln_returnuserprofile*",
     "invln_savetemporaryportaldata*",
     "invln_sendinvestmentloansdatatocrm*",
     "invln_updatesingleloanapplication*",
-    "invln_updatesinglesitedetails*"
+    "invln_updatesinglesitedetails*",
+    "invln_updateuserprofile*"
   ],
   "messagesTypesFolder": "..\\Actions",
   "metadataProviderService": "DLaB.ModelBuilderExtensions.MetadataProviderService,DLaB.ModelBuilderExtensions",
