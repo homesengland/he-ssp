@@ -37,25 +37,25 @@ public class CompanyStructureEntity
     public void ProvideCompanyPurpose(CompanyPurpose? purpose)
     {
         Purpose = purpose;
-        Status = SectionStatus.InProgress;
+        UnCompleteSection();
     }
 
     public void ProvideMoreInformation(OrganisationMoreInformation? moreInformation)
     {
         MoreInformation = moreInformation;
-        Status = SectionStatus.InProgress;
+        UnCompleteSection();
     }
 
     public void ProvideFileWithMoreInformation(OrganisationMoreInformationFile? moreInformationFile)
     {
         MoreInformationFile = moreInformationFile;
-        Status = SectionStatus.InProgress;
+        UnCompleteSection();
     }
 
     public void ProvideHowManyHomesBuilt(HomesBuilt? homesBuilt)
     {
         HomesBuilt = homesBuilt;
-        Status = SectionStatus.InProgress;
+        UnCompleteSection();
     }
 
     public void CompleteSection()

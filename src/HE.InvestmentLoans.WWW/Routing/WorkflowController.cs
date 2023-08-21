@@ -1,7 +1,7 @@
 using System.Reflection;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Common.Utils.ValueObjects;
+using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
