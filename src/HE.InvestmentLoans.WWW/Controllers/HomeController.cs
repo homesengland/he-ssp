@@ -1,4 +1,6 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Contract.Application.Queries;
+using HE.InvestmentLoans.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +28,7 @@ public class HomeController : Controller
 
     [Authorize]
     [HttpGet("/dashboard")]
+    [WorkflowState(LoanApplicationWorkflow.State.Dashboard)]
     public async Task<IActionResult> Dashboard()
     {
         return View(await _mediator.Send(new GetDashboardDataQuery()));
