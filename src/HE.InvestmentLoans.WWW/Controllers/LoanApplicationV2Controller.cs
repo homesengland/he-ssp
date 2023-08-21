@@ -145,7 +145,6 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return await Continue(new { Id = id });
     }
 
-
     [HttpGet("submitted/{id}")]
     [HttpGet("{id}/submitted")]
     [WorkflowState(LoanApplicationWorkflow.State.ApplicationSubmitted)]
