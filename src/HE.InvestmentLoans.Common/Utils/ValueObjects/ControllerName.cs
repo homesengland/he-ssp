@@ -17,6 +17,21 @@ public class ControllerName : ValueObject
         return _name.Replace("Controller", string.Empty, StringComparison.CurrentCulture);
     }
 
+    public override bool Equals(object? obj)
+    {
+        if (obj is string s)
+        {
+            return _name.Equals(s, StringComparison.Ordinal);
+        }
+
+        return base.Equals(obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return _name.GetHashCode();
+    }
+
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return _name;

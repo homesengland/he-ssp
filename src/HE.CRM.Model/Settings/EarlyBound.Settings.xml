@@ -17,11 +17,13 @@ invln_getloanapplicationsforaccountandcontact|
 invln_getorganizationdetails|
 invln_getsingleloanapplicationforaccountandcontact|
 invln_gettemporaryportaldata|
+invln_returnuserprofile|
 invln_savetemporaryportaldata|
 invln_searchorganizationbynameandcompanyhousename|
 invln_sendinvestmentloansdatatocrm|
 invln_updatesingleloanapplication|
-invln_updatesinglesitedetails</ActionsWhitelist>
+invln_updatesinglesitedetails|
+invln_updateuserprofile</ActionsWhitelist>
     <ActionsToSkip />
     <AddDebuggerNonUserCode>true</AddDebuggerNonUserCode>
     <AddNewFilesToProject>true</AddNewFilesToProject>
