@@ -6,13 +6,13 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 [Route("organization")]
 public class OrganizationController : Controller
 {
-    [HttpGet("search-organization")]
+    [HttpGet("search")]
     public IActionResult SearchOrganization()
     {
         return View();
     }
 
-    [HttpPost("select-organization")]
+    [HttpPost("select")]
     public IActionResult SelectOrganization()
     {
         var model = new OrganizationViewModel();
