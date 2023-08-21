@@ -59,7 +59,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             using (var ctx = new OrganizationServiceContext(service))
             {
                 return ctx.CreateQuery<Account>()
-                    .Where(x => x.Name == organizationName && x.he_CompaniesHouseNumber == companyHouseName).AsEnumerable().ToList();
+                    .Where(x => x.Name.Contains(organizationName) || x.he_CompaniesHouseNumber == companyHouseName).ToList();
             }
         }
 

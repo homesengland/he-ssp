@@ -21,7 +21,7 @@ namespace DataverseModel
 		public static class Fields
 		{
 			public const string invln_organizationname = "invln_organizationname";
-			public const string invln_companyhousename = "invln_companyhousename";
+			public const string invln_companyhousenumber = "invln_companyhousenumber";
 		}
 		
 		public const string ActionLogicalName = "invln_searchorganizationbynameandcompanyhousename";
@@ -45,13 +45,13 @@ namespace DataverseModel
 			}
 		}
 		
-		public string invln_companyhousename
+		public string invln_companyhousenumber
 		{
 			get
 			{
-				if (this.Parameters.Contains("invln_companyhousename"))
+				if (this.Parameters.Contains("invln_companyhousenumber"))
 				{
-					return ((string)(this.Parameters["invln_companyhousename"]));
+					return ((string)(this.Parameters["invln_companyhousenumber"]));
 				}
 				else
 				{
@@ -60,7 +60,7 @@ namespace DataverseModel
 			}
 			set
 			{
-				this.Parameters["invln_companyhousename"] = value;
+				this.Parameters["invln_companyhousenumber"] = value;
 			}
 		}
 		
@@ -68,7 +68,7 @@ namespace DataverseModel
 		{
 			this.RequestName = "invln_searchorganizationbynameandcompanyhousename";
 			this.invln_organizationname = default(string);
-			this.invln_companyhousename = default(string);
+			this.invln_companyhousenumber = default(string);
 		}
 	}
 	

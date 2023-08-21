@@ -136,6 +136,7 @@ namespace DataverseModel
 			public const string invln_Datesubmitted = "invln_datesubmitted";
 			public const string invln_DebentureHolder = "invln_debentureholder";
 			public const string invln_Directorloans = "invln_directorloans";
+			public const string invln_ExistingCompany = "invln_existingcompany";
 			public const string invln_ExternalStatus = "invln_externalstatus";
 			public const string invln_fundingdetailscompletionstatus = "invln_fundingdetailscompletionstatus";
 			public const string invln_FundingReason = "invln_fundingreason";
@@ -599,6 +600,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Directorloans");
 				this.SetAttributeValue("invln_directorloans", value);
 				this.OnPropertyChanged("invln_Directorloans");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_existingcompany")]
+		public System.Nullable<bool> invln_ExistingCompany
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_existingcompany");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ExistingCompany");
+				this.SetAttributeValue("invln_existingcompany", value);
+				this.OnPropertyChanged("invln_ExistingCompany");
 			}
 		}
 		

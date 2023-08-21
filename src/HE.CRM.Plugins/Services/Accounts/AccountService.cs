@@ -1,19 +1,8 @@
-using HE.Base.Repositories;
 using HE.Base.Services;
-using HE.CRM.Common.Extensions;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Query;
-using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.CRM.Common.Repositories;
 using DataverseModel;
 using HE.CRM.Common.Repositories.Interfaces;
-using HE.CRM.Common.Repositories.Implementations;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.CRM.Plugins.Services.Accounts
@@ -97,9 +86,30 @@ namespace HE.CRM.Plugins.Services.Accounts
             }
         }
 
-        public string SearchOrganizationByNameAndCompanyHouseName(string organizationName, string companyHouseName)
+        public List<OrganizationDetailsDto> SearchOrganizationByNameAndCompanyHouseNumber(string organizationName, string companyHouseNumber)
         {
-            _accountRepository.GetAccountsByOrganizationNameAndCompanyHouseName(organizationName, companyHouseName);
+            var accounts = _accountRepository.GetAccountsByOrganizationNameAndCompanyHouseName(organizationName, companyHouseNumber);
+            if(accounts != null && accounts.Count > 0)
+            {
+                var accountsToReturn = new List<OrganizationDetailsDto>();
+                foreach(var account in accounts)
+                {
+                    var accountToSerialize = new OrganizationDetailsDto()
+                    {
+                        addressLine1 = account.Address1_Line1,
+                        addressLine2 = account.Address1_Line2,
+                        addressLine3 = account.Address1_Line3,
+                        city = account.Address1_City,
+                        postalcode = account.Address1_PostalCode,
+                        country = account.Address1_Country,
+                        registeredCompanyName = account.Name,
+                        companyRegistrationNumber = account.he_CompaniesHouseNumber,
+                    };
+                    accountsToReturn.Add(accountToSerialize);
+                }
+                return accountsToReturn;
+            }
+            return new List<OrganizationDetailsDto>();
         }
 
         #endregion
