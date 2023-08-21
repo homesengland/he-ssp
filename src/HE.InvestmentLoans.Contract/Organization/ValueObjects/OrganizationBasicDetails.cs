@@ -1,9 +1,9 @@
 using HE.InvestmentLoans.Contract.Domain;
 
-namespace HE.InvestmentLoans.Contract.Application.ValueObjects;
-public class Organization : ValueObject
+namespace HE.InvestmentLoans.Contract.Organization.ValueObjects;
+public class OrganizationBasicDetails : ValueObject
 {
-    public Organization(string name, string street, string city, string code, string companiesHouseNumber)
+    public OrganizationBasicDetails(string name, string street, string city, string code, string companiesHouseNumber)
     {
         Name = name;
         Street = street;
