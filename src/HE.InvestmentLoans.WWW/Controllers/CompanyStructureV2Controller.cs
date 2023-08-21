@@ -3,6 +3,8 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.QueryHandlers;
+using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
@@ -23,10 +25,13 @@ public class CompanyStructureV2Controller : Controller
 
     private readonly IValidator<CompanyStructureViewModel> _validator;
 
-    public CompanyStructureV2Controller(IMediator mediator, IValidator<CompanyStructureViewModel> validator)
+    private readonly IAppConfig _appConfig;
+
+    public CompanyStructureV2Controller(IMediator mediator, IValidator<CompanyStructureViewModel> validator, IAppConfig appConfig)
     {
         _mediator = mediator;
         _validator = validator;
+        _appConfig = appConfig;
     }
 
     [HttpGet("start-company-structure")]
@@ -72,6 +77,11 @@ public class CompanyStructureV2Controller : Controller
             using var memoryStream = new MemoryStream();
             await formFile.CopyToAsync(memoryStream, cancellationToken);
             viewModel.CompanyInfoFile = memoryStream.ToArray();
+
+            if (viewModel.CompanyInfoFile.Length > _appConfig.MaxFileSizeInMegabytes * 1024 * 1024)
+            {
+                throw new FileException($"The selected file must be smaller than or equal to {_appConfig.MaxFileSizeInMegabytes}MB");
+            }
         }
 
         var validationResult = await _validator.ValidateAsync(viewModel, opt => opt.IncludeRuleSets(CompanyStructureView.MoreInformationAboutOrganization), cancellationToken);
