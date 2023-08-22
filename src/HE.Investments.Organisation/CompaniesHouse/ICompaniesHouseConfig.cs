@@ -4,5 +4,5 @@ public interface ICompaniesHouseConfig
 {
     public Uri CompaniesHouseBaseUrl { get; }
 
-    public string AuthorizationKey { get; }
+    public string ApiKey { get; }
 }
