@@ -3,7 +3,6 @@ using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.User;
-using HE.Investments.Organisation.CompaniesHouse;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
