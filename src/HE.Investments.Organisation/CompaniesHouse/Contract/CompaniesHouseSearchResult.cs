@@ -2,5 +2,7 @@ namespace HE.Investments.Organisation.CompaniesHouse.Contract;
 
 public class CompaniesHouseSearchResult
 {
-    public IList<CompaniesHouseSearchItem> Items { get; set; }
+    public IList<CompanyDetailsItem> Items { get; set; }
+
+    public int Hits { get; set; }
 }

@@ -4,5 +4,7 @@ namespace HE.Investments.Organisation.CompaniesHouse;
 
 public interface ICompaniesHouseApi
 {
-    Task<CompaniesHouseSearchResult> Search(string organisationName, CancellationToken cancellationToken);
+    Task<CompaniesHouseSearchResult> Search(string organisationName, PagingQueryParams? pagingQueryParams, CancellationToken cancellationToken);
+
+    Task<CompaniesHouseGetByCompanyNumberResult?> GetByCompanyNumber(string companyNumber, CancellationToken cancellationToken);
 }
