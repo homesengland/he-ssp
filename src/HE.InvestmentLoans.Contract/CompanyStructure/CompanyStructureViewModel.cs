@@ -1,3 +1,5 @@
+using HE.InvestmentLoans.Contract.Application.Enums;
+
 namespace HE.InvestmentLoans.Contract.CompanyStructure;
 
 public class CompanyStructureViewModel
@@ -23,14 +25,19 @@ public class CompanyStructureViewModel
 
     public string? CompanyInfoFileName { get; set; }
 
-    public CompanyStructureState State { get; set; }
+    public SectionStatus State { get; set; }
 
     public bool StateChanged { get; set; }
 
     public bool IsFlowCompleted { get; set; }
 
-    public void SetFlowCompletion(bool value)
+    public bool IsCompleted()
     {
-        IsFlowCompleted = value;
+        return State == SectionStatus.Completed;
+    }
+
+    public bool IsProgress()
+    {
+        return State == SectionStatus.InProgress;
     }
 }

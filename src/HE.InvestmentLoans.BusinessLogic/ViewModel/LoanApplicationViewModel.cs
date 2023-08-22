@@ -86,7 +86,6 @@ public class LoanApplicationViewModel
 
     public void UseSectionsFrom(LoanApplicationViewModel model)
     {
-        Company = model.Company;
         Projects = model.Projects;
         Security = model.Security;
         Sites = model.Sites;
@@ -96,7 +95,7 @@ public class LoanApplicationViewModel
 
     public bool IsReadyToSubmit()
     {
-        return (Company.State == CompanyStructureState.Complete || Company.IsFlowCompleted)
+        return (Company.IsCompleted() || Company.IsFlowCompleted)
             && (Security.State == SecurityWorkflow.State.Complete || Security.IsFlowCompleted)
             && (Funding.State == FundingWorkflow.State.Complete || Funding.IsFlowCompleted)
             && (Sites.All(x => x.State == SiteWorkflow.State.Complete) || Sites.All(x => x.IsFlowCompleted))
