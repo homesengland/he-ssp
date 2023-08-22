@@ -1,6 +1,8 @@
+using HE.Investments.Organisation.CompaniesHouse.Contract;
+
 namespace HE.Investments.Organisation.CompaniesHouse;
 
-public class ICompaniesHouseApi
+public interface ICompaniesHouseApi
 {
-    
+    Task<CompaniesHouseSearchResult> Search(string organisationName, CancellationToken cancellationToken);
 }

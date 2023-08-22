@@ -1,6 +1,3 @@
 namespace HE.Investments.Organisation.Contract;
 
-public class OrganisationSearchItem
-{
-    
-}
+public record OrganisationSearchItem(string CompanyNumber, string Name);

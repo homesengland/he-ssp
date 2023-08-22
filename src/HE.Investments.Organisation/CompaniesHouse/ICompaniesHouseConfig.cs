@@ -1,6 +1,8 @@
 namespace HE.Investments.Organisation.CompaniesHouse;
 
-public class ICompaniesHouseConfig
+public interface ICompaniesHouseConfig
 {
-    
+    public Uri CompaniesHouseBaseUrl { get; }
+
+    public string AuthorizationKey { get; }
 }

@@ -1,6 +1,3 @@
 namespace HE.Investments.Organisation.Contract;
 
-public class OrganisationSearchResult
-{
-    
-}
+public record OrganisationSearchResult(IList<OrganisationSearchItem> Items);
