@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Extensions;
@@ -35,7 +36,7 @@ public class LoanUserContext : ILoanUserContext
     {
         if (_selectedAccount is null)
         {
-            await LoadUserDetails();
+            await LoadUserAccount();
         }
 
         return _selectedAccount!.AccountId;
@@ -45,7 +46,7 @@ public class LoanUserContext : ILoanUserContext
     {
         if (_selectedAccount is null)
         {
-            await LoadUserDetails();
+            await LoadUserAccount();
         }
 
         return _accountIds;
@@ -55,21 +56,21 @@ public class LoanUserContext : ILoanUserContext
     {
         if (_selectedAccount is null)
         {
-            await LoadUserDetails();
+            await LoadUserAccount();
         }
 
         return _selectedAccount!;
     }
 
-    private async Task LoadUserDetails()
+    private async Task LoadUserAccount()
     {
         const string defaultAccountGuid = "429d11ab-15fe-ed11-8f6c-002248c653e1";
 
         const string defaultAccountName = "Default account";
 
-        var userDetails = await _cacheService.GetValueAsync($"{nameof(this.LoadUserDetails)}_{_userContext.UserGlobalId}", async () => await _loanUserRepository.GetUserDetails(_userContext.UserGlobalId, _userContext.Email)) ?? throw new LoanUserAccountIsMissingException();
+        var userAccount = await _cacheService.GetValueAsync($"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}", async () => await _loanUserRepository.GetUserAccount(_userContext.UserGlobalId, _userContext.Email)) ?? throw new LoanUserAccountIsMissingException();
 
-        var accounts = userDetails.contactRoles.OrderBy(x => x.accountId).ToList();
+        var accounts = userAccount.contactRoles.OrderBy(x => x.accountId).ToList();
 
         _accountIds.AddRange(accounts.Select(x => x.accountId).ToList());
 

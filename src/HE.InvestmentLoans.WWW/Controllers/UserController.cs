@@ -2,7 +2,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Organization;
-using HE.InvestmentLoans.Contract.User;
+using HE.InvestmentLoans.Contract.User.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +20,9 @@ public class UserController : Controller
         _mediator = mediator;
     }
 
-    public async Task<GetUserDetailsResponse> Index()
+    public async Task<GetUserAccountResponse> Index()
     {
-        return await _mediator.Send(new GetUserDetailsQuery());
+        return await _mediator.Send(new GetUserAccountQuery());
     }
 
     [Route("dashboard")]

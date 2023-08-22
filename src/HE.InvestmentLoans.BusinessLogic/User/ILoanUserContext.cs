@@ -1,3 +1,5 @@
+using HE.InvestmentLoans.BusinessLogic.User.Entities;
+
 namespace HE.InvestmentLoans.BusinessLogic.User;
 
 public interface ILoanUserContext

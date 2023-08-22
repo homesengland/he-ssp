@@ -6,7 +6,7 @@ using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Organization;
-using HE.InvestmentLoans.Contract.User;
+using HE.InvestmentLoans.Contract.User.Queries;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Routing;
 using MediatR;
@@ -61,7 +61,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     public async Task<IActionResult> CheckYourDetails(CancellationToken cancellationToken)
     {
         var organizationBasicInformationResponse = await _mediator.Send(new GetOrganizationBasicInformationQuery(), cancellationToken);
-        var userDetails = await _mediator.Send(new GetUserDetailsQuery(), cancellationToken);
+        var userDetails = await _mediator.Send(new GetUserAccountQuery(), cancellationToken);
         return View(
             "CheckYourDetails",
             new CheckYourDetailsModel
