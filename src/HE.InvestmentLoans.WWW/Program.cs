@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 builder.Services.Configure<AppConfig>(builder.Configuration.GetSection("AppConfiguration"));
 
-builder.Services.AddConfigs(builder.Configuration);
+builder.Services.AddConfigs();
 
 #pragma warning disable ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
 var config = builder.Services.BuildServiceProvider().GetRequiredService<IAppConfig>();

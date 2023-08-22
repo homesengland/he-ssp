@@ -10,7 +10,7 @@ namespace HE.InvestmentLoans.WWW.Extensions;
 
 public static class ServiceCollectionExtension
 {
-    public static void AddConfigs(this IServiceCollection services, IConfiguration configuration)
+    public static void AddConfigs(this IServiceCollection services)
     {
         services.AddSingleton<IAppConfig>(x => x.GetRequiredService<IOptions<AppConfig>>().Value);
         services.AddSingleton<IDataverseConfig>(x => x.GetRequiredService<IAppConfig>().Dataverse);
