@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 
-public record ProvideCompanyPurposeCommand(LoanApplicationId LoanApplicationId, CompanyPurpose CompanyPurpose) : IRequest;
+public record ProvideCompanyPurposeCommand(LoanApplicationId LoanApplicationId, CompanyPurpose? CompanyPurpose) : IRequest;

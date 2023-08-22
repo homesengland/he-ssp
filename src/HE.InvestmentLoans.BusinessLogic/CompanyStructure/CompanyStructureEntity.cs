@@ -36,24 +36,44 @@ public class CompanyStructureEntity
 
     public void ProvideCompanyPurpose(CompanyPurpose? purpose)
     {
+        if (Purpose == purpose)
+        {
+            return;
+        }
+
         Purpose = purpose;
         UnCompleteSection();
     }
 
     public void ProvideMoreInformation(OrganisationMoreInformation? moreInformation)
     {
+        if (MoreInformation == moreInformation)
+        {
+            return;
+        }
+
         MoreInformation = moreInformation;
         UnCompleteSection();
     }
 
     public void ProvideFileWithMoreInformation(OrganisationMoreInformationFile? moreInformationFile)
     {
+        if (MoreInformationFile == moreInformationFile)
+        {
+            return;
+        }
+
         MoreInformationFile = moreInformationFile;
         UnCompleteSection();
     }
 
     public void ProvideHowManyHomesBuilt(HomesBuilt? homesBuilt)
     {
+        if (HomesBuilt == homesBuilt)
+        {
+            return;
+        }
+
         HomesBuilt = homesBuilt;
         UnCompleteSection();
     }
