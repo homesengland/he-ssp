@@ -24,7 +24,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
             this.TracingService.Trace("ReturnUserProfile");
             var userProfile = CrmServicesFactory.Get<IContactService>().GetUserProfile(externalContactId);
             this.TracingService.Trace("End custom api");
-            if(userProfile != null)
+            if (userProfile != null)
             {
                 var serializedData = JsonSerializer.Serialize(userProfile);
                 ExecutionData.SetOutputParameter(invln_returnuserprofileResponse.Fields.invln_userprofile, serializedData);

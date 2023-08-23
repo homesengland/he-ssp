@@ -4,6 +4,7 @@ using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Exceptions;
+using HE.InvestmentLoans.Contract.User.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.User;
 
@@ -26,7 +27,7 @@ public class LoanUserContext : ILoanUserContext
         _cacheService = cacheService;
     }
 
-    public string UserGlobalId => _userContext.UserGlobalId;
+    public UserGlobalId UserGlobalId => UserGlobalId.From(_userContext.UserGlobalId);
 
     public string Email => _userContext.Email ?? string.Empty;
 
@@ -68,7 +69,7 @@ public class LoanUserContext : ILoanUserContext
 
         const string defaultAccountName = "Default account";
 
-        var userAccount = await _cacheService.GetValueAsync($"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}", async () => await _loanUserRepository.GetUserAccount(_userContext.UserGlobalId, _userContext.Email)) ?? throw new LoanUserAccountIsMissingException();
+        var userAccount = await _cacheService.GetValueAsync($"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}", async () => await _loanUserRepository.GetUserAccount(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email)) ?? throw new LoanUserAccountIsMissingException();
 
         var accounts = userAccount.contactRoles.OrderBy(x => x.accountId).ToList();
 

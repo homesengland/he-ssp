@@ -20,7 +20,7 @@ public class OrganizationRepository : IOrganizationRepository
     {
         var request = new invln_getorganizationdetailsRequest()
         {
-            invln_contactexternalid = userAccount.UserGlobalId,
+            invln_contactexternalid = userAccount.UserGlobalId.ToString(),
             invln_accountid = userAccount.AccountId.ToString(),
         };
 

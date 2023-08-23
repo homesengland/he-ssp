@@ -23,7 +23,7 @@ public class CompanyStructureRepository : ICompanyStructureRepository
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
-            invln_externalcontactid = userAccount.UserGlobalId,
+            invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
         };
 
@@ -58,7 +58,7 @@ public class CompanyStructureRepository : ICompanyStructureRepository
             invln_loanapplication = loanApplicationSerialized,
             invln_loanapplicationid = companyStructure.LoanApplicationId.Value.ToString(),
             invln_accountid = userAccount.AccountId.ToString(),
-            invln_contactexternalid = userAccount.UserGlobalId,
+            invln_contactexternalid = userAccount.UserGlobalId.ToString(),
             invln_fieldstoupdate = $"{nameof(invln_Loanapplication.invln_CompanyPurpose).ToLowerInvariant()}," +
                                    $"{nameof(invln_Loanapplication.invln_Companystructureinformation).ToLowerInvariant()}," +
                                    $"invln_companystructureandexperiencecompletionst," +

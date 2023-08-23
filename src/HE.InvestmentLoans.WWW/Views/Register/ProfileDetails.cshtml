@@ -1,0 +1,105 @@
+@model HE.InvestmentLoans.Contract.User.UserDetailsViewModel;
+@{
+    ViewData["Title"] = "Profile details";
+    var id = ViewContext.RouteData.Values["id"];
+
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.Name));
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.Action("GoBack","Site", new { })" text="Back" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
+    <partial name="_ErrorSummaryPartial" model="null" />
+
+    <gds-h1 size="ControlSize.L">
+        Complete your details
+    </gds-h1>
+
+    <gds-p>
+        Register as an individual, we will ask you for your organisation details later.
+    </gds-p>
+
+    <form asp-controller="Register" asp-action="ProfileDetails" asp-method="post" novalidate>
+        <gds-field-set role="group">
+            <legend>
+                <gds-label for="FirstName" size="ControlSize.M">
+                    First name
+                </gds-label>
+            </legend>
+
+            <gds-input asp-excludelabel
+                       govuk-formgroup-asp-for="FirstName"
+                       value="@Model?.FirstName"
+                       type="text" />
+        </gds-field-set>
+
+        <gds-field-set role="group">
+            <legend>
+                <gds-label for="Surname" size="ControlSize.M">
+                    Surname
+                </gds-label>
+            </legend>
+
+            <gds-input asp-excludelabel
+                       govuk-formgroup-asp-for="Surname"
+                       value="@Model?.Surname"
+                       type="text" />
+        </gds-field-set>
+
+        <gds-field-set role="group">
+            <legend>
+                <gds-label for="JobTitle" size="ControlSize.M">
+                    Job title
+                </gds-label>
+            </legend>
+
+            <gds-input asp-excludelabel
+                       govuk-formgroup-asp-for="JobTitle"
+                       value="@Model?.JobTitle"
+                       type="text" />
+        </gds-field-set>
+
+        <gds-field-set role="group">
+            <legend>
+                <gds-label for="TelephoneNumber" size="ControlSize.M">
+                    Preferred telephone number
+                </gds-label>
+            </legend>
+
+            <gds-input asp-excludelabel
+                       govuk-formgroup-asp-for="TelephoneNumber"
+                       value="@Model?.TelephoneNumber"
+                       type="text" />
+        </gds-field-set>
+
+        <gds-field-set role="group">
+            <legend>
+                <gds-label for="SecondaryTelephoneNumber" size="ControlSize.M">
+                    Secondary telephone number (optional)
+                </gds-label>
+            </legend>
+
+            <gds-input asp-excludelabel
+                       govuk-formgroup-asp-for="SecondaryTelephoneNumber"
+                       value="@Model?.SecondaryTelephoneNumber"
+                       type="text" />
+        </gds-field-set>
+
+        <div class="govuk-checkboxes govuk-!-margin-bottom-6" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+                <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
+                <label class="govuk-label govuk-checkboxes__label" for="waste">
+                    I agree to the 
+                    <gds-link href="@Url.Action("TermsAndConditions","Register")">
+                        terms and conditions
+                    </gds-link>
+                </label>
+            </div>
+        </div>
+
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit">
+            Continue
+        </button>
+    </form>
+
+</gds-div-grid-column-two-thirds>

@@ -16,7 +16,7 @@ public class GetUserAccountQueryHandler : IRequestHandler<GetUserAccountQuery, G
     {
         return new GetUserAccountResponse(
                             _loanUserContext.Email,
-                            _loanUserContext.UserGlobalId,
+                            _loanUserContext.UserGlobalId.ToString(),
                             await _loanUserContext.GetSelectedAccountId(),
                             await _loanUserContext.GetAllAccountIds());
     }

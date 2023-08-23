@@ -24,7 +24,7 @@ public static class LoanApplicationMapper
 
     public static UserAccountDto MapToUserAccountDto(UserAccount userAccount)
     {
-        return new UserAccountDto { AccountId = userAccount.AccountId, ContactEmail = userAccount.UserEmail, ContactExternalId = userAccount.UserGlobalId, };
+        return new UserAccountDto { AccountId = userAccount.AccountId, ContactEmail = userAccount.UserEmail, ContactExternalId = userAccount.UserGlobalId.ToString(), };
     }
 
     private static AccountDetailsViewModel MapToAccountDetailsViewModel(LoanApplicationDto loanApplicationDto)
