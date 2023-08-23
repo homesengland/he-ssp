@@ -1,5 +1,3 @@
-using HE.InvestmentLoans.Contract.User;
-
 namespace HE.InvestmentLoans.BusinessLogic.User.Entities;
 public class UserDetails
 {
@@ -25,13 +23,13 @@ public class UserDetails
 
     public string SecondaryTelephoneNumber { get; set; }
 
-    public void ProvideUserDetails(UserDetailsViewModel userDetailsViewModel, string userEmail)
+    public void ProvideUserDetails(string firstName, string surname, string jobTitle, string telephoneNumber, string secondaryTelephoneNumber, string userEmail)
     {
-        FirstName = userDetailsViewModel.FirstName;
-        Surname = userDetailsViewModel.Surname;
-        JobTitle = userDetailsViewModel.JobTitle;
+        FirstName = firstName;
+        Surname = surname;
+        JobTitle = jobTitle;
         Email = userEmail;
-        TelephoneNumber = userDetailsViewModel.TelephoneNumber;
-        SecondaryTelephoneNumber = userDetailsViewModel.SecondaryTelephoneNumber;
+        TelephoneNumber = telephoneNumber;
+        SecondaryTelephoneNumber = secondaryTelephoneNumber;
     }
 }

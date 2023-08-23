@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.Contract.User;
+using FluentValidation;
 using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.Contract.User.Queries;
 using MediatR;
@@ -13,9 +13,14 @@ public class RegisterController : Controller
 {
     private readonly IMediator _mediator;
 
+    // private readonly IValidator<UserDetailsViewModel> _validator;
+
+    // public RegisterController(IMediator mediator, IValidator<UserDetailsViewModel> validator)
     public RegisterController(IMediator mediator)
     {
         _mediator = mediator;
+
+        // _validator = validator;
     }
 
     [HttpGet("profile-details")]
@@ -23,13 +28,18 @@ public class RegisterController : Controller
     {
         var response = await _mediator.Send(new GetUserDetailsQuery());
 
-        return View(response.ViewModel);
+        return View(response);
     }
 
     [HttpPost("profile-details")]
-    public async Task<IActionResult> ProfileDetails(UserDetailsViewModel userDetailsViewModel)
+    public async Task<IActionResult> ProfileDetails(GetUserDetailsResponse getUserDetailsResponse)
     {
-        await _mediator.Send(new ProvideUserDetailsCommand(userDetailsViewModel));
+        await _mediator.Send(new ProvideUserDetailsCommand(
+            getUserDetailsResponse.FirstName,
+            getUserDetailsResponse.Surname,
+            getUserDetailsResponse.JobTitle,
+            getUserDetailsResponse.TelephoneNumber,
+            getUserDetailsResponse.SecondaryTelephoneNumber));
 
         return RedirectToAction("SearchOrganization", "Organization");
     }
