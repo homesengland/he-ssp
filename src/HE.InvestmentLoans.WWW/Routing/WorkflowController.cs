@@ -1,7 +1,7 @@
 using System.Reflection;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Common.Utils.ValueObjects;
+using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -94,27 +94,27 @@ public abstract class WorkflowController<TState> : Controller
         }
     }
 
-    private List<WorkflowMethod<TState>> WorkflowGetMethodsFromAllControllers()
+    private IList<WorkflowMethod<TState>> WorkflowGetMethodsFromAllControllers()
     {
-        return Assembly.GetExecutingAssembly()
+        return Assembly
+            .GetExecutingAssembly()
             .GetTypes()
             .SelectMany(t => t.GetMethods())
-            .Where(method => IsWorkflowGetMethod(method))
-            .Select(m =>
+            .Where(IsWorkflowGetMethod)
+            .SelectMany(m =>
             {
-                var attributeAssignedToMethod = m.GetCustomAttributes(typeof(WorkflowStateAttribute), false).Single() as WorkflowStateAttribute;
+                var attributeAssignedToMethods = m.GetCustomAttributes(typeof(WorkflowStateAttribute), false).Cast<WorkflowStateAttribute>();
+                var workflowMethods = new List<WorkflowMethod<TState>>();
+                foreach (var workflowStateAttribute in attributeAssignedToMethods)
+                {
+                    if (workflowStateAttribute.State is TState state)
+                    {
+                        workflowMethods.Add(new WorkflowMethod<TState>(new ControllerName(m.DeclaringType.Name), m.Name, state));
+                    }
+                }
 
-                if (attributeAssignedToMethod.State is not TState state)
-                {
-                    return (controller: new ControllerName(m.DeclaringType.Name), method: m.Name, state: default(TState), stateFound: false);
-                }
-                else
-                {
-                    return (controller: new ControllerName(m.DeclaringType.Name), method: m.Name, state, stateFound: true);
-                }
+                return workflowMethods;
             })
-            .Where(m => m.stateFound)
-            .Select(m => new WorkflowMethod<TState>(m.controller, m.method, m.state))
             .ToList();
     }
 

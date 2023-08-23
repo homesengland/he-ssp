@@ -2,6 +2,7 @@ using FluentValidation;
 using FluentValidation.Internal;
 using FluentValidation.Results;
 using MediatR;
+using ValidationException = HE.InvestmentLoans.Common.Exceptions.ValidationException;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Pipelines;
 
@@ -53,7 +54,7 @@ public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
 
         if (results.Count > 0)
         {
-            throw new Common.Exceptions.ValidationException(results);
+            throw new ValidationException(results);
         }
 
         return next();

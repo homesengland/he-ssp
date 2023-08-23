@@ -1,0 +1,50 @@
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.OrganizationViewModel;
+@{
+    ViewData["Title"] = "Organization Search";
+}
+
+<gds-div-grid-column-two-thirds>
+    <partial name="_BackLink" />
+
+    <gds-h1 size="ControlSize.L">
+        Search for your organisation
+    </gds-h1>
+
+    <gds-p>
+        You can search for your organisation below. This will search on our Customer Relationship Management (CRM) system and Companies House.
+    </gds-p>
+
+    <gds-p>
+        We will show you the result on the next page. You do not need to input the full organisation name for us to find it.
+    </gds-p>
+
+    <gds-p>
+        If you've not yet established your organisation, or you'll set up a special purpose vehicle (SPV) later, select 'enter details manually'.
+        If you do not think your details will be in CRM or Companies House, also select this button.
+    </gds-p>
+
+    <gds-p>
+        For the Affordable Homes Programme, the orgranisation searched should have or will have a secure legal interest in the land during legal development.
+    </gds-p>
+
+    <form asp-controller="Organization" asp-action="SelectOrganization" asp-method="post" novalidate>
+        <gds-h1 size="@ControlSize.M">
+            What is your organisation name?
+        </gds-h1>
+
+        <gds-input asp-excludelabel
+                   govuk-formgroup-asp-for="Name"
+                   type="text" />
+
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit">
+            Search
+        </button>
+    </form>
+
+    <gds-p>
+        <gds-link href="#">
+            Enter details manually.
+        </gds-link>
+    </gds-p>
+
+</gds-div-grid-column-two-thirds>

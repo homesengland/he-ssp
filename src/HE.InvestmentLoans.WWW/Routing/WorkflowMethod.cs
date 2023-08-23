@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.Common.Utils.ValueObjects;
+using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 
 namespace HE.InvestmentLoans.WWW.Routing;
 

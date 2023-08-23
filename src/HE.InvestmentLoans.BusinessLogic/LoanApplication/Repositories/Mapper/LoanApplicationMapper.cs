@@ -2,6 +2,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Contract.CompanyStructure;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 
@@ -66,6 +67,7 @@ public static class LoanApplicationMapper
             Purpose = loanApplicationDto.companyPurpose.MapToCommonResponse(),
             ExistingCompany = loanApplicationDto.existingCompany,
             HomesBuilt = loanApplicationDto.companyExperience.ToString(),
+            State = SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus),
         };
     }
 }

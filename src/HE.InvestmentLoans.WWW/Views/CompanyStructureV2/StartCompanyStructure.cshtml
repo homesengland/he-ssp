@@ -1,0 +1,23 @@
+﻿@model HE.InvestmentLoans.Contract.Application.ValueObjects.LoanApplicationId
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="CompanyStructureV2" asp-action="StartCompanyStructurePost" asp-route-id="@Model.Value" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("TaskList","LoanApplicationV2", new {id = Model.Value})" text="Back to application" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <gds-h1 size="ControlSize.L">
+            Company structure and experience
+        </gds-h1>
+
+        <div class="govuk-!-padding-bottom-8">
+            <gds-p>In this section, you’ll need to tell us:</gds-p>
+            <gds-ul>
+                <gds-li>if your organisation was established for the sole purpose of delivering this project</gds-li>
+                <gds-li>how much residential experience your organisation has </gds-li>
+            </gds-ul>
+        </div>
+        <gds-button-start name="action" type="submit" value="Continue">
+            Start now
+        </gds-button-start>
+    </form>
+</gds-div-grid-column-two-thirds>

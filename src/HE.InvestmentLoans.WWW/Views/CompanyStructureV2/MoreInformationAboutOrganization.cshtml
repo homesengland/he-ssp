@@ -1,0 +1,62 @@
+@using HE.InvestmentLoans.Contract.CompanyStructure
+@model HE.InvestmentLoans.Contract.CompanyStructure.CompanyStructureViewModel
+@inject ModelExpressionProvider modelProvider
+@{
+    var (hasError, fileInputError) = ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((CompanyStructureViewModel x) => x.CompanyInfoFile));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="CompanyStructureV2" asp-action="MoreInformationAboutOrganizationPost" asp-route-id="@Model.LoanApplicationId" enctype="multipart/form-data" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.ExistingCompany})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-error-form-group asp-for="ExistingCompany">
+                <legend>
+                    <gds-label-wrapper>
+                        <gds-label size="@ControlSize.L" for="ExistingCompany">
+                            Provide more information about your organisation
+                        </gds-label>
+                    </gds-label-wrapper>
+                </legend>
+                <gds-div-hint>
+                    Tell us about your organisation structure, including if your organisation is or has a parent company, or is part of a group structure.
+                </gds-div-hint>
+                <gds-text-area
+                    asp-for="ExistingCompany"
+                    rows="5"></gds-text-area>
+            </gds-error-form-group>
+            <gds-error-form-group asp-for="CompanyInfoFile" id="file-error-form">
+                <gds-div-hint>
+                    You can also upload any relevant files such as company structure charts.
+                </gds-div-hint>
+
+                    <p class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span>
+                        @if (hasError)
+                        {
+                            @fileInputError
+                        }
+                        else
+                        {
+                            <span id="client-error-message"/>
+                        }
+                    </p>
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="File">
+                        Upload a file
+                    </label>
+                    <input class="govuk-file-upload" id="File" name="File" type="file">
+                </div>
+            </gds-error-form-group>
+            <button class="govuk-button" id="continue-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
+                Continue
+            </button>
+        </gds-field-set>
+    </form>
+
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>
+
+<script src="/javascripts/ExistingCompany.file-validation.js"></script>

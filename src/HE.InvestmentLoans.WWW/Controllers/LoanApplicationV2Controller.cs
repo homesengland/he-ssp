@@ -1,11 +1,11 @@
 using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
-using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.User;
 using HE.InvestmentLoans.WWW.Models;
@@ -22,13 +22,11 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 {
     private readonly IMediator _mediator;
     private readonly IValidator<LoanPurposeModel> _validator;
-    private readonly ICacheService _cacheService;
 
-    public LoanApplicationV2Controller(IMediator mediator, IValidator<LoanPurposeModel> validator, ICacheService cacheService)
+    public LoanApplicationV2Controller(IMediator mediator, IValidator<LoanPurposeModel> validator)
     {
         _mediator = mediator;
         _validator = validator;
-        _cacheService = cacheService;
     }
 
     [HttpGet("")]
@@ -54,9 +52,9 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpPost("about-loan")]
     [WorkflowState(LoanApplicationWorkflow.State.AboutLoan)]
-    public Task<IActionResult> AboutLoanPost()
+    public async Task<IActionResult> AboutLoanPost()
     {
-        return Continue();
+        return await Continue();
     }
 
     [HttpGet("check-your-details")]
@@ -116,21 +114,15 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpGet("{id}/task-list")]
     [WorkflowState(LoanApplicationWorkflow.State.TaskList)]
+    [WorkflowState(CompanyStructureState.Complete)]
     public async Task<IActionResult> TaskList(Guid id)
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        var (isDeletedProjectInCache, deletedProjectFromCache) = response.LoanApplication.LegacyModel.ToggleDeleteProjectName(_cacheService);
-
-        if (isDeletedProjectInCache)
-        {
-            ViewBag.AdditionalData = deletedProjectFromCache;
-        }
-
         return View("TaskList", response.LoanApplication.LegacyModel);
     }
 
-    [HttpPost("task-list/{id}")]
+    [HttpPost("{id}/task-list")]
     [WorkflowState(LoanApplicationWorkflow.State.TaskList)]
     public Task<IActionResult> TaskListPost(Guid id)
     {

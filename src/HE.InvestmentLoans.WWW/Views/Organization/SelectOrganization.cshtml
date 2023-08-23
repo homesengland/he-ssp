@@ -1,0 +1,30 @@
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.OrganizationViewModel;
+@{
+    ViewData["Title"] = "Organization Select";
+}
+
+<gds-div-grid-column-two-thirds>
+    <partial name="_BackLink" />
+
+    <form asp-controller="Organization" asp-action="SelectOrganization" asp-method="post" novalidate>
+        <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
+            Select your organisation
+        </gds-h1>
+
+        <gds-radio govuk-formgroup-asp-for="SelectedOrganization"
+                   asp-selectlistitems="@Model.OrganizationSelectListItems"
+                   asp-isexcludeheader>
+        </gds-radio>
+
+        <gds-p>
+            <gds-link href="#">
+                The organisation is not listed above, enter details manually
+            </gds-link>
+        </gds-p>
+
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit">
+            Continue
+        </button>
+    </form>
+
+</gds-div-grid-column-two-thirds>

@@ -20382,6 +20382,127 @@ namespace HE.InvestmentLoans.CRM.Model
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_returnuserprofile")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_returnuserprofileRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_contactexternalid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactexternalid"))
+				{
+					return ((string)(this.Parameters["invln_contactexternalid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactexternalid"] = value;
+			}
+		}
+		
+		public invln_returnuserprofileRequest()
+		{
+			this.RequestName = "invln_returnuserprofile";
+			this.invln_contactexternalid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_returnuserprofile")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_returnuserprofileResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_returnuserprofileResponse()
+		{
+		}
+		
+		public string invln_userprofile
+		{
+			get
+			{
+				if (this.Results.Contains("invln_userprofile"))
+				{
+					return ((string)(this.Results["invln_userprofile"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_updateuserprofile")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_updateuserprofileRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_contactexternalid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactexternalid"))
+				{
+					return ((string)(this.Parameters["invln_contactexternalid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactexternalid"] = value;
+			}
+		}
+		
+		public string invln_contact
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contact"))
+				{
+					return ((string)(this.Parameters["invln_contact"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contact"] = value;
+			}
+		}
+		
+		public invln_updateuserprofileRequest()
+		{
+			this.RequestName = "invln_updateuserprofile";
+			this.invln_contactexternalid = default(string);
+			this.invln_contact = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_updateuserprofile")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_updateuserprofileResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_updateuserprofileResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
 	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_searchorganizationbynameandcompanyhousename")]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public partial class invln_searchorganizationbynameandcompanyhousenameRequest : Microsoft.Xrm.Sdk.OrganizationRequest

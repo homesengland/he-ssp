@@ -1,0 +1,42 @@
+@using HE.InvestmentLoans.Contract.CompanyStructure
+@model HE.InvestmentLoans.Contract.CompanyStructure.CompanyStructureViewModel
+@inject ModelExpressionProvider modelProvider
+@{
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((CompanyStructureViewModel x) => x.Purpose));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="CompanyStructureV2" asp-action="PurposePost" asp-route-id="@Model.LoanApplicationId"  asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.Purpose})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="radioInvalid">
+                <gds-legend class="govuk-fieldset__legend--l">
+                    <gds-fieldset-heading>
+                        Was your organisation established specifically for this development?
+                    </gds-fieldset-heading>
+                </gds-legend>
+                <gds-div-hint>
+                    This may mean your organisation is a special purpose vehicle (SPV).
+                </gds-div-hint>
+
+                @if (radioInvalid)
+                {
+                    <p class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> @radioErrors
+                    </p>
+                }
+                <gds-radio-yes-no class="govuk-!-margin-bottom-8"
+                                  asp-for="Purpose"></gds-radio-yes-no>
+            </gds-div-form-group>
+
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
+                Continue
+            </button>
+        </gds-field-set>
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>

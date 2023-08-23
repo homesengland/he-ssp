@@ -2,6 +2,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entiti
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.CompanyStructure;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
 
@@ -85,7 +86,6 @@ public class LoanApplicationViewModel
 
     public void UseSectionsFrom(LoanApplicationViewModel model)
     {
-        Company = model.Company;
         Projects = model.Projects;
         Security = model.Security;
         Sites = model.Sites;
@@ -95,7 +95,7 @@ public class LoanApplicationViewModel
 
     public bool IsReadyToSubmit()
     {
-        return (Company.State == CompanyStructureWorkflow.State.Complete || Company.IsFlowCompleted)
+        return (Company.IsCompleted() || Company.IsFlowCompleted)
             && (Security.State == SecurityWorkflow.State.Complete || Security.IsFlowCompleted)
             && (Funding.State == FundingWorkflow.State.Complete || Funding.IsFlowCompleted)
             && (Sites.All(x => x.State == SiteWorkflow.State.Complete) || Sites.All(x => x.IsFlowCompleted))
