@@ -6,8 +6,8 @@
       "generateOptionsetEnums": "true",
       "generateStateEnums": "true",
       "generateGlobalOptionsets": true,
-      "filename": "Model\\XrmSvcModel.cs",
-      "classNamespace": "HE.InvestmentLoans.CRM.Model",
+      "filename": "Model\\XrmSvc.cs",
+      "classNamespace": "HE.Investments.Organisation.Model",
       "serviceContextName": "XrmSvc",
       "oneTypePerFile": false
     }

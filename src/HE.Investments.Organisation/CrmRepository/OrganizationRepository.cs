@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.CRM.Model;
+using HE.Investments.Organisation.Model;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 

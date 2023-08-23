@@ -10,7 +10,7 @@
 
 [assembly: Microsoft.Xrm.Sdk.Client.ProxyTypesAssemblyAttribute()]
 
-namespace HE.InvestmentLoans.CRM.Model
+namespace HE.Investments.Organisation.Model
 {
 	
 	
@@ -8172,14 +8172,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select a category to indicate whether the customer account is standard or preferred.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountcategorycode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_accountcategorycode> AccountCategoryCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_accountcategorycode> AccountCategoryCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("accountcategorycode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_accountcategorycode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_accountcategorycode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_accountcategorycode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_accountcategorycode), optionSet.Value)));
 				}
 				else
 				{
@@ -8205,14 +8205,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select a classification code to indicate the potential value of the customer account based on the projected return on investment, cooperation level, sales cycle length or other criteria.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountclassificationcode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_accountclassificationcode> AccountClassificationCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_accountclassificationcode> AccountClassificationCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("accountclassificationcode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_accountclassificationcode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_accountclassificationcode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_accountclassificationcode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_accountclassificationcode), optionSet.Value)));
 				}
 				else
 				{
@@ -8295,14 +8295,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select a rating to indicate the value of the customer account.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountratingcode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_accountratingcode> AccountRatingCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_accountratingcode> AccountRatingCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("accountratingcode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_accountratingcode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_accountratingcode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_accountratingcode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_accountratingcode), optionSet.Value)));
 				}
 				else
 				{
@@ -8346,14 +8346,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the primary address type.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_addresstypecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_address1_addresstypecode> Address1_AddressTypeCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_address1_addresstypecode> Address1_AddressTypeCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_addresstypecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_address1_addresstypecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_address1_addresstypecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_address1_addresstypecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_address1_addresstypecode), optionSet.Value)));
 				}
 				else
 				{
@@ -8463,14 +8463,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the freight terms for the primary address to make sure shipping orders are processed correctly.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_freighttermscode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_address1_freighttermscode> Address1_FreightTermsCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_address1_freighttermscode> Address1_FreightTermsCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_freighttermscode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_address1_freighttermscode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_address1_freighttermscode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_address1_freighttermscode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_address1_freighttermscode), optionSet.Value)));
 				}
 				else
 				{
@@ -8658,14 +8658,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select a shipping method for deliveries sent to this address.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_shippingmethodcode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_address1_shippingmethodcode> Address1_ShippingMethodCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_address1_shippingmethodcode> Address1_ShippingMethodCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_shippingmethodcode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_address1_shippingmethodcode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_address1_shippingmethodcode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_address1_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_address1_shippingmethodcode), optionSet.Value)));
 				}
 				else
 				{
@@ -8817,14 +8817,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the secondary address type.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_addresstypecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_address2_addresstypecode> Address2_AddressTypeCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_address2_addresstypecode> Address2_AddressTypeCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_addresstypecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_address2_addresstypecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_address2_addresstypecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_address2_addresstypecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_address2_addresstypecode), optionSet.Value)));
 				}
 				else
 				{
@@ -8934,14 +8934,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the freight terms for the secondary address to make sure shipping orders are processed correctly.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_freighttermscode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_address2_freighttermscode> Address2_FreightTermsCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_address2_freighttermscode> Address2_FreightTermsCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_freighttermscode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_address2_freighttermscode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_address2_freighttermscode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_address2_freighttermscode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_address2_freighttermscode), optionSet.Value)));
 				}
 				else
 				{
@@ -9129,14 +9129,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select a shipping method for deliveries sent to this address.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_shippingmethodcode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_address2_shippingmethodcode> Address2_ShippingMethodCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_address2_shippingmethodcode> Address2_ShippingMethodCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_shippingmethodcode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_address2_shippingmethodcode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_address2_shippingmethodcode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_address2_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_address2_shippingmethodcode), optionSet.Value)));
 				}
 				else
 				{
@@ -9414,14 +9414,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the legal designation or other business type of the account for contracts or reporting purposes.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("businesstypecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_businesstypecode> BusinessTypeCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_businesstypecode> BusinessTypeCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("businesstypecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_businesstypecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_businesstypecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_businesstypecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_businesstypecode), optionSet.Value)));
 				}
 				else
 				{
@@ -9543,14 +9543,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the size category or range of the account for segmentation and reporting purposes.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customersizecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_customersizecode> CustomerSizeCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_customersizecode> CustomerSizeCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("customersizecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_customersizecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_customersizecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_customersizecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_customersizecode), optionSet.Value)));
 				}
 				else
 				{
@@ -9576,14 +9576,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the category that best describes the relationship between the account and your organization.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customertypecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_customertypecode> CustomerTypeCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_customertypecode> CustomerTypeCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("customertypecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_customertypecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_customertypecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_customertypecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_customertypecode), optionSet.Value)));
 				}
 				else
 				{
@@ -10149,14 +10149,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Local authority classification field. Is synchronized from SharePoint site
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_latier")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.he_account_he_latier> he_LATier
+		public System.Nullable<HE.Investments.Organisation.Model.he_account_he_latier> he_LATier
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_latier");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.he_account_he_latier)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.he_account_he_latier), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.he_account_he_latier)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.he_account_he_latier), optionSet.Value)));
 				}
 				else
 				{
@@ -10200,14 +10200,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_partner_sector")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.he_sector> he_Partner_Sector
+		public System.Nullable<HE.Investments.Organisation.Model.he_sector> he_Partner_Sector
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_partner_sector");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.he_sector)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.he_sector), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.he_sector)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.he_sector), optionSet.Value)));
 				}
 				else
 				{
@@ -10251,14 +10251,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_partnertype")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.he_account_he_partnertype> he_PartnerType
+		public System.Nullable<HE.Investments.Organisation.Model.he_account_he_partnertype> he_PartnerType
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_partnertype");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.he_account_he_partnertype)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.he_account_he_partnertype), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.he_account_he_partnertype)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.he_account_he_partnertype), optionSet.Value)));
 				}
 				else
 				{
@@ -10302,14 +10302,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Primary Operating Region of the partner
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_primaryoperatingregion")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.he_account_he_primaryoperatingregion> he_PrimaryOperatingRegion
+		public System.Nullable<HE.Investments.Organisation.Model.he_account_he_primaryoperatingregion> he_PrimaryOperatingRegion
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_primaryoperatingregion");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.he_account_he_primaryoperatingregion)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.he_account_he_primaryoperatingregion), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.he_account_he_primaryoperatingregion)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.he_account_he_primaryoperatingregion), optionSet.Value)));
 				}
 				else
 				{
@@ -10389,14 +10389,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_smeindicatorchoice")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.he_smeindicator> he_smeindicatorchoice
+		public System.Nullable<HE.Investments.Organisation.Model.he_smeindicator> he_smeindicatorchoice
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_smeindicatorchoice");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.he_smeindicator)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.he_smeindicator), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.he_smeindicator)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.he_smeindicator), optionSet.Value)));
 				}
 				else
 				{
@@ -10512,14 +10512,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the account's primary industry for use in marketing segmentation and demographic analysis.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("industrycode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_industrycode> IndustryCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_industrycode> IndustryCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("industrycode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_industrycode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_industrycode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_industrycode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_industrycode), optionSet.Value)));
 				}
 				else
 				{
@@ -10545,14 +10545,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_addressverificationtype")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_addressverificationtype> invln_addressverificationtype
+		public System.Nullable<HE.Investments.Organisation.Model.invln_addressverificationtype> invln_addressverificationtype
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_addressverificationtype");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_addressverificationtype)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_addressverificationtype), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_addressverificationtype)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_addressverificationtype), optionSet.Value)));
 				}
 				else
 				{
@@ -10578,14 +10578,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_creditratingagency")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_creditratingagency> invln_CreditRatingAgency
+		public System.Nullable<HE.Investments.Organisation.Model.invln_creditratingagency> invln_CreditRatingAgency
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_creditratingagency");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_creditratingagency)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_creditratingagency), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_creditratingagency)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_creditratingagency), optionSet.Value)));
 				}
 				else
 				{
@@ -10611,14 +10611,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_currentcrr")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_crrstatus> invln_CurrentCRR
+		public System.Nullable<HE.Investments.Organisation.Model.invln_crrstatus> invln_CurrentCRR
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_currentcrr");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_crrstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_crrstatus), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_crrstatus)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_crrstatus), optionSet.Value)));
 				}
 				else
 				{
@@ -10716,14 +10716,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_idverificationtype")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_idverificationtype> invln_idverificationtype
+		public System.Nullable<HE.Investments.Organisation.Model.invln_idverificationtype> invln_idverificationtype
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_idverificationtype");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_idverificationtype)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_idverificationtype), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_idverificationtype)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_idverificationtype), optionSet.Value)));
 				}
 				else
 				{
@@ -10749,14 +10749,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_originalcrr")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_crrstatus> invln_OriginalCRR
+		public System.Nullable<HE.Investments.Organisation.Model.invln_crrstatus> invln_OriginalCRR
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_originalcrr");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_crrstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_crrstatus), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_crrstatus)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_crrstatus), optionSet.Value)));
 				}
 				else
 				{
@@ -10818,14 +10818,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_previouscrr")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_crrstatus> invln_PreviousCRR
+		public System.Nullable<HE.Investments.Organisation.Model.invln_crrstatus> invln_PreviousCRR
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_previouscrr");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_crrstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_crrstatus), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_crrstatus)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_crrstatus), optionSet.Value)));
 				}
 				else
 				{
@@ -10851,14 +10851,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_rating")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_rating> invln_rating
+		public System.Nullable<HE.Investments.Organisation.Model.invln_rating> invln_rating
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_rating");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_rating)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_rating), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_rating)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_rating), optionSet.Value)));
 				}
 				else
 				{
@@ -11130,14 +11130,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msft_datastate")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.msft_datastate> msft_DataState
+		public System.Nullable<HE.Investments.Organisation.Model.msft_datastate> msft_DataState
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msft_datastate");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.msft_datastate)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.msft_datastate), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.msft_datastate)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.msft_datastate), optionSet.Value)));
 				}
 				else
 				{
@@ -11336,14 +11336,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the account's ownership structure, such as public or private.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownershipcode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_ownershipcode> OwnershipCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_ownershipcode> OwnershipCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("ownershipcode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_ownershipcode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_ownershipcode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_ownershipcode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_ownershipcode), optionSet.Value)));
 				}
 				else
 				{
@@ -11441,14 +11441,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the payment terms to indicate when the customer needs to pay the total amount.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("paymenttermscode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_paymenttermscode> PaymentTermsCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_paymenttermscode> PaymentTermsCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("paymenttermscode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_paymenttermscode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_paymenttermscode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_paymenttermscode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_paymenttermscode), optionSet.Value)));
 				}
 				else
 				{
@@ -11474,14 +11474,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the preferred day of the week for service appointments.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredappointmentdaycode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_preferredappointmentdaycode> PreferredAppointmentDayCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_preferredappointmentdaycode> PreferredAppointmentDayCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredappointmentdaycode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_preferredappointmentdaycode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_preferredappointmentdaycode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_preferredappointmentdaycode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_preferredappointmentdaycode), optionSet.Value)));
 				}
 				else
 				{
@@ -11507,14 +11507,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the preferred time of day for service appointments.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredappointmenttimecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_preferredappointmenttimecode> PreferredAppointmentTimeCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_preferredappointmenttimecode> PreferredAppointmentTimeCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredappointmenttimecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_preferredappointmenttimecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_preferredappointmenttimecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_preferredappointmenttimecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_preferredappointmenttimecode), optionSet.Value)));
 				}
 				else
 				{
@@ -11540,14 +11540,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the preferred method of contact.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredcontactmethodcode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_preferredcontactmethodcode> PreferredContactMethodCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_preferredcontactmethodcode> PreferredContactMethodCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredcontactmethodcode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_preferredcontactmethodcode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_preferredcontactmethodcode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_preferredcontactmethodcode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_preferredcontactmethodcode), optionSet.Value)));
 				}
 				else
 				{
@@ -11747,14 +11747,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select a shipping method for deliveries sent to the account's address to designate the preferred carrier or other delivery option.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("shippingmethodcode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_shippingmethodcode> ShippingMethodCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_shippingmethodcode> ShippingMethodCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("shippingmethodcode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_shippingmethodcode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_shippingmethodcode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_shippingmethodcode), optionSet.Value)));
 				}
 				else
 				{
@@ -11846,14 +11846,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Shows whether the account is active or inactive. Inactive accounts are read-only and can't be edited unless they are reactivated.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.AccountState> StateCode
+		public System.Nullable<HE.Investments.Organisation.Model.AccountState> StateCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.AccountState)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.AccountState), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.AccountState)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.AccountState), optionSet.Value)));
 				}
 				else
 				{
@@ -11879,14 +11879,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the account's status.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_statuscode> StatusCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_statuscode> StatusCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_statuscode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_statuscode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_statuscode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_statuscode), optionSet.Value)));
 				}
 				else
 				{
@@ -12002,14 +12002,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select a region or territory for the account for use in segmentation and analysis.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("territorycode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.account_territorycode> TerritoryCode
+		public System.Nullable<HE.Investments.Organisation.Model.account_territorycode> TerritoryCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("territorycode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.account_territorycode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.account_territorycode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.account_territorycode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.account_territorycode), optionSet.Value)));
 				}
 				else
 				{
@@ -12203,16 +12203,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 1:N account_master_account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
-		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Account> Referencedaccount_master_account
+		public System.Collections.Generic.IEnumerable<HE.Investments.Organisation.Model.Account> Referencedaccount_master_account
 		{
 			get
 			{
-				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Account>("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+				return this.GetRelatedEntities<HE.Investments.Organisation.Model.Account>("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced);
 			}
 			set
 			{
 				this.OnPropertyChanging("Referencedaccount_master_account");
-				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Account>("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.SetRelatedEntities<HE.Investments.Organisation.Model.Account>("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedaccount_master_account");
 			}
 		}
@@ -12221,16 +12221,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 1:N account_parent_account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
-		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Account> Referencedaccount_parent_account
+		public System.Collections.Generic.IEnumerable<HE.Investments.Organisation.Model.Account> Referencedaccount_parent_account
 		{
 			get
 			{
-				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+				return this.GetRelatedEntities<HE.Investments.Organisation.Model.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced);
 			}
 			set
 			{
 				this.OnPropertyChanging("Referencedaccount_parent_account");
-				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.SetRelatedEntities<HE.Investments.Organisation.Model.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedaccount_parent_account");
 			}
 		}
@@ -12239,16 +12239,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 1:N contact_customer_accounts
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_accounts")]
-		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Contact> contact_customer_accounts
+		public System.Collections.Generic.IEnumerable<HE.Investments.Organisation.Model.Contact> contact_customer_accounts
 		{
 			get
 			{
-				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("contact_customer_accounts", null);
+				return this.GetRelatedEntities<HE.Investments.Organisation.Model.Contact>("contact_customer_accounts", null);
 			}
 			set
 			{
 				this.OnPropertyChanging("contact_customer_accounts");
-				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("contact_customer_accounts", null, value);
+				this.SetRelatedEntities<HE.Investments.Organisation.Model.Contact>("contact_customer_accounts", null, value);
 				this.OnPropertyChanged("contact_customer_accounts");
 			}
 		}
@@ -12257,16 +12257,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 1:N he_account_account_UltimateParent
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
-		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Account> Referencedhe_account_account_UltimateParent
+		public System.Collections.Generic.IEnumerable<HE.Investments.Organisation.Model.Account> Referencedhe_account_account_UltimateParent
 		{
 			get
 			{
-				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+				return this.GetRelatedEntities<HE.Investments.Organisation.Model.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced);
 			}
 			set
 			{
 				this.OnPropertyChanging("Referencedhe_account_account_UltimateParent");
-				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.SetRelatedEntities<HE.Investments.Organisation.Model.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedhe_account_account_UltimateParent");
 			}
 		}
@@ -12275,16 +12275,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 1:N invln_loanapplication_account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_account")]
-		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.invln_Loanapplication> invln_loanapplication_account
+		public System.Collections.Generic.IEnumerable<HE.Investments.Organisation.Model.invln_Loanapplication> invln_loanapplication_account
 		{
 			get
 			{
-				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.invln_Loanapplication>("invln_loanapplication_account", null);
+				return this.GetRelatedEntities<HE.Investments.Organisation.Model.invln_Loanapplication>("invln_loanapplication_account", null);
 			}
 			set
 			{
 				this.OnPropertyChanging("invln_loanapplication_account");
-				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.invln_Loanapplication>("invln_loanapplication_account", null, value);
+				this.SetRelatedEntities<HE.Investments.Organisation.Model.invln_Loanapplication>("invln_loanapplication_account", null, value);
 				this.OnPropertyChanged("invln_loanapplication_account");
 			}
 		}
@@ -12293,16 +12293,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 1:N msa_account_managingpartner
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
-		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Account> Referencedmsa_account_managingpartner
+		public System.Collections.Generic.IEnumerable<HE.Investments.Organisation.Model.Account> Referencedmsa_account_managingpartner
 		{
 			get
 			{
-				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+				return this.GetRelatedEntities<HE.Investments.Organisation.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced);
 			}
 			set
 			{
 				this.OnPropertyChanging("Referencedmsa_account_managingpartner");
-				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.SetRelatedEntities<HE.Investments.Organisation.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedmsa_account_managingpartner");
 			}
 		}
@@ -12311,16 +12311,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 1:N msa_contact_managingpartner
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_contact_managingpartner")]
-		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Contact> msa_contact_managingpartner
+		public System.Collections.Generic.IEnumerable<HE.Investments.Organisation.Model.Contact> msa_contact_managingpartner
 		{
 			get
 			{
-				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("msa_contact_managingpartner", null);
+				return this.GetRelatedEntities<HE.Investments.Organisation.Model.Contact>("msa_contact_managingpartner", null);
 			}
 			set
 			{
 				this.OnPropertyChanging("msa_contact_managingpartner");
-				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("msa_contact_managingpartner", null, value);
+				this.SetRelatedEntities<HE.Investments.Organisation.Model.Contact>("msa_contact_managingpartner", null, value);
 				this.OnPropertyChanged("msa_contact_managingpartner");
 			}
 		}
@@ -12330,11 +12330,11 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
-		public HE.InvestmentLoans.CRM.Model.Account Referencingaccount_master_account
+		public HE.Investments.Organisation.Model.Account Referencingaccount_master_account
 		{
 			get
 			{
-				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+				return this.GetRelatedEntity<HE.Investments.Organisation.Model.Account>("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 		}
 		
@@ -12343,16 +12343,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentaccountid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
-		public HE.InvestmentLoans.CRM.Model.Account Referencingaccount_parent_account
+		public HE.Investments.Organisation.Model.Account Referencingaccount_parent_account
 		{
 			get
 			{
-				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+				return this.GetRelatedEntity<HE.Investments.Organisation.Model.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 			set
 			{
 				this.OnPropertyChanging("Referencingaccount_parent_account");
-				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.SetRelatedEntity<HE.Investments.Organisation.Model.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingaccount_parent_account");
 			}
 		}
@@ -12362,16 +12362,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("primarycontactid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_primary_contact")]
-		public HE.InvestmentLoans.CRM.Model.Contact account_primary_contact
+		public HE.Investments.Organisation.Model.Contact account_primary_contact
 		{
 			get
 			{
-				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("account_primary_contact", null);
+				return this.GetRelatedEntity<HE.Investments.Organisation.Model.Contact>("account_primary_contact", null);
 			}
 			set
 			{
 				this.OnPropertyChanging("account_primary_contact");
-				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("account_primary_contact", null, value);
+				this.SetRelatedEntity<HE.Investments.Organisation.Model.Contact>("account_primary_contact", null, value);
 				this.OnPropertyChanged("account_primary_contact");
 			}
 		}
@@ -12381,16 +12381,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_ultimateparent")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
-		public HE.InvestmentLoans.CRM.Model.Account Referencinghe_account_account_UltimateParent
+		public HE.Investments.Organisation.Model.Account Referencinghe_account_account_UltimateParent
 		{
 			get
 			{
-				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+				return this.GetRelatedEntity<HE.Investments.Organisation.Model.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 			set
 			{
 				this.OnPropertyChanging("Referencinghe_account_account_UltimateParent");
-				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.SetRelatedEntity<HE.Investments.Organisation.Model.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencinghe_account_account_UltimateParent");
 			}
 		}
@@ -12400,16 +12400,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
-		public HE.InvestmentLoans.CRM.Model.Account Referencingmsa_account_managingpartner
+		public HE.Investments.Organisation.Model.Account Referencingmsa_account_managingpartner
 		{
 			get
 			{
-				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+				return this.GetRelatedEntity<HE.Investments.Organisation.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 			set
 			{
 				this.OnPropertyChanging("Referencingmsa_account_managingpartner");
-				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.SetRelatedEntity<HE.Investments.Organisation.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingmsa_account_managingpartner");
 			}
 		}
@@ -12833,14 +12833,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the contact's role within the company or sales process, such as decision maker, employee, or influencer.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountrolecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_accountrolecode> AccountRoleCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_accountrolecode> AccountRoleCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("accountrolecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_accountrolecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_accountrolecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_accountrolecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_accountrolecode), optionSet.Value)));
 				}
 				else
 				{
@@ -12884,14 +12884,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the primary address type.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_addresstypecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_address1_addresstypecode> Address1_AddressTypeCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_address1_addresstypecode> Address1_AddressTypeCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_addresstypecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_address1_addresstypecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_address1_addresstypecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_address1_addresstypecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_address1_addresstypecode), optionSet.Value)));
 				}
 				else
 				{
@@ -13001,14 +13001,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the freight terms for the primary address to make sure shipping orders are processed correctly.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_freighttermscode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_address1_freighttermscode> Address1_FreightTermsCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_address1_freighttermscode> Address1_FreightTermsCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_freighttermscode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_address1_freighttermscode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_address1_freighttermscode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_address1_freighttermscode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_address1_freighttermscode), optionSet.Value)));
 				}
 				else
 				{
@@ -13196,14 +13196,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select a shipping method for deliveries sent to this address.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_shippingmethodcode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_address1_shippingmethodcode> Address1_ShippingMethodCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_address1_shippingmethodcode> Address1_ShippingMethodCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_shippingmethodcode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_address1_shippingmethodcode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_address1_shippingmethodcode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_address1_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_address1_shippingmethodcode), optionSet.Value)));
 				}
 				else
 				{
@@ -13355,14 +13355,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the secondary address type.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_addresstypecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_address2_addresstypecode> Address2_AddressTypeCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_address2_addresstypecode> Address2_AddressTypeCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_addresstypecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_address2_addresstypecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_address2_addresstypecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_address2_addresstypecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_address2_addresstypecode), optionSet.Value)));
 				}
 				else
 				{
@@ -13472,14 +13472,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the freight terms for the secondary address to make sure shipping orders are processed correctly.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_freighttermscode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_address2_freighttermscode> Address2_FreightTermsCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_address2_freighttermscode> Address2_FreightTermsCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_freighttermscode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_address2_freighttermscode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_address2_freighttermscode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_address2_freighttermscode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_address2_freighttermscode), optionSet.Value)));
 				}
 				else
 				{
@@ -13667,14 +13667,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select a shipping method for deliveries sent to this address.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_shippingmethodcode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_address2_shippingmethodcode> Address2_ShippingMethodCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_address2_shippingmethodcode> Address2_ShippingMethodCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_shippingmethodcode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_address2_shippingmethodcode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_address2_shippingmethodcode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_address2_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_address2_shippingmethodcode), optionSet.Value)));
 				}
 				else
 				{
@@ -13826,14 +13826,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the third address type.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_addresstypecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_address3_addresstypecode> Address3_AddressTypeCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_address3_addresstypecode> Address3_AddressTypeCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address3_addresstypecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_address3_addresstypecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_address3_addresstypecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_address3_addresstypecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_address3_addresstypecode), optionSet.Value)));
 				}
 				else
 				{
@@ -13943,14 +13943,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the freight terms for the third address to make sure shipping orders are processed correctly.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_freighttermscode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_address3_freighttermscode> Address3_FreightTermsCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_address3_freighttermscode> Address3_FreightTermsCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address3_freighttermscode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_address3_freighttermscode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_address3_freighttermscode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_address3_freighttermscode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_address3_freighttermscode), optionSet.Value)));
 				}
 				else
 				{
@@ -14138,14 +14138,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select a shipping method for deliveries sent to this address.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_shippingmethodcode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_address3_shippingmethodcode> Address3_ShippingMethodCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_address3_shippingmethodcode> Address3_ShippingMethodCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address3_shippingmethodcode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_address3_shippingmethodcode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_address3_shippingmethodcode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_address3_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_address3_shippingmethodcode), optionSet.Value)));
 				}
 				else
 				{
@@ -15200,14 +15200,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the size of the contact's company for segmentation and reporting purposes.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customersizecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_customersizecode> CustomerSizeCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_customersizecode> CustomerSizeCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("customersizecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_customersizecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_customersizecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_customersizecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_customersizecode), optionSet.Value)));
 				}
 				else
 				{
@@ -15233,14 +15233,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the category that best describes the relationship between the contact and your organization.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customertypecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_customertypecode> CustomerTypeCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_customertypecode> CustomerTypeCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("customertypecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_customertypecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_customertypecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_customertypecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_customertypecode), optionSet.Value)));
 				}
 				else
 				{
@@ -15446,14 +15446,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the contact's highest level of education for use in segmentation and analysis.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("educationcode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_educationcode> EducationCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_educationcode> EducationCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("educationcode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_educationcode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_educationcode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_educationcode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_educationcode), optionSet.Value)));
 				}
 				else
 				{
@@ -15635,14 +15635,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the marital status of the contact for reference in follow-up phone calls and other communications.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("familystatuscode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_familystatuscode> FamilyStatusCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_familystatuscode> FamilyStatusCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("familystatuscode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_familystatuscode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_familystatuscode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_familystatuscode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_familystatuscode), optionSet.Value)));
 				}
 				else
 				{
@@ -15752,14 +15752,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the contact's gender to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("gendercode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_gendercode> GenderCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_gendercode> GenderCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("gendercode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_gendercode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_gendercode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_gendercode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_gendercode), optionSet.Value)));
 				}
 				else
 				{
@@ -15803,14 +15803,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select whether the contact has any children for reference in follow-up phone calls and other communications.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("haschildrencode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_haschildrencode> HasChildrenCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_haschildrencode> HasChildrenCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("haschildrencode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_haschildrencode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_haschildrencode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_haschildrencode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_haschildrencode), optionSet.Value)));
 				}
 				else
 				{
@@ -15890,14 +15890,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_marketingsend")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.he_marketingsend> he_marketingsend
+		public System.Nullable<HE.Investments.Organisation.Model.he_marketingsend> he_marketingsend
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_marketingsend");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.he_marketingsend)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.he_marketingsend), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.he_marketingsend)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.he_marketingsend), optionSet.Value)));
 				}
 				else
 				{
@@ -16103,14 +16103,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the primary marketing source that directed the contact to your organization.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("leadsourcecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_leadsourcecode> LeadSourceCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_leadsourcecode> LeadSourceCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("leadsourcecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_leadsourcecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_leadsourcecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_leadsourcecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_leadsourcecode), optionSet.Value)));
 				}
 				else
 				{
@@ -16334,14 +16334,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Indicate buying influence using tags
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_decisioninfluencetag")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_msdyn_decisioninfluencetag> msdyn_decisioninfluencetag
+		public System.Nullable<HE.Investments.Organisation.Model.contact_msdyn_decisioninfluencetag> msdyn_decisioninfluencetag
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msdyn_decisioninfluencetag");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_msdyn_decisioninfluencetag)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_msdyn_decisioninfluencetag), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_msdyn_decisioninfluencetag)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_msdyn_decisioninfluencetag), optionSet.Value)));
 				}
 				else
 				{
@@ -16457,14 +16457,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Whether or not the contact belongs to the associated account
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_orgchangestatus")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_msdyn_orgchangestatus> msdyn_orgchangestatus
+		public System.Nullable<HE.Investments.Organisation.Model.contact_msdyn_orgchangestatus> msdyn_orgchangestatus
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msdyn_orgchangestatus");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_msdyn_orgchangestatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_msdyn_orgchangestatus), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_msdyn_orgchangestatus)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_msdyn_orgchangestatus), optionSet.Value)));
 				}
 				else
 				{
@@ -16526,14 +16526,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msft_datastate")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.msft_datastate> msft_DataState
+		public System.Nullable<HE.Investments.Organisation.Model.msft_datastate> msft_DataState
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msft_datastate");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.msft_datastate)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.msft_datastate), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.msft_datastate)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.msft_datastate), optionSet.Value)));
 				}
 				else
 				{
@@ -16546,14 +16546,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// User’s preferred portal language
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("mspp_userpreferredlcid")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.powerpagelanguages> mspp_userpreferredlcid
+		public System.Nullable<HE.Investments.Organisation.Model.powerpagelanguages> mspp_userpreferredlcid
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("mspp_userpreferredlcid");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.powerpagelanguages)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.powerpagelanguages), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.powerpagelanguages)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.powerpagelanguages), optionSet.Value)));
 				}
 				else
 				{
@@ -16801,14 +16801,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the payment terms to indicate when the customer needs to pay the total amount.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("paymenttermscode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_paymenttermscode> PaymentTermsCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_paymenttermscode> PaymentTermsCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("paymenttermscode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_paymenttermscode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_paymenttermscode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_paymenttermscode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_paymenttermscode), optionSet.Value)));
 				}
 				else
 				{
@@ -16834,14 +16834,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the preferred day of the week for service appointments.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredappointmentdaycode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_preferredappointmentdaycode> PreferredAppointmentDayCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_preferredappointmentdaycode> PreferredAppointmentDayCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredappointmentdaycode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_preferredappointmentdaycode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_preferredappointmentdaycode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_preferredappointmentdaycode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_preferredappointmentdaycode), optionSet.Value)));
 				}
 				else
 				{
@@ -16867,14 +16867,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the preferred time of day for service appointments.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredappointmenttimecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_preferredappointmenttimecode> PreferredAppointmentTimeCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_preferredappointmenttimecode> PreferredAppointmentTimeCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredappointmenttimecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_preferredappointmenttimecode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_preferredappointmenttimecode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_preferredappointmenttimecode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_preferredappointmenttimecode), optionSet.Value)));
 				}
 				else
 				{
@@ -16900,14 +16900,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the preferred method of contact.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredcontactmethodcode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_preferredcontactmethodcode> PreferredContactMethodCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_preferredcontactmethodcode> PreferredContactMethodCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredcontactmethodcode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_preferredcontactmethodcode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_preferredcontactmethodcode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_preferredcontactmethodcode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_preferredcontactmethodcode), optionSet.Value)));
 				}
 				else
 				{
@@ -17023,14 +17023,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select a shipping method for deliveries sent to this address.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("shippingmethodcode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_shippingmethodcode> ShippingMethodCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_shippingmethodcode> ShippingMethodCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("shippingmethodcode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_shippingmethodcode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_shippingmethodcode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_shippingmethodcode), optionSet.Value)));
 				}
 				else
 				{
@@ -17122,14 +17122,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Shows whether the contact is active or inactive. Inactive contacts are read-only and can't be edited unless they are reactivated.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.ContactState> StateCode
+		public System.Nullable<HE.Investments.Organisation.Model.ContactState> StateCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.ContactState)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.ContactState), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.ContactState)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.ContactState), optionSet.Value)));
 				}
 				else
 				{
@@ -17155,14 +17155,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select the contact's status.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_statuscode> StatusCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_statuscode> StatusCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_statuscode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_statuscode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_statuscode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_statuscode), optionSet.Value)));
 				}
 				else
 				{
@@ -17296,14 +17296,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Select a region or territory for the contact for use in segmentation and analysis.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("territorycode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_territorycode> TerritoryCode
+		public System.Nullable<HE.Investments.Organisation.Model.contact_territorycode> TerritoryCode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("territorycode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.contact_territorycode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.contact_territorycode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.contact_territorycode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.contact_territorycode), optionSet.Value)));
 				}
 				else
 				{
@@ -17509,16 +17509,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 1:N account_primary_contact
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_primary_contact")]
-		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Account> account_primary_contact
+		public System.Collections.Generic.IEnumerable<HE.Investments.Organisation.Model.Account> account_primary_contact
 		{
 			get
 			{
-				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Account>("account_primary_contact", null);
+				return this.GetRelatedEntities<HE.Investments.Organisation.Model.Account>("account_primary_contact", null);
 			}
 			set
 			{
 				this.OnPropertyChanging("account_primary_contact");
-				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Account>("account_primary_contact", null, value);
+				this.SetRelatedEntities<HE.Investments.Organisation.Model.Account>("account_primary_contact", null, value);
 				this.OnPropertyChanged("account_primary_contact");
 			}
 		}
@@ -17527,16 +17527,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 1:N contact_customer_contacts
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
-		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Contact> Referencedcontact_customer_contacts
+		public System.Collections.Generic.IEnumerable<HE.Investments.Organisation.Model.Contact> Referencedcontact_customer_contacts
 		{
 			get
 			{
-				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+				return this.GetRelatedEntities<HE.Investments.Organisation.Model.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced);
 			}
 			set
 			{
 				this.OnPropertyChanging("Referencedcontact_customer_contacts");
-				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.SetRelatedEntities<HE.Investments.Organisation.Model.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedcontact_customer_contacts");
 			}
 		}
@@ -17545,16 +17545,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 1:N contact_master_contact
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
-		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Contact> Referencedcontact_master_contact
+		public System.Collections.Generic.IEnumerable<HE.Investments.Organisation.Model.Contact> Referencedcontact_master_contact
 		{
 			get
 			{
-				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+				return this.GetRelatedEntities<HE.Investments.Organisation.Model.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced);
 			}
 			set
 			{
 				this.OnPropertyChanging("Referencedcontact_master_contact");
-				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.SetRelatedEntities<HE.Investments.Organisation.Model.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedcontact_master_contact");
 			}
 		}
@@ -17563,16 +17563,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 1:N contact_parent_contact
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
-		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Contact> Referencedcontact_parent_contact
+		public System.Collections.Generic.IEnumerable<HE.Investments.Organisation.Model.Contact> Referencedcontact_parent_contact
 		{
 			get
 			{
-				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+				return this.GetRelatedEntities<HE.Investments.Organisation.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced);
 			}
 			set
 			{
 				this.OnPropertyChanging("Referencedcontact_parent_contact");
-				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.SetRelatedEntities<HE.Investments.Organisation.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedcontact_parent_contact");
 			}
 		}
@@ -17581,16 +17581,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 1:N invln_loanapplication_contact
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_contact")]
-		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.invln_Loanapplication> invln_loanapplication_contact
+		public System.Collections.Generic.IEnumerable<HE.Investments.Organisation.Model.invln_Loanapplication> invln_loanapplication_contact
 		{
 			get
 			{
-				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.invln_Loanapplication>("invln_loanapplication_contact", null);
+				return this.GetRelatedEntities<HE.Investments.Organisation.Model.invln_Loanapplication>("invln_loanapplication_contact", null);
 			}
 			set
 			{
 				this.OnPropertyChanging("invln_loanapplication_contact");
-				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.invln_Loanapplication>("invln_loanapplication_contact", null, value);
+				this.SetRelatedEntities<HE.Investments.Organisation.Model.invln_Loanapplication>("invln_loanapplication_contact", null, value);
 				this.OnPropertyChanged("invln_loanapplication_contact");
 			}
 		}
@@ -17600,16 +17600,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_accounts")]
-		public HE.InvestmentLoans.CRM.Model.Account contact_customer_accounts
+		public HE.Investments.Organisation.Model.Account contact_customer_accounts
 		{
 			get
 			{
-				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("contact_customer_accounts", null);
+				return this.GetRelatedEntity<HE.Investments.Organisation.Model.Account>("contact_customer_accounts", null);
 			}
 			set
 			{
 				this.OnPropertyChanging("contact_customer_accounts");
-				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("contact_customer_accounts", null, value);
+				this.SetRelatedEntity<HE.Investments.Organisation.Model.Account>("contact_customer_accounts", null, value);
 				this.OnPropertyChanged("contact_customer_accounts");
 			}
 		}
@@ -17619,16 +17619,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
-		public HE.InvestmentLoans.CRM.Model.Contact Referencingcontact_customer_contacts
+		public HE.Investments.Organisation.Model.Contact Referencingcontact_customer_contacts
 		{
 			get
 			{
-				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+				return this.GetRelatedEntity<HE.Investments.Organisation.Model.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 			set
 			{
 				this.OnPropertyChanging("Referencingcontact_customer_contacts");
-				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.SetRelatedEntity<HE.Investments.Organisation.Model.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingcontact_customer_contacts");
 			}
 		}
@@ -17638,11 +17638,11 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
-		public HE.InvestmentLoans.CRM.Model.Contact Referencingcontact_master_contact
+		public HE.Investments.Organisation.Model.Contact Referencingcontact_master_contact
 		{
 			get
 			{
-				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+				return this.GetRelatedEntity<HE.Investments.Organisation.Model.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 		}
 		
@@ -17651,16 +17651,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parent_contactid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
-		public HE.InvestmentLoans.CRM.Model.Contact Referencingcontact_parent_contact
+		public HE.Investments.Organisation.Model.Contact Referencingcontact_parent_contact
 		{
 			get
 			{
-				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+				return this.GetRelatedEntity<HE.Investments.Organisation.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
 			}
 			set
 			{
 				this.OnPropertyChanging("Referencingcontact_parent_contact");
-				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.SetRelatedEntity<HE.Investments.Organisation.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingcontact_parent_contact");
 			}
 		}
@@ -17670,16 +17670,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_contact_managingpartner")]
-		public HE.InvestmentLoans.CRM.Model.Account msa_contact_managingpartner
+		public HE.Investments.Organisation.Model.Account msa_contact_managingpartner
 		{
 			get
 			{
-				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("msa_contact_managingpartner", null);
+				return this.GetRelatedEntity<HE.Investments.Organisation.Model.Account>("msa_contact_managingpartner", null);
 			}
 			set
 			{
 				this.OnPropertyChanging("msa_contact_managingpartner");
-				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("msa_contact_managingpartner", null, value);
+				this.SetRelatedEntity<HE.Investments.Organisation.Model.Account>("msa_contact_managingpartner", null, value);
 				this.OnPropertyChanged("msa_contact_managingpartner");
 			}
 		}
@@ -18010,14 +18010,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_companystructureandexperiencecompletionst")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus> invln_companystructureandexperiencecompletionst
+		public System.Nullable<HE.Investments.Organisation.Model.invln_sectioncompletionstatus> invln_companystructureandexperiencecompletionst
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_companystructureandexperiencecompletionst");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_sectioncompletionstatus), optionSet.Value)));
 				}
 				else
 				{
@@ -18205,14 +18205,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalstatus")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_externalstatus> invln_ExternalStatus
+		public System.Nullable<HE.Investments.Organisation.Model.invln_externalstatus> invln_ExternalStatus
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_externalstatus");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_externalstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_externalstatus), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_externalstatus)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_externalstatus), optionSet.Value)));
 				}
 				else
 				{
@@ -18238,14 +18238,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundingdetailscompletionstatus")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus> invln_fundingdetailscompletionstatus
+		public System.Nullable<HE.Investments.Organisation.Model.invln_sectioncompletionstatus> invln_fundingdetailscompletionstatus
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_fundingdetailscompletionstatus");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_sectioncompletionstatus), optionSet.Value)));
 				}
 				else
 				{
@@ -18271,14 +18271,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundingreason")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_fundingreason> invln_FundingReason
+		public System.Nullable<HE.Investments.Organisation.Model.invln_fundingreason> invln_FundingReason
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_fundingreason");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_fundingreason)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_fundingreason), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_fundingreason)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_fundingreason), optionSet.Value)));
 				}
 				else
 				{
@@ -18304,14 +18304,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_internalstatus")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_internalstatus> invln_InternalStatus
+		public System.Nullable<HE.Investments.Organisation.Model.invln_internalstatus> invln_InternalStatus
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_internalstatus");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_internalstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_internalstatus), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_internalstatus)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_internalstatus), optionSet.Value)));
 				}
 				else
 				{
@@ -18790,14 +18790,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_refinancerepayment")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_refinancerepayment> invln_Refinancerepayment
+		public System.Nullable<HE.Investments.Organisation.Model.invln_refinancerepayment> invln_Refinancerepayment
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_refinancerepayment");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_refinancerepayment)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_refinancerepayment), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_refinancerepayment)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_refinancerepayment), optionSet.Value)));
 				}
 				else
 				{
@@ -18859,14 +18859,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitydetailscompletionstatus")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus> invln_securitydetailscompletionstatus
+		public System.Nullable<HE.Investments.Organisation.Model.invln_sectioncompletionstatus> invln_securitydetailscompletionstatus
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_securitydetailscompletionstatus");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_sectioncompletionstatus), optionSet.Value)));
 				}
 				else
 				{
@@ -18892,14 +18892,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sitedetailscompletionstatus")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus> invln_sitedetailscompletionstatus
+		public System.Nullable<HE.Investments.Organisation.Model.invln_sectioncompletionstatus> invln_sitedetailscompletionstatus
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_sitedetailscompletionstatus");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_sectioncompletionstatus), optionSet.Value)));
 				}
 				else
 				{
@@ -19087,14 +19087,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Status of the Loan application
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_LoanapplicationState> statecode
+		public System.Nullable<HE.Investments.Organisation.Model.invln_LoanapplicationState> statecode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_LoanapplicationState)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_LoanapplicationState), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_LoanapplicationState)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_LoanapplicationState), optionSet.Value)));
 				}
 				else
 				{
@@ -19120,14 +19120,14 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// Reason for the status of the Loan application
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_loanapplication_statuscode> statuscode
+		public System.Nullable<HE.Investments.Organisation.Model.invln_loanapplication_statuscode> statuscode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
 				if ((optionSet != null))
 				{
-					return ((HE.InvestmentLoans.CRM.Model.invln_loanapplication_statuscode)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_loanapplication_statuscode), optionSet.Value)));
+					return ((HE.Investments.Organisation.Model.invln_loanapplication_statuscode)(System.Enum.ToObject(typeof(HE.Investments.Organisation.Model.invln_loanapplication_statuscode), optionSet.Value)));
 				}
 				else
 				{
@@ -19238,16 +19238,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_account")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_account")]
-		public HE.InvestmentLoans.CRM.Model.Account invln_loanapplication_account
+		public HE.Investments.Organisation.Model.Account invln_loanapplication_account
 		{
 			get
 			{
-				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("invln_loanapplication_account", null);
+				return this.GetRelatedEntity<HE.Investments.Organisation.Model.Account>("invln_loanapplication_account", null);
 			}
 			set
 			{
 				this.OnPropertyChanging("invln_loanapplication_account");
-				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Account>("invln_loanapplication_account", null, value);
+				this.SetRelatedEntity<HE.Investments.Organisation.Model.Account>("invln_loanapplication_account", null, value);
 				this.OnPropertyChanged("invln_loanapplication_account");
 			}
 		}
@@ -19257,16 +19257,16 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contact")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_contact")]
-		public HE.InvestmentLoans.CRM.Model.Contact invln_loanapplication_contact
+		public HE.Investments.Organisation.Model.Contact invln_loanapplication_contact
 		{
 			get
 			{
-				return this.GetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("invln_loanapplication_contact", null);
+				return this.GetRelatedEntity<HE.Investments.Organisation.Model.Contact>("invln_loanapplication_contact", null);
 			}
 			set
 			{
 				this.OnPropertyChanging("invln_loanapplication_contact");
-				this.SetRelatedEntity<HE.InvestmentLoans.CRM.Model.Contact>("invln_loanapplication_contact", null, value);
+				this.SetRelatedEntity<HE.Investments.Organisation.Model.Contact>("invln_loanapplication_contact", null, value);
 				this.OnPropertyChanged("invln_loanapplication_contact");
 			}
 		}
@@ -19276,47 +19276,47 @@ namespace HE.InvestmentLoans.CRM.Model
 	/// Represents a source of entities bound to a CRM service. It tracks and manages changes made to the retrieved entities.
 	/// </summary>
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
-	public partial class XrmSvcModel : Microsoft.Xrm.Sdk.Client.OrganizationServiceContext
+	public partial class XrmSvc : Microsoft.Xrm.Sdk.Client.OrganizationServiceContext
 	{
 		
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public XrmSvcModel(Microsoft.Xrm.Sdk.IOrganizationService service) : 
+		public XrmSvc(Microsoft.Xrm.Sdk.IOrganizationService service) : 
 				base(service)
 		{
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="HE.InvestmentLoans.CRM.Model.Account"/> entities.
+		/// Gets a binding to the set of all <see cref="HE.Investments.Organisation.Model.Account"/> entities.
 		/// </summary>
-		public System.Linq.IQueryable<HE.InvestmentLoans.CRM.Model.Account> AccountSet
+		public System.Linq.IQueryable<HE.Investments.Organisation.Model.Account> AccountSet
 		{
 			get
 			{
-				return this.CreateQuery<HE.InvestmentLoans.CRM.Model.Account>();
+				return this.CreateQuery<HE.Investments.Organisation.Model.Account>();
 			}
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="HE.InvestmentLoans.CRM.Model.Contact"/> entities.
+		/// Gets a binding to the set of all <see cref="HE.Investments.Organisation.Model.Contact"/> entities.
 		/// </summary>
-		public System.Linq.IQueryable<HE.InvestmentLoans.CRM.Model.Contact> ContactSet
+		public System.Linq.IQueryable<HE.Investments.Organisation.Model.Contact> ContactSet
 		{
 			get
 			{
-				return this.CreateQuery<HE.InvestmentLoans.CRM.Model.Contact>();
+				return this.CreateQuery<HE.Investments.Organisation.Model.Contact>();
 			}
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="HE.InvestmentLoans.CRM.Model.invln_Loanapplication"/> entities.
+		/// Gets a binding to the set of all <see cref="HE.Investments.Organisation.Model.invln_Loanapplication"/> entities.
 		/// </summary>
-		public System.Linq.IQueryable<HE.InvestmentLoans.CRM.Model.invln_Loanapplication> invln_LoanapplicationSet
+		public System.Linq.IQueryable<HE.Investments.Organisation.Model.invln_Loanapplication> invln_LoanapplicationSet
 		{
 			get
 			{
-				return this.CreateQuery<HE.InvestmentLoans.CRM.Model.invln_Loanapplication>();
+				return this.CreateQuery<HE.Investments.Organisation.Model.invln_Loanapplication>();
 			}
 		}
 	}
