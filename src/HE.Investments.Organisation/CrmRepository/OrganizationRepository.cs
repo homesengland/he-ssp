@@ -3,14 +3,14 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Client;
 
 namespace HE.Investments.Organisation.CrmRepository;
-public class OrganizationRepository
+public class OrganizationRepository : IOrganizationRepository
 {
-    public IEnumerable<Account> GetAccountsByOrganizationNameAndCompanyHouseNumber(IOrganizationService service, string organizationName, string companyHouseName)
+    public IEnumerable<Account> GetAccountsByOrganizationNameAndCompanyHouseNumber(IOrganizationService service, string organizationName, string companyHouseNumber)
     {
         using (var ctx = new OrganizationServiceContext(service))
         {
             return ctx.CreateQuery<Account>()
-                .Where(x => x.Name.Contains(organizationName) || x.he_CompaniesHouseNumber == companyHouseName).AsEnumerable();
+                .Where(x => x.Name.Contains(organizationName) || x.he_CompaniesHouseNumber == companyHouseNumber).AsEnumerable();
         }
     }
 }
