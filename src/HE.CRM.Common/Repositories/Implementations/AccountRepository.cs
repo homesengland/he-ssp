@@ -6,6 +6,7 @@ using Microsoft.Xrm.Sdk;
 using System;
 using Microsoft.Xrm.Sdk.Client;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace HE.CRM.Common.Repositories.Implementations
 {

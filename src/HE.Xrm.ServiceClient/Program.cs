@@ -35,7 +35,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    UserProfileTest(serviceClient);
+                    TestSearch(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -47,6 +47,18 @@ namespace HE.Xrm.ServiceClientExample
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
+        }
+
+        private static void TestSearch(ServiceClient serviceClient)
+        {
+            var req1 = new invln_searchorganizationbynameandcompanyhousenameRequest()
+            {
+                invln_companyhousenumber = "2137",
+                invln_organizationname = "",
+            };
+            var resp1 = (invln_searchorganizationbynameandcompanyhousenameResponse)serviceClient.Execute(req1);
+            var deserializedResp1 = JsonSerializer.Deserialize<List<OrganizationDetailsDto>>(resp1.invln_organization);
+            Console.WriteLine("test end.");
         }
 
         private static void UserProfileTest(ServiceClient serviceClient)

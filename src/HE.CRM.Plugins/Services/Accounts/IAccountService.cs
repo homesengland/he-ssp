@@ -1,7 +1,7 @@
 using HE.Base.Services;
-using Microsoft.Xrm.Sdk;
 using DataverseModel;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using System.Collections.Generic;
 
 namespace HE.CRM.Plugins.Services.Accounts
 {

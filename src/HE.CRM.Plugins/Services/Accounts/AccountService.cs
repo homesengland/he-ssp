@@ -1,19 +1,8 @@
-using HE.Base.Repositories;
 using HE.Base.Services;
-using HE.CRM.Common.Extensions;
-using Microsoft.Xrm.Sdk.Messages;
-using Microsoft.Xrm.Sdk.Query;
-using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.CRM.Common.Repositories;
 using DataverseModel;
 using HE.CRM.Common.Repositories.Interfaces;
-using HE.CRM.Common.Repositories.Implementations;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.CRM.Plugins.Services.Accounts
