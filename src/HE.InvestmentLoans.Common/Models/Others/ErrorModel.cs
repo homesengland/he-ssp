@@ -11,10 +11,26 @@ public class ErrorModel
         Message = message;
     }
 
-    public ErrorModel(string message, string stackTrace)
+    public ErrorModel(string message, string errorCode)
     {
-        Message = $"{message} {stackTrace}";
+        Message = message;
+        ErrorCode = errorCode;
+    }
+
+    public ErrorModel(string message, string errorCode, Dictionary<string, string> additionalData)
+    {
+        Message = message;
+        ErrorCode = errorCode;
+        AdditionalData = additionalData;
     }
 
     public string Message { get; set; }
+
+    public string Header { get; set; }
+
+    public string Body { get; set; }
+
+    public string ErrorCode { get; set; }
+
+    public Dictionary<string, string> AdditionalData { get; set; }
 }

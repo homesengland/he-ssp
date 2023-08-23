@@ -1,12 +1,35 @@
-@model HE.InvestmentLoans.Common.Models.Others.ErrorModel
+@using HE.InvestmentLoans.Common.Models.Others;
+@using HE.InvestmentLoans.WWW.Utils.Errors;
+@using Microsoft.AspNetCore.Html;
+@model ErrorModel;
+
+@{
+    var (header, body) = ErrorContentProvider.GetContent(Model);
+}
 
 <gds-column width="ColumnWidth.TwoThirds">
-    <gds-h1 class="govuk-!-margin-top-9" size="ControlSize.Xl">
-        Sorry, there is a problem with the service
-    </gds-h1>
+    @if (header != null)
+    {
+        <gds-h1 class="govuk-!-margin-top-9" size="ControlSize.Xl">
+            @header
+        </gds-h1>
+    }
+    else
+    {
+        <gds-h1 class="govuk-!-margin-top-9" size="ControlSize.Xl">
+            Sorry, there is a problem with the service
+        </gds-h1>
+    }
 
-    <gds-p>Try again later.</gds-p>
-    <gds-p>Contact Homes England Helpline if you need to make changes to your claim or speak to someone about your loan.</gds-p>
+    @if (body != null)
+    {
+        <gds-p>@body</gds-p>
+    }
+    else
+    {
+        <gds-p>Try again later.</gds-p>
+        <gds-p>Contact Homes England Helpline if you need to make changes to your claim or speak to someone about your loan.</gds-p>
+    }
 </gds-column>
 <gds-column width="ColumnWidth.Full">
     @if (Model != null)

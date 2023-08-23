@@ -8,5 +8,20 @@ public class DomainException : Exception
         ErrorCode = errorCode;
     }
 
+    public DomainException(string message, string errorCode, params (string Key, string Value)[] additionalData)
+        : base(message)
+    {
+        ErrorCode = errorCode;
+
+        AdditionalData = new Dictionary<string, string>();
+
+        foreach (var (key, value) in additionalData)
+        {
+            AdditionalData.Add(key, value);
+        }
+    }
+
     public string ErrorCode { get; }
+
+    public Dictionary<string, string> AdditionalData { get; private set; }
 }

@@ -7,4 +7,6 @@ public static class CommonErrorCodes
     public const string ValueWasNotProvided = nameof(ValueWasNotProvided);
 
     public const string LoanApplicationNotReadyToSubmit = nameof(LoanApplicationNotReadyToSubmit);
+
+    public const string ApplicationHasBeenSubmitted = nameof(ApplicationHasBeenSubmitted);
 }
