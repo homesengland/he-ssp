@@ -4,6 +4,8 @@ public interface IAppConfig
 {
     public string? SupportEmail { get; set; }
 
+    public int MaxFileSizeInMegabytes { get; set; }
+
     public CacheConfig? Cache { get; set; }
 
     public DataverseConfig? Dataverse { get; set; }

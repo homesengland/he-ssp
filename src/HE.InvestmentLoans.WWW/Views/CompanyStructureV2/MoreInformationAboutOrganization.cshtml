@@ -1,9 +1,13 @@
+@using HE.InvestmentLoans.Common.Models.App;
 @using HE.InvestmentLoans.Contract.CompanyStructure
 @model HE.InvestmentLoans.Contract.CompanyStructure.CompanyStructureViewModel
 @inject ModelExpressionProvider modelProvider
+@inject IAppConfig appConfig
 @{
     var (hasError, fileInputError) = ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((CompanyStructureViewModel x) => x.CompanyInfoFile));
 }
+
+@Html.Hidden("MaxFileSizeInMegabytes", appConfig.MaxFileSizeInMegabytes)
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="CompanyStructureV2" asp-action="MoreInformationAboutOrganizationPost" asp-route-id="@Model.LoanApplicationId" enctype="multipart/form-data" asp-method="post" novalidate>
