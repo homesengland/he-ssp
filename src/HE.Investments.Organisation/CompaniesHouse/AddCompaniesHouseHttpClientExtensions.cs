@@ -11,7 +11,7 @@ public static class AddCompaniesHouseHttpClientExtensions
         {
             var companiesHouseConfig = provider.GetRequiredService<ICompaniesHouseConfig>();
             client.BaseAddress = companiesHouseConfig.CompaniesHouseBaseUrl;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", companiesHouseConfig.AuthorizationKey);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", companiesHouseConfig.ApiKey);
         });
     }
 }

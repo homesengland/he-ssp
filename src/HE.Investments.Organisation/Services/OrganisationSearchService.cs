@@ -14,7 +14,7 @@ public class OrganisationSearchService : IOrganisationSearchService
 
     public async Task<OrganisationSearchResult> Search(string organisationName, string? companyNumber, CancellationToken cancellationToken)
     {
-        var companyHouseApiResult = await _companiesHouseApi.Search(organisationName, cancellationToken);
-        return new OrganisationSearchResult(companyHouseApiResult.Items.Select(x => new OrganisationSearchItem(x.CompanyNumber, x.Title)).ToList());
+        var companyHouseApiResult = await _companiesHouseApi.Search(organisationName, null, cancellationToken);
+        return new OrganisationSearchResult(companyHouseApiResult.Items.Select(x => new OrganisationSearchItem(x.CompanyNumber, x.CompanyName)).ToList());
     }
 }
