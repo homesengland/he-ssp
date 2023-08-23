@@ -54,15 +54,6 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        public List<Account> GetAccountsByOrganizationNameAndCompanyHouseName(string organizationName, string companyHouseName)
-        {
-            using (var ctx = new OrganizationServiceContext(service))
-            {
-                return ctx.CreateQuery<Account>()
-                    .Where(x => x.Name.Contains(organizationName) || x.he_CompaniesHouseNumber == companyHouseName).ToList();
-            }
-        }
-
         #endregion
     }
 }

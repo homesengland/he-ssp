@@ -10,6 +10,5 @@ namespace HE.CRM.Plugins.Services.Accounts
         string GenerateRandomAccountSampleName();
         OrganizationDetailsDto GetOrganizationDetails(string accountid, string contactExternalId);
         void OnCurrentCrrFieldUpdate(Account target, Account preImage);
-        List<OrganizationDetailsDto> SearchOrganizationByNameAndCompanyHouseNumber(string organizationName, string companyHouseNumber);
     }
 }

@@ -86,32 +86,6 @@ namespace HE.CRM.Plugins.Services.Accounts
             }
         }
 
-        public List<OrganizationDetailsDto> SearchOrganizationByNameAndCompanyHouseNumber(string organizationName, string companyHouseNumber)
-        {
-            var accounts = _accountRepository.GetAccountsByOrganizationNameAndCompanyHouseName(organizationName, companyHouseNumber);
-            if(accounts != null && accounts.Count > 0)
-            {
-                var accountsToReturn = new List<OrganizationDetailsDto>();
-                foreach(var account in accounts)
-                {
-                    var accountToSerialize = new OrganizationDetailsDto()
-                    {
-                        addressLine1 = account.Address1_Line1,
-                        addressLine2 = account.Address1_Line2,
-                        addressLine3 = account.Address1_Line3,
-                        city = account.Address1_City,
-                        postalcode = account.Address1_PostalCode,
-                        country = account.Address1_Country,
-                        registeredCompanyName = account.Name,
-                        companyRegistrationNumber = account.he_CompaniesHouseNumber,
-                    };
-                    accountsToReturn.Add(accountToSerialize);
-                }
-                return accountsToReturn;
-            }
-            return new List<OrganizationDetailsDto>();
-        }
-
         #endregion
 
         #region Private Methods
