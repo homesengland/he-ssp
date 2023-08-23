@@ -19276,13 +19276,13 @@ namespace HE.InvestmentLoans.CRM.Model
 	/// Represents a source of entities bound to a CRM service. It tracks and manages changes made to the retrieved entities.
 	/// </summary>
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
-	public partial class XrmSvc : Microsoft.Xrm.Sdk.Client.OrganizationServiceContext
+	public partial class XrmSvcModel : Microsoft.Xrm.Sdk.Client.OrganizationServiceContext
 	{
 		
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public XrmSvc(Microsoft.Xrm.Sdk.IOrganizationService service) : 
+		public XrmSvcModel(Microsoft.Xrm.Sdk.IOrganizationService service) : 
 				base(service)
 		{
 		}
