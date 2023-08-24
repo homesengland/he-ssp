@@ -1,14 +1,13 @@
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Rest;
 
 namespace HE.Investments.Organisation.CrmRepository;
 public class OrganizationRepository : IOrganizationRepository
 {
     public Guid? EnsureCreateOrganization(IOrganizationServiceAsync2 service, string companyNumber, string companyName)
     {
-        ConditionExpression condition1 = new ConditionExpression("he_companieshousenumber", ConditionOperator.Equal, companyNumber);
+        var condition1 = new ConditionExpression("he_companieshousenumber", ConditionOperator.Equal, companyNumber);
 
         FilterExpression filter1 = new FilterExpression()
         {
@@ -24,14 +23,14 @@ public class OrganizationRepository : IOrganizationRepository
             filter1.Conditions.Add(condition2);
         }
 
-        ColumnSet cols = new ColumnSet("name");
+        var cols = new ColumnSet("name");
 
-        QueryExpression query = new QueryExpression("account");
+        var query = new QueryExpression("account");
         query.ColumnSet = cols;
         query.Criteria.FilterOperator = LogicalOperator.And;
         query.Criteria.AddFilter(filter1);
 
-        EntityCollection result1 = service.RetrieveMultiple(query);
+        var result1 = service.RetrieveMultiple(query);
         if (result1.Entities.Count == 0)
         {
             var accountToCreate = new Entity("account");
