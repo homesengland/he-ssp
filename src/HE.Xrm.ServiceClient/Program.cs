@@ -53,13 +53,12 @@ namespace HE.Xrm.ServiceClientExample
         {
             var req1 = new invln_returnuserprofileRequest()
             {
-                invln_contactexternalid = "auth0|64a28c7fb67ed30b288d6ff8"
+                invln_contactexternalid = "auth0|64a686b77d88c88f0580d8d1"
             };
 
             var resp1 = (invln_returnuserprofileResponse)serviceClient.Execute(req1);
             var resp1Deserialized = JsonSerializer.Deserialize<ContactDto>(resp1.invln_userprofile);
 
-            resp1Deserialized.phoneNumber = "test custom api change";
 
             var req2 = new invln_updateuserprofileRequest()
             {
