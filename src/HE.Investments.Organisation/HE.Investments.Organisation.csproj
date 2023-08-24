@@ -24,6 +24,7 @@
     <None Remove="Log10.txt" />
     <None Remove="Log11.txt" />
     <None Remove="Log12.txt" />
+    <None Remove="Log13.txt" />
     <None Remove="Log14.txt" />
     <None Remove="Log5.txt" />
     <None Remove="Log6.txt" />
@@ -42,10 +43,6 @@
   
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Model\" />
   </ItemGroup>
 
 </Project>
