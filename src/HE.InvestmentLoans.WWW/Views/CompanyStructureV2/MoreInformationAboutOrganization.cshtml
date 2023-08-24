@@ -14,6 +14,9 @@
         <gds-back-link href="@Url.Action("Back","CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.ExistingCompany})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
+
+        @Html.HiddenFor(x => x.LoanApplicationId)
+
         <gds-field-set>
             <gds-error-form-group asp-for="ExistingCompany">
                 <legend>

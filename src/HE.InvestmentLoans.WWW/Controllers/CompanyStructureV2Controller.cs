@@ -85,7 +85,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
         var validationResult = await _validator.ValidateAsync(viewModel, opt => opt.IncludeRuleSets(CompanyStructureView.MoreInformationAboutOrganization), cancellationToken);
         if (!validationResult.IsValid)
         {
-            validationResult.AddToModelState(ModelState, "Company");
+            validationResult.AddToModelState(ModelState);
             return View("MoreInformationAboutOrganization", viewModel);
         }
 
@@ -114,7 +114,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
         var validationResult = await _validator.ValidateAsync(viewModel, opt => opt.IncludeRuleSets(CompanyStructureView.HomesBuilt), cancellationToken);
         if (!validationResult.IsValid)
         {
-            validationResult.AddToModelState(ModelState, "Company");
+            validationResult.AddToModelState(ModelState);
             return View("HomesBuilt", viewModel);
         }
 
