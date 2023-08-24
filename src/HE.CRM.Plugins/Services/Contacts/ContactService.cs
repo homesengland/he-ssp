@@ -123,7 +123,7 @@ namespace HE.CRM.Plugins.Services.Contacts
             {
                 string[] fields = { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower(), nameof(Contact.EMailAddress1).ToLower(),
                     nameof(Contact.Address1_Telephone1).ToLower(), nameof(Contact.invln_externalid).ToLower(), nameof(Contact.JobTitle).ToLower(), nameof(Contact.Address1_City).ToLower(),
-                    nameof(Contact.Address1_County).ToLower(), nameof(Contact.Address1_PostalCode).ToLower(), nameof(Contact.Address1_Country).ToLower() };
+                    nameof(Contact.Address1_County).ToLower(), nameof(Contact.Address1_PostalCode).ToLower(), nameof(Contact.Address1_Country).ToLower(), nameof(Contact.Address1_Telephone2) };
                 var retrievedContact =  contactRepository.GetContactViaExternalId(contactExternalId, fields);
                 if(retrievedContact != null)
                 {

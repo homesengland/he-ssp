@@ -44,7 +44,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.InvestmentLoans.Common.T
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "HE.CRM.WebResources", "HE.CRM.WebResources\HE.CRM.WebResources.njsproj", "{23CA5083-A949-46EB-8B60-E1E856E95324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Organisation", "HE.Investments.Organisation\HE.Investments.Organisation.csproj", "{D06EA4DC-76CF-4CEB-98A0-D89E88020C8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Organisation", "HE.Investments.Organisation\HE.Investments.Organisation.csproj", "{D06EA4DC-76CF-4CEB-98A0-D89E88020C8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
