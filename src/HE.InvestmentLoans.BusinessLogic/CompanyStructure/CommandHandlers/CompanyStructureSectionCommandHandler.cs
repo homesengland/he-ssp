@@ -8,7 +8,10 @@ namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 
 public class CompanyStructureSectionCommandHandler :
     IRequestHandler<CompanyStructureSectionCommand>,
-    IRequestHandler<UnCompleteCompanyStructureSectionCommand>
+    IRequestHandler<UnCompleteCompanyStructureSectionCommand>,
+    IRequestHandler<ProvideCompanyPurposeCommand>,
+    IRequestHandler<ProvideMoreInformationAboutOrganizationCommand>,
+    IRequestHandler<ProvideHowManyHomesBuiltCommand>
 {
     private readonly ICompanyStructureRepository _repository;
 
@@ -28,6 +31,28 @@ public class CompanyStructureSectionCommandHandler :
     public async Task Handle(UnCompleteCompanyStructureSectionCommand request, CancellationToken cancellationToken)
     {
         await Perform(x => x.UnCompleteSection(), request.LoanApplicationId, cancellationToken);
+    }
+
+    public async Task Handle(ProvideCompanyPurposeCommand request, CancellationToken cancellationToken)
+    {
+        await Perform(x => x.ProvideCompanyPurpose(request.CompanyPurpose), request.LoanApplicationId, cancellationToken);
+    }
+
+    public async Task Handle(ProvideMoreInformationAboutOrganizationCommand request, CancellationToken cancellationToken)
+    {
+        await Perform(
+            x =>
+            {
+                x.ProvideMoreInformation(request.OrganisationMoreInformation);
+                x.ProvideFileWithMoreInformation(request.OrganisationMoreInformationFile);
+            },
+            request.LoanApplicationId,
+            cancellationToken);
+    }
+
+    public async Task Handle(ProvideHowManyHomesBuiltCommand request, CancellationToken cancellationToken)
+    {
+        await Perform(x => x.ProvideHowManyHomesBuilt(request.HomesBuilt), request.LoanApplicationId, cancellationToken);
     }
 
     private async Task Perform(Action<CompanyStructureEntity> action, LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
