@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Services.Interfaces;
+using HE.InvestmentLoans.Common.Utils.Constants.Enums;
 using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 
@@ -61,6 +62,24 @@ public class LoanUserContext : ILoanUserContext
         }
 
         return _selectedAccount!;
+    }
+
+    public void SaveUserDetailsStatusInCache(UserGlobalId userGlobalId)
+    {
+        _cacheService.SetValue(userGlobalId.ToString(), ProfileCompletionStatus.Complete);
+    }
+
+    public ProfileCompletionStatus? GetUserDetailsStatusFromCache(UserGlobalId userGlobalId)
+    {
+        return _cacheService.GetValue<ProfileCompletionStatus>(userGlobalId.ToString());
+    }
+
+    public async Task<bool> IsProfileCompleted()
+    {
+        var selectedUser = await GetSelectedAccount();
+        var userDetails = await _loanUserRepository.GetUserDetails(selectedUser.UserGlobalId);
+
+        return userDetails.IsProfileComplete();
     }
 
     private async Task LoadUserAccount()

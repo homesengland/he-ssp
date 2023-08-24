@@ -1,7 +1,7 @@
 namespace HE.InvestmentLoans.BusinessLogic.User.Entities;
 public class UserDetails
 {
-    public UserDetails(string firstName, string surname, string jobTitle, string email, string telephoneNumber, string secondaryTelephoneNumber)
+    public UserDetails(string? firstName, string? surname, string? jobTitle, string? email, string? telephoneNumber, string? secondaryTelephoneNumber)
     {
         FirstName = firstName;
         Surname = surname;
@@ -33,5 +33,13 @@ public class UserDetails
         Email = userEmail;
         TelephoneNumber = telephoneNumber;
         SecondaryTelephoneNumber = secondaryTelephoneNumber;
+    }
+
+    public bool IsProfileComplete()
+    {
+        return !string.IsNullOrEmpty(FirstName) &&
+                !string.IsNullOrEmpty(Surname) &&
+                !string.IsNullOrEmpty(JobTitle) &&
+                !string.IsNullOrEmpty(TelephoneNumber);
     }
 }

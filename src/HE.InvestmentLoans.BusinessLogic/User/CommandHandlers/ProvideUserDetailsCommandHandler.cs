@@ -24,5 +24,7 @@ public class ProvideUserDetailsCommandHandler : IRequestHandler<ProvideUserDetai
         userDetails.ProvideUserDetails(request.FirstName, request.Surname, request.JobTitle, request.TelephoneNumber, request.SecondaryTelephoneNumber, selectedAccount.UserEmail);
 
         await _loanUserRepository.SaveAsync(userDetails, selectedAccount.UserGlobalId, cancellationToken);
+
+        _loanUserContext.SaveUserDetailsStatusInCache(selectedAccount.UserGlobalId);
     }
 }
