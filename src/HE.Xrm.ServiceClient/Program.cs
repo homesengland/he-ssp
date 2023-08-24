@@ -49,6 +49,18 @@ namespace HE.Xrm.ServiceClientExample
             Console.ReadLine();
         }
 
+        private static void TestSearch(ServiceClient serviceClient)
+        {
+            var req1 = new invln_searchorganizationbynameandcompanyhousenameRequest()
+            {
+                invln_companyhousenumber = "2137",
+                invln_organizationname = "",
+            };
+            var resp1 = (invln_searchorganizationbynameandcompanyhousenameResponse)serviceClient.Execute(req1);
+            var deserializedResp1 = JsonSerializer.Deserialize<List<OrganizationDetailsDto>>(resp1.invln_organization);
+            Console.WriteLine("test end.");
+        }
+
         private static void UserProfileTest(ServiceClient serviceClient)
         {
             var req1 = new invln_returnuserprofileRequest()

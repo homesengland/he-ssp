@@ -1,5 +1,6 @@
 using System.Globalization;
 using FluentValidation;
+using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
@@ -9,6 +10,8 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Validation;
 
 public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewModel>
 {
+    private readonly IAppConfig _appConfig;
+
     private readonly string[] _allowedExtensions = new string[]
     {
         AllowedFileExtension.PDF,
@@ -19,16 +22,18 @@ public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewM
         AllowedFileExtension.RTF,
     };
 
-    public CompanyStructureValidator()
+    public CompanyStructureValidator(IAppConfig appConfig)
     {
+        _appConfig = appConfig;
+
         RuleSet(CompanyStructureView.MoreInformationAboutOrganization, () =>
         {
             When(
                 c => c.CompanyInfoFileName != null,
                 () => RuleFor(e => e.CompanyInfoFile)
                     .Must(
-                        e => e?.Length < 20 * 1024 * 1024)
-                    .WithMessage(ValidationErrorMessage.FileIncorrectSize));
+                        e => e?.Length < _appConfig.MaxFileSizeInMegabytes * 1024 * 1024)
+                    .WithMessage(string.Format(CultureInfo.InvariantCulture, ValidationErrorMessage.FileIncorrectSize, _appConfig.MaxFileSizeInMegabytes)));
 
             RuleFor(e => e.CompanyInfoFileName)
               .Must(

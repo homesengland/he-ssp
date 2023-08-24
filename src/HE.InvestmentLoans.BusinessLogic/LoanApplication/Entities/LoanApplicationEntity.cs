@@ -51,14 +51,21 @@ public class LoanApplicationEntity
 
     public async Task Submit(ICanSubmitLoanApplication canSubmitLoanApplication, CancellationToken cancellationToken)
     {
-        if (IsReadyToSubmit())
-        {
-            await canSubmitLoanApplication.Submit(Id, cancellationToken);
-        }
-        else
+        if (!IsReadyToSubmit())
         {
             throw new DomainException("Loan application is not ready to be submitted", CommonErrorCodes.LoanApplicationNotReadyToSubmit);
         }
+
+        if (IsSubmitted())
+        {
+            throw new DomainException(
+                "Loan application has been submitted",
+                CommonErrorCodes.ApplicationHasBeenSubmitted,
+                ("Date", LegacyModel.Timestamp.Date.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)),
+                ("Hour", LegacyModel.Timestamp.Date.ToString("hh:mm tt", CultureInfo.InvariantCulture)));
+        }
+
+        await canSubmitLoanApplication.Submit(Id, cancellationToken);
     }
 
     public bool IsEnoughHomesToBuild()
@@ -76,7 +83,12 @@ public class LoanApplicationEntity
 
     private bool IsReadyToSubmit()
     {
-        return ExternalStatus != ApplicationStatus.Submitted && LegacyModel.IsReadyToSubmit();
+        return LegacyModel.IsReadyToSubmit();
+    }
+
+    private bool IsSubmitted()
+    {
+        return ExternalStatus == ApplicationStatus.Submitted;
     }
 
     private void SyncToLegacyModel()

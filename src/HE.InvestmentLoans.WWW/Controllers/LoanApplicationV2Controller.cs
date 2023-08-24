@@ -5,6 +5,7 @@ using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.User.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
@@ -115,6 +116,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpGet("{id}/task-list")]
     [WorkflowState(LoanApplicationWorkflow.State.TaskList)]
+    [WorkflowState(CompanyStructureState.Complete)]
     public async Task<IActionResult> TaskList(Guid id)
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
@@ -147,7 +149,6 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return await Continue(new { Id = id });
     }
 
-    [HttpGet("submitted/{id}")]
     [HttpGet("{id}/submitted")]
     [WorkflowState(LoanApplicationWorkflow.State.ApplicationSubmitted)]
     public async Task<IActionResult> ApplicationSubmitted(Guid id)

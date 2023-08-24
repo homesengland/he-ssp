@@ -49,12 +49,24 @@ public class ExceptionFilter : ExceptionFilterAttribute
         {
             NotFoundException => ViewPaths.PageNotFound,
             UnauthorizedAccessException => ViewPaths.PageNotFound,
+            DomainException => ViewPaths.ProblemWithTheService,
             _ => ViewPaths.ProblemWithTheService,
         };
     }
 
     private ErrorModel ErrorModelFrom(Exception exception)
     {
-        return _hostEnvironment.IsDevelopment() ? new ErrorModel(exception.Message, exception.StackTrace) : new ErrorModel(exception.Message);
+        var errrorModel = exception switch
+        {
+            DomainException ex => new ErrorModel(ex.Message, ex.ErrorCode, ex.AdditionalData),
+            _ => new ErrorModel(exception.Message),
+        };
+
+        if (_hostEnvironment.IsDevelopment())
+        {
+            errrorModel.Message += " " + exception.StackTrace;
+        }
+
+        return errrorModel;
     }
 }

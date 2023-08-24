@@ -7,7 +7,6 @@
 @{
     var securityWorkflow = new SecurityWorkflow(Model, mediator);
     var fundingWorkflow = new FundingWorkflow(Model, mediator);
-    var companyStructureWorkflow = new CompanyStructureWorkflow(Model, mediator);
     var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
 }
 
@@ -36,11 +35,11 @@
                             Complete company information
                         </a>
                     </span>
-                    @if (companyStructureWorkflow.IsCompleted())
+                    @if (Model.Company.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
-                    else if (companyStructureWorkflow.IsStarted())
+                    else if (Model.Company.IsProgress())
                     {
                         <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
                     }
@@ -164,9 +163,9 @@
             </button>
         }
     </form>
-    <gds-link href="@Url.Action("Index","LoanApplication", new {id = Model.ID})">
+    <gds-link href="@Url.Action("ReportProblem","LoanApplication", new {id = Model.ID})">
         Report a problem with this page
-        <gds-span-visually-hidden> @Url.Action("Index","LoanApplication", new {id = Model.ID})</gds-span-visually-hidden>
+        <gds-span-visually-hidden> @Url.Action("ReportProblem","LoanApplication", new {id = Model.ID})</gds-span-visually-hidden>
     </gds-link>
 </gds-div-grid-column-two-thirds>
 

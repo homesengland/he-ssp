@@ -67,6 +67,7 @@ public static class LoanApplicationMapper
             Purpose = loanApplicationDto.companyPurpose.MapToCommonResponse(),
             ExistingCompany = loanApplicationDto.existingCompany,
             HomesBuilt = loanApplicationDto.companyExperience.ToString(),
+            State = SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus),
         };
     }
 }
