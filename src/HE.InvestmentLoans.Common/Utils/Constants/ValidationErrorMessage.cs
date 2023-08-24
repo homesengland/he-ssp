@@ -54,6 +54,16 @@ public static class ValidationErrorMessage
 
     public const string IncorrectGrantFundingAmount = "The amount of funding provided";
 
+    public const string EnterFirstName = "Enter your first name";
+
+    public const string EnterSurname = "Enter your surname";
+
+    public const string EnterJobTitle = "Enter your job title";
+
+    public const string EnterTelephoneNumber = "Enter your preferred telephone number";
+
+    public const string AcceptTermsAndConditions = "You cannot continue unless you have selected that you have read the terms and conditions";
+
     public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
 
     public static string PoundInput(string name) => new($"{name} must be entered as a number, in pounds and pence");

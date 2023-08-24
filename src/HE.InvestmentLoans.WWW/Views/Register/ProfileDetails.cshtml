@@ -1,9 +1,9 @@
-@model HE.InvestmentLoans.Contract.User.Queries.GetUserDetailsResponse;
+@model HE.InvestmentLoans.Contract.User.UserDetailsViewModel;
 @{
     ViewData["Title"] = "Profile details";
     var id = ViewContext.RouteData.Values["id"];
 
-    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.Name));
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.Contract.User.UserDetailsViewModel));
 }
 
 <gds-div-grid-column-two-thirds>
@@ -19,18 +19,17 @@
         Register as an individual, we will ask you for your organisation details later.
     </gds-p>
 
-    <form asp-controller="Register" asp-action="ProfileDetails" asp-method="post" novalidate>
+    <form asp-controller="Register" asp-action="ProfileDetails" asp-method="post" novalidate>  
         <gds-field-set role="group">
             <legend>
                 <gds-label for="FirstName" size="ControlSize.M">
                     First name
                 </gds-label>
             </legend>
-
             <gds-input asp-excludelabel
                        govuk-formgroup-asp-for="FirstName"
                        value="@Model?.FirstName"
-                       type="text" />
+                               type="text" />
         </gds-field-set>
 
         <gds-field-set role="group">
@@ -85,17 +84,19 @@
                        type="text" />
         </gds-field-set>
 
-        <div class="govuk-checkboxes govuk-!-margin-bottom-6" data-module="govuk-checkboxes">
-            <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="waste" name="waste" type="checkbox" value="carcasses">
-                <label class="govuk-label govuk-checkboxes__label" for="waste">
-                    I agree to the 
-                    <gds-link href="@Url.Action("TermsAndConditions","Register")">
-                        terms and conditions
-                    </gds-link>
-                </label>
-            </div>
-        </div>
+        <gds-checkbox govuk-formgroup-asp-for="IsTermsAndConditionsAccepted"
+                      asp-selectlistitems='@(new List<SelectListItem>
+              {
+                  new SelectListItem
+                  {
+                      Text = $"I agree to the <a class=\"govuk-link\" href=\"{Url.Action("TermsAndConditions", "Register")}\">terms and conditions</a>",
+                      Value = "value",
+                  }
+              })'
+                      asp-ischeckboxgroup="true"
+                      asp-isexcludeheader="true"
+                      asp-excludelabel="true">
+        </gds-checkbox>
 
         <button class="govuk-button" data-module="govuk-button" name="action" type="submit">
             Continue

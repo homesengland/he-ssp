@@ -4,7 +4,7 @@ using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.User.QueryHandlers;
 
-public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, GetUserDetailsResponse?>
+public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, GetUserDetailsResponse>
 {
     private readonly ILoanUserContext _loanUserContext;
 
@@ -16,11 +16,11 @@ public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, G
         _loanUserRepository = loanUserRepository;
     }
 
-    public async Task<GetUserDetailsResponse?> Handle(GetUserDetailsQuery request, CancellationToken cancellationToken)
+    public async Task<GetUserDetailsResponse> Handle(GetUserDetailsQuery request, CancellationToken cancellationToken)
     {
         var selectedAccount = await _loanUserContext.GetSelectedAccount();
         var userDetails = await _loanUserRepository.GetUserDetails(selectedAccount.UserGlobalId);
 
-        return UserViewModelMapper.Map(userDetails);
+        return new GetUserDetailsResponse(UserViewModelMapper.Map(userDetails));
     }
 }

@@ -1,4 +1,7 @@
 using FluentValidation;
+using FluentValidation.AspNetCore;
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
+using HE.InvestmentLoans.Contract.User;
 using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.Contract.User.Queries;
 using MediatR;
@@ -13,14 +16,12 @@ public class RegisterController : Controller
 {
     private readonly IMediator _mediator;
 
-    // private readonly IValidator<UserDetailsViewModel> _validator;
+    private readonly IValidator<UserDetailsViewModel> _validator;
 
-    // public RegisterController(IMediator mediator, IValidator<UserDetailsViewModel> validator)
-    public RegisterController(IMediator mediator)
+    public RegisterController(IMediator mediator, IValidator<UserDetailsViewModel> validator)
     {
         _mediator = mediator;
-
-        // _validator = validator;
+        _validator = validator;
     }
 
     [HttpGet("profile-details")]
@@ -28,19 +29,27 @@ public class RegisterController : Controller
     {
         var response = await _mediator.Send(new GetUserDetailsQuery());
 
-        return View(response);
+        return View(response.ViewModel);
     }
 
     [HttpPost("profile-details")]
-    public async Task<IActionResult> ProfileDetails(GetUserDetailsResponse getUserDetailsResponse)
+    public async Task<IActionResult> ProfileDetails(UserDetailsViewModel viewModel, CancellationToken cancellationToken)
     {
-        await _mediator.Send(new ProvideUserDetailsCommand(
-            getUserDetailsResponse.FirstName,
-            getUserDetailsResponse.Surname,
-            getUserDetailsResponse.JobTitle,
-            getUserDetailsResponse.TelephoneNumber,
-            getUserDetailsResponse.SecondaryTelephoneNumber));
+        var validationResult = await _validator.ValidateAsync(viewModel, opt => opt.IncludeRuleSets(RegisterView.ProfileDetails), cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            validationResult.AddToModelState(ModelState);
+            return View(RegisterView.ProfileDetails, viewModel);
+        }
 
+        await _mediator.Send(
+            new ProvideUserDetailsCommand(
+            viewModel.FirstName,
+            viewModel.Surname,
+            viewModel.JobTitle,
+            viewModel.TelephoneNumber,
+            viewModel.SecondaryTelephoneNumber),
+            cancellationToken);
         return RedirectToAction("SearchOrganization", "Organization");
     }
 
