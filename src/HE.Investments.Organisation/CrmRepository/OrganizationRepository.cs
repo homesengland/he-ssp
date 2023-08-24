@@ -1,6 +1,6 @@
 using Microsoft.PowerPlatform.Dataverse.Client;
-using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 
 namespace HE.Investments.Organisation.CrmRepository;
 public class OrganizationRepository : IOrganizationRepository
@@ -9,7 +9,7 @@ public class OrganizationRepository : IOrganizationRepository
     {
         var condition1 = new ConditionExpression("he_companieshousenumber", ConditionOperator.Equal, companyNumber);
 
-        FilterExpression filter1 = new FilterExpression()
+        var filter1 = new FilterExpression()
         {
             Conditions =
                 {
@@ -17,16 +17,18 @@ public class OrganizationRepository : IOrganizationRepository
                 },
             FilterOperator = LogicalOperator.Or
         };
-        if (!String.IsNullOrEmpty(companyName))
+        if (!string.IsNullOrEmpty(companyName))
         {
-            ConditionExpression condition2 = new ConditionExpression("name", ConditionOperator.Like, $"%{companyName}%");
+            var condition2 = new ConditionExpression("name", ConditionOperator.Like, $"%{companyName}%");
             filter1.Conditions.Add(condition2);
         }
 
         var cols = new ColumnSet("name");
 
-        var query = new QueryExpression("account");
-        query.ColumnSet = cols;
+        var query = new QueryExpression("account")
+        {
+            ColumnSet = cols,
+        };
         query.Criteria.FilterOperator = LogicalOperator.And;
         query.Criteria.AddFilter(filter1);
 
