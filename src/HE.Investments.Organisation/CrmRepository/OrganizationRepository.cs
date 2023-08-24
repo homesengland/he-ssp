@@ -15,7 +15,7 @@ public class OrganizationRepository : IOrganizationRepository
                 {
                     condition1,
                 },
-            FilterOperator = LogicalOperator.Or
+            FilterOperator = LogicalOperator.Or,
         };
         if (!string.IsNullOrEmpty(companyName))
         {
