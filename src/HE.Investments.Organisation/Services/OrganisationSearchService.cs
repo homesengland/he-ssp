@@ -1,5 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CompaniesHouse;
+using HE.Investments.Organisation.CompaniesHouse.Contract;
 using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.CrmRepository;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -17,10 +18,11 @@ public class OrganisationSearchService : IOrganisationSearchService
         _organizationRepository = organizationRepository;
     }
 
-    public async Task<OrganisationSearchResult> Search(string organisationName, string? companyNumber, CancellationToken cancellationToken)
+    public async Task<OrganisationSearchResult> Search(string organisationName, PagingQueryParams pagingParams, string? companyNumber, CancellationToken cancellationToken)
     {
-        var companyHouseApiResult = await _companiesHouseApi.Search(organisationName, null, cancellationToken);
-        return new OrganisationSearchResult(companyHouseApiResult.Items.Select(x => new OrganisationSearchItem(x.CompanyNumber, x.CompanyName)).ToList());
+        var companyHouseApiResult = await _companiesHouseApi.Search(organisationName, pagingParams, cancellationToken);
+
+        return new OrganisationSearchResult(companyHouseApiResult.Items.Select(x => new OrganisationSearchItem(x.CompanyNumber, x.CompanyName, x.OfficeAddress.Locality!, x.OfficeAddress.AddressLine1!, x.OfficeAddress.PostalCode!)).ToList(), companyHouseApiResult.Hits, null!);
     }
 
     public List<OrganizationDetailsDto> SearchOrganizationInCrm(List<string> organisationNumbers, IOrganizationServiceAsync2 service)

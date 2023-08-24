@@ -1,7 +1,11 @@
-using HE.InvestmentLoans.Contract.Organization;
+using HE.InvestmentLoans.BusinessLogic.ViewModel;
+<<<<<<< HEAD
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
+=======
+using HE.InvestmentLoans.Contract.Organization;
 using MediatR;
+>>>>>>> fc5b6e6 (WIP)
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
@@ -9,13 +13,19 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 [Route("organization")]
 public class OrganizationController : Controller
 {
+<<<<<<< HEAD
     private readonly ICompaniesHouseApi _companiesHouseApi;
+
+    public OrganizationController(ICompaniesHouseApi companiesHouseApi)
+    {
+        _companiesHouseApi = companiesHouseApi;
+=======
     private readonly IMediator _mediator;
 
-    public OrganizationController(IMediator mediator, ICompaniesHouseApi companiesHouseApi)
+    public OrganizationController(IMediator mediator)
     {
         _mediator = mediator;
-        _companiesHouseApi = companiesHouseApi;
+>>>>>>> fc5b6e6 (WIP)
     }
 
     [HttpGet("search")]
@@ -25,21 +35,21 @@ public class OrganizationController : Controller
     }
 
     [HttpPost("search")]
-    public IActionResult SearchOrganizationPost(OrganizationViewModel organization)
+    public async Task<IActionResult> SearchOrganizationPost(OrganizationViewModel organization)
     {
         return RedirectToAction(nameof(SelectOrganization), new { searchPhrase = organization.Name });
     }
 
     [HttpGet("select")]
-    public async Task<IActionResult> SelectOrganization([FromQuery] string searchPhrase, [FromQuery] int page)
+    public async Task<IActionResult> SelectOrganization([FromQuery] string searchPhrase)
     {
-        var response = await _mediator.Send(new SearchOrganizations(searchPhrase, page, 10));
+        var response = await _mediator.Send(new SearchOrganizations(searchPhrase));
 
         return View(response.Result);
     }
 
     [HttpPost("select")]
-    public IActionResult SelectOrganizationPost(OrganizationViewModel organization)
+    public async Task<IActionResult> SelectOrganizationPost(OrganizationViewModel organization)
     {
         return View();
     }
