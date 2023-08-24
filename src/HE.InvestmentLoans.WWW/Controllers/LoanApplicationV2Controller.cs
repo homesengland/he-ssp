@@ -7,6 +7,7 @@ using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.User.Queries;
+using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Routing;
 using MediatR;
@@ -17,6 +18,7 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 
 [Route("application")]
 [Authorize]
+[CheckProfileCompletion]
 public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWorkflow.State>
 {
     private readonly IMediator _mediator;

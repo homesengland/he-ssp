@@ -4,6 +4,7 @@ using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.User;
 using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.Contract.User.Queries;
+using HE.InvestmentLoans.WWW.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.InvestmentLoans.WWW.Controllers;
 
 [Authorize]
+[CheckProfileCompletion]
 [Route("register")]
 public class RegisterController : Controller
 {

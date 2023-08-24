@@ -5,6 +5,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils;
+using HE.InvestmentLoans.WWW.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 [SuppressMessage("Usage", "CA1801", Justification = "It should be fixed in the future")]
 [Route("application/{id}/security")]
 [Authorize]
+[CheckProfileCompletion]
 public class SecurityController : Controller
 {
     private readonly IMediator _mediator;

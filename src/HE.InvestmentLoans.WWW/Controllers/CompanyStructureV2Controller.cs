@@ -9,6 +9,7 @@ using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using HE.InvestmentLoans.WWW.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 
 [Route("application/{id}/company")]
 [Authorize]
+[CheckProfileCompletion]
 public class CompanyStructureV2Controller : Controller
 {
     private readonly IMediator _mediator;
