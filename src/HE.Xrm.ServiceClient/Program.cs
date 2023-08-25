@@ -1,6 +1,8 @@
 using DataverseModel;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using Microsoft.PowerPlatform.Dataverse.Client;
+using Microsoft.Xrm.Sdk.Query;
+using Microsoft.Xrm.Sdk;
 using System.Configuration;
 using System.Text.Json;
 
@@ -35,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    UserProfileTest(serviceClient);
+                    TestQuery(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -49,16 +51,41 @@ namespace HE.Xrm.ServiceClientExample
             Console.ReadLine();
         }
 
-        private static void TestSearch(ServiceClient serviceClient)
+        private static void TestQuery(ServiceClient serviceClient)
         {
-            var req1 = new invln_searchorganizationbynameandcompanyhousenameRequest()
+            string companyNumber = "9972137";
+            string companyName = "6";
+            ConditionExpression condition1 = new ConditionExpression("he_companieshousenumber", ConditionOperator.Equal, companyNumber);
+
+            FilterExpression filter1 = new FilterExpression()
             {
-                invln_companyhousenumber = "2137",
-                invln_organizationname = "",
+                Conditions =
+                {
+                    condition1,
+                },
+                FilterOperator = LogicalOperator.Or
             };
-            var resp1 = (invln_searchorganizationbynameandcompanyhousenameResponse)serviceClient.Execute(req1);
-            var deserializedResp1 = JsonSerializer.Deserialize<List<OrganizationDetailsDto>>(resp1.invln_organization);
-            Console.WriteLine("test end.");
+            if (!String.IsNullOrEmpty(companyName))
+            {
+                ConditionExpression condition2 = new ConditionExpression("name", ConditionOperator.Like, $"%{companyName}%");
+                filter1.Conditions.Add(condition2);
+            }
+
+            ColumnSet cols = new ColumnSet("name");
+
+            QueryExpression query = new QueryExpression("account");
+            query.ColumnSet = cols;
+            query.Criteria.FilterOperator = LogicalOperator.And;
+            query.Criteria.AddFilter(filter1);
+
+            EntityCollection result1 = serviceClient.RetrieveMultiple(query);
+            if (result1.Entities.Count == 0)
+            {
+                var accountToCreate = new Entity("account");
+                accountToCreate["he_companieshousenumber"] = companyNumber;
+                accountToCreate["name"] = companyName;
+                serviceClient.Create(accountToCreate);
+            }
         }
 
         private static void UserProfileTest(ServiceClient serviceClient)
