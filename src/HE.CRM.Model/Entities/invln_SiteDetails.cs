@@ -59,6 +59,9 @@ namespace DataverseModel
 			public const string ExchangeRate = "exchangerate";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_Affordablehousing = "invln_affordablehousing";
+			public const string invln_Completiondate = "invln_completiondate";
+			public const string invln_Conductedby = "invln_conductedby";
+			public const string invln_ConductedbyName = "invln_conductedbyname";
 			public const string invln_currentvalue = "invln_currentvalue";
 			public const string invln_currentvalue_Base = "invln_currentvalue_base";
 			public const string invln_Dateofpurchase = "invln_dateofpurchase";
@@ -70,6 +73,7 @@ namespace DataverseModel
 			public const string invln_Landregistrytitlenumber = "invln_landregistrytitlenumber";
 			public const string invln_Loanapplication = "invln_loanapplication";
 			public const string invln_LoanapplicationName = "invln_loanapplicationname";
+			public const string invln_MSPresent = "invln_mspresent";
 			public const string invln_Name = "invln_name";
 			public const string invln_Nameofgrantfund = "invln_nameofgrantfund";
 			public const string invln_Numberofhomes = "invln_numberofhomes";
@@ -85,9 +89,14 @@ namespace DataverseModel
 			public const string Id = "invln_sitedetailsid";
 			public const string invln_Sitename = "invln_sitename";
 			public const string invln_Siteownership = "invln_siteownership";
+			public const string invln_TotalDevelopmentCost = "invln_totaldevelopmentcost";
+			public const string invln_totaldevelopmentcost_Base = "invln_totaldevelopmentcost_base";
+			public const string invln_TotalGDV = "invln_totalgdv";
+			public const string invln_totalgdv_Base = "invln_totalgdv_base";
 			public const string invln_Typeofhomes = "invln_typeofhomes";
 			public const string invln_TypeofSite = "invln_typeofsite";
 			public const string invln_Valuationsource = "invln_valuationsource";
+			public const string invln_Visitdate = "invln_visitdate";
 			public const string invln_Whoprovided = "invln_whoprovided";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedByName = "modifiedbyname";
@@ -251,6 +260,40 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_completiondate")]
+		public System.Nullable<System.DateTime> invln_Completiondate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_completiondate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Completiondate");
+				this.SetAttributeValue("invln_completiondate", value);
+				this.OnPropertyChanged("invln_Completiondate");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_conductedby")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Conductedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_conductedby");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Conductedby");
+				this.SetAttributeValue("invln_conductedby", value);
+				this.OnPropertyChanged("invln_Conductedby");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_currentvalue")]
 		public Microsoft.Xrm.Sdk.Money invln_currentvalue
 		{
@@ -410,6 +453,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Loanapplication");
 				this.SetAttributeValue("invln_loanapplication", value);
 				this.OnPropertyChanged("invln_Loanapplication");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mspresent")]
+		public System.Nullable<bool> invln_MSPresent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_mspresent");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_MSPresent");
+				this.SetAttributeValue("invln_mspresent", value);
+				this.OnPropertyChanged("invln_MSPresent");
 			}
 		}
 		
@@ -656,6 +716,66 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totaldevelopmentcost")]
+		public Microsoft.Xrm.Sdk.Money invln_TotalDevelopmentCost
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totaldevelopmentcost");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_TotalDevelopmentCost");
+				this.SetAttributeValue("invln_totaldevelopmentcost", value);
+				this.OnPropertyChanged("invln_TotalDevelopmentCost");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Total Development Cost in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totaldevelopmentcost_base")]
+		public Microsoft.Xrm.Sdk.Money invln_totaldevelopmentcost_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totaldevelopmentcost_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalgdv")]
+		public Microsoft.Xrm.Sdk.Money invln_TotalGDV
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalgdv");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_TotalGDV");
+				this.SetAttributeValue("invln_totalgdv", value);
+				this.OnPropertyChanged("invln_TotalGDV");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Total GDV in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalgdv_base")]
+		public Microsoft.Xrm.Sdk.Money invln_totalgdv_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalgdv_base");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_typeofhomes")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValueCollection invln_Typeofhomes
 		{
@@ -704,6 +824,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Valuationsource");
 				this.SetAttributeValue("invln_valuationsource", value);
 				this.OnPropertyChanged("invln_Valuationsource");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_visitdate")]
+		public System.Nullable<System.DateTime> invln_Visitdate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_visitdate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Visitdate");
+				this.SetAttributeValue("invln_visitdate", value);
+				this.OnPropertyChanged("invln_Visitdate");
 			}
 		}
 		
