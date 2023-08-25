@@ -58,6 +58,7 @@ public class UserDetails
         return !string.IsNullOrEmpty(FirstName) &&
                 !string.IsNullOrEmpty(Surname) &&
                 !string.IsNullOrEmpty(JobTitle) &&
-                !string.IsNullOrEmpty(TelephoneNumber);
+                !string.IsNullOrEmpty(TelephoneNumber) &&
+                IsTermsAndConditionsAccepted == true;
     }
 }
