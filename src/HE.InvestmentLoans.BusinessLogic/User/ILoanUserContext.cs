@@ -17,7 +17,7 @@ public interface ILoanUserContext
 
     Task<UserAccount> GetSelectedAccount();
 
-    public void RefreshDetails(UserGlobalId userGlobalId, UserDetails userDetails);
+    public void RefreshDetails();
 
     public Task<bool> IsProfileCompleted();
 }

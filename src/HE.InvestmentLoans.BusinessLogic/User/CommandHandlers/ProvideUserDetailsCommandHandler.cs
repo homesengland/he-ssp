@@ -32,6 +32,6 @@ public class ProvideUserDetailsCommandHandler : IRequestHandler<ProvideUserDetai
 
         await _loanUserRepository.SaveAsync(userDetails, selectedAccount.UserGlobalId, cancellationToken);
 
-        _loanUserContext.RefreshDetails(selectedAccount.UserGlobalId, userDetails);
+        _loanUserContext.RefreshDetails();
     }
 }
