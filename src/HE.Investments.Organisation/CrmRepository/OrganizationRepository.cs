@@ -8,21 +8,16 @@ public class OrganizationRepository : IOrganizationRepository
     public Guid? EnsureCreateOrganization(IOrganizationServiceAsync2 service, string companyNumber, string companyName)
     {
         var condition1 = new ConditionExpression("he_companieshousenumber", ConditionOperator.Equal, companyNumber);
-
+        var condition2 = new ConditionExpression("name", ConditionOperator.Equal, companyName);
         var filter1 = new FilterExpression()
         {
             Conditions =
                 {
-                    condition1,
+                    condition1, condition2
                 },
             FilterOperator = LogicalOperator.Or,
         };
-        if (!string.IsNullOrEmpty(companyName))
-        {
-            var condition2 = new ConditionExpression("name", ConditionOperator.Like, $"%{companyName}%");
-            filter1.Conditions.Add(condition2);
-        }
-
+        
         var cols = new ColumnSet("name");
 
         var query = new QueryExpression("account")
