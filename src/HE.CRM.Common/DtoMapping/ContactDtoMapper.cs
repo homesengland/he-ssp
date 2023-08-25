@@ -22,6 +22,7 @@ namespace HE.CRM.Common.DtoMapping
                 county = contact.Address1_County,
                 postcode = contact.Address1_PostalCode,
                 country = contact.Address1_Country,
+                isTermsAndConditionsAccepted = contact.invln_termsandconditionsaccepted,
             };
             if(contact.Id != null)
             {
@@ -45,6 +46,7 @@ namespace HE.CRM.Common.DtoMapping
                 Address1_County = contactDto.county,
                 Address1_PostalCode = contactDto.postcode,
                 Address1_Country = contactDto.country,
+                invln_termsandconditionsaccepted = contactDto.isTermsAndConditionsAccepted,
             };
             if(Guid.TryParse(contactDto.contactId, out Guid recordId))
             {
