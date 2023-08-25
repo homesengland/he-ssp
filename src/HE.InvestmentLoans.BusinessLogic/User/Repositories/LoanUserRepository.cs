@@ -47,7 +47,7 @@ public class LoanUserRepository : ILoanUserRepository
         };
 
         var resp_async = await _serviceClient.ExecuteAsync(req);
-        var resp = resp_async != null ? (invln_returnuserprofileResponse)resp_async : throw new NotFoundException(nameof(UserDetails), userGlobalId);
+        var resp = resp_async != null ? (invln_returnuserprofileResponse)resp_async : throw new NotFoundException(nameof(UserDetails), userGlobalId.ToString());
 
         var contactDto = CrmResponseSerializer.Deserialize<ContactDto>(resp.invln_userprofile) ?? throw new NotFoundException(nameof(UserDetails), userGlobalId.ToString());
 
@@ -57,7 +57,8 @@ public class LoanUserRepository : ILoanUserRepository
             contactDto.jobTitle,
             contactDto.email,
             contactDto.phoneNumber,
-            contactDto.secondaryPhoneNumber);
+            contactDto.secondaryPhoneNumber,
+            contactDto.isTermsAndConditionsAccepted);
     }
 
     public async Task SaveAsync(UserDetails userDetails, UserGlobalId userGlobalId, CancellationToken cancellationToken)
@@ -70,6 +71,7 @@ public class LoanUserRepository : ILoanUserRepository
             email = userDetails.Email,
             phoneNumber = userDetails.TelephoneNumber,
             secondaryPhoneNumber = userDetails.SecondaryTelephoneNumber,
+            isTermsAndConditionsAccepted = userDetails.IsTermsAndConditionsAccepted,
         };
 
         var contactDtoSerialized = JsonSerializer.Serialize(contactDto);

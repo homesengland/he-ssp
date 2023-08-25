@@ -13,14 +13,12 @@ using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
 
 [Route("application/{id}/company")]
-[Authorize]
-[CheckProfileCompletion]
+[AuthorizeWithCompletedProfile]
 public class CompanyStructureV2Controller : WorkflowController<CompanyStructureState>
 {
     private readonly IMediator _mediator;

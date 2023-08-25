@@ -3,7 +3,6 @@ using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Services.Interfaces;
-using HE.InvestmentLoans.Common.Utils.Constants.Enums;
 using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 
@@ -64,22 +63,27 @@ public class LoanUserContext : ILoanUserContext
         return _selectedAccount!;
     }
 
-    public void SaveUserDetailsStatusInCache(UserGlobalId userGlobalId)
+    public void RefreshDetails(UserGlobalId userGlobalId, UserDetails userDetails)
     {
-        _cacheService.SetValue(userGlobalId.ToString(), ProfileCompletionStatus.Complete);
-    }
-
-    public ProfileCompletionStatus? GetUserDetailsStatusFromCache(UserGlobalId userGlobalId)
-    {
-        return _cacheService.GetValue<ProfileCompletionStatus>(userGlobalId.ToString());
+        if (userDetails.IsProfileCompleted())
+        {
+            _cacheService.SetValue(userGlobalId.ToString(), userDetails);
+        }
+        else
+        {
+            _cacheService.SetValue(userGlobalId.ToString(), userDetails);
+        }
     }
 
     public async Task<bool> IsProfileCompleted()
     {
         var selectedUser = await GetSelectedAccount();
-        var userDetails = await _loanUserRepository.GetUserDetails(selectedUser.UserGlobalId);
+        var userDetails = await _cacheService.GetValueAsync(
+                                                selectedUser.UserGlobalId.ToString(),
+                                                async () => await _loanUserRepository.GetUserDetails(selectedUser.UserGlobalId))
+                                                            ?? throw new NotFoundException(nameof(UserDetails), selectedUser.UserGlobalId.ToString());
 
-        return userDetails.IsProfileComplete();
+        return userDetails.IsProfileCompleted();
     }
 
     private async Task LoadUserAccount()

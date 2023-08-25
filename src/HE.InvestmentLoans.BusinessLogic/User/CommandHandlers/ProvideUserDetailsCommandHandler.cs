@@ -21,10 +21,17 @@ public class ProvideUserDetailsCommandHandler : IRequestHandler<ProvideUserDetai
         var selectedAccount = await _loanUserContext.GetSelectedAccount();
         var userDetails = await _loanUserRepository.GetUserDetails(selectedAccount.UserGlobalId);
 
-        userDetails.ProvideUserDetails(request.FirstName, request.Surname, request.JobTitle, request.TelephoneNumber, request.SecondaryTelephoneNumber, selectedAccount.UserEmail);
+        userDetails.ProvideUserDetails(
+            request.FirstName,
+            request.Surname,
+            request.JobTitle,
+            request.TelephoneNumber,
+            request.SecondaryTelephoneNumber,
+            selectedAccount.UserEmail,
+            request.IsTermsAndConditionsAccepted);
 
         await _loanUserRepository.SaveAsync(userDetails, selectedAccount.UserGlobalId, cancellationToken);
 
-        _loanUserContext.SaveUserDetailsStatusInCache(selectedAccount.UserGlobalId);
+        _loanUserContext.RefreshDetails(selectedAccount.UserGlobalId, userDetails);
     }
 }

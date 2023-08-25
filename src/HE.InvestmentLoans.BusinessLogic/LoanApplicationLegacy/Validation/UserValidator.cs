@@ -5,11 +5,11 @@ using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.User;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Validation;
-public class RegisterValidator : AbstractValidator<UserDetailsViewModel>
+public class UserValidator : AbstractValidator<UserDetailsViewModel>
 {
-    public RegisterValidator()
+    public UserValidator()
     {
-        RuleSet(RegisterView.ProfileDetails, () =>
+        RuleSet(UserView.ProfileDetails, () =>
         {
             When(
                item => item.FirstName == null,
@@ -20,7 +20,7 @@ public class RegisterValidator : AbstractValidator<UserDetailsViewModel>
             When(
                 item => item.FirstName != null,
                 () => RuleFor(item => item.FirstName)
-                    .Must(value => value!.Length <= MaximumInputLength.Hundred)
+                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
                     .WithMessage(ValidationErrorMessage.InputLongerThanHundredCharacters));
 
             When(
@@ -32,7 +32,7 @@ public class RegisterValidator : AbstractValidator<UserDetailsViewModel>
             When(
                 item => item.Surname != null,
                 () => RuleFor(item => item.Surname)
-                    .Must(value => value!.Length <= MaximumInputLength.Hundred)
+                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
                     .WithMessage(ValidationErrorMessage.InputLongerThanHundredCharacters));
 
             When(
@@ -44,7 +44,7 @@ public class RegisterValidator : AbstractValidator<UserDetailsViewModel>
             When(
                 item => item.JobTitle != null,
                 () => RuleFor(item => item.JobTitle)
-                    .Must(value => value!.Length <= MaximumInputLength.Hundred)
+                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
                     .WithMessage(ValidationErrorMessage.InputLongerThanHundredCharacters));
 
             When(
@@ -56,13 +56,13 @@ public class RegisterValidator : AbstractValidator<UserDetailsViewModel>
             When(
                 item => item.TelephoneNumber != null,
                 () => RuleFor(item => item.TelephoneNumber)
-                    .Must(value => value!.Length <= MaximumInputLength.Hundred)
+                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
                     .WithMessage(ValidationErrorMessage.InputLongerThanHundredCharacters));
 
             When(
                 item => item.SecondaryTelephoneNumber != null,
                 () => RuleFor(item => item.SecondaryTelephoneNumber)
-                    .Must(value => value!.Length <= MaximumInputLength.Hundred)
+                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
                     .WithMessage(ValidationErrorMessage.InputLongerThanHundredCharacters));
 
             When(

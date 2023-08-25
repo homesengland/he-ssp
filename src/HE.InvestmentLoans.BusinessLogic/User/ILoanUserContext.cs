@@ -1,5 +1,4 @@
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.Common.Utils.Constants.Enums;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.User;
@@ -18,9 +17,7 @@ public interface ILoanUserContext
 
     Task<UserAccount> GetSelectedAccount();
 
-    public void SaveUserDetailsStatusInCache(UserGlobalId userGlobalId);
-
-    public ProfileCompletionStatus? GetUserDetailsStatusFromCache(UserGlobalId userGlobalId);
+    public void RefreshDetails(UserGlobalId userGlobalId, UserDetails userDetails);
 
     public Task<bool> IsProfileCompleted();
 }

@@ -1,7 +1,16 @@
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+
 namespace HE.InvestmentLoans.BusinessLogic.User.Entities;
 public class UserDetails
 {
-    public UserDetails(string? firstName, string? surname, string? jobTitle, string? email, string? telephoneNumber, string? secondaryTelephoneNumber)
+    public UserDetails(
+        string? firstName,
+        string? surname,
+        string? jobTitle,
+        string? email,
+        string? telephoneNumber,
+        string? secondaryTelephoneNumber,
+        bool? isTermsAndConditionsAccepted)
     {
         FirstName = firstName;
         Surname = surname;
@@ -9,23 +18,31 @@ public class UserDetails
         Email = email;
         TelephoneNumber = telephoneNumber;
         SecondaryTelephoneNumber = secondaryTelephoneNumber;
+        IsTermsAndConditionsAccepted = isTermsAndConditionsAccepted;
     }
 
-    public string? FirstName { get; set; }
+    public string? FirstName { get; private set; }
 
-    public string? Surname { get; set; }
+    public string? Surname { get; private set; }
 
-    public string? JobTitle { get; set; }
+    public string? JobTitle { get; private set; }
 
-    public string? Email { get; set; }
+    public string? Email { get; private set; }
 
-    public string? TelephoneNumber { get; set; }
+    public string? TelephoneNumber { get; private set; }
 
-    public string? SecondaryTelephoneNumber { get; set; }
+    public string? SecondaryTelephoneNumber { get; private set; }
 
-    public string? IsTermsAndConditionsAccepted { get; set; }
+    public bool? IsTermsAndConditionsAccepted { get; private set; }
 
-    public void ProvideUserDetails(string firstName, string surname, string jobTitle, string telephoneNumber, string secondaryTelephoneNumber, string userEmail)
+    public void ProvideUserDetails(
+        string firstName,
+        string surname,
+        string jobTitle,
+        string telephoneNumber,
+        string secondaryTelephoneNumber,
+        string userEmail,
+        string isTermsAndConditionsAccepted)
     {
         FirstName = firstName;
         Surname = surname;
@@ -33,9 +50,10 @@ public class UserDetails
         Email = userEmail;
         TelephoneNumber = telephoneNumber;
         SecondaryTelephoneNumber = secondaryTelephoneNumber;
+        IsTermsAndConditionsAccepted = isTermsAndConditionsAccepted == CommonResponse.Checked;
     }
 
-    public bool IsProfileComplete()
+    public bool IsProfileCompleted()
     {
         return !string.IsNullOrEmpty(FirstName) &&
                 !string.IsNullOrEmpty(Surname) &&

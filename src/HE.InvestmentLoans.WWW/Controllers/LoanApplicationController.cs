@@ -8,7 +8,6 @@ using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.WWW.Attributes;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BL = HE.InvestmentLoans.BusinessLogic;
 
@@ -16,8 +15,7 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 
 [SuppressMessage("Usage", "CA1801", Justification = "It should be fixed in the future")]
 [Route("application")]
-[Authorize]
-[CheckProfileCompletion]
+[AuthorizeWithCompletedProfile]
 public class LoanApplicationController : Controller
 {
     private readonly IMediator _mediator;

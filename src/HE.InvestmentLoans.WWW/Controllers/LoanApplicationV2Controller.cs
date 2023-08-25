@@ -12,14 +12,12 @@ using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Routing;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
 
 [Route("application")]
-[Authorize]
-[CheckProfileCompletion]
+[AuthorizeWithCompletedProfile]
 public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWorkflow.State>
 {
     private readonly IMediator _mediator;

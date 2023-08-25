@@ -7,8 +7,6 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("GoBack","Site", new { })" text="Back" class="govuk-!-margin-bottom-8">
-    </gds-back-link>
     <partial name="_ErrorSummaryPartial" model="null" />
 
     <gds-h1 size="ControlSize.L">
@@ -19,7 +17,7 @@
         Register as an individual, we will ask you for your organisation details later.
     </gds-p>
 
-    <form asp-controller="Register" asp-action="ProfileDetails" asp-method="post" novalidate>  
+    <form asp-controller="User" asp-action="ProfileDetails" asp-method="post" novalidate>  
         <gds-field-set role="group">
             <legend>
                 <gds-label for="FirstName" size="ControlSize.M">
@@ -85,12 +83,13 @@
         </gds-field-set>
 
         <gds-checkbox govuk-formgroup-asp-for="IsTermsAndConditionsAccepted"
+                      value="IsTermsAndConditionsAccepted"
                       asp-selectlistitems='@(new List<SelectListItem>
               {
                   new SelectListItem
                   {
-                      Text = $"I agree to the <a class=\"govuk-link\" href=\"{Url.Action("TermsAndConditions", "Register")}\">terms and conditions</a>",
-                      Value = "value",
+                      Text = $"I agree to the <a class=\"govuk-link\" href=\"{Url.Action("TermsAndConditions", "User")}\">terms and conditions</a>",
+                      Value = "checked",
                   }
               })'
                       asp-ischeckboxgroup="true"
