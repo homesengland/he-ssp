@@ -18,5 +18,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string county { get; set; }
         public string postcode { get; set; }
         public string country { get; set; }
+        public bool? isTermsAndConditionsAccepted { get; set; }
     }
 }
