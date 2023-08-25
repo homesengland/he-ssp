@@ -13,11 +13,10 @@ public class OrganizationRepository : IOrganizationRepository
         {
             Conditions =
                 {
-                    condition1, condition2
+                    condition1, condition2,
                 },
             FilterOperator = LogicalOperator.Or,
         };
-        
         var cols = new ColumnSet("name");
 
         var query = new QueryExpression("account")
