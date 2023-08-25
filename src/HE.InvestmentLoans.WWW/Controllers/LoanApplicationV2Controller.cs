@@ -7,17 +7,17 @@ using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.Organization;
-using HE.InvestmentLoans.Contract.User;
+using HE.InvestmentLoans.Contract.User.Queries;
+using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Routing;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
 
 [Route("application")]
-[Authorize]
+[AuthorizeWithCompletedProfile]
 public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWorkflow.State>
 {
     private readonly IMediator _mediator;
@@ -62,7 +62,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     public async Task<IActionResult> CheckYourDetails(CancellationToken cancellationToken)
     {
         var organizationBasicInformationResponse = await _mediator.Send(new GetOrganizationBasicInformationQuery(), cancellationToken);
-        var userDetails = await _mediator.Send(new GetUserDetailsQuery(), cancellationToken);
+        var userDetails = await _mediator.Send(new GetUserAccountQuery(), cancellationToken);
         return View(
             "CheckYourDetails",
             new CheckYourDetailsModel

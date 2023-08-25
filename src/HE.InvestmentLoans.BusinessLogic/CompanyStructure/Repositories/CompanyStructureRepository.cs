@@ -1,7 +1,7 @@
 using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
-using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.CRM.Model;
@@ -23,7 +23,7 @@ public class CompanyStructureRepository : ICompanyStructureRepository
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
-            invln_externalcontactid = userAccount.UserGlobalId,
+            invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
         };
 
@@ -58,7 +58,7 @@ public class CompanyStructureRepository : ICompanyStructureRepository
             invln_loanapplication = loanApplicationSerialized,
             invln_loanapplicationid = companyStructure.LoanApplicationId.Value.ToString(),
             invln_accountid = userAccount.AccountId.ToString(),
-            invln_contactexternalid = userAccount.UserGlobalId,
+            invln_contactexternalid = userAccount.UserGlobalId.ToString(),
             invln_fieldstoupdate = $"{nameof(invln_Loanapplication.invln_CompanyPurpose).ToLowerInvariant()}," +
                                    $"{nameof(invln_Loanapplication.invln_Companystructureinformation).ToLowerInvariant()}," +
                                    $"invln_companystructureandexperiencecompletionst," +

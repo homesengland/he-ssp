@@ -7,8 +7,8 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Common.Utils;
+using HE.InvestmentLoans.WWW.Attributes;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow.SiteWorkflow;
 using BL = HE.InvestmentLoans.BusinessLogic;
@@ -18,7 +18,7 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 
 [SuppressMessage("Usage", "CA1801", Justification = "It should be fixed in the future")]
 [Route("application/{id}/site")]
-[Authorize]
+[AuthorizeWithCompletedProfile]
 public class SiteController : Controller
 {
     private readonly IMediator _mediator;

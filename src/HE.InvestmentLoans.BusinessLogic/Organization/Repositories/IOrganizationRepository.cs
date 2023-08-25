@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Organization.Repositories;

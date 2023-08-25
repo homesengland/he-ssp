@@ -1,5 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
@@ -20,7 +20,7 @@ public class OrganizationRepository : IOrganizationRepository
     {
         var request = new invln_getorganizationdetailsRequest()
         {
-            invln_contactexternalid = userAccount.UserGlobalId,
+            invln_contactexternalid = userAccount.UserGlobalId.ToString(),
             invln_accountid = userAccount.AccountId.ToString(),
         };
 

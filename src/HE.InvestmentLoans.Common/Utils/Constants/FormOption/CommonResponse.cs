@@ -5,4 +5,5 @@ public class CommonResponse
     public const string No = "No";
     public const string DoNotKnow = "doNotKnow";
     public const string Other = "other";
+    public const string Checked = "checked";
 }

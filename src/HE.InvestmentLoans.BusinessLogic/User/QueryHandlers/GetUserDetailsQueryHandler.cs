@@ -1,4 +1,5 @@
-using HE.InvestmentLoans.Contract.User;
+using HE.InvestmentLoans.BusinessLogic.User.Repositories;
+using HE.InvestmentLoans.Contract.User.Queries;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.User.QueryHandlers;
@@ -7,17 +8,19 @@ public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, G
 {
     private readonly ILoanUserContext _loanUserContext;
 
-    public GetUserDetailsQueryHandler(ILoanUserContext loanUserContext)
+    private readonly ILoanUserRepository _loanUserRepository;
+
+    public GetUserDetailsQueryHandler(ILoanUserContext loanUserContext, ILoanUserRepository loanUserRepository)
     {
         _loanUserContext = loanUserContext;
+        _loanUserRepository = loanUserRepository;
     }
 
     public async Task<GetUserDetailsResponse> Handle(GetUserDetailsQuery request, CancellationToken cancellationToken)
     {
-        return new GetUserDetailsResponse(
-                            _loanUserContext.Email,
-                            _loanUserContext.UserGlobalId,
-                            await _loanUserContext.GetSelectedAccountId(),
-                            await _loanUserContext.GetAllAccountIds());
+        var selectedAccount = await _loanUserContext.GetSelectedAccount();
+        var userDetails = await _loanUserRepository.GetUserDetails(selectedAccount.UserGlobalId);
+
+        return new GetUserDetailsResponse(UserDetailsMapper.MapToViewModel(userDetails));
     }
 }

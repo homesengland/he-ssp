@@ -1,7 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
-using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Extensions;
@@ -35,7 +35,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
-            invln_externalcontactid = userAccount.UserGlobalId,
+            invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = id.ToString(),
         };
 
@@ -58,7 +58,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
-            invln_externalcontactid = userAccount.UserGlobalId,
+            invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = id.ToString(),
         };
 
@@ -78,7 +78,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var req = new invln_getloanapplicationsforaccountandcontactRequest()
         {
             invln_accountid = userAccount.AccountId.ToString(),
-            invln_externalcontactid = userAccount.UserGlobalId,
+            invln_externalcontactid = userAccount.UserGlobalId.ToString(),
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getloanapplicationsforaccountandcontactResponse
@@ -166,7 +166,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         {
             invln_entityfieldsparameters = loanApplicationSerialized,
             invln_accountid = userAccount.AccountId.ToString(),
-            invln_contactexternalid = userAccount.UserGlobalId,
+            invln_contactexternalid = userAccount.UserGlobalId.ToString(),
         };
 
         _serviceClient.ExecuteAsync(req);
@@ -184,7 +184,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         {
             invln_entityfieldsparameters = loanApplicationSerialized,
             invln_accountid = loanApplication.UserAccount.AccountId.ToString(),
-            invln_contactexternalid = loanApplication.UserAccount.UserGlobalId,
+            invln_contactexternalid = loanApplication.UserAccount.UserGlobalId.ToString(),
         };
 
         var response = (invln_sendinvestmentloansdatatocrmResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);
