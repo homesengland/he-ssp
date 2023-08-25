@@ -7,23 +7,26 @@ namespace HE.InvestmentLoans.Common.Services;
 
 public class RedisService : ICacheService
 {
+    private readonly string _envSufix;
+
     private readonly ICacheConfig _config;
 
     private readonly ConnectionMultiplexer _connection;
 
-    public RedisService(ICacheConfig config)
+    public RedisService(ICacheConfig config, IDataverseConfig dataverseConfig)
     {
         _config = config;
         _connection = ConnectionMultiplexer.Connect(config.RedisConnectionString);
+        _envSufix = dataverseConfig.BaseUri!;
     }
 
     private IDatabase Cache => _connection.GetDatabase();
 
     public T? GetValue<T>(string key)
     {
-        if (Cache.KeyExists(key))
+        if (Cache.KeyExists(EnvKey(key)))
         {
-            string? resp = Cache.StringGet(key);
+            string? resp = Cache.StringGet(EnvKey(key));
             return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
         }
 
@@ -32,30 +35,40 @@ public class RedisService : ICacheService
 
     public async Task<T?> GetValueAsync<T>(string key, Func<Task<T>> loadValue)
     {
-        if (Cache.KeyExists(key))
+        if (Cache.KeyExists(EnvKey(key)))
         {
-            return GetValue<T>(key);
+            return GetValue<T>(EnvKey(key));
         }
 
         var value = await loadValue();
 
         if (value != null)
         {
-            SetValue(key, value);
+            SetValue(EnvKey(key), value);
         }
 
         return value;
     }
 
-    public void SetValue(string key, object value) => SetValue(key, value, _config.ExpireMinutes);
+    public void SetValue(string key, object value) => SetValue(EnvKey(key), value, _config.ExpireMinutes);
 
     public void SetValue(string key, object value, int expireMinutes)
     {
-        Cache.StringSet(key, JsonSerializer.Serialize(value), TimeSpan.FromMinutes(expireMinutes));
+        Cache.StringSet(EnvKey(key), JsonSerializer.Serialize(value), TimeSpan.FromMinutes(expireMinutes));
     }
 
     public void SetValue<T>(string key, T value)
     {
-        SetValue(key, (object)value!);
+        SetValue(EnvKey(key), (object)value!);
+    }
+
+    private string EnvKey(string key)
+    {
+        if (key.Contains(_envSufix))
+        {
+            return key;
+        }
+
+        return $"{key}_{_envSufix}";
     }
 }
