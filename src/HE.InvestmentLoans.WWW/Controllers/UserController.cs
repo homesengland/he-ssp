@@ -78,7 +78,10 @@ public class UserController : Controller
             viewModel.SecondaryTelephoneNumber,
             viewModel.IsTermsAndConditionsAccepted),
             cancellationToken);
-        return RedirectToAction("SearchOrganization", "Organization");
+
+        // return RedirectToAction("SearchOrganization", "Organization");
+        // temporary change -> waitin for completion of SearchOrganization
+        return RedirectToAction("Dashboard", "Home");
     }
 
     [HttpGet("terms-and-conditions")]
