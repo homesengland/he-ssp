@@ -44,7 +44,7 @@ public class OrganizationRepository : IOrganizationRepository
         {
             var filter1 = new FilterExpression
             {
-                FilterOperator = LogicalOperator.Or
+                FilterOperator = LogicalOperator.Or,
             };
 
             var cols = new ColumnSet("name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3", "address1_city", "address1_postalcode", "address1_country");
