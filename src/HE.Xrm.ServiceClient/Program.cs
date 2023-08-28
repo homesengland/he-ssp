@@ -51,41 +51,63 @@ namespace HE.Xrm.ServiceClientExample
             Console.ReadLine();
         }
 
-        private static void TestQuery(ServiceClient serviceClient)
+        private static void TestQuery(ServiceClient service)
         {
-            string companyNumber = "9972137";
-            string companyName = "6";
-            ConditionExpression condition1 = new ConditionExpression("he_companieshousenumber", ConditionOperator.Equal, companyNumber);
-
-            FilterExpression filter1 = new FilterExpression()
+            var organizationNumbers = new List<string>() { "9972137", "2137", "87867687", "213543543534535", };
+            for(var x = 1; x < 100000; x++)
             {
-                Conditions =
-                {
-                    condition1,
-                },
-                FilterOperator = LogicalOperator.Or
+                organizationNumbers.Add(x.ToString());
+            }
+            var filter1 = new FilterExpression();
+            filter1.FilterOperator = LogicalOperator.Or;
+
+            var cols = new ColumnSet("name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3", "address1_city", "address1_postalcode", "address1_country");
+
+            var query = new QueryExpression("account")
+            {
+                ColumnSet = cols,
             };
-            if (!String.IsNullOrEmpty(companyName))
+
+            var i = 1;
+
+            var retrievedEntitiesCollection = new EntityCollection();
+            foreach (var organizationNumber in organizationNumbers)
             {
-                ConditionExpression condition2 = new ConditionExpression("name", ConditionOperator.Like, $"%{companyName}%");
-                filter1.Conditions.Add(condition2);
+                var condition1 = new ConditionExpression("he_companieshousenumber", ConditionOperator.Equal, organizationNumber);
+                filter1.Conditions.Add(condition1);
+                i++;
+                if(i >= 490)
+                {
+                    i = 0;
+                    query.Criteria.AddFilter(filter1);
+
+                    var retrievedEntities = service.RetrieveMultiple(query);
+                    if(retrievedEntities != null)
+                    {
+                        retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);
+                    }
+                    filter1.Conditions.Clear();
+                    query.Criteria.Filters.Clear();
+                }
             }
+            var organizationDtoList = new List<OrganizationDetailsDto>();
 
-            ColumnSet cols = new ColumnSet("name");
-
-            QueryExpression query = new QueryExpression("account");
-            query.ColumnSet = cols;
-            query.Criteria.FilterOperator = LogicalOperator.And;
-            query.Criteria.AddFilter(filter1);
-
-            EntityCollection result1 = serviceClient.RetrieveMultiple(query);
-            if (result1.Entities.Count == 0)
+            foreach (var account in retrievedEntitiesCollection.Entities)
             {
-                var accountToCreate = new Entity("account");
-                accountToCreate["he_companieshousenumber"] = companyNumber;
-                accountToCreate["name"] = companyName;
-                serviceClient.Create(accountToCreate);
+                var organization = new OrganizationDetailsDto()
+                {
+                    registeredCompanyName = account.Contains("name") ? account["name"].ToString() : null,
+                    companyRegistrationNumber = account.Contains("he_companieshousenumber") ? account["he_companieshousenumber"].ToString() : null,
+                    addressLine1 = account.Contains("address1_line1") ? account["address1_line1"].ToString() : null,
+                    addressLine2 = account.Contains("address1_line2") ? account["address1_line2"].ToString() : null,
+                    addressLine3 = account.Contains("address1_line3") ? account["address1_line3"].ToString() : null,
+                    city = account.Contains("address1_city") ? account["address1_city"].ToString() : null,
+                    postalcode = account.Contains("address1_postalcode") ? account["address1_postalcode"].ToString() : null,
+                    country = account.Contains("address1_country") ? account["address1_country"].ToString() : null,
+                };
+                organizationDtoList.Add(organization);
             }
+            Console.WriteLine("test end.");
         }
 
         private static void UserProfileTest(ServiceClient serviceClient)
