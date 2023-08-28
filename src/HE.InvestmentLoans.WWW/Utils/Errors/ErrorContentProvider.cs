@@ -1,3 +1,5 @@
+using System.Globalization;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Models.Others;
 using HE.InvestmentLoans.Contract;
 
@@ -9,8 +11,17 @@ public static class ErrorContentProvider
     {
         return errorModel.ErrorCode switch
         {
-            CommonErrorCodes.ApplicationHasBeenSubmitted => ("This application has already been submitted", $"Application submitted at {errorModel.AdditionalData["Hour"]} on {errorModel.AdditionalData["Date"]}"),
+            CommonErrorCodes.ApplicationHasBeenSubmitted => ApplicationHasBeenSubmittedError(errorModel),
             _ => (null, null),
         };
+    }
+
+    private static (string Header, string Body) ApplicationHasBeenSubmittedError(ErrorModel errorModel)
+    {
+        var utcDate = (DateTime)errorModel.AdditionalData["Date"];
+
+        var ukDate = utcDate.ConvertUtcToUkLocalTime();
+
+        return ("This application has already been submitted", $"Application submitted at {ukDate.ToString("hh:mm tt", CultureInfo.InvariantCulture)} on {ukDate.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)}");
     }
 }
