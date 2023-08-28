@@ -12,16 +12,22 @@ public class ExceptionFilter : ExceptionFilterAttribute
 {
     private readonly IModelMetadataProvider _modelMetadataProvider;
     private readonly IHostEnvironment _hostEnvironment;
+    private readonly ILogger<ExceptionFilter> _logger;
 
-    public ExceptionFilter(IModelMetadataProvider modelMetadataProvider, IHostEnvironment hostEnvironment)
+    public ExceptionFilter(IModelMetadataProvider modelMetadataProvider, IHostEnvironment hostEnvironment, ILogger<ExceptionFilter> logger)
     {
         _modelMetadataProvider = modelMetadataProvider;
         _hostEnvironment = hostEnvironment;
+        _logger = logger;
     }
 
     public override void OnException(ExceptionContext context)
     {
         var exception = context.Exception;
+
+#pragma warning disable CA1848 // Use the LoggerMessage delegates
+        _logger.LogError(exception, "Error occured: {Message}", exception.Message);
+#pragma warning restore CA1848 // Use the LoggerMessage delegates
 
         var result = new ViewResult
         {
