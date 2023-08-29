@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 
 namespace HE.InvestmentLoans.WWW.Helpers;
 
@@ -9,7 +9,7 @@ public static class DateHelper
         if (additionalInput == "Yes")
         {
             var formattedDate = ConvertToDateString(day, month, year);
-            return $"{additionalInput} {formattedDate}";
+            return $"{additionalInput}, {formattedDate}";
         }
 
         return additionalInput == "No" ? additionalInput : null;
