@@ -25,12 +25,11 @@ public class HomesBuiltCtorTests
     }
 
     [TestMethod]
-    public void DomainValidationExceptionShouldBeThrown_WhenStringIsNotNumber()
+    [DataRow("notNumber")]
+    [DataRow("  ")]
+    public void DomainValidationExceptionShouldBeThrown_WhenStringIsNotNumber(string homesBuildAsString)
     {
-        // given
-        var homesBuildAsString = "notNumber";
-
-        // when
+        // given & when
         var action = () => HomesBuilt.FromString(homesBuildAsString);
 
         // then

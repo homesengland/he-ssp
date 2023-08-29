@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
@@ -57,7 +58,7 @@ public class CompanyStructureSectionCommandHandler :
         return await Perform(
             x =>
             {
-                var homesBuild = string.IsNullOrWhiteSpace(request.HomesBuilt) ? null : HomesBuilt.FromString(request.HomesBuilt);
+                var homesBuild = request.HomesBuilt.IsProvided() ? HomesBuilt.FromString(request.HomesBuilt!) : null;
                 x.ProvideHowManyHomesBuilt(homesBuild);
             },
             request.LoanApplicationId,

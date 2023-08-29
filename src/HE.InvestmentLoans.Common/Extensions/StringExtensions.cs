@@ -6,4 +6,9 @@ public static class StringExtensions
     {
         return int.TryParse(val, out var outValue) ? outValue : null;
     }
+
+    public static bool IsProvided(this string? val)
+    {
+        return !string.IsNullOrWhiteSpace(val);
+    }
 }
