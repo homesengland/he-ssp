@@ -18,7 +18,14 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        if (User.Identity.IsAuthenticated)
+        {
+            return RedirectToAction("Dashboard", "Home");
+        }
+        else
+        {
+            return RedirectToAction("WhatTheHomeBuildingFundIs", "Guidance");
+        }
     }
 
     public IActionResult Privacy()
