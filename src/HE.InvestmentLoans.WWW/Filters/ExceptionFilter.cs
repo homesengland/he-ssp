@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.InvestmentLoans.Common.Models.Others;
 using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.WWW.Config;
@@ -21,13 +22,12 @@ public class ExceptionFilter : ExceptionFilterAttribute
         _logger = logger;
     }
 
+    [SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates", Justification = "We dont need high performace logging.")]
     public override void OnException(ExceptionContext context)
     {
         var exception = context.Exception;
 
-#pragma warning disable CA1848 // Use the LoggerMessage delegates
         _logger.LogError(exception, "Error occured: {Message}", exception.Message);
-#pragma warning restore CA1848 // Use the LoggerMessage delegates
 
         var result = new ViewResult
         {
