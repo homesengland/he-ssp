@@ -19,7 +19,6 @@ public class ContactRepository : IContactRepository
             Target = new EntityReference("contact", keys),
         };
 
-
         try
         {
             var response = (RetrieveResponse)service.Execute(request);
