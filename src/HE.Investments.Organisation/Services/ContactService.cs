@@ -13,7 +13,7 @@ public class ContactService : IContactService
         _contactRepository = contactRepository;
     }
 
-    public ContactDto RetrieveUserProfile(IOrganizationServiceAsync2 service, string contactExternalId)
+    public ContactDto? RetrieveUserProfile(IOrganizationServiceAsync2 service, string contactExternalId)
     {
         if (!string.IsNullOrEmpty(contactExternalId))
         {
@@ -29,7 +29,7 @@ public class ContactService : IContactService
             }
         }
 
-        return new ContactDto();
+        return null;
     }
 
     public void UpdateUserProfile(IOrganizationServiceAsync2 service, string contactExternalId, ContactDto contactDto)
@@ -77,7 +77,7 @@ public class ContactService : IContactService
 
     private Entity MapContactDtoToEntity(ContactDto contactDto)
     {
-        var entity = new Entity();
+        var entity = new Entity("contact");
         entity["firstname"] = contactDto.firstName;
         entity["lastname"] = contactDto.lastName;
         entity["emailaddress1"] = contactDto.email;
