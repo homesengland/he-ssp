@@ -9,5 +9,5 @@ public interface IOrganisationSearchService
 {
     Task<OrganisationSearchResult> Search(string organisationName, PagingQueryParams pagingParams, string? companyNumber = null, CancellationToken cancellationToken = default);
 
-    List<OrganizationDetailsDto> SearchOrganizationInCrm(List<string> organisationNumbers, IOrganizationServiceAsync2 service);
+    IEnumerable<OrganizationDetailsDto> SearchOrganizationInCrm(IEnumerable<string> organisationNumbers, IOrganizationServiceAsync2 service);
 }

@@ -38,7 +38,7 @@ public class OrganizationRepository : IOrganizationRepository
         return null;
     }
 
-    public EntityCollection? SearchForOrganizations(IOrganizationServiceAsync2 service, List<string> organizationNumbers)
+    public EntityCollection? SearchForOrganizations(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers)
     {
         if (organizationNumbers != null)
         {

@@ -25,7 +25,7 @@ public class OrganisationSearchService : IOrganisationSearchService
         return new OrganisationSearchResult(companyHouseApiResult.Items.Select(x => new OrganisationSearchItem(x.CompanyNumber, x.CompanyName, x.OfficeAddress.Locality!, x.OfficeAddress.AddressLine1!, x.OfficeAddress.PostalCode!)).ToList(), companyHouseApiResult.Hits, null!);
     }
 
-    public List<OrganizationDetailsDto> SearchOrganizationInCrm(List<string> organisationNumbers, IOrganizationServiceAsync2 service)
+    public IEnumerable<OrganizationDetailsDto> SearchOrganizationInCrm(IEnumerable<string> organisationNumbers, IOrganizationServiceAsync2 service)
     {
         var retrievedEntities = _organizationRepository.SearchForOrganizations(service, organisationNumbers);
         if (retrievedEntities != null && retrievedEntities.Entities.Count > 0)

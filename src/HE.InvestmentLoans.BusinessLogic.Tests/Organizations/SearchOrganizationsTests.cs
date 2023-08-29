@@ -1,10 +1,13 @@
+extern alias Org;
+
 using FluentAssertions;
 using HE.InvestmentLoans.BusinessLogic.Organization.QueryHandlers;
 using HE.InvestmentLoans.Contract.Organization;
-using HE.Investments.Organisation.CompaniesHouse.Contract;
-using HE.Investments.Organisation.Contract;
-using HE.Investments.Organisation.Services;
 using Moq;
+using Org.HE.Common.IntegrationModel.PortalIntegrationModel;
+using Org.HE.Investments.Organisation.CompaniesHouse.Contract;
+using Org.HE.Investments.Organisation.Contract;
+using Org.HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Organizations;
 
@@ -45,22 +48,6 @@ public class SearchOrganizationsTests
     }
 
     [TestMethod]
-    public async Task Result_from_company_houses_should_have_correct_data()
-    {
-        GivenThatCompanyHousesReturns(new OrganisationSearchItem("1234", "CompanyName", "Sheffield", "Letsby Avenue", "PO16 7GZ"));
-
-        await WhenSearchingOrganizations();
-
-        var foundOrganization = _response.Result.Organizations.First();
-
-        foundOrganization.CompaniesHouseNumber.Should().Be("1234");
-        foundOrganization.Name.Should().Be("CompanyName");
-        foundOrganization.City.Should().Be("Sheffield");
-        foundOrganization.Street.Should().Be("Letsby Avenue");
-        foundOrganization.Code.Should().Be("PO16 7GZ");
-    }
-
-    [TestMethod]
     public async Task Return_nothing_company_houses_returns_nothing()
     {
         GivenThatComanyHousesReturnsNothing();
@@ -78,6 +65,85 @@ public class SearchOrganizationsTests
         await WhenSearchingOrganizations();
 
         _response.Result.TotalOrganizations.Should().Be(10);
+    }
+
+    [TestMethod]
+    public async Task Return_organization_data_from_crm_when_org_exists_there_and_is_returned_form_company_houses()
+    {
+        var sameOrganizationNumber = "1234";
+        GivenThatCompanyHousesReturns(new OrganisationSearchItem(sameOrganizationNumber, "CompanyName", "Sheffield", "Letsby Avenue", "PO16 7GZ"));
+        GivenThatCrmReturns(CrmOrganization(sameOrganizationNumber, "CrmName", "CrmCity", "CrmStreet", "AJP2 GMD"));
+
+        await WhenSearchingOrganizations();
+
+        _response.Result.Organizations.Should().HaveCount(1);
+        var foundOrganization = _response.Result.Organizations.First();
+
+        foundOrganization.CompaniesHouseNumber.Should().Be("1234");
+        foundOrganization.Name.Should().Be("CrmName");
+        foundOrganization.City.Should().Be("CrmCity");
+        foundOrganization.Street.Should().Be("CrmStreet");
+        foundOrganization.Code.Should().Be("AJP2 GMD");
+    }
+
+    [TestMethod]
+    public async Task Match_multiple_organizations()
+    {
+        var firstOrganizationNumber = "1234";
+        var secondOrganizationNumber = "12345";
+        GivenThatCompanyHousesReturns(
+            new OrganisationSearchItem(firstOrganizationNumber, "CompanyName", "Sheffield", "Letsby Avenue", "PO16 7GZ"),
+            new OrganisationSearchItem(secondOrganizationNumber, "CompanyName", "Sheffield", "Letsby Avenue", "PO16 7GZ"));
+
+        GivenThatCrmReturns(
+            CrmOrganization(firstOrganizationNumber, "CrmName", "CrmCity", "CrmStreet", "AJP2 GMD"),
+            CrmOrganization(secondOrganizationNumber, "CrmName2", "CrmCity2", "CrmStreet2", "BJP2 GMD"));
+
+        await WhenSearchingOrganizations();
+
+        _response.Result.Organizations.Should().HaveCount(2);
+        var firstOrganization = _response.Result.Organizations.First(c => c.CompaniesHouseNumber == firstOrganizationNumber);
+
+        firstOrganization.CompaniesHouseNumber.Should().Be(firstOrganizationNumber);
+        firstOrganization.Name.Should().Be("CrmName");
+        firstOrganization.City.Should().Be("CrmCity");
+        firstOrganization.Street.Should().Be("CrmStreet");
+        firstOrganization.Code.Should().Be("AJP2 GMD");
+
+        var secondOrganization = _response.Result.Organizations.First(c => c.CompaniesHouseNumber == secondOrganizationNumber);
+
+        secondOrganization.CompaniesHouseNumber.Should().Be(secondOrganizationNumber);
+        secondOrganization.Name.Should().Be("CrmName2");
+        secondOrganization.City.Should().Be("CrmCity2");
+        secondOrganization.Street.Should().Be("CrmStreet2");
+        secondOrganization.Code.Should().Be("BJP2 GMD");
+    }
+
+    [TestMethod]
+    public async Task Return_organization_data_from_company_houses_when_org_cannot_be_found_in_crm()
+    {
+        var organizationNumber = "1234";
+        var differentOrganizationNumber = "12345";
+
+        GivenThatCompanyHousesReturns(new OrganisationSearchItem(organizationNumber, "CompanyName", "Sheffield", "Letsby Avenue", "PO16 7GZ"));
+        GivenThatCrmReturns(CrmOrganization(differentOrganizationNumber, "CrmName", "CrmCity", "CrmStreet", "AJP2 GMD"));
+
+        await WhenSearchingOrganizations();
+
+        var foundOrganization = _response.Result.Organizations.First();
+
+        _response.Result.Organizations.Should().HaveCount(1);
+        foundOrganization.CompaniesHouseNumber.Should().Be("1234");
+        foundOrganization.Name.Should().Be("CompanyName");
+        foundOrganization.City.Should().Be("Sheffield");
+        foundOrganization.Street.Should().Be("Letsby Avenue");
+        foundOrganization.Code.Should().Be("PO16 7GZ");
+    }
+
+    private void GivenThatCrmReturns(params OrganizationDetailsDto[] organizationsToReturn)
+    {
+        _searchServiceMock.Setup(c => c.SearchOrganizationInCrm(It.IsAny<IEnumerable<string>>(), null!))
+            .Returns(organizationsToReturn.ToList());
     }
 
     private void GivenThatComanyHousesReturnsNothing()
@@ -109,7 +175,7 @@ public class SearchOrganizationsTests
 
     private async Task WhenSearchingOrganizations()
     {
-        _handler = new SearchOrganizationsHandler(_searchServiceMock.Object);
+        _handler = new SearchOrganizationsHandler(_searchServiceMock.Object, null!);
 
         _response = await _handler.Handle(_query, CancellationToken.None);
     }
@@ -117,5 +183,17 @@ public class SearchOrganizationsTests
     private OrganisationSearchItem OrganizationWithCompanyHouseNumber(string number)
     {
         return new OrganisationSearchItem(number, "AnyName", "AnyCity", "AnyStreet", "AnyPostalCode");
+    }
+
+    private OrganizationDetailsDto CrmOrganization(string registrationNumber, string name, string city, string street, string postalCode)
+    {
+        return new OrganizationDetailsDto
+        {
+            registeredCompanyName = name,
+            city = city,
+            addressLine1 = street,
+            companyRegistrationNumber = registrationNumber,
+            postalcode = postalCode,
+        };
     }
 }
