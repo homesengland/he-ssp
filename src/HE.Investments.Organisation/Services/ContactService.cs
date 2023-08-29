@@ -60,16 +60,12 @@ public class ContactService : IContactService
             county = contact.Contains("address1_county") ? contact["address1_county"].ToString() : string.Empty,
             postcode = contact.Contains("address1_postalcode") ? contact["address1_postalcode"].ToString() : string.Empty,
             country = contact.Contains("address1_country") ? contact["address1_country"].ToString() : string.Empty,
+            contactId = contact.Id.ToString(),
         };
 
         if (contact.Contains("invln_termsandconditionsaccepted") && bool.TryParse(contact["invln_termsandconditionsaccepted"].ToString(), out var termsAccepted))
         {
             contactDto.isTermsAndConditionsAccepted = termsAccepted;
-        }
-
-        if (contact.Id != null)
-        {
-            contactDto.contactId = contact.Id.ToString();
         }
 
         return contactDto;
@@ -97,5 +93,4 @@ public class ContactService : IContactService
 
         return entity;
     }
-
 }

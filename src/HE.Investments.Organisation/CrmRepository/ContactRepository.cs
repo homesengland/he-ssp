@@ -19,6 +19,7 @@ public class ContactRepository : IContactRepository
             Target = new EntityReference("contact", keys),
         };
 
+
         try
         {
             var response = (RetrieveResponse)service.Execute(request);
@@ -31,7 +32,7 @@ public class ContactRepository : IContactRepository
                 return null;
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             throw new InvalidPluginExecutionException("Contact with invln_externalid: " + contactExternalId + " does not extst in CRM");
         }
