@@ -77,7 +77,6 @@ public class FundingValidator : AbstractValidator<FundingViewModel>
                     () => RuleFor(item => item.RefinanceInfo)
                         .Must(value => value!.Length <= MaximumInputLength.LongInput)
                         .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
-
         });
 
         RuleSet(FundingView.CheckAnswers, () =>
