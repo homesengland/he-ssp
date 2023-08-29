@@ -142,7 +142,7 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
             When(
                 item => item.GrantFundingPurpose != null,
                 () => RuleFor(item => item.GrantFundingPurpose)
-                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
+                    .Must(value => value!.Length <= MaximumInputLength.LongInput)
                     .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
         });
 
@@ -157,7 +157,7 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
             When(
                 item => item.ChargesDebtInfo != null,
                 () => RuleFor(item => item.ChargesDebtInfo)
-                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
+                    .Must(value => value!.Length <= MaximumInputLength.LongInput)
                     .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
         });
 

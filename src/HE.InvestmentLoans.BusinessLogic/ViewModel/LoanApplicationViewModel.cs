@@ -46,7 +46,7 @@ public class LoanApplicationViewModel
 
     public bool GoodChangeMode { get; set; }
 
-    public string ReferenceNumber { get; set; }
+    public string? ReferenceNumber { get; set; }
 
     public SiteViewModel AddNewSite()
     {

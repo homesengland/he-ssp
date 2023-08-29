@@ -37,6 +37,12 @@ public class FundingValidator : AbstractValidator<FundingViewModel>
                         .WithMessage(ValidationErrorMessage.EnterMoreDetails));
 
             When(
+                    item => item.PrivateSectorFundingResult != null,
+                    () => RuleFor(item => item.PrivateSectorFundingResult)
+                        .Must(value => value!.Length <= MaximumInputLength.LongInput)
+                        .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
+
+            When(
                     item => item.PrivateSectorFundingReason != null,
                     () => RuleFor(item => item.PrivateSectorFundingReason)
                         .Must(value => value!.Length <= MaximumInputLength.LongInput)
