@@ -24,6 +24,8 @@ public static class WebModule
         serviceCollections.AddValidatorsFromAssemblyContaining<LoanPurposeModel>();
         serviceCollections.AddCompaniesHouseHttpClient();
         serviceCollections.AddScoped<IOrganisationSearchService, OrganisationSearchService>();
+        serviceCollections.AddScoped<IContactService, ContactService>();
+        serviceCollections.AddScoped<IContactRepository, ContactRepository>();
         serviceCollections.AddScoped<IOrganizationRepository, OrganizationRepository>();
     }
 }
