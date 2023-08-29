@@ -35,19 +35,44 @@ public class FundingValidator : AbstractValidator<FundingViewModel>
                 () => RuleFor(item => item.PrivateSectorFundingReason)
                         .NotEmpty()
                         .WithMessage(ValidationErrorMessage.EnterMoreDetails));
+
+            When(
+                    item => item.PrivateSectorFundingReason != null,
+                    () => RuleFor(item => item.PrivateSectorFundingReason)
+                        .Must(value => value!.Length <= MaximumInputLength.LongInput)
+                        .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
         });
 
-        RuleSet(FundingView.AbnormalCosts, () => When(
-                item => item.AbnormalCosts == CommonResponse.Yes,
-                () => RuleFor(item => item.AbnormalCostsInfo)
-                        .NotEmpty()
-                        .WithMessage(ValidationErrorMessage.EnterMoreDetails)));
+        RuleSet(FundingView.AbnormalCosts, () =>
+        {
+            When(
+                    item => item.AbnormalCosts == CommonResponse.Yes,
+                    () => RuleFor(item => item.AbnormalCostsInfo)
+                            .NotEmpty()
+                            .WithMessage(ValidationErrorMessage.EnterMoreDetails));
 
-        RuleSet(FundingView.Refinance, () => When(
+            When(
+                    item => item.AbnormalCostsInfo != null,
+                    () => RuleFor(item => item.AbnormalCostsInfo)
+                        .Must(value => value!.Length <= MaximumInputLength.LongInput)
+                        .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
+        });
+
+        RuleSet(FundingView.Refinance, () =>
+        {
+            When(
                 item => item.Refinance == FundingFormOption.Refinance,
                 () => RuleFor(item => item.RefinanceInfo)
                         .NotEmpty()
-                        .WithMessage(ValidationErrorMessage.EnterMoreDetailsForRefinanceExitStrategy)));
+                        .WithMessage(ValidationErrorMessage.EnterMoreDetailsForRefinanceExitStrategy));
+
+            When(
+                    item => item.RefinanceInfo != null,
+                    () => RuleFor(item => item.RefinanceInfo)
+                        .Must(value => value!.Length <= MaximumInputLength.LongInput)
+                        .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
+
+        });
 
         RuleSet(FundingView.CheckAnswers, () =>
         {

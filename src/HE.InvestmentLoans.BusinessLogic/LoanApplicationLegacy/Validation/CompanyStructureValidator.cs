@@ -40,6 +40,12 @@ public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewM
                         e => _allowedExtensions.Contains(Path.GetExtension(e?.ToLower(CultureInfo.InvariantCulture))))
                     .WithMessage(ValidationErrorMessage.FileIncorrectFormat)
                     .When(e => !string.IsNullOrEmpty(e.CompanyInfoFileName));
+
+            When(
+                item => item.ExistingCompany != null,
+                () => RuleFor(item => item.ExistingCompany)
+                    .Must(value => value!.Length <= MaximumInputLength.LongInput)
+                    .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
         });
 
         RuleSet(CompanyStructureView.HomesBuilt, () => When(

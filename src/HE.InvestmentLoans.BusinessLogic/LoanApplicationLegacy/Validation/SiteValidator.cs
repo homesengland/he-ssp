@@ -14,6 +14,12 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
 {
     public SiteValidator()
     {
+        RuleSet(ProjectView.Name, () => When(
+                item => item.Name != null,
+                () => RuleFor(item => item.Name)
+                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
+                    .WithMessage(ValidationErrorMessage.InputLongerThanHundredCharacters)));
+
         RuleSet(ProjectView.ManyHomes, () => RuleFor(item => item.ManyHomes)
             .Matches(@"^(?!0)[1-9]\d{0,3}$|^9999$")
             .WithMessage(ValidationErrorMessage.ManyHomesAmount));
@@ -65,34 +71,95 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                     .WithName(ProjectFormOption.PurchaseDate));
         });
 
-        RuleSet(ProjectView.TypeHomes, () => When(
-                item => item.TypeHomes != null && item.TypeHomes.Contains(CommonResponse.Other),
+        RuleSet(ProjectView.TypeHomes, () =>
+        {
+            When(
+                    item => item.TypeHomes != null && item.TypeHomes.Contains(CommonResponse.Other),
+                    () => RuleFor(item => item.TypeHomesOther)
+                    .NotEmpty()
+                    .WithMessage(ValidationErrorMessage.TypeHomesOtherType));
+
+            When(
+                item => item.TypeHomesOther != null,
                 () => RuleFor(item => item.TypeHomesOther)
-                .NotEmpty()
-                .WithMessage(ValidationErrorMessage.TypeHomesOtherType)));
+                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
+                    .WithMessage(ValidationErrorMessage.InputLongerThanHundredCharacters));
+        });
 
         RuleSet(ProjectView.Location, () =>
         {
-            When(item => item.LocationOption == ProjectFormOption.Coordinates, () => RuleFor(item => item.LocationCoordinates)
+            When(
+                item => item.LocationOption == ProjectFormOption.Coordinates,
+                () => RuleFor(item => item.LocationCoordinates)
                     .NotEmpty()
                     .WithMessage(ValidationErrorMessage.EnterCoordinates));
 
-            When(item => item.LocationOption == ProjectFormOption.LandRegistryTitleNumber, () => RuleFor(item => item.LocationLandRegistry)
+            When(
+                    item => item.LocationCoordinates != null,
+                    () => RuleFor(item => item.LocationCoordinates)
+                        .Must(value => value!.Length <= MaximumInputLength.LongInput)
+                        .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
+
+            When(
+                item => item.LocationOption == ProjectFormOption.LandRegistryTitleNumber,
+                () => RuleFor(item => item.LocationLandRegistry)
                     .NotEmpty()
                     .WithMessage(ValidationErrorMessage.EnterLandRegistryTitleNumber));
+
+            When(
+                    item => item.LocationLandRegistry != null,
+                    () => RuleFor(item => item.LocationLandRegistry)
+                        .Must(value => value!.Length <= MaximumInputLength.LongInput)
+                        .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
         });
 
-        RuleSet(ProjectView.GrantFundingMore, () => When(
-                item => item.GrantFundingAmount != null,
-                () => RuleFor(item => item.GrantFundingAmount)
-                        .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
-                        .WithMessage(ValidationErrorMessage.IncorrectGrantFundingAmount)));
+        RuleSet(ProjectView.PlanningRefEnter, () => When(
+                item => item.PlanningRefEnter != null,
+                () => RuleFor(item => item.PlanningRefEnter)
+                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
+                    .WithMessage(ValidationErrorMessage.InputLongerThanHundredCharacters)));
 
-        RuleSet(ProjectView.ChargesDebt, () => When(
-                item => item.ChargesDebt == CommonResponse.Yes,
+        RuleSet(ProjectView.GrantFundingMore, () =>
+        {
+            When(
+                    item => item.GrantFundingAmount != null,
+                    () => RuleFor(item => item.GrantFundingAmount)
+                            .Matches(@"^[0-9]+([.,][0-9]{1,2})?$")
+                            .WithMessage(ValidationErrorMessage.IncorrectGrantFundingAmount));
+
+            When(
+                item => item.GrantFundingSource != null,
+                () => RuleFor(item => item.GrantFundingSource)
+                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
+                    .WithMessage(ValidationErrorMessage.InputLongerThanHundredCharacters));
+
+            When(
+                item => item.GrantFundingName != null,
+                () => RuleFor(item => item.GrantFundingName)
+                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
+                    .WithMessage(ValidationErrorMessage.InputLongerThanHundredCharacters));
+
+            When(
+                item => item.GrantFundingPurpose != null,
+                () => RuleFor(item => item.GrantFundingPurpose)
+                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
+                    .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
+        });
+
+        RuleSet(ProjectView.ChargesDebt, () =>
+        {
+            When(
+                    item => item.ChargesDebt == CommonResponse.Yes,
+                    () => RuleFor(item => item.ChargesDebtInfo)
+                            .NotEmpty()
+                            .WithMessage(ValidationErrorMessage.EnterExistingLegal));
+
+            When(
+                item => item.ChargesDebtInfo != null,
                 () => RuleFor(item => item.ChargesDebtInfo)
-                        .NotEmpty()
-                        .WithMessage(ValidationErrorMessage.EnterExistingLegal)));
+                    .Must(value => value!.Length <= MaximumInputLength.ShortInput)
+                    .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
+        });
 
         RuleSet(ProjectView.Additional, () =>
         {
