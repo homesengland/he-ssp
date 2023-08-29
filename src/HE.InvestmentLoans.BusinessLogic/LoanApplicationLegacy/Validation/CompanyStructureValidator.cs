@@ -42,44 +42,6 @@ public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewM
                     .When(e => !string.IsNullOrEmpty(e.CompanyInfoFileName));
         });
 
-        RuleSet(CompanyStructureView.HomesBuilt, () => When(
-                item => item.HomesBuilt != null,
-                () => RuleFor(item => item.HomesBuilt)
-                        .Cascade(CascadeMode.Stop)
-                        .Must(value =>
-                        {
-                            var culture = CultureInfo.InvariantCulture;
-                            if (decimal.TryParse(value, NumberStyles.Float, culture, out var decimalResult))
-                            {
-                                if (decimalResult % 1 != 0)
-                                {
-                                    return false;
-                                }
-                            }
-
-                            return true;
-                        }).WithMessage(ValidationErrorMessage.HomesBuiltDecimalNumber)
-                        .Must(value =>
-                        {
-                            if (!int.TryParse(value, out var intValue))
-                            {
-                                return false;
-                            }
-
-                            return true;
-                        }).WithMessage(ValidationErrorMessage.HomesBuiltIncorretInput)
-                        .Matches(@"^0$|^[1-9][0-9]*$")
-                        .WithMessage(ValidationErrorMessage.HomesBuiltIncorrectNumber)
-                        .Must(value =>
-                        {
-                            if (int.TryParse(value, out var intValue))
-                            {
-                                return intValue is >= 0 and <= 99999;
-                            }
-
-                            return true;
-                        }).WithMessage(ValidationErrorMessage.HomesBuiltIncorrectNumber)));
-
         RuleSet(CompanyStructureView.CheckAnswers, () =>
         {
             RuleFor(item => item.CheckAnswers)

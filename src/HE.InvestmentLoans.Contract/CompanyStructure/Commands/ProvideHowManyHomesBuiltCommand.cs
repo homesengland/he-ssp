@@ -1,7 +1,7 @@
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 using MediatR;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 
-public record ProvideHowManyHomesBuiltCommand(LoanApplicationId LoanApplicationId, HomesBuilt? HomesBuilt) : IRequest;
+public record ProvideHowManyHomesBuiltCommand(LoanApplicationId LoanApplicationId, string? HomesBuilt) : IRequest<OperationResult>;

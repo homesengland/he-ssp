@@ -1,5 +1,4 @@
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using Stateless;
 
@@ -50,8 +49,7 @@ public class CompanyStructureWorkflow : IStateRouting<CompanyStructureState>
             .Permit(Trigger.Change, CompanyStructureState.CheckAnswers);
 
         _machine.Configure(CompanyStructureState.CheckAnswers)
-            .PermitIf(Trigger.Continue, CompanyStructureState.Complete, () => _model.CheckAnswers == CommonResponse.Yes)
-            .IgnoreIf(Trigger.Continue, () => _model.CheckAnswers != CommonResponse.Yes)
+            .PermitIf(Trigger.Continue, CompanyStructureState.Complete, () => _model.CheckAnswers is not null)
             .PermitIf(Trigger.Back, CompanyStructureState.HomesBuilt);
 
         _machine.Configure(CompanyStructureState.Complete)

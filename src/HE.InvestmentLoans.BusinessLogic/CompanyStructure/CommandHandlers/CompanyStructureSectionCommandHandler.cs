@@ -1,5 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using MediatR;
@@ -11,7 +13,7 @@ public class CompanyStructureSectionCommandHandler :
     IRequestHandler<UnCompleteCompanyStructureSectionCommand>,
     IRequestHandler<ProvideCompanyPurposeCommand>,
     IRequestHandler<ProvideMoreInformationAboutOrganizationCommand>,
-    IRequestHandler<ProvideHowManyHomesBuiltCommand>
+    IRequestHandler<ProvideHowManyHomesBuiltCommand, OperationResult>
 {
     private readonly ICompanyStructureRepository _repository;
 
@@ -50,18 +52,33 @@ public class CompanyStructureSectionCommandHandler :
             cancellationToken);
     }
 
-    public async Task Handle(ProvideHowManyHomesBuiltCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(ProvideHowManyHomesBuiltCommand request, CancellationToken cancellationToken)
     {
-        await Perform(x => x.ProvideHowManyHomesBuilt(request.HomesBuilt), request.LoanApplicationId, cancellationToken);
+        return await Perform(
+            x =>
+            {
+                var homesBuild = string.IsNullOrWhiteSpace(request.HomesBuilt) ? null : HomesBuilt.FromString(request.HomesBuilt);
+                x.ProvideHowManyHomesBuilt(homesBuild);
+            },
+            request.LoanApplicationId,
+            cancellationToken);
     }
 
-    private async Task Perform(Action<CompanyStructureEntity> action, LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
+    private async Task<OperationResult> Perform(Action<CompanyStructureEntity> action, LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
     {
         var userAccount = await _loanUserContext.GetSelectedAccount();
         var companyStructure = await _repository.GetAsync(loanApplicationId, userAccount, cancellationToken);
 
-        action(companyStructure);
+        try
+        {
+            action(companyStructure);
+        }
+        catch (DomainValidationException domainValidationException)
+        {
+            return domainValidationException.OperationResult;
+        }
 
         await _repository.SaveAsync(companyStructure, userAccount, cancellationToken);
+        return OperationResult.Success();
     }
 }
