@@ -21,9 +21,9 @@ public class RedisService : ICacheService
 
     public T? GetValue<T>(string key)
     {
-        if (Cache.KeyExists(GetGey(key)))
+        if (Cache.KeyExists(GetKey(key)))
         {
-            string? resp = Cache.StringGet(GetGey(key));
+            string? resp = Cache.StringGet(GetKey(key));
             return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
         }
 
@@ -32,7 +32,7 @@ public class RedisService : ICacheService
 
     public async Task<T?> GetValueAsync<T>(string key, Func<Task<T>> loadValue)
     {
-        if (Cache.KeyExists(GetGey(key)))
+        if (Cache.KeyExists(GetKey(key)))
         {
             return GetValue<T>(key);
         }
@@ -51,7 +51,7 @@ public class RedisService : ICacheService
 
     public void SetValue(string key, object value, int expireMinutes)
     {
-        Cache.StringSet(GetGey(key), JsonSerializer.Serialize(value), TimeSpan.FromMinutes(expireMinutes));
+        Cache.StringSet(GetKey(key), JsonSerializer.Serialize(value), TimeSpan.FromMinutes(expireMinutes));
     }
 
     public void SetValue<T>(string key, T value)
@@ -59,5 +59,5 @@ public class RedisService : ICacheService
         SetValue(key, (object)value!);
     }
 
-    private string GetGey(string key) => $"{_appConfig.AppName}_{key}";
+    private string GetKey(string key) => $"{_appConfig.AppName}_{key}";
 }
