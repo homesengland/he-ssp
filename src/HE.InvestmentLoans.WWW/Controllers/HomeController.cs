@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
@@ -11,14 +12,24 @@ public class HomeController : Controller
 {
     private readonly IMediator _mediator;
 
-    public HomeController(IMediator mediator)
+    private readonly IUserContext _userContext;
+
+    public HomeController(IMediator mediator, IUserContext userContext)
     {
         _mediator = mediator;
+        _userContext = userContext;
     }
 
     public IActionResult Index()
     {
-        return View();
+        if (_userContext.IsAuthenticated)
+        {
+            return RedirectToAction("Dashboard", "Home");
+        }
+        else
+        {
+            return RedirectToAction("WhatTheHomeBuildingFundIs", "Guidance");
+        }
     }
 
     public IActionResult Privacy()

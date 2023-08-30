@@ -2,6 +2,7 @@ using System.Globalization;
 using FluentValidation;
 using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 
