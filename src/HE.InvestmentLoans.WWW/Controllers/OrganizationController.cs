@@ -33,7 +33,7 @@ public class OrganizationController : Controller
     [HttpGet("select")]
     public async Task<IActionResult> SelectOrganization([FromQuery] string searchPhrase, [FromQuery] int page)
     {
-        var response = await _mediator.Send(new SearchOrganizations(searchPhrase, page, 10));
+        var response = await _mediator.Send(new SearchOrganizationsQuery(searchPhrase, page, 10));
 
         return View(response.Result);
     }
