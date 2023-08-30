@@ -1,6 +1,5 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
@@ -137,21 +136,13 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     [WorkflowState(CompanyStructureState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswersPost(Guid id, CompanyStructureViewModel viewModel, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)), cancellationToken);
-        response.ViewModel.CheckAnswers = viewModel.CheckAnswers;
-        var validationResult = await _validator.ValidateAsync(response.ViewModel, opt => opt.IncludeRuleSets(CompanyStructureView.CheckAnswers), cancellationToken);
-        if (!validationResult.IsValid)
+        var result = await _mediator.Send(new CheckAnswersCompanyStructureSectionCommand(LoanApplicationId.From(id), viewModel.CheckAnswers), cancellationToken);
+        if (result.AreValidationErrors)
         {
-            validationResult.AddToModelState(ModelState);
+            ModelState.AddValidationErrors(result);
+            var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)), cancellationToken);
             return View("CheckAnswers", response.ViewModel);
         }
-
-        await (viewModel.CheckAnswers switch
-        {
-            CommonResponse.Yes => _mediator.Send(new CompanyStructureSectionCommand(LoanApplicationId.From(id)), cancellationToken),
-            CommonResponse.No => _mediator.Send(new UnCompleteCompanyStructureSectionCommand(LoanApplicationId.From(id)), cancellationToken),
-            _ => Task.CompletedTask,
-        });
 
         return await Continue(new { Id = id });
     }

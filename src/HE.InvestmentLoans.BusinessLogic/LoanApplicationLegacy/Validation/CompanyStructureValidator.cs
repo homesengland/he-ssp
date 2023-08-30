@@ -2,7 +2,6 @@ using System.Globalization;
 using FluentValidation;
 using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 
@@ -46,20 +45,6 @@ public class CompanyStructureValidator : AbstractValidator<CompanyStructureViewM
                 () => RuleFor(item => item.ExistingCompany)
                     .Must(value => value!.Length <= MaximumInputLength.LongInput)
                     .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
-        });
-
-        RuleSet(CompanyStructureView.CheckAnswers, () =>
-        {
-            RuleFor(item => item.CheckAnswers)
-           .NotEmpty()
-           .WithMessage(ValidationErrorMessage.SecurityCheckAnswers);
-
-            When(item => item.CheckAnswers == CommonResponse.Yes, () => RuleFor(m => m).Must(x =>
-                !string.IsNullOrEmpty(x.Purpose) &&
-                !string.IsNullOrEmpty(x.ExistingCompany) &&
-                !string.IsNullOrEmpty(x.HomesBuilt))
-                .WithMessage(ValidationErrorMessage.CheckAnswersOption)
-                .OverridePropertyName(nameof(CompanyStructureViewModel.CheckAnswers)));
         });
     }
 }
