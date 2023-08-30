@@ -18,16 +18,27 @@ public class UserContext : IUserContext
         }
 
         var httpUser = httpContext.User;
+        SetIsAuthenticated(httpUser);
         Email = httpUser.GetClaimValue(EmailClaimName) ?? string.Empty;
-        UserGlobalId = GetRequiredClaimValue(httpUser, IdentifierClaimName);
+        if (IsAuthenticated)
+        {
+            UserGlobalId = GetRequiredClaimValue(httpUser, IdentifierClaimName);
+        }
     }
 
     public string UserGlobalId { get; }
 
     public string Email { get; }
 
+    public bool IsAuthenticated { get; private set; }
+
     private string GetRequiredClaimValue(ClaimsPrincipal claimsPrincipal, string claimType)
     {
         return claimsPrincipal.GetClaimValue(claimType) ?? throw new ArgumentNullException(claimType);
+    }
+
+    private void SetIsAuthenticated(ClaimsPrincipal claimsPrincipal)
+    {
+        IsAuthenticated = claimsPrincipal.Identity != null && claimsPrincipal.Identity.IsAuthenticated;
     }
 }

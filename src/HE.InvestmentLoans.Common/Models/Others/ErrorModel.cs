@@ -17,7 +17,7 @@ public class ErrorModel
         ErrorCode = errorCode;
     }
 
-    public ErrorModel(string message, string errorCode, Dictionary<string, string> additionalData)
+    public ErrorModel(string message, string errorCode, Dictionary<string, object> additionalData)
     {
         Message = message;
         ErrorCode = errorCode;
@@ -32,5 +32,5 @@ public class ErrorModel
 
     public string ErrorCode { get; set; }
 
-    public Dictionary<string, string> AdditionalData { get; set; }
+    public Dictionary<string, object> AdditionalData { get; set; }
 }

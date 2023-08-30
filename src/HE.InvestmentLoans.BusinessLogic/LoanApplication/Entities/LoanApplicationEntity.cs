@@ -13,12 +13,14 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
 public class LoanApplicationEntity
 {
-    public LoanApplicationEntity(LoanApplicationId id, UserAccount userAccount, ApplicationStatus externalStatus)
+    public LoanApplicationEntity(LoanApplicationId id, UserAccount userAccount, ApplicationStatus externalStatus, DateTime? lastModificationDate)
     {
         Id = id;
         UserAccount = userAccount;
         ApplicationProjects = new ApplicationProjects(Id);
         ExternalStatus = externalStatus;
+
+        LastModificationDate = lastModificationDate;
     }
 
     public LoanApplicationId Id { get; private set; }
@@ -31,7 +33,9 @@ public class LoanApplicationEntity
 
     public ApplicationStatus ExternalStatus { get; set; }
 
-    public static LoanApplicationEntity New(UserAccount userAccount) => new(LoanApplicationId.New(), userAccount, ApplicationStatus.Draft);
+    public DateTime? LastModificationDate { get; private set; }
+
+    public static LoanApplicationEntity New(UserAccount userAccount) => new(LoanApplicationId.New(), userAccount, ApplicationStatus.Draft, null);
 
     public void SaveApplicationProjects(ApplicationProjects applicationProjects)
     {
@@ -61,8 +65,7 @@ public class LoanApplicationEntity
             throw new DomainException(
                 "Loan application has been submitted",
                 CommonErrorCodes.ApplicationHasBeenSubmitted,
-                ("Date", LegacyModel.Timestamp.Date.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)),
-                ("Hour", LegacyModel.Timestamp.Date.ToString("hh:mm tt", CultureInfo.InvariantCulture)));
+                ("Date", LastModificationDate!.Value));
         }
 
         await canSubmitLoanApplication.Submit(Id, cancellationToken);

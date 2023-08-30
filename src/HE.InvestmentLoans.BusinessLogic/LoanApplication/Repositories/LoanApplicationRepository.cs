@@ -47,7 +47,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
 
-        return new LoanApplicationEntity(id, userAccount, externalStatus)
+        return new LoanApplicationEntity(id, userAccount, externalStatus, loanApplicationDto.LastModificationOn)
         {
             LegacyModel = LoanApplicationMapper.Map(loanApplicationDto),
         };
