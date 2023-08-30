@@ -1,13 +1,6 @@
-﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.SecurityViewModel
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.SecurityViewModel
 @{
     var id = ViewContext.RouteData.Values["id"];
-
-    var dirLoansSub = Model?.DirLoansSub is null ? null : new List<string>() { $"{Model?.DirLoansSub}" };
-
-    if (dirLoansSub!= null && Model?.DirLoansSub == "No")
-    {
-        dirLoansSub.Add($"{Model?.DirLoansSubMore}");
-    }
 }
 
 <gds-summary-list class="govuk-!-margin-bottom-9">
@@ -23,7 +16,7 @@
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
         {
         { "Title", "Debenture" },
-        { "Value",  Model.ChargesDebtCompanyInfo },
+        { "Value",  $"{ Model.ChargesDebtCompany }, { Model.ChargesDebtCompanyInfo }" },
         { "Link", Url.Action("Change","Security", new {id = id,  state = "ChargesDebtCompany" }) }
         })
     }
@@ -34,12 +27,13 @@
     { "Value",  Model.DirLoans },
     { "Link", Url.Action("Change","Security", new {id = id,  state = "DirLoans" }) }
     })
+
     @if (Model.DirLoans=="Yes")
     {
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
         {
         { "Title", "Subordinated loans" },
-        { "Value", dirLoansSub },
+        { "Value", Model.DirLoansSub == "Yes" ? Model.DirLoansSub : $"{ Model.DirLoansSub }, { Model.DirLoansSubMore }"},
         { "Link", Url.Action("Change","Security", new {id = id,  state = "DirLoansSub" }) }
         })
     }

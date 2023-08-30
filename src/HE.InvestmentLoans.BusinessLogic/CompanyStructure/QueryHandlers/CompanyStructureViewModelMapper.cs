@@ -15,7 +15,7 @@ public static class CompanyStructureViewModelMapper
             LoanApplicationId = companyStructureEntity.LoanApplicationId.Value,
             ExistingCompany = companyStructureEntity.MoreInformation?.Information,
             HomesBuilt = companyStructureEntity.HomesBuilt?.ToString(),
-            CheckAnswers = companyStructureEntity.Status == SectionStatus.Completed ? CommonResponse.Yes : CommonResponse.No,
+            CheckAnswers = companyStructureEntity.Status == SectionStatus.Completed ? CommonResponse.Yes : null,
         };
     }
 

@@ -38,7 +38,7 @@ public class GetSubmitLoanApplicationQueryHandler : IRequestHandler<GetSubmitLoa
 
         var response = new SubmitLoanApplication(
                             loanApplication.Id,
-                            loanApplication.LegacyModel.ReferenceNumber,
+                            loanApplication.LegacyModel.ReferenceNumber!,
                             loanApplication.ExternalStatus,
                             loanApplication.IsEnoughHomesToBuild());
 
