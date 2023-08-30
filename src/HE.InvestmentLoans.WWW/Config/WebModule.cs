@@ -5,6 +5,8 @@ using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.CRM.Extensions;
 using HE.InvestmentLoans.WWW.Models;
 using HE.Investments.Organisation.Config;
+using HE.Investments.Organisation.CrmRepository;
+using HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.WWW.Config;
 
@@ -23,7 +25,8 @@ public static class WebModule
 
         serviceCollections.AddScoped<IContactService, ContactService>();
         serviceCollections.AddScoped<IContactRepository, ContactRepository>();
-        serviceCollections.AddOrganizationsModule();
         serviceCollections.AddScoped<IOrganizationService, OrganizationService>();
+
+        serviceCollections.AddOrganizationsModule();
     }
 }

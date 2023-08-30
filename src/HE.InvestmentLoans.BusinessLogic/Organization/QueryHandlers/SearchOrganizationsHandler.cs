@@ -4,10 +4,7 @@ using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using MediatR;
-using Microsoft.PowerPlatform.Dataverse.Client;
-using Org.HE.Common.IntegrationModel.PortalIntegrationModel;
 using Org.HE.Investments.Organisation.CompaniesHouse.Contract;
-using Org.HE.Investments.Organisation.Contract;
 using Org.HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.Organization.QueryHandlers;
@@ -40,5 +37,4 @@ internal class SearchOrganizationsHandler : IRequestHandler<SearchOrganizationsQ
 
         return new SearchOrganisationsQueryResponse(viewmodel);
     }
-
 }

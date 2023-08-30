@@ -15,7 +15,6 @@ public static class ServiceCollectionExtension
         services.AddSingleton<IDataverseConfig>(x => x.GetRequiredService<IAppConfig>().Dataverse);
         services.AddSingleton<IUrlConfig>(x => x.GetRequiredService<IAppConfig>().Url);
         services.AddSingleton<ICacheConfig>(x => x.GetRequiredService<IAppConfig>().Cache);
-
     }
 
     public static void AddCache(this IServiceCollection services, ICacheConfig config, string sessionCookieName)

@@ -24,7 +24,7 @@ public class OrganisationSearchServiceTests
     }
 
     [Fact]
-    public async Task Fail_when_api_company_houses_returns_error()
+    public async Task Fail_WhenCompanyHousesReturnsError()
     {
         GivenThatCompanyHousesReturnsError();
 
@@ -34,9 +34,10 @@ public class OrganisationSearchServiceTests
     }
 
     [Fact]
-    public async Task Return_results_from_company_houses()
+    public async Task ReturnResultsFromCompanyHouses_WhenCrmReturnsNoOrganization()
     {
         GivenThatCompanyHousesReturns(OrganizationWithCompanyHouseNumber("1234"));
+        GivenThatCrmReturnsNothing();
 
         await WhenSearchingOrganizations();
 
@@ -45,7 +46,7 @@ public class OrganisationSearchServiceTests
     }
 
     [Fact]
-    public async Task Return_nothing_company_houses_returns_nothing()
+    public async Task ReturnNothing_WhenCompanyHousesReturnsNothing()
     {
         GivenThatComanyHousesReturnsNothing();
 
@@ -55,7 +56,7 @@ public class OrganisationSearchServiceTests
     }
 
     [Fact]
-    public async Task Return_total_number_of_organizations_from_company_houses()
+    public async Task ReturnTotalNumberOfOrganizationsFromCompanyHouses()
     {
         GivenThatCompanyHousesReturnsTotalOrganizations(10);
 
@@ -65,7 +66,7 @@ public class OrganisationSearchServiceTests
     }
 
     [Fact]
-    public async Task Return_organization_data_from_crm_when_org_exists_there_and_is_returned_form_company_houses()
+    public async Task ReturnOrganizationDataFromCrm_WhenOrganzationExistsThereAndIsReturnedFormCompanyHousesApi()
     {
         var sameOrganizationNumber = "1234";
         GivenThatCompanyHousesReturns(CompanyDetails(sameOrganizationNumber, "CompanyName", "Sheffield", "Letsby Avenue", "PO16 7GZ"));
@@ -84,7 +85,7 @@ public class OrganisationSearchServiceTests
     }
 
     [Fact]
-    public async Task Match_multiple_organizations()
+    public async Task MatchMultipleOrganizations()
     {
         var firstOrganizationNumber = "1234";
         var secondOrganizationNumber = "12345";
@@ -117,7 +118,7 @@ public class OrganisationSearchServiceTests
     }
 
     [Fact]
-    public async Task Return_organization_data_from_company_houses_when_org_cannot_be_found_in_crm()
+    public async Task ReturnOrganizationDataFromCompanyHouses_WhenOrganizationCannotBeFoundInCrm()
     {
         var organizationNumber = "1234";
         var differentOrganizationNumber = "12345";
@@ -141,6 +142,12 @@ public class OrganisationSearchServiceTests
     {
         _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrm(It.IsAny<IEnumerable<string>>()))
             .Returns(organizationsToReturn.ToList());
+    }
+
+    private void GivenThatCrmReturnsNothing()
+    {
+        _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrm(It.IsAny<IEnumerable<string>>()))
+            .Returns(Enumerable.Empty<OrganizationDetailsDto>());
     }
 
     private void GivenThatComanyHousesReturnsNothing()
