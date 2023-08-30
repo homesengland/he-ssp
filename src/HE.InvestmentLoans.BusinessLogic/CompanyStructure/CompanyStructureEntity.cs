@@ -1,3 +1,6 @@
+using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
@@ -7,12 +10,12 @@ namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure;
 public class CompanyStructureEntity
 {
     public CompanyStructureEntity(
-                    LoanApplicationId loanApplicationId,
-                    CompanyPurpose? purpose,
-                    OrganisationMoreInformation? moreInformation,
-                    OrganisationMoreInformationFile? moreInformationFile,
-                    HomesBuilt? homesBuilt,
-                    SectionStatus status)
+        LoanApplicationId loanApplicationId,
+        CompanyPurpose? purpose,
+        OrganisationMoreInformation? moreInformation,
+        OrganisationMoreInformationFile? moreInformationFile,
+        HomesBuilt? homesBuilt,
+        SectionStatus status)
     {
         LoanApplicationId = loanApplicationId;
         Purpose = purpose;
@@ -78,12 +81,42 @@ public class CompanyStructureEntity
         UnCompleteSection();
     }
 
-    public void CompleteSection()
+    public void CheckAnswers(YesNoAnswers yesNoAnswers)
     {
+        switch (yesNoAnswers)
+        {
+            case YesNoAnswers.Yes:
+                CompleteSection();
+                break;
+            case YesNoAnswers.No:
+                UnCompleteSection();
+                break;
+            case YesNoAnswers.Undefined:
+                OperationResult.New()
+                    .AddValidationError(nameof(CheckAnswers), ValidationErrorMessage.SecurityCheckAnswers)
+                    .ThrowException();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(yesNoAnswers), yesNoAnswers, null);
+        }
+    }
+
+    private void CompleteSection()
+    {
+        if (HomesBuilt.IsNotProvided() ||
+            MoreInformation.IsNotProvided() ||
+            Purpose.IsNotProvided())
+        {
+            OperationResult
+                .New()
+                .AddValidationError(nameof(CheckAnswers), ValidationErrorMessage.CheckAnswersOption)
+                .ThrowException();
+        }
+
         Status = SectionStatus.Completed;
     }
 
-    public void UnCompleteSection()
+    private void UnCompleteSection()
     {
         Status = SectionStatus.InProgress;
     }

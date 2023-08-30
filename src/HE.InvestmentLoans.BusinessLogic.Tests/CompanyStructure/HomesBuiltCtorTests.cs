@@ -14,7 +14,7 @@ public class HomesBuiltCtorTests
     [DataRow("0")]
     [DataRow("1")]
     [DataRow("99999")]
-    public void HomesBuiltShouldBeCreated(string homesBuildAsString)
+    public void ShouldCreateHomesBuilt(string homesBuildAsString)
     {
         // given & when
         var action = () => HomesBuilt.FromString(homesBuildAsString);
@@ -27,7 +27,7 @@ public class HomesBuiltCtorTests
     [TestMethod]
     [DataRow("notNumber")]
     [DataRow("  ")]
-    public void DomainValidationExceptionShouldBeThrown_WhenStringIsNotNumber(string homesBuildAsString)
+    public void ShouldThrowDomainValidationException_WhenStringIsNotNumber(string homesBuildAsString)
     {
         // given & when
         var action = () => HomesBuilt.FromString(homesBuildAsString);
@@ -37,7 +37,7 @@ public class HomesBuiltCtorTests
     }
 
     [TestMethod]
-    public void DomainValidationExceptionShouldBeThrown_WhenStringIsDecimal()
+    public void ShouldThrowDomainValidationException_WhenStringIsDecimal()
     {
         // given
         var homesBuildAsString = 11.1m.ToString(CultureInfo.InvariantCulture);
@@ -52,7 +52,7 @@ public class HomesBuiltCtorTests
     [TestMethod]
     [DataRow("-1")]
     [DataRow("100000")]
-    public void DomainValidationExceptionShouldBeThrown_WhenStringIsNumberOutOfAllowedRange(string homesBuildAsString)
+    public void ShouldThrownDomainValidationException_WhenStringIsNumberOutOfAllowedRange(string homesBuildAsString)
     {
         // given & when
         var action = () => HomesBuilt.FromString(homesBuildAsString);

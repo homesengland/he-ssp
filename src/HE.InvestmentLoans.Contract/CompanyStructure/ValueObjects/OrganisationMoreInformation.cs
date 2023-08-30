@@ -7,7 +7,7 @@ public class OrganisationMoreInformation : ValueObject
 {
     public OrganisationMoreInformation(string information)
     {
-        Information = Guard.Argument(information, nameof(Information)).NotEmpty();
+        Information = Guard.Argument(information.Trim(), nameof(Information)).NotEmpty();
     }
 
     public string Information { get; }
