@@ -22,7 +22,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        if (_userContext.IsAuthenticated == true)
+        if (_userContext.IsAuthenticated)
         {
             return RedirectToAction("Dashboard", "Home");
         }

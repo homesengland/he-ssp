@@ -6,5 +6,5 @@ public interface IUserContext
 
     public string Email { get; }
 
-    public bool? IsAuthenticated { get; }
+    public bool IsAuthenticated { get; }
 }

@@ -20,7 +20,7 @@ public class UserContext : IUserContext
         var httpUser = httpContext.User;
         SetIsAuthenticated(httpUser);
         Email = httpUser.GetClaimValue(EmailClaimName) ?? string.Empty;
-        if (IsAuthenticated == true)
+        if (IsAuthenticated)
         {
             UserGlobalId = GetRequiredClaimValue(httpUser, IdentifierClaimName);
         }
@@ -30,7 +30,7 @@ public class UserContext : IUserContext
 
     public string Email { get; }
 
-    public bool? IsAuthenticated { get; private set; }
+    public bool IsAuthenticated { get; private set; }
 
     private string GetRequiredClaimValue(ClaimsPrincipal claimsPrincipal, string claimType)
     {
@@ -39,6 +39,6 @@ public class UserContext : IUserContext
 
     private void SetIsAuthenticated(ClaimsPrincipal claimsPrincipal)
     {
-        IsAuthenticated = claimsPrincipal.Identity?.IsAuthenticated;
+        IsAuthenticated = claimsPrincipal.Identity != null && claimsPrincipal.Identity.IsAuthenticated;
     }
 }
