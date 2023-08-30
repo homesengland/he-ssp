@@ -94,7 +94,7 @@ public class CompanyStructureEntity
             case YesNoAnswers.Undefined:
                 OperationResult.New()
                     .AddValidationError(nameof(CheckAnswers), ValidationErrorMessage.SecurityCheckAnswers)
-                    .ThrowException();
+                    .CheckErrors();
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(yesNoAnswers), yesNoAnswers, null);
@@ -110,7 +110,7 @@ public class CompanyStructureEntity
             OperationResult
                 .New()
                 .AddValidationError(nameof(CheckAnswers), ValidationErrorMessage.CheckAnswersOption)
-                .ThrowException();
+                .CheckErrors();
         }
 
         Status = SectionStatus.Completed;

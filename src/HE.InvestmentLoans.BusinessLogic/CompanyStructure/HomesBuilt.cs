@@ -14,7 +14,7 @@ public class HomesBuilt : ValueObject
             OperationResult
                 .New()
                 .AddValidationError(nameof(HomesBuilt), ValidationErrorMessage.HomesBuiltIncorrectNumber)
-                .ThrowException();
+                .CheckErrors();
         }
 
         Value = value;
@@ -31,7 +31,7 @@ public class HomesBuilt : ValueObject
                 OperationResult
                     .New()
                     .AddValidationError(nameof(HomesBuilt), ValidationErrorMessage.HomesBuiltDecimalNumber)
-                    .ThrowException();
+                    .CheckErrors();
             }
         }
 
@@ -40,7 +40,7 @@ public class HomesBuilt : ValueObject
             OperationResult
                 .New()
                 .AddValidationError(nameof(HomesBuilt), ValidationErrorMessage.HomesBuiltIncorretInput)
-                .ThrowException();
+                .CheckErrors();
         }
 
         return new HomesBuilt(intValue);
