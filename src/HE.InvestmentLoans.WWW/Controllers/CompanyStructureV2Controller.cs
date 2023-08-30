@@ -148,8 +148,6 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     protected override IStateRouting<CompanyStructureState> Routing(CompanyStructureState currentState)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
-        var response = _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id!))).Result;
-
-        return new CompanyStructureWorkflow(response.ViewModel, currentState);
+        return new CompanyStructureWorkflow(currentState);
     }
 }

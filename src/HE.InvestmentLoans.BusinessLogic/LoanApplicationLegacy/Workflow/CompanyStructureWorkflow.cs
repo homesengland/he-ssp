@@ -6,14 +6,11 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 
 public class CompanyStructureWorkflow : IStateRouting<CompanyStructureState>
 {
-    private readonly CompanyStructureViewModel _model;
     private readonly StateMachine<CompanyStructureState, Trigger> _machine;
 
-    public CompanyStructureWorkflow(CompanyStructureViewModel model, CompanyStructureState state)
+    public CompanyStructureWorkflow(CompanyStructureState state)
     {
-        _model = model;
         _machine = new StateMachine<CompanyStructureState, Trigger>(state);
-
         ConfigureTransitions();
     }
 
@@ -49,7 +46,7 @@ public class CompanyStructureWorkflow : IStateRouting<CompanyStructureState>
             .Permit(Trigger.Change, CompanyStructureState.CheckAnswers);
 
         _machine.Configure(CompanyStructureState.CheckAnswers)
-            .PermitIf(Trigger.Continue, CompanyStructureState.Complete, () => _model.CheckAnswers is not null)
+            .PermitIf(Trigger.Continue, CompanyStructureState.Complete)
             .PermitIf(Trigger.Back, CompanyStructureState.HomesBuilt);
 
         _machine.Configure(CompanyStructureState.Complete)
