@@ -1,4 +1,3 @@
-using System.Diagnostics.Metrics;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
@@ -12,7 +11,8 @@ public class OrganizationService : IOrganizationService
         var organizationDetailsDto = new OrganizationDetailsDto();
         if (Guid.TryParse(accountid, out var organizationId))
         {
-            var account = service.Retrieve("account", organizationId, new ColumnSet(new string[] {
+            var account = service.Retrieve("account", organizationId, new ColumnSet(new string[]
+            {
                     "name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3",
                     "address1_city", "address1_postalcode", "address1_country", "primarycontactid",
             }));
