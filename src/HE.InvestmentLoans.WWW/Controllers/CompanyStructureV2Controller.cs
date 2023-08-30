@@ -1,8 +1,4 @@
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
-using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
@@ -21,12 +17,9 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 {
     private readonly IMediator _mediator;
 
-    private readonly IValidator<CompanyStructureViewModel> _validator;
-
-    public CompanyStructureV2Controller(IMediator mediator, IValidator<CompanyStructureViewModel> validator)
+    public CompanyStructureV2Controller(IMediator mediator)
     {
         _mediator = mediator;
-        _validator = validator;
     }
 
     [HttpGet("start-company-structure")]
@@ -55,8 +48,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     [WorkflowState(CompanyStructureState.Purpose)]
     public async Task<IActionResult> PurposePost(Guid id, CompanyStructureViewModel viewModel)
     {
-        var companyPurpose = CompanyStructureViewModelMapper.MapCompanyPurpose(viewModel.Purpose);
-        await _mediator.Send(new ProvideCompanyPurposeCommand(LoanApplicationId.From(id), companyPurpose));
+        await _mediator.Send(new ProvideCompanyPurposeCommand(LoanApplicationId.From(id), viewModel.Purpose));
         return await Continue(new { Id = id });
     }
 
@@ -77,22 +69,22 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
             viewModel.CompanyInfoFileName = formFile.FileName;
             using var memoryStream = new MemoryStream();
             await formFile.CopyToAsync(memoryStream, cancellationToken);
-            viewModel.CompanyInfoFile = memoryStream.ToArray();
+            viewModel.OrganisationMoreInformationFile = memoryStream.ToArray();
         }
 
-        var validationResult = await _validator.ValidateAsync(viewModel, opt => opt.IncludeRuleSets(CompanyStructureView.MoreInformationAboutOrganization), cancellationToken);
-        if (!validationResult.IsValid)
-        {
-            validationResult.AddToModelState(ModelState);
-            return View("MoreInformationAboutOrganization", viewModel);
-        }
-
-        await _mediator.Send(
+        var result = await _mediator.Send(
             new ProvideMoreInformationAboutOrganizationCommand(
                 LoanApplicationId.From(id),
-                CompanyStructureViewModelMapper.MapOrganisationMoreInformation(viewModel.ExistingCompany),
-                CompanyStructureViewModelMapper.MapOrganisationMoreInformationFile(viewModel.CompanyInfoFileName, viewModel.CompanyInfoFile)),
+                viewModel.OrganisationMoreInformation,
+                viewModel.CompanyInfoFileName,
+                viewModel.OrganisationMoreInformationFile),
             cancellationToken);
+
+        if (result.AreValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("MoreInformationAboutOrganization", viewModel);
+        }
 
         return await Continue(new { Id = id });
     }

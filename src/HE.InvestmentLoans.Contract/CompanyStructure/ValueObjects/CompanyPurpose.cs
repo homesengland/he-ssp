@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
@@ -15,6 +16,11 @@ public class CompanyPurpose : ValueObject
     public bool IsSpv { get; }
 
     public static CompanyPurpose New(bool isSpv) => new(isSpv);
+
+    public static CompanyPurpose FromString(string companyPurposeAsString)
+    {
+        return new CompanyPurpose(companyPurposeAsString == CommonResponse.Yes);
+    }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
