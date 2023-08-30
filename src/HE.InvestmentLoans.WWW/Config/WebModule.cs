@@ -27,5 +27,6 @@ public static class WebModule
         serviceCollections.AddScoped<IContactService, ContactService>();
         serviceCollections.AddScoped<IContactRepository, ContactRepository>();
         serviceCollections.AddScoped<IOrganizationRepository, OrganizationRepository>();
+        serviceCollections.AddScoped<IOrganizationService, OrganizationService>();
     }
 }
