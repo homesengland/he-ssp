@@ -1,15 +1,14 @@
-using System.Globalization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
-using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
 using MediatR;
@@ -111,18 +110,17 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     [WorkflowState(CompanyStructureState.HomesBuilt)]
     public async Task<IActionResult> HowManyHomesBuiltPost(Guid id, CompanyStructureViewModel viewModel, CancellationToken cancellationToken)
     {
-        var validationResult = await _validator.ValidateAsync(viewModel, opt => opt.IncludeRuleSets(CompanyStructureView.HomesBuilt), cancellationToken);
-        if (!validationResult.IsValid)
-        {
-            validationResult.AddToModelState(ModelState);
-            return View("HomesBuilt", viewModel);
-        }
-
-        await _mediator.Send(
+        var result = await _mediator.Send(
             new ProvideHowManyHomesBuiltCommand(
                 LoanApplicationId.From(id),
-                string.IsNullOrWhiteSpace(viewModel.HomesBuilt) ? null : new HomesBuilt(int.Parse(viewModel.HomesBuilt, CultureInfo.InvariantCulture))),
+                viewModel.HomesBuilt),
             cancellationToken);
+
+        if (result.AreValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("HomesBuilt", viewModel);
+        }
 
         return await Continue(new { Id = id });
     }
