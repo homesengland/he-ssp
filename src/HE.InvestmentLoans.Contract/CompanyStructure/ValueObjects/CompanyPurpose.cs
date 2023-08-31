@@ -22,6 +22,11 @@ public class CompanyPurpose : ValueObject
         return new CompanyPurpose(companyPurposeAsString == CommonResponse.Yes);
     }
 
+    public override string ToString()
+    {
+        return IsSpv.ToString().ToLowerInvariant();
+    }
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return IsSpv;
