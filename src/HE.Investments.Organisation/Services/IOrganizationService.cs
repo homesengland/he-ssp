@@ -6,5 +6,5 @@ public interface IOrganizationService
 {
     OrganizationDetailsDto GetOrganizationDetails(IOrganizationServiceAsync2 service, string accountid, string contactExternalId);
 
-    Guid CreateOrganization(IOrganizationServiceAsync2 service,  OrganizationDetailsDto organizationDetails);
+    Guid CreateOrganization(IOrganizationServiceAsync2 service, OrganizationDetailsDto organizationDetails);
 }
