@@ -18,6 +18,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.Constants
         {
             public const string DescribedBy = "aria-describedby";
             public const string Hidden = "aria-hidden";
+            public const string Label = "aria-label";
         }
 
         internal static class InputTypes

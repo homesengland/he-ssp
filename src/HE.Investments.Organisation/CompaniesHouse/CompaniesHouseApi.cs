@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.WebUtilities;
 
 namespace HE.Investments.Organisation.CompaniesHouse;
 
-public class CompaniesHouseApi : ICompaniesHouseApi
+internal class CompaniesHouseApi : ICompaniesHouseApi
 {
     private readonly HttpClient _httpClient;
 

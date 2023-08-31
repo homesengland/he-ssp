@@ -1,0 +1,27 @@
+using System.Configuration;
+using HE.Investments.Organisation.CompaniesHouse;
+using HE.Investments.Organisation.CrmRepository;
+using HE.Investments.Organisation.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.PowerPlatform.Dataverse.Client;
+
+namespace HE.Investments.Organisation.Config;
+public static class ServiceCollectionExtensions
+{
+    public static void AddOrganizationsModule(this IServiceCollection serviceCollections)
+    {
+        if (!serviceCollections.Any(s => s.ServiceType == typeof(IOrganizationServiceAsync2)))
+        {
+            throw new ConfigurationErrorsException($"{nameof(IOrganizationServiceAsync2)} is required to be added to service collection.");
+        }
+
+        serviceCollections.AddCompaniesHouseHttpClient();
+        serviceCollections.AddScoped<IOrganisationSearchService, OrganisationSearchService>();
+        serviceCollections.AddScoped<IOrganizationRepository, OrganizationRepository>();
+        serviceCollections.AddScoped<IOrganizationCrmSearchService, OrganizationCrmSearchService>();
+
+        serviceCollections.AddSingleton<ICompaniesHouseConfig>(x =>
+            x.GetRequiredService<IConfiguration>().GetRequiredSection("AppConfiguration:CompaniesHouse").Get<CompaniesHouseConfig>());
+    }
+}

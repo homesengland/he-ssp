@@ -1,6 +1,7 @@
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Contract.Organization;
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
@@ -9,9 +10,11 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 public class OrganizationController : Controller
 {
     private readonly ICompaniesHouseApi _companiesHouseApi;
+    private readonly IMediator _mediator;
 
-    public OrganizationController(ICompaniesHouseApi companiesHouseApi)
+    public OrganizationController(IMediator mediator, ICompaniesHouseApi companiesHouseApi)
     {
+        _mediator = mediator;
         _companiesHouseApi = companiesHouseApi;
     }
 
@@ -21,11 +24,24 @@ public class OrganizationController : Controller
         return View();
     }
 
-    [HttpPost("select")]
-    public IActionResult SelectOrganization()
+    [HttpPost("search")]
+    public IActionResult SearchOrganization(OrganizationViewModel organization)
     {
-        var model = new OrganizationViewModel();
-        return View(model);
+        return RedirectToAction(nameof(SelectOrganization), new { searchPhrase = organization.Name });
+    }
+
+    [HttpGet("search/result")]
+    public async Task<IActionResult> SelectOrganization([FromQuery] string searchPhrase, [FromQuery] int page)
+    {
+        var response = await _mediator.Send(new SearchOrganizationsQuery(searchPhrase, page, 10));
+
+        return View(response.Result);
+    }
+
+    [HttpPost("select")]
+    public IActionResult SelectOrganization(OrganizationViewModel organization)
+    {
+        return View();
     }
 
     [HttpGet("no-match-found")]

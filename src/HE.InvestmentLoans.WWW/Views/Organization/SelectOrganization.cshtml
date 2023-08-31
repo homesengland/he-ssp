@@ -1,4 +1,5 @@
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.OrganizationViewModel;
+@using HE.InvestmentLoans.WWW.Helpers.Organisation;
+@model HE.InvestmentLoans.Contract.Organization.OrganizationViewModel;
 @{
     ViewData["Title"] = "Organization Select";
 }
@@ -6,16 +7,17 @@
 <gds-div-grid-column-two-thirds>
     <partial name="_BackLink" />
 
-    <form asp-controller="Organization" asp-action="SelectOrganization" asp-method="post" novalidate>
+    <form asp-controller="Organization" asp-action="SelectOrganizationPost" asp-method="post" novalidate>
         <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
             Select your organisation
         </gds-h1>
 
         <gds-radio govuk-formgroup-asp-for="SelectedOrganization"
-                   asp-selectlistitems="@Model.OrganizationSelectListItems"
+                   asp-selectlistitems="@OrganizationsMapper.MapToSelectListItems(Model)"
                    asp-isexcludeheader>
         </gds-radio>
 
+        <gds-pagination base-url="/organization/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.Organizations.Count()" total-items="@Model.TotalOrganizations"></gds-pagination>
         <gds-p>
             <gds-link href="#">
                 The organisation is not listed above, enter details manually
@@ -26,5 +28,4 @@
             Continue
         </button>
     </form>
-
 </gds-div-grid-column-two-thirds>
