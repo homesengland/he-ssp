@@ -486,5 +486,10 @@ namespace He.AspNetCore.Mvc.Gds.Components.Constants
         ///  The gov uk text area.
         /// </summary>
         public const string GovUkTextArea = "govuk-textarea";
+
+        /// <summary>
+        ///  The gov uk pagination.
+        /// </summary>
+        public const string GovUkPagination = "govuk-pagination";
     }
 }

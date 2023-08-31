@@ -17,7 +17,7 @@
                    asp-isexcludeheader>
         </gds-radio>
 
-        <gds-pagination base-url="/organization/select?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.Organizations.Count()" total-items="@Model.TotalOrganizations"></gds-pagination>
+        <gds-pagination base-url="/organization/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.Organizations.Count()" total-items="@Model.TotalOrganizations"></gds-pagination>
         <gds-p>
             <gds-link href="#">
                 The organisation is not listed above, enter details manually

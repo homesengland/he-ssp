@@ -1,9 +1,11 @@
+using Castle.Core.Logging;
 using FluentAssertions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
 using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Services;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
@@ -179,7 +181,8 @@ public class OrganisationSearchServiceTests
 
     private async Task WhenSearchingOrganizations()
     {
-        _searchService = new OrganisationSearchService(_companiesHouseApiMock.Object, _organizationCrmSearchServiceMock.Object);
+        var loggerMock = new Mock<ILogger<OrganisationSearchService>>();
+        _searchService = new OrganisationSearchService(_companiesHouseApiMock.Object, _organizationCrmSearchServiceMock.Object, loggerMock.Object);
 
         _response = await _searchService.Search("any phrase", new PagingQueryParams(1, 1), "any number", CancellationToken.None);
     }

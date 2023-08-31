@@ -1,7 +1,9 @@
+using System.Diagnostics.CodeAnalysis;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
 using HE.Investments.Organisation.Contract;
+using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Organisation.Services;
 
@@ -9,16 +11,18 @@ internal class OrganisationSearchService : IOrganisationSearchService
 {
     private readonly ICompaniesHouseApi _companiesHouseApi;
     private readonly IOrganizationCrmSearchService _organizationCrmSearchService;
+    private readonly ILogger<OrganisationSearchService> _logger;
 
-    public OrganisationSearchService(ICompaniesHouseApi companiesHouseApi, IOrganizationCrmSearchService organizationCrmSearchService)
+    public OrganisationSearchService(ICompaniesHouseApi companiesHouseApi, IOrganizationCrmSearchService organizationCrmSearchService, ILogger<OrganisationSearchService> logger)
     {
         _companiesHouseApi = companiesHouseApi;
         _organizationCrmSearchService = organizationCrmSearchService;
+        _logger = logger;
     }
 
     public async Task<OrganisationSearchResult> Search(string organisationName, PagingQueryParams pagingParams, string? companyNumber, CancellationToken cancellationToken)
     {
-        var companyHousesResult = await GetOrganizationFromCompenyHousesApi(organisationName, pagingParams, cancellationToken);
+        var companyHousesResult = await GetOrganizationFromCompanyHousesApi(organisationName, pagingParams, cancellationToken);
 
         if (!companyHousesResult.IsSuccessfull())
         {
@@ -34,7 +38,8 @@ internal class OrganisationSearchService : IOrganisationSearchService
         return new OrganisationSearchResult(mergedResult, companyHousesResult.TotalItems, null!);
     }
 
-    private async Task<OrganisationSearchResult> GetOrganizationFromCompenyHousesApi(string organisationName, PagingQueryParams pagingParams, CancellationToken cancellationToken)
+    [SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates", Justification = "We dont need high performace logging.")]
+    private async Task<OrganisationSearchResult> GetOrganizationFromCompanyHousesApi(string organisationName, PagingQueryParams pagingParams, CancellationToken cancellationToken)
     {
         try
         {
@@ -44,6 +49,8 @@ internal class OrganisationSearchService : IOrganisationSearchService
         }
         catch (HttpRequestException ex)
         {
+            _logger.LogError(ex, "Error occured while fetching organizations data from Company House API: {Message}", ex.Message);
+
             return new OrganisationSearchResult(null!, 0, ex.Message);
         }
     }

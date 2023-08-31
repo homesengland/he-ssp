@@ -8,11 +8,11 @@ using Org.HE.Investments.Organisation.CompaniesHouse.Contract;
 using Org.HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.Organization.QueryHandlers;
-internal class SearchOrganizationsHandler : IRequestHandler<SearchOrganizationsQuery, SearchOrganisationsQueryResponse>
+internal class SearchOrganizationsQueryHandler : IRequestHandler<SearchOrganizationsQuery, SearchOrganisationsQueryResponse>
 {
     private readonly IOrganisationSearchService _searchService;
 
-    public SearchOrganizationsHandler(IOrganisationSearchService searchService)
+    public SearchOrganizationsQueryHandler(IOrganisationSearchService searchService)
     {
         _searchService = searchService;
     }

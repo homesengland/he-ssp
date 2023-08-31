@@ -124,5 +124,10 @@ namespace He.AspNetCore.Mvc.Gds.Components.Constants
         /// The field dt tag.
         /// </summary>
         public const string Dt = "dt";
+
+        /// <summary>
+        /// The field nav tag.
+        /// </summary>
+        public const string Nav = "nav";
     }
 }

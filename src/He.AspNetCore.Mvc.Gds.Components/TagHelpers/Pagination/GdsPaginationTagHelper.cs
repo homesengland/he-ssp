@@ -28,9 +28,9 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Pagination
                 return;
             }
 
-            output.TagName = "nav";
+            output.TagName = HtmlConstants.Nav;
 
-            TagConstruct.ConstructClass(output, "govuk-pagination");
+            TagConstruct.ConstructClass(output, CssConstants.GovUkPagination);
             TagConstruct.ConstructGenericAttribute(output, HtmlAttributes.AriaAttributes.Label, "results");
 
             if (TotalItems <= 0)
