@@ -59,40 +59,13 @@ public class ContactService : IContactService
         if (contact != null)
         {
             var contactWebRole = _webRoleRepository.GetContactWebrole(service, contact.Id, portalType);
-            var roles = new List<ContactRoleDto>();
-            var portalPermissionLevels = _permissionRepository.RetrieveAll(service);
             if (contactWebRole.Count == 0)
             {
-                var defaultRoles = _webRoleRepository.GetDefaultPortalRoles(service, portalType);
-                var defaultRole = defaultRoles.Count > 0 ? defaultRoles[0] : null;
-                var defaultAccount = _organizationRepository.GetDefaultAccount(service);
-                var contactWebroleToCreate = new Entity("invln_contactwebrole")
-                {
-                    Attributes = new AttributeCollection() {
-                        { "invln_accountid", defaultAccount?.ToEntityReference() },
-                        { "invln_webroleid", defaultRole?.ToEntityReference() },
-                        { "invln_contactid", contact.ToEntityReference() },
-                    },
-                };
-                _ = service.Create(contactWebroleToCreate);
-
-                string? permissionLevelValue = null;
-                if (defaultRole != null && defaultRole.Contains("invln_portalpermissionlevelid") && defaultRole["invln_portalpermissionlevelid"] != null)
-                {
-                    var defaultRoleEntityReference = (EntityReference)defaultRole["invln_Portalpermissionlevelid"];
-                    var ppLevel = portalPermissionLevels.FirstOrDefault(x => x["invln_portalpermissionlevelid"] != null && new Guid(x["invln_portalpermissionlevelid"].ToString()) == defaultRoleEntityReference.Id);
-                    permissionLevelValue = ppLevel["invln_permission"]?.ToString();
-                }
-
-                roles.Add(new ContactRoleDto()
-                {
-                    accountId = defaultAccount != null ? defaultAccount.Id : Guid.Empty,
-                    accountName = defaultAccount != null ? defaultAccount["name"]?.ToString() : "account_not_set_CRM",
-                    permissionLevel = permissionLevelValue ?? "permission_level_not_set_CRM",
-                    webRoleName = defaultRole != null && defaultRole.Contains("invln_name") && defaultRole["invln_name"] != null ? defaultRole["invln_name"]?.ToString() : "default_role_not_set_CRM",
-                });
+                return null;
             }
 
+            var roles = new List<ContactRoleDto>();
+            var portalPermissionLevels = _permissionRepository.RetrieveAll(service);
             foreach (var contactRole in contactWebRole)
             {
                 Entity? permissionLevel = null;
