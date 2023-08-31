@@ -1,3 +1,4 @@
+using System.Linq;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CrmRepository;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -7,10 +8,16 @@ namespace HE.Investments.Organisation.Services;
 public class ContactService : IContactService
 {
     private readonly IContactRepository _contactRepository;
+    private readonly IWebRoleRepository _webRoleRepository;
+    private readonly IPortalPermissionRepository _permissionRepository;
+    private readonly IOrganizationRepository _organizationRepository;
 
-    public ContactService(IContactRepository contactRepository)
+    public ContactService(IContactRepository contactRepository, IWebRoleRepository webRoleRepository, IPortalPermissionRepository permissionRepository, IOrganizationRepository organizationRepository)
     {
         _contactRepository = contactRepository;
+        _webRoleRepository = webRoleRepository;
+        _permissionRepository = permissionRepository;
+        _organizationRepository = organizationRepository;
     }
 
     public ContactDto? RetrieveUserProfile(IOrganizationServiceAsync2 service, string contactExternalId)
@@ -44,6 +51,78 @@ public class ContactService : IContactService
                 service.Update(contactToUpdate);
             }
         }
+    }
+
+    public ContactRolesDto? GetContactRoles(IOrganizationServiceAsync2 service, string contactEmail, string portalType, string contactExternalId)
+    {
+        var contact = _contactRepository.GetContactWithGivenEmailAndExternalId(service, contactEmail, contactExternalId);
+        if (contact != null)
+        {
+            var contactWebRole = _webRoleRepository.GetContactWebrole(service, contact.Id, portalType);
+            var roles = new List<ContactRoleDto>();
+            var portalPermissionLevels = _permissionRepository.RetrieveAll(service);
+            if (contactWebRole.Count == 0)
+            {
+                var defaultRoles = _webRoleRepository.GetDefaultPortalRoles(service, portalType);
+                var defaultRole = defaultRoles.Count > 0 ? defaultRoles[0] : null;
+                var defaultAccount = _organizationRepository.GetDefaultAccount(service);
+                var contactWebroleToCreate = new Entity("invln_contactwebrole")
+                {
+                    Attributes = new AttributeCollection() {
+                        { "invln_accountid", defaultAccount?.ToEntityReference() },
+                        { "invln_webroleid", defaultRole?.ToEntityReference() },
+                        { "invln_contactid", contact.ToEntityReference() },
+                    },
+                };
+                _ = service.Create(contactWebroleToCreate);
+
+                string? permissionLevelValue = null;
+                if (defaultRole != null && defaultRole.Contains("invln_portalpermissionlevelid") && defaultRole["invln_portalpermissionlevelid"] != null)
+                {
+                    var defaultRoleEntityReference = (EntityReference)defaultRole["invln_Portalpermissionlevelid"];
+                    var ppLevel = portalPermissionLevels.FirstOrDefault(x => x["invln_portalpermissionlevelid"] != null && new Guid(x["invln_portalpermissionlevelid"].ToString()) == defaultRoleEntityReference.Id);
+                    permissionLevelValue = ppLevel["invln_permission"]?.ToString();
+                }
+
+                roles.Add(new ContactRoleDto()
+                {
+                    accountId = defaultAccount != null ? defaultAccount.Id : Guid.Empty,
+                    accountName = defaultAccount != null ? defaultAccount["name"]?.ToString() : "account_not_set_CRM",
+                    permissionLevel = permissionLevelValue ?? "permission_level_not_set_CRM",
+                    webRoleName = defaultRole != null && defaultRole.Contains("invln_name") && defaultRole["invln_name"] != null ? defaultRole["invln_name"]?.ToString() : "default_role_not_set_CRM",
+                });
+            }
+
+            foreach (var contactRole in contactWebRole)
+            {
+                Entity? permissionLevel = null;
+                if (contactRole.Contains("ae.invln_portalpermissionlevelid") && contactRole["ae.invln_portalpermissionlevelid"] != null && ((dynamic)contactRole["ae.invln_portalpermissionlevelid"]).Value != null)
+                {
+                    permissionLevel = portalPermissionLevels.Where(x => (dynamic)x["invln_portalpermissionlevelid"] == ((dynamic)contactRole["ae.invln_portalpermissionlevelid"]).Value.Id).ToList().FirstOrDefault();
+                }
+
+                var webroleReference = (EntityReference)contactRole["invln_webroleid"];
+                string webRoleName = webroleReference?.Name ?? (contactRole.Contains("ae.invln_name") ? ((dynamic)contactRole["ae.invln_name"]).Value : null);
+                roles.Add(new ContactRoleDto()
+                {
+                    accountId = contactRole.Contains("invln_accountid") && contactRole["invln_accountid"] != null ? ((EntityReference)contactRole["invln_accountid"]).Id : Guid.Empty,
+                    accountName = contactRole.Contains("invln_accountid") && contactRole["invln_accountid"] != null ? ((EntityReference)contactRole["invln_accountid"]).Name : null,
+                    permissionLevel = permissionLevel != null && permissionLevel.Contains("invln_permission") && permissionLevel["invln_permission"] != null ? ((OptionSetValue)permissionLevel["invln_permission"]).Value.ToString() : null,
+                    webRoleName = webRoleName,
+                });
+            }
+
+            var contactRolesDto = new ContactRolesDto()
+            {
+                email = contactEmail,
+                externalId = contactExternalId,
+                contactRoles = roles,
+            };
+
+            return contactRolesDto;
+        }
+
+        return null;
     }
 
     private ContactDto MapContactEntityToDto(Entity contact)
