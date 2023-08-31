@@ -1,4 +1,3 @@
-using FluentAssertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 

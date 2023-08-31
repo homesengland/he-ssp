@@ -4,7 +4,7 @@
 @inject ModelExpressionProvider modelProvider
 @inject IAppConfig appConfig
 @{
-    var (hasError, fileInputError) = ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((CompanyStructureViewModel x) => x.CompanyInfoFile));
+    var (hasError, fileInputError) = ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((CompanyStructureViewModel x) => x.OrganisationMoreInformationFile));
 }
 
 @Html.Hidden("MaxFileSizeInMegabytes", appConfig.MaxFileSizeInMegabytes)
@@ -18,7 +18,7 @@
         @Html.HiddenFor(x => x.LoanApplicationId)
 
         <gds-field-set>
-            <gds-error-form-group asp-for="ExistingCompany">
+            <gds-error-form-group asp-for="OrganisationMoreInformation">
                 <legend>
                     <gds-label-wrapper>
                         <gds-label size="@ControlSize.L" for="ExistingCompany">
@@ -30,10 +30,10 @@
                     Tell us about your organisation structure, including if your organisation is or has a parent company, or is part of a group structure.
                 </gds-div-hint>
                 <gds-text-area
-                    asp-for="ExistingCompany"
+                    asp-for="OrganisationMoreInformation"
                     rows="5"></gds-text-area>
             </gds-error-form-group>
-            <gds-error-form-group asp-for="CompanyInfoFile" id="file-error-form">
+            <gds-error-form-group asp-for="OrganisationMoreInformationFile" id="file-error-form">
                 <gds-div-hint>
                     You can also upload any relevant files such as company structure charts.
                 </gds-div-hint>

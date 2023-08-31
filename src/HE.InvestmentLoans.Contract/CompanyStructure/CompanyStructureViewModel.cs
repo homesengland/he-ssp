@@ -13,15 +13,13 @@ public class CompanyStructureViewModel
 
     public string? Purpose { get; set; }
 
-    public string? ExistingCompany { get; set; }
-
-    public string? ExistingCompanyInfo { get; set; }
+    public string? OrganisationMoreInformation { get; set; }
 
     public string? HomesBuilt { get; set; }
 
     public string? CheckAnswers { get; set; }
 
-    public byte[]? CompanyInfoFile { get; set; }
+    public byte[]? OrganisationMoreInformationFile { get; set; }
 
     public string? CompanyInfoFileName { get; set; }
 

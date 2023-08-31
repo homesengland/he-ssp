@@ -47,7 +47,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
 
-        return new LoanApplicationEntity(id, userAccount, externalStatus)
+        return new LoanApplicationEntity(id, userAccount, externalStatus, loanApplicationDto.LastModificationOn)
         {
             LegacyModel = LoanApplicationMapper.Map(loanApplicationDto),
         };
@@ -136,7 +136,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
             // COMPANY
             companyPurpose = loanApplication.Company.Purpose!.MapToBool(),
-            existingCompany = loanApplication.Company.ExistingCompany,
+            existingCompany = loanApplication.Company.OrganisationMoreInformation,
             companyExperience = loanApplication.Company.HomesBuilt?.TryParseNullableInt(),
 
             // FUNDING

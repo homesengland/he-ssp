@@ -30,7 +30,7 @@ public class OperationResult
         return AddValidationError(new ErrorItem(affectedField, validationMessage));
     }
 
-    public void ThrowException()
+    public void CheckErrors()
     {
         if (AreValidationErrors)
         {

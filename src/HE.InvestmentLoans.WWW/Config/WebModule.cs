@@ -29,5 +29,6 @@ public static class WebModule
         serviceCollections.AddScoped<IOrganizationRepository, OrganizationRepository>();
         serviceCollections.AddScoped<IWebRoleRepository, WebRoleRepository>();
         serviceCollections.AddScoped<IPortalPermissionRepository, PortalPermissionRepository>();
+        serviceCollections.AddScoped<IOrganizationService, OrganizationService>();
     }
 }

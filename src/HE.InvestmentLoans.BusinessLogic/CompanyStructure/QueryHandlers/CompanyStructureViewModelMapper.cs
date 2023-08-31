@@ -13,9 +13,9 @@ public static class CompanyStructureViewModelMapper
         {
             Purpose = MapCompanyPurpose(companyStructureEntity.Purpose),
             LoanApplicationId = companyStructureEntity.LoanApplicationId.Value,
-            ExistingCompany = companyStructureEntity.MoreInformation?.Information,
+            OrganisationMoreInformation = companyStructureEntity.MoreInformation?.Information,
             HomesBuilt = companyStructureEntity.HomesBuilt?.ToString(),
-            CheckAnswers = companyStructureEntity.Status == SectionStatus.Completed ? CommonResponse.Yes : CommonResponse.No,
+            CheckAnswers = companyStructureEntity.Status == SectionStatus.Completed ? CommonResponse.Yes : null,
         };
     }
 
@@ -27,24 +27,5 @@ public static class CompanyStructureViewModelMapper
         }
 
         return companyPurpose.IsSpv ? CommonResponse.Yes : CommonResponse.No;
-    }
-
-    public static CompanyPurpose? MapCompanyPurpose(string? companyPurpose)
-    {
-        return companyPurpose is null ? null : CompanyPurpose.New(companyPurpose == CommonResponse.Yes);
-    }
-
-    public static OrganisationMoreInformation? MapOrganisationMoreInformation(string? organisationMoreInformation)
-    {
-        return organisationMoreInformation is null ?
-            null :
-            new OrganisationMoreInformation(organisationMoreInformation);
-    }
-
-    public static OrganisationMoreInformationFile? MapOrganisationMoreInformationFile(string? fileName, byte[]? content)
-    {
-        return fileName is null || content is null ?
-            null :
-            new OrganisationMoreInformationFile(fileName, content);
     }
 }

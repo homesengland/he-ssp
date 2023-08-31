@@ -13,7 +13,7 @@
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
         { "Title", "Additional information" },
-        { "Value", Model.ExistingCompany },
+        { "Value", Model.OrganisationMoreInformation },
         { "Link", Url.Action("MoreInformationAboutOrganization","CompanyStructureV2", new { id,  state = "ExistingCompany" }) }
     })
 

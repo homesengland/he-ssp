@@ -1,4 +1,3 @@
-using FluentAssertions;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
