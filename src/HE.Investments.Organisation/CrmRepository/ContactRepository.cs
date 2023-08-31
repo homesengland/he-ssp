@@ -70,7 +70,5 @@ public class ContactRepository : IContactRepository
         {
             return result1.Entities.FirstOrDefault();
         }
-
-        return null;
     }
 }

@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CrmRepository;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -79,7 +80,7 @@ public class ContactService : IContactService
                 {
                     accountId = contactRole.Contains("invln_accountid") && contactRole["invln_accountid"] != null ? ((EntityReference)contactRole["invln_accountid"]).Id : Guid.Empty,
                     accountName = contactRole.Contains("invln_accountid") && contactRole["invln_accountid"] != null ? ((EntityReference)contactRole["invln_accountid"]).Name : null,
-                    permissionLevel = permissionLevel != null && permissionLevel.Contains("invln_permission") && permissionLevel["invln_permission"] != null ? ((OptionSetValue)permissionLevel["invln_permission"]).Value.ToString() : null,
+                    permissionLevel = permissionLevel != null && permissionLevel.Contains("invln_permission") && permissionLevel["invln_permission"] != null ? ((OptionSetValue)permissionLevel["invln_permission"]).Value.ToString(CultureInfo.InvariantCulture) : null,
                     webRoleName = webRoleName,
                 });
             }
