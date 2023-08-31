@@ -1,4 +1,3 @@
-using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Validation;

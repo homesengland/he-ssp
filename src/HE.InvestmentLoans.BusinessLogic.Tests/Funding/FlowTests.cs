@@ -68,15 +68,15 @@ public class FlowTests : MediatorTestBase
         Assert.AreEqual(model.Funding.State, FundingWorkflow.State.CheckAnswers);
     }
 
-    [TestMethod]
-    [DataRow(FundingWorkflow.State.GDV, FundingWorkflow.State.Index)]
-    [DataRow(FundingWorkflow.State.TotalCosts, FundingWorkflow.State.GDV)]
-    [DataRow(FundingWorkflow.State.AbnormalCosts, FundingWorkflow.State.TotalCosts)]
-    [DataRow(FundingWorkflow.State.PrivateSectorFunding, FundingWorkflow.State.AbnormalCosts)]
-    [DataRow(FundingWorkflow.State.Refinance, FundingWorkflow.State.PrivateSectorFunding)]
-    [DataRow(FundingWorkflow.State.AdditionalProjects, FundingWorkflow.State.Refinance)]
-    [DataRow(FundingWorkflow.State.CheckAnswers, FundingWorkflow.State.AdditionalProjects)]
-    [DataRow(FundingWorkflow.State.Complete, FundingWorkflow.State.CheckAnswers)]
+    [Theory]
+    [InlineData(FundingWorkflow.State.GDV, FundingWorkflow.State.Index)]
+    [InlineData(FundingWorkflow.State.TotalCosts, FundingWorkflow.State.GDV)]
+    [InlineData(FundingWorkflow.State.AbnormalCosts, FundingWorkflow.State.TotalCosts)]
+    [InlineData(FundingWorkflow.State.PrivateSectorFunding, FundingWorkflow.State.AbnormalCosts)]
+    [InlineData(FundingWorkflow.State.Refinance, FundingWorkflow.State.PrivateSectorFunding)]
+    [InlineData(FundingWorkflow.State.AdditionalProjects, FundingWorkflow.State.Refinance)]
+    [InlineData(FundingWorkflow.State.CheckAnswers, FundingWorkflow.State.AdditionalProjects)]
+    [InlineData(FundingWorkflow.State.Complete, FundingWorkflow.State.CheckAnswers)]
     public async Task Workflow_Back_Test(FundingWorkflow.State begin, FundingWorkflow.State expected)
     {
         var mediator = (IMediator)ServiceProvider.GetService(typeof(IMediator));
@@ -92,13 +92,13 @@ public class FlowTests : MediatorTestBase
         Assert.AreEqual(model.Funding.State, expected);
     }
 
-    [TestMethod]
-    [DataRow(FundingWorkflow.State.GDV)]
-    [DataRow(FundingWorkflow.State.TotalCosts)]
-    [DataRow(FundingWorkflow.State.AbnormalCosts)]
-    [DataRow(FundingWorkflow.State.PrivateSectorFunding)]
-    [DataRow(FundingWorkflow.State.Refinance)]
-    [DataRow(FundingWorkflow.State.AdditionalProjects)]
+    [Theory]
+    [InlineData(FundingWorkflow.State.GDV)]
+    [InlineData(FundingWorkflow.State.TotalCosts)]
+    [InlineData(FundingWorkflow.State.AbnormalCosts)]
+    [InlineData(FundingWorkflow.State.PrivateSectorFunding)]
+    [InlineData(FundingWorkflow.State.Refinance)]
+    [InlineData(FundingWorkflow.State.AdditionalProjects)]
     public async Task Go_back_to_check_answers_on_change(FundingWorkflow.State begin)
     {
         var mediator = (IMediator)ServiceProvider.GetService(typeof(IMediator));
@@ -114,14 +114,14 @@ public class FlowTests : MediatorTestBase
         Assert.AreEqual(model.Funding.State, FundingWorkflow.State.CheckAnswers);
     }
 
-    [TestMethod]
-    [DataRow(FundingWorkflow.State.Index)]
-    [DataRow(FundingWorkflow.State.GDV)]
-    [DataRow(FundingWorkflow.State.TotalCosts)]
-    [DataRow(FundingWorkflow.State.AbnormalCosts)]
-    [DataRow(FundingWorkflow.State.PrivateSectorFunding)]
-    [DataRow(FundingWorkflow.State.Refinance)]
-    [DataRow(FundingWorkflow.State.AdditionalProjects)]
+    [Theory]
+    [InlineData(FundingWorkflow.State.Index)]
+    [InlineData(FundingWorkflow.State.GDV)]
+    [InlineData(FundingWorkflow.State.TotalCosts)]
+    [InlineData(FundingWorkflow.State.AbnormalCosts)]
+    [InlineData(FundingWorkflow.State.PrivateSectorFunding)]
+    [InlineData(FundingWorkflow.State.Refinance)]
+    [InlineData(FundingWorkflow.State.AdditionalProjects)]
     public void Send_update_on_continue(FundingWorkflow.State initialState)
     {
         var mediatorMock = new Mock<IMediator>();
@@ -141,13 +141,13 @@ public class FlowTests : MediatorTestBase
         mediatorMock.Verify(c => c.Send(It.IsAny<Update>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
-    [TestMethod]
-    [DataRow(FundingWorkflow.State.GDV)]
-    [DataRow(FundingWorkflow.State.TotalCosts)]
-    [DataRow(FundingWorkflow.State.AbnormalCosts)]
-    [DataRow(FundingWorkflow.State.PrivateSectorFunding)]
-    [DataRow(FundingWorkflow.State.Refinance)]
-    [DataRow(FundingWorkflow.State.AdditionalProjects)]
+    [Theory]
+    [InlineData(FundingWorkflow.State.GDV)]
+    [InlineData(FundingWorkflow.State.TotalCosts)]
+    [InlineData(FundingWorkflow.State.AbnormalCosts)]
+    [InlineData(FundingWorkflow.State.PrivateSectorFunding)]
+    [InlineData(FundingWorkflow.State.Refinance)]
+    [InlineData(FundingWorkflow.State.AdditionalProjects)]
     public void Send_update_on_back(FundingWorkflow.State initialState)
     {
         var mediatorMock = new Mock<IMediator>();
@@ -167,13 +167,13 @@ public class FlowTests : MediatorTestBase
         mediatorMock.Verify(c => c.Send(It.IsAny<Update>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
-    [TestMethod]
-    [DataRow(FundingWorkflow.State.GDV)]
-    [DataRow(FundingWorkflow.State.TotalCosts)]
-    [DataRow(FundingWorkflow.State.AbnormalCosts)]
-    [DataRow(FundingWorkflow.State.PrivateSectorFunding)]
-    [DataRow(FundingWorkflow.State.Refinance)]
-    [DataRow(FundingWorkflow.State.AdditionalProjects)]
+    [Theory]
+    [InlineData(FundingWorkflow.State.GDV)]
+    [InlineData(FundingWorkflow.State.TotalCosts)]
+    [InlineData(FundingWorkflow.State.AbnormalCosts)]
+    [InlineData(FundingWorkflow.State.PrivateSectorFunding)]
+    [InlineData(FundingWorkflow.State.Refinance)]
+    [InlineData(FundingWorkflow.State.AdditionalProjects)]
     public void Send_update_on_change(FundingWorkflow.State initialState)
     {
         var mediatorMock = new Mock<IMediator>();

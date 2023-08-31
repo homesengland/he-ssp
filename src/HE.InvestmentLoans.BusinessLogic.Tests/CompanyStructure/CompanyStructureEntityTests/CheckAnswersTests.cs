@@ -1,4 +1,3 @@
-using FluentAssertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestDataBuilders;
 using HE.InvestmentLoans.Common.Exceptions;

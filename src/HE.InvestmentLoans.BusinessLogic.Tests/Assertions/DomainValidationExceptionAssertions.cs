@@ -1,4 +1,3 @@
-using FluentAssertions;
 using FluentAssertions.Specialized;
 using HE.InvestmentLoans.Common.Exceptions;
 

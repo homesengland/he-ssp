@@ -1,5 +1,4 @@
 using System.Globalization;
-using FluentAssertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestData;
 using HE.InvestmentLoans.Common.Exceptions;
