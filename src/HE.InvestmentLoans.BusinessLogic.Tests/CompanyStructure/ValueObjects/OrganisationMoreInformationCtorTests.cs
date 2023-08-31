@@ -3,15 +3,15 @@ using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.ValueObjects;
 
-[TestClass]
 public class OrganisationMoreInformationCtorTests
 {
-    [TestMethod]
-    [DataRow("123       ")]
-    [DataRow("Lorem Ipsum is simply dummy text of the printing and typesetting industry")]
+    [Theory]
+    [InlineData("123       ")]
+    [InlineData("Lorem Ipsum is simply dummy text of the printing and typesetting industry")]
     public void ShouldCreateOrganisationMoreInformation(string moreInformation)
     {
         // given & when
@@ -22,7 +22,7 @@ public class OrganisationMoreInformationCtorTests
         action().Information.Should().Be(moreInformation.Trim());
     }
 
-    [TestMethod]
+    [Fact]
     public void ShouldThrowDomainValidationException_WhenInputIsLongerThan1000Chars()
     {
         // given & when

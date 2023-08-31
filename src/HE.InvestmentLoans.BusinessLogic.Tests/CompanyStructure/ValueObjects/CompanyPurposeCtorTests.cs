@@ -1,13 +1,13 @@
 using FluentAssertions;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.ValueObjects;
 
-[TestClass]
 public class CompanyPurposeCtorTests
 {
-    [TestMethod]
+    [Fact]
     public void ShouldCompanyPurposeAsSpv_WhenStringIsYes()
     {
         // given
@@ -20,7 +20,7 @@ public class CompanyPurposeCtorTests
         companyPurpose.IsSpv.Should().BeTrue();
     }
 
-    [TestMethod]
+    [Fact]
     public void ShouldCompanyPurposeAsSpvSetToFalse_WhenStringIsNo()
     {
         // given

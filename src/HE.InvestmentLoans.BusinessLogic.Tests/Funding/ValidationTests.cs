@@ -3,10 +3,10 @@ using FluentValidation;
 using FluentValidation.Results;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Validation;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Funding;
 
-[TestClass]
 public class ValidationTests
 {
     private ValidationResult _result;
@@ -16,10 +16,10 @@ public class ValidationTests
         _result = new ValidationResult();
     }
 
-    [TestMethod]
-    [DataRow("2,232")]
-    [DataRow(",34")]
-    [DataRow("non number")]
+    [Theory]
+    [InlineData("2,232")]
+    [InlineData(",34")]
+    [InlineData("non number")]
     public void Fail_when_gdv_is_in_incorrect_format(string value)
     {
         var model = ModelThatPassesValidation();
@@ -31,10 +31,10 @@ public class ValidationTests
         ThenValidationShouldFail();
     }
 
-    [TestMethod]
-    [DataRow("2")]
-    [DataRow("2,34")]
-    [DataRow("2.34")]
+    [Theory]
+    [InlineData("2")]
+    [InlineData("2,34")]
+    [InlineData("2.34")]
     public void Pass_when_gdv_is_in_correct_format(string value)
     {
         var model = ModelThatPassesValidation();
@@ -46,10 +46,10 @@ public class ValidationTests
         ThenValidationShouldPass();
     }
 
-    [TestMethod]
-    [DataRow("2,232")]
-    [DataRow(",34")]
-    [DataRow("non number")]
+    [Theory]
+    [InlineData("2,232")]
+    [InlineData(",34")]
+    [InlineData("non number")]
     public void Fail_when_total_costs_is_in_incorrect_format(string value)
     {
         var model = ModelThatPassesValidation();
@@ -61,10 +61,10 @@ public class ValidationTests
         ThenValidationShouldFail();
     }
 
-    [TestMethod]
-    [DataRow("2")]
-    [DataRow("2,34")]
-    [DataRow("2.34")]
+    [Theory]
+    [InlineData("2")]
+    [InlineData("2,34")]
+    [InlineData("2.34")]
     public void Pass_when_total_costs_is_in_correct_format(string value)
     {
         var model = ModelThatPassesValidation();
@@ -76,7 +76,7 @@ public class ValidationTests
         ThenValidationShouldPass();
     }
 
-    [TestMethod]
+    [Fact]
     public void Fail_when_private_sector_funding_result_was_not_provided()
     {
         var model = ModelThatPassesValidation();
@@ -89,7 +89,7 @@ public class ValidationTests
         ThenValidationShouldFail();
     }
 
-    [TestMethod]
+    [Fact]
     public void Pass_when_private_sector_funding_result_was_provided()
     {
         var model = ModelThatPassesValidation();
@@ -102,7 +102,7 @@ public class ValidationTests
         ThenValidationShouldPass();
     }
 
-    [TestMethod]
+    [Fact]
     public void Fail_when_private_sector_funding_reason_was_not_provided()
     {
         var model = ModelThatPassesValidation();
@@ -115,7 +115,7 @@ public class ValidationTests
         ThenValidationShouldFail();
     }
 
-    [TestMethod]
+    [Fact]
     public void Pass_when_private_sector_funding_reason_was_provided()
     {
         var model = ModelThatPassesValidation();
@@ -128,7 +128,7 @@ public class ValidationTests
         ThenValidationShouldPass();
     }
 
-    [TestMethod]
+    [Fact]
     public void Fail_when_abnormal_cost_info_was_not_provided()
     {
         var model = ModelThatPassesValidation();
@@ -141,7 +141,7 @@ public class ValidationTests
         ThenValidationShouldFail();
     }
 
-    [TestMethod]
+    [Fact]
     public void Pass_when_abnormal_cost_info_was_not_provided()
     {
         var model = ModelThatPassesValidation();
@@ -154,7 +154,7 @@ public class ValidationTests
         ThenValidationShouldPass();
     }
 
-    [TestMethod]
+    [Fact]
     public void Pass_when_abnormal_cost_was_not_selected_and_more_info_was_not_provided()
     {
         var model = ModelThatPassesValidation();
@@ -167,7 +167,7 @@ public class ValidationTests
         ThenValidationShouldPass();
     }
 
-    [TestMethod]
+    [Fact]
     public void Fail_when_refinance_info_was_not_provided()
     {
         var model = ModelThatPassesValidation();
@@ -180,7 +180,7 @@ public class ValidationTests
         ThenValidationShouldFail();
     }
 
-    [TestMethod]
+    [Fact]
     public void Pass_when_refinance_info_was_provided()
     {
         var model = ModelThatPassesValidation();
@@ -193,7 +193,7 @@ public class ValidationTests
         ThenValidationShouldPass();
     }
 
-    [TestMethod]
+    [Fact]
     public void Pass_when_repay_was_selected_as_refinance_method()
     {
         var model = ModelThatPassesValidation();
@@ -206,7 +206,7 @@ public class ValidationTests
         ThenValidationShouldPass();
     }
 
-    [TestMethod]
+    [Fact]
     public void Fail_when_confirming_section_and_not_all_answers_not_provided()
     {
         var model = ModelThatPassesValidation();
@@ -217,7 +217,7 @@ public class ValidationTests
         ThenValidationShouldFail();
     }
 
-    [TestMethod]
+    [Fact]
     public void Pass_when_confirming_section_and_all_answers_are_provided()
     {
         var model = ModelThatPassesCheckAnswersValidation();

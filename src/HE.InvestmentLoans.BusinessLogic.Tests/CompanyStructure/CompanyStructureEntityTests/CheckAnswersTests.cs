@@ -4,13 +4,13 @@ using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestDataBuilders;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.CompanyStructureEntityTests;
 
-[TestClass]
 public class CheckAnswersTests
 {
-    [TestMethod]
+    [Fact]
     public void ShouldThrowValidationException_WhenCheckAnswersIsYesButAllAnswersAreNotProvided()
     {
         // given
@@ -24,7 +24,7 @@ public class CheckAnswersTests
         companyStructureEntity.Status.Should().NotBe(SectionStatus.Completed);
     }
 
-    [TestMethod]
+    [Fact]
     public void ShouldCompleteSection_WhenCheckAnswersIsYesAndAllAnswersAreProvided()
     {
         // given
@@ -43,7 +43,7 @@ public class CheckAnswersTests
         companyStructureEntity.Status.Should().Be(SectionStatus.Completed);
     }
 
-    [TestMethod]
+    [Fact]
     public void ShouldThrowValidationException_WhenCheckAnswersIsNotProvided()
     {
         // given
@@ -57,7 +57,7 @@ public class CheckAnswersTests
         companyStructureEntity.Status.Should().NotBe(SectionStatus.Completed);
     }
 
-    [TestMethod]
+    [Fact]
     public void ShouldNotThrowValidationException_WhenCheckAnswersIsNoAndSomeAnswersAreNotProvided()
     {
         // given

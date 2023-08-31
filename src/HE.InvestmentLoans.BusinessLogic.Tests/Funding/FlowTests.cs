@@ -4,20 +4,21 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using MediatR;
 using Moq;
+using Xunit;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Funding;
 
-[TestClass]
 public class FlowTests : MediatorTestBase
 {
-    [TestMethod]
-    [DataRow(FundingWorkflow.State.Index, FundingWorkflow.State.GDV)]
-    [DataRow(FundingWorkflow.State.GDV, FundingWorkflow.State.TotalCosts)]
-    [DataRow(FundingWorkflow.State.TotalCosts, FundingWorkflow.State.AbnormalCosts)]
-    [DataRow(FundingWorkflow.State.AbnormalCosts, FundingWorkflow.State.PrivateSectorFunding)]
-    [DataRow(FundingWorkflow.State.PrivateSectorFunding, FundingWorkflow.State.Refinance)]
-    [DataRow(FundingWorkflow.State.Refinance, FundingWorkflow.State.AdditionalProjects)]
-    [DataRow(FundingWorkflow.State.AdditionalProjects, FundingWorkflow.State.CheckAnswers)]
+    [Theory]
+    [InlineData(FundingWorkflow.State.Index, FundingWorkflow.State.GDV)]
+    [InlineData(FundingWorkflow.State.GDV, FundingWorkflow.State.TotalCosts)]
+    [InlineData(FundingWorkflow.State.TotalCosts, FundingWorkflow.State.AbnormalCosts)]
+    [InlineData(FundingWorkflow.State.AbnormalCosts, FundingWorkflow.State.PrivateSectorFunding)]
+    [InlineData(FundingWorkflow.State.PrivateSectorFunding, FundingWorkflow.State.Refinance)]
+    [InlineData(FundingWorkflow.State.Refinance, FundingWorkflow.State.AdditionalProjects)]
+    [InlineData(FundingWorkflow.State.AdditionalProjects, FundingWorkflow.State.CheckAnswers)]
     public async Task Workflow_Continue_Test(FundingWorkflow.State begin, FundingWorkflow.State expected)
     {
         var mediator = (IMediator)ServiceProvider.GetService(typeof(IMediator));
@@ -33,7 +34,7 @@ public class FlowTests : MediatorTestBase
         Assert.AreEqual(model.Funding.State, expected);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task Complete_workflow_when_answers_are_confirmed()
     {
         var mediator = (IMediator)ServiceProvider.GetService(typeof(IMediator));
@@ -50,7 +51,7 @@ public class FlowTests : MediatorTestBase
         Assert.AreEqual(model.Funding.State, FundingWorkflow.State.Complete);
     }
 
-    [TestMethod]
+    [Fact]
     public async Task Do_not_change_workflow_state_when_answers_are_not_confirmed()
     {
         var mediator = (IMediator)ServiceProvider.GetService(typeof(IMediator));
