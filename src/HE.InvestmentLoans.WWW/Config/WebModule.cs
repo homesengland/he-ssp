@@ -4,7 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.CRM.Extensions;
 using HE.InvestmentLoans.WWW.Models;
-using HE.Investments.Organisation.CompaniesHouse;
+using HE.Investments.Organisation.Config;
 using HE.Investments.Organisation.CrmRepository;
 using HE.Investments.Organisation.Services;
 
@@ -22,11 +22,11 @@ public static class WebModule
         serviceCollections.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         serviceCollections.AddScoped<IUserContext, UserContext>(x => new UserContext(x.GetRequiredService<IHttpContextAccessor>()!.HttpContext!));
         serviceCollections.AddValidatorsFromAssemblyContaining<LoanPurposeModel>();
-        serviceCollections.AddCompaniesHouseHttpClient();
-        serviceCollections.AddScoped<IOrganisationSearchService, OrganisationSearchService>();
+
         serviceCollections.AddScoped<IContactService, ContactService>();
         serviceCollections.AddScoped<IContactRepository, ContactRepository>();
-        serviceCollections.AddScoped<IOrganizationRepository, OrganizationRepository>();
         serviceCollections.AddScoped<IOrganizationService, OrganizationService>();
+
+        serviceCollections.AddOrganizationsModule();
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
 namespace HE.Investments.Organisation.CrmRepository;
-public class OrganizationRepository : IOrganizationRepository
+internal class OrganizationRepository : IOrganizationRepository
 {
     public Guid? EnsureCreateOrganization(IOrganizationServiceAsync2 service, string companyNumber, string companyName)
     {
@@ -38,7 +38,7 @@ public class OrganizationRepository : IOrganizationRepository
         return null;
     }
 
-    public EntityCollection? SearchForOrganizations(IOrganizationServiceAsync2 service, List<string> organizationNumbers)
+    public EntityCollection? SearchForOrganizations(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers)
     {
         if (organizationNumbers != null)
         {
