@@ -1,4 +1,3 @@
-using System.Linq;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CrmRepository;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -75,7 +74,7 @@ public class ContactService : IContactService
                 }
 
                 var webroleReference = (EntityReference)contactRole["invln_webroleid"];
-                string webRoleName = webroleReference?.Name ?? (contactRole.Contains("ae.invln_name") ? ((dynamic)contactRole["ae.invln_name"]).Value : null);
+                string webRoleName = webroleReference?.Name ?? (contactRole.Contains("ae.invln_name") ? ((dynamic)contactRole["ae.invln_name"]).Value : string.Empty);
                 roles.Add(new ContactRoleDto()
                 {
                     accountId = contactRole.Contains("invln_accountid") && contactRole["invln_accountid"] != null ? ((EntityReference)contactRole["invln_accountid"]).Id : Guid.Empty,
