@@ -1,5 +1,3 @@
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
-
 namespace HE.InvestmentLoans.BusinessLogic.User.Entities;
 public class UserDetails
 {
@@ -34,24 +32,6 @@ public class UserDetails
     public string? SecondaryTelephoneNumber { get; private set; }
 
     public bool? IsTermsAndConditionsAccepted { get; private set; }
-
-    public void ProvideUserDetails(
-        string firstName,
-        string surname,
-        string jobTitle,
-        string telephoneNumber,
-        string secondaryTelephoneNumber,
-        string userEmail,
-        string isTermsAndConditionsAccepted)
-    {
-        FirstName = firstName;
-        Surname = surname;
-        JobTitle = jobTitle;
-        Email = userEmail;
-        TelephoneNumber = telephoneNumber;
-        SecondaryTelephoneNumber = secondaryTelephoneNumber;
-        IsTermsAndConditionsAccepted = isTermsAndConditionsAccepted == CommonResponse.Checked;
-    }
 
     public bool IsProfileCompleted()
     {

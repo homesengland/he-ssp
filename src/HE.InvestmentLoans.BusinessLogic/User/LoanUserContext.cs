@@ -1,3 +1,5 @@
+extern alias Org;
+
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Authorization;
@@ -5,6 +7,9 @@ using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
+using Microsoft.PowerPlatform.Dataverse.Client;
+using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
+using Org::HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.User;
 
@@ -16,15 +21,21 @@ public class LoanUserContext : ILoanUserContext
 
     private readonly ICacheService _cacheService;
 
+    private readonly IContactService _contactService;
+
+    private readonly IOrganizationServiceAsync2 _service;
+
     private readonly IList<Guid> _accountIds = new List<Guid>();
 
     private UserAccount? _selectedAccount;
 
-    public LoanUserContext(IUserContext userContext, ILoanUserRepository loanUserRepository, ICacheService cacheService)
+    public LoanUserContext(IUserContext userContext, ILoanUserRepository loanUserRepository, ICacheService cacheService, IOrganizationServiceAsync2 service, IContactService contactService)
     {
         _userContext = userContext;
         _loanUserRepository = loanUserRepository;
         _cacheService = cacheService;
+        _service = service;
+        _contactService = contactService;
     }
 
     public UserGlobalId UserGlobalId => UserGlobalId.From(_userContext.UserGlobalId);
@@ -65,8 +76,9 @@ public class LoanUserContext : ILoanUserContext
 
     public async void RefreshDetails()
     {
-        var userDetails = await _loanUserRepository.GetUserDetails(UserGlobalId)
-                                ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
+        var contactDto = await _contactService.RetrieveUserProfile(_service, UserGlobalId.ToString()) ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
+
+        var userDetails = UserDetailsMapper.MapContactDtoToUserDetails(contactDto);
 
         _cacheService.SetValue(UserGlobalId.ToString(), userDetails);
     }
@@ -76,8 +88,12 @@ public class LoanUserContext : ILoanUserContext
         var selectedUser = await GetSelectedAccount();
         var userDetails = await _cacheService.GetValueAsync(
                                                 selectedUser.UserGlobalId.ToString(),
-                                                async () => await _loanUserRepository.GetUserDetails(selectedUser.UserGlobalId))
-                                                            ?? throw new NotFoundException(nameof(UserDetails), selectedUser.UserGlobalId.ToString());
+                                                async () =>
+                                                {
+                                                    var res = await _contactService.RetrieveUserProfile(_service, UserGlobalId.ToString())
+                                                        ?? throw new NotFoundException(nameof(ContactDto), selectedUser.UserGlobalId.ToString());
+                                                    return UserDetailsMapper.MapContactDtoToUserDetails(res);
+                                                }) ?? throw new NotFoundException(nameof(UserDetails), selectedUser.UserGlobalId.ToString());
 
         return userDetails.IsProfileCompleted();
     }

@@ -1,6 +1,11 @@
-using HE.InvestmentLoans.BusinessLogic.User.Repositories;
+extern alias Org;
+
+using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.User.Queries;
 using MediatR;
+using Microsoft.PowerPlatform.Dataverse.Client;
+using Org::HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.User.QueryHandlers;
 
@@ -8,19 +13,32 @@ public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, G
 {
     private readonly ILoanUserContext _loanUserContext;
 
-    private readonly ILoanUserRepository _loanUserRepository;
+    private readonly IContactService _contactService;
 
-    public GetUserDetailsQueryHandler(ILoanUserContext loanUserContext, ILoanUserRepository loanUserRepository)
+    private readonly IOrganizationServiceAsync2 _service;
+
+    public GetUserDetailsQueryHandler(ILoanUserContext loanUserContext, IOrganizationServiceAsync2 service, IContactService contactService)
     {
         _loanUserContext = loanUserContext;
-        _loanUserRepository = loanUserRepository;
+        _service = service;
+        _contactService = contactService;
     }
 
     public async Task<GetUserDetailsResponse> Handle(GetUserDetailsQuery request, CancellationToken cancellationToken)
     {
         var selectedAccount = await _loanUserContext.GetSelectedAccount();
-        var userDetails = await _loanUserRepository.GetUserDetails(selectedAccount.UserGlobalId);
 
-        return new GetUserDetailsResponse(UserDetailsMapper.MapToViewModel(userDetails));
+        var contactDto = await _contactService.RetrieveUserProfile(_service, selectedAccount.UserGlobalId.ToString()) ?? throw new NotFoundException(nameof(UserDetails), selectedAccount.UserGlobalId.ToString());
+
+        var userDetails = new UserDetails(
+            contactDto.firstName,
+            contactDto.lastName,
+            contactDto.jobTitle,
+            contactDto.email,
+            contactDto.phoneNumber,
+            contactDto.secondaryPhoneNumber,
+            contactDto.isTermsAndConditionsAccepted);
+
+        return new GetUserDetailsResponse(UserDetailsMapper.MapUserDetailsToViewModel(userDetails));
     }
 }

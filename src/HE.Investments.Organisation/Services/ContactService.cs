@@ -20,7 +20,7 @@ public class ContactService : IContactService
         _organizationRepository = organizationRepository;
     }
 
-    public ContactDto? RetrieveUserProfile(IOrganizationServiceAsync2 service, string contactExternalId)
+    public Task<ContactDto?> RetrieveUserProfile(IOrganizationServiceAsync2 service, string contactExternalId)
     {
         if (!string.IsNullOrEmpty(contactExternalId))
         {
@@ -32,14 +32,14 @@ public class ContactService : IContactService
             var retrievedContact = _contactRepository.GetContactViaExternalId(service, contactExternalId, fields);
             if (retrievedContact != null)
             {
-                return MapContactEntityToDto(retrievedContact);
+                return Task.FromResult<ContactDto?>(MapContactEntityToDto(retrievedContact));
             }
         }
 
-        return null;
+        return Task.FromResult<ContactDto?>(null);
     }
 
-    public void UpdateUserProfile(IOrganizationServiceAsync2 service, string contactExternalId, ContactDto contactDto)
+    public async Task UpdateUserProfile(IOrganizationServiceAsync2 service, string contactExternalId, ContactDto contactDto)
     {
         if (!string.IsNullOrEmpty(contactExternalId))
         {
@@ -48,7 +48,7 @@ public class ContactService : IContactService
             {
                 var contactToUpdate = MapContactDtoToEntity(contactDto);
                 contactToUpdate.Id = retrievedContact.Id;
-                service.Update(contactToUpdate);
+                await service.UpdateAsync(contactToUpdate);
             }
         }
     }
