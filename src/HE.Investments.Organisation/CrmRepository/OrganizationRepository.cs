@@ -3,7 +3,7 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
 namespace HE.Investments.Organisation.CrmRepository;
-internal class OrganizationRepository : IOrganizationRepository
+public class OrganizationRepository : IOrganizationRepository
 {
     public Guid? EnsureCreateOrganization(IOrganizationServiceAsync2 service, string companyNumber, string companyName)
     {
@@ -36,6 +36,30 @@ internal class OrganizationRepository : IOrganizationRepository
         }
 
         return null;
+    }
+
+    public Entity? GetDefaultAccount(IOrganizationServiceAsync2 service)
+    {
+        var condition1 = new ConditionExpression("name", ConditionOperator.Equal, "DO_NOT_DELETE_DEFAULT_ACCOUNT");
+        var filter1 = new FilterExpression()
+        {
+            Conditions =
+                {
+                    condition1,
+                },
+            FilterOperator = LogicalOperator.Or,
+        };
+        var cols = new ColumnSet(true);
+
+        var query = new QueryExpression("account")
+        {
+            ColumnSet = cols,
+        };
+        query.Criteria.FilterOperator = LogicalOperator.And;
+        query.Criteria.AddFilter(filter1);
+
+        var result1 = service.RetrieveMultiple(query);
+        return result1.Entities.FirstOrDefault();
     }
 
     public EntityCollection? SearchForOrganizations(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers)
