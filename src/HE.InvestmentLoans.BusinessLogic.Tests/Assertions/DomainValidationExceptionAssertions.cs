@@ -12,4 +12,11 @@ public static class DomainValidationExceptionAssertions
         exceptionAssertions.Which.OperationResult.Errors.Should().ContainSingle(x => x.ErrorMessage == errorMessage);
         return exceptionAssertions;
     }
+
+    public static ExceptionAssertions<DomainValidationException> WithErrorMessage(
+        this ExceptionAssertions<DomainValidationException> exceptionAssertions, string errorMessage)
+    {
+        exceptionAssertions.Which.OperationResult.Errors.Should().Contain(x => x.ErrorMessage == errorMessage);
+        return exceptionAssertions;
+    }
 }

@@ -65,7 +65,7 @@ public static class LoanApplicationMapper
         return new CompanyStructureViewModel
         {
             Purpose = loanApplicationDto.companyPurpose.MapToCommonResponse(),
-            ExistingCompany = loanApplicationDto.existingCompany,
+            OrganisationMoreInformation = loanApplicationDto.existingCompany,
             HomesBuilt = loanApplicationDto.companyExperience.ToString(),
             State = SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus),
         };

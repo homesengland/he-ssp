@@ -5,7 +5,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure;
+namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.ValueObjects;
 
 [TestClass]
 public class HomesBuiltCtorTests

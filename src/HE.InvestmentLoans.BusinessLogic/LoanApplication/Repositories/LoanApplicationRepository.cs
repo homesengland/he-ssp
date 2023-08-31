@@ -136,7 +136,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
             // COMPANY
             companyPurpose = loanApplication.Company.Purpose!.MapToBool(),
-            existingCompany = loanApplication.Company.ExistingCompany,
+            existingCompany = loanApplication.Company.OrganisationMoreInformation,
             companyExperience = loanApplication.Company.HomesBuilt?.TryParseNullableInt(),
 
             // FUNDING

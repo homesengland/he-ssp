@@ -2,6 +2,7 @@ using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.CRM.Model;
@@ -13,9 +14,12 @@ public class CompanyStructureRepository : ICompanyStructureRepository
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    public CompanyStructureRepository(IOrganizationServiceAsync2 serviceClient)
+    private readonly IAppConfig _appConfig;
+
+    public CompanyStructureRepository(IOrganizationServiceAsync2 serviceClient, IAppConfig appConfig)
     {
         _serviceClient = serviceClient;
+        _appConfig = appConfig;
     }
 
     public async Task<CompanyStructureEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -37,7 +41,7 @@ public class CompanyStructureRepository : ICompanyStructureRepository
             loanApplicationId,
             CompanyStructureMapper.MapCompanyPurpose(loanApplicationDto.companyPurpose),
             CompanyStructureMapper.MapMoreInformation(loanApplicationDto.existingCompany),
-            CompanyStructureMapper.MapMoreInformationFile(null, null),
+            CompanyStructureMapper.MapMoreInformationFile(null, null, _appConfig.MaxFileSizeInMegabytes),
             CompanyStructureMapper.MapHomesBuild(loanApplicationDto.companyExperience),
             SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus));
     }

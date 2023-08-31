@@ -34,14 +34,14 @@ public static class CompanyStructureMapper
         return new OrganisationMoreInformation(moreInformation);
     }
 
-    public static OrganisationMoreInformationFile? MapMoreInformationFile(string? moreInformationFileName, byte[]? moreInformationFileContent)
+    public static OrganisationMoreInformationFile? MapMoreInformationFile(string? moreInformationFileName, byte[]? moreInformationFileContent, int maxFileSizeInMb)
     {
         if (string.IsNullOrWhiteSpace(moreInformationFileName) || moreInformationFileContent is null)
         {
             return null;
         }
 
-        return new OrganisationMoreInformationFile(moreInformationFileName, moreInformationFileContent);
+        return new OrganisationMoreInformationFile(moreInformationFileName, moreInformationFileContent, maxFileSizeInMb);
     }
 
     public static HomesBuilt? MapHomesBuild(int? homesBuild)
