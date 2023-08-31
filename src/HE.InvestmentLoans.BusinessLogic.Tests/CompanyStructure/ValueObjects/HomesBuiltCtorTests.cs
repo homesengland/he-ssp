@@ -1,19 +1,18 @@
 using System.Globalization;
-using FluentAssertions;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
+using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.ValueObjects;
 
-[TestClass]
 public class HomesBuiltCtorTests
 {
-    [TestMethod]
-    [DataRow("0")]
-    [DataRow("1")]
-    [DataRow("99999")]
+    [Theory]
+    [InlineData("0")]
+    [InlineData("1")]
+    [InlineData("99999")]
     public void ShouldCreateHomesBuilt(string homesBuildAsString)
     {
         // given & when
@@ -24,9 +23,9 @@ public class HomesBuiltCtorTests
         action().Value.Should().Be(int.Parse(homesBuildAsString, CultureInfo.InvariantCulture));
     }
 
-    [TestMethod]
-    [DataRow("notNumber")]
-    [DataRow("  ")]
+    [Theory]
+    [InlineData("notNumber")]
+    [InlineData("  ")]
     public void ShouldThrowDomainValidationException_WhenStringIsNotNumber(string homesBuildAsString)
     {
         // given & when
@@ -36,7 +35,7 @@ public class HomesBuiltCtorTests
         action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.HomesBuiltIncorretInput);
     }
 
-    [TestMethod]
+    [Fact]
     public void ShouldThrowDomainValidationException_WhenStringIsDecimal()
     {
         // given
@@ -49,9 +48,9 @@ public class HomesBuiltCtorTests
         action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.HomesBuiltDecimalNumber);
     }
 
-    [TestMethod]
-    [DataRow("-1")]
-    [DataRow("100000")]
+    [Theory]
+    [InlineData("-1")]
+    [InlineData("100000")]
     public void ShouldThrownDomainValidationException_WhenStringIsNumberOutOfAllowedRange(string homesBuildAsString)
     {
         // given & when

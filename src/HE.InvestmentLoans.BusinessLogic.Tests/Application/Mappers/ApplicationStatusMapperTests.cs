@@ -1,4 +1,3 @@
-using FluentAssertions;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.Contract.Application.Enums;
 

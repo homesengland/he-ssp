@@ -1,23 +1,22 @@
 using System.Globalization;
-using FluentAssertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestData;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.ValueObjects;
 
-[TestClass]
 public class OrganisationMoreInformationFileCtorTests
 {
-    [TestMethod]
-    [DataRow("document.pdf")]
-    [DataRow("document.doc")]
-    [DataRow("document.docx")]
-    [DataRow("document.jpeg")]
-    [DataRow("document.jpg")]
-    [DataRow("document.rtf")]
+    [Theory]
+    [InlineData("document.pdf")]
+    [InlineData("document.doc")]
+    [InlineData("document.docx")]
+    [InlineData("document.jpeg")]
+    [InlineData("document.jpg")]
+    [InlineData("document.rtf")]
     public void ShouldOrganisationMoreInformationFile(string fileName)
     {
         // given & when
@@ -28,7 +27,7 @@ public class OrganisationMoreInformationFileCtorTests
         organisationMoreInformationFile.Content.Should().NotBeEmpty();
     }
 
-    [TestMethod]
+    [Fact]
     public void ShouldThrowDomainValidationException_WhenFileSizeIsToBig()
     {
         // given & when
@@ -41,7 +40,7 @@ public class OrganisationMoreInformationFileCtorTests
             .WithOnlyOneErrorMessage(string.Format(CultureInfo.InvariantCulture, ValidationErrorMessage.FileIncorrectSize, 1));
     }
 
-    [TestMethod]
+    [Fact]
     public void ShouldThrowDomainValidationExceptionWithTwoError_WhenFileSizeIsToBigAndFileNameIsIncorrect()
     {
         // given & when
