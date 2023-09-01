@@ -10,7 +10,6 @@ public class ProvideUserDetailsCommandHandler : IRequestHandler<ProvideUserDetai
 {
     private readonly ILoanUserContext _loanUserContext;
 
-
     private readonly ILoanUserRepository _loanUserRepository;
 
     public ProvideUserDetailsCommandHandler(ILoanUserContext loanUserContext, ILoanUserRepository loanUserRepository)
