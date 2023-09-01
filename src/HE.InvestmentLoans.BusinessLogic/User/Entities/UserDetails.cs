@@ -1,3 +1,5 @@
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+
 namespace HE.InvestmentLoans.BusinessLogic.User.Entities;
 public class UserDetails
 {
