@@ -3,13 +3,12 @@ extern alias Org;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.User;
-using HE.InvestmentLoans.Contract.User.Commands;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.InvestmentLoans.BusinessLogic.User;
 public static class UserDetailsMapper
 {
-    public static UserDetailsViewModel MapUserDetailsToViewModel(UserDetails userDetailsEntity)
+    public static UserDetailsViewModel MapToViewModel(UserDetails userDetailsEntity)
     {
         return new UserDetailsViewModel()
         {
@@ -19,20 +18,6 @@ public static class UserDetailsMapper
             TelephoneNumber = userDetailsEntity.TelephoneNumber,
             SecondaryTelephoneNumber = userDetailsEntity.SecondaryTelephoneNumber,
             IsTermsAndConditionsAccepted = userDetailsEntity.IsTermsAndConditionsAccepted == true ? CommonResponse.Checked : null,
-        };
-    }
-
-    public static ContactDto MapProvideUserDetailsCommandToContactDto(ProvideUserDetailsCommand provideUserDetailsCommand, string email)
-    {
-        return new ContactDto
-        {
-            firstName = provideUserDetailsCommand.FirstName,
-            lastName = provideUserDetailsCommand.Surname,
-            jobTitle = provideUserDetailsCommand.JobTitle,
-            email = email,
-            phoneNumber = provideUserDetailsCommand.TelephoneNumber,
-            secondaryPhoneNumber = provideUserDetailsCommand.SecondaryTelephoneNumber,
-            isTermsAndConditionsAccepted = provideUserDetailsCommand.IsTermsAndConditionsAccepted == CommonResponse.Checked,
         };
     }
 
