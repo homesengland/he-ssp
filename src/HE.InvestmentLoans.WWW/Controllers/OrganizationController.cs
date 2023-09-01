@@ -2,15 +2,17 @@ using HE.InvestmentLoans.Contract.Organization;
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
 
 [Route("organization")]
+[Authorize]
 public class OrganizationController : Controller
 {
-    private readonly ICompaniesHouseApi _companiesHouseApi;
     private readonly IMediator _mediator;
+    private readonly ICompaniesHouseApi _companiesHouseApi;
 
     public OrganizationController(IMediator mediator, ICompaniesHouseApi companiesHouseApi)
     {
@@ -33,7 +35,7 @@ public class OrganizationController : Controller
     [HttpGet("search/result")]
     public async Task<IActionResult> SearchOrganizationResult([FromQuery] string searchPhrase, [FromQuery] int page)
     {
-        var response = await _mediator.Send(new SearchOrganizationsQuery(searchPhrase, page, 10));
+        var response = await _mediator.Send(new SearchOrganizations(searchPhrase));
 
         return View(response.Result);
     }

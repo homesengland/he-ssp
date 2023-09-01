@@ -80,6 +80,15 @@ public class LoanUserContext : ILoanUserContext
         return userDetails.IsProfileCompleted();
     }
 
+    public async Task<bool> IsLinkedWithOrganization()
+    {
+        var userAccount = await _cacheService.GetValueAsync(
+            $"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}",
+            async () => await _loanUserRepository.GetUserAccount(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email));
+
+        return userAccount?.contactRoles.Any() ?? false;
+    }
+
     private async Task LoadUserAccount()
     {
         var userRoleDto = await _cacheService.GetValueAsync(
