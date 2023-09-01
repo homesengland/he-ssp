@@ -6,7 +6,7 @@ using Microsoft.Xrm.Sdk.Query;
 namespace HE.Investments.Organisation.Services;
 public class OrganizationService : IOrganizationService
 {
-    public OrganizationDetailsDto GetOrganizationDetails(IOrganizationServiceAsync2 service, string accountid, string contactExternalId)
+    public Task<OrganizationDetailsDto> GetOrganizationDetails(IOrganizationServiceAsync2 service, string accountid, string contactExternalId)
     {
         var organizationDetailsDto = new OrganizationDetailsDto();
         if (Guid.TryParse(accountid, out var organizationId))
@@ -42,6 +42,6 @@ public class OrganizationService : IOrganizationService
             }
         }
 
-        return organizationDetailsDto;
+        return Task.FromResult(organizationDetailsDto);
     }
 }

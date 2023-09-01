@@ -1,9 +1,12 @@
+extern alias Org;
+
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
+using Org::HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
 
@@ -11,21 +14,18 @@ public class OrganizationRepository : IOrganizationRepository
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    public OrganizationRepository(IOrganizationServiceAsync2 serviceClient)
+    private readonly IOrganizationService _organizationService;
+
+    public OrganizationRepository(IOrganizationServiceAsync2 serviceClient, IOrganizationService organizationService)
     {
         _serviceClient = serviceClient;
+        _organizationService = organizationService;
     }
 
     public async Task<OrganizationBasicInformation> GetBasicInformation(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var request = new invln_getorganizationdetailsRequest()
-        {
-            invln_contactexternalid = userAccount.UserGlobalId.ToString(),
-            invln_accountid = userAccount.AccountId.ToString(),
-        };
+        var organizationDetailsDto = await _organizationService.GetOrganizationDetails(_serviceClient, userAccount.AccountId.ToString(), userAccount.UserGlobalId.ToString());
 
-        var response = (invln_getorganizationdetailsResponse)await _serviceClient.ExecuteAsync(request);
-        var organizationDetailsDto = CrmResponseSerializer.Deserialize<OrganizationDetailsDto>(response.invln_organizationdetails)!;
         return new OrganizationBasicInformation(
             organizationDetailsDto.registeredCompanyName,
             organizationDetailsDto.companyRegistrationNumber,
