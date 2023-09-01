@@ -68,32 +68,43 @@ public class LoanUserContext : ILoanUserContext
         var userDetails = await _loanUserRepository.GetUserDetails(UserGlobalId)
                                 ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
 
-        _cacheService.SetValue(UserGlobalId.ToString(), userDetails);
+        _cacheService.SetValue($"UserDetails-{UserGlobalId}", userDetails);
     }
 
     public async Task<bool> IsProfileCompleted()
     {
-        var selectedUser = await GetSelectedAccount();
         var userDetails = await _cacheService.GetValueAsync(
-                                                selectedUser.UserGlobalId.ToString(),
-                                                async () => await _loanUserRepository.GetUserDetails(selectedUser.UserGlobalId))
-                                                            ?? throw new NotFoundException(nameof(UserDetails), selectedUser.UserGlobalId.ToString());
+                                                $"UserDetails-{UserGlobalId}",
+                                                async () => await _loanUserRepository.GetUserDetails(UserGlobalId))
+                                                            ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
         return userDetails.IsProfileCompleted();
     }
 
     private async Task LoadUserAccount()
     {
-        var userAccount = await _cacheService.GetValueAsync(
+        var userRoleDto = await _cacheService.GetValueAsync(
             $"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}",
             async () => await _loanUserRepository.GetUserAccount(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email))
             ?? throw new LoanUserAccountIsMissingException();
 
-        var accounts = userAccount.contactRoles.OrderBy(x => x.accountId).ToList();
+        var userDetails = await _cacheService.GetValueAsync(
+                                                $"UserDetails-{UserGlobalId}",
+                                                async () => await _loanUserRepository.GetUserDetails(UserGlobalId))
+                                                            ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
+
+        var accounts = userRoleDto.contactRoles.OrderBy(x => x.accountId).ToList();
 
         _accountIds.AddRange(accounts.Select(x => x.accountId).ToList());
 
         var selectedAccount = accounts.FirstOrDefault() ?? throw new LoanUserAccountIsMissingException();
 
-        _selectedAccount = new UserAccount(UserGlobalId, Email, selectedAccount.accountId, selectedAccount.accountName);
+        _selectedAccount = new UserAccount(
+            UserGlobalId,
+            Email,
+            selectedAccount.accountId,
+            selectedAccount.accountName,
+            userDetails.FirstName,
+            userDetails.Surname,
+            userDetails.TelephoneNumber);
     }
 }
