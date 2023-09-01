@@ -4,7 +4,7 @@ using Moq;
 
 namespace HE.InvestmentLoans.Common.Tests.TestFramework;
 
-public class TestBase<TTestClass>
+public class TestBase<TTestClass> : IRegisterDependency
     where TTestClass : class
 {
     private readonly Fixture _fixture = new();
@@ -16,7 +16,7 @@ public class TestBase<TTestClass>
 
     protected TTestClass TestCandidate => _fixture.Create<TTestClass>();
 
-    protected void RegisterDependency<TDependency>(TDependency dependency)
+    public void RegisterDependency<TDependency>(TDependency dependency)
     {
         _fixture.Inject(dependency);
     }

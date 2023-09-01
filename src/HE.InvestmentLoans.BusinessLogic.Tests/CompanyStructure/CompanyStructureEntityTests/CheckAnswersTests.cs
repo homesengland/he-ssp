@@ -1,5 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
-using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestDataBuilders;
+using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestObjectBuilders;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -13,7 +13,7 @@ public class CheckAnswersTests
     public void ShouldThrowValidationException_WhenCheckAnswersIsYesButAllAnswersAreNotProvided()
     {
         // given
-        var companyStructureEntity = CompanyStructureEntityTestObjectBuilder.New().Build();
+        var companyStructureEntity = CompanyStructureEntityTestBuilder.New().Build();
 
         // when
         var action = () => companyStructureEntity.CheckAnswers(YesNoAnswers.Yes);
@@ -27,7 +27,7 @@ public class CheckAnswersTests
     public void ShouldCompleteSection_WhenCheckAnswersIsYesAndAllAnswersAreProvided()
     {
         // given
-        var companyStructureEntity = CompanyStructureEntityTestObjectBuilder
+        var companyStructureEntity = CompanyStructureEntityTestBuilder
             .New()
             .WithHomesBuild()
             .WithCompanyPurpose()
@@ -46,7 +46,7 @@ public class CheckAnswersTests
     public void ShouldThrowValidationException_WhenCheckAnswersIsNotProvided()
     {
         // given
-        var companyStructureEntity = CompanyStructureEntityTestObjectBuilder.New().Build();
+        var companyStructureEntity = CompanyStructureEntityTestBuilder.New().Build();
 
         // when
         var action = () => companyStructureEntity.CheckAnswers(YesNoAnswers.Undefined);
@@ -60,7 +60,7 @@ public class CheckAnswersTests
     public void ShouldNotThrowValidationException_WhenCheckAnswersIsNoAndSomeAnswersAreNotProvided()
     {
         // given
-        var companyStructureEntity = CompanyStructureEntityTestObjectBuilder.New().WithHomesBuild().Build();
+        var companyStructureEntity = CompanyStructureEntityTestBuilder.New().WithHomesBuild().Build();
 
         // when
         var action = () => companyStructureEntity.CheckAnswers(YesNoAnswers.No);

@@ -4,33 +4,33 @@ using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestDataBuilders;
+namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestObjectBuilders;
 
-public class CompanyStructureEntityTestObjectBuilder
+public class CompanyStructureEntityTestBuilder
 {
     private readonly CompanyStructureEntity _item;
 
-    private CompanyStructureEntityTestObjectBuilder(CompanyStructureEntity companyStructureEntity)
+    private CompanyStructureEntityTestBuilder(CompanyStructureEntity companyStructureEntity)
     {
         _item = companyStructureEntity;
     }
 
-    public static CompanyStructureEntityTestObjectBuilder New() =>
+    public static CompanyStructureEntityTestBuilder New() =>
         new(new CompanyStructureEntity(LoanApplicationIdTestData.LoanApplicationIdOne, null, null, null, null, SectionStatus.NotStarted));
 
-    public CompanyStructureEntityTestObjectBuilder WithHomesBuild()
+    public CompanyStructureEntityTestBuilder WithHomesBuild()
     {
         _item.ProvideHowManyHomesBuilt(HomesBuiltTestData.HomesBuilt1);
         return this;
     }
 
-    public CompanyStructureEntityTestObjectBuilder WithCompanyPurpose()
+    public CompanyStructureEntityTestBuilder WithCompanyPurpose()
     {
         _item.ProvideCompanyPurpose(CompanyPurpose.New(true));
         return this;
     }
 
-    public CompanyStructureEntityTestObjectBuilder WithMoreInformation()
+    public CompanyStructureEntityTestBuilder WithMoreInformation()
     {
         _item.ProvideMoreInformation(OrganisationMoreInformationTestData.MoreInformationShort);
         return this;
