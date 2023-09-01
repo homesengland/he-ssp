@@ -33,6 +33,24 @@ public class UserDetails
 
     public bool? IsTermsAndConditionsAccepted { get; private set; }
 
+    public void ProvideUserDetails(
+        string firstName,
+        string surname,
+        string jobTitle,
+        string telephoneNumber,
+        string secondaryTelephoneNumber,
+        string userEmail,
+        string isTermsAndConditionsAccepted)
+    {
+        FirstName = firstName;
+        Surname = surname;
+        JobTitle = jobTitle;
+        Email = userEmail;
+        TelephoneNumber = telephoneNumber;
+        SecondaryTelephoneNumber = secondaryTelephoneNumber;
+        IsTermsAndConditionsAccepted = isTermsAndConditionsAccepted == CommonResponse.Checked;
+    }
+
     public bool IsProfileCompleted()
     {
         return !string.IsNullOrEmpty(FirstName) &&
