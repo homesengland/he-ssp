@@ -1,5 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
-using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestDataBuilders;
+using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.User;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
@@ -15,7 +15,7 @@ public class SaveAsyncTests : TestBase<CompanyStructureRepository>
     public async Task ShouldSaveCompanyStructureEntityWithAllAnswersAndSectionInProgressStatus()
     {
         // given
-        var companyStructureEntity = CompanyStructureEntityTestObjectBuilder
+        var companyStructureEntity = CompanyStructureEntityTestBuilder
             .New()
             .WithHomesBuild()
             .WithCompanyPurpose()

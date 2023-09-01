@@ -1,5 +1,6 @@
 using System.Globalization;
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure.QueryHandlers;
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure;
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
@@ -7,16 +8,18 @@ using HE.InvestmentLoans.BusinessLogic.Tests.User;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
+using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
 using Moq;
 using Xunit;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.QueryHandlers;
+namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.CommandHandlers;
 
-public class GetCompanyStructureQueryHandlerTests : TestBase<GetCompanyStructureQueryHandler>
+public class CheckAnswersCompanyStructureSectionCommandHandlerTests : TestBase<CheckAnswersCompanyStructureSectionCommandHandler>
 {
     [Fact]
-    public async Task ShouldThrowNotFoundException_WhenApplicationLoanDoesNotExist()
+    public async Task ShouldSaveCompanyStructureAsCompleted()
     {
         // given
         var loanApplicationId = LoanApplicationIdTestData.LoanApplicationIdOne;
@@ -39,11 +42,12 @@ public class GetCompanyStructureQueryHandlerTests : TestBase<GetCompanyStructure
             .BuildMockAndRegister(this);
 
         // when
-        var result = await TestCandidate.Handle(new GetCompanyStructureQuery(loanApplicationId), CancellationToken.None);
+        var result = await TestCandidate.Handle(
+            new CheckAnswersCompanyStructureSectionCommand(loanApplicationId, "Yes"),
+            CancellationToken.None);
 
         // then
-        result.ViewModel.Purpose.Should().Be("Yes");
-        result.ViewModel.OrganisationMoreInformation.Should().Be(companyStructureEntity.MoreInformation!.Information);
-        result.ViewModel.HomesBuilt.Should().Be(companyStructureEntity.HomesBuilt!.Value.ToString(CultureInfo.InvariantCulture));
+        result.IsValid.Should().BeTrue();
+        companyStructureEntity.Status!.Should().Be(SectionStatus.Completed);
     }
 }
