@@ -30,7 +30,7 @@ public class LoanUserRepository : ILoanUserRepository
         return contactRoles;
     }
 
-    public Task LinkAccountToOrganization(UserGlobalId userGlobalId, CompaniesHouseNumber organizationNumber)
+    public Task LinkContactToOrganisation(UserGlobalId userGlobalId, CompaniesHouseNumber organizationNumber)
     {
         // Temporary dummy implementation
         return Task.CompletedTask;

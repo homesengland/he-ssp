@@ -20,6 +20,8 @@ public class LoanUserContext : ILoanUserContext
 
     private UserAccount? _selectedAccount;
 
+    private bool? _isLinkedWithOrganization;
+
     public LoanUserContext(IUserContext userContext, ILoanUserRepository loanUserRepository, ICacheService cacheService)
     {
         _userContext = userContext;
@@ -82,11 +84,12 @@ public class LoanUserContext : ILoanUserContext
 
     public async Task<bool> IsLinkedWithOrganization()
     {
-        var userAccount = await _cacheService.GetValueAsync(
-            $"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}",
-            async () => await _loanUserRepository.GetUserAccount(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email));
+        if (_isLinkedWithOrganization is null)
+        {
+            await LoadUserAccount();
+        }
 
-        return userAccount?.contactRoles.Any() ?? false;
+        return _isLinkedWithOrganization!.Value;
     }
 
     private async Task LoadUserAccount()
@@ -106,6 +109,12 @@ public class LoanUserContext : ILoanUserContext
         _accountIds.AddRange(accounts.Select(x => x.accountId).ToList());
 
         var selectedAccount = accounts.FirstOrDefault() ?? throw new LoanUserAccountIsMissingException();
+
+        var userAccount = await _cacheService.GetValueAsync(
+            $"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}",
+            async () => await _loanUserRepository.GetUserAccount(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email));
+
+        _isLinkedWithOrganization = userAccount?.contactRoles.Any() ?? false;
 
         _selectedAccount = new UserAccount(
             UserGlobalId,

@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.Contract.Domain;
+using HE.InvestmentLoans.Contract.Exceptions;
 
 namespace HE.InvestmentLoans.Contract.Organization.ValueObjects;
 public class CompaniesHouseNumber : ValueObject
@@ -7,6 +8,11 @@ public class CompaniesHouseNumber : ValueObject
 
     public CompaniesHouseNumber(string value)
     {
+        if (string.IsNullOrEmpty(value))
+        {
+            throw new DomainException("Companies house number cannot be empty", CommonErrorCodes.ValueWasNotProvided);
+        }
+
         _value = value;
     }
 

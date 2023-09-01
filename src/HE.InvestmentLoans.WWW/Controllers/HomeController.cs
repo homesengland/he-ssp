@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
@@ -13,28 +14,34 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 public class HomeController : Controller
 {
     private readonly IMediator _mediator;
-    private readonly ILoanUserContext _userContext;
+    private readonly ILoanUserContext _loanUserContext;
+    private readonly IUserContext _userContext;
 
-    public HomeController(IMediator mediator, ILoanUserContext userContext)
+    public HomeController(IMediator mediator, IUserContext userContext, ILoanUserContext loanUserContext)
     {
         _mediator = mediator;
         _userContext = userContext;
+        _loanUserContext = loanUserContext;
     }
 
-    [Authorize]
     public async Task<IActionResult> Index()
     {
-        if (!await _userContext.IsProfileCompleted())
+        if (!_userContext.IsAuthenticated)
+        {
+            return RedirectToAction(nameof(GuidanceController.WhatTheHomeBuildingFundIs), new ControllerName(nameof(GuidanceController)).WithoutPrefix());
+        }
+
+        if (!await _loanUserContext.IsProfileCompleted())
         {
             return RedirectToAction(nameof(UserController.ProfileDetails), new ControllerName(nameof(UserController)).WithoutPrefix());
         }
 
-        if (!await _userContext.IsLinkedWithOrganization())
+        if (!await _loanUserContext.IsLinkedWithOrganization())
         {
             return RedirectToAction(nameof(OrganizationController.SearchOrganization), new ControllerName(nameof(OrganizationController)).WithoutPrefix());
         }
 
-        return RedirectToAction("Dashboard", "Home");
+        return RedirectToAction(nameof(Dashboard));
     }
 
     public IActionResult Privacy()
