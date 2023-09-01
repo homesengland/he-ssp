@@ -1,7 +1,7 @@
 @model HE.InvestmentLoans.Contract.User.UserDetailsViewModel;
 @{
     ViewData["Title"] = "Profile details";
-    var id = ViewContext.RouteData.Values["id"];
+    var callback = Context.Request.Query["callback"];
 
     var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.Contract.User.UserDetailsViewModel));
 }
@@ -17,7 +17,8 @@
         Register as an individual, we will ask you for your organisation details later.
     </gds-p>
 
-    <form asp-controller="User" asp-action="ProfileDetails" asp-method="post" novalidate>  
+    <form asp-controller="User" asp-action="ProfileDetails" asp-method="post" novalidate>
+        <input type="hidden" name="callback" value="@callback" />
         <gds-field-set role="group">
             <legend>
                 <gds-label for="FirstName" size="ControlSize.S">

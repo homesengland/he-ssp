@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
+using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
@@ -8,6 +9,7 @@ using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.User;
 using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.Contract.User.Queries;
+using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -52,7 +54,7 @@ public class UserController : Controller
     }
 
     [HttpGet("profile-details")]
-    public async Task<IActionResult> ProfileDetails()
+    public async Task<IActionResult> ProfileDetails(string callback)
     {
         var response = await _mediator.Send(new GetUserDetailsQuery());
 
@@ -60,7 +62,7 @@ public class UserController : Controller
     }
 
     [HttpPost("profile-details")]
-    public async Task<IActionResult> ProfileDetails(UserDetailsViewModel viewModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> ProfileDetails(UserDetailsViewModel viewModel, string callback, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(viewModel, opt => opt.IncludeRuleSets(UserView.ProfileDetails), cancellationToken);
         if (!validationResult.IsValid)
@@ -78,8 +80,15 @@ public class UserController : Controller
             viewModel.SecondaryTelephoneNumber),
             cancellationToken);
 
-        // return RedirectToAction("SearchOrganization", "Organization");
-        // temporary change -> waitin for completion of SearchOrganization
-        return RedirectToAction("Dashboard", "Home");
+        if (callback == nameof(LoanApplicationV2Controller.CheckYourDetails))
+        {
+            return RedirectToAction(
+                nameof(LoanApplicationV2Controller.CheckYourDetails),
+                new ControllerName(nameof(LoanApplicationV2Controller)).WithoutPrefix());
+        }
+
+        return RedirectToAction(
+            nameof(OrganizationController.SearchOrganization),
+            new ControllerName(nameof(OrganizationController)).WithoutPrefix());
     }
 }
