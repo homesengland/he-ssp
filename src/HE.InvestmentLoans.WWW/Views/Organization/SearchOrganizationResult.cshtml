@@ -1,13 +1,17 @@
+@using HE.InvestmentLoans.WWW.Controllers;
 @using HE.InvestmentLoans.WWW.Helpers.Organisation;
+@using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 @model HE.InvestmentLoans.Contract.Organization.OrganizationViewModel;
 @{
     ViewData["Title"] = "Organization Select";
+
+    var controllerName = new ControllerName(nameof(OrganizationController));
 }
 
 <gds-div-grid-column-two-thirds>
     <partial name="_BackLink" />
 
-    <form asp-controller="Organization" asp-action="SelectOrganizationPost" asp-method="post" novalidate>
+    <form asp-controller="@controllerName.WithoutPrefix()" asp-action="@nameof(OrganizationController.SelectOrganization)" asp-method="post" novalidate>
         <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
             Select your organisation
         </gds-h1>
