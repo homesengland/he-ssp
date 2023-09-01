@@ -6,6 +6,12 @@ using Microsoft.Xrm.Sdk.Query;
 namespace HE.Investments.Organisation.Services;
 public class OrganizationService : IOrganizationService
 {
+    public Guid CreateOrganization(IOrganizationServiceAsync2 service, OrganizationDetailsDto organizationDetails)
+    {
+        var organizationToCreate = MapOrganizationDtoToEntity(organizationDetails);
+        return service.Create(organizationToCreate);
+    }
+
     public OrganizationDetailsDto GetOrganizationDetails(IOrganizationServiceAsync2 service, string accountid, string contactExternalId)
     {
         var organizationDetailsDto = new OrganizationDetailsDto();
@@ -43,5 +49,24 @@ public class OrganizationService : IOrganizationService
         }
 
         return organizationDetailsDto;
+    }
+
+    private Entity MapOrganizationDtoToEntity(OrganizationDetailsDto organizationDetailsDto)
+    {
+        var organizationEntity = new Entity("account")
+        {
+            Attributes = new AttributeCollection()
+            {
+                { "name", organizationDetailsDto.registeredCompanyName },
+                { "he_companieshousenumber", organizationDetailsDto.companyRegistrationNumber },
+                { "address1_line1", organizationDetailsDto.addressLine1 },
+                { "address1_line2", organizationDetailsDto.addressLine2 },
+                { "address1_line3", organizationDetailsDto.addressLine3 },
+                { "address1_city", organizationDetailsDto.city },
+                { "address1_postalcode", organizationDetailsDto.postalcode },
+                { "address1_country", organizationDetailsDto.country },
+            },
+        };
+        return organizationEntity;
     }
 }
