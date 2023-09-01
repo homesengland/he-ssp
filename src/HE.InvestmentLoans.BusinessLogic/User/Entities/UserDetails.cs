@@ -41,8 +41,7 @@ public class UserDetails
         string jobTitle,
         string telephoneNumber,
         string secondaryTelephoneNumber,
-        string userEmail,
-        string isTermsAndConditionsAccepted)
+        string userEmail)
     {
         FirstName = firstName;
         Surname = surname;
@@ -50,7 +49,7 @@ public class UserDetails
         Email = userEmail;
         TelephoneNumber = telephoneNumber;
         SecondaryTelephoneNumber = secondaryTelephoneNumber;
-        IsTermsAndConditionsAccepted = isTermsAndConditionsAccepted == CommonResponse.Checked;
+        IsTermsAndConditionsAccepted = true;
     }
 
     public bool IsProfileCompleted()

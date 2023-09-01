@@ -75,18 +75,11 @@ public class UserController : Controller
             viewModel.Surname,
             viewModel.JobTitle,
             viewModel.TelephoneNumber,
-            viewModel.SecondaryTelephoneNumber,
-            viewModel.IsTermsAndConditionsAccepted),
+            viewModel.SecondaryTelephoneNumber),
             cancellationToken);
 
         // return RedirectToAction("SearchOrganization", "Organization");
         // temporary change -> waitin for completion of SearchOrganization
         return RedirectToAction("Dashboard", "Home");
-    }
-
-    [HttpGet("terms-and-conditions")]
-    public IActionResult TermsAndConditions()
-    {
-        return View();
     }
 }

@@ -64,12 +64,6 @@ public class UserValidator : AbstractValidator<UserDetailsViewModel>
                 () => RuleFor(item => item.SecondaryTelephoneNumber)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
                     .WithMessage(ValidationErrorMessage.InputLongerThanHundredCharacters));
-
-            When(
-              item => item.IsTermsAndConditionsAccepted == null,
-              () => RuleFor(item => item.IsTermsAndConditionsAccepted)
-                      .NotEmpty()
-                      .WithMessage(ValidationErrorMessage.AcceptTermsAndConditions));
         });
     }
 }

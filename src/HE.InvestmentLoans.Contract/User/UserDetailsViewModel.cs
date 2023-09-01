@@ -11,6 +11,4 @@ public class UserDetailsViewModel
     public string? TelephoneNumber { get; set; }
 
     public string? SecondaryTelephoneNumber { get; set; }
-
-    public string? IsTermsAndConditionsAccepted { get; set; }
 }
