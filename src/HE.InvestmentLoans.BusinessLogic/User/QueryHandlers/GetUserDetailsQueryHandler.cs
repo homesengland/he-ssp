@@ -24,6 +24,6 @@ public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, G
 
         var userDetails = await _loanUserRepository.GetUserDetails(selectedAccount.UserGlobalId);
 
-        return new GetUserDetailsResponse(UserDetailsMapper.MapUserDetailsToViewModel(userDetails));
+        return new GetUserDetailsResponse(UserDetailsMapper.MapToViewModel(userDetails));
     }
 }

@@ -1,5 +1,3 @@
-extern alias Org;
-
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.User;
@@ -8,7 +6,7 @@ using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 namespace HE.InvestmentLoans.BusinessLogic.User;
 public static class UserDetailsMapper
 {
-    public static UserDetailsViewModel MapUserDetailsToViewModel(UserDetails userDetailsEntity)
+    public static UserDetailsViewModel MapToViewModel(UserDetails userDetailsEntity)
     {
         return new UserDetailsViewModel()
         {
