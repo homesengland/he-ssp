@@ -96,7 +96,7 @@ public class LoanUserContext : ILoanUserContext
     {
         var userAccount = await _cacheService.GetValueAsync(
             $"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}",
-            async () => await _contactService.GetContactRoles(_service, _userContext.Email, PortalConstants.PortalType, _userContext.UserGlobalId.ToString()))
+            async () => await _loanUserRepository.GetUserAccount(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email))
             ?? throw new LoanUserAccountIsMissingException();
 
         var accounts = userAccount.contactRoles.OrderBy(x => x.accountId).ToList();
