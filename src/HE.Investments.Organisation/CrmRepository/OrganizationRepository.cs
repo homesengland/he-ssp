@@ -62,6 +62,35 @@ public class OrganizationRepository : IOrganizationRepository
         return result1.Entities.FirstOrDefault();
     }
 
+    public Entity? GetOrganizationViaCompanyHouseNumber(IOrganizationServiceAsync2 service, string companyHouseNumber)
+    {
+        var condition1 = new ConditionExpression("he_companieshousenumber", ConditionOperator.Equal, companyHouseNumber);
+        var filter1 = new FilterExpression()
+        {
+            Conditions =
+                {
+                    condition1,
+                },
+            FilterOperator = LogicalOperator.Or,
+        };
+        var cols = new ColumnSet("name");
+
+        var query = new QueryExpression("account")
+        {
+            ColumnSet = cols,
+        };
+        query.Criteria.FilterOperator = LogicalOperator.And;
+        query.Criteria.AddFilter(filter1);
+
+        var result1 = service.RetrieveMultiple(query);
+        if (result1.Entities.Count == 0)
+        {
+            throw new InvalidPluginExecutionException("Organization with he_companieshousenumber: " + companyHouseNumber + " does not extst in CRM");
+        }
+
+        return result1.Entities.FirstOrDefault();
+    }
+
     public EntityCollection? SearchForOrganizations(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers)
     {
         if (organizationNumbers != null)
