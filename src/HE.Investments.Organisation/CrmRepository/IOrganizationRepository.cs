@@ -9,4 +9,6 @@ public interface IOrganizationRepository
     EntityCollection? SearchForOrganizations(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers);
 
     Entity? GetDefaultAccount(IOrganizationServiceAsync2 service);
+
+    Entity? GetOrganizationViaCompanyHouseNumber(IOrganizationServiceAsync2 service, string companyHouseNumber);
 }
