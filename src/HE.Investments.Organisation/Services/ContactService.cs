@@ -53,7 +53,7 @@ public class ContactService : IContactService
         }
     }
 
-    public ContactRolesDto? GetContactRoles(IOrganizationServiceAsync2 service, string contactEmail, string portalType, string contactExternalId)
+    public Task<ContactRolesDto?> GetContactRoles(IOrganizationServiceAsync2 service, string contactEmail, string portalType, string contactExternalId)
     {
         var contact = _contactRepository.GetContactWithGivenEmailAndExternalId(service, contactEmail, contactExternalId);
         if (contact != null)
@@ -61,7 +61,7 @@ public class ContactService : IContactService
             var contactWebRole = _webRoleRepository.GetContactWebrole(service, contact.Id, portalType);
             if (contactWebRole.Count == 0)
             {
-                return null;
+                return Task.FromResult<ContactRolesDto?>(null);
             }
 
             var roles = new List<ContactRoleDto>();
@@ -92,10 +92,10 @@ public class ContactService : IContactService
                 contactRoles = roles,
             };
 
-            return contactRolesDto;
+            return Task.FromResult<ContactRolesDto?>(contactRolesDto);
         }
 
-        return null;
+        return Task.FromResult<ContactRolesDto?>(null);
     }
 
     private ContactDto MapContactEntityToDto(Entity contact)

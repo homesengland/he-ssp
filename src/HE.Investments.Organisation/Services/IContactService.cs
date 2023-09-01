@@ -8,5 +8,5 @@ public interface IContactService
 
     Task UpdateUserProfile(IOrganizationServiceAsync2 service, string contactExternalId, ContactDto contactDto);
 
-    ContactRolesDto? GetContactRoles(IOrganizationServiceAsync2 service, string contactEmail, string portalType, string contactExternalId);
+    Task<ContactRolesDto?> GetContactRoles(IOrganizationServiceAsync2 service, string contactEmail, string portalType, string contactExternalId);
 }
