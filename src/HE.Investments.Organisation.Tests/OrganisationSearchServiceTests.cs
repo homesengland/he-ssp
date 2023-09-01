@@ -1,4 +1,3 @@
-using Castle.Core.Logging;
 using FluentAssertions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CompaniesHouse;
