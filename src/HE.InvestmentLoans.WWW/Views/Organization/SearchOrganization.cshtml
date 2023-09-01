@@ -1,6 +1,10 @@
+@using HE.InvestmentLoans.WWW.Controllers;
+@using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 @model HE.InvestmentLoans.Contract.Organization.OrganizationViewModel;
 @{
     ViewData["Title"] = "Organization Search";
+
+    var controllerName = new ControllerName(nameof(OrganizationController));
 }
 
 <gds-div-grid-column-two-thirds>
@@ -27,7 +31,7 @@
         For the Affordable Homes Programme, the orgranisation searched should have or will have a secure legal interest in the land during legal development.
     </gds-p>
 
-    <form asp-controller="Organization" asp-action="SearchOrganizationPost" asp-method="post" novalidate>
+    <form asp-controller="@controllerName.WithoutPrefix()" asp-action="@nameof(OrganizationController.SearchOrganization)" asp-method="post" novalidate>
         <gds-h1 size="@ControlSize.M">
             What is your organisation name?
         </gds-h1>

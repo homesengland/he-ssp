@@ -27,11 +27,11 @@ public class OrganizationController : Controller
     [HttpPost("search")]
     public IActionResult SearchOrganization(OrganizationViewModel organization)
     {
-        return RedirectToAction(nameof(SelectOrganization), new { searchPhrase = organization.Name });
+        return RedirectToAction(nameof(SearchOrganizationResult), new { searchPhrase = organization.Name });
     }
 
     [HttpGet("search/result")]
-    public async Task<IActionResult> SelectOrganization([FromQuery] string searchPhrase, [FromQuery] int page)
+    public async Task<IActionResult> SearchOrganizationResult([FromQuery] string searchPhrase, [FromQuery] int page)
     {
         var response = await _mediator.Send(new SearchOrganizationsQuery(searchPhrase, page, 10));
 
