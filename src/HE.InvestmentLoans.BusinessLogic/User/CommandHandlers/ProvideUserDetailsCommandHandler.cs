@@ -30,8 +30,7 @@ public class ProvideUserDetailsCommandHandler : IRequestHandler<ProvideUserDetai
             request.JobTitle,
             request.TelephoneNumber,
             request.SecondaryTelephoneNumber,
-            selectedAccount.UserEmail,
-            request.IsTermsAndConditionsAccepted);
+            selectedAccount.UserEmail);
 
         await _loanUserRepository.SaveAsync(userDetails, selectedAccount.UserGlobalId, cancellationToken);
 

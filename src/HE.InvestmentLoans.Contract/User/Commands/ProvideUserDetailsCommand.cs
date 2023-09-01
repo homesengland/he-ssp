@@ -7,5 +7,4 @@ public record ProvideUserDetailsCommand(
     string Surname,
     string JobTitle,
     string TelephoneNumber,
-    string SecondaryTelephoneNumber,
-    string IsTermsAndConditionsAccepted) : IRequest;
+    string SecondaryTelephoneNumber) : IRequest;

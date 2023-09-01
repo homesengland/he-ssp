@@ -1,7 +1,6 @@
 extern alias Org;
 
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.User;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
@@ -17,7 +16,6 @@ public static class UserDetailsMapper
             JobTitle = userDetailsEntity.JobTitle,
             TelephoneNumber = userDetailsEntity.TelephoneNumber,
             SecondaryTelephoneNumber = userDetailsEntity.SecondaryTelephoneNumber,
-            IsTermsAndConditionsAccepted = userDetailsEntity.IsTermsAndConditionsAccepted == true ? CommonResponse.Checked : null,
         };
     }
 
