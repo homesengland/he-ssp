@@ -69,6 +69,8 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
             {
                 OrganizationBasicInformation = organizationBasicInformationResponse.OrganizationBasicInformation,
                 LoanApplicationContactEmail = userDetails.Email,
+                LoanApplicationContactName = $"{userDetails.FirstName} {userDetails.LastName}",
+                LoanApplicationContactTelephoneNumber = userDetails.TelephoneNumber,
             });
     }
 

@@ -1,4 +1,6 @@
 @using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow
+@using HE.InvestmentLoans.Common.Routing;
+@using HE.InvestmentLoans.WWW.Controllers;
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
@@ -42,22 +44,34 @@
             {
             { "Title", "Contact name" },
             { "Value", Model.LoanApplicationContactName },
-            { "Link", "#" }
+            { "Link", Url.RouteUrl(new {
+                    controller = "user",
+                    action = "profile-details",
+                    callback = nameof(LoanApplicationV2Controller.CheckYourDetails)
+                }) }
             })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Email address" },
             { "Value", Model.LoanApplicationContactEmail },
-            { "Link", "#" }
+            { "Link", Url.RouteUrl(new {
+                    controller = "user",
+                    action = "profile-details",
+                    callback = nameof(LoanApplicationV2Controller.CheckYourDetails)
+                }) }
             })
 
             @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Telephone number" },
             { "Value", Model.LoanApplicationContactTelephoneNumber},
-            { "Link", "#" }
-        })
+            { "Link", Url.RouteUrl(new {
+                    controller = "user",
+                    action = "profile-details",
+                    callback = nameof(LoanApplicationV2Controller.CheckYourDetails)
+                }) }
+            })
     </gds-summary-list>
     <gds-button name="action" type="submit" value="Continue">
         Continue

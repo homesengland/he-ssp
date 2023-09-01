@@ -14,10 +14,15 @@ public class GetUserAccountQueryHandler : IRequestHandler<GetUserAccountQuery, G
 
     public async Task<GetUserAccountResponse> Handle(GetUserAccountQuery request, CancellationToken cancellationToken)
     {
+        var selectedAccount = await _loanUserContext.GetSelectedAccount();
+
         return new GetUserAccountResponse(
                             _loanUserContext.Email,
                             _loanUserContext.UserGlobalId.ToString(),
                             await _loanUserContext.GetSelectedAccountId(),
-                            await _loanUserContext.GetAllAccountIds());
+                            await _loanUserContext.GetAllAccountIds(),
+                            selectedAccount.FirstName,
+                            selectedAccount.LastName,
+                            selectedAccount.TelephoneNumber);
     }
 }
