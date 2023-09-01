@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.Contract.Organization;
+using HE.InvestmentLoans.WWW.Attributes;
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
 using MediatR;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.InvestmentLoans.WWW.Controllers;
 
 [Route("organization")]
-[Authorize]
+[AuthorizeWithoutLinkedOrganiztionOnly]
 public class OrganizationController : Controller
 {
     private readonly IMediator _mediator;
