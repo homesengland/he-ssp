@@ -54,7 +54,7 @@ public class UserController : Controller
     }
 
     [HttpGet("profile-details")]
-    public async Task<IActionResult> ProfileDetails(string callback)
+    public async Task<IActionResult> ProfileDetails()
     {
         var response = await _mediator.Send(new GetUserDetailsQuery());
 
