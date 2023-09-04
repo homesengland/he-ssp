@@ -12,12 +12,12 @@ public class OrganizationService : IOrganizationService
         return service.Create(organizationToCreate);
     }
 
-    public OrganizationDetailsDto GetOrganizationDetails(IOrganizationServiceAsync2 service, string accountid, string contactExternalId)
+    public async Task<OrganizationDetailsDto> GetOrganizationDetails(IOrganizationServiceAsync2 service, string accountid, string contactExternalId)
     {
         var organizationDetailsDto = new OrganizationDetailsDto();
         if (Guid.TryParse(accountid, out var organizationId))
         {
-            var account = service.Retrieve("account", organizationId, new ColumnSet(new string[]
+            var account = await service.RetrieveAsync("account", organizationId, new ColumnSet(new string[]
             {
                     "name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3",
                     "address1_city", "address1_postalcode", "address1_country", "primarycontactid",
@@ -35,7 +35,7 @@ public class OrganizationService : IOrganizationService
             if (account.Contains("primarycontactid") && account["primarycontactid"] != null)
             {
                 var primaryContactReference = (EntityReference)account.Attributes["primarycontactid"];
-                var contact = service.Retrieve("contact", primaryContactReference.Id, new ColumnSet(new string[]
+                var contact = await service.RetrieveAsync("contact", primaryContactReference.Id, new ColumnSet(new string[]
                 {
                         "fullname",
                         "emailaddress1",
