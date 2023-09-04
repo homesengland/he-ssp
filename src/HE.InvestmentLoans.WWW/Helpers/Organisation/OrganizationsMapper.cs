@@ -10,7 +10,7 @@ public static class OrganizationsMapper
         return viewModel.Organizations.Select(org => new SelectListItem
         {
             Text = $"{ToHtml(org.Name)}{ToHtml(org.Street)}{ToHtml(org.City)}{ToHtml(org.Code)}Companies house number: {org.CompaniesHouseNumber}",
-            Value = org.Name,
+            Value = org.CompaniesHouseNumber,
         }).ToList();
     }
 
