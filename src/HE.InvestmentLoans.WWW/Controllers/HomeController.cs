@@ -1,9 +1,12 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
+using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
@@ -11,25 +14,34 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 public class HomeController : Controller
 {
     private readonly IMediator _mediator;
-
+    private readonly ILoanUserContext _loanUserContext;
     private readonly IUserContext _userContext;
 
-    public HomeController(IMediator mediator, IUserContext userContext)
+    public HomeController(IMediator mediator, IUserContext userContext, ILoanUserContext loanUserContext)
     {
         _mediator = mediator;
         _userContext = userContext;
+        _loanUserContext = loanUserContext;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        if (_userContext.IsAuthenticated)
+        if (!_userContext.IsAuthenticated)
         {
-            return RedirectToAction("Dashboard", "Home");
+            return RedirectToAction(nameof(GuidanceController.WhatTheHomeBuildingFundIs), new ControllerName(nameof(GuidanceController)).WithoutPrefix());
         }
-        else
+
+        if (!await _loanUserContext.IsProfileCompleted())
         {
-            return RedirectToAction("WhatTheHomeBuildingFundIs", "Guidance");
+            return RedirectToAction(nameof(UserController.ProfileDetails), new ControllerName(nameof(UserController)).WithoutPrefix());
         }
+
+        if (!await _loanUserContext.IsLinkedWithOrganization())
+        {
+            return RedirectToAction(nameof(OrganizationController.SearchOrganization), new ControllerName(nameof(OrganizationController)).WithoutPrefix());
+        }
+
+        return RedirectToAction(nameof(Dashboard));
     }
 
     public IActionResult Privacy()
@@ -37,8 +49,8 @@ public class HomeController : Controller
         return View();
     }
 
-    [AuthorizeWithCompletedProfile]
     [HttpGet("/dashboard")]
+    [AuthorizeWithCompletedProfile]
     [WorkflowState(LoanApplicationWorkflow.State.Dashboard)]
     public async Task<IActionResult> Dashboard()
     {

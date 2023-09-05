@@ -3,6 +3,7 @@ extern alias Org;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Exceptions;
+using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
@@ -24,10 +25,15 @@ public class LoanUserRepository : ILoanUserRepository
 
     public async Task<ContactRolesDto?> GetUserAccount(UserGlobalId userGlobalId, string userEmail)
     {
-        var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, PortalConstants.PortalType, userGlobalId.ToString())
-                            ?? throw new NotFoundException(nameof(ContactRolesDto), userGlobalId.ToString());
+        var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, PortalConstants.PortalType, userGlobalId.ToString());
 
         return contactRoles;
+    }
+
+    public Task LinkContactToOrganisation(UserGlobalId userGlobalId, CompaniesHouseNumber organizationNumber)
+    {
+        // Temporary dummy implementation
+        return Task.CompletedTask;
     }
 
     public async Task<UserDetails> GetUserDetails(UserGlobalId userGlobalId)

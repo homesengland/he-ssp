@@ -1,6 +1,7 @@
 extern alias Org;
 
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
@@ -13,4 +14,6 @@ public interface ILoanUserRepository
     public Task<UserDetails> GetUserDetails(UserGlobalId userGlobalId);
 
     public Task SaveAsync(UserDetails userDetails, UserGlobalId userGlobalId, CancellationToken cancellationToken);
+
+    Task LinkContactToOrganisation(UserGlobalId userGlobalId, CompaniesHouseNumber organizationNumber);
 }

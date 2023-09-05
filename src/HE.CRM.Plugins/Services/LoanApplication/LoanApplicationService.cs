@@ -250,6 +250,16 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
         }
 
+        public void CheckIfOwnerCanBeChanged(invln_Loanapplication target, invln_Loanapplication preImage)
+        {
+            TracingService.Trace($"preImage: value {preImage.StatusCode.Value}, other {preImage.StatusCode}");
+            TracingService.Trace($"target: value {target.StatusCode?.Value}, other {target.StatusCode}");
+            if (((preImage.StatusCode.Value == (int)invln_Loanapplication_StatusCode.Draft && target.StatusCode == null) || (target.StatusCode != null && target.StatusCode.Value == (int)invln_Loanapplication_StatusCode.Draft)) && target.OwnerId.Id != preImage.OwnerId.Id)
+            {
+                throw new InvalidPluginExecutionException("Cannot change owner when status is set to draft");
+            }
+        }
+
         private bool CheckIfExternalStatusCanBeChanged(int oldStatus, int newStatus)
         {
             if (oldStatus != (int)invln_ExternalStatus.Draft)
