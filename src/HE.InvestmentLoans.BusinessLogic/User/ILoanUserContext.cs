@@ -20,4 +20,6 @@ public interface ILoanUserContext
     public void RefreshDetails();
 
     public Task<bool> IsProfileCompleted();
+
+    Task<bool> IsLinkedWithOrganization();
 }

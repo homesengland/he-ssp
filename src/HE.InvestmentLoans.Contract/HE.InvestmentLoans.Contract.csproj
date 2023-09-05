@@ -39,4 +39,8 @@
     <ProjectReference Include="..\HE.InvestmentLoans.Common\HE.InvestmentLoans.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Organization\ViewModels\" />
+  </ItemGroup>
+
 </Project>
