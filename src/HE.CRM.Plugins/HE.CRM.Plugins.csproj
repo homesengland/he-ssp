@@ -139,6 +139,7 @@
     <Compile Include="Handlers\CustomApi\UpdateUserProfileHandler.cs" />
     <Compile Include="Handlers\LoanApplications\ChangeApplicationStatusOnOwnerChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\CheckIfOwnerCanBeChangedHandler.cs" />
+    <Compile Include="Handlers\LoanApplications\SetFieldsWhenChangingStatusFromDraftHandler.cs" />
     <Compile Include="Models\AzureAdToken.cs" />
     <Compile Include="Plugins\Accounts\GenerateRandomAccountNameSamplePlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeLoanApplicationExternalStatusPlugin.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Plugins\CustomApi\UpdateUserProfilePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\ChangeApplicationStatusOnOwnerChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\CheckIfOwnerCanBeChangedPlugin.cs" />
+    <Compile Include="Plugins\LoanApplications\SetFieldsWhenChangingStatusFromDraftPlugin.cs" />
     <Compile Include="Services\Accounts\AccountService.cs" />
     <Compile Include="Services\Accounts\IAccountService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

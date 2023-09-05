@@ -260,6 +260,30 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
         }
 
+        public void SetFieldsWhenChangingStatusFromDraft(invln_Loanapplication target, invln_Loanapplication preImage)
+        {
+            if (preImage.StatusCode.Value == (int)invln_Loanapplication_StatusCode.Draft && target.StatusCode.Value == (int)invln_Loanapplication_StatusCode.ApplicationSubmitted)
+            {
+                var relatedSiteDetails = siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(target.ToEntityReference());
+                if (relatedSiteDetails != null && relatedSiteDetails.Count > 0)
+                {
+                    var projectName = string.Empty;
+                    var numberOfHomes = 0;
+                    foreach (var siteDetail in relatedSiteDetails)
+                    {
+                        projectName += $"{siteDetail.invln_Name}, ";
+                        numberOfHomes += siteDetail.invln_Numberofhomes ?? 0;
+                    }
+                    if (projectName.Length > 100)
+                    {
+                        projectName = projectName.Substring(0, 100);
+                    }
+                    target.invln_ProjectName = projectName;
+                    target.invln_Noofhomes = numberOfHomes.ToString();
+                }
+            }
+        }
+
         private bool CheckIfExternalStatusCanBeChanged(int oldStatus, int newStatus)
         {
             if (oldStatus != (int)invln_ExternalStatus.Draft)
