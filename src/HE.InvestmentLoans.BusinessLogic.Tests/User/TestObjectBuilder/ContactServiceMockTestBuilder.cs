@@ -39,7 +39,6 @@ public class ContactServiceMockTestBuilder
         ContactDtoFromMock = contactDto;
 
         _mock.Setup(x => x.RetrieveUserProfile(It.IsAny<IOrganizationServiceAsync2>(), contactDto.contactId)).ReturnsAsync(contactDto);
-        _mock.Setup(x => x.UpdateUserProfile(It.IsAny<IOrganizationServiceAsync2>(), It.IsAny<string>(), It.IsAny<ContactDto>()));
 
         return this;
     }

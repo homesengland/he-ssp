@@ -57,14 +57,14 @@ public class ProvideUserDetailsCommandHandlerTests : TestBase<ProvideUserDetails
         userDetails.TelephoneNumber.Should().Be(newUserDetails.TelephoneNumber);
         userDetails.SecondaryTelephoneNumber.Should().Be(newUserDetails.SecondaryTelephoneNumber);
         userRepositoryMock.Verify(x =>
-            x.SaveAsync(It.Is<UserDetails>(y => y.FirstName! == newUserDetails.FirstName), userAccount.UserGlobalId, CancellationToken.None));
-        userRepositoryMock.Verify(x =>
-            x.SaveAsync(It.Is<UserDetails>(y => y.Surname! == newUserDetails.Surname), userAccount.UserGlobalId, CancellationToken.None));
-        userRepositoryMock.Verify(x =>
-            x.SaveAsync(It.Is<UserDetails>(y => y.JobTitle! == newUserDetails.JobTitle), userAccount.UserGlobalId, CancellationToken.None));
-        userRepositoryMock.Verify(x =>
-            x.SaveAsync(It.Is<UserDetails>(y => y.TelephoneNumber! == newUserDetails.TelephoneNumber), userAccount.UserGlobalId, CancellationToken.None));
-        userRepositoryMock.Verify(x =>
-            x.SaveAsync(It.Is<UserDetails>(y => y.SecondaryTelephoneNumber! == newUserDetails.SecondaryTelephoneNumber), userAccount.UserGlobalId, CancellationToken.None));
+            x.SaveAsync(
+                It.Is<UserDetails>(
+                y => y.FirstName! == newUserDetails.FirstName
+                && y.Surname! == newUserDetails.Surname
+                && y.JobTitle! == newUserDetails.JobTitle
+                && y.TelephoneNumber! == newUserDetails.TelephoneNumber
+                && y.SecondaryTelephoneNumber! == newUserDetails.SecondaryTelephoneNumber),
+                userAccount.UserGlobalId,
+                CancellationToken.None));
     }
 }
