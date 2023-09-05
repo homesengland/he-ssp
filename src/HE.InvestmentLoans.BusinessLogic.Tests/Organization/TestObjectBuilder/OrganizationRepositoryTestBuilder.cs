@@ -19,7 +19,7 @@ using Moq;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestObjectBuilder;
-internal class OrganizationRepositoryTestBuilder
+public class OrganizationRepositoryTestBuilder
 {
     private readonly Mock<IOrganizationRepository> _mock;
 
