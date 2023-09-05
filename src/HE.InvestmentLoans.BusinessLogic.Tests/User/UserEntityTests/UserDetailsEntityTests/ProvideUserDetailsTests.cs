@@ -29,8 +29,7 @@ public class ProvideUserDetailsTests
             newUserDetails.JobTitle!,
             newUserDetails.TelephoneNumber!,
             newUserDetails.SecondaryTelephoneNumber!,
-            newUserDetails.Email!
-            );
+            newUserDetails.Email!);
 
         // then
         userDetailsEntity.FirstName.Should().Be(newUserDetails.FirstName);

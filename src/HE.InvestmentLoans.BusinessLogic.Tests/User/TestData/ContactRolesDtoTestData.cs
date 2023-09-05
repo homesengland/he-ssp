@@ -13,7 +13,8 @@ public static class ContactRolesDtoTestData
 {
     public static readonly ContactRolesDto ContactRolesDto = new()
     {
-        contactRoles = new List<ContactRoleDto>() {
+        contactRoles = new List<ContactRoleDto>()
+        {
             new()
             {
                 accountId = Guid.NewGuid(),
