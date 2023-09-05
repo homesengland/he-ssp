@@ -37,7 +37,7 @@ public class GetUserAccountTests : TestBase<LoanUserRepository>
     }
 
     [Fact]
-    public async Task ShouldThrowNotFoundException_WhenUserGlobalIdDoesNotExist()
+    public async Task ShouldReturnEmptyContactRolesDto_WhenUserGlobalIdAndEmailAreFake()
     {
         // given
         var contactRolesDto = ContactServiceMockTestBuilder
@@ -54,9 +54,9 @@ public class GetUserAccountTests : TestBase<LoanUserRepository>
         var fakeEmail = "fake@fake.com";
 
         // when
-        var action = () => TestCandidate.GetUserAccount(UserGlobalId.From(wrongUserGlobalId), fakeEmail);
+        var result = await TestCandidate.GetUserAccount(UserGlobalId.From(wrongUserGlobalId), fakeEmail);
 
         // then
-        await action.Should().ThrowExactlyAsync<NotFoundException>().WithMessage($"*{wrongUserGlobalId}*");
+        result.Should().BeNull();
     }
 }
