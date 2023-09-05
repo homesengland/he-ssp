@@ -25,7 +25,7 @@ public class LoanUserRepository : ILoanUserRepository
     public async Task<ContactRolesDto?> GetUserAccount(UserGlobalId userGlobalId, string userEmail)
     {
         var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, PortalConstants.PortalType, userGlobalId.ToString())
-                            ?? throw new NotFoundException("Contact role", userGlobalId);
+                            ?? throw new NotFoundException(nameof(ContactRolesDto), userGlobalId.ToString());
 
         return contactRoles;
     }

@@ -51,9 +51,10 @@ public class GetUserAccountTests : TestBase<LoanUserRepository>
             .Register(this);
 
         var wrongUserGlobalId = "Wrong user global id";
+        var fakeEmail = "fake@fake.com";
 
         // when
-        var action = () => TestCandidate.GetUserAccount(UserGlobalId.From(wrongUserGlobalId), contactRolesDto.email);
+        var action = () => TestCandidate.GetUserAccount(UserGlobalId.From(wrongUserGlobalId), fakeEmail);
 
         // then
         await action.Should().ThrowExactlyAsync<NotFoundException>().WithMessage($"*{wrongUserGlobalId}*");
