@@ -101,6 +101,8 @@ app.MapControllerRoute(
 
 app.Run();
 
+#pragma warning disable CA1050
 public partial class Program
 {
 }
+#pragma warning restore CA1050
