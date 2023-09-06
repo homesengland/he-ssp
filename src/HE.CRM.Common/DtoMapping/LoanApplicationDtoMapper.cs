@@ -50,7 +50,6 @@ namespace HE.CRM.Common.DtoMapping
                 //CHANGE IN STATUS ONLY VIA STATUS CHANGE ENDPOINT
 
                 //OTHER maybe not related
-                invln_Name = loanApplicationDto.name,
                 invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference(Account.EntityLogicalName, accountid) : null, //pusty account?
             };
 
