@@ -1,14 +1,10 @@
 using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.QueryHandlers;
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
-using HE.InvestmentLoans.BusinessLogic.Tests.User;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
-using Moq;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.QueryHandlers;
