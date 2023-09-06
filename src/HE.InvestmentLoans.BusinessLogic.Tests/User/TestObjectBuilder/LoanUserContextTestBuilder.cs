@@ -31,6 +31,21 @@ public class LoanUserContextTestBuilder
         _mock.Setup(x => x.GetSelectedAccountId()).ReturnsAsync(userAccount.AccountId);
         _mock.Setup(x => x.UserGlobalId).Returns(userAccount.UserGlobalId);
         _mock.Setup(x => x.Email).Returns(userAccount.UserEmail);
+
+        return this;
+    }
+
+    public LoanUserContextTestBuilder IsNotLinkedWithOrganization()
+    {
+        _mock.Setup(x => x.IsLinkedWithOrganization()).ReturnsAsync(false);
+
+        return this;
+    }
+
+    public LoanUserContextTestBuilder IsLinkedWithOrganization()
+    {
+        _mock.Setup(x => x.IsLinkedWithOrganization()).ReturnsAsync(true);
+
         return this;
     }
 

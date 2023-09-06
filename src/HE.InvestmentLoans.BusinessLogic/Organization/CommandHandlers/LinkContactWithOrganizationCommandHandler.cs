@@ -5,8 +5,8 @@ using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.Organization;
 using MediatR;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.PowerPlatform.Dataverse.Client;
+using Org.HE.Investments.Organisation.Contract;
 using Org.HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
@@ -41,7 +41,7 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
             throw new ExternalServiceException();
         }
 
-        var organization = result.Item;
+        var organization = result.Item ?? throw new NotFoundException(nameof(OrganisationSearchItem), request.Number);
 
         if (!organization.ExistsInCrm)
         {
@@ -55,6 +55,6 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
             });
         }
 
-        await _contactService.LinkContactWithOrganization(_organizationServiceAsync, _loanUserContext.UserGlobalId.ToString(), request.Number.ToString(), PortalConstants.PortalType);
+        await _contactService.LinkContactWithOrganization(_organizationServiceAsync, _loanUserContext.UserGlobalId.ToString(), request.Number.ToString()!, PortalConstants.PortalType);
     }
 }
