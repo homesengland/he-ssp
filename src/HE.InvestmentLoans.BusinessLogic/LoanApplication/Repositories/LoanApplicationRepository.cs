@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
@@ -95,7 +96,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
                 x.LastModificationOn)).ToList();
     }
 
-    public void Save(LoanApplicationViewModel loanApplication, UserAccount userAccount)
+    public async Task Save(LoanApplicationViewModel loanApplication, UserAccount userAccount)
     {
         var siteDetailsDtos = new List<SiteDetailsDto>();
         foreach (var site in loanApplication.Sites)
@@ -167,9 +168,10 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             invln_entityfieldsparameters = loanApplicationSerialized,
             invln_accountid = userAccount.AccountId.ToString(),
             invln_contactexternalid = userAccount.UserGlobalId.ToString(),
+            invln_loanapplicationid = loanApplication.ID.ToString(),
         };
 
-        _serviceClient.ExecuteAsync(req);
+        await _serviceClient.ExecuteAsync(req);
     }
 
     public async Task Save(LoanApplicationEntity loanApplication, CancellationToken cancellationToken)
