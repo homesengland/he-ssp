@@ -11,7 +11,7 @@ public interface ILoanApplicationRepository
 
     Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount, CancellationToken cancellationToken);
 
-    void Save(LoanApplicationViewModel loanApplication, UserAccount userAccount);
+    Task Save(LoanApplicationViewModel loanApplication, UserAccount userAccount);
 
     Task Save(LoanApplicationEntity loanApplication, CancellationToken cancellationToken);
 }

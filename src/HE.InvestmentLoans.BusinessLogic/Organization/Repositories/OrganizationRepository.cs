@@ -3,7 +3,9 @@ extern alias Org;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
+using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.InvestmentLoans.Contract.User.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Org::HE.Investments.Organisation.Services;
@@ -24,7 +26,8 @@ public class OrganizationRepository : IOrganizationRepository
 
     public async Task<OrganizationBasicInformation> GetBasicInformation(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var organizationDetailsDto = await _organizationService.GetOrganizationDetails(_serviceClient, userAccount.AccountId.ToString(), userAccount.UserGlobalId.ToString());
+        var organizationDetailsDto = await _organizationService.GetOrganizationDetails(_serviceClient, userAccount.AccountId.ToString(), userAccount.UserGlobalId.ToString())
+                                        ?? throw new NotFoundException(nameof(OrganizationBasicInformation), userAccount.AccountId.ToString());
 
         return new OrganizationBasicInformation(
             organizationDetailsDto.registeredCompanyName,
