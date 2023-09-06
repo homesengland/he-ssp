@@ -10,7 +10,7 @@ public class IntegrationTest : IClassFixture<IntegrationTestFixture<Program>>
     protected IntegrationTest(IntegrationTestFixture<Program> fixture)
     {
         _fixture = fixture;
-        TestClient = new IntegrationTestClient(fixture.CreateClient());
+        TestClient = new IntegrationTestClient(fixture.CreateClient(new WebApplicationFactoryClientOptions() { AllowAutoRedirect = true }));
     }
 
     protected IntegrationTestClient TestClient { get; }

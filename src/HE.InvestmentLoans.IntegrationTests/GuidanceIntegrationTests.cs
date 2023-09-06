@@ -15,7 +15,7 @@ namespace HE.InvestmentLoans.IntegrationTests;
 public class GuidanceIntegrationTests : IntegrationTest
 {
     // Make it null when you want to run tests locally
-    private const string? Skip = "Waits for DevOps configuration - #76791";
+    private const string? Skip = null;
 
     private const string CurrentPageKey = "CurrentPage";
 
@@ -29,7 +29,7 @@ public class GuidanceIntegrationTests : IntegrationTest
     public async Task Order01_ShouldRedirectToGuidancePage_WhenUserIsNotLogged()
     {
         // given & when
-        var mainPage = await TestClient.NavigateTo(PagesUrls.MainPage);
+        var mainPage = await TestClient.AsNotLoggedUser().NavigateTo(PagesUrls.MainPage);
 
         // then
         mainPage.Url.Should().EndWith(GuidancePagesUrls.WhatTheHomeBuildingFundIs);
