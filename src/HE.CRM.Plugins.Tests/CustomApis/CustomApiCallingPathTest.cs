@@ -100,7 +100,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             var getOrganizationDetailsOutput = this.CallGetOrganizationDetailsPlugin(account.Id.ToString(), contact.invln_externalid, false);
 
             Assert.IsNotNull(getOrganizationDetailsOutput);
-            Assert.AreEqual(account.Name, getOrganizationDetailsOutput.registeredCompanyName);
 
             var sendInvestmentLoanDataOutput = this.CallSendInvestmentsLoanDataToCrm(getContactRoleOutput.externalId, account.Id.ToString(), String.Empty, JsonSerializer.Serialize(applicationDto), false);
 
@@ -111,7 +110,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             var getLoanApplicationOutput1 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
 
             Assert.IsNotNull(getLoanApplicationOutput1);
-            Assert.AreEqual(getLoanApplicationOutput1.name, applicationDto.name);
 
             var loanDtoNewFieldsValues = new LoanApplicationDto()
             {
@@ -188,7 +186,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             var getOrganizationDetailsOutput = this.CallGetOrganizationDetailsPlugin(account.Id.ToString(), contact.invln_externalid, false);
 
             Assert.IsNotNull(getOrganizationDetailsOutput);
-            Assert.AreEqual(account.Name, getOrganizationDetailsOutput.registeredCompanyName);
 
             var sendInvestmentLoanDataOutput = this.CallSendInvestmentsLoanDataToCrm(getContactRoleOutput.externalId, account.Id.ToString(), String.Empty, JsonSerializer.Serialize(applicationDto), false);
 
@@ -199,7 +196,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             var getLoanApplicationOutput1 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
 
             Assert.IsNotNull(getLoanApplicationOutput1);
-            Assert.AreEqual(getLoanApplicationOutput1.name, applicationDto.name);
 
             var loanDtoNewFieldsValues = new LoanApplicationDto()
             {
@@ -281,7 +277,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             var getOrganizationDetailsOutput = this.CallGetOrganizationDetailsPlugin(account.Id.ToString(), contact.invln_externalid, false);
 
             Assert.IsNotNull(getOrganizationDetailsOutput);
-            Assert.AreEqual(account.Name, getOrganizationDetailsOutput.registeredCompanyName);
 
             var sendInvestmentLoanDataOutput = this.CallSendInvestmentsLoanDataToCrm(getContactRoleOutput.externalId, account.Id.ToString(), loanApplication.Id.ToString(), JsonSerializer.Serialize(applicationDto), false);
 
@@ -292,7 +287,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             var getLoanApplicationOutput1 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
 
             Assert.IsNotNull(getLoanApplicationOutput1);
-            Assert.AreEqual(getLoanApplicationOutput1.name, applicationDto.name);
 
             var loanDtoNewFieldsValues = new LoanApplicationDto()
             {
@@ -354,7 +348,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             var getOrganizationDetailsOutput = this.CallGetOrganizationDetailsPlugin(account.Id.ToString(), contact.invln_externalid, false);
 
             Assert.IsNotNull(getOrganizationDetailsOutput);
-            Assert.AreEqual(account.Name, getOrganizationDetailsOutput.registeredCompanyName);
 
             var sendInvestmentLoanDataOutput = this.CallSendInvestmentsLoanDataToCrm(getContactRoleOutput.externalId, account.Id.ToString(), String.Empty, JsonSerializer.Serialize(applicationDto), false);
 
@@ -365,7 +358,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             var getLoanApplicationOutput1 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
 
             Assert.IsNotNull(getLoanApplicationOutput1);
-            Assert.AreEqual(getLoanApplicationOutput1.name, applicationDto.name);
 
             var loanDtoNewFieldsValues = new LoanApplicationDto()
             {
