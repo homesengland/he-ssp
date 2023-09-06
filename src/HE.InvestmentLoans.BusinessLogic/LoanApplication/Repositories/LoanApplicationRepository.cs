@@ -139,6 +139,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             companyPurpose = loanApplication.Company.Purpose!.MapToBool(),
             existingCompany = loanApplication.Company.OrganisationMoreInformation,
             companyExperience = loanApplication.Company.HomesBuilt?.TryParseNullableInt(),
+            CompanyStructureAndExperienceCompletionStatus = SectionStatusMapper.Map(loanApplication.Company.State),
 
             // FUNDING
             projectGdv = loanApplication.Funding.GrossDevelopmentValue,
