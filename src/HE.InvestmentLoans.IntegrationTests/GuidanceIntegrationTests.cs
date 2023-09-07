@@ -4,7 +4,7 @@ using FluentAssertions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Assertions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
-using HE.InvestmentLoans.IntegrationTests.Pages;
+using HE.InvestmentLoans.IntegrationTests.LoansHelpers.Pages;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -15,7 +15,7 @@ namespace HE.InvestmentLoans.IntegrationTests;
 public class GuidanceIntegrationTests : IntegrationTest
 {
     // Make it null when you want to run tests locally
-    private const string? Skip = null;
+    private const string? Skip = "Waits for DevOps configuration - #76791";
 
     private const string CurrentPageKey = "CurrentPage";
 
@@ -46,7 +46,7 @@ public class GuidanceIntegrationTests : IntegrationTest
 
         // when
         var nextLink = currentPage.GetAnchorElementById("guidance-next-link");
-        var eligibilityPage = await TestClient.NavigateTo(nextLink.PathName);
+        var eligibilityPage = await TestClient.AsNotLoggedUser().ClickAHrefElement(nextLink);
 
         // then
         eligibilityPage.Url.Should().EndWith(GuidancePagesUrls.Eligibility);
@@ -63,7 +63,7 @@ public class GuidanceIntegrationTests : IntegrationTest
 
         // when
         var nextLink = currentPage.GetAnchorElementById("guidance-next-link");
-        var applyPage = await TestClient.NavigateTo(nextLink.PathName);
+        var applyPage = await TestClient.AsNotLoggedUser().ClickAHrefElement(nextLink);
 
         // then
         applyPage.Url.Should().EndWith(GuidancePagesUrls.Apply);

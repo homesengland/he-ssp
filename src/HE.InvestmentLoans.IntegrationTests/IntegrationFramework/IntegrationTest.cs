@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc.Testing;
+using HE.InvestmentLoans.IntegrationTests.Config;
 using Xunit;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -10,7 +10,7 @@ public class IntegrationTest : IClassFixture<IntegrationTestFixture<Program>>
     protected IntegrationTest(IntegrationTestFixture<Program> fixture)
     {
         _fixture = fixture;
-        TestClient = new IntegrationTestClient(fixture.CreateClient(new WebApplicationFactoryClientOptions() { AllowAutoRedirect = true }));
+        TestClient = new IntegrationTestClient(fixture.CreateClient(), new IntegrationTestConfig());
     }
 
     protected IntegrationTestClient TestClient { get; }

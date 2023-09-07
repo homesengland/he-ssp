@@ -9,6 +9,7 @@ public class HtmlHelpers
 {
     public static async Task<IHtmlDocument> GetDocumentAsync(HttpResponseMessage response)
     {
+        response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
         var document = await BrowsingContext.New().OpenAsync(ResponseFactory, CancellationToken.None);
         return (IHtmlDocument)document;

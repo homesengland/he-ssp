@@ -45,8 +45,25 @@ public static class HtmlDocumentExtensions
 
     public static string GetPageTitle(this IHtmlDocument htmlDocument)
     {
-        var header = htmlDocument.GetElementsByClassName(CssConstants.GovUkHxl).FirstOrDefault();
+        var header = htmlDocument.GetElementsByClassName(CssConstants.GovUkHxl).FirstOrDefault()
+                     ?? htmlDocument.GetElementsByClassName(CssConstants.GovUkFieldSetHeading).FirstOrDefault()
+                     ?? htmlDocument.GetElementsByClassName(CssConstants.GovUkHl).FirstOrDefault();
+
         header.Should().NotBeNull("Page Header does not exist");
         return header!.InnerHtml.Trim();
+    }
+
+    public static IDictionary<string, string> GetSummaryListItems(this IHtmlDocument htmlDocument)
+    {
+        var summaryRows = htmlDocument.GetElementsByClassName("govuk-summary-list__row");
+        var dictionary = new Dictionary<string, string>();
+        foreach (var summaryRow in summaryRows)
+        {
+            var key = summaryRow.GetElementsByClassName("govuk-summary-list__key").Single().InnerHtml.Trim();
+            var value = summaryRow.GetElementsByClassName("govuk-summary-list__value").Single().LastElementChild!.InnerHtml.Trim();
+            dictionary[key] = value;
+        }
+
+        return dictionary;
     }
 }
