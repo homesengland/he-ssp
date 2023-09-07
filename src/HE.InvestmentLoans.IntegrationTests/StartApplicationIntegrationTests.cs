@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -124,7 +125,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
     public async Task Order06_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
     {
         // given
-        var currentPage = await TestClient.NavigateTo(ApplicationPagesUrls.LoanPurpose);
+        var currentPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
 
         // when
         var continueButton = currentPage.GetGdsSubmitButtonById("continue-button");
@@ -137,6 +138,10 @@ public class StartApplicationIntegrationTests : IntegrationTest
         // then
         taskListPage.Url.Should().EndWith(ApplicationPagesUrls.TaskList);
         taskListPage.GetPageTitle().Should().Be("Development loan application");
+
+        var dateTime = taskListPage.ExtractLastSavedDateFromTaskListPage();
+        dateTime.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMinutes(2));
+
         var applicationGuid = taskListPage.Url.GetApplicationGuidFromUrl();
         applicationGuid.Should().NotBeEmpty();
         SetSharedData(CurrentPageKey, taskListPage);
