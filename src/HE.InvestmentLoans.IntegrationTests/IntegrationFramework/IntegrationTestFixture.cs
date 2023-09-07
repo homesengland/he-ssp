@@ -24,16 +24,13 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.ConfigureTestServices(x =>
-        {
-            x.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = TestAuthHandler.AuthenticationScheme;
-                    options.DefaultScheme = TestAuthHandler.AuthenticationScheme;
-                    options.DefaultChallengeScheme = TestAuthHandler.AuthenticationScheme;
-                })
-                .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(TestAuthHandler.AuthenticationScheme, options => { });
-        });
+        builder.ConfigureTestServices(x => x.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = TestAuthHandler.AuthenticationScheme;
+                options.DefaultScheme = TestAuthHandler.AuthenticationScheme;
+                options.DefaultChallengeScheme = TestAuthHandler.AuthenticationScheme;
+            })
+            .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(TestAuthHandler.AuthenticationScheme, options => { }));
         base.ConfigureWebHost(builder);
     }
 }

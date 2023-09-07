@@ -86,7 +86,7 @@ public class IntegrationTestClient
             return;
         }
 
-        var inputElement = radioInputs.SingleOrDefault(x => x.Value == formValue.Value);
+        var inputElement = radioInputs.SingleOrDefault(x => x!.Value == formValue.Value);
         inputElement.Should().NotBeNull($"{formValue.Key} Key should be radio input element of form");
         inputElement!.IsChecked = true;
     }

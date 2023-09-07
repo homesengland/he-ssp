@@ -33,8 +33,8 @@ public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions
             new Claim(ClaimTypes.Name, "Test user"),
             new Claim(ClaimTypes.NameIdentifier, userGlobalId!),
             new Claim(ClaimTypes.Email, emailAddress!),
-
         };
+
         var identity = new ClaimsIdentity(claims, "Test");
         var principal = new ClaimsPrincipal(identity);
         var ticket = new AuthenticationTicket(principal, "Test");
