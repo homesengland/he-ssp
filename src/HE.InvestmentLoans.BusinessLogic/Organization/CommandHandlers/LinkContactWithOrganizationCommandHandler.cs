@@ -2,6 +2,7 @@ extern alias Org;
 
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.Organization;
 using MediatR;
@@ -10,7 +11,7 @@ using Org.HE.Investments.Organisation.Contract;
 using Org.HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
-public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkContactWithOrganizationCommand>
+internal class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkContactWithOrganizationCommand>
 {
     private readonly ILoanUserContext _loanUserContext;
     private readonly IOrganizationService _organizationService;
@@ -31,7 +32,9 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
     {
         if (await _loanUserContext.IsLinkedWithOrganization())
         {
-            throw new DomainException($"Cannot link organization id: {request.Number} to loan user account id: {_loanUserContext.UserGlobalId}, because it is already linked to other organization", string.Empty);
+            throw new DomainException(
+                $"Cannot link organization id: {request.Number} to loan user account id: {_loanUserContext.UserGlobalId}, because it is already linked to other organization",
+                CommonErrorCodes.ContactAlreadyLinkedWithOrganization);
         }
 
         var result = await _organisationSearchService.GetByCompaniesHouseNumber(request.Number.ToString(), cancellationToken);

@@ -4,6 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.Tests.Organizations.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
+using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
@@ -13,6 +14,7 @@ using Org.HE.Common.IntegrationModel.PortalIntegrationModel;
 using Org.HE.Investments.Organisation.Contract;
 using Org.HE.Investments.Organisation.Services;
 using Xunit;
+using static FluentAssertions.FluentActions;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Organizations.CommandHandlers;
 
@@ -39,10 +41,11 @@ public class LinkContactWithAccountTests : TestBase<IRequestHandler<LinkContactW
             .Register(this);
 
         // when
-        Func<Task> testAction = () => TestCandidate.Handle(_command, CancellationToken.None);
-
         // then
-        await testAction.Should().ThrowAsync<DomainException>();
+        await Invoking(() => TestCandidate.Handle(_command, CancellationToken.None))
+            .Should()
+            .ThrowAsync<DomainException>()
+            .Where(exception => exception.ErrorCode == CommonErrorCodes.ContactAlreadyLinkedWithOrganization);
     }
 
     [Fact]
@@ -60,10 +63,8 @@ public class LinkContactWithAccountTests : TestBase<IRequestHandler<LinkContactW
             .Register(this);
 
         // when
-        Func<Task> testAction = () => TestCandidate.Handle(_command, CancellationToken.None);
-
         // then
-        await testAction.Should().ThrowAsync<ExternalServiceException>();
+        await Invoking(() => TestCandidate.Handle(_command, CancellationToken.None)).Should().ThrowAsync<ExternalServiceException>();
     }
 
     [Fact]
@@ -81,10 +82,8 @@ public class LinkContactWithAccountTests : TestBase<IRequestHandler<LinkContactW
             .Register(this);
 
         // when
-        Func<Task> testAction = () => TestCandidate.Handle(_command, CancellationToken.None);
-
         // then
-        await testAction.Should().ThrowAsync<NotFoundException>();
+        await Invoking(() => TestCandidate.Handle(_command, CancellationToken.None)).Should().ThrowAsync<NotFoundException>();
     }
 
     [Fact]
