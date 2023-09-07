@@ -1,8 +1,10 @@
 extern alias Org;
 
+using FluentAssertions.Specialized;
 using HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.Tests.Organizations.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
+using HE.InvestmentLoans.Common.Tests.Extensions.FluentAssertionsExtensions;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Exceptions;
@@ -18,7 +20,7 @@ using static FluentAssertions.FluentActions;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Organizations.CommandHandlers;
 
-public class LinkContactWithAccountTests : TestBase<IRequestHandler<LinkContactWithOrganizationCommand>>
+public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationCommandHandler>
 {
     private readonly LinkContactWithOrganizationCommand _command;
 
@@ -27,8 +29,6 @@ public class LinkContactWithAccountTests : TestBase<IRequestHandler<LinkContactW
         _command = new LinkContactWithOrganizationCommand(new CompaniesHouseNumber("12345"));
 
         RegisterDependency(new Mock<IContactService>());
-
-        RegisterInterfaceImplementation<IRequestHandler<LinkContactWithOrganizationCommand>, LinkContactWithOrganizationCommandHandler>();
     }
 
     [Fact]
@@ -45,7 +45,7 @@ public class LinkContactWithAccountTests : TestBase<IRequestHandler<LinkContactW
         await Invoking(() => TestCandidate.Handle(_command, CancellationToken.None))
             .Should()
             .ThrowAsync<DomainException>()
-            .Where(exception => exception.ErrorCode == CommonErrorCodes.ContactAlreadyLinkedWithOrganization);
+            .WithErrorCode(CommonErrorCodes.ContactAlreadyLinkedWithOrganization);
     }
 
     [Fact]

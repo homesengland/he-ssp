@@ -11,7 +11,7 @@ using Org.HE.Investments.Organisation.Contract;
 using Org.HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
-internal class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkContactWithOrganizationCommand>
+public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkContactWithOrganizationCommand>
 {
     private readonly ILoanUserContext _loanUserContext;
     private readonly IOrganizationService _organizationService;
