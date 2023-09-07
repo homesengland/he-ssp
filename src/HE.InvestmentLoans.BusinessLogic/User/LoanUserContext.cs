@@ -84,9 +84,16 @@ public class LoanUserContext : ILoanUserContext
 
     public async Task<bool> IsLinkedWithOrganization()
     {
-        if (_isLinkedWithOrganization is null)
+        try
         {
-            await LoadUserAccount();
+            if (_isLinkedWithOrganization is null)
+            {
+                await LoadUserAccount();
+            }
+        }
+        catch (LoanUserAccountIsMissingException)
+        {
+            return false;
         }
 
         return _isLinkedWithOrganization!.Value;
