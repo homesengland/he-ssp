@@ -15,7 +15,7 @@ public class OrganizationViewModel
 
     public string Name { get; set; }
 
-    public OrganizationBasicDetails SelectedOrganization { get; set; }
+    public string SelectedOrganization { get; set; }
 
     public IEnumerable<OrganizationBasicDetails> Organizations { get; set; }
 

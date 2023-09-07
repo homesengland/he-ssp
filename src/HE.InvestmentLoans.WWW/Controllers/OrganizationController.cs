@@ -1,5 +1,7 @@
 using HE.InvestmentLoans.Contract.Organization;
+using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.WWW.Attributes;
+using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
 using MediatR;
@@ -36,15 +38,22 @@ public class OrganizationController : Controller
     [HttpGet("search/result")]
     public async Task<IActionResult> SearchOrganizationResult([FromQuery] string searchPhrase, [FromQuery] int page)
     {
-        var response = await _mediator.Send(new SearchOrganizations(searchPhrase));
+        var response = await _mediator.Send(new SearchOrganizationsQuery(searchPhrase, page, 10));
+
+        if (response.Result.TotalOrganizations == 0)
+        {
+            return RedirectToAction(nameof(NoMatchFound));
+        }
 
         return View(response.Result);
     }
 
     [HttpPost("select")]
-    public IActionResult SelectOrganization(OrganizationViewModel organization)
+    public async Task<IActionResult> SelectOrganization(OrganizationViewModel organization)
     {
-        return View();
+        await _mediator.Send(new LinkContactWithOrganizationCommand(new CompaniesHouseNumber(organization.SelectedOrganization)));
+
+        return RedirectToAction(nameof(HomeController.Dashboard), new ControllerName(nameof(HomeController)).WithoutPrefix());
     }
 
     [HttpGet("no-match-found")]

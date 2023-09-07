@@ -9,4 +9,6 @@ public static class CommonErrorCodes
     public const string LoanApplicationNotReadyToSubmit = nameof(LoanApplicationNotReadyToSubmit);
 
     public const string ApplicationHasBeenSubmitted = nameof(ApplicationHasBeenSubmitted);
+
+    public const string ContactAlreadyLinkedWithOrganization = nameof(ContactAlreadyLinkedWithOrganization);
 }

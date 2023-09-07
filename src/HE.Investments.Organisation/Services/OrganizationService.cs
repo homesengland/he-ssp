@@ -6,18 +6,25 @@ using Microsoft.Xrm.Sdk.Query;
 namespace HE.Investments.Organisation.Services;
 public class OrganizationService : IOrganizationService
 {
-    public Guid CreateOrganization(IOrganizationServiceAsync2 service, OrganizationDetailsDto organizationDetails)
+    private readonly IOrganizationServiceAsync2 _service;
+
+    public OrganizationService(IOrganizationServiceAsync2 service)
     {
-        var organizationToCreate = MapOrganizationDtoToEntity(organizationDetails);
-        return service.Create(organizationToCreate);
+        _service = service;
     }
 
-    public async Task<OrganizationDetailsDto> GetOrganizationDetails(IOrganizationServiceAsync2 service, string accountid, string contactExternalId)
+    public Guid CreateOrganization(OrganizationDetailsDto organizationDetails)
+    {
+        var organizationToCreate = MapOrganizationDtoToEntity(organizationDetails);
+        return _service.Create(organizationToCreate);
+    }
+
+    public async Task<OrganizationDetailsDto> GetOrganizationDetails(string accountid, string contactExternalId)
     {
         var organizationDetailsDto = new OrganizationDetailsDto();
         if (Guid.TryParse(accountid, out var organizationId))
         {
-            var account = await service.RetrieveAsync("account", organizationId, new ColumnSet(new string[]
+            var account = await _service.RetrieveAsync("account", organizationId, new ColumnSet(new string[]
             {
                     "name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3",
                     "address1_city", "address1_postalcode", "address1_country", "primarycontactid",
@@ -35,7 +42,7 @@ public class OrganizationService : IOrganizationService
             if (account.Contains("primarycontactid") && account["primarycontactid"] != null)
             {
                 var primaryContactReference = (EntityReference)account.Attributes["primarycontactid"];
-                var contact = await service.RetrieveAsync("contact", primaryContactReference.Id, new ColumnSet(new string[]
+                var contact = await _service.RetrieveAsync("contact", primaryContactReference.Id, new ColumnSet(new string[]
                 {
                         "fullname",
                         "emailaddress1",

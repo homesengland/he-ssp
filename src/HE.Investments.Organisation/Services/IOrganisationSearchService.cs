@@ -5,5 +5,7 @@ namespace HE.Investments.Organisation.Services;
 
 public interface IOrganisationSearchService
 {
-    Task<OrganisationSearchResult> Search(string organisationName, PagingQueryParams pagingParams, string? companyNumber = null, CancellationToken cancellationToken = default);
+    Task<GetOrganizationByCompaniesHouseNumberResult> GetByCompaniesHouseNumber(string? companiesHouseNumber, CancellationToken cancellationToken);
+
+    Task<OrganisationSearchResult> Search(string organisationName, PagingQueryParams pagingParams, CancellationToken cancellationToken = default);
 }

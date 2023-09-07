@@ -21,6 +21,12 @@ public class TestBase<TTestClass> : IRegisterDependency
         _fixture.Inject(dependency);
     }
 
+    public void RegisterInterfaceImplementation<TInterface, TImplementation>()
+        where TImplementation : TInterface
+    {
+        _fixture.Register<TInterface>(() => _fixture.Create<TImplementation>());
+    }
+
     protected Mock<TDependency> CreateAndRegisterDependencyMock<TDependency>()
         where TDependency : class
     {
