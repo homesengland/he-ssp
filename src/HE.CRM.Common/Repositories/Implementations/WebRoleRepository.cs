@@ -33,8 +33,11 @@ namespace HE.CRM.Common.Repositories.Implementations
 			                                <condition attribute='invln_contactid' operator='eq' uitype='contact' value='" + contactId + @"'/>
 		                                </filter>
 		                                <link-entity name='invln_webrole' from='invln_webroleid' to='invln_webroleid' link-type='inner' alias='ae'>
-			                                <attribute name='invln_portalpermissionlevelid'/>
 			                                <attribute name='invln_name'/>
+                                             <link-entity name=""invln_portalpermissionlevel"" from=""invln_portalpermissionlevelid"" to=""invln_portalpermissionlevelid"" alias=""pl"">
+                                                    <attribute name=""invln_name"" />
+                                                    <attribute name=""invln_permission"" />
+                                                  </link-entity>
 			                                <link-entity name='invln_portal' from='invln_portalid' to='invln_portalid' link-type='inner' alias='ag'>
 				                                <filter type='and'>
 					                                <condition attribute='invln_portal' operator='eq' value='" + portalType + @"'/>

@@ -83,6 +83,7 @@ app.UseStaticFiles();
 
 app.UseHeaderSecurity();
 app.UseCrossSiteScriptingSecurity();
+app.ConfigureAdditionalMiddlewares();
 
 app.UseCookiePolicy(
     new CookiePolicyOptions
@@ -100,3 +101,9 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+#pragma warning disable CA1050
+public partial class Program
+{
+}
+#pragma warning restore CA1050

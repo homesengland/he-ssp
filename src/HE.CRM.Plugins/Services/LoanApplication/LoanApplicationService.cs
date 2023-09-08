@@ -6,6 +6,7 @@ using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text.Json;
 
@@ -19,6 +20,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         private readonly ISiteDetailsRepository siteDetailsRepository;
         private readonly IAccountRepository accountRepository;
         private readonly IContactRepository contactRepository;
+        private readonly IWebRoleRepository webroleRepository;
 
         #endregion
 
@@ -30,6 +32,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             siteDetailsRepository = CrmRepositoriesFactory.Get<ISiteDetailsRepository>();
             accountRepository = CrmRepositoriesFactory.Get<IAccountRepository>();
             contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
+            webroleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
         }
 
         #endregion
@@ -41,8 +44,21 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             List<LoanApplicationDto> entityCollection = new List<LoanApplicationDto>();
             if (Guid.TryParse(accountId, out Guid accountGuid))
             {
+                var contact = contactRepository.GetContactViaExternalId(externalContactId);
+                var role = webroleRepository.GetContactWebRole(contact.Id, ((int)invln_Portal1.Loans).ToString());
+                List<invln_Loanapplication> loanApplicationsForAccountAndContact;
+                if (role.Any(x => x.Contains("pl.invln_permission") && ((OptionSetValue)((AliasedValue)x["pl.invln_permission"]).Value).Value == (int)invln_Permission.Accountadministrator) && loanApplicationId == null)
+                {
+                    TracingService.Trace("admin");
+                    loanApplicationsForAccountAndContact = loanApplicationRepository.GetAccountLoans(accountGuid);
+                }
+                else
+                {
+                    TracingService.Trace("regular user, not admin");
+                    loanApplicationsForAccountAndContact = loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId);
+                }
                 this.TracingService.Trace("GetLoanApplicationsForGivenAccountAndContact");
-                var loanApplicationsForAccountAndContact = loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId);
+                this.TracingService.Trace($"{loanApplicationsForAccountAndContact.Count}");
                 foreach (var element in loanApplicationsForAccountAndContact)
                 {
                     List<SiteDetailsDto> siteDetailsDtoList = new List<SiteDetailsDto>();
@@ -57,14 +73,19 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         }
                     }
                     this.TracingService.Trace("MapLoanApplicationToDto");
-                    var loanApplicationContact = this.contactRepository.GetById(element.invln_Contact.Id, new string[]
+                    Contact loanApplicationContact = null;
+                    if (element.invln_Contact != null)
                     {
-                        nameof(Contact.EMailAddress1).ToLower(),
-                        nameof(Contact.FirstName).ToLower(),
-                        nameof(Contact.LastName).ToLower(),
-                        nameof(Contact.invln_externalid).ToLower(),
-                        nameof(Contact.Telephone1).ToLower(),
-                    });
+                        loanApplicationContact = this.contactRepository.GetById(element.invln_Contact.Id, new string[]
+                        {
+                            nameof(Contact.EMailAddress1).ToLower(),
+                            nameof(Contact.FirstName).ToLower(),
+                            nameof(Contact.LastName).ToLower(),
+                            nameof(Contact.invln_externalid).ToLower(),
+                            nameof(Contact.Telephone1).ToLower(),
+                        });
+                    }
+
                     entityCollection.Add(LoanApplicationDtoMapper.MapLoanApplicationToDto(element, siteDetailsDtoList, externalContactId, loanApplicationContact));
                 }
             }
@@ -257,6 +278,30 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             if (((preImage.StatusCode.Value == (int)invln_Loanapplication_StatusCode.Draft && target.StatusCode == null) || (target.StatusCode != null && target.StatusCode.Value == (int)invln_Loanapplication_StatusCode.Draft)) && target.OwnerId.Id != preImage.OwnerId.Id)
             {
                 throw new InvalidPluginExecutionException("Cannot change owner when status is set to draft");
+            }
+        }
+
+        public void SetFieldsWhenChangingStatusFromDraft(invln_Loanapplication target, invln_Loanapplication preImage)
+        {
+            if (preImage.StatusCode.Value == (int)invln_Loanapplication_StatusCode.Draft && target.StatusCode.Value == (int)invln_Loanapplication_StatusCode.ApplicationSubmitted)
+            {
+                var relatedSiteDetails = siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(target.ToEntityReference());
+                if (relatedSiteDetails != null && relatedSiteDetails.Count > 0)
+                {
+                    var projectName = string.Empty;
+                    var numberOfHomes = 0;
+                    foreach (var siteDetail in relatedSiteDetails)
+                    {
+                        projectName += $"{siteDetail.invln_Name}, ";
+                        numberOfHomes += siteDetail.invln_Numberofhomes ?? 0;
+                    }
+                    if (projectName.Length > 100)
+                    {
+                        projectName = projectName.Substring(0, 100);
+                    }
+                    target.invln_ProjectName = projectName;
+                    target.invln_Noofhomes = numberOfHomes.ToString();
+                }
             }
         }
 

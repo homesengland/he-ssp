@@ -8,9 +8,9 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
-namespace HE.Investments.Organisation.Tests;
+namespace HE.Investments.Organisation.Tests.OrganizationSearchServiceTests;
 
-public class OrganisationSearchServiceTests
+public class SearchTests
 {
     private OrganisationSearchService _searchService;
     private OrganisationSearchResult _response;
@@ -18,7 +18,7 @@ public class OrganisationSearchServiceTests
     private readonly Mock<ICompaniesHouseApi> _companiesHouseApiMock;
     private readonly Mock<IOrganizationCrmSearchService> _organizationCrmSearchServiceMock;
 
-    public OrganisationSearchServiceTests()
+    public SearchTests()
     {
         _companiesHouseApiMock = new Mock<ICompaniesHouseApi>();
         _organizationCrmSearchServiceMock = new Mock<IOrganizationCrmSearchService>();
@@ -183,7 +183,7 @@ public class OrganisationSearchServiceTests
         var loggerMock = new Mock<ILogger<OrganisationSearchService>>();
         _searchService = new OrganisationSearchService(_companiesHouseApiMock.Object, _organizationCrmSearchServiceMock.Object, loggerMock.Object);
 
-        _response = await _searchService.Search("any phrase", new PagingQueryParams(1, 1), "any number", CancellationToken.None);
+        _response = await _searchService.Search("any phrase", new PagingQueryParams(1, 1), CancellationToken.None);
     }
 
     private CompanyDetailsItem OrganizationWithCompanyHouseNumber(string number)

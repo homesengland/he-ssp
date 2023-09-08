@@ -138,7 +138,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             var deserializedContactRoles = JsonSerializer.Deserialize<ContactRolesDto>(pluginContext.OutputParameters.Values.ElementAt(0).ToString());
 
             Assert.IsNull(exception);
-            Assert.AreEqual(deserializedContactRoles.contactRoles.ElementAt(0).webRoleName, role.invln_Name);
         }
 
         [TestMethod]

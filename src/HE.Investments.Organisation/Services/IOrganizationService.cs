@@ -4,7 +4,7 @@ using Microsoft.PowerPlatform.Dataverse.Client;
 namespace HE.Investments.Organisation.Services;
 public interface IOrganizationService
 {
-    Task<OrganizationDetailsDto> GetOrganizationDetails(IOrganizationServiceAsync2 service, string accountid, string contactExternalId);
+    Task<OrganizationDetailsDto> GetOrganizationDetails(string accountid, string contactExternalId);
 
-    Guid CreateOrganization(IOrganizationServiceAsync2 service, OrganizationDetailsDto organizationDetails);
+    Guid CreateOrganization(OrganizationDetailsDto organizationDetails);
 }

@@ -13,5 +13,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         void UpdateLoanApplication(string loanApplicationId, string loanApplication, string fieldsToUpdate, string accountId, string contactExternalId);
         void DeleteLoanApplication(string loanApplicationId);
         void CheckIfOwnerCanBeChanged(invln_Loanapplication target, invln_Loanapplication preImage);
+        void SetFieldsWhenChangingStatusFromDraft(invln_Loanapplication target, invln_Loanapplication preImage);
     }
 }
