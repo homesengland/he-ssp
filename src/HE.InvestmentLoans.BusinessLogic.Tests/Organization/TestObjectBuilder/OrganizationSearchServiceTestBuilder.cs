@@ -1,4 +1,5 @@
 extern alias Org;
+
 using HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
