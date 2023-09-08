@@ -21,31 +21,26 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
 
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
-        var featureManager = context.HttpContext.RequestServices.GetRequiredService<IFeatureManager>();
+        var loanUserContext = context.HttpContext.RequestServices.GetRequiredService<ILoanUserContext>();
 
-        if (await featureManager.IsEnabledAsync(LoansFeatureFlags.DisplayProfileDetailsPage))
+        var isProfileCompleted = await loanUserContext.IsProfileCompleted();
+
+        if (!isProfileCompleted)
         {
-            var loanUserContext = context.HttpContext.RequestServices.GetRequiredService<ILoanUserContext>();
+            context.Result = new RedirectToActionResult(
+                nameof(UserController.ProfileDetails),
+                new ControllerName(nameof(UserController)).WithoutPrefix(),
+                null);
+            return;
+        }
 
-            var isProfileComplete = await loanUserContext.IsProfileCompleted();
-
-            if (!isProfileComplete)
-            {
-                context.Result = new RedirectToActionResult(
-                    nameof(UserController.ProfileDetails),
-                    new ControllerName(nameof(UserController)).WithoutPrefix(),
-                    null);
-                return;
-            }
-
-            if (!await loanUserContext.IsLinkedWithOrganization())
-            {
-                context.Result = new RedirectToActionResult(
-                    nameof(OrganizationController.SearchOrganization),
-                    new ControllerName(nameof(OrganizationController)).WithoutPrefix(),
-                    null);
-                return;
-            }
+        if (!await loanUserContext.IsLinkedWithOrganization())
+        {
+            context.Result = new RedirectToActionResult(
+                nameof(OrganizationController.SearchOrganization),
+                new ControllerName(nameof(OrganizationController)).WithoutPrefix(),
+                null);
+            return;
         }
 
         await next();

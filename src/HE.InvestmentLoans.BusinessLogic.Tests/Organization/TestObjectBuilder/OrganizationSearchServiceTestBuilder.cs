@@ -13,7 +13,7 @@ using Org.HE.Investments.Organisation.Contract;
 using Org.HE.Investments.Organisation.Services;
 using Xunit;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.Organizations.TestObjectBuilders;
+namespace HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestObjectBuilder;
 
 public class OrganizationSearchServiceTestBuilder
 {

@@ -23,9 +23,15 @@ public class LoanUserRepository : ILoanUserRepository
         _contactService = contactService;
     }
 
-    public async Task<ContactRolesDto?> GetUserAccount(UserGlobalId userGlobalId, string userEmail)
+    public async Task<ContactRolesDto?> GetUserRoles(UserGlobalId userGlobalId, string userEmail)
     {
-        var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, PortalConstants.PortalType, userGlobalId.ToString());
+        var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, PortalConstants.LoansPortalType, userGlobalId.ToString());
+
+        contactRoles ??= new ContactRolesDto()
+        {
+            externalId = userGlobalId.ToString(),
+            email = userEmail,
+        };
 
         return contactRoles;
     }

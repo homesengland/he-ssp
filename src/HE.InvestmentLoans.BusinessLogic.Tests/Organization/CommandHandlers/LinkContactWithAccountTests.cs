@@ -2,7 +2,7 @@ extern alias Org;
 
 using FluentAssertions.Specialized;
 using HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
-using HE.InvestmentLoans.BusinessLogic.Tests.Organizations.TestObjectBuilders;
+using HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Tests.Extensions.FluentAssertionsExtensions;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
@@ -18,7 +18,7 @@ using Org.HE.Investments.Organisation.Services;
 using Xunit;
 using static FluentAssertions.FluentActions;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.Organizations.CommandHandlers;
+namespace HE.InvestmentLoans.BusinessLogic.Tests.Organization.CommandHandlers;
 
 public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationCommandHandler>
 {
@@ -100,10 +100,10 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
             .Returns(OrganizationThatDoesNotExistInCrm())
             .Register(this);
 
-        var organizationService = OrganizationServiceTestBuilder
+        var organizationService = OrganizationServiceMockTestBuilder
             .New()
             .Register(this)
-            .Mock();
+            .BuildMock();
 
         // when
         await TestCandidate.Handle(_command, CancellationToken.None);
@@ -126,10 +126,10 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
             .Returns(OrganizationThatExistsInCrm())
             .Register(this);
 
-        var organizationService = OrganizationServiceTestBuilder
+        var organizationService = OrganizationServiceMockTestBuilder
             .New()
             .Register(this)
-            .Mock();
+            .BuildMock();
 
         // when
         await TestCandidate.Handle(_command, CancellationToken.None);
