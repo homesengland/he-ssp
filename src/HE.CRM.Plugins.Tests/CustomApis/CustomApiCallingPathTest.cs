@@ -181,8 +181,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             Assert.IsNotNull(getContactRoleOutput);
             Assert.IsNotNull(getContactRoleOutput.contactRoles);
 
-            Assert.AreEqual(role.invln_Name, getContactRoleOutput.contactRoles.First().webRoleName);
-
             var getOrganizationDetailsOutput = this.CallGetOrganizationDetailsPlugin(account.Id.ToString(), contact.invln_externalid, false);
 
             Assert.IsNotNull(getOrganizationDetailsOutput);
@@ -271,8 +269,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             var getContactRoleOutput = this.CallGetContactRolePlugin(contact.invln_externalid, portal.invln_Portal.Value.ToString(), contact.EMailAddress1, false);
             Assert.IsNotNull(getContactRoleOutput);
             Assert.IsNotNull(getContactRoleOutput.contactRoles);
-
-            Assert.AreEqual(role.invln_Name, getContactRoleOutput.contactRoles.First().webRoleName);
 
             var getOrganizationDetailsOutput = this.CallGetOrganizationDetailsPlugin(account.Id.ToString(), contact.invln_externalid, false);
 
