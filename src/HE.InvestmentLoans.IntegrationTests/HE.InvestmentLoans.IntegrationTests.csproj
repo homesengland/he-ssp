@@ -52,4 +52,8 @@
     <ProjectReference Include="..\HE.InvestmentLoans.WWW\HE.InvestmentLoans.WWW.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="IntegrationFramework\Helpers\Components\" />
+  </ItemGroup>
+
 </Project>

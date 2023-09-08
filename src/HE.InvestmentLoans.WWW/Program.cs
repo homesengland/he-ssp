@@ -83,6 +83,7 @@ app.UseStaticFiles();
 
 app.UseHeaderSecurity();
 app.UseCrossSiteScriptingSecurity();
+app.ConfigureAdditionalMiddlewares();
 
 app.UseCookiePolicy(
     new CookiePolicyOptions

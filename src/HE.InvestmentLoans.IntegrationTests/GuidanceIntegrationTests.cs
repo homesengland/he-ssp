@@ -4,7 +4,7 @@ using FluentAssertions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Assertions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
-using HE.InvestmentLoans.IntegrationTests.Pages;
+using HE.InvestmentLoans.IntegrationTests.LoansHelpers.Pages;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -29,7 +29,7 @@ public class GuidanceIntegrationTests : IntegrationTest
     public async Task Order01_ShouldRedirectToGuidancePage_WhenUserIsNotLogged()
     {
         // given & when
-        var mainPage = await TestClient.NavigateTo(PagesUrls.MainPage);
+        var mainPage = await TestClient.AsNotLoggedUser().NavigateTo(PagesUrls.MainPage);
 
         // then
         mainPage.Url.Should().EndWith(GuidancePagesUrls.WhatTheHomeBuildingFundIs);
@@ -46,7 +46,7 @@ public class GuidanceIntegrationTests : IntegrationTest
 
         // when
         var nextLink = currentPage.GetAnchorElementById("guidance-next-link");
-        var eligibilityPage = await TestClient.NavigateTo(nextLink.PathName);
+        var eligibilityPage = await TestClient.AsNotLoggedUser().ClickAHrefElement(nextLink);
 
         // then
         eligibilityPage.Url.Should().EndWith(GuidancePagesUrls.Eligibility);
@@ -63,7 +63,7 @@ public class GuidanceIntegrationTests : IntegrationTest
 
         // when
         var nextLink = currentPage.GetAnchorElementById("guidance-next-link");
-        var applyPage = await TestClient.NavigateTo(nextLink.PathName);
+        var applyPage = await TestClient.AsNotLoggedUser().ClickAHrefElement(nextLink);
 
         // then
         applyPage.Url.Should().EndWith(GuidancePagesUrls.Apply);
