@@ -3,7 +3,8 @@ using Xunit;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 
-public class IntegrationTest : IClassFixture<IntegrationTestFixture<Program>>
+[Collection(nameof(IntegrationTestSharedContext))]
+public class IntegrationTest
 {
     private readonly IntegrationTestFixture<Program> _fixture;
 

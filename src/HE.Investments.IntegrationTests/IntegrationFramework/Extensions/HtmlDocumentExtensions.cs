@@ -53,6 +53,30 @@ public static class HtmlDocumentExtensions
         return header!.InnerHtml.Trim();
     }
 
+    public static string GetLabel(this IHtmlDocument htmlDocument)
+    {
+        var label = htmlDocument.GetElementsByClassName(CssConstants.GovUkLabel).FirstOrDefault();
+
+        label.Should().NotBeNull("Page label does not exist");
+        return label!.InnerHtml.Trim();
+    }
+
+    public static string[] GetSummaryErrors(this IHtmlDocument htmlDocument)
+    {
+        var errorSummary = htmlDocument.GetElementsByClassName(CssConstants.GovUkErrorSummary).SingleOrDefault();
+        errorSummary.Should().NotBeNull("Error summary does not exist");
+        var errorItems = errorSummary!.GetElementsByTagName("a").Select(x => x.TextContent.Trim()).ToArray();
+        errorItems.Should().NotBeEmpty();
+        return errorItems;
+    }
+
+    public static IHtmlDocument ContainsValidationMessage(this IHtmlDocument htmlDocument, string errorMessage)
+    {
+        htmlDocument.GetSummaryErrors().Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
+        htmlDocument.GetElementsByClassName(CssConstants.GovUkFormGroupError).Should().NotBeNull("Error message for specific item should exist");
+        return htmlDocument;
+    }
+
     public static IDictionary<string, string> GetSummaryListItems(this IHtmlDocument htmlDocument)
     {
         var summaryRows = htmlDocument.GetElementsByClassName("govuk-summary-list__row");

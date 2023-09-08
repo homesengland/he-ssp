@@ -17,8 +17,6 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class StartApplicationIntegrationTests : IntegrationTest
 {
-    private const string? Skip = "Waits for DevOps configuration - #76791";
-
     private const string CurrentPageKey = nameof(CurrentPageKey);
 
     private const string NewApplicationKey = nameof(NewApplicationKey);
@@ -31,7 +29,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
         _userConfig = new UserConfig();
     }
 
-    [Fact(Skip = Skip)]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_ShouldRedirectToDashboardPage_WhenUserIsLoggedIn()
     {
@@ -43,7 +41,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
         SetSharedData(CurrentPageKey, mainPage);
     }
 
-    [Fact(Skip = Skip)]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(2)]
     public async Task Order02_ShouldRedirectToApplyForALoanPage_WhenStartApplicationButtonIsClicked()
     {
@@ -52,7 +50,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
 
         // when
         var startApplicationLink = dashboardPage.GetGdsLinkButtonById("start-application-link");
-        var applyForLoanPage = await TestClient.ClickAHrefElement(startApplicationLink);
+        var applyForLoanPage = await TestClient.NavigateTo(startApplicationLink);
 
         // then
         applyForLoanPage.Url.Should().EndWith(ApplicationPagesUrls.StartPage);
@@ -60,7 +58,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
         SetSharedData(CurrentPageKey, applyForLoanPage);
     }
 
-    [Fact(Skip = Skip)]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(3)]
     public async Task Order03_ShouldRedirectToAboutLoanPage_WhenStartNowButtonIsClicked()
     {
@@ -77,7 +75,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
         SetSharedData(CurrentPageKey, aboutLoanPage);
     }
 
-    [Fact(Skip = Skip)]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(4)]
     public async Task Order04_ShouldRedirectToCheckYouDetailsPageAndDisplayMyData_WhenContinueButtonIsClicked()
     {
@@ -102,7 +100,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
         SetSharedData(CurrentPageKey, checkYourDetailsPage);
     }
 
-    [Fact(Skip = Skip)]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(5)]
     public async Task Order05_ShouldRedirectToLoanPurpose_WhenContinueButtonIsClicked()
     {
@@ -119,7 +117,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
         SetSharedData(CurrentPageKey, loanPurpose);
     }
 
-    [Fact(Skip = Skip)]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(6)]
     public async Task Order06_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
     {
@@ -135,7 +133,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
             });
 
         // then
-        taskListPage.Url.Should().EndWith(ApplicationPagesUrls.TaskList);
+        taskListPage.Url.Should().EndWith(ApplicationPagesUrls.TaskListSuffix);
         taskListPage.GetPageTitle().Should().Be("Development loan application");
 
         var dateTime = taskListPage.ExtractLastSavedDateFromTaskListPage();

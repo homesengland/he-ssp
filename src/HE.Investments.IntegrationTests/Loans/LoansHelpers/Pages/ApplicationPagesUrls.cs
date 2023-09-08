@@ -10,5 +10,7 @@ public static class ApplicationPagesUrls
 
     public const string LoanPurpose = "/application/loan-purpose";
 
-    public const string TaskList = "/task-list";
+    public const string TaskListSuffix = "/task-list";
+
+    public static string TaskList(string applicationId) => $"application/{applicationId}{TaskListSuffix}";
 }

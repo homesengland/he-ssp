@@ -1,5 +1,3 @@
-using System.Net.Http.Headers;
-using System.Text;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.InvestmentLoans.IntegrationTests.Config;
@@ -42,7 +40,7 @@ public class IntegrationTestClient
         return await HtmlHelpers.GetDocumentAsync(response);
     }
 
-    public async Task<IHtmlDocument> ClickAHrefElement(IHtmlAnchorElement anchorElement)
+    public async Task<IHtmlDocument> NavigateTo(IHtmlAnchorElement anchorElement)
     {
         return await NavigateTo(anchorElement.PathName);
     }
@@ -59,6 +57,7 @@ public class IntegrationTestClient
         foreach (var formValue in formValues)
         {
             HandleRadioInputs(form, formValue);
+            HandleTextAreaInputs(form, formValue);
         }
 
         var submit = form.GetSubmission(submitButton)!;
@@ -89,5 +88,22 @@ public class IntegrationTestClient
         var inputElement = radioInputs.SingleOrDefault(x => x!.Value == formValue.Value);
         inputElement.Should().NotBeNull($"{formValue.Key} Key should be radio input element of form");
         inputElement!.IsChecked = true;
+    }
+
+    private static void HandleTextAreaInputs(IHtmlFormElement form, KeyValuePair<string, string> formValue)
+    {
+        var textInputs = form.Elements
+            .Select(x => x as IHtmlTextAreaElement)
+            .Where(x => x is not null)
+            .ToList();
+
+        if (textInputs.Count <= 0)
+        {
+            return;
+        }
+
+        var inputElement = textInputs.SingleOrDefault(x => x!.Name == formValue.Key);
+        inputElement.Should().NotBeNull($"{formValue.Key} Key should be radio input element of form");
+        inputElement!.Value = formValue.Value;
     }
 }
