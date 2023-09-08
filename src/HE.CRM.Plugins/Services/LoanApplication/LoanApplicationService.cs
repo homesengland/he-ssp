@@ -47,22 +47,18 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 var contact = contactRepository.GetContactViaExternalId(externalContactId);
                 var role = webroleRepository.GetContactWebRole(contact.Id, ((int)invln_Portal1.Loans).ToString());
                 List<invln_Loanapplication> loanApplicationsForAccountAndContact;
-                foreach(var test in role)
+                if (role.Any(x => x.Contains("pl.invln_permission") && ((OptionSetValue)((AliasedValue)x["pl.invln_permission"]).Value).Value == (int)invln_Permission.Accountadministrator) && loanApplicationId == null)
                 {
-                    foreach(var attr in test.Attributes)
-                    {
-                        TracingService.Trace($"key: {attr.Key}, value: {attr.Value}");
-                    }
-                }
-                if (role.Any(x => x.Contains("pl.invln_permission") && ((dynamic)x["pl.invln_permission"]).Value == (int)invln_Permission.Accountadministrator) && loanApplicationId == null)
-                {
+                    TracingService.Trace("admin");
                     loanApplicationsForAccountAndContact = loanApplicationRepository.GetAccountLoans(accountGuid);
                 }
                 else
                 {
+                    TracingService.Trace("regular user, not admin");
                     loanApplicationsForAccountAndContact = loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId);
                 }
                 this.TracingService.Trace("GetLoanApplicationsForGivenAccountAndContact");
+                this.TracingService.Trace($"{loanApplicationsForAccountAndContact.Count}");
                 foreach (var element in loanApplicationsForAccountAndContact)
                 {
                     List<SiteDetailsDto> siteDetailsDtoList = new List<SiteDetailsDto>();
@@ -77,14 +73,19 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         }
                     }
                     this.TracingService.Trace("MapLoanApplicationToDto");
-                    var loanApplicationContact = this.contactRepository.GetById(element.invln_Contact.Id, new string[]
+                    Contact loanApplicationContact = null;
+                    if (element.invln_Contact != null)
                     {
-                        nameof(Contact.EMailAddress1).ToLower(),
-                        nameof(Contact.FirstName).ToLower(),
-                        nameof(Contact.LastName).ToLower(),
-                        nameof(Contact.invln_externalid).ToLower(),
-                        nameof(Contact.Telephone1).ToLower(),
-                    });
+                        loanApplicationContact = this.contactRepository.GetById(element.invln_Contact.Id, new string[]
+                        {
+                            nameof(Contact.EMailAddress1).ToLower(),
+                            nameof(Contact.FirstName).ToLower(),
+                            nameof(Contact.LastName).ToLower(),
+                            nameof(Contact.invln_externalid).ToLower(),
+                            nameof(Contact.Telephone1).ToLower(),
+                        });
+                    }
+
                     entityCollection.Add(LoanApplicationDtoMapper.MapLoanApplicationToDto(element, siteDetailsDtoList, externalContactId, loanApplicationContact));
                 }
             }

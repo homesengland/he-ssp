@@ -82,7 +82,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             using (var ctx = new OrganizationServiceContext(service))
             {
                 return ctx.CreateQuery<invln_Loanapplication>()
-                    .Where(x => x.Id == accountId).AsEnumerable().ToList();
+                    .Where(x => x.invln_Account.Id == accountId).ToList();
             }
         }
 

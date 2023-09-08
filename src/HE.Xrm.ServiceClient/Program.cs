@@ -56,7 +56,7 @@ namespace HE.Xrm.ServiceClientExample
             var req2 = new invln_getloanapplicationsforaccountandcontactRequest() //get loan applications related to account and contact with given data
             {
                 invln_accountid = "429d11ab-15fe-ed11-8f6c-002248c653e1", //account id
-                invln_externalcontactid = "auth0|64a28c7fb67ed30b288d6ff9", // contact external id
+                invln_externalcontactid = "auth0|64a3bdb420d21a3fc5193e4d", // contact external id
             };
             var resp2 = (invln_getloanapplicationsforaccountandcontactResponse)serviceClient.Execute(req2);
             var test = JsonSerializer.Deserialize<List<LoanApplicationDto>>(resp2.invln_loanapplications);
