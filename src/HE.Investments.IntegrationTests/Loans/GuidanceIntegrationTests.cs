@@ -4,11 +4,11 @@ using FluentAssertions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Assertions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
-using HE.InvestmentLoans.IntegrationTests.LoansHelpers.Pages;
+using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
-namespace HE.InvestmentLoans.IntegrationTests;
+namespace HE.InvestmentLoans.IntegrationTests.Loans;
 
 [Order(0)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]

@@ -48,7 +48,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Organisation
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Organisation.Tests", "HE.Investments.Organisation.Tests\HE.Investments.Organisation.Tests.csproj", "{DE9DC4B4-A8D7-45D6-8F7D-341059C33111}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.InvestmentLoans.IntegrationTests", "HE.InvestmentLoans.IntegrationTests\HE.InvestmentLoans.IntegrationTests.csproj", "{01D0B61D-E9CE-4F1D-B312-595541367D36}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.IntegrationTests", "HE.Investments.IntegrationTests\HE.Investments.IntegrationTests.csproj", "{01D0B61D-E9CE-4F1D-B312-595541367D36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

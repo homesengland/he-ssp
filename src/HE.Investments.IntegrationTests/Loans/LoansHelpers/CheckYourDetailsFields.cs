@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.IntegrationTests.LoansHelpers;
+namespace HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers;
 
 public static class CheckYourDetailsFields
 {

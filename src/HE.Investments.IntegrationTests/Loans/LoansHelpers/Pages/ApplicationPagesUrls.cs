@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.IntegrationTests.LoansHelpers.Pages;
+namespace HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 
 public static class ApplicationPagesUrls
 {

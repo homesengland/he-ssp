@@ -10,6 +10,7 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>10</LangVersion>
+    <RootNamespace>HE.InvestmentLoans.IntegrationTests</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
