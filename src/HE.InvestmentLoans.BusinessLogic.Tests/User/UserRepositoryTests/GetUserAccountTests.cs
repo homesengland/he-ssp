@@ -37,7 +37,7 @@ public class GetUserAccountTests : TestBase<LoanUserRepository>
     }
 
     [Fact]
-    public async Task ShouldReturnEmptyContactRolesDto_WhenUserGlobalIdAndEmailAreFake()
+    public async Task ShouldReturnEmptyContactRoles_WhenUserGlobalIdAndEmailAreFake()
     {
         // given
         var contactRolesDto = ContactServiceMockTestBuilder
@@ -57,6 +57,6 @@ public class GetUserAccountTests : TestBase<LoanUserRepository>
         var result = await TestCandidate.GetUserRoles(UserGlobalId.From(wrongUserGlobalId), fakeEmail);
 
         // then
-        result.Should().BeNull();
+        result?.contactRoles.Should().BeNull();
     }
 }
