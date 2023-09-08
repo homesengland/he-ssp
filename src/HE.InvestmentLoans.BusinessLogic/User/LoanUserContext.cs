@@ -65,19 +65,16 @@ public class LoanUserContext : ILoanUserContext
         return _selectedAccount!;
     }
 
-    public async void RefreshDetails()
-    {
-        var userDetails = await _loanUserRepository.GetUserDetails(UserGlobalId)
-                                ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
-
-        _cacheService.SetValue($"UserDetails-{UserGlobalId}", userDetails);
-    }
-
-    public async void RefreshUserAccount()
+    public async void RefreshUserData()
     {
         var userRoleDto = await _loanUserRepository.GetUserRoles(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email);
 
+        var userDetails = await _loanUserRepository.GetUserDetails(UserGlobalId)
+                                ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
+
         _cacheService.SetValue($"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}", userRoleDto);
+
+        _cacheService.SetValue($"UserDetails-{UserGlobalId}", userDetails);
     }
 
     public async Task<bool> IsProfileCompleted()

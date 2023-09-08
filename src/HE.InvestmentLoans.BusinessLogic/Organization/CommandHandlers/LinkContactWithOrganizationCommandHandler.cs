@@ -60,6 +60,6 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
 
         await _contactService.LinkContactWithOrganization(_organizationServiceAsync, _loanUserContext.UserGlobalId.ToString(), request.Number.ToString()!, PortalConstants.LoansPortalType);
 
-        _loanUserContext.RefreshUserAccount();
+        _loanUserContext.RefreshUserData();
     }
 }
