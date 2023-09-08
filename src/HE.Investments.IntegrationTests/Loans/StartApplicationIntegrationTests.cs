@@ -1,18 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.IntegrationTests.Config;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
-using HE.InvestmentLoans.IntegrationTests.LoansHelpers;
-using HE.InvestmentLoans.IntegrationTests.LoansHelpers.Extensions;
-using HE.InvestmentLoans.IntegrationTests.LoansHelpers.Pages;
+using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers;
+using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Extensions;
+using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
-namespace HE.InvestmentLoans.IntegrationTests;
+namespace HE.InvestmentLoans.IntegrationTests.Loans;
 
 [Order(1)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
@@ -49,10 +48,10 @@ public class StartApplicationIntegrationTests : IntegrationTest
     public async Task Order02_ShouldRedirectToApplyForALoanPage_WhenStartApplicationButtonIsClicked()
     {
         // given
-        var currentPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var dashboardPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
 
         // when
-        var startApplicationLink = currentPage.GetGdsLinkButtonById("start-application-link");
+        var startApplicationLink = dashboardPage.GetGdsLinkButtonById("start-application-link");
         var applyForLoanPage = await TestClient.ClickAHrefElement(startApplicationLink);
 
         // then
@@ -66,10 +65,10 @@ public class StartApplicationIntegrationTests : IntegrationTest
     public async Task Order03_ShouldRedirectToAboutLoanPage_WhenStartNowButtonIsClicked()
     {
         // given
-        var currentPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var applyForLoanPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
 
         // when
-        var startNowButton = currentPage.GetGdsSubmitButtonById("start-now-button");
+        var startNowButton = applyForLoanPage.GetGdsSubmitButtonById("start-now-button");
         var aboutLoanPage = await TestClient.SubmitButton(startNowButton);
 
         // then
@@ -83,10 +82,10 @@ public class StartApplicationIntegrationTests : IntegrationTest
     public async Task Order04_ShouldRedirectToCheckYouDetailsPageAndDisplayMyData_WhenContinueButtonIsClicked()
     {
         // given
-        var currentPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var aboutLoanPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
 
         // when
-        var continueButton = currentPage.GetGdsSubmitButtonById("continue-button");
+        var continueButton = aboutLoanPage.GetGdsSubmitButtonById("continue-button");
         var checkYourDetailsPage = await TestClient.SubmitButton(continueButton);
 
         // then
@@ -108,10 +107,10 @@ public class StartApplicationIntegrationTests : IntegrationTest
     public async Task Order05_ShouldRedirectToLoanPurpose_WhenContinueButtonIsClicked()
     {
         // given
-        var currentPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var checkYourDetailsPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
 
         // when
-        var continueButton = currentPage.GetGdsSubmitButtonById("continue-button");
+        var continueButton = checkYourDetailsPage.GetGdsSubmitButtonById("continue-button");
         var loanPurpose = await TestClient.SubmitButton(continueButton);
 
         // then
@@ -125,10 +124,10 @@ public class StartApplicationIntegrationTests : IntegrationTest
     public async Task Order06_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
     {
         // given
-        var currentPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var loanPurpose = GetSharedData<IHtmlDocument>(CurrentPageKey);
 
         // when
-        var continueButton = currentPage.GetGdsSubmitButtonById("continue-button");
+        var continueButton = loanPurpose.GetGdsSubmitButtonById("continue-button");
         var taskListPage = await TestClient.SubmitButton(
             continueButton, new Dictionary<string, string>
             {
