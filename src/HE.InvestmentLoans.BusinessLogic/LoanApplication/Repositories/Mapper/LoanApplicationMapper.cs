@@ -26,7 +26,7 @@ public static class LoanApplicationMapper
     {
         return new UserAccountDto
         {
-            AccountId = userAccount.AccountId,
+            AccountId = (Guid)userAccount.AccountId!,
             ContactEmail = userAccount.UserEmail,
             ContactExternalId = userAccount.UserGlobalId.ToString(),
             ContactFirstName = userAccount.FirstName,

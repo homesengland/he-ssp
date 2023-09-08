@@ -23,9 +23,9 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
     {
         var loanUserContext = context.HttpContext.RequestServices.GetRequiredService<ILoanUserContext>();
 
-        var isProfileComplete = await loanUserContext.IsProfileCompleted();
+        var isProfileCompleted = await loanUserContext.IsProfileCompleted();
 
-        if (!isProfileComplete)
+        if (!isProfileCompleted)
         {
             context.Result = new RedirectToActionResult(
                 nameof(UserController.ProfileDetails),

@@ -33,7 +33,7 @@ public class UserRepositoryTestBuilder
         string userEmail,
         ContactRolesDto contactRolesDto)
     {
-        _mock.Setup(x => x.GetUserAccount(userGlobalId, userEmail)).ReturnsAsync(contactRolesDto);
+        _mock.Setup(x => x.GetUserRoles(userGlobalId, userEmail)).ReturnsAsync(contactRolesDto);
         return this;
     }
 

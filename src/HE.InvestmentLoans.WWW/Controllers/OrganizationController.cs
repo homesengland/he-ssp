@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.WWW.Attributes;
@@ -38,7 +39,7 @@ public class OrganizationController : Controller
     [HttpGet("search/result")]
     public async Task<IActionResult> SearchOrganizationResult([FromQuery] string searchPhrase, [FromQuery] int page)
     {
-        var response = await _mediator.Send(new SearchOrganizationsQuery(searchPhrase, page, 10));
+        var response = await _mediator.Send(new SearchOrganizationsQuery(searchPhrase, page, DefaultPagination.PageSize));
 
         if (response.Result.TotalOrganizations == 0)
         {

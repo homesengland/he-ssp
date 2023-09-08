@@ -11,13 +11,15 @@ public interface ILoanUserContext
 
     public IReadOnlyCollection<string> Roles { get; }
 
-    public Task<Guid> GetSelectedAccountId();
+    public Task<Guid?> GetSelectedAccountId();
 
     Task<IList<Guid>> GetAllAccountIds();
 
     Task<UserAccount> GetSelectedAccount();
 
     public void RefreshDetails();
+
+    public void RefreshUserAccount();
 
     public Task<bool> IsProfileCompleted();
 

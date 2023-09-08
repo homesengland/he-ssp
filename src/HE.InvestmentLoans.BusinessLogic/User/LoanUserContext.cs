@@ -35,14 +35,14 @@ public class LoanUserContext : ILoanUserContext
 
     public IReadOnlyCollection<string> Roles { get; }
 
-    public async Task<Guid> GetSelectedAccountId()
+    public async Task<Guid?> GetSelectedAccountId()
     {
         if (_selectedAccount is null)
         {
             await LoadUserAccount();
         }
 
-        return _selectedAccount!.AccountId;
+        return _selectedAccount?.AccountId;
     }
 
     public async Task<IList<Guid>> GetAllAccountIds()
@@ -73,6 +73,13 @@ public class LoanUserContext : ILoanUserContext
         _cacheService.SetValue($"UserDetails-{UserGlobalId}", userDetails);
     }
 
+    public async void RefreshUserAccount()
+    {
+        var userRoleDto = await _loanUserRepository.GetUserRoles(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email);
+
+        _cacheService.SetValue($"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}", userRoleDto);
+    }
+
     public async Task<bool> IsProfileCompleted()
     {
         var userDetails = await _cacheService.GetValueAsync(
@@ -84,16 +91,9 @@ public class LoanUserContext : ILoanUserContext
 
     public async Task<bool> IsLinkedWithOrganization()
     {
-        try
+        if (_isLinkedWithOrganization is null)
         {
-            if (_isLinkedWithOrganization is null)
-            {
-                await LoadUserAccount();
-            }
-        }
-        catch (LoanUserAccountIsMissingException)
-        {
-            return false;
+            await LoadUserAccount();
         }
 
         return _isLinkedWithOrganization!.Value;
@@ -103,31 +103,26 @@ public class LoanUserContext : ILoanUserContext
     {
         var userRoleDto = await _cacheService.GetValueAsync(
             $"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}",
-            async () => await _loanUserRepository.GetUserAccount(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email))
-            ?? throw new LoanUserAccountIsMissingException();
+            async () => await _loanUserRepository.GetUserRoles(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email));
 
         var userDetails = await _cacheService.GetValueAsync(
                                                 $"UserDetails-{UserGlobalId}",
                                                 async () => await _loanUserRepository.GetUserDetails(UserGlobalId))
                                                             ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
 
-        var accounts = userRoleDto.contactRoles.OrderBy(x => x.accountId).ToList();
+        var accounts = userRoleDto?.contactRoles?.OrderBy(x => x.accountId).ToList();
 
-        _accountIds.AddRange(accounts.Select(x => x.accountId).ToList());
+        _accountIds.AddRange(accounts?.Select(x => x.accountId).ToList());
 
-        var selectedAccount = accounts.FirstOrDefault() ?? throw new LoanUserAccountIsMissingException();
+        var selectedAccount = accounts?.FirstOrDefault();
 
-        var userAccount = await _cacheService.GetValueAsync(
-            $"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}",
-            async () => await _loanUserRepository.GetUserAccount(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email));
-
-        _isLinkedWithOrganization = userAccount?.contactRoles.Any() ?? false;
+        _isLinkedWithOrganization = userRoleDto?.contactRoles?.Any() ?? false;
 
         _selectedAccount = new UserAccount(
             UserGlobalId,
             Email,
-            selectedAccount.accountId,
-            selectedAccount.accountName,
+            selectedAccount?.accountId,
+            selectedAccount?.accountName,
             userDetails.FirstName,
             userDetails.Surname,
             userDetails.TelephoneNumber);

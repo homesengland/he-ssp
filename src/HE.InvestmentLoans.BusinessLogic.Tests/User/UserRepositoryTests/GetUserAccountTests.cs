@@ -28,7 +28,7 @@ public class GetUserAccountTests : TestBase<LoanUserRepository>
             .Register(this);
 
         // when
-        var result = await TestCandidate.GetUserAccount(UserGlobalId.From(contactRolesDto.externalId), contactRolesDto.email);
+        var result = await TestCandidate.GetUserRoles(UserGlobalId.From(contactRolesDto.externalId), contactRolesDto.email);
 
         // then
         result!.externalId.Should().Be(contactRolesDto.externalId);
@@ -54,7 +54,7 @@ public class GetUserAccountTests : TestBase<LoanUserRepository>
         var fakeEmail = "fake@fake.com";
 
         // when
-        var result = await TestCandidate.GetUserAccount(UserGlobalId.From(wrongUserGlobalId), fakeEmail);
+        var result = await TestCandidate.GetUserRoles(UserGlobalId.From(wrongUserGlobalId), fakeEmail);
 
         // then
         result.Should().BeNull();

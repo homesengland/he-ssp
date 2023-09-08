@@ -22,6 +22,6 @@ public class GetDashboardDataQueryHandler : IRequestHandler<GetDashboardDataQuer
         var selectedAccount = await _loanUserContext.GetSelectedAccount();
         var userLoanApplications = (await _loanApplicationRepository.LoadAllLoanApplications(selectedAccount, cancellationToken)).OrderByDescending(application => application.LastModificationDate ?? DateTime.MinValue).ToList();
 
-        return new GetDashboardDataQueryResponse(userLoanApplications, selectedAccount.AccountName);
+        return new GetDashboardDataQueryResponse(userLoanApplications, selectedAccount?.AccountName);
     }
 }

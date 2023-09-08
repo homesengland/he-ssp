@@ -26,8 +26,8 @@ public class OrganizationRepository : IOrganizationRepository
 
     public async Task<OrganizationBasicInformation> GetBasicInformation(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var organizationDetailsDto = await _organizationService.GetOrganizationDetails(userAccount.AccountId.ToString(), userAccount.UserGlobalId.ToString())
-                                        ?? throw new NotFoundException(nameof(OrganizationBasicInformation), userAccount.AccountId.ToString());
+        var organizationDetailsDto = await _organizationService.GetOrganizationDetails(userAccount.AccountId.ToString()!, userAccount.UserGlobalId.ToString())
+                                        ?? throw new NotFoundException(nameof(OrganizationBasicInformation), userAccount.AccountId.ToString()!);
 
         return new OrganizationBasicInformation(
             organizationDetailsDto.registeredCompanyName,
