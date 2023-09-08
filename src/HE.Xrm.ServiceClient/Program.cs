@@ -37,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestQuery(serviceClient);
+                    TestLoan(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -49,6 +49,18 @@ namespace HE.Xrm.ServiceClientExample
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
+        }
+
+        private static void TestLoan(ServiceClient serviceClient)
+        {
+            var req2 = new invln_getloanapplicationsforaccountandcontactRequest() //get loan applications related to account and contact with given data
+            {
+                invln_accountid = "429d11ab-15fe-ed11-8f6c-002248c653e1", //account id
+                invln_externalcontactid = "auth0|64a28c7fb67ed30b288d6ff9", // contact external id
+            };
+            var resp2 = (invln_getloanapplicationsforaccountandcontactResponse)serviceClient.Execute(req2);
+            var test = JsonSerializer.Deserialize<List<LoanApplicationDto>>(resp2.invln_loanapplications);
+            Console.WriteLine("A web service connection was not established.");
         }
 
         private static void TestQuery(ServiceClient service)

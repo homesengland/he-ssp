@@ -6,6 +6,7 @@ using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text.Json;
 
@@ -19,6 +20,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         private readonly ISiteDetailsRepository siteDetailsRepository;
         private readonly IAccountRepository accountRepository;
         private readonly IContactRepository contactRepository;
+        private readonly IWebRoleRepository webroleRepository;
 
         #endregion
 
@@ -30,6 +32,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             siteDetailsRepository = CrmRepositoriesFactory.Get<ISiteDetailsRepository>();
             accountRepository = CrmRepositoriesFactory.Get<IAccountRepository>();
             contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
+            webroleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
         }
 
         #endregion
@@ -41,8 +44,25 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             List<LoanApplicationDto> entityCollection = new List<LoanApplicationDto>();
             if (Guid.TryParse(accountId, out Guid accountGuid))
             {
+                var contact = contactRepository.GetContactViaExternalId(externalContactId);
+                var role = webroleRepository.GetContactWebRole(contact.Id, ((int)invln_Portal1.Loans).ToString());
+                List<invln_Loanapplication> loanApplicationsForAccountAndContact;
+                foreach(var test in role)
+                {
+                    foreach(var attr in test.Attributes)
+                    {
+                        TracingService.Trace($"key: {attr.Key}, value: {attr.Value}");
+                    }
+                }
+                if (role.Any(x => x.Contains("pl.invln_permission") && ((dynamic)x["pl.invln_permission"]).Value == (int)invln_Permission.Accountadministrator) && loanApplicationId == null)
+                {
+                    loanApplicationsForAccountAndContact = loanApplicationRepository.GetAccountLoans(accountGuid);
+                }
+                else
+                {
+                    loanApplicationsForAccountAndContact = loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId);
+                }
                 this.TracingService.Trace("GetLoanApplicationsForGivenAccountAndContact");
-                var loanApplicationsForAccountAndContact = loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId);
                 foreach (var element in loanApplicationsForAccountAndContact)
                 {
                     List<SiteDetailsDto> siteDetailsDtoList = new List<SiteDetailsDto>();
