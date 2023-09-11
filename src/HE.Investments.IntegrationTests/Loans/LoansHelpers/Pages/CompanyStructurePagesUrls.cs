@@ -10,5 +10,14 @@ public static class CompanyStructurePagesUrls
 
     public const string HowManyHomesBuiltSuffix = "/company/how-many-homes-built";
 
+    public const string CheckYourAnswersSuffix = "/company/check-answers";
+
+    public static string CompanyPurpose(string applicationId) => $"/application/{applicationId}{CompanyPurposeSuffix}";
+
     public static string MoreInformationAboutOrganization(string applicationId) => $"/application/{applicationId}{MoreInformationAboutOrganizationSuffix}";
+
+    public static string HowManyHomesBuilt(string applicationId) => $"/application/{applicationId}{HowManyHomesBuiltSuffix}";
+
+    public static string CheckYourAnswers(string applicationId) => $"/application/{applicationId}{CheckYourAnswersSuffix}";
+
 }

@@ -14,11 +14,12 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.CompanyStructureSection;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order03MoreInformationAboutOrganizationIntegrationTests : IntegrationTest
 {
-    private const string CurrentPageKey = nameof(CurrentPageKey);
+    private readonly string _applicationLoanId;
 
     public Order03MoreInformationAboutOrganizationIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
+        _applicationLoanId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -26,7 +27,7 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
     public async Task Order01_ShouldDisplayValidationError_WhenTextIsTooLong()
     {
         // given
-        var moreInformationAboutOrganizationPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var moreInformationAboutOrganizationPage = await TestClient.NavigateTo(CompanyStructurePagesUrls.MoreInformationAboutOrganization(_applicationLoanId));
         var continueButton = moreInformationAboutOrganizationPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -36,6 +37,7 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
         // then
         moreInformationAboutOrganizationPage.Url.Should().EndWith(CompanyStructurePagesUrls.MoreInformationAboutOrganizationSuffix);
         moreInformationAboutOrganizationPage.ContainsValidationMessage("Your input cannot be longer than 1000 characters");
+        SetSharedData(SharedKeys.CurrentPageKey, moreInformationAboutOrganizationPage);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -43,15 +45,15 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
     public async Task Order02_ShouldMoveToNextPageHowManyHomesBuilt_WhenTextHas1000CharsAndContinueButtonIsClicked()
     {
         // given
-        var moreInformationAboutOrganizationPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var moreInformationAboutOrganizationPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
         var continueButton = moreInformationAboutOrganizationPage.GetGdsSubmitButtonById("continue-button");
 
         // when
-        var howManyHomesBuilt = await TestClient.SubmitButton(
+        var howManyHomesBuiltPage = await TestClient.SubmitButton(
             continueButton, new Dictionary<string, string> { { "OrganisationMoreInformation", TextTestData.TextWithLenght1000 } });
 
         // then
-        howManyHomesBuilt.Url.Should().EndWith(CompanyStructurePagesUrls.HowManyHomesBuiltSuffix);
-        howManyHomesBuilt.GetLabel().Should().Be("How many homes in the past three years has your organisation built?");
+        howManyHomesBuiltPage.Url.Should().EndWith(CompanyStructurePagesUrls.HowManyHomesBuiltSuffix);
+        howManyHomesBuiltPage.GetLabel().Should().Be("How many homes in the past three years has your organisation built?");
     }
 }

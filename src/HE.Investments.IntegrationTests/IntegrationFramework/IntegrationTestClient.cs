@@ -58,6 +58,7 @@ public class IntegrationTestClient
         {
             HandleRadioInputs(form, formValue);
             HandleTextAreaInputs(form, formValue);
+            HandleInputs(form, formValue);
         }
 
         var submit = form.GetSubmission(submitButton)!;
@@ -85,6 +86,16 @@ public class IntegrationTestClient
             return;
         }
 
+        if (formValue.Value == string.Empty)
+        {
+            foreach (var radioInput in radioInputs)
+            {
+                radioInput!.IsChecked = false;
+            }
+
+            return;
+        }
+
         var inputElement = radioInputs.SingleOrDefault(x => x!.Value == formValue.Value);
         inputElement.Should().NotBeNull($"{formValue.Key} Key should be radio input element of form");
         inputElement!.IsChecked = true;
@@ -95,6 +106,23 @@ public class IntegrationTestClient
         var textInputs = form.Elements
             .Select(x => x as IHtmlTextAreaElement)
             .Where(x => x is not null)
+            .ToList();
+
+        if (textInputs.Count <= 0)
+        {
+            return;
+        }
+
+        var inputElement = textInputs.SingleOrDefault(x => x!.Name == formValue.Key);
+        inputElement.Should().NotBeNull($"{formValue.Key} Key should be radio input element of form");
+        inputElement!.Value = formValue.Value;
+    }
+
+    private static void HandleInputs(IHtmlFormElement form, KeyValuePair<string, string> formValue)
+    {
+        var textInputs = form.Elements
+            .Select(x => x as IHtmlInputElement)
+            .Where(x => x is not null && x.Type == "text")
             .ToList();
 
         if (textInputs.Count <= 0)

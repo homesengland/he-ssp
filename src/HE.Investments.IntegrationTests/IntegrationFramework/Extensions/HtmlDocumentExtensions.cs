@@ -90,4 +90,18 @@ public static class HtmlDocumentExtensions
 
         return dictionary;
     }
+
+    public static IDictionary<string, string> GetTaskListItems(this IHtmlDocument htmlDocument)
+    {
+        var summaryRows = htmlDocument.GetElementsByClassName("app-task-list__item");
+        var dictionary = new Dictionary<string, string>();
+        foreach (var summaryRow in summaryRows)
+        {
+            var key = summaryRow.GetElementsByClassName("app-task-list__task-name").First().TextContent.Trim();
+            var value = summaryRow.GetElementsByClassName("app-task-list__tag").FirstOrDefault()?.InnerHtml.Trim() ?? string.Empty;
+            dictionary[key] = value;
+        }
+
+        return dictionary;
+    }
 }

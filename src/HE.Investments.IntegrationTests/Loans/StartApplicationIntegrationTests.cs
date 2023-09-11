@@ -19,8 +19,6 @@ public class StartApplicationIntegrationTests : IntegrationTest
 {
     private const string CurrentPageKey = nameof(CurrentPageKey);
 
-    private const string NewApplicationKey = nameof(NewApplicationKey);
-
     private readonly UserConfig _userConfig;
 
     public StartApplicationIntegrationTests(IntegrationTestFixture<Program> fixture)
@@ -141,7 +139,6 @@ public class StartApplicationIntegrationTests : IntegrationTest
 
         var applicationGuid = taskListPage.Url.GetApplicationGuidFromUrl();
         applicationGuid.Should().NotBeEmpty();
-        SetSharedData(CurrentPageKey, taskListPage);
-        SetSharedData(NewApplicationKey, applicationGuid);
+        SetSharedData(SharedKeys.ApplicationLoanIdInDraftStatusKey, applicationGuid);
     }
 }

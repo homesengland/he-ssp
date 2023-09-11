@@ -13,11 +13,12 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.CompanyStructureSection;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order01StartCompanyStructureIntegrationTests : IntegrationTest
 {
-    private const string CurrentPageKey = nameof(CurrentPageKey);
+    private readonly string _applicationLoanId;
 
     public Order01StartCompanyStructureIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
+        _applicationLoanId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -25,7 +26,7 @@ public class Order01StartCompanyStructureIntegrationTests : IntegrationTest
     public async Task Order01_ShouldOpenCompanyStructureStartingPage_WhenCompanyStructureLinkIsClickedOnTaskListPage()
     {
         // given
-        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList("2b018098-7b4d-ee11-be6f-002248c653e1"));
+        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
 
         // when
         var linkToCompanyStructureSection = taskList.GetAnchorElementById("company-structure-section-link");
@@ -36,7 +37,7 @@ public class Order01StartCompanyStructureIntegrationTests : IntegrationTest
         startCompanyStructurePage.GetPageTitle().Should().Be("Company structure and experience");
         startCompanyStructurePage.GetGdsSubmitButtonById("start-now-button");
 
-        SetSharedData(CurrentPageKey, startCompanyStructurePage);
+        SetSharedData(SharedKeys.CurrentPageKey, startCompanyStructurePage);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -44,7 +45,7 @@ public class Order01StartCompanyStructureIntegrationTests : IntegrationTest
     public async Task Order02_ShouldMoveToNextPageCompanyPurpose_WhenStartButtonIsClicked()
     {
         // given
-        var startCompanyStructurePage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var startCompanyStructurePage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
         var startNow = startCompanyStructurePage.GetGdsSubmitButtonById("start-now-button");
 
         // when
@@ -53,6 +54,5 @@ public class Order01StartCompanyStructureIntegrationTests : IntegrationTest
         // then
         companyPurposePage.Url.Should().EndWith(CompanyStructurePagesUrls.CompanyPurposeSuffix);
         companyPurposePage.GetPageTitle().Should().Be("Was your organisation established specifically for this development?");
-        SetSharedData(CurrentPageKey, companyPurposePage);
     }
 }

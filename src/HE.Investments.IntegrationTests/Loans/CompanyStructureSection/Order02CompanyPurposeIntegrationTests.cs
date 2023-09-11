@@ -14,8 +14,6 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.CompanyStructureSection;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order02CompanyPurposeIntegrationTests : IntegrationTest
 {
-    private const string CurrentPageKey = nameof(CurrentPageKey);
-
     public Order02CompanyPurposeIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
@@ -26,7 +24,7 @@ public class Order02CompanyPurposeIntegrationTests : IntegrationTest
     public async Task Order01_ShouldMoveToNextPageMoreInformationAboutOrganization_WhenContinueButtonIsClicked()
     {
         // given
-        var companyPurposePage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var companyPurposePage = await TestClient.NavigateTo(CompanyStructurePagesUrls.CompanyPurpose(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
         var continueButton = companyPurposePage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -36,6 +34,5 @@ public class Order02CompanyPurposeIntegrationTests : IntegrationTest
         // then
         moreInformationAboutOrganizationPage.Url.Should().EndWith(CompanyStructurePagesUrls.MoreInformationAboutOrganizationSuffix);
         moreInformationAboutOrganizationPage.GetLabel().Should().Be("Provide more information about your organisation");
-        SetSharedData(CurrentPageKey, moreInformationAboutOrganizationPage);
     }
 }
