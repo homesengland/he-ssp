@@ -1,5 +1,4 @@
 using HE.InvestmentLoans.IntegrationTests.Config;
-using HE.InvestmentLoans.IntegrationTests.Loans;
 using Xunit;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
