@@ -19,5 +19,4 @@ public static class CompanyStructurePagesUrls
     public static string HowManyHomesBuilt(string applicationId) => $"/application/{applicationId}{HowManyHomesBuiltSuffix}";
 
     public static string CheckYourAnswers(string applicationId) => $"/application/{applicationId}{CheckYourAnswersSuffix}";
-
 }

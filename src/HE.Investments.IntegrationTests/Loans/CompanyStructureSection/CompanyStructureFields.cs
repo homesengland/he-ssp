@@ -7,5 +7,4 @@ public static class CompanyStructureFields
     public const string AdditionalInformation = "Additional information";
 
     public const string HomesInLastThreeYears = "Homes in the last three years";
-
 }

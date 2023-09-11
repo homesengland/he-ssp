@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
-using FluentAssertions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
@@ -33,9 +32,10 @@ public class Order01StartCompanyStructureIntegrationTests : IntegrationTest
         var startCompanyStructurePage = await TestClient.NavigateTo(linkToCompanyStructureSection);
 
         // then
-        startCompanyStructurePage.Url.Should().EndWith(CompanyStructurePagesUrls.StartCompanyStructureSuffix);
-        startCompanyStructurePage.GetPageTitle().Should().Be("Company structure and experience");
-        startCompanyStructurePage.GetGdsSubmitButtonById("start-now-button");
+        startCompanyStructurePage
+            .UrlEndWith(CompanyStructurePagesUrls.StartCompanyStructureSuffix)
+            .HasTitle("Company structure and experience")
+            .HasGdsSubmitButton("start-now-button", out _);
 
         SetSharedData(SharedKeys.CurrentPageKey, startCompanyStructurePage);
     }
@@ -52,7 +52,8 @@ public class Order01StartCompanyStructureIntegrationTests : IntegrationTest
         var companyPurposePage = await TestClient.SubmitButton(startNow);
 
         // then
-        companyPurposePage.Url.Should().EndWith(CompanyStructurePagesUrls.CompanyPurposeSuffix);
-        companyPurposePage.GetPageTitle().Should().Be("Was your organisation established specifically for this development?");
+        companyPurposePage
+            .UrlEndWith(CompanyStructurePagesUrls.CompanyPurposeSuffix)
+            .HasTitle("Was your organisation established specifically for this development?");
     }
 }

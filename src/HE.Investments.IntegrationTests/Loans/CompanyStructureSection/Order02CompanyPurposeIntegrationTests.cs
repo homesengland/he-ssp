@@ -1,6 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using AngleSharp.Html.Dom;
-using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
@@ -32,7 +30,8 @@ public class Order02CompanyPurposeIntegrationTests : IntegrationTest
             continueButton, new Dictionary<string, string> { { "Purpose", CommonResponse.Yes } });
 
         // then
-        moreInformationAboutOrganizationPage.Url.Should().EndWith(CompanyStructurePagesUrls.MoreInformationAboutOrganizationSuffix);
-        moreInformationAboutOrganizationPage.GetLabel().Should().Be("Provide more information about your organisation");
+        moreInformationAboutOrganizationPage
+            .UrlEndWith(CompanyStructurePagesUrls.MoreInformationAboutOrganizationSuffix)
+            .HasLabelTitle("Provide more information about your organisation");
     }
 }

@@ -1,5 +1,4 @@
 using HE.InvestmentLoans.IntegrationTests.Config;
-using HE.InvestmentLoans.IntegrationTests.Loans;
 using Xunit;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -27,10 +26,10 @@ public class IntegrationTest
         where T : class
     {
 #if DEBUG
-        if (key == SharedKeys.ApplicationLoanIdInDraftStatusKey)
-        {
-            return ("20a97aa8-6e50-ee11-be6f-002248c652b4" as T)!;
-        }
+        // if (key == SharedKeys.ApplicationLoanIdInDraftStatusKey)
+        // {
+        //     return ("20a97aa8-6e50-ee11-be6f-002248c652b4" as T)!;
+        // }
 #endif
 
         return (_fixture.DataBag[key] as T)!;
