@@ -2,6 +2,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entiti
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Security;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;

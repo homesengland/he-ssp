@@ -94,7 +94,7 @@ public abstract class WorkflowController<TState> : Controller
         }
     }
 
-    private IList<WorkflowMethod<TState>> WorkflowGetMethodsFromAllControllers()
+    private IList<WorkflowAction<TState>> WorkflowGetMethodsFromAllControllers()
     {
         return Assembly
             .GetExecutingAssembly()
@@ -104,12 +104,12 @@ public abstract class WorkflowController<TState> : Controller
             .SelectMany(m =>
             {
                 var attributeAssignedToMethods = m.GetCustomAttributes(typeof(WorkflowStateAttribute), false).Cast<WorkflowStateAttribute>();
-                var workflowMethods = new List<WorkflowMethod<TState>>();
+                var workflowMethods = new List<WorkflowAction<TState>>();
                 foreach (var workflowStateAttribute in attributeAssignedToMethods)
                 {
                     if (workflowStateAttribute.State is TState state)
                     {
-                        workflowMethods.Add(new WorkflowMethod<TState>(new ControllerName(m.DeclaringType.Name), m.Name, state));
+                        workflowMethods.Add(new WorkflowAction<TState>(new ControllerName(m.DeclaringType.Name), m.Name, state));
                     }
                 }
 

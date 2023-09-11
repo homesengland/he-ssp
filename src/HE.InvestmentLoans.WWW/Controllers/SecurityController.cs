@@ -6,6 +6,7 @@ using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils;
+using HE.InvestmentLoans.Contract.Security;
 using HE.InvestmentLoans.Contract.User;
 using HE.InvestmentLoans.WWW.Attributes;
 using MediatR;
@@ -108,7 +109,7 @@ public class SecurityController : Controller
     {
         var sessionmodel = await this._mediator.Send(new BL.LoanApplicationLegacy.Queries.GetSingle() { Id = id });
         var workflow = new SecurityWorkflow(sessionmodel, _mediator);
-        workflow.ChangeState(Enum.Parse<SecurityWorkflow.State>(state));
+        workflow.ChangeState(Enum.Parse<SecurityState>(state));
         return RedirectToAction("Workflow", new { id = sessionmodel.ID, ending = workflow.GetName() });
     }
 }
