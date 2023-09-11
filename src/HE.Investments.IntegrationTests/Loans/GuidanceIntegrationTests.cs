@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Assertions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using Xunit;
@@ -29,8 +28,9 @@ public class GuidanceIntegrationTests : IntegrationTest
         var mainPage = await TestClient.AsNotLoggedUser().NavigateTo(PagesUrls.MainPage);
 
         // then
-        mainPage.Url.Should().EndWith(GuidancePagesUrls.WhatTheHomeBuildingFundIs);
-        mainPage.GetElementById("SignInButton").Should().BeGdsButton();
+        mainPage
+            .UrlEndWith(GuidancePagesUrls.WhatTheHomeBuildingFundIs)
+            .HasGdsButton("SignInButton");
         SetSharedData(CurrentPageKey, mainPage);
     }
 
@@ -46,8 +46,10 @@ public class GuidanceIntegrationTests : IntegrationTest
         var eligibilityPage = await TestClient.AsNotLoggedUser().NavigateTo(nextLink);
 
         // then
-        eligibilityPage.Url.Should().EndWith(GuidancePagesUrls.Eligibility);
-        eligibilityPage.GetElementById("SignInButton").Should().BeGdsButton();
+        eligibilityPage
+            .UrlEndWith(GuidancePagesUrls.Eligibility)
+            .HasGdsButton("SignInButton");
+
         SetSharedData(CurrentPageKey, eligibilityPage);
     }
 
@@ -63,7 +65,10 @@ public class GuidanceIntegrationTests : IntegrationTest
         var applyPage = await TestClient.AsNotLoggedUser().NavigateTo(nextLink);
 
         // then
-        applyPage.Url.Should().EndWith(GuidancePagesUrls.Apply);
-        applyPage.GetAnchorElementById("apply-link").PathName.Should().EndWith("/application");
+        applyPage
+            .UrlEndWith(GuidancePagesUrls.Apply)
+            .GetAnchorElementById("apply-link")
+            .PathName.Should()
+            .EndWith("/application");
     }
 }

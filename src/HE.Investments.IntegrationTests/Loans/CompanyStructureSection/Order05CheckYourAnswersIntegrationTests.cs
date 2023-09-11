@@ -54,8 +54,10 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
             continueButton, new Dictionary<string, string> { { "CheckAnswers", string.Empty } });
 
         // then
-        checkYourAnswersPage.Url.Should().EndWith(CompanyStructurePagesUrls.CheckYourAnswersSuffix);
-        checkYourAnswersPage.ContainsValidationMessage("Select whether you have completed this section");
+        checkYourAnswersPage
+            .UrlEndWith(CompanyStructurePagesUrls.CheckYourAnswersSuffix)
+            .HasValidationMessages("Select whether you have completed this section");
+
         SetSharedData(SharedKeys.CurrentPageKey, checkYourAnswersPage);
     }
 
@@ -72,7 +74,8 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
             continueButton, new Dictionary<string, string> { { "CheckAnswers", CommonResponse.Yes } });
 
         // then
-        taskListPage.Url.Should().EndWith(ApplicationPagesUrls.TaskList(_applicationLoanId));
-        taskListPage.GetTaskListItems()[TaskListFields.CompleteCompanyInformation].Should().Be("Completed");
+        taskListPage
+            .UrlEndWith(ApplicationPagesUrls.TaskList(_applicationLoanId))
+            .GetTaskListItems()[TaskListFields.CompleteCompanyInformation].Should().Be("Completed");
     }
 }

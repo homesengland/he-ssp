@@ -35,7 +35,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
         var mainPage = await TestClient.NavigateTo(PagesUrls.MainPage);
 
         // then
-        mainPage.Url.Should().EndWith(PagesUrls.DashboardPage);
+        mainPage.UrlEndWith(PagesUrls.DashboardPage);
         SetSharedData(CurrentPageKey, mainPage);
     }
 
@@ -51,8 +51,10 @@ public class StartApplicationIntegrationTests : IntegrationTest
         var applyForLoanPage = await TestClient.NavigateTo(startApplicationLink);
 
         // then
-        applyForLoanPage.Url.Should().EndWith(ApplicationPagesUrls.StartPage);
-        applyForLoanPage.GetPageTitle().Should().Be("Apply for a development loan");
+        applyForLoanPage
+            .UrlEndWith(ApplicationPagesUrls.StartPage)
+            .HasTitle("Apply for a development loan");
+
         SetSharedData(CurrentPageKey, applyForLoanPage);
     }
 
@@ -68,8 +70,10 @@ public class StartApplicationIntegrationTests : IntegrationTest
         var aboutLoanPage = await TestClient.SubmitButton(startNowButton);
 
         // then
-        aboutLoanPage.Url.Should().EndWith(ApplicationPagesUrls.AboutLoanPage);
-        aboutLoanPage.GetPageTitle().Should().Be("What you need to know about the loan");
+        aboutLoanPage
+            .UrlEndWith(ApplicationPagesUrls.AboutLoanPage)
+            .HasTitle("What you need to know about the loan");
+
         SetSharedData(CurrentPageKey, aboutLoanPage);
     }
 
@@ -85,9 +89,10 @@ public class StartApplicationIntegrationTests : IntegrationTest
         var checkYourDetailsPage = await TestClient.SubmitButton(continueButton);
 
         // then
-        checkYourDetailsPage.Url.Should().EndWith(ApplicationPagesUrls.CheckYourDetails);
-        checkYourDetailsPage.GetPageTitle().Should().Be("Check your details");
-        var items = checkYourDetailsPage.GetSummaryListItems();
+        var items = checkYourDetailsPage
+            .UrlEndWith(ApplicationPagesUrls.CheckYourDetails)
+            .HasTitle("Check your details")
+            .GetSummaryListItems();
 
         items[CheckYourDetailsFields.RegisteredCompanyName].Should().Be(_userConfig.OrganizationName);
         items[CheckYourDetailsFields.CompanyRegistrationNumber].Should().Be(_userConfig.OrganizationRegistrationNumber);
@@ -110,8 +115,10 @@ public class StartApplicationIntegrationTests : IntegrationTest
         var loanPurpose = await TestClient.SubmitButton(continueButton);
 
         // then
-        loanPurpose.Url.Should().EndWith(ApplicationPagesUrls.LoanPurpose);
-        loanPurpose.GetPageTitle().Should().Be("What do you require Homes England funding for?");
+        loanPurpose
+            .UrlEndWith(ApplicationPagesUrls.LoanPurpose)
+            .HasTitle("What do you require Homes England funding for?");
+
         SetSharedData(CurrentPageKey, loanPurpose);
     }
 
@@ -131,10 +138,11 @@ public class StartApplicationIntegrationTests : IntegrationTest
             });
 
         // then
-        taskListPage.Url.Should().EndWith(ApplicationPagesUrls.TaskListSuffix);
-        taskListPage.GetPageTitle().Should().Be("Development loan application");
+        taskListPage
+            .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
+            .HasTitle("Development loan application")
+            .ExtractLastSavedDateFromTaskListPage(out var dateTime);
 
-        var dateTime = taskListPage.ExtractLastSavedDateFromTaskListPage();
         dateTime.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMinutes(2));
 
         var applicationGuid = taskListPage.Url.GetApplicationGuidFromUrl();

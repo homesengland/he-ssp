@@ -34,8 +34,10 @@ public class Order04HowManyHomesBuiltIntegrationTests : IntegrationTest
             continueButton, new Dictionary<string, string> { { "HomesBuilt", "NotNumber" } });
 
         // then
-        howManyHomesBuiltPage.Url.Should().EndWith(CompanyStructurePagesUrls.HowManyHomesBuiltSuffix);
-        howManyHomesBuiltPage.ContainsValidationMessage("The amount of homes your organisation has built must be a number");
+        howManyHomesBuiltPage
+            .UrlEndWith(CompanyStructurePagesUrls.HowManyHomesBuiltSuffix)
+            .HasValidationMessages("The amount of homes your organisation has built must be a number");
+
         SetSharedData(SharedKeys.CurrentPageKey, howManyHomesBuiltPage);
     }
 
@@ -52,7 +54,8 @@ public class Order04HowManyHomesBuiltIntegrationTests : IntegrationTest
             continueButton, new Dictionary<string, string> { { "HomesBuilt", "13" } });
 
         // then
-        checkYourAnswersPage.Url.Should().EndWith(CompanyStructurePagesUrls.CheckYourAnswersSuffix);
-        checkYourAnswersPage.GetPageTitle().Should().EndWith("Check your answers");
+        checkYourAnswersPage
+            .UrlEndWith(CompanyStructurePagesUrls.CheckYourAnswersSuffix)
+            .GetPageTitle().Should().EndWith("Check your answers");
     }
 }

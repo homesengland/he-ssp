@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
-using FluentAssertions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.TestData;
@@ -35,8 +34,10 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
             continueButton, new Dictionary<string, string> { { "OrganisationMoreInformation", TextTestData.TextWithLenght1501 } });
 
         // then
-        moreInformationAboutOrganizationPage.Url.Should().EndWith(CompanyStructurePagesUrls.MoreInformationAboutOrganizationSuffix);
-        moreInformationAboutOrganizationPage.ContainsValidationMessage("Your input cannot be longer than 1000 characters");
+        moreInformationAboutOrganizationPage
+            .UrlEndWith(CompanyStructurePagesUrls.MoreInformationAboutOrganizationSuffix)
+            .HasValidationMessages("Your input cannot be longer than 1000 characters");
+
         SetSharedData(SharedKeys.CurrentPageKey, moreInformationAboutOrganizationPage);
     }
 
@@ -53,7 +54,8 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
             continueButton, new Dictionary<string, string> { { "OrganisationMoreInformation", TextTestData.TextWithLenght1000 } });
 
         // then
-        howManyHomesBuiltPage.Url.Should().EndWith(CompanyStructurePagesUrls.HowManyHomesBuiltSuffix);
-        howManyHomesBuiltPage.GetLabel().Should().Be("How many homes in the past three years has your organisation built?");
+        howManyHomesBuiltPage
+            .UrlEndWith(CompanyStructurePagesUrls.HowManyHomesBuiltSuffix)
+            .HasLabelTitle("How many homes in the past three years has your organisation built?");
     }
 }
