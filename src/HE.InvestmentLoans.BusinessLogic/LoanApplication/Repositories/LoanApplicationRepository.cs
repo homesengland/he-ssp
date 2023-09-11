@@ -103,6 +103,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         {
             var siteDetail = new SiteDetailsDto()
             {
+                Name = site.Name,
                 siteName = site.Name,
                 numberOfHomes = site.ManyHomes,
                 typeOfHomes = site.TypeHomes,
