@@ -72,7 +72,9 @@ public static class HtmlDocumentExtensions
 
     public static IHtmlDocument ContainsValidationMessage(this IHtmlDocument htmlDocument, string errorMessage)
     {
-        htmlDocument.GetSummaryErrors().Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
+        var pageErrors = htmlDocument.GetSummaryErrors();
+
+        pageErrors.Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
         htmlDocument.GetElementsByClassName(CssConstants.GovUkFormGroupError).Should().NotBeNull("Error message for specific item should exist");
         return htmlDocument;
     }

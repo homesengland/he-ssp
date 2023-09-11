@@ -2,10 +2,10 @@ using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 
 namespace HE.InvestmentLoans.WWW.Routing;
 
-public class WorkflowMethod<TState>
+public class WorkflowAction<TState>
     where TState : Enum
 {
-    public WorkflowMethod(ControllerName controllerName, string actionName, TState state)
+    public WorkflowAction(ControllerName controllerName, string actionName, TState state)
     {
         ControllerName = controllerName;
         ActionName = actionName;

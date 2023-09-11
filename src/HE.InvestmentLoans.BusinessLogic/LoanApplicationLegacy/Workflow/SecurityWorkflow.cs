@@ -1,46 +1,51 @@
 using System.Diagnostics.CodeAnalysis;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.InvestmentLoans.Contract.Security;
+using HE.InvestmentLoans.Contract.Security.Queries;
 using MediatR;
 using Stateless;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 
 [SuppressMessage("Ordering Rules", "SA1201", Justification = "Need to refactored in the fure")]
-public class SecurityWorkflow
+public class SecurityWorkflow : IStateRouting<SecurityState>
 {
-    public enum State : int
-    {
-        Index = 1,
-        ChargesDebtCompany = 2,
-        DirLoans = 3,
-        DirLoansSub = 4,
-        CheckAnswers = 5,
-        Complete = 6,
-    }
 
     private readonly LoanApplicationViewModel _model;
-    private readonly StateMachine<State, Trigger> _machine;
+    private readonly StateMachine<SecurityState, Trigger> _machine;
     private readonly IMediator _mediator;
+    private readonly LoanApplicationId _applicationId;
+    private readonly SecurityViewModel _model2;
 
     public SecurityWorkflow(LoanApplicationViewModel model, IMediator mediator)
     {
         _model = model;
-        _machine = new StateMachine<State, Trigger>(_model.Security.State);
+        _machine = new StateMachine<SecurityState, Trigger>(_model.Security.State);
         _mediator = mediator;
 
         ConfigureTransitions();
     }
 
-    public async void NextState(Trigger trigger)
+    public SecurityWorkflow(LoanApplicationId applicationId, SecurityViewModel model, IMediator mediator, SecurityState currentState)
     {
-        await _machine.FireAsync(trigger);
+        _applicationId = applicationId;
+        _mediator = mediator;
+        _model = new LoanApplicationViewModel { GoodChangeMode = true };
+
+        _model2 = model;
+
+        _machine = new StateMachine<SecurityState, Trigger>(currentState);
+
+        ConfigureTransitions();
     }
 
     public bool IsStateComplete()
     {
-        return _model.Security.State == State.Complete;
+        return _model.Security.State == SecurityState.Complete;
     }
 
     public bool IsCompleted()
@@ -56,10 +61,10 @@ public class SecurityWorkflow
 
     public string GetName()
     {
-        return Enum.GetName(typeof(State), _model.Security.State) ?? string.Empty;
+        return Enum.GetName(typeof(SecurityState), _model.Security.State) ?? string.Empty;
     }
 
-    public async void ChangeState(State state)
+    public async void ChangeState(SecurityState state)
     {
         _model.Security.State = state;
         _model.Security.StateChanged = true;
@@ -68,49 +73,66 @@ public class SecurityWorkflow
 
     private void ConfigureTransitions()
     {
-        _machine.Configure(State.Index)
-          .Permit(Trigger.Continue, State.ChargesDebtCompany);
+        _machine.Configure(SecurityState.Index)
+          .Permit(Trigger.Continue, SecurityState.ChargesDebtCompany);
 
-        _machine.Configure(State.ChargesDebtCompany)
-            .Permit(Trigger.Continue, State.DirLoans)
-            .Permit(Trigger.Back, State.Index)
-            .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(SecurityState.ChargesDebtCompany)
+            .Permit(Trigger.Continue, SecurityState.DirLoans)
+            .Permit(Trigger.Back, SecurityState.Index)
+            .Permit(Trigger.Change, SecurityState.CheckAnswers);
 
-        _machine.Configure(State.DirLoans)
-            .PermitIf(Trigger.Continue, State.DirLoansSub, () => _model.Security.DirLoans == CommonResponse.Yes)
-            .PermitIf(Trigger.Continue, State.CheckAnswers, () => _model.Security.DirLoans != CommonResponse.Yes)
-            .PermitIf(Trigger.Change, State.DirLoansSub, () => _model.Security.DirLoans == CommonResponse.Yes)
-            .PermitIf(Trigger.Change, State.CheckAnswers, () => _model.Security.DirLoans != CommonResponse.Yes)
-            .Permit(Trigger.Back, State.ChargesDebtCompany);
+        _machine.Configure(SecurityState.DirLoans)
+            .PermitIf(Trigger.Continue, SecurityState.DirLoansSub, () => _model2.DirLoans == CommonResponse.Yes)
+            .PermitIf(Trigger.Continue, SecurityState.CheckAnswers, () => _model2.DirLoans != CommonResponse.Yes)
+            .PermitIf(Trigger.Change, SecurityState.DirLoansSub, () => _model2.DirLoans == CommonResponse.Yes)
+            .PermitIf(Trigger.Change, SecurityState.CheckAnswers, () => _model2.DirLoans != CommonResponse.Yes)
+            .Permit(Trigger.Back, SecurityState.ChargesDebtCompany);
 
-        _machine.Configure(State.DirLoansSub)
-            .Permit(Trigger.Continue, State.CheckAnswers)
-            .Permit(Trigger.Back, State.DirLoans)
-            .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(SecurityState.DirLoansSub)
+            .Permit(Trigger.Continue, SecurityState.CheckAnswers)
+            .Permit(Trigger.Back, SecurityState.DirLoans)
+            .Permit(Trigger.Change, SecurityState.CheckAnswers);
 
-        _machine.Configure(State.CheckAnswers)
-           .PermitIf(Trigger.Continue, State.Complete, () => _model.Security.CheckAnswers == CommonResponse.Yes)
-           .IgnoreIf(Trigger.Continue, () => _model.Security.CheckAnswers != CommonResponse.Yes)
-           .PermitIf(Trigger.Back, State.DirLoansSub, () => _model.Security.DirLoans == CommonResponse.Yes)
-           .PermitIf(Trigger.Back, State.DirLoans, () => _model.Security.DirLoans != CommonResponse.Yes)
+        _machine.Configure(SecurityState.CheckAnswers)
+           .PermitIf(Trigger.Continue, SecurityState.Complete, () => _model2.CheckAnswers == CommonResponse.Yes)
+           .IgnoreIf(Trigger.Continue, () => _model2.CheckAnswers != CommonResponse.Yes)
+           .PermitIf(Trigger.Back, SecurityState.DirLoansSub, () => _model2.DirLoans == CommonResponse.Yes)
+           .PermitIf(Trigger.Back, SecurityState.DirLoans, () => _model2.DirLoans != CommonResponse.Yes)
            .OnExit(() =>
            {
-               if (_model.Security.CheckAnswers == CommonResponse.Yes)
+               if (_model2.CheckAnswers == CommonResponse.Yes)
                {
-                   _model.Security.SetFlowCompletion(true);
+                   _model2.SetFlowCompletion(true);
                }
            });
 
-        _machine.Configure(State.Complete)
-          .Permit(Trigger.Back, State.CheckAnswers);
+        _machine.Configure(SecurityState.Complete)
+          .Permit(Trigger.Back, SecurityState.CheckAnswers);
 
         _machine.OnTransitionCompletedAsync(x =>
         {
+            if (_model.GoodChangeMode)
+            {
+                return Task.CompletedTask;
+            }
+
             _model.Security.State = x.Destination;
 
             _model.Security.RemoveAlternativeRoutesData();
 
             return _mediator.Send(new Commands.Update() { Model = _model });
         });
+    }
+
+    public async Task<SecurityState> NextState(Trigger trigger)
+    {
+        await _machine.FireAsync(trigger);
+
+        return _machine.State;
+    }
+
+    public Task<bool> StateCanBeAccessed(SecurityState nextState)
+    {
+        return Task.FromResult(true);
     }
 }

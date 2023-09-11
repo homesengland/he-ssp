@@ -25,6 +25,11 @@ public static class CommonAnswersMappingExtensions
             return null!;
         }
 
-        return value.Value ? CommonResponse.Yes : CommonResponse.No;
+        return MapToCommonResponse(value.Value);
+    }
+
+    public static string MapToCommonResponse(this bool value)
+    {
+        return value ? CommonResponse.Yes : CommonResponse.No;
     }
 }
