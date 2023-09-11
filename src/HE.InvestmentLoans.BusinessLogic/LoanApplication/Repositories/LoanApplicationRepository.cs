@@ -48,7 +48,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
 
-        return new LoanApplicationEntity(id, userAccount, externalStatus, loanApplicationDto.LastModificationOn)
+        return new LoanApplicationEntity(id, userAccount, externalStatus, loanApplicationDto.LastModificationOn, FundingPurposeMapper.Map(loanApplicationDto.fundingReason))
         {
             LegacyModel = LoanApplicationMapper.Map(loanApplicationDto),
         };
@@ -181,6 +181,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var loanApplicationDto = new LoanApplicationDto()
         {
             LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount),
+            fundingReason = FundingPurposeMapper.Map(loanApplication.FundingReason),
         };
 
         var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);
