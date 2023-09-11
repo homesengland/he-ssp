@@ -1,9 +1,11 @@
 using HE.InvestmentLoans.IntegrationTests.Config;
+using HE.InvestmentLoans.IntegrationTests.Loans;
 using Xunit;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 
-public class IntegrationTest : IClassFixture<IntegrationTestFixture<Program>>
+[Collection(nameof(IntegrationTestSharedContext))]
+public class IntegrationTest
 {
     private readonly IntegrationTestFixture<Program> _fixture;
 
@@ -24,6 +26,13 @@ public class IntegrationTest : IClassFixture<IntegrationTestFixture<Program>>
     protected T GetSharedData<T>(string key)
         where T : class
     {
+#if DEBUG
+        if (key == SharedKeys.ApplicationLoanIdInDraftStatusKey)
+        {
+            return ("20a97aa8-6e50-ee11-be6f-002248c652b4" as T)!;
+        }
+#endif
+
         return (_fixture.DataBag[key] as T)!;
     }
 }

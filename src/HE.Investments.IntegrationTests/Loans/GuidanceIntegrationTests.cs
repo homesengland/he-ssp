@@ -14,9 +14,6 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class GuidanceIntegrationTests : IntegrationTest
 {
-    // Make it null when you want to run tests locally
-    private const string? Skip = "Waits for DevOps configuration - #76791";
-
     private const string CurrentPageKey = "CurrentPage";
 
     public GuidanceIntegrationTests(IntegrationTestFixture<Program> fixture)
@@ -24,7 +21,7 @@ public class GuidanceIntegrationTests : IntegrationTest
     {
     }
 
-    [Fact(Skip = Skip)]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_ShouldRedirectToGuidancePage_WhenUserIsNotLogged()
     {
@@ -37,16 +34,16 @@ public class GuidanceIntegrationTests : IntegrationTest
         SetSharedData(CurrentPageKey, mainPage);
     }
 
-    [Fact(Skip = Skip)]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(2)]
     public async Task Order02_ShouldRedirectFromWhatTheHomeBuildingFundIsToEligibilityPage()
     {
         // given
-        var currentPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var mainPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
 
         // when
-        var nextLink = currentPage.GetAnchorElementById("guidance-next-link");
-        var eligibilityPage = await TestClient.AsNotLoggedUser().ClickAHrefElement(nextLink);
+        var nextLink = mainPage.GetAnchorElementById("guidance-next-link");
+        var eligibilityPage = await TestClient.AsNotLoggedUser().NavigateTo(nextLink);
 
         // then
         eligibilityPage.Url.Should().EndWith(GuidancePagesUrls.Eligibility);
@@ -54,16 +51,16 @@ public class GuidanceIntegrationTests : IntegrationTest
         SetSharedData(CurrentPageKey, eligibilityPage);
     }
 
-    [Fact(Skip = Skip)]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(3)]
     public async Task Order03_ShouldRedirectFromEligibilityPageToApplyPageAndApplyLinkShouldBeVisible()
     {
         // given
-        var currentPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var eligibilityPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
 
         // when
-        var nextLink = currentPage.GetAnchorElementById("guidance-next-link");
-        var applyPage = await TestClient.AsNotLoggedUser().ClickAHrefElement(nextLink);
+        var nextLink = eligibilityPage.GetAnchorElementById("guidance-next-link");
+        var applyPage = await TestClient.AsNotLoggedUser().NavigateTo(nextLink);
 
         // then
         applyPage.Url.Should().EndWith(GuidancePagesUrls.Apply);

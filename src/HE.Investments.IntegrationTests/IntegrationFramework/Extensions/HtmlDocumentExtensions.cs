@@ -53,6 +53,30 @@ public static class HtmlDocumentExtensions
         return header!.InnerHtml.Trim();
     }
 
+    public static string GetLabel(this IHtmlDocument htmlDocument)
+    {
+        var label = htmlDocument.GetElementsByClassName(CssConstants.GovUkLabel).FirstOrDefault();
+
+        label.Should().NotBeNull("Page label does not exist");
+        return label!.InnerHtml.Trim();
+    }
+
+    public static string[] GetSummaryErrors(this IHtmlDocument htmlDocument)
+    {
+        var errorSummary = htmlDocument.GetElementsByClassName(CssConstants.GovUkErrorSummary).SingleOrDefault();
+        errorSummary.Should().NotBeNull("Error summary does not exist");
+        var errorItems = errorSummary!.GetElementsByTagName("a").Select(x => x.TextContent.Trim()).ToArray();
+        errorItems.Should().NotBeEmpty();
+        return errorItems;
+    }
+
+    public static IHtmlDocument ContainsValidationMessage(this IHtmlDocument htmlDocument, string errorMessage)
+    {
+        htmlDocument.GetSummaryErrors().Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
+        htmlDocument.GetElementsByClassName(CssConstants.GovUkFormGroupError).Should().NotBeNull("Error message for specific item should exist");
+        return htmlDocument;
+    }
+
     public static IDictionary<string, string> GetSummaryListItems(this IHtmlDocument htmlDocument)
     {
         var summaryRows = htmlDocument.GetElementsByClassName("govuk-summary-list__row");
@@ -61,6 +85,20 @@ public static class HtmlDocumentExtensions
         {
             var key = summaryRow.GetElementsByClassName("govuk-summary-list__key").Single().InnerHtml.Trim();
             var value = summaryRow.GetElementsByClassName("govuk-summary-list__value").Single().LastElementChild!.InnerHtml.Trim();
+            dictionary[key] = value;
+        }
+
+        return dictionary;
+    }
+
+    public static IDictionary<string, string> GetTaskListItems(this IHtmlDocument htmlDocument)
+    {
+        var summaryRows = htmlDocument.GetElementsByClassName("app-task-list__item");
+        var dictionary = new Dictionary<string, string>();
+        foreach (var summaryRow in summaryRows)
+        {
+            var key = summaryRow.GetElementsByClassName("app-task-list__task-name").First().TextContent.Trim();
+            var value = summaryRow.GetElementsByClassName("app-task-list__tag").FirstOrDefault()?.InnerHtml.Trim() ?? string.Empty;
             dictionary[key] = value;
         }
 
