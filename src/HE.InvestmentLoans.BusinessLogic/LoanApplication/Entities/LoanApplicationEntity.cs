@@ -4,6 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
@@ -13,14 +14,14 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
 public class LoanApplicationEntity
 {
-    public LoanApplicationEntity(LoanApplicationId id, UserAccount userAccount, ApplicationStatus externalStatus, DateTime? lastModificationDate)
+    public LoanApplicationEntity(LoanApplicationId id, UserAccount userAccount, ApplicationStatus externalStatus, DateTime? lastModificationDate, FundingPurpose fundingReason)
     {
         Id = id;
         UserAccount = userAccount;
         ApplicationProjects = new ApplicationProjects(Id);
         ExternalStatus = externalStatus;
-
         LastModificationDate = lastModificationDate;
+        FundingReason = fundingReason;
     }
 
     public LoanApplicationId Id { get; private set; }
@@ -35,7 +36,9 @@ public class LoanApplicationEntity
 
     public DateTime? LastModificationDate { get; private set; }
 
-    public static LoanApplicationEntity New(UserAccount userAccount) => new(LoanApplicationId.New(), userAccount, ApplicationStatus.Draft, null);
+    public FundingPurpose FundingReason { get; private set; }
+
+    public static LoanApplicationEntity New(UserAccount userAccount) => new(LoanApplicationId.New(), userAccount, ApplicationStatus.Draft, null, FundingPurpose.BuildingNewHomes);
 
     public void SaveApplicationProjects(ApplicationProjects applicationProjects)
     {
