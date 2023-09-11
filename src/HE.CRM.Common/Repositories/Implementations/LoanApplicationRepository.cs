@@ -39,7 +39,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                 qe.ColumnSet = new ColumnSet(nameof(invln_Loanapplication.invln_Contact).ToLower());
                 qe.Criteria.AddCondition(nameof(invln_Loanapplication.invln_Contact).ToLower(), ConditionOperator.Equal, contactId.Id);
                 var result = service.RetrieveMultiple(qe);
-                if(result != null && result.Entities.Count > 0)
+                if (result != null && result.Entities.Count > 0)
                 {
                     logger.Trace("Loans: " + result.Entities.Count);
                     loanapplications.AddRange(result.Entities.Select(x => x.ToEntity<invln_Loanapplication>()));
@@ -74,6 +74,15 @@ namespace HE.CRM.Common.Repositories.Implementations
                         return new List<invln_Loanapplication>();
                     }
                 }
+            }
+        }
+
+        public List<invln_Loanapplication> GetAccountLoans(Guid accountId)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<invln_Loanapplication>()
+                    .Where(x => x.invln_Account.Id == accountId).ToList();
             }
         }
 

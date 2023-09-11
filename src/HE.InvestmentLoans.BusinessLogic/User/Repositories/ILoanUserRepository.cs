@@ -9,7 +9,7 @@ namespace HE.InvestmentLoans.BusinessLogic.User.Repositories;
 
 public interface ILoanUserRepository
 {
-    public Task<ContactRolesDto?> GetUserAccount(UserGlobalId userGlobalId, string userEmail);
+    public Task<ContactRolesDto?> GetUserRoles(UserGlobalId userGlobalId, string userEmail);
 
     public Task<UserDetails> GetUserDetails(UserGlobalId userGlobalId);
 
