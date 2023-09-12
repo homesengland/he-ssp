@@ -1,4 +1,6 @@
-﻿namespace HE.InvestmentLoans.WWW.Middlewares;
+﻿using Microsoft.AspNetCore.Builder;
+
+namespace HE.InvestmentLoans.Common.Infrastructure.Middlewares;
 
 public static partial class HeaderSecurityMiddlewareExtensions
 {

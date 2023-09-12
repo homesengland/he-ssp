@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace HE.InvestmentLoans.WWW.Models;
+namespace HE.InvestmentLoans.Common.Infrastructure;
 
 #pragma warning disable CS1570 // XML comment has badly formed XML
 /// <summary>

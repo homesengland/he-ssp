@@ -1,0 +1,34 @@
+@using HE.Investment.AHP.WWW.Config
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject IAhpAppConfig AhpAppConfig
+
+@{
+    Layout = "_GovukTemplate";
+    ViewData["ServiceName"] = AhpAppConfig.AppName;
+}
+
+@section AdditionalMeta
+    {
+}
+
+@{
+    var cookieConsent = Context.Request.Cookies["CookieConsent"] == "Yes";
+}
+
+@section HeadCss
+    {
+    <partial name="_LoadStylesheetPartial" />
+}
+
+@section HeadScripts {
+
+}
+
+<gds-div-grid-row>
+    @RenderBody()
+</gds-div-grid-row>
+
+@section BodyEnd
+    {
+    <partial name="_LoadJavascriptPartial" />
+}
