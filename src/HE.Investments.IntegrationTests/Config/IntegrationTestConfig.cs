@@ -2,5 +2,10 @@ namespace HE.InvestmentLoans.IntegrationTests.Config;
 
 public class IntegrationTestConfig
 {
-    public UserConfig User { get; } = new();
+    public IntegrationTestConfig(IUserConfig user)
+    {
+        User = user;
+    }
+
+    public IUserConfig User { get; }
 }

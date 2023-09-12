@@ -1,4 +1,6 @@
 using HE.InvestmentLoans.IntegrationTests.Config;
+using HE.InvestmentLoans.IntegrationTests.Loans;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -11,10 +13,13 @@ public class IntegrationTest
     protected IntegrationTest(IntegrationTestFixture<Program> fixture)
     {
         _fixture = fixture;
-        TestClient = new IntegrationTestClient(fixture.CreateClient(), new IntegrationTestConfig());
+        UserConfig = _fixture.Services.GetRequiredService<IUserConfig>();
+        TestClient = new IntegrationTestClient(fixture.CreateClient(), new IntegrationTestConfig(UserConfig));
     }
 
     protected IntegrationTestClient TestClient { get; }
+
+    protected IUserConfig UserConfig { get; }
 
     protected void SetSharedData<T>(string key, T data)
         where T : notnull

@@ -19,12 +19,9 @@ public class StartApplicationIntegrationTests : IntegrationTest
 {
     private const string CurrentPageKey = nameof(CurrentPageKey);
 
-    private readonly UserConfig _userConfig;
-
     public StartApplicationIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _userConfig = new UserConfig();
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -94,12 +91,12 @@ public class StartApplicationIntegrationTests : IntegrationTest
             .HasTitle("Check your details")
             .GetSummaryListItems();
 
-        items[CheckYourDetailsFields.RegisteredCompanyName].Should().Be(_userConfig.OrganizationName);
-        items[CheckYourDetailsFields.CompanyRegistrationNumber].Should().Be(_userConfig.OrganizationRegistrationNumber);
-        items[CheckYourDetailsFields.CompanyAddress].Should().Be(_userConfig.OrganizationAddress);
-        items[CheckYourDetailsFields.ContactName].Should().Be(_userConfig.ContactName);
-        items[CheckYourDetailsFields.EmailAddress].Should().Be(_userConfig.Email);
-        items[CheckYourDetailsFields.TelephoneNumber].Should().Be(_userConfig.TelephoneNumer);
+        items[CheckYourDetailsFields.RegisteredCompanyName].Should().Be(UserConfig.OrganizationName);
+        items[CheckYourDetailsFields.CompanyRegistrationNumber].Should().Be(UserConfig.OrganizationRegistrationNumber);
+        items[CheckYourDetailsFields.CompanyAddress].Should().Be(UserConfig.OrganizationAddress);
+        items[CheckYourDetailsFields.ContactName].Should().Be(UserConfig.ContactName);
+        items[CheckYourDetailsFields.EmailAddress].Should().Be(UserConfig.Email);
+        items[CheckYourDetailsFields.TelephoneNumber].Should().Be(UserConfig.TelephoneNumber);
         SetSharedData(CurrentPageKey, checkYourDetailsPage);
     }
 
