@@ -400,5 +400,6 @@ FodyWeavers.xsd
 Log*.txt
 /HE.Xrm.ServiceClient/appsettings.json
 /HE.InvestmentLoans.WWW/appsettings.Development.json
+/HE.InvestmentLoans.WWW/Certificates
 
 tests/
