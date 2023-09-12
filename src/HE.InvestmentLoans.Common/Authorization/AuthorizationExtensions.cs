@@ -35,6 +35,5 @@ public static class AuthorizationExtensions
         builder.Services.ConfigureHeCookieSettings(
             mvcBuilder,
             configure => configure.WithAspNetCore().WithHeIdentity().WithApplicationInsights());
-
     }
 }
