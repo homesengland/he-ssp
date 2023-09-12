@@ -21,20 +21,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Certificates\redis-tls.crt" />
-    <None Remove="Certificates\redis-tls.key" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Certificates\redis-tls.crt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Certificates\redis-tls.key">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.20" />
     <PackageReference Include="Microsoft.FeatureManagement" Version="2.6.1" />
     <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.6.1" />
