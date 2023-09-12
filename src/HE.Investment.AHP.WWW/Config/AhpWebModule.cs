@@ -2,7 +2,7 @@ using HE.InvestmentLoans.Common.Infrastructure;
 
 namespace HE.Investment.AHP.WWW.Config;
 
-public static class WebModule
+public static class AhpWebModule
 {
     public static void AddWebModule(this IServiceCollection service)
     {
