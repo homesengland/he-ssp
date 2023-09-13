@@ -66,7 +66,6 @@ namespace DataverseModel
 		public UpsertMultipleResponse()
 		{
 		}
-		
 		//public Microsoft.Xrm.Sdk.Messages.UpsertResponse[] Results
 		//{
 		//	get

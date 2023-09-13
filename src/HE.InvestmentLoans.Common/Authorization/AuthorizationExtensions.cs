@@ -27,8 +27,8 @@ public static class AuthorizationExtensions
             auth0Config.Domain,
             auth0Config.ClientId,
             auth0Config.ClientSecret,
-            builder.Configuration["Auth0:ManagementClientAudience"],
-            builder.Configuration["Auth0:UserConnection"]);
+            configuration["AppConfiguration:Auth0:ManagementClientAudience"],
+            configuration["AppConfiguration:Auth0:UserConnection"]);
 
         builder.Services.ConfigureIdentityManagementService(x => x.UseAuth0(auth0Config, auth0ManagementConfig));
         builder.Services.ConfigureHeCookieSettings(
