@@ -63,6 +63,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_contract"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_contract> invln_contractSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_contract>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Loanapplication"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_Loanapplication> invln_LoanapplicationSet

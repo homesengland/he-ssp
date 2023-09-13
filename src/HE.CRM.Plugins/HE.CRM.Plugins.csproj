@@ -124,6 +124,7 @@
     <Compile Include="Exceptions\IntegrationApiException.cs" />
     <Compile Include="Handlers\Accounts\GenerateRandomAccountNameSampleHandler.cs" />
     <Compile Include="Handlers\Accounts\OnCurrentCrrFieldUpdateHandler.cs" />
+    <Compile Include="Handlers\Contract\RejectAddingWhenRelatedLoanInApprovedStatusHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeLoanApplicationExternalStatusHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteLoanApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteSiteDetailsHandler.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Handlers\LoanApplications\SetFieldsWhenChangingStatusFromDraftHandler.cs" />
     <Compile Include="Models\AzureAdToken.cs" />
     <Compile Include="Plugins\Accounts\GenerateRandomAccountNameSamplePlugin.cs" />
+    <Compile Include="Plugins\Contract\RejectAddingWhenRelatedLoanInApprovedStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeLoanApplicationExternalStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteLoanApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteSiteDetailsPlugin.cs" />
@@ -224,6 +226,8 @@
     <Compile Include="HE.Base\Services\ICrmServicesFactory.cs" />
     <Compile Include="Services\Contacts\ContactService.cs" />
     <Compile Include="Services\Contacts\IContactService.cs" />
+    <Compile Include="Services\Contract\ContractService.cs" />
+    <Compile Include="Services\Contract\IContractService.cs" />
     <Compile Include="Services\HttpServices\AzureAdHttpClientService.cs" />
     <Compile Include="Services\LoanApplication\ILoanApplicationService.cs" />
     <Compile Include="Services\LoanApplication\LoanApplicationService.cs" />
