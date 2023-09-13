@@ -19,13 +19,13 @@ public static class ServiceCollectionExtension
 
     public static void AddCache(this IServiceCollection services, ICacheConfig config)
     {
-        if (!string.IsNullOrEmpty(config.RedisConnectionString))
+        if (string.IsNullOrEmpty(config.RedisConnectionString) || config.RedisConnectionString == "off")
         {
-            services.AddSingleton<ICacheService, RedisService>();
+            services.AddSingleton<ICacheService, MemoryCacheService>();
         }
         else
         {
-            services.AddSingleton<ICacheService, MemoryCacheService>();
+            services.AddSingleton<ICacheService, RedisService>();
         }
     }
 }
