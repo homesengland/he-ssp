@@ -109,7 +109,7 @@
     "invln_gettemporaryportaldata*",
     "invln_returnuserprofile*",
     "invln_savetemporaryportaldata*",
-    "invln_searchorganizationbynameandcompanyhousename*",
+    "invln_sendinternalcrmnotification*",
     "invln_sendinvestmentloansdatatocrm*",
     "invln_updatesingleloanapplication*",
     "invln_updatesinglesitedetails*",
