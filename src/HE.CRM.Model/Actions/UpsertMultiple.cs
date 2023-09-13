@@ -66,21 +66,20 @@ namespace DataverseModel
 		public UpsertMultipleResponse()
 		{
 		}
-
-        //public Microsoft.Xrm.Sdk.Messages.UpsertResponse[] Results
-        //{
-        //    get
-        //    {
-        //        if (this.Results.Contains("Results"))
-        //        {
-        //            return ((Microsoft.Xrm.Sdk.Messages.UpsertResponse[])(this.Results["Results"]));
-        //        }
-        //        else
-        //        {
-        //            return default(Microsoft.Xrm.Sdk.Messages.UpsertResponse[]);
-        //        }
-        //    }
-        //}
-    }
+		//public Microsoft.Xrm.Sdk.Messages.UpsertResponse[] Results
+		//{
+		//	get
+		//	{
+		//		if (this.Results.Contains("Results"))
+		//		{
+		//			return ((Microsoft.Xrm.Sdk.Messages.UpsertResponse[])(this.Results["Results"]));
+		//		}
+		//		else
+		//		{
+		//			return default(Microsoft.Xrm.Sdk.Messages.UpsertResponse[]);
+		//		}
+		//	}
+		//}
+	}
 }
 #pragma warning restore CS1591
