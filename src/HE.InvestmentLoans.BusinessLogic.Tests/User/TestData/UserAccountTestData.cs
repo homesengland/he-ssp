@@ -6,5 +6,5 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 
 public static class UserAccountTestData
 {
-    public static readonly UserAccount UserAccountOne = new(UserGlobalId.From("UserOne"), "User@one.com", GuidTestData.GuidTwo, "AccountOne", "John", "Doe", "888888");
+    public static readonly UserAccount UserAccountOne = new(UserGlobalId.From("UserOne"), "User@one.com", GuidTestData.GuidTwo, "AccountOne", new[] { new UserAccountRole("Limited") });
 }

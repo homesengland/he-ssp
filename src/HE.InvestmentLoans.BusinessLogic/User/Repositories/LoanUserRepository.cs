@@ -23,17 +23,24 @@ public class LoanUserRepository : ILoanUserRepository
         _contactService = contactService;
     }
 
-    public async Task<ContactRolesDto?> GetUserRoles(UserGlobalId userGlobalId, string userEmail)
+    public async Task<IList<UserAccount>> GetUserAccounts(UserGlobalId userGlobalId, string userEmail)
     {
         var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, PortalConstants.LoansPortalType, userGlobalId.ToString());
 
-        contactRoles ??= new ContactRolesDto()
+        if (contactRoles is null)
         {
-            externalId = userGlobalId.ToString(),
-            email = userEmail,
-        };
+            return Array.Empty<UserAccount>();
+        }
 
-        return contactRoles;
+        return contactRoles
+            .contactRoles
+            .GroupBy(x => x.accountId)
+            .Select(x => new UserAccount(
+                            UserGlobalId.From(userGlobalId.ToString()),
+                            userEmail,
+                            x.Key,
+                            x.FirstOrDefault(y => y.accountId == x.Key)?.accountName,
+                            x.Select(y => new UserAccountRole(y.webRoleName)).ToArray())).ToList();
     }
 
     public Task LinkContactToOrganisation(UserGlobalId userGlobalId, CompaniesHouseNumber organizationNumber)
