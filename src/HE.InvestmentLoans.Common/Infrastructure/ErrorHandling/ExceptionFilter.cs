@@ -1,13 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
-using HE.InvestmentLoans.Common.Models.Others;
-using HE.InvestmentLoans.Contract.Exceptions;
-using HE.InvestmentLoans.WWW.Config;
+using HE.InvestmentLoans.Common.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace HE.InvestmentLoans.WWW.Filters;
+namespace HE.InvestmentLoans.Common.Infrastructure.ErrorHandling;
 
 public class ExceptionFilter : ExceptionFilterAttribute
 {
@@ -53,16 +53,16 @@ public class ExceptionFilter : ExceptionFilterAttribute
     {
         return exception switch
         {
-            NotFoundException => ViewPaths.PageNotFound,
-            UnauthorizedAccessException => ViewPaths.PageNotFound,
-            DomainException => ViewPaths.ProblemWithTheService,
-            _ => ViewPaths.ProblemWithTheService,
+            NotFoundException => ErrorViewPaths.PageNotFound,
+            UnauthorizedAccessException => ErrorViewPaths.PageNotFound,
+            DomainException => ErrorViewPaths.ProblemWithTheService,
+            _ => ErrorViewPaths.ProblemWithTheService,
         };
     }
 
     private ErrorModel ErrorModelFrom(Exception exception)
     {
-        var errrorModel = exception switch
+        var errorModel = exception switch
         {
             DomainException ex => new ErrorModel(ex.Message, ex.ErrorCode, ex.AdditionalData),
             _ => new ErrorModel(exception.Message),
@@ -70,9 +70,9 @@ public class ExceptionFilter : ExceptionFilterAttribute
 
         if (_hostEnvironment.IsDevelopment())
         {
-            errrorModel.Message += " " + exception.StackTrace;
+            errorModel.Message += " " + exception.StackTrace;
         }
 
-        return errrorModel;
+        return errorModel;
     }
 }

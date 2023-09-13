@@ -1,6 +1,6 @@
 using System.Globalization;
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Models.Others;
+using HE.InvestmentLoans.Common.Infrastructure.ErrorHandling;
 using HE.InvestmentLoans.Contract;
 
 namespace HE.InvestmentLoans.WWW.Utils.Errors;

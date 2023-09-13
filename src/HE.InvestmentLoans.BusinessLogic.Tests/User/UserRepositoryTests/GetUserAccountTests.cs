@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
-using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Xunit;
 

@@ -5,7 +5,6 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Services.Interfaces;
-using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.WWW.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
