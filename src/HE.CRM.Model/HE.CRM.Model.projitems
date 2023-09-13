@@ -24,10 +24,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_returnuserprofile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_savetemporaryportaldata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_searchorganizationbynameandcompanyhousename.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinternalcrmnotification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinvestmentloansdatatocrm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesingleloanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesinglesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updateuserprofile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\UpsertMultiple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Account.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Contact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_contactwebrole.cs" />
@@ -109,6 +111,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Rating.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_refinancerepayment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Repaymenttype.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Role.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sectioncompletionstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sourceofincome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Typeofhomes.cs" />
