@@ -10,7 +10,10 @@ public static class AuthorizationExtensions
     public static void AddIdentityProviderConfiguration(this WebApplicationBuilder builder, IMvcBuilder mvcBuilder)
     {
         var configuration = builder.Configuration;
-        var auth0Config = new Auth0Config(configuration["AppConfiguration:Auth0:Domain"], configuration["AppConfiguration:Auth0:ClientId"], configuration["AppConfiguration:Auth0:ClientSecret"]);
+        var auth0Config = new Auth0Config(
+                            configuration["AppConfiguration:Auth0:Domain"],
+                            configuration["AppConfiguration:Auth0:ClientId"],
+                            configuration["AppConfiguration:Auth0:ClientSecret"]);
         var supportEmail = configuration["AppConfiguration:SupportEmail"];
 
         var heIdentityCookieConfiguration = new HeIdentityCookieConfiguration
@@ -20,6 +23,10 @@ public static class AuthorizationExtensions
             ClientSecret = auth0Config.ClientSecret,
             SupportEmail = supportEmail,
         };
+
+        builder.Services.ConfigureHeCookieSettings(
+            mvcBuilder,
+            configure => configure.WithAspNetCore().WithHeIdentity());
 
         mvcBuilder.AddHeIdentityCookieAuth(heIdentityCookieConfiguration, builder.Environment);
 
@@ -31,8 +38,5 @@ public static class AuthorizationExtensions
             configuration["AppConfiguration:Auth0:UserConnection"]);
 
         builder.Services.ConfigureIdentityManagementService(x => x.UseAuth0(auth0Config, auth0ManagementConfig));
-        builder.Services.ConfigureHeCookieSettings(
-            mvcBuilder,
-            configure => configure.WithAspNetCore().WithHeIdentity().WithApplicationInsights());
     }
 }
