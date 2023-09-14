@@ -39,14 +39,8 @@ public class LoanUserRepository : ILoanUserRepository
                             UserGlobalId.From(userGlobalId.ToString()),
                             userEmail,
                             x.Key,
-                            x.FirstOrDefault(y => y.accountId == x.Key)?.accountName,
+                            x.FirstOrDefault(y => y.accountId == x.Key)?.accountName ?? string.Empty,
                             x.Select(y => new UserAccountRole(y.webRoleName)).ToArray())).ToList();
-    }
-
-    public Task LinkContactToOrganisation(UserGlobalId userGlobalId, CompaniesHouseNumber organizationNumber)
-    {
-        // Temporary dummy implementation
-        return Task.CompletedTask;
     }
 
     public async Task<UserDetails> GetUserDetails(UserGlobalId userGlobalId)

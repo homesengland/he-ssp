@@ -47,7 +47,7 @@ public class FlowTest : MediatorTestBase
     [TestMethod]
     [DataRow(LoanApplicationWorkflow.State.CheckYourDetails, LoanApplicationWorkflow.State.AboutLoan)]
     [DataRow(LoanApplicationWorkflow.State.LoanPurpose, LoanApplicationWorkflow.State.CheckYourDetails)]
-    [DataRow(LoanApplicationWorkflow.State.TaskList, LoanApplicationWorkflow.State.Dashboard)]
+    [DataRow(LoanApplicationWorkflow.State.TaskList, LoanApplicationWorkflow.State.UserDashboard)]
     public async Task Workflow_Back_Test(LoanApplicationWorkflow.State begin, LoanApplicationWorkflow.State expcected)
     {
         var mediator = (IMediator)ServiceProvider.GetService(typeof(IMediator));
