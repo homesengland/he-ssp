@@ -64,9 +64,9 @@ public static class ValidationErrorMessage
 
     public const string AcceptTermsAndConditions = "You cannot continue unless you have selected that you have read the terms and conditions";
 
-    public const string InputLongerThanHundredCharacters = "Your input cannot be longer than 100 characters";
+    public const string ShortInputLengthExcedeed = "Your input cannot be longer than 100 characters";
 
-    public const string InputLongerThanThousandCharacters = "Your input cannot be longer than 1000 characters";
+    public const string LongInputLengthExceeded = "Your input cannot be longer than 1000 characters";
 
     public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
 

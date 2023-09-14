@@ -2,8 +2,8 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entiti
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Enums;
-using HE.InvestmentLoans.Contract.Security;
 using HE.InvestmentLoans.Contract.CompanyStructure;
+using HE.InvestmentLoans.Contract.Security;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
 
@@ -97,7 +97,7 @@ public class LoanApplicationViewModel
     public bool IsReadyToSubmit()
     {
         return (Company.IsCompleted() || Company.IsFlowCompleted)
-            && (Security.State == SecurityWorkflow.State.Complete || Security.IsFlowCompleted)
+            && (Security.State == SectionStatus.Completed || Security.IsFlowCompleted)
             && (Funding.State == FundingWorkflow.State.Complete || Funding.IsFlowCompleted)
             && (Sites.All(x => x.State == SiteWorkflow.State.Complete) || Sites.All(x => x.IsFlowCompleted))
             && Sites.Count > 0;

@@ -1,4 +1,4 @@
-﻿@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
+@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
 @{
     var id = ViewContext.RouteData.Values["id"];
     var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.ChargesDebt));

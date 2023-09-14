@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Exceptions;
-internal class HtmlElementNotFoundException : Exception
+public class HtmlElementNotFoundException : Exception
 {
-    public HtmlElementNotFoundException(string? message) : base(message)
+    public HtmlElementNotFoundException(string? message)
+        : base(message)
     {
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace HE.InvestmentLoans.WWW.Routing;
 
 public abstract class WorkflowController<TState> : Controller
-    where TState : Enum
+    where TState : struct, Enum
 {
     public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
@@ -52,6 +52,16 @@ public abstract class WorkflowController<TState> : Controller
         return Continue(currentStateAttribute.StateAs<TState>(), routeData);
     }
 
+    public IActionResult Change(string redirectToState, object routeData)
+    {
+        if (!Enum.TryParse<TState>(redirectToState, true, out var nextState))
+        {
+            throw new ArgumentException($"Cannot parse: \"{redirectToState}\" to {typeof(TState).Name}");
+        }
+
+        return ChangeState(nextState, routeData);
+    }
+
     public Task<IActionResult> Continue(TState currentState, object routeData)
     {
         return ChangeState(Trigger.Continue, currentState, routeData);
@@ -82,6 +92,16 @@ public abstract class WorkflowController<TState> : Controller
     {
         var nextState = await Routing(currentState).NextState(trigger);
 
+        return RedirectToState(nextState, trigger, routeData);
+    }
+
+    private IActionResult ChangeState(TState targetState, object routeData)
+    {
+        return RedirectToState(targetState, Trigger.Change, routeData);
+    }
+
+    private IActionResult RedirectToState(TState nextState, Trigger trigger, object routeData)
+    {
         var nextAction = WorkflowGetMethodsFromAllControllers().FirstOrDefault(x => x.State.Equals(nextState)) ?? throw WorkflowActionCannotBePerformedException.CannotFindDestination(trigger, nextState);
 
         if (routeData is null)

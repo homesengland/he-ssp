@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
-internal class SecurityPageUrls
+internal sealed class SecurityPageUrls
 {
     public const string StartSuffix = "/security";
 

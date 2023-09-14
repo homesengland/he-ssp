@@ -46,7 +46,8 @@ public class IntegrationTestClient
 
     public async Task<IHtmlDocument> NavigateTo(IHtmlAnchorElement anchorElement)
     {
-        return await NavigateTo(anchorElement.PathName);
+        var href = anchorElement.GetAttribute("href");
+        return await NavigateTo(href!);
     }
 
     public async Task<IHtmlDocument> SubmitButton(IHtmlButtonElement submitButton)
@@ -80,7 +81,8 @@ public class IntegrationTestClient
             submission.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);
         }
 
-        return await HtmlHelpers.GetDocumentAsync(await _client.SendAsync(submission));
+        var clientResponse = await _client.SendAsync(submission);
+        return await HtmlHelpers.GetDocumentAsync(clientResponse);
     }
 
     private static bool HandleRadioInputs(IHtmlFormElement form, KeyValuePair<string, string> formValue)

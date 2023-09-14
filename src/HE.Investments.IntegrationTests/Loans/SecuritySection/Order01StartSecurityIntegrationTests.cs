@@ -3,6 +3,7 @@ using AngleSharp.Html.Dom;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
+using HE.InvestmentLoans.WWW.Views.SecurityV2.Consts;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -54,6 +55,6 @@ public class Order01StartSecurityIntegrationTests : IntegrationTest
         // then
         companyPurposePage
             .UrlEndWith(SecurityPageUrls.ChargesDebtSuffix)
-            .HasTitle("Are there any charges outstanding or debt secured on this company?");
+            .HasTitle(SecurityPageTitles.ChargesDebt);
     }
 }

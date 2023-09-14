@@ -7,21 +7,23 @@ using HE.InvestmentLoans.Contract.Security.ValueObjects;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.Security.CommandHandler;
-internal class ProvideCompanyDebentureHandler : SecurityBaseCommandHandler, IRequestHandler<ProvideCompanyDebenture, OperationResult>
+public class ProvideDirectorLoansCommandHandler : SecurityBaseCommandHandler, IRequestHandler<ProvideDirectorLoansCommand, OperationResult>
 {
-    public ProvideCompanyDebentureHandler(ISecurityRepository securityRepository, ILoanUserContext loanUserContext)
+    public ProvideDirectorLoansCommandHandler(ISecurityRepository securityRepository, ILoanUserContext loanUserContext)
         : base(securityRepository, loanUserContext)
     {
     }
 
-    public async Task<OperationResult> Handle(ProvideCompanyDebenture request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(ProvideDirectorLoansCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
             security =>
             {
-                var debenture = request.Exists.IsProvided() ? Debenture.FromString(request.Exists, request.Holder) : null;
+                var directorLoans = request.Exists.IsProvided() ?
+                    DirectorLoans.FromString(request.Exists) :
+                    null;
 
-                security.ProvideDebenture(debenture!);
+                security.ProvideDirectorLoans(directorLoans!);
             },
             request.Id,
             cancellationToken);
