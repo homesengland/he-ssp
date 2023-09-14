@@ -9,7 +9,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <partial name="_BackLink" />
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganization", "Organization")">Back</gds-back-link>
 
     <form asp-controller="@controllerName.WithoutPrefix()" asp-action="@nameof(OrganizationController.SelectOrganization)" asp-method="post" novalidate>
         <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
