@@ -28,7 +28,7 @@ public class HeaderSecurityMiddleware
         context.Response.Headers["Pragma"] = "No-cache";
         context.Response.Headers["Cache-control"] = "No-cache";
         context.Response.Headers["X-XSS-Protection"] = "0";
-        context.Response.Headers["X-Robots-Tag"] = "noindex] nofollow";
+        context.Response.Headers["X-Robots-Tag"] = "noindex, nofollow";
         context.Response.Headers["Permissions-Policy"] = "interest-cohort=()";
         await _next(context);
     }
