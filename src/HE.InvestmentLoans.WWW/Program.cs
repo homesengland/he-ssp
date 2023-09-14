@@ -28,7 +28,7 @@ builder.Services.AddSession(options =>
     options.Cookie.Name = sessionCookieName;
     options.IdleTimeout = TimeSpan.FromMinutes(config.Cache.SessionExpireMinutes);
 });
-builder.Services.AddCache(config.Cache);
+builder.Services.AddCache(config.Cache, config);
 
 builder.Services.AddApplicationInsightsTelemetry();
 
@@ -36,7 +36,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 
-var mvcBuilder = builder.Services.AddControllersWithViews(config => config.Filters.Add<ExceptionFilter>());
+var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<ExceptionFilter>());
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 
 var app = builder.Build();
@@ -44,7 +44,21 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+
+    app.Use(async (context, next) =>
+    {
+        await next();
+        if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
+        {
+            context.Items["originalPath"] = context.Request.Path.Value;
+            context.Items["backUrl"] = context.Request.Headers["Referer"];
+            context.Request.Path = "/Home/PageNotFound";
+            await next();
+        }
+    });
+
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    // app.UseHsts();
     app.Use((context, next) =>
     {
         // assume all non-development requests are https
@@ -56,7 +70,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseHeaderSecurity();
+app.UseMiddleware<HeaderSecurityMiddleware>();
 app.UseCrossSiteScriptingSecurity();
 app.ConfigureAdditionalMiddlewares();
 
@@ -70,7 +84,7 @@ app.UseSession();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseMiddleware<HeaderSecurityMiddleware>();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
