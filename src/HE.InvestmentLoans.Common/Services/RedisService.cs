@@ -19,11 +19,10 @@ public class RedisService : ICacheService
     {
         _appConfig = appConfig;
 
-        var configurationOptions = ConfigurationOptions.Parse(appConfig.Cache.RedisConnectionString);
-
-        if (!string.IsNullOrEmpty(appConfig.Cache.RedisCertificatePath) &&
-            !string.IsNullOrEmpty(appConfig.Cache.RedisCertificateKeyPath))
+        if (appConfig.Cache.RedisCertificateEnabled == true)
         {
+            var configurationOptions = ConfigurationOptions.Parse(appConfig.Cache.RedisConnectionString);
+
 #pragma warning disable CA5359
             configurationOptions.CertificateValidation += CertificateValidationCallBack!;
 #pragma warning restore CA5359
@@ -31,9 +30,13 @@ public class RedisService : ICacheService
             configurationOptions.Ssl = true;
             configurationOptions.SslProtocols = SslProtocols.Tls12;
             configurationOptions.AbortOnConnectFail = false;
-        }
 
-        _connection = ConnectionMultiplexer.Connect(configurationOptions);
+            _connection = ConnectionMultiplexer.Connect(configurationOptions);
+        }
+        else
+        {
+            _connection = ConnectionMultiplexer.Connect(appConfig.Cache.RedisConnectionString);
+        }
     }
 
     private IDatabase Cache => _connection.GetDatabase();
