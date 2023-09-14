@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using Microsoft.AspNetCore.Server.IIS.Core;
 
 namespace HE.InvestmentLoans.Common.Extensions;
 public static class CommonAnswersMappingExtensions
@@ -16,6 +17,21 @@ public static class CommonAnswersMappingExtensions
         }
 
         return null;
+    }
+
+    public static bool MapToNonNullableBool(this string value)
+    {
+        if (value == CommonResponse.Yes)
+        {
+            return true;
+        }
+
+        if (value == CommonResponse.No)
+        {
+            return false;
+        }
+
+        throw new ArgumentException($"\"{value}\" cannot be converted to bool. Only \"Yes\" or \"No\" can be converted using this method.");
     }
 
     public static string MapToCommonResponse(this bool? value)

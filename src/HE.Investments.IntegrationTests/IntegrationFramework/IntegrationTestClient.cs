@@ -7,6 +7,7 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Auth;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Exceptions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Helpers;
 using Microsoft.CodeAnalysis.Operations;
+using Microsoft.Extensions.Configuration;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 
@@ -21,6 +22,7 @@ public class IntegrationTestClient
         _client = client;
         _client.BaseAddress = new Uri("https://localhost/");
         _integrationTestConfig = integrationTestConfig;
+
         AsLoggedUser();
     }
 
@@ -31,6 +33,8 @@ public class IntegrationTestClient
 
         return this;
     }
+
+    public UserConfig UserData() => _integrationTestConfig.User;
 
     public IntegrationTestClient AsNotLoggedUser()
     {
@@ -46,7 +50,8 @@ public class IntegrationTestClient
 
     public async Task<IHtmlDocument> NavigateTo(IHtmlAnchorElement anchorElement)
     {
-        return await NavigateTo(anchorElement.PathName);
+        var href = anchorElement.GetAttribute("href");
+        return await NavigateTo(href!);
     }
 
     public async Task<IHtmlDocument> SubmitButton(IHtmlButtonElement submitButton)
@@ -80,7 +85,8 @@ public class IntegrationTestClient
             submission.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);
         }
 
-        return await HtmlHelpers.GetDocumentAsync(await _client.SendAsync(submission));
+        var clientResponse = await _client.SendAsync(submission);
+        return await HtmlHelpers.GetDocumentAsync(clientResponse);
     }
 
     private static bool HandleRadioInputs(IHtmlFormElement form, KeyValuePair<string, string> formValue)

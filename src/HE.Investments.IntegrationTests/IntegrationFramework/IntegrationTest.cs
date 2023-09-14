@@ -1,4 +1,6 @@
 using HE.InvestmentLoans.IntegrationTests.Config;
+using HE.InvestmentLoans.IntegrationTests.Loans;
+using Microsoft.Extensions.Configuration;
 using Xunit;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -11,7 +13,12 @@ public class IntegrationTest
     protected IntegrationTest(IntegrationTestFixture<Program> fixture)
     {
         _fixture = fixture;
-        TestClient = new IntegrationTestClient(fixture.CreateClient(), new IntegrationTestConfig());
+
+        var configuration = CreateConfiguration();
+
+        var userConfig = GetUserConfigFrom(configuration);
+
+        TestClient = new IntegrationTestClient(fixture.CreateClient(), new IntegrationTestConfig(userConfig));
     }
 
     protected IntegrationTestClient TestClient { get; }
@@ -26,12 +33,41 @@ public class IntegrationTest
         where T : class
     {
 #if DEBUG
-        // if (key == SharedKeys.ApplicationLoanIdInDraftStatusKey)
-        // {
-        //     return ("20a97aa8-6e50-ee11-be6f-002248c652b4" as T)!;
-        // }
+        if (key == SharedKeys.ApplicationLoanIdInDraftStatusKey)
+        {
+            return ("0a440401-dc52-ee11-be6f-002248c653e1" as T)!;
+        }
 #endif
+
+        if (!_fixture.DataBag.ContainsKey(key))
+        {
+            return null!;
+        }
 
         return (_fixture.DataBag[key] as T)!;
     }
+
+    private static IConfigurationRoot CreateConfiguration()
+    {
+        return new ConfigurationBuilder()
+                    .AddJsonFile("appsettings.json")
+                    .AddJsonFile("appsettings.Development.json", true)
+                    .Build();
+    }
+
+    private static UserConfig GetUserConfigFrom(IConfigurationRoot configuration)
+    {
+        var userSection = configuration.GetSection("User");
+
+        var userConfig = new UserConfig(
+            userSection["UserGlobalId"]!,
+            userSection["Email"]!,
+            userSection["OrganizationName"]!,
+            userSection["OrganizationRegistrationNumber"]!,
+            userSection["OrganizationAddress"]!,
+            userSection["ContactName"]!,
+            userSection["TelephoneNumer"]!);
+        return userConfig;
+    }
+
 }

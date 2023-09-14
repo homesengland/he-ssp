@@ -1,0 +1,7 @@
+"Auth0": {
+  "ClientId": "lFZxxiVWnGqttYSfQqsNKq6Pkv5dugWC",
+  "ClientSecret": "h45w7RfluYf36rm1nmOJvR4-GxCItREtdNzfDFPVZA9HimsMM1E102V1Gydck9oi",
+  "Domain": "identity-dev-homesengland.eu.auth0.com",
+  "ManagementClientAudience": "fakeuri.com",
+  "UserConnection": "fake"
+},

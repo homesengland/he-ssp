@@ -64,7 +64,7 @@ public static class HtmlDocumentExtensions
     public static string[] GetSummaryErrors(this IHtmlDocument htmlDocument)
     {
         var errorSummary = htmlDocument.GetElementsByClassName(CssConstants.GovUkErrorSummary).SingleOrDefault();
-        errorSummary.Should().NotBeNull("Error summary does not exist");
+        errorSummary.Should().NotBeNull("Error summary should be present on a page");
         var errorItems = errorSummary!.GetElementsByTagName("a").Select(x => x.TextContent.Trim()).ToArray();
         errorItems.Should().NotBeEmpty();
         return errorItems;

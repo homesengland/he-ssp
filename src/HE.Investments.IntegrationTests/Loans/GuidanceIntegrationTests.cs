@@ -20,7 +20,7 @@ public class GuidanceIntegrationTests : IntegrationTest
     {
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = "LoansConfig.SkipTest")]
     [Order(1)]
     public async Task Order01_ShouldRedirectToGuidancePage_WhenUserIsNotLogged()
     {
@@ -34,7 +34,7 @@ public class GuidanceIntegrationTests : IntegrationTest
         SetSharedData(CurrentPageKey, mainPage);
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = "LoansConfig.SkipTest")]
     [Order(2)]
     public async Task Order02_ShouldRedirectFromWhatTheHomeBuildingFundIsToEligibilityPage()
     {
@@ -53,7 +53,7 @@ public class GuidanceIntegrationTests : IntegrationTest
         SetSharedData(CurrentPageKey, eligibilityPage);
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = "LoansConfig.SkipTest")]
     [Order(3)]
     public async Task Order03_ShouldRedirectFromEligibilityPageToApplyPageAndApplyLinkShouldBeVisible()
     {

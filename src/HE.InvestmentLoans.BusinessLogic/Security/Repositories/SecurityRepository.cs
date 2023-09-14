@@ -1,8 +1,10 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
@@ -41,13 +43,15 @@ internal class SecurityRepository : ISecurityRepository
             : null;
 
         var directLoans = loanApplicationDto.directorLoans.HasValue ?
-            new DirectLoans(
-                loanApplicationDto.directorLoans.Value,
-                loanApplicationDto.confirmationDirectorLoansCanBeSubordinated,
-                loanApplicationDto.reasonForDirectorLoanNotSubordinated)
+            new DirectorLoans(
+                loanApplicationDto.directorLoans.Value)
             : null;
 
-        return new SecurityEntity(applicationId, debenture!, directLoans!);
+        var directLoansSubordinate = loanApplicationDto.confirmationDirectorLoansCanBeSubordinated.HasValue ?
+            new DirectorLoansSubordinate(loanApplicationDto.confirmationDirectorLoansCanBeSubordinated.Value, loanApplicationDto.reasonForDirectorLoanNotSubordinated) :
+            null;
+
+        return new SecurityEntity(applicationId, debenture!, directLoans!, directLoansSubordinate!, SectionStatus.NotStarted);
     }
 
     public async Task SaveAsync(SecurityEntity entity, UserAccount userAccount, CancellationToken cancellationToken)
@@ -56,9 +60,10 @@ internal class SecurityRepository : ISecurityRepository
         {
             debentureHolder = entity.Debenture?.Holder,
             outstandingLegalChargesOrDebt = entity.Debenture?.Exists,
-            directorLoans = entity.DirectLoans?.Exists,
-            confirmationDirectorLoansCanBeSubordinated = entity.DirectLoans?.CanBeSubordinated,
-            reasonForDirectorLoanNotSubordinated = entity.DirectLoans?.ReasonWhyCannotBeSubordinated,
+            directorLoans = entity.DirectorLoans?.Exists,
+            confirmationDirectorLoansCanBeSubordinated = entity.DirectorLoansSubordinate?.CanBeSubordinated,
+            reasonForDirectorLoanNotSubordinated = entity.DirectorLoansSubordinate?.ReasonWhyCannotBeSubordinated,
+            SecurityDetailsCompletionStatus = SectionStatusMapper.Map(entity.Status),
         };
 
         var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);
@@ -81,5 +86,6 @@ internal class SecurityRepository : ISecurityRepository
         yield return nameof(invln_Loanapplication.invln_Directorloans).ToLowerInvariant();
         yield return nameof(invln_Loanapplication.invln_Confirmationdirectorloanscanbesubordinated).ToLowerInvariant();
         yield return nameof(invln_Loanapplication.invln_Reasonfordirectorloannotsubordinated).ToLowerInvariant();
+        yield return nameof(invln_Loanapplication.invln_securitydetailscompletionstatus).ToLowerInvariant();
     }
 }

@@ -27,9 +27,9 @@ internal class GetSecurityHandler : IRequestHandler<GetSecurity, GetSecurityResp
                 LoanApplicationId = request.Id.Value,
                 ChargesDebtCompany = security.Debenture?.Exists.MapToCommonResponse(),
                 ChargesDebtCompanyInfo = security.Debenture?.Holder,
-                DirLoans = security.DirectLoans?.Exists.MapToCommonResponse(),
-                DirLoansSub = security.DirectLoans?.CanBeSubordinated.MapToCommonResponse(),
-                DirLoansSubMore = security.DirectLoans?.ReasonWhyCannotBeSubordinated,
+                DirLoans = security.DirectorLoans?.Exists.MapToCommonResponse(),
+                DirLoansSub = security.DirectorLoansSubordinate?.CanBeSubordinated.MapToCommonResponse(),
+                DirLoansSubMore = security.DirectorLoansSubordinate?.ReasonWhyCannotBeSubordinated,
             });
     }
 }

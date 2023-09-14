@@ -1,28 +1,29 @@
 using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Security.Commands;
+using HE.InvestmentLoans.Contract.Security.ValueObjects;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.Security.CommandHandler;
-internal class ProvideCompanyDebentureHandler : IRequestHandler<ProvideCompanyDebenture>
+internal class ProvideCompanyDebentureHandler : SecurityBaseCommandHandler, IRequestHandler<ProvideCompanyDebenture, OperationResult>
 {
-    private readonly ISecurityRepository _securityRepository;
-    private readonly ILoanUserContext _loanUserContext;
-
     public ProvideCompanyDebentureHandler(ISecurityRepository securityRepository, ILoanUserContext loanUserContext)
+        : base(securityRepository, loanUserContext)
     {
-        _securityRepository = securityRepository;
-        _loanUserContext = loanUserContext;
     }
 
-    public async Task Handle(ProvideCompanyDebenture request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(ProvideCompanyDebenture request, CancellationToken cancellationToken)
     {
-        var userAccount = await _loanUserContext.GetSelectedAccount();
+        return await Perform(
+            security =>
+            {
+                var debenture = request.Exists.IsProvided() ? Debenture.FromString(request.Exists, request.Holder) : null;
 
-        var security = await _securityRepository.GetAsync(request.Id, userAccount, cancellationToken);
-
-        security.ProvideDebenture(request.Debenture);
-
-        await _securityRepository.SaveAsync(security, userAccount, cancellationToken);
+                security.ProvideDebenture(debenture!);
+            },
+            request.Id,
+            cancellationToken);
     }
 }

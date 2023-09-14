@@ -37,7 +37,7 @@ public class SecurityController : Controller
 
         if (workflow.IsStateComplete())
         {
-            workflow.NextState(Trigger.Back);
+            await workflow.NextState(Trigger.Back);
         }
 
         return View(workflow.GetName(), model);
@@ -75,9 +75,9 @@ public class SecurityController : Controller
                 TryUpdateModelAction = x => this.TryUpdateModelAsync(x),
             }).ConfigureAwait(false);
 
-            workflow.NextState(Enum.Parse<Trigger>(action));
+            await workflow.NextState(Enum.Parse<Trigger>(action));
         }
-        catch (HE.InvestmentLoans.Common.Exceptions.ValidationException ex)
+        catch (Common.Exceptions.ValidationException ex)
         {
             ex.Results.ForEach(item => item.AddToModelState(ModelState, null));
         }
@@ -98,7 +98,7 @@ public class SecurityController : Controller
     {
         model = await this._mediator.Send(new BL.LoanApplicationLegacy.Queries.GetSingle() { Id = id });
         var workflow = new SecurityWorkflow(model, _mediator);
-        workflow.NextState(Trigger.Back);
+        await workflow.NextState(Trigger.Back);
         return RedirectToAction("Workflow", new { id = model.ID, ending = workflow.GetName() });
     }
 

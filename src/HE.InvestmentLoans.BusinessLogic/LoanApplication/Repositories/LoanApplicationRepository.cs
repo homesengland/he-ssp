@@ -159,6 +159,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             directorLoans = loanApplication.Security.DirLoans!.MapToBool(),
             confirmationDirectorLoansCanBeSubordinated = loanApplication.Security.DirLoansSub!.MapToBool(),
             reasonForDirectorLoanNotSubordinated = loanApplication.Security.DirLoansSubMore,
+            SecurityDetailsCompletionStatus = SectionStatusMapper.Map(loanApplication.Security.State),
 
             // SITEDETAILS
             siteDetailsList = siteDetailsDtos,

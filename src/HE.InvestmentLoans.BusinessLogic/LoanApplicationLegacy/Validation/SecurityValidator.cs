@@ -22,7 +22,7 @@ public class SecurityValidator : AbstractValidator<SecurityViewModel>
                     item => item.ChargesDebtCompanyInfo != null,
                     () => RuleFor(item => item.ChargesDebtCompanyInfo)
                         .Must(value => value!.Length <= MaximumInputLength.LongInput)
-                        .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
+                        .WithMessage(ValidationErrorMessage.LongInputLengthExceeded));
         });
 
         RuleSet(SecurityView.DirLoansSub, () =>
@@ -37,7 +37,7 @@ public class SecurityValidator : AbstractValidator<SecurityViewModel>
                     item => item.DirLoansSubMore != null,
                     () => RuleFor(item => item.DirLoansSubMore)
                         .Must(value => value!.Length <= MaximumInputLength.LongInput)
-                        .WithMessage(ValidationErrorMessage.InputLongerThanThousandCharacters));
+                        .WithMessage(ValidationErrorMessage.LongInputLengthExceeded));
         });
 
         RuleSet(SecurityView.CheckAnswers, () =>

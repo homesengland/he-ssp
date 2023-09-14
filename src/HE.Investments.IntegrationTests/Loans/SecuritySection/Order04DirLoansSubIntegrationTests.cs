@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.TestData;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
+using HE.InvestmentLoans.WWW.Views.SecurityV2.Consts;
 using Microsoft.PowerPlatform.Dataverse.Client.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -16,6 +18,7 @@ using Xunit.Extensions.Ordering;
 namespace HE.InvestmentLoans.IntegrationTests.Loans.SecuritySection;
 
 [Order(2)]
+[SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order04DirLoansSubIntegrationTests : IntegrationTest
 {
     private readonly string _applicationId;
@@ -41,7 +44,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
         // then
         checkAnswersPage
             .UrlEndWith(SecurityPageUrls.CheckYourAnswersSuffix)
-            .HasTitle("Check your answers");
+            .HasTitle(SecurityPageTitles.CheckAnswers);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -95,6 +98,6 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
         // then
         checkAnswersPage
             .UrlEndWith(SecurityPageUrls.CheckYourAnswersSuffix)
-            .HasTitle("Check your answers");
+            .HasTitle(SecurityPageTitles.CheckAnswers);
     }
 }

@@ -24,7 +24,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
     public StartApplicationIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _userConfig = new UserConfig();
+        _userConfig = TestClient.UserData();
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -94,13 +94,13 @@ public class StartApplicationIntegrationTests : IntegrationTest
             .HasTitle("Check your details")
             .GetSummaryListItems();
 
+        SetSharedData(CurrentPageKey, checkYourDetailsPage);
         items[CheckYourDetailsFields.RegisteredCompanyName].Should().Be(_userConfig.OrganizationName);
         items[CheckYourDetailsFields.CompanyRegistrationNumber].Should().Be(_userConfig.OrganizationRegistrationNumber);
         items[CheckYourDetailsFields.CompanyAddress].Should().Be(_userConfig.OrganizationAddress);
         items[CheckYourDetailsFields.ContactName].Should().Be(_userConfig.ContactName);
         items[CheckYourDetailsFields.EmailAddress].Should().Be(_userConfig.Email);
         items[CheckYourDetailsFields.TelephoneNumber].Should().Be(_userConfig.TelephoneNumer);
-        SetSharedData(CurrentPageKey, checkYourDetailsPage);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

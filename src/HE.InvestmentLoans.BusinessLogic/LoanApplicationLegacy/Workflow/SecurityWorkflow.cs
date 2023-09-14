@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Security;
 using HE.InvestmentLoans.Contract.Security.Queries;
@@ -14,17 +15,15 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 [SuppressMessage("Ordering Rules", "SA1201", Justification = "Need to refactored in the fure")]
 public class SecurityWorkflow : IStateRouting<SecurityState>
 {
-
     private readonly LoanApplicationViewModel _model;
     private readonly StateMachine<SecurityState, Trigger> _machine;
     private readonly IMediator _mediator;
-    private readonly LoanApplicationId _applicationId;
     private readonly SecurityViewModel _model2;
 
     public SecurityWorkflow(LoanApplicationViewModel model, IMediator mediator)
     {
         _model = model;
-        _machine = new StateMachine<SecurityState, Trigger>(_model.Security.State);
+        _machine = new StateMachine<SecurityState, Trigger>(SecurityState.Index);
         _mediator = mediator;
 
         ConfigureTransitions();
@@ -32,7 +31,6 @@ public class SecurityWorkflow : IStateRouting<SecurityState>
 
     public SecurityWorkflow(LoanApplicationId applicationId, SecurityViewModel model, IMediator mediator, SecurityState currentState)
     {
-        _applicationId = applicationId;
         _mediator = mediator;
         _model = new LoanApplicationViewModel { GoodChangeMode = true };
 
@@ -45,7 +43,7 @@ public class SecurityWorkflow : IStateRouting<SecurityState>
 
     public bool IsStateComplete()
     {
-        return _model.Security.State == SecurityState.Complete;
+        return _model.Security.State == SectionStatus.Completed;
     }
 
     public bool IsCompleted()
@@ -66,9 +64,20 @@ public class SecurityWorkflow : IStateRouting<SecurityState>
 
     public async void ChangeState(SecurityState state)
     {
-        _model.Security.State = state;
         _model.Security.StateChanged = true;
         await _mediator.Send(new Commands.Update() { Model = _model });
+    }
+
+    public async Task<SecurityState> NextState(Trigger trigger)
+    {
+        await _machine.FireAsync(trigger);
+
+        return _machine.State;
+    }
+
+    public Task<bool> StateCanBeAccessed(SecurityState nextState)
+    {
+        return Task.FromResult(true);
     }
 
     private void ConfigureTransitions()
@@ -94,8 +103,7 @@ public class SecurityWorkflow : IStateRouting<SecurityState>
             .Permit(Trigger.Change, SecurityState.CheckAnswers);
 
         _machine.Configure(SecurityState.CheckAnswers)
-           .PermitIf(Trigger.Continue, SecurityState.Complete, () => _model2.CheckAnswers == CommonResponse.Yes)
-           .IgnoreIf(Trigger.Continue, () => _model2.CheckAnswers != CommonResponse.Yes)
+           .Permit(Trigger.Continue, SecurityState.Complete)
            .PermitIf(Trigger.Back, SecurityState.DirLoansSub, () => _model2.DirLoans == CommonResponse.Yes)
            .PermitIf(Trigger.Back, SecurityState.DirLoans, () => _model2.DirLoans != CommonResponse.Yes)
            .OnExit(() =>
@@ -116,23 +124,9 @@ public class SecurityWorkflow : IStateRouting<SecurityState>
                 return Task.CompletedTask;
             }
 
-            _model.Security.State = x.Destination;
-
             _model.Security.RemoveAlternativeRoutesData();
 
             return _mediator.Send(new Commands.Update() { Model = _model });
         });
-    }
-
-    public async Task<SecurityState> NextState(Trigger trigger)
-    {
-        await _machine.FireAsync(trigger);
-
-        return _machine.State;
-    }
-
-    public Task<bool> StateCanBeAccessed(SecurityState nextState)
-    {
-        return Task.FromResult(true);
     }
 }

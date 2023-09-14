@@ -1,4 +1,5 @@
 namespace HE.InvestmentLoans.Contract.Security;
+
 public enum SecurityState : int
 {
     Index = 1,
