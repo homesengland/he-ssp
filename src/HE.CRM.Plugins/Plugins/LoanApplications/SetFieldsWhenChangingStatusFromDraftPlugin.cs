@@ -12,12 +12,12 @@ namespace HE.CRM.Plugins.Plugins.LoanApplications
        invln_Loanapplication.EntityLogicalName,
        StageEnum.PreOperation,
        ExecutionModeEnum.Synchronous,
-       "statuscode",
+       "statuscode,invln_externalstatus",
        "HE.CRM.Plugins.Plugins.LoanApplications.SetFieldsWhenChangingStatusFromDraftPlugin: Update of Loan Application",
        1,
        IsolationModeEnum.Sandbox,
        Id = "c29a5e63-d5de-4883-8bdf-a37c12be214c",
-       Image1Name = "PreImage", Image1Attributes = "statuscode",
+       Image1Name = "PreImage", Image1Attributes = "statuscode,invln_externalstatus",
        Image1Type = ImageTypeEnum.PreImage)]
     public class SetFieldsWhenChangingStatusFromDraftPlugin : PluginBase<DataverseContext>, IPlugin
     {

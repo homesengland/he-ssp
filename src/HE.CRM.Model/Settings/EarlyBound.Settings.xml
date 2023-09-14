@@ -42,6 +42,7 @@ invln_updateuserprofile</ActionsWhitelist>
     <EntitiesWhitelist>account|
 contact|
 invln_contactwebrole|
+invln_contract|
 invln_loanapplication|
 invln_portal|
 invln_portalpermissionlevel|

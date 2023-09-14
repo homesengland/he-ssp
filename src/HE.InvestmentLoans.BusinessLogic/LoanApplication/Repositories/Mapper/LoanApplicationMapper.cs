@@ -29,9 +29,6 @@ public static class LoanApplicationMapper
             AccountId = (Guid)userAccount.AccountId!,
             ContactEmail = userAccount.UserEmail,
             ContactExternalId = userAccount.UserGlobalId.ToString(),
-            ContactFirstName = userAccount.FirstName,
-            ContactLastName = userAccount.LastName,
-            ContactTelephoneNumber = userAccount.TelephoneNumber,
         };
     }
 

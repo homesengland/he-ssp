@@ -29,6 +29,7 @@ public class LoanUserContextTestBuilder
         UserAccountFromMock = userAccount;
         _mock.Setup(x => x.GetSelectedAccount()).ReturnsAsync(userAccount);
         _mock.Setup(x => x.GetSelectedAccountId()).ReturnsAsync(userAccount.AccountId);
+        _mock.Setup(x => x.GetAllAccounts()).ReturnsAsync(new List<UserAccount> { userAccount });
         _mock.Setup(x => x.UserGlobalId).Returns(userAccount.UserGlobalId);
         _mock.Setup(x => x.Email).Returns(userAccount.UserEmail);
 
@@ -52,6 +53,7 @@ public class LoanUserContextTestBuilder
     public LoanUserContextTestBuilder ReturnUserDetails(UserDetails userDetails)
     {
         UserDetailsFromMock = userDetails;
+        _mock.Setup(x => x.GetUserDetails()).ReturnsAsync(userDetails);
         return this;
     }
 

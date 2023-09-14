@@ -283,7 +283,10 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
         public void SetFieldsWhenChangingStatusFromDraft(invln_Loanapplication target, invln_Loanapplication preImage)
         {
-            if (preImage.StatusCode.Value == (int)invln_Loanapplication_StatusCode.Draft && target.StatusCode.Value == (int)invln_Loanapplication_StatusCode.ApplicationSubmitted)
+            if ((preImage.StatusCode != null && target.StatusCode != null && preImage.StatusCode.Value == (int)invln_Loanapplication_StatusCode.Draft
+                && target.StatusCode.Value == (int)invln_Loanapplication_StatusCode.ApplicationSubmitted) ||
+                (preImage.invln_ExternalStatus != null && target.invln_ExternalStatus != null && preImage.invln_ExternalStatus.Value == (int)invln_ExternalStatus.Draft
+                && target.invln_ExternalStatus.Value == (int)invln_ExternalStatus.ApplicationSubmitted))
             {
                 var relatedSiteDetails = siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(target.ToEntityReference());
                 if (relatedSiteDetails != null && relatedSiteDetails.Count > 0)
