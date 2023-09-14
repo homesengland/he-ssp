@@ -7,6 +7,7 @@ using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Filters;
 using HE.InvestmentLoans.WWW.Middlewares;
 using Microsoft.FeatureManagement;
+using HeaderSecurityMiddleware = HE.InvestmentLoans.WWW.Middlewares.HeaderSecurityMiddleware;
 
 #pragma warning disable CA1852
 #pragma warning disable CA1812
