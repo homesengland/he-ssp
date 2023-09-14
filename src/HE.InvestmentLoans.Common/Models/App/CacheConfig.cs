@@ -2,6 +2,8 @@ namespace HE.InvestmentLoans.Common.Models.App;
 
 public class CacheConfig : ICacheConfig
 {
+    public bool? RedisCertificateEnabled { get; set; }
+
     public string RedisCertificatePath { get; set; }
 
     public string RedisCertificateKeyPath { get; set; }
