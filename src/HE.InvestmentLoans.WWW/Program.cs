@@ -1,4 +1,5 @@
-using HE.InvestmentLoans.Common.Authorization;
+using He.Identity.Auth0;
+using He.Identity.Mvc;
 using HE.InvestmentLoans.Common.Infrastructure.Middlewares;
 using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.WWW.Config;
@@ -36,8 +37,33 @@ builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 
-var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<ExceptionFilter>());
-builder.AddIdentityProviderConfiguration(mvcBuilder);
+var mvcBuilder = builder.Services.AddControllersWithViews(config => config.Filters.Add<ExceptionFilter>());
+
+builder.Services.ConfigureHeCookieSettings(
+    mvcBuilder,
+    configure => configure.WithAspNetCore().WithHeIdentity());
+
+var heIdentityConfiguration = new HeIdentityCookieConfiguration
+{
+    Domain = config.Auth0.Domain,
+    ClientId = config.Auth0.ClientId,
+    ClientSecret = config.Auth0.ClientSecret,
+    SupportEmail = config.SupportEmail,
+};
+mvcBuilder.AddHeIdentityCookieAuth(heIdentityConfiguration, builder.Environment);
+
+var auth0Config = new He.Identity.Auth0.Auth0Config(
+    config.Auth0.Domain,
+    config.Auth0.ClientId,
+    config.Auth0.ClientSecret);
+var auth0ManagementConfig = new Auth0ManagementConfig(
+    config.Auth0.Domain,
+    config.Auth0.ClientId,
+    config.Auth0.ClientSecret,
+    config.Auth0.ManagementClientAudience,
+    config.Auth0.UserConnection);
+
+builder.Services.ConfigureIdentityManagementService(x => x.UseAuth0(auth0Config, auth0ManagementConfig));
 
 var app = builder.Build();
 
@@ -66,7 +92,6 @@ if (!app.Environment.IsDevelopment())
         return next();
     });
 }
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
