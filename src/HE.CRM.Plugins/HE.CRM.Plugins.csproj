@@ -122,7 +122,6 @@
   <ItemGroup>
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Exceptions\IntegrationApiException.cs" />
-    <Compile Include="Handlers\Accounts\GenerateRandomAccountNameSampleHandler.cs" />
     <Compile Include="Handlers\Accounts\OnCurrentCrrFieldUpdateHandler.cs" />
     <Compile Include="Handlers\Contract\RejectAddingWhenRelatedLoanInApprovedStatusHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeLoanApplicationExternalStatusHandler.cs" />
