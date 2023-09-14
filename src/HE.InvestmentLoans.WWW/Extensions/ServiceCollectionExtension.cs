@@ -17,15 +17,18 @@ public static class ServiceCollectionExtension
         services.AddSingleton<ICacheConfig>(x => x.GetRequiredService<IAppConfig>().Cache);
     }
 
-    public static void AddCache(this IServiceCollection services, ICacheConfig config)
+    public static void AddCache(this IServiceCollection services, ICacheConfig config, IAppConfig appConfig)
     {
-        if (!string.IsNullOrEmpty(config.RedisConnectionString))
+        if (string.IsNullOrEmpty(config.RedisConnectionString) || config.RedisConnectionString == "off")
         {
-            services.AddSingleton<ICacheService, RedisService>();
+            services.AddSingleton<ICacheService, MemoryCacheService>();
         }
         else
         {
-            services.AddSingleton<ICacheService, MemoryCacheService>();
+            services.AddSingleton<ICacheService, RedisService>();
+            services.AddDataProtection()
+                .SetApplicationName(appConfig.AppName!)
+                .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(config.RedisConnectionString), "DataProtection-Keys");
         }
     }
 }

@@ -14,14 +14,17 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_Permission
+	public enum invln_Role
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Accountadministrator = 858110000,
+		Monitoringsurveyor = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Limiteduser = 858110001,
+		Solicitor = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Valuer = 858110001,
 	}
 }
 #pragma warning restore CS1591

@@ -20,9 +20,7 @@ public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, G
 
     public async Task<GetUserDetailsResponse> Handle(GetUserDetailsQuery request, CancellationToken cancellationToken)
     {
-        var selectedAccount = await _loanUserContext.GetSelectedAccount();
-
-        var userDetails = await _loanUserRepository.GetUserDetails(selectedAccount.UserGlobalId);
+        var userDetails = await _loanUserRepository.GetUserDetails(_loanUserContext.UserGlobalId);
 
         return new GetUserDetailsResponse(UserDetailsMapper.MapToViewModel(userDetails));
     }

@@ -12,22 +12,22 @@ namespace HE.CRM.Plugins.Plugins.LoanApplications
        invln_Loanapplication.EntityLogicalName,
        StageEnum.PreOperation,
        ExecutionModeEnum.Synchronous,
-       "statuscode,invln_externalstatus",
-       "HE.CRM.Plugins.Plugins.LoanApplications.SetFieldsWhenChangingStatusFromDraftPlugin: Update of Loan Application",
+       "statuscode",
+       "HE.CRM.Plugins.Plugins.LoanApplications.SendInternalNotificationOnStatusChangePlugin: Update of Loan Application",
        1,
        IsolationModeEnum.Sandbox,
-       Id = "c29a5e63-d5de-4883-8bdf-a37c12be214c",
-       Image1Name = "PreImage", Image1Attributes = "statuscode,invln_externalstatus",
+       Id = "0c45565a-bd91-4610-ac44-fc10205e2aa1",
+       Image1Name = "PreImage", Image1Attributes = "",
        Image1Type = ImageTypeEnum.PreImage)]
-    public class SetFieldsWhenChangingStatusFromDraftPlugin : PluginBase<DataverseContext>, IPlugin
+    public class SendInternalNotificationOnStatusChangePlugin : PluginBase<DataverseContext>, IPlugin
     {
-        public SetFieldsWhenChangingStatusFromDraftPlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
+        public SendInternalNotificationOnStatusChangePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
 
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
-            registeredHandlers.Add(handlerFactory.GetHandler<SetFieldsWhenChangingStatusFromDraftHandler>());
+            registeredHandlers.Add(handlerFactory.GetHandler<SendInternalNotificationOnStatusChangeHandler>());
         }
     }
 }

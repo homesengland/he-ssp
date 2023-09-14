@@ -8,11 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddApplicationInsightsTelemetry();
-var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<ExceptionFilter>());
-
 builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
+var mvcBuilder = builder.Services.AddControllersWithViews();
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 
 var app = builder.Build();
@@ -27,7 +26,6 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseHeCookieSettings();
 app.UseMiddleware<HeaderSecurityMiddleware>();
 
 app.MapControllerRoute(

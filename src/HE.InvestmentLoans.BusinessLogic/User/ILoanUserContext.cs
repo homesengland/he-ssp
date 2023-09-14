@@ -9,13 +9,13 @@ public interface ILoanUserContext
 
     public string Email { get; }
 
-    public IReadOnlyCollection<string> Roles { get; }
-
     public Task<Guid?> GetSelectedAccountId();
 
-    Task<IList<Guid>> GetAllAccountIds();
+    Task<IList<UserAccount>> GetAllAccounts();
 
     Task<UserAccount> GetSelectedAccount();
+
+    Task<UserDetails> GetUserDetails();
 
     public void RefreshUserData();
 

@@ -14,10 +14,10 @@ namespace DataverseModel
 	
 	
 	/// <summary>
-	/// Status of the Contact webrole
+	/// Status of the Contract
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_contactwebroleState
+	public enum invln_contractState
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -28,10 +28,10 @@ namespace DataverseModel
 	}
 	
 	/// <summary>
-	/// Reason for the status of the Contact webrole
+	/// Reason for the status of the Contract
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_contactwebrole_StatusCode
+	public enum invln_contract_StatusCode
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -42,12 +42,12 @@ namespace DataverseModel
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_contactwebrole")]
-	public partial class invln_contactwebrole : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_contract")]
+	public partial class invln_contract : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
 		/// <summary>
-		/// Available fields, a the time of codegen, for the invln_contactwebrole entity
+		/// Available fields, a the time of codegen, for the invln_contract entity
 		/// </summary>
 		public static partial class Fields
 		{
@@ -57,18 +57,14 @@ namespace DataverseModel
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string ImportSequenceNumber = "importsequencenumber";
-			public const string invln_account_invln_contactwebrole_Accountid = "invln_account_invln_contactwebrole_Accountid";
-			public const string invln_Accountid = "invln_accountid";
-			public const string invln_AccountidName = "invln_accountidname";
-			public const string invln_contact_invln_contactwebrole_Contactid = "invln_contact_invln_contactwebrole_Contactid";
-			public const string invln_Contactid = "invln_contactid";
-			public const string invln_ContactidName = "invln_contactidname";
-			public const string invln_contactwebroleId = "invln_contactwebroleid";
-			public const string Id = "invln_contactwebroleid";
-			public const string invln_invln_webrole_invln_contactwebrole_Webroleid = "invln_invln_webrole_invln_contactwebrole_Webroleid";
+			public const string invln_contractId = "invln_contractid";
+			public const string Id = "invln_contractid";
+			public const string invln_description = "invln_description";
+			public const string invln_invln_loanapplication_invln_contract_Loanapplication = "invln_invln_loanapplication_invln_contract_Loanapplication";
+			public const string invln_loanapplicationid = "invln_loanapplicationid";
+			public const string invln_loanapplicationidName = "invln_loanapplicationidname";
 			public const string invln_name = "invln_name";
-			public const string invln_Webroleid = "invln_webroleid";
-			public const string invln_WebroleidName = "invln_webroleidname";
+			public const string invln_url = "invln_url";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedByName = "modifiedbyname";
 			public const string ModifiedOn = "modifiedon";
@@ -94,22 +90,22 @@ namespace DataverseModel
 		/// Default Constructor.
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public invln_contactwebrole() : 
+		public invln_contract() : 
 				base(EntityLogicalName)
 		{
 		}
 		
-		public const string PrimaryIdAttribute = "invln_contactwebroleid";
+		public const string PrimaryIdAttribute = "invln_contractid";
 		
 		public const string PrimaryNameAttribute = "invln_name";
 		
-		public const string EntitySchemaName = "invln_contactwebrole";
+		public const string EntitySchemaName = "invln_contract";
 		
-		public const string EntityLogicalName = "invln_contactwebrole";
+		public const string EntityLogicalName = "invln_contract";
 		
-		public const string EntityLogicalCollectionName = "invln_contactwebroles";
+		public const string EntityLogicalCollectionName = "invln_contracts";
 		
-		public const string EntitySetName = "invln_contactwebroles";
+		public const string EntitySetName = "invln_contracts";
 		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 		
@@ -199,56 +195,22 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_accountid")]
-		public Microsoft.Xrm.Sdk.EntityReference invln_Accountid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_accountid");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Accountid");
-				this.SetAttributeValue("invln_accountid", value);
-				this.OnPropertyChanged("invln_Accountid");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactid")]
-		public Microsoft.Xrm.Sdk.EntityReference invln_Contactid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_contactid");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Contactid");
-				this.SetAttributeValue("invln_contactid", value);
-				this.OnPropertyChanged("invln_Contactid");
-			}
-		}
-		
 		/// <summary>
 		/// Unique identifier for entity instances
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactwebroleid")]
-		public System.Nullable<System.Guid> invln_contactwebroleId
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contractid")]
+		public System.Nullable<System.Guid> invln_contractId
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<System.Guid>>("invln_contactwebroleid");
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("invln_contractid");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_contactwebroleId");
-				this.SetAttributeValue("invln_contactwebroleid", value);
+				this.OnPropertyChanging("invln_contractId");
+				this.SetAttributeValue("invln_contractid", value);
 				if (value.HasValue)
 				{
 					base.Id = value.Value;
@@ -257,11 +219,11 @@ namespace DataverseModel
 				{
 					base.Id = System.Guid.Empty;
 				}
-				this.OnPropertyChanged("invln_contactwebroleId");
+				this.OnPropertyChanged("invln_contractId");
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactwebroleid")]
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contractid")]
 		public override System.Guid Id
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
@@ -272,7 +234,41 @@ namespace DataverseModel
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.invln_contactwebroleId = value;
+				this.invln_contractId = value;
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_description")]
+		public string invln_description
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_description");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_description");
+				this.SetAttributeValue("invln_description", value);
+				this.OnPropertyChanged("invln_description");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanapplicationid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_loanapplicationid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_loanapplicationid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplicationid");
+				this.SetAttributeValue("invln_loanapplicationid", value);
+				this.OnPropertyChanged("invln_loanapplicationid");
 			}
 		}
 		
@@ -296,20 +292,20 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_webroleid")]
-		public Microsoft.Xrm.Sdk.EntityReference invln_Webroleid
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_url")]
+		public string invln_url
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_webroleid");
+				return this.GetAttributeValue<string>("invln_url");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_Webroleid");
-				this.SetAttributeValue("invln_webroleid", value);
-				this.OnPropertyChanged("invln_Webroleid");
+				this.OnPropertyChanging("invln_url");
+				this.SetAttributeValue("invln_url", value);
+				this.OnPropertyChanged("invln_url");
 			}
 		}
 		
@@ -446,7 +442,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Status of the Contact webrole
+		/// Status of the Contract
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue StateCode
@@ -466,7 +462,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Reason for the status of the Contact webrole
+		/// Reason for the status of the Contract
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue StatusCode
@@ -539,65 +535,23 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// N:1 invln_account_invln_contactwebrole_Accountid
+		/// N:1 invln_invln_loanapplication_invln_contract_Loanapplication
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_accountid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_account_invln_contactwebrole_Accountid")]
-		public DataverseModel.Account invln_account_invln_contactwebrole_Accountid
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanapplicationid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_loanapplication_invln_contract_Loanapplication")]
+		public DataverseModel.invln_Loanapplication invln_invln_loanapplication_invln_contract_Loanapplication
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.Account>("invln_account_invln_contactwebrole_Accountid", null);
+				return this.GetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_invln_loanapplication_invln_contract_Loanapplication", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_account_invln_contactwebrole_Accountid");
-				this.SetRelatedEntity<DataverseModel.Account>("invln_account_invln_contactwebrole_Accountid", null, value);
-				this.OnPropertyChanged("invln_account_invln_contactwebrole_Accountid");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 invln_contact_invln_contactwebrole_Contactid
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_contactwebrole_Contactid")]
-		public DataverseModel.Contact invln_contact_invln_contactwebrole_Contactid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.Contact>("invln_contact_invln_contactwebrole_Contactid", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_contact_invln_contactwebrole_Contactid");
-				this.SetRelatedEntity<DataverseModel.Contact>("invln_contact_invln_contactwebrole_Contactid", null, value);
-				this.OnPropertyChanged("invln_contact_invln_contactwebrole_Contactid");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 invln_invln_webrole_invln_contactwebrole_Webroleid
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_webroleid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_webrole_invln_contactwebrole_Webroleid")]
-		public DataverseModel.invln_Webrole invln_invln_webrole_invln_contactwebrole_Webroleid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.invln_Webrole>("invln_invln_webrole_invln_contactwebrole_Webroleid", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_invln_webrole_invln_contactwebrole_Webroleid");
-				this.SetRelatedEntity<DataverseModel.invln_Webrole>("invln_invln_webrole_invln_contactwebrole_Webroleid", null, value);
-				this.OnPropertyChanged("invln_invln_webrole_invln_contactwebrole_Webroleid");
+				this.OnPropertyChanging("invln_invln_loanapplication_invln_contract_Loanapplication");
+				this.SetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_invln_loanapplication_invln_contract_Loanapplication", null, value);
+				this.OnPropertyChanged("invln_invln_loanapplication_invln_contract_Loanapplication");
 			}
 		}
 		
@@ -606,7 +560,7 @@ namespace DataverseModel
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public invln_contactwebrole(object anonymousType) : 
+		public invln_contract(object anonymousType) : 
 				this()
 		{
             foreach (var p in anonymousType.GetType().GetProperties())
@@ -624,9 +578,9 @@ namespace DataverseModel
                 {
                     case "id":
                         base.Id = (System.Guid)value;
-                        Attributes["invln_contactwebroleid"] = base.Id;
+                        Attributes["invln_contractid"] = base.Id;
                         break;
-                    case "invln_contactwebroleid":
+                    case "invln_contractid":
                         var id = (System.Nullable<System.Guid>) value;
                         if(id == null){ continue; }
                         base.Id = id.Value;

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
@@ -10,10 +5,11 @@ using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.User.UserRepositoryTests;
+
 public class GetUserAccountTests : TestBase<LoanUserRepository>
 {
     [Fact]
-    public async Task ShouldReturnContactRolesDto_WhenUserGlobalIdAndEmailAreCorrect()
+    public async Task ShouldReturnUserAccounts_WhenUserGlobalIdAndEmailAreCorrect()
     {
         // given
         var contactRolesDto = ContactServiceMockTestBuilder
@@ -27,16 +23,17 @@ public class GetUserAccountTests : TestBase<LoanUserRepository>
             .Register(this);
 
         // when
-        var result = await TestCandidate.GetUserRoles(UserGlobalId.From(contactRolesDto.externalId), contactRolesDto.email);
+        var result = await TestCandidate.GetUserAccounts(UserGlobalId.From(contactRolesDto.externalId), contactRolesDto.email);
 
         // then
-        result!.externalId.Should().Be(contactRolesDto.externalId);
-        result.email.Should().Be(contactRolesDto.email);
-        result.contactRoles.Should().BeEquivalentTo(contactRolesDto.contactRoles);
+        var account = result.First();
+        account.UserGlobalId.Value.Should().Be(contactRolesDto.externalId);
+        account.UserEmail.Should().Be(contactRolesDto.email);
+        account.Roles.Should().ContainSingle(x => x.Role == contactRolesDto.contactRoles.First().webRoleName);
     }
 
     [Fact]
-    public async Task ShouldReturnEmptyContactRoles_WhenUserGlobalIdAndEmailAreFake()
+    public async Task ShouldReturnEmptyUserAccounts_WhenUserGlobalIdAndEmailAreFake()
     {
         // given
         var contactRolesDto = ContactServiceMockTestBuilder
@@ -53,9 +50,9 @@ public class GetUserAccountTests : TestBase<LoanUserRepository>
         var fakeEmail = "fake@fake.com";
 
         // when
-        var result = await TestCandidate.GetUserRoles(UserGlobalId.From(wrongUserGlobalId), fakeEmail);
+        var result = await TestCandidate.GetUserAccounts(UserGlobalId.From(wrongUserGlobalId), fakeEmail);
 
         // then
-        result?.contactRoles.Should().BeNull();
+        result.Should().BeEmpty();
     }
 }

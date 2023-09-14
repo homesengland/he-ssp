@@ -65,7 +65,7 @@ public class GetBasicInformationTests : TestBase<OrganizationRepository>
             .Register(this)
             .UserAccountFromMock;
 
-        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, GuidTestData.GuidTwo, string.Empty, null, null, null);
+        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, GuidTestData.GuidTwo, string.Empty, Array.Empty<UserAccountRole>());
 
         OrganizationServiceMockTestBuilder
             .New()

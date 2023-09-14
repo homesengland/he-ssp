@@ -28,15 +28,6 @@ public class UserRepositoryTestBuilder
 
     public static UserRepositoryTestBuilder New() => new();
 
-    public UserRepositoryTestBuilder ReturnUserAccountEntity(
-        UserGlobalId userGlobalId,
-        string userEmail,
-        ContactRolesDto contactRolesDto)
-    {
-        _mock.Setup(x => x.GetUserRoles(userGlobalId, userEmail)).ReturnsAsync(contactRolesDto);
-        return this;
-    }
-
     public UserRepositoryTestBuilder ReturnUserDetailsEntity(
         UserGlobalId userGlobalId,
         UserDetails userDetails)

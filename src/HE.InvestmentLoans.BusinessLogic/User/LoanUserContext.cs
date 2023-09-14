@@ -16,11 +16,11 @@ public class LoanUserContext : ILoanUserContext
 
     private readonly ICacheService _cacheService;
 
-    private readonly IList<Guid> _accountIds = new List<Guid>();
+    private IList<UserAccount> _accounts = new List<UserAccount>();
 
     private UserAccount? _selectedAccount;
 
-    private bool? _isLinkedWithOrganization;
+    private UserDetails? _details;
 
     public LoanUserContext(IUserContext userContext, ILoanUserRepository loanUserRepository, ICacheService cacheService)
     {
@@ -31,97 +31,109 @@ public class LoanUserContext : ILoanUserContext
 
     public UserGlobalId UserGlobalId => UserGlobalId.From(_userContext.UserGlobalId);
 
-    public string Email => _userContext.Email ?? string.Empty;
-
-    public IReadOnlyCollection<string> Roles { get; }
+    public string Email => _userContext.Email;
 
     public async Task<Guid?> GetSelectedAccountId()
     {
-        if (_selectedAccount is null)
+        if (_details is null)
         {
-            await LoadUserAccount();
+            await LoadUserData();
         }
 
         return _selectedAccount?.AccountId;
     }
 
-    public async Task<IList<Guid>> GetAllAccountIds()
+    public async Task<IList<UserAccount>> GetAllAccounts()
     {
-        if (_selectedAccount is null)
+        if (_details is null)
         {
-            await LoadUserAccount();
+            await LoadUserData();
         }
 
-        return _accountIds;
+        return _accounts;
     }
 
     public async Task<UserAccount> GetSelectedAccount()
     {
-        if (_selectedAccount is null)
+        if (_details is null)
         {
-            await LoadUserAccount();
+            await LoadUserData();
         }
 
         return _selectedAccount!;
     }
 
+    public async Task<UserDetails> GetUserDetails()
+    {
+        if (_details is null)
+        {
+            await LoadUserData();
+        }
+
+        return _details!;
+    }
+
     public async void RefreshUserData()
     {
-        var userRoleDto = await _loanUserRepository.GetUserRoles(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email);
-
-        var userDetails = await _loanUserRepository.GetUserDetails(UserGlobalId)
-                                ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
-
-        _cacheService.SetValue($"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}", userRoleDto);
-
-        _cacheService.SetValue($"UserDetails-{UserGlobalId}", userDetails);
+        await RefreshUserAccounts();
+        await RefreshUserDetails();
     }
 
     public async Task<bool> IsProfileCompleted()
     {
-        var userDetails = await _cacheService.GetValueAsync(
-                                                $"UserDetails-{UserGlobalId}",
-                                                async () => await _loanUserRepository.GetUserDetails(UserGlobalId))
-                                                            ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
-        return userDetails.IsProfileCompleted();
+        if (_details is null)
+        {
+            await LoadUserData();
+        }
+
+        return _details!.IsProfileCompleted();
     }
 
     public async Task<bool> IsLinkedWithOrganization()
     {
-        if (_isLinkedWithOrganization is null)
+        if (_details is null)
         {
-            await LoadUserAccount();
+            await LoadUserData();
         }
 
-        return _isLinkedWithOrganization!.Value;
+        return _selectedAccount is not null;
     }
 
-    private async Task LoadUserAccount()
+    private async Task RefreshUserDetails()
     {
-        var userRoleDto = await _cacheService.GetValueAsync(
-            $"{nameof(this.LoadUserAccount)}_{_userContext.UserGlobalId}",
-            async () => await _loanUserRepository.GetUserRoles(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email));
+        _details = await _loanUserRepository.GetUserDetails(UserGlobalId)
+                   ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
+        _cacheService.SetValue($"UserDetails-{UserGlobalId}", _details);
+    }
 
-        var userDetails = await _cacheService.GetValueAsync(
-                                                $"UserDetails-{UserGlobalId}",
-                                                async () => await _loanUserRepository.GetUserDetails(UserGlobalId))
-                                                            ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
+    private async Task RefreshUserAccounts()
+    {
+        var userAccounts = await _loanUserRepository.GetUserAccounts(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email);
+        _cacheService.SetValue($"{nameof(RefreshUserAccounts)}_{_userContext.UserGlobalId}", userAccounts);
+    }
 
-        var accounts = userRoleDto?.contactRoles?.OrderBy(x => x.accountId).ToList();
+    private async Task LoadUserData()
+    {
+        await LoadUserAccounts();
+        await LoadUserDetails();
+    }
 
-        _accountIds.AddRange(accounts?.Select(x => x.accountId).ToList());
+    private async Task LoadUserAccounts()
+    {
+        _accounts = (await _cacheService.GetValueAsync(
+            $"{nameof(LoadUserData)}_{_userContext.UserGlobalId}",
+            async () => await _loanUserRepository.GetUserAccounts(
+                UserGlobalId.From(_userContext.UserGlobalId),
+                _userContext.Email)))!;
 
-        var selectedAccount = accounts?.FirstOrDefault();
+        _selectedAccount = _accounts?.MinBy(x => x.AccountId);
+    }
 
-        _isLinkedWithOrganization = userRoleDto?.contactRoles?.Any() ?? false;
-
-        _selectedAccount = new UserAccount(
-            UserGlobalId,
-            Email,
-            selectedAccount?.accountId,
-            selectedAccount?.accountName,
-            userDetails.FirstName,
-            userDetails.Surname,
-            userDetails.TelephoneNumber);
+    private async Task LoadUserDetails()
+    {
+        _details = await _cacheService.GetValueAsync(
+                       $"UserDetails-{UserGlobalId}",
+                       async () => await _loanUserRepository.GetUserDetails(UserGlobalId))
+                   ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
     }
 }
