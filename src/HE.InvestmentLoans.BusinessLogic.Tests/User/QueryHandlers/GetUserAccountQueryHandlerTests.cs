@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User.QueryHandlers;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
@@ -21,9 +22,12 @@ public class GetUserAccountQueryHandlerTests : TestBase<GetUserAccountQueryHandl
             .Register(this)
             .UserAccountFromMock;
 
+        var userDetails = UserDetailsTestData.UserDetailsOne;
+
         LoanUserContextTestBuilder
             .New()
             .ReturnUserAccount(userAccount)
+            .ReturnUserDetails(userDetails)
             .Register(this);
 
         // when
@@ -33,8 +37,8 @@ public class GetUserAccountQueryHandlerTests : TestBase<GetUserAccountQueryHandl
         result.Email.Should().Be(userAccount.UserEmail);
         result.UserGlobalId.Should().Be(userAccount.UserGlobalId.ToString());
         result.SelectedAccountId.Should().Be(userAccount.AccountId);
-        result.FirstName.Should().Be(userAccount.FirstName);
-        result.LastName.Should().Be(userAccount.LastName);
-        result.TelephoneNumber.Should().Be(userAccount.TelephoneNumber);
+        result.FirstName.Should().Be(userDetails.FirstName);
+        result.LastName.Should().Be(userDetails.Surname);
+        result.TelephoneNumber.Should().Be(userDetails.TelephoneNumber);
     }
 }
