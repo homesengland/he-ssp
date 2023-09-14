@@ -1,5 +1,3 @@
-using He.Identity.Auth0;
-using He.Identity.Mvc;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Infrastructure.Middlewares;
 using HE.InvestmentLoans.Common.Models.App;
@@ -8,7 +6,6 @@ using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Filters;
 using HE.InvestmentLoans.WWW.Middlewares;
 using Microsoft.FeatureManagement;
-using HeaderSecurityMiddleware = HE.InvestmentLoans.WWW.Middlewares.HeaderSecurityMiddleware;
 
 #pragma warning disable CA1852
 #pragma warning disable CA1812
