@@ -33,13 +33,14 @@ builder.Services.AddCache(config.Cache);
 
 builder.Services.AddApplicationInsightsTelemetry();
 
-builder.Services.AddHttpClient().AddWebModule();
+builder.Services.AddHttpClient();
+builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 
-var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<ExceptionFilter>());
+var mvcbuilder = builder.Services.AddControllersWithViews(config => config.Filters.Add<ExceptionFilter>());
 
 builder.Services.ConfigureHeCookieSettings(
-    mvcBuilder,
+    mvcbuilder,
     configure => configure.WithAspNetCore().WithHeIdentity());
 
 var heIdentityConfiguration = new HeIdentityCookieConfiguration
@@ -49,7 +50,7 @@ var heIdentityConfiguration = new HeIdentityCookieConfiguration
     ClientSecret = config.Auth0.ClientSecret,
     SupportEmail = config.SupportEmail,
 };
-mvcBuilder.AddHeIdentityCookieAuth(heIdentityConfiguration, builder.Environment);
+mvcbuilder.AddHeIdentityCookieAuth(heIdentityConfiguration, builder.Environment);
 
 var auth0Config = new He.Identity.Auth0.Auth0Config(
     config.Auth0.Domain,
