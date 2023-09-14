@@ -71,7 +71,21 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+
+    app.Use(async (context, next) =>
+    {
+        await next();
+        if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
+        {
+            context.Items["originalPath"] = context.Request.Path.Value;
+            context.Items["backUrl"] = context.Request.Headers["Referer"];
+            context.Request.Path = "/Home/PageNotFound";
+            await next();
+        }
+    });
+
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    // app.UseHsts();
     app.Use((context, next) =>
     {
         // assume all non-development requests are https
