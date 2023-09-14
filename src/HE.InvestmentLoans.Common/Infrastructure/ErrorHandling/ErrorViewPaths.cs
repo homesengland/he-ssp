@@ -1,6 +1,6 @@
-namespace HE.InvestmentLoans.WWW.Config;
+namespace HE.InvestmentLoans.Common.Infrastructure.ErrorHandling;
 
-public static class ViewPaths
+public static class ErrorViewPaths
 {
     public const string Errors = "Errors";
 

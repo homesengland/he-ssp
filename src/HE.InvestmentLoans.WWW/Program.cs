@@ -1,9 +1,9 @@
 using HE.InvestmentLoans.Common.Authorization;
+using HE.InvestmentLoans.Common.Infrastructure.ErrorHandling;
 using HE.InvestmentLoans.Common.Infrastructure.Middlewares;
 using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.WWW.Config;
 using HE.InvestmentLoans.WWW.Extensions;
-using HE.InvestmentLoans.WWW.Filters;
 using HE.InvestmentLoans.WWW.Middlewares;
 using Microsoft.FeatureManagement;
 
