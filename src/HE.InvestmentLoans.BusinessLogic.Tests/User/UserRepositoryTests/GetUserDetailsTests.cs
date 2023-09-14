@@ -10,10 +10,10 @@ using HE.InvestmentLoans.BusinessLogic.Tests.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
-using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Xunit;
 

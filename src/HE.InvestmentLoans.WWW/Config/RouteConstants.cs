@@ -9,8 +9,4 @@ public static class RouteConstants
     public const string LastApplicationPage = "/CheckYourAnswers";
 
     public const string EmailProblemPage = "/PersonalDetails/EmailProblem?Applicant={0}";
-
-    public const string ErrorPageNotFound = "/page-not-found";
-
-    public const string ErrorProblemWithTheService = "/problem-with-the-service";
 }

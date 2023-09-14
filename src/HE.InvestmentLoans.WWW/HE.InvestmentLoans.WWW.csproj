@@ -56,4 +56,8 @@
     <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Filters\" />
+  </ItemGroup>
+
 </Project>

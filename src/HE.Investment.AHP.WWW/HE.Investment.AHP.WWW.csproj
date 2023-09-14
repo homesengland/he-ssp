@@ -46,4 +46,9 @@
     <ProjectReference Include="..\HE.InvestmentLoans.Common\HE.InvestmentLoans.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Include="Views\Shared\Errors\PageNotFound.cshtml" />
+    <AdditionalFiles Include="Views\Shared\Errors\ProblemWithTheService.cshtml" />
+  </ItemGroup>
+
 </Project>
