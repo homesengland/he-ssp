@@ -400,6 +400,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 invln_notificationbody = $"[Application ref no {target.invln_Name ?? preImage.invln_Name} - Status change to '{statusLabel}](?pagetype=entityrecord&etn=invln_loanapplication&id={target.Id})'",
                 invln_notificationowner = target.OwnerId == null ? preImage.OwnerId.Id.ToString() : target.OwnerId.Id.ToString(),
                 invln_notificationtitle = "Information",
+                invln_loanapplicationid = target.Id.ToString(),
             };
             _ = loanApplicationRepository.ExecuteNotificatioRequest(req1);
         }
