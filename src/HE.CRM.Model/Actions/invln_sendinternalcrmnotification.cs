@@ -20,7 +20,7 @@ namespace DataverseModel
 		
 		public static class Fields
 		{
-			public const string invln_loanapplicationid = "invln_loanapplicationid";
+			public const string invln_emailid = "invln_emailid";
 			public const string invln_notificationbody = "invln_notificationbody";
 			public const string invln_notificationowner = "invln_notificationowner";
 			public const string invln_notificationtitle = "invln_notificationtitle";
@@ -28,13 +28,13 @@ namespace DataverseModel
 		
 		public const string ActionLogicalName = "invln_sendinternalcrmnotification";
 		
-		public string invln_loanapplicationid
+		public string invln_emailid
 		{
 			get
 			{
-				if (this.Parameters.Contains("invln_loanapplicationid"))
+				if (this.Parameters.Contains("invln_emailid"))
 				{
-					return ((string)(this.Parameters["invln_loanapplicationid"]));
+					return ((string)(this.Parameters["invln_emailid"]));
 				}
 				else
 				{
@@ -43,7 +43,7 @@ namespace DataverseModel
 			}
 			set
 			{
-				this.Parameters["invln_loanapplicationid"] = value;
+				this.Parameters["invln_emailid"] = value;
 			}
 		}
 		
@@ -107,7 +107,7 @@ namespace DataverseModel
 		public invln_sendinternalcrmnotificationRequest()
 		{
 			this.RequestName = "invln_sendinternalcrmnotification";
-			this.invln_loanapplicationid = default(string);
+			this.invln_emailid = default(string);
 			this.invln_notificationbody = default(string);
 			this.invln_notificationowner = default(string);
 			this.invln_notificationtitle = default(string);

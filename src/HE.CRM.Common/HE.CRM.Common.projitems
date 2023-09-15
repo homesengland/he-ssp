@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AccountRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\ContactRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\ContactWebroleRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\EmailRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\GlobalRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\LoanApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\PortalPermissionRepository.cs" />
@@ -27,6 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\TraceHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IContactRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IContactWebroleRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IEmailRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IGlobalRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ILoanApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\interfaces\IPortalPermissionRepository.cs" />
