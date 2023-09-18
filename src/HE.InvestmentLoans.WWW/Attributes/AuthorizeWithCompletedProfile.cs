@@ -1,6 +1,11 @@
+using System.Collections.Generic;
 using Auth0.ManagementApi.Models;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic;
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Contract.User;
 using HE.InvestmentLoans.WWW.Controllers;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using Microsoft.AspNetCore.Authorization;
@@ -14,9 +19,19 @@ namespace HE.InvestmentLoans.WWW.Attributes;
 [AttributeUsage(AttributeTargets.All)]
 public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFilter
 {
-    public AuthorizeWithCompletedProfile()
+    private readonly IEnumerable<string> _allowedFor;
+
+    public AuthorizeWithCompletedProfile(string[] allowedFor = null)
         : base()
     {
+        if (allowedFor.IsNotProvided())
+        {
+            _allowedFor = new[] { UserAccountRole.LimitedUser };
+        }
+        else
+        {
+            _allowedFor = allowedFor;
+        }
     }
 
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -41,6 +56,12 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
                 new ControllerName(nameof(OrganizationController)).WithoutPrefix(),
                 null);
             return;
+        }
+
+        var userRoles = (await loanUserContext.GetSelectedAccount()).Roles;
+        if (!_allowedFor.Any(allowedRole => userRoles.Any(role => role.Role == allowedRole)))
+        {
+            throw new UnauthorizedAccessException();
         }
 
         await next();

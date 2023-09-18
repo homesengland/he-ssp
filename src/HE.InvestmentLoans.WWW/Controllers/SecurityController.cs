@@ -2,9 +2,11 @@ using System.Diagnostics.CodeAnalysis;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils;
+using HE.InvestmentLoans.Contract.User;
 using HE.InvestmentLoans.WWW.Attributes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -76,7 +78,7 @@ public class SecurityController : Controller
 
             workflow.NextState(Enum.Parse<Trigger>(action));
         }
-        catch (HE.InvestmentLoans.Common.Exceptions.ValidationException ex)
+        catch (Common.Exceptions.ValidationException ex)
         {
             ex.Results.ForEach(item => item.AddToModelState(ModelState, null));
         }

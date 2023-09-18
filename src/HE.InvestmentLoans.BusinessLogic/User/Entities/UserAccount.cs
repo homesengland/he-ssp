@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.Contract.User;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.User.Entities;
@@ -7,4 +8,4 @@ public record UserAccount(
     string UserEmail,
     Guid? AccountId,
     string? AccountName,
-    UserAccountRole[] Roles);
+    IEnumerable<UserAccountRole> Roles);

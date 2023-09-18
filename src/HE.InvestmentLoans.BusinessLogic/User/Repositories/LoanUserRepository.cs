@@ -6,7 +6,6 @@ using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 using Org::HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.User.Repositories;
@@ -40,7 +39,7 @@ public class LoanUserRepository : ILoanUserRepository
                             userEmail,
                             x.Key,
                             x.FirstOrDefault(y => y.accountId == x.Key)?.accountName,
-                            x.Select(y => new UserAccountRole(y.webRoleName)).ToArray())).ToList();
+                            x.Select(x => new UserAccountRole(x.webRoleName)))).ToList();
     }
 
     public Task LinkContactToOrganisation(UserGlobalId userGlobalId, CompaniesHouseNumber organizationNumber)
