@@ -35,6 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_contactwebrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Contact_Webrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_contract.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_email.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portalpermissionlevel.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_CreditRatingAgency.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_CRRStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_DefineTenure.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Emailsendstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FundingReason.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Fundingtypeforadditionalprojects.cs" />
