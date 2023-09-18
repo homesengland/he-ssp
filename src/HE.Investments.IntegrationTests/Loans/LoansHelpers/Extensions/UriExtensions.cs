@@ -6,4 +6,9 @@ public static class UriExtensions
     {
         return new Uri(uri).Segments[^2][..^1];
     }
+
+    public static string GetProjectGuidFromUrl(this string uri)
+    {
+        return new Uri(uri).Segments[^4][..^1];
+    }
 }
