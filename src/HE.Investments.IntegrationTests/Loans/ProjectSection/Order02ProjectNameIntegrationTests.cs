@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AngleSharp.Html.Dom;
+using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
+using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
+using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.TestData;
+using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
+using HE.InvestmentLoans.WWW.Views.Project.Consts;
+using Xunit;
+using Xunit.Extensions.Ordering;
+
+namespace HE.InvestmentLoans.IntegrationTests.Loans.ProjectSection;
+
+[Order(2)]
+[SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
+public class Order02ProjectNameIntegrationTests : IntegrationTest
+{
+    private readonly string _projectId;
+
+    private readonly string _applicationLoanId;
+
+    public Order02ProjectNameIntegrationTests(IntegrationTestFixture<Program> fixture)
+        : base(fixture)
+    {
+        _applicationLoanId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
+        _projectId = GetSharedData<string>(SharedKeys.ProjectIdInDraftStatusKey);
+    }
+
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(1)]
+    public async Task Order01_ShouldDisplayValidationError_WhenNameIsTooLong()
+    {
+        // given
+        var projectNamePage = await TestClient.NavigateTo(ProjectPagesUrls.Name(_applicationLoanId, _projectId));
+        var continueButton = projectNamePage.GetGdsSubmitButtonById("continue-button");
+
+        // when
+        projectNamePage = await TestClient.SubmitButton(
+            continueButton, new Dictionary<string, string> { { "Name", TextTestData.TextThatExceedsShortInputLimit } });
+
+        // then
+        projectNamePage
+            .UrlEndWith(ProjectPagesUrls.NameSuffix)
+            .HasTitle(ProjectPageTitles.Name)
+            .HasValidationMessages(ValidationErrorMessage.ShortInputLengthExcedeed);
+
+        SetSharedData(SharedKeys.CurrentPageKey, projectNamePage);
+    }
+
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(2)]
+    public async Task Order02_ShouldRedirectToStartDatePage_WhenProvidedNameIsCorrect()
+    {
+        // given
+        var projectNamePage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
+        var continueButton = projectNamePage.GetGdsSubmitButtonById("continue-button");
+
+        // when
+        var startDatePage = await TestClient.SubmitButton(
+            continueButton, new Dictionary<string, string> { { "Name", TextTestData.TextThatNotExceedsShortInputLimit } });
+
+        // then
+        startDatePage
+            .UrlEndWith(ProjectPagesUrls.StartDateSuffix)
+            .HasTitle(ProjectPageTitles.StartDate);
+    }
+}

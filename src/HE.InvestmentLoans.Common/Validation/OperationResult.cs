@@ -2,6 +2,18 @@ using HE.InvestmentLoans.Common.Exceptions;
 
 namespace HE.InvestmentLoans.Common.Validation;
 
+public class OperationResult<TResult> : OperationResult
+{
+    public TResult Value { get; private set; }
+
+    public OperationResult Success(TResult returnedValue)
+    {
+        Value = returnedValue;
+
+        return this;
+    }
+}
+
 public class OperationResult
 {
     public OperationResult()
