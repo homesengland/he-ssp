@@ -1,10 +1,10 @@
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
 using Microsoft.Extensions.Caching.Distributed;
 
@@ -60,16 +60,12 @@ public class SecurityEntity
 
     public void ProvideDirectorLoansSubordinate(DirectorLoansSubordinate directLoansSubordinate)
     {
-        if (directLoansSubordinate.IsNotProvided())
-        {
-            DirectorLoansSubordinate = null!;
-
-            return;
-        }
-
         if (DirectorLoansDoNotExists())
         {
-            throw new DomainException("Cannot add director loans subordinate because director loans does not exist.", LoanApplicationErrorCodes.DirectorLoansNotExist);
+            OperationResult
+                .New()
+                .AddValidationError(nameof(DirectorLoans), ValidationErrorMessage.DirectorLoansDoesNotExist)
+                .CheckErrors();
         }
 
         DirectorLoansSubordinate = directLoansSubordinate;

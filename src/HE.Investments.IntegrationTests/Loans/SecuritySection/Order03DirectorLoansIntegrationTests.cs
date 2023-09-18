@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using AngleSharp.Html.Dom;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
@@ -37,6 +38,8 @@ public class Order03DirectorLoansIntegrationTests : IntegrationTest
         checkAnswersPage
             .UrlEndWith(SecurityPageUrls.CheckYourAnswersSuffix)
             .HasTitle(SecurityPageTitles.CheckAnswers);
+
+        SetSharedData(SharedKeys.CurrentPageKey, dirLoansPage);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -44,7 +47,7 @@ public class Order03DirectorLoansIntegrationTests : IntegrationTest
     public async Task Order02_ShouldMoveToCheckAnswers_WhenNeitherOptionIsSelectedAndContinueButtonIsClicked()
     {
         // given
-        var dirLoansPage = await TestClient.NavigateTo(SecurityPageUrls.DirectorLoans(_applicationId));
+        var dirLoansPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
         var continueButton = dirLoansPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -62,7 +65,7 @@ public class Order03DirectorLoansIntegrationTests : IntegrationTest
     public async Task Order03_ShouldMoveToDirLoansSub_WhenYesIsSelectedAndContinueButtonIsClicked()
     {
         // given
-        var dirLoansPage = await TestClient.NavigateTo(SecurityPageUrls.DirectorLoans(_applicationId));
+        var dirLoansPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
         var continueButton = dirLoansPage.GetGdsSubmitButtonById("continue-button");
 
         // when

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AngleSharp.Html.Dom;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -34,8 +35,8 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
     public async Task Order01_ShouldMoveToCheckAnswers_WhenYesIsSelectedAndContinueButtonIsClicked()
     {
         // given
-        var companyPurposePage = await TestClient.NavigateTo(SecurityPageUrls.DirLoansSub(_applicationId));
-        var continueButton = companyPurposePage.GetGdsSubmitButtonById("continue-button");
+        var dirLoansSubPage = await TestClient.NavigateTo(SecurityPageUrls.DirLoansSub(_applicationId));
+        var continueButton = dirLoansSubPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         var checkAnswersPage = await TestClient.SubmitButton(
@@ -45,6 +46,8 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
         checkAnswersPage
             .UrlEndWith(SecurityPageUrls.CheckYourAnswersSuffix)
             .HasTitle(SecurityPageTitles.CheckAnswers);
+
+        SetSharedData(SharedKeys.CurrentPageKey, dirLoansSubPage);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -52,7 +55,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
     public async Task Order02_ShouldDisplayValidationError_WhenNoIsSelectedAndAdditionalInformationIsNotProvided()
     {
         // given
-        var dirLoansSubPage = await TestClient.NavigateTo(SecurityPageUrls.DirLoansSub(_applicationId));
+        var dirLoansSubPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
         var continueButton = dirLoansSubPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -70,7 +73,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
     public async Task Order03_ShouldDisplayValidationError_WhenNoIsSelectedAndAdditionalInformationIsLongerThan1000Characters()
     {
         // given
-        var dirLoansSubPage = await TestClient.NavigateTo(SecurityPageUrls.DirLoansSub(_applicationId));
+        var dirLoansSubPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
         var continueButton = dirLoansSubPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -88,7 +91,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
     public async Task Order04_ShouldMoveToCheckAnswers_WhenNoIsSelectedAndAdditionalInformationIs1000Characters()
     {
         // given
-        var dirLoansSubPage = await TestClient.NavigateTo(SecurityPageUrls.DirLoansSub(_applicationId));
+        var dirLoansSubPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
         var continueButton = dirLoansSubPage.GetGdsSubmitButtonById("continue-button");
 
         // when

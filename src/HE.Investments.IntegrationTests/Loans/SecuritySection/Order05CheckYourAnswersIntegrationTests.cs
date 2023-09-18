@@ -24,12 +24,6 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
         : base(fixture)
     {
         _applicationId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
-        _currentPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
-
-        if (_currentPage is null)
-        {
-            SetSharedData(SharedKeys.CurrentPageKey, TestClient.NavigateTo(SecurityPageUrls.CheckYourAnswers(_applicationId)).Result);
-        }
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

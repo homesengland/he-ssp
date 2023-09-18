@@ -11,6 +11,7 @@ using HE.InvestmentLoans.Contract.Security;
 using HE.InvestmentLoans.Contract.Security.Commands;
 using HE.InvestmentLoans.Contract.Security.Queries;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
+using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -18,9 +19,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
 
-[SuppressMessage("Usage", "CA1801", Justification = "It should be fixed in the future")]
 [Route("application/{id}/security")]
-[Authorize]
+[AuthorizeWithCompletedProfile]
 public class SecurityV2Controller : WorkflowController<SecurityState>
 {
     private readonly IMediator _mediator;
@@ -67,9 +67,7 @@ public class SecurityV2Controller : WorkflowController<SecurityState>
             return View("ChargesDebtCompany", response.ViewModel);
         }
 
-        return redirect.IsProvided() ?
-            Change(redirect, new { Id = id }) :
-            await Continue(new { Id = id });
+        return await Continue(redirect, new { Id = id });
     }
 
     [HttpGet("dir-loans")]
@@ -95,9 +93,7 @@ public class SecurityV2Controller : WorkflowController<SecurityState>
             return View("DirLoans", response.ViewModel);
         }
 
-        return redirect.IsProvided() ?
-            Change(redirect, new { Id = id }) :
-            await Continue(new { Id = id });
+        return await Continue(redirect, new { Id = id });
     }
 
     [HttpGet("dir-loans-sub")]

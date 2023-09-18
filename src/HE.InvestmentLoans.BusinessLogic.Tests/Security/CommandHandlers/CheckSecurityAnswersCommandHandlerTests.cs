@@ -16,11 +16,11 @@ using HE.InvestmentLoans.Contract.Security.ValueObjects;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Security.CommandHandlers;
-public class CheckSecurityAnswersTests : TestBase<CheckSecurityAnswersCommandHandler>
+public class CheckSecurityAnswersCommandHandlerTests : TestBase<CheckSecurityAnswersCommandHandler>
 {
     private ConfirmSecuritySectionCommand _command;
 
-    public CheckSecurityAnswersTests()
+    public CheckSecurityAnswersCommandHandlerTests()
     {
         LoanUserContextTestBuilder
             .New()

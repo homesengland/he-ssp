@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using AngleSharp.Html.Dom;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -44,15 +45,36 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
             .UrlEndWith(SecurityPageUrls.ChargesDebtSuffix)
             .HasTitle(SecurityPageTitles.ChargesDebt)
             .ContainsValidationMessage(ValidationErrorMessage.EnterMoreDetails);
+
+        SetSharedData(SharedKeys.CurrentPageKey, chargesDebtPage);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(2)]
-    public async Task Order02_ShouldDisplayValidationError_WhenNoIsSelectedAndAdditionalInformationIsLongerThan1000Characters()
+    public async Task Order02ShouldMoveToDirectorLoans_WhenNoIsSelected()
     {
         // given
-        var companyPurposePage = await TestClient.NavigateTo(SecurityPageUrls.ChargesDebt(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
-        var continueButton = companyPurposePage.GetGdsSubmitButtonById("continue-button");
+        var chargesDebtPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
+        var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
+
+        // when
+        var directorLoansPage = await TestClient.SubmitButton(
+            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.No } });
+
+        // then
+        directorLoansPage
+            .UrlEndWith(SecurityPageUrls.DirectorLoansSuffix)
+            .HasTitle(SecurityPageTitles.DirLoans);
+    }
+
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(3)]
+    public async Task Order03_ShouldDisplayValidationError_WhenNoIsSelectedAndAdditionalInformationIsLongerThan1000Characters()
+    {
+        // given
+        var chargesDebtPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
+
+        var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         var directorLoansPage = await TestClient.SubmitButton(
@@ -66,30 +88,12 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(3)]
-    public async Task Order03_ShouldMoveToDirectorLoans_WhenNoIsSelected()
-    {
-        // given
-        var companyPurposePage = await TestClient.NavigateTo(SecurityPageUrls.ChargesDebt(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
-        var continueButton = companyPurposePage.GetGdsSubmitButtonById("continue-button");
-
-        // when
-        var directorLoansPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.No } });
-
-        // then
-        directorLoansPage
-            .UrlEndWith(SecurityPageUrls.DirectorLoansSuffix)
-            .HasTitle(SecurityPageTitles.DirLoans);
-    }
-
-    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(4)]
     public async Task Order04_ShouldMoveToDirectorLoans_WhenYesIsSelectedAndAdditionalDataProvided()
     {
         // given
-        var companyPurposePage = await TestClient.NavigateTo(SecurityPageUrls.ChargesDebt(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
-        var continueButton = companyPurposePage.GetGdsSubmitButtonById("continue-button");
+        var chargesDebtPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
+        var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
 
         // when
         var directorLoansPage = await TestClient.SubmitButton(

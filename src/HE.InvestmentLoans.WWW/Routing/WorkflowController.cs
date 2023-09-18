@@ -1,5 +1,6 @@
 using System.Reflection;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,18 @@ public abstract class WorkflowController<TState> : Controller
 
     public Task<IActionResult> Continue(object routeData)
     {
+        var currentStateAttribute = CurrentActionStateAttribute(ControllerContext.ActionDescriptor) ?? throw WorkflowActionCannotBePerformedException.MethodHasNoState(Trigger.Continue, ControllerContext.ActionDescriptor.ActionName);
+
+        return Continue(currentStateAttribute.StateAs<TState>(), routeData);
+    }
+
+    public Task<IActionResult> Continue(string redirect, object routeData)
+    {
+        if (redirect.IsProvided())
+        {
+            return Task.FromResult(Change(redirect, routeData));
+        }
+
         var currentStateAttribute = CurrentActionStateAttribute(ControllerContext.ActionDescriptor) ?? throw WorkflowActionCannotBePerformedException.MethodHasNoState(Trigger.Continue, ControllerContext.ActionDescriptor.ActionName);
 
         return Continue(currentStateAttribute.StateAs<TState>(), routeData);
