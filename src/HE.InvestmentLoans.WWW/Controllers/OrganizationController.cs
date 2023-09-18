@@ -49,10 +49,15 @@ public class OrganizationController : Controller
         return View(response.Result);
     }
 
-    [HttpPost("select")]
-    public async Task<IActionResult> SelectOrganization(OrganizationViewModel organization)
+    [HttpGet("select")]
+    public IActionResult SelectOrganization(string organizationNumber)
     {
-        await _mediator.Send(new LinkContactWithOrganizationCommand(new CompaniesHouseNumber(organization.SelectedOrganization)));
+        return RedirectToAction(nameof(OrganizationController.SelectOrganizationPost), new { organizationNumber });
+    }
+
+    public async Task<IActionResult> SelectOrganizationPost(string organizationNumber)
+    {
+        await _mediator.Send(new LinkContactWithOrganizationCommand(new CompaniesHouseNumber(organizationNumber)));
 
         return RedirectToAction(nameof(HomeController.Dashboard), new ControllerName(nameof(HomeController)).WithoutPrefix());
     }
