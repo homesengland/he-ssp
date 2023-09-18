@@ -103,13 +103,13 @@ public class LoanUserContext : ILoanUserContext
     {
         _details = await _loanUserRepository.GetUserDetails(UserGlobalId)
                    ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
-        _cacheService.SetValue($"UserDetails-{UserGlobalId}", _details);
+        _cacheService.SetValue($"{nameof(UserDetails)}-{UserGlobalId}", _details);
     }
 
     private async Task RefreshUserAccounts()
     {
         var userAccounts = await _loanUserRepository.GetUserAccounts(UserGlobalId.From(_userContext.UserGlobalId), _userContext.Email);
-        _cacheService.SetValue($"{nameof(RefreshUserAccounts)}_{_userContext.UserGlobalId}", userAccounts);
+        _cacheService.SetValue($"{nameof(UserAccount)}-{_userContext.UserGlobalId}", userAccounts);
     }
 
     private async Task LoadUserData()
@@ -121,7 +121,7 @@ public class LoanUserContext : ILoanUserContext
     private async Task LoadUserAccounts()
     {
         _accounts = (await _cacheService.GetValueAsync(
-            $"{nameof(LoadUserData)}_{_userContext.UserGlobalId}",
+            $"{nameof(UserAccount)}-{_userContext.UserGlobalId}",
             async () => await _loanUserRepository.GetUserAccounts(
                 UserGlobalId.From(_userContext.UserGlobalId),
                 _userContext.Email)))!;
@@ -132,7 +132,7 @@ public class LoanUserContext : ILoanUserContext
     private async Task LoadUserDetails()
     {
         _details = await _cacheService.GetValueAsync(
-                       $"UserDetails-{UserGlobalId}",
+                       $"{nameof(UserDetails)}-{UserGlobalId}",
                        async () => await _loanUserRepository.GetUserDetails(UserGlobalId))
                    ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
     }
