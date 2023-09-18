@@ -164,7 +164,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     {
         var response = await _mediator.Send(new GetApplicationDashboardQuery(LoanApplicationId.From(id)));
 
-        return View("ApplicationSubmitted", response.LoanApplication);
+        return View("ApplicationDashboard", response);
     }
 
     [HttpGet("back")]

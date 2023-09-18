@@ -7,6 +7,7 @@ namespace HE.InvestmentLoans.Contract.Application.Queries;
 public record GetApplicationDashboardQuery(LoanApplicationId ApplicationId) : IRequest<GetApplicationDashboardQueryResponse>;
 
 public record GetApplicationDashboardQueryResponse(
+    LoanApplicationId ApplicationId,
     string ApplicationName,
     ApplicationStatus ApplicationStatus,
     string ApplicationReferenceNumber,

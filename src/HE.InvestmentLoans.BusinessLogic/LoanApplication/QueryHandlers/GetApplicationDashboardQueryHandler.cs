@@ -22,6 +22,6 @@ public class GetApplicationDashboardQueryHandler : IRequestHandler<GetApplicatio
         var account = await _loanUserContext.GetSelectedAccount();
         var response = await _loanApplicationRepository.GetLoanApplication(request.ApplicationId, account, cancellationToken);
 
-        return new GetApplicationDashboardQueryResponse("test", response.ExternalStatus, response.LegacyModel.ReferenceNumber!, account.AccountName);
+        return new GetApplicationDashboardQueryResponse(request.ApplicationId, "Fairview Place", response.ExternalStatus, response.LegacyModel.ReferenceNumber!, account.AccountName);
     }
 }

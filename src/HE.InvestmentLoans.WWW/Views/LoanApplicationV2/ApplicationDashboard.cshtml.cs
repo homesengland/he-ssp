@@ -6,6 +6,5 @@ public class ApplicationDashboard : PageModel
 {
     public void OnGet()
     {
-        
     }
 }
