@@ -143,7 +143,7 @@
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
                         <span class="app-task-list__task-name">
-                            <a href="@Url.Action("CreateSite", "Site", new {id = Model.ID, ending = securityWorkflow.GetName() })">
+                            <a id="add-project-link" href="@Url.Action("StartProject", "Project", new {id = Model.ID})">
                                 Add another
                             </a>
                         </span>

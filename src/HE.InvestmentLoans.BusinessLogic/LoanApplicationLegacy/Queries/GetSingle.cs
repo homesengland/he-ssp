@@ -25,7 +25,7 @@ public class GetSingle : IRequest<LoanApplicationViewModel>
 
         public Task<LoanApplicationViewModel> Handle(GetSingle request, CancellationToken cancellationToken)
         {
-            var model = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationViewModel>(request.Id.ToString()) ?? throw new NotFoundException(nameof(LoanApplicationViewModel), request.Id);
+            var model = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationViewModel>(request.Id.ToString()) ?? new LoanApplicationViewModel(); //throw new NotFoundException(nameof(LoanApplicationViewModel), request.Id);
 
             return Task.FromResult(model);
         }
