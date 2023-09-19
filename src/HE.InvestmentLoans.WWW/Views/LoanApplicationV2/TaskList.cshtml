@@ -77,7 +77,7 @@
                 </li>
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("Workflow","Security", new {id = Model.ID, ending = securityWorkflow.GetName() })">
+                        <a href="@Url.Action("StartSecurity","Security", new {id = Model.ID})" id="security-section-link">
                             Provide details about security
                         </a>
                     </span>

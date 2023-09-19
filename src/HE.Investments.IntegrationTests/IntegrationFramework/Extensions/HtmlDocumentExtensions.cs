@@ -64,7 +64,7 @@ public static class HtmlDocumentExtensions
     public static string[] GetSummaryErrors(this IHtmlDocument htmlDocument)
     {
         var errorSummary = htmlDocument.GetElementsByClassName(CssConstants.GovUkErrorSummary).SingleOrDefault();
-        errorSummary.Should().NotBeNull("Error summary does not exist");
+        errorSummary.Should().NotBeNull("Error summary should be present on a page");
         var errorItems = errorSummary!.GetElementsByTagName("a").Select(x => x.TextContent.Trim()).ToArray();
         errorItems.Should().NotBeEmpty();
         return errorItems;
@@ -72,7 +72,9 @@ public static class HtmlDocumentExtensions
 
     public static IHtmlDocument ContainsValidationMessage(this IHtmlDocument htmlDocument, string errorMessage)
     {
-        htmlDocument.GetSummaryErrors().Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
+        var pageErrors = htmlDocument.GetSummaryErrors();
+
+        pageErrors.Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
         htmlDocument.GetElementsByClassName(CssConstants.GovUkFormGroupError).Should().NotBeNull("Error message for specific item should exist");
         return htmlDocument;
     }

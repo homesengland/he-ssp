@@ -12,6 +12,15 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument UrlWithoutQueryEndsWith(this IHtmlDocument htmlDocument, string endsWith)
+    {
+        var url = new Uri(htmlDocument.Url);
+
+        url.AbsolutePath.Should().EndWith(endsWith);
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasTitle(this IHtmlDocument htmlDocument, string title)
     {
         htmlDocument.GetPageTitle().Should().Be(title);

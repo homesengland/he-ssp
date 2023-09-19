@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.CompanyStructure;
+using HE.InvestmentLoans.Contract.Security;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 
@@ -49,6 +50,7 @@ public static class LoanApplicationMapper
             DirLoans = loanApplicationDto.directorLoans.MapToCommonResponse(),
             DirLoansSub = loanApplicationDto.confirmationDirectorLoansCanBeSubordinated.MapToCommonResponse(),
             DirLoansSubMore = loanApplicationDto.reasonForDirectorLoanNotSubordinated,
+            State = SectionStatusMapper.Map(loanApplicationDto.SecurityDetailsCompletionStatus),
         };
     }
 
