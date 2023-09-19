@@ -10,6 +10,7 @@ using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
+using HE.InvestmentLoans.Contract.User;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Microsoft.Crm.Sdk.Messages;
 using Xunit;
