@@ -12,7 +12,6 @@ using Stateless;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 
-[SuppressMessage("Ordering Rules", "SA1201", Justification = "Need to refactored in the fure")]
 public class FundingWorkflow : IStateRouting<FundingState>
 {
     private readonly LoanApplicationViewModel _model;
@@ -36,37 +35,6 @@ public class FundingWorkflow : IStateRouting<FundingState>
         _machine = new StateMachine<FundingState, Trigger>(currentState);
 
         ConfigureTransitions();
-    }
-
-    public bool IsStateComplete()
-    {
-        return _model.Funding.State == SectionStatus.Completed;
-    }
-
-    public bool IsCompleted()
-    {
-        return IsStateComplete() || _model.Funding.IsFlowCompleted;
-    }
-
-    public bool IsStarted()
-    {
-        return !string.IsNullOrEmpty(_model.Funding.GrossDevelopmentValue)
-            || !string.IsNullOrEmpty(_model.Funding.TotalCosts)
-            || !string.IsNullOrEmpty(_model.Funding.AbnormalCosts)
-            || !string.IsNullOrEmpty(_model.Funding.PrivateSectorFunding)
-            || !string.IsNullOrEmpty(_model.Funding.Refinance)
-            || !string.IsNullOrEmpty(_model.Funding.AdditionalProjects);
-    }
-
-    public string GetName()
-    {
-        return Enum.GetName(typeof(FundingState), _model.Funding.State) ?? string.Empty;
-    }
-
-    public async void ChangeState(FundingState state)
-    {
-        _model.Funding.StateChanged = true;
-        await _mediator.Send(new Commands.Update() { Model = _model });
     }
 
     public async Task<FundingState> NextState(Trigger trigger)
@@ -117,8 +85,7 @@ public class FundingWorkflow : IStateRouting<FundingState>
             .Permit(Trigger.Change, FundingState.CheckAnswers);
 
         _machine.Configure(FundingState.CheckAnswers)
-           .PermitIf(Trigger.Continue, FundingState.Complete, () => _model.Funding.CheckAnswers == CommonResponse.Yes)
-           .IgnoreIf(Trigger.Continue, () => _model.Funding.CheckAnswers != CommonResponse.Yes)
+           .Permit(Trigger.Continue, FundingState.Complete)
            .Permit(Trigger.Back, FundingState.AdditionalProjects)
            .OnExit(() =>
            {
