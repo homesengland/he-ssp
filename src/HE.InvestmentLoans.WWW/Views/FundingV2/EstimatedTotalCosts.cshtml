@@ -1,15 +1,17 @@
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@model HE.InvestmentLoans.Contract.Funding.FundingViewModel
+@using HE.InvestmentLoans.Contract.Funding
+@using HE.InvestmentLoans.Contract.Funding.Enums;
 @inject ModelExpressionProvider modelProvider
 
 @{
 
 
-    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Funding.TotalCosts));
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.Contract.Funding.FundingViewModel x) => x.TotalCosts));
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Funding" asp-action="WorkflowPost" asp-route-id="@Model.ID"  asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("GoBack","Funding", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+    <form asp-controller="FundingV2" asp-action="EstimatedTotalCostsPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","FundingV2", new {id = Model.LoanApplicationId, currentPage = FundingState.TotalCosts})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
@@ -28,13 +30,13 @@
                 <gds-input-wrapper class="govuk-!-margin-bottom-6">
                     <gds-input asp-prefixtext="GdsInputPrefixText.Pounds"
                                class="govuk-input--width-5"
-                               govuk-formgroup-asp-for="Funding.TotalCosts"
-                               value="@Model.Funding.TotalCosts"
+                               govuk-formgroup-asp-for="TotalCosts"
+                               value="@Model.TotalCosts"
                                asp-excludelabel
                                type="text" />
                 </gds-input-wrapper>
             </gds-div-form-group>
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Funding.StateChanged?"Change":"Continue")">
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")" id="continue-button">
                 Continue
             </button>
         </gds-field-set>

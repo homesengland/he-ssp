@@ -1,6 +1,9 @@
-﻿<gds-div-grid-column-two-thirds>
-    <form asp-controller="Funding" asp-action="WorkflowPost" asp-route-id="@Model.ID" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Workflow","LoanApplication", new {id = Model.ID})" text="Back to application" class="govuk-!-margin-bottom-8">
+@using HE.InvestmentLoans.Contract.Funding;
+@model HE.InvestmentLoans.Contract.Application.ValueObjects.LoanApplicationId
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="FundingV2" asp-action="StartFundingPost" asp-route-id="@Model.Value" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("TaskList","LoanApplicationV2", new { Id = Model.Value })" text="Back to application" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
 
@@ -22,7 +25,7 @@
             </gds-ul>
         </div>
 
-        <gds-button-start data-module="govuk-button" name="action" type="submit" value="Continue">
+        <gds-button-start data-module="govuk-button" name="action" type="submit" value="Continue" id="start-now-button">
             Start now
         </gds-button-start>
     </form>

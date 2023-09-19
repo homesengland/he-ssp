@@ -58,7 +58,7 @@
             <ul class="app-task-list__items">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("Workflow","Funding", new {id = Model.ID, ending = fundingWorkflow.GetName() })">
+                        <a href="@Url.Action("StartFunding","FundingV2", new {id = Model.ID})" id="funding-section-link">
                             Provide details about funding
                         </a>
                     </span>

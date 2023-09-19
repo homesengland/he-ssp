@@ -1,15 +1,16 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract.Application.Enums;
 
-namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
+namespace HE.InvestmentLoans.Contract.Funding;
 
 public class FundingViewModel
 {
     public FundingViewModel()
     {
-        State = FundingWorkflow.State.Index;
         StateChanged = false;
     }
+
+    public Guid LoanApplicationId { get; set; }
 
     public string? GrossDevelopmentValue { get; set; }
 
@@ -33,7 +34,7 @@ public class FundingViewModel
 
     public string? CheckAnswers { get; set; }
 
-    public FundingWorkflow.State State { get; set; }
+    public SectionStatus State { get; set; }
 
     public bool StateChanged { get; set; }
 
@@ -64,5 +65,10 @@ public class FundingViewModel
     public void SetFlowCompletion(bool value)
     {
         IsFlowCompleted = value;
+    }
+
+    public bool IsCompleted()
+    {
+        return State == SectionStatus.Completed;
     }
 }

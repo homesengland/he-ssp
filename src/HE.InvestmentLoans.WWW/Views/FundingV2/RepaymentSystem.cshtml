@@ -1,22 +1,24 @@
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@model HE.InvestmentLoans.Contract.Funding.FundingViewModel
+@using HE.InvestmentLoans.Contract.Funding
+@using HE.InvestmentLoans.Contract.Funding.Enums;
 @inject ModelExpressionProvider modelProvider
 @{
-    var refinanceInfoName = modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Funding.RefinanceInfo);
+    var refinanceInfoName = modelProvider.GetExpressionText((HE.InvestmentLoans.Contract.Funding.FundingViewModel x) => x.RefinanceInfo);
     
     var ids = new string[] { refinanceInfoName };
     var labels = new string[] { "Tell us more about your refinance exit strategy." };
     var names = new string[] { refinanceInfoName };
-    var values = new string[] { Model.Funding.RefinanceInfo };
+    var values = new string[] { Model.RefinanceInfo };
 
-    var refinanceName = modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Funding.Refinance);
+    var refinanceName = modelProvider.GetExpressionText((HE.InvestmentLoans.Contract.Funding.FundingViewModel x) => x.Refinance);
 
     var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(refinanceName);
     var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(refinanceInfoName);
 }
 
 <gds-div-grid-column-two-thirds>
-<form asp-controller="Funding" asp-action="WorkflowPost" asp-route-id="@Model.ID"  asp-method="post" novalidate>
-    <gds-back-link href="@Url.Action("GoBack","Funding", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+    <form asp-controller="FundingV2" asp-action="RepaymentSystemPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","FundingV2", new {id = Model.LoanApplicationId, currentPage = FundingState.Refinance})" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     <partial name="_ErrorSummaryPartial" model="null" />
     <gds-field-set>
@@ -34,8 +36,8 @@
             }
             <gds-custom-radio
                 id="refinance"
-                asp-for="Funding.Refinance"
-                value="@Model.Funding.Refinance"
+                asp-for="Refinance"
+                value="@Model.Refinance"
                 radio-items="TemporaryFormOptions.LoanResolution"
                 conditional-input-ids="@ids"
                 conditional-input-labels="@labels"
@@ -46,7 +48,7 @@
                 conditional-input-error="@inputErrors">
             </gds-custom-radio>
         </gds-div-form-group>
-        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Funding.StateChanged?"Change":"Continue")">
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")" id="continue-button">
             Continue
         </button>
     </gds-field-set>

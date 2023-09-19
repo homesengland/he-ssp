@@ -1,12 +1,14 @@
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@model HE.InvestmentLoans.Contract.Funding.FundingViewModel
+@using HE.InvestmentLoans.Contract.Funding
+@using HE.InvestmentLoans.Contract.Funding.Enums;
 @inject ModelExpressionProvider modelProvider
 @{
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Funding.AdditionalProjects));
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.Contract.Funding.FundingViewModel x) => x.AdditionalProjects));
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Funding" asp-action="WorkflowPost" asp-route-id="@Model.ID"  asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("GoBack","Funding", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+    <form asp-controller="FundingV2" asp-action="AdditionalProjectsPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","FundingV2", new {id = Model.LoanApplicationId, currentPage = FundingState.AdditionalProjects})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
         <partial name="_ErrorSummaryPartial" model="null" />
@@ -27,12 +29,12 @@
                         <span class="govuk-visually-hidden">Error:</span> @radioErrors
                     </p>
                 }
-                <gds-radio-yes-no asp-for="Funding.AdditionalProjects"
-                                  value="@Model.Funding.AdditionalProjects"
+                <gds-radio-yes-no asp-for="AdditionalProjects"
+                                  value="@Model.AdditionalProjects"
                                   class="govuk-!-margin-bottom-8">
                 </gds-radio-yes-no>
             </gds-div-form-group>
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Funding.StateChanged?"Change":"Continue")">
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")" id="continue-button">
                 Continue
             </button>
         </gds-field-set>

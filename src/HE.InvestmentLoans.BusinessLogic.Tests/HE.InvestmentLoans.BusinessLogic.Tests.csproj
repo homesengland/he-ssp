@@ -56,4 +56,8 @@
     </ProjectReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Funding\" />
+  </ItemGroup>
+
 </Project>

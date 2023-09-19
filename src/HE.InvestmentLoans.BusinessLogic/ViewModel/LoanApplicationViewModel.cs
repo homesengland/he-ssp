@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure;
+using HE.InvestmentLoans.Contract.Funding;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
 
@@ -97,7 +98,7 @@ public class LoanApplicationViewModel
     {
         return (Company.IsCompleted() || Company.IsFlowCompleted)
             && (Security.State == SecurityWorkflow.State.Complete || Security.IsFlowCompleted)
-            && (Funding.State == FundingWorkflow.State.Complete || Funding.IsFlowCompleted)
+            && (Funding.IsCompleted() || Funding.IsFlowCompleted)
             && (Sites.All(x => x.State == SiteWorkflow.State.Complete) || Sites.All(x => x.IsFlowCompleted))
             && Sites.Count > 0;
     }

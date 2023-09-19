@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.CompanyStructure;
+using HE.InvestmentLoans.Contract.Funding;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 

@@ -67,7 +67,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
     {
         return (_model.Company.IsCompleted() || _model.Company.IsFlowCompleted)
             && (_model.Security.State == SecurityWorkflow.State.Complete || _model.Security.IsFlowCompleted)
-            && (_model.Funding.State == FundingWorkflow.State.Complete || _model.Funding.IsFlowCompleted)
+            && (_model.Funding.IsCompleted() || _model.Funding.IsFlowCompleted)
             && (_model.Sites.All(x => x.State == SiteWorkflow.State.Complete) || _model.Sites.All(x => x.IsFlowCompleted))
             && _model.Sites.Count > 0;
     }
@@ -81,7 +81,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
     {
         return (application.Company.IsCompleted() || application.Company.IsFlowCompleted)
             && (application.Security.State == SecurityWorkflow.State.Complete || application.Security.IsFlowCompleted)
-            && (application.Funding.State == FundingWorkflow.State.Complete || application.Funding.IsFlowCompleted)
+            && (application.Funding.IsCompleted() || application.Funding.IsFlowCompleted)
             && (application.Sites.All(x => x.State == SiteWorkflow.State.Complete) || application.Sites.All(x => x.IsFlowCompleted))
             && application.Sites.Count > 0;
     }
