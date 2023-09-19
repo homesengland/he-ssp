@@ -5,10 +5,12 @@ using HE.InvestmentLoans.Contract.Funding;
 using HE.InvestmentLoans.Contract.Funding.Commands;
 using HE.InvestmentLoans.Contract.Funding.Enums;
 using HE.InvestmentLoans.Contract.Funding.Queries;
+using HE.InvestmentLoans.Contract.Security.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Common;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
 
@@ -58,7 +60,9 @@ public class FundingV2Controller : WorkflowController<FundingState>
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View("GrossDevelopmentValue", viewModel);
+
+            var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)), cancellationToken);
+            return View("GrossDevelopmentValue", response.ViewModel);
         }
 
         return await Continue(redirect, new { Id = id });
@@ -85,7 +89,9 @@ public class FundingV2Controller : WorkflowController<FundingState>
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View("EstimatedTotalCosts", viewModel);
+
+            var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)), cancellationToken);
+            return View("EstimatedTotalCosts", response.ViewModel);
         }
 
         return await Continue(redirect, new { Id = id });
@@ -113,7 +119,9 @@ public class FundingV2Controller : WorkflowController<FundingState>
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View("AbnormalCosts", viewModel);
+
+            var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)), cancellationToken);
+            return View("AbnormalCosts", response.ViewModel);
         }
 
         return await Continue(redirect, new { Id = id });
@@ -142,7 +150,9 @@ public class FundingV2Controller : WorkflowController<FundingState>
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View("PrivateSectorFunding", viewModel);
+
+            var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)), cancellationToken);
+            return View("PrivateSectorFunding", response.ViewModel);
         }
 
         return await Continue(redirect, new { Id = id });
@@ -170,7 +180,9 @@ public class FundingV2Controller : WorkflowController<FundingState>
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View("RepaymentSystem", viewModel);
+
+            var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)), cancellationToken);
+            return View("RepaymentSystem", response.ViewModel);
         }
 
         return await Continue(redirect, new { Id = id });
@@ -197,7 +209,9 @@ public class FundingV2Controller : WorkflowController<FundingState>
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View("AdditionalProjects", viewModel);
+
+            var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)), cancellationToken);
+            return View("AdditionalProjects", response.ViewModel);
         }
 
         return await Continue(redirect, new { Id = id });
