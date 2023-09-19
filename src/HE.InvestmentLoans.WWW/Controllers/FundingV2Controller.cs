@@ -55,7 +55,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
                 viewModel.GrossDevelopmentValue),
             cancellationToken);
 
-        if (result.AreValidationErrors)
+        if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
             return View("GrossDevelopmentValue", viewModel);
@@ -82,7 +82,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
                 viewModel.TotalCosts),
             cancellationToken);
 
-        if (result.AreValidationErrors)
+        if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
             return View("EstimatedTotalCosts", viewModel);
@@ -110,7 +110,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
                 viewModel.AbnormalCostsInfo),
             cancellationToken);
 
-        if (result.AreValidationErrors)
+        if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
             return View("AbnormalCosts", viewModel);
@@ -139,7 +139,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
                 viewModel.PrivateSectorFundingReason),
             cancellationToken);
 
-        if (result.AreValidationErrors)
+        if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
             return View("PrivateSectorFunding", viewModel);
@@ -167,7 +167,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
                 viewModel.RefinanceInfo),
             cancellationToken);
 
-        if (result.AreValidationErrors)
+        if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
             return View("RepaymentSystem", viewModel);
@@ -194,7 +194,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
                 viewModel.AdditionalProjects),
             cancellationToken);
 
-        if (result.AreValidationErrors)
+        if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
             return View("AdditionalProjects", viewModel);
@@ -216,7 +216,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
     public async Task<IActionResult> CheckAnswersPost(Guid id, FundingViewModel viewModel, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CheckAnswersFundingSectionCommand(LoanApplicationId.From(id), viewModel.CheckAnswers), cancellationToken);
-        if (result.AreValidationErrors)
+        if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
             var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)), cancellationToken);
