@@ -25,7 +25,7 @@ public class DirectorLoansSubordinate : ValueObject
             {
                 OperationResult
                     .New()
-                    .AddValidationError(nameof(CanBeSubordinated), ValidationErrorMessage.LongInputLengthExceeded)
+                    .AddValidationError(nameof(CanBeSubordinated), ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.ReasonWhyCannotBeSubordinated))
                     .CheckErrors();
             }
 
