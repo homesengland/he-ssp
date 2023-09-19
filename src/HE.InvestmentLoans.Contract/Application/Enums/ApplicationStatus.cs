@@ -12,18 +12,30 @@ public enum ApplicationStatus
     [Description("Application Under Review")]
     UnderReview,
     Withdrawn,
-
     [Description("Hold Requested")]
     HoldRequested,
     [Description("On Hold")]
     OnHold,
-
-    InDueDiligence,
-    ContractSigned,
-    CspSatisfied,
-    LoanAvailable,
+    [Description("Cashflow Requested")]
+    CashflowRequested,
+    [Description("Cashflow Under Review")]
+    CashflowUnderReview,
+    [Description("Referred Back to Applicant")]
     ReferredBackToApplicant,
-    NotApproved,
+    [Description("Sent for Approval")]
+    SentForApproval,
+    [Description("Approved Subject to Due Diligence")]
+    ApprovedSubjectToDueDiligence,
+    [Description("Application Declined")]
     ApplicationDeclined,
+    [Description("In Due Diligence")]
+    InDueDiligence,
+    [Description("Approved Subject to Contract")]
     ApprovedSubjectToContract,
+    [Description("Contract Signed Subject to CP")]
+    ContractSigned,
+    [Description("CPs Satisfied")]
+    CspSatisfied,
+    [Description("Loan Available")]
+    LoanAvailable,
 }

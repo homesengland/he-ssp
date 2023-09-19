@@ -1,6 +1,9 @@
+@using HE.InvestmentLoans.Common.Extensions
 @model HE.InvestmentLoans.Contract.Application.Queries.GetApplicationDashboardQueryResponse;
 
-<div class="govuk-grid-column-full govuk-!-padding-top-8">
+<gds-back-link href="@Url.Action("Dashboard", "Home")" text="Back to account homepage" class="govuk-grid-column-full"></gds-back-link>
+
+<div class="govuk-grid-column-full govuk-!-padding-top-6">
     <div class="govuk-grid-row">
         <gds-div-grid-column-two-thirds>
             <span class="govuk-caption-m">
@@ -10,29 +13,26 @@
                 @Model.ApplicationName
             </gds-h1>
 
-
             <p class="govuk-body govuk-!-margin-bottom-1">
                 <strong>ID @Model.ApplicationReferenceNumber</strong>
-                <application-status-tag application-status="@Model.ApplicationStatus" />
+                <ApplicationStatusTag application-status="@Model.ApplicationStatus" additional-classes="govuk-!-static-margin-left-2"></ApplicationStatusTag>
             </p >
             <p class="govuk-body govuk-!-margin-bottom-1">
                 <strong>LUHBF</strong>
             </p>
             <p class="govuk-body govuk-!-margin-bottom-1">
-                Last edited ... by ...
+                Last edited @Model.LastEditedOn?.ConvertUtcToUkLocalTime()
             </p>
         </gds-div-grid-column-two-thirds>
     </div>
     <div class="govuk-grid-row govuk-!-padding-top-6">
         <div class="govuk-grid-column-one-third">
-            <ul class="govuk-list">
-                <li>
-                    <a href="#" class="govuk-link govuk-link--no-underline">Overview</a>
-                </li>
-                <li>
-                    <a href="#" class="govuk-link govuk-link--no-underline">Supporting documents</a>
-                </li>
-            </ul>
+            <div>
+                <a href="#" class="govuk-link govuk-link--no-underline">Overview</a>
+            </div>
+            <div>
+                <a href="#" class="govuk-link govuk-link--no-underline">Supporting documents</a>
+            </div>
         </div>
 
         <div class="govuk-grid-column-two-thirds">
