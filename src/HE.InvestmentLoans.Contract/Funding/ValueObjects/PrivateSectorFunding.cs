@@ -7,7 +7,7 @@ using HE.InvestmentLoans.Contract.Domain;
 namespace HE.InvestmentLoans.Contract.Funding.ValueObjects;
 public class PrivateSectorFunding : ValueObject
 {
-    protected PrivateSectorFunding(bool isApplied, string? privateSectorFundingApplyResult, string? privateSectorFundingNotApplyingReason)
+    public PrivateSectorFunding(bool isApplied, string? privateSectorFundingApplyResult, string? privateSectorFundingNotApplyingReason)
     {
         if (isApplied)
         {

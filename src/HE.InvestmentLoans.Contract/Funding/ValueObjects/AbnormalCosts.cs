@@ -7,7 +7,7 @@ using HE.InvestmentLoans.Contract.Domain;
 namespace HE.InvestmentLoans.Contract.Funding.ValueObjects;
 public class AbnormalCosts : ValueObject
 {
-    protected AbnormalCosts(bool isAnyAbnormalCost, string? abnormalCostsAdditionalInformation)
+    public AbnormalCosts(bool isAnyAbnormalCost, string? abnormalCostsAdditionalInformation)
     {
         if (isAnyAbnormalCost)
         {

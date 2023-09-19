@@ -4,7 +4,7 @@ using HE.InvestmentLoans.Contract.Domain;
 namespace HE.InvestmentLoans.Contract.Funding.ValueObjects;
 public class AdditionalProjects : ValueObject
 {
-    protected AdditionalProjects(bool isThereAnyAdditionalProject)
+    public AdditionalProjects(bool isThereAnyAdditionalProject)
     {
         IsThereAnyAdditionalProject = isThereAnyAdditionalProject;
     }
