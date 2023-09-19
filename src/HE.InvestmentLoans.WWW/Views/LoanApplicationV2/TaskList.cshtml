@@ -6,7 +6,6 @@
 @inject MediatR.IMediator mediator
 @{
     var securityWorkflow = new SecurityWorkflow(Model, mediator);
-    var fundingWorkflow = new FundingWorkflow(Model, mediator);
     var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
 }
 
@@ -62,11 +61,11 @@
                             Provide details about funding
                         </a>
                     </span>
-                    @if (fundingWorkflow.IsCompleted())
+                    @if (Model.Funding.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
-                    else if (fundingWorkflow.IsStarted())
+                    else if (Model.Funding.IsProgress())
                     {
                         <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
                     }

@@ -28,7 +28,15 @@ public class AbnormalCosts : ValueObject
         }
 
         IsAnyAbnormalCost = isAnyAbnormalCost;
-        AbnormalCostsAdditionalInformation = abnormalCostsAdditionalInformation;
+
+        if (isAnyAbnormalCost)
+        {
+            AbnormalCostsAdditionalInformation = abnormalCostsAdditionalInformation;
+        }
+        else
+        {
+            AbnormalCostsAdditionalInformation = null;
+        }
     }
 
     public bool IsAnyAbnormalCost { get; }

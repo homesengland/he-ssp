@@ -68,6 +68,7 @@ public static class LoanApplicationMapper
             AdditionalProjects = loanApplicationDto.additionalProjects.MapToCommonResponse(),
             Refinance = loanApplicationDto.refinanceRepayment,
             RefinanceInfo = loanApplicationDto.refinanceRepaymentDetails,
+            State = SectionStatusMapper.Map(loanApplicationDto.FundingDetailsCompletionStatus),
         };
     }
 

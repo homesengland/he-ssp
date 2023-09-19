@@ -45,8 +45,17 @@ public class PrivateSectorFunding : ValueObject
         }
 
         IsApplied = isApplied;
-        PrivateSectorFundingApplyResult = privateSectorFundingApplyResult;
-        PrivateSectorFundingNotApplyingReason = privateSectorFundingNotApplyingReason;
+
+        if (isApplied)
+        {
+            PrivateSectorFundingApplyResult = privateSectorFundingApplyResult;
+            PrivateSectorFundingNotApplyingReason = null;
+        }
+        else
+        {
+            PrivateSectorFundingApplyResult = null;
+            PrivateSectorFundingNotApplyingReason = privateSectorFundingNotApplyingReason;
+        }
     }
 
     public bool IsApplied { get; }

@@ -4,7 +4,7 @@ using HE.InvestmentLoans.Contract.Domain;
 namespace HE.InvestmentLoans.Contract.Funding.ValueObjects;
 public class RepaymentSystem : ValueObject
 {
-    public RepaymentSystem(Refinance? refinance = null, Repay? repay = null)
+    public RepaymentSystem(Refinance? refinance, Repay? repay)
     {
         Refinance = refinance;
         Repay = repay;
@@ -18,8 +18,8 @@ public class RepaymentSystem : ValueObject
     {
         var result = value switch
         {
-            FundingFormOption.Refinance => new RepaymentSystem(refinance: new Refinance(value, additionalInformation!)),
-            FundingFormOption.Repay => new RepaymentSystem(repay: new Repay(value)),
+            FundingFormOption.Refinance => new RepaymentSystem(new Refinance(value, additionalInformation!), null),
+            FundingFormOption.Repay => new RepaymentSystem(null, repay: new Repay(value)),
             _ => throw new ArgumentException("Provided invalid value"),
         };
         return result;

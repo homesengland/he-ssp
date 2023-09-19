@@ -71,4 +71,9 @@ public class FundingViewModel
     {
         return State == SectionStatus.Completed;
     }
+
+    public bool IsProgress()
+    {
+        return State == SectionStatus.InProgress;
+    }
 }

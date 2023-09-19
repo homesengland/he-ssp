@@ -91,7 +91,6 @@ public class LoanApplicationViewModel
         Projects = model.Projects;
         Security = model.Security;
         Sites = model.Sites;
-        Funding = model.Funding;
         Timestamp = model.Timestamp;
     }
 

@@ -152,6 +152,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             additionalProjects = loanApplication.Funding.AdditionalProjects!.MapToBool(),
             refinanceRepayment = loanApplication.Funding.Refinance,
             refinanceRepaymentDetails = loanApplication.Funding.RefinanceInfo,
+            FundingDetailsCompletionStatus = SectionStatusMapper.Map(loanApplication.Funding.State),
 
             // SECURITY
             outstandingLegalChargesOrDebt = loanApplication.Security.ChargesDebtCompany!.MapToBool(),
