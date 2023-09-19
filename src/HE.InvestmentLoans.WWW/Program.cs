@@ -80,8 +80,8 @@ app.UseCookiePolicy(
         Secure = CookieSecurePolicy.Always,
         MinimumSameSitePolicy = SameSiteMode.Strict,
     });
-app.UseSession();
 app.UseRouting();
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
