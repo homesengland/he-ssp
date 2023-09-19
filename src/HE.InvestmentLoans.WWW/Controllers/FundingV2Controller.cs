@@ -61,7 +61,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
             return View("GrossDevelopmentValue", viewModel);
         }
 
-        return await Continue(new { Id = id });
+        return await Continue(redirect, new { Id = id });
     }
 
     [HttpGet("estimated-total-costs")]
@@ -88,7 +88,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
             return View("EstimatedTotalCosts", viewModel);
         }
 
-        return await Continue(new { Id = id });
+        return await Continue(redirect, new { Id = id });
     }
 
     [HttpGet("abnormal-costs")]
@@ -116,7 +116,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
             return View("AbnormalCosts", viewModel);
         }
 
-        return await Continue(new { Id = id });
+        return await Continue(redirect, new { Id = id });
     }
 
     [HttpGet("private-sector-funding")]
@@ -145,7 +145,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
             return View("PrivateSectorFunding", viewModel);
         }
 
-        return await Continue(new { Id = id });
+        return await Continue(redirect, new { Id = id });
     }
 
     [HttpGet("repayment-system")]
@@ -173,7 +173,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
             return View("RepaymentSystem", viewModel);
         }
 
-        return await Continue(new { Id = id });
+        return await Continue(redirect, new { Id = id });
     }
 
     [HttpGet("additional-projects")]
@@ -200,7 +200,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
             return View("AdditionalProjects", viewModel);
         }
 
-        return await Continue(new { Id = id });
+        return await Continue(redirect, new { Id = id });
     }
 
     [HttpGet("check-answers")]
