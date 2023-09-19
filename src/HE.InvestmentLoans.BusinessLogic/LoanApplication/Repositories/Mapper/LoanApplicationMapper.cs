@@ -22,13 +22,16 @@ public static class LoanApplicationMapper
         };
     }
 
-    public static UserAccountDto MapToUserAccountDto(UserAccount userAccount)
+    public static UserAccountDto MapToUserAccountDto(UserAccount userAccount, UserDetails userDetails)
     {
         return new UserAccountDto
         {
             AccountId = (Guid)userAccount.AccountId!,
             ContactEmail = userAccount.UserEmail,
             ContactExternalId = userAccount.UserGlobalId.ToString(),
+            ContactFirstName = userDetails.FirstName,
+            ContactLastName = userDetails.Surname,
+            ContactTelephoneNumber = userDetails.TelephoneNumber,
         };
     }
 
