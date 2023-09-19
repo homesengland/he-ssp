@@ -1,12 +1,11 @@
 extern alias Org;
 
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 using Org::HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.User.Repositories;
@@ -23,17 +22,24 @@ public class LoanUserRepository : ILoanUserRepository
         _contactService = contactService;
     }
 
-    public async Task<ContactRolesDto?> GetUserRoles(UserGlobalId userGlobalId, string userEmail)
+    public async Task<IList<UserAccount>> GetUserAccounts(UserGlobalId userGlobalId, string userEmail)
     {
         var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, PortalConstants.LoansPortalType, userGlobalId.ToString());
 
-        contactRoles ??= new ContactRolesDto()
+        if (contactRoles is null)
         {
-            externalId = userGlobalId.ToString(),
-            email = userEmail,
-        };
+            return Array.Empty<UserAccount>();
+        }
 
-        return contactRoles;
+        return contactRoles
+            .contactRoles
+            .GroupBy(x => x.accountId)
+            .Select(x => new UserAccount(
+                            UserGlobalId.From(userGlobalId.ToString()),
+                            userEmail,
+                            x.Key,
+                            x.FirstOrDefault(y => y.accountId == x.Key)?.accountName,
+                            x.Select(x => new UserAccountRole(x.webRoleName)))).ToList();
     }
 
     public Task LinkContactToOrganisation(UserGlobalId userGlobalId, CompaniesHouseNumber organizationNumber)

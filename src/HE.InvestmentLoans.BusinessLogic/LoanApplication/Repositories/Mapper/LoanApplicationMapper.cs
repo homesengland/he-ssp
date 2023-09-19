@@ -4,6 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.Funding;
+using HE.InvestmentLoans.Contract.Security;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 
@@ -23,16 +24,16 @@ public static class LoanApplicationMapper
         };
     }
 
-    public static UserAccountDto MapToUserAccountDto(UserAccount userAccount)
+    public static UserAccountDto MapToUserAccountDto(UserAccount userAccount, UserDetails userDetails)
     {
         return new UserAccountDto
         {
             AccountId = (Guid)userAccount.AccountId!,
             ContactEmail = userAccount.UserEmail,
             ContactExternalId = userAccount.UserGlobalId.ToString(),
-            ContactFirstName = userAccount.FirstName,
-            ContactLastName = userAccount.LastName,
-            ContactTelephoneNumber = userAccount.TelephoneNumber,
+            ContactFirstName = userDetails.FirstName,
+            ContactLastName = userDetails.Surname,
+            ContactTelephoneNumber = userDetails.TelephoneNumber,
         };
     }
 
@@ -50,6 +51,7 @@ public static class LoanApplicationMapper
             DirLoans = loanApplicationDto.directorLoans.MapToCommonResponse(),
             DirLoansSub = loanApplicationDto.confirmationDirectorLoansCanBeSubordinated.MapToCommonResponse(),
             DirLoansSubMore = loanApplicationDto.reasonForDirectorLoanNotSubordinated,
+            State = SectionStatusMapper.Map(loanApplicationDto.SecurityDetailsCompletionStatus),
         };
     }
 

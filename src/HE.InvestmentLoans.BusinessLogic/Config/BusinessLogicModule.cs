@@ -6,6 +6,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Reposi
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Pipelines;
 using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Utils;
@@ -29,6 +30,7 @@ public static class BusinessLogicModule
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 
         services.AddOrganizationSubmodule();
+        services.AddSecuritySubmodule();
         services.AddCompanyStructureSubmodule();
         services.AddFundingSubmodule();
     }
@@ -36,6 +38,11 @@ public static class BusinessLogicModule
     private static void AddOrganizationSubmodule(this IServiceCollection services)
     {
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+    }
+
+    private static void AddSecuritySubmodule(this IServiceCollection services)
+    {
+        services.AddScoped<ISecurityRepository, SecurityRepository>();
     }
 
     private static void AddCompanyStructureSubmodule(this IServiceCollection services)

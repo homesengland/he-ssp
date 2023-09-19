@@ -86,6 +86,14 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
+        public invln_sendinternalcrmnotificationResponse ExecuteNotificatioRequest(invln_sendinternalcrmnotificationRequest request)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return (invln_sendinternalcrmnotificationResponse)ctx.Execute(request);
+            }
+        }
+
         #endregion
 
         #region Interface Implementation

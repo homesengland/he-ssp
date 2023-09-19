@@ -1,10 +1,12 @@
-using System.Net.Http.Headers;
-using System.Text;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Config;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Auth;
+using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Exceptions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Helpers;
+using Microsoft.CodeAnalysis.Operations;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 
@@ -42,9 +44,10 @@ public class IntegrationTestClient
         return await HtmlHelpers.GetDocumentAsync(response);
     }
 
-    public async Task<IHtmlDocument> ClickAHrefElement(IHtmlAnchorElement anchorElement)
+    public async Task<IHtmlDocument> NavigateTo(IHtmlAnchorElement anchorElement)
     {
-        return await NavigateTo(anchorElement.PathName);
+        var href = anchorElement.GetAttribute("href");
+        return await NavigateTo(href!);
     }
 
     public async Task<IHtmlDocument> SubmitButton(IHtmlButtonElement submitButton)
@@ -58,7 +61,14 @@ public class IntegrationTestClient
 
         foreach (var formValue in formValues)
         {
-            HandleRadioInputs(form, formValue);
+            var radiosFound = HandleRadioInputs(form, formValue);
+            var textAreaFound = HandleTextAreaInputs(form, formValue);
+            var inputFound = HandleInputs(form, formValue);
+
+            if (!radiosFound && !textAreaFound && !inputFound)
+            {
+                throw new HtmlElementNotFoundException($"Cannot found any input with name {formValue.Key}");
+            }
         }
 
         var submit = form.GetSubmission(submitButton)!;
@@ -71,23 +81,76 @@ public class IntegrationTestClient
             submission.Content.Headers.TryAddWithoutValidation(header.Key, header.Value);
         }
 
-        return await HtmlHelpers.GetDocumentAsync(await _client.SendAsync(submission));
+        var clientResponse = await _client.SendAsync(submission);
+        return await HtmlHelpers.GetDocumentAsync(clientResponse);
     }
 
-    private static void HandleRadioInputs(IHtmlFormElement form, KeyValuePair<string, string> formValue)
+    private static bool HandleRadioInputs(IHtmlFormElement form, KeyValuePair<string, string> formValue)
     {
         var radioInputs = form.Elements
             .Select(x => x as IHtmlInputElement)
             .Where(x => x is not null && x.Type == "radio")
             .ToList();
 
-        if (radioInputs.Count <= 0)
+        var radioInputsWithFormName = radioInputs.Where(radio => radio!.Name.IsProvided() && radio.Name!.Contains(formValue.Key));
+
+        if (!radioInputsWithFormName.Any())
         {
-            return;
+            return false;
         }
 
-        var inputElement = radioInputs.SingleOrDefault(x => x!.Value == formValue.Value);
-        inputElement.Should().NotBeNull($"{formValue.Key} Key should be radio input element of form");
+        foreach (var radioInput in radioInputsWithFormName)
+        {
+            radioInput!.IsChecked = false;
+        }
+
+        if (formValue.Value == string.Empty)
+        {
+            return true;
+        }
+
+        var inputElement = radioInputsWithFormName.SingleOrDefault(x => x!.Value == formValue.Value) ?? throw new HtmlElementNotFoundException($"None of radio buttons for property {formValue.Key}, has value {formValue.Value}");
+
         inputElement!.IsChecked = true;
+
+        return true;
+    }
+
+    private static bool HandleTextAreaInputs(IHtmlFormElement form, KeyValuePair<string, string> formValue)
+    {
+        var textInputs = form.Elements
+            .Select(x => x as IHtmlTextAreaElement)
+            .Where(x => x is not null)
+            .ToList();
+
+        var inputElement = textInputs.SingleOrDefault(x => x!.Name == formValue.Key);
+
+        if (inputElement is null)
+        {
+            return false;
+        }
+
+        inputElement!.Value = formValue.Value;
+
+        return true;
+    }
+
+    private static bool HandleInputs(IHtmlFormElement form, KeyValuePair<string, string> formValue)
+    {
+        var textInputs = form.Elements
+            .Select(x => x as IHtmlInputElement)
+            .Where(x => x is not null && x.Type == "text")
+            .ToList();
+
+        var inputElement = textInputs.SingleOrDefault(x => x!.Name == formValue.Key);
+
+        if (inputElement is null)
+        {
+            return false;
+        }
+
+        inputElement!.Value = formValue.Value;
+
+        return true;
     }
 }

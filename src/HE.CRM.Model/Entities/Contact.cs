@@ -170,7 +170,7 @@ namespace DataverseModel
 	}
 	
 	/// <summary>
-	/// Indicate buying influence using tags
+	/// Indicate buying influence using label
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	public enum Contact_msdyn_decisioninfluencetag
@@ -560,6 +560,7 @@ namespace DataverseModel
 			public const string Company = "company";
 			public const string contact_customer_accounts = "contact_customer_accounts";
 			public const string Referencingcontact_customer_contacts = "contact_customer_contacts";
+			public const string contact_invln_emails = "contact_invln_emails";
 			public const string Referencingcontact_master_contact = "contact_master_contact";
 			public const string Referencingcontact_parent_contact = "contact_parent_contact";
 			public const string ContactId = "contactid";
@@ -616,9 +617,11 @@ namespace DataverseModel
 			public const string Home2 = "home2";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_contact_invln_contactwebrole_Contactid = "invln_contact_invln_contactwebrole_Contactid";
+			public const string invln_contact_invln_loanapplication = "invln_contact_invln_loanapplication";
 			public const string invln_externalid = "invln_externalid";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
 			public const string invln_PEP = "invln_pep";
+			public const string invln_role = "invln_role";
 			public const string invln_termsandconditionsaccepted = "invln_termsandconditionsaccepted";
 			public const string IsBackofficeCustomer = "isbackofficecustomer";
 			public const string JobTitle = "jobtitle";
@@ -3967,6 +3970,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_role")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_role
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_role");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_role");
+				this.SetAttributeValue("invln_role", value);
+				this.OnPropertyChanged("invln_role");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_termsandconditionsaccepted")]
 		public System.Nullable<bool> invln_termsandconditionsaccepted
 		{
@@ -4330,7 +4350,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Indicate buying influence using tags
+		/// Indicate buying influence using labels
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_decisioninfluencetag")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue msdyn_decisioninfluencetag
@@ -4662,6 +4682,13 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("OwningBusinessUnit");
+				this.SetAttributeValue("owningbusinessunit", value);
+				this.OnPropertyChanged("OwningBusinessUnit");
 			}
 		}
 		
@@ -5477,6 +5504,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N contact_invln_emails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_invln_emails")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_email> contact_invln_emails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_email>("contact_invln_emails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("contact_invln_emails");
+				this.SetRelatedEntities<DataverseModel.invln_email>("contact_invln_emails", null, value);
+				this.OnPropertyChanged("contact_invln_emails");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N contact_master_contact
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
@@ -5553,6 +5600,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_loanapplication_contact");
 				this.SetRelatedEntities<DataverseModel.invln_Loanapplication>("invln_loanapplication_contact", null, value);
 				this.OnPropertyChanged("invln_loanapplication_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:N invln_contact_invln_loanapplication
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_loanapplication")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Loanapplication> invln_contact_invln_loanapplication
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Loanapplication>("invln_contact_invln_loanapplication", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_loanapplication");
+				this.SetRelatedEntities<DataverseModel.invln_Loanapplication>("invln_contact_invln_loanapplication", null, value);
+				this.OnPropertyChanged("invln_contact_invln_loanapplication");
 			}
 		}
 		

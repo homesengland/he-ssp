@@ -5,14 +5,14 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 
 public static class FundingPurposeMapper
 {
-    public static FundingPurpose? Map(string? fundingPurposeAsString)
+    public static FundingPurpose Map(string? fundingPurposeAsString)
     {
         return fundingPurposeAsString switch
         {
             FundingPurposeString.BuildingNewHomes => FundingPurpose.BuildingNewHomes,
             FundingPurposeString.BuildingInfrastructureOnly => FundingPurpose.BuildingInfrastructure,
             FundingPurposeString.Other => FundingPurpose.Other,
-            _ => null,
+            _ => FundingPurpose.BuildingNewHomes,
         };
     }
 

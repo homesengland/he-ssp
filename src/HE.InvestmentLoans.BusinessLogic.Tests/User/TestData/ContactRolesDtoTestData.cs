@@ -20,8 +20,8 @@ public static class ContactRolesDtoTestData
             {
                 accountId = GuidTestData.GuidOne,
                 accountName = "Organization",
-                webRoleName = "Director",
-                permissionLevel = "Test permission leve",
+                webRoleName = "Limited user",
+                permissionLevel = "Test permission level",
             },
         },
         email = "test@test.com",

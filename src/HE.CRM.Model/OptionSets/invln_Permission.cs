@@ -21,7 +21,7 @@ namespace DataverseModel
 		Accountadministrator = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Portalmember = 858110001,
+		Limiteduser = 858110001,
 	}
 }
 #pragma warning restore CS1591

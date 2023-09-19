@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using HE.InvestmentLoans.WWW.Models;
+using HE.InvestmentLoans.Common.Infrastructure;
 
 namespace HE.InvestmentLoans.WWW.Middlewares;
 

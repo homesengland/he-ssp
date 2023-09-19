@@ -19,7 +19,7 @@ invln_getsingleloanapplicationforaccountandcontact|
 invln_gettemporaryportaldata|
 invln_returnuserprofile|
 invln_savetemporaryportaldata|
-invln_searchorganizationbynameandcompanyhousename|
+invln_sendinternalcrmnotification|
 invln_sendinvestmentloansdatatocrm|
 invln_updatesingleloanapplication|
 invln_updatesinglesitedetails|
@@ -42,6 +42,8 @@ invln_updateuserprofile</ActionsWhitelist>
     <EntitiesWhitelist>account|
 contact|
 invln_contactwebrole|
+invln_contract|
+invln_email|
 invln_loanapplication|
 invln_portal|
 invln_portalpermissionlevel|

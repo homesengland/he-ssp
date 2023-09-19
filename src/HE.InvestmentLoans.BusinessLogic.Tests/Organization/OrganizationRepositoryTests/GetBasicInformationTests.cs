@@ -7,9 +7,10 @@ using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
-using HE.InvestmentLoans.Contract.Exceptions;
+using HE.InvestmentLoans.Contract.User;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Microsoft.Crm.Sdk.Messages;
 using Xunit;
@@ -65,7 +66,7 @@ public class GetBasicInformationTests : TestBase<OrganizationRepository>
             .Register(this)
             .UserAccountFromMock;
 
-        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, GuidTestData.GuidTwo, string.Empty, null, null, null);
+        var fakeUserAccount = new UserAccount(UserGlobalId.From("FakeId"), string.Empty, GuidTestData.GuidTwo, string.Empty, Array.Empty<UserAccountRole>());
 
         OrganizationServiceMockTestBuilder
             .New()

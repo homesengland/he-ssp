@@ -1,5 +1,5 @@
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract.Domain;
-using HE.InvestmentLoans.Contract.Exceptions;
 
 namespace HE.InvestmentLoans.Contract.Organization.ValueObjects;
 public class CompaniesHouseNumber : ValueObject

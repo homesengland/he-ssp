@@ -1,18 +1,18 @@
 namespace HE.InvestmentLoans.IntegrationTests.Config;
 
-public class UserConfig
+public class UserConfig : IUserConfig
 {
-    public string UserGlobalId = "auth0|64a3bdb420d21a3fc5193e4d";
+    public string UserGlobalId { get; set; }
 
-    public string Email = "luci_001@pwc.com";
+    public string Email { get; set; }
 
-    public string OrganizationName = "DO_NOT_DELETE_DEFAULT_ACCOUNT";
+    public string OrganizationName { get; set; }
 
-    public string OrganizationRegistrationNumber = "Not provided";
+    public string OrganizationRegistrationNumber { get; set; }
 
-    public string OrganizationAddress = "12 Wharf Street";
+    public string OrganizationAddress { get; set; }
 
-    public string ContactName = "John Doe";
+    public string ContactName { get; set; }
 
-    public string TelephoneNumer = "Carq pozdrawia";
+    public string TelephoneNumber { get; set; }
 }

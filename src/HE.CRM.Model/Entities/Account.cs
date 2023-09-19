@@ -279,38 +279,6 @@ namespace DataverseModel
 		Wholesale = 33,
 	}
 	
-	/// <summary>
-	/// Primary Operating Region of the partner
-	/// </summary>
-	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum Account_he_PrimaryOperatingRegion
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		London = 134370000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Midlands = 134370001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		MultipleRegions = 134370002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		National = 134370003,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		NorthEastYorkshireandHumber = 134370004,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		NorthWest = 134370005,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SouthEast = 134370006,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SouthWest = 134370007,
-	}
-	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	public enum Account_he_PartnerType
 	{
@@ -574,6 +542,7 @@ namespace DataverseModel
 		/// </summary>
 		public static partial class Fields
 		{
+			public const string account_invln_emails = "account_invln_emails";
 			public const string Referencingaccount_master_account = "account_master_account";
 			public const string Referencingaccount_parent_account = "account_parent_account";
 			public const string account_primary_contact = "account_primary_contact";
@@ -679,6 +648,11 @@ namespace DataverseModel
 			public const string FtpSiteURL = "ftpsiteurl";
 			public const string Referencinghe_account_account_UltimateParent = "he_account_account_UltimateParent";
 			public const string he_automaticsearch = "he_automaticsearch";
+			public const string he_Chapi_CompanyProfileUrl = "he_chapi_companyprofileurl";
+			public const string he_Chapi_CompanyStatus = "he_chapi_companystatus";
+			public const string he_Chapi_CompanyStatusName = "he_chapi_companystatusname";
+			public const string he_Chapi_CompanyType = "he_chapi_companytype";
+			public const string he_Chapi_CompanyTypeName = "he_chapi_companytypename";
 			public const string he_CompaniesHouseNumber = "he_companieshousenumber";
 			public const string he_companysearch = "he_companysearch";
 			public const string he_Created = "he_created";
@@ -693,10 +667,8 @@ namespace DataverseModel
 			public const string he_LATier = "he_latier";
 			public const string he_LocalAuthorityCode = "he_localauthoritycode";
 			public const string he_Partner_Sector = "he_partner_sector";
-			public const string he_PartnerSector = "he_partnersector";
 			public const string he_PartnerType = "he_partnertype";
 			public const string he_prefixid = "he_prefixid";
-			public const string he_PrimaryOperatingRegion = "he_primaryoperatingregion";
 			public const string he_primaryoperatingregionchoice = "he_primaryoperatingregionchoice";
 			public const string he_RelationshipOwner = "he_relationshipowner";
 			public const string he_RelationshipOwnerName = "he_relationshipownername";
@@ -828,9 +800,8 @@ namespace DataverseModel
 			public const string YomiName = "yominame";
 		}
 		
-		public const string AlternateKeys = "he_socialhousingproviderregistrationnumber|he_homesenglandcombinedauthoritycode|h" +
-			"e_companieshousenumber|he_esriid|he_id|he_homesenglandcentralgovernmentorganisat" +
-			"ioncode|he_localauthoritycode";
+		public const string AlternateKeys = "he_homesenglandcentralgovernmentorganisationcode|he_esriid|he_id|he_homesenglandc" +
+			"ombinedauthoritycode";
 		
 		/// <summary>
 		/// Default Constructor.
@@ -2652,6 +2623,60 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_chapi_companyprofileurl")]
+		public string he_Chapi_CompanyProfileUrl
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("he_chapi_companyprofileurl");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_Chapi_CompanyProfileUrl");
+				this.SetAttributeValue("he_chapi_companyprofileurl", value);
+				this.OnPropertyChanged("he_Chapi_CompanyProfileUrl");
+			}
+		}
+		
+		/// <summary>
+		/// Company Status imported form Companies House API
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_chapi_companystatus")]
+		public Microsoft.Xrm.Sdk.EntityReference he_Chapi_CompanyStatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("he_chapi_companystatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_Chapi_CompanyStatus");
+				this.SetAttributeValue("he_chapi_companystatus", value);
+				this.OnPropertyChanged("he_Chapi_CompanyStatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_chapi_companytype")]
+		public Microsoft.Xrm.Sdk.EntityReference he_Chapi_CompanyType
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("he_chapi_companytype");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_Chapi_CompanyType");
+				this.SetAttributeValue("he_chapi_companytype", value);
+				this.OnPropertyChanged("he_Chapi_CompanyType");
+			}
+		}
+		
 		/// <summary>
 		/// Companies House Number
 		/// </summary>
@@ -2900,23 +2925,6 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_partnersector")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValueCollection he_PartnerSector
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValueCollection>("he_partnersector");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_PartnerSector");
-				this.SetAttributeValue("he_partnersector", value);
-				this.OnPropertyChanged("he_PartnerSector");
-			}
-		}
-		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_partnertype")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue he_PartnerType
 		{
@@ -2951,26 +2959,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("he_prefixid");
 				this.SetAttributeValue("he_prefixid", value);
 				this.OnPropertyChanged("he_prefixid");
-			}
-		}
-		
-		/// <summary>
-		/// Primary Operating Region of the partner
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_primaryoperatingregion")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue he_PrimaryOperatingRegion
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_primaryoperatingregion");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("he_PrimaryOperatingRegion");
-				this.SetAttributeValue("he_primaryoperatingregion", value);
-				this.OnPropertyChanged("he_PrimaryOperatingRegion");
 			}
 		}
 		
@@ -3028,6 +3016,9 @@ namespace DataverseModel
 			}
 		}
 		
+		/// <summary>
+		/// "A developer building fewer than 2,000 homes per year"
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_smeindicatorchoice")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue he_smeindicatorchoice
 		{
@@ -3900,6 +3891,13 @@ namespace DataverseModel
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
 			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("OwningBusinessUnit");
+				this.SetAttributeValue("owningbusinessunit", value);
+				this.OnPropertyChanged("OwningBusinessUnit");
+			}
 		}
 		
 		/// <summary>
@@ -4677,6 +4675,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("YomiName");
 				this.SetAttributeValue("yominame", value);
 				this.OnPropertyChanged("YomiName");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N account_invln_emails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_invln_emails")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_email> account_invln_emails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_email>("account_invln_emails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("account_invln_emails");
+				this.SetRelatedEntities<DataverseModel.invln_email>("account_invln_emails", null, value);
+				this.OnPropertyChanged("account_invln_emails");
 			}
 		}
 		
