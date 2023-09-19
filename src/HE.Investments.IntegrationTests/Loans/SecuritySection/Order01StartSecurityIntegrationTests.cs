@@ -3,7 +3,7 @@ using AngleSharp.Html.Dom;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.InvestmentLoans.WWW.Views.SecurityV2.Consts;
+using HE.InvestmentLoans.WWW.Views.Security.Consts;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -35,7 +35,7 @@ public class Order01StartSecurityIntegrationTests : IntegrationTest
         // then
         startCompanyStructurePage
             .UrlEndWith(SecurityPageUrls.StartSuffix)
-            .HasTitle("Security details")
+            .HasTitle(SecurityPageTitles.Index)
             .HasGdsSubmitButton("start-now-button", out _);
 
         SetSharedData(SharedKeys.CurrentPageKey, startCompanyStructurePage);

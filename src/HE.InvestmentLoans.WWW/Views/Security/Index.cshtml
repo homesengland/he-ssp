@@ -1,12 +1,13 @@
+@using HE.InvestmentLoans.Contract.Security;
 @model HE.InvestmentLoans.Contract.Application.ValueObjects.LoanApplicationId
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Security" asp-action="WorkflowPost" asp-route-id="@Model.Value" asp-route-ending="Index" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Workflow","LoanApplication", new {id = Model.Value})" text="Back to application" class="govuk-!-margin-bottom-8">
+    <form asp-controller="Security" asp-action="StartSecurityPost" asp-route-id="@Model.Value" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("TaskList","LoanApplicationV2", new { Id = Model.Value })" text="Back to application" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
         <gds-h1 class="govuk-heading-xl">
-            Security details
+            @SecurityPageTitles.Index
         </gds-h1>
 
         <div class="govuk-!-padding-bottom-8">
@@ -19,7 +20,7 @@
             </gds-ul>
         </div>
 
-        <gds-button-start data-module="govuk-button" name="action" type="submit" value="Continue">
+        <gds-button-start data-module="govuk-button" name="action" type="submit" value="Continue" id="start-now-button">
             Start now
         </gds-button-start>
     </form>

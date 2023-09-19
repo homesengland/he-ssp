@@ -2,114 +2,166 @@ using System.Diagnostics.CodeAnalysis;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Common.Utils;
+using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
+using HE.InvestmentLoans.Common.Validation;
+using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Security;
-using HE.InvestmentLoans.Contract.User;
+using HE.InvestmentLoans.Contract.Security.Commands;
+using HE.InvestmentLoans.Contract.Security.Queries;
+using HE.InvestmentLoans.Contract.Security.ValueObjects;
 using HE.InvestmentLoans.WWW.Attributes;
+using HE.InvestmentLoans.WWW.Routing;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using BL = HE.InvestmentLoans.BusinessLogic;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
 
-[SuppressMessage("Usage", "CA1801", Justification = "It should be fixed in the future")]
 [Route("application/{id}/security")]
 [AuthorizeWithCompletedProfile]
-public class SecurityController : Controller
+public class SecurityController : WorkflowController<SecurityState>
 {
     private readonly IMediator _mediator;
-    private readonly IValidator<SecurityViewModel> _validator;
 
-    public SecurityController(IValidator<SecurityViewModel> validator, IMediator mediator)
-        : base()
+    public SecurityController(IMediator mediator)
     {
-        this._mediator = mediator;
-        this._validator = validator;
+        _mediator = mediator;
     }
 
-    [Route("{ending?}")]
-    public async Task<IActionResult> Workflow(Guid id, string ending)
+    [HttpGet("")]
+    [WorkflowState(SecurityState.Index)]
+    public IActionResult StartSecurity(Guid id)
     {
-        var model = await _mediator.Send(new BL.LoanApplicationLegacy.Queries.GetSingle() { Id = id });
-
-        var workflow = new SecurityWorkflow(model, _mediator);
-
-        if (workflow.IsStateComplete())
-        {
-            await workflow.NextState(Trigger.Back);
-        }
-
-        return View(workflow.GetName(), model);
+        return View("Index", LoanApplicationId.From(id));
     }
 
-    [HttpPost]
-    [Route("{ending?}")]
-    public async Task<IActionResult> WorkflowPost(Guid id, string ending, string action)
+    [HttpPost("start")]
+    [WorkflowState(SecurityState.Index)]
+    public Task<IActionResult> StartSecurityPost(Guid id)
     {
-        var sessionModel = await this._mediator.Send(new BL.LoanApplicationLegacy.Queries.GetSingle() { Id = id });
-        var workflow = new SecurityWorkflow(sessionModel, _mediator);
-
-        try
-        {
-            var originalSessionModel = ObjectUtilities.DeepCopy(sessionModel);
-            await TryUpdateModelAsync(sessionModel);
-            var vresult = _validator.Validate(sessionModel.Security, opt => opt.IncludeRuleSets(workflow.GetName()));
-            if (!vresult.IsValid)
-            {
-                // error messages in the View.
-                vresult.AddToModelState(this.ModelState, "Security");
-
-                // re-render the view when validation failed.
-                return View(workflow.GetName(), sessionModel);
-            }
-
-            if (!sessionModel.Equals(originalSessionModel))
-            {
-                sessionModel.Security.SetFlowCompletion(false);
-            }
-
-            var result = await this._mediator.Send(new BL.LoanApplicationLegacy.Commands.Update()
-            {
-                Model = sessionModel,
-                TryUpdateModelAction = x => this.TryUpdateModelAsync(x),
-            }).ConfigureAwait(false);
-
-            await workflow.NextState(Enum.Parse<Trigger>(action));
-        }
-        catch (Common.Exceptions.ValidationException ex)
-        {
-            ex.Results.ForEach(item => item.AddToModelState(ModelState, null));
-        }
-
-        var loanWorkflow = new LoanApplicationWorkflow(sessionModel, _mediator);
-        if (loanWorkflow.IsBeingChecked() || workflow.IsStateComplete() || (sessionModel.Security.CheckAnswers == "No" && action != "Change"))
-        {
-            return RedirectToAction("TaskList", "LoanApplicationV2", new { id = sessionModel.ID });
-        }
-        else
-        {
-            return RedirectToAction("Workflow", new { id = sessionModel.ID, ending = workflow.GetName() });
-        }
+        return Continue(new { Id = id });
     }
 
-    [Route("GoBack")]
-    public async Task<IActionResult> GoBack(Guid id, LoanApplicationViewModel model, string action)
+    [HttpGet("charges-debt")]
+    [WorkflowState(SecurityState.ChargesDebtCompany)]
+    public async Task<IActionResult> ChargesDebtCompany(Guid id, CancellationToken token)
     {
-        model = await this._mediator.Send(new BL.LoanApplicationLegacy.Queries.GetSingle() { Id = id });
-        var workflow = new SecurityWorkflow(model, _mediator);
-        await workflow.NextState(Trigger.Back);
-        return RedirectToAction("Workflow", new { id = model.ID, ending = workflow.GetName() });
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id)), token);
+
+        return View("ChargesDebtCompany", response.ViewModel);
     }
 
-    [Route("Change")]
-    public async Task<IActionResult> Change(Guid id, string state)
+    [HttpPost("charges-debt")]
+    [WorkflowState(SecurityState.ChargesDebtCompany)]
+    public async Task<IActionResult> ChargesDebtCompanyPost(Guid id, SecurityViewModel viewModel, [FromQuery] string redirect, CancellationToken token)
     {
-        var sessionmodel = await this._mediator.Send(new BL.LoanApplicationLegacy.Queries.GetSingle() { Id = id });
-        var workflow = new SecurityWorkflow(sessionmodel, _mediator);
-        workflow.ChangeState(Enum.Parse<SecurityState>(state));
-        return RedirectToAction("Workflow", new { id = sessionmodel.ID, ending = workflow.GetName() });
+        var result = await _mediator.Send(new ProvideCompanyDebenture(LoanApplicationId.From(id), viewModel.ChargesDebtCompany, viewModel.ChargesDebtCompanyInfo), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id)), token);
+            return View("ChargesDebtCompany", response.ViewModel);
+        }
+
+        return await Continue(redirect, new { Id = id });
+    }
+
+    [HttpGet("dir-loans")]
+    [WorkflowState(SecurityState.DirLoans)]
+    public async Task<IActionResult> DirLoans(Guid id, CancellationToken token)
+    {
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id)), token);
+
+        return View("DirLoans", response.ViewModel);
+    }
+
+    [HttpPost("dir-loans")]
+    [WorkflowState(SecurityState.DirLoans)]
+    public async Task<IActionResult> DirLoansPost(Guid id, SecurityViewModel viewModel, [FromQuery] string redirect, CancellationToken token)
+    {
+        var result = await _mediator.Send(new ProvideDirectorLoansCommand(LoanApplicationId.From(id), viewModel.DirLoans), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id)), token);
+            return View("DirLoans", response.ViewModel);
+        }
+
+        return await Continue(redirect, new { Id = id });
+    }
+
+    [HttpGet("dir-loans-sub")]
+    [WorkflowState(SecurityState.DirLoansSub)]
+    public async Task<IActionResult> DirLoansSub(Guid id, CancellationToken token)
+    {
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id)), token);
+
+        return View("DirLoansSub", response.ViewModel);
+    }
+
+    [HttpPost("dir-loans-sub")]
+    [WorkflowState(SecurityState.DirLoansSub)]
+    public async Task<IActionResult> DirLoansSubPost(Guid id, SecurityViewModel viewModel, CancellationToken token)
+    {
+        var result = await _mediator.Send(new ProvideDirectorLoansSubordinateCommand(LoanApplicationId.From(id), viewModel.DirLoansSub, viewModel.DirLoansSubMore), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id)), token);
+            return View("DirLoansSub", response.ViewModel);
+        }
+
+        return await Continue(new { Id = id });
+    }
+
+    [HttpGet("check-answers")]
+    [WorkflowState(SecurityState.CheckAnswers)]
+    public async Task<IActionResult> CheckAnswers(Guid id, CancellationToken token)
+    {
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id)), token);
+
+        return View("CheckAnswers", response.ViewModel);
+    }
+
+    [HttpPost("check-answers")]
+    [WorkflowState(SecurityState.CheckAnswers)]
+    public async Task<IActionResult> CheckAnswersPost(Guid id, SecurityViewModel viewModel, CancellationToken token)
+    {
+        var result = await _mediator.Send(new ConfirmSecuritySectionCommand(LoanApplicationId.From(id), viewModel.CheckAnswers), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id)), token);
+            return View("CheckAnswers", response.ViewModel);
+        }
+
+        return await Continue(new { Id = id });
+    }
+
+    [HttpGet("back")]
+    public Task<IActionResult> Back(SecurityState currentPage, Guid id)
+    {
+        return Back(currentPage, new { Id = id });
+    }
+
+    protected override IStateRouting<SecurityState> Routing(SecurityState currentState)
+    {
+        var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
+
+        var applicationId = !string.IsNullOrEmpty(id) ? LoanApplicationId.From(Guid.Parse(id)) : null;
+
+        var response = _mediator.Send(new GetSecurity(LoanApplicationId.From(id))).Result;
+
+        return new SecurityWorkflow(applicationId, response.ViewModel, _mediator, currentState);
     }
 }

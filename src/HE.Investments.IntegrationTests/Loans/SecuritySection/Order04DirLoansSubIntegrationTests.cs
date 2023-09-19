@@ -11,7 +11,7 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.TestData;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.InvestmentLoans.WWW.Views.SecurityV2.Consts;
+using HE.InvestmentLoans.WWW.Views.Security.Consts;
 using Microsoft.PowerPlatform.Dataverse.Client.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;

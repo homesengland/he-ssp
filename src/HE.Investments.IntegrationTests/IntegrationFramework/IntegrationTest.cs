@@ -31,10 +31,10 @@ public class IntegrationTest
         where T : class
     {
 #if DEBUG
-        if (key == SharedKeys.ApplicationLoanIdInDraftStatusKey)
-        {
-            return ("0054d117-b353-ee11-be6f-002248c653e1" as T)!;
-        }
+        //if (key == SharedKeys.ApplicationLoanIdInDraftStatusKey)
+        //{
+        //    return ("0054d117-b353-ee11-be6f-002248c653e1" as T)!;
+        //}
 #endif
 
         return (_fixture.DataBag[key] as T)!;

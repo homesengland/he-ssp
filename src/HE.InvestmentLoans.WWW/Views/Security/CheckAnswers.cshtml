@@ -1,12 +1,15 @@
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@using HE.InvestmentLoans.Contract.Security;
+@model HE.InvestmentLoans.Contract.Security.SecurityViewModel;
+
 @inject ModelExpressionProvider modelProvider
 
 @{
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Security.CheckAnswers));
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.Contract.Security.SecurityViewModel x) => x.CheckAnswers));
 }
+
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Security" asp-action="WorkflowPost" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("GoBack","Security", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+    <form asp-controller="Security" asp-action="CheckAnswersPost" asp-route-id="@Model.LoanApplicationId" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","Security", new {id = Model.LoanApplicationId, currentPage = SecurityState.CheckAnswers})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
         <partial name="_ErrorSummaryPartial" model="null" />
@@ -15,17 +18,17 @@
             Check your answers
         </gds-h1>
 
-        @await Html.PartialAsync("_SecurityAnswers",Model.Security )
+        @await Html.PartialAsync("_SecurityAnswers", Model)
 
         <gds-div-form-group>
             <gds-field-set>
                 <gds-legend class="govuk-fieldset__legend--m">
-                    Have you completed this section?
+                    @SecurityPageTitles.CheckAnswers
                 </gds-legend>
                 
                 <gds-div-form-group invalid="radioInvalid">
                     <gds-radio 
-                        govuk-formgroup-asp-for="Security.CheckAnswers"
+                        govuk-formgroup-asp-for="CheckAnswers"
                                asp-selectlistitems="TemporaryFormOptions.CheckAnswersCompletion"
                                asp-isexcludeheader>
                     </gds-radio>    
@@ -33,7 +36,7 @@
             </gds-field-set>
         </gds-div-form-group>
 
-        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
             Continue
         </button>
 

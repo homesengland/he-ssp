@@ -12,7 +12,7 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.TestData;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.InvestmentLoans.WWW.Views.SecurityV2.Consts;
+using HE.InvestmentLoans.WWW.Views.Security.Consts;
 using Microsoft.AspNetCore.Components.Web;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -51,25 +51,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(2)]
-    public async Task Order02ShouldMoveToDirectorLoans_WhenNoIsSelected()
-    {
-        // given
-        var chargesDebtPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
-        var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
-
-        // when
-        var directorLoansPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.No } });
-
-        // then
-        directorLoansPage
-            .UrlEndWith(SecurityPageUrls.DirectorLoansSuffix)
-            .HasTitle(SecurityPageTitles.DirLoans);
-    }
-
-    [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(3)]
-    public async Task Order03_ShouldDisplayValidationError_WhenNoIsSelectedAndAdditionalInformationIsLongerThan1000Characters()
+    public async Task Order02_ShouldDisplayValidationError_WhenNoIsSelectedAndAdditionalInformationIsLongerThan1000Characters()
     {
         // given
         var chargesDebtPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -85,6 +67,24 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
             .UrlEndWith(SecurityPageUrls.ChargesDebtSuffix)
             .HasTitle(SecurityPageTitles.ChargesDebt)
             .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceeded);
+    }
+
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(3)]
+    public async Task Order03_ShouldMoveToDirectorLoans_WhenNoIsSelected()
+    {
+        // given
+        var chargesDebtPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
+        var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
+
+        // when
+        var directorLoansPage = await TestClient.SubmitButton(
+            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.No }, { "ChargesDebtCompanyInfo", string.Empty } });
+
+        // then
+        directorLoansPage
+            .UrlEndWith(SecurityPageUrls.DirectorLoansSuffix)
+            .HasTitle(SecurityPageTitles.DirLoans);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

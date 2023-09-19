@@ -4,7 +4,7 @@ using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.InvestmentLoans.WWW.Views.SecurityV2.Consts;
+using HE.InvestmentLoans.WWW.Views.Security.Consts;
 using Xunit;
 using Xunit.Extensions.Ordering;
 

@@ -8,7 +8,7 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.TestData;
 using HE.InvestmentLoans.IntegrationTests.Loans.CompanyStructureSection;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.InvestmentLoans.WWW.Views.SecurityV2.Consts;
+using HE.InvestmentLoans.WWW.Views.Security.Consts;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -18,7 +18,6 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.SecuritySection;
 public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
 {
     private readonly string _applicationId;
-    private readonly IHtmlDocument _currentPage;
 
     public Order05CheckYourAnswersIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
@@ -38,7 +37,7 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
 
         // then
         companyStructureSummary[SecurityFields.ChargesDebt].Should().Be(CommonResponse.Yes);
-        companyStructureSummary[SecurityFields.Debenture].Should().Be(TextTestData.TextWithLenght1000);
+        companyStructureSummary[SecurityFields.Debenture].Should().Contain(TextTestData.TextWithLenght1000);
         companyStructureSummary[SecurityFields.DirLoans].Should().Be(CommonResponse.Yes);
         companyStructureSummary[SecurityFields.DirLoansSub].Should().Contain(CommonResponse.No).And.Contain(TextTestData.TextWithLenght1000);
 
