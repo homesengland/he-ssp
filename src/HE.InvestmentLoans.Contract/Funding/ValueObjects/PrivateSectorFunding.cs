@@ -22,7 +22,7 @@ public class PrivateSectorFunding : ValueObject
             {
                 OperationResult
                 .New()
-                .AddValidationError(nameof(FundingViewModel.PrivateSectorFundingResult), ValidationErrorMessage.LongInputLengthExceeded)
+                .AddValidationError(nameof(FundingViewModel.PrivateSectorFundingResult), ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.PrivateSectorFundingResult))
                 .CheckErrors();
             }
         }
@@ -39,7 +39,7 @@ public class PrivateSectorFunding : ValueObject
             {
                 OperationResult
                 .New()
-                .AddValidationError(nameof(FundingViewModel.PrivateSectorFundingReason), ValidationErrorMessage.LongInputLengthExceeded)
+                .AddValidationError(nameof(FundingViewModel.PrivateSectorFundingReason), ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.PrivateSectorFundingReason))
                 .CheckErrors();
             }
         }

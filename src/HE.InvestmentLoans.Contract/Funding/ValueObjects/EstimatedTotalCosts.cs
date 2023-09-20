@@ -8,12 +8,14 @@ using HE.InvestmentLoans.Contract.Domain;
 namespace HE.InvestmentLoans.Contract.Funding.ValueObjects;
 public class EstimatedTotalCosts : ValueObject
 {
-    public EstimatedTotalCosts(int value)
+    public EstimatedTotalCosts(decimal value)
     {
         Value = value;
     }
 
-    public int Value { get; }
+    public decimal Value { get; }
+
+    public static EstimatedTotalCosts New(decimal value) => new(value);
 
     public static EstimatedTotalCosts FromString(string estimatedTotalCosts)
     {
@@ -25,7 +27,7 @@ public class EstimatedTotalCosts : ValueObject
                 .CheckErrors();
         }
 
-        _ = int.TryParse(estimatedTotalCosts, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue);
+        _ = decimal.TryParse(estimatedTotalCosts, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue);
         return new EstimatedTotalCosts(parsedValue);
     }
 

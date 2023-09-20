@@ -59,8 +59,8 @@ public static class LoanApplicationMapper
     {
         return new FundingViewModel
         {
-            GrossDevelopmentValue = loanApplicationDto.projectGdv,
-            TotalCosts = loanApplicationDto.projectEstimatedTotalCost,
+            GrossDevelopmentValue = loanApplicationDto.projectGdv.ToString(),
+            TotalCosts = loanApplicationDto.projectEstimatedTotalCost.ToString(),
             AbnormalCosts = loanApplicationDto.projectAbnormalCosts.MapToCommonResponse(),
             AbnormalCostsInfo = loanApplicationDto.projectAbnormalCostsInformation,
             PrivateSectorFunding = loanApplicationDto.privateSectorApproach.MapToCommonResponse(),

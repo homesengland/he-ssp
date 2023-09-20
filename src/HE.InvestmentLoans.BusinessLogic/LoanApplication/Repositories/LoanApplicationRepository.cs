@@ -143,8 +143,8 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             CompanyStructureAndExperienceCompletionStatus = SectionStatusMapper.Map(loanApplication.Company.State),
 
             // FUNDING
-            projectGdv = loanApplication.Funding.GrossDevelopmentValue,
-            projectEstimatedTotalCost = loanApplication.Funding.TotalCosts,
+            projectGdv = loanApplication.Funding.GrossDevelopmentValue?.TryParseNullableDecimal(),
+            projectEstimatedTotalCost = loanApplication.Funding.TotalCosts?.TryParseNullableDecimal(),
             projectAbnormalCosts = loanApplication.Funding.AbnormalCosts!.MapToBool(),
             projectAbnormalCostsInformation = loanApplication.Funding.AbnormalCostsInfo,
             privateSectorApproach = loanApplication.Funding.PrivateSectorFunding!.MapToBool(),

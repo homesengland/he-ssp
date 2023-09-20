@@ -8,12 +8,14 @@ using HE.InvestmentLoans.Contract.Domain;
 namespace HE.InvestmentLoans.Contract.Funding.ValueObjects;
 public class GrossDevelopmentValue : ValueObject
 {
-    public GrossDevelopmentValue(int value)
+    public GrossDevelopmentValue(decimal value)
     {
         Value = value;
     }
 
-    public int Value { get; }
+    public decimal Value { get; }
+
+    public static GrossDevelopmentValue New(decimal value) => new(value);
 
     public static GrossDevelopmentValue FromString(string grossDevelopmentValue)
     {
@@ -25,7 +27,7 @@ public class GrossDevelopmentValue : ValueObject
                 .CheckErrors();
         }
 
-        _ = int.TryParse(grossDevelopmentValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue);
+        _ = decimal.TryParse(grossDevelopmentValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue);
         return new GrossDevelopmentValue(parsedValue);
     }
 

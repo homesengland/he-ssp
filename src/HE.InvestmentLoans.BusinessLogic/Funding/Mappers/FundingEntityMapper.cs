@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Funding.ValueObjects;
 
@@ -5,44 +6,44 @@ namespace HE.InvestmentLoans.BusinessLogic.Funding.Mappers;
 
 public static class FundingEntityMapper
 {
-    public static GrossDevelopmentValue? MapGrossDevelopmentValue(string? grossDevelopmentValue)
-    {
-        if (string.IsNullOrWhiteSpace(grossDevelopmentValue))
-        {
-            return null;
-        }
-
-        return GrossDevelopmentValue.FromString(grossDevelopmentValue);
-    }
-
-    public static string? MapGrossDevelopmentValue(GrossDevelopmentValue? grossDevelopmentValue)
+    public static GrossDevelopmentValue? MapGrossDevelopmentValue(decimal? grossDevelopmentValue)
     {
         if (grossDevelopmentValue is null)
         {
             return null;
         }
 
-        return grossDevelopmentValue.ToString();
+        return GrossDevelopmentValue.New(grossDevelopmentValue.Value);
     }
 
-    public static EstimatedTotalCosts? MapEstimatedTotalCosts(string? estimatedTotalCosts)
+    public static decimal? MapGrossDevelopmentValue(GrossDevelopmentValue? grossDevelopmentValue)
     {
-        if (string.IsNullOrWhiteSpace(estimatedTotalCosts))
+        if (grossDevelopmentValue is null)
         {
             return null;
         }
 
-        return EstimatedTotalCosts.FromString(estimatedTotalCosts);
+        return grossDevelopmentValue.Value;
     }
 
-    public static string? MapEstimatedTotalCosts(EstimatedTotalCosts? estimatedTotalCosts)
+    public static EstimatedTotalCosts? MapEstimatedTotalCosts(decimal? estimatedTotalCosts)
     {
         if (estimatedTotalCosts is null)
         {
             return null;
         }
 
-        return estimatedTotalCosts.ToString();
+        return EstimatedTotalCosts.New(estimatedTotalCosts.Value);
+    }
+
+    public static decimal? MapEstimatedTotalCosts(EstimatedTotalCosts? estimatedTotalCosts)
+    {
+        if (estimatedTotalCosts is null)
+        {
+            return null;
+        }
+
+        return estimatedTotalCosts.Value;
     }
 
     public static AbnormalCosts? MapAbnormalCosts(bool? abnormalCosts, string? abnormalCostsInfo)

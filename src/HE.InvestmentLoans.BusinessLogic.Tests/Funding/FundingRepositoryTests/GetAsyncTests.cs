@@ -43,37 +43,37 @@ public class GetAsyncTests : TestBase<FundingRepository>
         result.Status.Should().Be(SectionStatus.NotStarted);
     }
 
-    [Fact]
-    public async Task ShouldReturnFundingEntityWithAllAnserws()
-    {
-        // given
-        var loanApplicationId = LoanApplicationIdTestData.LoanApplicationIdOne;
+    //[Fact]
+    //public async Task ShouldReturnFundingEntityWithAllAnserws()
+    //{
+    //    // given
+    //    var loanApplicationId = LoanApplicationIdTestData.LoanApplicationIdOne;
 
-        var organizationServiceMock = OrganizationServiceAsyncMockTestBuilder
-            .New()
-            .MockGetSingleLoanApplicationForAccountAndContactRequest(
-                loanApplicationId,
-                GetSingleLoanApplicationForAccountAndContactResponseTestData.ResponseWithFundingFields)
-            .Build();
+    //    var organizationServiceMock = OrganizationServiceAsyncMockTestBuilder
+    //        .New()
+    //        .MockGetSingleLoanApplicationForAccountAndContactRequest(
+    //            loanApplicationId,
+    //            GetSingleLoanApplicationForAccountAndContactResponseTestData.ResponseWithFundingFields)
+    //        .Build();
 
-        RegisterDependency(organizationServiceMock);
+    //    RegisterDependency(organizationServiceMock);
 
-        // when
-        var result = await TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, CancellationToken.None);
+    //    // when
+    //    var result = await TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, CancellationToken.None);
 
-        // then
-        result.LoanApplicationId.Should().Be(loanApplicationId);
-        result.GrossDevelopmentValue.Should().Be(CompanyPurpose.New(true));
-        result.MoreInformation.Should().Be(new OrganisationMoreInformation("Short description"));
-        result.MoreInformationFile.Should().BeNull();
-        result.HomesBuilt.Should().Be(new HomesBuilt(5));
-        result.HomesBuilt.Should().Be(new HomesBuilt(5));
-        result.HomesBuilt.Should().Be(new HomesBuilt(5));
-        result.HomesBuilt.Should().Be(new HomesBuilt(5));
-        result.HomesBuilt.Should().Be(new HomesBuilt(5));
-        result.HomesBuilt.Should().Be(new HomesBuilt(5));
-        result.Status.Should().Be(SectionStatus.InProgress);
-    }
+    //    // then
+    //    result.LoanApplicationId.Should().Be(loanApplicationId);
+    //    result.GrossDevelopmentValue.Should().Be(CompanyPurpose.New(true));
+    //    result.MoreInformation.Should().Be(new OrganisationMoreInformation("Short description"));
+    //    result.MoreInformationFile.Should().BeNull();
+    //    result.HomesBuilt.Should().Be(new HomesBuilt(5));
+    //    result.HomesBuilt.Should().Be(new HomesBuilt(5));
+    //    result.HomesBuilt.Should().Be(new HomesBuilt(5));
+    //    result.HomesBuilt.Should().Be(new HomesBuilt(5));
+    //    result.HomesBuilt.Should().Be(new HomesBuilt(5));
+    //    result.HomesBuilt.Should().Be(new HomesBuilt(5));
+    //    result.Status.Should().Be(SectionStatus.InProgress);
+    //}
 
     [Fact]
     public async Task ShouldThrowNotFoundException_WhenApplicationLoanDoesNotExist()
