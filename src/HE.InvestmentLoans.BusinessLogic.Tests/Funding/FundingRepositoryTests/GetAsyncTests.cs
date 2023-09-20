@@ -1,5 +1,3 @@
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure;
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Funding.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestObjectBuilders;
@@ -7,7 +5,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
 using HE.InvestmentLoans.Contract.Application.Enums;
-using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using HE.InvestmentLoans.Contract.Funding.ValueObjects;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Funding.FundingRepositoryTests;
@@ -43,37 +41,34 @@ public class GetAsyncTests : TestBase<FundingRepository>
         result.Status.Should().Be(SectionStatus.NotStarted);
     }
 
-    //[Fact]
-    //public async Task ShouldReturnFundingEntityWithAllAnserws()
-    //{
-    //    // given
-    //    var loanApplicationId = LoanApplicationIdTestData.LoanApplicationIdOne;
+    [Fact]
+    public async Task ShouldReturnFundingEntityWithAllAnserws()
+    {
+        // given
+        var loanApplicationId = LoanApplicationIdTestData.LoanApplicationIdOne;
 
-    //    var organizationServiceMock = OrganizationServiceAsyncMockTestBuilder
-    //        .New()
-    //        .MockGetSingleLoanApplicationForAccountAndContactRequest(
-    //            loanApplicationId,
-    //            GetSingleLoanApplicationForAccountAndContactResponseTestData.ResponseWithFundingFields)
-    //        .Build();
+        var organizationServiceMock = OrganizationServiceAsyncMockTestBuilder
+            .New()
+            .MockGetSingleLoanApplicationForAccountAndContactRequest(
+                loanApplicationId,
+                GetSingleLoanApplicationForAccountAndContactResponseTestData.ResponseWithFundingFields)
+            .Build();
 
-    //    RegisterDependency(organizationServiceMock);
+        RegisterDependency(organizationServiceMock);
 
-    //    // when
-    //    var result = await TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, CancellationToken.None);
+        // when
+        var result = await TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, CancellationToken.None);
 
-    //    // then
-    //    result.LoanApplicationId.Should().Be(loanApplicationId);
-    //    result.GrossDevelopmentValue.Should().Be(CompanyPurpose.New(true));
-    //    result.MoreInformation.Should().Be(new OrganisationMoreInformation("Short description"));
-    //    result.MoreInformationFile.Should().BeNull();
-    //    result.HomesBuilt.Should().Be(new HomesBuilt(5));
-    //    result.HomesBuilt.Should().Be(new HomesBuilt(5));
-    //    result.HomesBuilt.Should().Be(new HomesBuilt(5));
-    //    result.HomesBuilt.Should().Be(new HomesBuilt(5));
-    //    result.HomesBuilt.Should().Be(new HomesBuilt(5));
-    //    result.HomesBuilt.Should().Be(new HomesBuilt(5));
-    //    result.Status.Should().Be(SectionStatus.InProgress);
-    //}
+        // then
+        result.LoanApplicationId.Should().Be(loanApplicationId);
+        result.GrossDevelopmentValue.Should().Be(GrossDevelopmentValue.New(5.23m));
+        result.EstimatedTotalCosts.Should().Be(EstimatedTotalCosts.New(10));
+        result.AbnormalCosts.Should().Be(AbnormalCosts.New(true, "Short description"));
+        result.PrivateSectorFunding.Should().Be(PrivateSectorFunding.New(true, "Short description", null));
+        result.RepaymentSystem.Should().Be(RepaymentSystem.New("refinance", "Short description"));
+        result.AdditionalProjects.Should().Be(AdditionalProjects.New(true));
+        result.Status.Should().Be(SectionStatus.InProgress);
+    }
 
     [Fact]
     public async Task ShouldThrowNotFoundException_WhenApplicationLoanDoesNotExist()

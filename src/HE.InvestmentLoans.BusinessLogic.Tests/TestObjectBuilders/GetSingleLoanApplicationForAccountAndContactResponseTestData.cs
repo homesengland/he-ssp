@@ -35,7 +35,7 @@ public static class GetSingleLoanApplicationForAccountAndContactResponseTestData
                     ""siteDetailsList"": [],
                     ""LastModificationOn"": ""2023-08-30T12:51:43Z"",
                     ""loanApplicationId"": ""a860b821-6730-ee11-bdf3-002248c652b4"",
-                    ""projectGdv"": 5,
+                    ""projectGdv"": 5.23,
                     ""projectEstimatedTotalCost"": 10,
                     ""projectAbnormalCosts"": true,
                     ""projectAbnormalCostsInformation"": ""Short description"",
@@ -44,7 +44,7 @@ public static class GetSingleLoanApplicationForAccountAndContactResponseTestData
                     ""additionalProjects"": true,
                     ""refinanceRepayment"": ""refinance"",
                     ""refinanceRepaymentDetails"": ""Short description"",
-                    ""FundingDetailsCompletionStatus"": 858110001,
+                    ""FundingDetailsCompletionStatus"": 858110001
                 }
             ]
         ";

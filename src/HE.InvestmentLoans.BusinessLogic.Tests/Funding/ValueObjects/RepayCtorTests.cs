@@ -1,10 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract.Funding.ValueObjects;
+using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Funding.ValueObjects;
-internal class RepayCtorTests
+public class RepayCtorTests
 {
+    [Fact]
+    public void ShouldCreateRepay()
+    {
+        // given
+        var repay = FundingFormOption.Repay;
+
+        // when
+        var action = () => Repay.New(repay);
+
+        // then
+        action.Should().NotThrow<DomainValidationException>();
+        action().Value.Should().Be(repay);
+    }
 }

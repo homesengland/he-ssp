@@ -1,4 +1,7 @@
+using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.Contract.Funding.ValueObjects;
@@ -20,7 +23,7 @@ public class RepaymentSystem : ValueObject
         {
             FundingFormOption.Refinance => new RepaymentSystem(new Refinance(value, additionalInformation!), null),
             FundingFormOption.Repay => new RepaymentSystem(null, repay: new Repay(value)),
-            _ => throw new ArgumentException("Provided invalid value"),
+            _ => throw new DomainValidationException(OperationResult.New().AddValidationError(nameof(RepaymentSystem), ValidationErrorMessage.InvalidValue)),
         };
         return result;
     }
