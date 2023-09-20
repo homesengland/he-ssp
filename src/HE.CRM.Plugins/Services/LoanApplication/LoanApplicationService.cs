@@ -21,6 +21,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         private readonly IAccountRepository accountRepository;
         private readonly IContactRepository contactRepository;
         private readonly IWebRoleRepository webroleRepository;
+        private readonly IEmailRepository emailRepository;
 
         #endregion
 
@@ -33,6 +34,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             accountRepository = CrmRepositoriesFactory.Get<IAccountRepository>();
             contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
             webroleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
+            emailRepository = CrmRepositoriesFactory.Get<IEmailRepository>();
         }
 
         #endregion
@@ -395,12 +397,18 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 default:
                     break;
             }
+            var emailToCreate = new invln_email()
+            {
+                RegardingObjectId = target.ToEntityReference(),
+                invln_sendstatus = new OptionSetValue((int)invln_Emailsendstatus.Draft),
+            };
+            var emailId = emailRepository.Create(emailToCreate);
             var req1 = new invln_sendinternalcrmnotificationRequest()
             {
                 invln_notificationbody = $"[Application ref no {target.invln_Name ?? preImage.invln_Name} - Status change to '{statusLabel}](?pagetype=entityrecord&etn=invln_loanapplication&id={target.Id})'",
                 invln_notificationowner = target.OwnerId == null ? preImage.OwnerId.Id.ToString() : target.OwnerId.Id.ToString(),
                 invln_notificationtitle = "Information",
-                invln_loanapplicationid = target.Id.ToString(),
+                invln_emailid = emailId.ToString(),
             };
             _ = loanApplicationRepository.ExecuteNotificatioRequest(req1);
         }
