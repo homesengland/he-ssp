@@ -58,14 +58,13 @@ namespace HE.CRM.Common.DtoMapping
 
             if (loanApplicationDto.projectGdv.HasValue)
             {
-                loanApplication.invln_ProjectGDV = new Money(new decimal(loanApplicationDto.projectGdv.Value));
+                loanApplication.invln_ProjectGDV = new Money(loanApplicationDto.projectGdv.Value);
             }
 
             if (loanApplicationDto.projectEstimatedTotalCost.HasValue)
             {
-                loanApplication.invln_Projectestimatedtotalcost = new Money(new decimal(loanApplicationDto.projectEstimatedTotalCost.Value));
+                loanApplication.invln_Projectestimatedtotalcost = new Money(loanApplicationDto.projectEstimatedTotalCost.Value);
             }
-
             if (contact != null)
             {
                 loanApplication.invln_Contact = contact.ToEntityReference();
@@ -129,12 +128,12 @@ namespace HE.CRM.Common.DtoMapping
 
             if (loanApplication.invln_ProjectGDV != null)
             {
-                loanApplicationDto.projectGdv = (float)loanApplication.invln_ProjectGDV.Value;
+                loanApplicationDto.projectGdv = loanApplication.invln_ProjectGDV.Value;
             }
 
             if (loanApplication.invln_Projectestimatedtotalcost != null)
             {
-                loanApplicationDto.projectEstimatedTotalCost = (float)loanApplication.invln_Projectestimatedtotalcost.Value;
+                loanApplicationDto.projectEstimatedTotalCost = loanApplication.invln_Projectestimatedtotalcost.Value;
             }
             if (contact != null)
             {
