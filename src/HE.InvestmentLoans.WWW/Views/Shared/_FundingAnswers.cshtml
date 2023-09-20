@@ -6,7 +6,7 @@
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
-        { "Title", "Gross Development Value " },
+        { "Title", "Gross Development Value" },
         { "Value", MoneyLabelHelper.Pounds(Model.GrossDevelopmentValue) },
         { "Link", Url.Action("GrossDevelopmentValue", "FundingV2", new {id = id,  redirect = "CheckAnswers"}) },
         { "LinkId", "gross-development-value-change"}
