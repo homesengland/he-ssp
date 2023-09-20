@@ -132,7 +132,7 @@ namespace HE.CRM.Common.DtoMapping
                 loanApplicationDto.projectGdv = decimal.ToInt32(loanApplication.invln_ProjectGDV.Value);
             }
 
-            if (loanApplication.invln_ProjectGDV != null)
+            if (loanApplication.invln_Projectestimatedtotalcost != null)
             {
                 loanApplicationDto.projectEstimatedTotalCost = decimal.ToInt32(loanApplication.invln_Projectestimatedtotalcost.Value);
             }
