@@ -17,9 +17,9 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
                                                     //Company.CompanyInfoFile
 
         //FUNDING
-        public decimal? projectGdv { get; set; } //GDV
+        public float? projectGdv { get; set; } //GDV
 
-        public decimal? projectEstimatedTotalCost { get; set; } //TotalCosts
+        public float? projectEstimatedTotalCost { get; set; } //TotalCosts
 
         public bool? projectAbnormalCosts { get; set; } //AbnormalCosts
 
