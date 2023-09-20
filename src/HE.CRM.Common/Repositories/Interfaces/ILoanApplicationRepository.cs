@@ -11,7 +11,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
     public interface ILoanApplicationRepository : ICrmEntityRepository<invln_Loanapplication, DataverseContext>
     {
         bool LoanWithGivenIdExists(Guid id);
-        List<invln_Loanapplication> GetContactLoans(EntityReference contactId);
         List<invln_Loanapplication> GetLoanApplicationsForGivenAccountAndContact(Guid accountId, string externalContactId, string loanApplicationId = null);
         List<invln_Loanapplication> GetAccountLoans(Guid accountId);
         invln_sendinternalcrmnotificationResponse ExecuteNotificatioRequest(invln_sendinternalcrmnotificationRequest request);
