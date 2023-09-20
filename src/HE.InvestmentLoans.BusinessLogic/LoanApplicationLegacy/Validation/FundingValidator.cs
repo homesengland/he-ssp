@@ -40,13 +40,13 @@ public class FundingValidator : AbstractValidator<FundingViewModel>
                     item => item.PrivateSectorFundingResult != null,
                     () => RuleFor(item => item.PrivateSectorFundingResult)
                         .Must(value => value!.Length <= MaximumInputLength.LongInput)
-                        .WithMessage(ValidationErrorMessage.LongInputLengthExceeded));
+                        .WithMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.PrivateSectorFundingResult)));
 
             When(
                     item => item.PrivateSectorFundingReason != null,
                     () => RuleFor(item => item.PrivateSectorFundingReason)
                         .Must(value => value!.Length <= MaximumInputLength.LongInput)
-                        .WithMessage(ValidationErrorMessage.LongInputLengthExceeded));
+                        .WithMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.PrivateSectorFundingReason)));
         });
 
         RuleSet(FundingView.AbnormalCosts, () =>
@@ -61,7 +61,7 @@ public class FundingValidator : AbstractValidator<FundingViewModel>
                     item => item.AbnormalCostsInfo != null,
                     () => RuleFor(item => item.AbnormalCostsInfo)
                         .Must(value => value!.Length <= MaximumInputLength.LongInput)
-                        .WithMessage(ValidationErrorMessage.LongInputLengthExceeded));
+                        .WithMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.AbnormalCostsInfo)));
         });
 
         RuleSet(FundingView.Refinance, () =>
@@ -76,7 +76,7 @@ public class FundingValidator : AbstractValidator<FundingViewModel>
                     item => item.RefinanceInfo != null,
                     () => RuleFor(item => item.RefinanceInfo)
                         .Must(value => value!.Length <= MaximumInputLength.LongInput)
-                        .WithMessage(ValidationErrorMessage.LongInputLengthExceeded));
+                        .WithMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.RefinanceInfo)));
         });
 
         RuleSet(FundingView.CheckAnswers, () =>

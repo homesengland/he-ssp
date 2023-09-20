@@ -21,7 +21,7 @@ public class UserValidator : AbstractValidator<UserDetailsViewModel>
                 item => item.FirstName != null,
                 () => RuleFor(item => item.FirstName)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
-                    .WithMessage(ValidationErrorMessage.ShortInputLengthExcedeed));
+                    .WithMessage(ValidationErrorMessage.ShortInputLengthExcedeed(FieldNameForInputLengthValidation.FirstName)));
 
             When(
                item => item.Surname == null,
@@ -33,7 +33,7 @@ public class UserValidator : AbstractValidator<UserDetailsViewModel>
                 item => item.Surname != null,
                 () => RuleFor(item => item.Surname)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
-                    .WithMessage(ValidationErrorMessage.ShortInputLengthExcedeed));
+                    .WithMessage(ValidationErrorMessage.ShortInputLengthExcedeed(FieldNameForInputLengthValidation.Surname)));
 
             When(
                item => item.JobTitle == null,
@@ -45,7 +45,7 @@ public class UserValidator : AbstractValidator<UserDetailsViewModel>
                 item => item.JobTitle != null,
                 () => RuleFor(item => item.JobTitle)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
-                    .WithMessage(ValidationErrorMessage.ShortInputLengthExcedeed));
+                    .WithMessage(ValidationErrorMessage.ShortInputLengthExcedeed(FieldNameForInputLengthValidation.JobTitle)));
 
             When(
                item => item.TelephoneNumber == null,
@@ -57,13 +57,13 @@ public class UserValidator : AbstractValidator<UserDetailsViewModel>
                 item => item.TelephoneNumber != null,
                 () => RuleFor(item => item.TelephoneNumber)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
-                    .WithMessage(ValidationErrorMessage.ShortInputLengthExcedeed));
+                    .WithMessage(ValidationErrorMessage.ShortInputLengthExcedeed(FieldNameForInputLengthValidation.TelephoneNumber)));
 
             When(
                 item => item.SecondaryTelephoneNumber != null,
                 () => RuleFor(item => item.SecondaryTelephoneNumber)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
-                    .WithMessage(ValidationErrorMessage.ShortInputLengthExcedeed));
+                    .WithMessage(ValidationErrorMessage.ShortInputLengthExcedeed(FieldNameForInputLengthValidation.SecondaryTelephoneNumber)));
         });
     }
 }
