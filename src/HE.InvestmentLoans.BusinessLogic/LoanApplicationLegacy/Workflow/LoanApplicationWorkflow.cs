@@ -118,7 +118,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
         _machine.Configure(State.TaskList)
             .Permit(Trigger.Continue, State.CheckApplication)
-            .Permit(Trigger.Back, State.UserDashboard);
+            .Permit(Trigger.Back, State.ApplicationDashboard);
 
         _machine.Configure(State.CheckApplication)
             .Permit(Trigger.Continue, State.ApplicationSubmitted)
