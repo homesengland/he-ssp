@@ -50,7 +50,7 @@ internal class SecurityRepository : ISecurityRepository
             new DirectorLoansSubordinate(loanApplicationDto.confirmationDirectorLoansCanBeSubordinated.Value, loanApplicationDto.reasonForDirectorLoanNotSubordinated) :
             null;
 
-        return new SecurityEntity(applicationId, debenture!, directLoans!, directLoansSubordinate!, SectionStatus.NotStarted);
+        return new SecurityEntity(applicationId, debenture!, directLoans!, directLoansSubordinate!, SectionStatusMapper.Map(loanApplicationDto.SecurityDetailsCompletionStatus));
     }
 
     public async Task SaveAsync(SecurityEntity entity, UserAccount userAccount, CancellationToken cancellationToken)

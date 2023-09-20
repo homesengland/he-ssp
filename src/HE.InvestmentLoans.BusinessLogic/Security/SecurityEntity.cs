@@ -69,6 +69,8 @@ public class SecurityEntity
         }
 
         DirectorLoansSubordinate = directLoansSubordinate;
+
+        UncompleteSection();
     }
 
     internal void CheckAnswers(YesNoAnswers answer)
