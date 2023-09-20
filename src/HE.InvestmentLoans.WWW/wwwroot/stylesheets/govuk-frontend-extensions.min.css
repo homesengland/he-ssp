@@ -50,3 +50,68 @@
 .guidance-subpart-link {
     text-decoration: underline;
 }
+
+/*
+Side navigation bar is based on
+https://design-patterns.service.justice.gov.uk/components/side-navigation/
+ */
+.moj-side-navigation {
+  display: block;
+  padding: 20px 0 0;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+
+  .moj-side-navigation__list {
+    margin-bottom: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .moj-side-navigation__item a:link, a:visited {
+    background-color: inherit;
+    color: #1d70b8;
+    display: block;
+    text-decoration: none;
+    border-left: 4px solid rgba(0, 0, 0, 0);
+    padding: 10px;
+  }
+
+  .moj-side-navigation__item a:hover {
+    border-color: #3581c2;
+  }
+
+  .moj-side-navigation__item a:focus {
+    color: #0b0c0c;
+    background-color: #fd0;
+    box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+    border-color: #0b0c0c;
+    border-left-color: rgba(0, 0, 0, 0);
+    position: relative;
+  }
+
+  .moj-side-navigation__item--active a:link, a:visited {
+    border-color: #1d70b8;
+    color: #1d70b8;
+    font-weight: bold;
+  }
+
+  .moj-side-navigation__item--active a:focus {
+    color: #0b0c0c;
+    background-color: #fd0;
+    box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+    border-color: #0b0c0c;
+    border-left-color: rgba(0, 0, 0, 0);
+  }
+
+  .moj-side-navigation__item--active a:link, a:visited {
+    background-color: #f3f2f1;
+  }
+
+  .moj-side-navigation__item--active a:focus {
+    color: #0b0c0c;
+    background-color: #fd0;
+    border-color: rgba(0, 0, 0, 0);
+  }
+}
