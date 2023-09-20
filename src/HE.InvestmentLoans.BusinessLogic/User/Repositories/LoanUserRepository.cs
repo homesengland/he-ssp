@@ -6,6 +6,7 @@ using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Microsoft.PowerPlatform.Dataverse.Client;
+using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 using Org::HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.User.Repositories;
@@ -38,14 +39,8 @@ public class LoanUserRepository : ILoanUserRepository
                             UserGlobalId.From(userGlobalId.ToString()),
                             userEmail,
                             x.Key,
-                            x.FirstOrDefault(y => y.accountId == x.Key)?.accountName,
+                            x.FirstOrDefault(y => y.accountId == x.Key)?.accountName ?? string.Empty,
                             x.Select(x => new UserAccountRole(x.webRoleName)))).ToList();
-    }
-
-    public Task LinkContactToOrganisation(UserGlobalId userGlobalId, CompaniesHouseNumber organizationNumber)
-    {
-        // Temporary dummy implementation
-        return Task.CompletedTask;
     }
 
     public async Task<UserDetails> GetUserDetails(UserGlobalId userGlobalId)
@@ -62,6 +57,6 @@ public class LoanUserRepository : ILoanUserRepository
     {
         var contactDto = UserDetailsMapper.MapUserDetailsToContactDto(userDetails);
 
-        await _contactService.UpdateUserProfile(_serviceClient, userGlobalId.ToString(), contactDto);
+        await _contactService.UpdateUserProfile(_serviceClient, userGlobalId.ToString(), contactDto, cancellationToken);
     }
 }

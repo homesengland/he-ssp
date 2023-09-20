@@ -1,0 +1,42 @@
+@using HE.InvestmentLoans.Common.Extensions
+@model HE.InvestmentLoans.Contract.Application.Queries.GetApplicationDashboardQueryResponse;
+
+<gds-back-link href="@Url.Action("Dashboard", "Home")" text="Back to account homepage" class="govuk-grid-column-full"></gds-back-link>
+
+<div class="govuk-grid-column-full govuk-!-padding-top-6">
+    <div class="govuk-grid-row">
+        <gds-div-grid-column-two-thirds>
+            <span class="govuk-caption-m">
+                @Model.OrganizationName
+            </span>
+            <gds-h1 size="ControlSize.L">
+                @Model.ApplicationName
+            </gds-h1>
+
+            <p class="govuk-body govuk-!-margin-bottom-1">
+                <strong>ID @Model.ApplicationReferenceNumber</strong>
+                <application-status-tag application-status="@Model.ApplicationStatus" additional-classes="govuk-!-static-margin-left-2"></application-status-tag>
+            </p >
+            <p class="govuk-body govuk-!-margin-bottom-1">
+                <strong>LUHBF</strong>
+            </p>
+            <p class="govuk-body govuk-!-margin-bottom-1">
+                Last edited @Model.LastEditedOn?.ConvertUtcToUkLocalTime()
+            </p>
+        </gds-div-grid-column-two-thirds>
+    </div>
+    <div class="govuk-grid-row govuk-!-padding-top-6">
+        <div class="govuk-grid-column-one-third">
+            <div>
+                <a href="#" class="govuk-link govuk-link--no-underline">Overview</a>
+            </div>
+            <div>
+                <a href="#" class="govuk-link govuk-link--no-underline">Supporting documents</a>
+            </div>
+        </div>
+
+        <div class="govuk-grid-column-two-thirds">
+            @await Html.PartialAsync("ApplicationDashboard/_ApplicationDashboardOverview", Model.ApplicationId)
+        </div>
+    </div>
+</div>

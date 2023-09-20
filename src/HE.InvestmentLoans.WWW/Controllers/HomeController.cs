@@ -51,7 +51,7 @@ public class HomeController : Controller
 
     [HttpGet("/dashboard")]
     [AuthorizeWithCompletedProfile]
-    [WorkflowState(LoanApplicationWorkflow.State.Dashboard)]
+    [WorkflowState(LoanApplicationWorkflow.State.UserDashboard)]
     public async Task<IActionResult> Dashboard()
     {
         return View(await _mediator.Send(new GetDashboardDataQuery()));

@@ -15,7 +15,8 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
     public enum State : int
     {
         Index = 1,
-        Dashboard,
+        ApplicationDashboard,
+        UserDashboard,
         AboutLoan,
         CheckYourDetails,
         LoanPurpose,
@@ -120,7 +121,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
         _machine.Configure(State.TaskList)
             .Permit(Trigger.Continue, State.CheckApplication)
-            .Permit(Trigger.Back, State.Dashboard);
+            .Permit(Trigger.Back, State.ApplicationDashboard);
 
         _machine.Configure(State.CheckApplication)
             .Permit(Trigger.Continue, State.ApplicationSubmitted)

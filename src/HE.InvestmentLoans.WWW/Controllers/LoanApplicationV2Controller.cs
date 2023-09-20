@@ -160,6 +160,15 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return View("ApplicationSubmitted", response.LoanApplication);
     }
 
+    [HttpGet("{id}/dashboard")]
+    [WorkflowState(LoanApplicationWorkflow.State.ApplicationDashboard)]
+    public async Task<IActionResult> ApplicationDashboard(Guid id)
+    {
+        var response = await _mediator.Send(new GetApplicationDashboardQuery(LoanApplicationId.From(id)));
+
+        return View("ApplicationDashboard", response);
+    }
+
     [HttpGet("back")]
     public Task<IActionResult> Back(LoanApplicationWorkflow.State currentPage, Guid applicationId)
     {
