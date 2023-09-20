@@ -16,6 +16,7 @@ using HE.InvestmentLoans.WWW.Views.Security.Consts;
 using Microsoft.AspNetCore.Components.Web;
 using Xunit;
 using Xunit.Extensions.Ordering;
+using FormOptions = HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 
 namespace HE.InvestmentLoans.IntegrationTests.Loans.SecuritySection;
 
@@ -51,7 +52,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(2)]
-    public async Task Order02_ShouldDisplayValidationError_WhenNoIsSelectedAndAdditionalInformationIsLongerThan1000Characters()
+    public async Task Order02_ShouldDisplayValidationError_WhenNoIsSelectedAndAdditionalInformationIsLongerThan1500Characters()
     {
         // given
         var chargesDebtPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -66,7 +67,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
         directorLoansPage
             .UrlEndWith(SecurityPageUrls.ChargesDebtSuffix)
             .HasTitle(SecurityPageTitles.ChargesDebt)
-            .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceeded);
+            .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FormOptions.FieldNameForInputLengthValidation.ReasonWhyCannotBeSubordinated));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

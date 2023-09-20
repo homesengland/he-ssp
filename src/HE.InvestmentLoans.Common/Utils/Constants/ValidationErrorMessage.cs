@@ -1,3 +1,5 @@
+using HE.InvestmentLoans.Common.Extensions;
+
 namespace HE.InvestmentLoans.Common.Utils.Constants;
 
 public static class ValidationErrorMessage
@@ -66,11 +68,11 @@ public static class ValidationErrorMessage
 
     public const string DirectorLoansDoesNotExist = "Cannot add director loans subordinate because director loans does not exist.";
 
-    public const string ShortInputLengthExcedeed = "Your input cannot be longer than 100 characters";
-
-    public const string LongInputLengthExceeded = "Your input cannot be longer than 1000 characters";
-
     public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
 
     public static string PoundInput(string name) => new($"{name} must be entered as a number, in pounds and pence");
+
+    public static string ShortInputLengthExcedeed(string fieldName) => new($"{fieldName.TitleCaseFirstLetterInString()} must be 100 characters or less ");
+
+    public static string LongInputLengthExceeded(string fieldName) => new($"Request to change {fieldName} must be 1500 characters or less");
 }

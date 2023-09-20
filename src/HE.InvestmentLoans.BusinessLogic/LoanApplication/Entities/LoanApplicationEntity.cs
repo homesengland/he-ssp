@@ -5,7 +5,6 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
@@ -37,6 +36,11 @@ public class LoanApplicationEntity
     public DateTime? LastModificationDate { get; private set; }
 
     public FundingPurpose FundingReason { get; private set; }
+
+    public string ReferenceNumber => LegacyModel.ReferenceNumber ?? string.Empty;
+
+    // TODO: #77804
+    public string Name => ReferenceNumber;
 
     public static LoanApplicationEntity New(UserAccount userAccount) => new(LoanApplicationId.New(), userAccount, ApplicationStatus.Draft, null, FundingPurpose.BuildingNewHomes);
 

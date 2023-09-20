@@ -8,7 +8,7 @@ public class HeaderSecurityMiddleware
 
     public HeaderSecurityMiddleware(RequestDelegate next)
     {
-        this._next = next;
+        _next = next;
     }
 
     public async Task InvokeAsync(HttpContext context, NonceModel nonce)

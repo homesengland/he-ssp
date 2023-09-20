@@ -39,7 +39,7 @@ public class ContactService : IContactService
         return Task.FromResult<ContactDto?>(null);
     }
 
-    public async Task UpdateUserProfile(IOrganizationServiceAsync2 service, string contactExternalId, ContactDto contactDto)
+    public async Task UpdateUserProfile(IOrganizationServiceAsync2 service, string contactExternalId, ContactDto contactDto, CancellationToken cancellationToken)
     {
         if (!string.IsNullOrEmpty(contactExternalId))
         {
@@ -48,7 +48,7 @@ public class ContactService : IContactService
             {
                 var contactToUpdate = MapContactDtoToEntity(contactDto);
                 contactToUpdate.Id = retrievedContact.Id;
-                await service.UpdateAsync(contactToUpdate);
+                await service.UpdateAsync(contactToUpdate, cancellationToken);
             }
         }
     }
