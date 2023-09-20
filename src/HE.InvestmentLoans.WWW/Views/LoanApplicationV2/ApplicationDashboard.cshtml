@@ -1,5 +1,5 @@
 @using HE.InvestmentLoans.Common.Extensions
-@model HE.InvestmentLoans.Contract.Application.Queries.GetApplicationDashboardQueryResponse;
+@model ApplicationDashboardModel
 
 <gds-back-link href="@Url.Action("Dashboard", "Home")" text="Back to account homepage" class="govuk-grid-column-full"></gds-back-link>
 
@@ -7,36 +7,50 @@
     <div class="govuk-grid-row">
         <gds-div-grid-column-two-thirds>
             <span class="govuk-caption-m">
-                @Model.OrganizationName
+                @Model.Data.OrganizationName
             </span>
             <gds-h1 size="ControlSize.L">
-                @Model.ApplicationName
+                @Model.Data.ApplicationName
             </gds-h1>
 
             <p class="govuk-body govuk-!-margin-bottom-1">
-                <strong>ID @Model.ApplicationReferenceNumber</strong>
-                <application-status-tag application-status="@Model.ApplicationStatus" additional-classes="govuk-!-static-margin-left-2"></application-status-tag>
+                <strong>ID @Model.Data.ApplicationReferenceNumber</strong>
+                <application-status-tag application-status="@Model.Data.ApplicationStatus" additional-classes="govuk-!-static-margin-left-2"></application-status-tag>
             </p >
             <p class="govuk-body govuk-!-margin-bottom-1">
                 <strong>LUHBF</strong>
             </p>
             <p class="govuk-body govuk-!-margin-bottom-1">
-                Last edited @Model.LastEditedOn?.ConvertUtcToUkLocalTime()
+                Last edited @Model.Data.LastEditedOn?.ConvertUtcToUkLocalTime()
             </p>
         </gds-div-grid-column-two-thirds>
     </div>
-    <div class="govuk-grid-row govuk-!-padding-top-6">
-        <div class="govuk-grid-column-one-third">
-            <div>
-                <a href="#" class="govuk-link govuk-link--no-underline">Overview</a>
-            </div>
-            <div>
-                <a href="#" class="govuk-link govuk-link--no-underline">Supporting documents</a>
-            </div>
-        </div>
+    <div class="govuk-grid-column-one-third">
 
-        <div class="govuk-grid-column-two-thirds">
-            @await Html.PartialAsync("ApplicationDashboard/_ApplicationDashboardOverview", Model.ApplicationId)
-        </div>
+        <nav class="moj-side-navigation">
+            <ul class="moj-side-navigation__list">
+
+                <li class="@("moj-side-navigation__item" + (Model.IsOverviewSectionSelected ? " moj-side-navigation__item--active" : ""))">
+                    <a href=@Url.Action("ApplicationDashboard", "LoanApplicationV2", new { id = Model.Data.ApplicationId} )>Overview</a>
+                </li>
+
+                <li class="@("moj-side-navigation__item" + (!Model.IsOverviewSectionSelected ? " moj-side-navigation__item--active" : ""))">
+                    <a href="@Url.Action("ApplicationDashboardSupportingDocuments", "LoanApplicationV2",  new { id = Model.Data.ApplicationId})">Supporting documents</a>
+                </li>
+
+            </ul>
+        </nav>
     </div>
+
+    <div class="govuk-grid-column-two-thirds">
+        @if (Model.IsOverviewSectionSelected)
+        {
+            @await Html.PartialAsync("ApplicationDashboard/_ApplicationDashboardOverview", Model.Data.ApplicationId)
+        }
+        else
+        {
+            @await Html.PartialAsync("ApplicationDashboard/_ApplicationDashboardSupportingDocuments", Model.Data.ApplicationId)
+        }
+    </div>
+
 </div>

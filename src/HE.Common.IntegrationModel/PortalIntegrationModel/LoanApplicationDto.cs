@@ -90,5 +90,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string loanApplicationStatus { get; set; }
 
         public string externalId { get; set; }
+
+        public string withdrawReason { get; set; }
     }
 }

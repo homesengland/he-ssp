@@ -89,7 +89,6 @@ public class LoanApplicationViewModel
     public void UseSectionsFrom(LoanApplicationViewModel model)
     {
         Projects = model.Projects;
-        Security = model.Security;
         Sites = model.Sites;
         Timestamp = model.Timestamp;
     }

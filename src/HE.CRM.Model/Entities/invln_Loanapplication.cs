@@ -180,6 +180,7 @@ namespace DataverseModel
 			public const string invln_securitydetailscompletionstatus = "invln_securitydetailscompletionstatus";
 			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
 			public const string invln_sitedetailscompletionstatus = "invln_sitedetailscompletionstatus";
+			public const string invln_statuschangereason = "invln_statuschangereason";
 			public const string invln_SubjecttocontractApproved = "invln_subjecttocontractapproved";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedByName = "modifiedbyname";
@@ -1241,6 +1242,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_sitedetailscompletionstatus");
 				this.SetAttributeValue("invln_sitedetailscompletionstatus", value);
 				this.OnPropertyChanged("invln_sitedetailscompletionstatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_statuschangereason")]
+		public string invln_statuschangereason
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_statuschangereason");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_statuschangereason");
+				this.SetAttributeValue("invln_statuschangereason", value);
+				this.OnPropertyChanged("invln_statuschangereason");
 			}
 		}
 		
