@@ -180,8 +180,8 @@ namespace DataverseModel
 			public const string invln_securitydetailscompletionstatus = "invln_securitydetailscompletionstatus";
 			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
 			public const string invln_sitedetailscompletionstatus = "invln_sitedetailscompletionstatus";
+			public const string invln_statuschangereason = "invln_statuschangereason";
 			public const string invln_SubjecttocontractApproved = "invln_subjecttocontractapproved";
-			public const string invln_withdrawreason = "invln_withdrawreason";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedByName = "modifiedbyname";
 			public const string ModifiedOn = "modifiedon";
@@ -1245,6 +1245,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_statuschangereason")]
+		public string invln_statuschangereason
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_statuschangereason");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_statuschangereason");
+				this.SetAttributeValue("invln_statuschangereason", value);
+				this.OnPropertyChanged("invln_statuschangereason");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subjecttocontractapproved")]
 		public System.Nullable<bool> invln_SubjecttocontractApproved
 		{
@@ -1259,23 +1276,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_SubjecttocontractApproved");
 				this.SetAttributeValue("invln_subjecttocontractapproved", value);
 				this.OnPropertyChanged("invln_SubjecttocontractApproved");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_withdrawreason")]
-		public string invln_withdrawreason
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<string>("invln_withdrawreason");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_withdrawreason");
-				this.SetAttributeValue("invln_withdrawreason", value);
-				this.OnPropertyChanged("invln_withdrawreason");
 			}
 		}
 		
