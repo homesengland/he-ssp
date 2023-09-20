@@ -19,7 +19,7 @@ public class GrossDevelopmentValue : ValueObject
 
     public static GrossDevelopmentValue FromString(string grossDevelopmentValue)
     {
-        if (!Regex.IsMatch(grossDevelopmentValue, @"^[0-9]+([.,][0-9]{1,2})?$"))
+        if (!Regex.IsMatch(grossDevelopmentValue, @"^[0-9]+([.][0-9]{1,2})?$"))
         {
             OperationResult
                 .New()
@@ -27,13 +27,13 @@ public class GrossDevelopmentValue : ValueObject
                 .CheckErrors();
         }
 
-        _ = decimal.TryParse(grossDevelopmentValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue);
+        _ = decimal.TryParse(grossDevelopmentValue, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue);
         return new GrossDevelopmentValue(parsedValue);
     }
 
     public override string ToString()
     {
-        return Value.ToString(CultureInfo.InvariantCulture);
+        return Value.ToString("0.##", CultureInfo.InvariantCulture);
     }
 
     protected override IEnumerable<object?> GetAtomicValues()

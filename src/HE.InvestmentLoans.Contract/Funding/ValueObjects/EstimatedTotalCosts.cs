@@ -19,7 +19,7 @@ public class EstimatedTotalCosts : ValueObject
 
     public static EstimatedTotalCosts FromString(string estimatedTotalCosts)
     {
-        if (!Regex.IsMatch(estimatedTotalCosts, @"^[0-9]+([.,][0-9]{1,2})?$"))
+        if (!Regex.IsMatch(estimatedTotalCosts, @"^[0-9]+([.][0-9]{1,2})?$"))
         {
             OperationResult
                 .New()
@@ -27,13 +27,13 @@ public class EstimatedTotalCosts : ValueObject
                 .CheckErrors();
         }
 
-        _ = decimal.TryParse(estimatedTotalCosts, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue);
+        _ = decimal.TryParse(estimatedTotalCosts, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue);
         return new EstimatedTotalCosts(parsedValue);
     }
 
     public override string ToString()
     {
-        return Value.ToString(CultureInfo.InvariantCulture);
+        return Value.ToString("0.##", CultureInfo.InvariantCulture);
     }
 
     protected override IEnumerable<object?> GetAtomicValues()
