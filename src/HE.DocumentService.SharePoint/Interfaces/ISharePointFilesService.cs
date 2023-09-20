@@ -10,11 +10,11 @@ namespace HE.DocumentService.SharePoint.Interfaces;
 
 public interface ISharePointFilesService
 {
-    Task<TableResult<FileTableRow>> GetTableRows(Guid contactId, FileTableFilter filter);
+    Task<TableResult<FileTableRow>> GetTableRows(FileTableFilter filter);
 
-    Task UploadFile(Guid contactId, FileData fileData);
+    Task UploadFile(SharepointFileUploadModel item);
 
-    Task<FileData> DownloadFile(Guid contactId, string fileName);
+    Task<FileData> DownloadFile(string listAlias, string folderPath, string fileName);
 
-    Task RemoveFile(Guid contactId, string fileName);
+    Task RemoveFile(string listAlias, string folderPath, string fileName);
 }

@@ -9,14 +9,14 @@ public class BaseService
 {
     internal static readonly int RETRY_COUNT = 4;
 
-    internal readonly ClientContext spContext;
-    internal readonly ISharePointConfiguration spConfig;
-    internal readonly IMapper mapper;
+    internal readonly ClientContext _spContext;
+    internal readonly ISharePointConfiguration _spConfig;
+    internal readonly IMapper _mapper;
 
     public BaseService(ISharePointContext spContext, ISharePointConfiguration spConfig, IMapper mapper)
     {
-        this.spConfig = spConfig;
-        this.mapper = mapper;
-        this.spContext = spContext.context;
+        _spConfig = spConfig;
+        _mapper = mapper;
+        _spContext = spContext.Context;
     }
 }

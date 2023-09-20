@@ -17,16 +17,12 @@ public class FileData
     /// </summary>
     public string Ext => Path.GetExtension(Name ?? "").Replace(".", "");
 
-    public FileData() { }
-
     public FileData(string name, Stream data)
     {
         Name = name;
 
-        using (MemoryStream ms = new MemoryStream())
-        {
-            data.CopyTo(ms);
-            Data = ms.ToArray();
-        }
+        using var ms = new MemoryStream();
+        data.CopyTo(ms);
+        Data = ms.ToArray();
     }
 }

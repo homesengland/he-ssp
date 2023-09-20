@@ -1,5 +1,6 @@
 using HE.DocumentService.Api.Configuration;
 using HE.DocumentService.Api.Extensions;
+using HE.DocumentService.Api.Middlewares;
 using HE.DocumentService.SharePoint.Configurartion;
 using HE.DocumentService.SharePoint.Extensions;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +35,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+// global error handler
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.MapControllers();
 

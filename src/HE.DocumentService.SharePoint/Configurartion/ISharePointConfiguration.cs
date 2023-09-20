@@ -1,19 +1,19 @@
-﻿namespace HE.DocumentService.SharePoint.Configurartion;
+namespace HE.DocumentService.SharePoint.Configurartion;
 
 public interface ISharePointConfiguration
 {
-    public string ClientId { get; }
+    public string ClientId { get; set; }
 
-    public string ClientSecret { get; }
+    public string ClientSecret { get; set; }
 
-    public string SiteUrl { get; }
+    public string SiteUrl { get; set; }
 
-    public string WhiteListOfFileExtensions { get; }
+    public string WhiteListOfFileExtensions { get; set; }
 
     /// <summary>
     /// SP_FileMaxSize the value in bytes
     /// </summary>
-    public int FileMaxSize { get; }
+    public int FileMaxSize { get; set; }
 
     public List<string> AllowedFileExtensions { get; }
 }

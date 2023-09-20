@@ -15,8 +15,7 @@ public class TableResult<T>
     [Required]
     public int TotalCount { get; set; }
 
-    [Required]
-    public string PagingInfo { get; set; }
+    public string? PagingInfo { get; set; }
 
     public TableResult()
     {
@@ -24,9 +23,9 @@ public class TableResult<T>
         TotalCount = 0;
     }
 
-    public TableResult(IEnumerable<T> queryResult, int totalCount = 0, string pagingInfo = null, int? trimStringLength = null)
+    public TableResult(IEnumerable<T> queryResult, int totalCount = 0, string? pagingInfo = null, int? trimStringLength = null)
     {
-        Items = TrimStrings(queryResult.ToList(), trimStringLength.HasValue ? trimStringLength.Value : 100);
+        Items = TrimStrings(queryResult.ToList(), trimStringLength ?? 100);
         TotalCount = totalCount;
         PagingInfo = pagingInfo;
     }
@@ -35,17 +34,20 @@ public class TableResult<T>
     {
         foreach (var item in items)
         {
+            if (item == null)
+            {
+                break;
+            }
+
             foreach (var prop in item.GetType().GetProperties())
             {
                 if (prop.PropertyType == typeof(string))
                 {
-                    var val = prop.GetValue(item) as string;
-
-                    if (val != null && val.Length > length)
+                    if (prop.GetValue(item) is string val && val.Length > length)
                     {
-                        val = val.Substring(0, length);
-                        var lastIndexOfWhiteSpace = val.LastIndexOf(" ");
-                        prop.SetValue(item, $"{val.Substring(0, lastIndexOfWhiteSpace)}...");
+                        val = val[..length];
+                        var lastIndexOfWhiteSpace = val.LastIndexOf(" ", System.StringComparison.OrdinalIgnoreCase);
+                        prop.SetValue(item, $"{val[..lastIndexOfWhiteSpace]}...");
                     }
                 }
             }

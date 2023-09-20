@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using HE.DocumentService.SharePoint.Interfaces;
 using HE.DocumentService.SharePoint.Models.File;
 using HE.DocumentService.SharePoint.Models.Table;
@@ -18,28 +19,28 @@ public class SharepointFilesController : CustomControllerBase
     [HttpPost("GetTableRows")]
     public async Task<TableResult<FileTableRow>> GetTableRows(FileTableFilter filter)
     {
-        var rows = await Service<ISharePointFilesService>().GetTableRows(Guid.NewGuid(), filter);
+        var rows = await Service<ISharePointFilesService>().GetTableRows(filter);
 
         return rows;
     }
 
     [HttpPost("Upload")]
-    public async Task Upload(FileData item)
+    public async Task Upload([FromForm] SharepointFileUploadModel item)
     {
-        await Service<ISharePointFilesService>().UploadFile(Guid.NewGuid(), item);
+        await Service<ISharePointFilesService>().UploadFile(item);
     }
 
     [HttpGet("Download")]
-    public async Task<FileData> Download(string fileName)
+    public async Task<FileData> Download(string listAlias, string folderPath, string fileName)
     {
-        var file = await Service<ISharePointFilesService>().DownloadFile(Guid.NewGuid(), fileName);
+        var file = await Service<ISharePointFilesService>().DownloadFile(listAlias, folderPath, fileName);
 
         return file;
     }
 
     [HttpDelete("Delete")]
-    public async Task Delete(string fileName)
+    public async Task Delete(string listAlias, string folderPath, string fileName)
     {
-        await Service<ISharePointFilesService>().RemoveFile(Guid.NewGuid(), fileName);
+        await Service<ISharePointFilesService>().RemoveFile(listAlias, folderPath, fileName);
     }
 }

@@ -12,7 +12,7 @@ public static class ListItemCollectionExtension
 {
     public static DataTable MapDataTable(this ListItemCollection items)
     {
-        DataTable dtGetReqForm = new DataTable();
+        var dtGetReqForm = new DataTable();
         if (items != null && items.Count > 0)
         {
             foreach (var field in items[0].FieldValues.Keys)
@@ -22,14 +22,14 @@ public static class ListItemCollectionExtension
 
             foreach (var item in items)
             {
-                DataRow dr = dtGetReqForm.NewRow();
+                var dr = dtGetReqForm.NewRow();
 
                 foreach (var obj in item.FieldValues)
                 {
                     if (obj.Value != null)
                     {
-                        string key = obj.Key;
-                        string type = obj.Value.GetType().FullName;
+                        var key = obj.Key;
+                        var type = obj.Value.GetType().FullName;
 
                         if (type == "Microsoft.SharePoint.Client.FieldLookupValue")
                         {
@@ -41,14 +41,15 @@ public static class ListItemCollectionExtension
                         }
                         else if (type == "Microsoft.SharePoint.Client.FieldUserValue[]")
                         {
-                            FieldUserValue[] multValue = (FieldUserValue[])obj.Value;
-                            foreach (FieldUserValue fieldUserValue in multValue)
+                            var multValue = (FieldUserValue[])obj.Value;
+                            foreach (var fieldUserValue in multValue)
                             {
-                                dr[obj.Key] += (fieldUserValue).LookupValue;
+                                dr[obj.Key] += fieldUserValue.LookupValue;
                             }
                         }
                         else if (type == "System.DateTime")
                         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                             if (obj.Value.ToString().Length > 0)
                             {
                                 var date = obj.Value.ToString().Split(' ');
@@ -57,6 +58,7 @@ public static class ListItemCollectionExtension
                                     dr[obj.Key] = date[0];
                                 }
                             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                         }
                         else
                         {

@@ -21,13 +21,19 @@ public class SharePointContext : ISharePointContext, IDisposable
         );
     }
 
-    public ClientContext context => _context.Value;
+    public ClientContext Context => _context.Value;
 
-    public void Dispose()
+    protected virtual void Dispose(bool disposing)
     {
-        if (_context.IsValueCreated)
+        if (disposing && _context.IsValueCreated)
         {
             _context.Value.Dispose();
         }
+    }
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }

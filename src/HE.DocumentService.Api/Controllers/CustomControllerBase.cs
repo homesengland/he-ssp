@@ -12,13 +12,5 @@ public class CustomControllerBase : ControllerBase
         _contextAccessor = contextAccessor;
     }
 
-    public T Service<T>() => (T)_contextAccessor.HttpContext.RequestServices.GetService(typeof(T));
-
-    public override FileContentResult File(byte[] fileContents, string contentType, string fileDownloadName)
-    {
-        Response.Headers.Add("File-Name", fileDownloadName);
-        Response.Headers.Add("Access-Control-Expose-Headers", "File-Name");
-
-        return base.File(fileContents, contentType, fileDownloadName);
-    }
+    public T Service<T>() => (T)(_contextAccessor.HttpContext?.RequestServices.GetService(typeof(T)) ?? throw new ArgumentNullException());
 }

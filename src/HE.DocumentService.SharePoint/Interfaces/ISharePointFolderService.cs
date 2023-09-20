@@ -10,6 +10,4 @@ public interface ISharePointFolderService
     Folder EnsureAndGetTargetFolder(string folderPath);
 
     Folder EnsureAndGetTargetFolder(List list, List<string> folderPath);
-
-    Folder GetFolder(string path);
 }
