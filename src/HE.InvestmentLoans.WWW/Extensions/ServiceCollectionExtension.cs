@@ -29,6 +29,12 @@ public static class ServiceCollectionExtension
             services.AddDataProtection()
                 .SetApplicationName(appConfig.AppName!)
                 .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(config.RedisConnectionString), "DataProtection-Keys");
+
+            services.AddStackExchangeRedisCache(action =>
+            {
+                action.InstanceName = "redis";
+                action.Configuration = config.RedisConnectionString;
+            });
         }
     }
 }

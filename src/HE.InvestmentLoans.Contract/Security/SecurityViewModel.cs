@@ -1,14 +1,16 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract.Application.Enums;
 
-namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
+namespace HE.InvestmentLoans.Contract.Security;
 
 public class SecurityViewModel
 {
     public SecurityViewModel()
     {
-        State = SecurityWorkflow.State.Index;
+        State = SectionStatus.NotStarted;
     }
+
+    public Guid LoanApplicationId { get; set; }
 
     public string? CheckAnswers { get; set; }
 
@@ -24,7 +26,7 @@ public class SecurityViewModel
 
     public string? Name { get; set; }
 
-    public SecurityWorkflow.State State { get; set; }
+    public SectionStatus State { get; set; }
 
     public bool StateChanged { get; set; }
 

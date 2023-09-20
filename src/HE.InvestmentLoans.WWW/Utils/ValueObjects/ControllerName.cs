@@ -1,5 +1,5 @@
 using Dawn;
-using HE.InvestmentLoans.Contract.Domain;
+using HE.InvestmentLoans.Common.Domain;
 
 namespace HE.InvestmentLoans.WWW.Utils.ValueObjects;
 

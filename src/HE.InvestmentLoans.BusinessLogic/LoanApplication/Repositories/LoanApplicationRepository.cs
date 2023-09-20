@@ -159,6 +159,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             directorLoans = loanApplication.Security.DirLoans!.MapToBool(),
             confirmationDirectorLoansCanBeSubordinated = loanApplication.Security.DirLoansSub!.MapToBool(),
             reasonForDirectorLoanNotSubordinated = loanApplication.Security.DirLoansSubMore,
+            SecurityDetailsCompletionStatus = SectionStatusMapper.Map(loanApplication.Security.State),
 
             // SITEDETAILS
             siteDetailsList = siteDetailsDtos,
@@ -176,11 +177,11 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         await _serviceClient.ExecuteAsync(req);
     }
 
-    public async Task Save(LoanApplicationEntity loanApplication, CancellationToken cancellationToken)
+    public async Task Save(LoanApplicationEntity loanApplication, UserDetails userDetails, CancellationToken cancellationToken)
     {
         var loanApplicationDto = new LoanApplicationDto()
         {
-            LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount),
+            LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount, userDetails),
             fundingReason = FundingPurposeMapper.Map(loanApplication.FundingReason),
         };
 

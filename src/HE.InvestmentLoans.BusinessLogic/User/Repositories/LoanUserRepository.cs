@@ -40,7 +40,7 @@ public class LoanUserRepository : ILoanUserRepository
                             userEmail,
                             x.Key,
                             x.FirstOrDefault(y => y.accountId == x.Key)?.accountName ?? string.Empty,
-                            x.Select(y => new UserAccountRole(y.webRoleName)).ToArray())).ToList();
+                            x.Select(x => new UserAccountRole(x.webRoleName)))).ToList();
     }
 
     public async Task<UserDetails> GetUserDetails(UserGlobalId userGlobalId)
@@ -57,6 +57,6 @@ public class LoanUserRepository : ILoanUserRepository
     {
         var contactDto = UserDetailsMapper.MapUserDetailsToContactDto(userDetails);
 
-        await _contactService.UpdateUserProfile(_serviceClient, userGlobalId.ToString(), contactDto);
+        await _contactService.UpdateUserProfile(_serviceClient, userGlobalId.ToString(), contactDto, cancellationToken);
     }
 }

@@ -13,7 +13,7 @@ public class OperationResult
 
     public bool IsValid => Errors.Count == 0;
 
-    public bool AreValidationErrors => !IsValid;
+    public bool HasValidationErrors => !IsValid;
 
     public static OperationResult New() => new();
 
@@ -32,7 +32,7 @@ public class OperationResult
 
     public void CheckErrors()
     {
-        if (AreValidationErrors)
+        if (HasValidationErrors)
         {
             throw new DomainValidationException(this);
         }

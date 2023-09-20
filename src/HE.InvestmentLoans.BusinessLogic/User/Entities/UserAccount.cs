@@ -7,4 +7,4 @@ public record UserAccount(
     string UserEmail,
     Guid? AccountId,
     string AccountName,
-    UserAccountRole[] Roles);
+    IEnumerable<UserAccountRole> Roles);
