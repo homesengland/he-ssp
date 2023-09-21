@@ -50,6 +50,7 @@ namespace HE.CRM.Common.DtoMapping
                 //CHANGE IN STATUS ONLY VIA STATUS CHANGE ENDPOINT
 
                 //OTHER maybe not related
+                invln_source = loanApplicationDto.source,
                 invln_statuschangereason = loanApplicationDto.withdrawReason,
                 invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference(Account.EntityLogicalName, accountid) : null, //pusty account?
             };
@@ -120,6 +121,7 @@ namespace HE.CRM.Common.DtoMapping
                 accountId = loanApplication.invln_Account.Id,
                 loanApplicationId = loanApplication.invln_LoanapplicationId.ToString(),
                 externalId = externalContactId,
+                source = loanApplication.invln_source,
             };
 
             if (contact != null)
