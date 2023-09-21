@@ -23,7 +23,7 @@
 
                 @if (!string.IsNullOrEmpty(singleData.Link))
                 {
-                    <gds-link href=@singleData.Link>
+                    <gds-link href=@singleData.Link id=@($"edit-link-{singleData.Title.ToLowerInvariant().Replace(' ', '-')}")>
                         View or Edit
                     </gds-link>
                 }
