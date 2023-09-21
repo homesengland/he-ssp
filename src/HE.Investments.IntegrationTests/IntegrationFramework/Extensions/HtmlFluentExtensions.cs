@@ -27,6 +27,12 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasNotEmptyTitle(this IHtmlDocument htmlDocument)
+    {
+        htmlDocument.GetPageTitle().Should().NotBeEmpty();
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasLabelTitle(this IHtmlDocument htmlDocument, string titleLabel)
     {
         htmlDocument.GetLabel().Should().Be(titleLabel);
