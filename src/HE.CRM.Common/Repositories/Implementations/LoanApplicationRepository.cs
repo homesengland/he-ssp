@@ -28,27 +28,6 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        public List<invln_Loanapplication> GetContactLoans(EntityReference contactId)
-        {
-            logger.Trace("Get Loans for Contact");
-            List<invln_Loanapplication> loanapplications = new List<invln_Loanapplication>();
-            if (contactId != null)
-            {
-                logger.Trace("Contact id not null. Id: " + contactId.Id);
-                QueryExpression qe = new QueryExpression(invln_Loanapplication.EntityLogicalName);
-                qe.ColumnSet = new ColumnSet(nameof(invln_Loanapplication.invln_Contact).ToLower());
-                qe.Criteria.AddCondition(nameof(invln_Loanapplication.invln_Contact).ToLower(), ConditionOperator.Equal, contactId.Id);
-                var result = service.RetrieveMultiple(qe);
-                if (result != null && result.Entities.Count > 0)
-                {
-                    logger.Trace("Loans: " + result.Entities.Count);
-                    loanapplications.AddRange(result.Entities.Select(x => x.ToEntity<invln_Loanapplication>()));
-                }
-            }
-
-            return loanapplications;
-        }
-
         public List<invln_Loanapplication> GetLoanApplicationsForGivenAccountAndContact(Guid accountId, string externalContactId, string loanApplicationId = null)
         {
             using (DataverseContext ctx = new DataverseContext(service))
@@ -57,7 +36,9 @@ namespace HE.CRM.Common.Repositories.Implementations
                 {
                     return (from la in ctx.invln_LoanapplicationSet
                             join cnt in ctx.ContactSet on la.invln_Contact.Id equals cnt.ContactId
-                            where la.invln_Account.Id == accountId && cnt.invln_externalid == externalContactId
+                            where la.invln_Account.Id == accountId && cnt.invln_externalid == externalContactId &&
+                            la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Inactive &&
+                            la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Active && la.StateCode.Value != (int)invln_loanapplicationState.Inactive
                             select la).ToList();
                 }
                 else
@@ -66,7 +47,9 @@ namespace HE.CRM.Common.Repositories.Implementations
                     {
                         return (from la in ctx.invln_LoanapplicationSet
                                 join cnt in ctx.ContactSet on la.invln_Contact.Id equals cnt.ContactId
-                                where la.invln_Account.Id == accountId && cnt.invln_externalid == externalContactId && la.invln_LoanapplicationId == loanApplicationGuid
+                                where la.invln_Account.Id == accountId && cnt.invln_externalid == externalContactId && la.invln_LoanapplicationId == loanApplicationGuid &&
+                                la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Inactive &&
+                                la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Active && la.StateCode.Value != (int)invln_loanapplicationState.Inactive
                                 select la).ToList();
                     }
                     else
@@ -82,7 +65,8 @@ namespace HE.CRM.Common.Repositories.Implementations
             using (var ctx = new OrganizationServiceContext(service))
             {
                 return ctx.CreateQuery<invln_Loanapplication>()
-                    .Where(x => x.invln_Account.Id == accountId).ToList();
+                    .Where(x => x.invln_Account.Id == accountId && x.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Inactive &&
+                            x.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Active && x.StateCode.Value != (int)invln_loanapplicationState.Inactive).ToList();
             }
         }
 
