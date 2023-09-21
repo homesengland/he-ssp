@@ -30,12 +30,7 @@ public class CheckAnswersTests
         // given
         var fundingEntity = FundingEntityTestBuilder
             .New()
-            .WithGrossDevelopmentValue()
-            .WithEstimatedTotalCosts()
-            .WithAbnormalCosts()
-            .WithPrivateSectorFunding()
-            .WithRepaymentSystem()
-            .WithAdditionalProjects()
+            .WithAllDataProvided()
             .Build();
 
         // when

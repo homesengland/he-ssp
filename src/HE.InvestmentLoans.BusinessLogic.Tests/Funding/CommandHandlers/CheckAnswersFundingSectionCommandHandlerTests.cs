@@ -27,12 +27,7 @@ public class CheckAnswersFundingSectionCommandHandlerTests : TestBase<CheckAnswe
 
         var fundingEntity = FundingEntityTestBuilder
             .New()
-            .WithGrossDevelopmentValue()
-            .WithEstimatedTotalCosts()
-            .WithAbnormalCosts()
-            .WithPrivateSectorFunding()
-            .WithRepaymentSystem()
-            .WithAdditionalProjects()
+            .WithAllDataProvided()
             .Build();
 
         var userAccount = LoanUserContextTestBuilder

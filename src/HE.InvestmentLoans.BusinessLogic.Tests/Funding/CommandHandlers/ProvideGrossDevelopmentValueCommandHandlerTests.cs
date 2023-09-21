@@ -19,12 +19,6 @@ public class ProvideGrossDevelopmentValueCommandHandlerTests : TestBase<ProvideG
 
         var fundingEntity = FundingEntityTestBuilder
             .New()
-            .WithGrossDevelopmentValue()
-            .WithEstimatedTotalCosts()
-            .WithAbnormalCosts()
-            .WithPrivateSectorFunding()
-            .WithRepaymentSystem()
-            .WithAdditionalProjects()
             .Build();
 
         var userAccount = LoanUserContextTestBuilder

@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Extensions;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using MediatR;
 
@@ -17,13 +18,6 @@ public class CheckAnswersCompanyStructureSectionCommandHandler : CompanyStructur
 
     public async Task<OperationResult> Handle(CheckAnswersCompanyStructureSectionCommand request, CancellationToken cancellationToken)
     {
-        var yesNoAnswers = request.YesNoAnswer switch
-        {
-            CommonResponse.Yes => YesNoAnswers.Yes,
-            CommonResponse.No => YesNoAnswers.No,
-            _ => YesNoAnswers.Undefined,
-        };
-
-        return await Perform(x => x.CheckAnswers(yesNoAnswers), request.LoanApplicationId, cancellationToken);
+        return await Perform(x => x.CheckAnswers(request.YesNoAnswer.ToYesNoAnswer()), request.LoanApplicationId, cancellationToken);
     }
 }

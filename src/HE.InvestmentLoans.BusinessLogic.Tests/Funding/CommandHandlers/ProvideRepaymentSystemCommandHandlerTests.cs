@@ -20,12 +20,6 @@ public class ProvideRepaymentSystemCommandHandlerTests : TestBase<ProvideRepayme
 
         var fundingEntity = FundingEntityTestBuilder
             .New()
-            .WithGrossDevelopmentValue()
-            .WithEstimatedTotalCosts()
-            .WithAbnormalCosts()
-            .WithPrivateSectorFunding()
-            .WithRepaymentSystem()
-            .WithAdditionalProjects()
             .Build();
 
         var userAccount = LoanUserContextTestBuilder

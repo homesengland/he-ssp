@@ -53,6 +53,18 @@ public class FundingEntityTestBuilder
         return this;
     }
 
+    public FundingEntityTestBuilder WithAllDataProvided()
+    {
+        WithGrossDevelopmentValue();
+        WithEstimatedTotalCosts();
+        WithAbnormalCosts();
+        WithPrivateSectorFunding();
+        WithRepaymentSystem();
+        WithAdditionalProjects();
+
+        return this;
+    }
+
     public FundingEntity Build()
     {
         return _item;

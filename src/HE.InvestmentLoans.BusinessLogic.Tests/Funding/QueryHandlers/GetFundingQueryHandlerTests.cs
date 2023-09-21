@@ -18,12 +18,7 @@ public class GetFundingQueryHandlerTests : TestBase<GetFundingQueryHandler>
 
         var fundingEntity = FundingEntityTestBuilder
             .New()
-            .WithGrossDevelopmentValue()
-            .WithEstimatedTotalCosts()
-            .WithAbnormalCosts()
-            .WithPrivateSectorFunding()
-            .WithRepaymentSystem()
-            .WithAdditionalProjects()
+            .WithAllDataProvided()
             .Build();
 
         var userAccount = LoanUserContextTestBuilder

@@ -17,12 +17,7 @@ public class SaveAsyncTests : TestBase<FundingRepository>
         // given
         var fundingEntity = FundingEntityTestBuilder
             .New()
-            .WithGrossDevelopmentValue()
-            .WithEstimatedTotalCosts()
-            .WithAbnormalCosts()
-            .WithPrivateSectorFunding()
-            .WithRepaymentSystem()
-            .WithAdditionalProjects()
+            .WithAllDataProvided()
             .Build();
 
         var userAccount = UserAccountTestData.UserAccountOne;
