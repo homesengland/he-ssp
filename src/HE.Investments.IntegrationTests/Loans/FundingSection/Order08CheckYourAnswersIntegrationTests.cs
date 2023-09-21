@@ -14,7 +14,7 @@ using CommonResponse = HE.InvestmentLoans.Common.Utils.Constants.FormOption.Comm
 
 namespace HE.InvestmentLoans.IntegrationTests.Loans.FundingSection;
 
-[Order(8)]
+[Order(2)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
 {

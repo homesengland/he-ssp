@@ -13,7 +13,7 @@ using FormOptions = HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 
 namespace HE.InvestmentLoans.IntegrationTests.Loans.FundingSection;
 
-[Order(4)]
+[Order(2)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order04AbnormalCostsIntegrationTests : IntegrationTest
 {

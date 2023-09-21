@@ -10,7 +10,7 @@ using Xunit.Extensions.Ordering;
 
 namespace HE.InvestmentLoans.IntegrationTests.Loans.FundingSection;
 
-[Order(3)]
+[Order(2)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order03EstimatedTotalCostsIntegrationTests : IntegrationTest
 {
