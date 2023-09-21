@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 using Xunit;
 
@@ -22,12 +23,12 @@ public class OrganisationMoreInformationCtorTests
     }
 
     [Fact]
-    public void ShouldThrowDomainValidationException_WhenInputIsLongerThan1000Chars()
+    public void ShouldThrowDomainValidationException_WhenInputIsLongerThan1500Chars()
     {
         // given & when
-        var action = () => new OrganisationMoreInformation(new string('*', 1001));
+        var action = () => new OrganisationMoreInformation(new string('*', 1501));
 
         // then
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.InputLongerThanThousandCharacters);
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.OrganisationMoreInformation));
     }
 }

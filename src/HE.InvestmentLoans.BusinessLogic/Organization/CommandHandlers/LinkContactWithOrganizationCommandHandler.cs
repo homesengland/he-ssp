@@ -1,9 +1,9 @@
 extern alias Org;
 
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract;
-using HE.InvestmentLoans.Contract.Exceptions;
 using HE.InvestmentLoans.Contract.Organization;
 using MediatR;
 using Microsoft.PowerPlatform.Dataverse.Client;

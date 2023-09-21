@@ -20,9 +20,7 @@ public class ProvideUserDetailsCommandHandler : IRequestHandler<ProvideUserDetai
 
     public async Task Handle(ProvideUserDetailsCommand request, CancellationToken cancellationToken)
     {
-        var selectedAccount = await _loanUserContext.GetSelectedAccount();
-
-        var userDetails = await _loanUserRepository.GetUserDetails(selectedAccount.UserGlobalId);
+        var userDetails = await _loanUserRepository.GetUserDetails(_loanUserContext.UserGlobalId);
 
         userDetails.ProvideUserDetails(
             request.FirstName,
@@ -30,9 +28,9 @@ public class ProvideUserDetailsCommandHandler : IRequestHandler<ProvideUserDetai
             request.JobTitle,
             request.TelephoneNumber,
             request.SecondaryTelephoneNumber,
-            selectedAccount.UserEmail);
+            _loanUserContext.Email);
 
-        await _loanUserRepository.SaveAsync(userDetails, selectedAccount.UserGlobalId, cancellationToken);
+        await _loanUserRepository.SaveAsync(userDetails, _loanUserContext.UserGlobalId, cancellationToken);
 
         _loanUserContext.RefreshUserData();
     }

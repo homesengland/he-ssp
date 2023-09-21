@@ -1,7 +1,6 @@
-@using HE.InvestmentLoans.Common.Models.Others;
 @using HE.InvestmentLoans.WWW.Utils.Errors;
 @using Microsoft.AspNetCore.Html;
-@model ErrorModel;
+@model HE.InvestmentLoans.Common.Infrastructure.ErrorHandling.ErrorModel;
 
 @{
     var (header, body) = ErrorContentProvider.GetContent(Model);

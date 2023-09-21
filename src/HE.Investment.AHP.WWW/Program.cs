@@ -1,5 +1,6 @@
 using HE.Investment.AHP.WWW.Config;
 using HE.InvestmentLoans.Common.Authorization;
+using HE.InvestmentLoans.Common.Infrastructure.ErrorHandling;
 using HE.InvestmentLoans.Common.Infrastructure.Middlewares;
 using Microsoft.FeatureManagement;
 
@@ -7,7 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddApplicationInsightsTelemetry();
-
 builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();

@@ -36,8 +36,11 @@ namespace HE.CRM.Plugins.Services.Accounts
         public OrganizationDetailsDto GetOrganizationDetails(string accountid, string contactExternalId)
         {
             var organizationDetailsDto = new OrganizationDetailsDto();
+            TracingService.Trace($"accountid : {accountid}");
+            TracingService.Trace($"externalid : {contactExternalId}");
             if (Guid.TryParse(accountid, out var organizationId))
             {
+                TracingService.Trace($"organizationid : {organizationId}");
                 var account = _accountRepository.GetById(organizationId, new string[] {
                     nameof(Account.Name).ToLower(),
                     nameof(Account.he_CompaniesHouseNumber).ToLower(),
@@ -61,6 +64,7 @@ namespace HE.CRM.Plugins.Services.Accounts
 
                 if (account.PrimaryContactId != null)
                 {
+                    TracingService.Trace($"primary contact : {account.PrimaryContactId}");
                     var contact = _contactRepository.GetById(account.PrimaryContactId, new string[]
                     {
                         nameof(Contact.FullName).ToLower(),

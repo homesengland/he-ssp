@@ -50,6 +50,7 @@ namespace HE.CRM.Common.DtoMapping
                 //CHANGE IN STATUS ONLY VIA STATUS CHANGE ENDPOINT
 
                 //OTHER maybe not related
+                invln_statuschangereason = loanApplicationDto.withdrawReason,
                 invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference(Account.EntityLogicalName, accountid) : null, //pusty account?
             };
 
@@ -113,7 +114,7 @@ namespace HE.CRM.Common.DtoMapping
                 //OTHRER ATTRIBUTES
                 LastModificationOn = loanApplication.ModifiedOn,
                 loanApplicationExternalStatus = loanApplication.invln_ExternalStatus?.Value,
-
+                withdrawReason = loanApplication.invln_statuschangereason,
 
                 name = loanApplication.invln_Name,
                 accountId = loanApplication.invln_Account.Id,

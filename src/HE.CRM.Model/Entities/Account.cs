@@ -542,6 +542,7 @@ namespace DataverseModel
 		/// </summary>
 		public static partial class Fields
 		{
+			public const string account_invln_emails = "account_invln_emails";
 			public const string Referencingaccount_master_account = "account_master_account";
 			public const string Referencingaccount_parent_account = "account_parent_account";
 			public const string account_primary_contact = "account_primary_contact";
@@ -4674,6 +4675,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("YomiName");
 				this.SetAttributeValue("yominame", value);
 				this.OnPropertyChanged("YomiName");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N account_invln_emails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_invln_emails")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_email> account_invln_emails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_email>("account_invln_emails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("account_invln_emails");
+				this.SetRelatedEntities<DataverseModel.invln_email>("account_invln_emails", null, value);
+				this.OnPropertyChanged("account_invln_emails");
 			}
 		}
 		

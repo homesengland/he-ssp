@@ -42,7 +42,10 @@ namespace DataverseModel
 		CustomerVoicesurveyresponse = 10355,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Email = 4202,
+		Email_11075 = 11075,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Email_4202 = 4202,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		InviteRedemption = 11008,

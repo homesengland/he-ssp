@@ -6,5 +6,5 @@ public record UserAccount(
     UserGlobalId UserGlobalId,
     string UserEmail,
     Guid? AccountId,
-    string? AccountName,
-    UserAccountRole[] Roles);
+    string AccountName,
+    IEnumerable<UserAccountRole> Roles);

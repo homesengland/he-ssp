@@ -1,6 +1,6 @@
 using FluentAssertions;
 using FluentAssertions.Specialized;
-using HE.InvestmentLoans.Contract.Exceptions;
+using HE.InvestmentLoans.Common.Exceptions;
 
 namespace HE.InvestmentLoans.Common.Tests.Extensions.FluentAssertionsExtensions;
 public static class ExceptionAssertionsExtensions
