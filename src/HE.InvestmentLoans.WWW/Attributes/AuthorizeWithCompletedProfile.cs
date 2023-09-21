@@ -26,7 +26,7 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
     {
         if (allowedFor.IsNotProvided())
         {
-            _allowedFor = new[] { UserAccountRole.LimitedUser };
+            _allowedFor = new[] { UserAccountRole.LimitedUser, UserAccountRole.Admin };
         }
         else
         {
