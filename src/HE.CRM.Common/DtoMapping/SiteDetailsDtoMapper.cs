@@ -111,7 +111,7 @@ namespace HE.CRM.Common.DtoMapping
 
         public static string[] MapTypeOfHomesOptionSetToString(OptionSetValueCollection typeOfHomes)
         {
-            if (typeOfHomes.Count > 0)
+            if (typeOfHomes != null && typeOfHomes.Count > 0)
             {
                 List<string> collection = new List<string>();
                 foreach (var home in typeOfHomes)
