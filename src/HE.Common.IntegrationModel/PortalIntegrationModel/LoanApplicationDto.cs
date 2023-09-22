@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Microsoft.Xrm.Sdk;
 #pragma warning restore IDE0005 // Using directive is unnecessary.
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
@@ -17,9 +18,9 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
                                                     //Company.CompanyInfoFile
 
         //FUNDING
-        public string projectGdv { get; set; } //GDV
+        public decimal? projectGdv { get; set; } //GDV
 
-        public string projectEstimatedTotalCost { get; set; } //TotalCosts
+        public decimal? projectEstimatedTotalCost { get; set; } //TotalCosts
 
         public bool? projectAbnormalCosts { get; set; } //AbnormalCosts
 
@@ -92,5 +93,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string externalId { get; set; }
 
         public string withdrawReason { get; set; }
+
+        public OptionSetValue source { get; set; }
     }
 }

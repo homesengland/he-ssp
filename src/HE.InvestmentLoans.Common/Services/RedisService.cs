@@ -15,25 +15,11 @@ public class RedisService : ICacheService
 
     private readonly ConnectionMultiplexer _connection;
 
-    public RedisService(IAppConfig appConfig, IDataverseConfig dataverseConfig)
+    public RedisService(IAppConfig appConfig, ConfigurationOptions options)
     {
         _appConfig = appConfig;
 
-        if (appConfig.Cache.RedisCertificateEnabled == true)
-        {
-            var configurationOptions = ConfigurationOptions.Parse(appConfig.Cache.RedisConnectionString);
-            configurationOptions.CertificateValidation += CertificateValidationCallBack!;
-            configurationOptions.CertificateSelection += OptionsOnCertificateSelection;
-            configurationOptions.Ssl = true;
-            configurationOptions.SslProtocols = SslProtocols.Tls12;
-            configurationOptions.AbortOnConnectFail = false;
-
-            _connection = ConnectionMultiplexer.Connect(configurationOptions);
-        }
-        else
-        {
-            _connection = ConnectionMultiplexer.Connect(appConfig.Cache.RedisConnectionString);
-        }
+        _connection = ConnectionMultiplexer.Connect(options);
     }
 
     private IDatabase Cache => _connection.GetDatabase();
@@ -79,29 +65,4 @@ public class RedisService : ICacheService
     }
 
     private string GetKey(string key) => $"{_appConfig.AppName}_{key}";
-
-    private X509Certificate OptionsOnCertificateSelection(object sender, string targethost, X509CertificateCollection localcertificates, X509Certificate? remotecertificate, string[] acceptableissuers)
-    {
-        return CreateCertFromPemFile(_appConfig.Cache.RedisCertificatePath, _appConfig.Cache.RedisCertificateKeyPath);
-    }
-
-    private X509Certificate2 CreateCertFromPemFile(string certPath, string keyPath)
-    {
-        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            return X509Certificate2.CreateFromPemFile(certPath, keyPath);
-        }
-
-        using var cert = X509Certificate2.CreateFromPemFile(certPath, keyPath);
-        return new X509Certificate2(cert.Export(X509ContentType.Pkcs12));
-    }
-
-    private bool CertificateValidationCallBack(
-        object sender,
-        X509Certificate certificate,
-        X509Chain? chain,
-        SslPolicyErrors sslPolicyErrors)
-    {
-        return true;
-    }
 }

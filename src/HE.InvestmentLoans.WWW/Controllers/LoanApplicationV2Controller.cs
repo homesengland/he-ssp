@@ -6,6 +6,7 @@ using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
+using HE.InvestmentLoans.Contract.Funding.Enums;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Security;
 using HE.InvestmentLoans.Contract.User.Queries;
@@ -119,6 +120,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     [WorkflowState(LoanApplicationWorkflow.State.TaskList)]
     [WorkflowState(CompanyStructureState.Complete)]
     [WorkflowState(SecurityState.Complete)]
+    [WorkflowState(FundingState.Complete)]
     public async Task<IActionResult> TaskList(Guid id)
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));

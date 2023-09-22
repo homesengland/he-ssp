@@ -15,5 +15,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         void CheckIfOwnerCanBeChanged(invln_Loanapplication target, invln_Loanapplication preImage);
         void SetFieldsWhenChangingStatusFromDraft(invln_Loanapplication target, invln_Loanapplication preImage);
         void SendInternalNotificationOnStatusChange(invln_Loanapplication target, invln_Loanapplication preImage);
+        void ChangeInternalStatusOnExternalStatusChange(invln_Loanapplication target, invln_Loanapplication preImage);
     }
 }

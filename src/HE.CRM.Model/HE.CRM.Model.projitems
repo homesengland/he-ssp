@@ -121,6 +121,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Satisfactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_SatisfiedBy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sectioncompletionstatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Source.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sourceofincome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Typeofhomes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_TypeofSite.cs" />

@@ -638,10 +638,16 @@ namespace HE.InvestmentLoans.CRM.Model
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		New = 858110018,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Draft = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationSubmitted = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NA = 858110019,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationunderReview = 858110002,
@@ -690,12 +696,6 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		LoanAvailable = 858110017,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		New = 858110018,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		NA = 858110019,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -813,6 +813,87 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Completed = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_role
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Monitoringsurveyor = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Valuer = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Solicitor = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_conditiontype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Precedent = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Subsequent = 858110001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_conditionsource
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Standard = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Bespoke = 858110001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_satisfactory
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		True = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		False = 858110001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_conditionstatus
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Satisfied = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Rejected = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotSubmitted = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Submitted = 858110003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_source
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Companyhousesapi = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Manuallycreated = 858110001,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -3698,10 +3779,40 @@ namespace HE.InvestmentLoans.CRM.Model
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Portalmember = 858110001,
+		Limiteduser = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Accountadministrator = 858110000,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_emailsendstatus
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Draft = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Send = 858110001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_satisfiedby
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Borrower = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Valuer = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Solicitor = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		MonitoringSurveyor = 858110003,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -4358,7 +4469,7 @@ namespace HE.InvestmentLoans.CRM.Model
 		PhoneCall = 4210,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Email = 4202,
+		Email4202 = 4202,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Letter = 4207,
@@ -4425,6 +4536,9 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PortalComment = 11009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Email = 11075,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -5651,7 +5765,7 @@ namespace HE.InvestmentLoans.CRM.Model
 		PhoneCall = 4210,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Email = 4202,
+		Email4202 = 4202,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Appointment = 4201,
@@ -5694,6 +5808,9 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		PortalComment = 11009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Email = 11075,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -7849,36 +7966,6 @@ namespace HE.InvestmentLoans.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
-	public enum he_account_he_primaryoperatingregion
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Midlands = 134370001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		MultipleRegions = 134370002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		National = 134370003,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		NorthEastYorkshireandHumber = 134370004,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		NorthWest = 134370005,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SouthEast = 134370006,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SouthWest = 134370007,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		London = 134370000,
-	}
-	
-	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_industrycode
 	{
 		
@@ -9966,6 +10053,60 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_chapi_companyprofileurl")]
+		public string he_Chapi_CompanyProfileUrl
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_chapi_companyprofileurl");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_Chapi_CompanyProfileUrl");
+				this.SetAttributeValue("he_chapi_companyprofileurl", value);
+				this.OnPropertyChanged("he_Chapi_CompanyProfileUrl");
+			}
+		}
+		
+		/// <summary>
+		/// Company Status imported form Companies House API
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_chapi_companystatus")]
+		public Microsoft.Xrm.Sdk.EntityReference he_Chapi_CompanyStatus
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("he_chapi_companystatus");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_Chapi_CompanyStatus");
+				this.SetAttributeValue("he_chapi_companystatus", value);
+				this.OnPropertyChanged("he_Chapi_CompanyStatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_chapi_companytype")]
+		public Microsoft.Xrm.Sdk.EntityReference he_Chapi_CompanyType
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("he_chapi_companytype");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_Chapi_CompanyType");
+				this.SetAttributeValue("he_chapi_companytype", value);
+				this.OnPropertyChanged("he_Chapi_CompanyType");
+			}
+		}
+		
+		/// <summary>
 		/// Companies House Number
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_companieshousenumber")]
@@ -10232,24 +10373,6 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_partnersector")]
-		public object he_PartnerSector
-		{
-			get
-			{
-				return this.GetAttributeValue<object>("he_partnersector");
-			}
-			set
-			{
-				this.OnPropertyChanging("he_PartnerSector");
-				this.SetAttributeValue("he_partnersector", value);
-				this.OnPropertyChanged("he_PartnerSector");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_partnertype")]
 		public System.Nullable<HE.InvestmentLoans.CRM.Model.he_account_he_partnertype> he_PartnerType
 		{
@@ -10295,39 +10418,6 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanging("he_prefixid");
 				this.SetAttributeValue("he_prefixid", value);
 				this.OnPropertyChanged("he_prefixid");
-			}
-		}
-		
-		/// <summary>
-		/// Primary Operating Region of the partner
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_primaryoperatingregion")]
-		public System.Nullable<HE.InvestmentLoans.CRM.Model.he_account_he_primaryoperatingregion> he_PrimaryOperatingRegion
-		{
-			get
-			{
-				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_primaryoperatingregion");
-				if ((optionSet != null))
-				{
-					return ((HE.InvestmentLoans.CRM.Model.he_account_he_primaryoperatingregion)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.he_account_he_primaryoperatingregion), optionSet.Value)));
-				}
-				else
-				{
-					return null;
-				}
-			}
-			set
-			{
-				this.OnPropertyChanging("he_PrimaryOperatingRegion");
-				if ((value == null))
-				{
-					this.SetAttributeValue("he_primaryoperatingregion", null);
-				}
-				else
-				{
-					this.SetAttributeValue("he_primaryoperatingregion", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
-				}
-				this.OnPropertyChanged("he_PrimaryOperatingRegion");
 			}
 		}
 		
@@ -10386,7 +10476,7 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
-		/// 
+		/// "A developer building fewer than 2,000 homes per year"
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_smeindicatorchoice")]
 		public System.Nullable<HE.InvestmentLoans.CRM.Model.he_smeindicator> he_smeindicatorchoice
@@ -11374,6 +11464,12 @@ namespace HE.InvestmentLoans.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwningBusinessUnit");
+				this.SetAttributeValue("owningbusinessunit", value);
+				this.OnPropertyChanged("OwningBusinessUnit");
 			}
 		}
 		
@@ -16012,6 +16108,39 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_role")]
+		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_role> invln_role
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_role");
+				if ((optionSet != null))
+				{
+					return ((HE.InvestmentLoans.CRM.Model.invln_role)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_role), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_role");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_role", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_role", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_role");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_termsandconditionsaccepted")]
 		public System.Nullable<bool> invln_termsandconditionsaccepted
 		{
@@ -16349,7 +16478,7 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
-		/// Indicate buying influence using tags
+		/// Indicate buying influence using labels
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_decisioninfluencetag")]
 		public System.Nullable<HE.InvestmentLoans.CRM.Model.contact_msdyn_decisioninfluencetag> msdyn_decisioninfluencetag
@@ -16704,6 +16833,12 @@ namespace HE.InvestmentLoans.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwningBusinessUnit");
+				this.SetAttributeValue("owningbusinessunit", value);
+				this.OnPropertyChanged("OwningBusinessUnit");
 			}
 		}
 		
@@ -17614,6 +17749,24 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
+		/// N:N invln_contact_invln_loanapplication
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_loanapplication")]
+		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.invln_Loanapplication> invln_contact_invln_loanapplication
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.invln_Loanapplication>("invln_contact_invln_loanapplication", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_loanapplication");
+				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.invln_Loanapplication>("invln_contact_invln_loanapplication", null, value);
+				this.OnPropertyChanged("invln_contact_invln_loanapplication");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 contact_customer_accounts
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
@@ -17985,6 +18138,24 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanging("invln_Cashflowsubmitted");
 				this.SetAttributeValue("invln_cashflowsubmitted", value);
 				this.OnPropertyChanged("invln_Cashflowsubmitted");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_commerciallysensitive")]
+		public System.Nullable<bool> invln_CommerciallySensitive
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_commerciallysensitive");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_CommerciallySensitive");
+				this.SetAttributeValue("invln_commerciallysensitive", value);
+				this.OnPropertyChanged("invln_CommerciallySensitive");
 			}
 		}
 		
@@ -18477,6 +18648,18 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanid")]
+		public string invln_loanid
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_loanid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanportaldata")]
 		public string invln_loanportaldata
 		{
@@ -18942,6 +19125,57 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_source")]
+		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_source> invln_source
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_source");
+				if ((optionSet != null))
+				{
+					return ((HE.InvestmentLoans.CRM.Model.invln_source)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_source), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_source");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_source", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_source", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_source");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_statuschangereason")]
+		public string invln_statuschangereason
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_statuschangereason");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_statuschangereason");
+				this.SetAttributeValue("invln_statuschangereason", value);
+				this.OnPropertyChanged("invln_statuschangereason");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subjecttocontractapproved")]
 		public System.Nullable<bool> invln_SubjecttocontractApproved
 		{
@@ -19038,6 +19272,12 @@ namespace HE.InvestmentLoans.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwningBusinessUnit");
+				this.SetAttributeValue("owningbusinessunit", value);
+				this.OnPropertyChanged("OwningBusinessUnit");
 			}
 		}
 		
@@ -19248,6 +19488,24 @@ namespace HE.InvestmentLoans.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:N invln_contact_invln_loanapplication
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_loanapplication")]
+		public System.Collections.Generic.IEnumerable<HE.InvestmentLoans.CRM.Model.Contact> invln_contact_invln_loanapplication
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("invln_contact_invln_loanapplication", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_loanapplication");
+				this.SetRelatedEntities<HE.InvestmentLoans.CRM.Model.Contact>("invln_contact_invln_loanapplication", null, value);
+				this.OnPropertyChanged("invln_contact_invln_loanapplication");
 			}
 		}
 		

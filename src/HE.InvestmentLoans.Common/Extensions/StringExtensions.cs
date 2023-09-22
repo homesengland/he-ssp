@@ -9,6 +9,11 @@ public static class StringExtensions
         return int.TryParse(val, out var outValue) ? outValue : null;
     }
 
+    public static decimal? TryParseNullableDecimal(this string val)
+    {
+        return decimal.TryParse(val, out var outValue) ? outValue : null;
+    }
+
     public static bool IsProvided(this string? val)
     {
         return !string.IsNullOrWhiteSpace(val);

@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 
-public record CheckAnswersCompanyStructureSectionCommand(LoanApplicationId LoanApplicationId, string? YesNoAnswer) : IRequest<OperationResult>;
+public record CheckAnswersCompanyStructureSectionCommand(LoanApplicationId LoanApplicationId, string YesNoAnswer) : IRequest<OperationResult>;

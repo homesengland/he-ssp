@@ -22,8 +22,6 @@ namespace HE.CRM.Common.DtoMapping
                                                                                 //Company.CompanyInfoFile
 
                 //FUNDING
-                invln_ProjectGDV = ParseDecimalToMoney(loanApplicationDto.projectGdv), //GDV
-                invln_Projectestimatedtotalcost = ParseDecimalToMoney(loanApplicationDto.projectEstimatedTotalCost), //TotalCosts
                 invln_Projectabnormalcosts = loanApplicationDto.projectAbnormalCosts, //AbnormalCosts
                 invln_Projectabnormalcostsinformation = loanApplicationDto.projectAbnormalCostsInformation, //AbnormalCosts
                 invln_Privatesectorapproach = loanApplicationDto.privateSectorApproach, //PrivateSectorFunding
@@ -50,16 +48,18 @@ namespace HE.CRM.Common.DtoMapping
                 //CHANGE IN STATUS ONLY VIA STATUS CHANGE ENDPOINT
 
                 //OTHER maybe not related
+                invln_source = loanApplicationDto.source,
                 invln_statuschangereason = loanApplicationDto.withdrawReason,
                 invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference(Account.EntityLogicalName, accountid) : null, //pusty account?
+                invln_ProjectGDV = loanApplicationDto.projectGdv.HasValue ? new Money(loanApplicationDto.projectGdv.Value) : null,
+                invln_Projectestimatedtotalcost = loanApplicationDto.projectEstimatedTotalCost.HasValue ? new Money(loanApplicationDto.projectEstimatedTotalCost.Value) : null,
             };
 
             if (loanApplicationDto.loanApplicationExternalStatus.HasValue)
             {
                 loanApplication.invln_ExternalStatus = new OptionSetValue(loanApplicationDto.loanApplicationExternalStatus.Value);
             }
-
-            if(contact != null)
+            if (contact != null)
             {
                 loanApplication.invln_Contact = contact.ToEntityReference();
             }
@@ -85,8 +85,6 @@ namespace HE.CRM.Common.DtoMapping
                 companyExperience = loanApplication.invln_CompanyExperience,
 
                 //funding
-                projectGdv = (loanApplication.invln_ProjectGDV?.Value).ToString(),
-                projectEstimatedTotalCost = (loanApplication.invln_Projectestimatedtotalcost?.Value).ToString(),
                 projectAbnormalCosts = loanApplication.invln_Projectabnormalcosts,
                 projectAbnormalCostsInformation = loanApplication.invln_Projectabnormalcostsinformation?.ToString(),
                 privateSectorApproach = loanApplication.invln_Privatesectorapproach,
@@ -120,8 +118,18 @@ namespace HE.CRM.Common.DtoMapping
                 accountId = loanApplication.invln_Account.Id,
                 loanApplicationId = loanApplication.invln_LoanapplicationId.ToString(),
                 externalId = externalContactId,
+                source = loanApplication.invln_source,
             };
 
+            if (loanApplication.invln_ProjectGDV != null)
+            {
+                loanApplicationDto.projectGdv = loanApplication.invln_ProjectGDV.Value;
+            }
+
+            if (loanApplication.invln_Projectestimatedtotalcost != null)
+            {
+                loanApplicationDto.projectEstimatedTotalCost = loanApplication.invln_Projectestimatedtotalcost.Value;
+            }
             if (contact != null)
             {
                 loanApplicationDto.LoanApplicationContact = new UserAccountDto()
