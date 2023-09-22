@@ -6,7 +6,6 @@
 @inject MediatR.IMediator mediator
 @{
     var securityWorkflow = new SecurityWorkflow(Model, mediator);
-    var fundingWorkflow = new FundingWorkflow(Model, mediator);
     var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
 }
 
@@ -58,15 +57,15 @@
             <ul class="app-task-list__items">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("Workflow","Funding", new {id = Model.ID, ending = fundingWorkflow.GetName() })">
+                        <a href="@Url.Action("StartFunding","FundingV2", new {id = Model.ID})" id="funding-section-link">
                             Provide details about funding
                         </a>
                     </span>
-                    @if (fundingWorkflow.IsCompleted())
+                    @if (Model.Funding.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
-                    else if (fundingWorkflow.IsStarted())
+                    else if (Model.Funding.IsInProgress())
                     {
                         <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
                     }

@@ -282,8 +282,8 @@ namespace HE.CRM.Plugins.Tests.CustomApis
                 existingCompany = "",
                 companyExperience = 5,
 
-                projectGdv = "22.2",
-                projectEstimatedTotalCost = "33.3",
+                projectGdv = 22,
+                projectEstimatedTotalCost = 33,
                 projectAbnormalCosts = false,
                 projectAbnormalCostsInformation = "projectAbnormalCostsInformation",
                 privateSectorApproach = false,

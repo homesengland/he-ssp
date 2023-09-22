@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.CompanyStructure;
+using HE.InvestmentLoans.Contract.Funding;
 using HE.InvestmentLoans.Contract.Security;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
@@ -58,8 +59,8 @@ public static class LoanApplicationMapper
     {
         return new FundingViewModel
         {
-            GrossDevelopmentValue = loanApplicationDto.projectGdv,
-            TotalCosts = loanApplicationDto.projectEstimatedTotalCost,
+            GrossDevelopmentValue = loanApplicationDto.projectGdv.ToString(),
+            TotalCosts = loanApplicationDto.projectEstimatedTotalCost.ToString(),
             AbnormalCosts = loanApplicationDto.projectAbnormalCosts.MapToCommonResponse(),
             AbnormalCostsInfo = loanApplicationDto.projectAbnormalCostsInformation,
             PrivateSectorFunding = loanApplicationDto.privateSectorApproach.MapToCommonResponse(),
@@ -67,6 +68,7 @@ public static class LoanApplicationMapper
             AdditionalProjects = loanApplicationDto.additionalProjects.MapToCommonResponse(),
             Refinance = loanApplicationDto.refinanceRepayment,
             RefinanceInfo = loanApplicationDto.refinanceRepaymentDetails,
+            State = SectionStatusMapper.Map(loanApplicationDto.FundingDetailsCompletionStatus),
         };
     }
 
