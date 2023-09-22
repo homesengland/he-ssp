@@ -21,7 +21,7 @@ public class Order03EstimatedTotalCostsIntegrationTests : IntegrationTest
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(1)]
-    public async Task Order01_ShouldDisplayValidationError_WhenProvidedValueIsText()
+    public async Task Order01_ShouldDisplayValidationError_WhenProvidedValueIsNotADecimalNumber()
     {
         // given
         var estimatedTotalCostsPage = await TestClient.NavigateTo(FundingPageUrls.EstimatedTotalCosts(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
