@@ -237,6 +237,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                                 int oldStatus = retrievedLoanApplicationStatus != null ? retrievedLoanApplicationStatus.Value : 0;
                                 CheckIfExternalStatusCanBeChanged(oldStatus, loanApplicationMapped.invln_ExternalStatus.Value);
                             }
+                            TracingService.Trace($"field name {field}");
                             loanApplicationToUpdate[field] = loanApplicationMapped[field];
                         }
                     }

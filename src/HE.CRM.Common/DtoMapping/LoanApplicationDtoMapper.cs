@@ -51,21 +51,13 @@ namespace HE.CRM.Common.DtoMapping
                 invln_source = loanApplicationDto.source,
                 invln_statuschangereason = loanApplicationDto.withdrawReason,
                 invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference(Account.EntityLogicalName, accountid) : null, //pusty account?
+                invln_ProjectGDV = loanApplicationDto.projectGdv.HasValue ? new Money(loanApplicationDto.projectGdv.Value) : null,
+                invln_Projectestimatedtotalcost = loanApplicationDto.projectEstimatedTotalCost.HasValue ? new Money(loanApplicationDto.projectEstimatedTotalCost.Value) : null,
             };
 
             if (loanApplicationDto.loanApplicationExternalStatus.HasValue)
             {
                 loanApplication.invln_ExternalStatus = new OptionSetValue(loanApplicationDto.loanApplicationExternalStatus.Value);
-            }
-
-            if (loanApplicationDto.projectGdv.HasValue)
-            {
-                loanApplication.invln_ProjectGDV = new Money(loanApplicationDto.projectGdv.Value);
-            }
-
-            if (loanApplicationDto.projectEstimatedTotalCost.HasValue)
-            {
-                loanApplication.invln_Projectestimatedtotalcost = new Money(loanApplicationDto.projectEstimatedTotalCost.Value);
             }
             if (contact != null)
             {
