@@ -28,7 +28,7 @@ builder.Services.AddSession(options =>
     options.Cookie.Name = sessionCookieName;
     options.IdleTimeout = TimeSpan.FromMinutes(config.Cache.SessionExpireMinutes);
 });
-builder.Services.AddCache(config, config);
+builder.Services.AddCache(config);
 
 builder.Services.AddApplicationInsightsTelemetry();
 

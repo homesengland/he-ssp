@@ -19,7 +19,7 @@ public static class ServiceCollectionExtension
         services.AddSingleton<ICacheConfig>(x => x.GetRequiredService<IAppConfig>().Cache);
     }
 
-    public static void AddCache(this IServiceCollection services, IAppConfig config, IAppConfig appConfig)
+    public static void AddCache(this IServiceCollection services, IAppConfig config)
     {
         if (string.IsNullOrEmpty(config.Cache.RedisConnectionString) || config.Cache.RedisConnectionString == "off")
         {
@@ -31,7 +31,7 @@ public static class ServiceCollectionExtension
 
             services.AddSingleton<ICacheService>(x => new RedisService(config, redis.ConfigurationOptions));
             services.AddDataProtection()
-                .SetApplicationName(appConfig.AppName!)
+                .SetApplicationName(config.AppName!)
                 .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(redis.ConfigurationOptions), "DataProtection-Keys");
 
             services.AddStackExchangeRedisCache(action =>
