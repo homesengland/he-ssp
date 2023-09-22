@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Microsoft.Xrm.Sdk;
 #pragma warning restore IDE0005 // Using directive is unnecessary.
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
@@ -92,5 +93,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string externalId { get; set; }
 
         public string withdrawReason { get; set; }
+
+        public OptionSetValue source { get; set; }
     }
 }
