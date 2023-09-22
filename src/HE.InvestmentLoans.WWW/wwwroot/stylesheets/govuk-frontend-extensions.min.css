@@ -100,7 +100,7 @@ https://design-patterns.service.justice.gov.uk/components/side-navigation/
   .moj-side-navigation__item--active a:focus {
     color: #0b0c0c;
     background-color: #fd0;
-    box-shadow: 0 -2px #fd0, 0 4px  #0b0c0c;
+    box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
     border-color: #0b0c0c;
     border-left-color: rgba(0, 0, 0, 0);
   }
