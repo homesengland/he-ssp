@@ -18,7 +18,7 @@ public class Order04HowManyHomesBuiltIntegrationTests : IntegrationTest
     public Order04HowManyHomesBuiltIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _applicationLoanId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
+        _applicationLoanId = UserData.LoanApplicationIdInDraftState;
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

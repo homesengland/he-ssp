@@ -27,7 +27,7 @@ public class Order04AbnormalCostsIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenYesIsSelectedAndAdditionalInformationIsNotProvided()
     {
         // given
-        var abnormalCostsPage = await TestClient.NavigateTo(FundingPageUrls.AbnormalCosts(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
+        var abnormalCostsPage = await TestClient.NavigateTo(FundingPageUrls.AbnormalCosts(UserData.LoanApplicationIdInDraftState));
         var continueButton = abnormalCostsPage.GetGdsSubmitButtonById("continue-button");
 
         // when

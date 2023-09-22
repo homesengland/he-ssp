@@ -18,7 +18,7 @@ public class Order01StartSecurityIntegrationTests : IntegrationTest
     public Order01StartSecurityIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _applicationLoanId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
+        _applicationLoanId = UserData.LoanApplicationIdInDraftState;
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

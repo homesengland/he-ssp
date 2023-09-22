@@ -16,17 +16,19 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
     public CompleteUserProfileIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        if (string.IsNullOrWhiteSpace(UserData.UserGlobalId))
+        if (string.IsNullOrWhiteSpace(UserData.UserGlobalId) && !UserData.IsDeveloperProvidedUserData)
         {
             UserData.ProvideData($"itests|{Guid.NewGuid()}");
             TestClient.AsLoggedUser();
         }
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(Skip = LoansConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_ShouldRedirectToCompleteUserProfile_WhenUserIsLoggedInButProfileIsNotCompleted()
     {
+        Skip.If(UserData.IsDeveloperProvidedUserData);
+
         // given & when
         var completeProfilePage = await TestClient
             .NavigateTo(PagesUrls.MainPage);
@@ -39,10 +41,12 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, completeProfilePage);
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(Skip = LoansConfig.SkipTest)]
     [Order(2)]
     public async Task Order02_ShouldRedirectToDashboardPage_WhenUserIsLoggedInAndProfileIsCompleted()
     {
+        Skip.If(UserData.IsDeveloperProvidedUserData);
+
         // given
         var completeProfilePage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
 
@@ -61,10 +65,12 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
                 "Enter your preferred telephone number");
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(Skip = LoansConfig.SkipTest)]
     [Order(3)]
     public async Task Order03_ShouldNavigateToOrganisationPage_WhenUserCompletedProfile()
     {
+        Skip.If(UserData.IsDeveloperProvidedUserData);
+
         // given
         var completeProfilePage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
 
@@ -86,10 +92,12 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, organizationSearchPage);
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(Skip = LoansConfig.SkipTest)]
     [Order(4)]
     public async Task Order04_ShouldRedirectToOrganisationSearch_WhenUserCompletedProfileButNotOrganisationIsNotLinked()
     {
+        Skip.If(UserData.IsDeveloperProvidedUserData);
+
         // given & when
         var organizationSearchPage = await TestClient.NavigateTo(PagesUrls.MainPage);
 
@@ -101,10 +109,12 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, organizationSearchPage);
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(Skip = LoansConfig.SkipTest)]
     [Order(5)]
     public async Task Order06_ShouldSearchOrganization()
     {
+        Skip.If(UserData.IsDeveloperProvidedUserData);
+
         // given
         var organizationSearchPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
 
@@ -123,10 +133,12 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, organizationSearchResultPage);
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(Skip = LoansConfig.SkipTest)]
     [Order(6)]
     public async Task Order07_ShouldSelectOrganizationAndNavigateToOrganizationDashboardPage()
     {
+        Skip.If(UserData.IsDeveloperProvidedUserData);
+
         // given
         var organizationSearchResultPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
 

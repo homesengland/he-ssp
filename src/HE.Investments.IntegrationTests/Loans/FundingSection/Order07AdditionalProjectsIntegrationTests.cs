@@ -24,7 +24,7 @@ public class Order07AdditionalProjectsIntegrationTests : IntegrationTest
     public async Task Order01_ShouldMoveToAdditionalProjects_WhenYesIsSelected()
     {
         // given
-        var additionalProjectsPage = await TestClient.NavigateTo(FundingPageUrls.AdditionalProjects(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
+        var additionalProjectsPage = await TestClient.NavigateTo(FundingPageUrls.AdditionalProjects(UserData.LoanApplicationIdInDraftState));
         var continueButton = additionalProjectsPage.GetGdsSubmitButtonById("continue-button");
 
         // when

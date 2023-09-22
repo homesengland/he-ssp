@@ -30,13 +30,6 @@ public class IntegrationTest
 
     protected T GetSharedData<T>(string key)
     {
-#if DEBUG
-        // if (key == SharedKeys.ApplicationLoanIdInDraftStatusKey)
-        // {
-        //     return ("d1a8770b-3b58-ee11-be6f-002248c652b4" as T)!;
-        // }
-#endif
-
         return (T)_fixture.DataBag[key];
     }
 

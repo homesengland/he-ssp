@@ -24,7 +24,7 @@ public class Order02GrossDevelopmentValueIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenProvidedValueIsNotADecimalNumber()
     {
         // given
-        var grossDevelopmentValuePage = await TestClient.NavigateTo(FundingPageUrls.GrossDevelopmentValue(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
+        var grossDevelopmentValuePage = await TestClient.NavigateTo(FundingPageUrls.GrossDevelopmentValue(UserData.LoanApplicationIdInDraftState));
         var continueButton = grossDevelopmentValuePage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -34,7 +34,7 @@ public class Order02GrossDevelopmentValueIntegrationTests : IntegrationTest
         // then
         grossDevelopmentValuePage
             .UrlEndWith(FundingPageUrls.GrossDevelopmentValueSuffix)
-            .HasTitle(FundingPageTitles.GrossDevelopmentValue)
+            .HasLabelTitle(FundingPageTitles.GrossDevelopmentValue)
             .ContainsValidationMessage(ValidationErrorMessage.EstimatedPoundInput("GDV"));
 
         SetSharedData(SharedKeys.CurrentPageKey, grossDevelopmentValuePage);
@@ -55,6 +55,6 @@ public class Order02GrossDevelopmentValueIntegrationTests : IntegrationTest
         // then
         estimatedTotalCostsPage
             .UrlEndWith(FundingPageUrls.EstimatedTotalCostsSuffix)
-            .HasTitle(FundingPageTitles.EstimatedTotalCosts);
+            .HasLabelTitle(FundingPageTitles.EstimatedTotalCosts);
     }
 }

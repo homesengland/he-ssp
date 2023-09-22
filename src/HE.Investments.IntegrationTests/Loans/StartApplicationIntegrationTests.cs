@@ -144,6 +144,6 @@ public class StartApplicationIntegrationTests : IntegrationTest
 
         var applicationGuid = taskListPage.Url.GetApplicationGuidFromUrl();
         applicationGuid.Should().NotBeEmpty();
-        SetSharedData(SharedKeys.ApplicationLoanIdInDraftStatusKey, applicationGuid);
+        UserData.SetApplicationLoanId(applicationGuid);
     }
 }

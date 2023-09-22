@@ -18,7 +18,7 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
     public Order03MoreInformationAboutOrganizationIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _applicationLoanId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
+        _applicationLoanId = UserData.LoanApplicationIdInDraftState;
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

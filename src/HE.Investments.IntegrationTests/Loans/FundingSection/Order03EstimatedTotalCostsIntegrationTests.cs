@@ -24,7 +24,7 @@ public class Order03EstimatedTotalCostsIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenProvidedValueIsNotADecimalNumber()
     {
         // given
-        var estimatedTotalCostsPage = await TestClient.NavigateTo(FundingPageUrls.EstimatedTotalCosts(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
+        var estimatedTotalCostsPage = await TestClient.NavigateTo(FundingPageUrls.EstimatedTotalCosts(UserData.LoanApplicationIdInDraftState));
         var continueButton = estimatedTotalCostsPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -34,7 +34,7 @@ public class Order03EstimatedTotalCostsIntegrationTests : IntegrationTest
         // then
         estimatedTotalCostsPage
             .UrlEndWith(FundingPageUrls.EstimatedTotalCostsSuffix)
-            .HasTitle(FundingPageTitles.EstimatedTotalCosts)
+            .HasLabelTitle(FundingPageTitles.EstimatedTotalCosts)
             .ContainsValidationMessage(ValidationErrorMessage.EstimatedPoundInput("total cost"));
 
         SetSharedData(SharedKeys.CurrentPageKey, estimatedTotalCostsPage);

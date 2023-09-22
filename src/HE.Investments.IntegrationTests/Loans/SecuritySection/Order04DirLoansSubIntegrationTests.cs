@@ -27,7 +27,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
     public Order04DirLoansSubIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _applicationId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
+        _applicationId = UserData.LoanApplicationIdInDraftState;
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -70,7 +70,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(3)]
-    public async Task Order03_ShouldDisplayValidationError_WhenNoIsSelectedAndAdditionalInformationIsLongerThan1000Characters()
+    public async Task Order03_ShouldDisplayValidationError_WhenNoIsSelectedAndAdditionalInformationIsLongerThan1500Characters()
     {
         // given
         var dirLoansSubPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -83,7 +83,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
         // then
         dirLoansSubPage
             .UrlEndWith(SecurityPageUrls.DirLoansSubSuffix)
-            .HasOneValidationMessages("Your input cannot be longer than 1500 characters");
+            .HasOneValidationMessages("Request to change reason why cannot be subordinated must be 1500 characters or less");
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

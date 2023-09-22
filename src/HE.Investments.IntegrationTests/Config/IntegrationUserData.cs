@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.InvestmentLoans.Common.Extensions;
 
 namespace HE.InvestmentLoans.IntegrationTests.Config;
 
@@ -6,8 +7,14 @@ public class IntegrationUserData
 {
     public IntegrationUserData()
     {
+        // Change this flag to true when you want to use own user with already completed profile
         IsDeveloperProvidedUserData = false;
-        UseUserWithAlreadyCompletedProfile();
+        if (IsDeveloperProvidedUserData)
+        {
+            UseDataProvidedByDeveloper();
+            return;
+        }
+
         FirstName = "Integration";
         LastName = $"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
     }
@@ -30,6 +37,8 @@ public class IntegrationUserData
 
     public string TelephoneNumber { get; private set; } = "01427 611 833";
 
+    public string LoanApplicationIdInDraftState { get; private set; }
+
     public bool IsDeveloperProvidedUserData { get; }
 
     public void ProvideData(string userGlobalId)
@@ -43,20 +52,32 @@ public class IntegrationUserData
         Email = $"{userGlobalId}@integrationTests.it";
     }
 
-    public void UseUserWithAlreadyCompletedProfile()
+    public void SetApplicationLoanId(string loanApplicationId)
+    {
+        if (LoanApplicationIdInDraftState.IsProvided())
+        {
+            return;
+        }
+
+        LoanApplicationIdInDraftState = loanApplicationId;
+    }
+
+    public void UseDataProvidedByDeveloper()
     {
         if (IsDeveloperProvidedUserData is false)
         {
             return;
         }
 
-        UserGlobalId = "real user global id";
-        Email = "real email";
-        FirstName = "real first name";
-        LastName = "real last name";
-        TelephoneNumber = "real telephone number";
-        OrganizationName = "real organization name";
-        OrganizationRegistrationNumber = "real organization registration number";
-        OrganizationAddress = "real organization address";
+        UserGlobalId = "auth0|64a3bdb420d21a3fc5193e4d";
+        Email = "luci_001@pwc.com";
+        FirstName = "John";
+        LastName = "Doe";
+        TelephoneNumber = "Carq pozdrawia";
+        OrganizationName = "DO_NOT_DELETE_DEFAULT_ACCOUNT";
+        OrganizationRegistrationNumber = "Not provided";
+        OrganizationAddress = "12 Wharf Street";
+
+        LoanApplicationIdInDraftState = "6ef83a12-4659-ee11-be6f-002248c653e1";
     }
 }

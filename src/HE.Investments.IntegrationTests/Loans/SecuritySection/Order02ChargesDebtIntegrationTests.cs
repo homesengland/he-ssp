@@ -34,7 +34,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenYesIsSelectedAndAdditionalInformationIsNotProvided()
     {
         // given
-        var chargesDebtPage = await TestClient.NavigateTo(SecurityPageUrls.ChargesDebt(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
+        var chargesDebtPage = await TestClient.NavigateTo(SecurityPageUrls.ChargesDebt(UserData.LoanApplicationIdInDraftState));
         var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
 
         // when

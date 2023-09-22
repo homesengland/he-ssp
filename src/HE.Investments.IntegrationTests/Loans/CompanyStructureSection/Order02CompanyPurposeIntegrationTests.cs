@@ -22,7 +22,7 @@ public class Order02CompanyPurposeIntegrationTests : IntegrationTest
     public async Task Order01_ShouldMoveToNextPageMoreInformationAboutOrganization_WhenContinueButtonIsClicked()
     {
         // given
-        var companyPurposePage = await TestClient.NavigateTo(CompanyStructurePagesUrls.CompanyPurpose(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
+        var companyPurposePage = await TestClient.NavigateTo(CompanyStructurePagesUrls.CompanyPurpose(UserData.LoanApplicationIdInDraftState));
         var continueButton = companyPurposePage.GetGdsSubmitButtonById("continue-button");
 
         // when
