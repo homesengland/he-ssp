@@ -638,10 +638,16 @@ namespace HE.InvestmentLoans.CRM.Model
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		New = 858110018,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Draft = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationSubmitted = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NA = 858110019,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationunderReview = 858110002,
@@ -690,12 +696,6 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		LoanAvailable = 858110017,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		New = 858110018,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		NA = 858110019,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -882,6 +882,18 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Submitted = 858110003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_source
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Companyhousesapi = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Manuallycreated = 858110001,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -7722,18 +7734,6 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Hidden = 100000002,
-	}
-	
-	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
-	public enum invln_source
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Companyhousesapi = 858110000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Manuallycreated = 858110001,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
