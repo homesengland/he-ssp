@@ -54,7 +54,7 @@ public class IntegrationUserData
 
     public void SetApplicationLoanId(string loanApplicationId)
     {
-        if (LoanApplicationIdInDraftState.IsProvided())
+        if (LoanApplicationIdInDraftState.IsProvided() && IsDeveloperProvidedUserData)
         {
             return;
         }

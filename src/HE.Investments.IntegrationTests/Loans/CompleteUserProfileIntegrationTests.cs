@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using AngleSharp.Html.Dom;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
@@ -21,14 +20,14 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
             UserData.ProvideData($"itests|{Guid.NewGuid()}");
             TestClient.AsLoggedUser();
         }
+
+        Skip.If(UserData.IsDeveloperProvidedUserData, "Developer provided own user which has completed profile and those tests cannot be run");
     }
 
     [SkippableFact(Skip = LoansConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_ShouldRedirectToCompleteUserProfile_WhenUserIsLoggedInButProfileIsNotCompleted()
     {
-        Skip.If(UserData.IsDeveloperProvidedUserData);
-
         // given & when
         var completeProfilePage = await TestClient
             .NavigateTo(PagesUrls.MainPage);
@@ -45,8 +44,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
     [Order(2)]
     public async Task Order02_ShouldRedirectToDashboardPage_WhenUserIsLoggedInAndProfileIsCompleted()
     {
-        Skip.If(UserData.IsDeveloperProvidedUserData);
-
         // given
         var completeProfilePage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
 
@@ -69,8 +66,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
     [Order(3)]
     public async Task Order03_ShouldNavigateToOrganisationPage_WhenUserCompletedProfile()
     {
-        Skip.If(UserData.IsDeveloperProvidedUserData);
-
         // given
         var completeProfilePage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
 
@@ -96,8 +91,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
     [Order(4)]
     public async Task Order04_ShouldRedirectToOrganisationSearch_WhenUserCompletedProfileButNotOrganisationIsNotLinked()
     {
-        Skip.If(UserData.IsDeveloperProvidedUserData);
-
         // given & when
         var organizationSearchPage = await TestClient.NavigateTo(PagesUrls.MainPage);
 
@@ -113,8 +106,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
     [Order(5)]
     public async Task Order06_ShouldSearchOrganization()
     {
-        Skip.If(UserData.IsDeveloperProvidedUserData);
-
         // given
         var organizationSearchPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
 
@@ -137,8 +128,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
     [Order(6)]
     public async Task Order07_ShouldSelectOrganizationAndNavigateToOrganizationDashboardPage()
     {
-        Skip.If(UserData.IsDeveloperProvidedUserData);
-
         // given
         var organizationSearchResultPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
 
