@@ -21,7 +21,7 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
     public Order05CheckYourAnswersIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _applicationLoanId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
+        _applicationLoanId = UserData.LoanApplicationIdInDraftState;
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -56,7 +56,7 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
         // then
         checkYourAnswersPage
             .UrlEndWith(CompanyStructurePagesUrls.CheckYourAnswersSuffix)
-            .HasValidationMessages("Select whether you have completed this section");
+            .HasOneValidationMessages("Select whether you have completed this section");
 
         SetSharedData(SharedKeys.CurrentPageKey, checkYourAnswersPage);
     }

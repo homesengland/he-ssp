@@ -70,11 +70,20 @@ public static class HtmlDocumentExtensions
         return errorItems;
     }
 
-    public static IHtmlDocument ContainsValidationMessage(this IHtmlDocument htmlDocument, string errorMessage)
+    public static IHtmlDocument ContainsOnlyOneValidationMessage(this IHtmlDocument htmlDocument, string errorMessage)
     {
         var pageErrors = htmlDocument.GetSummaryErrors();
 
         pageErrors.Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
+        htmlDocument.GetElementsByClassName(CssConstants.GovUkFormGroupError).Should().NotBeNull("Error message for specific item should exist");
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument ContainsValidationMessage(this IHtmlDocument htmlDocument, string errorMessage)
+    {
+        var pageErrors = htmlDocument.GetSummaryErrors();
+
+        pageErrors.Should().Contain(x => x.Equals(errorMessage, StringComparison.Ordinal));
         htmlDocument.GetElementsByClassName(CssConstants.GovUkFormGroupError).Should().NotBeNull("Error message for specific item should exist");
         return htmlDocument;
     }

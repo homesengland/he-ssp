@@ -27,7 +27,7 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenYesIsSelectedAndApplyResultIsNotProvided()
     {
         // given
-        var privateSectorFundingPage = await TestClient.NavigateTo(FundingPageUrls.PrivateSectorFunding(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
+        var privateSectorFundingPage = await TestClient.NavigateTo(FundingPageUrls.PrivateSectorFunding(UserData.LoanApplicationIdInDraftState));
         var continueButton = privateSectorFundingPage.GetGdsSubmitButtonById("continue-button");
 
         // when

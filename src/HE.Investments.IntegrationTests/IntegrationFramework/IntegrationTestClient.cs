@@ -6,6 +6,7 @@ using HE.InvestmentLoans.IntegrationTests.Config;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Auth;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Exceptions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Helpers;
+using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Helpers.DataPackages;
 using Microsoft.CodeAnalysis.Operations;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -14,27 +15,28 @@ public class IntegrationTestClient
 {
     private readonly HttpClient _client;
 
-    private readonly IntegrationTestConfig _integrationTestConfig;
+    private readonly IntegrationUserData _userData;
 
-    public IntegrationTestClient(HttpClient client, IntegrationTestConfig integrationTestConfig)
+    public IntegrationTestClient(HttpClient client, IntegrationUserData userData)
     {
         _client = client;
         _client.BaseAddress = new Uri("https://localhost/");
-        _integrationTestConfig = integrationTestConfig;
+        _userData = userData;
         AsLoggedUser();
     }
 
-    public IntegrationTestClient AsLoggedUser()
+    public IntegrationTestClient AsLoggedUser(UserGlobalIdWithEmail? user = null)
     {
-        _client.DefaultRequestHeaders.Add(TestAuthHandler.HeaderUserGlobalId, _integrationTestConfig.User.UserGlobalId);
-        _client.DefaultRequestHeaders.Add(TestAuthHandler.HeaderUserEmail, _integrationTestConfig.User.Email);
-
+        ClearAuthHeaders();
+        _client.DefaultRequestHeaders.Add(TestAuthHandler.HeaderUserGlobalId, user?.UserGlobalId ?? _userData.UserGlobalId);
+        _client.DefaultRequestHeaders.Add(TestAuthHandler.HeaderUserEmail, user?.Email ?? _userData.Email);
         return this;
     }
 
     public IntegrationTestClient AsNotLoggedUser()
     {
-        _client.DefaultRequestHeaders.Remove(TestAuthHandler.HeaderUserGlobalId);
+        ClearAuthHeaders();
+
         return this;
     }
 
@@ -92,7 +94,7 @@ public class IntegrationTestClient
             .Where(x => x is not null && x.Type == "radio")
             .ToList();
 
-        var radioInputsWithFormName = radioInputs.Where(radio => radio!.Name.IsProvided() && radio.Name!.Contains(formValue.Key));
+        var radioInputsWithFormName = radioInputs.Where(radio => radio!.Name.IsProvided() && radio.Name!.Contains(formValue.Key)).ToList();
 
         if (!radioInputsWithFormName.Any())
         {
@@ -152,5 +154,11 @@ public class IntegrationTestClient
         inputElement!.Value = formValue.Value;
 
         return true;
+    }
+
+    private void ClearAuthHeaders()
+    {
+        _client.DefaultRequestHeaders.Remove(TestAuthHandler.HeaderUserGlobalId);
+        _client.DefaultRequestHeaders.Remove(TestAuthHandler.HeaderUserEmail);
     }
 }

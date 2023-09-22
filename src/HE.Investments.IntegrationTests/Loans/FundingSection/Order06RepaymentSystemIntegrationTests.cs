@@ -27,7 +27,7 @@ public class Order06RepaymentSystemIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenRefinanceIsSelectedAndAdditionalInformationIsNotProvided()
     {
         // given
-        var repaymentSystemPage = await TestClient.NavigateTo(FundingPageUrls.RepaymentSystem(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
+        var repaymentSystemPage = await TestClient.NavigateTo(FundingPageUrls.RepaymentSystem(UserData.LoanApplicationIdInDraftState));
         var continueButton = repaymentSystemPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -95,7 +95,7 @@ public class Order06RepaymentSystemIntegrationTests : IntegrationTest
 
         // then
         additionalProjectsPage
-            .UrlEndWith(FundingPageUrls.PrivateSectorFundingSuffix)
-            .HasTitle(FundingPageTitles.PrivateSectorFunding);
+            .UrlEndWith(FundingPageUrls.AdditionalProjectsSuffix)
+            .HasTitle(FundingPageTitles.AdditionalProjects);
     }
 }

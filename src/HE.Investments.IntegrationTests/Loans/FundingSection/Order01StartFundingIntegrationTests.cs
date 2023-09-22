@@ -18,7 +18,7 @@ public class Order01StartFundingIntegrationTests : IntegrationTest
     public Order01StartFundingIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _applicationLoanId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
+        _applicationLoanId = UserData.LoanApplicationIdInDraftState;
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -55,6 +55,6 @@ public class Order01StartFundingIntegrationTests : IntegrationTest
         // then
         grossDevelopmentValuePage
             .UrlEndWith(FundingPageUrls.GrossDevelopmentValueSuffix)
-            .HasTitle(FundingPageTitles.GrossDevelopmentValue);
+            .HasLabelTitle(FundingPageTitles.GrossDevelopmentValue);
     }
 }

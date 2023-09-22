@@ -12,12 +12,9 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.CompanyStructureSection;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order01StartCompanyStructureIntegrationTests : IntegrationTest
 {
-    private readonly string _applicationLoanId;
-
     public Order01StartCompanyStructureIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _applicationLoanId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -25,7 +22,7 @@ public class Order01StartCompanyStructureIntegrationTests : IntegrationTest
     public async Task Order01_ShouldOpenCompanyStructureStartingPage_WhenCompanyStructureLinkIsClickedOnTaskListPage()
     {
         // given
-        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(UserData.LoanApplicationIdInDraftState));
 
         // when
         var linkToCompanyStructureSection = taskList.GetAnchorElementById("company-structure-section-link");

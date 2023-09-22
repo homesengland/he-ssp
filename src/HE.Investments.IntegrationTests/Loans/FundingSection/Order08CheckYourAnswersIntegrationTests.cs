@@ -23,7 +23,7 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
     public Order08CheckYourAnswersIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _applicationId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
+        _applicationId = UserData.LoanApplicationIdInDraftState;
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -37,8 +37,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         var fundingSummary = checkYourAnswersPage.GetSummaryListItems();
 
         // then
-        fundingSummary[FundingFields.GrossDevelopmentValue].Should().Be("12");
-        fundingSummary[FundingFields.EstimatedTotalCosts].Should().Be("999");
+        fundingSummary[FundingFields.GrossDevelopmentValue].Should().Be("£12");
+        fundingSummary[FundingFields.EstimatedTotalCosts].Should().Be("£999");
         fundingSummary[FundingFields.AbnormalCosts].Should().Contain(CommonResponse.Yes).And.Contain(TextTestData.TextWithLenght1000);
         fundingSummary[FundingFields.PrivateSectorFunding].Should().Contain(CommonResponse.Yes).And.Contain(TextTestData.TextWithLenght1000);
         fundingSummary[FundingFields.RefinanceOrRepay].Should().Contain(FundingFormOption.Refinance).And.Contain(TextTestData.TextWithLenght1000);

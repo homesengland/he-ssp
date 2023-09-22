@@ -18,7 +18,7 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
     public Order03MoreInformationAboutOrganizationIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _applicationLoanId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
+        _applicationLoanId = UserData.LoanApplicationIdInDraftState;
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -36,7 +36,7 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
         // then
         moreInformationAboutOrganizationPage
             .UrlEndWith(CompanyStructurePagesUrls.MoreInformationAboutOrganizationSuffix)
-            .HasValidationMessages("Request to change organisation more information must be 1500 characters or less");
+            .HasOneValidationMessages("Request to change organisation more information must be 1500 characters or less");
 
         SetSharedData(SharedKeys.CurrentPageKey, moreInformationAboutOrganizationPage);
     }

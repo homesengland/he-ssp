@@ -34,7 +34,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenYesIsSelectedAndAdditionalInformationIsNotProvided()
     {
         // given
-        var chargesDebtPage = await TestClient.NavigateTo(SecurityPageUrls.ChargesDebt(GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey)));
+        var chargesDebtPage = await TestClient.NavigateTo(SecurityPageUrls.ChargesDebt(UserData.LoanApplicationIdInDraftState));
         var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
 
         // when
@@ -45,7 +45,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
         chargesDebtPage
             .UrlEndWith(SecurityPageUrls.ChargesDebtSuffix)
             .HasTitle(SecurityPageTitles.ChargesDebt)
-            .ContainsValidationMessage(ValidationErrorMessage.EnterMoreDetails);
+            .ContainsOnlyOneValidationMessage(ValidationErrorMessage.EnterMoreDetails);
 
         SetSharedData(SharedKeys.CurrentPageKey, chargesDebtPage);
     }
@@ -67,7 +67,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
         directorLoansPage
             .UrlEndWith(SecurityPageUrls.ChargesDebtSuffix)
             .HasTitle(SecurityPageTitles.ChargesDebt)
-            .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FormOptions.FieldNameForInputLengthValidation.ReasonWhyCannotBeSubordinated));
+            .ContainsOnlyOneValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FormOptions.FieldNameForInputLengthValidation.Holder));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
