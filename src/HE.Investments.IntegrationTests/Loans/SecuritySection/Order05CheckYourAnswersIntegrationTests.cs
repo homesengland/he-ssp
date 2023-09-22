@@ -59,7 +59,7 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
         // then
         checkYourAnswersPage
             .UrlEndWith(SecurityPageUrls.CheckYourAnswersSuffix)
-            .HasValidationMessages("Select whether you have completed this section");
+            .HasOneValidationMessages("Select whether you have completed this section");
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

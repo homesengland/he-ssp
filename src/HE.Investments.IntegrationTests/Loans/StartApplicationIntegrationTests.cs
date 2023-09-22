@@ -91,12 +91,12 @@ public class StartApplicationIntegrationTests : IntegrationTest
             .HasTitle("Check your details")
             .GetSummaryListItems();
 
-        items[CheckYourDetailsFields.RegisteredCompanyName].Should().Be(UserConfig.OrganizationName);
-        items[CheckYourDetailsFields.CompanyRegistrationNumber].Should().Be(UserConfig.OrganizationRegistrationNumber);
-        items[CheckYourDetailsFields.CompanyAddress].Should().Be(UserConfig.OrganizationAddress);
-        items[CheckYourDetailsFields.ContactName].Should().Be(UserConfig.ContactName);
-        items[CheckYourDetailsFields.EmailAddress].Should().Be(UserConfig.Email);
-        items[CheckYourDetailsFields.TelephoneNumber].Should().Be(UserConfig.TelephoneNumber);
+        items[CheckYourDetailsFields.RegisteredCompanyName].Should().Be(UserData.OrganizationName);
+        items[CheckYourDetailsFields.CompanyRegistrationNumber].Should().Be(UserData.OrganizationRegistrationNumber);
+        items[CheckYourDetailsFields.CompanyAddress].Should().Be(UserData.OrganizationAddress);
+        items[CheckYourDetailsFields.ContactName].Should().Be(UserData.ContactName);
+        items[CheckYourDetailsFields.EmailAddress].Should().Be(UserData.Email);
+        items[CheckYourDetailsFields.TelephoneNumber].Should().Be(UserData.TelephoneNumber);
         SetSharedData(CurrentPageKey, checkYourDetailsPage);
     }
 

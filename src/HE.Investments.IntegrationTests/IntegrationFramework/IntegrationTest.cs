@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.IntegrationTests.Config;
+using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Helpers.DataPackages;
 using HE.InvestmentLoans.IntegrationTests.Loans;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -13,13 +14,13 @@ public class IntegrationTest
     protected IntegrationTest(IntegrationTestFixture<Program> fixture)
     {
         _fixture = fixture;
-        UserConfig = _fixture.Services.GetRequiredService<IUserConfig>();
-        TestClient = new IntegrationTestClient(fixture.CreateClient(), new IntegrationTestConfig(UserConfig));
+        UserData = _fixture.UserData;
+        TestClient = new IntegrationTestClient(fixture.CreateClient(), UserData);
     }
 
     protected IntegrationTestClient TestClient { get; }
 
-    protected IUserConfig UserConfig { get; }
+    protected IntegrationUserData UserData { get; }
 
     protected void SetSharedData<T>(string key, T data)
         where T : notnull
@@ -28,7 +29,6 @@ public class IntegrationTest
     }
 
     protected T GetSharedData<T>(string key)
-        where T : class
     {
 #if DEBUG
         // if (key == SharedKeys.ApplicationLoanIdInDraftStatusKey)
@@ -37,6 +37,11 @@ public class IntegrationTest
         // }
 #endif
 
-        return (_fixture.DataBag[key] as T)!;
+        return (T)_fixture.DataBag[key];
+    }
+
+    protected T? GetSharedDataOrNull<T>(string key)
+    {
+        return _fixture.DataBag.TryGetValue(key, out var data) ? (T)data : default;
     }
 }

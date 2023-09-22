@@ -22,10 +22,7 @@ public class RedisService : ICacheService
         if (appConfig.Cache.RedisCertificateEnabled == true)
         {
             var configurationOptions = ConfigurationOptions.Parse(appConfig.Cache.RedisConnectionString);
-
-#pragma warning disable CA5359
             configurationOptions.CertificateValidation += CertificateValidationCallBack!;
-#pragma warning restore CA5359
             configurationOptions.CertificateSelection += OptionsOnCertificateSelection;
             configurationOptions.Ssl = true;
             configurationOptions.SslProtocols = SslProtocols.Tls12;

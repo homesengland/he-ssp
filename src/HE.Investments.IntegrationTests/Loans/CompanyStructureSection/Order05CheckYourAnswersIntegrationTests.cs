@@ -56,7 +56,7 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
         // then
         checkYourAnswersPage
             .UrlEndWith(CompanyStructurePagesUrls.CheckYourAnswersSuffix)
-            .HasValidationMessages("Select whether you have completed this section");
+            .HasOneValidationMessages("Select whether you have completed this section");
 
         SetSharedData(SharedKeys.CurrentPageKey, checkYourAnswersPage);
     }

@@ -36,7 +36,7 @@ public class Order04HowManyHomesBuiltIntegrationTests : IntegrationTest
         // then
         howManyHomesBuiltPage
             .UrlEndWith(CompanyStructurePagesUrls.HowManyHomesBuiltSuffix)
-            .HasValidationMessages("The amount of homes your organisation has built must be a number");
+            .HasOneValidationMessages("The amount of homes your organisation has built must be a number");
 
         SetSharedData(SharedKeys.CurrentPageKey, howManyHomesBuiltPage);
     }

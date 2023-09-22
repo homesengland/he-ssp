@@ -51,14 +51,30 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasAnchor(this IHtmlDocument htmlDocument, string elementId, out IHtmlAnchorElement htmlAnchorElement)
+    {
+        htmlAnchorElement = htmlDocument.GetAnchorElementById(elementId);
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasGdsButton(this IHtmlDocument htmlDocument, string elementId)
     {
         htmlDocument.GetElementById(elementId).Should().BeGdsButton();
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasValidationMessages(this IHtmlDocument htmlDocument, string validationMessage)
+    public static IHtmlDocument HasOneValidationMessages(this IHtmlDocument htmlDocument, string validationMessage)
     {
-        return htmlDocument.ContainsValidationMessage(validationMessage);
+        return htmlDocument.ContainsOnlyOneValidationMessage(validationMessage);
+    }
+
+    public static IHtmlDocument HasValidationMessages(this IHtmlDocument htmlDocument, params string[] validationMessages)
+    {
+        foreach (var validationMessage in validationMessages)
+        {
+            htmlDocument.ContainsValidationMessage(validationMessage);
+        }
+
+        return htmlDocument;
     }
 }

@@ -65,7 +65,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
         // then
         dirLoansSubPage
             .UrlEndWith(SecurityPageUrls.DirLoansSubSuffix)
-            .HasValidationMessages(ValidationErrorMessage.EnterMoreDetails);
+            .HasOneValidationMessages(ValidationErrorMessage.EnterMoreDetails);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -83,7 +83,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
         // then
         dirLoansSubPage
             .UrlEndWith(SecurityPageUrls.DirLoansSubSuffix)
-            .HasValidationMessages("Your input cannot be longer than 1000 characters");
+            .HasOneValidationMessages("Your input cannot be longer than 1500 characters");
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
