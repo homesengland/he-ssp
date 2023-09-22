@@ -139,6 +139,7 @@
     <Compile Include="Handlers\CustomApi\UpdateSingleSiteDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateUserProfileHandler.cs" />
     <Compile Include="Handlers\LoanApplications\ChangeApplicationStatusOnOwnerChangeHandler.cs" />
+    <Compile Include="Handlers\LoanApplications\ChangeInternalStatusOnExternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\CheckIfOwnerCanBeChangedHandler.cs" />
     <Compile Include="Handlers\LoanApplications\SendInternalNotificationOnStatusChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\SetFieldsWhenChangingStatusFromDraftHandler.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateUserProfilePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\ChangeApplicationStatusOnOwnerChangePlugin.cs" />
+    <Compile Include="Plugins\LoanApplications\ChangeInternalStatusOnExternalStatusChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\CheckIfOwnerCanBeChangedPlugin.cs" />
     <Compile Include="Plugins\LoanApplications\SendInternalNotificationOnStatusChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\SetFieldsWhenChangingStatusFromDraftPlugin.cs" />
