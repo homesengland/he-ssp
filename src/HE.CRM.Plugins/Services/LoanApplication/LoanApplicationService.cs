@@ -418,6 +418,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         {
             if (target.invln_ExternalStatus.Value != preImage.invln_ExternalStatus.Value)
             {
+                TracingService.Trace($"new status {target.invln_ExternalStatus.Value}");
                 switch (target.invln_ExternalStatus.Value)
                 {
                     case (int)invln_ExternalStatus.Draft:
