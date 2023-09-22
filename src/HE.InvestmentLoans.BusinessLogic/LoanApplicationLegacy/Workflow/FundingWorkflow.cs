@@ -1,117 +1,92 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Security;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.InvestmentLoans.Contract.Funding;
+using HE.InvestmentLoans.Contract.Funding.Enums;
 using MediatR;
 using Stateless;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 
-[SuppressMessage("Ordering Rules", "SA1201", Justification = "Need to refactored in the fure")]
-public class FundingWorkflow
+public class FundingWorkflow : IStateRouting<FundingState>
 {
-    public enum State : int
-    {
-        Index,
-        GDV,
-        TotalCosts,
-        AbnormalCosts,
-        PrivateSectorFunding,
-        AdditionalProjects,
-        Refinance,
-        CheckAnswers,
-        Complete,
-    }
-
     private readonly LoanApplicationViewModel _model;
-    private readonly StateMachine<State, Trigger> _machine;
+    private readonly StateMachine<FundingState, Trigger> _machine;
     private readonly IMediator _mediator;
 
     public FundingWorkflow(LoanApplicationViewModel model, IMediator mediator)
     {
         _model = model;
-        _machine = new StateMachine<State, Trigger>(_model.Funding.State);
+        _machine = new StateMachine<FundingState, Trigger>(FundingState.Index);
         _mediator = mediator;
 
         ConfigureTransitions();
     }
 
-    public async void NextState(Trigger trigger)
+    public FundingWorkflow(LoanApplicationId applicationId, IMediator mediator, FundingState currentState)
+    {
+        _mediator = mediator;
+        _model = new LoanApplicationViewModel { GoodChangeMode = true };
+
+        _machine = new StateMachine<FundingState, Trigger>(currentState);
+
+        ConfigureTransitions();
+    }
+
+    public async Task<FundingState> NextState(Trigger trigger)
     {
         await _machine.FireAsync(trigger);
+
+        return _machine.State;
     }
 
-    public bool IsStateComplete()
+    public Task<bool> StateCanBeAccessed(FundingState nextState)
     {
-        return _model.Funding.State == State.Complete;
-    }
-
-    public bool IsCompleted()
-    {
-        return IsStateComplete() || _model.Funding.IsFlowCompleted;
-    }
-
-    public bool IsStarted()
-    {
-        return !string.IsNullOrEmpty(_model.Funding.GrossDevelopmentValue)
-            || !string.IsNullOrEmpty(_model.Funding.TotalCosts)
-            || !string.IsNullOrEmpty(_model.Funding.AbnormalCosts)
-            || !string.IsNullOrEmpty(_model.Funding.PrivateSectorFunding)
-            || !string.IsNullOrEmpty(_model.Funding.Refinance)
-            || !string.IsNullOrEmpty(_model.Funding.AdditionalProjects);
-    }
-
-    public string GetName()
-    {
-        return Enum.GetName(typeof(State), _model.Funding.State) ?? string.Empty;
-    }
-
-    public async void ChangeState(State state)
-    {
-        _model.Funding.State = state;
-        _model.Funding.StateChanged = true;
-        await _mediator.Send(new Commands.Update() { Model = _model });
+        return Task.FromResult(true);
     }
 
     private void ConfigureTransitions()
     {
-        _machine.Configure(State.Index)
-          .Permit(Trigger.Continue, State.GDV);
+        _machine.Configure(FundingState.Index)
+          .Permit(Trigger.Continue, FundingState.GDV);
 
-        _machine.Configure(State.GDV)
-            .Permit(Trigger.Continue, State.TotalCosts)
-            .Permit(Trigger.Back, State.Index)
-            .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(FundingState.GDV)
+            .Permit(Trigger.Continue, FundingState.TotalCosts)
+            .Permit(Trigger.Back, FundingState.Index)
+            .Permit(Trigger.Change, FundingState.CheckAnswers);
 
-        _machine.Configure(State.TotalCosts)
-            .Permit(Trigger.Continue, State.AbnormalCosts)
-            .Permit(Trigger.Back, State.GDV)
-            .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(FundingState.TotalCosts)
+            .Permit(Trigger.Continue, FundingState.AbnormalCosts)
+            .Permit(Trigger.Back, FundingState.GDV)
+            .Permit(Trigger.Change, FundingState.CheckAnswers);
 
-        _machine.Configure(State.AbnormalCosts)
-            .Permit(Trigger.Continue, State.PrivateSectorFunding)
-            .Permit(Trigger.Back, State.TotalCosts)
-            .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(FundingState.AbnormalCosts)
+            .Permit(Trigger.Continue, FundingState.PrivateSectorFunding)
+            .Permit(Trigger.Back, FundingState.TotalCosts)
+            .Permit(Trigger.Change, FundingState.CheckAnswers);
 
-        _machine.Configure(State.PrivateSectorFunding)
-            .Permit(Trigger.Continue, State.Refinance)
-            .Permit(Trigger.Back, State.AbnormalCosts)
-            .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(FundingState.PrivateSectorFunding)
+            .Permit(Trigger.Continue, FundingState.Refinance)
+            .Permit(Trigger.Back, FundingState.AbnormalCosts)
+            .Permit(Trigger.Change, FundingState.CheckAnswers);
 
-        _machine.Configure(State.Refinance)
-            .Permit(Trigger.Continue, State.AdditionalProjects)
-            .Permit(Trigger.Back, State.PrivateSectorFunding)
-            .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(FundingState.Refinance)
+            .Permit(Trigger.Continue, FundingState.AdditionalProjects)
+            .Permit(Trigger.Back, FundingState.PrivateSectorFunding)
+            .Permit(Trigger.Change, FundingState.CheckAnswers);
 
-        _machine.Configure(State.AdditionalProjects)
-           .Permit(Trigger.Continue, State.CheckAnswers)
-            .Permit(Trigger.Back, State.Refinance)
-            .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(FundingState.AdditionalProjects)
+           .Permit(Trigger.Continue, FundingState.CheckAnswers)
+            .Permit(Trigger.Back, FundingState.Refinance)
+            .Permit(Trigger.Change, FundingState.CheckAnswers);
 
-        _machine.Configure(State.CheckAnswers)
-           .PermitIf(Trigger.Continue, State.Complete, () => _model.Funding.CheckAnswers == CommonResponse.Yes)
-           .IgnoreIf(Trigger.Continue, () => _model.Funding.CheckAnswers != CommonResponse.Yes)
-           .Permit(Trigger.Back, State.AdditionalProjects)
+        _machine.Configure(FundingState.CheckAnswers)
+           .Permit(Trigger.Continue, FundingState.Complete)
+           .Permit(Trigger.Back, FundingState.AdditionalProjects)
            .OnExit(() =>
            {
                if (_model.Funding.CheckAnswers == CommonResponse.Yes)
@@ -120,12 +95,15 @@ public class FundingWorkflow
                }
            });
 
-        _machine.Configure(State.Complete)
-            .Permit(Trigger.Back, State.CheckAnswers);
+        _machine.Configure(FundingState.Complete)
+            .Permit(Trigger.Back, FundingState.CheckAnswers);
 
         _machine.OnTransitionCompletedAsync(x =>
         {
-            _model.Funding.State = x.Destination;
+            if (_model.GoodChangeMode)
+            {
+                return Task.CompletedTask;
+            }
 
             _model.Funding.RemoveAlternativeRoutesData();
 

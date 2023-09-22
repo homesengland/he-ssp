@@ -143,8 +143,8 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             CompanyStructureAndExperienceCompletionStatus = SectionStatusMapper.Map(loanApplication.Company.State),
 
             // FUNDING
-            projectGdv = loanApplication.Funding.GrossDevelopmentValue,
-            projectEstimatedTotalCost = loanApplication.Funding.TotalCosts,
+            projectGdv = loanApplication.Funding.GrossDevelopmentValue?.TryParseNullableDecimal(),
+            projectEstimatedTotalCost = loanApplication.Funding.TotalCosts?.TryParseNullableDecimal(),
             projectAbnormalCosts = loanApplication.Funding.AbnormalCosts!.MapToBool(),
             projectAbnormalCostsInformation = loanApplication.Funding.AbnormalCostsInfo,
             privateSectorApproach = loanApplication.Funding.PrivateSectorFunding!.MapToBool(),
@@ -152,6 +152,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             additionalProjects = loanApplication.Funding.AdditionalProjects!.MapToBool(),
             refinanceRepayment = loanApplication.Funding.Refinance,
             refinanceRepaymentDetails = loanApplication.Funding.RefinanceInfo,
+            FundingDetailsCompletionStatus = SectionStatusMapper.Map(loanApplication.Funding.State),
 
             // SECURITY
             outstandingLegalChargesOrDebt = loanApplication.Security.ChargesDebtCompany!.MapToBool(),
