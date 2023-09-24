@@ -63,6 +63,10 @@ namespace DataverseModel
 			public const string invln_Portal = "invln_portal";
 			public const string invln_portalId = "invln_portalid";
 			public const string Id = "invln_portalid";
+			public const string lk_invln_portal_createdby = "lk_invln_portal_createdby";
+			public const string lk_invln_portal_createdonbehalfby = "lk_invln_portal_createdonbehalfby";
+			public const string lk_invln_portal_modifiedby = "lk_invln_portal_modifiedby";
+			public const string lk_invln_portal_modifiedonbehalfby = "lk_invln_portal_modifiedonbehalfby";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedByName = "modifiedbyname";
 			public const string ModifiedOn = "modifiedon";
@@ -80,6 +84,7 @@ namespace DataverseModel
 			public const string StateCode = "statecode";
 			public const string StatusCode = "statuscode";
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string user_invln_portal = "user_invln_portal";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
 		}
@@ -534,6 +539,90 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_portal_invln_webrole_Portalid");
 				this.SetRelatedEntities<DataverseModel.invln_Webrole>("invln_invln_portal_invln_webrole_Portalid", null, value);
 				this.OnPropertyChanged("invln_invln_portal_invln_webrole_Portalid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_invln_portal_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_portal_createdby")]
+		public DataverseModel.SystemUser lk_invln_portal_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_portal_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_invln_portal_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_portal_createdonbehalfby")]
+		public DataverseModel.SystemUser lk_invln_portal_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_portal_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_portal_createdonbehalfby");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_invln_portal_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_portal_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_invln_portal_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_portal_modifiedby")]
+		public DataverseModel.SystemUser lk_invln_portal_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_portal_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_invln_portal_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_portal_modifiedonbehalfby")]
+		public DataverseModel.SystemUser lk_invln_portal_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_portal_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_portal_modifiedonbehalfby");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_invln_portal_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_portal_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_invln_portal
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_portal")]
+		public DataverseModel.SystemUser user_invln_portal
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("user_invln_portal", null);
 			}
 		}
 		

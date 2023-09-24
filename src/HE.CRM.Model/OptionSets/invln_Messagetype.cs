@@ -14,17 +14,17 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum msdyn_desktopnotificationvisibility
+	public enum invln_Messagetype
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Alwayspreview = 509180002,
+		ConditionsManagement = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Never = 509180000,
+		HoTFeeIndemnity = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Whenappisinbackground = 509180001,
+		SupportDocuments = 858110000,
 	}
 }
 #pragma warning restore CS1591

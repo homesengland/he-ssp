@@ -3,6 +3,7 @@ using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
+using HE.CRM.Model.CrmSerializedParameters;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         private readonly IAccountRepository accountRepository;
         private readonly IContactRepository contactRepository;
         private readonly IWebRoleRepository webroleRepository;
-        private readonly IEmailRepository emailRepository;
+        private readonly IGovNotifyEmailRepository govNotifyEmailRepository;
+        private readonly INotificationSettingRepository _notificationSettingRepository;
+        private readonly ISystemUserRepository systemUserRepository;
 
         #endregion
 
@@ -34,7 +37,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             accountRepository = CrmRepositoriesFactory.Get<IAccountRepository>();
             contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
             webroleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
-            emailRepository = CrmRepositoriesFactory.Get<IEmailRepository>();
+            govNotifyEmailRepository = CrmRepositoriesFactory.Get<IGovNotifyEmailRepository>();
+            _notificationSettingRepository = CrmRepositoriesFactory.Get<INotificationSettingRepository>();
+            systemUserRepository = CrmRepositoriesFactory.Get<ISystemUserRepository>();
         }
 
         #endregion
@@ -316,6 +321,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             if (target.StatusCode != null && preImage.StatusCode != null && target.StatusCode.Value != preImage.StatusCode.Value)
             {
                 var statusLabel = string.Empty;
+                var pastFormStatus = string.Empty;
                 switch (target.StatusCode.Value)
                 {
                     case (int)invln_Loanapplication_StatusCode.Draft:
@@ -401,20 +407,51 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     default:
                         break;
                 }
-                var emailToCreate = new invln_email()
-                {
-                    RegardingObjectId = target.ToEntityReference(),
-                    invln_sendstatus = new OptionSetValue((int)invln_Emailsendstatus.Draft),
-                };
-                var emailId = emailRepository.Create(emailToCreate);
+
                 var req1 = new invln_sendinternalcrmnotificationRequest()
                 {
                     invln_notificationbody = $"[Application ref no {target.invln_Name ?? preImage.invln_Name} - Status change to '{statusLabel}](?pagetype=entityrecord&etn=invln_loanapplication&id={target.Id})'",
                     invln_notificationowner = target.OwnerId == null ? preImage.OwnerId.Id.ToString() : target.OwnerId.Id.ToString(),
                     invln_notificationtitle = "Information",
-                    invln_emailid = emailId.ToString(),
+                    invln_emailid = "email.todelete@wp.pl",// TODO: delete this parameter
                 };
                 _ = loanApplicationRepository.ExecuteNotificatioRequest(req1);
+
+                var emailTemplate = _notificationSettingRepository.GetTemplateViaTypeName("INTERNAL_LOAN_APP_STATUS_CHANGE");
+                var emailToCreate = new invln_govnotifyemail()
+                {
+                    OwnerId = target.OwnerId ?? preImage.OwnerId,
+                    RegardingObjectId = target.ToEntityReference(),
+                    StatusCode = new OptionSetValue((int)invln_govnotifyemail_StatusCode.Draft),
+                    invln_notificationsettingid = emailTemplate?.ToEntityReference(),
+                    invln_templateguid = emailTemplate?.invln_templateid,
+                };
+                var emailId = govNotifyEmailRepository.Create(emailToCreate);
+
+                if (emailTemplate != null)
+                {
+                    var ownerData = systemUserRepository.GetById(emailToCreate.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
+                    var govNotParams = new INTERNAL_LOAN_APP_STATUS_CHANGE()
+                    {
+                        templateId = emailTemplate?.invln_templateid,
+                        personalisation = new parameters()
+                        {
+                            recipientEmail = ownerData.InternalEMailAddress,
+                            username = ownerData.FullName,
+                            applicationId = preImage.Id.ToString(),
+                            applicationUrl = "https://www.onet.pl",
+                            statusAtSubject = statusLabel,
+                            statusAtBody = "changed to " + statusLabel
+                        }
+                    };
+
+                    var govNotReq = new invln_sendgovnotifyemailRequest()
+                    {
+                        invln_emailid = emailId.ToString(),
+                        invln_govnotifyparameters = JsonSerializer.Serialize(govNotParams),
+                    };
+                    _ = loanApplicationRepository.ExecuteGovNotifyNotificationRequest(govNotReq);
+                }
             }
         }
 

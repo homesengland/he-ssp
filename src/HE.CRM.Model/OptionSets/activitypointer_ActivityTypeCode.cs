@@ -51,13 +51,16 @@ namespace DataverseModel
 		CustomerVoicesurveyresponse = 10355,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Email_11075 = 11075,
+		Email = 4202,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Email_4202 = 4202,
+		Externalcomms = 11080,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Fax = 4204,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		GovNotifyEmail = 11079,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		InviteRedemption = 11008,

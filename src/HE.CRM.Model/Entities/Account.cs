@@ -542,7 +542,7 @@ namespace DataverseModel
 		/// </summary>
 		public static partial class Fields
 		{
-			public const string account_invln_emails = "account_invln_emails";
+			public const string account_invln_govnotifyemails = "account_invln_govnotifyemails";
 			public const string Referencingaccount_master_account = "account_master_account";
 			public const string Referencingaccount_parent_account = "account_parent_account";
 			public const string account_primary_contact = "account_primary_contact";
@@ -647,6 +647,7 @@ namespace DataverseModel
 			public const string FollowEmail = "followemail";
 			public const string FtpSiteURL = "ftpsiteurl";
 			public const string Referencinghe_account_account_UltimateParent = "he_account_account_UltimateParent";
+			public const string he_account_keyaccountmanager_systemuser = "he_account_keyaccountmanager_systemuser";
 			public const string he_automaticsearch = "he_automaticsearch";
 			public const string he_Chapi_CompanyProfileUrl = "he_chapi_companyprofileurl";
 			public const string he_Chapi_CompanyStatus = "he_chapi_companystatus";
@@ -676,6 +677,7 @@ namespace DataverseModel
 			public const string he_smeindicatorchoice = "he_smeindicatorchoice";
 			public const string he_SocialHousingProviderRegistrationNumber = "he_socialhousingproviderregistrationnumber";
 			public const string he_specifypartnertype = "he_specifypartnertype";
+			public const string he_systemuser_account_RelationshipOwner = "he_systemuser_account_RelationshipOwner";
 			public const string he_tempdataid = "he_tempdataid";
 			public const string he_UltimateParent = "he_ultimateparent";
 			public const string he_UltimateParentName = "he_ultimateparentname";
@@ -698,6 +700,10 @@ namespace DataverseModel
 			public const string invln_rating = "invln_rating";
 			public const string LastOnHoldTime = "lastonholdtime";
 			public const string LastUsedInCampaign = "lastusedincampaign";
+			public const string lk_accountbase_createdby = "lk_accountbase_createdby";
+			public const string lk_accountbase_createdonbehalfby = "lk_accountbase_createdonbehalfby";
+			public const string lk_accountbase_modifiedby = "lk_accountbase_modifiedby";
+			public const string lk_accountbase_modifiedonbehalfby = "lk_accountbase_modifiedonbehalfby";
 			public const string MarketCap = "marketcap";
 			public const string MarketCap_Base = "marketcap_base";
 			public const string MarketingOnly = "marketingonly";
@@ -781,6 +787,7 @@ namespace DataverseModel
 			public const string StateCode = "statecode";
 			public const string StatusCode = "statuscode";
 			public const string StockExchange = "stockexchange";
+			public const string system_user_accounts = "system_user_accounts";
 			public const string TeamsFollowed = "teamsfollowed";
 			public const string Telephone1 = "telephone1";
 			public const string Telephone2 = "telephone2";
@@ -794,6 +801,7 @@ namespace DataverseModel
 			public const string TransactionCurrencyId = "transactioncurrencyid";
 			public const string TransactionCurrencyIdName = "transactioncurrencyidname";
 			public const string TraversedPath = "traversedpath";
+			public const string user_accounts = "user_accounts";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
 			public const string WebSiteURL = "websiteurl";
@@ -4679,22 +4687,22 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// 1:N account_invln_emails
+		/// 1:N account_invln_govnotifyemails
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_invln_emails")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_email> account_invln_emails
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_invln_govnotifyemails")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_govnotifyemail> account_invln_govnotifyemails
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<DataverseModel.invln_email>("account_invln_emails", null);
+				return this.GetRelatedEntities<DataverseModel.invln_govnotifyemail>("account_invln_govnotifyemails", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("account_invln_emails");
-				this.SetRelatedEntities<DataverseModel.invln_email>("account_invln_emails", null, value);
-				this.OnPropertyChanged("account_invln_emails");
+				this.OnPropertyChanging("account_invln_govnotifyemails");
+				this.SetRelatedEntities<DataverseModel.invln_govnotifyemail>("account_invln_govnotifyemails", null, value);
+				this.OnPropertyChanged("account_invln_govnotifyemails");
 			}
 		}
 		
@@ -4936,6 +4944,118 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// N:1 he_account_keyaccountmanager_systemuser
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_keyaccountmanager")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_account_keyaccountmanager_systemuser")]
+		public DataverseModel.SystemUser he_account_keyaccountmanager_systemuser
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("he_account_keyaccountmanager_systemuser", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_account_keyaccountmanager_systemuser");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("he_account_keyaccountmanager_systemuser", null, value);
+				this.OnPropertyChanged("he_account_keyaccountmanager_systemuser");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 he_systemuser_account_RelationshipOwner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_relationshipowner")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_systemuser_account_RelationshipOwner")]
+		public DataverseModel.SystemUser he_systemuser_account_RelationshipOwner
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("he_systemuser_account_RelationshipOwner", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("he_systemuser_account_RelationshipOwner");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("he_systemuser_account_RelationshipOwner", null, value);
+				this.OnPropertyChanged("he_systemuser_account_RelationshipOwner");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_accountbase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_accountbase_createdby")]
+		public DataverseModel.SystemUser lk_accountbase_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_accountbase_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_accountbase_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_accountbase_createdonbehalfby")]
+		public DataverseModel.SystemUser lk_accountbase_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_accountbase_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_accountbase_createdonbehalfby");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_accountbase_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_accountbase_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_accountbase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_accountbase_modifiedby")]
+		public DataverseModel.SystemUser lk_accountbase_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_accountbase_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_accountbase_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_accountbase_modifiedonbehalfby")]
+		public DataverseModel.SystemUser lk_accountbase_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_accountbase_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_accountbase_modifiedonbehalfby");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_accountbase_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_accountbase_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
 		/// N:1 msa_account_managingpartner
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
@@ -4953,6 +5073,41 @@ namespace DataverseModel
 				this.OnPropertyChanging("Referencingmsa_account_managingpartner");
 				this.SetRelatedEntity<DataverseModel.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingmsa_account_managingpartner");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 system_user_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredsystemuserid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("system_user_accounts")]
+		public DataverseModel.SystemUser system_user_accounts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("system_user_accounts", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("system_user_accounts");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("system_user_accounts", null, value);
+				this.OnPropertyChanged("system_user_accounts");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_accounts")]
+		public DataverseModel.SystemUser user_accounts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("user_accounts", null);
 			}
 		}
 		

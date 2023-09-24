@@ -74,13 +74,35 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="DataverseModel.invln_email"/> entities.
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Emailnotification"/> entities.
 		/// </summary>
-		public System.Linq.IQueryable<DataverseModel.invln_email> invln_emailSet
+		public System.Linq.IQueryable<DataverseModel.invln_Emailnotification> invln_EmailnotificationSet
 		{
 			get
 			{
-				return this.CreateQuery<DataverseModel.invln_email>();
+				return this.CreateQuery<DataverseModel.invln_Emailnotification>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_EmailTemplate"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_EmailTemplate> invln_EmailTemplateSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_EmailTemplate>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_govnotifyemail"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_govnotifyemail> invln_govnotifyemailSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_govnotifyemail>();
 			}
 		}
 		
@@ -92,6 +114,17 @@ namespace DataverseModel
 			get
 			{
 				return this.CreateQuery<DataverseModel.invln_Loanapplication>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_notificationsetting"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_notificationsetting> invln_notificationsettingSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_notificationsetting>();
 			}
 		}
 		
@@ -136,6 +169,17 @@ namespace DataverseModel
 			get
 			{
 				return this.CreateQuery<DataverseModel.invln_Webrole>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.SystemUser"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.SystemUser> SystemUserSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.SystemUser>();
 			}
 		}
 	}

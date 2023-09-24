@@ -14,10 +14,10 @@ namespace DataverseModel
 	
 	
 	/// <summary>
-	/// Status of the Contract
+	/// Status of the Notification Setting
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_contractState
+	public enum invln_notificationsettingState
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -28,10 +28,10 @@ namespace DataverseModel
 	}
 	
 	/// <summary>
-	/// Reason for the status of the Contract
+	/// Reason for the status of the Notification Setting
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_contract_StatusCode
+	public enum invln_notificationsetting_StatusCode
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -42,12 +42,12 @@ namespace DataverseModel
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_contract")]
-	public partial class invln_contract : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_notificationsetting")]
+	public partial class invln_notificationsetting : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
 		/// <summary>
-		/// Available fields, a the time of codegen, for the invln_contract entity
+		/// Available fields, a the time of codegen, for the invln_notificationsetting entity
 		/// </summary>
 		public static partial class Fields
 		{
@@ -57,18 +57,17 @@ namespace DataverseModel
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string ImportSequenceNumber = "importsequencenumber";
-			public const string invln_contractId = "invln_contractid";
-			public const string Id = "invln_contractid";
-			public const string invln_description = "invln_description";
-			public const string invln_invln_loanapplication_invln_contract_Loanapplication = "invln_invln_loanapplication_invln_contract_Loanapplication";
-			public const string invln_loanapplicationid = "invln_loanapplicationid";
-			public const string invln_loanapplicationidName = "invln_loanapplicationidname";
 			public const string invln_name = "invln_name";
-			public const string invln_url = "invln_url";
-			public const string lk_invln_contract_createdby = "lk_invln_contract_createdby";
-			public const string lk_invln_contract_createdonbehalfby = "lk_invln_contract_createdonbehalfby";
-			public const string lk_invln_contract_modifiedby = "lk_invln_contract_modifiedby";
-			public const string lk_invln_contract_modifiedonbehalfby = "lk_invln_contract_modifiedonbehalfby";
+			public const string invln_notificationsetting_invln_govnotifyemail_emailtemplate = "invln_notificationsetting_invln_govnotifyemail_emailtemplate";
+			public const string invln_notificationsettingId = "invln_notificationsettingid";
+			public const string Id = "invln_notificationsettingid";
+			public const string invln_subject = "invln_subject";
+			public const string invln_templateid = "invln_templateid";
+			public const string invln_templatetypename = "invln_templatetypename";
+			public const string lk_invln_notificationsetting_createdby = "lk_invln_notificationsetting_createdby";
+			public const string lk_invln_notificationsetting_createdonbehalfby = "lk_invln_notificationsetting_createdonbehalfby";
+			public const string lk_invln_notificationsetting_modifiedby = "lk_invln_notificationsetting_modifiedby";
+			public const string lk_invln_notificationsetting_modifiedonbehalfby = "lk_invln_notificationsetting_modifiedonbehalfby";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedByName = "modifiedbyname";
 			public const string ModifiedOn = "modifiedon";
@@ -86,7 +85,7 @@ namespace DataverseModel
 			public const string StateCode = "statecode";
 			public const string StatusCode = "statuscode";
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
-			public const string user_invln_contract = "user_invln_contract";
+			public const string user_invln_notificationsetting = "user_invln_notificationsetting";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
 		}
@@ -95,22 +94,22 @@ namespace DataverseModel
 		/// Default Constructor.
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public invln_contract() : 
+		public invln_notificationsetting() : 
 				base(EntityLogicalName)
 		{
 		}
 		
-		public const string PrimaryIdAttribute = "invln_contractid";
+		public const string PrimaryIdAttribute = "invln_notificationsettingid";
 		
 		public const string PrimaryNameAttribute = "invln_name";
 		
-		public const string EntitySchemaName = "invln_contract";
+		public const string EntitySchemaName = "invln_notificationsetting";
 		
-		public const string EntityLogicalName = "invln_contract";
+		public const string EntityLogicalName = "invln_notificationsetting";
 		
-		public const string EntityLogicalCollectionName = "invln_contracts";
+		public const string EntityLogicalCollectionName = "invln_notificationsettings";
 		
-		public const string EntitySetName = "invln_contracts";
+		public const string EntitySetName = "invln_notificationsettings";
 		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 		
@@ -201,83 +200,6 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Unique identifier for entity instances
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contractid")]
-		public System.Nullable<System.Guid> invln_contractId
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<System.Guid>>("invln_contractid");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_contractId");
-				this.SetAttributeValue("invln_contractid", value);
-				if (value.HasValue)
-				{
-					base.Id = value.Value;
-				}
-				else
-				{
-					base.Id = System.Guid.Empty;
-				}
-				this.OnPropertyChanged("invln_contractId");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contractid")]
-		public override System.Guid Id
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return base.Id;
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.invln_contractId = value;
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_description")]
-		public string invln_description
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<string>("invln_description");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_description");
-				this.SetAttributeValue("invln_description", value);
-				this.OnPropertyChanged("invln_description");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanapplicationid")]
-		public Microsoft.Xrm.Sdk.EntityReference invln_loanapplicationid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_loanapplicationid");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_loanapplicationid");
-				this.SetAttributeValue("invln_loanapplicationid", value);
-				this.OnPropertyChanged("invln_loanapplicationid");
-			}
-		}
-		
-		/// <summary>
 		/// The name of the custom entity.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_name")]
@@ -297,20 +219,97 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_url")]
-		public string invln_url
+		/// <summary>
+		/// Unique identifier for entity instances
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_notificationsettingid")]
+		public System.Nullable<System.Guid> invln_notificationsettingId
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<string>("invln_url");
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("invln_notificationsettingid");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_url");
-				this.SetAttributeValue("invln_url", value);
-				this.OnPropertyChanged("invln_url");
+				this.OnPropertyChanging("invln_notificationsettingId");
+				this.SetAttributeValue("invln_notificationsettingid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("invln_notificationsettingId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_notificationsettingid")]
+		public override System.Guid Id
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return base.Id;
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.invln_notificationsettingId = value;
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subject")]
+		public string invln_subject
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_subject");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_subject");
+				this.SetAttributeValue("invln_subject", value);
+				this.OnPropertyChanged("invln_subject");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_templateid")]
+		public string invln_templateid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_templateid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_templateid");
+				this.SetAttributeValue("invln_templateid", value);
+				this.OnPropertyChanged("invln_templateid");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_templatetypename")]
+		public string invln_templatetypename
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_templatetypename");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_templatetypename");
+				this.SetAttributeValue("invln_templatetypename", value);
+				this.OnPropertyChanged("invln_templatetypename");
 			}
 		}
 		
@@ -447,7 +446,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Status of the Contract
+		/// Status of the Notification Setting
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue StateCode
@@ -467,7 +466,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Reason for the status of the Contract
+		/// Reason for the status of the Notification Setting
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue StatusCode
@@ -540,107 +539,106 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// N:1 invln_invln_loanapplication_invln_contract_Loanapplication
+		/// 1:N invln_notificationsetting_invln_govnotifyemail_emailtemplate
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanapplicationid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_loanapplication_invln_contract_Loanapplication")]
-		public DataverseModel.invln_Loanapplication invln_invln_loanapplication_invln_contract_Loanapplication
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_notificationsetting_invln_govnotifyemail_emailtemplate")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_govnotifyemail> invln_notificationsetting_invln_govnotifyemail_emailtemplate
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_invln_loanapplication_invln_contract_Loanapplication", null);
+				return this.GetRelatedEntities<DataverseModel.invln_govnotifyemail>("invln_notificationsetting_invln_govnotifyemail_emailtemplate", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_invln_loanapplication_invln_contract_Loanapplication");
-				this.SetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_invln_loanapplication_invln_contract_Loanapplication", null, value);
-				this.OnPropertyChanged("invln_invln_loanapplication_invln_contract_Loanapplication");
+				this.OnPropertyChanging("invln_notificationsetting_invln_govnotifyemail_emailtemplate");
+				this.SetRelatedEntities<DataverseModel.invln_govnotifyemail>("invln_notificationsetting_invln_govnotifyemail_emailtemplate", null, value);
+				this.OnPropertyChanged("invln_notificationsetting_invln_govnotifyemail_emailtemplate");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 lk_invln_contract_createdby
+		/// N:1 lk_invln_notificationsetting_createdby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_contract_createdby")]
-		public DataverseModel.SystemUser lk_invln_contract_createdby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_notificationsetting_createdby")]
+		public DataverseModel.SystemUser lk_invln_notificationsetting_createdby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_contract_createdby", null);
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_notificationsetting_createdby", null);
 			}
 		}
 		
 		/// <summary>
-		/// N:1 lk_invln_contract_createdonbehalfby
+		/// N:1 lk_invln_notificationsetting_createdonbehalfby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_contract_createdonbehalfby")]
-		public DataverseModel.SystemUser lk_invln_contract_createdonbehalfby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_notificationsetting_createdonbehalfby")]
+		public DataverseModel.SystemUser lk_invln_notificationsetting_createdonbehalfby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_contract_createdonbehalfby", null);
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_notificationsetting_createdonbehalfby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("lk_invln_contract_createdonbehalfby");
-				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_invln_contract_createdonbehalfby", null, value);
-				this.OnPropertyChanged("lk_invln_contract_createdonbehalfby");
+				this.OnPropertyChanging("lk_invln_notificationsetting_createdonbehalfby");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_invln_notificationsetting_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_notificationsetting_createdonbehalfby");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 lk_invln_contract_modifiedby
+		/// N:1 lk_invln_notificationsetting_modifiedby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_contract_modifiedby")]
-		public DataverseModel.SystemUser lk_invln_contract_modifiedby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_notificationsetting_modifiedby")]
+		public DataverseModel.SystemUser lk_invln_notificationsetting_modifiedby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_contract_modifiedby", null);
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_notificationsetting_modifiedby", null);
 			}
 		}
 		
 		/// <summary>
-		/// N:1 lk_invln_contract_modifiedonbehalfby
+		/// N:1 lk_invln_notificationsetting_modifiedonbehalfby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_contract_modifiedonbehalfby")]
-		public DataverseModel.SystemUser lk_invln_contract_modifiedonbehalfby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_notificationsetting_modifiedonbehalfby")]
+		public DataverseModel.SystemUser lk_invln_notificationsetting_modifiedonbehalfby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_contract_modifiedonbehalfby", null);
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_notificationsetting_modifiedonbehalfby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("lk_invln_contract_modifiedonbehalfby");
-				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_invln_contract_modifiedonbehalfby", null, value);
-				this.OnPropertyChanged("lk_invln_contract_modifiedonbehalfby");
+				this.OnPropertyChanging("lk_invln_notificationsetting_modifiedonbehalfby");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_invln_notificationsetting_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_notificationsetting_modifiedonbehalfby");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 user_invln_contract
+		/// N:1 user_invln_notificationsetting
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_contract")]
-		public DataverseModel.SystemUser user_invln_contract
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_notificationsetting")]
+		public DataverseModel.SystemUser user_invln_notificationsetting
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("user_invln_contract", null);
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("user_invln_notificationsetting", null);
 			}
 		}
 		
@@ -649,7 +647,7 @@ namespace DataverseModel
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public invln_contract(object anonymousType) : 
+		public invln_notificationsetting(object anonymousType) : 
 				this()
 		{
             foreach (var p in anonymousType.GetType().GetProperties())
@@ -667,9 +665,9 @@ namespace DataverseModel
                 {
                     case "id":
                         base.Id = (System.Guid)value;
-                        Attributes["invln_contractid"] = base.Id;
+                        Attributes["invln_notificationsettingid"] = base.Id;
                         break;
-                    case "invln_contractid":
+                    case "invln_notificationsettingid":
                         var id = (System.Nullable<System.Guid>) value;
                         if(id == null){ continue; }
                         base.Id = id.Value;
