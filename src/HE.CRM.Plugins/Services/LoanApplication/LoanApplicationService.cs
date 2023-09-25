@@ -424,7 +424,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     RegardingObjectId = target.ToEntityReference(),
                     StatusCode = new OptionSetValue((int)invln_govnotifyemail_StatusCode.Draft),
                     invln_notificationsettingid = emailTemplate?.ToEntityReference(),
-                    invln_templateguid = emailTemplate?.invln_templateid,
                 };
                 var emailId = govNotifyEmailRepository.Create(emailToCreate);
 

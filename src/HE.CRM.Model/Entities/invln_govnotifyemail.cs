@@ -143,7 +143,6 @@ namespace DataverseModel
 			public const string invln_notificationsettingid = "invln_notificationsettingid";
 			public const string invln_notificationsettingidName = "invln_notificationsettingidname";
 			public const string invln_sitedetails_invln_govnotifyemails = "invln_sitedetails_invln_govnotifyemails";
-			public const string invln_templateguid = "invln_templateguid";
 			public const string IsBilled = "isbilled";
 			public const string IsMapiPrivate = "ismapiprivate";
 			public const string IsRegularActivity = "isregularactivity";
@@ -778,23 +777,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_notificationsettingid");
 				this.SetAttributeValue("invln_notificationsettingid", value);
 				this.OnPropertyChanged("invln_notificationsettingid");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_templateguid")]
-		public string invln_templateguid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<string>("invln_templateguid");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_templateguid");
-				this.SetAttributeValue("invln_templateguid", value);
-				this.OnPropertyChanged("invln_templateguid");
 			}
 		}
 		
