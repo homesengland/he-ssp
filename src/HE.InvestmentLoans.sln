@@ -60,10 +60,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investment.AHP.Contract"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DocumentService", "DocumentService", "{EDCC12BC-4EBF-4C44-8541-BE9838543BBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.DocumentService.Api", "HE.DocumentService.Api\HE.DocumentService.Api.csproj", "{471F1F15-3F25-4A2B-80FF-913DA5A41B6B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.DocumentService.SharePoint", "HE.DocumentService.SharePoint\HE.DocumentService.SharePoint.csproj", "{A2967817-7D8A-426E-83FB-7621EA933944}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
