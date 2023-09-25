@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
@@ -41,7 +42,7 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         fundingSummary[FundingFields.EstimatedTotalCosts].Should().Be("£999");
         fundingSummary[FundingFields.AbnormalCosts].Should().Contain(CommonResponse.Yes).And.Contain(TextTestData.TextWithLenght1000);
         fundingSummary[FundingFields.PrivateSectorFunding].Should().Contain(CommonResponse.Yes).And.Contain(TextTestData.TextWithLenght1000);
-        fundingSummary[FundingFields.RefinanceOrRepay].Should().Contain(FundingFormOption.Refinance).And.Contain(TextTestData.TextWithLenght1000);
+        fundingSummary[FundingFields.RefinanceOrRepay].Should().Contain(FundingFormOption.Refinance.TitleCaseFirstLetterInString()).And.Contain(TextTestData.TextWithLenght1000);
         fundingSummary[FundingFields.AdditionalProjects].Should().Be(CommonResponse.No);
 
         SetSharedData(SharedKeys.CurrentPageKey, checkYourAnswersPage);
@@ -97,7 +98,7 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         // then
         grossDevelopmentValuePage
             .UrlWithoutQueryEndsWith(FundingPageUrls.GrossDevelopmentValueSuffix)
-            .HasTitle(FundingPageTitles.GrossDevelopmentValue);
+            .HasLabelTitle(FundingPageTitles.GrossDevelopmentValue);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -134,7 +135,7 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         // then
         estimatedTotalCostsPage
             .UrlWithoutQueryEndsWith(FundingPageUrls.EstimatedTotalCostsSuffix)
-            .HasTitle(FundingPageTitles.EstimatedTotalCosts);
+            .HasLabelTitle(FundingPageTitles.EstimatedTotalCosts);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
