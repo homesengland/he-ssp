@@ -138,6 +138,7 @@ namespace DataverseModel
 			public const string invln_govnotifyemail_systemuser_modifiedonbehalfby = "invln_govnotifyemail_systemuser_modifiedonbehalfby";
 			public const string invln_govnotifyemail_systemuser_owninguser = "invln_govnotifyemail_systemuser_owninguser";
 			public const string invln_loanapplication_invln_govnotifyemails = "invln_loanapplication_invln_govnotifyemails";
+			public const string invln_notificationid = "invln_notificationid";
 			public const string invln_notificationsetting_invln_govnotifyemail_emailtemplate = "invln_notificationsetting_invln_govnotifyemail_emailtemplate";
 			public const string invln_notificationsettingid = "invln_notificationsettingid";
 			public const string invln_notificationsettingidName = "invln_notificationsettingidname";
@@ -743,6 +744,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_body");
 				this.SetAttributeValue("invln_body", value);
 				this.OnPropertyChanged("invln_body");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_notificationid")]
+		public string invln_notificationid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_notificationid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_notificationid");
+				this.SetAttributeValue("invln_notificationid", value);
+				this.OnPropertyChanged("invln_notificationid");
 			}
 		}
 		
