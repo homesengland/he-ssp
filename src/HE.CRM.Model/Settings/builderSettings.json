@@ -105,7 +105,6 @@
   "generateGlobalOptionSets": true,
   "messageNamesFilter": [
     "invln_changeloanapplicationexternalstatus*",
-    "invln_createsinglesitedetail*",
     "invln_deleteloanapplication*",
     "invln_deletesitedetails*",
     "invln_generaterichtextdocument*",
