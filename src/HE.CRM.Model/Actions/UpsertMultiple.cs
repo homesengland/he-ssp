@@ -51,36 +51,6 @@ namespace DataverseModel
 		}
 	}
 	
-	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/Contracts")]
-	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("UpsertMultiple")]
-	public partial class UpsertMultipleResponse : Microsoft.Xrm.Sdk.OrganizationResponse
-	{
-		
-		public static class Fields
-		{
-			public const string Results = "Results";
-		}
-		
-		public const string ActionLogicalName = "UpsertMultiple";
-		
-		public UpsertMultipleResponse()
-		{
-		}
-		
-		//public Microsoft.Xrm.Sdk.Messages.UpsertResponse[] Results
-		//{
-		//	get
-		//	{
-		//		if (this.Results.Contains("Results"))
-		//		{
-		//			return ((Microsoft.Xrm.Sdk.Messages.UpsertResponse[])(this.Results["Results"]));
-		//		}
-		//		else
-		//		{
-		//			return default(Microsoft.Xrm.Sdk.Messages.UpsertResponse[]);
-		//		}
-		//	}
-		//}
-	}
+	
 }
 #pragma warning restore CS1591

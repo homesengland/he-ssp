@@ -14,5 +14,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         List<invln_Loanapplication> GetLoanApplicationsForGivenAccountAndContact(Guid accountId, string externalContactId, string loanApplicationId = null);
         List<invln_Loanapplication> GetAccountLoans(Guid accountId);
         invln_sendinternalcrmnotificationResponse ExecuteNotificatioRequest(invln_sendinternalcrmnotificationRequest request);
+        invln_sendgovnotifyemailResponse ExecuteGovNotifyNotificationRequest(invln_sendgovnotifyemailRequest request);
     }
 }

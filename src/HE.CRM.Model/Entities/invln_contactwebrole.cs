@@ -69,6 +69,10 @@ namespace DataverseModel
 			public const string invln_name = "invln_name";
 			public const string invln_Webroleid = "invln_webroleid";
 			public const string invln_WebroleidName = "invln_webroleidname";
+			public const string lk_invln_contactwebrole_createdby = "lk_invln_contactwebrole_createdby";
+			public const string lk_invln_contactwebrole_createdonbehalfby = "lk_invln_contactwebrole_createdonbehalfby";
+			public const string lk_invln_contactwebrole_modifiedby = "lk_invln_contactwebrole_modifiedby";
+			public const string lk_invln_contactwebrole_modifiedonbehalfby = "lk_invln_contactwebrole_modifiedonbehalfby";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedByName = "modifiedbyname";
 			public const string ModifiedOn = "modifiedon";
@@ -86,6 +90,7 @@ namespace DataverseModel
 			public const string StateCode = "statecode";
 			public const string StatusCode = "statuscode";
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
+			public const string user_invln_contactwebrole = "user_invln_contactwebrole";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
 		}
@@ -598,6 +603,90 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_webrole_invln_contactwebrole_Webroleid");
 				this.SetRelatedEntity<DataverseModel.invln_Webrole>("invln_invln_webrole_invln_contactwebrole_Webroleid", null, value);
 				this.OnPropertyChanged("invln_invln_webrole_invln_contactwebrole_Webroleid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_invln_contactwebrole_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_contactwebrole_createdby")]
+		public DataverseModel.SystemUser lk_invln_contactwebrole_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_contactwebrole_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_invln_contactwebrole_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_contactwebrole_createdonbehalfby")]
+		public DataverseModel.SystemUser lk_invln_contactwebrole_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_contactwebrole_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_contactwebrole_createdonbehalfby");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_invln_contactwebrole_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_contactwebrole_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_invln_contactwebrole_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_contactwebrole_modifiedby")]
+		public DataverseModel.SystemUser lk_invln_contactwebrole_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_contactwebrole_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_invln_contactwebrole_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_contactwebrole_modifiedonbehalfby")]
+		public DataverseModel.SystemUser lk_invln_contactwebrole_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_invln_contactwebrole_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_contactwebrole_modifiedonbehalfby");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_invln_contactwebrole_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_contactwebrole_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_invln_contactwebrole
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_contactwebrole")]
+		public DataverseModel.SystemUser user_invln_contactwebrole
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("user_invln_contactwebrole", null);
 			}
 		}
 		
