@@ -47,7 +47,8 @@ public class SaveAsyncTests : TestBase<LoanUserRepository>
             x => x.UpdateUserProfile(
                 It.IsAny<IOrganizationServiceAsync2>(),
                 userAccount.UserGlobalId.ToString(),
-                It.IsAny<ContactDto>()),
+                It.IsAny<ContactDto>(),
+                It.IsAny<CancellationToken>()),
             Times.Once);
     }
 }

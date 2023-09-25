@@ -1,13 +1,15 @@
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
+@using HE.InvestmentLoans.Contract.Security;
+@model HE.InvestmentLoans.Contract.Security.SecurityViewModel;
+
 @inject ModelExpressionProvider modelProvider
 @{
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.Security.DirLoans));
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.Contract.Security.SecurityViewModel x) => x.DirLoans));
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Security" asp-action="WorkflowPost" asp-route-id="@Model.ID" asp-route-ending="DirLoans" asp-method="post" novalidate>
+    <form asp-controller="Security" asp-action="DirLoansPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
-        <gds-back-link href="@Url.Action("GoBack","Security", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back","Security", new {id = Model.LoanApplicationId, currentPage = SecurityState.DirLoans})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
         <partial name="_ErrorSummaryPartial" model="null" />
@@ -16,7 +18,7 @@
             <gds-div-form-group invalid="radioInvalid">
                 <gds-legend size="ControlSize.L">
                     <gds-fieldset-heading>
-                        Do you have any director loans against this company?
+                        @SecurityPageTitles.DirLoans
                     </gds-fieldset-heading>
                 </gds-legend>
                 @if (radioInvalid)
@@ -26,10 +28,10 @@
                     </p>
                 }
 
-                <gds-radio-yes-no asp-for="Security.DirLoans"
+                <gds-radio-yes-no asp-for="DirLoans"
                                   class="govuk-!-margin-bottom-8"></gds-radio-yes-no>
             </gds-div-form-group>
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.Security.StateChanged?"Change":"Continue")">
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")" id="continue-button">
                 Continue
             </button>
         </gds-field-set>

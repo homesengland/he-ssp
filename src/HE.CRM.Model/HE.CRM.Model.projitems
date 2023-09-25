@@ -35,6 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_contactwebrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Contact_Webrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_contract.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_email.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portalpermissionlevel.cs" />
@@ -97,10 +98,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Incident_CaseOriginCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\InitialCommunication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Addressverificationtype.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConditionSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConditionStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConditionType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConstructionMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_CreditRatingAgency.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_CRRStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_DefineTenure.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Emailsendstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FundingReason.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Fundingtypeforadditionalprojects.cs" />
@@ -113,6 +118,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_refinancerepayment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Repaymenttype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Role.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Satisfactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_SatisfiedBy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sectioncompletionstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sourceofincome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Typeofhomes.cs" />

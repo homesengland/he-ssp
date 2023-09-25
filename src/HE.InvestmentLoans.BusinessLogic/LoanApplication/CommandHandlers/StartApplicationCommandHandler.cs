@@ -24,7 +24,7 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
         var userAccount = await _loanUserContext.GetSelectedAccount();
         var newLoanApplication = LoanApplicationEntity.New(userAccount);
 
-        await _applicationRepository.Save(newLoanApplication, cancellationToken);
+        await _applicationRepository.Save(newLoanApplication, await _loanUserContext.GetUserDetails(), cancellationToken);
 
         return newLoanApplication.Id;
     }

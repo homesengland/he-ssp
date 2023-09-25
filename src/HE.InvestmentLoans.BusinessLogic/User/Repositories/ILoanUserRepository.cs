@@ -14,6 +14,4 @@ public interface ILoanUserRepository
     public Task<UserDetails> GetUserDetails(UserGlobalId userGlobalId);
 
     public Task SaveAsync(UserDetails userDetails, UserGlobalId userGlobalId, CancellationToken cancellationToken);
-
-    Task LinkContactToOrganisation(UserGlobalId userGlobalId, CompaniesHouseNumber organizationNumber);
 }

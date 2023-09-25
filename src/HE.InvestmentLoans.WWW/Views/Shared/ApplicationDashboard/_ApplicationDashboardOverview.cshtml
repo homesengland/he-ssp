@@ -1,0 +1,33 @@
+@model HE.InvestmentLoans.Contract.Application.ValueObjects.LoanApplicationId
+@{
+    var data = new List<(string Title, string Desription, string Link)>
+    {
+        ("Application details",  "You can view or edit your company and project information.", Url.Action("TaskList", "LoanApplicationV2", new { id = Model.Value })),
+        ("Conditions management", "You can upload evidence to satisfy your Conditions Precedent and Subsequent.", null),
+        ("Letters", "You'll be able to download letters and upload your signed copies here.", null),
+    };
+}
+
+<gds-h3 size="ControlSize.M"> Overview</gds-h3>
+<gds-summary-list class="govuk-!-margin-bottom-4">
+    @foreach (var singleData in data)
+    {
+        <gds-summary-list-row-v2>
+            <dt class="govuk-summary-list__key govuk-!-width-three-quarters">
+                <gds-h1 size="ControlSize.S">
+                    @singleData.Title
+                </gds-h1>
+                <p class="govuk-body govuk-!-margin-bottom-2"> @singleData.Desription</p>
+            </dt>
+            <gds-summary-list-actions-v2>
+
+                @if (!string.IsNullOrEmpty(singleData.Link))
+                {
+                    <gds-link href=@singleData.Link>
+                        View or Edit
+                    </gds-link>
+                }
+            </gds-summary-list-actions-v2>
+        </gds-summary-list-row-v2>
+    }
+</gds-summary-list>

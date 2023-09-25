@@ -7,6 +7,7 @@ using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.Organization;
+using HE.InvestmentLoans.Contract.Security;
 using HE.InvestmentLoans.Contract.User.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
@@ -117,6 +118,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     [HttpGet("{id}/task-list")]
     [WorkflowState(LoanApplicationWorkflow.State.TaskList)]
     [WorkflowState(CompanyStructureState.Complete)]
+    [WorkflowState(SecurityState.Complete)]
     public async Task<IActionResult> TaskList(Guid id)
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
@@ -156,6 +158,24 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         var response = await _mediator.Send(new GetSubmitLoanApplicationQuery(LoanApplicationId.From(id)));
 
         return View("ApplicationSubmitted", response.LoanApplication);
+    }
+
+    [HttpGet("{id}/dashboard")]
+    [WorkflowState(LoanApplicationWorkflow.State.ApplicationDashboard)]
+    public async Task<IActionResult> ApplicationDashboard(Guid id)
+    {
+        var response = await _mediator.Send(new GetApplicationDashboardQuery(LoanApplicationId.From(id)));
+
+        return View("ApplicationDashboard", new ApplicationDashboardModel { Data = response, IsOverviewSectionSelected = true });
+    }
+
+    [HttpGet("{id}/dashboard/supporting-documents")]
+    [WorkflowState(LoanApplicationWorkflow.State.ApplicationDashboard)]
+    public async Task<IActionResult> ApplicationDashboardSupportingDocuments(Guid id)
+    {
+        var response = await _mediator.Send(new GetApplicationDashboardQuery(LoanApplicationId.From(id)));
+
+        return View("ApplicationDashboard", new ApplicationDashboardModel { Data = response, IsOverviewSectionSelected = false });
     }
 
     [HttpGet("back")]

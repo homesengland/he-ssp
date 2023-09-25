@@ -80,7 +80,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
                 viewModel.OrganisationMoreInformationFile),
             cancellationToken);
 
-        if (result.AreValidationErrors)
+        if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
             return View("MoreInformationAboutOrganization", viewModel);
@@ -107,7 +107,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
                 viewModel.HomesBuilt),
             cancellationToken);
 
-        if (result.AreValidationErrors)
+        if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
             return View("HomesBuilt", viewModel);
@@ -129,7 +129,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     public async Task<IActionResult> CheckAnswersPost(Guid id, CompanyStructureViewModel viewModel, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CheckAnswersCompanyStructureSectionCommand(LoanApplicationId.From(id), viewModel.CheckAnswers), cancellationToken);
-        if (result.AreValidationErrors)
+        if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
             var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)), cancellationToken);

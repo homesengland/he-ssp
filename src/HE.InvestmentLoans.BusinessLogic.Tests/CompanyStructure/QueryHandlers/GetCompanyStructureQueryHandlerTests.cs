@@ -12,7 +12,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.QueryHandlers;
 public class GetCompanyStructureQueryHandlerTests : TestBase<GetCompanyStructureQueryHandler>
 {
     [Fact]
-    public async Task ShouldThrowNotFoundException_WhenApplicationLoanDoesNotExist()
+    public async Task ShouldReturnCompanyStructure()
     {
         // given
         var loanApplicationId = LoanApplicationIdTestData.LoanApplicationIdOne;

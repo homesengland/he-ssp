@@ -11,7 +11,7 @@
 }
 
 
-<gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.ID })" text="Back to account homepage" class="govuk-grid-column-full"></gds-back-link>
+<gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.ID })" text="Back to application dashboard" class="govuk-grid-column-full"></gds-back-link>
 
 @await Html.PartialAsync("_DeleteNotification")
 
@@ -77,7 +77,7 @@
                 </li>
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("Workflow","Security", new {id = Model.ID, ending = securityWorkflow.GetName() })">
+                        <a href="@Url.Action("StartSecurity","Security", new {id = Model.ID})" id="security-section-link">
                             Provide details about security
                         </a>
                     </span>

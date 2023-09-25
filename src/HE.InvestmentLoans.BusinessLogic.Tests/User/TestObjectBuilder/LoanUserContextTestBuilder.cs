@@ -36,6 +36,20 @@ public class LoanUserContextTestBuilder
         return this;
     }
 
+    public LoanUserContextTestBuilder WithoutCompletedProfile()
+    {
+        _mock.Setup(x => x.IsProfileCompleted()).ReturnsAsync(false);
+
+        return this;
+    }
+
+    public LoanUserContextTestBuilder WithCompletedProfile()
+    {
+        _mock.Setup(x => x.IsProfileCompleted()).ReturnsAsync(true);
+
+        return this;
+    }
+
     public LoanUserContextTestBuilder IsNotLinkedWithOrganization()
     {
         _mock.Setup(x => x.IsLinkedWithOrganization()).ReturnsAsync(false);
