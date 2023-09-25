@@ -49,9 +49,15 @@
     <TypeScriptCompile Include="rollup.config.ts" />
     <TypeScriptCompile Include="src\Common.ts" />
     <TypeScriptCompile Include="src\events\Account.ts" />
+    <TypeScriptCompile Include="src\events\Isp.ts" />
+    <TypeScriptCompile Include="src\events\Precomplete.ts" />
+    <TypeScriptCompile Include="src\events\VfT.ts" />
     <TypeScriptCompile Include="src\Main.ts" />
     <TypeScriptCompile Include="src\OptionSet.ts" />
     <TypeScriptCompile Include="src\services\AccountService.ts" />
+    <TypeScriptCompile Include="src\services\IspService.ts" />
+    <TypeScriptCompile Include="src\services\PrecompleteService.ts" />
+    <TypeScriptCompile Include="src\services\VfTService.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
