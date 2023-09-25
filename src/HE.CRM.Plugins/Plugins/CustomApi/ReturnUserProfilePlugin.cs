@@ -19,13 +19,17 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     Id = "1be484ff-ab9b-4b0b-93c8-bebc330c4118")]
     public class ReturnUserProfilePlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
         public ReturnUserProfilePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<ReturnUserProfileHandler>());
         }
+        #endregion
     }
 }

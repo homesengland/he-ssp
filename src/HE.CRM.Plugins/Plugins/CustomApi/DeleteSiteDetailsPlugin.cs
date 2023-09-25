@@ -19,13 +19,17 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     Id = "144c73bc-e888-4eac-abca-0e6e2054aa82")]
     public class DeleteSiteDetailsPlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
         public DeleteSiteDetailsPlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<DeleteSiteDetailsHandler>());
         }
+        #endregion
     }
 }

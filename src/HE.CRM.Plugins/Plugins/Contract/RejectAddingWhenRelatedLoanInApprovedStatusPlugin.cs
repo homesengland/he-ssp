@@ -32,13 +32,17 @@ namespace HE.CRM.Plugins.Plugins.LoanApplications
         Image1Type = ImageTypeEnum.PreImage)]
     public class RejectAddingWhenRelatedLoanInApprovedStatusPlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructor
         public RejectAddingWhenRelatedLoanInApprovedStatusPlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<RejectAddingWhenRelatedLoanInApprovedStatusHandler>());
         }
+        #endregion
     }
 }

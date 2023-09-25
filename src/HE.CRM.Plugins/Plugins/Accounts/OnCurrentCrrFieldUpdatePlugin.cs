@@ -21,13 +21,17 @@ namespace HE.CRM.Plugins.Plugins.Accounts
     Image1Type = ImageTypeEnum.PreImage)]
     public class OnCurrentCrrFieldUpdatePlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
         public OnCurrentCrrFieldUpdatePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<OnCurrentCrrFieldUpdateHandler>());
         }
+        #endregion
     }
 }

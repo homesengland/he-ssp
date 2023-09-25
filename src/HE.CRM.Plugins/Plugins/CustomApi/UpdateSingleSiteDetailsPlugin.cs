@@ -20,13 +20,17 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
      Id = "6cb2968f-905e-4d87-a375-7793bb6eccb2")]
     public class UpdateSingleSiteDetailsPlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
         public UpdateSingleSiteDetailsPlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<UpdateSingleSiteDetailsHandler>());
         }
+        #endregion
     }
 }
