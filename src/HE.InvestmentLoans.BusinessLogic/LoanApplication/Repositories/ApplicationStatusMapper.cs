@@ -9,7 +9,7 @@ public class ApplicationStatusMapper
         return status switch
         {
             ApplicationStatus.Draft => (int)invln_externalstatus.Draft,
-            ApplicationStatus.Submitted => (int)invln_externalstatus.ApplicationSubmitted,
+            ApplicationStatus.ApplicationSubmitted => (int)invln_externalstatus.ApplicationSubmitted,
             ApplicationStatus.InDueDiligence => (int)invln_externalstatus.InDueDiligence,
             ApplicationStatus.ContractSigned => (int)invln_externalstatus.ContractSignedSubjecttoCP,
             ApplicationStatus.CspSatisfied => (int)invln_externalstatus.CPsSatisfied,
@@ -22,6 +22,12 @@ public class ApplicationStatusMapper
             ApplicationStatus.ApplicationDeclined => (int)invln_externalstatus.ApplicationDeclined,
             ApplicationStatus.ApprovedSubjectToContract => (int)invln_externalstatus.Approvedsubjecttocontract,
             ApplicationStatus.UnderReview => (int)invln_externalstatus.Underreview,
+            ApplicationStatus.ApplicationUnderReview => (int)invln_externalstatus.ApplicationunderReview,
+            ApplicationStatus.CashflowRequested => (int)invln_externalstatus.Cashflowrequested,
+            ApplicationStatus.CashflowUnderReview => (int)invln_externalstatus.Cashflowunderreview,
+            ApplicationStatus.SentForApproval => (int)invln_externalstatus.Sentforapproval,
+            ApplicationStatus.ApprovedSubjectToDueDiligence => (int)invln_externalstatus.Approvedsubjecttoduediligence,
+            ApplicationStatus.New => (int)invln_externalstatus.New,
             _ => throw new NotImplementedException(),
         };
     }
@@ -31,7 +37,7 @@ public class ApplicationStatusMapper
         return crmStatus switch
         {
             (int)invln_externalstatus.Draft => ApplicationStatus.Draft,
-            (int)invln_externalstatus.ApplicationSubmitted => ApplicationStatus.Submitted,
+            (int)invln_externalstatus.ApplicationSubmitted => ApplicationStatus.ApplicationSubmitted,
             (int)invln_externalstatus.InDueDiligence => ApplicationStatus.InDueDiligence,
             (int)invln_externalstatus.ContractSignedSubjecttoCP => ApplicationStatus.ContractSigned,
             (int)invln_externalstatus.CPsSatisfied => ApplicationStatus.CspSatisfied,
@@ -44,8 +50,14 @@ public class ApplicationStatusMapper
             (int)invln_externalstatus.ApplicationDeclined => ApplicationStatus.ApplicationDeclined,
             (int)invln_externalstatus.Approvedsubjecttocontract => ApplicationStatus.ApprovedSubjectToContract,
             (int)invln_externalstatus.Underreview => ApplicationStatus.UnderReview,
+            (int)invln_externalstatus.ApplicationunderReview => ApplicationStatus.ApplicationUnderReview,
+            (int)invln_externalstatus.Cashflowrequested => ApplicationStatus.CashflowRequested,
+            (int)invln_externalstatus.Cashflowunderreview => ApplicationStatus.CashflowUnderReview,
+            (int)invln_externalstatus.Sentforapproval => ApplicationStatus.SentForApproval,
+            (int)invln_externalstatus.Approvedsubjecttoduediligence => ApplicationStatus.ApprovedSubjectToDueDiligence,
+            (int)invln_externalstatus.New => ApplicationStatus.New,
             null => ApplicationStatus.Draft,
-            _ => throw new NotImplementedException(),
+            _ => throw new ArgumentOutOfRangeException(nameof(crmStatus), crmStatus, null),
         };
     }
 }
