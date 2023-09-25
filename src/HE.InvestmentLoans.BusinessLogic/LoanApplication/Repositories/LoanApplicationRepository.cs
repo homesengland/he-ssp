@@ -179,10 +179,42 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     public async Task Save(LoanApplicationEntity loanApplication, UserDetails userDetails, CancellationToken cancellationToken)
     {
+        var siteDetailsDtos = new List<SiteDetailsDto>();
+        foreach (var site in loanApplication.ApplicationProjects.Projects)
+        {
+            var siteDetail = new SiteDetailsDto()
+            {
+                Name = site.NameLegacy,
+                siteName = site.NameLegacy,
+                numberOfHomes = site.ManyHomes,
+                typeOfHomes = site.TypeHomes,
+                otherTypeOfHomes = site.TypeHomesOther,
+                typeOfSite = site.Type,
+                haveAPlanningReferenceNumber = site.PlanningRef,
+                planningReferenceNumber = site.PlanningRefEnter,
+                siteCoordinates = site.LocationCoordinates,
+                siteOwnership = site.Ownership,
+                landRegistryTitleNumber = site.LocationLandRegistry,
+                dateOfPurchase = site.PurchaseDate,
+                siteCost = site.Cost,
+                currentValue = site.Value,
+                valuationSource = site.Source,
+                publicSectorFunding = site.GrantFunding,
+                howMuch = site.GrantFundingAmount,
+                nameOfGrantFund = site.GrantFundingName,
+                reason = site.GrantFundingPurpose,
+                existingLegalCharges = site.ChargesDebt,
+                existingLegalChargesInformation = site.ChargesDebtInfo,
+                numberOfAffordableHomes = site.AffordableHomes,
+            };
+            siteDetailsDtos.Add(siteDetail);
+        }
+
         var loanApplicationDto = new LoanApplicationDto()
         {
             LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount, userDetails),
             fundingReason = FundingPurposeMapper.Map(loanApplication.FundingReason),
+            siteDetailsList = siteDetailsDtos,
         };
 
         var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);

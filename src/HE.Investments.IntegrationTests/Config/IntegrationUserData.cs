@@ -19,6 +19,28 @@ public class IntegrationUserData
         LastName = $"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
     }
 
+    public IntegrationUserData(UserConfig userConfig)
+    {
+        if (userConfig.UseConfigData)
+        {
+            UserGlobalId = userConfig.UserGlobalId;
+            Email = userConfig.Email;
+            FirstName = userConfig.FirstName;
+            LastName = userConfig.LastName;
+            OrganizationName = userConfig.OrganizationName;
+            OrganizationRegistrationNumber = userConfig.OrganizationRegistrationNumber;
+            OrganizationAddress = userConfig.OrganizationAddress;
+            TelephoneNumber = userConfig.TelephoneNumber;
+            LoanApplicationIdInDraftState = userConfig.LoanApplicationIdInDraftState;
+            IsDeveloperProvidedUserData = true;
+
+            return;
+        }
+
+        FirstName = "Integration";
+        LastName = $"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
+    }
+
     public string UserGlobalId { get; private set; }
 
     public string Email { get; private set; }

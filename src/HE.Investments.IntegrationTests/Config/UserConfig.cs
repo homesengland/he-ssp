@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HE.InvestmentLoans.IntegrationTests.Config;
+public class UserConfig
+{
+    public bool UseConfigData { get; set; }
+
+    public string UserGlobalId { get; set; }
+
+    public string Email { get; set; }
+
+    public string OrganizationName { get; set; }
+
+    public string OrganizationRegistrationNumber { get; set; }
+
+    public string OrganizationAddress { get; set; }
+
+    public string FirstName { get; set; }
+
+    public string LastName { get; set; }
+
+    public string TelephoneNumber { get; set; }
+
+    public string LoanApplicationIdInDraftState { get; set; }
+}

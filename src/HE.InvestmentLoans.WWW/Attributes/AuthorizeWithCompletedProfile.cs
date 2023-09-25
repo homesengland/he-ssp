@@ -58,11 +58,11 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
             return;
         }
 
-        var userRoles = (await loanUserContext.GetSelectedAccount()).Roles;
-        if (!_allowedFor.Any(allowedRole => userRoles.Any(role => role.Role == allowedRole)))
-        {
-            throw new UnauthorizedAccessException();
-        }
+        //var userRoles = (await loanUserContext.GetSelectedAccount()).Roles;
+        //if (!_allowedFor.Any(allowedRole => userRoles.Any(role => role.Role == allowedRole)))
+        //{
+        //    throw new UnauthorizedAccessException();
+        //}
 
         await next();
     }

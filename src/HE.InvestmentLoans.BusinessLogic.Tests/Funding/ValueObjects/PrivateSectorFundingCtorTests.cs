@@ -81,7 +81,7 @@ public class PrivateSectorFundingCtorTests
         var action = () => PrivateSectorFunding.New(response, applyResult, null);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.PrivateSectorFundingResult));
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.LongInputLengthExceededFor(FieldNameForInputLengthValidation.PrivateSectorFundingResult));
     }
 
     [Fact]
@@ -95,6 +95,6 @@ public class PrivateSectorFundingCtorTests
         var action = () => PrivateSectorFunding.New(response, null, notApplyingReason);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.PrivateSectorFundingReason));
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.LongInputLengthExceededFor(FieldNameForInputLengthValidation.PrivateSectorFundingReason));
     }
 }

@@ -11,21 +11,24 @@ public class ApplicationProjects
         AddProject();
     }
 
+    public ApplicationProjects(LoanApplicationId loanApplicationId, IEnumerable<Project> projects)
+    {
+        LoanApplicationId = loanApplicationId;
+        Projects = projects.ToList();
+    }
+
     public LoanApplicationId LoanApplicationId { get; }
 
     public IList<Project> Projects { get; }
 
     public IList<Project> ActiveProjects => Projects.Where(p => !p.IsSoftDeleted).ToList();
 
-    public void AddProject()
+    public ProjectId AddProject()
     {
-        const string newProjectName = "New project";
-
-        var project = new Project
-        {
-            DefaultName = newProjectName,
-        };
+        var project = new Project();
         Projects.Add(project);
+
+        return project.Id!;
     }
 
     public void UpdateProject(Project project)

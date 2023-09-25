@@ -14,8 +14,15 @@ internal class ProjectPagesUrls
 
     public const string StartDateSuffix = "/start-date";
 
+    public const string ManyHomesSuffix = "/many-homes";
+
     public static string Name(string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}";
+        return $"application/{applicationId}/project/{projectId}/{NameSuffix}";
+    }
+
+    public static string StartDate(string applicationId, string projectId)
+    {
+        return $"application/{applicationId}/project/{projectId}/{StartDateSuffix}";
     }
 }

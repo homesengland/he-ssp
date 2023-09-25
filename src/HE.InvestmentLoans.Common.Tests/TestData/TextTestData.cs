@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework.TestData;
+namespace HE.InvestmentLoans.Common.Tests.TestData;
 
 public static class TextTestData
 {

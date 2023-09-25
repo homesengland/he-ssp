@@ -1,10 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
+using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.TestData;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.InvestmentLoans.WWW.Views.FundingV2.Consts;
 using Xunit;
@@ -60,7 +60,7 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
         privateSectorFundingPage
             .UrlEndWith(FundingPageUrls.PrivateSectorFundingSuffix)
             .HasTitle(FundingPageTitles.PrivateSectorFunding)
-            .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FormOptions.FieldNameForInputLengthValidation.PrivateSectorFundingResult));
+            .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceededFor(FormOptions.FieldNameForInputLengthValidation.PrivateSectorFundingResult));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -99,7 +99,7 @@ public class Order05PrivateSectorFundingIntegrationTests : IntegrationTest
         privateSectorFundingPage
             .UrlEndWith(FundingPageUrls.PrivateSectorFundingSuffix)
             .HasTitle(FundingPageTitles.PrivateSectorFunding)
-            .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FormOptions.FieldNameForInputLengthValidation.PrivateSectorFundingReason));
+            .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceededFor(FormOptions.FieldNameForInputLengthValidation.PrivateSectorFundingReason));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

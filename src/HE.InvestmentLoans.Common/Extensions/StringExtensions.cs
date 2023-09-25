@@ -37,4 +37,9 @@ public static class StringExtensions
 
         return result;
     }
+
+    public static bool IsNotProvided(this string val)
+    {
+        return string.IsNullOrWhiteSpace(val);
+    }
 }

@@ -1,4 +1,4 @@
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
+@model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
     var id = ViewContext.RouteData.Values["id"];
 
@@ -9,7 +9,7 @@
     <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.Id, id = id })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     <partial name="_ErrorSummaryPartial" model="null" />
-    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="Name" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="ProjectName" asp-route-id="@Model.Id" asp-method="post" novalidate>
             <gds-h1 size="@ControlSize.L">
                     @ProjectPageTitles.Name
             </gds-h1>
@@ -29,7 +29,7 @@
                                type="text" />
                 </gds-input-wrapper>
             </gds-div-form-group>
-        <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
+        <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Continue
             </button>
     </form>
