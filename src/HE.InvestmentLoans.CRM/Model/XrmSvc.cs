@@ -20768,4 +20768,67 @@ namespace HE.InvestmentLoans.CRM.Model
 		{
 		}
 	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_createsinglesitedetail")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_createsinglesitedetailRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_sitedetails
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_sitedetails"))
+				{
+					return ((string)(this.Parameters["invln_sitedetails"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_sitedetails"] = value;
+			}
+		}
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public invln_createsinglesitedetailRequest()
+		{
+			this.RequestName = "invln_createsinglesitedetail";
+			this.invln_sitedetails = default(string);
+			this.invln_loanapplicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_createsinglesitedetail")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_createsinglesitedetailResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_createsinglesitedetailResponse()
+		{
+		}
+	}
 }
