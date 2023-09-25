@@ -9,7 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 
 namespace HE.CRM.Plugins.Services.LoanApplication
 {
@@ -17,14 +19,14 @@ namespace HE.CRM.Plugins.Services.LoanApplication
     {
         #region Fields
 
-        private readonly ILoanApplicationRepository loanApplicationRepository;
-        private readonly ISiteDetailsRepository siteDetailsRepository;
-        private readonly IAccountRepository accountRepository;
-        private readonly IContactRepository contactRepository;
-        private readonly IWebRoleRepository webroleRepository;
-        private readonly IGovNotifyEmailRepository govNotifyEmailRepository;
+        private readonly ILoanApplicationRepository _loanApplicationRepository;
+        private readonly ISiteDetailsRepository _siteDetailsRepository;
+        private readonly IContactRepository _contactRepository;
+        private readonly IWebRoleRepository _webroleRepository;
+        private readonly IGovNotifyEmailRepository _govNotifyEmailRepository;
         private readonly INotificationSettingRepository _notificationSettingRepository;
-        private readonly ISystemUserRepository systemUserRepository;
+        private readonly ISystemUserRepository _systemUserRepository;
+        private readonly IEnvironmentVariableRepository _environmentVariableRepository;
 
         #endregion
 
@@ -32,14 +34,14 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
         public LoanApplicationService(CrmServiceArgs args) : base(args)
         {
-            loanApplicationRepository = CrmRepositoriesFactory.Get<ILoanApplicationRepository>();
-            siteDetailsRepository = CrmRepositoriesFactory.Get<ISiteDetailsRepository>();
-            accountRepository = CrmRepositoriesFactory.Get<IAccountRepository>();
-            contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
-            webroleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
-            govNotifyEmailRepository = CrmRepositoriesFactory.Get<IGovNotifyEmailRepository>();
+            _loanApplicationRepository = CrmRepositoriesFactory.Get<ILoanApplicationRepository>();
+            _siteDetailsRepository = CrmRepositoriesFactory.Get<ISiteDetailsRepository>();
+            _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
+            _webroleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
+            _govNotifyEmailRepository = CrmRepositoriesFactory.Get<IGovNotifyEmailRepository>();
             _notificationSettingRepository = CrmRepositoriesFactory.Get<INotificationSettingRepository>();
-            systemUserRepository = CrmRepositoriesFactory.Get<ISystemUserRepository>();
+            _systemUserRepository = CrmRepositoriesFactory.Get<ISystemUserRepository>();
+            _environmentVariableRepository = CrmRepositoriesFactory.Get<IEnvironmentVariableRepository>();
         }
 
         #endregion
@@ -51,18 +53,18 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             List<LoanApplicationDto> entityCollection = new List<LoanApplicationDto>();
             if (Guid.TryParse(accountId, out Guid accountGuid))
             {
-                var contact = contactRepository.GetContactViaExternalId(externalContactId);
-                var role = webroleRepository.GetContactWebRole(contact.Id, ((int)invln_Portal1.Loans).ToString());
+                var contact = _contactRepository.GetContactViaExternalId(externalContactId);
+                var role = _webroleRepository.GetContactWebRole(contact.Id, ((int)invln_Portal1.Loans).ToString());
                 List<invln_Loanapplication> loanApplicationsForAccountAndContact;
                 if (role.Any(x => x.Contains("pl.invln_permission") && ((OptionSetValue)((AliasedValue)x["pl.invln_permission"]).Value).Value == (int)invln_Permission.Accountadministrator) && loanApplicationId == null)
                 {
                     TracingService.Trace("admin");
-                    loanApplicationsForAccountAndContact = loanApplicationRepository.GetAccountLoans(accountGuid);
+                    loanApplicationsForAccountAndContact = _loanApplicationRepository.GetAccountLoans(accountGuid);
                 }
                 else
                 {
                     TracingService.Trace("regular user, not admin");
-                    loanApplicationsForAccountAndContact = loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId);
+                    loanApplicationsForAccountAndContact = _loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId);
                 }
                 this.TracingService.Trace("GetLoanApplicationsForGivenAccountAndContact");
                 this.TracingService.Trace($"{loanApplicationsForAccountAndContact.Count}");
@@ -71,7 +73,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     List<SiteDetailsDto> siteDetailsDtoList = new List<SiteDetailsDto>();
                     this.TracingService.Trace($"Loan application id {element.Id}");
                     this.TracingService.Trace("GetSiteDetailRelatedToLoanApplication");
-                    var siteDetailsList = siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(element.ToEntityReference());
+                    var siteDetailsList = _siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(element.ToEntityReference());
                     if (siteDetailsList != null)
                     {
                         foreach (var siteDetail in siteDetailsList)
@@ -84,7 +86,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     Contact loanApplicationContact = null;
                     if (element.invln_Contact != null)
                     {
-                        loanApplicationContact = this.contactRepository.GetById(element.invln_Contact.Id, new string[]
+                        loanApplicationContact = this._contactRepository.GetById(element.invln_Contact.Id, new string[]
                         {
                             nameof(Contact.EMailAddress1).ToLower(),
                             nameof(Contact.FirstName).ToLower(),
@@ -106,7 +108,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         {
             if (preImage?.StatusCode.Value == (int)invln_Loanapplication_StatusCode.ApplicationSubmitted && preImage.OwnerId.Id != postImage.OwnerId.Id)
             {
-                loanApplicationRepository.Update(new invln_Loanapplication()
+                _loanApplicationRepository.Update(new invln_Loanapplication()
                 {
                     Id = target.Id,
                     invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Underreview),
@@ -121,7 +123,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
             LoanApplicationDto loanApplicationFromPortal = JsonSerializer.Deserialize<LoanApplicationDto>(loanApplicationPayload);
             //THIS IS CONTACT WHO IS SENDING MESSAGE
-            var requestContact = contactRepository.GetContactViaExternalId(contactExternalId);
+            var requestContact = _contactRepository.GetContactViaExternalId(contactExternalId);
 
             //Update Contact on Loan Application
             Contact loanApplicationContact = null;
@@ -129,8 +131,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             {
                 //THIS IS CONTACT FOR WHICH LOAN IS CREATED
                 var contactExternalid = loanApplicationFromPortal?.LoanApplicationContact?.ContactExternalId ?? contactExternalId;
-                loanApplicationContact = contactRepository.GetContactViaExternalId(contactExternalid);
-                contactRepository.Update(new Contact()
+                loanApplicationContact = _contactRepository.GetContactViaExternalId(contactExternalid);
+                _contactRepository.Update(new Contact()
                 {
                     Id = loanApplicationContact.Id,
                     FirstName = loanApplicationFromPortal.LoanApplicationContact.ContactFirstName,
@@ -157,7 +159,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 this.TracingService.Trace("Update invln_Loanapplication");
                 loanApplicationGuid = loanAppId;
                 loanApplicationToCreate.Id = loanAppId;
-                loanApplicationRepository.Update(loanApplicationToCreate);
+                _loanApplicationRepository.Update(loanApplicationToCreate);
             }
             else
             {
@@ -168,7 +170,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
                 this.TracingService.Trace("Create invln_Loanapplication");
                 loanApplicationToCreate.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Draft);
-                loanApplicationGuid = loanApplicationRepository.Create(loanApplicationToCreate);
+                loanApplicationGuid = _loanApplicationRepository.Create(loanApplicationToCreate);
             }
 
             if (loanApplicationFromPortal.siteDetailsList != null && loanApplicationFromPortal.siteDetailsList.Count > 0)
@@ -181,11 +183,11 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     this.TracingService.Trace("create");
                     if (!String.IsNullOrEmpty(siteDetail.siteDetailsId) && Guid.TryParse(siteDetail.siteDetailsId, out Guid result))
                     {
-                        siteDetailsRepository.Update(siteDetailToCreate);
+                        _siteDetailsRepository.Update(siteDetailToCreate);
                     }
                     else
                     {
-                        siteDetailsRepository.Create(siteDetailToCreate);
+                        _siteDetailsRepository.Create(siteDetailToCreate);
                     }
                     this.TracingService.Trace("after create record");
                 }
@@ -201,17 +203,17 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             if (Guid.TryParse(loanApplicationId, out Guid loanId) && externalStatus != null)
             {
 
-                var retrievedLoanApplicationStatus = loanApplicationRepository.GetById(loanId, new string[] { nameof(invln_Loanapplication.invln_ExternalStatus).ToLower() }).invln_ExternalStatus;
+                var retrievedLoanApplicationStatus = _loanApplicationRepository.GetById(loanId, new string[] { nameof(invln_Loanapplication.invln_ExternalStatus).ToLower() }).invln_ExternalStatus;
 
                 int oldStatus = retrievedLoanApplicationStatus != null ? retrievedLoanApplicationStatus.Value : 0;
                 CheckIfExternalStatusCanBeChanged(oldStatus, externalStatus);
-                invln_Loanapplication loanToUpdate = new invln_Loanapplication()
+                var loanToUpdate = new invln_Loanapplication()
                 {
                     Id = loanId,
                     invln_ExternalStatus = new OptionSetValue(externalStatus),
                 };
                 TracingService.Trace("update loan application");
-                loanApplicationRepository.Update(loanToUpdate);
+                _loanApplicationRepository.Update(loanToUpdate);
             }
         }
 
@@ -222,9 +224,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             {
                 var deserializedLoanApplication = JsonSerializer.Deserialize<LoanApplicationDto>(loanApplication);
                 var contactExternalid = deserializedLoanApplication?.LoanApplicationContact?.ContactExternalId ?? contactExternalId;
-                Contact contact = contactRepository.GetContactViaExternalId(contactExternalid);
+                var contact = _contactRepository.GetContactViaExternalId(contactExternalid);
                 var loanApplicationMapped = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(deserializedLoanApplication, contact, accountId);
-                invln_Loanapplication loanApplicationToUpdate = new invln_Loanapplication();
+                var loanApplicationToUpdate = new invln_Loanapplication();
                 if (string.IsNullOrEmpty(fieldsToUpdate))
                 {
                     loanApplicationToUpdate = loanApplicationMapped;
@@ -238,7 +240,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         {
                             if (string.Equals(field.ToLower(), nameof(invln_Loanapplication.invln_ExternalStatus).ToLower()))
                             {
-                                var retrievedLoanApplicationStatus = loanApplicationRepository.GetById(applicationId, new string[] { nameof(invln_Loanapplication.invln_ExternalStatus).ToLower() }).invln_ExternalStatus;
+                                var retrievedLoanApplicationStatus = _loanApplicationRepository.GetById(applicationId, new string[] { nameof(invln_Loanapplication.invln_ExternalStatus).ToLower() }).invln_ExternalStatus;
                                 int oldStatus = retrievedLoanApplicationStatus != null ? retrievedLoanApplicationStatus.Value : 0;
                                 CheckIfExternalStatusCanBeChanged(oldStatus, loanApplicationMapped.invln_ExternalStatus.Value);
                             }
@@ -248,7 +250,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     }
                 }
                 loanApplicationToUpdate.Id = applicationId;
-                loanApplicationRepository.Update(loanApplicationToUpdate);
+                _loanApplicationRepository.Update(loanApplicationToUpdate);
             }
         }
 
@@ -262,9 +264,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Withdrawn),
                     StateCode = new OptionSetValue(1)
                 };
-                loanApplicationRepository.Update(loanApplicationToUpdate);
+                _loanApplicationRepository.Update(loanApplicationToUpdate);
 
-                var relatedSiteDetails = siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(loanApplicationToUpdate.ToEntityReference());
+                var relatedSiteDetails = _siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(loanApplicationToUpdate.ToEntityReference());
                 if (relatedSiteDetails != null && relatedSiteDetails.Count > 0)
                 {
                     foreach (var siteDetail in relatedSiteDetails)
@@ -274,7 +276,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                             Id = siteDetail.Id,
                             StateCode = new OptionSetValue(1),
                         };
-                        siteDetailsRepository.Update(siteDetailToUpdate);
+                        _siteDetailsRepository.Update(siteDetailToUpdate);
                     }
                 }
             }
@@ -297,7 +299,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 (preImage.invln_ExternalStatus != null && target.invln_ExternalStatus != null && preImage.invln_ExternalStatus.Value == (int)invln_ExternalStatus.Draft
                 && target.invln_ExternalStatus.Value == (int)invln_ExternalStatus.ApplicationSubmitted))
             {
-                var relatedSiteDetails = siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(target.ToEntityReference());
+                var relatedSiteDetails = _siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(target.ToEntityReference());
                 if (relatedSiteDetails != null && relatedSiteDetails.Count > 0)
                 {
                     var projectName = string.Empty;
@@ -415,7 +417,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     invln_notificationtitle = "Information",
                     invln_emailid = "email.todelete@wp.pl",// TODO: delete this parameter
                 };
-                _ = loanApplicationRepository.ExecuteNotificatioRequest(req1);
+                _ = _loanApplicationRepository.ExecuteNotificatioRequest(req1);
 
                 var emailTemplate = _notificationSettingRepository.GetTemplateViaTypeName("INTERNAL_LOAN_APP_STATUS_CHANGE");
                 var emailToCreate = new invln_govnotifyemail()
@@ -425,11 +427,13 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     StatusCode = new OptionSetValue((int)invln_govnotifyemail_StatusCode.Draft),
                     invln_notificationsettingid = emailTemplate?.ToEntityReference(),
                 };
-                var emailId = govNotifyEmailRepository.Create(emailToCreate);
+                var emailId = _govNotifyEmailRepository.Create(emailToCreate);
 
                 if (emailTemplate != null)
                 {
-                    var ownerData = systemUserRepository.GetById(emailToCreate.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
+                    var orgUrl = _environmentVariableRepository.GetEnvironmentVariableValue("invln_environmenturl") ?? "";
+                    var ownerData = _systemUserRepository.GetById(emailToCreate.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
+                    var subject = $"Application ref no {target.invln_Name ?? preImage.invln_Name} - Status change to '{statusLabel}";
                     var govNotParams = new INTERNAL_LOAN_APP_STATUS_CHANGE()
                     {
                         templateId = emailTemplate?.invln_templateid,
@@ -437,19 +441,32 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         {
                             recipientEmail = ownerData.InternalEMailAddress,
                             username = ownerData.FullName,
-                            applicationId = preImage.Id.ToString(),
-                            applicationUrl = "https://www.onet.pl",
-                            statusAtSubject = statusLabel,
+                            applicationId = preImage.invln_Name,
+                            applicationUrl = orgUrl + "/main.aspx?appid=2576a100-db47-ee11-be6f-002248c653e1&pagetype=entityrecord&etn=invln_loanapplication&id=" + target.Id,
+                            subject = subject,
                             statusAtBody = "changed to " + statusLabel
                         }
                     };
 
+                    var options = new JsonSerializerOptions
+                    {
+                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                        WriteIndented = true
+                    };
+                    // TODO: delete after MVP when update possible from gov notify returned data
+                    _govNotifyEmailRepository.Update(new invln_govnotifyemail()
+                    {
+                        Id = emailId,
+                        Subject = subject,
+                        invln_body = JsonSerializer.Serialize(govNotParams, options)
+                    });
+                    //
                     var govNotReq = new invln_sendgovnotifyemailRequest()
                     {
                         invln_emailid = emailId.ToString(),
-                        invln_govnotifyparameters = JsonSerializer.Serialize(govNotParams),
+                        invln_govnotifyparameters = JsonSerializer.Serialize(govNotParams, options),
                     };
-                    _ = loanApplicationRepository.ExecuteGovNotifyNotificationRequest(govNotReq);
+                    _ = _loanApplicationRepository.ExecuteGovNotifyNotificationRequest(govNotReq);
                 }
             }
         }

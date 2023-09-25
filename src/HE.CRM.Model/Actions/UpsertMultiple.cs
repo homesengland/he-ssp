@@ -51,6 +51,5 @@ namespace DataverseModel
 		}
 	}
 	
-
 }
 #pragma warning restore CS1591

@@ -32,10 +32,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesingleloanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesinglesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updateuserprofile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\RetrieveEnvironmentVariables.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\RetrieveEnvironmentVariableSecretValue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\RetrieveEnvironmentVariableValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\UpsertMultiple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\INTERNAL_LOAN_APP_STATUS_CHANGE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Account.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Contact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\EnvironmentVariableDefinition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\EnvironmentVariableValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_contactwebrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Contact_Webrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_contract.cs" />
