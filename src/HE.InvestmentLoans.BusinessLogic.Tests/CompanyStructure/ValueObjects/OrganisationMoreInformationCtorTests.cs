@@ -29,6 +29,6 @@ public class OrganisationMoreInformationCtorTests
         var action = () => new OrganisationMoreInformation(new string('*', 1501));
 
         // then
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.OrganisationMoreInformation));
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.LongInputLengthExceededFor(FieldNameForInputLengthValidation.OrganisationMoreInformation));
     }
 }

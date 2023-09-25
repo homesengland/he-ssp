@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AngleSharp.Html.Dom;
+using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.TestData;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.InvestmentLoans.WWW.Views.Project.Consts;
 using Xunit;
@@ -47,7 +42,7 @@ public class Order02ProjectNameIntegrationTests : IntegrationTest
         projectNamePage
             .UrlEndWith(ProjectPagesUrls.NameSuffix)
             .HasTitle(ProjectPageTitles.Name)
-            .HasValidationMessages(ValidationErrorMessage.ShortInputLengthExcedeed);
+            .HasValidationMessages(ValidationErrorMessage.ShortInputLengthExceeded);
 
         SetSharedData(SharedKeys.CurrentPageKey, projectNamePage);
     }

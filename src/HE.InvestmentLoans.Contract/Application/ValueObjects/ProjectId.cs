@@ -13,6 +13,8 @@ public class ProjectId : ValueObject
 
     public static ProjectId From(Guid value) => new(value);
 
+    public static ProjectId From(string value) => new(Guid.Parse(value));
+
     public override string ToString()
     {
         return Value.ToString();

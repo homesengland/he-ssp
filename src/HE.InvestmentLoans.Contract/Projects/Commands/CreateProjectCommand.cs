@@ -7,5 +7,5 @@ using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using MediatR;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.CommandHandlers;
-public record CreateProjectCommand(LoanApplicationId Id) : IRequest<OperationResult<Guid>>;
+namespace HE.InvestmentLoans.Contract.Projects.Commands;
+public record CreateProjectCommand(LoanApplicationId Id) : IRequest<OperationResult<ProjectId>>;

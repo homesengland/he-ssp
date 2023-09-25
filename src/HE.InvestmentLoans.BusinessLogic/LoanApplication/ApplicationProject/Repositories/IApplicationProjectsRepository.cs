@@ -1,3 +1,4 @@
+using System.Threading;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
@@ -9,9 +10,11 @@ public interface IApplicationProjectsRepository
 {
     public ApplicationProjects GetAll(LoanApplicationId loanApplicationId, UserAccount userAccount);
 
-    public Project GetById(LoanApplicationId loanApplicationId, ProjectId projectId, UserAccount userAccount);
+    public Task<Project> GetById(LoanApplicationId loanApplicationId, ProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken);
 
-    public void Save(ApplicationProjects applicationProjects);
+    Task SaveAsync(ApplicationProjects applicationProjects, UserAccount userAccount, CancellationToken cancellationToken);
 
     public LoanApplicationViewModel LegacyDeleteProject(Guid loanApplicationId, Guid projectId);
+
+    Task<ApplicationProjects> GetById(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken);
 }

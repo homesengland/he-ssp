@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -14,7 +15,19 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
     public IntegrationTestFixture()
     {
         DataBag = new Dictionary<string, object>();
-        UserData = new IntegrationUserData();
+
+        var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json", true).Build();
+
+        var userConfig = configuration.GetSection("IntegrationTestsConfig:UserConfig").Get<UserConfig>();
+
+        if (userConfig is not null)
+        {
+            UserData = new IntegrationUserData(userConfig);
+        }
+        else
+        {
+            UserData = new IntegrationUserData();
+        }
     }
 
     public IDictionary<string, object> DataBag { get; }
@@ -30,6 +43,7 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
                 options.DefaultChallengeScheme = TestAuthHandler.AuthenticationScheme;
             })
             .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(TestAuthHandler.AuthenticationScheme, options => { }));
+
         base.ConfigureWebHost(builder);
     }
 }

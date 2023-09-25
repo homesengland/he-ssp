@@ -1,0 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using HE.InvestmentLoans.Contract.Application.ValueObjects;
+
+namespace HE.InvestmentLoans.Contract.Projects.ViewModels;
+public class ProjectViewModel
+{
+    public Guid Id { get; set; }
+
+    public string? Name { get; set; }
+
+    public string? HasEstimatedStartDate { get; set; }
+
+    public string? EstimatedStartDay { get; set; }
+
+    public string? EstimatedStartMonth { get; set; }
+
+    public string? EstimatedStartYear { get; set; }
+}

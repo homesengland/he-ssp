@@ -1,6 +1,7 @@
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
+using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Extensions;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 
@@ -111,6 +112,25 @@ public static class HtmlDocumentExtensions
             var key = summaryRow.GetElementsByClassName("app-task-list__task-name").First().TextContent.Trim();
             var value = summaryRow.GetElementsByClassName("app-task-list__tag").FirstOrDefault()?.InnerHtml.Trim() ?? string.Empty;
             dictionary[key] = value;
+        }
+
+        return dictionary;
+    }
+
+    public static IDictionary<string, (string name, string status)> GetTaskListProjects(this IHtmlDocument htmlDocument)
+    {
+        var projectRows = htmlDocument.GetElementsByClassName("task-list-grid-container");
+
+        var dictionary = new Dictionary<string, (string name, string status)>();
+        foreach (var row in projectRows)
+        {
+            var key = row
+                .GetElementsByClassName("task-list-project-name").First()
+                .GetElementsByTagName("a").First()
+                .GetAttribute("href")!.GetProjectGuidFromUrl();
+
+            var status = row.GetElementsByClassName("app-task-list__tag").FirstOrDefault()?.InnerHtml.Trim() ?? string.Empty;
+            //dictionary[key] = value;
         }
 
         return dictionary;

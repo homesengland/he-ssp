@@ -4,14 +4,12 @@ namespace HE.InvestmentLoans.Common.Validation;
 
 public class OperationResult<TResult> : OperationResult
 {
-    public TResult Value { get; private set; }
-
-    public OperationResult Success(TResult returnedValue)
+    public OperationResult(TResult value)
     {
-        Value = returnedValue;
-
-        return this;
+        Result = value;
     }
+
+    public TResult Result { get; private set; }
 }
 
 public class OperationResult
@@ -30,6 +28,8 @@ public class OperationResult
     public static OperationResult New() => new();
 
     public static OperationResult Success() => new();
+
+    public static OperationResult<TResult> Success<TResult>(TResult result) => new(result);
 
     public OperationResult AddValidationError(ErrorItem errorItem)
     {
