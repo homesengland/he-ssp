@@ -10,3 +10,7 @@ export enum CreditRatingAgency {
   fitchIbca = 858110002,
   other = 858110003,
 }
+
+export enum ExternalStatus {
+  sentForApproval = 858110010,
+}
