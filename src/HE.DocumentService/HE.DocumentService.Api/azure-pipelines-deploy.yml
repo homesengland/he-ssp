@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- '*'
+- none
 
 pool: "vmss-ado-chs-nonprod-001"
           
@@ -20,4 +20,4 @@ resources:
     ref: 'master'
 
 stages:
-- template: azure-pipelines-www-build.yml@he-invst-deployment
+- template: azure-pipelines-document-service-deploy.yml@he-invst-deployment
