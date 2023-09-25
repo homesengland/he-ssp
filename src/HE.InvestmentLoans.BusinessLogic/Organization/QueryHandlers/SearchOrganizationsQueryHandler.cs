@@ -19,7 +19,7 @@ internal class SearchOrganizationsQueryHandler : IRequestHandler<SearchOrganizat
 
     public async Task<SearchOrganisationsQueryResponse> Handle(SearchOrganizationsQuery request, CancellationToken cancellationToken)
     {
-        var companyHousesResult = await _searchService.Search(request.SearchPhrase, new PagingQueryParams(request.PageSize, request.Page - 1), cancellationToken);
+        var companyHousesResult = await _searchService.Search(request.SearchPhrase, new PagingQueryParams(request.PageSize, (request.Page - 1) * request.PageSize), cancellationToken);
 
         if (!companyHousesResult.IsSuccessfull())
         {
