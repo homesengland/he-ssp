@@ -15,7 +15,7 @@ public class OrganisationMoreInformation : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(OrganisationMoreInformation), ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.OrganisationMoreInformation))
+                .AddValidationError(nameof(OrganisationMoreInformation), ValidationErrorMessage.LongInputLengthExceededFor(FieldNameForInputLengthValidation.OrganisationMoreInformation))
                 .CheckErrors();
         }
 

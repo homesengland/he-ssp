@@ -1,19 +1,12 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 using AngleSharp.Html.Dom;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
+using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.TestData;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.InvestmentLoans.WWW.Views.Security.Consts;
-using Microsoft.AspNetCore.Components.Web;
 using Xunit;
 using Xunit.Extensions.Ordering;
 using FormOptions = HE.InvestmentLoans.Common.Utils.Constants.FormOption;
@@ -67,7 +60,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
         directorLoansPage
             .UrlEndWith(SecurityPageUrls.ChargesDebtSuffix)
             .HasTitle(SecurityPageTitles.ChargesDebt)
-            .ContainsOnlyOneValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FormOptions.FieldNameForInputLengthValidation.Debenture));
+            .ContainsOnlyOneValidationMessage(ValidationErrorMessage.LongInputLengthExceededFor(FormOptions.FieldNameForInputLengthValidation.Debenture));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

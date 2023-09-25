@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
@@ -11,23 +12,35 @@ public class Project
         Id = new ProjectId(Guid.NewGuid());
         State = SiteWorkflow.State.Index;
         StateChanged = false;
+        Name = ProjectName.Default;
+    }
+
+
+    public Project(ProjectName name, StartDate startDate)
+    {
+        Name = name;
+        StartDate = startDate;
     }
 
     public string? CheckAnswers { get; set; }
 
     public string? DefaultName { get; set; }
 
-    public string? Name { get; set; }
+    public ProjectName Name { get; private set; }
+
+    public StartDate StartDate { get; private set; }
+
+    public string? NameLegacy { get; set; }
 
     public string? AffordableHomes { get; set; }
 
-    public string? PlanningRef { get; set; }
+    public bool? PlanningRef { get; set; }
 
     public string? PlanningRefEnter { get; set; }
 
     public string? SitePurchaseFrom { get; set; }
 
-    public string? Ownership { get; set; }
+    public bool? Ownership { get; set; }
 
     public string? ManyHomes { get; set; }
 
@@ -75,7 +88,7 @@ public class Project
 
     public string? Type { get; set; }
 
-    public string? ChargesDebt { get; set; }
+    public bool? ChargesDebt { get; set; }
 
     public string? ChargesDebtInfo { get; set; }
 
@@ -99,6 +112,16 @@ public class Project
 
     public string? DeleteProject { get; set; }
 
+    public void ChangeName(ProjectName newName)
+    {
+        Name = newName;
+    }
+
+    public void ProvideStartDate(StartDate startDate)
+    {
+        StartDate = startDate;
+    }
+
     public void RemoveAlternativeRoutesData()
     {
         if (TypeHomes != null && !TypeHomes.Contains(CommonResponse.Other))
@@ -106,12 +129,12 @@ public class Project
             TypeHomesOther = null;
         }
 
-        if (PlanningRef == CommonResponse.No)
-        {
-            PlanningRefEnter = null;
-            Location = null;
-            PlanningStatus = null;
-        }
+        //if (PlanningRef == CommonResponse.No)
+        //{
+        //    PlanningRefEnter = null;
+        //    Location = null;
+        //    PlanningStatus = null;
+        //}
 
         if (LocationOption == ProjectFormOption.Coordinates)
         {
@@ -122,13 +145,13 @@ public class Project
             LocationCoordinates = null;
         }
 
-        if (Ownership == CommonResponse.No)
-        {
-            PurchaseDate = null;
-            Cost = null;
-            Value = null;
-            Source = null;
-        }
+        //if (Ownership == CommonResponse.No)
+        //{
+        //    PurchaseDate = null;
+        //    Cost = null;
+        //    Value = null;
+        //    Source = null;
+        //}
 
         if (GrantFunding != CommonResponse.Yes)
         {
@@ -138,10 +161,10 @@ public class Project
             GrantFundingPurpose = null;
         }
 
-        if (ChargesDebt == CommonResponse.No)
-        {
-            ChargesDebtInfo = null;
-        }
+        //if (ChargesDebt == CommonResponse.No)
+        //{
+        //    ChargesDebtInfo = null;
+        //}
     }
 
     public bool AllInformationIsProvided()
@@ -154,14 +177,14 @@ public class Project
 
     public bool AnyBasicInformationIsProvided()
     {
-        return !string.IsNullOrEmpty(Name) ||
+        return !string.IsNullOrEmpty(NameLegacy) ||
                 !string.IsNullOrEmpty(ManyHomes) ||
                 !string.IsNullOrEmpty(HasEstimatedStartDate) ||
                 TypeHomes != null || TypeHomes?.Length > 0 ||
                 !string.IsNullOrEmpty(Type) ||
-                !string.IsNullOrEmpty(ChargesDebt) ||
-                !string.IsNullOrEmpty(PlanningRef) ||
-                !string.IsNullOrEmpty(Ownership) ||
+                //!string.IsNullOrEmpty(ChargesDebt) ||
+                //!string.IsNullOrEmpty(PlanningRef) ||
+                //!string.IsNullOrEmpty(Ownership) ||
                 !string.IsNullOrEmpty(GrantFunding) ||
                 !string.IsNullOrEmpty(AffordableHomes) ||
                 !string.IsNullOrEmpty(CheckAnswers);
@@ -174,26 +197,26 @@ public class Project
 
     private bool BasicInformationProvided()
     {
-        return !string.IsNullOrEmpty(Name) &&
+        return !string.IsNullOrEmpty(NameLegacy) &&
                 !string.IsNullOrEmpty(ManyHomes) &&
                 !string.IsNullOrEmpty(HasEstimatedStartDate) &&
                 TypeHomes != null && TypeHomes.Length > 0 &&
                 !string.IsNullOrEmpty(Type) &&
-                !string.IsNullOrEmpty(ChargesDebt) &&
+                //!string.IsNullOrEmpty(ChargesDebt) &&
                 !string.IsNullOrEmpty(AffordableHomes);
     }
 
     private bool PlanningReferenceProvided()
     {
-        if (string.IsNullOrEmpty(PlanningRef))
-        {
-            return false;
-        }
+        //if (string.IsNullOrEmpty(PlanningRef))
+        //{
+        //    return false;
+        //}
 
-        if (PlanningRef == CommonResponse.Yes && !PlanningInformationProvided())
-        {
-            return false;
-        }
+        //if (PlanningRef == CommonResponse.Yes && !PlanningInformationProvided())
+        //{
+        //    return false;
+        //}
 
         return ProjectLocationProvided();
     }
@@ -222,15 +245,15 @@ public class Project
 
     private bool OwnershipInformationProvided()
     {
-        if (string.IsNullOrEmpty(Ownership))
-        {
-            return false;
-        }
+        //if (string.IsNullOrEmpty(Ownership))
+        //{
+        //    return false;
+        //}
 
-        if (Ownership == CommonResponse.No)
-        {
-            return true;
-        }
+        //if (Ownership == CommonResponse.No)
+        //{
+        //    return true;
+        //}
 
         return !string.IsNullOrEmpty(PurchaseDay)
                 && !string.IsNullOrEmpty(PurchaseMonth)
