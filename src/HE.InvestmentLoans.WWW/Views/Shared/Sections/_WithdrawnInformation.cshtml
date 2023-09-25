@@ -1,0 +1,8 @@
+@model HE.InvestmentLoans.Contract.ViewModels.IEditableViewModel
+
+ @if (Model.IsReadOnly())
+{
+    <gds-div-inset-text>
+        Your application has been withdrawn, contact your Transaction Manager if you need to discuss a change
+    </gds-div-inset-text>
+}

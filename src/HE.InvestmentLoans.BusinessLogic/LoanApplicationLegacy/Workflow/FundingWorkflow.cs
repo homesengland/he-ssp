@@ -1,37 +1,18 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Security;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
-using HE.InvestmentLoans.Contract.Application.Enums;
-using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Funding;
 using HE.InvestmentLoans.Contract.Funding.Enums;
-using MediatR;
 using Stateless;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 
 public class FundingWorkflow : IStateRouting<FundingState>
 {
-    private readonly LoanApplicationViewModel _model;
+    private readonly FundingViewModel _model;
     private readonly StateMachine<FundingState, Trigger> _machine;
-    private readonly IMediator _mediator;
 
-    public FundingWorkflow(LoanApplicationViewModel model, IMediator mediator)
+    public FundingWorkflow(FundingState currentState, FundingViewModel fundingViewModel)
     {
-        _model = model;
-        _machine = new StateMachine<FundingState, Trigger>(FundingState.Index);
-        _mediator = mediator;
-
-        ConfigureTransitions();
-    }
-
-    public FundingWorkflow(LoanApplicationId applicationId, IMediator mediator, FundingState currentState)
-    {
-        _mediator = mediator;
-        _model = new LoanApplicationViewModel { GoodChangeMode = true };
-
+        _model = fundingViewModel;
         _machine = new StateMachine<FundingState, Trigger>(currentState);
 
         ConfigureTransitions();
@@ -86,28 +67,10 @@ public class FundingWorkflow : IStateRouting<FundingState>
 
         _machine.Configure(FundingState.CheckAnswers)
            .Permit(Trigger.Continue, FundingState.Complete)
-           .Permit(Trigger.Back, FundingState.AdditionalProjects)
-           .OnExit(() =>
-           {
-               if (_model.Funding.CheckAnswers == CommonResponse.Yes)
-               {
-                   _model.Funding.SetFlowCompletion(true);
-               }
-           });
+           .PermitIf(Trigger.Back, FundingState.AdditionalProjects, () => _model.IsEditable())
+           .PermitIf(Trigger.Back, FundingState.Complete, () => _model.IsReadOnly());
 
         _machine.Configure(FundingState.Complete)
             .Permit(Trigger.Back, FundingState.CheckAnswers);
-
-        _machine.OnTransitionCompletedAsync(x =>
-        {
-            if (_model.GoodChangeMode)
-            {
-                return Task.CompletedTask;
-            }
-
-            _model.Funding.RemoveAlternativeRoutesData();
-
-            return _mediator.Send(new Commands.Update() { Model = _model });
-        });
     }
 }

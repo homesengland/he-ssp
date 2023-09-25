@@ -5,40 +5,44 @@
 
 <gds-summary-list class="govuk-!-margin-bottom-9">
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-    {
-    { "Title", "Charges outstanding or debt secured on company" },
-    { "Value", Model.ChargesDebtCompany },
-    { "Link", Url.Action("ChargesDebtCompany", "Security", new {id = id,  redirect = "CheckAnswers"}) },
-    { "LinkId", "charges-debt-change"}
-    })
+           {
+               { "Title", "Charges outstanding or debt secured on company" },
+               { "Value", Model.ChargesDebtCompany },
+               { "Link", Url.Action("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
+               { "LinkId", "charges-debt-change" },
+               { "IsEditable", Model.IsEditable() }
+           })
 
     @if (Model.ChargesDebtCompany == "Yes")
     {
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-        {
-        { "Title", "Debenture" },
-        { "Value",  $"{Model.ChargesDebtCompany}, {Model.ChargesDebtCompanyInfo}" },
-        { "Link", Url.Action("ChargesDebtCompany","Security", new {id = id, redirect = "CheckAnswers" }) },
-        { "LinkId", "debenture-change"}
-        })
+               {
+                   { "Title", "Debenture" },
+                   { "Value", $"{Model.ChargesDebtCompany}, {Model.ChargesDebtCompanyInfo}" },
+                   { "Link", Url.Action("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
+                   { "LinkId", "debenture-change" },
+                   { "IsEditable", Model.IsEditable() }
+               })
     }
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-    {
-    { "Title", "Director loans" },
-    { "Value",  Model.DirLoans },
-    { "Link", Url.Action("DirLoans","Security", new {id = id,  redirect = "CheckAnswers"}) },
-    { "LinkId", "dir-loans-change"}
-    })
+           {
+               { "Title", "Director loans" },
+               { "Value", Model.DirLoans },
+               { "Link", Url.Action("DirLoans", "Security", new { id = id, redirect = "CheckAnswers" }) },
+               { "LinkId", "dir-loans-change" },
+               { "IsEditable", Model.IsEditable() }
+           })
 
-    @if (Model.DirLoans=="Yes")
+    @if (Model.DirLoans == "Yes")
     {
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-        {
-        { "Title", "Subordinated loans" },
-        { "Value", Model.DirLoansSub == "Yes" ? Model.DirLoansSub : $"{ Model.DirLoansSub }, { Model.DirLoansSubMore }"},
-        { "Link", Url.Action("DirLoansSub","Security", new {id = id,  redirect = "CheckAnswers"}) },
-        { "LinkId", "dir-loans-sub-change"}
-        })
+               {
+                   { "Title", "Subordinated loans" },
+                   { "Value", Model.DirLoansSub == "Yes" ? Model.DirLoansSub : $"{Model.DirLoansSub}, {Model.DirLoansSubMore}" },
+                   { "Link", Url.Action("DirLoansSub", "Security", new { id = id, redirect = "CheckAnswers" }) },
+                   { "LinkId", "dir-loans-sub-change" },
+                   { "IsEditable", Model.IsEditable() }
+               })
     }
 </gds-summary-list>
