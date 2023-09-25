@@ -62,5 +62,12 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 siteDetailsRepository.Update(siteDetailsToUpdate);
             }
         }
+
+        public void CreateSiteDetail(string siteDetail, string loanApplicationId)
+        {
+            var deserilizedSiteDetail = JsonSerializer.Deserialize<SiteDetailsDto>(siteDetail);
+            var siteDetailsToCreate = SiteDetailsDtoMapper.MapSiteDetailsDtoToRegularEntity(deserilizedSiteDetail, loanApplicationId);
+            siteDetailsRepository.Create(siteDetailsToCreate);
+        }
     }
 }
