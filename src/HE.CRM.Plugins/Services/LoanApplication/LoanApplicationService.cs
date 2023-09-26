@@ -402,6 +402,10 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         statusLabel = "Approved subject to contract";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Approvedsubjecttocontract);
                         break;
+                    case (int)invln_Loanapplication_StatusCode.CPsSatisfied:
+                        statusLabel = "CPs Satisfied";
+                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.CPsSatisfied);
+                        break;
                     case (int)invln_Loanapplication_StatusCode.AwaitingCPSatisfaction:
                         statusLabel = "Awaiting CP satisfaction";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ContractSignedSubjecttoCP);
