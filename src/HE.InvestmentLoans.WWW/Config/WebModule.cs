@@ -3,6 +3,8 @@ using HE.InvestmentLoans.BusinessLogic.Config;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Infrastructure;
+using HE.InvestmentLoans.Common.Services;
+using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.CRM.Extensions;
 using HE.InvestmentLoans.WWW.Models;
 using HE.Investments.Organisation.Config;
@@ -29,6 +31,7 @@ public static class WebModule
         serviceCollections.AddScoped<IWebRoleRepository, WebRoleRepository>();
         serviceCollections.AddScoped<IPortalPermissionRepository, PortalPermissionRepository>();
         serviceCollections.AddScoped<IOrganizationService, OrganizationService>();
+        serviceCollections.AddScoped<INotificationService, NotificationService>();
 
         serviceCollections.AddOrganizationsModule();
     }
