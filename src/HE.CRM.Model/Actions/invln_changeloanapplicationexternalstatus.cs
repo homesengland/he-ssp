@@ -20,12 +20,31 @@ namespace DataverseModel
 		
 		public static class Fields
 		{
+			public const string invln_changereason = "invln_changereason";
 			public const string invln_loanapplicationid = "invln_loanapplicationid";
 			public const string invln_statusexternal = "invln_statusexternal";
-			public const string invln_withdrawreason = "invln_withdrawreason";
 		}
 		
 		public const string ActionLogicalName = "invln_changeloanapplicationexternalstatus";
+		
+		public string invln_changereason
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_changereason"))
+				{
+					return ((string)(this.Parameters["invln_changereason"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_changereason"] = value;
+			}
+		}
 		
 		public string invln_loanapplicationid
 		{
@@ -65,28 +84,10 @@ namespace DataverseModel
 			}
 		}
 		
-		public string invln_withdrawreason
-		{
-			get
-			{
-				if (this.Parameters.Contains("invln_withdrawreason"))
-				{
-					return ((string)(this.Parameters["invln_withdrawreason"]));
-				}
-				else
-				{
-					return default(string);
-				}
-			}
-			set
-			{
-				this.Parameters["invln_withdrawreason"] = value;
-			}
-		}
-		
 		public invln_changeloanapplicationexternalstatusRequest()
 		{
 			this.RequestName = "invln_changeloanapplicationexternalstatus";
+			this.invln_changereason = default(string);
 			this.invln_loanapplicationid = default(string);
 			this.invln_statusexternal = default(int);
 		}

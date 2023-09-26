@@ -196,7 +196,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return loanApplicationGuid.ToString();
         }
 
-        public void ChangeLoanApplicationExternalStatus(int externalStatus, string loanApplicationId, string withdrawReason)
+        public void ChangeLoanApplicationExternalStatus(int externalStatus, string loanApplicationId, string changeReason)
         {
             TracingService.Trace($"loan id {loanApplicationId}");
             TracingService.Trace($"new external status {externalStatus}");
@@ -212,9 +212,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     Id = loanId,
                     invln_ExternalStatus = new OptionSetValue(externalStatus),
                 };
-                if (!string.IsNullOrEmpty(withdrawReason))
+                if (!string.IsNullOrEmpty(changeReason))
                 {
-                    loanToUpdate.invln_statuschangereason = withdrawReason;
+                    loanToUpdate.invln_statuschangereason = changeReason;
                 }
                 TracingService.Trace("update loan application");
                 _loanApplicationRepository.Update(loanToUpdate);
@@ -401,6 +401,10 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     case (int)invln_Loanapplication_StatusCode.ApprovedSubjectToContract:
                         statusLabel = "Approved subject to contract";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Approvedsubjecttocontract);
+                        break;
+                    case (int)invln_Loanapplication_StatusCode.CPsSatisfied:
+                        statusLabel = "CPs Satisfied";
+                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.CPsSatisfied);
                         break;
                     case (int)invln_Loanapplication_StatusCode.AwaitingCPSatisfaction:
                         statusLabel = "Awaiting CP satisfaction";
