@@ -6,7 +6,6 @@ using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.CommandHandlers;
@@ -14,16 +13,13 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.CommandHandlers;
 public class WithdrawLoanApplicationCommandHandler : IRequestHandler<WithdrawLoanApplicationCommand, OperationResult>
 {
     private readonly ILoanApplicationRepository _loanApplicationRepository;
-
     private readonly ILoanUserContext _loanUserContext;
-    private readonly IHttpContextAccessor _contextAccessor;
     private readonly ILogger<CompanyStructureBaseCommandHandler> _logger;
 
-    public WithdrawLoanApplicationCommandHandler(ILoanApplicationRepository loanApplicationRepository, ILoanUserContext loanUserContext, IHttpContextAccessor contextAccessor, ILogger<CompanyStructureBaseCommandHandler> logger)
+    public WithdrawLoanApplicationCommandHandler(ILoanApplicationRepository loanApplicationRepository, ILoanUserContext loanUserContext , ILogger<CompanyStructureBaseCommandHandler> logger)
     {
         _loanApplicationRepository = loanApplicationRepository;
         _loanUserContext = loanUserContext;
-        _contextAccessor = contextAccessor;
         _logger = logger;
     }
 
