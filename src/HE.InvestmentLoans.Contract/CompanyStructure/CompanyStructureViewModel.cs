@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.ViewModels;
 
@@ -27,8 +28,6 @@ public class CompanyStructureViewModel : ICompletedSectionViewModel
     public SectionStatus State { get; set; }
 
     public bool StateChanged { get; set; }
-
-    public bool IsFlowCompleted { get; set; }
 
     public bool IsCompleted()
     {

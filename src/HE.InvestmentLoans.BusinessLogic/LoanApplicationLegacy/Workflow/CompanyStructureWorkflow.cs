@@ -8,8 +8,11 @@ public class CompanyStructureWorkflow : IStateRouting<CompanyStructureState>
 {
     private readonly StateMachine<CompanyStructureState, Trigger> _machine;
 
-    public CompanyStructureWorkflow(CompanyStructureState state)
+    private readonly CompanyStructureViewModel _model;
+
+    public CompanyStructureWorkflow(CompanyStructureState state, CompanyStructureViewModel model)
     {
+        _model = model;
         _machine = new StateMachine<CompanyStructureState, Trigger>(state);
         ConfigureTransitions();
     }
@@ -47,7 +50,8 @@ public class CompanyStructureWorkflow : IStateRouting<CompanyStructureState>
 
         _machine.Configure(CompanyStructureState.CheckAnswers)
             .PermitIf(Trigger.Continue, CompanyStructureState.Complete)
-            .PermitIf(Trigger.Back, CompanyStructureState.HomesBuilt);
+            .PermitIf(Trigger.Back, CompanyStructureState.Complete, () => _model.IsReadOnly())
+            .PermitIf(Trigger.Back, CompanyStructureState.HomesBuilt, () => _model.IsEditable());
 
         _machine.Configure(CompanyStructureState.Complete)
            .Permit(Trigger.Back, CompanyStructureState.CheckAnswers);

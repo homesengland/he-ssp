@@ -28,7 +28,7 @@ public abstract class WorkflowController<TState> : Controller
         }
         else
         {
-            if (await Routing(state).StateCanBeAccessed(state))
+            if (await (await Routing(state)).StateCanBeAccessed(state))
             {
                 await base.OnActionExecutionAsync(context, next);
             }
@@ -99,11 +99,12 @@ public abstract class WorkflowController<TState> : Controller
         return ChangeState(Trigger.Back, currentState, routeData);
     }
 
-    protected abstract IStateRouting<TState> Routing(TState currentState);
+    protected abstract Task<IStateRouting<TState>> Routing(TState currentState);
 
     private async Task<IActionResult> ChangeState(Trigger trigger, TState currentState, object routeData)
     {
-        var nextState = await Routing(currentState).NextState(trigger);
+        var routing = await Routing(currentState);
+        var nextState = await routing.NextState(trigger);
 
         return RedirectToState(nextState, trigger, routeData);
     }

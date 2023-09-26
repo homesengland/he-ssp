@@ -32,8 +32,14 @@ public class SecurityController : WorkflowController<SecurityState>
 
     [HttpGet("")]
     [WorkflowState(SecurityState.Index)]
-    public IActionResult StartSecurity(Guid id)
+    public async Task<IActionResult> StartSecurity(Guid id)
     {
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id)));
+        if (response.ViewModel.IsReadOnly())
+        {
+            return RedirectToAction("CheckAnswers", new { Id = id });
+        }
+
         return View("Index", LoanApplicationId.From(id));
     }
 
@@ -154,14 +160,12 @@ public class SecurityController : WorkflowController<SecurityState>
         return Back(currentPage, new { Id = id });
     }
 
-    protected override IStateRouting<SecurityState> Routing(SecurityState currentState)
+    protected override async Task<IStateRouting<SecurityState>> Routing(SecurityState currentState)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
 
-        var applicationId = !string.IsNullOrEmpty(id) ? LoanApplicationId.From(Guid.Parse(id)) : null;
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id!)));
 
-        var response = _mediator.Send(new GetSecurity(LoanApplicationId.From(id))).Result;
-
-        return new SecurityWorkflow(applicationId, response.ViewModel, _mediator, currentState);
+        return new SecurityWorkflow(currentState, response.ViewModel);
     }
 }
