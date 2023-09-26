@@ -14,7 +14,7 @@
     <table class="govuk-table">
         <caption class="govuk-table__caption govuk-table__caption--m">
             <gds-column width="ColumnWidth.ThreeQuarters" class="govuk-!-padding-left-0">
-                    Your applications
+                Your applications
             </gds-column>
             <gds-column width="ColumnWidth.OneQuarter" class="govuk-!-padding-right-0">
                 <div class="govuk-form-group">
@@ -31,39 +31,28 @@
             </gds-column>
         </caption>
         <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-                <th scope="col" class="govuk-table__header govuk-!-width-one-half">Name</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Stage</th>
-                <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Status</th>
-                <td scope="col" class="govuk-table__header govuk-!-width-one-quarter"></td>
-            </tr>
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Stage</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-half">Status</th>
+        </tr>
         </thead>
         <tbody class="govuk-table__body">
-            @foreach (var application in Model.LoanApplications)
-            {
-                <tr class="govuk-table__row">
-                    <td class="govuk-table__cell">
-                        <span class="app-task-list__task-name">
-                            <a href="@Url.Action("ApplicationDashboard", "LoanApplicationV2", new { id = application.Id.Value })" id=@($"open-application-link-{application.Id.Value}")>@application.ApplicationName</a>
-                        </span>
-                    </td>
-                    <td class="govuk-table__cell">Application</td>
+        @foreach (var application in Model.LoanApplications)
+        {
+            <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                    <span class="app-task-list__task-name">
+                        <a href="@Url.Action("ApplicationDashboard", "LoanApplicationV2", new { id = application.Id.Value })" id=@($"open-application-link-{application.Id.Value}")>@application.ApplicationName</a>
+                    </span>
+                </td>
+                <td class="govuk-table__cell">Application</td>
 
-                    @if (application.Status == ApplicationStatus.ApplicationSubmitted)
-                    {
-                        <td class="govuk-table__cell"><gds-tag colour="Blue">Submitted</gds-tag></td>
-                    }
-                    else if (application.Status == ApplicationStatus.Withdrawn)
-                    {
-                        <td class="govuk-table__cell"><gds-tag colour="Red">Withdrawn</gds-tag></td>
-                    }
-                    else
-                    {
-                        <td class="govuk-table__cell"><gds-tag colour="Grey">Draft</gds-tag></td>
-                    }
-                    <td class="govuk-table__cell"><gds-link>Action</gds-link></td>
-                </tr>
-            }
+                <td class="govuk-table__cell">
+                    <application-status-tag application-status="@application.Status"></application-status-tag>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 

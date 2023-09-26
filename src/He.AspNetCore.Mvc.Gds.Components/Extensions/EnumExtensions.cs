@@ -32,7 +32,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.Extensions
                 return string.Empty;
             }
 
-            return enumValue?.GetType()?.GetField(enumValue.ToString())?.GetCustomAttribute<DescriptionAttribute>()?.Description ?? string.Empty;
+            return enumValue?.GetType()?.GetField(enumValue.ToString())?.GetCustomAttribute<DescriptionAttribute>()?.Description ?? enumValue.ToString();
         }
     }
 }
