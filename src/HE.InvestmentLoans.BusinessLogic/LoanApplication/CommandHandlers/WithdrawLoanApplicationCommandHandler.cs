@@ -16,7 +16,7 @@ public class WithdrawLoanApplicationCommandHandler : IRequestHandler<WithdrawLoa
     private readonly ILoanUserContext _loanUserContext;
     private readonly ILogger<CompanyStructureBaseCommandHandler> _logger;
 
-    public WithdrawLoanApplicationCommandHandler(ILoanApplicationRepository loanApplicationRepository, ILoanUserContext loanUserContext , ILogger<CompanyStructureBaseCommandHandler> logger)
+    public WithdrawLoanApplicationCommandHandler(ILoanApplicationRepository loanApplicationRepository, ILoanUserContext loanUserContext, ILogger<CompanyStructureBaseCommandHandler> logger)
     {
         _loanApplicationRepository = loanApplicationRepository;
         _loanUserContext = loanUserContext;
