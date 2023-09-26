@@ -1,8 +1,9 @@
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.ViewModels;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure;
 
-public class CompanyStructureViewModel
+public class CompanyStructureViewModel : ICompletedSectionViewModel
 {
     public CompanyStructureViewModel()
     {
@@ -38,4 +39,11 @@ public class CompanyStructureViewModel
     {
         return State == SectionStatus.InProgress;
     }
+
+    public bool IsEditable()
+    {
+        return true;
+    }
+
+    public bool IsReadOnly() => IsEditable() is false;
 }

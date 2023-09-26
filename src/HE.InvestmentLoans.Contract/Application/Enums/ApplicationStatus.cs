@@ -7,10 +7,12 @@ public enum ApplicationStatus
     New,
     Draft,
     [Description("Application Submitted")]
-    Submitted,
+    ApplicationSubmitted,
     NA,
-    [Description("Application Under Review")]
+    [Description("Under Review")]
     UnderReview,
+    [Description("Application Under Review")]
+    ApplicationUnderReview,
     Withdrawn,
     [Description("Hold Requested")]
     HoldRequested,

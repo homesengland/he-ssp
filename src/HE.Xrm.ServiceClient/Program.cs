@@ -37,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestLoan(serviceClient);
+                    TestUpdateSiteDetails(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -262,12 +262,10 @@ namespace HE.Xrm.ServiceClientExample
                 valuationSource = "estateagentestimate",
                 whoProvided = "provided",
             };
-            var req1 = new invln_updatesinglesitedetailsRequest()
+            var req1 = new invln_createsinglesitedetailRequest()
             {
-                invln_sitedetail = JsonSerializer.Serialize(siteDetailsNewValues), //site details serialized DTO data
-                invln_sitedetailsid = "6d6b7b09-770f-ee11-8f6e-002248c653e1", // site details id to update
-                invln_fieldstoupdate = "invln_currentvalue,invln_landregistrytitlenumber,invln_loanapplication", //fields to update
-                invln_loanapplicationid = "cd7198e6-381c-ee11-8f6d-002248c653e1", // related loan application
+                invln_sitedetails = JsonSerializer.Serialize(siteDetailsNewValues), //site details serialized DTO data
+                invln_loanapplicationid = "0beee88c-e540-ee11-bdf3-002248c652b4", // related loan application
             };
             serviceClient.Execute(req1);
         }

@@ -52,6 +52,28 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.EnvironmentVariableDefinition"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.EnvironmentVariableDefinition> EnvironmentVariableDefinitionSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.EnvironmentVariableDefinition>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.EnvironmentVariableValue"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.EnvironmentVariableValue> EnvironmentVariableValueSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.EnvironmentVariableValue>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_contactwebrole"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_contactwebrole> invln_contactwebroleSet

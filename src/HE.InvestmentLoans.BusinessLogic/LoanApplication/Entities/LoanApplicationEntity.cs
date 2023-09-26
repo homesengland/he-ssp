@@ -98,7 +98,7 @@ public class LoanApplicationEntity
 
     private bool IsSubmitted()
     {
-        return ExternalStatus == ApplicationStatus.Submitted;
+        return ExternalStatus == ApplicationStatus.ApplicationSubmitted;
     }
 
     private void SyncToLegacyModel()

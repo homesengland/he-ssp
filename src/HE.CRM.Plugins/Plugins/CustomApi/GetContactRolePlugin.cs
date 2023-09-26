@@ -1,4 +1,4 @@
-﻿using DataverseModel;
+using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.Base.Plugins;
 using HE.CRM.Plugins.Handlers.CustomApi;
@@ -19,13 +19,17 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     Id = "5d510406-13b5-45b0-be51-e5641a340b5b")]
     public class GetContactRolePlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
         public GetContactRolePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<GetContactRoleHandler>());
         }
+        #endregion
     }
 }

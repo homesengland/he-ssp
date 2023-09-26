@@ -1,46 +1,22 @@
 @model HE.InvestmentLoans.Contract.Funding.FundingViewModel
-@using HE.InvestmentLoans.Contract.Funding
 @using HE.InvestmentLoans.Contract.Funding.Enums;
-@inject ModelExpressionProvider modelProvider
-@using System.Text;
-@{
-
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.Contract.Funding.FundingViewModel x) => x.CheckAnswers));
-}
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="FundingV2" asp-action="CheckAnswersPost" asp-route-id="@Model.LoanApplicationId" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","FundingV2", new {id = Model.LoanApplicationId, currentPage = FundingState.CheckAnswers})" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back", "FundingV2", new { id = Model.LoanApplicationId, currentPage = FundingState.CheckAnswers })" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
-        <partial name="_ErrorSummaryPartial" model="null" />
+        <partial name="_ErrorSummaryPartial" model="null"/>
 
         <gds-h1 size="ControlSize.L">
             @FundingPageTitles.CheckAnswers
         </gds-h1>
 
-
+        <partial name="Sections/_WithdrawnInformation" model="Model"/>
 
         @await Html.PartialAsync("_FundingAnswers", Model)
-        <gds-div-form-group>
-            <gds-field-set>
-                <gds-legend class="govuk-fieldset__legend--m">
-                    Have you completed this section?
-                </gds-legend>
 
-                <gds-div-form-group invalid="radioInvalid">
-                    <gds-radio
-                        govuk-formgroup-asp-for="CheckAnswers"
-                               asp-selectlistitems="TemporaryFormOptions.CheckAnswersCompletion"
-                               asp-isexcludeheader>
-                    </gds-radio>
-                </gds-div-form-group>
-            </gds-field-set>
-        </gds-div-form-group>
-
-        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
-            Continue
-        </button>
+        <partial name="Sections/_HaveYouCompletedThisSection" model="Model"/>
 
     </form>
 </gds-div-grid-column-two-thirds>

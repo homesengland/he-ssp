@@ -26,13 +26,17 @@ namespace HE.CRM.Plugins.Plugins.LoanApplications
 
     public class ChangeApplicationStatusOnOwnerChangePlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
         public ChangeApplicationStatusOnOwnerChangePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<ChangeApplicationStatusOnOwnerChangeHandler>());
         }
+        #endregion
     }
 }

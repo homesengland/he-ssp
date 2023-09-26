@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
@@ -202,7 +201,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     public async Task Submit(LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
     {
-        var crmSubmitStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Submitted);
+        var crmSubmitStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.ApplicationSubmitted);
 
         var request = new invln_changeloanapplicationexternalstatusRequest
         {

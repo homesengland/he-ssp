@@ -5,7 +5,7 @@ namespace HE.InvestmentLoans.Common.Exceptions;
 public class DomainValidationException : Exception
 {
     public DomainValidationException(OperationResult operationResult)
-        : base("Validation error")
+        : base(operationResult.GetAllErrors())
     {
         OperationResult = operationResult;
     }

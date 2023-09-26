@@ -22,6 +22,7 @@ namespace DataverseModel
 		{
 			public const string invln_loanapplicationid = "invln_loanapplicationid";
 			public const string invln_statusexternal = "invln_statusexternal";
+			public const string invln_withdrawreason = "invln_withdrawreason";
 		}
 		
 		public const string ActionLogicalName = "invln_changeloanapplicationexternalstatus";
@@ -61,6 +62,25 @@ namespace DataverseModel
 			set
 			{
 				this.Parameters["invln_statusexternal"] = value;
+			}
+		}
+		
+		public string invln_withdrawreason
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_withdrawreason"))
+				{
+					return ((string)(this.Parameters["invln_withdrawreason"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_withdrawreason"] = value;
 			}
 		}
 		

@@ -25,7 +25,10 @@ invln_sendinternalcrmnotification|
 invln_sendinvestmentloansdatatocrm|
 invln_updatesingleloanapplication|
 invln_updatesinglesitedetails|
-invln_updateuserprofile</ActionsWhitelist>
+invln_updateuserprofile|
+retrieveenvironmentvariables|
+retrieveenvironmentvariablesecretvalue|
+retrieveenvironmentvariablevalue</ActionsWhitelist>
     <ActionsToSkip />
     <AddDebuggerNonUserCode>true</AddDebuggerNonUserCode>
     <AddNewFilesToProject>true</AddNewFilesToProject>
@@ -43,6 +46,8 @@ invln_updateuserprofile</ActionsWhitelist>
     <EntitiesToSkip />
     <EntitiesWhitelist>account|
 contact|
+environmentvariabledefinition|
+environmentvariablevalue|
 invln_contactwebrole|
 invln_contract|
 invln_emailnotification|

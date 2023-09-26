@@ -1,4 +1,3 @@
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Funding.ValueObjects;
 

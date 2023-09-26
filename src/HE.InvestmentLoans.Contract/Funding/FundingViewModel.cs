@@ -1,9 +1,10 @@
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.ViewModels;
 
 namespace HE.InvestmentLoans.Contract.Funding;
 
-public class FundingViewModel
+public class FundingViewModel : ICompletedSectionViewModel
 {
     public FundingViewModel()
     {
@@ -67,6 +68,11 @@ public class FundingViewModel
         IsFlowCompleted = value;
     }
 
+    public void SetLoanApplicationId(Guid id)
+    {
+        LoanApplicationId = id;
+    }
+
     public bool IsCompleted()
     {
         return State == SectionStatus.Completed;
@@ -76,4 +82,11 @@ public class FundingViewModel
     {
         return State == SectionStatus.InProgress;
     }
+
+    public bool IsEditable()
+    {
+        return true;
+    }
+
+    public bool IsReadOnly() => IsEditable() is false;
 }

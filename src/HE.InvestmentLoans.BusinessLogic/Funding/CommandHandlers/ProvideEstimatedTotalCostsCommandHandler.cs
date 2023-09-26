@@ -5,13 +5,14 @@ using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Funding.Commands;
 using HE.InvestmentLoans.Contract.Funding.ValueObjects;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Funding.CommandHandlers;
 
 public class ProvideEstimatedTotalCostsCommandHandler : FundingBaseCommandHandler, IRequestHandler<ProvideEstimatedTotalCostsCommand, OperationResult>
 {
-    public ProvideEstimatedTotalCostsCommandHandler(IFundingRepository repository, ILoanUserContext loanUserContext)
-        : base(repository, loanUserContext)
+    public ProvideEstimatedTotalCostsCommandHandler(IFundingRepository repository, ILoanUserContext loanUserContext, ILogger<FundingBaseCommandHandler> logger)
+        : base(repository, loanUserContext, logger)
     {
     }
 

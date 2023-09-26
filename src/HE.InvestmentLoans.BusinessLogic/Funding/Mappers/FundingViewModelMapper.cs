@@ -1,9 +1,6 @@
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure;
 using HE.InvestmentLoans.BusinessLogic.Funding.Entities;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.Enums;
-using HE.InvestmentLoans.Contract.CompanyStructure;
-using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 using HE.InvestmentLoans.Contract.Funding;
 using HE.InvestmentLoans.Contract.Funding.ValueObjects;
 

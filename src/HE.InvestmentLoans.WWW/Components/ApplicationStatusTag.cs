@@ -1,4 +1,5 @@
 using He.AspNetCore.Mvc.Gds.Components.Constants;
+using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Abstraction;
 using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Tags;
@@ -20,7 +21,7 @@ public class ApplicationStatusTag : TextWithIdTagHelper
 
     protected override void ConstructClass(TagHelperOutput output)
     {
-        Text = ApplicationStatus.ToString();
+        Text = ApplicationStatus.GetDescription();
         TagConstruct.ConstructClass(output, $"{CssConstants.GovUkTag} {TagColourClass(ApplicationStatus)} {AdditionalClasses}");
     }
 
@@ -40,9 +41,10 @@ public class ApplicationStatusTag : TextWithIdTagHelper
             ApplicationStatus.HoldRequested => TagColour.Grey,
             ApplicationStatus.OnHold => TagColour.Grey,
             ApplicationStatus.UnderReview => TagColour.Orange,
+            ApplicationStatus.ApplicationUnderReview => TagColour.Orange,
             ApplicationStatus.InDueDiligence => TagColour.Orange,
             ApplicationStatus.CashflowUnderReview => TagColour.Orange,
-            ApplicationStatus.Submitted => TagColour.Green,
+            ApplicationStatus.ApplicationSubmitted => TagColour.Green,
             ApplicationStatus.SentForApproval => TagColour.Green,
             ApplicationStatus.ApprovedSubjectToContract => TagColour.Green,
             ApplicationStatus.ApprovedSubjectToDueDiligence => TagColour.Green,

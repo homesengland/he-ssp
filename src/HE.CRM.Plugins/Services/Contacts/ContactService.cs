@@ -152,6 +152,7 @@ namespace HE.CRM.Plugins.Services.Contacts
 
         #endregion
 
+        #region Private Methods
         private void AssignRoleToContact(Contact contact, invln_Webrole role)
         {
             var contactRoleToCreate = new invln_contactwebrole()
@@ -161,5 +162,6 @@ namespace HE.CRM.Plugins.Services.Contacts
             };
             contactWebroleRepository.Create(contactRoleToCreate);
         }
+        #endregion
     }
 }

@@ -10,6 +10,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
 
         private int externalStatus => ExecutionData.GetInputParameter<int>(invln_changeloanapplicationexternalstatusRequest.Fields.invln_statusexternal);
         private string loanApplicationId => ExecutionData.GetInputParameter<string>(invln_changeloanapplicationexternalstatusRequest.Fields.invln_loanapplicationid);
+        private string withdrawReason => ExecutionData.GetInputParameter<string>(invln_changeloanapplicationexternalstatusRequest.Fields.invln_withdrawreason);
 
         #endregion
 
@@ -21,7 +22,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
 
         public override void DoWork()
         {
-            CrmServicesFactory.Get<ILoanApplicationService>().ChangeLoanApplicationExternalStatus(externalStatus, loanApplicationId);
+            CrmServicesFactory.Get<ILoanApplicationService>().ChangeLoanApplicationExternalStatus(externalStatus, loanApplicationId, withdrawReason);
         }
 
         #endregion

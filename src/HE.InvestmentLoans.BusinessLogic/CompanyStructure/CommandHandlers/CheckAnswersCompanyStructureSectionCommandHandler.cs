@@ -1,18 +1,17 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Validation;
-using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Extensions;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 
 public class CheckAnswersCompanyStructureSectionCommandHandler : CompanyStructureBaseCommandHandler, IRequestHandler<CheckAnswersCompanyStructureSectionCommand, OperationResult>
 {
-    public CheckAnswersCompanyStructureSectionCommandHandler(ICompanyStructureRepository repository, ILoanUserContext loanUserContext)
-        : base(repository, loanUserContext)
+    public CheckAnswersCompanyStructureSectionCommandHandler(ICompanyStructureRepository repository, ILoanUserContext loanUserContext, ILogger<CompanyStructureBaseCommandHandler> logger)
+        : base(repository, loanUserContext, logger)
     {
     }
 
