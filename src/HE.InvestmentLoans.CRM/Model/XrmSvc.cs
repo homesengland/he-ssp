@@ -19842,6 +19842,25 @@ namespace HE.InvestmentLoans.CRM.Model
 	public partial class invln_changeloanapplicationexternalstatusRequest : Microsoft.Xrm.Sdk.OrganizationRequest
 	{
 		
+		public string invln_changereason
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_changereason"))
+				{
+					return ((string)(this.Parameters["invln_changereason"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_changereason"] = value;
+			}
+		}
+		
 		public string invln_loanapplicationid
 		{
 			get
@@ -19880,28 +19899,10 @@ namespace HE.InvestmentLoans.CRM.Model
 			}
 		}
 		
-		public string invln_withdrawreason
-		{
-			get
-			{
-				if (this.Parameters.Contains("invln_withdrawreason"))
-				{
-					return ((string)(this.Parameters["invln_withdrawreason"]));
-				}
-				else
-				{
-					return default(string);
-				}
-			}
-			set
-			{
-				this.Parameters["invln_withdrawreason"] = value;
-			}
-		}
-		
 		public invln_changeloanapplicationexternalstatusRequest()
 		{
 			this.RequestName = "invln_changeloanapplicationexternalstatus";
+			this.invln_changereason = default(string);
 			this.invln_loanapplicationid = default(string);
 			this.invln_statusexternal = default(int);
 		}
