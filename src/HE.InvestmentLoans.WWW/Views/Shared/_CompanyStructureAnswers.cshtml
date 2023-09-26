@@ -7,20 +7,23 @@
            {
                { "Title", "Company established for this development" },
                { "Value", Model.Purpose },
-               { "Link", Url.Action("Purpose","CompanyStructureV2", new { id,  state = "Purpose" }) }
-    })
+               { "Link", Url.Action("Purpose", "CompanyStructureV2", new { id, state = "Purpose" }) },
+               { "IsEditable", Model.IsEditable() }
+           })
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-    {
-        { "Title", "Additional information" },
-        { "Value", Model.OrganisationMoreInformation },
-        { "Link", Url.Action("MoreInformationAboutOrganization","CompanyStructureV2", new { id,  state = "ExistingCompany" }) }
-    })
+           {
+               { "Title", "Additional information" },
+               { "Value", Model.OrganisationMoreInformation },
+               { "Link", Url.Action("MoreInformationAboutOrganization", "CompanyStructureV2", new { id, state = "ExistingCompany" }) },
+               { "IsEditable", Model.IsEditable() }
+           })
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-    {
-        { "Title", "Homes in the last three years" },
-        { "Value", Model.HomesBuilt },
-        { "Link", Url.Action("HowManyHomesBuilt","CompanyStructureV2", new { id,  state = "HomesBuilt" }) }
-    })
+           {
+               { "Title", "Homes in the last three years" },
+               { "Value", Model.HomesBuilt },
+               { "Link", Url.Action("HowManyHomesBuilt", "CompanyStructureV2", new { id, state = "HomesBuilt" }) },
+               { "IsEditable", Model.IsEditable() }
+           })
 </gds-summary-list>

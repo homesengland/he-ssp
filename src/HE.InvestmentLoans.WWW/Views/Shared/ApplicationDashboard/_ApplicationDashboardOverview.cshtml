@@ -20,7 +20,6 @@
                 <p class="govuk-body govuk-!-margin-bottom-2"> @singleData.Desription</p>
             </dt>
             <gds-summary-list-actions-v2>
-
                 @if (!string.IsNullOrEmpty(singleData.Link))
                 {
                     <gds-link href=@singleData.Link id=@($"edit-link-{singleData.Title.ToLowerInvariant().Replace(' ', '-')}")>
