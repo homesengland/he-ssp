@@ -1,11 +1,13 @@
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
+using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Commands;
-using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.CommandHandlers;
 
@@ -13,24 +15,32 @@ public class WithdrawLoanApplicationCommandHandler : IRequestHandler<WithdrawLoa
 {
     private readonly ILoanApplicationRepository _loanApplicationRepository;
 
-    public WithdrawLoanApplicationCommandHandler(ILoanApplicationRepository loanApplicationRepository)
+    private readonly ILoanUserContext _loanUserContext;
+    private readonly IHttpContextAccessor _contextAccessor;
+    private readonly ILogger<CompanyStructureBaseCommandHandler> _logger;
+
+    public WithdrawLoanApplicationCommandHandler(ILoanApplicationRepository loanApplicationRepository, ILoanUserContext loanUserContext, IHttpContextAccessor contextAccessor, ILogger<CompanyStructureBaseCommandHandler> logger)
     {
         _loanApplicationRepository = loanApplicationRepository;
+        _loanUserContext = loanUserContext;
+        _contextAccessor = contextAccessor;
+        _logger = logger;
     }
 
     public async Task<OperationResult> Handle(WithdrawLoanApplicationCommand request, CancellationToken cancellationToken)
     {
         try
         {
+            var loanApplication = await _loanApplicationRepository
+                                .GetLoanApplication(request.LoanApplicationId, await _loanUserContext.GetSelectedAccount(), cancellationToken);
             var withdrawReason = WithdrawReason.New(request.WithdrawReason);
-            var applicationStatus = (ApplicationStatus)Enum.Parse(typeof(ApplicationStatus), request.ApplicationStatus);
-            var newApplicationStatus = applicationStatus == ApplicationStatus.ApplicationSubmitted ? ApplicationStatus.Withdrawn : ApplicationStatus.NA;
-            await _loanApplicationRepository.Withdraw(request.LoanApplicationId, withdrawReason, newApplicationStatus, cancellationToken);
 
+            await loanApplication.Withdraw(_loanApplicationRepository, withdrawReason, cancellationToken);
             return OperationResult.Success();
         }
         catch (DomainValidationException domainValidationException)
         {
+            _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
             return domainValidationException.OperationResult;
         }
     }

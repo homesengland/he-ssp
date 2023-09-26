@@ -14,14 +14,4 @@ public class NotificationModel
     public string Description { get; private set; }
 
     public bool IsTypeSuccess { get; private set; }
-
-    public string IsTypeSuccessNotification()
-    {
-        if (IsTypeSuccess)
-        {
-            return "govuk-notification-banner--success";
-        }
-
-        return string.Empty;
-    }
 }

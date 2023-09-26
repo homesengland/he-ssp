@@ -212,15 +212,29 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         await _serviceClient.ExecuteAsync(request, cancellationToken);
     }
 
-    public async Task Withdraw(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, ApplicationStatus applicationStatus, CancellationToken cancellationToken)
+    public async Task Withdraw(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken)
     {
-        var crmSubmitStatus = ApplicationStatusMapper.MapToCrmStatus(applicationStatus);
+        var crmWithdrawStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Withdrawn);
 
         var request = new invln_changeloanapplicationexternalstatusRequest
         {
             invln_loanapplicationid = loanApplicationId.ToString(),
-            invln_statusexternal = crmSubmitStatus,
-            invln_withdrawreason = withdrawReason.ToString(),
+            invln_statusexternal = crmWithdrawStatus,
+            invln_changereason = withdrawReason.ToString(),
+        };
+
+        await _serviceClient.ExecuteAsync(request, cancellationToken);
+    }
+
+    public async Task Remove(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken)
+    {
+        var crmRemoveStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.NA);
+
+        var request = new invln_changeloanapplicationexternalstatusRequest
+        {
+            invln_loanapplicationid = loanApplicationId.ToString(),
+            invln_statusexternal = crmRemoveStatus,
+            invln_changereason = withdrawReason.ToString(),
         };
 
         await _serviceClient.ExecuteAsync(request, cancellationToken);

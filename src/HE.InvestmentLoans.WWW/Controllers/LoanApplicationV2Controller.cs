@@ -175,23 +175,6 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return View("ApplicationDashboard", new ApplicationDashboardModel { LoanApplicationId = LoanApplicationId.From(id), Data = response, IsOverviewSectionSelected = true });
     }
 
-    [HttpPost("{id}/dashboard")]
-    [WorkflowState(LoanApplicationWorkflow.State.ApplicationDashboard)]
-    public async Task<IActionResult> ApplicationDashboardPost(Guid id, string buttonValue, string applicationStatus)
-    {
-        if (buttonValue == LoanApplicationView.Withdraw)
-        {
-            return View("Withdraw", new WithdrawModel { LoanApplicationId = LoanApplicationId.From(id), ApplicationStatus = applicationStatus });
-        }
-        else if (buttonValue == LoanApplicationView.Hold)
-        {
-            return View("Hold", new LoanApplicationViewModel { ID = id });
-        }
-
-        var response = await _mediator.Send(new GetApplicationDashboardQuery(LoanApplicationId.From(id)));
-        return View("ApplicationDashboard", new ApplicationDashboardModel { LoanApplicationId = LoanApplicationId.From(id), Data = response, IsOverviewSectionSelected = true });
-    }
-
     [HttpGet("{id}/dashboard/supporting-documents")]
     [WorkflowState(LoanApplicationWorkflow.State.ApplicationDashboard)]
     public async Task<IActionResult> ApplicationDashboardSupportingDocuments(Guid id)
@@ -201,17 +184,24 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return View("ApplicationDashboard", new ApplicationDashboardModel { LoanApplicationId = LoanApplicationId.From(id), Data = response, IsOverviewSectionSelected = false });
     }
 
+    [HttpGet("{id}/withdraw")]
+    [WorkflowState(LoanApplicationWorkflow.State.Withdraw)]
+    public IActionResult Withdraw(Guid id)
+    {
+        return View("Withdraw", new WithdrawModel { LoanApplicationId = LoanApplicationId.From(id) });
+    }
+
     [HttpPost("{id}/withdraw")]
     [WorkflowState(LoanApplicationWorkflow.State.Withdraw)]
     public async Task<IActionResult> WithdrawPost(Guid id, WithdrawModel withdrawModel, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new WithdrawLoanApplicationCommand(LoanApplicationId.From(id), withdrawModel.WithdrawReason, withdrawModel.ApplicationStatus), cancellationToken);
+        var result = await _mediator.Send(new WithdrawLoanApplicationCommand(LoanApplicationId.From(id), withdrawModel.WithdrawReason), cancellationToken);
 
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
 
-            return View("Withdraw", new WithdrawModel { LoanApplicationId = LoanApplicationId.From(id), ApplicationStatus = withdrawModel.ApplicationStatus });
+            return View("Withdraw", new WithdrawModel { LoanApplicationId = LoanApplicationId.From(id) });
         }
 
         return await Continue();

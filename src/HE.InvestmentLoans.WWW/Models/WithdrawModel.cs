@@ -8,6 +8,4 @@ public class WithdrawModel
     public LoanApplicationId LoanApplicationId { get; set; }
 
     public string WithdrawReason { get; set; }
-
-    public string ApplicationStatus { get; set; }
 }

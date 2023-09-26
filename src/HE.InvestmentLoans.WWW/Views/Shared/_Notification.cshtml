@@ -1,6 +1,6 @@
 @model NotificationModel;
 
-<div class="govuk-notification-banner @Model.IsTypeSuccessNotification() govuk-!-margin-bottom-8" role="alert"
+<div class="govuk-notification-banner @(Model.IsTypeSuccess ? "govuk-notification-banner--success" : "") govuk-!-margin-bottom-8" role="alert"
         aria-labelledby="govuk-notification-banner-title"
         data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
