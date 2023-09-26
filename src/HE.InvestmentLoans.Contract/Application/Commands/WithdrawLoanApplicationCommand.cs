@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.InvestmentLoans.Contract.Application.Commands;
 
-public record WithdrawLoanApplicationCommand(LoanApplicationId LoanApplicationId, string WithdrawReason) : IRequest<OperationResult>;
+public record WithdrawLoanApplicationCommand(LoanApplicationId LoanApplicationId, string WithdrawReason, string ApplicationStatus) : IRequest<OperationResult>;

@@ -177,11 +177,11 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpPost("{id}/dashboard")]
     [WorkflowState(LoanApplicationWorkflow.State.ApplicationDashboard)]
-    public async Task<IActionResult> ApplicationDashboardPost(Guid id, string buttonValue)
+    public async Task<IActionResult> ApplicationDashboardPost(Guid id, string buttonValue, string applicationStatus)
     {
         if (buttonValue == LoanApplicationView.Withdraw)
         {
-            return View("Withdraw", new WithdrawModel { LoanApplicationId = LoanApplicationId.From(id) });
+            return View("Withdraw", new WithdrawModel { LoanApplicationId = LoanApplicationId.From(id), ApplicationStatus = applicationStatus });
         }
         else if (buttonValue == LoanApplicationView.Hold)
         {
@@ -201,24 +201,17 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return View("ApplicationDashboard", new ApplicationDashboardModel { LoanApplicationId = LoanApplicationId.From(id), Data = response, IsOverviewSectionSelected = false });
     }
 
-    [HttpGet("{id}/withdraw")]
-    [WorkflowState(LoanApplicationWorkflow.State.Withdraw)]
-    public IActionResult Withdraw(Guid id, CancellationToken cancellationToken)
-    {
-        return View("Withdraw", new WithdrawModel { LoanApplicationId = LoanApplicationId.From(id) });
-    }
-
     [HttpPost("{id}/withdraw")]
     [WorkflowState(LoanApplicationWorkflow.State.Withdraw)]
     public async Task<IActionResult> WithdrawPost(Guid id, WithdrawModel withdrawModel, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new WithdrawLoanApplicationCommand(LoanApplicationId.From(id), withdrawModel.WithdrawReason), cancellationToken);
+        var result = await _mediator.Send(new WithdrawLoanApplicationCommand(LoanApplicationId.From(id), withdrawModel.WithdrawReason, withdrawModel.ApplicationStatus), cancellationToken);
 
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
 
-            return View("Withdraw", new WithdrawModel { LoanApplicationId = LoanApplicationId.From(id) });
+            return View("Withdraw", new WithdrawModel { LoanApplicationId = LoanApplicationId.From(id), ApplicationStatus = withdrawModel.ApplicationStatus });
         }
 
         return await Continue();

@@ -69,6 +69,7 @@
                 <gds-p>
                     To withdraw your application, and notify Homes England that you no longer wish to proceed, click below.
                 </gds-p>
+                <input type="hidden" name="applicationStatus" value="@Model.Data.ApplicationStatus">
                 <button class="govuk-button govuk-button--warning" data-module="govuk-button" type="submit" name="buttonValue" value="@LoanApplicationView.Withdraw">
                     Withdraw application
                 </button>

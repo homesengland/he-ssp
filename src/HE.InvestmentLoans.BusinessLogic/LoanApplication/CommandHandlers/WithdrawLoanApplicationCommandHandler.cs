@@ -3,6 +3,7 @@ using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Commands;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using MediatR;
 
@@ -22,7 +23,9 @@ public class WithdrawLoanApplicationCommandHandler : IRequestHandler<WithdrawLoa
         try
         {
             var withdrawReason = WithdrawReason.New(request.WithdrawReason);
-            await _loanApplicationRepository.Withdraw(request.LoanApplicationId, withdrawReason, cancellationToken);
+            var applicationStatus = (ApplicationStatus)Enum.Parse(typeof(ApplicationStatus), request.ApplicationStatus);
+            var newApplicationStatus = applicationStatus == ApplicationStatus.ApplicationSubmitted ? ApplicationStatus.Withdrawn : ApplicationStatus.NA;
+            await _loanApplicationRepository.Withdraw(request.LoanApplicationId, withdrawReason, newApplicationStatus, cancellationToken);
 
             return OperationResult.Success();
         }
