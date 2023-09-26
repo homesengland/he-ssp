@@ -17,7 +17,7 @@ namespace HE.CRM.Model.CrmSerializedParameters
         public string username { get; set; }
         public string applicationId { get; set; }
         public string applicationUrl { get; set; }
-        public string statusAtSubject { get; set; }
+        public string subject { get; set; }
         public string statusAtBody { get; set; }
     }
 }

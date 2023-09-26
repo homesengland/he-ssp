@@ -87,6 +87,8 @@
   "entityNamesFilter": [
     "account",
     "contact",
+    "environmentvariabledefinition",
+    "environmentvariablevalue",
     "invln_contactwebrole",
     "invln_contract",
     "invln_emailnotification",
@@ -121,7 +123,10 @@
     "invln_sendinvestmentloansdatatocrm*",
     "invln_updatesingleloanapplication*",
     "invln_updatesinglesitedetails*",
-    "invln_updateuserprofile*"
+    "invln_updateuserprofile*",
+    "retrieveenvironmentvariables*",
+    "retrieveenvironmentvariablesecretvalue*",
+    "retrieveenvironmentvariablevalue*"
   ],
   "messagesTypesFolder": "..\\Actions",
   "metadataProviderService": "DLaB.ModelBuilderExtensions.MetadataProviderService,DLaB.ModelBuilderExtensions",
