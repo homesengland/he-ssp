@@ -4,6 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Funding.CommandHandlers;
 public class FundingBaseCommandHandler
@@ -12,10 +13,13 @@ public class FundingBaseCommandHandler
 
     private readonly ILoanUserContext _loanUserContext;
 
-    public FundingBaseCommandHandler(IFundingRepository repository, ILoanUserContext loanUserContext)
+    private readonly ILogger<FundingBaseCommandHandler> _logger;
+
+    public FundingBaseCommandHandler(IFundingRepository repository, ILoanUserContext loanUserContext, ILogger<FundingBaseCommandHandler> logger)
     {
         _repository = repository;
         _loanUserContext = loanUserContext;
+        _logger = logger;
     }
 
     protected async Task<OperationResult> Perform(Action<FundingEntity> action, LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
@@ -29,6 +33,7 @@ public class FundingBaseCommandHandler
         }
         catch (DomainValidationException domainValidationException)
         {
+            _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
             return domainValidationException.OperationResult;
         }
 

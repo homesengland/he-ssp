@@ -5,12 +5,13 @@ using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Security.Commands;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Security.CommandHandler;
 public class ProvideDirectorLoansCommandHandler : SecurityBaseCommandHandler, IRequestHandler<ProvideDirectorLoansCommand, OperationResult>
 {
-    public ProvideDirectorLoansCommandHandler(ISecurityRepository securityRepository, ILoanUserContext loanUserContext)
-        : base(securityRepository, loanUserContext)
+    public ProvideDirectorLoansCommandHandler(ISecurityRepository securityRepository, ILoanUserContext loanUserContext, ILogger<SecurityBaseCommandHandler> logger)
+        : base(securityRepository, loanUserContext, logger)
     {
     }
 

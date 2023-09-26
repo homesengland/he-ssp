@@ -30,6 +30,11 @@ public class OperationResult
         return AddValidationError(new ErrorItem(affectedField, validationMessage));
     }
 
+    public string GetAllErrors()
+    {
+        return string.Join(Environment.NewLine, Errors.Select(x => x.ErrorMessage));
+    }
+
     public void CheckErrors()
     {
         if (HasValidationErrors)

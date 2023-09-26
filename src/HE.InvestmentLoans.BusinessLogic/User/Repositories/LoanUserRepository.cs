@@ -3,10 +3,8 @@ extern alias Org;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 using Org::HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.User.Repositories;
