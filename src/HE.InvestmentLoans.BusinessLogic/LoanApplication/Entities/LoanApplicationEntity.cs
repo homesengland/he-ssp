@@ -82,11 +82,11 @@ public class LoanApplicationEntity
     {
         if (ExternalStatus == ApplicationStatus.Draft)
         {
-            await loanApplicationRepository.Remove(Id, withdrawReason, cancellationToken);
+            await loanApplicationRepository.WithdrawDraft(Id, withdrawReason, cancellationToken);
         }
         else if (ExternalStatus == ApplicationStatus.ApplicationSubmitted)
         {
-            await loanApplicationRepository.Withdraw(Id, withdrawReason, cancellationToken);
+            await loanApplicationRepository.WithdrawSubmit(Id, withdrawReason, cancellationToken);
         }
         else
         {

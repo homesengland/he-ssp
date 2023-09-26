@@ -212,7 +212,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         await _serviceClient.ExecuteAsync(request, cancellationToken);
     }
 
-    public async Task Withdraw(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken)
+    public async Task WithdrawSubmit(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken)
     {
         var crmWithdrawStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Withdrawn);
 
@@ -226,7 +226,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         await _serviceClient.ExecuteAsync(request, cancellationToken);
     }
 
-    public async Task Remove(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken)
+    public async Task WithdrawDraft(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken)
     {
         var crmRemoveStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.NA);
 
