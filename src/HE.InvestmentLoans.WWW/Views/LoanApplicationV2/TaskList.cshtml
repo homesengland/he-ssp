@@ -7,12 +7,19 @@
 @{
     var securityWorkflow = new SecurityWorkflow(Model, mediator);
     var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
+    var deleteName = ViewBag.AdditionalData;
+    var deleteNotification = new NotificationModel("Success", $"{deleteName} removed", true);
 }
 
 
 <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.ID })" text="Back to application dashboard" class="govuk-grid-column-full"></gds-back-link>
 
-@await Html.PartialAsync("_DeleteNotification")
+@if (deleteName != null)
+{
+    <gds-div-grid-column-two-thirds>
+        @await Html.PartialAsync("_Notification", deleteNotification)
+    </gds-div-grid-column-two-thirds>
+}
 
 <gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-2 govuk-!-margin-top-8 govuk-grid-column-full">
     Development loan application
@@ -151,9 +158,9 @@
     <form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.ID" asp-method="post" novalidate>
         @if (loanApllicationWorkflow.IsFilled())
         {
-                <gds-button data-module="govuk-button" name="action" value="Continue">
-                    Check and submit application
-                </gds-button>
+            <gds-button data-module="govuk-button" name="action" value="Continue">
+                Check and submit application
+            </gds-button>
         }
         else
         {

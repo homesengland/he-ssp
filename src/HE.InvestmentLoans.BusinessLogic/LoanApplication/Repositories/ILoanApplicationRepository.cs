@@ -14,4 +14,6 @@ public interface ILoanApplicationRepository
     Task Save(LoanApplicationViewModel loanApplication, UserAccount userAccount);
 
     Task Save(LoanApplicationEntity loanApplication, UserDetails userDetails, CancellationToken cancellationToken);
+
+    Task Withdraw(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken);
 }

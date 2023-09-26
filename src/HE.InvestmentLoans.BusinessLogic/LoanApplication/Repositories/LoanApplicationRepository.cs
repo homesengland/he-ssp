@@ -213,6 +213,20 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         await _serviceClient.ExecuteAsync(request, cancellationToken);
     }
 
+    public async Task Withdraw(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken)
+    {
+        var crmSubmitStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Withdrawn);
+
+        var request = new invln_changeloanapplicationexternalstatusRequest
+        {
+            invln_loanapplicationid = loanApplicationId.ToString(),
+            invln_statusexternal = crmSubmitStatus,
+            // invln_withdrawreason = withdrawReason.ToString(),
+        };
+
+        // await _serviceClient.ExecuteAsync(request, cancellationToken);
+    }
+
     public void LegacySave(LoanApplicationViewModel legacyModel)
     {
         legacyModel.Timestamp = _dateTime.Now;

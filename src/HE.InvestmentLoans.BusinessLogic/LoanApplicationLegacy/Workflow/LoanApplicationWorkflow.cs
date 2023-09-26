@@ -24,6 +24,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         CheckApplication,
         ApplicationSubmitted,
         Ineligible,
+        Withdraw,
     }
 
     private readonly StateMachine<State, Trigger> _machine;
@@ -126,6 +127,13 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         _machine.Configure(State.CheckApplication)
             .Permit(Trigger.Continue, State.ApplicationSubmitted)
             .Permit(Trigger.Back, State.TaskList);
+
+        _machine.Configure(State.ApplicationDashboard)
+            .Permit(Trigger.Withdraw, State.Withdraw);
+
+        _machine.Configure(State.Withdraw)
+            .Permit(Trigger.Continue, State.UserDashboard)
+            .Permit(Trigger.Back, State.ApplicationDashboard);
 
         _machine.OnTransitionCompletedAsync(x =>
         {

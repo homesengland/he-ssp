@@ -1,0 +1,39 @@
+@using HE.InvestmentLoans.Common.Models.App;
+@using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow
+@model WithdrawModel
+@inject ModelExpressionProvider modelProvider
+@inject IAppConfig appConfig
+@{
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.WithdrawReason));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="LoanApplicationV2" asp-action="WithdrawPost" asp-route-id="@Model.LoanApplicationId" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.Withdraw, ApplicationId = Model.LoanApplicationId })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+
+        <gds-field-set>
+            <gds-error-form-group asp-for="WithdrawReason">
+                <legend>
+                    <gds-label-wrapper>
+                        <gds-label size="@ControlSize.L" for="Withdraw">
+                            Why are you withdrawing your application
+                        </gds-label>
+                    </gds-label-wrapper>
+                </legend>
+                <gds-p>
+                    Tell us why you are withdrawing your application. Once your application is withdrawn, you will no longer be able to access it.
+                </gds-p>
+                <gds-text-area asp-for="WithdrawReason"
+                               rows="5"></gds-text-area>
+            </gds-error-form-group>
+            <gds-p>
+                You can enter up to 1500 characters
+            </gds-p>
+
+            <button class="govuk-button govuk-button--warning" data-module="govuk-button" type="submit">
+                Withdraw application
+            </button>
+        </gds-field-set>
+    </form>
+</gds-div-grid-column-two-thirds>

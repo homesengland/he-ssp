@@ -23,4 +23,5 @@ public static class FieldNameForInputLengthValidation
     public const string PrivateSectorFundingReason = "funding not applying reason";
     public const string AbnormalCostsInfo = "abnormal costs information";
     public const string RefinanceInfo = "refinance exit strategy";
+    public const string WithdrawReason = "withdraw reason";
 }

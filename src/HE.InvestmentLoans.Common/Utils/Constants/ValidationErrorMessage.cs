@@ -6,6 +6,8 @@ public static class ValidationErrorMessage
 {
     public const string EnterMoreDetails = "Enter more details";
 
+    public const string EnterWhyYouWantToWithdrawApplication = "Enter why you want to withdraw your application";
+
     public const string InvalidValue = "Provided invalid value";
 
     public const string EnterMoreDetailsForRefinanceExitStrategy = "Enter more detail about your refinance exit strategy";

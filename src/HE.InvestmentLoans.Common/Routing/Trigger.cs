@@ -8,4 +8,5 @@ public enum Trigger
     Back,
     Redirect,
     Change,
+    Withdraw,
 }
