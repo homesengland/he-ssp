@@ -54,12 +54,6 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         return _machine.State;
     }
 
-    public async void ChangeState(State state)
-    {
-        _model.State = state;
-        await _mediator.Send(new Commands.Update() { Model = _model });
-    }
-
     public string GetName()
     {
         return Enum.GetName(typeof(State), _model.State) ?? string.Empty;
@@ -67,7 +61,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
     public bool IsFilled()
     {
-        return (_model.Company.IsCompleted() || _model.Company.IsFlowCompleted)
+        return _model.Company.IsCompleted()
             && (_model.Security.State == SectionStatus.Completed || _model.Security.IsFlowCompleted)
             && (_model.Funding.IsCompleted() || _model.Funding.IsFlowCompleted)
             && (_model.Sites.All(x => x.State == SiteWorkflow.State.Complete) || _model.Sites.All(x => x.IsFlowCompleted))
@@ -81,7 +75,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
     public bool IsFilled(LoanApplicationViewModel application)
     {
-        return (application.Company.IsCompleted() || application.Company.IsFlowCompleted)
+        return application.Company.IsCompleted()
             && (application.Security.State == SectionStatus.Completed || application.Security.IsFlowCompleted)
             && (application.Funding.IsCompleted() || application.Funding.IsFlowCompleted)
             && (application.Sites.All(x => x.State == SiteWorkflow.State.Complete) || application.Sites.All(x => x.IsFlowCompleted))

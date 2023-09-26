@@ -25,8 +25,14 @@ public class FundingV2Controller : WorkflowController<FundingState>
 
     [HttpGet("start-funding")]
     [WorkflowState(FundingState.Index)]
-    public IActionResult StartFunding(Guid id)
+    public async Task<IActionResult> StartFunding(Guid id)
     {
+        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)));
+        if (response.ViewModel.IsReadOnly())
+        {
+            return RedirectToAction("CheckAnswers", new { Id = id });
+        }
+
         return View("StartFunding", LoanApplicationId.From(id));
     }
 
@@ -245,12 +251,12 @@ public class FundingV2Controller : WorkflowController<FundingState>
         return await Back(currentPage, new { Id = id });
     }
 
-    protected override IStateRouting<FundingState> Routing(FundingState currentState)
+    protected override async Task<IStateRouting<FundingState>> Routing(FundingState currentState)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
 
         var applicationId = !string.IsNullOrEmpty(id) ? LoanApplicationId.From(Guid.Parse(id)) : null;
-        var response = _mediator.Send(new GetFundingQuery(applicationId!)).Result;
+        var response = await _mediator.Send(new GetFundingQuery(applicationId!));
 
         return new FundingWorkflow(currentState, response.ViewModel);
     }

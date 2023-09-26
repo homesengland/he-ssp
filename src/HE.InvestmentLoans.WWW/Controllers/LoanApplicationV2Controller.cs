@@ -186,12 +186,15 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return Back(currentPage, new { Id = applicationId });
     }
 
-    protected override IStateRouting<LoanApplicationWorkflow.State> Routing(LoanApplicationWorkflow.State currentState)
+    protected override Task<IStateRouting<LoanApplicationWorkflow.State>> Routing(LoanApplicationWorkflow.State currentState)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
 
         var applicationId = !string.IsNullOrEmpty(id) ? LoanApplicationId.From(Guid.Parse(id)) : null;
 
-        return new LoanApplicationWorkflow(currentState, async () => (await _mediator.Send(new GetLoanApplicationQuery(applicationId))).LoanApplication.LegacyModel);
+        return Task.FromResult<IStateRouting<LoanApplicationWorkflow.State>>(
+            new LoanApplicationWorkflow(
+                currentState,
+                async () => (await _mediator.Send(new GetLoanApplicationQuery(applicationId!))).LoanApplication.LegacyModel));
     }
 }
