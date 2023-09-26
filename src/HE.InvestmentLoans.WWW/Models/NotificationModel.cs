@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Html;
+
 namespace HE.InvestmentLoans.WWW.Models;
 
 public class NotificationModel
 {
-    public NotificationModel(string title, string description, bool isTypeSuccess = false)
+    public NotificationModel(string title, IHtmlContent description, bool isTypeSuccess = false)
     {
         Title = title;
         Description = description;
@@ -11,7 +13,7 @@ public class NotificationModel
 
     public string Title { get; private set; }
 
-    public string Description { get; private set; }
+    public IHtmlContent Description { get; private set; }
 
     public bool IsTypeSuccess { get; private set; }
 }

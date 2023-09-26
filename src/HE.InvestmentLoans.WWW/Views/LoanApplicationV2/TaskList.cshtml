@@ -8,7 +8,7 @@
     var securityWorkflow = new SecurityWorkflow(Model, mediator);
     var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
     var deleteName = ViewBag.AdditionalData;
-    var deleteNotification = new NotificationModel("Success", $"{deleteName} removed", true);
+    var deleteNotification = new NotificationModel("Success", new HtmlString($"{deleteName} removed"), true);
 }
 
 

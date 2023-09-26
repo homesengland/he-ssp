@@ -4,7 +4,8 @@
 @{
     ViewData["Title"] = "Home Page";
     var (isLoanApplicationNameInCache, LoanApplicationNameFromCache) = @Model.NotificationService.Pop(NotificationServiceKey.LoanApplicationWithdraw);
-    var notificationModel = new NotificationModel("Success", $"{LoanApplicationNameFromCache} removed", true);
+    var notificationMessage = $"{LoanApplicationNameFromCache} project has been withdrawn.</br><a href=\"\">Contact [email] if you think there's a problem.</a>";
+    var notificationModel = new NotificationModel("Success", Html.Raw(notificationMessage), true);
 }
 
 <gds-column width="ColumnWidth.Full">
