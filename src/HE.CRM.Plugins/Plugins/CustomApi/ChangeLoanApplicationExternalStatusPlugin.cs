@@ -19,13 +19,17 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     Id = "f58b6af4-7c28-4348-a2a1-d8c5fcb87d4b")]
     public class ChangeLoanApplicationExternalStatusPlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
         public ChangeLoanApplicationExternalStatusPlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<ChangeLoanApplicationExternalStatusHandler>());
         }
+        #endregion
     }
 }

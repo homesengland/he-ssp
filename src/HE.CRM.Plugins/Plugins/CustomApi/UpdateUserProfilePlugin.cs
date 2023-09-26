@@ -20,13 +20,17 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
      Id = "004af2a6-5a78-4523-b529-5a0e4e5ce3ee")]
     public class UpdateUserProfilePlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
         public UpdateUserProfilePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<UpdateUserProfileHandler>());
         }
+        #endregion
     }
 }

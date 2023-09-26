@@ -1,4 +1,4 @@
-﻿using DataverseModel;
+using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.Base.Plugins;
 using HE.CRM.Plugins.Handlers.CustomApi;
@@ -19,13 +19,17 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     Id = "257390a9-1cc9-40af-977e-5bddf60fa55b")]
     public class GetSingleInvestmentLoanForAccountAndContactPlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
         public GetSingleInvestmentLoanForAccountAndContactPlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<GetSingleInvestmentLoanForAccountAndContactHandler>());
         }
+        #endregion
     }
 }

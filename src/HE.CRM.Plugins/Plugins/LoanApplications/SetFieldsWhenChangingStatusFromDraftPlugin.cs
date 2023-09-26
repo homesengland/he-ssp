@@ -21,13 +21,17 @@ namespace HE.CRM.Plugins.Plugins.LoanApplications
        Image1Type = ImageTypeEnum.PreImage)]
     public class SetFieldsWhenChangingStatusFromDraftPlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
         public SetFieldsWhenChangingStatusFromDraftPlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<SetFieldsWhenChangingStatusFromDraftHandler>());
         }
+        #endregion
     }
 }

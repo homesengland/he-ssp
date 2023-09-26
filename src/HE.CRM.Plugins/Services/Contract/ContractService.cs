@@ -18,6 +18,9 @@ namespace HE.CRM.Plugins.Services.Contract
         {
             loanApplicationRepository = CrmRepositoriesFactory.Get<ILoanApplicationRepository>();
         }
+        #endregion
+
+        #region Public Methods
 
         public void RejectAddingWhenRelatedLoanInApprovedStatus(invln_contract target, invln_contract preImage)
         {

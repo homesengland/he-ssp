@@ -19,13 +19,17 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     Id = "3887ace8-9550-46f1-9602-02b90b9faa19")]
     public class DeleteLoanApplicationPlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
         public DeleteLoanApplicationPlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<DeleteLoanApplicationHandler>());
         }
+        #endregion
     }
 }

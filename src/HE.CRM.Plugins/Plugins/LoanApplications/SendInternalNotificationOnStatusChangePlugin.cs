@@ -21,13 +21,17 @@ namespace HE.CRM.Plugins.Plugins.LoanApplications
        Image1Type = ImageTypeEnum.PreImage)]
     public class SendInternalNotificationOnStatusChangePlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
         public SendInternalNotificationOnStatusChangePlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<SendInternalNotificationOnStatusChangeHandler>());
         }
+        #endregion
     }
 }

@@ -6,6 +6,7 @@ namespace HE.CRM.Plugins.Handlers.Accounts
 {
     public class GenerateRandomAccountNameSampleHandler : CrmEntityHandlerBase<Account, DataverseContext>
     {
+        #region Base Methods Overrides
         public override bool CanWork()
         {
             return true;
@@ -16,5 +17,6 @@ namespace HE.CRM.Plugins.Handlers.Accounts
             var randomAccountName = CrmServicesFactory.Get<IAccountService>().GenerateRandomAccountSampleName();
             ExecutionData.Target.Name = randomAccountName;
         }
+        #endregion
     }
 }

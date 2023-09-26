@@ -1,4 +1,4 @@
-﻿using HE.Base.Services;
+using HE.Base.Services;
 using HE.CRM.Common.Repositories.Implementations;
 using HE.CRM.Common.Repositories.Interfaces;
 using System;
@@ -11,11 +11,18 @@ namespace HE.CRM.Plugins.Services.RichTextService
 {
     public class RichTextService : CrmService, IRichTextService
     {
+        #region Fields
         private readonly IGlobalRepository globalRepository;
+        #endregion
+
+        #region Constructors
         public RichTextService(CrmServiceArgs args) : base(args)
         {
             globalRepository = CrmRepositoriesFactory.Get<IGlobalRepository>();
         }
+        #endregion
+
+        #region Public Methods
 
         public string GenerateRichTextDocument(string entityId, string entityName, string richText)
         {
@@ -47,5 +54,6 @@ namespace HE.CRM.Plugins.Services.RichTextService
             }
             return richText;
         }
+        #endregion
     }
 }

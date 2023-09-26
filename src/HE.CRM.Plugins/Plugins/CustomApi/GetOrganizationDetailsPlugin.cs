@@ -23,13 +23,17 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     Id = "302988EC-B2D8-4F48-8CE3-547590BDF49C")]
     public class GetOrganizationDetailsPlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
         public GetOrganizationDetailsPlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
         {
         }
+        #endregion
 
+        #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
             registeredHandlers.Add(handlerFactory.GetHandler<GetOrganizationDetailsHandler>());
         }
+        #endregion
     }
 }

@@ -24,6 +24,8 @@ namespace HE.CRM.Plugins.Services.SiteDetails
         }
 
         #endregion
+
+        #region Public Methods
         public void UpdateSiteDetails(string siteDetailsId, string siteDetail, string fieldsToUpdate, string loanApplicationId)
         {
             if(Guid.TryParse(siteDetailsId, out Guid detailsId))
@@ -69,5 +71,6 @@ namespace HE.CRM.Plugins.Services.SiteDetails
             var siteDetailsToCreate = SiteDetailsDtoMapper.MapSiteDetailsDtoToRegularEntity(deserilizedSiteDetail, loanApplicationId);
             siteDetailsRepository.Create(siteDetailsToCreate);
         }
+        #endregion
     }
 }
