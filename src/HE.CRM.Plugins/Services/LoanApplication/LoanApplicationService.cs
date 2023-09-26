@@ -196,7 +196,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return loanApplicationGuid.ToString();
         }
 
-        public void ChangeLoanApplicationExternalStatus(int externalStatus, string loanApplicationId)
+        public void ChangeLoanApplicationExternalStatus(int externalStatus, string loanApplicationId, string withdrawReason)
         {
             TracingService.Trace($"loan id {loanApplicationId}");
             TracingService.Trace($"new external status {externalStatus}");
@@ -212,6 +212,10 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     Id = loanId,
                     invln_ExternalStatus = new OptionSetValue(externalStatus),
                 };
+                if (!string.IsNullOrEmpty(withdrawReason))
+                {
+                    loanToUpdate.invln_statuschangereason = withdrawReason;
+                }
                 TracingService.Trace("update loan application");
                 _loanApplicationRepository.Update(loanToUpdate);
             }
