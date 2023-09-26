@@ -3817,6 +3817,21 @@ namespace HE.InvestmentLoans.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_messagetype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SupportDocuments = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ConditionsManagement = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HoTFeeIndemnity = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum msdyn_queuetype
 	{
 		
@@ -4469,7 +4484,7 @@ namespace HE.InvestmentLoans.CRM.Model
 		PhoneCall = 4210,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Email4202 = 4202,
+		Email = 4202,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Letter = 4207,
@@ -4538,7 +4553,10 @@ namespace HE.InvestmentLoans.CRM.Model
 		PortalComment = 11009,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Email = 11075,
+		GovNotifyEmail = 11079,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Externalcomms = 11080,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -5765,7 +5783,7 @@ namespace HE.InvestmentLoans.CRM.Model
 		PhoneCall = 4210,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Email4202 = 4202,
+		Email = 4202,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Appointment = 4201,
@@ -5810,7 +5828,10 @@ namespace HE.InvestmentLoans.CRM.Model
 		PortalComment = 11009,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Email = 11075,
+		GovNotifyEmail = 11079,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Externalcomms = 11080,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -6207,6 +6228,9 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Whenappisinbackground = 509180001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Always_preview = 509180002,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -19853,6 +19877,25 @@ namespace HE.InvestmentLoans.CRM.Model
 			set
 			{
 				this.Parameters["invln_statusexternal"] = value;
+			}
+		}
+		
+		public string invln_withdrawreason
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_withdrawreason"))
+				{
+					return ((string)(this.Parameters["invln_withdrawreason"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_withdrawreason"] = value;
 			}
 		}
 		
