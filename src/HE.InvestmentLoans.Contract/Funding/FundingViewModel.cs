@@ -68,6 +68,11 @@ public class FundingViewModel : ICompletedSectionViewModel
         IsFlowCompleted = value;
     }
 
+    public void SetLoanApplicationId(Guid id)
+    {
+        LoanApplicationId = id;
+    }
+
     public bool IsCompleted()
     {
         return State == SectionStatus.Completed;
