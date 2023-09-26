@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Extensions;
@@ -10,13 +5,13 @@ using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Security.Commands;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
 using MediatR;
-using Microsoft.Crm.Sdk.Messages;
+using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Security.CommandHandler;
 internal class ProvideDirectorLoansSubordinateCommandHandler : SecurityBaseCommandHandler, IRequestHandler<ProvideDirectorLoansSubordinateCommand, OperationResult>
 {
-    public ProvideDirectorLoansSubordinateCommandHandler(ISecurityRepository repository, ILoanUserContext loanUserContext)
-        : base(repository, loanUserContext)
+    public ProvideDirectorLoansSubordinateCommandHandler(ISecurityRepository repository, ILoanUserContext loanUserContext, ILogger<SecurityBaseCommandHandler> logger)
+        : base(repository, loanUserContext, logger)
     {
     }
 

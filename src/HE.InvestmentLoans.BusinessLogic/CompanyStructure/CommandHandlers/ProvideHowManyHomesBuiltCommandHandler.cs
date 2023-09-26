@@ -4,6 +4,7 @@ using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 
@@ -11,8 +12,8 @@ public class ProvideHowManyHomesBuiltCommandHandler :
     CompanyStructureBaseCommandHandler,
     IRequestHandler<ProvideHowManyHomesBuiltCommand, OperationResult>
 {
-    public ProvideHowManyHomesBuiltCommandHandler(ICompanyStructureRepository repository, ILoanUserContext loanUserContext)
-        : base(repository, loanUserContext)
+    public ProvideHowManyHomesBuiltCommandHandler(ICompanyStructureRepository repository, ILoanUserContext loanUserContext, ILogger<CompanyStructureBaseCommandHandler> logger)
+        : base(repository, loanUserContext, logger)
     {
     }
 

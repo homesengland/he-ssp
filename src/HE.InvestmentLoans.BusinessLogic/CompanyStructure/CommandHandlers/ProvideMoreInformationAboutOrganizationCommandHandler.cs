@@ -6,6 +6,7 @@ using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 
@@ -14,8 +15,12 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
 {
     private readonly IAppConfig _appConfig;
 
-    public ProvideMoreInformationAboutOrganizationCommandHandler(ICompanyStructureRepository repository, ILoanUserContext loanUserContext, IAppConfig appConfig)
-        : base(repository, loanUserContext)
+    public ProvideMoreInformationAboutOrganizationCommandHandler(
+                ICompanyStructureRepository repository,
+                ILoanUserContext loanUserContext,
+                IAppConfig appConfig,
+                ILogger<CompanyStructureBaseCommandHandler> logger)
+        : base(repository, loanUserContext, logger)
     {
         _appConfig = appConfig;
     }

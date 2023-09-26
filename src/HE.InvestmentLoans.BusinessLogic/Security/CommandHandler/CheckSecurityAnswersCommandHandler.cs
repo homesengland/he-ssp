@@ -1,17 +1,16 @@
 using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Validation;
-using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Extensions;
 using HE.InvestmentLoans.Contract.Security.Commands;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Security.CommandHandler;
 public class CheckSecurityAnswersCommandHandler : SecurityBaseCommandHandler, IRequestHandler<ConfirmSecuritySectionCommand, OperationResult>
 {
-    public CheckSecurityAnswersCommandHandler(ISecurityRepository securityRepository, ILoanUserContext userContext)
-        : base(securityRepository, userContext)
+    public CheckSecurityAnswersCommandHandler(ISecurityRepository securityRepository, ILoanUserContext userContext, ILogger<SecurityBaseCommandHandler> logger)
+        : base(securityRepository, userContext, logger)
     {
     }
 

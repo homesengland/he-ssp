@@ -5,13 +5,14 @@ using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 
 public class ProvideCompanyPurposeCommandHandler : CompanyStructureBaseCommandHandler, IRequestHandler<ProvideCompanyPurposeCommand, OperationResult>
 {
-    public ProvideCompanyPurposeCommandHandler(ICompanyStructureRepository repository, ILoanUserContext loanUserContext)
-        : base(repository, loanUserContext)
+    public ProvideCompanyPurposeCommandHandler(ICompanyStructureRepository repository, ILoanUserContext loanUserContext, ILogger<CompanyStructureBaseCommandHandler> logger)
+        : base(repository, loanUserContext, logger)
     {
     }
 

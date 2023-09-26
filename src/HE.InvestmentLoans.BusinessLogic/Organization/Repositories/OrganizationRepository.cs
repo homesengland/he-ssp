@@ -1,12 +1,8 @@
 extern alias Org;
 
-using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
-using HE.InvestmentLoans.Contract.User.ValueObjects;
-using HE.InvestmentLoans.CRM.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Org::HE.Investments.Organisation.Services;
 
