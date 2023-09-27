@@ -24,7 +24,7 @@ public class MapContactDtoToUserDetailsTests
 
         // then
         userDetailsEntity.FirstName.Should().Be(contactDto.firstName);
-        userDetailsEntity.Surname.Should().Be(contactDto.lastName);
+        userDetailsEntity.LastName.Should().Be(contactDto.lastName);
         userDetailsEntity.JobTitle.Should().Be(contactDto.jobTitle);
         userDetailsEntity.Email.Should().Be(contactDto.email);
         userDetailsEntity.TelephoneNumber.Should().Be(contactDto.phoneNumber);

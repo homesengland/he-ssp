@@ -74,7 +74,7 @@ public class UserController : Controller
         await _mediator.Send(
             new ProvideUserDetailsCommand(
             viewModel.FirstName,
-            viewModel.Surname,
+            viewModel.LastName,
             viewModel.JobTitle,
             viewModel.TelephoneNumber,
             viewModel.SecondaryTelephoneNumber),

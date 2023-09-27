@@ -40,7 +40,7 @@ public class GetUserDetailsQueryHandlerTests : TestBase<GetUserDetailsQueryHandl
 
         // then
         result.ViewModel.FirstName.Should().Be(userDetails.FirstName);
-        result.ViewModel.Surname.Should().Be(userDetails.Surname);
+        result.ViewModel.LastName.Should().Be(userDetails.LastName);
         result.ViewModel.JobTitle.Should().Be(userDetails.JobTitle);
         result.ViewModel.TelephoneNumber.Should().Be(userDetails.TelephoneNumber);
         result.ViewModel.SecondaryTelephoneNumber.Should().Be(userDetails.SecondaryTelephoneNumber);

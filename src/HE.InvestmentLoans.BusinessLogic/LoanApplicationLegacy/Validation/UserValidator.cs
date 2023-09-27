@@ -24,14 +24,14 @@ public class UserValidator : AbstractValidator<UserDetailsViewModel>
                     .WithMessage(ValidationErrorMessage.ShortInputLengthExcedeed(FieldNameForInputLengthValidation.FirstName)));
 
             When(
-               item => item.Surname == null,
-               () => RuleFor(item => item.Surname)
+               item => item.LastName == null,
+               () => RuleFor(item => item.LastName)
                        .NotEmpty()
-                       .WithMessage(ValidationErrorMessage.EnterSurname));
+                       .WithMessage(ValidationErrorMessage.EnterLastName));
 
             When(
-                item => item.Surname != null,
-                () => RuleFor(item => item.Surname)
+                item => item.LastName != null,
+                () => RuleFor(item => item.LastName)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
                     .WithMessage(ValidationErrorMessage.ShortInputLengthExcedeed(FieldNameForInputLengthValidation.Surname)));
 

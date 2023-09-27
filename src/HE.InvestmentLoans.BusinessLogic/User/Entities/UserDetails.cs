@@ -3,7 +3,7 @@ public class UserDetails
 {
     public UserDetails(
         string? firstName,
-        string? surname,
+        string? lastName,
         string? jobTitle,
         string? email,
         string? telephoneNumber,
@@ -11,7 +11,7 @@ public class UserDetails
         bool? isTermsAndConditionsAccepted)
     {
         FirstName = firstName;
-        Surname = surname;
+        LastName = lastName;
         JobTitle = jobTitle;
         Email = email;
         TelephoneNumber = telephoneNumber;
@@ -21,7 +21,7 @@ public class UserDetails
 
     public string? FirstName { get; private set; }
 
-    public string? Surname { get; private set; }
+    public string? LastName { get; private set; }
 
     public string? JobTitle { get; private set; }
 
@@ -35,14 +35,14 @@ public class UserDetails
 
     public void ProvideUserDetails(
         string firstName,
-        string surname,
+        string lastName,
         string jobTitle,
         string telephoneNumber,
         string secondaryTelephoneNumber,
         string userEmail)
     {
         FirstName = firstName;
-        Surname = surname;
+        LastName = lastName;
         JobTitle = jobTitle;
         Email = userEmail;
         TelephoneNumber = telephoneNumber;
@@ -53,7 +53,7 @@ public class UserDetails
     public bool IsProfileCompleted()
     {
         return !string.IsNullOrEmpty(FirstName) &&
-                !string.IsNullOrEmpty(Surname) &&
+                !string.IsNullOrEmpty(LastName) &&
                 !string.IsNullOrEmpty(JobTitle) &&
                 !string.IsNullOrEmpty(TelephoneNumber) &&
                 IsTermsAndConditionsAccepted == true;

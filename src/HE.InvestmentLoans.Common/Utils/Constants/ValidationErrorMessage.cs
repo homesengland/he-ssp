@@ -60,7 +60,7 @@ public static class ValidationErrorMessage
 
     public const string EnterFirstName = "Enter your first name";
 
-    public const string EnterSurname = "Enter your surname";
+    public const string EnterLastName = "Enter your last name";
 
     public const string EnterJobTitle = "Enter your job title";
 
