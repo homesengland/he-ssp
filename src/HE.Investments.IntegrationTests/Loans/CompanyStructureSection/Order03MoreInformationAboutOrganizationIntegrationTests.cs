@@ -36,7 +36,7 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
         // then
         moreInformationAboutOrganizationPage
             .UrlEndWith(CompanyStructurePagesUrls.MoreInformationAboutOrganizationSuffix)
-            .HasOneValidationMessages("Request to change organisation more information must be 1500 characters or less");
+            .HasOneValidationMessages("Organisation more information must be 1500 characters or less");
 
         SetSharedData(SharedKeys.CurrentPageKey, moreInformationAboutOrganizationPage);
     }

@@ -78,5 +78,5 @@ public static class ValidationErrorMessage
 
     public static string ShortInputLengthExcedeed(string fieldName) => new($"{fieldName.TitleCaseFirstLetterInString()} must be 100 characters or less ");
 
-    public static string LongInputLengthExceeded(string fieldName) => new($"Request to change {fieldName} must be 1500 characters or less");
+    public static string LongInputLengthExceeded(string fieldName) => new($"{fieldName.TitleCaseFirstLetterInString()} must be 1500 characters or less");
 }
