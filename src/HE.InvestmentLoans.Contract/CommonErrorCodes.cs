@@ -11,4 +11,6 @@ public static class CommonErrorCodes
     public const string ApplicationHasBeenSubmitted = nameof(ApplicationHasBeenSubmitted);
 
     public const string ContactAlreadyLinkedWithOrganization = nameof(ContactAlreadyLinkedWithOrganization);
+
+    public const string LoanApplicationCannotBeWithdrawn = nameof(LoanApplicationCannotBeWithdrawn);
 }

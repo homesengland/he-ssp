@@ -50,6 +50,8 @@ public class LoanApplicationViewModel
 
     public string? ReferenceNumber { get; set; }
 
+    public string? WithdrawReason { get; set; }
+
     public SiteViewModel AddNewSite()
     {
         const string newProjectName = "New project";
