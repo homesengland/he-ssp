@@ -41,22 +41,22 @@ namespace DataverseModel
 		ApplicationSubmitted = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ApplicationunderReview = 858110003,
+		ApplicationUnderReview = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApprovedSubjectToContract = 858110017,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Approvedsubjecttoduediligence = 858110013,
+		ApprovedSubjecttoDueDiligence = 858110013,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		AwaitingCPSatisfaction = 858110018,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Cashflowrequested = 858110007,
+		CashflowRequested = 858110007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Cashflowunderreview = 858110008,
+		CashflowUnderReview = 858110008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CPsSatisfied = 858110019,
@@ -95,7 +95,7 @@ namespace DataverseModel
 		SentforPreCompleteApproval = 858110016,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Underreview = 858110010,
+		UnderReview = 858110010,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Withdrawn = 858110004,

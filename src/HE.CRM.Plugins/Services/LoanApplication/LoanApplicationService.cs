@@ -116,7 +116,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 {
                     Id = target.Id,
                     invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.UnderReview),
-                    StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Underreview)
+                    StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.UnderReview)
                 });
             }
         }
@@ -346,7 +346,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         statusLabel = "Inactive";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.NA);
                         break;
-                    case (int)invln_Loanapplication_StatusCode.ApplicationunderReview:
+                    case (int)invln_Loanapplication_StatusCode.ApplicationUnderReview:
                         statusLabel = "Application under review";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationUnderReview);
                         break;
@@ -358,11 +358,11 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         statusLabel = "Withdrawn";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Withdrawn);
                         break;
-                    case (int)invln_Loanapplication_StatusCode.Cashflowrequested:
+                    case (int)invln_Loanapplication_StatusCode.CashflowRequested:
                         statusLabel = "Cashflow requested";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.CashflowRequested);
                         break;
-                    case (int)invln_Loanapplication_StatusCode.Cashflowunderreview:
+                    case (int)invln_Loanapplication_StatusCode.CashflowUnderReview:
                         statusLabel = "Cashflow under review";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.CashflowUnderReview);
                         break;
@@ -374,7 +374,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         statusLabel = "Reffered back to applicant";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ReferredBacktoApplicant);
                         break;
-                    case (int)invln_Loanapplication_StatusCode.Underreview:
+                    case (int)invln_Loanapplication_StatusCode.UnderReview:
                         statusLabel = "Under review";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.UnderReview);
                         break;
@@ -386,7 +386,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         statusLabel = "Not approved";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.SentforApproval);
                         break;
-                    case (int)invln_Loanapplication_StatusCode.Approvedsubjecttoduediligence:
+                    case (int)invln_Loanapplication_StatusCode.ApprovedSubjecttoDueDiligence:
                         statusLabel = "Approved subject to due diligence";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApprovedSubjecttoDueDiligence);
                         break;
@@ -500,7 +500,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Inactive_Active);
                         break;
                     case (int)invln_ExternalStatus.ApplicationUnderReview:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationunderReview);
+                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationUnderReview);
                         break;
                     case (int)invln_ExternalStatus.HoldRequested:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.HoldRequested);
@@ -509,10 +509,10 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Withdrawn);
                         break;
                     case (int)invln_ExternalStatus.CashflowRequested:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Cashflowrequested);
+                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.CashflowRequested);
                         break;
                     case (int)invln_ExternalStatus.CashflowUnderReview:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Cashflowunderreview);
+                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.CashflowUnderReview);
                         break;
                     case (int)invln_ExternalStatus.OnHold:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.OnHold);
@@ -521,13 +521,13 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ReferredBacktoApplicant);
                         break;
                     case (int)invln_ExternalStatus.UnderReview:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Underreview);
+                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.UnderReview);
                         break;
                     case (int)invln_ExternalStatus.SentforApproval:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.SentforApproval);
                         break;
                     case (int)invln_ExternalStatus.ApprovedSubjecttoDueDiligence:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Approvedsubjecttoduediligence);
+                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApprovedSubjecttoDueDiligence);
                         break;
                     case (int)invln_ExternalStatus.ApplicationDeclined:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationDeclined);
