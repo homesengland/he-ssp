@@ -56,6 +56,16 @@ public class SecurityViewModel : ICompletedSectionViewModel
         IsFlowCompleted = value;
     }
 
+    public bool IsCompleted()
+    {
+        return State == SectionStatus.Completed;
+    }
+
+    public bool IsInProgress()
+    {
+        return State == SectionStatus.InProgress;
+    }
+
     public bool IsEditable()
     {
         return true;

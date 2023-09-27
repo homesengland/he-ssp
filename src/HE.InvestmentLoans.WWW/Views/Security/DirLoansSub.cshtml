@@ -12,6 +12,7 @@
         <gds-back-link href="@Url.Action("Back","Security", new {id = Model.LoanApplicationId, currentPage = SecurityState.DirLoansSub})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
+        @Html.HiddenFor(x => x.LoanApplicationId)
         <gds-field-set>
             <gds-div-form-group invalid="radioInvalid">
                 <gds-legend size="ControlSize.L">

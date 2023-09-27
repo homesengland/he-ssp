@@ -44,7 +44,7 @@ public class ProvideUserDetailsCommandHandlerTests : TestBase<ProvideUserDetails
         await TestCandidate.Handle(
             new ProvideUserDetailsCommand(
                 newUserDetails.FirstName!,
-                newUserDetails.Surname!,
+                newUserDetails.LastName!,
                 newUserDetails.JobTitle!,
                 newUserDetails.TelephoneNumber!,
                 newUserDetails.SecondaryTelephoneNumber!),
@@ -52,7 +52,7 @@ public class ProvideUserDetailsCommandHandlerTests : TestBase<ProvideUserDetails
 
         // then
         userDetails.FirstName.Should().Be(newUserDetails.FirstName);
-        userDetails.Surname.Should().Be(newUserDetails.Surname);
+        userDetails.LastName.Should().Be(newUserDetails.LastName);
         userDetails.JobTitle.Should().Be(newUserDetails.JobTitle);
         userDetails.TelephoneNumber.Should().Be(newUserDetails.TelephoneNumber);
         userDetails.SecondaryTelephoneNumber.Should().Be(newUserDetails.SecondaryTelephoneNumber);
@@ -60,7 +60,7 @@ public class ProvideUserDetailsCommandHandlerTests : TestBase<ProvideUserDetails
             x.SaveAsync(
                 It.Is<UserDetails>(
                 y => y.FirstName! == newUserDetails.FirstName
-                && y.Surname! == newUserDetails.Surname
+                && y.LastName! == newUserDetails.LastName
                 && y.JobTitle! == newUserDetails.JobTitle
                 && y.TelephoneNumber! == newUserDetails.TelephoneNumber
                 && y.SecondaryTelephoneNumber! == newUserDetails.SecondaryTelephoneNumber),

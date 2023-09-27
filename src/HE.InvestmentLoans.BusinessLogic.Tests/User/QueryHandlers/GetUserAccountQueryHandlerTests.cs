@@ -38,7 +38,7 @@ public class GetUserAccountQueryHandlerTests : TestBase<GetUserAccountQueryHandl
         result.UserGlobalId.Should().Be(userAccount.UserGlobalId.ToString());
         result.SelectedAccountId.Should().Be(userAccount.AccountId);
         result.FirstName.Should().Be(userDetails.FirstName);
-        result.LastName.Should().Be(userDetails.Surname);
+        result.LastName.Should().Be(userDetails.LastName);
         result.TelephoneNumber.Should().Be(userDetails.TelephoneNumber);
     }
 }

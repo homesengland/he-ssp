@@ -24,7 +24,7 @@ public class ProvideUserDetailsCommandHandler : IRequestHandler<ProvideUserDetai
 
         userDetails.ProvideUserDetails(
             request.FirstName,
-            request.Surname,
+            request.LastName,
             request.JobTitle,
             request.TelephoneNumber,
             request.SecondaryTelephoneNumber,

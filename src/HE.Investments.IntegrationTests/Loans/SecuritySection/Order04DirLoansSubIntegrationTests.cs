@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AngleSharp.Html.Dom;
-using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.TestData;
@@ -15,6 +15,7 @@ using HE.InvestmentLoans.WWW.Views.Security.Consts;
 using Microsoft.PowerPlatform.Dataverse.Client.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
+using CommonResponse = He.AspNetCore.Mvc.Gds.Components.Constants.CommonResponse;
 
 namespace HE.InvestmentLoans.IntegrationTests.Loans.SecuritySection;
 
@@ -83,7 +84,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
         // then
         dirLoansSubPage
             .UrlEndWith(SecurityPageUrls.DirLoansSubSuffix)
-            .HasOneValidationMessages("Request to change reason why cannot be subordinated must be 1500 characters or less");
+            .HasOneValidationMessages(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.ReasonWhyCannotBeSubordinated));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

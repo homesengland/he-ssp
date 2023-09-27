@@ -106,17 +106,17 @@ namespace HE.CRM.Plugins.Tests.CustomApis
         }
         [TestMethod]
         [DataRow((int)invln_ExternalStatus.ApplicationDeclined)]
-        [DataRow((int)invln_ExternalStatus.Approvedsubjecttocontract)]
+        [DataRow((int)invln_ExternalStatus.ApprovedSubjecttoContract)]
         [DataRow((int)invln_ExternalStatus.ContractSignedSubjecttoCP)]
         [DataRow((int)invln_ExternalStatus.CPsSatisfied)]
         [DataRow((int)invln_ExternalStatus.Draft)]
         [DataRow((int)invln_ExternalStatus.HoldRequested)]
-        [DataRow((int)invln_ExternalStatus.InDueDiligence)]
+        [DataRow((int)invln_ExternalStatus.Induediligence)]
         [DataRow((int)invln_ExternalStatus.LoanAvailable)]
         [DataRow((int)invln_ExternalStatus.OnHold)]
         [DataRow((int)invln_ExternalStatus.ReferredBacktoApplicant)]
         [DataRow((int)invln_ExternalStatus.ApplicationSubmitted)]
-        [DataRow((int)invln_ExternalStatus.Underreview)]
+        [DataRow((int)invln_ExternalStatus.UnderReview)]
         [DataRow((int)invln_ExternalStatus.Withdrawn)]
         public void ChangeLoanApplicationExternalStatus_ChangeStatusFromDraftToNewValue_ShouldUpdateStatus(int newStatus)
         {
@@ -155,17 +155,17 @@ namespace HE.CRM.Plugins.Tests.CustomApis
         }
         [TestMethod]
         [DataRow((int)invln_ExternalStatus.ApplicationDeclined)]
-        [DataRow((int)invln_ExternalStatus.Approvedsubjecttocontract)]
+        [DataRow((int)invln_ExternalStatus.ApprovedSubjecttoContract)]
         [DataRow((int)invln_ExternalStatus.ContractSignedSubjecttoCP)]
         [DataRow((int)invln_ExternalStatus.CPsSatisfied)]
         [DataRow((int)invln_ExternalStatus.Draft)]
         [DataRow((int)invln_ExternalStatus.HoldRequested)]
-        [DataRow((int)invln_ExternalStatus.InDueDiligence)]
+        [DataRow((int)invln_ExternalStatus.Induediligence)]
         [DataRow((int)invln_ExternalStatus.LoanAvailable)]
         [DataRow((int)invln_ExternalStatus.OnHold)]
         [DataRow((int)invln_ExternalStatus.ReferredBacktoApplicant)]
         [DataRow((int)invln_ExternalStatus.ApplicationSubmitted)]
-        [DataRow((int)invln_ExternalStatus.Underreview)]
+        [DataRow((int)invln_ExternalStatus.UnderReview)]
         [DataRow((int)invln_ExternalStatus.Withdrawn)]
         public void ChangeLoanApplicationExternalStatus_ChangeStatusFromSubmittedToNewValue_ShouldUpdateStatus(int newStatus)
         {
@@ -204,18 +204,18 @@ namespace HE.CRM.Plugins.Tests.CustomApis
         }
         [TestMethod]
         [DataRow((int)invln_ExternalStatus.ApplicationDeclined)]
-        [DataRow((int)invln_ExternalStatus.Approvedsubjecttocontract)]
+        [DataRow((int)invln_ExternalStatus.ApprovedSubjecttoContract)]
         [DataRow((int)invln_ExternalStatus.ContractSignedSubjecttoCP)]
         [DataRow((int)invln_ExternalStatus.CPsSatisfied)]
         [DataRow((int)invln_ExternalStatus.Draft)]
         [DataRow((int)invln_ExternalStatus.HoldRequested)]
         [DataRow((int)invln_ExternalStatus.NA)]
-        [DataRow((int)invln_ExternalStatus.InDueDiligence)]
+        [DataRow((int)invln_ExternalStatus.Induediligence)]
         [DataRow((int)invln_ExternalStatus.LoanAvailable)]
         [DataRow((int)invln_ExternalStatus.OnHold)]
         [DataRow((int)invln_ExternalStatus.ReferredBacktoApplicant)]
         [DataRow((int)invln_ExternalStatus.ApplicationSubmitted)]
-        [DataRow((int)invln_ExternalStatus.Underreview)]
+        [DataRow((int)invln_ExternalStatus.UnderReview)]
         [DataRow((int)invln_ExternalStatus.Withdrawn)]
         public void ChangeLoanApplicationExternalStatus_ChangeStatusFromInactiveToNewValue_ShouldUpdateStatus(int newStatus)
         {

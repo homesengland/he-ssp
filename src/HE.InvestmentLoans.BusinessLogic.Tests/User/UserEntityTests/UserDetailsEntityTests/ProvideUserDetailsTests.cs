@@ -25,7 +25,7 @@ public class ProvideUserDetailsTests
         // when
         userDetailsEntity.ProvideUserDetails(
             newUserDetails.FirstName!,
-            newUserDetails.Surname!,
+            newUserDetails.LastName!,
             newUserDetails.JobTitle!,
             newUserDetails.TelephoneNumber!,
             newUserDetails.SecondaryTelephoneNumber!,
@@ -33,7 +33,7 @@ public class ProvideUserDetailsTests
 
         // then
         userDetailsEntity.FirstName.Should().Be(newUserDetails.FirstName);
-        userDetailsEntity.Surname.Should().Be(newUserDetails.Surname);
+        userDetailsEntity.LastName.Should().Be(newUserDetails.LastName);
         userDetailsEntity.JobTitle.Should().Be(newUserDetails.JobTitle);
         userDetailsEntity.TelephoneNumber.Should().Be(newUserDetails.TelephoneNumber);
         userDetailsEntity.SecondaryTelephoneNumber.Should().Be(newUserDetails.SecondaryTelephoneNumber);

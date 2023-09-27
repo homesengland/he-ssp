@@ -87,7 +87,6 @@ namespace DataverseModel
 		public invln_changeloanapplicationexternalstatusRequest()
 		{
 			this.RequestName = "invln_changeloanapplicationexternalstatus";
-			this.invln_changereason = default(string);
 			this.invln_loanapplicationid = default(string);
 			this.invln_statusexternal = default(int);
 		}

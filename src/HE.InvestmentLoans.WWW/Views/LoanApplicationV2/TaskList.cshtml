@@ -5,7 +5,7 @@
 @using System.Globalization
 @inject MediatR.IMediator mediator
 @{
-    var securityWorkflow = new SecurityWorkflow(Model, mediator);
+    var securityWorkflow = new SecurityWorkflow(Model);
     var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
 }
 
@@ -81,11 +81,11 @@
                             Provide details about security
                         </a>
                     </span>
-                    @if (securityWorkflow.IsCompleted())
+                    @if (Model.Security.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
-                    else if (securityWorkflow.IsStarted())
+                    else if (Model.Security.IsInProgress())
                     {
                         <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
                     }
