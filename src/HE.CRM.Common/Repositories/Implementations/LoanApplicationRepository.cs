@@ -40,6 +40,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                             la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Inactive &&
                             la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Active && la.StateCode.Value != (int)invln_loanapplicationState.Inactive
                             select la).ToList();
+                    //comms
                 }
                 else
                 {
