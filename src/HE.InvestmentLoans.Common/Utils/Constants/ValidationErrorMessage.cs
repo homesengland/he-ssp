@@ -6,6 +6,8 @@ public static class ValidationErrorMessage
 {
     public const string EnterMoreDetails = "Enter more details";
 
+    public const string EnterWhyYouWantToWithdrawApplication = "Enter why you want to withdraw your application";
+
     public const string InvalidValue = "Provided invalid value";
 
     public const string EnterMoreDetailsForRefinanceExitStrategy = "Enter more detail about your refinance exit strategy";
@@ -60,7 +62,7 @@ public static class ValidationErrorMessage
 
     public const string EnterFirstName = "Enter your first name";
 
-    public const string EnterSurname = "Enter your surname";
+    public const string EnterLastName = "Enter your last name";
 
     public const string EnterJobTitle = "Enter your job title";
 
@@ -76,5 +78,5 @@ public static class ValidationErrorMessage
 
     public static string ShortInputLengthExcedeed(string fieldName) => new($"{fieldName.TitleCaseFirstLetterInString()} must be 100 characters or less ");
 
-    public static string LongInputLengthExceeded(string fieldName) => new($"Request to change {fieldName} must be 1500 characters or less");
+    public static string LongInputLengthExceeded(string fieldName) => new($"{fieldName.TitleCaseFirstLetterInString()} must be 1500 characters or less");
 }

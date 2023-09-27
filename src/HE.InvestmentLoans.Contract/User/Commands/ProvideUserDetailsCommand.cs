@@ -4,7 +4,7 @@ namespace HE.InvestmentLoans.Contract.User.Commands;
 
 public record ProvideUserDetailsCommand(
     string FirstName,
-    string Surname,
+    string LastName,
     string JobTitle,
     string TelephoneNumber,
     string SecondaryTelephoneNumber) : IRequest;

@@ -22,7 +22,7 @@ public class MapToViewModelTests
 
         // then
         userDetailsViewModel.FirstName.Should().Be(userDetailsEntity.FirstName);
-        userDetailsViewModel.Surname.Should().Be(userDetailsEntity.Surname);
+        userDetailsViewModel.LastName.Should().Be(userDetailsEntity.LastName);
         userDetailsViewModel.JobTitle.Should().Be(userDetailsEntity.JobTitle);
         userDetailsViewModel.TelephoneNumber.Should().Be(userDetailsEntity.TelephoneNumber);
         userDetailsViewModel.SecondaryTelephoneNumber.Should().Be(userDetailsEntity.SecondaryTelephoneNumber);

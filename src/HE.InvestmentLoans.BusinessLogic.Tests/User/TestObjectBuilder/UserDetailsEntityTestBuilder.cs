@@ -25,7 +25,7 @@ public class UserDetailsEntityTestBuilder
     public static UserDetailsEntityTestBuilder New() =>
         new(new UserDetails(
             UserDetailsTestData.UserDetailsOne.FirstName,
-            UserDetailsTestData.UserDetailsOne.Surname,
+            UserDetailsTestData.UserDetailsOne.LastName,
             UserDetailsTestData.UserDetailsOne.JobTitle,
             UserDetailsTestData.UserDetailsOne.Email,
             UserDetailsTestData.UserDetailsOne.TelephoneNumber,

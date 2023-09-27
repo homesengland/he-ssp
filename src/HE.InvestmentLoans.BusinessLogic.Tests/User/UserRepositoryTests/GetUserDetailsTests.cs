@@ -39,7 +39,7 @@ public class GetUserDetailsTests : TestBase<LoanUserRepository>
 
         // then
         result.FirstName.Should().Be(contactDto.firstName);
-        result.Surname.Should().Be(contactDto.lastName);
+        result.LastName.Should().Be(contactDto.lastName);
         result.Email.Should().Be(contactDto.email);
         result.JobTitle.Should().Be(contactDto.jobTitle);
         result.TelephoneNumber.Should().Be(contactDto.phoneNumber);

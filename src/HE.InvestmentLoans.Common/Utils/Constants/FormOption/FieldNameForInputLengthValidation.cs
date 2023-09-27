@@ -17,10 +17,11 @@ public static class FieldNameForInputLengthValidation
     public const string TelephoneNumber = "telephone number";
     public const string SecondaryTelephoneNumber = "secondary telephone number";
     public const string OrganisationMoreInformation = "organisation more information";
-    public const string Holder = "holder";
+    public const string Holder = "debenture holder";
     public const string ReasonWhyCannotBeSubordinated = "reason why cannot be subordinated";
     public const string PrivateSectorFundingResult = "funding result";
     public const string PrivateSectorFundingReason = "funding not applying reason";
     public const string AbnormalCostsInfo = "abnormal costs information";
     public const string RefinanceInfo = "refinance exit strategy";
+    public const string WithdrawReason = "withdraw reason";
 }

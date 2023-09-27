@@ -78,6 +78,22 @@ public class LoanApplicationEntity
         await canSubmitLoanApplication.Submit(Id, cancellationToken);
     }
 
+    public async Task Withdraw(ILoanApplicationRepository loanApplicationRepository, WithdrawReason withdrawReason, CancellationToken cancellationToken)
+    {
+        if (ExternalStatus == ApplicationStatus.Draft)
+        {
+            await loanApplicationRepository.WithdrawDraft(Id, withdrawReason, cancellationToken);
+        }
+        else if (ExternalStatus == ApplicationStatus.ApplicationSubmitted)
+        {
+            await loanApplicationRepository.WithdrawSubmit(Id, withdrawReason, cancellationToken);
+        }
+        else
+        {
+            throw new DomainException("Loan application cannot be withdrawn", CommonErrorCodes.LoanApplicationCannotBeWithdrawn);
+        }
+    }
+
     public bool IsEnoughHomesToBuild()
     {
         const int minimumHomesToBuild = 5;
