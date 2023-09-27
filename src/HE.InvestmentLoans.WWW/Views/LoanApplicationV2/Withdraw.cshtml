@@ -2,7 +2,6 @@
 @using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow
 @model WithdrawModel
 @inject ModelExpressionProvider modelProvider
-@inject IAppConfig appConfig
 @{
     var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel x) => x.WithdrawReason));
 }
