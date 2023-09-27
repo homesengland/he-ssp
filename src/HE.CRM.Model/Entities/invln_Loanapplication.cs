@@ -41,22 +41,22 @@ namespace DataverseModel
 		ApplicationSubmitted = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ApplicationunderReview = 858110003,
+		ApplicationUnderReview = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApprovedSubjectToContract = 858110017,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Approvedsubjecttoduediligence = 858110013,
+		ApprovedSubjecttoDueDiligence = 858110013,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		AwaitingCPSatisfaction = 858110018,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Cashflowrequested = 858110007,
+		CashflowRequested = 858110007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Cashflowunderreview = 858110008,
+		CashflowUnderReview = 858110008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CPsSatisfied = 858110019,
@@ -95,7 +95,7 @@ namespace DataverseModel
 		SentforPreCompleteApproval = 858110016,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Underreview = 858110010,
+		UnderReview = 858110010,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Withdrawn = 858110004,
@@ -159,10 +159,11 @@ namespace DataverseModel
 			public const string invln_loanportaldata = "invln_loanportaldata";
 			public const string invln_loanportaldataid = "invln_loanportaldataid";
 			public const string invln_Name = "invln_name";
-			public const string invln_Noofhomes = "invln_noofhomes";
+			public const string invln_numberofhomes = "invln_numberofhomes";
 			public const string invln_NumberofSites = "invln_numberofsites";
 			public const string invln_Outstandinglegalchargesordebt = "invln_outstandinglegalchargesordebt";
 			public const string invln_OwnerSelected = "invln_ownerselected";
+			public const string invln_planningpermissionstatus = "invln_planningpermissionstatus";
 			public const string invln_PreCompletereportApproved = "invln_precompletereportapproved";
 			public const string invln_PreCompletereportsubmitted = "invln_precompletereportsubmitted";
 			public const string invln_Privatesectorapproach = "invln_privatesectorapproach";
@@ -182,6 +183,7 @@ namespace DataverseModel
 			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
 			public const string invln_sitedetailscompletionstatus = "invln_sitedetailscompletionstatus";
 			public const string invln_source = "invln_source";
+			public const string invln_startdate = "invln_startdate";
 			public const string invln_statuschangereason = "invln_statuschangereason";
 			public const string invln_SubjecttocontractApproved = "invln_subjecttocontractapproved";
 			public const string lk_invln_loanapplication_createdby = "lk_invln_loanapplication_createdby";
@@ -903,20 +905,20 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_noofhomes")]
-		public string invln_Noofhomes
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_numberofhomes")]
+		public string invln_numberofhomes
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<string>("invln_noofhomes");
+				return this.GetAttributeValue<string>("invln_numberofhomes");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_Noofhomes");
-				this.SetAttributeValue("invln_noofhomes", value);
-				this.OnPropertyChanged("invln_Noofhomes");
+				this.OnPropertyChanging("invln_numberofhomes");
+				this.SetAttributeValue("invln_numberofhomes", value);
+				this.OnPropertyChanged("invln_numberofhomes");
 			}
 		}
 		
@@ -968,6 +970,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_OwnerSelected");
 				this.SetAttributeValue("invln_ownerselected", value);
 				this.OnPropertyChanged("invln_OwnerSelected");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_planningpermissionstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_planningpermissionstatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_planningpermissionstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_planningpermissionstatus");
+				this.SetAttributeValue("invln_planningpermissionstatus", value);
+				this.OnPropertyChanged("invln_planningpermissionstatus");
 			}
 		}
 		
@@ -1266,6 +1285,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_source");
 				this.SetAttributeValue("invln_source", value);
 				this.OnPropertyChanged("invln_source");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_startdate")]
+		public System.Nullable<System.DateTime> invln_startdate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_startdate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_startdate");
+				this.SetAttributeValue("invln_startdate", value);
+				this.OnPropertyChanged("invln_startdate");
 			}
 		}
 		
