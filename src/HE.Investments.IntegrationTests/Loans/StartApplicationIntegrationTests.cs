@@ -124,7 +124,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
     public async Task Order06_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
     {
         // given
-        var loanPurpose = await GetCurrentPage(() => TestClient.NavigateTo(ApplicationPagesUrls.LoanPurpose));
+        var loanPurpose = GetSharedData<IHtmlDocument>(CurrentPageKey);
 
         // when
         var continueButton = loanPurpose.GetGdsSubmitButtonById("continue-button");
@@ -135,7 +135,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
             });
 
         // then
-            taskListPage
+        taskListPage
             .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
             .HasTitle("Development loan application")
             .ExtractLastSavedDateFromTaskListPage(out var dateTime);

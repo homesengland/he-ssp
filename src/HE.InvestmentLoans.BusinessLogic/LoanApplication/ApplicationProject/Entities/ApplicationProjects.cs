@@ -4,29 +4,31 @@ using HE.InvestmentLoans.Contract.Application.ValueObjects;
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
 public class ApplicationProjects
 {
+    private readonly List<Project> _projects;
+
     public ApplicationProjects(LoanApplicationId loanApplicationId)
     {
         LoanApplicationId = loanApplicationId;
-        Projects = new List<Project>();
+        _projects = new List<Project>();
         AddProject();
     }
 
     public ApplicationProjects(LoanApplicationId loanApplicationId, IEnumerable<Project> projects)
     {
         LoanApplicationId = loanApplicationId;
-        Projects = projects.ToList();
+        _projects = projects.ToList();
     }
 
     public LoanApplicationId LoanApplicationId { get; }
 
-    public IList<Project> Projects { get; }
+    public IReadOnlyCollection<Project> Projects => _projects.AsReadOnly();
 
     public IList<Project> ActiveProjects => Projects.Where(p => !p.IsSoftDeleted).ToList();
 
     public ProjectId AddProject()
     {
         var project = new Project();
-        Projects.Add(project);
+        _projects.Add(project);
 
         return project.Id!;
     }
@@ -41,6 +43,9 @@ public class ApplicationProjects
     public void DeleteProject(ProjectId projectId)
     {
         var projectToDelete = Projects.FirstOrDefault(p => p.Id == projectId) ?? throw new NotFoundException(nameof(Project).ToString(), projectId);
+
+        _projects.Remove(projectToDelete);
+
         projectToDelete.MarkAsDeleted();
     }
 }

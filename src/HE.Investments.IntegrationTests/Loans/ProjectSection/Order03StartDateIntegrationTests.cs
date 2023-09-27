@@ -18,11 +18,11 @@ public class Order03StartDateIntegrationTests : IntegrationTest
 
     private readonly string _applicationLoanId;
 
-    protected Order03StartDateIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order03StartDateIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _applicationLoanId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
-        _projectId = GetSharedData<string>(SharedKeys.ProjectIdInDraftStatusKey);
+        _applicationLoanId = UserData.LoanApplicationIdInDraftState;
+        _projectId = UserData.ProjectInDraftStateId;
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -30,33 +30,33 @@ public class Order03StartDateIntegrationTests : IntegrationTest
     public async Task Order01_ShouldDisplayValidationError_WhenYesIsSelectedButStartDateIsNotProvided()
     {
         // given
-        var startDate = await TestClient.NavigateTo(ProjectPagesUrls.Name(_applicationLoanId, _projectId));
-        var continueButton = startDate.GetGdsSubmitButtonById("continue-button");
+        var startDatePage = await TestClient.NavigateTo(ProjectPagesUrls.StartDate(_applicationLoanId, _projectId));
+        var continueButton = startDatePage.GetGdsSubmitButtonById("continue-button");
 
         // when
-        startDate = await TestClient.SubmitButton(
+        startDatePage = await TestClient.SubmitButton(
             continueButton, new Dictionary<string, string> { { "HasEstimatedStartDate", CommonResponse.Yes } });
 
         // then
-        startDate
+        startDatePage
             .UrlEndWith(ProjectPagesUrls.StartDateSuffix)
             .HasTitle(ProjectPageTitles.StartDate)
             .HasValidationMessages(ValidationErrorMessage.NoStartDate);
 
-        SetSharedData(SharedKeys.CurrentPageKey, startDate);
+        SetSharedData(SharedKeys.CurrentPageKey, startDatePage);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(1)]
+    [Order(2)]
     public async Task Order02_ShouldDisplayValidationError_WhenYesIsSelectedButInvalidStartDateIsProvided()
     {
         // given
-        var startDate = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Name(_applicationLoanId, _projectId)));
+        var startDate = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.StartDate(_applicationLoanId, _projectId)));
         var continueButton = startDate.GetGdsSubmitButtonById("continue-button");
 
         // when
         startDate = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "HasEstimatedStartDate", CommonResponse.Yes }, { "EstimatedStartDay", "31" }, { "EstimatedStartMonth", "1" }, { "EstimatedStartYear", "2030" } });
+            continueButton, new Dictionary<string, string> { { "HasEstimatedStartDate", CommonResponse.Yes }, { "EstimatedStartDay", "32" }, { "EstimatedStartMonth", "1" }, { "EstimatedStartYear", "2020" } });
 
         // then
         startDate
@@ -66,11 +66,11 @@ public class Order03StartDateIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(1)]
+    [Order(3)]
     public async Task Order03_ShouldRedirectToManyHomes_WhenYesIsSelectedAndValidStartDateIsProvided()
     {
         // given
-        var startDate = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Name(_applicationLoanId, _projectId)));
+        var startDate = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.StartDate(_applicationLoanId, _projectId)));
         var continueButton = startDate.GetGdsSubmitButtonById("continue-button");
 
         // when

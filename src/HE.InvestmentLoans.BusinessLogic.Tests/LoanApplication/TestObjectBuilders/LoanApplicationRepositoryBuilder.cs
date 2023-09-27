@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Moq;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
-internal class LoanApplicationRepositoryBuilder
+internal sealed class LoanApplicationRepositoryBuilder
 {
     private readonly Mock<ILoanApplicationRepository> _mock;
 
@@ -26,15 +26,6 @@ internal class LoanApplicationRepositoryBuilder
 
         return this;
     }
-
-    //public LoanApplicationRepositoryBuilder ReturnsApplicationInDraftStatus()
-    //{
-    //    _mock
-    //        .Setup(m => m.GetLoanApplication(It.IsAny<LoanApplicationId>(), It.IsAny<UserAccount>(), It.IsAny<CancellationToken>()))
-    //        .ReturnsAsync(loanapplicationtetsbu);
-
-    //    return this;
-    //}
 
     public ILoanApplicationRepository Build()
     {

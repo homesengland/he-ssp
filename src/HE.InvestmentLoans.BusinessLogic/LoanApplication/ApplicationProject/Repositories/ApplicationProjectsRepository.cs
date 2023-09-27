@@ -1,8 +1,10 @@
+using System.Linq;
 using System.Security.Policy;
 using System.Threading;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
@@ -70,31 +72,10 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                                  ?? throw new NotFoundException(nameof(ApplicationProjects), loanApplicationId.ToString());
 
         var projectsFromCrm = loanApplicationDto.siteDetailsList.Select(
-            projectFromCrm => new Project
-            {
-                Id = ProjectId.From(projectFromCrm.siteDetailsId),
-                NameLegacy = projectFromCrm.siteName,
-                ManyHomes = projectFromCrm.numberOfHomes,
-                TypeHomes = projectFromCrm.typeOfHomes,
-                TypeHomesOther = projectFromCrm.otherTypeOfHomes,
-                Type = projectFromCrm.typeOfSite,
-                PlanningRef = projectFromCrm.haveAPlanningReferenceNumber,
-                PlanningRefEnter = projectFromCrm.planningReferenceNumber,
-                LocationCoordinates = projectFromCrm.siteCoordinates,
-                Ownership = projectFromCrm.siteOwnership,
-                LocationLandRegistry = projectFromCrm.landRegistryTitleNumber,
-                PurchaseDate = projectFromCrm.dateOfPurchase,
-                Cost = projectFromCrm.siteCost,
-                Value = projectFromCrm.currentValue,
-                Source = projectFromCrm.valuationSource,
-                GrantFunding = projectFromCrm.publicSectorFunding,
-                GrantFundingAmount = projectFromCrm.howMuch,
-                GrantFundingName = projectFromCrm.nameOfGrantFund,
-                GrantFundingPurpose = projectFromCrm.reason,
-                ChargesDebt = projectFromCrm.existingLegalCharges,
-                ChargesDebtInfo = projectFromCrm.existingLegalChargesInformation,
-                AffordableHomes = projectFromCrm.numberOfAffordableHomes,
-            });
+            projectFromCrm => new Project(
+                ProjectId.From(projectFromCrm.siteDetailsId),
+                projectFromCrm.Name.IsNotProvided() ? null! : new ProjectName(projectFromCrm.Name),
+                null!));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
@@ -119,7 +100,6 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
         return new Project
         {
-            Id = ProjectId.From(projectFromCrm.siteDetailsId),
             NameLegacy = projectFromCrm.siteName,
             ManyHomes = projectFromCrm.numberOfHomes,
             TypeHomes = projectFromCrm.typeOfHomes,
@@ -144,70 +124,49 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         };
     }
 
-    public async Task SaveAsync(ApplicationProjects applicationProjects, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task SaveAsync(ApplicationProjects applicationProjects, ProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        var siteDetailsDtos = new List<SiteDetailsDto>();
-        foreach (var site in applicationProjects.Projects)
+        var projectToSave = applicationProjects.Projects.First(c => c.Id == projectId);
+
+        if (projectToSave.IsNewlyCreated)
         {
-            var siteDetail = new SiteDetailsDto()
+            var siteDetails = new SiteDetailsDto
             {
-                Name = site.NameLegacy,
-                siteName = site.NameLegacy,
-                numberOfHomes = site.ManyHomes,
-                typeOfHomes = site.TypeHomes,
-                otherTypeOfHomes = site.TypeHomesOther,
-                typeOfSite = site.Type,
-                haveAPlanningReferenceNumber = site.PlanningRef,
-                planningReferenceNumber = site.PlanningRefEnter,
-                siteCoordinates = site.LocationCoordinates,
-                siteOwnership = site.Ownership,
-                landRegistryTitleNumber = site.LocationLandRegistry,
-                dateOfPurchase = site.PurchaseDate,
-                siteCost = site.Cost,
-                currentValue = site.Value,
-                valuationSource = site.Source,
-                publicSectorFunding = site.GrantFunding,
-                howMuch = site.GrantFundingAmount,
-                nameOfGrantFund = site.GrantFundingName,
-                reason = site.GrantFundingPurpose,
-                existingLegalCharges = site.ChargesDebt,
-                existingLegalChargesInformation = site.ChargesDebtInfo,
-                numberOfAffordableHomes = site.AffordableHomes,
+                siteDetailsId = projectToSave.Id.Value.ToString(),
             };
 
-            siteDetailsDtos.Add(siteDetail);
+            var req = new invln_createsinglesitedetailRequest
+            {
+                invln_sitedetails = CrmResponseSerializer.Serialize(siteDetails),
+                invln_loanapplicationid = applicationProjects.LoanApplicationId.Value.ToString(),
+            };
+
+            var resp = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_createsinglesitedetailResponse;
         }
-
-        var loanApplicationDto = new LoanApplicationDto
+        else
         {
-            siteDetailsList = siteDetailsDtos,
-        };
+            var siteDetails = new SiteDetailsDto
+            {
+                siteDetailsId = projectToSave.Id.Value.ToString(),
+                Name = projectToSave.Name?.Value,
+                dateOfPurchase = projectToSave.StartDate?.Value,
+            };
 
-        var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);
+            var req = new invln_updatesinglesitedetailsRequest
+            {
+                invln_sitedetail = CrmResponseSerializer.Serialize(siteDetails),
+                invln_loanapplicationid = applicationProjects.LoanApplicationId.Value.ToString(),
+                invln_fieldstoupdate = string.Join(",", CrmSiteNames()),
+                invln_sitedetailsid = projectId.ToString(),
+            };
 
-        //var req = new invln_createsinglesitedetailRequest
-
-        //var req = new invln_updatesingleloanapplicationRequest
-        //{
-        //    invln_loanapplication = loanApplicationSerialized,
-        //    invln_loanapplicationid = applicationProjects.LoanApplicationId.Value.ToString(),
-        //    invln_accountid = userAccount.AccountId.ToString(),
-        //    invln_contactexternalid = userAccount.UserGlobalId.ToString(),
-        //    invln_fieldstoupdate = string.Join(",", CrmSecurityFieldNames()),
-        //};
-
-        await _serviceClient.ExecuteAsync(req, cancellationToken);
+            await _serviceClient.ExecuteAsync(req, cancellationToken);
+        }
     }
 
-    private IEnumerable<string> CrmSecurityFieldNames()
+    private IEnumerable<string> CrmSiteNames()
     {
-        yield return nameof(invln_Loanapplication.invln_projectestimatedtotalcost_Base).ToLowerInvariant();
-        yield return nameof(invln_Loanapplication.invln_projectgdv_Base).ToLowerInvariant();
-        yield return nameof(invln_Loanapplication.invln_Projectabnormalcosts).ToLowerInvariant();
-        yield return nameof(invln_Loanapplication.invln_Projectabnormalcostsinformation).ToLowerInvariant();
-        yield return nameof(invln_Loanapplication.invln_Projectestimatedtotalcost).ToLowerInvariant();
-        yield return nameof(invln_Loanapplication.invln_ProjectGDV).ToLowerInvariant();
-        yield return nameof(invln_Loanapplication.invln_ProjectName).ToLowerInvariant();
-        yield return nameof(invln_Loanapplication.invln_Additionalprojects).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Name).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Dateofpurchase).ToLowerInvariant();
     }
 }

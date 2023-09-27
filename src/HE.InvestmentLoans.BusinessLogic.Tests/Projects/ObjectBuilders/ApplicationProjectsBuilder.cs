@@ -7,7 +7,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entiti
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
-internal class ApplicationProjectsBuilder
+internal sealed class ApplicationProjectsBuilder
 {
     private readonly ApplicationProjects _applicationProjects;
 
@@ -24,7 +24,12 @@ internal class ApplicationProjectsBuilder
 
     public ApplicationProjectsBuilder WithoutProjects()
     {
-        _applicationProjects.Projects.Clear();
+        var projectToDeleteIds = _applicationProjects.Projects.Select(c => c.Id).ToList();
+
+        foreach (var projectId in projectToDeleteIds)
+        {
+            _applicationProjects.DeleteProject(projectId);
+        }
 
         return this;
     }

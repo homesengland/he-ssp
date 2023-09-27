@@ -9,7 +9,7 @@ using Stateless;
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 
 [SuppressMessage("Ordering Rules", "SA1201", Justification = "Need to refactored in the fure")]
-public class SiteWorkflow : IStateRouting<ProjectState>
+public class SiteWorkflow
 {
     public enum State : int
     {
@@ -50,7 +50,6 @@ public class SiteWorkflow : IStateRouting<ProjectState>
 
         ConfigureTransitions();
     }
-
 
     public async void NextState(Trigger trigger)
     {
@@ -204,15 +203,5 @@ public class SiteWorkflow : IStateRouting<ProjectState>
 
             return _mediator.Send(new Commands.Update() { Model = _model });
         });
-    }
-
-    Task<ProjectState> IStateRouting<ProjectState>.NextState(Trigger trigger)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> StateCanBeAccessed(ProjectState nextState)
-    {
-        return Task.FromResult(true);
     }
 }

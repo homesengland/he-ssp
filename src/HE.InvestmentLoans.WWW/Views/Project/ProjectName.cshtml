@@ -1,15 +1,14 @@
+@using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
-    var id = ViewContext.RouteData.Values["id"];
-
     var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.Name));
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.Id, id = id })" text="Back" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.Action("GoBack","Site")" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     <partial name="_ErrorSummaryPartial" model="null" />
-    <form asp-controller="Project" asp-action="ProjectName" asp-route-id="@Model.Id" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="ProjectName" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId"  asp-method="post" novalidate>
             <gds-h1 size="@ControlSize.L">
                     @ProjectPageTitles.Name
             </gds-h1>
@@ -29,6 +28,10 @@
                                type="text" />
                 </gds-input-wrapper>
             </gds-div-form-group>
+
+            @Html.HiddenFor(c => c.ProjectId)
+            @Html.HiddenFor(c => c.ApplicationId)
+
         <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Continue
             </button>

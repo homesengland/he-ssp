@@ -26,14 +26,15 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
         return Task.FromResult(_machine.State);
     }
 
-    public async Task<bool> StateCanBeAccessed(ProjectState nextState)
+    public Task<bool> StateCanBeAccessed(ProjectState nextState)
     {
         return nextState switch
         {
-            _ => true,
+            _ => Task.FromResult(true),
         };
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1005:Single line comments should begin with single space", Justification = "Commented lines will help in next refactoring steps")]
     private void ConfigureTransitions()
     {
         _machine.Configure(ProjectState.Index)

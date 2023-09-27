@@ -20,7 +20,7 @@ public class WithdrawReason : ValueObject
         {
             OperationResult
             .New()
-            .AddValidationError(nameof(WithdrawReason), ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.WithdrawReason))
+            .AddValidationError(nameof(WithdrawReason), ValidationErrorMessage.LongInputLengthExceededFor(FieldNameForInputLengthValidation.WithdrawReason))
             .CheckErrors();
         }
 
