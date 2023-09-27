@@ -43,7 +43,7 @@
                 The organisation is not listed above, enter details manually
             </gds-link>
         </gds-p>
-        <gds-pagination base-url="/organization/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.Organizations.Count()" total-items="@Model.TotalOrganizations"></gds-pagination>
+        <gds-pagination base-url="/organization/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.ItemsPerPage" total-items="@Model.TotalOrganizations"></gds-pagination>
 
         <button class="govuk-button" data-module="govuk-button" name="action" type="submit">
             Continue
