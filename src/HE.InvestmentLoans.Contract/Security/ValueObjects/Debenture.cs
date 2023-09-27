@@ -3,8 +3,6 @@ using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Domain;
-using Microsoft.VisualBasic;
-using StackExchange.Redis;
 
 namespace HE.InvestmentLoans.Contract.Security.ValueObjects;
 
@@ -15,14 +13,14 @@ public class Debenture : ValueObject
         if (exists && holderName.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError(nameof(Holder), ValidationErrorMessage.EnterMoreDetails)
+                .AddValidationError("ChargesDebtCompany", ValidationErrorMessage.EnterMoreDetails)
                 .CheckErrors();
         }
 
         if (exists && holderName.Length > MaximumInputLength.LongInput)
         {
             OperationResult.New()
-                .AddValidationError(nameof(Holder), ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.Holder))
+                .AddValidationError("ChargesDebtCompany", ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.Holder))
                 .CheckErrors();
         }
 

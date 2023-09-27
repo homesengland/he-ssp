@@ -13,6 +13,7 @@
         </gds-back-link>
 
         <partial name="_ErrorSummaryPartial" model="null" />
+        @Html.HiddenFor(x => x.LoanApplicationId)
 
         <gds-field-set>
             <gds-div-form-group invalid="radioInvalid">

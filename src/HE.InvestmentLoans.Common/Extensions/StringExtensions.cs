@@ -19,6 +19,11 @@ public static class StringExtensions
         return !string.IsNullOrWhiteSpace(val);
     }
 
+    public static bool IsNotProvided(this string? val)
+    {
+        return !val.IsProvided();
+    }
+
     public static string TitleCaseFirstLetterInString(this string val)
     {
         var result = string.Empty;
