@@ -2,6 +2,7 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Extensions;
+using Xunit.Sdk;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 
@@ -133,20 +134,36 @@ public static class HtmlDocumentExtensions
         return dictionary;
     }
 
-    public static IDictionary<string, (string name, string status)> GetTaskListProjects(this IHtmlDocument htmlDocument)
+    public static (string Name, string Status) GetProjectFromTaskList(this IHtmlDocument htmlDocument, string id)
+    {
+        var projects = htmlDocument.GetTaskListProjects();
+
+        if (!projects.ContainsKey(id))
+        {
+            throw new ArgumentException($"Cannot find project id: {id} in task list. Available projects: {string.Join(", ", projects.Keys)}.");
+        }
+
+        return htmlDocument.GetTaskListProjects()[id];
+    }
+
+    public static IDictionary<string, (string Name, string Status)> GetTaskListProjects(this IHtmlDocument htmlDocument)
     {
         var projectRows = htmlDocument.GetElementsByClassName("task-list-grid-container");
 
-        var dictionary = new Dictionary<string, (string name, string status)>();
+        var dictionary = new Dictionary<string, (string Name, string Status)>();
         foreach (var row in projectRows)
         {
-            var key = row
+            var projectLink = row
                 .GetElementsByClassName("task-list-project-name").First()
-                .GetElementsByTagName("a").First()
-                .GetAttribute("href")!.GetProjectGuidFromUrl();
+                .GetElementsByTagName("a").First();
+
+            var id = projectLink.GetAttribute("href")!.GetProjectGuidFromRelativePath();
+
+            var name = projectLink.InnerHtml.Trim();
 
             var status = row.GetElementsByClassName("app-task-list__tag").FirstOrDefault()?.InnerHtml.Trim() ?? string.Empty;
-            //dictionary[key] = value;
+
+            dictionary[id] = (name, status);
         }
 
         return dictionary;

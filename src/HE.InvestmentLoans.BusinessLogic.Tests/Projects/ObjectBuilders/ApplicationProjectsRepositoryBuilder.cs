@@ -16,7 +16,7 @@ using Xunit.Sdk;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 
-internal class ApplicationProjectsRepositoryBuilder : IDependencyTestBuilder<IApplicationProjectsRepository>
+internal sealed class ApplicationProjectsRepositoryBuilder : IDependencyTestBuilder<IApplicationProjectsRepository>
 {
     private readonly Mock<IApplicationProjectsRepository> _mock;
 

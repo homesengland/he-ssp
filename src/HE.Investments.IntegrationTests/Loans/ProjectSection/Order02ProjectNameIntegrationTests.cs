@@ -22,8 +22,8 @@ public class Order02ProjectNameIntegrationTests : IntegrationTest
     public Order02ProjectNameIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _applicationLoanId = GetSharedData<string>(SharedKeys.ApplicationLoanIdInDraftStatusKey);
-        _projectId = GetSharedData<string>(SharedKeys.ProjectIdInDraftStatusKey);
+        _applicationLoanId = UserData.LoanApplicationIdInDraftState;
+        _projectId = UserData.ProjectInDraftStateId;
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -52,7 +52,8 @@ public class Order02ProjectNameIntegrationTests : IntegrationTest
     public async Task Order02_ShouldRedirectToStartDatePage_WhenProvidedNameIsCorrect()
     {
         // given
-        var projectNamePage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
+        var projectNamePage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Name(_applicationLoanId, _projectId)));
+
         var continueButton = projectNamePage.GetGdsSubmitButtonById("continue-button");
 
         // when

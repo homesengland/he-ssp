@@ -1,9 +1,10 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.Queries;
+using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
 using MediatR;
@@ -26,7 +27,6 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.Index)]
     public IActionResult StartProject(Guid id)
     {
-
         return View("Index", LoanApplicationId.From(id));
     }
 
@@ -50,20 +50,47 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/name")]
     [WorkflowState(ProjectState.Name)]
-    public IActionResult ProjectName(Guid id, Guid projectId, SiteViewModel model)
+    public async Task<IActionResult> ProjectName(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
     {
-        return View(model);
+        var result = await _mediator.Send(new ChangeProjectNameCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.Name), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("ProjectName", model);
+        }
+
+        return await Continue(new { id, projectId });
     }
 
     [HttpGet("{projectId}/start-date")]
-    [WorkflowState(ProjectState.Name)]
-    public IActionResult StartDate(Guid id, Guid projectId, SiteViewModel model)
+    [WorkflowState(ProjectState.StartDate)]
+    public async Task<IActionResult> StartDate(Guid id, Guid projectId)
     {
-        return View(model);
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
     }
 
-    protected override IStateRouting<ProjectState> Routing(ProjectState currentState)
+    [HttpPost("{projectId}/start-date")]
+    [WorkflowState(ProjectState.Name)]
+    public async Task<IActionResult> StartDate(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
     {
-        return new ProjectWorkflow(currentState);
+        var result = await _mediator.Send(new ProvideStartDateCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HasEstimatedStartDate, model.EstimatedStartDay, model.EstimatedStartMonth, model.EstimatedStartYear), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("StartDate", model);
+        }
+
+        return await Continue(new { id, projectId });
+    }
+
+    protected override Task<IStateRouting<ProjectState>> Routing(ProjectState currentState)
+    {
+        return Task.FromResult((IStateRouting<ProjectState>)new ProjectWorkflow(currentState));
     }
 }

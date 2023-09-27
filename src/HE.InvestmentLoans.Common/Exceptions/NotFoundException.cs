@@ -2,8 +2,6 @@ namespace HE.InvestmentLoans.Common.Exceptions;
 
 public class NotFoundException : Exception
 {
-    public string EntityName { get; private set; }
-
     public NotFoundException(string name, object key)
         : base($"Entity \"{name}\" ({key}) was not found.")
     {
@@ -14,4 +12,6 @@ public class NotFoundException : Exception
         : base(message)
     {
     }
+
+    public string EntityName { get; private set; }
 }

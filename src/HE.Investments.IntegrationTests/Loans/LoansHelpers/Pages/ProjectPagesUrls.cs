@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
-internal class ProjectPagesUrls
+internal sealed class ProjectPagesUrls
 {
     public const string StartSuffix = "/project/start";
 
@@ -16,13 +16,18 @@ internal class ProjectPagesUrls
 
     public const string ManyHomesSuffix = "/many-homes";
 
+    public static string Start(string applicationId)
+    {
+        return $"application/{applicationId}{StartSuffix}";
+    }
+
     public static string Name(string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}/{NameSuffix}";
+        return $"application/{applicationId}/project/{projectId}{NameSuffix}";
     }
 
     public static string StartDate(string applicationId, string projectId)
     {
-        return $"application/{applicationId}/project/{projectId}/{StartDateSuffix}";
+        return $"application/{applicationId}/project/{projectId}{StartDateSuffix}";
     }
 }

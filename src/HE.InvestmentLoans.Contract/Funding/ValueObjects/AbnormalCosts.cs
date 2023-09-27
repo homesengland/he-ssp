@@ -11,7 +11,7 @@ public class AbnormalCosts : ValueObject
     {
         if (isAnyAbnormalCost)
         {
-            if (abnormalCostsAdditionalInformation.IsNotProvided())
+            if (abnormalCostsAdditionalInformation!.IsNotProvided())
             {
                 OperationResult
                 .New()

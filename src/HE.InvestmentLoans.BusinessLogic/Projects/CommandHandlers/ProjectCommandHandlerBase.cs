@@ -9,7 +9,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
 public class ProjectCommandHandlerBase
 {
-
     private readonly IApplicationProjectsRepository _repository;
 
     private readonly ILoanUserContext _loanUserContext;
@@ -39,7 +38,7 @@ public class ProjectCommandHandlerBase
             return domainValidationException.OperationResult;
         }
 
-        await _repository.SaveAsync(applicationProjects, userAccount, cancellationToken);
+        await _repository.SaveAsync(applicationProjects, projectId, userAccount, cancellationToken);
         return OperationResult.Success();
     }
 }

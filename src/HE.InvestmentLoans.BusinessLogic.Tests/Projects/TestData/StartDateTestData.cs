@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
-internal class StartDateTestData
+internal sealed class StartDateTestData
 {
     public static readonly (string Day, string Month, string Year) IncorrectDateAsStrings = ("32", "1", "2022");
 

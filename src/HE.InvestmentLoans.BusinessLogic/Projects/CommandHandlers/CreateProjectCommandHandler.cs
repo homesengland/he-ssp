@@ -4,6 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
@@ -28,7 +29,7 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
 
         var projectId = applicationProjects.AddProject();
 
-        await _applicationProjectsRepository.SaveAsync(applicationProjects, await _loanUserContext.GetSelectedAccount(), cancellationToken);
+        await _applicationProjectsRepository.SaveAsync(applicationProjects, projectId, await _loanUserContext.GetSelectedAccount(), cancellationToken);
 
         return OperationResult.Success(projectId);
     }

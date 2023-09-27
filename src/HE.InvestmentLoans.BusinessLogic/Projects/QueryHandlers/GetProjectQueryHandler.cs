@@ -33,8 +33,9 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
 
         return new ProjectViewModel
         {
-            Id = project.Id!.Value,
-            Name = project.NameLegacy,
+            ProjectId = project.Id!.Value,
+            Name = project.Name?.Value,
+            ApplicationId = applicationProjects.LoanApplicationId.Value,
         };
     }
 }
