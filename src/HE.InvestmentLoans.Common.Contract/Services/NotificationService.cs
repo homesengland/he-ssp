@@ -20,14 +20,14 @@ public class NotificationService : INotificationService
 
     public Tuple<bool, NotificationModel?> Pop()
     {
-        var searchKey = $"{NotificationServiceKey.Notification}-{UserGlobalId}";
+        var key = $"{NotificationServiceKey.Notification}-{UserGlobalId}";
         var isInCache = false;
-        var valueFromCache = _cacheService.GetValue<NotificationModel>(searchKey) ?? null;
+        var valueFromCache = _cacheService.GetValue<NotificationModel>(key) ?? null;
 
         if (valueFromCache != null)
         {
             isInCache = true;
-            _cacheService.SetValue<NotificationModel?>(searchKey, null);
+            _cacheService.SetValue(key, string.Empty);
         }
 
         return Tuple.Create(isInCache, valueFromCache);
@@ -35,9 +35,10 @@ public class NotificationService : INotificationService
 
     public void NotifySuccess(string notificationBody, bool displayBodyLink)
     {
+        var key = $"{NotificationServiceKey.Notification}-{UserGlobalId}";
         var bodyLink = displayBodyLink ? NotificationBodyLink.ContactEmailIfThereIsAProblem : string.Empty;
         var notificationModel = new NotificationModel(NotificationTitle.Success, notificationBody, bodyLink, NotificationType.Success);
 
-        _cacheService.SetValue($"{NotificationServiceKey.Notification}-{UserGlobalId}", notificationModel);
+        _cacheService.SetValue(key, notificationModel);
     }
 }
