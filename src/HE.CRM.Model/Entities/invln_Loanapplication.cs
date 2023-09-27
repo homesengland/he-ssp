@@ -163,6 +163,7 @@ namespace DataverseModel
 			public const string invln_NumberofSites = "invln_numberofsites";
 			public const string invln_Outstandinglegalchargesordebt = "invln_outstandinglegalchargesordebt";
 			public const string invln_OwnerSelected = "invln_ownerselected";
+			public const string invln_planningpermissionstatus = "invln_planningpermissionstatus";
 			public const string invln_PreCompletereportApproved = "invln_precompletereportapproved";
 			public const string invln_PreCompletereportsubmitted = "invln_precompletereportsubmitted";
 			public const string invln_Privatesectorapproach = "invln_privatesectorapproach";
@@ -968,6 +969,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_OwnerSelected");
 				this.SetAttributeValue("invln_ownerselected", value);
 				this.OnPropertyChanged("invln_OwnerSelected");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_planningpermissionstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_planningpermissionstatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_planningpermissionstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_planningpermissionstatus");
+				this.SetAttributeValue("invln_planningpermissionstatus", value);
+				this.OnPropertyChanged("invln_planningpermissionstatus");
 			}
 		}
 		

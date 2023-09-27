@@ -52,6 +52,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_Account = Guid.TryParse(accountId, out Guid accountid) == true ? new EntityReference(Account.EntityLogicalName, accountid) : null, //pusty account?
                 invln_ProjectGDV = loanApplicationDto.projectGdv.HasValue ? new Money(loanApplicationDto.projectGdv.Value) : null,
                 invln_Projectestimatedtotalcost = loanApplicationDto.projectEstimatedTotalCost.HasValue ? new Money(loanApplicationDto.projectEstimatedTotalCost.Value) : null,
+                invln_planningpermissionstatus = loanApplicationDto.planningPermissionStatus,
             };
 
             if (loanApplicationDto.loanApplicationExternalStatus.HasValue)
@@ -117,6 +118,7 @@ namespace HE.CRM.Common.DtoMapping
                 loanApplicationId = loanApplication.invln_LoanapplicationId.ToString(),
                 externalId = externalContactId,
                 source = loanApplication.invln_source,
+                planningPermissionStatus = loanApplication.invln_planningpermissionstatus
             };
 
             if (loanApplication.invln_ProjectGDV != null)
