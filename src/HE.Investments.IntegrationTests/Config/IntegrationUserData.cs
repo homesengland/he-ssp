@@ -32,6 +32,8 @@ public class IntegrationUserData
             OrganizationAddress = userConfig.OrganizationAddress;
             TelephoneNumber = userConfig.TelephoneNumber;
             LoanApplicationIdInDraftState = userConfig.LoanApplicationIdInDraftState;
+            ProjectInDraftStateId = userConfig.ProjectIdInDraftState;
+
             IsDeveloperProvidedUserData = true;
 
             return;
@@ -61,6 +63,8 @@ public class IntegrationUserData
 
     public string LoanApplicationIdInDraftState { get; private set; }
 
+    public string ProjectInDraftStateId { get; private set; }
+
     public bool IsDeveloperProvidedUserData { get; }
 
     public void ProvideData(string userGlobalId)
@@ -82,6 +86,16 @@ public class IntegrationUserData
         }
 
         LoanApplicationIdInDraftState = loanApplicationId;
+    }
+
+    public void SetProjectId(string projectId)
+    {
+        if (ProjectInDraftStateId.IsProvided() && IsDeveloperProvidedUserData)
+        {
+            return;
+        }
+
+        ProjectInDraftStateId = projectId;
     }
 
     public void UseDataProvidedByDeveloper()

@@ -26,4 +26,6 @@ public class UserConfig
     public string TelephoneNumber { get; set; }
 
     public string LoanApplicationIdInDraftState { get; set; }
+
+    public string ProjectIdInDraftState { get; set; }
 }

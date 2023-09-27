@@ -21,6 +21,12 @@ public static class LoanApplicationMapper
             Security = MapToSecurityViewModel(loanApplicationDto),
             Account = MapToAccountDetailsViewModel(loanApplicationDto),
             ReferenceNumber = loanApplicationDto.name,
+            Sites = loanApplicationDto.siteDetailsList.Select(c => new SiteViewModel
+            {
+                Id = Guid.Parse(c.siteDetailsId),
+                Name = c.Name,
+                Status = Contract.Application.Enums.SectionStatus.NotStarted,
+            }).ToList(),
         };
     }
 

@@ -8,7 +8,9 @@ using HE.InvestmentLoans.Contract.Application.ValueObjects;
 namespace HE.InvestmentLoans.Contract.Projects.ViewModels;
 public class ProjectViewModel
 {
-    public Guid Id { get; set; }
+    public Guid ApplicationId { get; set; }
+
+    public Guid ProjectId { get; set; }
 
     public string? Name { get; set; }
 

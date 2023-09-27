@@ -12,7 +12,7 @@ public interface IApplicationProjectsRepository
 
     public Task<Project> GetById(LoanApplicationId loanApplicationId, ProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken);
 
-    Task SaveAsync(ApplicationProjects applicationProjects, UserAccount userAccount, CancellationToken cancellationToken);
+    Task SaveAsync(ApplicationProjects applicationProjects, ProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken);
 
     public LoanApplicationViewModel LegacyDeleteProject(Guid loanApplicationId, Guid projectId);
 

@@ -9,7 +9,7 @@ public class Refinance : ValueObject
 {
     public Refinance(string value, string? additionalInformation)
     {
-        if (additionalInformation.IsNotProvided())
+        if (additionalInformation!.IsNotProvided())
         {
             OperationResult
             .New()

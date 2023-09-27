@@ -11,5 +11,5 @@ public static class TextTestData
 
     public const string TextThatExceedsShortInputLimit = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fermentum efficitur condimentum libero.";
 
-    public const string TextThatNotExceedsShortInputLimit = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fermentum efficitur condimentum liber.";
+    public const string TextThatNotExceedsShortInputLimit = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fermentum efficitur condimentum.";
 }

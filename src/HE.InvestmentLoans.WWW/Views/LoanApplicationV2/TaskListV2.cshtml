@@ -7,7 +7,6 @@
 @using System.Globalization
 @inject MediatR.IMediator mediator
 @{
-    var securityWorkflow = new SecurityWorkflow(Model);
     var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
     var deleteName = ViewBag.AdditionalData;
     var deleteNotification = new NotificationModel("Success", $"{deleteName} removed", true);
@@ -115,10 +114,10 @@
                     <li class="app-task-list__item">
                         <div class="task-list-grid-container">
                             <span class="app-task-list__task-name task-list-project-name">
-                                <a href="@Url.Action("Workflow", "Site", new {id = Model.ID, projectId = site.Id })">
+                                <a href="@Url.Action("ProjectName", "Project", new {id = Model.ID, projectId = site.Id })">
                                     @if(site.Name.IsNotProvided())
                                     {
-                                        @ProjectName.Default
+                                        @ProjectName.Default.Value
                                     }
                                     else
                                     {
@@ -132,11 +131,11 @@
                                 </a>
                             </div>
                             <div>
-                                @if (new SiteWorkflow(Model, mediator, site.Id.Value).IsCompleted())
+                                @if (site.IsCompleted())
                                 {
                                     <gds-task-list-item-status class="task-list-project-tag" status=Completed>Completed</gds-task-list-item-status>
                                 }
-                                else if (!new SiteWorkflow(Model, mediator, site.Id.Value).IsStarted())
+                                else if (!site.IsInProgress())
                                 {
                                     <gds-task-list-item-status class="task-list-project-tag" status=NotStarted>Not Started</gds-task-list-item-status>
                                 }
@@ -152,7 +151,7 @@
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
                         <span class="app-task-list__task-name">
-                            <a id="add-project-link" href="@Url.Action("CreateSite", "Site", new {id = Model.ID})">
+                            <a id="add-project-link" href="@Url.Action("StartProjectPost", "Project", new {id = Model.ID})">
                                 Add another
                             </a>
                         </span>
@@ -167,9 +166,9 @@
     <form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.ID" asp-method="post" novalidate>
         @if (loanApllicationWorkflow.IsFilled())
         {
-            <gds-button data-module="govuk-button" name="action" value="Continue">
-                Check and submit application
-            </gds-button>
+                <gds-button data-module="govuk-button" name="action" value="Continue">
+                    Check and submit application
+                </gds-button>
         }
         else
         {
