@@ -183,6 +183,7 @@ namespace DataverseModel
 			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
 			public const string invln_sitedetailscompletionstatus = "invln_sitedetailscompletionstatus";
 			public const string invln_source = "invln_source";
+			public const string invln_startdate = "invln_startdate";
 			public const string invln_statuschangereason = "invln_statuschangereason";
 			public const string invln_SubjecttocontractApproved = "invln_subjecttocontractapproved";
 			public const string lk_invln_loanapplication_createdby = "lk_invln_loanapplication_createdby";
@@ -1284,6 +1285,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_source");
 				this.SetAttributeValue("invln_source", value);
 				this.OnPropertyChanged("invln_source");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_startdate")]
+		public System.Nullable<System.DateTime> invln_startdate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_startdate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_startdate");
+				this.SetAttributeValue("invln_startdate", value);
+				this.OnPropertyChanged("invln_startdate");
 			}
 		}
 		

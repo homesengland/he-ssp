@@ -95,6 +95,9 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string withdrawReason { get; set; }
 
         public OptionSetValue source { get; set; }
+
         public OptionSetValue planningPermissionStatus { get; set; }
+
+        public DateTime? startDate { get; set; }
     }
 }

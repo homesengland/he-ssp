@@ -53,6 +53,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_ProjectGDV = loanApplicationDto.projectGdv.HasValue ? new Money(loanApplicationDto.projectGdv.Value) : null,
                 invln_Projectestimatedtotalcost = loanApplicationDto.projectEstimatedTotalCost.HasValue ? new Money(loanApplicationDto.projectEstimatedTotalCost.Value) : null,
                 invln_planningpermissionstatus = loanApplicationDto.planningPermissionStatus,
+                invln_startdate = loanApplicationDto.startDate,
             };
 
             if (loanApplicationDto.loanApplicationExternalStatus.HasValue)
@@ -118,7 +119,8 @@ namespace HE.CRM.Common.DtoMapping
                 loanApplicationId = loanApplication.invln_LoanapplicationId.ToString(),
                 externalId = externalContactId,
                 source = loanApplication.invln_source,
-                planningPermissionStatus = loanApplication.invln_planningpermissionstatus
+                planningPermissionStatus = loanApplication.invln_planningpermissionstatus,
+                startDate = loanApplication.invln_startdate
             };
 
             if (loanApplication.invln_ProjectGDV != null)
