@@ -159,7 +159,7 @@ namespace DataverseModel
 			public const string invln_loanportaldata = "invln_loanportaldata";
 			public const string invln_loanportaldataid = "invln_loanportaldataid";
 			public const string invln_Name = "invln_name";
-			public const string invln_Noofhomes = "invln_noofhomes";
+			public const string invln_numberofhomes = "invln_numberofhomes";
 			public const string invln_NumberofSites = "invln_numberofsites";
 			public const string invln_Outstandinglegalchargesordebt = "invln_outstandinglegalchargesordebt";
 			public const string invln_OwnerSelected = "invln_ownerselected";
@@ -903,20 +903,20 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_noofhomes")]
-		public string invln_Noofhomes
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_numberofhomes")]
+		public string invln_numberofhomes
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<string>("invln_noofhomes");
+				return this.GetAttributeValue<string>("invln_numberofhomes");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_Noofhomes");
-				this.SetAttributeValue("invln_noofhomes", value);
-				this.OnPropertyChanged("invln_Noofhomes");
+				this.OnPropertyChanging("invln_numberofhomes");
+				this.SetAttributeValue("invln_numberofhomes", value);
+				this.OnPropertyChanged("invln_numberofhomes");
 			}
 		}
 		

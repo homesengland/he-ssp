@@ -181,9 +181,9 @@ namespace HE.CRM.Common.DtoMapping
                 case "submitted":
                     return new OptionSetValue((int)invln_ExternalStatus.ApplicationSubmitted);
                 case "under review":
-                    return new OptionSetValue((int)invln_ExternalStatus.Underreview);
+                    return new OptionSetValue((int)invln_ExternalStatus.UnderReview);
                 case "in due diligence":
-                    return new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
+                    return new OptionSetValue((int)invln_ExternalStatus.Induediligence);
                 case "contract signed subject to cp":
                     return new OptionSetValue((int)invln_ExternalStatus.ContractSignedSubjecttoCP);
                 case "cps satisfied":
@@ -201,11 +201,11 @@ namespace HE.CRM.Common.DtoMapping
                 case "withdrawn":
                     return new OptionSetValue((int)invln_ExternalStatus.Withdrawn);
                 case "not approved":
-                    return new OptionSetValue((int)invln_ExternalStatus.Sentforapproval);
+                    return new OptionSetValue((int)invln_ExternalStatus.SentforApproval);
                 case "application declined":
                     return new OptionSetValue((int)invln_ExternalStatus.ApplicationDeclined);
                 case "approved subject to contract":
-                    return new OptionSetValue((int)invln_ExternalStatus.Approvedsubjecttocontract);
+                    return new OptionSetValue((int)invln_ExternalStatus.ApprovedSubjecttoContract);
             }
 
             return null;
@@ -223,9 +223,9 @@ namespace HE.CRM.Common.DtoMapping
                     return "draft";
                 case (int)invln_ExternalStatus.ApplicationSubmitted:
                     return "submitted";
-                case (int)invln_ExternalStatus.Underreview:
+                case (int)invln_ExternalStatus.UnderReview:
                     return "under review";
-                case (int)invln_ExternalStatus.InDueDiligence:
+                case (int)invln_ExternalStatus.Induediligence:
                     return "in due diligence";
                 case (int)invln_ExternalStatus.ContractSignedSubjecttoCP:
                     return "contract signed subject to cp";
@@ -243,11 +243,11 @@ namespace HE.CRM.Common.DtoMapping
                     return "inactive";
                 case (int)invln_ExternalStatus.Withdrawn:
                     return "withdrawn";
-                case (int)invln_ExternalStatus.Sentforapproval:
+                case (int)invln_ExternalStatus.SentforApproval:
                     return "not approved";
                 case (int)invln_ExternalStatus.ApplicationDeclined:
                     return "application declined";
-                case (int)invln_ExternalStatus.Approvedsubjecttocontract:
+                case (int)invln_ExternalStatus.ApprovedSubjecttoContract:
                     return "approved subject to contract";
             }
             return null;
