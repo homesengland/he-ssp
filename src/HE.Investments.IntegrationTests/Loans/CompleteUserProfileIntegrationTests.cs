@@ -56,8 +56,8 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
             .UrlEndWith(OrganizationPagesUrls.CompleteProfileDetails)
             .HasTitle("Complete your details")
             .HasValidationMessages(
-                "Enter your surname",
                 "Enter your job title",
+                "Enter your last name",
                 "Enter your first name",
                 "Enter your preferred telephone number");
     }
@@ -74,7 +74,7 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         var organizationSearchPage = await TestClient.SubmitButton(saveAndContinueButton, new Dictionary<string, string>
         {
             { "FirstName", UserData.FirstName },
-            { "Surname", UserData.LastName },
+            { "LastName", UserData.LastName },
             { "JobTitle", "AI Tester" },
             { "TelephoneNumber", UserData.TelephoneNumber },
         });

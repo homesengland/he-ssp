@@ -32,7 +32,7 @@ public static class LoanApplicationMapper
             ContactEmail = userAccount.UserEmail,
             ContactExternalId = userAccount.UserGlobalId.ToString(),
             ContactFirstName = userDetails.FirstName,
-            ContactLastName = userDetails.Surname,
+            ContactLastName = userDetails.LastName,
             ContactTelephoneNumber = userDetails.TelephoneNumber,
         };
     }

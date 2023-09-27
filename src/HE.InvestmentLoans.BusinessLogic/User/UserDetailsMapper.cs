@@ -12,7 +12,7 @@ public static class UserDetailsMapper
         return new UserDetailsViewModel()
         {
             FirstName = userDetailsEntity.FirstName,
-            Surname = userDetailsEntity.Surname,
+            LastName = userDetailsEntity.LastName,
             JobTitle = userDetailsEntity.JobTitle,
             TelephoneNumber = userDetailsEntity.TelephoneNumber,
             SecondaryTelephoneNumber = userDetailsEntity.SecondaryTelephoneNumber,
@@ -24,7 +24,7 @@ public static class UserDetailsMapper
         return new ContactDto
         {
             firstName = userDetails.FirstName,
-            lastName = userDetails.Surname,
+            lastName = userDetails.LastName,
             jobTitle = userDetails.JobTitle,
             email = userDetails.Email,
             phoneNumber = userDetails.TelephoneNumber,
