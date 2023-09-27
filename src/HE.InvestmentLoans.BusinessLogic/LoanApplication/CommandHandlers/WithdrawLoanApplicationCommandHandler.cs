@@ -1,9 +1,9 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Services.Interfaces;
-using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Utils.Constants.Notification;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
@@ -41,7 +41,9 @@ public class WithdrawLoanApplicationCommandHandler : IRequestHandler<WithdrawLoa
 
             await loanApplication.Withdraw(_loanApplicationRepository, withdrawReason, cancellationToken);
 
-            _notificationService.Add(NotificationServiceKey.LoanApplicationWithdraw, loanApplication.Name);
+            var notificationBody = NotificationBody.ApplicationWithdrawnWithName(loanApplication.Name);
+
+            _notificationService.NotifySuccess(notificationBody, true);
 
             return OperationResult.Success();
         }

@@ -1,15 +1,13 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Authorization;
-using HE.InvestmentLoans.Common.Services;
-using HE.InvestmentLoans.Common.Services.Interfaces;
+using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Routing;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.InvestmentLoans.WWW.Controllers;

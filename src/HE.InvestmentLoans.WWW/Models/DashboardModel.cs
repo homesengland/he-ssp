@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.Common.Services.Interfaces;
+using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Queries;
 
 namespace HE.InvestmentLoans.WWW.Models;
