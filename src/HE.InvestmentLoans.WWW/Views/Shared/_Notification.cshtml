@@ -1,6 +1,15 @@
+@using HE.InvestmentLoans.WWW.Helpers.Notification;
 @model NotificationService;
 @{
     var (isNotificationInCache, notificationModel) = Model.Pop();
+    var description = "";
+    var linkDescription = "";
+
+    if (notificationModel != null)
+    {
+        description = NotificationMapper.MapBodyTypeToDescription(notificationModel.NotificationBodyType, notificationModel.ValueToDisplay);
+        linkDescription = NotificationMapper.MapBodyTypeToLinkDescription(notificationModel.NotificationBodyType);
+    }
 }
 
 @if (isNotificationInCache)
@@ -15,11 +24,11 @@
     </div>
     <div class="govuk-notification-banner__content">
         <h3 class="govuk-notification-banner__heading">
-                @notificationModel.Description
-                @if (notificationModel.LinkDescription != null)
+                @description
+                @if (!string.IsNullOrEmpty(linkDescription))
                 {
                     <br />
-                    <a href="">@notificationModel.LinkDescription</a>
+                    <a href="">@linkDescription</a>
                 }
         </h3>
     </div>

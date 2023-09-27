@@ -33,11 +33,10 @@ public class NotificationService : INotificationService
         return Tuple.Create(isInCache, valueFromCache);
     }
 
-    public void NotifySuccess(string notificationBody, bool displayBodyLink)
+    public void NotifySuccess(NotificationBodyType notificationBodyType, string valueToDisplay)
     {
         var key = $"{NotificationServiceKey.Notification}-{UserGlobalId}";
-        var bodyLink = displayBodyLink ? NotificationBodyLink.ContactEmailIfThereIsAProblem : string.Empty;
-        var notificationModel = new NotificationModel(NotificationTitle.Success, notificationBody, bodyLink, NotificationType.Success);
+        var notificationModel = new NotificationModel(NotificationTitle.Success, NotificationType.Success, notificationBodyType, valueToDisplay);
 
         _cacheService.SetValue(key, notificationModel);
     }
