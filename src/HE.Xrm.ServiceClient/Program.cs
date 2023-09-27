@@ -37,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestUpdateSiteDetails(serviceClient);
+                    TestLoan(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -53,13 +53,15 @@ namespace HE.Xrm.ServiceClientExample
 
         private static void TestLoan(ServiceClient serviceClient)
         {
-            var req2 = new invln_getloanapplicationsforaccountandcontactRequest() //get loan applications related to account and contact with given data
+            var req2 = new invln_getsingleloanapplicationforaccountandcontactRequest() //get loan applications related to account and contact with given data
             {
                 invln_accountid = "429d11ab-15fe-ed11-8f6c-002248c653e1", //account id
-                invln_externalcontactid = "auth0|64a3bdb420d21a3fc5193e4d", // contact external id
+                invln_externalcontactid = "auth0|64a26f0d878561f7f4179859", // contact external id
+                invln_loanapplicationid = "0beee88c-e540-ee11-bdf3-002248c652b4", // contact external id
+                invln_fieldstoretrieve = $"{nameof(invln_Loanapplication.invln_Name).ToLower()},{nameof(invln_Loanapplication.invln_NumberofSites).ToLower()}", // contact external id
             };
-            var resp2 = (invln_getloanapplicationsforaccountandcontactResponse)serviceClient.Execute(req2);
-            var test = JsonSerializer.Deserialize<List<LoanApplicationDto>>(resp2.invln_loanapplications);
+            var resp2 = (invln_getsingleloanapplicationforaccountandcontactResponse)serviceClient.Execute(req2);
+            var test = JsonSerializer.Deserialize<List<LoanApplicationDto>>(resp2.invln_loanapplication);
             Console.WriteLine("A web service connection was not established.");
         }
 

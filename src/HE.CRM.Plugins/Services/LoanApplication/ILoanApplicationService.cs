@@ -8,7 +8,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
     {
         string CreateRecordFromPortal(string contactExternalId, string accountId, string loanApplicationId, string loanApplicationPayload);
         void ChangeLoanApplicationStatusOnOwnerChange(invln_Loanapplication target, invln_Loanapplication preImage, invln_Loanapplication postImage);
-        string GetLoanApplicationsForAccountAndContact(string externalContactId, string accountId, string loanApplicationId = null);
+        string GetLoanApplicationsForAccountAndContact(string externalContactId, string accountId, string loanApplicationId = null, string fieldsToRetrieve = null);
         void ChangeLoanApplicationExternalStatus(int externalStatus, string loanApplicationId, string changeReason);
         void UpdateLoanApplication(string loanApplicationId, string loanApplication, string fieldsToUpdate, string accountId, string contactExternalId);
         void DeleteLoanApplication(string loanApplicationId);

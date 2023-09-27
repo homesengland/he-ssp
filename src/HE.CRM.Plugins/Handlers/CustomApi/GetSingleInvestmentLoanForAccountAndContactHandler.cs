@@ -1,4 +1,4 @@
-﻿using DataverseModel;
+using DataverseModel;
 using HE.Base.Plugins.Handlers;
 using HE.CRM.Plugins.Services.LoanApplication;
 
@@ -11,6 +11,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         private string accountId => ExecutionData.GetInputParameter<string>(invln_getsingleloanapplicationforaccountandcontactRequest.Fields.invln_accountid);
         private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getsingleloanapplicationforaccountandcontactRequest.Fields.invln_externalcontactid);
         private string loanApplicationId => ExecutionData.GetInputParameter<string>(invln_getsingleloanapplicationforaccountandcontactRequest.Fields.invln_loanapplicationid);
+        private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getsingleloanapplicationforaccountandcontactRequest.Fields.invln_fieldstoretrieve);
 
         #endregion
 
@@ -23,7 +24,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         public override void DoWork()
         {
             this.TracingService.Trace("GetSingleInvestmentLoanForAccountAndContact");
-            var loanApplication = CrmServicesFactory.Get<ILoanApplicationService>().GetLoanApplicationsForAccountAndContact(externalContactId, accountId, loanApplicationId);
+            var loanApplication = CrmServicesFactory.Get<ILoanApplicationService>().GetLoanApplicationsForAccountAndContact(externalContactId, accountId, loanApplicationId, fieldsToRetrieve);
             this.TracingService.Trace("Send Response");
             if (loanApplication != null)
             {
