@@ -650,7 +650,7 @@ namespace HE.InvestmentLoans.CRM.Model
 		NA = 858110019,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ApplicationunderReview = 858110002,
+		ApplicationUnderReview = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Withdrawn = 858110003,
@@ -662,31 +662,31 @@ namespace HE.InvestmentLoans.CRM.Model
 		OnHold = 858110005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Cashflowrequested = 858110006,
+		CashflowRequested = 858110006,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Cashflowunderreview = 858110007,
+		CashflowUnderReview = 858110007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ReferredBacktoApplicant = 858110008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Underreview = 858110009,
+		UnderReview = 858110009,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Sentforapproval = 858110010,
+		SentforApproval = 858110010,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Approvedsubjecttoduediligence = 858110011,
+		ApprovedSubjecttoDueDiligence = 858110011,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationDeclined = 858110012,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InDueDiligence = 858110013,
+		Induediligence = 858110013,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Approvedsubjecttocontract = 858110014,
+		ApprovedSubjecttoContract = 858110014,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ContractSignedSubjecttoCP = 858110015,
@@ -18738,18 +18738,18 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_noofhomes")]
-		public string invln_Noofhomes
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_numberofhomes")]
+		public string invln_numberofhomes
 		{
 			get
 			{
-				return this.GetAttributeValue<string>("invln_noofhomes");
+				return this.GetAttributeValue<string>("invln_numberofhomes");
 			}
 			set
 			{
-				this.OnPropertyChanging("invln_Noofhomes");
-				this.SetAttributeValue("invln_noofhomes", value);
-				this.OnPropertyChanged("invln_Noofhomes");
+				this.OnPropertyChanging("invln_numberofhomes");
+				this.SetAttributeValue("invln_numberofhomes", value);
+				this.OnPropertyChanged("invln_numberofhomes");
 			}
 		}
 		
@@ -19902,7 +19902,6 @@ namespace HE.InvestmentLoans.CRM.Model
 		public invln_changeloanapplicationexternalstatusRequest()
 		{
 			this.RequestName = "invln_changeloanapplicationexternalstatus";
-			this.invln_changereason = default(string);
 			this.invln_loanapplicationid = default(string);
 			this.invln_statusexternal = default(int);
 		}
