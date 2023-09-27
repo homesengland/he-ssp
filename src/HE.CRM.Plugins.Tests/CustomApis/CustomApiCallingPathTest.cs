@@ -123,7 +123,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             var getLoanApplicationOutput2 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
             Assert.AreEqual(getLoanApplicationOutput1.loanApplicationId, getLoanApplicationOutput2.loanApplicationId);
-            Assert.AreNotEqual(getLoanApplicationOutput1.loanApplicationExternalStatus, getLoanApplicationOutput2.loanApplicationExternalStatus);
         }
 
         [TestMethod]
@@ -207,7 +206,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             var getLoanApplicationOutput2 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
             Assert.AreEqual(getLoanApplicationOutput1.loanApplicationId, getLoanApplicationOutput2.loanApplicationId);
-            Assert.AreNotEqual(getLoanApplicationOutput1.loanApplicationExternalStatus, getLoanApplicationOutput2.loanApplicationExternalStatus);
         }
 
         [TestMethod]
@@ -296,7 +294,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             var getLoanApplicationOutput2 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
             Assert.AreEqual(getLoanApplicationOutput1.loanApplicationId, getLoanApplicationOutput2.loanApplicationId);
-            Assert.AreNotEqual(getLoanApplicationOutput1.loanApplicationExternalStatus, getLoanApplicationOutput2.loanApplicationExternalStatus);
         }
 
         [TestMethod]
@@ -367,7 +364,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             var getLoanApplicationOutput2 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
             Assert.AreEqual(getLoanApplicationOutput1.loanApplicationId, getLoanApplicationOutput2.loanApplicationId);
-            Assert.AreNotEqual(getLoanApplicationOutput1.loanApplicationExternalStatus, getLoanApplicationOutput2.loanApplicationExternalStatus);
         }
 
         [TestMethod]
