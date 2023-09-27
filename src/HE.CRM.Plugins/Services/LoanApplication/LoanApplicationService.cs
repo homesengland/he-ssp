@@ -23,10 +23,12 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         private readonly ISiteDetailsRepository _siteDetailsRepository;
         private readonly IContactRepository _contactRepository;
         private readonly IWebRoleRepository _webroleRepository;
-        private readonly IGovNotifyEmailRepository _govNotifyEmailRepository;
-        private readonly INotificationSettingRepository _notificationSettingRepository;
-        private readonly ISystemUserRepository _systemUserRepository;
-        private readonly IEnvironmentVariableRepository _environmentVariableRepository;
+
+        private readonly ILoanApplicationRepository _loanApplicationRepositoryAdmin;
+        private readonly INotificationSettingRepository _notificationSettingRepositoryAdmin;
+        private readonly IGovNotifyEmailRepository _govNotifyEmailRepositoryAdmin;
+        private readonly IEnvironmentVariableRepository _environmentVariableRepositoryAdmin;
+        private readonly ISystemUserRepository _systemUserRepositoryAdmin;
 
         #endregion
 
@@ -38,10 +40,12 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             _siteDetailsRepository = CrmRepositoriesFactory.Get<ISiteDetailsRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
             _webroleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
-            _govNotifyEmailRepository = CrmRepositoriesFactory.Get<IGovNotifyEmailRepository>();
-            _notificationSettingRepository = CrmRepositoriesFactory.Get<INotificationSettingRepository>();
-            _systemUserRepository = CrmRepositoriesFactory.Get<ISystemUserRepository>();
-            _environmentVariableRepository = CrmRepositoriesFactory.Get<IEnvironmentVariableRepository>();
+
+            _loanApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<ILoanApplicationRepository>();
+            _notificationSettingRepositoryAdmin = CrmRepositoriesFactory.GetSystem<INotificationSettingRepository>();
+            _govNotifyEmailRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IGovNotifyEmailRepository>();
+            _environmentVariableRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IEnvironmentVariableRepository>();
+            _systemUserRepositoryAdmin = CrmRepositoriesFactory.GetSystem<ISystemUserRepository>();
         }
 
         #endregion
@@ -417,9 +421,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     invln_notificationtitle = "Information",
                     invln_emailid = "email.todelete@wp.pl",// TODO: delete this parameter
                 };
-                _ = _loanApplicationRepository.ExecuteNotificatioRequest(req1);
+                _ = _loanApplicationRepositoryAdmin.ExecuteNotificatioRequest(req1);
 
-                var emailTemplate = _notificationSettingRepository.GetTemplateViaTypeName("INTERNAL_LOAN_APP_STATUS_CHANGE");
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("INTERNAL_LOAN_APP_STATUS_CHANGE");
                 var emailToCreate = new invln_govnotifyemail()
                 {
                     OwnerId = target.OwnerId ?? preImage.OwnerId,
@@ -427,12 +431,12 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     StatusCode = new OptionSetValue((int)invln_govnotifyemail_StatusCode.Draft),
                     invln_notificationsettingid = emailTemplate?.ToEntityReference(),
                 };
-                var emailId = _govNotifyEmailRepository.Create(emailToCreate);
+                var emailId = _govNotifyEmailRepositoryAdmin.Create(emailToCreate);
 
                 if (emailTemplate != null)
                 {
-                    var orgUrl = _environmentVariableRepository.GetEnvironmentVariableValue("invln_environmenturl") ?? "";
-                    var ownerData = _systemUserRepository.GetById(emailToCreate.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
+                    var orgUrl = _environmentVariableRepositoryAdmin.GetEnvironmentVariableValue("invln_environmenturl") ?? "";
+                    var ownerData = _systemUserRepositoryAdmin.GetById(emailToCreate.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
                     var subject = $"Application ref no {target.invln_Name ?? preImage.invln_Name} - Status change to '{statusLabel}";
                     var govNotParams = new INTERNAL_LOAN_APP_STATUS_CHANGE()
                     {
@@ -454,7 +458,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         WriteIndented = true
                     };
                     // TODO: delete after MVP when update possible from gov notify returned data
-                    _govNotifyEmailRepository.Update(new invln_govnotifyemail()
+                    _govNotifyEmailRepositoryAdmin.Update(new invln_govnotifyemail()
                     {
                         Id = emailId,
                         Subject = subject,
@@ -466,7 +470,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         invln_emailid = emailId.ToString(),
                         invln_govnotifyparameters = JsonSerializer.Serialize(govNotParams, options),
                     };
-                    _ = _loanApplicationRepository.ExecuteGovNotifyNotificationRequest(govNotReq);
+                    _ = _loanApplicationRepositoryAdmin.ExecuteGovNotifyNotificationRequest(govNotReq);
                 }
             }
         }
