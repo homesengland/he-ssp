@@ -68,7 +68,11 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 else
                 {
                     TracingService.Trace("regular user, not admin");
-                    var attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+                    string attributes = null;
+                    if (!string.IsNullOrEmpty(fieldsToRetrieve))
+                    {
+                        attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+                    }
                     loanApplicationsForAccountAndContact = _loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId, attributes);
                 }
                 this.TracingService.Trace("GetLoanApplicationsForGivenAccountAndContact");
