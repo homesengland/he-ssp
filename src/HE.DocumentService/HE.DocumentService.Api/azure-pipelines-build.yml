@@ -21,7 +21,7 @@ resources:
   - repository: he-invst-deployment
     type: git
     name: 'Investments Programme/he-invst-deployment'
-    ref: 'main'
+    ref: 'features/DocumentServiceFix'
   - repository: templates
     type: git
     name: 'Cloud Hosting Service/Templates'
