@@ -17,7 +17,7 @@ trigger:
     - feature*/*
   paths:
     include:
-    - src/HE.DocumentService/*
+    - src/HE.DocumentService/Middlewares/*
 
 pool: "vmss-ado-chs-nonprod-001"
           
