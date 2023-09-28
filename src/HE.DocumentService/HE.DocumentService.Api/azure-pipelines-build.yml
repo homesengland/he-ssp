@@ -2,14 +2,6 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-
-#trigger:
-#  branches:
-#    include:
-#    - 'main'
-#  paths:
-#    include:
-#    - src/HE.DocumentService/*
  
 trigger:
   branches:
@@ -17,7 +9,7 @@ trigger:
     - feature*/*
   paths:
     include:
-    - src/HE.DocumentService/Middlewares/*
+    - src/HE.DocumentService/*
 
 pool: "vmss-ado-chs-nonprod-001"
           
