@@ -17,8 +17,8 @@ public static class FieldNameForInputLengthValidation
     public const string TelephoneNumber = "telephone number";
     public const string SecondaryTelephoneNumber = "secondary telephone number";
     public const string OrganisationMoreInformation = "organisation more information";
-    public const string Holder = "debenture holder";
-    public const string ReasonWhyCannotBeSubordinated = "reason why cannot be subordinated";
+    public const string Debenture = "Debenture";
+    public const string SubordinatedLoans = "Subordinated loans";
     public const string PrivateSectorFundingResult = "funding result";
     public const string PrivateSectorFundingReason = "funding not applying reason";
     public const string AbnormalCostsInfo = "abnormal costs information";
