@@ -1,7 +1,8 @@
+@using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 @using HE.InvestmentLoans.WWW.Helpers.Notification;
-@model NotificationService;
+@inject INotificationService NotificationService
 @{
-    var (isNotificationInCache, notificationModel) = Model.Pop();
+    var (isNotificationInCache, notificationModel) = NotificationService.Pop();
     var description = "";
     var linkDescription = "";
 

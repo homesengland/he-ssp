@@ -1,16 +1,17 @@
+@using HE.InvestmentLoans.Contract.Application.Queries;
 @using HE.InvestmentLoans.Contract.Application.Enums;
-@model DashboardModel
+@model GetDashboardDataQueryResponse
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <gds-column width="ColumnWidth.Full">
     <div class ="govuk-!-margin-top-4">
-        @await Html.PartialAsync("_Notification", Model.NotificationService)
+        @await Html.PartialAsync("_Notification")
     </div>
 
     <gds-h1 class="govuk-!-margin-top-6" size="ControlSize.L">
-        @Model.DashboardData.AccountName home page
+        @Model.AccountName home page
     </gds-h1>
 
     <table class="govuk-table">
@@ -40,7 +41,7 @@
         </tr>
         </thead>
         <tbody class="govuk-table__body">
-        @foreach (var application in Model.DashboardData.LoanApplications)
+        @foreach (var application in Model.LoanApplications)
         {
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">

@@ -1,10 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Authorization;
-using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
-using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Routing;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using MediatR;
@@ -17,14 +15,12 @@ public class HomeController : Controller
     private readonly IMediator _mediator;
     private readonly ILoanUserContext _loanUserContext;
     private readonly IUserContext _userContext;
-    private readonly INotificationService _notificationService;
 
-    public HomeController(IMediator mediator, IUserContext userContext, ILoanUserContext loanUserContext, INotificationService notificationService)
+    public HomeController(IMediator mediator, IUserContext userContext, ILoanUserContext loanUserContext)
     {
         _mediator = mediator;
         _userContext = userContext;
         _loanUserContext = loanUserContext;
-        _notificationService = notificationService;
     }
 
     public async Task<IActionResult> Index()
@@ -57,14 +53,6 @@ public class HomeController : Controller
     [WorkflowState(LoanApplicationWorkflow.State.UserDashboard)]
     public async Task<IActionResult> Dashboard()
     {
-        var dashboardData = await _mediator.Send(new GetDashboardDataQuery());
-
-        var viewModel = new DashboardModel
-        {
-            DashboardData = dashboardData,
-            NotificationService = _notificationService,
-        };
-
-        return View(viewModel);
+        return View(await _mediator.Send(new GetDashboardDataQuery()));
     }
 }
