@@ -68,25 +68,7 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(3)]
-    public async Task Order03_ShouldCompletedSection_WhenYesAnswerIsSelected()
-    {
-        // given
-        var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
-        var continueButton = checkYourAnswersPage.GetGdsSubmitButtonById("continue-button");
-
-        // when
-        var taskListPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "CheckAnswers", CommonResponse.Yes } });
-
-        // then
-        taskListPage
-            .UrlEndWith(ApplicationPagesUrls.TaskList(_applicationId))
-            .GetTaskListItems()[TaskListFields.ProvideDetailsAboutFunding].Should().Be("Completed");
-    }
-
-    [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(4)]
-    public async Task Order04_ShouldRedirectToGrossDevelopmentValue_WhenGrossDevelopmentValueClicked()
+    public async Task Order03_ShouldRedirectToGrossDevelopmentValue_WhenGrossDevelopmentValueClicked()
     {
         // given
         var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -102,8 +84,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(5)]
-    public async Task Order05_ShouldGoBackToCheckAnswers_WhenChangingGrossDevelopmentValue()
+    [Order(4)]
+    public async Task Order04_ShouldGoBackToCheckAnswers_WhenChangingGrossDevelopmentValue()
     {
         // given
         var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -122,8 +104,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(6)]
-    public async Task Order06_ShouldRedirectToEstimatedTotalCosts_WhenEstimatedTotalCostsClicked()
+    [Order(5)]
+    public async Task Order05_ShouldRedirectToEstimatedTotalCosts_WhenEstimatedTotalCostsClicked()
     {
         // given
         var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -139,8 +121,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(7)]
-    public async Task Order07_ShouldGoBackToCheckAnswers_WhenChangingEstimatedTotalCosts()
+    [Order(6)]
+    public async Task Order06_ShouldGoBackToCheckAnswers_WhenChangingEstimatedTotalCosts()
     {
         // given
         var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -159,8 +141,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(8)]
-    public async Task Order08_ShouldRedirectToAbnormalCosts_WhenAbnormalCostsClicked()
+    [Order(7)]
+    public async Task Order07_ShouldRedirectToAbnormalCosts_WhenAbnormalCostsClicked()
     {
         // given
         var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -176,8 +158,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(9)]
-    public async Task Order09_ShouldGoBackToCheckAnswers_WhenChangingAbnormalCosts()
+    [Order(8)]
+    public async Task Order08_ShouldGoBackToCheckAnswers_WhenChangingAbnormalCosts()
     {
         // given
         var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -196,8 +178,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(10)]
-    public async Task Order10_ShouldRedirectToPrivateSectorFunding_WhenPrivateSectorFundingClicked()
+    [Order(9)]
+    public async Task Order09_ShouldRedirectToPrivateSectorFunding_WhenPrivateSectorFundingClicked()
     {
         // given
         var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -213,8 +195,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(11)]
-    public async Task Order11_ShouldGoBackToCheckAnswers_WhenChangingPrivateSectorFunding()
+    [Order(10)]
+    public async Task Order10_ShouldGoBackToCheckAnswers_WhenChangingPrivateSectorFunding()
     {
         // given
         var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -233,8 +215,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(12)]
-    public async Task Order12_ShouldRedirectToRepaymentSystem_WhenRepaymentSystemClicked()
+    [Order(11)]
+    public async Task Order11_ShouldRedirectToRepaymentSystem_WhenRepaymentSystemClicked()
     {
         // given
         var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -250,8 +232,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(13)]
-    public async Task Order13_ShouldGoBackToCheckAnswers_WhenChangingRepaymentSystem()
+    [Order(12)]
+    public async Task Order12_ShouldGoBackToCheckAnswers_WhenChangingRepaymentSystem()
     {
         // given
         var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -270,8 +252,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(14)]
-    public async Task Order14_ShouldRedirectToAdditionalProjects_WhenAdditionalProjectsClicked()
+    [Order(13)]
+    public async Task Order13_ShouldRedirectToAdditionalProjects_WhenAdditionalProjectsClicked()
     {
         // given
         var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -287,8 +269,8 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(15)]
-    public async Task Order15_ShouldGoBackToCheckAnswers_WhenChangingAdditionalProjects()
+    [Order(14)]
+    public async Task Order14_ShouldGoBackToCheckAnswers_WhenChangingAdditionalProjects()
     {
         // given
         var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -304,5 +286,23 @@ public class Order08CheckYourAnswersIntegrationTests : IntegrationTest
         returnPage
             .UrlEndWith(FundingPageUrls.CheckYourAnswersSuffix)
             .HasTitle(FundingPageTitles.CheckAnswers);
+    }
+
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(15)]
+    public async Task Order15_ShouldCompletedSection_WhenYesAnswerIsSelected()
+    {
+        // given
+        var checkYourAnswersPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
+        var continueButton = checkYourAnswersPage.GetGdsSubmitButtonById("continue-button");
+
+        // when
+        var taskListPage = await TestClient.SubmitButton(
+            continueButton, new Dictionary<string, string> { { "CheckAnswers", CommonResponse.Yes } });
+
+        // then
+        taskListPage
+            .UrlEndWith(ApplicationPagesUrls.TaskList(_applicationId))
+            .GetTaskListItems()[TaskListFields.ProvideDetailsAboutFunding].Should().Be("Completed");
     }
 }

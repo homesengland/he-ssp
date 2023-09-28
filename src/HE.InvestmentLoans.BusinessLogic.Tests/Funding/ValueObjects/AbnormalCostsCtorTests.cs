@@ -66,4 +66,19 @@ public class AbnormalCostsCtorTests
         // then
         action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.AbnormalCostsInfo));
     }
+
+    [Fact]
+    public void ShouldAbnormalCostsAdditionalInformationBeEmpty_WhenIsAnyAbnormalCostIsFalse()
+    {
+        // given
+        var response = false;
+        var additionalInformation = "additional information";
+
+        // when
+        var abnormalCosts = AbnormalCosts.New(response, additionalInformation);
+
+        // then
+        abnormalCosts.AbnormalCostsAdditionalInformation.Should().BeNull();
+        abnormalCosts.IsAnyAbnormalCost.Should().BeFalse();
+    }
 }
