@@ -18,7 +18,7 @@ public class AbnormalCosts : ValueObject
                 .AddValidationError(nameof(FundingViewModel.AbnormalCostsInfo), ValidationErrorMessage.EnterMoreDetails)
                 .CheckErrors();
             }
-            else if (abnormalCostsAdditionalInformation!.Length >= MaximumInputLength.LongInput)
+            else if (abnormalCostsAdditionalInformation!.Length > MaximumInputLength.LongInput)
             {
                 OperationResult
                 .New()
