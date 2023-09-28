@@ -28,11 +28,12 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        public List<invln_Loanapplication> GetLoanApplicationsForGivenAccountAndContact(Guid accountId, string externalContactId, string loanApplicationId = null)
+        public List<invln_Loanapplication> GetLoanApplicationsForGivenAccountAndContact(Guid accountId, string externalContactId, string loanApplicationId = null, string fieldsToRetrieve = null)
         {
-            using (DataverseContext ctx = new DataverseContext(service))
+
+            if (loanApplicationId == null)
             {
-                if (loanApplicationId == null)
+                using (DataverseContext ctx = new DataverseContext(service))
                 {
                     return (from la in ctx.invln_LoanapplicationSet
                             join cnt in ctx.ContactSet on la.invln_Contact.Id equals cnt.ContactId
@@ -40,22 +41,36 @@ namespace HE.CRM.Common.Repositories.Implementations
                             la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Inactive &&
                             la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Active && la.StateCode.Value != (int)invln_loanapplicationState.Inactive
                             select la).ToList();
+
+                }
+            }
+            else
+            {
+                if (Guid.TryParse(loanApplicationId, out Guid loanApplicationGuid))
+                {
+                    var fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+	                                <entity name='invln_loanapplication'>"
+                                    + fieldsToRetrieve +
+                                    @"<filter>
+                                              <condition attribute=""statuscode"" operator=""ne"" value=""858110002"" />
+                                              <condition attribute=""statuscode"" operator=""ne"" value=""2"" />
+                                              <condition attribute=""statecode"" operator=""ne"" value=""1"" />
+                                              <condition attribute=""invln_account"" operator=""eq"" value=""" + accountId + @""" />
+                                              <condition attribute=""invln_loanapplicationid"" operator=""eq"" value=""" + loanApplicationId + @""" />
+                                            </filter>
+                                            <link-entity name=""contact"" from=""contactid"" to=""invln_contact"">
+                                              <filter>
+                                                <condition attribute=""invln_externalid"" operator=""eq"" value=""" + externalContactId + @""" />
+                                              </filter>
+                                            </link-entity>
+                                          </entity>
+                                        </fetch>";
+                    EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXML));
+                    return result.Entities.Select(x => x.ToEntity<invln_Loanapplication>()).ToList();
                 }
                 else
                 {
-                    if (Guid.TryParse(loanApplicationId, out Guid loanApplicationGuid))
-                    {
-                        return (from la in ctx.invln_LoanapplicationSet
-                                join cnt in ctx.ContactSet on la.invln_Contact.Id equals cnt.ContactId
-                                where la.invln_Account.Id == accountId && cnt.invln_externalid == externalContactId && la.invln_LoanapplicationId == loanApplicationGuid &&
-                                la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Inactive &&
-                                la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Active && la.StateCode.Value != (int)invln_loanapplicationState.Inactive
-                                select la).ToList();
-                    }
-                    else
-                    {
-                        return new List<invln_Loanapplication>();
-                    }
+                    return new List<invln_Loanapplication>();
                 }
             }
         }

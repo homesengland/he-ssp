@@ -37,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestUpdateSiteDetails(serviceClient);
+                    TestLoan(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -56,7 +56,7 @@ namespace HE.Xrm.ServiceClientExample
             var req2 = new invln_getloanapplicationsforaccountandcontactRequest() //get loan applications related to account and contact with given data
             {
                 invln_accountid = "429d11ab-15fe-ed11-8f6c-002248c653e1", //account id
-                invln_externalcontactid = "auth0|64a3bdb420d21a3fc5193e4d", // contact external id
+                invln_externalcontactid = "auth0|64a26f0d878561f7f4179859", // contact external id
             };
             var resp2 = (invln_getloanapplicationsforaccountandcontactResponse)serviceClient.Execute(req2);
             var test = JsonSerializer.Deserialize<List<LoanApplicationDto>>(resp2.invln_loanapplications);
