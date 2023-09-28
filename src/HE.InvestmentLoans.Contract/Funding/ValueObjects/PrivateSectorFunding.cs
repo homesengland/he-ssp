@@ -18,7 +18,7 @@ public class PrivateSectorFunding : ValueObject
                 .AddValidationError(nameof(FundingViewModel.PrivateSectorFundingResult), ValidationErrorMessage.EnterMoreDetails)
                 .CheckErrors();
             }
-            else if (privateSectorFundingApplyResult!.Length >= MaximumInputLength.LongInput)
+            else if (privateSectorFundingApplyResult!.Length > MaximumInputLength.LongInput)
             {
                 OperationResult
                 .New()
@@ -35,7 +35,7 @@ public class PrivateSectorFunding : ValueObject
                 .AddValidationError(nameof(FundingViewModel.PrivateSectorFundingReason), ValidationErrorMessage.EnterMoreDetails)
                 .CheckErrors();
             }
-            else if (privateSectorFundingNotApplyingReason!.Length >= MaximumInputLength.LongInput)
+            else if (privateSectorFundingNotApplyingReason!.Length > MaximumInputLength.LongInput)
             {
                 OperationResult
                 .New()

@@ -12,5 +12,5 @@ public static class CheckYourDetailsFields
 
     public const string EmailAddress = "Email address";
 
-    public const string TelephoneNumber = "Telephone number";
+    public const string TelephoneNumber = "Preferred telephone number";
 }
