@@ -62,6 +62,13 @@ public class LoanApplicationEntity
 
     public async Task Submit(ICanSubmitLoanApplication canSubmitLoanApplication, CancellationToken cancellationToken)
     {
+        CheckIfCanBeSubmitted();
+
+        await canSubmitLoanApplication.Submit(Id, cancellationToken);
+    }
+
+    public void CheckIfCanBeSubmitted()
+    {
         if (!IsReadyToSubmit())
         {
             throw new DomainException("Loan application is not ready to be submitted", CommonErrorCodes.LoanApplicationNotReadyToSubmit);
@@ -74,8 +81,6 @@ public class LoanApplicationEntity
                 CommonErrorCodes.ApplicationHasBeenSubmitted,
                 ("Date", LastModificationDate!.Value));
         }
-
-        await canSubmitLoanApplication.Submit(Id, cancellationToken);
     }
 
     public async Task Withdraw(ILoanApplicationRepository loanApplicationRepository, WithdrawReason withdrawReason, CancellationToken cancellationToken)
