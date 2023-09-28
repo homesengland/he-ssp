@@ -3,12 +3,12 @@ using HE.InvestmentLoans.Contract.Domain;
 namespace HE.InvestmentLoans.Contract.Organization.ValueObjects;
 public class OrganizationBasicDetails : ValueObject
 {
-    public OrganizationBasicDetails(string name, string street, string city, string code, string companiesHouseNumber)
+    public OrganizationBasicDetails(string name, string street, string city, string postalCode, string companiesHouseNumber)
     {
         Name = name;
         Street = street;
         City = city;
-        Code = code;
+        PostalCode = postalCode;
         CompaniesHouseNumber = companiesHouseNumber;
     }
 
@@ -18,7 +18,7 @@ public class OrganizationBasicDetails : ValueObject
 
     public string City { get; }
 
-    public string Code { get; }
+    public string PostalCode { get; }
 
     public string CompaniesHouseNumber { get; }
 
@@ -27,7 +27,7 @@ public class OrganizationBasicDetails : ValueObject
         yield return Name;
         yield return Street;
         yield return City;
-        yield return Code;
+        yield return PostalCode;
         yield return CompaniesHouseNumber;
     }
 }

@@ -1,7 +1,9 @@
 using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.WWW.Attributes;
+using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
@@ -49,17 +51,31 @@ public class OrganizationController : Controller
         return View(response.Result);
     }
 
-    [HttpGet("select")]
-    public IActionResult SelectOrganization(string organizationNumber)
+    [HttpGet("{organizationNumber}/confirm")]
+    public async Task<IActionResult> ConfirmOrganization(string organizationNumber)
     {
-        return RedirectToAction(nameof(OrganizationController.SelectOrganizationPost), new { organizationNumber });
+        var response = await _mediator.Send(new GetOrganizationByCompanyHouseNumberQuery(organizationNumber));
+
+        return View("ConfirmYourSelection", new ConfirmModel<OrganizationBasicDetails> { ViewModel = response });
     }
 
-    public async Task<IActionResult> SelectOrganizationPost(string organizationNumber)
+    [HttpPost("{organizationNumber}/confirm")]
+    public async Task<IActionResult> ConfirmOrganizationPost(string organizationNumber, ConfirmModel<OrganizationBasicDetails> model)
     {
-        await _mediator.Send(new LinkContactWithOrganizationCommand(new CompaniesHouseNumber(organizationNumber)));
+        if (string.IsNullOrEmpty(model.Response))
+        {
+            ModelState.AddModelError(nameof(model.Response), ValidationErrorMessage.ChooseYourAnswer);
+            model.ViewModel = await _mediator.Send(new GetOrganizationByCompanyHouseNumberQuery(organizationNumber));
+            return View("ConfirmYourSelection", model);
+        }
 
-        return RedirectToAction(nameof(HomeController.Dashboard), new ControllerName(nameof(HomeController)).WithoutPrefix());
+        if (model.Response == CommonResponse.Yes)
+        {
+            await _mediator.Send(new LinkContactWithOrganizationCommand(new CompaniesHouseNumber(organizationNumber)));
+            return RedirectToAction(nameof(HomeController.Dashboard), new ControllerName(nameof(HomeController)).WithoutPrefix());
+        }
+
+        return RedirectToAction(nameof(SearchOrganization));
     }
 
     [HttpGet("no-match-found")]

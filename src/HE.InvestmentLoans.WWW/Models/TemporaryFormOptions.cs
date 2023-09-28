@@ -195,6 +195,20 @@ public static class TemporaryFormOptions
         },
     };
 
+    public static List<SelectListItem> YesNo { get; } = new()
+    {
+        new SelectListItem
+        {
+            Value = "Yes",
+            Text = "Yes",
+        },
+        new SelectListItem
+        {
+            Value = "No",
+            Text = "No",
+        },
+    };
+
     public static List<string> LocationDescription { get; } = new()
     {
         "To find your project coordinates, use any online digital mapping service, such as Google Maps. " +

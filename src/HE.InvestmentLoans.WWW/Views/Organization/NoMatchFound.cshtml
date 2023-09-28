@@ -1,3 +1,8 @@
+@using HE.InvestmentLoans.WWW.Views.Organization
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @{
     ViewData["Title"] = "Organization Not Found";
 }
@@ -6,7 +11,8 @@
     <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganization", "Organization")">Back</gds-back-link>
 
     <gds-h1 size="ControlSize.L">
-        The details you entered did not match our records
+        @OrganizationPageTitles.NoMatch
+
     </gds-h1>
 
     <gds-p>

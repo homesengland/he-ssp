@@ -1,16 +1,9 @@
 extern alias Org;
 
-using HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
-using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
-using HE.InvestmentLoans.Contract.Organization;
-using HE.InvestmentLoans.Contract.Organization.ValueObjects;
-using MediatR;
 using Moq;
-using Org.HE.Common.IntegrationModel.PortalIntegrationModel;
 using Org.HE.Investments.Organisation.Contract;
 using Org.HE.Investments.Organisation.Services;
-using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestObjectBuilder;
 
@@ -48,6 +41,22 @@ public class OrganizationSearchServiceTestBuilder
         _mock
             .Setup(c => c.GetByCompaniesHouseNumber(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new GetOrganizationByCompaniesHouseNumberResult(organization, null!));
+
+        return this;
+    }
+
+    public OrganizationSearchServiceTestBuilder ReturnsOneOrganization(string companyHouseNumber, out OrganisationSearchItem result)
+    {
+        result = new OrganisationSearchItem(
+            companyHouseNumber,
+            "anyName",
+            "anyCity",
+            "Any Street 1",
+            "ABCD 123");
+
+        _mock
+            .Setup(c => c.GetByCompaniesHouseNumber(companyHouseNumber, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new GetOrganizationByCompaniesHouseNumberResult(result, string.Empty));
 
         return this;
     }
