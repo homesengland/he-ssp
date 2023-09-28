@@ -22,12 +22,12 @@ public class NotificationService : INotificationService
     {
         var key = $"{NotificationServiceKey.Notification}-{UserGlobalId}";
         var isInCache = false;
-        var valueFromCache = _cacheService.GetValue<NotificationModel>(key) ?? null;
+        var valueFromCache = _cacheService.GetValue<NotificationModel?>(key);
 
         if (valueFromCache != null)
         {
             isInCache = true;
-            _cacheService.SetValue(key, string.Empty);
+            _cacheService.SetValue<NotificationModel?>(key, null);
         }
 
         return Tuple.Create(isInCache, valueFromCache);
