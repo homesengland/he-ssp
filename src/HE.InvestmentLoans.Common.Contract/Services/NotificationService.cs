@@ -16,7 +16,7 @@ public class NotificationService : INotificationService
         _userContext = userContext;
     }
 
-    public string UserGlobalId => _userContext.UserGlobalId;
+    private string UserGlobalId => _userContext.UserGlobalId;
 
     public Tuple<bool, NotificationModel?> Pop()
     {

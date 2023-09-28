@@ -70,11 +70,25 @@ public static class HtmlDocumentExtensions
         return errorItems;
     }
 
+    public static string[] GetFieldValidationErrors(this IHtmlDocument htmlDocument)
+    {
+        var fieldValidationError = htmlDocument.GetElementsByClassName(CssConstants.GovUkErrorMessage).ToArray();
+        var errorItems = fieldValidationError!
+                                .Select(x => x.TextContent.Replace("Error:", string.Empty).Trim())
+                                .Where(x => !string.IsNullOrEmpty(x))
+                                .ToArray();
+        errorItems.Should().HaveCountGreaterThan(1, "Field validation error should be present on a page");
+
+        return errorItems;
+    }
+
     public static IHtmlDocument ContainsOnlyOneValidationMessage(this IHtmlDocument htmlDocument, string errorMessage)
     {
-        var pageErrors = htmlDocument.GetSummaryErrors();
+        var pageSummaryErrors = htmlDocument.GetSummaryErrors();
+        var fieldValidationErrors = htmlDocument.GetFieldValidationErrors();
 
-        pageErrors.Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
+        pageSummaryErrors.Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
+        fieldValidationErrors.Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
         htmlDocument.GetElementsByClassName(CssConstants.GovUkFormGroupError).Should().NotBeNull("Error message for specific item should exist");
         return htmlDocument;
     }
@@ -82,8 +96,10 @@ public static class HtmlDocumentExtensions
     public static IHtmlDocument ContainsValidationMessage(this IHtmlDocument htmlDocument, string errorMessage)
     {
         var pageErrors = htmlDocument.GetSummaryErrors();
+        var fieldValidationErrors = htmlDocument.GetFieldValidationErrors();
 
         pageErrors.Should().Contain(x => x.Equals(errorMessage, StringComparison.Ordinal));
+        fieldValidationErrors.Should().Contain(x => x.Equals(errorMessage, StringComparison.Ordinal));
         htmlDocument.GetElementsByClassName(CssConstants.GovUkFormGroupError).Should().NotBeNull("Error message for specific item should exist");
         return htmlDocument;
     }

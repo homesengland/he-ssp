@@ -53,7 +53,7 @@
     {
     { "Title", "Build start date" },
     { "Value", DateHelper.ConvertToDateStringWithDescription(
-                              Model?.EstimatedStartDay, Model?.EstimatedStartMonth, 
+                              Model?.EstimatedStartDay, Model?.EstimatedStartMonth,
                               Model?.EstimatedStartYear, Model?.HasEstimatedStartDate) },
     { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "StartDate" }) }
     })
@@ -112,7 +112,7 @@
         { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Location" }) }
         })
     }
-    
+
     @if (Model.LocationOption == null || Model.LocationOption == "landRegistryTitleNumber")
     {
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
@@ -160,7 +160,7 @@
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
     { "Title", "Legal charges" },
-    { "Value", Model?.ChargesDebtInfo != null ? $"{ Model.ChargesDebt }, { Model.ChargesDebtInfo }" : $"{ Model.ChargesDebt }" },
+    { "Value", Model?.ChargesDebtInfo != null ? $"{ Model.ChargesDebt }, { Model.ChargesDebtInfo }" : $"{ Model?.ChargesDebt }" },
     { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "ChargesDebt" }) }
     })
 
