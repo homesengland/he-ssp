@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
@@ -42,7 +43,7 @@ public class Order02ProjectNameIntegrationTests : IntegrationTest
         projectNamePage
             .UrlEndWith(ProjectPagesUrls.NameSuffix)
             .HasTitle(ProjectPageTitles.Name)
-            .HasValidationMessages(ValidationErrorMessage.ShortInputLengthExceeded);
+            .HasValidationMessages(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.ProjectName));
 
         SetSharedData(SharedKeys.CurrentPageKey, projectNamePage);
     }

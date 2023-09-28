@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using MediatR;
 

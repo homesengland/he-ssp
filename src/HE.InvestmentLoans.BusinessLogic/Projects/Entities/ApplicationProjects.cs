@@ -1,7 +1,7 @@
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
+namespace HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 public class ApplicationProjects
 {
     private readonly List<Project> _projects;
@@ -10,13 +10,17 @@ public class ApplicationProjects
     {
         LoanApplicationId = loanApplicationId;
         _projects = new List<Project>();
-        AddProject();
+
+        AddEmptyProject();
     }
 
     public ApplicationProjects(LoanApplicationId loanApplicationId, IEnumerable<Project> projects)
     {
         LoanApplicationId = loanApplicationId;
-        _projects = projects.ToList();
+
+        _projects = new List<Project>();
+
+        _projects.AddRange(projects);
     }
 
     public LoanApplicationId LoanApplicationId { get; }
@@ -25,7 +29,7 @@ public class ApplicationProjects
 
     public IList<Project> ActiveProjects => Projects.Where(p => !p.IsSoftDeleted).ToList();
 
-    public ProjectId AddProject()
+    public ProjectId AddEmptyProject()
     {
         var project = new Project();
         _projects.Add(project);

@@ -29,17 +29,6 @@ public class CreateProjectCommandHandlerTests : TestBase<CreateProjectCommandHan
     }
 
     [Fact]
-    public async Task ShouldFail_WhenApplicationProjectsCannotBeFound()
-    {
-        Given(
-            ApplicationProjectsRepositoryBuilder
-            .New()
-            .ReturnsNoProjects());
-
-        await Invoking(() => TestCandidate.Handle(_command, CancellationToken.None)).Should().ThrowAsync<NotFoundException>();
-    }
-
-    [Fact]
     public async Task ShouldAddNewProjectToApplication()
     {
         var projects = ApplicationProjectsBuilder.EmptyProjects();

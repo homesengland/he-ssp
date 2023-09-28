@@ -3,7 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
+namespace HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 
 public class Project
 {

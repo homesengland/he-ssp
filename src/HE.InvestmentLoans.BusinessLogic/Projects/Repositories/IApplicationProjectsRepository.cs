@@ -1,10 +1,10 @@
 using System.Threading;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Repositories;
+namespace HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 
 public interface IApplicationProjectsRepository
 {

@@ -49,6 +49,6 @@ public class RefinanceCtorTests
         var action = () => Refinance.New(refinance, additionalInformation);
 
         // then
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.LongInputLengthExceededFor(FieldNameForInputLengthValidation.RefinanceInfo));
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.RefinanceInfo));
     }
 }

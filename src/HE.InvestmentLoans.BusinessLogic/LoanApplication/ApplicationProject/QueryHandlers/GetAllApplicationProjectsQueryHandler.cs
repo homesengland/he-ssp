@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using MediatR;
 

@@ -60,7 +60,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
         directorLoansPage
             .UrlEndWith(SecurityPageUrls.ChargesDebtSuffix)
             .HasTitle(SecurityPageTitles.ChargesDebt)
-            .ContainsOnlyOneValidationMessage(ValidationErrorMessage.LongInputLengthExceededFor(FormOptions.FieldNameForInputLengthValidation.Debenture));
+            .ContainsOnlyOneValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FormOptions.FieldNameForInputLengthValidation.Debenture));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

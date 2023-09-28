@@ -26,7 +26,7 @@ public class ProjectName : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(ProjectName), ValidationErrorMessage.ShortInputLengthExceeded)
+                .AddValidationError(nameof(ProjectName), ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.ProjectName))
                 .CheckErrors();
         }
 

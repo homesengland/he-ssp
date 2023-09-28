@@ -22,7 +22,7 @@ public class AbnormalCosts : ValueObject
             {
                 OperationResult
                 .New()
-                .AddValidationError(nameof(FundingViewModel.AbnormalCostsInfo), ValidationErrorMessage.LongInputLengthExceededFor(FieldNameForInputLengthValidation.AbnormalCostsInfo))
+                .AddValidationError(nameof(FundingViewModel.AbnormalCostsInfo), ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.AbnormalCostsInfo))
                 .CheckErrors();
             }
         }

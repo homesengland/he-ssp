@@ -20,7 +20,7 @@ public class Refinance : ValueObject
         {
             OperationResult
             .New()
-            .AddValidationError(nameof(FundingViewModel.RefinanceInfo), ValidationErrorMessage.LongInputLengthExceededFor(FieldNameForInputLengthValidation.RefinanceInfo))
+            .AddValidationError(nameof(FundingViewModel.RefinanceInfo), ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.RefinanceInfo))
             .CheckErrors();
         }
 

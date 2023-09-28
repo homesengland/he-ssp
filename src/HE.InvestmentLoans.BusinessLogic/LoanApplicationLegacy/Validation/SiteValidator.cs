@@ -18,7 +18,7 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                 item => item.Name != null,
                 () => RuleFor(item => item.Name)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
-                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceededFor(FieldNameForInputLengthValidation.ProjectName))));
+                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.ProjectName))));
 
         RuleSet(ProjectView.ManyHomes, () => RuleFor(item => item.ManyHomes)
             .Matches(@"^(?!0)[1-9]\d{0,3}$|^9999$")
@@ -83,7 +83,7 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                 item => item.TypeHomesOther != null,
                 () => RuleFor(item => item.TypeHomesOther)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
-                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceededFor(FieldNameForInputLengthValidation.OtherHomeType)));
+                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.OtherHomeType)));
         });
 
         RuleSet(ProjectView.Location, () =>
@@ -98,7 +98,7 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                     item => item.LocationCoordinates != null,
                     () => RuleFor(item => item.LocationCoordinates)
                         .Must(value => value!.Length <= MaximumInputLength.LongInput)
-                        .WithMessage(ValidationErrorMessage.LongInputLengthExceededFor(FieldNameForInputLengthValidation.LocationCoordinates)));
+                        .WithMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.LocationCoordinates)));
 
             When(
                 item => item.LocationOption == ProjectFormOption.LandRegistryTitleNumber,
@@ -110,14 +110,14 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                     item => item.LocationLandRegistry != null,
                     () => RuleFor(item => item.LocationLandRegistry)
                         .Must(value => value!.Length <= MaximumInputLength.LongInput)
-                        .WithMessage(ValidationErrorMessage.LongInputLengthExceededFor(FieldNameForInputLengthValidation.LocationLandRegistry)));
+                        .WithMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.LocationLandRegistry)));
         });
 
         RuleSet(ProjectView.PlanningRefEnter, () => When(
                 item => item.PlanningRefEnter != null,
                 () => RuleFor(item => item.PlanningRefEnter)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
-                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceededFor(FieldNameForInputLengthValidation.PlanningRefEnter))));
+                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.PlanningRefEnter))));
 
         RuleSet(ProjectView.GrantFundingMore, () =>
         {
@@ -131,19 +131,19 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                 item => item.GrantFundingSource != null,
                 () => RuleFor(item => item.GrantFundingSource)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
-                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceededFor(FieldNameForInputLengthValidation.GrantFundingSource)));
+                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingSource)));
 
             When(
                 item => item.GrantFundingName != null,
                 () => RuleFor(item => item.GrantFundingName)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
-                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceededFor(FieldNameForInputLengthValidation.GrantFundingName)));
+                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingName)));
 
             When(
                 item => item.GrantFundingPurpose != null,
                 () => RuleFor(item => item.GrantFundingPurpose)
                     .Must(value => value!.Length <= MaximumInputLength.LongInput)
-                    .WithMessage(ValidationErrorMessage.LongInputLengthExceededFor(FieldNameForInputLengthValidation.GrantFundingPurpose)));
+                    .WithMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingPurpose)));
         });
 
         RuleSet(ProjectView.ChargesDebt, () =>
@@ -158,7 +158,7 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                 item => item.ChargesDebtInfo != null,
                 () => RuleFor(item => item.ChargesDebtInfo)
                     .Must(value => value!.Length <= MaximumInputLength.LongInput)
-                    .WithMessage(ValidationErrorMessage.LongInputLengthExceededFor(FieldNameForInputLengthValidation.ChargesDebtInfo)));
+                    .WithMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.ChargesDebtInfo)));
         });
 
         RuleSet(ProjectView.Additional, () =>

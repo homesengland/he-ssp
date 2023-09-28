@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
@@ -16,6 +15,7 @@ using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Tests.TestFramework;
 using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using Xunit;
@@ -107,7 +107,7 @@ public class ProvideNameCommandHandlerTests : TestBase<ChangeProjectNameCommandH
 
         var result = await TestCandidate.Handle(_command, CancellationToken.None);
 
-        result.Errors.Should().ContainsOnlyOneErrorMessage(ValidationErrorMessage.ShortInputLengthExceeded);
+        result.Errors.Should().ContainsOnlyOneErrorMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.ProjectName));
     }
 
     [Fact]

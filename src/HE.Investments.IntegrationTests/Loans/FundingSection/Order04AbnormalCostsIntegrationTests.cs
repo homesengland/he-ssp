@@ -60,7 +60,7 @@ public class Order04AbnormalCostsIntegrationTests : IntegrationTest
         abnormalCostsPage
             .UrlEndWith(FundingPageUrls.AbnormalCostsSuffix)
             .HasTitle(FundingPageTitles.AbnormalCosts)
-            .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceededFor(FormOptions.FieldNameForInputLengthValidation.AbnormalCostsInfo));
+            .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FormOptions.FieldNameForInputLengthValidation.AbnormalCostsInfo));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
