@@ -16,7 +16,7 @@ public class WithdrawReason : ValueObject
             .AddValidationError(nameof(WithdrawReason), ValidationErrorMessage.EnterWhyYouWantToWithdrawApplication)
             .CheckErrors();
         }
-        else if (value!.Length >= MaximumInputLength.LongInput)
+        else if (value!.Length > MaximumInputLength.LongInput)
         {
             OperationResult
             .New()
