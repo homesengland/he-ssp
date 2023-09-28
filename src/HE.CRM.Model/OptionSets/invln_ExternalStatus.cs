@@ -51,7 +51,7 @@ namespace DataverseModel
 		HoldRequested = 858110004,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Induediligence = 858110013,
+		InDueDiligence = 858110013,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		LoanAvailable = 858110017,

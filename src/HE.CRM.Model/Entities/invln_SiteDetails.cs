@@ -58,6 +58,7 @@ namespace DataverseModel
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string ExchangeRate = "exchangerate";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_Address = "invln_address";
 			public const string invln_Affordablehousing = "invln_affordablehousing";
 			public const string invln_Completiondate = "invln_completiondate";
 			public const string invln_Conductedby = "invln_conductedby";
@@ -79,6 +80,8 @@ namespace DataverseModel
 			public const string invln_Numberofhomes = "invln_numberofhomes";
 			public const string invln_OtherTypeofhomes = "invln_othertypeofhomes";
 			public const string invln_Planningreferencenumber = "invln_planningreferencenumber";
+			public const string invln_Planningstatus = "invln_planningstatus";
+			public const string invln_Postcode = "invln_postcode";
 			public const string invln_Publicsectorfunding = "invln_publicsectorfunding";
 			public const string invln_Reason = "invln_reason";
 			public const string invln_Sitecoordinates = "invln_sitecoordinates";
@@ -91,6 +94,7 @@ namespace DataverseModel
 			public const string Id = "invln_sitedetailsid";
 			public const string invln_Sitename = "invln_sitename";
 			public const string invln_Siteownership = "invln_siteownership";
+			public const string invln_Totalbuildperiod = "invln_totalbuildperiod";
 			public const string invln_TotalDevelopmentCost = "invln_totaldevelopmentcost";
 			public const string invln_totaldevelopmentcost_Base = "invln_totaldevelopmentcost_base";
 			public const string invln_TotalGDV = "invln_totalgdv";
@@ -247,6 +251,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("ImportSequenceNumber");
 				this.SetAttributeValue("importsequencenumber", value);
 				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_address")]
+		public string invln_Address
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_address");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Address");
+				this.SetAttributeValue("invln_address", value);
+				this.OnPropertyChanged("invln_Address");
 			}
 		}
 		
@@ -565,6 +586,40 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_planningstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Planningstatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_planningstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Planningstatus");
+				this.SetAttributeValue("invln_planningstatus", value);
+				this.OnPropertyChanged("invln_Planningstatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_postcode")]
+		public string invln_Postcode
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_postcode");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Postcode");
+				this.SetAttributeValue("invln_postcode", value);
+				this.OnPropertyChanged("invln_Postcode");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_publicsectorfunding")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Publicsectorfunding
 		{
@@ -720,6 +775,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Siteownership");
 				this.SetAttributeValue("invln_siteownership", value);
 				this.OnPropertyChanged("invln_Siteownership");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalbuildperiod")]
+		public string invln_Totalbuildperiod
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_totalbuildperiod");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Totalbuildperiod");
+				this.SetAttributeValue("invln_totalbuildperiod", value);
+				this.OnPropertyChanged("invln_Totalbuildperiod");
 			}
 		}
 		

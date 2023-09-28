@@ -37,8 +37,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                     return (from la in ctx.invln_LoanapplicationSet
                             join cnt in ctx.ContactSet on la.invln_Contact.Id equals cnt.ContactId
                             where la.invln_Account.Id == accountId && cnt.invln_externalid == externalContactId &&
-                            la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Inactive &&
-                            la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Active && la.StateCode.Value != (int)invln_loanapplicationState.Inactive
+                            la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive
                             select la).ToList();
                 }
                 else
@@ -48,8 +47,7 @@ namespace HE.CRM.Common.Repositories.Implementations
                         return (from la in ctx.invln_LoanapplicationSet
                                 join cnt in ctx.ContactSet on la.invln_Contact.Id equals cnt.ContactId
                                 where la.invln_Account.Id == accountId && cnt.invln_externalid == externalContactId && la.invln_LoanapplicationId == loanApplicationGuid &&
-                                la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Inactive &&
-                                la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Active && la.StateCode.Value != (int)invln_loanapplicationState.Inactive
+                                la.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive
                                 select la).ToList();
                     }
                     else
@@ -65,8 +63,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             using (var ctx = new OrganizationServiceContext(service))
             {
                 return ctx.CreateQuery<invln_Loanapplication>()
-                    .Where(x => x.invln_Account.Id == accountId && x.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Inactive &&
-                            x.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive_Active && x.StateCode.Value != (int)invln_loanapplicationState.Inactive).ToList();
+                    .Where(x => x.invln_Account.Id == accountId && x.StatusCode.Value != (int)invln_Loanapplication_StatusCode.Inactive && x.StateCode.Value != (int)invln_loanapplicationState.Inactive).ToList();
             }
         }
 

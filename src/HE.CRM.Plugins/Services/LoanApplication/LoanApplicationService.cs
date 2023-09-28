@@ -336,86 +336,107 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 {
                     case (int)invln_Loanapplication_StatusCode.Draft:
                         statusLabel = "Draft";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Draft);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApplicationSubmitted:
                         statusLabel = "Application submitted";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationSubmitted);
                         break;
-                    case (int)invln_Loanapplication_StatusCode.Inactive_Active:
+                    case (int)invln_Loanapplication_StatusCode.Inactive:
                         statusLabel = "Inactive";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.NA);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApplicationUnderReview:
                         statusLabel = "Application under review";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationUnderReview);
                         break;
                     case (int)invln_Loanapplication_StatusCode.HoldRequested:
                         statusLabel = "Hold requested";
+                        pastFormStatus = "requested to be put on hold.";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.HoldRequested);
                         break;
                     case (int)invln_Loanapplication_StatusCode.Withdrawn:
                         statusLabel = "Withdrawn";
+                        pastFormStatus = "withdrawn";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Withdrawn);
                         break;
                     case (int)invln_Loanapplication_StatusCode.CashflowRequested:
                         statusLabel = "Cashflow requested";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.CashflowRequested);
                         break;
                     case (int)invln_Loanapplication_StatusCode.CashflowUnderReview:
                         statusLabel = "Cashflow under review";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.CashflowUnderReview);
                         break;
                     case (int)invln_Loanapplication_StatusCode.OnHold:
                         statusLabel = "On hold";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.OnHold);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ReferredBacktoApplicant:
                         statusLabel = "Reffered back to applicant";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ReferredBacktoApplicant);
                         break;
                     case (int)invln_Loanapplication_StatusCode.UnderReview:
                         statusLabel = "Under review";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.UnderReview);
                         break;
                     case (int)invln_Loanapplication_StatusCode.SentforApproval:
                         statusLabel = "Sent for approval";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.SentforApproval);
                         break;
                     case (int)invln_Loanapplication_StatusCode.NotApproved:
-                        statusLabel = "Not approved";
+                        statusLabel = "Not Approved";
+                        pastFormStatus = "been not approved and has been returned.";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.SentforApproval);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApprovedSubjecttoDueDiligence:
                         statusLabel = "Approved subject to due diligence";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApprovedSubjecttoDueDiligence);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApplicationDeclined:
                         statusLabel = "Application declined";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationDeclined);
                         break;
-                    case (int)invln_Loanapplication_StatusCode.Induediligence:
+                    case (int)invln_Loanapplication_StatusCode.InDueDiligence:
                         statusLabel = "In due diligence";
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Induediligence);
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
                         break;
                     case (int)invln_Loanapplication_StatusCode.SentforPreCompleteApproval:
                         statusLabel = "Sent for pre complete approval";
-                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Induediligence);
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApprovedSubjectToContract:
-                        statusLabel = "Approved subject to contract";
+                        statusLabel = "Approved Subject to Contract";
+                        pastFormStatus = "approved subject to contract.";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApprovedSubjecttoContract);
                         break;
                     case (int)invln_Loanapplication_StatusCode.CPsSatisfied:
                         statusLabel = "CPs Satisfied";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.CPsSatisfied);
                         break;
                     case (int)invln_Loanapplication_StatusCode.AwaitingCPSatisfaction:
                         statusLabel = "Awaiting CP satisfaction";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ContractSignedSubjecttoCP);
                         break;
                     case (int)invln_Loanapplication_StatusCode.LoanAvailable:
                         statusLabel = "Loan available";
+                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.LoanAvailable);
                         break;
                     default:
@@ -456,7 +477,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                             applicationId = preImage.invln_Name,
                             applicationUrl = orgUrl + "/main.aspx?appid=2576a100-db47-ee11-be6f-002248c653e1&pagetype=entityrecord&etn=invln_loanapplication&id=" + target.Id,
                             subject = subject,
-                            statusAtBody = "changed to " + statusLabel
+                            statusAtBody = pastFormStatus
                         }
                     };
 
@@ -492,60 +513,79 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 {
                     case (int)invln_ExternalStatus.Draft:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Draft);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.ApplicationSubmitted:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationSubmitted);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.NA:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Inactive_Active);
+                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Inactive);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Inactive);
                         break;
                     case (int)invln_ExternalStatus.ApplicationUnderReview:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationUnderReview);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.HoldRequested:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.HoldRequested);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.Withdrawn:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Withdrawn);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Inactive);
                         break;
                     case (int)invln_ExternalStatus.CashflowRequested:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.CashflowRequested);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.CashflowUnderReview:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.CashflowUnderReview);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.OnHold:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.OnHold);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.ReferredBacktoApplicant:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ReferredBacktoApplicant);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.UnderReview:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.UnderReview);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.SentforApproval:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.SentforApproval);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.ApprovedSubjecttoDueDiligence:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApprovedSubjecttoDueDiligence);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.ApplicationDeclined:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationDeclined);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
-                    case (int)invln_ExternalStatus.Induediligence:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Induediligence);
+                    case (int)invln_ExternalStatus.InDueDiligence:
+                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.InDueDiligence);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.ApprovedSubjecttoContract:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApprovedSubjectToContract);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.ContractSignedSubjecttoCP:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.AwaitingCPSatisfaction);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.LoanAvailable:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.LoanAvailable);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     case (int)invln_ExternalStatus.CPsSatisfied:
                         target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.CPsSatisfied);
+                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     default:
                         break;
