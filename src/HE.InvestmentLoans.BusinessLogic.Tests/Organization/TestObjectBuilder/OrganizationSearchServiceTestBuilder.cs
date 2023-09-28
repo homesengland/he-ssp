@@ -1,15 +1,9 @@
 extern alias Org;
-using HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
-using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
+
 using HE.InvestmentLoans.Common.Tests.TestFramework;
-using HE.InvestmentLoans.Contract.Organization;
-using HE.InvestmentLoans.Contract.Organization.ValueObjects;
-using MediatR;
 using Moq;
-using Org.HE.Common.IntegrationModel.PortalIntegrationModel;
 using Org.HE.Investments.Organisation.Contract;
 using Org.HE.Investments.Organisation.Services;
-using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestObjectBuilder;
 
