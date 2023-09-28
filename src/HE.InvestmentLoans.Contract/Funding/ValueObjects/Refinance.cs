@@ -16,7 +16,7 @@ public class Refinance : ValueObject
             .AddValidationError(nameof(FundingViewModel.RefinanceInfo), ValidationErrorMessage.EnterMoreDetails)
             .CheckErrors();
         }
-        else if (additionalInformation!.Length >= MaximumInputLength.LongInput)
+        else if (additionalInformation!.Length > MaximumInputLength.LongInput)
         {
             OperationResult
             .New()
