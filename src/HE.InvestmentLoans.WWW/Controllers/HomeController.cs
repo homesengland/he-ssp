@@ -6,7 +6,6 @@ using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
