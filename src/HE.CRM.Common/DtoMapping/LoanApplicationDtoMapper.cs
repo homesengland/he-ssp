@@ -115,13 +115,16 @@ namespace HE.CRM.Common.DtoMapping
                 loanApplicationExternalStatus = loanApplication.invln_ExternalStatus?.Value,
 
                 name = loanApplication.invln_Name,
-                accountId = loanApplication.invln_Account.Id,
-                loanApplicationId = loanApplication.invln_LoanapplicationId.ToString(),
+                loanApplicationId = loanApplication.invln_LoanapplicationId?.ToString(),
                 externalId = externalContactId,
                 source = loanApplication.invln_source,
                 planningPermissionStatus = loanApplication.invln_planningpermissionstatus,
                 startDate = loanApplication.invln_startdate
             };
+            if(loanApplication.invln_Account != null)
+            {
+                loanApplicationDto.accountId = loanApplication.invln_Account.Id;
+            }
 
             if (loanApplication.invln_ProjectGDV != null)
             {
@@ -141,8 +144,11 @@ namespace HE.CRM.Common.DtoMapping
                     ContactLastName = contact.LastName,
                     ContactExternalId = contact.invln_externalid,
                     ContactTelephoneNumber = contact.Telephone1,
-                    AccountId = loanApplication.invln_Account.Id
                 };
+                if(loanApplication.invln_Account != null)
+                {
+                    loanApplicationDto.LoanApplicationContact.AccountId = loanApplication.invln_Account.Id;
+                }
             }
 
             return loanApplicationDto;

@@ -33,6 +33,7 @@ internal class SearchOrganizationsQueryHandler : IRequestHandler<SearchOrganizat
             Name = request.SearchPhrase,
             TotalOrganizations = companyHousesResult.TotalItems,
             Page = request.Page,
+            ItemsPerPage = request.PageSize,
         };
 
         return new SearchOrganisationsQueryResponse(viewmodel);

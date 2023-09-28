@@ -22,4 +22,6 @@ public class OrganizationViewModel
     public int TotalOrganizations { get; set; }
 
     public int Page { get; set; }
+
+    public int ItemsPerPage { get; set; }
 }

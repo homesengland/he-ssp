@@ -42,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HE.InvestmentLoans.Common.Contract\HE.InvestmentLoans.Common.Contract.csproj" />
     <ProjectReference Include="..\HE.InvestmentLoans.Contract\HE.InvestmentLoans.Contract.csproj" />
     <ProjectReference Include="..\HE.InvestmentLoans.CRM\HE.InvestmentLoans.CRM.csproj" />
     <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj">

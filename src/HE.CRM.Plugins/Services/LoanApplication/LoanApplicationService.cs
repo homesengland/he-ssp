@@ -52,7 +52,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
         #region Public Methods
 
-        public string GetLoanApplicationsForAccountAndContact(string externalContactId, string accountId, string loanApplicationId = null)
+        public string GetLoanApplicationsForAccountAndContact(string externalContactId, string accountId, string loanApplicationId = null, string fieldsToRetrieve = null)
         {
             List<LoanApplicationDto> entityCollection = new List<LoanApplicationDto>();
             if (Guid.TryParse(accountId, out Guid accountGuid))
@@ -68,7 +68,12 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 else
                 {
                     TracingService.Trace("regular user, not admin");
-                    loanApplicationsForAccountAndContact = _loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId);
+                    string attributes = null;
+                    if (!string.IsNullOrEmpty(fieldsToRetrieve))
+                    {
+                        attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+                    }
+                    loanApplicationsForAccountAndContact = _loanApplicationRepository.GetLoanApplicationsForGivenAccountAndContact(accountGuid, externalContactId, loanApplicationId, attributes);
                 }
                 this.TracingService.Trace("GetLoanApplicationsForGivenAccountAndContact");
                 this.TracingService.Trace($"{loanApplicationsForAccountAndContact.Count}");
@@ -611,6 +616,20 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
 
             return true;
+        }
+
+        private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
+        {
+            var fields = fieldsToRetrieve.Split(',');
+            var generatedAttribuesFetchXml = "";
+            if (fields.Length > 0)
+            {
+                foreach (var field in fields)
+                {
+                    generatedAttribuesFetchXml += $"<attribute name=\"{field}\" />";
+                }
+            }
+            return generatedAttribuesFetchXml;
         }
 
         #endregion

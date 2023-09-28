@@ -20,11 +20,11 @@ public class Debenture : ValueObject
         if (exists && holderName.Length > MaximumInputLength.LongInput)
         {
             OperationResult.New()
-                .AddValidationError("ChargesDebtCompany", ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.Holder))
+                .AddValidationError("ChargesDebtCompany", ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.Debenture))
                 .CheckErrors();
         }
 
-        Holder = holderName;
+        Holder = exists ? holderName : string.Empty;
         Exists = exists;
     }
 

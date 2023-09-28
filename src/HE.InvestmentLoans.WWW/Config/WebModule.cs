@@ -2,6 +2,8 @@ using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.Config;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Authorization;
+using HE.InvestmentLoans.Common.Contract.Services;
+using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 using HE.InvestmentLoans.Common.Infrastructure;
 using HE.InvestmentLoans.CRM.Extensions;
 using HE.InvestmentLoans.WWW.Models;
@@ -29,6 +31,7 @@ public static class WebModule
         serviceCollections.AddScoped<IWebRoleRepository, WebRoleRepository>();
         serviceCollections.AddScoped<IPortalPermissionRepository, PortalPermissionRepository>();
         serviceCollections.AddScoped<IOrganizationService, OrganizationService>();
+        serviceCollections.AddScoped<INotificationService, NotificationService>();
 
         serviceCollections.AddOrganizationsModule();
     }

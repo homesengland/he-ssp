@@ -7,19 +7,13 @@
 @{
     var securityWorkflow = new SecurityWorkflow(Model);
     var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
-    var deleteName = ViewBag.AdditionalData;
-    var deleteNotification = new NotificationModel("Success", $"{deleteName} removed", true);
 }
-
 
 <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.ID })" text="Back to application dashboard" class="govuk-grid-column-full"></gds-back-link>
 
-@if (deleteName != null)
-{
-    <gds-div-grid-column-two-thirds>
-        @await Html.PartialAsync("_Notification", deleteNotification)
-    </gds-div-grid-column-two-thirds>
-}
+<gds-div-grid-column-two-thirds>
+    @await Html.PartialAsync("_Notification")
+</gds-div-grid-column-two-thirds>
 
 <gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-2 govuk-!-margin-top-8 govuk-grid-column-full">
     Development loan application

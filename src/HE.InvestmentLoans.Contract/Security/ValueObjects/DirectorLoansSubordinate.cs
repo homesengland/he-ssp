@@ -11,26 +11,29 @@ public class DirectorLoansSubordinate : ValueObject
     {
         CanBeSubordinated = canBeSubordinated;
 
-        if (!CanBeSubordinated)
+        if (CanBeSubordinated)
         {
-            if (reasonWhyCannotBeSubordinated.IsNotProvided())
-            {
-                OperationResult
-                    .New()
-                    .AddValidationError("DirLoansSub", ValidationErrorMessage.EnterMoreDetails)
-                    .CheckErrors();
-            }
-
-            if (reasonWhyCannotBeSubordinated.Length > MaximumInputLength.LongInput)
-            {
-                OperationResult
-                    .New()
-                    .AddValidationError("DirLoansSub", ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.ReasonWhyCannotBeSubordinated))
-                    .CheckErrors();
-            }
-
-            ReasonWhyCannotBeSubordinated = reasonWhyCannotBeSubordinated;
+            ReasonWhyCannotBeSubordinated = string.Empty;
+            return;
         }
+
+        if (reasonWhyCannotBeSubordinated.IsNotProvided())
+        {
+            OperationResult
+                .New()
+                .AddValidationError("DirLoansSub", ValidationErrorMessage.EnterMoreDetails)
+                .CheckErrors();
+        }
+
+        if (reasonWhyCannotBeSubordinated.Length > MaximumInputLength.LongInput)
+        {
+            OperationResult
+                .New()
+                .AddValidationError("DirLoansSub", ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.SubordinatedLoans))
+                .CheckErrors();
+        }
+
+        ReasonWhyCannotBeSubordinated = reasonWhyCannotBeSubordinated;
     }
 
     public bool CanBeSubordinated { get; }

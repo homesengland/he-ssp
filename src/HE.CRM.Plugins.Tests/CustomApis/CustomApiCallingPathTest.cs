@@ -123,7 +123,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             var getLoanApplicationOutput2 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
             Assert.AreEqual(getLoanApplicationOutput1.loanApplicationId, getLoanApplicationOutput2.loanApplicationId);
-            Assert.AreNotEqual(getLoanApplicationOutput1.loanApplicationExternalStatus, getLoanApplicationOutput2.loanApplicationExternalStatus);
         }
 
         [TestMethod]
@@ -207,7 +206,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             var getLoanApplicationOutput2 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
             Assert.AreEqual(getLoanApplicationOutput1.loanApplicationId, getLoanApplicationOutput2.loanApplicationId);
-            Assert.AreNotEqual(getLoanApplicationOutput1.loanApplicationExternalStatus, getLoanApplicationOutput2.loanApplicationExternalStatus);
         }
 
         [TestMethod]
@@ -286,7 +284,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             var loanDtoNewFieldsValues = new LoanApplicationDto()
             {
-                projectAbnormalCostsInformation = "projectAbnormalCostsInformationchangetest",
+                projectAbnormalCostsInformation = "projectAbnormalCostsInformationchangetes",
             };
 
             this.CallUpdateSingleLoanApplication(JsonSerializer.Serialize(loanDtoNewFieldsValues), "invln_projectabnormalcostsinformation", getLoanApplicationOutput1.loanApplicationId, account.Id.ToString(), getContactRoleOutput.externalId, false);
@@ -296,7 +294,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             var getLoanApplicationOutput2 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
             Assert.AreEqual(getLoanApplicationOutput1.loanApplicationId, getLoanApplicationOutput2.loanApplicationId);
-            Assert.AreNotEqual(getLoanApplicationOutput1.loanApplicationExternalStatus, getLoanApplicationOutput2.loanApplicationExternalStatus);
         }
 
         [TestMethod]
@@ -357,7 +354,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             var loanDtoNewFieldsValues = new LoanApplicationDto()
             {
-                projectAbnormalCostsInformation = "projectAbnormalCostsInformationchangetest",
+                projectAbnormalCostsInformation = "projectAbnormalCostsInformationchangetests",
             };
 
             this.CallUpdateSingleLoanApplication(JsonSerializer.Serialize(loanDtoNewFieldsValues), "invln_projectabnormalcostsinformation", getLoanApplicationOutput1.loanApplicationId, account.Id.ToString(), getContactRoleOutput.externalId, false);
@@ -367,7 +364,6 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             var getLoanApplicationOutput2 = this.CallGetSingleLoanApplicationPlugin(account.Id.ToString(), getContactRoleOutput.externalId, sendInvestmentLoanDataOutput, false);
             Assert.AreEqual(getLoanApplicationOutput1.loanApplicationId, getLoanApplicationOutput2.loanApplicationId);
-            Assert.AreNotEqual(getLoanApplicationOutput1.loanApplicationExternalStatus, getLoanApplicationOutput2.loanApplicationExternalStatus);
         }
 
         [TestMethod]

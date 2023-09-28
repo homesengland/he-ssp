@@ -49,7 +49,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Pagination
                 AddPreviousButton(contentBuilder);
             }
 
-            AddPagebuttons(contentBuilder, totalPages);
+            AddPageButtons(contentBuilder, totalPages);
 
             if (Page < totalPages)
             {
@@ -59,7 +59,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Pagination
             output.Content.SetHtmlContent(contentBuilder.ToString());
         }
 
-        private void AddPagebuttons(StringBuilder contentBuilder, int totalPages)
+        private void AddPageButtons(StringBuilder contentBuilder, int totalPages)
         {
             contentBuilder.Append("<ul class=\"govuk-pagination__list\">");
 
