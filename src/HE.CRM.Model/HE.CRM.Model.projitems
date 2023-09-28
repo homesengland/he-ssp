@@ -128,6 +128,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Messagetype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Permission.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_PlanningPermissionStatusSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Planningstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_portal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Publicsectorfunding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Rating.cs" />

@@ -68,13 +68,10 @@ namespace DataverseModel
 		HoldRequested = 858110005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Inactive_Active = 858110002,
+		Inactive = 2,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Inactive_Inactive = 2,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Induediligence = 858110015,
+		InDueDiligence = 858110015,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		LoanAvailable = 858110020,
@@ -98,7 +95,7 @@ namespace DataverseModel
 		UnderReview = 858110010,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Withdrawn = 858110004,
+		Withdrawn = 858110021,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]

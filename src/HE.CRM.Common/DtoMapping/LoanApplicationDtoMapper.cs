@@ -193,7 +193,7 @@ namespace HE.CRM.Common.DtoMapping
                 case "under review":
                     return new OptionSetValue((int)invln_ExternalStatus.UnderReview);
                 case "in due diligence":
-                    return new OptionSetValue((int)invln_ExternalStatus.Induediligence);
+                    return new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
                 case "contract signed subject to cp":
                     return new OptionSetValue((int)invln_ExternalStatus.ContractSignedSubjecttoCP);
                 case "cps satisfied":
@@ -235,7 +235,7 @@ namespace HE.CRM.Common.DtoMapping
                     return "submitted";
                 case (int)invln_ExternalStatus.UnderReview:
                     return "under review";
-                case (int)invln_ExternalStatus.Induediligence:
+                case (int)invln_ExternalStatus.InDueDiligence:
                     return "in due diligence";
                 case (int)invln_ExternalStatus.ContractSignedSubjecttoCP:
                     return "contract signed subject to cp";
