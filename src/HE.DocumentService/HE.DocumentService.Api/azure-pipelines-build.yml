@@ -12,7 +12,7 @@ trigger:
     - src/HE.DocumentService/*
 
 pool: "vmss-ado-chs-nonprod-001"
-          
+
 resources:
   repositories:
   - repository: he-invst-deployment
