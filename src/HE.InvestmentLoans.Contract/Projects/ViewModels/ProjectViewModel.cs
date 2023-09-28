@@ -21,4 +21,8 @@ public class ProjectViewModel
     public string? EstimatedStartMonth { get; set; }
 
     public string? EstimatedStartYear { get; set; }
+
+    public string? HomesCount { get; set; }
+
+    public string[]? HomeTypes { get; set; }
 }

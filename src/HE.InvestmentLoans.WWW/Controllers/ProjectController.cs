@@ -74,7 +74,7 @@ public class ProjectController : WorkflowController<ProjectState>
     }
 
     [HttpPost("{projectId}/start-date")]
-    [WorkflowState(ProjectState.Name)]
+    [WorkflowState(ProjectState.StartDate)]
     public async Task<IActionResult> StartDate(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(new ProvideStartDateCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HasEstimatedStartDate, model.EstimatedStartDay, model.EstimatedStartMonth, model.EstimatedStartYear), token);
@@ -84,6 +84,56 @@ public class ProjectController : WorkflowController<ProjectState>
             ModelState.AddValidationErrors(result);
 
             return View("StartDate", model);
+        }
+
+        return await Continue(new { id, projectId });
+    }
+
+    [HttpGet("{projectId}/many-homes")]
+    [WorkflowState(ProjectState.ManyHomes)]
+    public async Task<IActionResult> ManyHomes(Guid id, Guid projectId)
+    {
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
+    }
+
+    [HttpPost("{projectId}/many-homes")]
+    [WorkflowState(ProjectState.ManyHomes)]
+    public async Task<IActionResult> ManyHomesPost(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    {
+        var result = await _mediator.Send(new ProvideHomesCountCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HomesCount), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("ManyHomes", model);
+        }
+
+        return await Continue(new { id, projectId });
+    }
+
+    [HttpGet("{projectId}/type-homes")]
+    [WorkflowState(ProjectState.TypeHomes)]
+    public async Task<IActionResult> TypeHomes(Guid id, Guid projectId)
+    {
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
+    }
+
+    [HttpPost("{projectId}/type-homes")]
+    [WorkflowState(ProjectState.TypeHomes)]
+    public async Task<IActionResult> TypeHomesPost(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    {
+        var result = await _mediator.Send(new ProvideHomeTypesCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HomeTypes), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("TypeHomes", model);
         }
 
         return await Continue(new { id, projectId });

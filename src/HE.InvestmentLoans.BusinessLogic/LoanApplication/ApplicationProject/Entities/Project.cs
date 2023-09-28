@@ -15,12 +15,16 @@ public class Project
         IsNewlyCreated = true;
     }
 
-    public Project(ProjectId id, ProjectName name, StartDate startDate)
+    public Project(
+        ProjectId id,
+        ProjectName name,
+        StartDate startDate,
+        HomesCount homesCount)
     {
         Id = id;
         Name = name;
         StartDate = startDate;
-
+        HomesCount = homesCount;
         IsNewlyCreated = false;
     }
 
@@ -29,6 +33,10 @@ public class Project
     public ProjectName Name { get; private set; }
 
     public StartDate StartDate { get; private set; }
+
+    public HomesCount HomesCount { get; private set; }
+
+    public ICollection<HomeType> HomeTypes { get; private set; }
 
     public bool IsNewlyCreated { get; private set; }
 
@@ -45,8 +53,6 @@ public class Project
     public string? SitePurchaseFrom { get; set; }
 
     public bool? Ownership { get; set; }
-
-    public string? ManyHomes { get; set; }
 
     public string? GrantFunding { get; set; }
 
@@ -109,6 +115,17 @@ public class Project
     {
         StartDate = startDate;
     }
+
+    public void ProvideHomesCount(HomesCount homesCount)
+    {
+        HomesCount = homesCount;
+    }
+
+    public void ProvideHomeTypes(ICollection<HomeType> homeTypes)
+    {
+        HomeTypes = homeTypes;
+    }
+
 
     public void MarkAsDeleted()
     {

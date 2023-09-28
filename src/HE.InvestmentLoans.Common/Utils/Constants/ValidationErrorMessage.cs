@@ -74,6 +74,10 @@ public static class ValidationErrorMessage
 
     public const string ProjectNameIsEmpty = "Project name cannot be empty";
 
+    public const string EmptyHomesCount = "Enter a build homes count";
+
+    public const string NotEnoughHomesCount = "Homes England provide loans to developers building more than 5 homes";
+
     public const string ShortInputLengthExceeded = "Your input cannot be longer than 100 characters";
 
     public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
