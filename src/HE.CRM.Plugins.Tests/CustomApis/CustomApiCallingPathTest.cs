@@ -284,7 +284,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
 
             var loanDtoNewFieldsValues = new LoanApplicationDto()
             {
-                projectAbnormalCostsInformation = "projectAbnormalCostsInformationchangetest",
+                projectAbnormalCostsInformation = "projectAbnormalCostsInformationchangetes",
             };
 
             this.CallUpdateSingleLoanApplication(JsonSerializer.Serialize(loanDtoNewFieldsValues), "invln_projectabnormalcostsinformation", getLoanApplicationOutput1.loanApplicationId, account.Id.ToString(), getContactRoleOutput.externalId, false);
