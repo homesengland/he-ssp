@@ -1,26 +1,29 @@
 @using HE.InvestmentLoans.Common.Extensions;
-@using HE.InvestmentLoans.WWW.Controllers;
-@using HE.InvestmentLoans.WWW.Helpers.Organisation;
-@using HE.InvestmentLoans.WWW.Utils.ValueObjects;
+@using HE.InvestmentLoans.WWW.Views.Organization
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Pagination
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @model HE.InvestmentLoans.Contract.Organization.OrganizationViewModel;
 @{
     ViewData["Title"] = "Organization Select";
 
-    var controllerName = new ControllerName(nameof(OrganizationController));
 }
 
 <gds-div-grid-column-two-thirds>
     <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganization", "Organization")">Back</gds-back-link>
 
         <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
-            Select your organisation
+            @OrganizationPageTitles.SelectYourOrganisation
         </gds-h1>
 
         <gds-ul non-bullet-list>
             @foreach (var organization in Model.Organizations)
             {
                 <li>
-                <gds-link href="@Url.Action("SelectOrganization", "Organization", new { organizationNumber = organization.CompaniesHouseNumber })" id=@($"company-link-{organization.CompaniesHouseNumber}")><b>@organization.Name</b></gds-link><br />
+                <gds-link href="@Url.Action("ConfirmOrganization", "Organization", new { organizationNumber = organization.CompaniesHouseNumber })" id=@($"company-link-{organization.CompaniesHouseNumber}")><b>@organization.Name</b></gds-link><br />
                     @if (organization.Street.IsProvided())
                     {
                         <span class="govuk-body">@organization.Street</span><br />
@@ -31,7 +34,7 @@
                     }
                     @if (organization.Street.IsProvided())
                     {
-                        <span class="govuk-body">@organization.Code</span><br/>
+                        <span class="govuk-body">@organization.PostalCode</span><br/>
                     }
                     <p class="govuk-body govuk-!-margin-bottom-6">Companies house number: @organization.CompaniesHouseNumber</p>
                 </li>
@@ -43,9 +46,8 @@
                 The organisation is not listed above, enter details manually
             </gds-link>
         </gds-p>
+
         <gds-pagination base-url="/organization/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.ItemsPerPage" total-items="@Model.TotalOrganizations"></gds-pagination>
 
-        <button class="govuk-button" data-module="govuk-button" name="action" type="submit">
-            Continue
-        </button>
+
 </gds-div-grid-column-two-thirds>

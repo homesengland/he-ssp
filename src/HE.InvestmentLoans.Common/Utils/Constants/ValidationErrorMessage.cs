@@ -10,6 +10,8 @@ public static class ValidationErrorMessage
 
     public const string InvalidValue = "Provided invalid value";
 
+    public const string ChooseYourAnswer = "Choose your answer";
+
     public const string EnterMoreDetailsForRefinanceExitStrategy = "Enter more detail about your refinance exit strategy";
 
     public const string ManyHomesAmount = "The amount of homes must be a number containing no more than 4 digits (1 - 9999)";

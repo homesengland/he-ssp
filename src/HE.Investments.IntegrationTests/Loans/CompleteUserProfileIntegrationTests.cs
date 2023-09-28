@@ -1,8 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
+using HE.InvestmentLoans.WWW.Views.Organization;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -82,7 +84,7 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         // then
         organizationSearchPage
             .UrlEndWith(OrganizationPagesUrls.OrganizationSearch)
-            .HasTitle("Search for your organisation");
+            .HasTitle(OrganizationPageTitles.SearchForYourOrganisation);
 
         SetSharedData(SharedKeys.CurrentPageKey, organizationSearchPage);
     }
@@ -97,14 +99,14 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         // then
         organizationSearchPage
             .UrlEndWith(OrganizationPagesUrls.OrganizationSearch)
-            .HasTitle("Search for your organisation");
+            .HasTitle(OrganizationPageTitles.SearchForYourOrganisation);
 
         SetSharedData(SharedKeys.CurrentPageKey, organizationSearchPage);
     }
 
     [SkippableFact(Skip = LoansConfig.SkipTest)]
     [Order(5)]
-    public async Task Order06_ShouldSearchOrganization()
+    public async Task Order05_ShouldSearchOrganization()
     {
         // given
         var organizationSearchPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
@@ -119,21 +121,42 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         // then
         organizationSearchResultPage
             .UrlWithoutQueryEndsWith(OrganizationPagesUrls.SearchOrganizationResult)
-            .HasTitle("Select your organisation");
+            .HasTitle(OrganizationPageTitles.SelectYourOrganisation);
 
         SetSharedData(SharedKeys.CurrentPageKey, organizationSearchResultPage);
     }
 
     [SkippableFact(Skip = LoansConfig.SkipTest)]
     [Order(6)]
-    public async Task Order07_ShouldSelectOrganizationAndNavigateToOrganizationDashboardPage()
+    public async Task Order06_ShouldSelectOrganizationAndNavigateToConfirmPage()
     {
         // given
         var organizationSearchResultPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
 
         // when
         organizationSearchResultPage.HasAnchor($"company-link-{UserData.OrganizationRegistrationNumber}", out var selectOrganizationLink);
-        var dashboardPage = await TestClient.NavigateTo(selectOrganizationLink);
+        var confirmationPage = await TestClient.NavigateTo(selectOrganizationLink);
+
+        // then
+        confirmationPage
+            .UrlEndWith(OrganizationPagesUrls.ConfirmOrganization(UserData.OrganizationRegistrationNumber))
+            .HasTitle(OrganizationPageTitles.ConfirmYourSelection);
+
+        SetSharedData(SharedKeys.CurrentPageKey, confirmationPage);
+    }
+
+    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [Order(7)]
+    public async Task Order07_ShouldConfirmOrganizationAndNavigateToDashboardPage()
+    {
+        // given
+        var confirmationPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
+
+        // when
+        confirmationPage.HasGdsSubmitButton("continue-button", out var continueButton);
+        var dashboardPage = await TestClient.SubmitButton(
+            continueButton,
+            new Dictionary<string, string> { { "Response", CommonResponse.Yes } });
 
         // then
         dashboardPage

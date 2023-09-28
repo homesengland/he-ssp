@@ -7,4 +7,6 @@ public static class OrganizationPagesUrls
     public const string OrganizationSearch = "organization/search";
 
     public const string SearchOrganizationResult = "organization/search/result";
+
+    public static string ConfirmOrganization(string organizationNumber) => $"organization/{organizationNumber}/confirm";
 }
