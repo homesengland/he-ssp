@@ -2,8 +2,8 @@ using System.Linq;
 using System.Security.Policy;
 using System.Threading;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Repositories;
+namespace HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 
 public class ApplicationProjectsRepository : IApplicationProjectsRepository
 {

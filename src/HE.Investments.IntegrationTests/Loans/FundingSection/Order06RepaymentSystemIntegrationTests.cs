@@ -60,7 +60,7 @@ public class Order06RepaymentSystemIntegrationTests : IntegrationTest
         repaymentSystemPage
             .UrlEndWith(FundingPageUrls.RepaymentSystemSuffix)
             .HasTitle(FundingPageTitles.RepaymentSystem)
-            .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceededFor(FormOptions.FieldNameForInputLengthValidation.RefinanceInfo));
+            .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FormOptions.FieldNameForInputLengthValidation.RefinanceInfo));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

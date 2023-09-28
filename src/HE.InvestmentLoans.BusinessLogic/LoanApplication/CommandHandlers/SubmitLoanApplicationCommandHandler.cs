@@ -39,6 +39,6 @@ public class SubmitLoanApplicationCommandHandler : IRequestHandler<SubmitLoanApp
         // Added temporarily until saving every section to crm is implemented
         await _loanApplicationRepository.Save(loanApplication.LegacyModel, await _loanUserContext.GetSelectedAccount());
 
-        await loanApplication.Submit(_canSubmitLoanApplication, cancellationToken);
+        await loanApplication.Submit(_canSubmitLoanApplication, await _loanUserContext.GetSelectedAccount(), cancellationToken);
     }
 }

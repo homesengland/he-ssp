@@ -1,10 +1,12 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Security.CommandHandler;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
 public class ProjectCommandHandlerBase
@@ -13,10 +15,13 @@ public class ProjectCommandHandlerBase
 
     private readonly ILoanUserContext _loanUserContext;
 
-    public ProjectCommandHandlerBase(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext)
+    private readonly ILogger<ProjectCommandHandlerBase> _logger;
+
+    public ProjectCommandHandlerBase(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger)
     {
         _repository = repository;
         _loanUserContext = loanUserContext;
+        _logger = logger;
     }
 
     protected async Task<OperationResult> Perform(Action<Project> action, LoanApplicationId loanApplicationId, ProjectId projectId, CancellationToken cancellationToken)
@@ -35,6 +40,8 @@ public class ProjectCommandHandlerBase
         }
         catch (DomainValidationException domainValidationException)
         {
+            _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
+
             return domainValidationException.OperationResult;
         }
 

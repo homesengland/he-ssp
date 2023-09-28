@@ -1,10 +1,5 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Repositories;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
@@ -24,10 +19,9 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
 
     public async Task<OperationResult<ProjectId>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
-        var applicationProjects = await _applicationProjectsRepository.GetById(request.Id, await _loanUserContext.GetSelectedAccount(), cancellationToken)
-            ?? throw new NotFoundException(nameof(ApplicationProjects), request.Id);
+        var applicationProjects = await _applicationProjectsRepository.GetById(request.Id, await _loanUserContext.GetSelectedAccount(), cancellationToken);
 
-        var projectId = applicationProjects.AddProject();
+        var projectId = applicationProjects.AddEmptyProject();
 
         await _applicationProjectsRepository.SaveAsync(applicationProjects, projectId, await _loanUserContext.GetSelectedAccount(), cancellationToken);
 

@@ -79,7 +79,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
         // then
         dirLoansSubPage
             .UrlEndWith(SecurityPageUrls.DirLoansSubSuffix)
-            .HasOneValidationMessages(ValidationErrorMessage.LongInputLengthExceededFor(FieldNameForInputLengthValidation.SubordinatedLoans));
+            .HasOneValidationMessages(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.SubordinatedLoans));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

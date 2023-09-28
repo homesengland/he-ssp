@@ -24,4 +24,5 @@ public static class FieldNameForInputLengthValidation
     public const string AbnormalCostsInfo = "Abnormal costs information";
     public const string RefinanceInfo = "Refinance";
     public const string WithdrawReason = "Withdraw reason";
+    public const string StartDate = "build start date";
 }

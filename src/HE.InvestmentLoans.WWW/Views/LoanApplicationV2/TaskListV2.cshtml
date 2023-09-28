@@ -9,7 +9,6 @@
 @{
     var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
     var deleteName = ViewBag.AdditionalData;
-    var deleteNotification = new NotificationModel("Success", $"{deleteName} removed", true);
 }
 
 
@@ -18,7 +17,7 @@
 @if (deleteName != null)
 {
     <gds-div-grid-column-two-thirds>
-        @await Html.PartialAsync("_Notification", deleteNotification)
+        @await Html.PartialAsync("_Notification")
     </gds-div-grid-column-two-thirds>
 }
 
