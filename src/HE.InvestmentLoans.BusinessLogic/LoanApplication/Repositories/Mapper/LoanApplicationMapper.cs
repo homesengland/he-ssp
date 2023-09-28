@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
@@ -59,8 +60,8 @@ public static class LoanApplicationMapper
     {
         return new FundingViewModel
         {
-            GrossDevelopmentValue = loanApplicationDto.projectGdv.ToString(),
-            TotalCosts = loanApplicationDto.projectEstimatedTotalCost.ToString(),
+            GrossDevelopmentValue = loanApplicationDto.projectGdv?.ToString("0.##", CultureInfo.InvariantCulture),
+            TotalCosts = loanApplicationDto.projectEstimatedTotalCost?.ToString("0.##", CultureInfo.InvariantCulture),
             AbnormalCosts = loanApplicationDto.projectAbnormalCosts.MapToCommonResponse(),
             AbnormalCostsInfo = loanApplicationDto.projectAbnormalCostsInformation,
             PrivateSectorFunding = loanApplicationDto.privateSectorApproach.MapToCommonResponse(),
