@@ -5,7 +5,7 @@ using HE.DocumentService.SharePoint.Configurartion;
 using HE.DocumentService.SharePoint.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args); 
 
 // Add services to the container.
 
