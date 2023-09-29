@@ -1,43 +1,33 @@
 @using HE.InvestmentLoans.Contract.Application.Queries;
 @using HE.InvestmentLoans.Contract.Application.Enums;
+@using HE.InvestmentLoans.Common.Extensions
 @model GetDashboardDataQueryResponse
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <gds-column width="ColumnWidth.Full">
-    <div class ="govuk-!-margin-top-4">
+    <div class="govuk-!-margin-top-4">
         @await Html.PartialAsync("_Notification")
     </div>
 
     <gds-h1 class="govuk-!-margin-top-6" size="ControlSize.L">
-        @Model.AccountName home page
+        @Model.AccountName LUHBF applications
     </gds-h1>
 
     <table class="govuk-table">
         <caption class="govuk-table__caption govuk-table__caption--m">
             <gds-column width="ColumnWidth.ThreeQuarters" class="govuk-!-padding-left-0">
-                Your applications
-            </gds-column>
-            <gds-column width="ColumnWidth.OneQuarter" class="govuk-!-padding-right-0">
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="sort">
-                        Sort by
-                    </label>
-                    <select class="govuk-select" id="sort" name="sort">
-                        <option value="published">Recently published</option>
-                        <option value="updated" selected>Recently updated</option>
-                        <option value="views">Most views</option>
-                        <option value="comments">Most comments</option>
-                    </select>
-                </div>
+                <gds-h3 size="ControlSize.M">
+                    Your applications
+                </gds-h3>
             </gds-column>
         </caption>
         <thead class="govuk-table__head">
         <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name</th>
-            <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Stage</th>
-            <th scope="col" class="govuk-table__header govuk-!-width-one-half">Status</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Status</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Last updated</th>
         </tr>
         </thead>
         <tbody class="govuk-table__body">
@@ -46,22 +36,33 @@
             <tr class="govuk-table__row">
                 <td class="govuk-table__cell">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("ApplicationDashboard", "LoanApplicationV2", new { id = application.Id.Value })" id=@($"open-application-link-{application.Id.Value}")>@application.ApplicationName</a>
+                        <strong>
+                            <a href="@Url.Action("ApplicationDashboard", "LoanApplicationV2", new { id = application.Id.Value })" id=@($"open-application-link-{application.Id.Value}")>@application.ApplicationName</a>
+                        </strong>
                     </span>
                 </td>
-                <td class="govuk-table__cell">Application</td>
 
                 <td class="govuk-table__cell">
                     <application-status-tag application-status="@application.Status"></application-status-tag>
                 </td>
+
+                <td class="govuk-table__cell">@application.LastModificationDate?.ConvertUtcToUkLocalTime()</td>
+
             </tr>
         }
         </tbody>
     </table>
 
-    <a href="/application" id="start-application-link">
-        <gds-button-start type="button">
-            Start application
-        </gds-button-start>
-    </a>
+    <div class="govuk-!-padding-top-8">
+        <gds-h3 size="ControlSize.M">
+            Start new Home Building Fund application
+        </gds-h3>
+        <p class="govuk-body govuk-!-margin-bottom-3">You can start a new application here. This will not impact any of your previous applications.</p>
+
+        <a href="/application" id="start-application-link">
+            <gds-button-start type="button">
+                Start new application
+            </gds-button-start>
+        </a>
+    </div>
 </gds-column>

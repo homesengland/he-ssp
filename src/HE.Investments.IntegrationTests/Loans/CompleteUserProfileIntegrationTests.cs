@@ -161,6 +161,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         // then
         dashboardPage
             .UrlEndWith(PagesUrls.DashboardPage)
-            .HasTitle($"{UserData.OrganizationName} home page");
+            .HasTitle($"{UserData.OrganizationName} LUHBF applications");
     }
 }
