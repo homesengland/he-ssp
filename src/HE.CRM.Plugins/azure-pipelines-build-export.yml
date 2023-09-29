@@ -6,7 +6,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+- none
 
 pool: 
   vmImage: windows-latest
