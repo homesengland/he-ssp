@@ -10,7 +10,7 @@ using Microsoft.FeatureManagement;
 #pragma warning disable CA1852
 #pragma warning disable CA1812
 var builder = WebApplication.CreateBuilder(args);
-#pragma warning restore CA1812
+#pragma warning restore CA1812 
 #pragma warning restore CA1852
 
 builder.Configuration.AddEnvironmentVariables();
