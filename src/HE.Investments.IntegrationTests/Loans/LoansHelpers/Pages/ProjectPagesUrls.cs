@@ -53,6 +53,11 @@ internal sealed class ProjectPagesUrls
         return $"application/{applicationId}/project/{projectId}{PlanningReferenceNumberSuffix}";
     }
 
+    public static string PlanningPermissionStatus(string applicationId, string projectId)
+    {
+        return $"application/{applicationId}/project/{projectId}{PlanningPermissionStatusSuffix}";
+    }
+
     public static string Location(string applicationId, string projectId)
     {
         return $"application/{applicationId}/project/{projectId}{LocationSuffix}";

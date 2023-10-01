@@ -50,6 +50,8 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1005:Single line comments should begin with single space", Justification = "Commented lines will help in next refactoring steps")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1515:Single-line comment should be preceded by blank line", Justification = "Commented lines will help in next refactoring steps")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1512:Single-line comments should not be followed by blank line", Justification = "Commented lines will help in next refactoring steps")]
     private void ConfigureTransitions()
     {
         _machine.Configure(ProjectState.Index)
@@ -81,28 +83,25 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
         //    .Permit(Trigger.Change, State.CheckAnswers);
 
         _machine.Configure(ProjectState.PlanningRef)
-            .PermitIf(Trigger.Continue, ProjectState.PlanningRefEnter, () => _model.PlanningReferenceNumberExists == CommonResponse.Yes)
-            .PermitIf(Trigger.Continue, ProjectState.Location, () => _model.PlanningReferenceNumberExists == CommonResponse.No)
-            //.PermitIf(Trigger.Continue, ProjectState.Ownership, () => string.IsNullOrEmpty(_site.PlanningRef))
-            //.PermitIf(Trigger.Change, ProjectState.PlanningRefEnter, () => _site.PlanningRef == CommonResponse.Yes)
-            //.PermitIf(Trigger.Change, ProjectState.Location, () => _site.PlanningRef != CommonResponse.Yes)
-            .Permit(Trigger.Back, ProjectState.Type);
+           .PermitIf(Trigger.Continue, ProjectState.PlanningRefEnter, () => _model.PlanningReferenceNumberExists == CommonResponse.Yes)
+           .PermitIf(Trigger.Continue, ProjectState.Location, () => _model.PlanningReferenceNumberExists == CommonResponse.No)
+           .Permit(Trigger.Back, ProjectState.Type);
 
         _machine.Configure(ProjectState.PlanningRefEnter)
-            .Permit(Trigger.Continue, ProjectState.PlanningPermissionStatus)
-            .Permit(Trigger.Back, ProjectState.PlanningRef);
+           .Permit(Trigger.Continue, ProjectState.PlanningPermissionStatus)
+           .Permit(Trigger.Back, ProjectState.PlanningRef);
 
-        //_machine.Configure(State.PlanningPermissionStatus)
-        //    .Permit(Trigger.Continue, State.Location)
-        //    .Permit(Trigger.Back, State.PlanningRefEnter)
+        _machine.Configure(ProjectState.PlanningPermissionStatus)
+           .Permit(Trigger.Continue, ProjectState.Location)
+           .Permit(Trigger.Back, ProjectState.PlanningRefEnter);
         //    .PermitIf(Trigger.Change, State.Location, () => _site.Location == null)
         //    .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.Location != null);
 
         _machine.Configure(ProjectState.Location)
-            .Permit(Trigger.Continue, ProjectState.Ownership)
-            //.PermitIf(Trigger.Back, ProjectState.PlanningPermissionStatus, () => _model.PlanningRef == CommonResponse.Yes)
-            //.PermitIf(Trigger.Back, ProjectState.PlanningRef, () => _model.PlanningRef != CommonResponse.Yes)
-            .Permit(Trigger.Change, ProjectState.CheckAnswers);
+           .Permit(Trigger.Continue, ProjectState.Ownership)
+           .PermitIf(Trigger.Back, ProjectState.PlanningPermissionStatus, () => _model.PlanningReferenceNumberExists == CommonResponse.Yes)
+           .PermitIf(Trigger.Back, ProjectState.PlanningRef, () => _model.PlanningReferenceNumberExists != CommonResponse.Yes);
+        //.Permit(Trigger.Change, ProjectState.CheckAnswers);
 
         //_machine.Configure(State.Ownership)
         //    .PermitIf(Trigger.Continue, State.Additional, () => _site.Ownership == CommonResponse.Yes)

@@ -1,7 +1,10 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.Projects.Enums;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.Entities;
@@ -35,6 +38,8 @@ public class Project
     public StartDate StartDate { get; private set; }
 
     public PlanningReferenceNumber PlanningReferenceNumber { get; private set; }
+
+    public PlanningPermissionStatus? PlanningPermissionStatus { get; private set; }
 
     public Coordinates Coordinates { get; private set; }
 
@@ -140,5 +145,15 @@ public class Project
         }
 
         LandRegistryTitleNumber = landRegistryTitleNumber;
+    }
+
+    public void ProvidePlanningPermissionStatus(PlanningPermissionStatus? planningPermissionStatus)
+    {
+        if (PlanningReferenceNumber.IsNotProvided() || !PlanningReferenceNumber.Exists)
+        {
+            throw new DomainException($"Cannot provide planning permission status because project id: {Id}, has no planning reference number.", LoanApplicationErrorCodes.PlanningReferenceNumberNotExists);
+        }
+
+        PlanningPermissionStatus = planningPermissionStatus;
     }
 }

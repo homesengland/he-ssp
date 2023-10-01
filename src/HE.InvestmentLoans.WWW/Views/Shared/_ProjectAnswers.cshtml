@@ -100,12 +100,13 @@
         { "LinkId", "reference-number" },
     })
 
-    @* @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
-    { "Title", "Planning status" },
-    { "Value", TemporaryFormOptions.PermissionStatus.GetSummaryLabel(Model?.PlanningStatus) },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "PlanningPermissionStatus" }) }
-    }) *@
+    { "Title", ProjectFieldNames.PlanningPermissionStatus },
+    { "Value", TemporaryFormOptions.PermissionStatus.GetSummaryLabel(Model?.PlanningPermissionStatus) },
+    { "Link", Url.Action("ReferenceNumber", "Project", new { id = id, redirect = "CheckAnswers" }) },
+    { "LinkId", "planning-permission-status" },
+    })
 }
 
 @if(Model.LocationOption == null || Model.LocationOption == "coordinates")

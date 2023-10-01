@@ -28,7 +28,7 @@ public class Order01StartProjectIntegrationTests : IntegrationTest
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
 
-        Skip.If(UserData.IsDeveloperProvidedUserData && UserData.ProjectInDraftStateId.IsProvided(), "Developer provided own user which has completed profile and those tests cannot be run");
+        Skip.If(UserData.IsDeveloperProvidedUserData && UserData.ProjectInDraftStateId.IsProvided(), "Developer provided their own project");
     }
 
     [SkippableFact(Skip = LoansConfig.SkipTest)]

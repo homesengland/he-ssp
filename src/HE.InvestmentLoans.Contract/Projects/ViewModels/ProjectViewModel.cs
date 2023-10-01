@@ -26,6 +26,8 @@ public class ProjectViewModel
 
     public string? PlanningReferenceNumber { get; set; }
 
+    public string? PlanningPermissionStatus { get; set; }
+
     public string? LocationOption { get; set; }
 
     public string? LocationCoordinates { get; set; }

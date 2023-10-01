@@ -20,7 +20,8 @@ public class CoordinatesTests
     [Fact]
     public void ShouldThrowValidationError_WhenCoordinatesExceedsLongInputLimit()
     {
-        var action = () => new Coordinates(TextTestData.TextThatExceedsLongInputLimit);
+        var additionalInformation = new string('*', 1501);
+        var action = () => new Coordinates(additionalInformation);
 
         action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.LocationCoordinates));
     }

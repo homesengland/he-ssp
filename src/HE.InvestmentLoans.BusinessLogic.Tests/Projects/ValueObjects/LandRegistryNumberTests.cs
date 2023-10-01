@@ -18,9 +18,10 @@ public class LandRegistryNumberTests
     }
 
     [Fact]
-    public void ShouldThrowValidationError_WhenNumberExceedsShortInputLimit()
+    public void ShouldThrowValidationError_WhenNumberExceedsLongInputLimit()
     {
-        var action = () => new LandRegistryTitleNumber(TextTestData.TextThatExceedsLongInputLimit);
+        var additionalInformation = new string('*', 1501);
+        var action = () => new LandRegistryTitleNumber(additionalInformation);
 
         action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.LocationLandRegistry));
     }

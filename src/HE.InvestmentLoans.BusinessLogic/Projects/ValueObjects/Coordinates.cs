@@ -1,10 +1,11 @@
+using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Validation;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
-public class Coordinates
+public class Coordinates : ValueObject
 {
     public Coordinates(string value)
     {
@@ -26,4 +27,9 @@ public class Coordinates
     }
 
     public string Value { get; private set; }
+
+    protected override IEnumerable<object> GetAtomicValues()
+    {
+        yield return Value;
+    }
 }

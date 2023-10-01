@@ -6,4 +6,12 @@ public static class ProjectFormOption
     public const string AllowedDateFormat = "d/M/yyyy";
     public const string EstimatedStartDay = "EstimatedStartDay";
     public const string PurchaseDate = "PurchaseDate";
+
+    public class PlanningPermissionStatusOptions
+    {
+        public const string NotSubmitted = "notSubmitted";
+        public const string NotReceived = "notReceived";
+        public const string OutlineOrConsent = "outlineOrConsent";
+        public const string ReceivedFull = "receivedFull";
+    }
 }
