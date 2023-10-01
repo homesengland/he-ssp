@@ -15,11 +15,14 @@ public class Project
         IsNewlyCreated = true;
     }
 
-    public Project(ProjectId id, ProjectName name, StartDate startDate)
+    public Project(ProjectId id, ProjectName name, StartDate startDate, HomesCount homesCount, HomesTypes homesTypes, ProjectType projectType)
     {
         Id = id;
         Name = name;
         StartDate = startDate;
+        HomesCount = homesCount;
+        HomesTypes = homesTypes;
+        ProjectType = projectType;
 
         IsNewlyCreated = false;
     }
@@ -29,6 +32,12 @@ public class Project
     public ProjectName Name { get; private set; }
 
     public StartDate StartDate { get; private set; }
+
+    public HomesCount HomesCount { get; private set; }
+
+    public HomesTypes HomesTypes { get; private set; }
+
+    public ProjectType ProjectType { get; private set; }
 
     public bool IsNewlyCreated { get; private set; }
 
@@ -108,6 +117,21 @@ public class Project
     public void ProvideStartDate(StartDate startDate)
     {
         StartDate = startDate;
+    }
+
+    public void ProvideHomesCount(HomesCount homesCount)
+    {
+        HomesCount = homesCount;
+    }
+
+    public void ProvideHomesTypes(HomesTypes homesTypes)
+    {
+        HomesTypes = homesTypes;
+    }
+
+    public void ProvideProjectType(ProjectType projectType)
+    {
+        ProjectType = projectType;
     }
 
     public void MarkAsDeleted()

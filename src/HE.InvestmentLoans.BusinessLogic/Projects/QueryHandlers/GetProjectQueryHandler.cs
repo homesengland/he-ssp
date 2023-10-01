@@ -35,6 +35,9 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
         {
             ProjectId = project.Id!.Value,
             Name = project.Name?.Value,
+            HomesCount = project.HomesCount?.Value,
+            HomesTypes = project.HomesTypes?.Value,
+            ProjectType = project.ProjectType?.Value,
             ApplicationId = applicationProjects.LoanApplicationId.Value,
         };
     }

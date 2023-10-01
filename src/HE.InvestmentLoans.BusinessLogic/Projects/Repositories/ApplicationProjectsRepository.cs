@@ -75,7 +75,10 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             projectFromCrm => new Project(
                 ProjectId.From(projectFromCrm.siteDetailsId),
                 projectFromCrm.Name.IsNotProvided() ? null! : new ProjectName(projectFromCrm.Name),
-                null!));
+                null!,
+                projectFromCrm.numberOfHomes.IsNotProvided() ? null! : new HomesCount(projectFromCrm.numberOfHomes),
+                projectFromCrm.typeOfHomes.IsNotProvided() ? null! : new HomesTypes(projectFromCrm.typeOfHomes),
+                projectFromCrm.typeOfSite.IsNotProvided() ? null! : new ProjectType(projectFromCrm.typeOfSite)));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
