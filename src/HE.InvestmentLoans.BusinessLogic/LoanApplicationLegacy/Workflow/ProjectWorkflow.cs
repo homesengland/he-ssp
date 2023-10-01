@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects;
+using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using Stateless;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
@@ -12,12 +14,25 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
 {
     private readonly StateMachine<ProjectState, Trigger> _machine;
 
-    public ProjectWorkflow(ProjectState currentState)
+    private readonly ProjectViewModel _model;
+
+    public ProjectWorkflow()
     {
-        _machine = new StateMachine<ProjectState, Trigger>(currentState);
+        _machine = new StateMachine<ProjectState, Trigger>(ProjectState.Index);
 
         ConfigureTransitions();
     }
+
+    public ProjectWorkflow(ProjectState currentState, ProjectViewModel model)
+    {
+        _machine = new StateMachine<ProjectState, Trigger>(currentState);
+
+        _model = model;
+
+        ConfigureTransitions();
+    }
+
+    public static ProjectWorkflow ForStartPage() => new();
 
     public Task<ProjectState> NextState(Trigger trigger)
     {
@@ -65,17 +80,18 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
         //    .Permit(Trigger.Back, State.TypeHomes)
         //    .Permit(Trigger.Change, State.CheckAnswers);
 
-        //_machine.Configure(State.PlanningRef)
-        //    .PermitIf(Trigger.Continue, State.PlanningRefEnter, () => _site.PlanningRef == CommonResponse.Yes)
-        //    .PermitIf(Trigger.Continue, State.Location, () => _site.PlanningRef == CommonResponse.No)
-        //    .PermitIf(Trigger.Continue, State.Ownership, () => string.IsNullOrEmpty(_site.PlanningRef))
-        //    .PermitIf(Trigger.Change, State.PlanningRefEnter, () => _site.PlanningRef == CommonResponse.Yes)
-        //    .PermitIf(Trigger.Change, State.Location, () => _site.PlanningRef != CommonResponse.Yes)
-        //    .Permit(Trigger.Back, State.Type);
+        _machine.Configure(ProjectState.PlanningRef)
+            .PermitIf(Trigger.Continue, ProjectState.PlanningRefEnter, () => _model.PlanningReferenceNumberExists == CommonResponse.Yes)
+            .PermitIf(Trigger.Continue, ProjectState.Location, () => _model.PlanningReferenceNumberExists == CommonResponse.No)
+            //.PermitIf(Trigger.Continue, ProjectState.Ownership, () => string.IsNullOrEmpty(_site.PlanningRef))
+            //.PermitIf(Trigger.Change, ProjectState.PlanningRefEnter, () => _site.PlanningRef == CommonResponse.Yes)
+            //.PermitIf(Trigger.Change, ProjectState.Location, () => _site.PlanningRef != CommonResponse.Yes)
+            .Permit(Trigger.Back, ProjectState.Type);
 
-        //_machine.Configure(State.PlanningRefEnter)
-        //    .Permit(Trigger.Continue, State.PlanningPermissionStatus)
-        //    .Permit(Trigger.Back, State.PlanningRef)
+        _machine.Configure(ProjectState.PlanningRefEnter)
+            .Permit(Trigger.Continue, ProjectState.PlanningPermissionStatus)
+            .Permit(Trigger.Back, ProjectState.PlanningRef);
+
         //    .PermitIf(Trigger.Change, State.PlanningPermissionStatus, () => _site.PlanningStatus == null)
         //    .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.PlanningStatus != null);
 

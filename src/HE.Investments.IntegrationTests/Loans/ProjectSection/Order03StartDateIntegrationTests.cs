@@ -1,4 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
+using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -41,7 +43,7 @@ public class Order03StartDateIntegrationTests : IntegrationTest
         startDatePage
             .UrlEndWith(ProjectPagesUrls.StartDateSuffix)
             .HasTitle(ProjectPageTitles.StartDate)
-            .HasValidationMessages(ValidationErrorMessage.NoStartDate);
+            .HasOneValidationMessages(ValidationErrorMessage.NoStartDate);
 
         SetSharedData(SharedKeys.CurrentPageKey, startDatePage);
     }
@@ -62,7 +64,7 @@ public class Order03StartDateIntegrationTests : IntegrationTest
         startDate
             .UrlEndWith(ProjectPagesUrls.StartDateSuffix)
             .HasTitle(ProjectPageTitles.StartDate)
-            .HasValidationMessages(ValidationErrorMessage.InvalidStartDate);
+            .HasOneValidationMessages(ValidationErrorMessage.InvalidStartDate);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

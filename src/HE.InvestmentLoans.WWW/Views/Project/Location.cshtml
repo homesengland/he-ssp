@@ -1,0 +1,54 @@
+@using HE.InvestmentLoans.Contract.Projects;
+@model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
+
+@inject ModelExpressionProvider modelProvider;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.LocationOption));
+    var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(
+        Model.LocationOption == "coordinates" ?
+        nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.LocationCoordinates) :
+        nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.LocationLandRegistry)
+    );
+
+    var values = new string[] { Model.LocationCoordinates, Model.LocationLandRegistry };
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Project" asp-action="Location" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("Back", "Project" , new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.Location})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="radioInvalid">
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>
+                        @ProjectPageTitles.Location
+                    </gds-fieldset-heading>
+                </gds-legend>
+                <gds-custom-radio asp-for="LocationOption"
+                                  radio-items="TemporaryFormOptions.SiteLocation"
+                                  id="location"
+                                  value="@Model.LocationOption"
+                                  conditional-input-ids=TemporaryFormOptions.LocationDetailsNames
+                                  conditional-input-labels=TemporaryFormOptions.LocationDescription
+                                  conditional-input-values="@values"
+                                  conditional-input-names=TemporaryFormOptions.LocationDetailsNames
+                                  conditional-input-error="@inputErrors"
+                                  is-conditional-input-invalid="@conditionalInputInvalid">
+                </gds-custom-radio>
+            </gds-div-form-group>
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit">
+                Continue
+            </button>
+        </gds-field-set>
+    </form>
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>
+
+@await Html.RadioConditionalInputScript(
+    ("LocationOption", "LocationOption-conditional"),
+    ("LocationOption-1", "LocationOption-1-conditional")
+)

@@ -74,8 +74,9 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         var projectsFromCrm = loanApplicationDto.siteDetailsList.Select(
             projectFromCrm => new Project(
                 ProjectId.From(projectFromCrm.siteDetailsId),
-                projectFromCrm.Name.IsNotProvided() ? null! : new ProjectName(projectFromCrm.Name),
-                null!));
+                projectFromCrm.Name.IsProvided() ? new ProjectName(projectFromCrm.Name) : null!,
+                null!,
+                projectFromCrm.haveAPlanningReferenceNumber.IsProvided() ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber) : null!));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
@@ -150,6 +151,8 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                 siteDetailsId = projectToSave.Id.Value.ToString(),
                 Name = projectToSave.Name?.Value,
                 dateOfPurchase = projectToSave.StartDate?.Value,
+                haveAPlanningReferenceNumber = projectToSave.PlanningReferenceNumber.IsProvided() ? projectToSave.PlanningReferenceNumber.Exists : null!,
+                planningReferenceNumber = projectToSave.PlanningReferenceNumber.IsProvided() ? projectToSave.PlanningReferenceNumber.Value : null!,
             };
 
             var req = new invln_updatesinglesitedetailsRequest
@@ -167,6 +170,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
     private IEnumerable<string> CrmSiteNames()
     {
         yield return nameof(invln_SiteDetails.invln_Name).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Dateofpurchase).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Haveaplanningreferencenumber).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Planningreferencenumber).ToLowerInvariant();
     }
 }

@@ -15,13 +15,14 @@ public class Project
         IsNewlyCreated = true;
     }
 
-    public Project(ProjectId id, ProjectName name, StartDate startDate)
+    public Project(ProjectId id, ProjectName name, StartDate startDate, PlanningReferenceNumber planningReferenceNumber)
     {
+        IsNewlyCreated = false;
+
         Id = id;
         Name = name;
         StartDate = startDate;
-
-        IsNewlyCreated = false;
+        PlanningReferenceNumber = planningReferenceNumber;
     }
 
     public ProjectId Id { get; private set; }
@@ -29,6 +30,8 @@ public class Project
     public ProjectName Name { get; private set; }
 
     public StartDate StartDate { get; private set; }
+
+    public PlanningReferenceNumber PlanningReferenceNumber { get; private set; }
 
     public bool IsNewlyCreated { get; private set; }
 
@@ -113,5 +116,10 @@ public class Project
     public void MarkAsDeleted()
     {
         IsSoftDeleted = true;
+    }
+
+    public void ProvidePlanningReferenceNumber(PlanningReferenceNumber planningReferenceNumber)
+    {
+        PlanningReferenceNumber = planningReferenceNumber;
     }
 }
