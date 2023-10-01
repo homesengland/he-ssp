@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
@@ -15,7 +16,7 @@ public class Project
         IsNewlyCreated = true;
     }
 
-    public Project(ProjectId id, ProjectName name, StartDate startDate, PlanningReferenceNumber planningReferenceNumber)
+    public Project(ProjectId id, ProjectName name, StartDate startDate, PlanningReferenceNumber planningReferenceNumber, Coordinates coordinates, LandRegistryTitleNumber landRegistryTitleNumber)
     {
         IsNewlyCreated = false;
 
@@ -23,6 +24,8 @@ public class Project
         Name = name;
         StartDate = startDate;
         PlanningReferenceNumber = planningReferenceNumber;
+        Coordinates = coordinates;
+        LandRegistryTitleNumber = landRegistryTitleNumber;
     }
 
     public ProjectId Id { get; private set; }
@@ -32,6 +35,10 @@ public class Project
     public StartDate StartDate { get; private set; }
 
     public PlanningReferenceNumber PlanningReferenceNumber { get; private set; }
+
+    public Coordinates Coordinates { get; private set; }
+
+    public LandRegistryTitleNumber LandRegistryTitleNumber { get; private set; }
 
     public bool IsNewlyCreated { get; private set; }
 
@@ -75,14 +82,6 @@ public class Project
 
     public string? Source { get; set; }
 
-    public string? LocationOption { get; set; }
-
-    public string? LocationCoordinates { get; set; }
-
-    public string? LocationLandRegistry { get; set; }
-
-    public string? Location { get; set; }
-
     public string? PlanningStatus { get; set; }
 
     public string? GrantFundingName { get; set; }
@@ -121,5 +120,25 @@ public class Project
     public void ProvidePlanningReferenceNumber(PlanningReferenceNumber planningReferenceNumber)
     {
         PlanningReferenceNumber = planningReferenceNumber;
+    }
+
+    public void ProvideCoordinates(Coordinates coordinates)
+    {
+        if (coordinates.IsProvided())
+        {
+            LandRegistryTitleNumber = null!;
+        }
+
+        Coordinates = coordinates;
+    }
+
+    public void ProvideLandRegistryNumber(LandRegistryTitleNumber landRegistryTitleNumber)
+    {
+        if (landRegistryTitleNumber.IsProvided())
+        {
+            Coordinates = null!;
+        }
+
+        LandRegistryTitleNumber = landRegistryTitleNumber;
     }
 }

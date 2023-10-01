@@ -31,7 +31,7 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
 
         // when
         moreInformationAboutOrganizationPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "OrganisationMoreInformation", TextTestData.TextWithLenght1501 } });
+            continueButton, new Dictionary<string, string> { { "OrganisationMoreInformation", TextTestData.TextThatExceedsLongInputLimit } });
 
         // then
         moreInformationAboutOrganizationPage
@@ -51,7 +51,7 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
 
         // when
         var howManyHomesBuiltPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "OrganisationMoreInformation", TextTestData.TextWithLenght1000 } });
+            continueButton, new Dictionary<string, string> { { "OrganisationMoreInformation", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         howManyHomesBuiltPage

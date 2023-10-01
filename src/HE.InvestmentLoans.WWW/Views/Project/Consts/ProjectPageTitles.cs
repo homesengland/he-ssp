@@ -15,4 +15,6 @@ public static class ProjectPageTitles
     public const string PlanningPermissionStatus = "What is the status of your planning permission application for this project?";
 
     public const string Location = "How do you want to provide your project location?";
+
+    public const string Ownership = "Do you have full ownership of this land?";
 }

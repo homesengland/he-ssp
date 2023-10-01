@@ -32,5 +32,7 @@ public class ProjectViewModel
 
     public string? LocationLandRegistry { get; set; }
 
+    public string? Ownership { get; set; }
+
     public string? CheckAnswers { get; set; }
 }

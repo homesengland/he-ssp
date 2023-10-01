@@ -14,4 +14,8 @@ public static class ProjectFieldNames
     public const string PlanningReferenceNumberExists = "Do you have a planning reference number";
 
     public const string PlanningReferenceNumber = "Planning reference number";
+
+    public const string Coordinates = "Location coordinates";
+
+    public const string LandRegistryTitleNumber = "Land registry title number";
 }

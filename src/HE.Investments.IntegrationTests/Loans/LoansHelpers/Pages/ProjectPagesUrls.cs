@@ -24,6 +24,8 @@ internal sealed class ProjectPagesUrls
 
     public const string LocationSuffix = "/location";
 
+    public const string OwnershipSuffix = "/ownership";
+
     public const string CheckAnswersSuffix = "/check-answers";
 
     public static string Start(string applicationId)
@@ -49,6 +51,11 @@ internal sealed class ProjectPagesUrls
     public static string PlanningReferenceNumber(string applicationId, string projectId)
     {
         return $"application/{applicationId}/project/{projectId}{PlanningReferenceNumberSuffix}";
+    }
+
+    public static string Location(string applicationId, string projectId)
+    {
+        return $"application/{applicationId}/project/{projectId}{LocationSuffix}";
     }
 
     public static string CheckAnswers(string applicationId, string projectId)

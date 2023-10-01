@@ -38,17 +38,18 @@ public class Order99CheckAnswersIntegrationTests : IntegrationTest
     [Order(1)]
     public async Task Order01_ShouldDisplayDataSummary()
     {
+        // given
         var checkAnswersPage = await TestClient.NavigateTo(ProjectPagesUrls.CheckAnswers(_applicationLoanId, _projectId));
 
+        // when
         var projectSummary = checkAnswersPage.GetSummaryListItems();
 
-        using (new AssertionScope())
-        {
-            projectSummary[ProjectFieldNames.Name].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
-            projectSummary[ProjectFieldNames.PlanningReferenceNumberExists].Should().Be(CommonResponse.Yes);
-            projectSummary[ProjectFieldNames.PlanningReferenceNumber].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
-            projectSummary[ProjectFieldNames.StartDate].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
-        }
+        // then
+        projectSummary[ProjectFieldNames.Name].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
+        projectSummary[ProjectFieldNames.PlanningReferenceNumberExists].Should().Be(CommonResponse.Yes);
+        projectSummary[ProjectFieldNames.PlanningReferenceNumber].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
+        projectSummary[ProjectFieldNames.LandRegistryTitleNumber].Should().Be(TextTestData.TextThatNotExceedsLongInputLimit);
+        projectSummary[ProjectFieldNames.StartDate].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
 
         SetSharedData(SharedKeys.CurrentPageKey, checkAnswersPage);
     }

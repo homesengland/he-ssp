@@ -57,6 +57,11 @@ public class IntegrationTestClient
         return await SubmitButton(submitButton, new Dictionary<string, string>());
     }
 
+    public Task<IHtmlDocument> SubmitButton(IHtmlButtonElement submitButton, params (string InputName, string Value)[] inputs)
+    {
+        return SubmitButton(submitButton, inputs.Select(i => new KeyValuePair<string, string>(i.InputName, i.Value)));
+    }
+
     public async Task<IHtmlDocument> SubmitButton(IHtmlButtonElement submitButton, IEnumerable<KeyValuePair<string, string>> formValues)
     {
         var form = submitButton.Form!;

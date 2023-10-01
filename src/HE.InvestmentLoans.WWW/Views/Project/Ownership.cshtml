@@ -1,0 +1,37 @@
+@using HE.InvestmentLoans.Contract.Projects;
+@model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.Ownership));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.ApplicationId" asp-route-ending="PlanningRef" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.PlanningRefEnter})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="inputInvalid">
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>
+                        @ProjectPageTitles.Ownership
+                    </gds-fieldset-heading>
+                </gds-legend>
+
+                <gds-radio-yes-no asp-for="Ownership" class="govuk-!-margin-bottom-6"></gds-radio-yes-no>
+            </gds-div-form-group>
+
+            @Html.HiddenFor(c => c.ProjectId)
+            @Html.HiddenFor(c => c.ApplicationId)
+
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Continue
+            </button>
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>

@@ -39,6 +39,8 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
             ApplicationId = applicationProjects.LoanApplicationId.Value,
             PlanningReferenceNumberExists = project.PlanningReferenceNumber.IsProvided() ? project.PlanningReferenceNumber.Exists.MapToCommonResponse() : null!,
             PlanningReferenceNumber = project.PlanningReferenceNumber.IsProvided() ? project.PlanningReferenceNumber.Value : null!,
+            LocationCoordinates = project.Coordinates.IsProvided() ? project.Coordinates.Value : null!,
+            LocationLandRegistry = project.LandRegistryTitleNumber.IsProvided() ? project.LandRegistryTitleNumber.Value : null!,
         };
     }
 }

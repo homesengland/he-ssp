@@ -86,7 +86,7 @@
 {
     { "Title", ProjectFieldNames.PlanningReferenceNumberExists },
     { "Value", Model?.PlanningReferenceNumberExists },
-    { "Link", Url.Action("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
+    { "Link", Url.Action("ReferenceNumberExists", "Project", new { id = id, redirect = "CheckAnswers" }) },
     { "LinkId", "reference-number-exists" },
 })
 
@@ -95,8 +95,8 @@
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
         { "Title", ProjectFieldNames.PlanningReferenceNumber },
-        { "Value", Model?.PlanningReferenceNumber },
-        { "Link", Url.Action("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
+    { "Value", Model?.PlanningReferenceNumber },
+    { "Link", Url.Action("ReferenceNumber", "Project", new { id = id, redirect = "CheckAnswers" }) },
         { "LinkId", "reference-number" },
     })
 
@@ -108,27 +108,29 @@
     }) *@
 }
 
-   @*  @if(Model.LocationOption == null || Model.LocationOption == "coordinates")
-    {
-        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-        {
-        { "Title", "Location coordinates" },
-        { "Value", Model?.LocationCoordinates },
-        { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Location" }) }
-        })
-    }
-
-    @if (Model.LocationOption == null || Model.LocationOption == "landRegistryTitleNumber")
-    {
-        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-        {
-        { "Title", "Land registry title number" },
-        { "Value", Model?.LocationLandRegistry },
-        { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Location" }) }
-        })
-    }
-
+@if(Model.LocationOption == null || Model.LocationOption == "coordinates")
+{
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+    { "Title", ProjectFieldNames.Coordinates },
+    { "Value", Model?.LocationCoordinates },
+    { "Link", Url.Action("Location", "Project", new { id = id, redirect = "CheckAnswers" }) },
+    { "LinkId", "coordinates" },
+    })
+}
+
+@if (Model.LocationOption == null || Model.LocationOption == "landRegistryTitleNumber")
+{
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+    { "Title", ProjectFieldNames.LandRegistryTitleNumber },
+    { "Value", Model?.LocationLandRegistry },
+    { "Link", Url.Action("Location", "Project", new { id = id, redirect = "CheckAnswers" }) },
+    { "LinkId", "land-registry-title-number" },
+    })
+}
+
+    @* @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
     { "Title", "Land ownership" },
     { "Value", Model?.Ownership },

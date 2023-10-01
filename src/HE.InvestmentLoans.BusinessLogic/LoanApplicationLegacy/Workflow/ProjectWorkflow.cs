@@ -92,20 +92,17 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             .Permit(Trigger.Continue, ProjectState.PlanningPermissionStatus)
             .Permit(Trigger.Back, ProjectState.PlanningRef);
 
-        //    .PermitIf(Trigger.Change, State.PlanningPermissionStatus, () => _site.PlanningStatus == null)
-        //    .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.PlanningStatus != null);
-
         //_machine.Configure(State.PlanningPermissionStatus)
         //    .Permit(Trigger.Continue, State.Location)
         //    .Permit(Trigger.Back, State.PlanningRefEnter)
         //    .PermitIf(Trigger.Change, State.Location, () => _site.Location == null)
         //    .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.Location != null);
 
-        //_machine.Configure(State.Location)
-        //    .Permit(Trigger.Continue, State.Ownership)
-        //    .PermitIf(Trigger.Back, State.PlanningPermissionStatus, () => _site.PlanningRef == CommonResponse.Yes)
-        //    .PermitIf(Trigger.Back, State.PlanningRef, () => _site.PlanningRef != CommonResponse.Yes)
-        //    .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(ProjectState.Location)
+            .Permit(Trigger.Continue, ProjectState.Ownership)
+            //.PermitIf(Trigger.Back, ProjectState.PlanningPermissionStatus, () => _model.PlanningRef == CommonResponse.Yes)
+            //.PermitIf(Trigger.Back, ProjectState.PlanningRef, () => _model.PlanningRef != CommonResponse.Yes)
+            .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
         //_machine.Configure(State.Ownership)
         //    .PermitIf(Trigger.Continue, State.Additional, () => _site.Ownership == CommonResponse.Yes)

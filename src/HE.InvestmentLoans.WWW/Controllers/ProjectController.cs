@@ -143,6 +143,15 @@ public class ProjectController : WorkflowController<ProjectState>
         return await Continue(new { id, projectId });
     }
 
+    [HttpGet("{projectId}/planning-permission-status")]
+    [WorkflowState(ProjectState.PlanningPermissionStatus)]
+    public async Task<IActionResult> PlanningPermissionStatus(Guid id, Guid projectId)
+    {
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
+    }
+
     [HttpGet("{projectId}/location")]
     [WorkflowState(ProjectState.Location)]
     public async Task<IActionResult> Location(Guid id, Guid projectId)
@@ -152,9 +161,25 @@ public class ProjectController : WorkflowController<ProjectState>
         return View(result);
     }
 
-    [HttpGet("{projectId}/planning-permission-status")]
-    [WorkflowState(ProjectState.PlanningPermissionStatus)]
-    public async Task<IActionResult> PlanningPermissionStatus(Guid id, Guid projectId)
+    [HttpPost("{projectId}/location")]
+    [WorkflowState(ProjectState.Location)]
+    public async Task<IActionResult> Location(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    {
+        var result = await _mediator.Send(new ProvideLocationCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.LocationOption, model.LocationCoordinates, model.LocationLandRegistry), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("Location", model);
+        }
+
+        return await Continue(new { id, projectId });
+    }
+
+    [HttpGet("{projectId}/ownership")]
+    [WorkflowState(ProjectState.Ownership)]
+    public async Task<IActionResult> Ownership(Guid id, Guid projectId)
     {
         var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
 
