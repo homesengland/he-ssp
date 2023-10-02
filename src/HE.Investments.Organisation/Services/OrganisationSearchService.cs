@@ -91,7 +91,7 @@ internal class OrganisationSearchService : IOrganisationSearchService
     {
         var organizationCompanyNumbers = companyHousesOrganizations.Select(x => x.CompanyNumber);
 
-        return _organizationCrmSearchService.SearchOrganizationInCrm(organizationCompanyNumbers);
+        return _organizationCrmSearchService.SearchOrganizationInCrmByCompanyHouseNumber(organizationCompanyNumbers);
     }
 
     private IEnumerable<OrganisationSearchItem> MergeResults(IEnumerable<OrganisationSearchItem> companyHousesOrganizations, IEnumerable<OrganizationDetailsDto> organizationsFromCrm)
