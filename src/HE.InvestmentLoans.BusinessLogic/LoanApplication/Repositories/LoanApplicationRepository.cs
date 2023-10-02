@@ -179,10 +179,22 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     public async Task Save(LoanApplicationEntity loanApplication, UserDetails userDetails, CancellationToken cancellationToken)
     {
+        var siteDetailsDtos = new List<SiteDetailsDto>();
+        foreach (var site in loanApplication.ApplicationProjects.Projects)
+        {
+            var siteDetail = new SiteDetailsDto()
+            {
+                Name = site.Name?.Value,
+                siteName = site.Name?.Value,
+            };
+            siteDetailsDtos.Add(siteDetail);
+        }
+
         var loanApplicationDto = new LoanApplicationDto()
         {
             LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount, userDetails),
             fundingReason = FundingPurposeMapper.Map(loanApplication.FundingReason),
+            siteDetailsList = siteDetailsDtos,
         };
 
         var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);

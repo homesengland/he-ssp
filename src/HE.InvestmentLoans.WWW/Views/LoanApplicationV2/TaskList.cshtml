@@ -1,5 +1,7 @@
 @model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel;
 @using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+@using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+@using HE.InvestmentLoans.Common.Extensions;
 @using HE.InvestmentLoans.WWW.Controllers
 @using HE.InvestmentLoans.BusinessLogic.ViewModel
 @using System.Globalization
@@ -107,8 +109,15 @@
                     <li class="app-task-list__item">
                         <div class="task-list-grid-container">
                             <span class="app-task-list__task-name task-list-project-name">
-                                <a href="@Url.Action("Workflow","Site", new {id = Model.ID, site=site.Id, ending = securityWorkflow.GetName() })">
-                                    @(site.Name ?? site.DefaultName)
+                                <a href="@Url.Action("Workflow", "Site", new {id = Model.ID, projectId = site.Id })">
+                                    @if(site.Name.IsNotProvided())
+                                    {
+                                        @ProjectName.Default
+                                    }
+                                    else
+                                    {
+                                        @site.Name
+                                    }
                                 </a>
                             </span>
                             <div class="task-list-remove-link">
@@ -137,7 +146,7 @@
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
                         <span class="app-task-list__task-name">
-                            <a href="@Url.Action("CreateSite", "Site", new {id = Model.ID, ending = securityWorkflow.GetName() })">
+                            <a id="add-project-link" href="@Url.Action("CreateSite", "Site", new {id = Model.ID})">
                                 Add another
                             </a>
                         </span>

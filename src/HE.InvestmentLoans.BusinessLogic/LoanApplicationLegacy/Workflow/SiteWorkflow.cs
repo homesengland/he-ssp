@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract.Projects;
 using MediatR;
 using Stateless;
 

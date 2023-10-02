@@ -27,6 +27,15 @@ public class TestBase<TTestClass> : IRegisterDependency
         _fixture.Register<TInterface>(() => _fixture.Create<TImplementation>());
     }
 
+    public TDependency Given<TDependency>(IDependencyTestBuilder<TDependency> builder)
+    {
+        var dependency = builder.Build();
+
+        RegisterDependency(dependency);
+
+        return dependency;
+    }
+
     protected Mock<TDependency> CreateAndRegisterDependencyMock<TDependency>()
         where TDependency : class
     {

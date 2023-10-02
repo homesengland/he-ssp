@@ -1,3 +1,4 @@
+using AngleSharp.Html.Dom;
 using HE.InvestmentLoans.IntegrationTests.Config;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Helpers.DataPackages;
 using HE.InvestmentLoans.IntegrationTests.Loans;
@@ -36,5 +37,17 @@ public class IntegrationTest
     protected T? GetSharedDataOrNull<T>(string key)
     {
         return _fixture.DataBag.TryGetValue(key, out var data) ? (T)data : default;
+    }
+
+    protected async Task<IHtmlDocument> GetCurrentPage(Func<Task<IHtmlDocument>> alternativeNavigate)
+    {
+        var currentPage = GetSharedDataOrNull<IHtmlDocument>(SharedKeys.CurrentPageKey);
+
+        if (currentPage is null)
+        {
+            return await alternativeNavigate();
+        }
+
+        return currentPage;
     }
 }

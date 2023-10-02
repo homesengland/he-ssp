@@ -1,7 +1,7 @@
 using System.Globalization;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
@@ -60,7 +60,7 @@ public class LoanApplicationEntity
         SyncToLegacyModel();
     }
 
-    public async Task Submit(ICanSubmitLoanApplication canSubmitLoanApplication, CancellationToken cancellationToken)
+    public async Task Submit(ICanSubmitLoanApplication canSubmitLoanApplication, UserAccount userAccount, CancellationToken cancellationToken)
     {
         CheckIfCanBeSubmitted();
 

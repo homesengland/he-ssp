@@ -11,7 +11,7 @@ public class PrivateSectorFunding : ValueObject
     {
         if (isApplied)
         {
-            if (privateSectorFundingApplyResult.IsNotProvided())
+            if (privateSectorFundingApplyResult!.IsNotProvided())
             {
                 OperationResult
                 .New()
@@ -28,7 +28,7 @@ public class PrivateSectorFunding : ValueObject
         }
         else
         {
-            if (privateSectorFundingNotApplyingReason.IsNotProvided())
+            if (privateSectorFundingNotApplyingReason!.IsNotProvided())
             {
                 OperationResult
                 .New()

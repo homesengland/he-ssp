@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure;
@@ -91,7 +91,9 @@ public class LoanApplicationViewModel
     public void UseSectionsFrom(LoanApplicationViewModel model)
     {
         Projects = model.Projects;
+        Security = model.Security;
         Sites = model.Sites;
+        Funding = model.Funding;
         Timestamp = model.Timestamp;
     }
 

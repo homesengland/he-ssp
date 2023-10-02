@@ -19,6 +19,8 @@ public class OperationResult
 
     public static OperationResult Success() => new();
 
+    public static OperationResult<TResult> Success<TResult>(TResult result) => new(result);
+
     public OperationResult AddValidationError(ErrorItem errorItem)
     {
         Errors.Add(errorItem);

@@ -19,6 +19,30 @@ public class IntegrationUserData
         LastName = $"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
     }
 
+    public IntegrationUserData(UserConfig userConfig)
+    {
+        if (userConfig.UseConfigData)
+        {
+            UserGlobalId = userConfig.UserGlobalId;
+            Email = userConfig.Email;
+            FirstName = userConfig.FirstName;
+            LastName = userConfig.LastName;
+            OrganizationName = userConfig.OrganizationName;
+            OrganizationRegistrationNumber = userConfig.OrganizationRegistrationNumber;
+            OrganizationAddress = userConfig.OrganizationAddress;
+            TelephoneNumber = userConfig.TelephoneNumber;
+            LoanApplicationIdInDraftState = userConfig.LoanApplicationIdInDraftState;
+            ProjectInDraftStateId = userConfig.ProjectIdInDraftState;
+
+            IsDeveloperProvidedUserData = true;
+
+            return;
+        }
+
+        FirstName = "Integration";
+        LastName = $"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}";
+    }
+
     public string UserGlobalId { get; private set; }
 
     public string Email { get; private set; }
@@ -38,6 +62,8 @@ public class IntegrationUserData
     public string TelephoneNumber { get; private set; } = "01427 611 833";
 
     public string LoanApplicationIdInDraftState { get; private set; }
+
+    public string ProjectInDraftStateId { get; private set; }
 
     public bool IsDeveloperProvidedUserData { get; }
 
@@ -60,6 +86,16 @@ public class IntegrationUserData
         }
 
         LoanApplicationIdInDraftState = loanApplicationId;
+    }
+
+    public void SetProjectId(string projectId)
+    {
+        if (ProjectInDraftStateId.IsProvided() && IsDeveloperProvidedUserData)
+        {
+            return;
+        }
+
+        ProjectInDraftStateId = projectId;
     }
 
     public void UseDataProvidedByDeveloper()

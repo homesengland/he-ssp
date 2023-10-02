@@ -1,6 +1,8 @@
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
+using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Extensions;
+using Xunit.Sdk;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 
@@ -127,6 +129,41 @@ public static class HtmlDocumentExtensions
             var key = summaryRow.GetElementsByClassName("app-task-list__task-name").First().TextContent.Trim();
             var value = summaryRow.GetElementsByClassName("app-task-list__tag").FirstOrDefault()?.InnerHtml.Trim() ?? string.Empty;
             dictionary[key] = value;
+        }
+
+        return dictionary;
+    }
+
+    public static (string Name, string Status) GetProjectFromTaskList(this IHtmlDocument htmlDocument, string id)
+    {
+        var projects = htmlDocument.GetTaskListProjects();
+
+        if (!projects.ContainsKey(id))
+        {
+            throw new ArgumentException($"Cannot find project id: {id} in task list. Available projects: {string.Join(", ", projects.Keys)}.");
+        }
+
+        return htmlDocument.GetTaskListProjects()[id];
+    }
+
+    public static IDictionary<string, (string Name, string Status)> GetTaskListProjects(this IHtmlDocument htmlDocument)
+    {
+        var projectRows = htmlDocument.GetElementsByClassName("task-list-grid-container");
+
+        var dictionary = new Dictionary<string, (string Name, string Status)>();
+        foreach (var row in projectRows)
+        {
+            var projectLink = row
+                .GetElementsByClassName("task-list-project-name").First()
+                .GetElementsByTagName("a").First();
+
+            var id = projectLink.GetAttribute("href")!.GetProjectGuidFromRelativePath();
+
+            var name = projectLink.InnerHtml.Trim();
+
+            var status = row.GetElementsByClassName("app-task-list__tag").FirstOrDefault()?.InnerHtml.Trim() ?? string.Empty;
+
+            dictionary[id] = (name, status);
         }
 
         return dictionary;

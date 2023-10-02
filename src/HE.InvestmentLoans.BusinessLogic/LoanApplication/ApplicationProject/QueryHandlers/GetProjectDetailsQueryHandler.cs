@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using MediatR;
 
@@ -18,6 +18,6 @@ public class GetProjectDetailsQueryHandler : IRequestHandler<GetProjectDetailsQu
 
     public async Task<Project> Handle(GetProjectDetailsQuery request, CancellationToken cancellationToken)
     {
-        return _applicationProjectsRepository.GetById(request.LoanApplicationId, request.ProjectId, await _loanUserContext.GetSelectedAccount());
+        return await _applicationProjectsRepository.GetById(request.LoanApplicationId, request.ProjectId, await _loanUserContext.GetSelectedAccount(), cancellationToken);
     }
 }

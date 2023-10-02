@@ -1,31 +1,40 @@
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.Entities;
+namespace HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 public class ApplicationProjects
 {
+    private readonly List<Project> _projects;
+
     public ApplicationProjects(LoanApplicationId loanApplicationId)
     {
         LoanApplicationId = loanApplicationId;
-        Projects = new List<Project>();
-        AddProject();
+        _projects = new List<Project>();
+
+        AddEmptyProject();
+    }
+
+    public ApplicationProjects(LoanApplicationId loanApplicationId, IEnumerable<Project> projects)
+    {
+        LoanApplicationId = loanApplicationId;
+
+        _projects = new List<Project>();
+
+        _projects.AddRange(projects);
     }
 
     public LoanApplicationId LoanApplicationId { get; }
 
-    public IList<Project> Projects { get; }
+    public IReadOnlyCollection<Project> Projects => _projects.AsReadOnly();
 
     public IList<Project> ActiveProjects => Projects.Where(p => !p.IsSoftDeleted).ToList();
 
-    public void AddProject()
+    public ProjectId AddEmptyProject()
     {
-        const string newProjectName = "New project";
+        var project = new Project();
+        _projects.Add(project);
 
-        var project = new Project
-        {
-            DefaultName = newProjectName,
-        };
-        Projects.Add(project);
+        return project.Id!;
     }
 
     public void UpdateProject(Project project)
@@ -38,6 +47,9 @@ public class ApplicationProjects
     public void DeleteProject(ProjectId projectId)
     {
         var projectToDelete = Projects.FirstOrDefault(p => p.Id == projectId) ?? throw new NotFoundException(nameof(Project).ToString(), projectId);
+
+        _projects.Remove(projectToDelete);
+
         projectToDelete.MarkAsDeleted();
     }
 }

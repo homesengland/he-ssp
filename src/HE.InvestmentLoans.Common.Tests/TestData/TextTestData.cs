@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework.TestData;
+namespace HE.InvestmentLoans.Common.Tests.TestData;
 
 public static class TextTestData
 {
@@ -8,4 +8,8 @@ public static class TextTestData
 
     public const string TextWithLenght1000 =
         @"ras vitae pellentesque nisl. Pellentesque tempor, ex eu finibus lobortis, dolor odio pellentesque dui, id fringilla mauris mauris sollicitudin nunc. Quisque sollicitudin, eros non semper elementum, quam magna tincidunt diam, vitae interdum magna purus ut lorem. Nam egestas augue sit amet tortor eleifend commodo. Morbi dapibus et velit in porttitor. Curabitur egestas ipsum libero, vel scelerisque tortor sollicitudin sit amet. Curabitur quis convallis velit. Etiam vel ornare mi. Nulla sem justo, rhoncus eu volutpat a, luctus quis felis. Donec malesuada lorem vitae finibus maximus. Nam tempus tempus convallis. Phasellus scelerisque gravida diam a iaculis. Nulla vehicula tristique vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer at nisl quam. Curabitur venenatis ligula sapien, nec lobortis nisi pellentesque quis. Ut molestie augue a quam porttitor, et faucibus orci vestibulum. Quisque quis ante vestibulum, feugiat dui sed, porta odio. Vivamus ac ex a laoreet.";
+
+    public const string TextThatExceedsShortInputLimit = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fermentum efficitur condimentum libero.";
+
+    public const string TextThatNotExceedsShortInputLimit = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fermentum efficitur condimentum.";
 }
