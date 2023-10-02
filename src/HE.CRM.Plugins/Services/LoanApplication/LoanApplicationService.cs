@@ -120,8 +120,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 _loanApplicationRepository.Update(new invln_Loanapplication()
                 {
                     Id = target.Id,
-                    invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.UnderReview),
-                    StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.UnderReview)
+                    invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationUnderReview),
+                    StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationUnderReview)
                 });
             }
         }
