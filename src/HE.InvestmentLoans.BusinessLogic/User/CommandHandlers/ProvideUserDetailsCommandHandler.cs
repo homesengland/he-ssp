@@ -1,37 +1,51 @@
 extern alias Org;
 
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
+using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.User.Commands;
+using HE.InvestmentLoans.Contract.User.ValueObjects;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.User.CommandHandlers;
 
-public class ProvideUserDetailsCommandHandler : IRequestHandler<ProvideUserDetailsCommand>
+public class ProvideUserDetailsCommandHandler : IRequestHandler<ProvideUserDetailsCommand, OperationResult>
 {
     private readonly ILoanUserContext _loanUserContext;
-
     private readonly ILoanUserRepository _loanUserRepository;
+    private readonly ILogger<ProvideUserDetailsCommandHandler> _logger;
 
-    public ProvideUserDetailsCommandHandler(ILoanUserContext loanUserContext, ILoanUserRepository loanUserRepository)
+    public ProvideUserDetailsCommandHandler(ILoanUserContext loanUserContext, ILoanUserRepository loanUserRepository, ILogger<ProvideUserDetailsCommandHandler> logger)
     {
         _loanUserContext = loanUserContext;
         _loanUserRepository = loanUserRepository;
+        _logger = logger;
     }
 
-    public async Task Handle(ProvideUserDetailsCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(ProvideUserDetailsCommand request, CancellationToken cancellationToken)
     {
         var userDetails = await _loanUserRepository.GetUserDetails(_loanUserContext.UserGlobalId);
 
-        userDetails.ProvideUserDetails(
-            request.FirstName,
-            request.LastName,
-            request.JobTitle,
-            request.TelephoneNumber,
-            request.SecondaryTelephoneNumber,
-            _loanUserContext.Email);
+        try
+        {
+            var firstName = FirstName.FromString(request.FirstName!);
+            var lastName = LastName.FromString(request.LastName!);
+            var jobTitle = JobTitle.FromString(request.JobTitle!);
+            var telephoneNumber = TelephoneNumber.FromString(request.TelephoneNumber!);
+            var secondaryTelephoneNumber = SecondaryTelephoneNumber.FromString(request.SecondaryTelephoneNumber!);
+
+            userDetails.ProvideUserDetails(firstName, lastName, jobTitle, telephoneNumber, secondaryTelephoneNumber, _loanUserContext.Email);
+        }
+        catch (DomainValidationException domainValidationException)
+        {
+            _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
+            return domainValidationException.OperationResult;
+        }
 
         await _loanUserRepository.SaveAsync(userDetails, _loanUserContext.UserGlobalId, cancellationToken);
-
         _loanUserContext.RefreshUserData();
+
+        return OperationResult.Success();
     }
 }

@@ -44,4 +44,17 @@ public class OperationResult
             throw new DomainValidationException(this);
         }
     }
+
+    public OperationResult AddErrorsFromValueObject(params ErrorItem?[] errors)
+    {
+        foreach (var error in errors)
+        {
+            if (error != null)
+            {
+                AddValidationError(error);
+            }
+        }
+
+        return this;
+    }
 }

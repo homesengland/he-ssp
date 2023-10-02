@@ -12,7 +12,7 @@ public static class FieldNameForInputLengthValidation
     public const string GrantFundingSource = "Previous funding";
     public const string ChargesDebtInfo = "Infomation for legal charges";
     public const string FirstName = "First name";
-    public const string Surname = "Last name";
+    public const string LastName = "Last name";
     public const string JobTitle = "Job title";
     public const string TelephoneNumber = "Preferred telephone number";
     public const string SecondaryTelephoneNumber = "Secondary telephone number";

@@ -1,13 +1,17 @@
+using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Validation;
+using HE.InvestmentLoans.Contract.User.ValueObjects;
+
 namespace HE.InvestmentLoans.BusinessLogic.User.Entities;
 public class UserDetails
 {
     public UserDetails(
-        string? firstName,
-        string? lastName,
-        string? jobTitle,
+        FirstName? firstName,
+        LastName? lastName,
+        JobTitle? jobTitle,
         string? email,
-        string? telephoneNumber,
-        string? secondaryTelephoneNumber,
+        TelephoneNumber? telephoneNumber,
+        SecondaryTelephoneNumber? secondaryTelephoneNumber,
         bool? isTermsAndConditionsAccepted)
     {
         FirstName = firstName;
@@ -19,28 +23,31 @@ public class UserDetails
         IsTermsAndConditionsAccepted = isTermsAndConditionsAccepted;
     }
 
-    public string? FirstName { get; private set; }
+    public FirstName? FirstName { get; private set; }
 
-    public string? LastName { get; private set; }
+    public LastName? LastName { get; private set; }
 
-    public string? JobTitle { get; private set; }
+    public JobTitle? JobTitle { get; private set; }
 
     public string? Email { get; private set; }
 
-    public string? TelephoneNumber { get; private set; }
+    public TelephoneNumber? TelephoneNumber { get; private set; }
 
-    public string? SecondaryTelephoneNumber { get; private set; }
+    public SecondaryTelephoneNumber? SecondaryTelephoneNumber { get; private set; }
 
     public bool? IsTermsAndConditionsAccepted { get; private set; }
 
     public void ProvideUserDetails(
-        string firstName,
-        string lastName,
-        string jobTitle,
-        string telephoneNumber,
-        string secondaryTelephoneNumber,
+        FirstName firstName,
+        LastName lastName,
+        JobTitle jobTitle,
+        TelephoneNumber telephoneNumber,
+        SecondaryTelephoneNumber secondaryTelephoneNumber,
         string userEmail)
     {
+        OperationResult.New().AddErrorsFromValueObject(firstName.Error, lastName.Error, jobTitle.Error, telephoneNumber.Error, secondaryTelephoneNumber.Error)
+            .CheckErrors();
+
         FirstName = firstName;
         LastName = lastName;
         JobTitle = jobTitle;
@@ -52,10 +59,10 @@ public class UserDetails
 
     public bool IsProfileCompleted()
     {
-        return !string.IsNullOrEmpty(FirstName) &&
-                !string.IsNullOrEmpty(LastName) &&
-                !string.IsNullOrEmpty(JobTitle) &&
-                !string.IsNullOrEmpty(TelephoneNumber) &&
+        return FirstName.IsProvided() &&
+                LastName.IsProvided() &&
+                JobTitle.IsProvided() &&
+                TelephoneNumber.IsProvided() &&
                 IsTermsAndConditionsAccepted == true;
     }
 }

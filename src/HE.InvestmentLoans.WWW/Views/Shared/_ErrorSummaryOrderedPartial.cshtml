@@ -1,0 +1,31 @@
+@model string
+@{
+    var validationErrors = ViewBag.ValidationErrors;
+}
+@if (validationErrors != null)
+{
+    <gds-error-summary id="validation-summary"
+                       aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+        <gds-error-summary-title id="error-summary-title">
+            There is a problem
+        </gds-error-summary-title>
+
+        <gds-error-summary-body>
+
+            <gds-error-summary-message id="validation-error-list" data-valmsg-summary="true">
+                <gds-error-summary-list>
+                    @{
+                        foreach (var field in validationErrors)
+                        {
+                            <li>
+                                <a href="#@(field.Key)">
+                                    @(field.Value)
+                                </a>
+                            </li>
+                        }
+                    }
+                </gds-error-summary-list>
+            </gds-error-summary-message>
+        </gds-error-summary-body>
+    </gds-error-summary>
+}

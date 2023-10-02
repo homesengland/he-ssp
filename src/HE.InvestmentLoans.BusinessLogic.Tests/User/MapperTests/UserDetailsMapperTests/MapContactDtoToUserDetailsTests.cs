@@ -1,13 +1,7 @@
 extern alias Org;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User;
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.User.MapperTests.UserDetailsMapperTests;
@@ -23,12 +17,12 @@ public class MapContactDtoToUserDetailsTests
         var userDetailsEntity = UserDetailsMapper.MapContactDtoToUserDetails(contactDto);
 
         // then
-        userDetailsEntity.FirstName.Should().Be(contactDto.firstName);
-        userDetailsEntity.LastName.Should().Be(contactDto.lastName);
-        userDetailsEntity.JobTitle.Should().Be(contactDto.jobTitle);
+        userDetailsEntity.FirstName.Should().Be(FirstName.FromString(contactDto.firstName));
+        userDetailsEntity.LastName.Should().Be(LastName.FromString(contactDto.lastName));
+        userDetailsEntity.JobTitle.Should().Be(JobTitle.FromString(contactDto.jobTitle));
         userDetailsEntity.Email.Should().Be(contactDto.email);
-        userDetailsEntity.TelephoneNumber.Should().Be(contactDto.phoneNumber);
-        userDetailsEntity.SecondaryTelephoneNumber.Should().Be(contactDto.secondaryPhoneNumber);
+        userDetailsEntity.TelephoneNumber.Should().Be(TelephoneNumber.FromString(contactDto.phoneNumber));
+        userDetailsEntity.SecondaryTelephoneNumber.Should().Be(SecondaryTelephoneNumber.FromString(contactDto.secondaryPhoneNumber));
         userDetailsEntity.IsTermsAndConditionsAccepted.Should().Be(contactDto.isTermsAndConditionsAccepted);
     }
 }

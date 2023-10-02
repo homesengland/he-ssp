@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.User.UserEntityTests.UserDetailsEntityTests;
@@ -27,7 +23,14 @@ public class IsProfileCompletedTests
     public void ShouldReturnFalse_WhenJobTitleNameAreProvided()
     {
         // given
-        var userDetails = new UserDetails("John", "Smith", null, "john.smith@test.com", "12345678", "87654321", false);
+        var userDetails = new UserDetails(
+            FirstName.New("John"),
+            LastName.New("Smith"),
+            JobTitle.New(string.Empty),
+            "john.smith@test.com",
+            TelephoneNumber.New("12345678"),
+            SecondaryTelephoneNumber.New("87654321"),
+            false);
 
         // when
         var result = userDetails.IsProfileCompleted();

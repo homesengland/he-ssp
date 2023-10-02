@@ -2,12 +2,10 @@
 @{
     ViewData["Title"] = "Profile details";
     var callback = Context.Request.Query["callback"];
-
-    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.Contract.User.UserDetailsViewModel));
 }
 
 <gds-div-grid-column-two-thirds>
-    <partial name="_ErrorSummaryPartial" model="null" />
+    <partial name="_ErrorSummaryOrderedPartial" model="null" />
 
     <gds-h1 size="ControlSize.L" class="govuk-!-margin-top-9">
         Complete your details
