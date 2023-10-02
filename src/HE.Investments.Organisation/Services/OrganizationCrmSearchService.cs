@@ -33,6 +33,7 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
 
         return new List<OrganizationDetailsDto>();
     }
+
     public IEnumerable<OrganizationDetailsDto> SearchOrganizationInCrmByCompanyHouseNumber(IEnumerable<string> organisationNumbers)
     {
         var retrievedEntities = _organizationRepository.SearchForOrganizationsByCompanyHouseNumber(_organizationService, organisationNumbers);
