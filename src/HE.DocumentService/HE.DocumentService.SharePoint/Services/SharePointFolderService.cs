@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using HE.DocumentService.SharePoint.Configurartion;
+using HE.DocumentService.SharePoint.Constants;
 using HE.DocumentService.SharePoint.Exceptions;
 using HE.DocumentService.SharePoint.Interfaces;
 using Microsoft.SharePoint.Client;
@@ -62,8 +63,7 @@ public class SharePointFolderService : BaseService, ISharePointFolderService
             }
             catch (ServerException ex)
             {
-                // -2130245363 = SPErrorCodes.FolderAlreadyExists
-                if (ex.ServerErrorCode != -2130245363)
+                if (ex.ServerErrorCode != SPErrorCodes.FolderAlreadyExists)
                 {
                     throw;
                 }
