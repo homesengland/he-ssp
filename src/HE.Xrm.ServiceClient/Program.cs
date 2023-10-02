@@ -37,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestLoan(serviceClient);
+                    TestQuery(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -65,45 +65,71 @@ namespace HE.Xrm.ServiceClientExample
 
         private static void TestQuery(ServiceClient service)
         {
-            var organizationNumbers = new List<string>() { "9972137", "2137", "87867687", "213543543534535", };
-            for(var x = 1; x < 100000; x++)
+            string organisationNames = "pwc ass";
+            IEnumerable<string> names = organisationNames.Split(' ').ToList();
+            bool recordsWithoutCopanyNumberIncluded = false;
+            var filter1 = new FilterExpression
             {
-                organizationNumbers.Add(x.ToString());
-            }
-            var filter1 = new FilterExpression();
-            filter1.FilterOperator = LogicalOperator.Or;
+                FilterOperator = LogicalOperator.And,
+            };
 
-            var cols = new ColumnSet("name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3", "address1_city", "address1_postalcode", "address1_country");
+            var cols = new ColumnSet("name", "he_companieshousenumber", "address1_line1", "address1_line2",
+                "address1_line3", "address1_city", "address1_postalcode", "address1_country");
 
             var query = new QueryExpression("account")
             {
                 ColumnSet = cols,
             };
 
-            var i = 1;
+            var numberOfRequestsInQuery = 1;
+            var recordsWithoutCompanyNumberFilter = new FilterExpression();
+            if (!recordsWithoutCopanyNumberIncluded)
+            {
+                recordsWithoutCompanyNumberFilter = new FilterExpression
+                {
+                    FilterOperator = LogicalOperator.And,
+                    Conditions =
+                {
+                    new ConditionExpression("he_companieshousenumber", ConditionOperator.NotNull),
+                },
+                };
+            }
 
             var retrievedEntitiesCollection = new EntityCollection();
-            foreach (var organizationNumber in organizationNumbers)
+            EntityCollection retrievedEntities;
+            foreach (var name in names)
             {
-                var condition1 = new ConditionExpression("he_companieshousenumber", ConditionOperator.Equal, organizationNumber);
+                var condition1 = new ConditionExpression("name", ConditionOperator.Like, $"%{name}%");
                 filter1.Conditions.Add(condition1);
-                i++;
-                if(i >= 490)
+                numberOfRequestsInQuery++;
+                if (numberOfRequestsInQuery >= 490)
                 {
-                    i = 0;
+                    numberOfRequestsInQuery = 0;
                     query.Criteria.AddFilter(filter1);
 
-                    var retrievedEntities = service.RetrieveMultiple(query);
-                    if(retrievedEntities != null)
+                    retrievedEntities = service.RetrieveMultiple(query);
+                    if (retrievedEntities != null)
                     {
                         retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);
                     }
+
+                    query.Criteria.AddFilter(recordsWithoutCompanyNumberFilter);
+
                     filter1.Conditions.Clear();
                     query.Criteria.Filters.Clear();
                 }
             }
-            var organizationDtoList = new List<OrganizationDetailsDto>();
 
+            query.Criteria.AddFilter(filter1);
+            query.Criteria.AddFilter(recordsWithoutCompanyNumberFilter);
+
+            retrievedEntities = service.RetrieveMultiple(query);
+            if (retrievedEntities != null)
+            {
+                retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);
+            }
+
+            var organizationDtoList = new List<OrganizationDetailsDto>();
             foreach (var account in retrievedEntitiesCollection.Entities)
             {
                 var organization = new OrganizationDetailsDto()
@@ -116,6 +142,7 @@ namespace HE.Xrm.ServiceClientExample
                     city = account.Contains("address1_city") ? account["address1_city"].ToString() : null,
                     postalcode = account.Contains("address1_postalcode") ? account["address1_postalcode"].ToString() : null,
                     country = account.Contains("address1_country") ? account["address1_country"].ToString() : null,
+                    organisationId = account.Contains("accountid") ? account["accountid"].ToString() : null,
                 };
                 organizationDtoList.Add(organization);
             }

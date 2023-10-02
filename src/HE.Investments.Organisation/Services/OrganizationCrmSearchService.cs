@@ -1,4 +1,4 @@
-﻿using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CrmRepository;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
@@ -15,9 +15,10 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
         _organizationService = organizationService;
     }
 
-    public IEnumerable<OrganizationDetailsDto> SearchOrganizationInCrm(IEnumerable<string> organisationNumbers)
+    public IEnumerable<OrganizationDetailsDto> SearchOrganizationInCrm(string organisationNames, bool recordsWithoutCopanyNumberIncluded)
     {
-        var retrievedEntities = _organizationRepository.SearchForOrganizations(_organizationService, organisationNumbers);
+        IEnumerable<string> result = organisationNames.Split(' ').ToList();
+        var retrievedEntities = _organizationRepository.SearchForOrganizations(_organizationService, result, recordsWithoutCopanyNumberIncluded);
         if (retrievedEntities != null && retrievedEntities.Entities.Count > 0)
         {
             var organizationDtoList = new List<OrganizationDetailsDto>();
@@ -33,6 +34,7 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
                     city = account.Contains("address1_city") ? account["address1_city"].ToString() : null,
                     postalcode = account.Contains("address1_postalcode") ? account["address1_postalcode"].ToString() : null,
                     country = account.Contains("address1_country") ? account["address1_country"].ToString() : null,
+                    organisationId = account.Contains("accountid") ? account["accountid"].ToString() : null,
                 };
                 organizationDtoList.Add(organization);
             }
