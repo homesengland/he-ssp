@@ -317,9 +317,18 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 {
                     var projectName = string.Empty;
                     var numberOfHomes = 0;
+                    var isFirst = true;
                     foreach (var siteDetail in relatedSiteDetails)
                     {
-                        projectName += $"{siteDetail.invln_Name}, ";
+                        if (isFirst)
+                        {
+                            projectName += $"{siteDetail.invln_Name}";
+                            isFirst = false;
+                        }
+                        else
+                        {
+                            projectName += $", {siteDetail.invln_Name}";
+                        }
                         numberOfHomes += siteDetail.invln_Numberofhomes ?? 0;
                     }
                     if (projectName.Length > 100)
