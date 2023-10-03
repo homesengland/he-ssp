@@ -479,6 +479,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 if (emailTemplate != null)
                 {
                     var orgUrl = _environmentVariableRepositoryAdmin.GetEnvironmentVariableValue("invln_environmenturl") ?? "";
+                    var loanAppId = _environmentVariableRepositoryAdmin.GetEnvironmentVariableValue("invln_loanapplicationid") ?? "";
                     var ownerData = _systemUserRepositoryAdmin.GetById(emailToCreate.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
                     var subject = $"Application ref no {target.invln_Name ?? preImage.invln_Name} - Status change to '{statusLabel}'";
                     var govNotParams = new INTERNAL_LOAN_APP_STATUS_CHANGE()
@@ -489,7 +490,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                             recipientEmail = ownerData.InternalEMailAddress,
                             username = ownerData.FullName,
                             applicationId = preImage.invln_Name,
-                            applicationUrl = orgUrl + "/main.aspx?appid=2576a100-db47-ee11-be6f-002248c653e1&pagetype=entityrecord&etn=invln_loanapplication&id=" + target.Id,
+                            applicationUrl = orgUrl + "/main.aspx?appid=" + loanAppId + "&pagetype=entityrecord&etn=invln_loanapplication&id=" + target.Id,
                             subject = subject,
                             statusAtBody = pastFormStatus
                         }
