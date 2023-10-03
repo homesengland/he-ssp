@@ -74,24 +74,28 @@ public static class HtmlDocumentExtensions
 
     public static string[] GetFieldValidationErrors(this IHtmlDocument htmlDocument)
     {
-        var fieldValidationError = htmlDocument.GetElementsByClassName(CssConstants.GovUkErrorMessage).ToArray();
-        var errorItems = fieldValidationError!
+        var fieldValidationElements = htmlDocument
+            .GetElementsByClassName(CssConstants.GovUkFormGroupError)
+            .SelectMany(e => e.GetElementsByClassName(CssConstants.GovUkErrorMessage));
+
+        var fieldValidationErrors = fieldValidationElements!
                                 .Select(x => x.TextContent.Replace("Error:", string.Empty).Trim())
                                 .Where(x => !string.IsNullOrEmpty(x))
                                 .ToArray();
-        errorItems.Should().HaveCountGreaterThan(0, "Field validation error should be present on a page");
 
-        return errorItems;
+        fieldValidationErrors.Should().NotBeEmpty();
+
+        return fieldValidationErrors;
     }
 
     public static IHtmlDocument ContainsOnlyOneValidationMessage(this IHtmlDocument htmlDocument, string errorMessage)
     {
         var pageSummaryErrors = htmlDocument.GetSummaryErrors();
-        var fieldValidationErrors = htmlDocument.GetFieldValidationErrors();
-
         pageSummaryErrors.Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
+
+        var fieldValidationErrors = htmlDocument.GetFieldValidationErrors();
         fieldValidationErrors.Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
-        htmlDocument.GetElementsByClassName(CssConstants.GovUkFormGroupError).Should().NotBeNull("Error message for specific item should exist");
+
         return htmlDocument;
     }
 

@@ -44,6 +44,18 @@ public class IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, page);
     }
 
+    protected async Task<IHtmlDocument> GetCurrentPage(string navigateTo)
+    {
+        var currentPage = GetSharedDataOrNull<IHtmlDocument>(SharedKeys.CurrentPageKey);
+
+        if (currentPage is null)
+        {
+            return await TestClient.NavigateTo(navigateTo);
+        }
+
+        return currentPage;
+    }
+
     protected async Task<IHtmlDocument> GetCurrentPage(Func<Task<IHtmlDocument>> alternativeNavigate)
     {
         var currentPage = GetSharedDataOrNull<IHtmlDocument>(SharedKeys.CurrentPageKey);

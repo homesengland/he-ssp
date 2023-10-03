@@ -22,7 +22,7 @@ public class StartDateTests
     [InlineData("24", "9", "")]
     public void ShouldFail_WhenStartDateExistButDateIsNotCompleted(string day, string month, string year)
     {
-        var action = () => StartDate.From(CommonResponse.Yes, day, month, year);
+        var action = () => StartDate.From(CommonResponse.Yes, year, month, day);
 
         action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.NoStartDate);
     }
@@ -33,7 +33,7 @@ public class StartDateTests
     [InlineData("1", "1", "-1")]
     public void ShouldFail_WhenStartDateExistButIsNotCorrect(string day, string month, string year)
     {
-        var action = () => StartDate.From(CommonResponse.Yes, day, month, year);
+        var action = () => StartDate.From(CommonResponse.Yes, year, month, day);
 
         action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.InvalidStartDate);
     }
@@ -49,7 +49,7 @@ public class StartDateTests
     [Fact]
     public void ShouldCreateExistingStartDate_WhenCorrectDataIsProvided()
     {
-        var startDate = StartDate.From(CommonResponse.Yes, "24", "9", "2023");
+        var startDate = StartDate.From(CommonResponse.Yes, "2023", "9", "24");
 
         startDate.Exists.Should().BeTrue();
         startDate.Value.Should().Be(new DateTime(2023, 9, 24));

@@ -13,24 +13,23 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
-public class ProvideStartDateCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideStartDateCommand, OperationResult>
+public class ProvideLandOwnershipCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideLandOwnershipCommand, OperationResult>
 {
-    public ProvideStartDateCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger)
-        : base(repository, loanUserContext, logger)
+    public ProvideLandOwnershipCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger) : base(repository, loanUserContext, logger)
     {
     }
 
-    public async Task<OperationResult> Handle(ProvideStartDateCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(ProvideLandOwnershipCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
             project =>
             {
-                if (request.Exists.IsNotProvided())
+                if (request.ApplicantHasFullOwnership.IsNotProvided())
                 {
                     return;
                 }
 
-                project.ProvideStartDate(StartDate.From(request.Exists, request.Year, request.Month, request.Day));
+                project.ProvideLandOwnership(LandOwnership.From(request.ApplicantHasFullOwnership));
             },
             request.LoanApplicationId,
             request.ProjectId,

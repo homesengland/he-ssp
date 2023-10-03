@@ -79,7 +79,8 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                 null,
                 projectFromCrm.haveAPlanningReferenceNumber.IsProvided() ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber) : null,
                 projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null,
-                projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null));
+                projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null!,
+                projectFromCrm.siteOwnership.IsProvided() ? new LandOwnership(projectFromCrm.siteOwnership!.Value) : null));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
@@ -111,7 +112,6 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             Type = projectFromCrm.typeOfSite,
             PlanningRef = projectFromCrm.haveAPlanningReferenceNumber,
             PlanningRefEnter = projectFromCrm.planningReferenceNumber,
-            Ownership = projectFromCrm.siteOwnership,
             PurchaseDate = projectFromCrm.dateOfPurchase,
             Cost = projectFromCrm.siteCost,
             Value = projectFromCrm.currentValue,
@@ -156,6 +156,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                 planningReferenceNumber = projectToSave.PlanningReferenceNumber?.Value,
                 siteCoordinates = projectToSave.Coordinates?.Value,
                 landRegistryTitleNumber = projectToSave.LandRegistryTitleNumber?.Value,
+                siteOwnership = projectToSave.LandOwnership.IsProvided() ? projectToSave.LandOwnership.ApplicantHasFullOwnership : null!,
             };
 
             var req = new invln_updatesinglesitedetailsRequest
@@ -177,5 +178,6 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         yield return nameof(invln_SiteDetails.invln_Planningreferencenumber).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Sitecoordinates).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Landregistrytitlenumber).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Siteownership).ToLowerInvariant();
     }
 }

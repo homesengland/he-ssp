@@ -26,6 +26,10 @@ internal sealed class ProjectPagesUrls
 
     public const string OwnershipSuffix = "/ownership";
 
+    public const string GrantFundingExistsSuffix = "/grant-funding-exists";
+
+    public const string AdditionalDetailsSuffix = "/additional-details";
+
     public const string CheckAnswersSuffix = "/check-answers";
 
     public static string Start(string applicationId)
@@ -61,6 +65,11 @@ internal sealed class ProjectPagesUrls
     public static string Location(string applicationId, string projectId)
     {
         return $"application/{applicationId}/project/{projectId}{LocationSuffix}";
+    }
+
+    public static string Ownership(string applicationId, string projectId)
+    {
+        return $"application/{applicationId}/project/{projectId}{OwnershipSuffix}";
     }
 
     public static string CheckAnswers(string applicationId, string projectId)

@@ -41,6 +41,7 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
             PlanningReferenceNumber = project.PlanningReferenceNumber?.Value,
             LocationCoordinates = project.Coordinates?.Value,
             LocationLandRegistry = project.LandRegistryTitleNumber?.Value,
+            Ownership = project.LandOwnership.IsProvided() ? project.LandOwnership.ApplicantHasFullOwnership.MapToCommonResponse() : null!,
         };
     }
 }

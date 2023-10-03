@@ -2,12 +2,19 @@ using HE.InvestmentLoans.Common.Exceptions;
 
 namespace HE.InvestmentLoans.Common.Validation;
 
-public class OperationResult<TResult> : OperationResult
+public class OperationResult<TReturnedData> : OperationResult
 {
-    public OperationResult(TResult value)
+    public OperationResult(TReturnedData value)
+        : base()
     {
-        Result = value;
+        ReturnedData = value;
     }
 
-    public TResult Result { get; private set; }
+    public OperationResult(IEnumerable<ErrorItem> errorItems, TReturnedData value)
+    {
+        ReturnedData = value;
+        Errors = errorItems.ToList();
+    }
+
+    public TReturnedData ReturnedData { get; private set; }
 }

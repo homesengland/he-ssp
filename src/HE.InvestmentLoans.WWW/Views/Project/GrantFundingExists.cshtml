@@ -1,4 +1,5 @@
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel;
+@using HE.InvestmentLoans.Contract.Projects.ViewModels;
+@model ProjectViewModel;
 @{
     var id = ViewContext.RouteData.Values["id"];
 
@@ -6,23 +7,23 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.Id" asp-route-ending="GrantFunding" asp-method="post" novalidate>
+    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.ApplicationId" asp-route-ending="GrantFunding" asp-method="post" novalidate>
 
-        <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.Id, id = id })" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.ApplicationId, id = id })" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="inputInvalid">
                 <gds-legend size="ControlSize.L">
                     <gds-fieldset-heading>
-                        To the best of your knowledge, has this land received public sector grant funding?
+                        @ProjectPageTitles.GrantFundingExists
                     </gds-fieldset-heading>
                 </gds-legend>
                 <gds-div-hint>
                     This could include any previous Homes England funding.
                 </gds-div-hint>
 
-                <div class="govuk-!-margin-bottom-6 govuk-radios">
+               @*  <div class="govuk-!-margin-bottom-6 govuk-radios">
                     <div class="govuk-radios__item">
                         @Html.RadioButtonFor(m => m.GrantFunding,"Yes", new { @class="govuk-radios__input", id="GrantFunding"} )
                         <label class="govuk-label govuk-radios__label" for="GrantFunding">Yes</label>
@@ -35,9 +36,9 @@
                         @Html.RadioButtonFor(m => m.GrantFunding,"doNotKnow", new { @class="govuk-radios__input", id="GrantFunding-2"} )
                         <label class="govuk-label govuk-radios__label" for="GrantFunding-2">Do not know</label>
                     </div>
-                </div>
+                </div> *@
             </gds-div-form-group>
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Continue
             </button>
         </gds-field-set>

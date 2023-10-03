@@ -13,7 +13,7 @@ using HE.InvestmentLoans.Common.Validation;
 namespace HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 public class StartDate : ValueObject
 {
-    public StartDate(bool exists, DateTime? value)
+    public StartDate(bool exists, ProjectDate value)
     {
         Exists = exists;
 
@@ -24,39 +24,29 @@ public class StartDate : ValueObject
                 .CheckErrors();
         }
 
-        Value = value;
+        Date = value;
     }
 
-    public DateTime? Value { get; }
+    public ProjectDate Date { get; private set; }
+
+    public DateTime? Value => Date.Value;
 
     public bool Exists { get; }
 
-    public static StartDate From(string existsString, string day, string month, string year)
+    public static StartDate From(string existsString, string year, string month, string day)
     {
         var exists = existsString.MapToNonNullableBool();
 
         if (!exists)
         {
-            return new StartDate(exists, null);
+            return new StartDate(exists, null!);
         }
 
-        if (day.IsNotProvided() || month.IsNotProvided() || year.IsNotProvided())
-        {
-            OperationResult.New()
-                .AddValidationError(nameof(StartDate), ValidationErrorMessage.NoStartDate)
-                .CheckErrors();
-        }
+        var operationResult = OperationResult.ResultOf(() => ProjectDate.FromString(year, month, day), "EstimatedStartDate");
 
-        var dateString = $"{day}/{month}/{year}";
+        operationResult.CheckErrors();
 
-        if (!DateTime.TryParseExact(dateString, ProjectFormOption.AllowedDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateValue))
-        {
-            OperationResult.New()
-                .AddValidationError(nameof(StartDate), ValidationErrorMessage.InvalidStartDate)
-                .CheckErrors();
-        }
-
-        return new StartDate(exists, dateValue);
+        return new StartDate(exists, operationResult.ReturnedData);
     }
 
     protected override IEnumerable<object> GetAtomicValues()
