@@ -16,6 +16,12 @@ public class SharepointFilesController : CustomControllerBase
     {
     }
 
+    [HttpGet("Ping")]
+    public IActionResult Ping()
+    {
+        return Ok();
+    }
+
     [HttpPost("GetTableRows")]
     public async Task<TableResult<FileTableRow>> GetTableRows(FileTableFilter filter)
     {
