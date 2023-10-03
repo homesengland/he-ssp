@@ -19,5 +19,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string compayAdminContactName { get; set; }
         public string compayAdminContactEmail { get; set; }
         public string compayAdminContactTelephone { get; set; }
+        public string organisationId { get; set; }
     }
 }

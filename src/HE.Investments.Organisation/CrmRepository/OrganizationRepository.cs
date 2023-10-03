@@ -91,13 +91,83 @@ public class OrganizationRepository : IOrganizationRepository
         return result1.Entities.FirstOrDefault();
     }
 
-    public EntityCollection? SearchForOrganizations(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers)
+    public EntityCollection? SearchForOrganizationsByName(IOrganizationServiceAsync2 service, IEnumerable<string> names, bool recordsWithoutCopanyNumberIncluded)
+    {
+        if (names != null)
+        {
+            var filter1 = new FilterExpression
+            {
+                FilterOperator = LogicalOperator.And,
+            };
+
+            var cols = new ColumnSet("name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3", "address1_city", "address1_postalcode", "address1_country");
+
+            var query = new QueryExpression("account")
+            {
+                ColumnSet = cols,
+            };
+
+            var numberOfRequestsInQuery = 1;
+            var recordsWithoutCompanyNumberFilter = new FilterExpression();
+            if (!recordsWithoutCopanyNumberIncluded)
+            {
+                recordsWithoutCompanyNumberFilter = new FilterExpression
+                {
+                    FilterOperator = LogicalOperator.And,
+                    Conditions =
+                    {
+                        new ConditionExpression("he_companieshousenumber", ConditionOperator.NotNull),
+                    },
+                };
+            }
+
+            var retrievedEntitiesCollection = new EntityCollection();
+            EntityCollection retrievedEntities;
+            foreach (var name in names)
+            {
+                var condition1 = new ConditionExpression("name", ConditionOperator.Like, $"%{name}%");
+                filter1.Conditions.Add(condition1);
+                numberOfRequestsInQuery++;
+                if (numberOfRequestsInQuery >= 490)
+                {
+                    numberOfRequestsInQuery = 0;
+                    query.Criteria.AddFilter(filter1);
+
+                    retrievedEntities = service.RetrieveMultiple(query);
+                    if (retrievedEntities != null)
+                    {
+                        retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);
+                    }
+
+                    query.Criteria.AddFilter(recordsWithoutCompanyNumberFilter);
+
+                    filter1.Conditions.Clear();
+                    query.Criteria.Filters.Clear();
+                }
+            }
+
+            query.Criteria.AddFilter(filter1);
+            query.Criteria.AddFilter(recordsWithoutCompanyNumberFilter);
+
+            retrievedEntities = service.RetrieveMultiple(query);
+            if (retrievedEntities != null)
+            {
+                retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);
+            }
+
+            return retrievedEntitiesCollection;
+        }
+
+        return null;
+    }
+
+    public EntityCollection? SearchForOrganizationsByCompanyHouseNumber(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers)
     {
         if (organizationNumbers != null)
         {
             var filter1 = new FilterExpression
             {
-                FilterOperator = LogicalOperator.Or,
+                FilterOperator = LogicalOperator.And,
             };
 
             var cols = new ColumnSet("name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3", "address1_city", "address1_postalcode", "address1_country");

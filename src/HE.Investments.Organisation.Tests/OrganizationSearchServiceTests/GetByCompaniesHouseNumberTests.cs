@@ -96,13 +96,13 @@ public class GetByCompaniesHouseNumberTests
 
     private void GivenThatCrmReturns(params OrganizationDetailsDto[] organizationsToReturn)
     {
-        _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrm(It.IsAny<IEnumerable<string>>()))
+        _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrmByCompanyHouseNumber(It.IsAny<IEnumerable<string>>()))
             .Returns(organizationsToReturn.ToList());
     }
 
     private void GivenThatCrmReturnsNothing()
     {
-        _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrm(It.IsAny<IEnumerable<string>>()))
+        _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrmByCompanyHouseNumber(It.IsAny<IEnumerable<string>>()))
             .Returns(Enumerable.Empty<OrganizationDetailsDto>());
     }
 
