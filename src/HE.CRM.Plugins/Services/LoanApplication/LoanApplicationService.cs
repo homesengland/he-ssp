@@ -370,7 +370,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         break;
                     case (int)invln_Loanapplication_StatusCode.HoldRequested:
                         statusLabel = "Hold requested";
-                        pastFormStatus = "has been requested to be put on hold.";
+                        pastFormStatus = "has been requested to be put on hold";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.HoldRequested);
                         break;
                     case (int)invln_Loanapplication_StatusCode.Withdrawn:
@@ -410,7 +410,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         break;
                     case (int)invln_Loanapplication_StatusCode.NotApproved:
                         statusLabel = "Not Approved";
-                        pastFormStatus = "has not been approved and has been returned.";
+                        pastFormStatus = "has not been approved and has been returned";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.SentforApproval);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApprovedSubjecttoDueDiligence:
@@ -425,17 +425,17 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         break;
                     case (int)invln_Loanapplication_StatusCode.InDueDiligence:
                         statusLabel = "In Due Diligence";
-                        pastFormStatus = "has been returned without approval on Pre-Complete.";
+                        pastFormStatus = "has been returned without approval on Pre-Complete";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
                         break;
                     case (int)invln_Loanapplication_StatusCode.SentforPreCompleteApproval:
                         statusLabel = "Sent for Pre-Complete Approval";
-                        pastFormStatus = "has been sent for Pre-Complete approval.";
+                        pastFormStatus = "has been sent for Pre-Complete approval";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApprovedSubjectToContract:
                         statusLabel = "Approved Subject to Contract";
-                        pastFormStatus = "has been approved subject to contract.";
+                        pastFormStatus = "has been approved subject to contract";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApprovedSubjecttoContract);
                         break;
                     case (int)invln_Loanapplication_StatusCode.CPsSatisfied:
