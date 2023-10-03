@@ -424,13 +424,13 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationDeclined);
                         break;
                     case (int)invln_Loanapplication_StatusCode.InDueDiligence:
-                        statusLabel = "In due diligence";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        statusLabel = "In Due Diligence";
+                        pastFormStatus = "returned without approval on Pre-Complete.";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
                         break;
                     case (int)invln_Loanapplication_StatusCode.SentforPreCompleteApproval:
-                        statusLabel = "Sent for pre complete approval";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        statusLabel = "Sent for Pre-Complete Approval";
+                        pastFormStatus = "sent for Pre-Complete approval.";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApprovedSubjectToContract:
@@ -480,7 +480,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 {
                     var orgUrl = _environmentVariableRepositoryAdmin.GetEnvironmentVariableValue("invln_environmenturl") ?? "";
                     var ownerData = _systemUserRepositoryAdmin.GetById(emailToCreate.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
-                    var subject = $"Application ref no {target.invln_Name ?? preImage.invln_Name} - Status change to '{statusLabel}";
+                    var subject = $"Application ref no {target.invln_Name ?? preImage.invln_Name} - Status change to '{statusLabel}'";
                     var govNotParams = new INTERNAL_LOAN_APP_STATUS_CHANGE()
                     {
                         templateId = emailTemplate?.invln_templateid,
