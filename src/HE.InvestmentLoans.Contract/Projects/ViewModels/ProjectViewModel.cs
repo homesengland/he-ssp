@@ -26,5 +26,7 @@ public class ProjectViewModel
 
     public string[]? HomesTypes { get; set; }
 
+    public string? OtherHomeTypes { get; set; }
+
     public string? ProjectType { get; set; }
 }

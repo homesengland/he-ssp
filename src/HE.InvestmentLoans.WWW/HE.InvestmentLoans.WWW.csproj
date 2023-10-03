@@ -68,4 +68,11 @@
     <Folder Include="Helpers\Organisation\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Project\ManyHomes.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

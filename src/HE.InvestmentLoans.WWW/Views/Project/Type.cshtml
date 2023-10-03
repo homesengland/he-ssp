@@ -1,0 +1,42 @@
+@model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
+@{
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.Type));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Project" asp-action="Type" asp-route-id="@Model.ApplicationId" asp-route-site="@Model.ProjectId" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("GoBack","Site")" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="inputInvalid">
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>
+                        What type of project is this?
+                    </gds-fieldset-heading>
+                </gds-legend>
+
+                <gds-div-hint class="govuk-!-margin-bottom-6">
+                    Brownfield land is previously developed land. Greenfield land is land that has not previously been developed.
+                </gds-div-hint>
+
+                <gds-radio govuk-formgroup-asp-for="@Model.ProjectType"
+                           asp-selectlistitems="TemporaryFormOptions.SiteType"
+                           class="govuk-!-margin-bottom-6"
+                            asp-isexcludeheader>
+                </gds-radio>
+            </gds-div-form-group>
+
+            @Html.HiddenFor(c => c.ProjectId)
+            @Html.HiddenFor(c => c.ApplicationId)
+
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Continue
+            </button>
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>
