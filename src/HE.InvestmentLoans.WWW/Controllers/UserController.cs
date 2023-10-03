@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Organization;
@@ -68,6 +69,7 @@ public class UserController : Controller
 
         if (result.HasValidationErrors)
         {
+            ModelState.AddValidationErrors(result);
             var validationErrors = new List<KeyValuePair<string, string>>();
             foreach (var validationResult in result.Errors)
             {

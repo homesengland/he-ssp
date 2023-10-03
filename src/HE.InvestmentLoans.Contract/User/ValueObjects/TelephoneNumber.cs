@@ -1,23 +1,30 @@
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.Contract.User.ValueObjects;
 
-public class TelephoneNumber : ValueObjectWithErrorItem
+public class TelephoneNumber : ValueObject
 {
     private TelephoneNumber(string value)
     {
         if (value!.IsNotProvided())
         {
-            AddValidationError(nameof(UserDetailsViewModel.TelephoneNumber), ValidationErrorMessage.EnterTelephoneNumber);
+            OperationResult
+                .New()
+                .AddValidationError(nameof(UserDetailsViewModel.TelephoneNumber), ValidationErrorMessage.EnterTelephoneNumber)
+                .CheckErrors();
         }
         else if (value!.Length > MaximumInputLength.ShortInput)
         {
-            AddValidationError(
-                nameof(UserDetailsViewModel.TelephoneNumber),
-                ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.TelephoneNumber));
+            OperationResult
+                .New()
+                .AddValidationError(
+                    nameof(UserDetailsViewModel.TelephoneNumber),
+                    ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.TelephoneNumber))
+                .CheckErrors();
         }
 
         Value = value;

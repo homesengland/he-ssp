@@ -37,23 +37,23 @@ public class UserDetails
 
     public bool? IsTermsAndConditionsAccepted { get; private set; }
 
-    public void ProvideUserDetails(
-        FirstName firstName,
-        LastName lastName,
-        JobTitle jobTitle,
-        TelephoneNumber telephoneNumber,
-        SecondaryTelephoneNumber secondaryTelephoneNumber,
-        string userEmail)
+    public void ProvideUserDetails(string firstName, string lastName, string jobTitle, string telephoneNumber, string secondaryTelephoneNumber, string userEmail)
     {
-        OperationResult.New().AddErrorsFromValueObject(firstName.Error, lastName.Error, jobTitle.Error, telephoneNumber.Error, secondaryTelephoneNumber.Error)
-            .CheckErrors();
+        var operationResult = OperationResult.New();
+        var firstNameResult = operationResult.CatchResult(() => FirstName.FromString(firstName));
+        var lastNameResult = operationResult.CatchResult(() => LastName.FromString(lastName));
+        var jobTitleResult = operationResult.CatchResult(() => JobTitle.FromString(jobTitle));
+        var telephoneNumberResult = operationResult.CatchResult(() => TelephoneNumber.FromString(telephoneNumber));
+        var secondaryTelephoneNumberResult = operationResult.CatchResult(() => SecondaryTelephoneNumber.FromString(secondaryTelephoneNumber));
 
-        FirstName = firstName;
-        LastName = lastName;
-        JobTitle = jobTitle;
+        operationResult.CheckErrors();
+
+        FirstName = firstNameResult;
+        LastName = lastNameResult;
+        JobTitle = jobTitleResult;
         Email = userEmail;
-        TelephoneNumber = telephoneNumber;
-        SecondaryTelephoneNumber = secondaryTelephoneNumber;
+        TelephoneNumber = telephoneNumberResult;
+        SecondaryTelephoneNumber = secondaryTelephoneNumberResult;
         IsTermsAndConditionsAccepted = true;
     }
 

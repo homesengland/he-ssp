@@ -1,23 +1,30 @@
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.Contract.User.ValueObjects;
 
-public class LastName : ValueObjectWithErrorItem
+public class LastName : ValueObject
 {
     private LastName(string value)
     {
         if (value!.IsNotProvided())
         {
-            AddValidationError(nameof(UserDetailsViewModel.LastName), ValidationErrorMessage.EnterLastName);
+            OperationResult
+                .New()
+                .AddValidationError(nameof(UserDetailsViewModel.LastName), ValidationErrorMessage.EnterLastName)
+                .CheckErrors();
         }
         else if (value!.Length > MaximumInputLength.ShortInput)
         {
-            AddValidationError(
-                nameof(UserDetailsViewModel.LastName),
-                ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.LastName));
+            OperationResult
+                .New()
+                .AddValidationError(
+                    nameof(UserDetailsViewModel.LastName),
+                    ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.LastName))
+                .CheckErrors();
         }
 
         Value = value;

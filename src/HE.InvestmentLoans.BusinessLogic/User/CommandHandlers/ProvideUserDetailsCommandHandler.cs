@@ -29,13 +29,13 @@ public class ProvideUserDetailsCommandHandler : IRequestHandler<ProvideUserDetai
 
         try
         {
-            var firstName = FirstName.FromString(request.FirstName!);
-            var lastName = LastName.FromString(request.LastName!);
-            var jobTitle = JobTitle.FromString(request.JobTitle!);
-            var telephoneNumber = TelephoneNumber.FromString(request.TelephoneNumber!);
-            var secondaryTelephoneNumber = SecondaryTelephoneNumber.FromString(request.SecondaryTelephoneNumber!);
-
-            userDetails.ProvideUserDetails(firstName, lastName, jobTitle, telephoneNumber, secondaryTelephoneNumber, _loanUserContext.Email);
+            userDetails.ProvideUserDetails(
+                request.FirstName,
+                request.LastName,
+                request.JobTitle,
+                request.TelephoneNumber,
+                request.SecondaryTelephoneNumber,
+                _loanUserContext.Email);
         }
         catch (DomainValidationException domainValidationException)
         {

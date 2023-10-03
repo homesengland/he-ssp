@@ -1,23 +1,30 @@
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Domain;
 
 namespace HE.InvestmentLoans.Contract.User.ValueObjects;
 
-public class JobTitle : ValueObjectWithErrorItem
+public class JobTitle : ValueObject
 {
     private JobTitle(string value)
     {
         if (value!.IsNotProvided())
         {
-            AddValidationError(nameof(UserDetailsViewModel.JobTitle), ValidationErrorMessage.EnterJobTitle);
+            OperationResult
+                .New()
+                .AddValidationError(nameof(UserDetailsViewModel.JobTitle), ValidationErrorMessage.EnterJobTitle)
+                .CheckErrors();
         }
         else if (value!.Length > MaximumInputLength.ShortInput)
         {
-            AddValidationError(
-                nameof(UserDetailsViewModel.JobTitle),
-                ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.JobTitle));
+            OperationResult
+                .New()
+                .AddValidationError(
+                    nameof(UserDetailsViewModel.JobTitle),
+                    ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.JobTitle))
+                .CheckErrors();
         }
 
         Value = value;

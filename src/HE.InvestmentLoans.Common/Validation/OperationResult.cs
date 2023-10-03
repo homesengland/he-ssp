@@ -1,15 +1,11 @@
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Extensions;
 
 namespace HE.InvestmentLoans.Common.Validation;
 
 public class OperationResult
 {
-    public OperationResult()
-    {
-        Errors = new List<ErrorItem>();
-    }
-
-    public IList<ErrorItem> Errors { get; }
+    public IList<ErrorItem> Errors { get; } = new List<ErrorItem>();
 
     public bool IsValid => Errors.Count == 0;
 
@@ -45,16 +41,21 @@ public class OperationResult
         }
     }
 
-    public OperationResult AddErrorsFromValueObject(params ErrorItem?[] errors)
+    public TReturnedData CatchResult<TReturnedData>(Func<TReturnedData> action, string overriddenFieldName = null!)
+        where TReturnedData : class
     {
-        foreach (var error in errors)
+        try
         {
-            if (error != null)
-            {
-                AddValidationError(error);
-            }
+            return action();
         }
+        catch (DomainValidationException ex)
+        {
+            var result = ex.OperationResult;
+            var error = result.Errors.Single();
 
-        return this;
+            AddValidationError(overriddenFieldName.IsProvided() ? overriddenFieldName : error.AffectedField, error.ErrorMessage);
+
+            return null!;
+        }
     }
 }
