@@ -350,7 +350,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 {
                     case (int)invln_Loanapplication_StatusCode.Draft:
                         statusLabel = "Draft";
-                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "is now being edited by the applicant";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Draft);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApplicationSubmitted:
