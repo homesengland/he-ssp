@@ -23,11 +23,11 @@ public class ProvideUserDetailsTests
 
         // when
         userDetailsEntity.ProvideUserDetails(
-            newUserDetails.FirstName!,
-            newUserDetails.LastName!,
-            newUserDetails.JobTitle!,
-            newUserDetails.TelephoneNumber!,
-            newUserDetails.SecondaryTelephoneNumber!,
+            newUserDetails.FirstName!.ToString(),
+            newUserDetails.LastName!.ToString(),
+            newUserDetails.JobTitle!.ToString(),
+            newUserDetails.TelephoneNumber!.ToString(),
+            newUserDetails.SecondaryTelephoneNumber!.ToString(),
             newUserDetails.Email!);
 
         // then

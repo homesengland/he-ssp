@@ -1,5 +1,8 @@
+using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Xunit;
 
@@ -20,22 +23,22 @@ public class IsProfileCompletedTests
     }
 
     [Fact]
-    public void ShouldReturnFalse_WhenJobTitleNameAreProvided()
+    public void ShouldThrowDomainValidationException_WhenJobTitleNameAreProvided()
     {
         // given
-        var userDetails = new UserDetails(
-            FirstName.New("John"),
-            LastName.New("Smith"),
-            JobTitle.New(string.Empty),
-            "john.smith@test.com",
-            TelephoneNumber.New("12345678"),
-            SecondaryTelephoneNumber.New("87654321"),
-            false);
+        var userDetailsEntity = UserDetailsEntityTestBuilder.New().Build();
+
+        var firstName = "John";
+        var lastName = "Smith";
+        var jobTitle = string.Empty;
+        var telephoneNumber = "123123";
+        var secondaryTelephoneNumber = "678678";
+        var userEmail = "john.smith@test.com";
 
         // when
-        var result = userDetails.IsProfileCompleted();
+        var action = () => userDetailsEntity.ProvideUserDetails(firstName, lastName, jobTitle, telephoneNumber, secondaryTelephoneNumber, userEmail);
 
         // then
-        result.Should().BeFalse();
+        action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.EnterJobTitle);
     }
 }
