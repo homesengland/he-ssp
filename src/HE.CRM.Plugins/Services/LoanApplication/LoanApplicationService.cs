@@ -479,7 +479,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 if (emailTemplate != null)
                 {
                     var orgUrl = _environmentVariableRepositoryAdmin.GetEnvironmentVariableValue("invln_environmenturl") ?? "";
-                    var loanAppId = _environmentVariableRepositoryAdmin.GetEnvironmentVariableValue("invln_loanapplicationid") ?? "";
+                    var loanAppId = _environmentVariableRepositoryAdmin.GetEnvironmentVariableValue("invln_loanappid") ?? "";
                     var ownerData = _systemUserRepositoryAdmin.GetById(emailToCreate.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
                     var subject = $"Application ref no {target.invln_Name ?? preImage.invln_Name} - Status change to '{statusLabel}'";
                     var govNotParams = new INTERNAL_LOAN_APP_STATUS_CHANGE()
