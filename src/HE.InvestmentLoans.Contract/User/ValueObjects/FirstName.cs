@@ -34,7 +34,15 @@ public class FirstName : ValueObject
 
     public static FirstName New(string value) => new(value);
 
-    public static FirstName FromString(string firstName) => new(firstName);
+    public static FirstName? FromString(string? firstName)
+    {
+        if (string.IsNullOrEmpty(firstName))
+        {
+            return null;
+        }
+
+        return new FirstName(firstName);
+    }
 
     public override string ToString()
     {

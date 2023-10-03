@@ -34,7 +34,15 @@ public class TelephoneNumber : ValueObject
 
     public static TelephoneNumber New(string value) => new(value);
 
-    public static TelephoneNumber FromString(string telephoneNumber) => new(telephoneNumber);
+    public static TelephoneNumber? FromString(string? telephoneNumber)
+    {
+        if (string.IsNullOrEmpty(telephoneNumber))
+        {
+            return null;
+        }
+
+        return new TelephoneNumber(telephoneNumber);
+    }
 
     public override string ToString()
     {

@@ -40,11 +40,11 @@ public class UserDetails
     public void ProvideUserDetails(string firstName, string lastName, string jobTitle, string telephoneNumber, string secondaryTelephoneNumber, string userEmail)
     {
         var operationResult = OperationResult.New();
-        var firstNameResult = operationResult.CatchResult(() => FirstName.FromString(firstName));
-        var lastNameResult = operationResult.CatchResult(() => LastName.FromString(lastName));
-        var jobTitleResult = operationResult.CatchResult(() => JobTitle.FromString(jobTitle));
-        var telephoneNumberResult = operationResult.CatchResult(() => TelephoneNumber.FromString(telephoneNumber));
-        var secondaryTelephoneNumberResult = operationResult.CatchResult(() => SecondaryTelephoneNumber.FromString(secondaryTelephoneNumber));
+        var firstNameResult = operationResult.CatchResult(() => FirstName.New(firstName));
+        var lastNameResult = operationResult.CatchResult(() => LastName.New(lastName));
+        var jobTitleResult = operationResult.CatchResult(() => JobTitle.New(jobTitle));
+        var telephoneNumberResult = operationResult.CatchResult(() => TelephoneNumber.New(telephoneNumber));
+        var secondaryTelephoneNumberResult = operationResult.CatchResult(() => SecondaryTelephoneNumber.New(secondaryTelephoneNumber));
 
         operationResult.CheckErrors();
 

@@ -34,7 +34,15 @@ public class JobTitle : ValueObject
 
     public static JobTitle New(string value) => new(value);
 
-    public static JobTitle FromString(string jobTitle) => new(jobTitle);
+    public static JobTitle? FromString(string? jobTitle)
+    {
+        if (string.IsNullOrEmpty(jobTitle))
+        {
+            return null;
+        }
+
+        return new JobTitle(jobTitle);
+    }
 
     public override string ToString()
     {
