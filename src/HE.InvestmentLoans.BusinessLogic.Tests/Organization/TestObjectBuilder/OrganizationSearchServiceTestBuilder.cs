@@ -52,7 +52,8 @@ public class OrganizationSearchServiceTestBuilder
             "anyName",
             "anyCity",
             "Any Street 1",
-            "ABCD 123");
+            "ABCD 123",
+            "123");
 
         _mock
             .Setup(c => c.GetByCompaniesHouseNumber(companyHouseNumber, It.IsAny<CancellationToken>()))
