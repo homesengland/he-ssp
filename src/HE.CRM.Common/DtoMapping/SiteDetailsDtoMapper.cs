@@ -35,6 +35,8 @@ namespace HE.CRM.Common.DtoMapping
                 invln_TypeofSite = MapTypeOfSite(siteDetail.typeOfSite),
                 invln_Valuationsource = MapValuationSource(siteDetail.valuationSource),
                 invln_Whoprovided = siteDetail.whoProvided,
+                invln_planningpermissionstatus = siteDetail.planningPermissionStatus,
+                invln_startdate = siteDetail.startDate,
             };
             if (Guid.TryParse(loanApplicationGuid, out Guid applicationId))
             {
@@ -74,6 +76,8 @@ namespace HE.CRM.Common.DtoMapping
                 typeOfSite = MapTypeOfSiteOptionSetToString(siteDetails.invln_TypeofSite),
                 valuationSource = MapValuationSourceOptionSetToString(siteDetails.invln_Valuationsource),
                 whoProvided = siteDetails.invln_Whoprovided,
+                startDate = siteDetails.invln_startdate,
+                planningPermissionStatus = siteDetails.invln_planningpermissionstatus,
             };
             return siteDetailToReturn;
         }
