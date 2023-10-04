@@ -61,6 +61,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\activity_mailmergetypecode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\activity_typecode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\addlistcampaign.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\AIOperationOverrideType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\AIPluginType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\AllocationType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\BookableResourceCharacteristicType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\botcomponentreusepolicy.cs" />
@@ -418,6 +420,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Need.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\officedocument_DocumentType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\OnlineMeetingType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\OpenAISchemaVersion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Opportunity_SalesStage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\orginsightsconfiguration_Lookback.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\orginsightsconfiguration_PlotOption.cs" />
