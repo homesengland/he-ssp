@@ -33,7 +33,7 @@ public class OrganisationSearchService : IOrganisationSearchService
 
         var organizationsFromCrm = await GetMatchingOrganizationsFromCrm(companyHousesOrganizations);
         var mergedResult = MergeResults(companyHousesOrganizations, organizationsFromCrm);
-        var foundSpvCompaniesCount = await AppendSpvCompanies(organisationName, pagingParams, mergedResult);
+        var foundSpvCompaniesCount = await AppendSpvCompanies(organisationName, pagingParams, companyHousesResult.TotalItems, mergedResult);
 
         return new OrganisationSearchResult(mergedResult, companyHousesResult.TotalItems + foundSpvCompaniesCount, null!);
     }
@@ -56,10 +56,16 @@ public class OrganisationSearchService : IOrganisationSearchService
         return new GetOrganizationByCompaniesHouseNumberResult(mergedResult.FirstOrDefault()!, null!);
     }
 
-    private async Task<int> AppendSpvCompanies(string organisationName, PagingQueryParams pagingParams, IList<OrganisationSearchItem> mergedResult)
+    private async Task<int> AppendSpvCompanies(
+        string organisationName,
+        PagingQueryParams pagingParams,
+        int totalItemsFromCompaniesHouseApi,
+        IList<OrganisationSearchItem> mergedResult)
     {
         var result = await _organizationCrmSearchService.SearchOrganizationInCrmByName(organisationName, false);
-        foreach (var spvCompany in result.OrderBy(x => x.registeredCompanyName))
+        var fromCompanyHouse = Math.Min((pagingParams.StartIndex * (pagingParams.Size - 1)) + mergedResult.Count, totalItemsFromCompaniesHouseApi);
+        var skip = Math.Max(((pagingParams.StartIndex - 1) * pagingParams.Size) - totalItemsFromCompaniesHouseApi, 0);
+        foreach (var spvCompany in result.OrderBy(x => x.registeredCompanyName).Skip(skip))
         {
             if (mergedResult.Count >= pagingParams.Size)
             {

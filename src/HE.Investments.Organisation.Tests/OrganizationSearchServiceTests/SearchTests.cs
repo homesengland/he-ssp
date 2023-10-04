@@ -214,6 +214,33 @@ public class SearchTests : TestBase<OrganisationSearchService>
         result.Items[1].ShouldBe(spvCompany1.registeredCompanyName, spvCompany1.companyRegistrationNumber, spvCompany1.organisationId, true);
     }
 
+    [Fact]
+    public async Task ShouldNotReturnSpvCompanies_WhenThereAreOnTwoPAges()
+    {
+        // given
+        var spvCompany1 = OrganizationDetailsDtoTestBuilder.NewSpvCompany("CRM1").Build();
+        var spvCompany2 = OrganizationDetailsDtoTestBuilder.NewSpvCompany("CRM2").Build();
+        var spvCompany3 = OrganizationDetailsDtoTestBuilder.NewSpvCompany("CRM3").Build();
+        var spvCompany4 = OrganizationDetailsDtoTestBuilder.NewSpvCompany("CRM4").Build();
+
+        CompaniesHouseApiTestBuilder.New().SearchReturnsTotalOrganizations(1).Register(this);
+
+        OrganizationCrmSearchServiceTestBuilder
+            .New()
+            .ByNameReturns(spvCompany1.registeredCompanyName, spvCompany1, spvCompany2, spvCompany3, spvCompany4)
+            .ByCompanyHouseNumberReturnsNothing()
+            .Register(this);
+
+        // when
+        var result = await TestCandidate.Search(spvCompany1.registeredCompanyName, new PagingQueryParams(2, 3), CancellationToken.None);
+
+        // then
+        result.IsSuccessfull().Should().BeTrue();
+        result.TotalItems.Should().Be(5);
+        result.Items.Count.Should().Be(1);
+        result.Items.Single().ShouldBe(spvCompany4.registeredCompanyName, spvCompany4.companyRegistrationNumber, spvCompany4.organisationId, true);
+    }
+
     private void GivenThatCrmReturns(params OrganizationDetailsDto[] crmOrganization)
     {
         OrganizationCrmSearchServiceTestBuilder.New().ByCompanyHouseNumberReturns(crmOrganization).ByNameReturnsNothing().Register(this);
