@@ -2,7 +2,7 @@
 @{
     var data = new List<(string Title, string Desription, string Link)>
     {
-        ("Application details",  "You can view or edit your company and project information.", Url.Action("TaskList", "LoanApplicationV2", new { id = Model.Value })),
+        ("Application details",  "You can view or edit your company and project information.", Url.Action("TaskList","LoanApplicationV2", new { id = Model.Value })),
         ("Conditions management", "You can upload evidence to satisfy your Conditions Precedent and Subsequent.", null),
         ("Letters", "You'll be able to download letters and upload your signed copies here.", Url.Link("#", null)),
     };
