@@ -30,10 +30,10 @@ public class GetUserDetailsQueryHandlerTests : TestBase<GetUserDetailsQueryHandl
         var result = await TestCandidate.Handle(new GetUserDetailsQuery(), CancellationToken.None);
 
         // then
-        result.ViewModel.FirstName.Should().Be(userDetails.FirstName);
-        result.ViewModel.LastName.Should().Be(userDetails.LastName);
-        result.ViewModel.JobTitle.Should().Be(userDetails.JobTitle);
-        result.ViewModel.TelephoneNumber.Should().Be(userDetails.TelephoneNumber);
-        result.ViewModel.SecondaryTelephoneNumber.Should().Be(userDetails.SecondaryTelephoneNumber);
+        result.ViewModel.FirstName.Should().Be(userDetails.FirstName?.ToString());
+        result.ViewModel.LastName.Should().Be(userDetails.LastName?.ToString());
+        result.ViewModel.JobTitle.Should().Be(userDetails.JobTitle?.ToString());
+        result.ViewModel.TelephoneNumber.Should().Be(userDetails.TelephoneNumber?.ToString());
+        result.ViewModel.SecondaryTelephoneNumber.Should().Be(userDetails.SecondaryTelephoneNumber?.ToString());
     }
 }

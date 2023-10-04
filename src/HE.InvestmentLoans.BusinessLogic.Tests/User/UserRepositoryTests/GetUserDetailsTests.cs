@@ -6,6 +6,7 @@ using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.User.UserRepositoryTests;
+
 public class GetUserDetailsTests : TestBase<LoanUserRepository>
 {
     [Fact]
@@ -26,12 +27,12 @@ public class GetUserDetailsTests : TestBase<LoanUserRepository>
         var result = await TestCandidate.GetUserDetails(UserGlobalId.From(contactDto.contactId));
 
         // then
-        result.FirstName.Should().Be(contactDto.firstName);
-        result.LastName.Should().Be(contactDto.lastName);
+        result.FirstName.Should().Be(FirstName.FromString(contactDto.firstName));
+        result.LastName.Should().Be(LastName.FromString(contactDto.lastName));
         result.Email.Should().Be(contactDto.email);
-        result.JobTitle.Should().Be(contactDto.jobTitle);
-        result.TelephoneNumber.Should().Be(contactDto.phoneNumber);
-        result.SecondaryTelephoneNumber.Should().Be(contactDto.secondaryPhoneNumber);
+        result.JobTitle.Should().Be(JobTitle.FromString(contactDto.jobTitle));
+        result.TelephoneNumber.Should().Be(TelephoneNumber.FromString(contactDto.phoneNumber));
+        result.SecondaryTelephoneNumber.Should().Be(SecondaryTelephoneNumber.FromString(contactDto.secondaryPhoneNumber));
         result.IsTermsAndConditionsAccepted.Should().Be(contactDto.isTermsAndConditionsAccepted);
     }
 

@@ -1,8 +1,5 @@
-using FluentValidation;
-using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
-using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Organization;
@@ -22,12 +19,9 @@ public class UserController : Controller
 {
     private readonly IMediator _mediator;
 
-    private readonly IValidator<UserDetailsViewModel> _validator;
-
-    public UserController(IMediator mediator, IValidator<UserDetailsViewModel> validator)
+    public UserController(IMediator mediator)
     {
         _mediator = mediator;
-        _validator = validator;
     }
 
     public async Task<GetUserAccountResponse> Index()
@@ -64,21 +58,28 @@ public class UserController : Controller
     [HttpPost("profile-details")]
     public async Task<IActionResult> ProfileDetails(UserDetailsViewModel viewModel, string callback, CancellationToken cancellationToken)
     {
-        var validationResult = await _validator.ValidateAsync(viewModel, opt => opt.IncludeRuleSets(UserView.ProfileDetails), cancellationToken);
-        if (!validationResult.IsValid)
-        {
-            validationResult.AddToModelState(ModelState);
-            return View(UserView.ProfileDetails, viewModel);
-        }
-
-        await _mediator.Send(
+        var result = await _mediator.Send(
             new ProvideUserDetailsCommand(
-            viewModel.FirstName,
-            viewModel.LastName,
-            viewModel.JobTitle,
-            viewModel.TelephoneNumber,
-            viewModel.SecondaryTelephoneNumber),
+                viewModel.FirstName,
+                viewModel.LastName,
+                viewModel.JobTitle,
+                viewModel.TelephoneNumber,
+                viewModel.SecondaryTelephoneNumber),
             cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            var validationErrors = new List<KeyValuePair<string, string>>();
+            foreach (var validationResult in result.Errors)
+            {
+                validationErrors.Add(new KeyValuePair<string, string>(validationResult.AffectedField, validationResult.ErrorMessage));
+            }
+
+            ViewBag.ValidationErrors = validationErrors;
+
+            return View("ProfileDetails", viewModel);
+        }
 
         if (callback == nameof(LoanApplicationV2Controller.CheckYourDetails))
         {

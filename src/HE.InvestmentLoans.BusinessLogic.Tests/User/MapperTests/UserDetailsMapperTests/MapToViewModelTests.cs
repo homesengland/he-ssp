@@ -15,10 +15,10 @@ public class MapToViewModelTests
         var userDetailsViewModel = UserDetailsMapper.MapToViewModel(userDetailsEntity);
 
         // then
-        userDetailsViewModel.FirstName.Should().Be(userDetailsEntity.FirstName);
-        userDetailsViewModel.LastName.Should().Be(userDetailsEntity.LastName);
-        userDetailsViewModel.JobTitle.Should().Be(userDetailsEntity.JobTitle);
-        userDetailsViewModel.TelephoneNumber.Should().Be(userDetailsEntity.TelephoneNumber);
-        userDetailsViewModel.SecondaryTelephoneNumber.Should().Be(userDetailsEntity.SecondaryTelephoneNumber);
+        userDetailsViewModel.FirstName.Should().Be(userDetailsEntity.FirstName?.ToString());
+        userDetailsViewModel.LastName.Should().Be(userDetailsEntity.LastName?.ToString());
+        userDetailsViewModel.JobTitle.Should().Be(userDetailsEntity.JobTitle?.ToString());
+        userDetailsViewModel.TelephoneNumber.Should().Be(userDetailsEntity.TelephoneNumber?.ToString());
+        userDetailsViewModel.SecondaryTelephoneNumber.Should().Be(userDetailsEntity.SecondaryTelephoneNumber?.ToString());
     }
 }
