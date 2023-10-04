@@ -59,5 +59,4 @@ public class ProjectViewModel
     public string? GrantFundingAmount { get; set; }
 
     public string? GrantFundingPurpose { get; set; }
-
 }

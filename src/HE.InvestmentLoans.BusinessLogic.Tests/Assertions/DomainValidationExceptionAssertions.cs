@@ -19,5 +19,4 @@ public static class DomainValidationExceptionAssertions
         exceptionAssertions.Which.OperationResult.Errors.Should().Contain(x => x.ErrorMessage == errorMessage);
         return exceptionAssertions;
     }
-
 }

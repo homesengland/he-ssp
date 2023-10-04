@@ -86,6 +86,11 @@ internal sealed class ProjectPagesUrls
         return $"application/{applicationId}/project/{projectId}{GrantFundingExistsSuffix}";
     }
 
+    public static string GrantFunding(string applicationId, string projectId)
+    {
+        return $"application/{applicationId}/project/{projectId}{GrantFundingSuffix}";
+    }
+
     public static string CheckAnswers(string applicationId, string projectId)
     {
         return $"application/{applicationId}/project/{projectId}{CheckAnswersSuffix}";

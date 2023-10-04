@@ -53,6 +53,10 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
             Value = project.AdditionalDetails?.CurrentValue.ToString(),
             Source = additionalDetailsAreProvided ? SourceOfValuationMapper.ToString(project.AdditionalDetails!.SourceOfValuation) : null,
             GrantFundingStatus = project.GrantFundingStatus.IsProvided() ? GrantFundingStatusMapper.ToString(project.GrantFundingStatus!.Value) : null,
+            GrantFundingProviderName = project.PublicSectorGrantFunding?.ProviderName?.Value,
+            GrantFundingAmount = project.PublicSectorGrantFunding?.Amount?.ToString(),
+            GrantFundingName = project.PublicSectorGrantFunding?.GrantOrFundName?.Value,
+            GrantFundingPurpose = project.PublicSectorGrantFunding?.Purpose?.Value,
         };
     }
 }

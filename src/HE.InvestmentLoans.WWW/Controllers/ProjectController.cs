@@ -289,6 +289,30 @@ public class ProjectController : WorkflowController<ProjectState>
         return View(result);
     }
 
+    [HttpPost("{projectId}/grant-funding")]
+    [WorkflowState(ProjectState.GrantFundingMore)]
+    public async Task<IActionResult> GrantFunding(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    {
+        var result = await _mediator.Send(
+            new ProvideGrantFundingInformationCommand(
+                LoanApplicationId.From(id),
+                ProjectId.From(projectId),
+                model.GrantFundingProviderName,
+                model.GrantFundingAmount,
+                model.GrantFundingName,
+                model.GrantFundingPurpose),
+            token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View(model);
+        }
+
+        return await Continue(new { id, projectId });
+    }
+
     [HttpGet("{projectId}/charges-debt")]
     [WorkflowState(ProjectState.ChargesDebt)]
     public async Task<IActionResult> ChargesDebt(Guid id, Guid projectId)

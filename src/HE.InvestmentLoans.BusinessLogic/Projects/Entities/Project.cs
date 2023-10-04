@@ -28,7 +28,8 @@ public class Project
         LandRegistryTitleNumber? landRegistryTitleNumber,
         LandOwnership? landOwnership,
         AdditionalDetails? additionalDetails,
-        PublicSectorGrantFundingStatus? grantFundingStatus)
+        PublicSectorGrantFundingStatus? grantFundingStatus,
+        PublicSectorGrantFunding? publicSectorGrantFunding)
     {
         IsNewlyCreated = false;
 
@@ -41,6 +42,7 @@ public class Project
         LandOwnership = landOwnership;
         AdditionalDetails = additionalDetails;
         GrantFundingStatus = grantFundingStatus;
+        PublicSectorGrantFunding = publicSectorGrantFunding;
     }
 
     public ProjectId Id { get; private set; }

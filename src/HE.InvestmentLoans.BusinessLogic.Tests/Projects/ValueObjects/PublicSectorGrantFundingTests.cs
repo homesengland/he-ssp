@@ -18,7 +18,7 @@ public class PublicSectorGrantFundingTests
                 TextTestData.TextThatNotExceedsShortInputLimit,
                 TextTestData.TextThatNotExceedsLongInputLimit);
 
-        action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingName));
+        action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingProviderName));
     }
 
     [Fact]

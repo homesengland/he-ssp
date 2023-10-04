@@ -24,4 +24,8 @@ public static class ProjectFieldNames
     public const string LandOwnership = "Land ownership";
 
     public const string AdditionalDetails = "Additional details";
+
+    public const string GrantFunding = "Additional information";
+
+    public const string GrantFundingExists = "Public sector grant funding";
 }

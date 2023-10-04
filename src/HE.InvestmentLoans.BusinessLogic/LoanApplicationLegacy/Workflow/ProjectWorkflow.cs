@@ -124,10 +124,9 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
         //   .PermitIf(Trigger.Change, State.GrantFundingMore, () => _site.GrantFunding == CommonResponse.Yes)
         //   .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.GrantFunding != CommonResponse.Yes);
 
-        //_machine.Configure(State.GrantFundingMore)
-        //    .Permit(Trigger.Continue, State.ChargesDebt)
-        //    .Permit(Trigger.Back, State.GrantFunding)
-        //    .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(ProjectState.GrantFundingMore)
+            .Permit(Trigger.Continue, ProjectState.ChargesDebt)
+            .Permit(Trigger.Back, ProjectState.GrantFunding);
 
         //_machine.Configure(State.ChargesDebt)
         //    .Permit(Trigger.Continue, State.AffordableHomes)

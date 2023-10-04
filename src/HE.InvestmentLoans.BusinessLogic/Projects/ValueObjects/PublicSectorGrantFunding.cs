@@ -38,7 +38,7 @@ public class PublicSectorGrantFunding : ValueObject
         var aggregatedResult = OperationResult.New();
 
         var providerName = providerNameString.IsProvided() ? aggregatedResult.CatchResult(() => new ShortText(providerNameString)) : null;
-        aggregatedResult.OverrideError(GenericValidationError.TextTooLong, "GrantFundingProviderName", ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingName));
+        aggregatedResult.OverrideError(GenericValidationError.TextTooLong, "GrantFundingProviderName", ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingProviderName));
 
         var amount = amountString.IsProvided() ? aggregatedResult.CatchResult(() => Pounds.FromString(amountString)) : null;
         aggregatedResult.OverrideError(GenericValidationError.InvalidPoundsValue, "GrantFundingAmount", ValidationErrorMessage.IncorrectGrantFundingAmount);
