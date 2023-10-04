@@ -1,10 +1,10 @@
-namespace HE.InvestmentLoans.Contract.User.ValueObjects;
-
 using System.Runtime.Serialization;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Domain;
+
+namespace HE.InvestmentLoans.Contract.User.ValueObjects;
 
 [Serializable]
 public class SecondaryTelephoneNumber : ValueObject, ISerializable
