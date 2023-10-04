@@ -79,7 +79,7 @@ public static class HtmlDocumentExtensions
                                 .Select(x => x.TextContent.Replace("Error:", string.Empty).Trim())
                                 .Where(x => !string.IsNullOrEmpty(x))
                                 .ToArray();
-        errorItems.Should().HaveCountGreaterThan(1, "Field validation error should be present on a page");
+        errorItems.Should().HaveCountGreaterThan(0, "Field validation error should be present on a page");
 
         return errorItems;
     }

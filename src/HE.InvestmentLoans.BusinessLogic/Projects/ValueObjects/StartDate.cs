@@ -27,9 +27,9 @@ public class StartDate : ValueObject
         Value = value;
     }
 
-    public DateTime? Value { get; private set; }
+    public DateTime? Value { get; }
 
-    public bool Exists { get; private set; }
+    public bool Exists { get; }
 
     public static StartDate From(string existsString, string day, string month, string year)
     {

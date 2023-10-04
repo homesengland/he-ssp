@@ -117,7 +117,7 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                 item => item.PlanningRefEnter != null,
                 () => RuleFor(item => item.PlanningRefEnter)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
-                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.PlanningRefEnter))));
+                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.PlanningReferenceNumber))));
 
         RuleSet(ProjectView.GrantFundingMore, () =>
         {

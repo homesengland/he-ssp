@@ -118,7 +118,7 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
         // then
         result.IsValid.Should().BeTrue();
 
-        project.StartDate.Exists.Should().BeTrue();
+        project.StartDate!.Exists.Should().BeTrue();
         project.StartDate.Should().Be(CorrectDate);
     }
 
@@ -148,6 +148,6 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
         // then
         result.IsValid.Should().BeTrue();
 
-        project.StartDate.Exists.Should().BeFalse();
+        project.StartDate!.Exists.Should().BeFalse();
     }
 }

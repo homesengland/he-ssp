@@ -11,6 +11,7 @@ using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.AspNetCore.Http;
@@ -74,8 +75,11 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         var projectsFromCrm = loanApplicationDto.siteDetailsList.Select(
             projectFromCrm => new Project(
                 ProjectId.From(projectFromCrm.siteDetailsId),
-                projectFromCrm.Name.IsNotProvided() ? null! : new ProjectName(projectFromCrm.Name),
-                null!));
+                projectFromCrm.Name.IsProvided() ? new ProjectName(projectFromCrm.Name) : null,
+                null,
+                projectFromCrm.haveAPlanningReferenceNumber.IsProvided() ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber) : null,
+                projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null,
+                projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
@@ -107,9 +111,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             Type = projectFromCrm.typeOfSite,
             PlanningRef = projectFromCrm.haveAPlanningReferenceNumber,
             PlanningRefEnter = projectFromCrm.planningReferenceNumber,
-            LocationCoordinates = projectFromCrm.siteCoordinates,
             Ownership = projectFromCrm.siteOwnership,
-            LocationLandRegistry = projectFromCrm.landRegistryTitleNumber,
             PurchaseDate = projectFromCrm.dateOfPurchase,
             Cost = projectFromCrm.siteCost,
             Value = projectFromCrm.currentValue,
@@ -150,6 +152,10 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                 siteDetailsId = projectToSave.Id.Value.ToString(),
                 Name = projectToSave.Name?.Value,
                 dateOfPurchase = projectToSave.StartDate?.Value,
+                haveAPlanningReferenceNumber = projectToSave.PlanningReferenceNumber?.Exists,
+                planningReferenceNumber = projectToSave.PlanningReferenceNumber?.Value,
+                siteCoordinates = projectToSave.Coordinates?.Value,
+                landRegistryTitleNumber = projectToSave.LandRegistryTitleNumber?.Value,
             };
 
             var req = new invln_updatesinglesitedetailsRequest
@@ -167,6 +173,9 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
     private IEnumerable<string> CrmSiteNames()
     {
         yield return nameof(invln_SiteDetails.invln_Name).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Dateofpurchase).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Haveaplanningreferencenumber).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Planningreferencenumber).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Sitecoordinates).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Landregistrytitlenumber).ToLowerInvariant();
     }
 }

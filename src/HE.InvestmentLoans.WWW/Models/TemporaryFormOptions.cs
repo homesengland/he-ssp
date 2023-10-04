@@ -1,4 +1,4 @@
-﻿using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.WWW.Helpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 

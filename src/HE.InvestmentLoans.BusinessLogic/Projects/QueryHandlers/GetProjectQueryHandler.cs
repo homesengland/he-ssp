@@ -7,6 +7,7 @@ using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
@@ -36,6 +37,10 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
             ProjectId = project.Id!.Value,
             Name = project.Name?.Value,
             ApplicationId = applicationProjects.LoanApplicationId.Value,
+            PlanningReferenceNumberExists = project.PlanningReferenceNumber?.Exists.MapToCommonResponse(),
+            PlanningReferenceNumber = project.PlanningReferenceNumber?.Value,
+            LocationCoordinates = project.Coordinates?.Value,
+            LocationLandRegistry = project.LandRegistryTitleNumber?.Value,
         };
     }
 }

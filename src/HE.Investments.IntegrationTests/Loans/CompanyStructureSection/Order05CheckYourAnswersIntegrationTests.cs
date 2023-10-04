@@ -36,7 +36,7 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
 
         // then
         companyStructureSummary[CompanyStructureFields.CompanyEstablishedForThisDevelopment].Should().Be(CommonResponse.Yes);
-        companyStructureSummary[CompanyStructureFields.AdditionalInformation].Should().Be(TextTestData.TextWithLenght1000);
+        companyStructureSummary[CompanyStructureFields.AdditionalInformation].Should().Be(TextTestData.TextThatNotExceedsLongInputLimit);
         companyStructureSummary[CompanyStructureFields.HomesInLastThreeYears].Should().Be("13");
         SetSharedData(SharedKeys.CurrentPageKey, checkYourAnswersPage);
     }

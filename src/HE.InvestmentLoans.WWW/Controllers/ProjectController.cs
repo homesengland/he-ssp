@@ -1,14 +1,20 @@
+using System.Runtime.CompilerServices;
+using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.InvestmentLoans.Contract.Funding.Commands;
 using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
+using HE.InvestmentLoans.Contract.Security.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Common;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
 
@@ -74,7 +80,7 @@ public class ProjectController : WorkflowController<ProjectState>
     }
 
     [HttpPost("{projectId}/start-date")]
-    [WorkflowState(ProjectState.Name)]
+    [WorkflowState(ProjectState.StartDate)]
     public async Task<IActionResult> StartDate(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(new ProvideStartDateCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HasEstimatedStartDate, model.EstimatedStartDay, model.EstimatedStartMonth, model.EstimatedStartYear), token);
@@ -89,8 +95,142 @@ public class ProjectController : WorkflowController<ProjectState>
         return await Continue(new { id, projectId });
     }
 
-    protected override Task<IStateRouting<ProjectState>> Routing(ProjectState currentState)
+    [HttpGet("{projectId}/planning-ref-number-exists")]
+    [WorkflowState(ProjectState.PlanningRef)]
+    public async Task<IActionResult> PlanningReferenceNumberExists(Guid id, Guid projectId)
     {
-        return Task.FromResult((IStateRouting<ProjectState>)new ProjectWorkflow(currentState));
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
+    }
+
+    [HttpPost("{projectId}/planning-ref-number-exists")]
+    [WorkflowState(ProjectState.PlanningRef)]
+    public async Task<IActionResult> PlanningReferenceNumberExists(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    {
+        var result = await _mediator.Send(new ProvidePlanningReferenceNumberCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.PlanningReferenceNumberExists, null), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("PlanningReferenceNumberExists", model);
+        }
+
+        return await Continue(new { id, projectId });
+    }
+
+    [HttpGet("{projectId}/planning-ref-number")]
+    [WorkflowState(ProjectState.PlanningRefEnter)]
+    public async Task<IActionResult> PlanningReferenceNumber(Guid id, Guid projectId)
+    {
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
+    }
+
+    [HttpPost("{projectId}/planning-ref-number")]
+    [WorkflowState(ProjectState.PlanningRefEnter)]
+    public async Task<IActionResult> PlanningReferenceNumber(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    {
+        var result = await _mediator.Send(new ProvidePlanningReferenceNumberCommand(LoanApplicationId.From(id), ProjectId.From(projectId), CommonResponse.Yes, model.PlanningReferenceNumber), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("PlanningReferenceNumber", model);
+        }
+
+        return await Continue(new { id, projectId });
+    }
+
+    [HttpGet("{projectId}/planning-permission-status")]
+    [WorkflowState(ProjectState.PlanningPermissionStatus)]
+    public async Task<IActionResult> PlanningPermissionStatus(Guid id, Guid projectId)
+    {
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
+    }
+
+    [HttpPost("{projectId}/planning-permission-status")]
+    [WorkflowState(ProjectState.PlanningPermissionStatus)]
+    public async Task<IActionResult> PlanningPermissionStatus(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    {
+        var result = await _mediator.Send(new ProvidePlanningPermissionStatusCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.PlanningPermissionStatus), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View(model);
+        }
+
+        return await Continue(new { id, projectId });
+    }
+
+    [HttpGet("{projectId}/location")]
+    [WorkflowState(ProjectState.Location)]
+    public async Task<IActionResult> Location(Guid id, Guid projectId)
+    {
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
+    }
+
+    [HttpPost("{projectId}/location")]
+    [WorkflowState(ProjectState.Location)]
+    public async Task<IActionResult> Location(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    {
+        var result = await _mediator.Send(new ProvideLocationCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.LocationOption, model.LocationCoordinates, model.LocationLandRegistry), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("Location", model);
+        }
+
+        return await Continue(new { id, projectId });
+    }
+
+    [HttpGet("{projectId}/ownership")]
+    [WorkflowState(ProjectState.Ownership)]
+    public async Task<IActionResult> Ownership(Guid id, Guid projectId)
+    {
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
+    }
+
+    [HttpGet("{projectId}/check-answers")]
+    [WorkflowState(ProjectState.CheckAnswers)]
+    public async Task<IActionResult> CheckAnswers(Guid id, Guid projectId)
+    {
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
+    }
+
+    [HttpGet("back")]
+    public Task<IActionResult> Back(ProjectState currentPage, Guid id, Guid projectId)
+    {
+        return Back(currentPage, new { id, projectId });
+    }
+
+    protected override async Task<IStateRouting<ProjectState>> Routing(ProjectState currentState)
+    {
+        var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
+        var projectId = Request.RouteValues.FirstOrDefault(x => x.Key == "projectId").Value as string;
+
+        if (projectId.IsNotProvided())
+        {
+            return ProjectWorkflow.ForStartPage();
+        }
+
+        var response = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id!), ProjectId.From(projectId!)));
+
+        return new ProjectWorkflow(currentState, response);
     }
 }

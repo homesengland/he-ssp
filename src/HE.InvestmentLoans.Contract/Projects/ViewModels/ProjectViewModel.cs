@@ -21,4 +21,20 @@ public class ProjectViewModel
     public string? EstimatedStartMonth { get; set; }
 
     public string? EstimatedStartYear { get; set; }
+
+    public string? PlanningReferenceNumberExists { get; set; }
+
+    public string? PlanningReferenceNumber { get; set; }
+
+    public string? PlanningPermissionStatus { get; set; }
+
+    public string? LocationOption { get; set; }
+
+    public string? LocationCoordinates { get; set; }
+
+    public string? LocationLandRegistry { get; set; }
+
+    public string? Ownership { get; set; }
+
+    public string? CheckAnswers { get; set; }
 }
