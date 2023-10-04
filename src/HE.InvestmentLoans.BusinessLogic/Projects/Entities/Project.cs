@@ -26,8 +26,8 @@ public class Project
         PlanningReferenceNumber? planningReferenceNumber,
         Coordinates? coordinates,
         LandRegistryTitleNumber? landRegistryTitleNumber,
-        LandOwnership landOwnership,
-        AdditionalDetails additionalDetails)
+        LandOwnership? landOwnership,
+        AdditionalDetails? additionalDetails)
     {
         IsNewlyCreated = false;
 
@@ -55,9 +55,9 @@ public class Project
 
     public LandRegistryTitleNumber? LandRegistryTitleNumber { get; private set; }
 
-    public LandOwnership LandOwnership { get; private set; }
+    public LandOwnership? LandOwnership { get; private set; }
 
-    public AdditionalDetails AdditionalDetails { get; private set; }
+    public AdditionalDetails? AdditionalDetails { get; private set; }
 
     public bool IsNewlyCreated { get; private set; }
 

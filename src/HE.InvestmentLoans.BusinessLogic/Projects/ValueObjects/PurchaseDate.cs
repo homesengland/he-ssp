@@ -20,7 +20,7 @@ public class PurchaseDate
         Date = date;
     }
 
-    public ProjectDate Date { get; private set; }
+    public ProjectDate Date { get; }
 
     public static PurchaseDate FromString(string year, string month, string day, DateTime now)
     {

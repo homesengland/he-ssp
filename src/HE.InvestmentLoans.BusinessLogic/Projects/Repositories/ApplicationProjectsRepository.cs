@@ -86,28 +86,12 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                                 null,
                                 projectFromCrm.haveAPlanningReferenceNumber.IsProvided() ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber) : null,
                                 projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null,
-                                projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null!,
+                                projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null,
                                 projectFromCrm.siteOwnership.IsProvided() ? new LandOwnership(projectFromCrm.siteOwnership!.Value) : null,
                                 additionalDetails);
             });
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
-    }
-
-    private AdditionalDetails MapAdditionalDetails(SiteDetailsDto projectFromCrm)
-    {
-        return AdditionalDetailsExistsIn(projectFromCrm) ?
-            new AdditionalDetails(
-                projectFromCrm.dateOfPurchase.IsProvided() ? new PurchaseDate(new ProjectDate(projectFromCrm.dateOfPurchase!.Value), _dateTime.Now) : null!,
-                projectFromCrm.siteCost.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.siteCost, CultureInfo.InvariantCulture)) : null!,
-                projectFromCrm.currentValue.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.currentValue, CultureInfo.InvariantCulture)) : null!,
-                SourceOfValuationMapper.FromString(projectFromCrm.valuationSource)!.Value) :
-                null!;
-    }
-
-    private bool AdditionalDetailsExistsIn(SiteDetailsDto projectFromCrm)
-    {
-        return projectFromCrm.dateOfPurchase.IsProvided() && projectFromCrm.siteCost.IsProvided() && projectFromCrm.currentValue.IsProvided() && projectFromCrm.valuationSource.IsProvided();
     }
 
     public async Task<Project> GetById(LoanApplicationId loanApplicationId, ProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -180,11 +164,11 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                 planningReferenceNumber = projectToSave.PlanningReferenceNumber?.Value,
                 siteCoordinates = projectToSave.Coordinates?.Value,
                 landRegistryTitleNumber = projectToSave.LandRegistryTitleNumber?.Value,
-                siteOwnership = projectToSave.LandOwnership.IsProvided() ? projectToSave.LandOwnership.ApplicantHasFullOwnership : null!,
-                dateOfPurchase = projectToSave.AdditionalDetails.IsProvided() ? projectToSave.AdditionalDetails.PurchaseDate.AsDateTime() : null!,
-                siteCost = projectToSave.AdditionalDetails.IsProvided() ? projectToSave.AdditionalDetails.Cost.ToString() : null!,
-                currentValue = projectToSave.AdditionalDetails.IsProvided() ? projectToSave.AdditionalDetails.CurrentValue.ToString() : null!,
-                valuationSource = projectToSave.AdditionalDetails.IsProvided() ? SourceOfValuationMapper.ToString(projectToSave.AdditionalDetails.SourceOfValuation) : null!,
+                siteOwnership = projectToSave.LandOwnership?.ApplicantHasFullOwnership,
+                dateOfPurchase = projectToSave.AdditionalDetails?.PurchaseDate.AsDateTime(),
+                siteCost = projectToSave.AdditionalDetails?.Cost.ToString(),
+                currentValue = projectToSave.AdditionalDetails?.CurrentValue.ToString(),
+                valuationSource = projectToSave.AdditionalDetails.IsProvided() ? SourceOfValuationMapper.ToString(projectToSave.AdditionalDetails!.SourceOfValuation) : null!,
             };
 
             var req = new invln_updatesinglesitedetailsRequest
@@ -197,6 +181,22 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
             await _serviceClient.ExecuteAsync(req, cancellationToken);
         }
+    }
+
+    private AdditionalDetails MapAdditionalDetails(SiteDetailsDto projectFromCrm)
+    {
+        return AdditionalDetailsExistsIn(projectFromCrm) ?
+            new AdditionalDetails(
+                projectFromCrm.dateOfPurchase.IsProvided() ? new PurchaseDate(new ProjectDate(projectFromCrm.dateOfPurchase!.Value), _dateTime.Now) : null!,
+                projectFromCrm.siteCost.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.siteCost, CultureInfo.InvariantCulture)) : null!,
+                projectFromCrm.currentValue.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.currentValue, CultureInfo.InvariantCulture)) : null!,
+                SourceOfValuationMapper.FromString(projectFromCrm.valuationSource)!.Value) :
+                null!;
+    }
+
+    private bool AdditionalDetailsExistsIn(SiteDetailsDto projectFromCrm)
+    {
+        return projectFromCrm.dateOfPurchase.IsProvided() && projectFromCrm.siteCost.IsProvided() && projectFromCrm.currentValue.IsProvided() && projectFromCrm.valuationSource.IsProvided();
     }
 
     private IEnumerable<string> CrmSiteNames()

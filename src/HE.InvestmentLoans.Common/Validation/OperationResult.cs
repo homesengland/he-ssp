@@ -1,7 +1,5 @@
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
-using Polly;
-using HE.InvestmentLoans.Common.Extensions;
 
 namespace HE.InvestmentLoans.Common.Validation;
 
@@ -96,24 +94,6 @@ public class OperationResult
         if (HasValidationErrors)
         {
             throw new DomainValidationException(this);
-        }
-    }
-
-    public TReturnedData CatchResult<TReturnedData>(Func<TReturnedData> action, string overriddenFieldName = null!)
-        where TReturnedData : class
-    {
-        try
-        {
-            return action();
-        }
-        catch (DomainValidationException ex)
-        {
-            var result = ex.OperationResult;
-            var error = result.Errors.Single();
-
-            AddValidationError(overriddenFieldName.IsProvided() ? overriddenFieldName : error.AffectedField, error.ErrorMessage);
-
-            return null!;
         }
     }
 }

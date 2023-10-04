@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.Common.Tests.TestFramework;
 using HE.InvestmentLoans.Common.Utils;
-using Microsoft.Crm.Sdk.Messages;
+using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 
 namespace HE.InvestmentLoans.Common.Tests.ObjectBuilders;

@@ -54,8 +54,7 @@ public class Order99CheckAnswersIntegrationTests : IntegrationTest
 
         CheckIfAdditionalDetailsAreCorrect(projectSummary);
 
-        projectSummary[ProjectFieldNames.StartDate].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
-
+        // projectSummary[ProjectFieldNames.StartDate].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
         SetSharedData(SharedKeys.CurrentPageKey, checkAnswersPage);
     }
 

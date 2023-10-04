@@ -15,7 +15,8 @@ using Microsoft.Extensions.Logging;
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
 public class ProvideLandOwnershipCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideLandOwnershipCommand, OperationResult>
 {
-    public ProvideLandOwnershipCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger) : base(repository, loanUserContext, logger)
+    public ProvideLandOwnershipCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger)
+        : base(repository, loanUserContext, logger)
     {
     }
 

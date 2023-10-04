@@ -50,7 +50,7 @@ public class PoundsTests
     public void ShouldThrowDomainValidationException_WhenValueIsNull()
     {
         // given && when
-        var action = () => Pounds.FromString(null!);
+        var action = () => Pounds.FromString(null);
 
         // then
         action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(GenericValidationError.InvalidPoundsValue);

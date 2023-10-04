@@ -13,7 +13,7 @@ using HE.InvestmentLoans.Common.Validation;
 namespace HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 public class StartDate : ValueObject
 {
-    public StartDate(bool exists, ProjectDate value)
+    public StartDate(bool exists, ProjectDate? value)
     {
         Exists = exists;
 
@@ -27,9 +27,9 @@ public class StartDate : ValueObject
         Date = value;
     }
 
-    public ProjectDate Date { get; private set; }
+    public ProjectDate? Date { get; }
 
-    public DateTime? Value => Date.Value;
+    public DateTime? Value => Date?.Value;
 
     public bool Exists { get; }
 
@@ -39,7 +39,7 @@ public class StartDate : ValueObject
 
         if (!exists)
         {
-            return new StartDate(exists, null!);
+            return new StartDate(exists, null);
         }
 
         var operationResult = OperationResult.ResultOf(() => ProjectDate.FromString(year, month, day));

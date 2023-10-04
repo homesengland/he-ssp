@@ -1,18 +1,16 @@
-using FluentAssertions.Common;
 using HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Tests.ObjectBuilders;
-using HE.InvestmentLoans.Common.Tests.TestFramework;
-using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 using static HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData.ProjectDateTestData;
-using static HE.InvestmentLoans.Common.Tests.TestData.SourceOfValuationTestData;
 using static HE.InvestmentLoans.Common.Tests.TestData.PoundsTestData;
+using static HE.InvestmentLoans.Common.Tests.TestData.SourceOfValuationTestData;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
 public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAdditionalDataCommandHandler>
@@ -20,7 +18,6 @@ public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAddition
     public ProvideAdditionalDataCommandHandlerTests()
     {
         LoanUserContextTestBuilder.New().Register(this);
-
     }
 
     [Fact]
@@ -100,10 +97,10 @@ public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAddition
         // then
         result.HasValidationErrors.Should().BeFalse();
 
-        project.AdditionalDetails.Cost.Value.Should().Be(CorrectAmount);
-        project.AdditionalDetails.CurrentValue.Value.Should().Be(CorrectAmount);
-        project.AdditionalDetails.PurchaseDate.Date.Should().Be(CorrectDate);
-        project.AdditionalDetails.PurchaseDate.Date.Should().Be(CorrectDate);
+        project.AdditionalDetails!.Cost.Value.Should().Be(CorrectAmount);
+        project.AdditionalDetails!.CurrentValue.Value.Should().Be(CorrectAmount);
+        project.AdditionalDetails!.PurchaseDate.Date.Should().Be(CorrectDate);
+        project.AdditionalDetails!.PurchaseDate.Date.Should().Be(CorrectDate);
     }
 
     private void GivenCurrentDate(DateTime date)

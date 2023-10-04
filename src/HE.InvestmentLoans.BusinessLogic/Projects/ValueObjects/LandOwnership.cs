@@ -15,7 +15,7 @@ public class LandOwnership : ValueObject
         ApplicantHasFullOwnership = applicationHasFullOwnership;
     }
 
-    public bool ApplicantHasFullOwnership { get; private set; }
+    public bool ApplicantHasFullOwnership { get; }
 
     public static LandOwnership From(string ownershipAnswer) => new(ownershipAnswer.MapToNonNullableBool());
 

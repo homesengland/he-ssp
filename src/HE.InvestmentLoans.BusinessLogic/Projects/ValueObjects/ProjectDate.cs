@@ -13,7 +13,7 @@ public class ProjectDate : ValueObject
         Value = value;
     }
 
-    public DateTime Value { get; private set; }
+    public DateTime Value { get; }
 
     public static ProjectDate FromString(string year, string month, string day)
     {

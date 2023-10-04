@@ -45,13 +45,13 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
             PlanningReferenceNumber = project.PlanningReferenceNumber?.Value,
             LocationCoordinates = project.Coordinates?.Value,
             LocationLandRegistry = project.LandRegistryTitleNumber?.Value,
-            Ownership = project.LandOwnership.IsProvided() ? project.LandOwnership.ApplicantHasFullOwnership.MapToCommonResponse() : null!,
-            PurchaseYear = additionalDetailsAreProvided ? project.AdditionalDetails.PurchaseDate.AsDateTime().Year.ToString(CultureInfo.InvariantCulture) : null!,
-            PurchaseMonth = additionalDetailsAreProvided ? project.AdditionalDetails.PurchaseDate.AsDateTime().Month.ToString(CultureInfo.InvariantCulture) : null!,
-            PurchaseDay = additionalDetailsAreProvided ? project.AdditionalDetails.PurchaseDate.AsDateTime().Day.ToString(CultureInfo.InvariantCulture) : null!,
-            Cost = additionalDetailsAreProvided ? project.AdditionalDetails.Cost.ToString() : null!,
-            Value = additionalDetailsAreProvided ? project.AdditionalDetails.CurrentValue.ToString() : null!,
-            Source = additionalDetailsAreProvided ? SourceOfValuationMapper.ToString(project.AdditionalDetails.SourceOfValuation) : null!,
+            Ownership = project.LandOwnership?.ApplicantHasFullOwnership.MapToCommonResponse(),
+            PurchaseYear = project.AdditionalDetails?.PurchaseDate.AsDateTime().Year.ToString(CultureInfo.InvariantCulture),
+            PurchaseMonth = project.AdditionalDetails?.PurchaseDate.AsDateTime().Month.ToString(CultureInfo.InvariantCulture),
+            PurchaseDay = project.AdditionalDetails?.PurchaseDate.AsDateTime().Day.ToString(CultureInfo.InvariantCulture),
+            Cost = project.AdditionalDetails?.Cost.ToString(),
+            Value = project.AdditionalDetails?.CurrentValue.ToString(),
+            Source = additionalDetailsAreProvided ? SourceOfValuationMapper.ToString(project.AdditionalDetails!.SourceOfValuation) : null!,
         };
     }
 }

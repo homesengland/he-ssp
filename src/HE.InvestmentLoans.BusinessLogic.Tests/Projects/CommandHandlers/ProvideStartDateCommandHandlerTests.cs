@@ -11,7 +11,6 @@ using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
-using static HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData.StartDateTestData;
 using static HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData.ProjectDateTestData;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;

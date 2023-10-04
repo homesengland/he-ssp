@@ -16,9 +16,9 @@ public class Pounds : ValueObject
 
     public decimal Value { get; }
 
-    public static Pounds FromString(string estimatedTotalCosts)
+    public static Pounds FromString(string? estimatedTotalCosts)
     {
-        if (estimatedTotalCosts.IsNotProvided() || !Regex.IsMatch(estimatedTotalCosts, @"^[0-9]+([.][0-9]{1,2})?$"))
+        if (estimatedTotalCosts.IsNotProvided() || !Regex.IsMatch(estimatedTotalCosts!, @"^[0-9]+([.][0-9]{1,2})?$"))
         {
             OperationResult
                 .New()

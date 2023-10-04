@@ -8,7 +8,7 @@ using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.Entities.ProjectTests;
-public class ProvideLandOwnership
+public class ProvideLandOwnershipTests
 {
     [Fact]
     public void ShouldSetOwnershipInformation()
