@@ -27,7 +27,8 @@ public class Project
         Coordinates? coordinates,
         LandRegistryTitleNumber? landRegistryTitleNumber,
         LandOwnership? landOwnership,
-        AdditionalDetails? additionalDetails)
+        AdditionalDetails? additionalDetails,
+        PublicSectorGrantFundingStatus? grantFundingStatus)
     {
         IsNewlyCreated = false;
 
@@ -39,6 +40,7 @@ public class Project
         LandRegistryTitleNumber = landRegistryTitleNumber;
         LandOwnership = landOwnership;
         AdditionalDetails = additionalDetails;
+        GrantFundingStatus = grantFundingStatus;
     }
 
     public ProjectId Id { get; private set; }
@@ -58,6 +60,10 @@ public class Project
     public LandOwnership? LandOwnership { get; private set; }
 
     public AdditionalDetails? AdditionalDetails { get; private set; }
+
+    public PublicSectorGrantFundingStatus? GrantFundingStatus { get; private set; }
+
+    public PublicSectorGrantFunding? PublicSectorGrantFunding { get; private set; }
 
     public bool IsNewlyCreated { get; private set; }
 
@@ -182,5 +188,25 @@ public class Project
     public void ProvideAdditionalData(AdditionalDetails additionalDetails)
     {
         AdditionalDetails = additionalDetails;
+    }
+
+    internal void ProvideGrantFundingStatus(PublicSectorGrantFundingStatus grantFundingStatus)
+    {
+        GrantFundingStatus = grantFundingStatus;
+
+        if (grantFundingStatus != PublicSectorGrantFundingStatus.Received)
+        {
+            PublicSectorGrantFunding = null;
+        }
+    }
+
+    internal void ProvideGrantFundingInformation(PublicSectorGrantFunding publicSectorGrantFunding)
+    {
+        if (GrantFundingStatus != PublicSectorGrantFundingStatus.Received)
+        {
+            throw new DomainException($"Cannot provide more information about grant funding that has not been received. Current status: {GrantFundingStatus}", LoanApplicationErrorCodes.GrantFundingNotExists);
+        }
+
+        PublicSectorGrantFunding = publicSectorGrantFunding;
     }
 }

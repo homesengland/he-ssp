@@ -1,0 +1,40 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
+using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.Common.Validation;
+using HE.InvestmentLoans.Contract.Projects.Commands;
+using MediatR;
+using Microsoft.Extensions.Logging;
+
+namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
+internal class ProvideGrantFundingStatusCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideGrantFundingStatusCommand, OperationResult>
+{
+    public ProvideGrantFundingStatusCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger)
+        : base(repository, loanUserContext, logger)
+    {
+    }
+
+    public async Task<OperationResult> Handle(ProvideGrantFundingStatusCommand request, CancellationToken cancellationToken)
+    {
+        return await Perform(
+            project =>
+            {
+                var status = GrantFundingStatusMapper.FromString(request.Status);
+
+                if (status is null)
+                {
+                    return;
+                }
+
+                project.ProvideGrantFundingStatus(status.Value);
+            },
+            request.LoanApplicationId,
+            request.ProjectId,
+            cancellationToken);
+    }
+}

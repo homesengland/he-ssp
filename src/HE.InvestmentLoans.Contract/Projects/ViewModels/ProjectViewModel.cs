@@ -49,4 +49,15 @@ public class ProjectViewModel
     public string? Value { get; set; }
 
     public string? Source { get; set; }
+
+    public string? GrantFundingStatus { get; set; }
+
+    public string? GrantFundingProviderName { get; set; }
+
+    public string? GrantFundingName { get; set; }
+
+    public string? GrantFundingAmount { get; set; }
+
+    public string? GrantFundingPurpose { get; set; }
+
 }

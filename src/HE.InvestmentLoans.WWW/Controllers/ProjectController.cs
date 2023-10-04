@@ -264,6 +264,40 @@ public class ProjectController : WorkflowController<ProjectState>
         return View(result);
     }
 
+    [HttpPost("{projectId}/grant-funding-exists")]
+    [WorkflowState(ProjectState.GrantFunding)]
+    public async Task<IActionResult> GrantFundingExists(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    {
+        var result = await _mediator.Send(new ProvideGrantFundingStatusCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.GrantFundingStatus), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View(model);
+        }
+
+        return await Continue(new { id, projectId });
+    }
+
+    [HttpGet("{projectId}/grant-funding")]
+    [WorkflowState(ProjectState.GrantFundingMore)]
+    public async Task<IActionResult> GrantFunding(Guid id, Guid projectId)
+    {
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
+    }
+
+    [HttpGet("{projectId}/charges-debt")]
+    [WorkflowState(ProjectState.ChargesDebt)]
+    public async Task<IActionResult> ChargesDebt(Guid id, Guid projectId)
+    {
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
+    }
+
     [HttpGet("{projectId}/check-answers")]
     [WorkflowState(ProjectState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(Guid id, Guid projectId)

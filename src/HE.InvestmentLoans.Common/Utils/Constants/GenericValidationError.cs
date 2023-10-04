@@ -12,4 +12,8 @@ public static class GenericValidationError
     public const string InvalidDate = "Enter valid date";
 
     public const string InvalidPoundsValue = "Invalid pounds value";
+
+    public const string TextTooLong = "Text exceeds limit";
+
+    public const string NoValueProvided = "Value is not provided";
 }

@@ -88,7 +88,8 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                                 projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null,
                                 projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null,
                                 projectFromCrm.siteOwnership.IsProvided() ? new LandOwnership(projectFromCrm.siteOwnership!.Value) : null,
-                                additionalDetails);
+                                additionalDetails,
+                                projectFromCrm.IsProvided() ? GrantFundingStatusMapper.FromString(projectFromCrm.publicSectorFunding) : null);
             });
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
@@ -169,6 +170,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                 siteCost = projectToSave.AdditionalDetails?.Cost.ToString(),
                 currentValue = projectToSave.AdditionalDetails?.CurrentValue.ToString(),
                 valuationSource = projectToSave.AdditionalDetails.IsProvided() ? SourceOfValuationMapper.ToString(projectToSave.AdditionalDetails!.SourceOfValuation) : null!,
+                publicSectorFunding = projectToSave.GrantFundingStatus.IsProvided() ? GrantFundingStatusMapper.ToString(projectToSave.GrantFundingStatus!.Value) : null,
             };
 
             var req = new invln_updatesinglesitedetailsRequest
@@ -212,5 +214,6 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         yield return nameof(invln_SiteDetails.invln_Sitecost).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_currentvalue).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Valuationsource).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Publicsectorfunding).ToLowerInvariant();
     }
 }
