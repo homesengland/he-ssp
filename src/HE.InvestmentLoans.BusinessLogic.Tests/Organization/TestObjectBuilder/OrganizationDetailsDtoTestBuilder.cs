@@ -1,4 +1,5 @@
 extern alias Org;
+
 using HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestData;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 

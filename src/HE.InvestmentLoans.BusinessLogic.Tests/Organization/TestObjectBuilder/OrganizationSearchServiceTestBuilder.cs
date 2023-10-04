@@ -1,4 +1,5 @@
 extern alias Org;
+
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Org.HE.Investments.Organisation.Contract;
