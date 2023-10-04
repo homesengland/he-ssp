@@ -91,7 +91,7 @@ public class OrganizationRepository : IOrganizationRepository
         return result1.Entities.FirstOrDefault();
     }
 
-    public EntityCollection? SearchForOrganizationsByName(IOrganizationServiceAsync2 service, IEnumerable<string> names, bool recordsWithoutCopanyNumberIncluded)
+    public async Task<EntityCollection?> SearchForOrganizationsByName(IOrganizationServiceAsync2 service, IEnumerable<string> names, bool recordsWithoutCopanyNumberIncluded)
     {
         if (names != null)
         {
@@ -149,7 +149,7 @@ public class OrganizationRepository : IOrganizationRepository
             query.Criteria.AddFilter(filter1);
             query.Criteria.AddFilter(recordsWithoutCompanyNumberFilter);
 
-            retrievedEntities = service.RetrieveMultiple(query);
+            retrievedEntities = await service.RetrieveMultipleAsync(query);
             if (retrievedEntities != null)
             {
                 retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);
@@ -161,7 +161,7 @@ public class OrganizationRepository : IOrganizationRepository
         return null;
     }
 
-    public EntityCollection? SearchForOrganizationsByCompanyHouseNumber(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers)
+    public async Task<EntityCollection?> SearchForOrganizationsByCompanyHouseNumber(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers)
     {
         if (organizationNumbers != null)
         {
@@ -204,7 +204,7 @@ public class OrganizationRepository : IOrganizationRepository
 
             query.Criteria.AddFilter(filter1);
 
-            retrievedEntities = service.RetrieveMultiple(query);
+            retrievedEntities = await service.RetrieveMultipleAsync(query);
             if (retrievedEntities != null)
             {
                 retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);

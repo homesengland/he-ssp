@@ -3,14 +3,15 @@ extern alias Org;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
-using HE.InvestmentLoans.Common.Tests.TestFramework;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
+using HE.Investments.TestsUtils.TestFramework;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Moq;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.User.UserRepositoryTests;
+
 public class SaveAsyncTests : TestBase<LoanUserRepository>
 {
     [Fact]

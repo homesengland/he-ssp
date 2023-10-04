@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.Organisation.Services;
 
-internal class OrganisationSearchService : IOrganisationSearchService
+public class OrganisationSearchService : IOrganisationSearchService
 {
     private readonly ICompaniesHouseApi _companiesHouseApi;
     private readonly IOrganizationCrmSearchService _organizationCrmSearchService;
@@ -29,10 +29,9 @@ internal class OrganisationSearchService : IOrganisationSearchService
             return companyHousesResult;
         }
 
-        var companyHousesOrganizations = companyHousesResult.Items;
+        var companyHousesOrganizations = companyHousesResult.Items.ToList();
 
-        var organizationsFromCrm = GetMatchingOrganizationsFromCrm(companyHousesOrganizations);
-
+        var organizationsFromCrm = await GetMatchingOrganizationsFromCrm(companyHousesOrganizations);
         var mergedResult = MergeResults(companyHousesOrganizations, organizationsFromCrm);
 
         return new OrganisationSearchResult(mergedResult, companyHousesResult.TotalItems, null!);
@@ -47,16 +46,15 @@ internal class OrganisationSearchService : IOrganisationSearchService
             return new GetOrganizationByCompaniesHouseNumberResult(null!, companyHousesResult.Error);
         }
 
-        var companyHousesOrganizations = companyHousesResult.Items;
+        var companyHousesOrganizations = companyHousesResult.Items.ToList();
 
-        var organizationsFromCrm = GetMatchingOrganizationsFromCrm(companyHousesOrganizations);
+        var organizationsFromCrm = await GetMatchingOrganizationsFromCrm(companyHousesOrganizations);
 
         var mergedResult = MergeResults(companyHousesOrganizations, organizationsFromCrm);
 
         return new GetOrganizationByCompaniesHouseNumberResult(mergedResult.FirstOrDefault()!, null!);
     }
 
-    [SuppressMessage("Performance", "CA1848:Use the LoggerMessage delegates", Justification = "We dont need high performace logging.")]
     private async Task<OrganisationSearchResult> GetOrganizationFromCompanyHousesApi(string organisationName, string? compenirsHouseNumber, PagingQueryParams pagingParams, CancellationToken cancellationToken)
     {
         try
@@ -87,25 +85,26 @@ internal class OrganisationSearchService : IOrganisationSearchService
         }
     }
 
-    private IEnumerable<OrganizationDetailsDto> GetMatchingOrganizationsFromCrm(IEnumerable<OrganisationSearchItem> companyHousesOrganizations)
+    private async Task<IList<OrganizationDetailsDto>> GetMatchingOrganizationsFromCrm(IEnumerable<OrganisationSearchItem> companyHousesOrganizations)
     {
         var organizationCompanyNumbers = companyHousesOrganizations.Select(x => x.CompanyNumber);
 
-        return _organizationCrmSearchService.SearchOrganizationInCrmByCompanyHouseNumber(organizationCompanyNumbers);
+        return await _organizationCrmSearchService.SearchOrganizationInCrmByCompanyHouseNumber(organizationCompanyNumbers);
     }
 
-    private IEnumerable<OrganisationSearchItem> MergeResults(IEnumerable<OrganisationSearchItem> companyHousesOrganizations, IEnumerable<OrganizationDetailsDto> organizationsFromCrm)
+    private IList<OrganisationSearchItem> MergeResults(IList<OrganisationSearchItem> companyHousesOrganizations, IList<OrganizationDetailsDto> organizationsFromCrm)
     {
         var organizationsThatExistInCrm = companyHousesOrganizations.Join(
             organizationsFromCrm,
             c => c.CompanyNumber,
             c => c.companyRegistrationNumber,
-            (ch, crm) => new OrganisationSearchItem(crm.companyRegistrationNumber, crm.registeredCompanyName, crm.city, crm.addressLine1, crm.postalcode, true));
+            (ch, crm) => new OrganisationSearchItem(crm.companyRegistrationNumber, crm.registeredCompanyName, crm.city, crm.addressLine1, crm.postalcode, true))
+            .ToList();
 
         var organizationNumbersThatExistInCrm = organizationsThatExistInCrm.Select(c => c.CompanyNumber);
 
         var organizationsThatNotExistInCrm = companyHousesOrganizations.Where(ch => !organizationNumbersThatExistInCrm.Contains(ch.CompanyNumber));
 
-        return organizationsThatNotExistInCrm.Concat(organizationsThatExistInCrm);
+        return organizationsThatNotExistInCrm.Concat(organizationsThatExistInCrm).ToList();
     }
 }
