@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
@@ -10,8 +5,8 @@ using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Tests.TestFramework;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
