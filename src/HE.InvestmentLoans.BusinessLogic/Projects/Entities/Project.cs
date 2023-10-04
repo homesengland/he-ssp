@@ -19,7 +19,15 @@ public class Project
         IsNewlyCreated = true;
     }
 
-    public Project(ProjectId id, ProjectName? name, StartDate? startDate, PlanningReferenceNumber? planningReferenceNumber, Coordinates? coordinates, LandRegistryTitleNumber? landRegistryTitleNumber, LandOwnership landOwnership)
+    public Project(
+        ProjectId id,
+        ProjectName? name,
+        StartDate? startDate,
+        PlanningReferenceNumber? planningReferenceNumber,
+        Coordinates? coordinates,
+        LandRegistryTitleNumber? landRegistryTitleNumber,
+        LandOwnership landOwnership,
+        AdditionalDetails additionalDetails)
     {
         IsNewlyCreated = false;
 
@@ -30,6 +38,7 @@ public class Project
         Coordinates = coordinates;
         LandRegistryTitleNumber = landRegistryTitleNumber;
         LandOwnership = landOwnership;
+        AdditionalDetails = additionalDetails;
     }
 
     public ProjectId Id { get; private set; }
@@ -48,7 +57,7 @@ public class Project
 
     public LandOwnership LandOwnership { get; private set; }
 
-    public AdditionalData AdditionalData { get; private set; }
+    public AdditionalDetails AdditionalDetails { get; private set; }
 
     public bool IsNewlyCreated { get; private set; }
 
@@ -160,13 +169,18 @@ public class Project
         PlanningPermissionStatus = planningPermissionStatus;
     }
 
-    internal void ProvideLandOwnership(LandOwnership landOwnership)
+    public void ProvideLandOwnership(LandOwnership landOwnership)
     {
         LandOwnership = landOwnership;
 
         if (!LandOwnership.ApplicantHasFullOwnership)
         {
-            AdditionalData = null!;
+            AdditionalDetails = null!;
         }
+    }
+
+    public void ProvideAdditionalData(AdditionalDetails additionalDetails)
+    {
+        AdditionalDetails = additionalDetails;
     }
 }

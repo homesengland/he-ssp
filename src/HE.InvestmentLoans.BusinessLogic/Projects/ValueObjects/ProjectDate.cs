@@ -22,7 +22,7 @@ public class ProjectDate : ValueObject
         if (day.IsNotProvided() || month.IsNotProvided() || year.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError(nameof(ProjectDate), ValidationErrorMessage.NoStartDate)
+                .AddValidationError(nameof(ProjectDate), GenericValidationError.NoDate)
                 .CheckErrors();
         }
 
@@ -31,7 +31,7 @@ public class ProjectDate : ValueObject
         if (!DateTime.TryParseExact(dateString, ProjectFormOption.AllowedDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateValue))
         {
             OperationResult.New()
-                .AddValidationError(nameof(ProjectDate), ValidationErrorMessage.InvalidStartDate)
+                .AddValidationError(nameof(ProjectDate), GenericValidationError.InvalidDate)
                 .CheckErrors();
         }
 
@@ -40,6 +40,6 @@ public class ProjectDate : ValueObject
 
     protected override IEnumerable<object> GetAtomicValues()
     {
-        throw new NotImplementedException();
+        yield return Value;
     }
 }

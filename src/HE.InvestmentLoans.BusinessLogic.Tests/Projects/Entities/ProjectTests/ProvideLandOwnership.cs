@@ -37,6 +37,6 @@ public class ProvideLandOwnership
         project.ProvideLandOwnership(ownership);
 
         // then
-        project.AdditionalData.Should().BeNull();
+        project.AdditionalDetails.Should().BeNull();
     }
 }

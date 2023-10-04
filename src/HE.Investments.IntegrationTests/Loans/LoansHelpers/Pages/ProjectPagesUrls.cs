@@ -72,6 +72,11 @@ internal sealed class ProjectPagesUrls
         return $"application/{applicationId}/project/{projectId}{OwnershipSuffix}";
     }
 
+    public static string AdditionalDetails(string applicationId, string projectId)
+    {
+        return $"application/{applicationId}/project/{projectId}{AdditionalDetailsSuffix}";
+    }
+
     public static string CheckAnswers(string applicationId, string projectId)
     {
         return $"application/{applicationId}/project/{projectId}{CheckAnswersSuffix}";

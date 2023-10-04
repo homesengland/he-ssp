@@ -15,12 +15,26 @@ public class PurchaseDateTests
 {
     private readonly DateTime _now = new(2023, 10, 3);
 
-    [Fact]
-    public void ShouldFail_WhenFutureDateIsProvided()
+    [Theory]
+    [InlineData("", "9", "2023")]
+    [InlineData("24", "", "2023")]
+    [InlineData("24", "9", "")]
+    public void ShouldFail_WhenStartDateExistButDateIsNotCompleted(string day, string month, string year)
     {
-        var action = () => PurchaseDate.FromString("2023", "10", "4", _now);
+        var action = () => PurchaseDate.FromString(year, month, day, _now);
 
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.FuturePurchaseDate);
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.NoPurchaseDate);
+    }
+
+    [Theory]
+    [InlineData("32", "1", "2023")]
+    [InlineData("1", "13", "2023")]
+    [InlineData("1", "1", "-1")]
+    public void ShouldFail_WhenStartDateExistButIsNotCorrect(string day, string month, string year)
+    {
+        var action = () => PurchaseDate.FromString(year, month, day, _now);
+
+        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.IncorrectPurchaseDate);
     }
 
     [Fact]

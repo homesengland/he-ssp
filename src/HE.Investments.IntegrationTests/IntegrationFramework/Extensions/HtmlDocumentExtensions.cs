@@ -1,3 +1,4 @@
+using System.Text;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
@@ -110,6 +111,16 @@ public static class HtmlDocumentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument ContainsValidationMessages(this IHtmlDocument htmlDocument, params string[] errorMessages)
+    {
+        foreach (var errorMessage in errorMessages)
+        {
+            ContainsValidationMessage(htmlDocument, errorMessage);
+        }
+
+        return htmlDocument;
+    }
+
     public static IDictionary<string, string> GetSummaryListItems(this IHtmlDocument htmlDocument)
     {
         var summaryRows = htmlDocument.GetElementsByClassName("govuk-summary-list__row");
@@ -117,7 +128,9 @@ public static class HtmlDocumentExtensions
         foreach (var summaryRow in summaryRows)
         {
             var key = summaryRow.GetElementsByClassName("govuk-summary-list__key").Single().InnerHtml.Trim();
-            var value = summaryRow.GetElementsByClassName("govuk-summary-list__value").Single().LastElementChild!.InnerHtml.Trim();
+
+            var value = GetValueFor(summaryRow);
+
             dictionary[key] = value;
         }
 
@@ -171,5 +184,26 @@ public static class HtmlDocumentExtensions
         }
 
         return dictionary;
+    }
+
+    private static string GetValueFor(AngleSharp.Dom.IElement summaryRow)
+    {
+        var valueRow = summaryRow.GetElementsByClassName("govuk-summary-list__value").Single();
+
+        var valueBuilder = new StringBuilder();
+        if (valueRow.Children.Length > 1)
+        {
+            foreach (var child in valueRow.Children)
+            {
+                valueBuilder.AppendLine(child.TextContent.Trim());
+            }
+        }
+        else
+        {
+            valueBuilder.Append(valueRow.LastElementChild!.InnerHtml.Trim());
+        }
+
+        var value = valueBuilder.ToString();
+        return value;
     }
 }

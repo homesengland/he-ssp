@@ -1,9 +1,12 @@
+using System.Globalization;
 using System.Linq;
 using System.Security.Policy;
 using System.Threading;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.BusinessLogic.Generic;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
@@ -73,16 +76,38 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                                  ?? throw new NotFoundException(nameof(ApplicationProjects), loanApplicationId.ToString());
 
         var projectsFromCrm = loanApplicationDto.siteDetailsList.Select(
-            projectFromCrm => new Project(
-                ProjectId.From(projectFromCrm.siteDetailsId),
-                projectFromCrm.Name.IsProvided() ? new ProjectName(projectFromCrm.Name) : null,
-                null,
-                projectFromCrm.haveAPlanningReferenceNumber.IsProvided() ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber) : null,
-                projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null,
-                projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null!,
-                projectFromCrm.siteOwnership.IsProvided() ? new LandOwnership(projectFromCrm.siteOwnership!.Value) : null));
+            projectFromCrm =>
+            {
+                var additionalDetails = MapAdditionalDetails(projectFromCrm);
+
+                return new Project(
+                                ProjectId.From(projectFromCrm.siteDetailsId),
+                                projectFromCrm.Name.IsProvided() ? new ProjectName(projectFromCrm.Name) : null,
+                                null,
+                                projectFromCrm.haveAPlanningReferenceNumber.IsProvided() ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber) : null,
+                                projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null,
+                                projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null!,
+                                projectFromCrm.siteOwnership.IsProvided() ? new LandOwnership(projectFromCrm.siteOwnership!.Value) : null,
+                                additionalDetails);
+            });
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
+    }
+
+    private AdditionalDetails MapAdditionalDetails(SiteDetailsDto projectFromCrm)
+    {
+        return AdditionalDetailsExistsIn(projectFromCrm) ?
+            new AdditionalDetails(
+                projectFromCrm.dateOfPurchase.IsProvided() ? new PurchaseDate(new ProjectDate(projectFromCrm.dateOfPurchase!.Value), _dateTime.Now) : null!,
+                projectFromCrm.siteCost.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.siteCost, CultureInfo.InvariantCulture)) : null!,
+                projectFromCrm.currentValue.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.currentValue, CultureInfo.InvariantCulture)) : null!,
+                SourceOfValuationMapper.FromString(projectFromCrm.valuationSource)!.Value) :
+                null!;
+    }
+
+    private bool AdditionalDetailsExistsIn(SiteDetailsDto projectFromCrm)
+    {
+        return projectFromCrm.dateOfPurchase.IsProvided() && projectFromCrm.siteCost.IsProvided() && projectFromCrm.currentValue.IsProvided() && projectFromCrm.valuationSource.IsProvided();
     }
 
     public async Task<Project> GetById(LoanApplicationId loanApplicationId, ProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -151,12 +176,15 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             {
                 siteDetailsId = projectToSave.Id.Value.ToString(),
                 Name = projectToSave.Name?.Value,
-                dateOfPurchase = projectToSave.StartDate?.Value,
                 haveAPlanningReferenceNumber = projectToSave.PlanningReferenceNumber?.Exists,
                 planningReferenceNumber = projectToSave.PlanningReferenceNumber?.Value,
                 siteCoordinates = projectToSave.Coordinates?.Value,
                 landRegistryTitleNumber = projectToSave.LandRegistryTitleNumber?.Value,
                 siteOwnership = projectToSave.LandOwnership.IsProvided() ? projectToSave.LandOwnership.ApplicantHasFullOwnership : null!,
+                dateOfPurchase = projectToSave.AdditionalDetails.IsProvided() ? projectToSave.AdditionalDetails.PurchaseDate.AsDateTime() : null!,
+                siteCost = projectToSave.AdditionalDetails.IsProvided() ? projectToSave.AdditionalDetails.Cost.ToString() : null!,
+                currentValue = projectToSave.AdditionalDetails.IsProvided() ? projectToSave.AdditionalDetails.CurrentValue.ToString() : null!,
+                valuationSource = projectToSave.AdditionalDetails.IsProvided() ? SourceOfValuationMapper.ToString(projectToSave.AdditionalDetails.SourceOfValuation) : null!,
             };
 
             var req = new invln_updatesinglesitedetailsRequest
@@ -179,5 +207,10 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         yield return nameof(invln_SiteDetails.invln_Sitecoordinates).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Landregistrytitlenumber).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Siteownership).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Siteownership).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Dateofpurchase).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Sitecost).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_currentvalue).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Valuationsource).ToLowerInvariant();
     }
 }

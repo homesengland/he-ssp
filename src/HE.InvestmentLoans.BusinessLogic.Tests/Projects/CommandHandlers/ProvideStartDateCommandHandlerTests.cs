@@ -12,6 +12,7 @@ using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 using static HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData.StartDateTestData;
+using static HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData.ProjectDateTestData;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
 public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateCommandHandler>
@@ -108,7 +109,7 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
 
         var project = applicationProjects.Projects.Single();
 
-        var (day, month, year) = CorrectDateAsStrings;
+        var (year, month, day) = CorrectDateAsStrings;
 
         _command = new ProvideStartDateCommand(LoanApplicationIdTestData.LoanApplicationIdOne, project.Id!, CommonResponse.Yes, year, month, day);
 
@@ -119,7 +120,7 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
         result.IsValid.Should().BeTrue();
 
         project.StartDate!.Exists.Should().BeTrue();
-        project.StartDate.Should().Be(CorrectDate);
+        project.StartDate.Should().Be(StartDateTestData.CorrectDate);
     }
 
     [Fact]

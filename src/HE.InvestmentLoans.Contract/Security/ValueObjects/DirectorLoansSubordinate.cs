@@ -29,7 +29,7 @@ public class DirectorLoansSubordinate : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(CanBeSubordinated), ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.SubordinatedLoans))
+                .AddValidationError("DirLoansSubMore", ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.SubordinatedLoans))
                 .CheckErrors();
         }
 

@@ -35,7 +35,7 @@ public class Order11OwnershipIntegrationTests : IntegrationTest
     public async Task Order01_ShouldRedirectToGrantFunding_WhenNoWasSelected()
     {
         // given
-        var ownershipPage = await GetCurrentPage(ProjectPagesUrls.Ownership(_applicationLoanId, _projectId));
+        var ownershipPage = await TestClient.NavigateTo(ProjectPagesUrls.Ownership(_applicationLoanId, _projectId));
 
         var continueButton = ownershipPage.GetGdsSubmitButtonById("continue-button");
 
@@ -46,11 +46,13 @@ public class Order11OwnershipIntegrationTests : IntegrationTest
         grantFunding
             .UrlEndWith(ProjectPagesUrls.GrantFundingExistsSuffix)
             .HasTitle(ProjectPageTitles.GrantFundingExists);
+
+        SetCurrentPage(ownershipPage);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(2)]
-    public async Task Order02_ShouldRedirectToAdditionalDetails_WhenNoWasSelected()
+    public async Task Order02_ShouldRedirectToAdditionalDetails_WhenYesWasSelected()
     {
         // given
         var ownershipPage = await GetCurrentPage(ProjectPagesUrls.Ownership(_applicationLoanId, _projectId));

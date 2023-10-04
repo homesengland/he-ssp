@@ -24,7 +24,10 @@ public class PurchaseDate
 
     public static PurchaseDate FromString(string year, string month, string day, DateTime now)
     {
-        var operationResult = OperationResult.ResultOf(() => ProjectDate.FromString(year, month, day), "PurchaseDay");
+        var operationResult = OperationResult.ResultOf(() => ProjectDate.FromString(year, month, day));
+
+        operationResult.OverrideError(GenericValidationError.NoDate, "PurchaseDate", ValidationErrorMessage.NoPurchaseDate);
+        operationResult.OverrideError(GenericValidationError.InvalidDate, "PurchaseDate", ValidationErrorMessage.IncorrectPurchaseDate);
 
         operationResult.CheckErrors();
 

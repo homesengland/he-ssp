@@ -42,7 +42,10 @@ public class StartDate : ValueObject
             return new StartDate(exists, null!);
         }
 
-        var operationResult = OperationResult.ResultOf(() => ProjectDate.FromString(year, month, day), "EstimatedStartDate");
+        var operationResult = OperationResult.ResultOf(() => ProjectDate.FromString(year, month, day));
+
+        operationResult.OverrideError(GenericValidationError.NoDate, "EstimatedStartDay", ValidationErrorMessage.NoStartDate);
+        operationResult.OverrideError(GenericValidationError.InvalidDate, "EstimatedStartDay", ValidationErrorMessage.InvalidStartDate);
 
         operationResult.CheckErrors();
 

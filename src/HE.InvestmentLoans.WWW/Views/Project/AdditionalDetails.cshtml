@@ -1,22 +1,24 @@
+@using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 @using HE.InvestmentLoans.Contract.Projects.ViewModels;
+@using HE.InvestmentLoans.Contract.Projects;
 @using He.AspNetCore.Mvc.Gds.Components.Enums
 @model ProjectViewModel;
 @{
     var id = ViewContext.RouteData.Values["id"];
-    var (dateInputInvalid, dateInputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.PurchaseDate));
+    var (dateInputInvalid, dateInputErrors) = @ViewData.ModelState.GetErrors(nameof(PurchaseDate));
 
-    var (dayInputInvalid, dayInputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.PurchaseDay));
-    var (monthInputInvalid, monthInputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.PurchaseMonth));
-    var (yearInputInvalid, yearInputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.PurchaseYear));
+    var (dayInputInvalid, dayInputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.PurchaseDay));
+    var (monthInputInvalid, monthInputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.PurchaseMonth));
+    var (yearInputInvalid, yearInputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.PurchaseYear));
 
     var isDateFormInvalid = dateInputInvalid || dayInputInvalid || monthInputInvalid || yearInputInvalid;
     var errorsList = new string[] { dateInputErrors, dayInputErrors, monthInputErrors, yearInputErrors };
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.ApplicationId" asp-route-ending="Additional" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="AdditionalDetails" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
 
-        <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.ApplicationId, id = id })" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.Additional})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
         <partial name="_ErrorSummaryPartial" model="null" />
@@ -133,7 +135,7 @@
                     </gds-radio>
                 </gds-field-set>
             </gds-div-form-group>
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Continue
             </button>
 

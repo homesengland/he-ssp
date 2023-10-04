@@ -26,12 +26,12 @@ public class OperationResult
 
     public static void ThrowValidationError(string affectedField, string validationMessage) => New().AddValidationError(affectedField, validationMessage).CheckErrors();
 
-    public static OperationResult<TReturnedData> ResultOf<TReturnedData>(Func<TReturnedData> action, string overriddenFieldName = null!)
+    public static OperationResult<TReturnedData> ResultOf<TReturnedData>(Func<TReturnedData> action)
         where TReturnedData : class
     {
         var operationResult = OperationResult.New();
 
-        var returnedData = operationResult.CatchResult(action, overriddenFieldName);
+        var returnedData = operationResult.CatchResult(action);
 
         return operationResult.Returns(returnedData);
     }
@@ -68,6 +68,22 @@ public class OperationResult
     public OperationResult<TResult> Returns<TResult>(TResult returnedObject)
     {
         return new OperationResult<TResult>(Errors, returnedObject);
+    }
+
+    public OperationResult OverrideError(string message, string overriddenAffectedField, string overriddenValidationMessage)
+    {
+        var error = Errors.FirstOrDefault(c => c.ErrorMessage == message);
+
+        if (error is null)
+        {
+            return this;
+        }
+
+        Errors.Remove(error);
+
+        Errors.Add(new ErrorItem(overriddenAffectedField, overriddenValidationMessage));
+
+        return this;
     }
 
     public string GetAllErrors()
