@@ -1,26 +1,23 @@
 using FluentAssertions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
 using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Services;
-using Microsoft.Extensions.Logging;
+using HE.Investments.Organisation.Tests.TestObjectBuilders;
+using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;
 
 namespace HE.Investments.Organisation.Tests.OrganizationSearchServiceTests;
 
-public class GetByCompaniesHouseNumberTests
+public class GetByCompaniesHouseNumberTests : TestBase<OrganisationSearchService>
 {
-    private OrganisationSearchService _searchService;
     private GetOrganizationByCompaniesHouseNumberResult _response;
 
-    private readonly Mock<ICompaniesHouseApi> _companiesHouseApiMock;
     private readonly Mock<IOrganizationCrmSearchService> _organizationCrmSearchServiceMock;
 
     public GetByCompaniesHouseNumberTests()
     {
-        _companiesHouseApiMock = new Mock<ICompaniesHouseApi>();
         _organizationCrmSearchServiceMock = new Mock<IOrganizationCrmSearchService>();
     }
 
@@ -49,6 +46,7 @@ public class GetByCompaniesHouseNumberTests
     public async Task ReturnNothing_WhenCompanyHousesReturnsNothing()
     {
         GivenThatComanyHousesReturnsNothing();
+        GivenThatCrmReturnsNothing();
 
         await WhenGettingOrganizationByCompaniesHouseNumber();
 
@@ -97,46 +95,34 @@ public class GetByCompaniesHouseNumberTests
     private void GivenThatCrmReturns(params OrganizationDetailsDto[] organizationsToReturn)
     {
         _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrmByCompanyHouseNumber(It.IsAny<IEnumerable<string>>()))
-            .Returns(organizationsToReturn.ToList());
+            .ReturnsAsync(organizationsToReturn.ToList());
     }
 
     private void GivenThatCrmReturnsNothing()
     {
         _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrmByCompanyHouseNumber(It.IsAny<IEnumerable<string>>()))
-            .Returns(Enumerable.Empty<OrganizationDetailsDto>());
+            .ReturnsAsync(Array.Empty<OrganizationDetailsDto>());
     }
 
     private void GivenThatComanyHousesReturnsNothing()
     {
-        _companiesHouseApiMock.Setup(c => c.GetByCompanyNumber(It.IsAny<string>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync((CompaniesHouseGetByCompanyNumberResult)null!);
+        CompaniesHouseApiTestBuilder.New().GetByCompanyNumberReturnsNothing().Register(this);
     }
 
     private void GivenThatCompanyHousesReturns(CompanyDetailsItem organizationToReturn)
     {
-        _companiesHouseApiMock
-            .Setup(c => c.GetByCompanyNumber(It.IsAny<string>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new CompaniesHouseGetByCompanyNumberResult
-            {
-                CompanyName = organizationToReturn.CompanyName,
-                CompanyNumber = organizationToReturn.CompanyNumber,
-                OfficeAddress = organizationToReturn.OfficeAddress
-            });
+        CompaniesHouseApiTestBuilder.New().GetByCompanyNumberReturns(organizationToReturn).Register(this);
     }
 
     private void GivenThatCompanyHousesReturnsError()
     {
-        _companiesHouseApiMock
-            .Setup(c => c.GetByCompanyNumber(It.IsAny<string>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new HttpRequestException());
+        CompaniesHouseApiTestBuilder.New().GetByCompanyNumberReturnsError().Register(this);
     }
 
     private async Task WhenGettingOrganizationByCompaniesHouseNumber()
     {
-        var loggerMock = new Mock<ILogger<OrganisationSearchService>>();
-        _searchService = new OrganisationSearchService(_companiesHouseApiMock.Object, _organizationCrmSearchServiceMock.Object, loggerMock.Object);
-
-        _response = await _searchService.GetByCompaniesHouseNumber("any number", CancellationToken.None);
+        RegisterDependency(_organizationCrmSearchServiceMock.Object);
+        _response = await TestCandidate.GetByCompaniesHouseNumber("any number", CancellationToken.None);
     }
 
     private CompanyDetailsItem OrganizationWithCompanyHouseNumber(string number)

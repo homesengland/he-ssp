@@ -16,10 +16,10 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
         _organizationService = organizationService;
     }
 
-    public IEnumerable<OrganizationDetailsDto> SearchOrganizationInCrmByName(string organisationNames, bool recordsWithoutCopanyNumberIncluded)
+    public async Task<IList<OrganizationDetailsDto>> SearchOrganizationInCrmByName(string organisationNames, bool recordsWithoutCopanyNumberIncluded)
     {
         IEnumerable<string> result = organisationNames.Split(' ').ToList();
-        var retrievedEntities = _organizationRepository.SearchForOrganizationsByName(_organizationService, result, recordsWithoutCopanyNumberIncluded);
+        var retrievedEntities = await _organizationRepository.SearchForOrganizationsByName(_organizationService, result, recordsWithoutCopanyNumberIncluded);
         if (retrievedEntities != null && retrievedEntities.Entities.Count > 0)
         {
             var organizationDtoList = new List<OrganizationDetailsDto>();
@@ -31,12 +31,12 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
             return organizationDtoList;
         }
 
-        return new List<OrganizationDetailsDto>();
+        return Array.Empty<OrganizationDetailsDto>();
     }
 
-    public IEnumerable<OrganizationDetailsDto> SearchOrganizationInCrmByCompanyHouseNumber(IEnumerable<string> organisationNumbers)
+    public async Task<IList<OrganizationDetailsDto>> SearchOrganizationInCrmByCompanyHouseNumber(IEnumerable<string> organisationNumbers)
     {
-        var retrievedEntities = _organizationRepository.SearchForOrganizationsByCompanyHouseNumber(_organizationService, organisationNumbers);
+        var retrievedEntities = await _organizationRepository.SearchForOrganizationsByCompanyHouseNumber(_organizationService, organisationNumbers);
         if (retrievedEntities != null && retrievedEntities.Entities.Count > 0)
         {
             var organizationDtoList = new List<OrganizationDetailsDto>();

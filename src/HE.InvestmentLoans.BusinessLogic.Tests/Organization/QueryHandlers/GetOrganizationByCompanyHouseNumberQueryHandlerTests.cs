@@ -1,10 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.Organization.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestObjectBuilder;
-using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Tests.TestFramework;
 using HE.InvestmentLoans.Contract.Organization;
-using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Organization.QueryHandlers;

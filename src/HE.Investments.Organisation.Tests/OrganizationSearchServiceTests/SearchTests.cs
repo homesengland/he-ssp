@@ -1,33 +1,33 @@
 using FluentAssertions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
 using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Services;
-using Microsoft.Extensions.Logging;
+using HE.Investments.Organisation.Tests.TestObjectBuilders;
+using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;
 
 namespace HE.Investments.Organisation.Tests.OrganizationSearchServiceTests;
 
-public class SearchTests
+public class SearchTests : TestBase<OrganisationSearchService>
 {
-    private OrganisationSearchService _searchService;
     private OrganisationSearchResult _response;
 
-    private readonly Mock<ICompaniesHouseApi> _companiesHouseApiMock;
     private readonly Mock<IOrganizationCrmSearchService> _organizationCrmSearchServiceMock;
 
     public SearchTests()
     {
-        _companiesHouseApiMock = new Mock<ICompaniesHouseApi>();
         _organizationCrmSearchServiceMock = new Mock<IOrganizationCrmSearchService>();
     }
 
     [Fact]
     public async Task Fail_WhenCompanyHousesReturnsError()
     {
-        GivenThatCompanyHousesReturnsError();
+        CompaniesHouseApiTestBuilder
+            .New()
+            .SearchReturnsError()
+            .Register(this);
 
         await WhenSearchingOrganizations();
 
@@ -49,7 +49,8 @@ public class SearchTests
     [Fact]
     public async Task ReturnNothing_WhenCompanyHousesReturnsNothing()
     {
-        GivenThatComanyHousesReturnsNothing();
+        GivenThatCompanyHousesReturnsNothing();
+        GivenThatCrmReturnsNothing();
 
         await WhenSearchingOrganizations();
 
@@ -60,6 +61,7 @@ public class SearchTests
     public async Task ReturnTotalNumberOfOrganizationsFromCompanyHouses()
     {
         GivenThatCompanyHousesReturnsTotalOrganizations(10);
+        GivenThatCrmReturnsNothing();
 
         await WhenSearchingOrganizations();
 
@@ -142,48 +144,34 @@ public class SearchTests
     private void GivenThatCrmReturns(params OrganizationDetailsDto[] organizationsToReturn)
     {
         _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrmByCompanyHouseNumber(It.IsAny<IEnumerable<string>>()))
-            .Returns(organizationsToReturn.ToList());
+            .ReturnsAsync(organizationsToReturn.ToList());
     }
 
     private void GivenThatCrmReturnsNothing()
     {
         _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrmByCompanyHouseNumber(It.IsAny<IEnumerable<string>>()))
-            .Returns(Enumerable.Empty<OrganizationDetailsDto>());
+            .ReturnsAsync(Array.Empty<OrganizationDetailsDto>());
     }
 
-    private void GivenThatComanyHousesReturnsNothing()
+    private void GivenThatCompanyHousesReturnsNothing()
     {
-        _companiesHouseApiMock.Setup(c => c.Search(It.IsAny<string>(), It.IsAny<PagingQueryParams>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(CompaniesHouseSearchResult.New(Enumerable.Empty<CompanyDetailsItem>().ToList(), 0));
+        CompaniesHouseApiTestBuilder.New().SearchReturnsNothing().Register(this);
     }
 
     private void GivenThatCompanyHousesReturns(params CompanyDetailsItem[] organizationsToReturn)
     {
-        _companiesHouseApiMock
-            .Setup(c => c.Search(It.IsAny<string>(), It.IsAny<PagingQueryParams>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(CompaniesHouseSearchResult.New(organizationsToReturn.ToList(), organizationsToReturn.Length));
+        CompaniesHouseApiTestBuilder.New().SearchReturns(organizationsToReturn).Register(this);
     }
 
     private void GivenThatCompanyHousesReturnsTotalOrganizations(int numberOfOrganizations)
     {
-        _companiesHouseApiMock
-            .Setup(c => c.Search(It.IsAny<string>(), It.IsAny<PagingQueryParams>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(CompaniesHouseSearchResult.New(Enumerable.Empty<CompanyDetailsItem>().ToList(), numberOfOrganizations));
-    }
-
-    private void GivenThatCompanyHousesReturnsError()
-    {
-        _companiesHouseApiMock
-            .Setup(c => c.Search(It.IsAny<string>(), It.IsAny<PagingQueryParams>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new HttpRequestException());
+        CompaniesHouseApiTestBuilder.New().SearchReturnsTotalOrganizations(numberOfOrganizations).Register(this);
     }
 
     private async Task WhenSearchingOrganizations()
     {
-        var loggerMock = new Mock<ILogger<OrganisationSearchService>>();
-        _searchService = new OrganisationSearchService(_companiesHouseApiMock.Object, _organizationCrmSearchServiceMock.Object, loggerMock.Object);
-
-        _response = await _searchService.Search("any phrase", new PagingQueryParams(1, 1), CancellationToken.None);
+        RegisterDependency(_organizationCrmSearchServiceMock.Object);
+        _response = await TestCandidate.Search("any phrase", new PagingQueryParams(1, 1), CancellationToken.None);
     }
 
     private CompanyDetailsItem OrganizationWithCompanyHouseNumber(string number)

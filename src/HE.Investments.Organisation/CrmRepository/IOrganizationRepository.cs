@@ -6,9 +6,9 @@ public interface IOrganizationRepository
 {
     Guid? EnsureCreateOrganization(IOrganizationServiceAsync2 service, string companyNumber, string companyName);
 
-    EntityCollection? SearchForOrganizationsByName(IOrganizationServiceAsync2 service, IEnumerable<string> names, bool recordsWithoutCopanyNumberIncluded);
+    Task<EntityCollection?> SearchForOrganizationsByName(IOrganizationServiceAsync2 service, IEnumerable<string> names, bool recordsWithoutCopanyNumberIncluded);
 
-    EntityCollection? SearchForOrganizationsByCompanyHouseNumber(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers);
+    Task<EntityCollection?> SearchForOrganizationsByCompanyHouseNumber(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers);
 
     Entity? GetDefaultAccount(IOrganizationServiceAsync2 service);
 

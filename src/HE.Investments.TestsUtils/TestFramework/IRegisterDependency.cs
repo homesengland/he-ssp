@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.Common.Tests.TestFramework;
+namespace HE.Investments.TestsUtils.TestFramework;
 
 public interface IRegisterDependency
 {
