@@ -5,7 +5,6 @@ using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Services;
 using HE.Investments.Organisation.Tests.TestObjectBuilders;
 using HE.Investments.TestsUtils.TestFramework;
-using Moq;
 using Xunit;
 
 namespace HE.Investments.Organisation.Tests.OrganizationSearchServiceTests;
@@ -13,13 +12,6 @@ namespace HE.Investments.Organisation.Tests.OrganizationSearchServiceTests;
 public class SearchTests : TestBase<OrganisationSearchService>
 {
     private OrganisationSearchResult _response;
-
-    private readonly Mock<IOrganizationCrmSearchService> _organizationCrmSearchServiceMock;
-
-    public SearchTests()
-    {
-        _organizationCrmSearchServiceMock = new Mock<IOrganizationCrmSearchService>();
-    }
 
     [Fact]
     public async Task Fail_WhenCompanyHousesReturnsError()
@@ -141,16 +133,14 @@ public class SearchTests : TestBase<OrganisationSearchService>
         foundOrganization.PostalCode.Should().Be("PO16 7GZ");
     }
 
-    private void GivenThatCrmReturns(params OrganizationDetailsDto[] organizationsToReturn)
+    private void GivenThatCrmReturns(params OrganizationDetailsDto[] crmOrganization)
     {
-        _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrmByCompanyHouseNumber(It.IsAny<IEnumerable<string>>()))
-            .ReturnsAsync(organizationsToReturn.ToList());
+        OrganizationCrmSearchServiceTestBuilder.New().ByCompanyHouseNumberReturns(crmOrganization).Register(this);
     }
 
     private void GivenThatCrmReturnsNothing()
     {
-        _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrmByCompanyHouseNumber(It.IsAny<IEnumerable<string>>()))
-            .ReturnsAsync(Array.Empty<OrganizationDetailsDto>());
+        OrganizationCrmSearchServiceTestBuilder.New().ByCompanyHouseNumberReturnsNothing().Register(this);
     }
 
     private void GivenThatCompanyHousesReturnsNothing()
@@ -170,7 +160,6 @@ public class SearchTests : TestBase<OrganisationSearchService>
 
     private async Task WhenSearchingOrganizations()
     {
-        RegisterDependency(_organizationCrmSearchServiceMock.Object);
         _response = await TestCandidate.Search("any phrase", new PagingQueryParams(1, 1), CancellationToken.None);
     }
 
