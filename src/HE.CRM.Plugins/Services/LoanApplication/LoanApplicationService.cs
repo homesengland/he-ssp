@@ -607,6 +607,63 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
         }
 
+        public void SendEmailToNewOwner(invln_Loanapplication target, invln_Loanapplication preImage)
+        {
+            if (target.OwnerId.Id != preImage.OwnerId.Id)
+            {
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("INTERNAL_LOAN_APP_STATUS_CHANGE");
+                var emailToCreate = new invln_govnotifyemail()
+                {
+                    OwnerId = target.OwnerId,
+                    RegardingObjectId = target.ToEntityReference(),
+                    StatusCode = new OptionSetValue((int)invln_govnotifyemail_StatusCode.Draft),
+                    invln_notificationsettingid = emailTemplate?.ToEntityReference(),
+                };
+                var emailId = _govNotifyEmailRepositoryAdmin.Create(emailToCreate);
+
+                if (emailTemplate != null)
+                {
+                    var orgUrl = _environmentVariableRepositoryAdmin.GetEnvironmentVariableValue("invln_environmenturl") ?? "";
+                    var loanAppId = _environmentVariableRepositoryAdmin.GetEnvironmentVariableValue("invln_loanappid") ?? "";
+                    var ownerData = _systemUserRepositoryAdmin.GetById(emailToCreate.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
+                    var subject = $"Application ref no {target.invln_Name ?? preImage.invln_Name} - Assigned to you";
+                    var govNotParams = new INTERNAL_LOAN_APP_STATUS_CHANGE()
+                    {
+                        templateId = emailTemplate?.invln_templateid,
+                        personalisation = new parameters()
+                        {
+                            recipientEmail = ownerData.InternalEMailAddress,
+                            username = ownerData.FullName,
+                            applicationId = preImage.invln_Name,
+                            applicationUrl = orgUrl + "/main.aspx?appid=" + loanAppId + "&pagetype=entityrecord&etn=invln_loanapplication&id=" + target.Id,
+                            subject = subject,
+                            statusAtBody = pastFormStatus
+                        }
+                    };
+
+                    var options = new JsonSerializerOptions
+                    {
+                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                        WriteIndented = true
+                    };
+                    // TODO: delete after MVP when update possible from gov notify returned data
+                    _govNotifyEmailRepositoryAdmin.Update(new invln_govnotifyemail()
+                    {
+                        Id = emailId,
+                        Subject = subject,
+                        invln_body = JsonSerializer.Serialize(govNotParams, options)
+                    });
+                    //
+                    var govNotReq = new invln_sendgovnotifyemailRequest()
+                    {
+                        invln_emailid = emailId.ToString(),
+                        invln_govnotifyparameters = JsonSerializer.Serialize(govNotParams, options),
+                    };
+                    _ = _loanApplicationRepositoryAdmin.ExecuteGovNotifyNotificationRequest(govNotReq);
+                }
+            }
+        }
+
         private bool CheckIfExternalStatusCanBeChanged(int oldStatus, int newStatus)
         {
             if (oldStatus != (int)invln_ExternalStatus.Draft)
@@ -640,7 +697,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
             return generatedAttribuesFetchXml;
         }
-
         #endregion
     }
 }

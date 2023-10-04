@@ -16,5 +16,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         void SetFieldsWhenChangingStatusFromDraft(invln_Loanapplication target, invln_Loanapplication preImage);
         void SendInternalNotificationOnStatusChange(invln_Loanapplication target, invln_Loanapplication preImage);
         void ChangeInternalStatusOnExternalStatusChange(invln_Loanapplication target, invln_Loanapplication preImage);
+        void SendEmailToNewOwner(invln_Loanapplication target, invln_Loanapplication preImage);
     }
 }
