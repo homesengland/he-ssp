@@ -63,8 +63,8 @@ public class OrganisationSearchService : IOrganisationSearchService
         IList<OrganisationSearchItem> mergedResult)
     {
         var result = await _organizationCrmSearchService.SearchOrganizationInCrmByName(organisationName, false);
-        var fromCompanyHouse = Math.Min((pagingParams.StartIndex * (pagingParams.Size - 1)) + mergedResult.Count, totalItemsFromCompaniesHouseApi);
-        var skip = Math.Max(((pagingParams.StartIndex - 1) * pagingParams.Size) - totalItemsFromCompaniesHouseApi, 0);
+        var displayedItems = pagingParams.StartIndex == 1 ? 0 : pagingParams.StartIndex;
+        var skip = Math.Max(displayedItems - totalItemsFromCompaniesHouseApi, 0);
         foreach (var spvCompany in result.OrderBy(x => x.registeredCompanyName).Skip(skip))
         {
             if (mergedResult.Count >= pagingParams.Size)

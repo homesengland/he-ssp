@@ -232,7 +232,7 @@ public class SearchTests : TestBase<OrganisationSearchService>
             .Register(this);
 
         // when
-        var result = await TestCandidate.Search(spvCompany1.registeredCompanyName, new PagingQueryParams(2, 3), CancellationToken.None);
+        var result = await TestCandidate.Search(spvCompany1.registeredCompanyName, new PagingQueryParams(2, 4), CancellationToken.None);
 
         // then
         result.IsSuccessfull().Should().BeTrue();
