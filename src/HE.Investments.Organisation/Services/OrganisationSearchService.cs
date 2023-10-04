@@ -58,7 +58,7 @@ public class OrganisationSearchService : IOrganisationSearchService
 
     private async Task<int> AppendSpvCompanies(string organisationName, PagingQueryParams pagingParams, IList<OrganisationSearchItem> mergedResult)
     {
-        var result = await _organizationCrmSearchService.SearchOrganizationInCrmByName(organisationName, true);
+        var result = await _organizationCrmSearchService.SearchOrganizationInCrmByName(organisationName, false);
         foreach (var spvCompany in result.OrderBy(x => x.registeredCompanyName))
         {
             if (mergedResult.Count >= pagingParams.Size)
