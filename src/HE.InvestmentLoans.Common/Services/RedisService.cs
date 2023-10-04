@@ -1,10 +1,6 @@
-using System.Net.Security;
-using System.Runtime.InteropServices;
-using System.Security.Authentication;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
 using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Services.Interfaces;
+using Newtonsoft.Json;
 using StackExchange.Redis;
 
 namespace HE.InvestmentLoans.Common.Services;
@@ -29,7 +25,7 @@ public class RedisService : ICacheService
         if (Cache.KeyExists(GetKey(key)))
         {
             string? resp = Cache.StringGet(GetKey(key));
-            return resp != null ? JsonSerializer.Deserialize<T>(resp) : default;
+            return resp != null ? JsonConvert.DeserializeObject<T>(resp) : default;
         }
 
         return default;
@@ -56,7 +52,13 @@ public class RedisService : ICacheService
 
     public void SetValue(string key, object value, int expireMinutes)
     {
-        Cache.StringSet(GetKey(key), JsonSerializer.Serialize(value), TimeSpan.FromMinutes(expireMinutes));
+        var settings = new JsonSerializerSettings
+        {
+            TypeNameHandling = TypeNameHandling.Auto,
+        };
+
+        var serializedValue = JsonConvert.SerializeObject(value, settings);
+        Cache.StringSet(GetKey(key), serializedValue, TimeSpan.FromMinutes(expireMinutes));
     }
 
     public void SetValue<T>(string key, T value)

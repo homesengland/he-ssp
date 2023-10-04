@@ -1,12 +1,24 @@
+namespace HE.InvestmentLoans.Contract.User.ValueObjects;
+
+using System.Runtime.Serialization;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Domain;
 
-namespace HE.InvestmentLoans.Contract.User.ValueObjects;
-
-public class SecondaryTelephoneNumber : ValueObject
+[Serializable]
+public class SecondaryTelephoneNumber : ValueObject, ISerializable
 {
+    protected SecondaryTelephoneNumber(SerializationInfo info, StreamingContext context)
+    {
+        if (info == null)
+        {
+            throw new ArgumentNullException(nameof(info));
+        }
+
+        Value = info.GetString(nameof(Value)) ?? string.Empty;
+    }
+
     private SecondaryTelephoneNumber(string value)
     {
         if (value?.Length > MaximumInputLength.ShortInput)
@@ -34,6 +46,16 @@ public class SecondaryTelephoneNumber : ValueObject
         }
 
         return new SecondaryTelephoneNumber(secondaryTelephoneNumber);
+    }
+
+    public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        if (info == null)
+        {
+            throw new ArgumentNullException(nameof(info));
+        }
+
+        info.AddValue("Value", Value);
     }
 
     public override string ToString()

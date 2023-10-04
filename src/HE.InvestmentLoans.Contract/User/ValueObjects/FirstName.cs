@@ -1,13 +1,25 @@
+namespace HE.InvestmentLoans.Contract.User.ValueObjects;
+
+using System.Runtime.Serialization;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Domain;
 
-namespace HE.InvestmentLoans.Contract.User.ValueObjects;
-
-public class FirstName : ValueObject
+[Serializable]
+public class FirstName : ValueObject, ISerializable
 {
+    protected FirstName(SerializationInfo info, StreamingContext context)
+    {
+        if (info == null)
+        {
+            throw new ArgumentNullException(nameof(info));
+        }
+
+        Value = info.GetString(nameof(Value)) ?? string.Empty;
+    }
+
     private FirstName(string value)
     {
         if (value!.IsNotProvided())
@@ -42,6 +54,16 @@ public class FirstName : ValueObject
         }
 
         return new FirstName(firstName);
+    }
+
+    public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+    {
+        if (info == null)
+        {
+            throw new ArgumentNullException(nameof(info));
+        }
+
+        info.AddValue("Value", Value);
     }
 
     public override string ToString()
