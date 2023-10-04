@@ -8,7 +8,7 @@ namespace HE.InvestmentLoans.Contract.User.ValueObjects;
 
 public class JobTitle : ValueObject
 {
-    private JobTitle(string value)
+    public JobTitle(string value)
     {
         if (value!.IsNotProvided())
         {
@@ -30,7 +30,7 @@ public class JobTitle : ValueObject
         Value = value;
     }
 
-    private string Value { get; }
+    public string Value { get; }
 
     public static JobTitle New(string value) => new(value);
 
