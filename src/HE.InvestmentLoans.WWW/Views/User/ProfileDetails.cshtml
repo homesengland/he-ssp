@@ -2,8 +2,6 @@
 @{
     ViewData["Title"] = "Profile details";
     var callback = Context.Request.Query["callback"];
-
-    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.Contract.User.UserDetailsViewModel));
 }
 
 <gds-div-grid-column-two-thirds>

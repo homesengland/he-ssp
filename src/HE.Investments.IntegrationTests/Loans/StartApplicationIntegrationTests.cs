@@ -96,7 +96,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
         items[CheckYourDetailsFields.CompanyAddress].Should().Be(UserData.OrganizationAddress);
         items[CheckYourDetailsFields.ContactName].Should().Be(UserData.ContactName);
         items[CheckYourDetailsFields.EmailAddress].Should().Be(UserData.Email);
-        items[CheckYourDetailsFields.TelephoneNumber].Should().Be(UserData.TelephoneNumber);
+        items[CheckYourDetailsFields.TelephoneNumber].Should().Be(UserData.TelephoneNumber.ToString());
         SetSharedData(CurrentPageKey, checkYourDetailsPage);
     }
 

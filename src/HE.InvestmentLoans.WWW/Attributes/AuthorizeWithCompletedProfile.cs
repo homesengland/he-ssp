@@ -1,18 +1,11 @@
-using System.Collections.Generic;
-using Auth0.ManagementApi.Models;
-using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.InvestmentLoans.BusinessLogic;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Contract.User;
 using HE.InvestmentLoans.WWW.Controllers;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.FeatureManagement;
 
 namespace HE.InvestmentLoans.WWW.Attributes;
 

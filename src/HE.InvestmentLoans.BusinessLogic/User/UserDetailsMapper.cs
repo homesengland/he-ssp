@@ -2,6 +2,7 @@ extern alias Org;
 
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Contract.User;
+using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.InvestmentLoans.BusinessLogic.User;
@@ -11,11 +12,11 @@ public static class UserDetailsMapper
     {
         return new UserDetailsViewModel()
         {
-            FirstName = userDetailsEntity.FirstName,
-            LastName = userDetailsEntity.LastName,
-            JobTitle = userDetailsEntity.JobTitle,
-            TelephoneNumber = userDetailsEntity.TelephoneNumber,
-            SecondaryTelephoneNumber = userDetailsEntity.SecondaryTelephoneNumber,
+            FirstName = userDetailsEntity.FirstName?.ToString(),
+            LastName = userDetailsEntity.LastName?.ToString(),
+            JobTitle = userDetailsEntity.JobTitle?.ToString(),
+            TelephoneNumber = userDetailsEntity.TelephoneNumber?.ToString(),
+            SecondaryTelephoneNumber = userDetailsEntity.SecondaryTelephoneNumber?.ToString(),
         };
     }
 
@@ -23,12 +24,12 @@ public static class UserDetailsMapper
     {
         return new ContactDto
         {
-            firstName = userDetails.FirstName,
-            lastName = userDetails.LastName,
-            jobTitle = userDetails.JobTitle,
+            firstName = userDetails.FirstName?.ToString(),
+            lastName = userDetails.LastName?.ToString(),
+            jobTitle = userDetails.JobTitle?.ToString(),
             email = userDetails.Email,
-            phoneNumber = userDetails.TelephoneNumber,
-            secondaryPhoneNumber = userDetails.SecondaryTelephoneNumber,
+            phoneNumber = userDetails.TelephoneNumber?.ToString(),
+            secondaryPhoneNumber = userDetails.SecondaryTelephoneNumber?.ToString(),
             isTermsAndConditionsAccepted = userDetails.IsTermsAndConditionsAccepted,
         };
     }
@@ -36,12 +37,12 @@ public static class UserDetailsMapper
     public static UserDetails MapContactDtoToUserDetails(ContactDto contactDto)
     {
         return new UserDetails(
-            contactDto.firstName,
-            contactDto.lastName,
-            contactDto.jobTitle,
+            FirstName.FromString(contactDto.firstName),
+            LastName.FromString(contactDto.lastName),
+            JobTitle.FromString(contactDto.jobTitle),
             contactDto.email,
-            contactDto.phoneNumber,
-            contactDto.secondaryPhoneNumber,
+            TelephoneNumber.FromString(contactDto.phoneNumber),
+            SecondaryTelephoneNumber.FromString(contactDto.secondaryPhoneNumber),
             contactDto.isTermsAndConditionsAccepted);
     }
 }

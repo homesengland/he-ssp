@@ -22,8 +22,8 @@ public class GetUserAccountQueryHandler : IRequestHandler<GetUserAccountQuery, G
                             _loanUserContext.UserGlobalId.ToString(),
                             await _loanUserContext.GetSelectedAccountId(),
                             (await _loanUserContext.GetAllAccounts()).Select(x => x.AccountId!.Value).ToList(),
-                            userDetails.FirstName,
-                            userDetails.LastName,
-                            userDetails.TelephoneNumber);
+                            userDetails.FirstName?.ToString(),
+                            userDetails.LastName?.ToString(),
+                            userDetails.TelephoneNumber?.ToString());
     }
 }
