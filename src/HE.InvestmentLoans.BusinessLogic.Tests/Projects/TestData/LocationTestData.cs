@@ -18,7 +18,7 @@ internal static class LocationTestData
 
     public const string CorrectLandRegistryNumber = "CorrectLandRegistryNumber";
 
-    public static Coordinates AnyCoordinates => new(CorrectCoordinates);
+    public static readonly Coordinates AnyCoordinates = new(CorrectCoordinates);
 
-    public static LandRegistryTitleNumber AnyLandRegistryTitleNumber => new(CorrectLandRegistryNumber);
+    public static readonly LandRegistryTitleNumber AnyLandRegistryTitleNumber = new(CorrectLandRegistryNumber);
 }

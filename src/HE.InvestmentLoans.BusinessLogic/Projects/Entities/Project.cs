@@ -19,7 +19,7 @@ public class Project
         IsNewlyCreated = true;
     }
 
-    public Project(ProjectId id, ProjectName name, StartDate startDate, PlanningReferenceNumber planningReferenceNumber, Coordinates coordinates, LandRegistryTitleNumber landRegistryTitleNumber)
+    public Project(ProjectId id, ProjectName? name, StartDate? startDate, PlanningReferenceNumber? planningReferenceNumber, Coordinates? coordinates, LandRegistryTitleNumber? landRegistryTitleNumber)
     {
         IsNewlyCreated = false;
 
@@ -33,17 +33,17 @@ public class Project
 
     public ProjectId Id { get; private set; }
 
-    public ProjectName Name { get; private set; }
+    public ProjectName? Name { get; private set; }
 
-    public StartDate StartDate { get; private set; }
+    public StartDate? StartDate { get; private set; }
 
-    public PlanningReferenceNumber PlanningReferenceNumber { get; private set; }
+    public PlanningReferenceNumber? PlanningReferenceNumber { get; private set; }
 
     public PlanningPermissionStatus? PlanningPermissionStatus { get; private set; }
 
-    public Coordinates Coordinates { get; private set; }
+    public Coordinates? Coordinates { get; private set; }
 
-    public LandRegistryTitleNumber LandRegistryTitleNumber { get; private set; }
+    public LandRegistryTitleNumber? LandRegistryTitleNumber { get; private set; }
 
     public bool IsNewlyCreated { get; private set; }
 
@@ -149,7 +149,7 @@ public class Project
 
     public void ProvidePlanningPermissionStatus(PlanningPermissionStatus? planningPermissionStatus)
     {
-        if (PlanningReferenceNumber.IsNotProvided() || !PlanningReferenceNumber.Exists)
+        if (PlanningReferenceNumber.IsNotProvided() || !PlanningReferenceNumber!.Exists)
         {
             throw new DomainException($"Cannot provide planning permission status because project id: {Id}, has no planning reference number.", LoanApplicationErrorCodes.PlanningReferenceNumberNotExists);
         }

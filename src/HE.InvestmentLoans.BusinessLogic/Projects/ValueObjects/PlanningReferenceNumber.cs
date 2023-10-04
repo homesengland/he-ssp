@@ -25,9 +25,9 @@ public class PlanningReferenceNumber : ValueObject
         }
     }
 
-    public bool Exists { get; private set; }
+    public bool Exists { get; }
 
-    public string Value { get; private set; }
+    public string Value { get; }
 
     public static PlanningReferenceNumber FromString(string existsString, string value)
     {

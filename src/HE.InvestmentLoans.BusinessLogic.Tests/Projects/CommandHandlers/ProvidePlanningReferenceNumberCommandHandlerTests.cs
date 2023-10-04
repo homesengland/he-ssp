@@ -115,7 +115,7 @@ public class ProvidePlanningReferenceNumberCommandHandlerTests : TestBase<Provid
         // then
         project.PlanningReferenceNumber.Should().NotBeNull();
 
-        project.PlanningReferenceNumber.Exists.Should().BeFalse();
+        project.PlanningReferenceNumber!.Exists.Should().BeFalse();
     }
 
     [Fact]
@@ -143,7 +143,7 @@ public class ProvidePlanningReferenceNumberCommandHandlerTests : TestBase<Provid
         // then
         project.PlanningReferenceNumber.Should().NotBeNull();
 
-        project.PlanningReferenceNumber.Exists.Should().BeTrue();
+        project.PlanningReferenceNumber!.Exists.Should().BeTrue();
         project.PlanningReferenceNumber.Value.Should().BeNull();
     }
 
@@ -172,7 +172,7 @@ public class ProvidePlanningReferenceNumberCommandHandlerTests : TestBase<Provid
         // then
         project.PlanningReferenceNumber.Should().NotBeNull();
 
-        project.PlanningReferenceNumber.Exists.Should().BeTrue();
+        project.PlanningReferenceNumber!.Exists.Should().BeTrue();
         project.PlanningReferenceNumber.Value.Should().Be("number");
     }
 }

@@ -35,7 +35,7 @@ public class Order09PlanningPermissionStatusIntegrationTests : IntegrationTest
     public async Task Order01_ShouldRedirectToLocation_WhenNoStatusWasSelected()
     {
         // given
-        var planningStatusPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.PlanningPermissionStatus(_applicationLoanId, _projectId)));
+        var planningStatusPage = await TestClient.NavigateTo(ProjectPagesUrls.PlanningPermissionStatus(_applicationLoanId, _projectId));
         var continueButton = planningStatusPage.GetGdsSubmitButtonById("continue-button");
 
         // when

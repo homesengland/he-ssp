@@ -75,11 +75,11 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         var projectsFromCrm = loanApplicationDto.siteDetailsList.Select(
             projectFromCrm => new Project(
                 ProjectId.From(projectFromCrm.siteDetailsId),
-                projectFromCrm.Name.IsProvided() ? new ProjectName(projectFromCrm.Name) : null!,
-                null!,
-                projectFromCrm.haveAPlanningReferenceNumber.IsProvided() ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber) : null!,
-                projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null!,
-                projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null!));
+                projectFromCrm.Name.IsProvided() ? new ProjectName(projectFromCrm.Name) : null,
+                null,
+                projectFromCrm.haveAPlanningReferenceNumber.IsProvided() ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber) : null,
+                projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null,
+                projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
@@ -152,10 +152,10 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                 siteDetailsId = projectToSave.Id.Value.ToString(),
                 Name = projectToSave.Name?.Value,
                 dateOfPurchase = projectToSave.StartDate?.Value,
-                haveAPlanningReferenceNumber = projectToSave.PlanningReferenceNumber.IsProvided() ? projectToSave.PlanningReferenceNumber.Exists : null!,
-                planningReferenceNumber = projectToSave.PlanningReferenceNumber.IsProvided() ? projectToSave.PlanningReferenceNumber.Value : null!,
-                siteCoordinates = projectToSave.Coordinates.IsProvided() ? projectToSave.Coordinates.Value : null!,
-                landRegistryTitleNumber = projectToSave.LandRegistryTitleNumber.IsProvided() ? projectToSave.LandRegistryTitleNumber.Value : null!,
+                haveAPlanningReferenceNumber = projectToSave.PlanningReferenceNumber?.Exists,
+                planningReferenceNumber = projectToSave.PlanningReferenceNumber?.Value,
+                siteCoordinates = projectToSave.Coordinates?.Value,
+                landRegistryTitleNumber = projectToSave.LandRegistryTitleNumber?.Value,
             };
 
             var req = new invln_updatesinglesitedetailsRequest

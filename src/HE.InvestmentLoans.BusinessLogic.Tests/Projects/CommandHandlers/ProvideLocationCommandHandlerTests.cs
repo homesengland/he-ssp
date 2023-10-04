@@ -121,7 +121,7 @@ public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationComman
         // then
         result.HasValidationErrors.Should().BeFalse();
 
-        project.Coordinates.Value.Should().Be(CorrectCoordinates);
+        project.Coordinates!.Value.Should().Be(CorrectCoordinates);
     }
 
     [Fact]
@@ -176,7 +176,7 @@ public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationComman
         // then
         result.HasValidationErrors.Should().BeFalse();
 
-        project.LandRegistryTitleNumber.Value.Should().Be(CorrectLandRegistryNumber);
+        project.LandRegistryTitleNumber!.Value.Should().Be(CorrectLandRegistryNumber);
     }
 
     [Fact]
