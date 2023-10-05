@@ -79,6 +79,7 @@ namespace DataverseModel
 			public const string invln_Nameofgrantfund = "invln_nameofgrantfund";
 			public const string invln_Numberofhomes = "invln_numberofhomes";
 			public const string invln_OtherTypeofhomes = "invln_othertypeofhomes";
+			public const string invln_planningpermissionstatus = "invln_planningpermissionstatus";
 			public const string invln_Planningreferencenumber = "invln_planningreferencenumber";
 			public const string invln_Planningstatus = "invln_planningstatus";
 			public const string invln_Postcode = "invln_postcode";
@@ -94,6 +95,7 @@ namespace DataverseModel
 			public const string Id = "invln_sitedetailsid";
 			public const string invln_Sitename = "invln_sitename";
 			public const string invln_Siteownership = "invln_siteownership";
+			public const string invln_startdate = "invln_startdate";
 			public const string invln_Totalbuildperiod = "invln_totalbuildperiod";
 			public const string invln_TotalDevelopmentCost = "invln_totaldevelopmentcost";
 			public const string invln_totaldevelopmentcost_Base = "invln_totaldevelopmentcost_base";
@@ -569,6 +571,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_planningpermissionstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_planningpermissionstatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_planningpermissionstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_planningpermissionstatus");
+				this.SetAttributeValue("invln_planningpermissionstatus", value);
+				this.OnPropertyChanged("invln_planningpermissionstatus");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_planningreferencenumber")]
 		public string invln_Planningreferencenumber
 		{
@@ -775,6 +794,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Siteownership");
 				this.SetAttributeValue("invln_siteownership", value);
 				this.OnPropertyChanged("invln_Siteownership");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_startdate")]
+		public System.Nullable<System.DateTime> invln_startdate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_startdate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_startdate");
+				this.SetAttributeValue("invln_startdate", value);
+				this.OnPropertyChanged("invln_startdate");
 			}
 		}
 		

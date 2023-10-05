@@ -1,5 +1,6 @@
 #pragma warning disable IDE0005 // Using directive is unnecessary.
 using System;
+using Microsoft.Xrm.Sdk;
 #pragma warning restore IDE0005 // Using directive is unnecessary.
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
@@ -53,5 +54,9 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string valuationSource { get; set; }
 
         public string whoProvided { get; set; }
+
+        public OptionSetValue planningPermissionStatus { get; set; }
+
+        public DateTime? startDate { get; set; }
     }
 }
