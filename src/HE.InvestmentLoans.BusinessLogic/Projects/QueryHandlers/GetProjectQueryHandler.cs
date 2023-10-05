@@ -51,7 +51,12 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
             PurchaseDay = project.AdditionalDetails?.PurchaseDate.AsDateTime().Day.ToString(CultureInfo.InvariantCulture),
             Cost = project.AdditionalDetails?.Cost.ToString(),
             Value = project.AdditionalDetails?.CurrentValue.ToString(),
-            Source = additionalDetailsAreProvided ? SourceOfValuationMapper.ToString(project.AdditionalDetails!.SourceOfValuation) : null!,
+            Source = additionalDetailsAreProvided ? SourceOfValuationMapper.ToString(project.AdditionalDetails!.SourceOfValuation) : null,
+            GrantFundingStatus = project.GrantFundingStatus.IsProvided() ? GrantFundingStatusMapper.ToString(project.GrantFundingStatus!.Value) : null,
+            GrantFundingProviderName = project.PublicSectorGrantFunding?.ProviderName?.Value,
+            GrantFundingAmount = project.PublicSectorGrantFunding?.Amount?.ToString(),
+            GrantFundingName = project.PublicSectorGrantFunding?.GrantOrFundName?.Value,
+            GrantFundingPurpose = project.PublicSectorGrantFunding?.Purpose?.Value,
         };
     }
 }

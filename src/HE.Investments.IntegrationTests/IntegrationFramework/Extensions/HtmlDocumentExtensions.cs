@@ -198,9 +198,13 @@ public static class HtmlDocumentExtensions
                 valueBuilder.AppendLine(child.TextContent.Trim());
             }
         }
-        else
+        else if (valueRow.Children.Length == 1)
         {
             valueBuilder.Append(valueRow.LastElementChild!.InnerHtml.Trim());
+        }
+        else
+        {
+            return string.Empty;
         }
 
         var value = valueBuilder.ToString();

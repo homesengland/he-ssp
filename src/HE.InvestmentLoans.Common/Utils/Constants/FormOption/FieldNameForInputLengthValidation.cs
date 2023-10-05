@@ -8,7 +8,7 @@ public static class FieldNameForInputLengthValidation
     public const string LocationLandRegistry = "Land registry title number";
     public const string GrantFundingPurpose = "Grant funding purpose";
     public const string GrantFundingName = "Name of the grant/found";
-    public const string GrantFundingSource = "Previous funding";
+    public const string GrantFundingProviderName = "Previous funding";
     public const string ChargesDebtInfo = "Infomation for legal charges";
     public const string FirstName = "First name";
     public const string LastName = "Last name";

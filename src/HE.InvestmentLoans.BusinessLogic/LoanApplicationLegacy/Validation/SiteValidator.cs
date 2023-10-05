@@ -131,7 +131,7 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
                 item => item.GrantFundingSource != null,
                 () => RuleFor(item => item.GrantFundingSource)
                     .Must(value => value!.Length <= MaximumInputLength.ShortInput)
-                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingSource)));
+                    .WithMessage(ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingProviderName)));
 
             When(
                 item => item.GrantFundingName != null,

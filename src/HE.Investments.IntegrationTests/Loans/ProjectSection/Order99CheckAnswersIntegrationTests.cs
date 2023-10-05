@@ -12,6 +12,7 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.InvestmentLoans.IntegrationTests.Loans.SecuritySection;
+using HE.InvestmentLoans.WWW.Helpers;
 using HE.InvestmentLoans.WWW.Views.Project.Consts;
 using Microsoft.AspNetCore.Razor.Language.Intermediate;
 using Xunit;
@@ -54,6 +55,9 @@ public class Order99CheckAnswersIntegrationTests : IntegrationTest
 
         CheckIfAdditionalDetailsAreCorrect(projectSummary);
 
+        projectSummary[ProjectFieldNames.GrantFundingExists].Should().Be(CommonResponse.Yes);
+        CheckIfGrantFundingInformationIsCorrect(projectSummary);
+
         // projectSummary[ProjectFieldNames.StartDate].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
         SetSharedData(SharedKeys.CurrentPageKey, checkAnswersPage);
     }
@@ -66,5 +70,15 @@ public class Order99CheckAnswersIntegrationTests : IntegrationTest
         additionalDetails.Should().Contain($"Purchase cost: {PoundsTestData.CorrectAmountDisplay}");
         additionalDetails.Should().Contain($"Current value: {PoundsTestData.CorrectAmountDisplay}");
         additionalDetails.Should().Contain(SourceOfValuationTestData.AnySourceDisplay);
+    }
+
+    private static void CheckIfGrantFundingInformationIsCorrect(IDictionary<string, string> projectSummary)
+    {
+        var additionalDetails = projectSummary[ProjectFieldNames.GrantFunding];
+
+        additionalDetails.Should().Contain($"Previous funding: {TextTestData.TextThatNotExceedsShortInputLimit}");
+        additionalDetails.Should().Contain($"Amount: {PoundsTestData.CorrectAmountDisplay}");
+        additionalDetails.Should().Contain($"Name of the grant/found: {TextTestData.TextThatNotExceedsShortInputLimit}");
+        additionalDetails.Should().Contain($"It was for: {TextTestData.TextThatNotExceedsLongInputLimit}");
     }
 }
