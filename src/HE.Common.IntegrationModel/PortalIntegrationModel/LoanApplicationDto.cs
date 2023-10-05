@@ -99,5 +99,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public OptionSetValue planningPermissionStatus { get; set; }
 
         public DateTime? startDate { get; set; }
+        public DateTime? createdOn { get; set; }
     }
 }

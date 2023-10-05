@@ -119,7 +119,8 @@ namespace HE.CRM.Common.DtoMapping
                 externalId = externalContactId,
                 source = loanApplication.invln_source,
                 planningPermissionStatus = loanApplication.invln_planningpermissionstatus,
-                startDate = loanApplication.invln_startdate
+                startDate = loanApplication.invln_startdate,
+                createdOn = loanApplication.CreatedOn,
             };
             if(loanApplication.invln_Account != null)
             {
