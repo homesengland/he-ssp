@@ -6,6 +6,7 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Tests;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.Investments.TestsUtils;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
 
@@ -22,6 +23,13 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             LoanApplicationIdTestData.LoanApplicationIdOne,
             userAccount,
             ApplicationStatus.Draft,
+            FundingPurpose.BuildingNewHomes,
             DateTimeTestData.SeptemberDay20Year2023At0736,
-            FundingPurpose.BuildingNewHomes));
+            DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(1)));
+
+    public LoanApplicationTestBuilder WithCreatedOn(DateTime createdOn)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.CreatedOn), createdOn);
+        return this;
+    }
 }

@@ -27,6 +27,17 @@ public class LoanApplicationRepositoryTestBuilder
         return this;
     }
 
+    public LoanApplicationRepositoryTestBuilder ReturnLoanApplications(UserAccount userAccount, IList<LoanApplicationEntity> loanApplicationEntities)
+    {
+        _mock.Setup(x => x
+                .LoadAllLoanApplications(userAccount, CancellationToken.None))
+                    .ReturnsAsync(loanApplicationEntities.Select(x =>
+                        new UserLoanApplication(x.Id, x.Name, x.ExternalStatus, x.CreatedOn, x.LastModificationDate))
+                .ToList());
+
+        return this;
+    }
+
     public ILoanApplicationRepository Build()
     {
         return _mock.Object;
