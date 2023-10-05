@@ -6,18 +6,23 @@ using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Security;
+
 public class SecurityEntity
 {
-    public SecurityEntity(LoanApplicationId applicationId, Debenture debenture, DirectorLoans directLoans, DirectorLoansSubordinate directorLoansSubordinate, SectionStatus status)
+    public SecurityEntity(LoanApplicationId applicationId, Debenture debenture, DirectorLoans directLoans, DirectorLoansSubordinate directorLoansSubordinate,
+        SectionStatus status, ApplicationStatus loanApplicationStatus)
     {
         LoanApplicationId = applicationId;
         Debenture = debenture;
         DirectorLoans = directLoans;
         Status = status;
         DirectorLoansSubordinate = directorLoansSubordinate;
+        LoanApplicationStatus = loanApplicationStatus;
     }
 
     public LoanApplicationId LoanApplicationId { get; private set; }
+
+    public ApplicationStatus LoanApplicationStatus { get; }
 
     public Debenture Debenture { get; private set; }
 

@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Extensions;
 using HE.InvestmentLoans.Contract.ViewModels;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure;
@@ -12,6 +13,8 @@ public class CompanyStructureViewModel : ICompletedSectionViewModel
     }
 
     public Guid LoanApplicationId { get; set; }
+
+    public ApplicationStatus LoanApplicationStatus { get; set; }
 
     public string? Purpose { get; set; }
 
@@ -39,10 +42,11 @@ public class CompanyStructureViewModel : ICompletedSectionViewModel
         return State == SectionStatus.InProgress;
     }
 
-    public bool IsEditable()
+    public bool IsReadOnly()
     {
-        return true;
+        var readonlyStatuses = LoanApplicationStatus.GetStatusesForReadonlyMode();
+        return readonlyStatuses.Contains(LoanApplicationStatus);
     }
 
-    public bool IsReadOnly() => IsEditable() is false;
+    public bool IsEditable() => IsReadOnly() is false;
 }

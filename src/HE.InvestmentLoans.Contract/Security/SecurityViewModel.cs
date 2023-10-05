@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Extensions;
 using HE.InvestmentLoans.Contract.ViewModels;
 
 namespace HE.InvestmentLoans.Contract.Security;
@@ -12,6 +13,8 @@ public class SecurityViewModel : ICompletedSectionViewModel
     }
 
     public Guid LoanApplicationId { get; set; }
+
+    public ApplicationStatus LoanApplicationStatus { get; set; }
 
     public string? CheckAnswers { get; set; }
 
@@ -66,10 +69,11 @@ public class SecurityViewModel : ICompletedSectionViewModel
         return State == SectionStatus.InProgress;
     }
 
-    public bool IsEditable()
+    public bool IsReadOnly()
     {
-        return true;
+        var readonlyStatuses = LoanApplicationStatus.GetStatusesForReadonlyMode();
+        return readonlyStatuses.Contains(LoanApplicationStatus);
     }
 
-    public bool IsReadOnly() => IsEditable() is false;
+    public bool IsEditable() => IsReadOnly() is false;
 }
