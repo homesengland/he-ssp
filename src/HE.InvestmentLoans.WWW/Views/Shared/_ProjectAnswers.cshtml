@@ -47,7 +47,7 @@
            {
                { "Title", ProjectFieldNames.Name },
                { "Value", Model?.Name },
-               { "Link", Url.Action("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
+               { "Link", Url.Action("ProjectName", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "name" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -60,7 +60,7 @@
                        Model?.EstimatedStartDay, Model?.EstimatedStartMonth,
                        Model?.EstimatedStartYear, Model?.HasEstimatedStartDate)
                },
-               { "Link", Url.Action("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
+               { "Link", Url.Action("StartDate", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "start-date" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -93,7 +93,7 @@
            {
                { "Title", ProjectFieldNames.PlanningReferenceNumberExists },
                { "Value", Model?.PlanningReferenceNumberExists },
-               { "Link", Url.Action("ReferenceNumberExists", "Project", new { id = id, redirect = "CheckAnswers" }) },
+               { "Link", Url.Action("PlanningReferenceNumberExists", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "reference-number-exists" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -104,7 +104,7 @@
                {
                    { "Title", ProjectFieldNames.PlanningReferenceNumber },
                    { "Value", Model?.PlanningReferenceNumber },
-                   { "Link", Url.Action("ReferenceNumber", "Project", new { id = id, redirect = "CheckAnswers" }) },
+                   { "Link", Url.Action("PlanningReferenceNumber", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                    { "LinkId", "reference-number" },
                    { "IsEditable", Model?.IsEditable() }
                })
@@ -113,7 +113,7 @@
                {
                    { "Title", ProjectFieldNames.PlanningPermissionStatus },
                    { "Value", TemporaryFormOptions.PermissionStatus.GetSummaryLabel(Model?.PlanningPermissionStatus) },
-                   { "Link", Url.Action("ReferenceNumber", "Project", new { id = id, redirect = "CheckAnswers" }) },
+                   { "Link", Url.Action("PlanningPermissionStatus", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                    { "LinkId", "planning-permission-status" },
                    { "IsEditable", Model?.IsEditable() }
                })
@@ -125,7 +125,7 @@
                {
                    { "Title", ProjectFieldNames.Coordinates },
                    { "Value", Model?.LocationCoordinates },
-                   { "Link", Url.Action("Location", "Project", new { id = id, redirect = "CheckAnswers" }) },
+                   { "Link", Url.Action("Location", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                    { "LinkId", "coordinates" },
                    { "IsEditable", Model?.IsEditable() }
                })
@@ -137,7 +137,7 @@
                {
                    { "Title", ProjectFieldNames.LandRegistryTitleNumber },
                    { "Value", Model?.LocationLandRegistry },
-                   { "Link", Url.Action("Location", "Project", new { id = id, redirect = "CheckAnswers" }) },
+                   { "Link", Url.Action("Location", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                    { "LinkId", "land-registry-title-number" },
                    { "IsEditable", Model?.IsEditable() }
                })
@@ -147,7 +147,7 @@
            {
                { "Title", ProjectFieldNames.LandOwnership },
                { "Value", Model?.Ownership },
-               { "Link", Url.Action("Ownership", "Project", new { id = id, redirect = "CheckAnswers" }) },
+               { "Link", Url.Action("Ownership", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "ownership" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -158,7 +158,7 @@
                {
                    { "Title", ProjectFieldNames.AdditionalDetails },
                    { "Value", additionalProjectDetails },
-                   { "Link", Url.Action("AdditionalDetails", "Project", new { id = id, redirect = "CheckAnswers" }) },
+                   { "Link", Url.Action("AdditionalDetails", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                    { "LinkId", "additional-details" },
                    { "IsEditable", Model?.IsEditable() }
                })
@@ -168,7 +168,7 @@
            {
                { "Title", ProjectFieldNames.GrantFundingExists },
                { "Value", TemporaryFormOptions.GrantFunding.GetSummaryLabel(Model?.GrantFundingStatus) },
-               { "Link", Url.Action("GrantFundingExists", "Project", new { id = id, redirect = "CheckAnswers" }) },
+               { "Link", Url.Action("GrantFundingExists", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "grant-funding-exists" },
                { "IsEditable", Model?.IsEditable() }
            })
@@ -179,7 +179,7 @@
                {
                    { "Title", ProjectFieldNames.GrantFunding },
                    { "Value", grantFundingMore },
-                   { "Link", Url.Action("GrantFunding", "Project", new { id = id, redirect = "CheckAnswers" }) },
+                   { "Link", Url.Action("GrantFunding", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                    { "LinkId", "grant-funding" },
                    { "IsEditable", Model?.IsEditable() }
                })

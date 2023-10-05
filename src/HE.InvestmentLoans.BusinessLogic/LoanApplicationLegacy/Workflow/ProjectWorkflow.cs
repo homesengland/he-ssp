@@ -64,13 +64,11 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
 
         _machine.Configure(ProjectState.Name)
             .Permit(Trigger.Continue, ProjectState.StartDate)
-            .Permit(Trigger.Back, ProjectState.Index)
-            .Permit(Trigger.Change, ProjectState.CheckAnswers);
+            .Permit(Trigger.Back, ProjectState.Index);
 
         _machine.Configure(ProjectState.StartDate)
-            .Permit(Trigger.Continue, ProjectState.ManyHomes)
-            .Permit(Trigger.Back, ProjectState.Name)
-            .Permit(Trigger.Change, ProjectState.CheckAnswers);
+           .Permit(Trigger.Continue, ProjectState.ManyHomes)
+           .Permit(Trigger.Back, ProjectState.Name);
 
         _machine.Configure(ProjectState.ManyHomes)
             .Permit(Trigger.Continue, ProjectState.TypeHomes)
@@ -110,24 +108,18 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
 
         _machine.Configure(ProjectState.Ownership)
             .PermitIf(Trigger.Continue, ProjectState.Additional, () => _model.Ownership == CommonResponse.Yes)
-            .PermitIf(Trigger.Continue, ProjectState.GrantFunding, () => _model.Ownership != CommonResponse.Yes);
-        //    .PermitIf(Trigger.Back, State.Location, () => _site.PlanningRef == CommonResponse.Yes)
-        //    .PermitIf(Trigger.Back, State.Location, () => _site.PlanningRef == CommonResponse.No)
-        //.PermitIf(Trigger.Back, ProjectState.PlanningRef, () => string.IsNullOrEmpty(_model.PlanningRef));
-        //    .PermitIf(Trigger.Change, State.Additional, () => _site.Ownership == CommonResponse.Yes)
-        //    .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.Ownership != CommonResponse.Yes);
+            .PermitIf(Trigger.Continue, ProjectState.GrantFunding, () => _model.Ownership != CommonResponse.Yes)
+            .Permit(Trigger.Back, ProjectState.Location);
 
         _machine.Configure(ProjectState.Additional)
             .Permit(Trigger.Continue, ProjectState.GrantFunding)
             .Permit(Trigger.Back, ProjectState.Ownership);
 
         _machine.Configure(ProjectState.GrantFunding)
-            .PermitIf(Trigger.Continue, ProjectState.GrantFundingMore, () => _model.GrantFundingStatus == CommonResponse.Yes)
-            .PermitIf(Trigger.Continue, ProjectState.ChargesDebt, () => _model.GrantFundingStatus != CommonResponse.Yes);
-        //   .PermitIf(Trigger.Back, State.Additional, () => _site.Ownership == CommonResponse.Yes)
-        //   .PermitIf(Trigger.Back, State.Ownership, () => _site.Ownership != CommonResponse.Yes)
-        //   .PermitIf(Trigger.Change, State.GrantFundingMore, () => _site.GrantFunding == CommonResponse.Yes)
-        //   .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.GrantFunding != CommonResponse.Yes);
+           .PermitIf(Trigger.Continue, ProjectState.GrantFundingMore, () => _model.GrantFundingStatus == CommonResponse.Yes)
+           .PermitIf(Trigger.Continue, ProjectState.ChargesDebt, () => _model.GrantFundingStatus != CommonResponse.Yes)
+           .PermitIf(Trigger.Back, ProjectState.Additional, () => _model.Ownership == CommonResponse.Yes)
+           .PermitIf(Trigger.Back, ProjectState.Ownership, () => _model.Ownership != CommonResponse.Yes);
 
         _machine.Configure(ProjectState.GrantFundingMore)
             .Permit(Trigger.Continue, ProjectState.ChargesDebt)

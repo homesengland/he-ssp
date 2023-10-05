@@ -36,4 +36,15 @@ internal static class SourceOfValuationMapper
             _ => throw new ArgumentException($"Cannot convert {valuationSource} to SourceOfValuation."),
         };
     }
+
+    public static string ToCrmString(SourceOfValuation valuationSource)
+    {
+        return valuationSource switch
+        {
+            SourceOfValuation.SelfEstimate => "selfestimate",
+            SourceOfValuation.EstateAgentEstimate => "estateagentestimate",
+            SourceOfValuation.RicsRedBookValuation => "ricsredbookvaluation",
+            _ => throw new ArgumentException($"Cannot convert {valuationSource} to SourceOfValuation."),
+        };
+    }
 }
