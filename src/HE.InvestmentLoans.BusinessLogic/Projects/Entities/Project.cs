@@ -67,7 +67,7 @@ public class Project
 
     public PublicSectorGrantFunding? PublicSectorGrantFunding { get; private set; }
 
-    public bool IsNewlyCreated { get; private set; }
+    public bool IsNewlyCreated { get; }
 
     public string? CheckAnswers { get; set; }
 
@@ -210,5 +210,10 @@ public class Project
         }
 
         PublicSectorGrantFunding = publicSectorGrantFunding;
+    }
+
+    internal void Delete()
+    {
+        IsSoftDeleted = true;
     }
 }

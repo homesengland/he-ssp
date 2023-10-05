@@ -8,19 +8,14 @@
 @inject MediatR.IMediator mediator
 @{
     var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
-    var deleteName = ViewBag.AdditionalData;
 }
 
 
 <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.ID })" text="Back to application dashboard" class="govuk-grid-column-full"></gds-back-link>
 
-@if (deleteName != null)
-{
     <gds-div-grid-column-two-thirds>
         @await Html.PartialAsync("_Notification")
     </gds-div-grid-column-two-thirds>
-}
-
 <gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-2 govuk-!-margin-top-8 govuk-grid-column-full">
     Development loan application
 </gds-h1>
@@ -125,7 +120,7 @@
                                 </a>
                             </span>
                             <div class="task-list-remove-link">
-                                <a href="@Url.Action("Workflow","Site", new {id = Model.ID, site=site.Id, ending = "DeleteProject" })">
+                                <a href="@Url.Action("Delete","Project", new {id = Model.ID, projectId = site.Id })">
                                     Remove
                                 </a>
                             </div>
