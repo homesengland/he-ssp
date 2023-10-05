@@ -7,9 +7,9 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.ApplicationId" asp-route-ending="PlanningRef" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="Ownership" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
 
-        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.PlanningRefEnter})" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.Ownership})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>

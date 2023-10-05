@@ -50,8 +50,21 @@ public class Order99CheckAnswersIntegrationTests : IntegrationTest
         projectSummary[ProjectFieldNames.PlanningReferenceNumber].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
         projectSummary[ProjectFieldNames.PlanningReferenceNumber].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
         projectSummary[ProjectFieldNames.LandRegistryTitleNumber].Should().Be(TextTestData.TextThatNotExceedsLongInputLimit);
-        projectSummary[ProjectFieldNames.StartDate].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
+        projectSummary[ProjectFieldNames.LandOwnership].Should().Be(CommonResponse.Yes);
 
+        CheckIfAdditionalDetailsAreCorrect(projectSummary);
+
+        // projectSummary[ProjectFieldNames.StartDate].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
         SetSharedData(SharedKeys.CurrentPageKey, checkAnswersPage);
+    }
+
+    private static void CheckIfAdditionalDetailsAreCorrect(IDictionary<string, string> projectSummary)
+    {
+        var additionalDetails = projectSummary[ProjectFieldNames.AdditionalDetails];
+
+        additionalDetails.Should().Contain(DateTimeTestData.CorrectDateDisplay);
+        additionalDetails.Should().Contain($"Purchase cost: {PoundsTestData.CorrectAmountDisplay}");
+        additionalDetails.Should().Contain($"Current value: {PoundsTestData.CorrectAmountDisplay}");
+        additionalDetails.Should().Contain(SourceOfValuationTestData.AnySourceDisplay);
     }
 }

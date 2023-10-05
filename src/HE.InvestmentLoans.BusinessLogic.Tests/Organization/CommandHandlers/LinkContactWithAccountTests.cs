@@ -138,11 +138,11 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
 
     private OrganisationSearchItem OrganizationThatDoesNotExistInCrm()
     {
-        return new OrganisationSearchItem("12345", "anyName", "anyCity", "Any Street 1", "ABCD 123", false);
+        return new OrganisationSearchItem("12345", "anyName", "anyCity", "Any Street 1", "ABCD 123", null, false);
     }
 
     private OrganisationSearchItem OrganizationThatExistsInCrm()
     {
-        return new OrganisationSearchItem("12345", "anyName", "anyCity", "Any Street 1", "ABCD 123", true);
+        return new OrganisationSearchItem("12345", "anyName", "anyCity", "Any Street 1", "ABCD 123", "IdFromCrm123", true);
     }
 }

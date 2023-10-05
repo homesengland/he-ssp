@@ -15,13 +15,13 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.ProjectSection;
 
 [Order(2)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order11LocationIntegrationTests : IntegrationTest
+public class Order10LocationIntegrationTests : IntegrationTest
 {
     private readonly string _projectId;
 
     private readonly string _applicationLoanId;
 
-    public Order11LocationIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order10LocationIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;

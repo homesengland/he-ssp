@@ -33,8 +33,9 @@ public class OrganisationSearchService : IOrganisationSearchService
 
         var organizationsFromCrm = await GetMatchingOrganizationsFromCrm(companyHousesOrganizations);
         var mergedResult = MergeResults(companyHousesOrganizations, organizationsFromCrm);
+        var foundSpvCompaniesCount = await AppendSpvCompanies(organisationName, pagingParams, companyHousesResult.TotalItems, mergedResult);
 
-        return new OrganisationSearchResult(mergedResult, companyHousesResult.TotalItems, null!);
+        return new OrganisationSearchResult(mergedResult, companyHousesResult.TotalItems + foundSpvCompaniesCount, null!);
     }
 
     public async Task<GetOrganizationByCompaniesHouseNumberResult> GetByCompaniesHouseNumber(string? companiesHouseNumber, CancellationToken cancellationToken)
@@ -55,7 +56,40 @@ public class OrganisationSearchService : IOrganisationSearchService
         return new GetOrganizationByCompaniesHouseNumberResult(mergedResult.FirstOrDefault()!, null!);
     }
 
-    private async Task<OrganisationSearchResult> GetOrganizationFromCompanyHousesApi(string organisationName, string? compenirsHouseNumber, PagingQueryParams pagingParams, CancellationToken cancellationToken)
+    private async Task<int> AppendSpvCompanies(
+        string organisationName,
+        PagingQueryParams pagingParams,
+        int totalItemsFromCompaniesHouseApi,
+        IList<OrganisationSearchItem> mergedResult)
+    {
+        var result = await _organizationCrmSearchService.SearchOrganizationInCrmByName(organisationName, false);
+        var displayedItems = pagingParams.StartIndex == 1 ? 0 : pagingParams.StartIndex;
+        var skip = Math.Max(displayedItems - totalItemsFromCompaniesHouseApi, 0);
+        foreach (var spvCompany in result.OrderBy(x => x.registeredCompanyName).Skip(skip))
+        {
+            if (mergedResult.Count >= pagingParams.Size)
+            {
+                break;
+            }
+
+            mergedResult.Add(new OrganisationSearchItem(
+                spvCompany.companyRegistrationNumber,
+                spvCompany.registeredCompanyName,
+                spvCompany.city,
+                spvCompany.addressLine1,
+                spvCompany.postalcode,
+                spvCompany.organisationId,
+                true));
+        }
+
+        return result.Count;
+    }
+
+    private async Task<OrganisationSearchResult> GetOrganizationFromCompanyHousesApi(
+        string organisationName,
+        string? compenirsHouseNumber,
+        PagingQueryParams pagingParams,
+        CancellationToken cancellationToken)
     {
         try
         {
@@ -63,19 +97,32 @@ public class OrganisationSearchService : IOrganisationSearchService
             {
                 var result = await _companiesHouseApi.GetByCompanyNumber(compenirsHouseNumber, cancellationToken);
 
-                return result != null ? OrganisationSearchResult.FromSingleItem(
+                return result != null
+                    ? OrganisationSearchResult.FromSingleItem(
                         new OrganisationSearchItem(
                             result!.CompanyNumber,
                             result.CompanyName,
                             result.OfficeAddress.Locality!,
                             result.OfficeAddress.AddressLine1!,
-                            result.OfficeAddress.PostalCode!)) :
-                    OrganisationSearchResult.Empty();
+                            result.OfficeAddress.PostalCode!,
+                            null))
+                    : OrganisationSearchResult.Empty();
             }
 
             var companyHouseApiResult = await _companiesHouseApi.Search(organisationName, pagingParams, cancellationToken);
 
-            return new OrganisationSearchResult(companyHouseApiResult.Items.Select(x => new OrganisationSearchItem(x.CompanyNumber, x.CompanyName, x.OfficeAddress.Locality!, x.OfficeAddress.AddressLine1!, x.OfficeAddress.PostalCode!)).ToList(), companyHouseApiResult.Hits, null!);
+            return new OrganisationSearchResult(
+                companyHouseApiResult.Items.Select(x =>
+                        new OrganisationSearchItem(
+                            x.CompanyNumber,
+                            x.CompanyName,
+                            x.OfficeAddress.Locality!,
+                            x.OfficeAddress.AddressLine1!,
+                            x.OfficeAddress.PostalCode!,
+                            null))
+                    .ToList(),
+                companyHouseApiResult.Hits,
+                null!);
         }
         catch (HttpRequestException ex)
         {
@@ -95,10 +142,17 @@ public class OrganisationSearchService : IOrganisationSearchService
     private IList<OrganisationSearchItem> MergeResults(IList<OrganisationSearchItem> companyHousesOrganizations, IList<OrganizationDetailsDto> organizationsFromCrm)
     {
         var organizationsThatExistInCrm = companyHousesOrganizations.Join(
-            organizationsFromCrm,
-            c => c.CompanyNumber,
-            c => c.companyRegistrationNumber,
-            (ch, crm) => new OrganisationSearchItem(crm.companyRegistrationNumber, crm.registeredCompanyName, crm.city, crm.addressLine1, crm.postalcode, true))
+                organizationsFromCrm,
+                c => c.CompanyNumber,
+                c => c.companyRegistrationNumber,
+                (ch, crm) => new OrganisationSearchItem(
+                    crm.companyRegistrationNumber,
+                    crm.registeredCompanyName,
+                    crm.city,
+                    crm.addressLine1,
+                    crm.postalcode,
+                    crm.organisationId,
+                    true))
             .ToList();
 
         var organizationNumbersThatExistInCrm = organizationsThatExistInCrm.Select(c => c.CompanyNumber);

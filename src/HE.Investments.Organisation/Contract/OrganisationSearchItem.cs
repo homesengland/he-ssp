@@ -1,3 +1,10 @@
 namespace HE.Investments.Organisation.Contract;
 
-public record OrganisationSearchItem(string CompanyNumber, string Name, string City, string Street, string PostalCode, bool ExistsInCrm = false);
+public record OrganisationSearchItem(
+    string CompanyNumber,
+    string Name,
+    string City,
+    string Street,
+    string PostalCode,
+    string? OrganisationId,
+    bool ExistsInCrm = false);

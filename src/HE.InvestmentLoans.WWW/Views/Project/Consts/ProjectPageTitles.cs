@@ -17,4 +17,8 @@ public static class ProjectPageTitles
     public const string Location = "How do you want to provide your project location?";
 
     public const string Ownership = "Do you have full ownership of this land?";
+
+    public const string GrantFundingExists = "To the best of your knowledge, has this land received public sector grant funding?";
+
+    public const string AdditionalDetails = "Additional project details";
 }

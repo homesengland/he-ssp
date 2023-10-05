@@ -5,11 +5,11 @@
 @{
     var id = ViewContext.RouteData.Values["id"];
 
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.LocationOption));
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel.LocationOption));
     var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(
         Model.LocationOption == "coordinates" ?
-        nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.LocationCoordinates) :
-        nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.LocationLandRegistry)
+        nameof(HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel.LocationCoordinates) :
+        nameof(HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel.LocationLandRegistry)
     );
 
     var values = new string[] { Model.LocationCoordinates, Model.LocationLandRegistry };

@@ -12,14 +12,14 @@ public class Coordinates : ValueObject
         if (value.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError(nameof(Coordinates), ValidationErrorMessage.EnterCoordinates)
+                .AddValidationError("LocationCoordinates", ValidationErrorMessage.EnterCoordinates)
                 .CheckErrors();
         }
 
         if (value!.Length > MaximumInputLength.LongInput)
         {
             OperationResult.New()
-                .AddValidationError(nameof(Coordinates), ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.LocationCoordinates))
+                .AddValidationError("LocationCoordinates", ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.LocationCoordinates))
                 .CheckErrors();
         }
 
