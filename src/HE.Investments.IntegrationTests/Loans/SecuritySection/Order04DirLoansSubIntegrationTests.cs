@@ -74,7 +74,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
 
         // when
         dirLoansSubPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", TextTestData.TextWithLenght1501 } });
+            continueButton, new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", TextTestData.TextThatExceedsLongInputLimit } });
 
         // then
         dirLoansSubPage
@@ -92,7 +92,7 @@ public class Order04DirLoansSubIntegrationTests : IntegrationTest
 
         // when
         var checkAnswersPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", TextTestData.TextWithLenght1000 } });
+            continueButton, new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         checkAnswersPage

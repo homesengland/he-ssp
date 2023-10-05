@@ -1,0 +1,184 @@
+@using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+@model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+    var typeHomesList = new List<string>();
+
+    // if (Model?.TypeHomes != null)
+    // {
+    //     foreach (var typeHome in Model.TypeHomes)
+    //     {
+    //         if (typeHome != "other")
+    //         {
+    //             typeHomesList.Add(typeHome);
+    //         }
+    //     }
+    // }
+    // if (!string.IsNullOrEmpty(Model?.TypeHomesOther))
+    // {
+    //     typeHomesList.Add(Model.TypeHomesOther);
+    // }
+
+    // var grantFundingMore = new List<string>();
+
+    // if (Model?.GrantFundingName != null)
+    // {
+    //     grantFundingMore.Add($"Previous funding: {Model.GrantFundingSource}");
+    //     grantFundingMore.Add($"Amount: {MoneyLabelHelper.Pounds(Model.GrantFundingAmount)}");
+    //     grantFundingMore.Add($"Name of the grant/found: {Model.GrantFundingName}");
+    //     grantFundingMore.Add($"It was for: {Model.GrantFundingPurpose}");
+    // }
+
+    var additionalProjectDetails = new List<string>();
+
+    if (Model?.Cost != null)
+    {
+        var purchaseDate = DateHelper.ConvertToDateString(Model.PurchaseDay, Model.PurchaseMonth, Model.PurchaseYear);
+        additionalProjectDetails.Add($"Purchased: {purchaseDate}");
+        additionalProjectDetails.Add($"Purchase cost: {MoneyLabelHelper.Pounds(Model.Cost)}");
+        additionalProjectDetails.Add($"Current value: {MoneyLabelHelper.Pounds(Model.Value)}");
+        additionalProjectDetails.Add($"Source: {TemporaryFormOptions.SiteAdditionalSource.GetSummaryLabel(Model.Source)}");
+    }
+}
+
+<gds-summary-list class="govuk-!-margin-bottom-9">
+
+@await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+{
+    { "Title", ProjectFieldNames.Name },
+    { "Value", Model?.Name },
+    { "Link", Url.Action("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
+    { "LinkId", "name" },
+})
+
+@await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+{
+    { "Title", ProjectFieldNames.StartDate },
+    { "Value", DateHelper.ConvertToDateStringWithDescription(
+                          Model?.EstimatedStartDay, Model?.EstimatedStartMonth,
+                        Model?.EstimatedStartYear, Model?.HasEstimatedStartDate) },
+    { "Link", Url.Action("ChargesDebtCompany", "Security", new { id = id, redirect = "CheckAnswers" }) },
+    { "LinkId", "start-date" },
+})
+
+@*     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+    { "Title", "Number of homes" },
+    { "Value", Model?.ManyHomes },
+    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "ManyHomes" }) }
+    })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+    { "Title", "Type of homes" },
+    { "Value", TemporaryFormOptions.SiteTypeHomesCheckbox.GetSummaryLabel(typeHomesList) },
+    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "TypeHomes" }) }
+    })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+    { "Title", "Type of project" },
+    { "Value", TemporaryFormOptions.SiteType.GetSummaryLabel(Model?.Type) },
+    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Type" }) }
+    }) *@
+
+@await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+{
+    { "Title", ProjectFieldNames.PlanningReferenceNumberExists },
+    { "Value", Model?.PlanningReferenceNumberExists },
+    { "Link", Url.Action("ReferenceNumberExists", "Project", new { id = id, redirect = "CheckAnswers" }) },
+    { "LinkId", "reference-number-exists" },
+})
+
+@if (Model.PlanningReferenceNumberExists == CommonResponse.Yes)
+{
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+        { "Title", ProjectFieldNames.PlanningReferenceNumber },
+    { "Value", Model?.PlanningReferenceNumber },
+    { "Link", Url.Action("ReferenceNumber", "Project", new { id = id, redirect = "CheckAnswers" }) },
+        { "LinkId", "reference-number" },
+    })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+    { "Title", ProjectFieldNames.PlanningPermissionStatus },
+    { "Value", TemporaryFormOptions.PermissionStatus.GetSummaryLabel(Model?.PlanningPermissionStatus) },
+    { "Link", Url.Action("ReferenceNumber", "Project", new { id = id, redirect = "CheckAnswers" }) },
+    { "LinkId", "planning-permission-status" },
+    })
+}
+
+@if(Model.LocationOption == null || Model.LocationOption == "coordinates")
+{
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+    { "Title", ProjectFieldNames.Coordinates },
+    { "Value", Model?.LocationCoordinates },
+    { "Link", Url.Action("Location", "Project", new { id = id, redirect = "CheckAnswers" }) },
+    { "LinkId", "coordinates" },
+    })
+}
+
+@if (Model.LocationOption == null || Model.LocationOption == "landRegistryTitleNumber")
+{
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+    { "Title", ProjectFieldNames.LandRegistryTitleNumber },
+    { "Value", Model?.LocationLandRegistry },
+    { "Link", Url.Action("Location", "Project", new { id = id, redirect = "CheckAnswers" }) },
+    { "LinkId", "land-registry-title-number" },
+    })
+}
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+    { "Title", ProjectFieldNames.LandOwnership },
+    { "Value", Model?.Ownership },
+    { "Link", Url.Action("Ownership", "Project", new { id = id, redirect = "CheckAnswers" }) },
+    { "LinkId", "ownership" },
+    })
+
+    @if (Model.Ownership == "Yes")
+    {
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", ProjectFieldNames.AdditionalDetails },
+        { "Value", additionalProjectDetails },
+        { "Link", Url.Action("AdditionalDetails", "Project", new { id = id, redirect = "CheckAnswers" }) },
+        { "LinkId", "additional-details" },
+        })
+    }
+
+    @*@await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+    { "Title", "Public sector grant funding" },
+    { "Value", TemporaryFormOptions.GrantFunding.GetSummaryLabel(Model?.GrantFunding) },
+    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "GrantFunding" }) }
+    })
+
+    @if (Model.GrantFunding == "Yes")
+    {
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Additional information" },
+        { "Value", grantFundingMore },
+        { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "GrantFundingMore" }) }
+        })
+    }
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+    { "Title", "Legal charges" },
+    { "Value", Model?.ChargesDebtInfo != null ? $"{ Model.ChargesDebt }, { Model.ChargesDebtInfo }" : $"{ Model?.ChargesDebt }" },
+    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "ChargesDebt" }) }
+    })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    {
+    { "Title", "Affordable homes" },
+    { "Value", Model?.AffordableHomes },
+    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "AffordableHomes" }) }
+    }) *@
+
+</gds-summary-list>

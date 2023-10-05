@@ -1,6 +1,10 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.Projects.Enums;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.Entities;
@@ -15,20 +19,45 @@ public class Project
         IsNewlyCreated = true;
     }
 
-    public Project(ProjectId id, ProjectName name, StartDate startDate)
+    public Project(
+        ProjectId id,
+        ProjectName? name,
+        StartDate? startDate,
+        PlanningReferenceNumber? planningReferenceNumber,
+        Coordinates? coordinates,
+        LandRegistryTitleNumber? landRegistryTitleNumber,
+        LandOwnership? landOwnership,
+        AdditionalDetails? additionalDetails)
     {
+        IsNewlyCreated = false;
+
         Id = id;
         Name = name;
         StartDate = startDate;
-
-        IsNewlyCreated = false;
+        PlanningReferenceNumber = planningReferenceNumber;
+        Coordinates = coordinates;
+        LandRegistryTitleNumber = landRegistryTitleNumber;
+        LandOwnership = landOwnership;
+        AdditionalDetails = additionalDetails;
     }
 
     public ProjectId Id { get; private set; }
 
-    public ProjectName Name { get; private set; }
+    public ProjectName? Name { get; private set; }
 
-    public StartDate StartDate { get; private set; }
+    public StartDate? StartDate { get; private set; }
+
+    public PlanningReferenceNumber? PlanningReferenceNumber { get; private set; }
+
+    public PlanningPermissionStatus? PlanningPermissionStatus { get; private set; }
+
+    public Coordinates? Coordinates { get; private set; }
+
+    public LandRegistryTitleNumber? LandRegistryTitleNumber { get; private set; }
+
+    public LandOwnership? LandOwnership { get; private set; }
+
+    public AdditionalDetails? AdditionalDetails { get; private set; }
 
     public bool IsNewlyCreated { get; private set; }
 
@@ -43,8 +72,6 @@ public class Project
     public string? PlanningRefEnter { get; set; }
 
     public string? SitePurchaseFrom { get; set; }
-
-    public bool? Ownership { get; set; }
 
     public string? ManyHomes { get; set; }
 
@@ -71,14 +98,6 @@ public class Project
     public string? Value { get; set; }
 
     public string? Source { get; set; }
-
-    public string? LocationOption { get; set; }
-
-    public string? LocationCoordinates { get; set; }
-
-    public string? LocationLandRegistry { get; set; }
-
-    public string? Location { get; set; }
 
     public string? PlanningStatus { get; set; }
 
@@ -113,5 +132,55 @@ public class Project
     public void MarkAsDeleted()
     {
         IsSoftDeleted = true;
+    }
+
+    public void ProvidePlanningReferenceNumber(PlanningReferenceNumber planningReferenceNumber)
+    {
+        PlanningReferenceNumber = planningReferenceNumber;
+    }
+
+    public void ProvideCoordinates(Coordinates coordinates)
+    {
+        if (coordinates.IsProvided())
+        {
+            LandRegistryTitleNumber = null!;
+        }
+
+        Coordinates = coordinates;
+    }
+
+    public void ProvideLandRegistryNumber(LandRegistryTitleNumber landRegistryTitleNumber)
+    {
+        if (landRegistryTitleNumber.IsProvided())
+        {
+            Coordinates = null!;
+        }
+
+        LandRegistryTitleNumber = landRegistryTitleNumber;
+    }
+
+    public void ProvidePlanningPermissionStatus(PlanningPermissionStatus? planningPermissionStatus)
+    {
+        if (PlanningReferenceNumber.IsNotProvided() || !PlanningReferenceNumber!.Exists)
+        {
+            throw new DomainException($"Cannot provide planning permission status because project id: {Id}, has no planning reference number.", LoanApplicationErrorCodes.PlanningReferenceNumberNotExists);
+        }
+
+        PlanningPermissionStatus = planningPermissionStatus;
+    }
+
+    public void ProvideLandOwnership(LandOwnership landOwnership)
+    {
+        LandOwnership = landOwnership;
+
+        if (!LandOwnership.ApplicantHasFullOwnership)
+        {
+            AdditionalDetails = null!;
+        }
+    }
+
+    public void ProvideAdditionalData(AdditionalDetails additionalDetails)
+    {
+        AdditionalDetails = additionalDetails;
     }
 }

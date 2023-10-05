@@ -1,3 +1,4 @@
+using System.Text;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
@@ -74,24 +75,28 @@ public static class HtmlDocumentExtensions
 
     public static string[] GetFieldValidationErrors(this IHtmlDocument htmlDocument)
     {
-        var fieldValidationError = htmlDocument.GetElementsByClassName(CssConstants.GovUkErrorMessage).ToArray();
-        var errorItems = fieldValidationError!
+        var fieldValidationElements = htmlDocument
+            .GetElementsByClassName(CssConstants.GovUkFormGroupError)
+            .SelectMany(e => e.GetElementsByClassName(CssConstants.GovUkErrorMessage));
+
+        var fieldValidationErrors = fieldValidationElements!
                                 .Select(x => x.TextContent.Replace("Error:", string.Empty).Trim())
                                 .Where(x => !string.IsNullOrEmpty(x))
                                 .ToArray();
-        errorItems.Should().HaveCountGreaterThan(1, "Field validation error should be present on a page");
 
-        return errorItems;
+        fieldValidationErrors.Should().NotBeEmpty();
+
+        return fieldValidationErrors;
     }
 
     public static IHtmlDocument ContainsOnlyOneValidationMessage(this IHtmlDocument htmlDocument, string errorMessage)
     {
         var pageSummaryErrors = htmlDocument.GetSummaryErrors();
-        var fieldValidationErrors = htmlDocument.GetFieldValidationErrors();
-
         pageSummaryErrors.Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
+
+        var fieldValidationErrors = htmlDocument.GetFieldValidationErrors();
         fieldValidationErrors.Should().OnlyContain(x => x.Equals(errorMessage, StringComparison.Ordinal));
-        htmlDocument.GetElementsByClassName(CssConstants.GovUkFormGroupError).Should().NotBeNull("Error message for specific item should exist");
+
         return htmlDocument;
     }
 
@@ -106,6 +111,16 @@ public static class HtmlDocumentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument ContainsValidationMessages(this IHtmlDocument htmlDocument, params string[] errorMessages)
+    {
+        foreach (var errorMessage in errorMessages)
+        {
+            ContainsValidationMessage(htmlDocument, errorMessage);
+        }
+
+        return htmlDocument;
+    }
+
     public static IDictionary<string, string> GetSummaryListItems(this IHtmlDocument htmlDocument)
     {
         var summaryRows = htmlDocument.GetElementsByClassName("govuk-summary-list__row");
@@ -113,7 +128,9 @@ public static class HtmlDocumentExtensions
         foreach (var summaryRow in summaryRows)
         {
             var key = summaryRow.GetElementsByClassName("govuk-summary-list__key").Single().InnerHtml.Trim();
-            var value = summaryRow.GetElementsByClassName("govuk-summary-list__value").Single().LastElementChild!.InnerHtml.Trim();
+
+            var value = GetValueFor(summaryRow);
+
             dictionary[key] = value;
         }
 
@@ -167,5 +184,26 @@ public static class HtmlDocumentExtensions
         }
 
         return dictionary;
+    }
+
+    private static string GetValueFor(AngleSharp.Dom.IElement summaryRow)
+    {
+        var valueRow = summaryRow.GetElementsByClassName("govuk-summary-list__value").Single();
+
+        var valueBuilder = new StringBuilder();
+        if (valueRow.Children.Length > 1)
+        {
+            foreach (var child in valueRow.Children)
+            {
+                valueBuilder.AppendLine(child.TextContent.Trim());
+            }
+        }
+        else
+        {
+            valueBuilder.Append(valueRow.LastElementChild!.InnerHtml.Trim());
+        }
+
+        var value = valueBuilder.ToString();
+        return value;
     }
 }

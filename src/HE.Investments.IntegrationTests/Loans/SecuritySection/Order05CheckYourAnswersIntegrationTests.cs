@@ -36,9 +36,9 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
 
         // then
         companyStructureSummary[SecurityFields.ChargesDebt].Should().Be(CommonResponse.Yes);
-        companyStructureSummary[SecurityFields.Debenture].Should().Contain(TextTestData.TextWithLenght1000);
+        companyStructureSummary[SecurityFields.Debenture].Should().Contain(TextTestData.TextThatNotExceedsLongInputLimit);
         companyStructureSummary[SecurityFields.DirLoans].Should().Be(CommonResponse.Yes);
-        companyStructureSummary[SecurityFields.DirLoansSub].Should().Contain(CommonResponse.No).And.Contain(TextTestData.TextWithLenght1000);
+        companyStructureSummary[SecurityFields.DirLoansSub].Should().Contain(CommonResponse.No).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
 
         SetSharedData(SharedKeys.CurrentPageKey, checkYourAnswersPage);
     }
@@ -90,7 +90,7 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
         // when
         var continueButton = chargesDebtPage.GetGdsSubmitButtonById("continue-button");
         var returnPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", TextTestData.TextWithLenght1000 } });
+            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         returnPage
@@ -181,7 +181,7 @@ public class Order05CheckYourAnswersIntegrationTests : IntegrationTest
         // when
         var continueButton = dirLoansSubPage.GetGdsSubmitButtonById("continue-button");
         var returnPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", TextTestData.TextWithLenght1000 } });
+            continueButton, new Dictionary<string, string> { { "DirLoansSub", CommonResponse.No }, { "DirLoansSubMore", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         returnPage

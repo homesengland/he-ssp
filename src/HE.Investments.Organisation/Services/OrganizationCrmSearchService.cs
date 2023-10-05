@@ -16,10 +16,10 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
         _organizationService = organizationService;
     }
 
-    public async Task<IList<OrganizationDetailsDto>> SearchOrganizationInCrmByName(string organisationNames, bool recordsWithoutCopanyNumberIncluded)
+    public async Task<IList<OrganizationDetailsDto>> SearchOrganizationInCrmByName(string organisationNames, bool recordsWithCompanyHouseNumberIncluded)
     {
         IEnumerable<string> result = organisationNames.Split(' ').ToList();
-        var retrievedEntities = await _organizationRepository.SearchForOrganizationsByName(_organizationService, result, recordsWithoutCopanyNumberIncluded);
+        var retrievedEntities = await _organizationRepository.SearchForOrganizationsByName(_organizationService, result, recordsWithCompanyHouseNumberIncluded);
         if (retrievedEntities != null && retrievedEntities.Entities.Count > 0)
         {
             var organizationDtoList = new List<OrganizationDetailsDto>();

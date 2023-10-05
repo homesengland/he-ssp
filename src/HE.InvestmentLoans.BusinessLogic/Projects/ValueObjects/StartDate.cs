@@ -13,7 +13,7 @@ using HE.InvestmentLoans.Common.Validation;
 namespace HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 public class StartDate : ValueObject
 {
-    public StartDate(bool exists, DateTime? value)
+    public StartDate(bool exists, ProjectDate? value)
     {
         Exists = exists;
 
@@ -24,14 +24,16 @@ public class StartDate : ValueObject
                 .CheckErrors();
         }
 
-        Value = value;
+        Date = value;
     }
 
-    public DateTime? Value { get; private set; }
+    public ProjectDate? Date { get; }
 
-    public bool Exists { get; private set; }
+    public DateTime? Value => Date?.Value;
 
-    public static StartDate From(string existsString, string day, string month, string year)
+    public bool Exists { get; }
+
+    public static StartDate From(string existsString, string year, string month, string day)
     {
         var exists = existsString.MapToNonNullableBool();
 
@@ -40,23 +42,14 @@ public class StartDate : ValueObject
             return new StartDate(exists, null);
         }
 
-        if (day.IsNotProvided() || month.IsNotProvided() || year.IsNotProvided())
-        {
-            OperationResult.New()
-                .AddValidationError(nameof(StartDate), ValidationErrorMessage.NoStartDate)
-                .CheckErrors();
-        }
+        var operationResult = OperationResult.ResultOf(() => ProjectDate.FromString(year, month, day));
 
-        var dateString = $"{day}/{month}/{year}";
+        operationResult.OverrideError(GenericValidationError.NoDate, "EstimatedStartDay", ValidationErrorMessage.NoStartDate);
+        operationResult.OverrideError(GenericValidationError.InvalidDate, "EstimatedStartDay", ValidationErrorMessage.InvalidStartDate);
 
-        if (!DateTime.TryParseExact(dateString, ProjectFormOption.AllowedDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dateValue))
-        {
-            OperationResult.New()
-                .AddValidationError(nameof(StartDate), ValidationErrorMessage.InvalidStartDate)
-                .CheckErrors();
-        }
+        operationResult.CheckErrors();
 
-        return new StartDate(exists, dateValue);
+        return new StartDate(exists, operationResult.ReturnedData);
     }
 
     protected override IEnumerable<object> GetAtomicValues()

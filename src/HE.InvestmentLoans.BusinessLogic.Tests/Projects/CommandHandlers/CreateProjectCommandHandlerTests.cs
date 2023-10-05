@@ -47,6 +47,6 @@ public class CreateProjectCommandHandlerTests : TestBase<CreateProjectCommandHan
 
         var response = await TestCandidate.Handle(_command, CancellationToken.None);
 
-        projects.Projects.Single().Id.Should().Be(response.Result);
+        projects.Projects.Single().Id.Should().Be(response.ReturnedData);
     }
 }
