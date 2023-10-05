@@ -1,6 +1,5 @@
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Enums;
-using HE.InvestmentLoans.Contract.Application.Extensions;
+using HE.InvestmentLoans.Contract.Application.Helper;
 using HE.InvestmentLoans.Contract.ViewModels;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure;
@@ -44,7 +43,7 @@ public class CompanyStructureViewModel : ICompletedSectionViewModel
 
     public bool IsReadOnly()
     {
-        var readonlyStatuses = LoanApplicationStatus.GetStatusesForReadonlyMode();
+        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesAfterSubmit();
         return readonlyStatuses.Contains(LoanApplicationStatus);
     }
 

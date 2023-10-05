@@ -7,6 +7,7 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Helper;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
@@ -85,13 +86,15 @@ public class LoanApplicationEntity
 
     public async Task Withdraw(ILoanApplicationRepository loanApplicationRepository, WithdrawReason withdrawReason, CancellationToken cancellationToken)
     {
+        var statusesAfterSubmit = ApplicationStatusDivision.GetAllStatusesAfterSubmit();
+
         if (ExternalStatus == ApplicationStatus.Draft)
         {
             await loanApplicationRepository.WithdrawDraft(Id, withdrawReason, cancellationToken);
         }
-        else if (ExternalStatus == ApplicationStatus.ApplicationSubmitted)
+        else if (statusesAfterSubmit.Contains(ExternalStatus))
         {
-            await loanApplicationRepository.WithdrawSubmit(Id, withdrawReason, cancellationToken);
+            await loanApplicationRepository.WithdrawSubmitted(Id, withdrawReason, cancellationToken);
         }
         else
         {

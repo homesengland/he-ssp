@@ -1,5 +1,5 @@
-namespace HE.InvestmentLoans.Common.Utils.Constants.ViewName;
-public enum FundingViewOption
+namespace HE.InvestmentLoans.Common.Utils.Enums;
+public enum FundingFieldsSet
 {
     GDV,
     EstimatedTotalCosts,
@@ -9,4 +9,5 @@ public enum FundingViewOption
     AdditionalProjects,
     GetEmpty,
     GetAllFields,
+    SaveAllFields,
 }

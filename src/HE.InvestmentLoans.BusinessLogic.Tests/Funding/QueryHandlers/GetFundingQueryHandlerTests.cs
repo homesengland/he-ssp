@@ -3,7 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.Funding.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
-using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Funding.Queries;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
@@ -33,7 +33,7 @@ public class GetFundingQueryHandlerTests : TestBase<GetFundingQueryHandler>
             .BuildMockAndRegister(this);
 
         // when
-        var result = await TestCandidate.Handle(new GetFundingQuery(loanApplicationId, FundingViewOption.GetAllFields), CancellationToken.None);
+        var result = await TestCandidate.Handle(new GetFundingQuery(loanApplicationId, FundingFieldsSet.GetAllFields), CancellationToken.None);
 
         // then
         result.ViewModel.LoanApplicationId.Should().Be(fundingEntity.LoanApplicationId.ToString());

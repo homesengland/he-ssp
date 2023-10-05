@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.Enums;
-using HE.InvestmentLoans.Contract.Application.Extensions;
+using HE.InvestmentLoans.Contract.Application.Helper;
 using HE.InvestmentLoans.Contract.ViewModels;
 
 namespace HE.InvestmentLoans.Contract.Funding;
@@ -88,7 +88,7 @@ public class FundingViewModel : ICompletedSectionViewModel
 
     public bool IsReadOnly()
     {
-        var readonlyStatuses = LoanApplicationStatus.GetStatusesForReadonlyMode();
+        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesAfterSubmit();
         return readonlyStatuses.Contains(LoanApplicationStatus);
     }
 

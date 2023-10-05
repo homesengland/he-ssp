@@ -4,6 +4,9 @@
 <gds-back-link href="@Url.Action("Dashboard", "Home")" text="Back to account homepage" class="govuk-grid-column-full"></gds-back-link>
 
 <div class="govuk-grid-column-full govuk-!-padding-top-6">
+    <div class="govuk-!-margin-top-4">
+        @await Html.PartialAsync("_Notification")
+    </div>
     <div class="govuk-grid-row">
         <gds-div-grid-column-two-thirds>
             <span class="govuk-caption-m">
@@ -31,11 +34,11 @@
             <ul class="moj-side-navigation__list">
 
                 <li class="@("moj-side-navigation__item" + (Model.IsOverviewSectionSelected ? " moj-side-navigation__item--active" : ""))">
-                    <a href=@Url.Action("ApplicationDashboard", "LoanApplicationV2", new { id = Model.Data.ApplicationId} )>Overview</a>
+                    <a href=@Url.Action("ApplicationDashboard", "LoanApplicationV2", new { id = Model.Data.ApplicationId })>Overview</a>
                 </li>
 
                 <li class="@("moj-side-navigation__item" + (!Model.IsOverviewSectionSelected ? " moj-side-navigation__item--active" : ""))">
-                    <a href="@Url.Action("ApplicationDashboardSupportingDocuments", "LoanApplicationV2",  new { id = Model.Data.ApplicationId})">Supporting documents</a>
+                    <a href="@Url.Action("ApplicationDashboardSupportingDocuments", "LoanApplicationV2", new { id = Model.Data.ApplicationId })">Supporting documents</a>
                 </li>
 
             </ul>
@@ -45,7 +48,7 @@
     <div class="govuk-grid-column-two-thirds">
         @if (Model.IsOverviewSectionSelected)
         {
-            @await Html.PartialAsync("ApplicationDashboard/_ApplicationDashboardOverview", Model.Data.ApplicationId)
+            @await Html.PartialAsync("ApplicationDashboard/_ApplicationDashboardOverview", Model)
         }
         else
         {

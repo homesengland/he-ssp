@@ -1,16 +1,18 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.Security.Mappers;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.Security.Repositories;
+
 internal class SecurityRepository : ISecurityRepository
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
@@ -20,9 +22,13 @@ internal class SecurityRepository : ISecurityRepository
         _serviceClient = serviceClient;
     }
 
-    public async Task<SecurityEntity> GetAsync(LoanApplicationId applicationId, UserAccount userAccount, SecurityViewOption securityViewOption, CancellationToken cancellationToken)
+    public async Task<SecurityEntity> GetAsync(
+                                            LoanApplicationId applicationId,
+                                            UserAccount userAccount,
+                                            SecurityFieldsSet securityFieldsSet,
+                                            CancellationToken cancellationToken)
     {
-        var fieldsToRetrieve = SecurityCrmFieldNameMapper.Map(securityViewOption);
+        var fieldsToRetrieve = SecurityCrmFieldNameMapper.Map(securityFieldsSet);
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
@@ -32,27 +38,35 @@ internal class SecurityRepository : ISecurityRepository
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
-                      ?? throw new NotFoundException(nameof(SecurityEntity), applicationId.ToString());
+                       ?? throw new NotFoundException(nameof(SecurityEntity), applicationId.ToString());
 
         var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                                  ?? throw new NotFoundException(nameof(SecurityEntity), applicationId.ToString());
 
-        var debenture = loanApplicationDto.outstandingLegalChargesOrDebt.HasValue ?
-            new Debenture(
+        var debenture = loanApplicationDto.outstandingLegalChargesOrDebt.HasValue
+            ? new Debenture(
                 loanApplicationDto.debentureHolder,
                 loanApplicationDto.outstandingLegalChargesOrDebt.Value)
             : null;
 
-        var directLoans = loanApplicationDto.directorLoans.HasValue ?
-            new DirectorLoans(
+        var directLoans = loanApplicationDto.directorLoans.HasValue
+            ? new DirectorLoans(
                 loanApplicationDto.directorLoans.Value)
             : null;
 
-        var directLoansSubordinate = loanApplicationDto.confirmationDirectorLoansCanBeSubordinated.HasValue ?
-            new DirectorLoansSubordinate(loanApplicationDto.confirmationDirectorLoansCanBeSubordinated.Value, loanApplicationDto.reasonForDirectorLoanNotSubordinated) :
-            null;
+        var directLoansSubordinate = loanApplicationDto.confirmationDirectorLoansCanBeSubordinated.HasValue
+            ? new DirectorLoansSubordinate(
+                loanApplicationDto.confirmationDirectorLoansCanBeSubordinated.Value,
+                loanApplicationDto.reasonForDirectorLoanNotSubordinated)
+            : null;
 
-        return new SecurityEntity(applicationId, debenture!, directLoans!, directLoansSubordinate!, SectionStatusMapper.Map(loanApplicationDto.SecurityDetailsCompletionStatus));
+        return new SecurityEntity(
+            applicationId,
+            debenture!,
+            directLoans!,
+            directLoansSubordinate!,
+            SectionStatusMapper.Map(loanApplicationDto.SecurityDetailsCompletionStatus),
+            ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus));
     }
 
     public async Task SaveAsync(SecurityEntity entity, UserAccount userAccount, CancellationToken cancellationToken)
@@ -74,7 +88,7 @@ internal class SecurityRepository : ISecurityRepository
             invln_loanapplicationid = entity.LoanApplicationId.Value.ToString(),
             invln_accountid = userAccount.AccountId.ToString(),
             invln_contactexternalid = userAccount.UserGlobalId.ToString(),
-            invln_fieldstoupdate = string.Join(',', SecurityCrmFieldNameMapper.Map(SecurityViewOption.GetAllFields)),
+            invln_fieldstoupdate = string.Join(',', SecurityCrmFieldNameMapper.Map(SecurityFieldsSet.SaveAllFields)),
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);

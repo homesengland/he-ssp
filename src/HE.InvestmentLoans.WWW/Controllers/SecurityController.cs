@@ -1,5 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
-using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Security;
@@ -27,7 +27,7 @@ public class SecurityController : WorkflowController<SecurityState>
     [WorkflowState(SecurityState.Index)]
     public async Task<IActionResult> StartSecurity(Guid id)
     {
-        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id), SecurityViewOption.GetEmpty));
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id), SecurityFieldsSet.GetEmpty));
         if (response.ViewModel.IsReadOnly())
         {
             return RedirectToAction("CheckAnswers", new { Id = id });
@@ -47,7 +47,7 @@ public class SecurityController : WorkflowController<SecurityState>
     [WorkflowState(SecurityState.ChargesDebtCompany)]
     public async Task<IActionResult> ChargesDebtCompany(Guid id, CancellationToken token)
     {
-        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id), SecurityViewOption.ChargesDebtCompany), token);
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id), SecurityFieldsSet.ChargesDebtCompany), token);
 
         return View("ChargesDebtCompany", response.ViewModel);
     }
@@ -76,7 +76,7 @@ public class SecurityController : WorkflowController<SecurityState>
     [WorkflowState(SecurityState.DirLoans)]
     public async Task<IActionResult> DirLoans(Guid id, CancellationToken token)
     {
-        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id), SecurityViewOption.DirLoans), token);
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id), SecurityFieldsSet.DirLoans), token);
 
         return View("DirLoans", response.ViewModel);
     }
@@ -100,7 +100,7 @@ public class SecurityController : WorkflowController<SecurityState>
     [WorkflowState(SecurityState.DirLoansSub)]
     public async Task<IActionResult> DirLoansSub(Guid id, CancellationToken token)
     {
-        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id), SecurityViewOption.DirLoansSub), token);
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id), SecurityFieldsSet.DirLoansSub), token);
 
         return View("DirLoansSub", response.ViewModel);
     }
@@ -124,7 +124,7 @@ public class SecurityController : WorkflowController<SecurityState>
     [WorkflowState(SecurityState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(Guid id, CancellationToken token)
     {
-        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id), SecurityViewOption.GetAllFields), token);
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id), SecurityFieldsSet.GetAllFields), token);
 
         return View("CheckAnswers", response.ViewModel);
     }
@@ -139,7 +139,7 @@ public class SecurityController : WorkflowController<SecurityState>
         {
             ModelState.AddValidationErrors(result);
 
-            var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id), SecurityViewOption.GetAllFields), token);
+            var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id), SecurityFieldsSet.GetAllFields), token);
             return View("CheckAnswers", response.ViewModel);
         }
 
@@ -156,7 +156,7 @@ public class SecurityController : WorkflowController<SecurityState>
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
 
-        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id!), SecurityViewOption.GetEmpty));
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id!), SecurityFieldsSet.GetEmpty));
 
         return new SecurityWorkflow(currentState, response.ViewModel);
     }

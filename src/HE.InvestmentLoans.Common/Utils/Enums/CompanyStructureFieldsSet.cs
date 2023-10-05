@@ -1,10 +1,11 @@
-namespace HE.InvestmentLoans.Common.Utils.Constants.ViewName;
-public enum CompanyStructureViewOption
+namespace HE.InvestmentLoans.Common.Utils.Enums;
+public enum CompanyStructureFieldsSet
 {
     HomesBuilt,
     CompanyPurpose,
     MoreInformationAboutOrganization,
     GetEmpty,
     GetAllFields,
+    SaveAllFields,
 }
 
