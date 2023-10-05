@@ -4,6 +4,6 @@ using MediatR;
 
 namespace HE.InvestmentLoans.Contract.Funding.Queries;
 
-public record GetFundingQuery(LoanApplicationId LoanApplicationId, FundingViewOption FundingViewOption) : IRequest<GetFundingQueryResponse>; // TODO do not allow null
+public record GetFundingQuery(LoanApplicationId LoanApplicationId, FundingViewOption FundingViewOption) : IRequest<GetFundingQueryResponse>;
 
 public record GetFundingQueryResponse(FundingViewModel ViewModel);
