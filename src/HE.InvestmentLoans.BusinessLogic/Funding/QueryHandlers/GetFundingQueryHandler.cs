@@ -23,6 +23,7 @@ public class GetFundingQueryHandler : IRequestHandler<GetFundingQuery, GetFundin
         var funding = await _fundingRepository.GetAsync(
                                         request.LoanApplicationId,
                                         await _loanUserContext.GetSelectedAccount(),
+                                        request.FundingViewOption,
                                         cancellationToken);
 
         return new GetFundingQueryResponse(FundingViewModelMapper.Map(funding));

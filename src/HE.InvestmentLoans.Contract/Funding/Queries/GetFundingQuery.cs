@@ -1,9 +1,9 @@
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.InvestmentLoans.Contract.Funding;
 using MediatR;
 
 namespace HE.InvestmentLoans.Contract.Funding.Queries;
 
-public record GetFundingQuery(LoanApplicationId LoanApplicationId) : IRequest<GetFundingQueryResponse>;
+public record GetFundingQuery(LoanApplicationId LoanApplicationId, FundingViewOption FundingViewOption) : IRequest<GetFundingQueryResponse>; // TODO do not allow null
 
 public record GetFundingQueryResponse(FundingViewModel ViewModel);

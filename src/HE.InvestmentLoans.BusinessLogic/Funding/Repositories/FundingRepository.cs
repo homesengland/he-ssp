@@ -6,6 +6,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Models.App;
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -23,13 +24,15 @@ public class FundingRepository : IFundingRepository
         _appConfig = appConfig;
     }
 
-    public async Task<FundingEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<FundingEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, FundingViewOption fundingViewOption, CancellationToken cancellationToken)
     {
+        var fieldsToRetrieve = FundingFieldNameMapper.Map(fundingViewOption);
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
+            invln_fieldstoretrieve = fieldsToRetrieve,
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse

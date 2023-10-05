@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Funding;
@@ -27,7 +28,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
     [WorkflowState(FundingState.Index)]
     public async Task<IActionResult> StartFunding(Guid id)
     {
-        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id), FundingViewOption.GetEmpty));
         if (response.ViewModel.IsReadOnly())
         {
             return RedirectToAction("CheckAnswers", new { Id = id });
@@ -47,7 +48,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
     [WorkflowState(FundingState.GDV)]
     public async Task<IActionResult> GrossDevelopmentValue(Guid id)
     {
-        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id), FundingViewOption.GDV));
         return View("GrossDevelopmentValue", response.ViewModel);
     }
 
@@ -76,7 +77,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
     [WorkflowState(FundingState.TotalCosts)]
     public async Task<IActionResult> EstimatedTotalCosts(Guid id)
     {
-        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id), FundingViewOption.EstimatedTotalCosts));
         return View("EstimatedTotalCosts", response.ViewModel);
     }
 
@@ -105,7 +106,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
     [WorkflowState(FundingState.AbnormalCosts)]
     public async Task<IActionResult> AbnormalCosts(Guid id)
     {
-        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id), FundingViewOption.AbnormalCosts));
         return View("AbnormalCosts", response.ViewModel);
     }
 
@@ -135,7 +136,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
     [WorkflowState(FundingState.PrivateSectorFunding)]
     public async Task<IActionResult> PrivateSectorFunding(Guid id)
     {
-        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id), FundingViewOption.PrivateSectorFunding));
         return View("PrivateSectorFunding", response.ViewModel);
     }
 
@@ -166,7 +167,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
     [WorkflowState(FundingState.Refinance)]
     public async Task<IActionResult> RepaymentSystem(Guid id)
     {
-        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id), FundingViewOption.RepaymentSystem));
         return View("RepaymentSystem", response.ViewModel);
     }
 
@@ -196,7 +197,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
     [WorkflowState(FundingState.AdditionalProjects)]
     public async Task<IActionResult> AdditionalProjects(Guid id)
     {
-        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id), FundingViewOption.AdditionalProjects));
         return View("AdditionalProjects", response.ViewModel);
     }
 
@@ -225,7 +226,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
     [WorkflowState(FundingState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(Guid id, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id)), cancellationToken);
+        var response = await _mediator.Send(new GetFundingQuery(LoanApplicationId.From(id), FundingViewOption.GetAllFields), cancellationToken);
         return View("CheckAnswers", response.ViewModel);
     }
 
@@ -256,7 +257,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
 
         var applicationId = !string.IsNullOrEmpty(id) ? LoanApplicationId.From(Guid.Parse(id)) : null;
-        var response = await _mediator.Send(new GetFundingQuery(applicationId!));
+        var response = await _mediator.Send(new GetFundingQuery(applicationId!, FundingViewOption.GetEmpty));
 
         return new FundingWorkflow(currentState, response.ViewModel);
     }

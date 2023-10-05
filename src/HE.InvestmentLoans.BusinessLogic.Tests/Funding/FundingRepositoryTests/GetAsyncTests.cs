@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Funding.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
@@ -28,7 +29,7 @@ public class GetAsyncTests : TestBase<FundingRepository>
         RegisterDependency(organizationServiceMock);
 
         // when
-        var result = await TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, CancellationToken.None);
+        var result = await TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, FundingViewOption.GetAllFields,CancellationToken.None);
 
         // then
         result.LoanApplicationId.Should().Be(loanApplicationId);
@@ -57,7 +58,7 @@ public class GetAsyncTests : TestBase<FundingRepository>
         RegisterDependency(organizationServiceMock);
 
         // when
-        var result = await TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, CancellationToken.None);
+        var result = await TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, FundingViewOption.GetAllFields, CancellationToken.None);
 
         // then
         result.LoanApplicationId.Should().Be(loanApplicationId);
@@ -77,7 +78,7 @@ public class GetAsyncTests : TestBase<FundingRepository>
         var loanApplicationId = LoanApplicationIdTestData.LoanApplicationIdOne;
 
         // when
-        var action = () => TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, CancellationToken.None);
+        var action = () => TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, FundingViewOption.GetAllFields, CancellationToken.None);
 
         // then
         await action.Should().ThrowExactlyAsync<NotFoundException>().WithMessage($"*{loanApplicationId}*");
