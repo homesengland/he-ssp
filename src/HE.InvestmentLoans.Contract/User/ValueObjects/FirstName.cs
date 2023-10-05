@@ -8,7 +8,7 @@ namespace HE.InvestmentLoans.Contract.User.ValueObjects;
 
 public class FirstName : ValueObject
 {
-    private FirstName(string value)
+    public FirstName(string value)
     {
         if (value!.IsNotProvided())
         {
@@ -27,10 +27,10 @@ public class FirstName : ValueObject
                 .CheckErrors();
         }
 
-        Value = value;
+        Value = value!;
     }
 
-    private string Value { get; }
+    public string Value { get; }
 
     public static FirstName New(string value) => new(value);
 

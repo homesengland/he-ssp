@@ -1,12 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoFixture.Kernel;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
-using HE.InvestmentLoans.BusinessLogic.Projects.Enums;
-using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
 using Xunit;
 using static HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData.PlanningPermissionStatusTestData;
