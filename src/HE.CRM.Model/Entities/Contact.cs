@@ -715,6 +715,7 @@ namespace DataverseModel
 			public const string SubscriptionId = "subscriptionid";
 			public const string Suffix = "suffix";
 			public const string system_user_contacts = "system_user_contacts";
+			public const string team_contacts = "team_contacts";
 			public const string TeamsFollowed = "teamsfollowed";
 			public const string Telephone1 = "telephone1";
 			public const string Telephone2 = "telephone2";
@@ -5829,6 +5830,20 @@ namespace DataverseModel
 				this.OnPropertyChanging("system_user_contacts");
 				this.SetRelatedEntity<DataverseModel.SystemUser>("system_user_contacts", null, value);
 				this.OnPropertyChanged("system_user_contacts");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_contacts")]
+		public DataverseModel.Team team_contacts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Team>("team_contacts", null);
 			}
 		}
 		

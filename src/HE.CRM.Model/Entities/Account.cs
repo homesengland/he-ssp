@@ -788,6 +788,7 @@ namespace DataverseModel
 			public const string StatusCode = "statuscode";
 			public const string StockExchange = "stockexchange";
 			public const string system_user_accounts = "system_user_accounts";
+			public const string team_accounts = "team_accounts";
 			public const string TeamsFollowed = "teamsfollowed";
 			public const string Telephone1 = "telephone1";
 			public const string Telephone2 = "telephone2";
@@ -5094,6 +5095,20 @@ namespace DataverseModel
 				this.OnPropertyChanging("system_user_accounts");
 				this.SetRelatedEntity<DataverseModel.SystemUser>("system_user_accounts", null, value);
 				this.OnPropertyChanged("system_user_accounts");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_accounts")]
+		public DataverseModel.Team team_accounts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Team>("team_accounts", null);
 			}
 		}
 		

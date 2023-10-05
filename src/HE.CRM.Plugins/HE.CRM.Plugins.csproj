@@ -235,6 +235,8 @@
     <Compile Include="Services\Contacts\IContactService.cs" />
     <Compile Include="Services\Contract\ContractService.cs" />
     <Compile Include="Services\Contract\IContractService.cs" />
+    <Compile Include="Services\GovNotifyEmail\GovNotifyEmailService.cs" />
+    <Compile Include="Services\GovNotifyEmail\IGovNotifyEmailService.cs" />
     <Compile Include="Services\HttpServices\AzureAdHttpClientService.cs" />
     <Compile Include="Services\LoanApplication\ILoanApplicationService.cs" />
     <Compile Include="Services\LoanApplication\LoanApplicationService.cs" />
