@@ -22,6 +22,7 @@ public class GetCompanyStructureQueryHandler : IRequestHandler<GetCompanyStructu
         var companyStructure = await _companyStructureRepository.GetAsync(
                                         request.LoanApplicationId,
                                         await _loanUserContext.GetSelectedAccount(),
+                                        request.CompanyStructureViewOption,
                                         cancellationToken);
 
         return new GetCompanyStructureQueryResponse(CompanyStructureViewModelMapper.Map(companyStructure));

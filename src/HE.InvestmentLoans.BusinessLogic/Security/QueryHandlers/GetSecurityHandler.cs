@@ -19,7 +19,7 @@ internal class GetSecurityHandler : IRequestHandler<GetSecurity, GetSecurityResp
 
     public async Task<GetSecurityResponse> Handle(GetSecurity request, CancellationToken cancellationToken)
     {
-        var security = await _securityRepository.GetAsync(request.Id, await _loanUserContext.GetSelectedAccount(), cancellationToken);
+        var security = await _securityRepository.GetAsync(request.Id, await _loanUserContext.GetSelectedAccount(), request.SecurityViewOption, cancellationToken);
 
         return new GetSecurityResponse(
             new SecurityViewModel

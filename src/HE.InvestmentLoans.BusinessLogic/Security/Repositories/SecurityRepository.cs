@@ -1,8 +1,10 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
+using HE.InvestmentLoans.BusinessLogic.Security.Mappers;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
@@ -18,13 +20,15 @@ internal class SecurityRepository : ISecurityRepository
         _serviceClient = serviceClient;
     }
 
-    public async Task<SecurityEntity> GetAsync(LoanApplicationId applicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<SecurityEntity> GetAsync(LoanApplicationId applicationId, UserAccount userAccount, SecurityViewOption securityViewOption, CancellationToken cancellationToken)
     {
+        var fieldsToRetrieve = SecurityCrmFieldNameMapper.Map(securityViewOption);
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = applicationId.ToString(),
+            invln_fieldstoretrieve = fieldsToRetrieve,
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
@@ -70,19 +74,9 @@ internal class SecurityRepository : ISecurityRepository
             invln_loanapplicationid = entity.LoanApplicationId.Value.ToString(),
             invln_accountid = userAccount.AccountId.ToString(),
             invln_contactexternalid = userAccount.UserGlobalId.ToString(),
-            invln_fieldstoupdate = string.Join(',', CrmSecurityFieldNames()),
+            invln_fieldstoupdate = string.Join(',', SecurityCrmFieldNameMapper.Map(SecurityViewOption.GetAllFields)),
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
-    }
-
-    private IEnumerable<string> CrmSecurityFieldNames()
-    {
-        yield return nameof(invln_Loanapplication.invln_DebentureHolder).ToLowerInvariant();
-        yield return nameof(invln_Loanapplication.invln_Outstandinglegalchargesordebt).ToLowerInvariant();
-        yield return nameof(invln_Loanapplication.invln_Directorloans).ToLowerInvariant();
-        yield return nameof(invln_Loanapplication.invln_Confirmationdirectorloanscanbesubordinated).ToLowerInvariant();
-        yield return nameof(invln_Loanapplication.invln_Reasonfordirectorloannotsubordinated).ToLowerInvariant();
-        yield return nameof(invln_Loanapplication.invln_securitydetailscompletionstatus).ToLowerInvariant();
     }
 }

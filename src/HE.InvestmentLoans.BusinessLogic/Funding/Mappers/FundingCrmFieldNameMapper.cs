@@ -3,7 +3,7 @@ using HE.InvestmentLoans.CRM.Model;
 
 namespace HE.InvestmentLoans.BusinessLogic.Funding.Mappers;
 
-public static class FundingFieldNameMapper
+public static class FundingCrmFieldNameMapper
 {
     private static readonly string ProjectGdv = $"{nameof(invln_Loanapplication.invln_ProjectGDV).ToLowerInvariant()},";
     private static readonly string ProjectEstimatedTotalCost = $"{nameof(invln_Loanapplication.invln_Projectestimatedtotalcost).ToLowerInvariant()},";

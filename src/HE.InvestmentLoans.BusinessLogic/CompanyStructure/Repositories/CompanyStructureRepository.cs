@@ -1,9 +1,11 @@
 using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Mappers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Models.App;
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -22,13 +24,16 @@ public class CompanyStructureRepository : ICompanyStructureRepository
         _appConfig = appConfig;
     }
 
-    public async Task<CompanyStructureEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<CompanyStructureEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount,CompanyStructureViewOption companyStructureViewOption, CancellationToken cancellationToken)
     {
+        var fieldsToRetrieve = CompanyStructureCrmFieldNameMapper.Map(companyStructureViewOption);
+
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
+            invln_fieldstoretrieve = fieldsToRetrieve,
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
@@ -63,10 +68,7 @@ public class CompanyStructureRepository : ICompanyStructureRepository
             invln_loanapplicationid = companyStructure.LoanApplicationId.Value.ToString(),
             invln_accountid = userAccount.AccountId.ToString(),
             invln_contactexternalid = userAccount.UserGlobalId.ToString(),
-            invln_fieldstoupdate = $"{nameof(invln_Loanapplication.invln_CompanyPurpose).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Companystructureinformation).ToLowerInvariant()}," +
-                                   $"invln_companystructureandexperiencecompletionst," +
-                                   $"{nameof(invln_Loanapplication.invln_CompanyExperience).ToLowerInvariant()}",
+            invln_fieldstoupdate = CompanyStructureCrmFieldNameMapper.Map(CompanyStructureViewOption.GetAllFields),
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);

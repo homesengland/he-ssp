@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
@@ -26,7 +27,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     [WorkflowState(CompanyStructureState.Index)]
     public async Task<IActionResult> StartCompanyStructure(Guid id)
     {
-        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureViewOption.GetEmpty));
         if (response.ViewModel.IsReadOnly())
         {
             return RedirectToAction("CheckAnswers", new { Id = id });
@@ -46,7 +47,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     [WorkflowState(CompanyStructureState.Purpose)]
     public async Task<IActionResult> Purpose(Guid id)
     {
-        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureViewOption.CompanyPurpose));
         return View("Purpose", response.ViewModel);
     }
 
@@ -62,7 +63,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     [WorkflowState(CompanyStructureState.ExistingCompany)]
     public async Task<IActionResult> MoreInformationAboutOrganization(Guid id)
     {
-        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureViewOption.MoreInformationAboutOrganization));
         return View("MoreInformationAboutOrganization", response.ViewModel);
     }
 
@@ -99,7 +100,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     [WorkflowState(CompanyStructureState.HomesBuilt)]
     public async Task<IActionResult> HowManyHomesBuilt(Guid id)
     {
-        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureViewOption.HomesBuilt));
         return View("HomesBuilt", response.ViewModel);
     }
 
@@ -126,7 +127,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     [WorkflowState(CompanyStructureState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(Guid id, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)), cancellationToken);
+        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureViewOption.GetAllFields), cancellationToken);
         return View("CheckAnswers", response.ViewModel);
     }
 
@@ -138,7 +139,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id)), cancellationToken);
+            var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureViewOption.GetAllFields), cancellationToken);
             return View("CheckAnswers", response.ViewModel);
         }
 
@@ -154,7 +155,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     protected override async Task<IStateRouting<CompanyStructureState>> Routing(CompanyStructureState currentState)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
-        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id!)));
+        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id!), CompanyStructureViewOption.GetEmpty));
 
         return new CompanyStructureWorkflow(currentState, response.ViewModel);
     }

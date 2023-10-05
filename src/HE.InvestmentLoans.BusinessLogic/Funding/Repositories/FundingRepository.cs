@@ -26,7 +26,7 @@ public class FundingRepository : IFundingRepository
 
     public async Task<FundingEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, FundingViewOption fundingViewOption, CancellationToken cancellationToken)
     {
-        var fieldsToRetrieve = FundingFieldNameMapper.Map(fundingViewOption);
+        var fieldsToRetrieve = FundingCrmFieldNameMapper.Map(fundingViewOption);
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
@@ -75,16 +75,7 @@ public class FundingRepository : IFundingRepository
             invln_loanapplicationid = funding.LoanApplicationId.Value.ToString(),
             invln_accountid = userAccount.AccountId.ToString(),
             invln_contactexternalid = userAccount.UserGlobalId.ToString(),
-            invln_fieldstoupdate = $"{nameof(invln_Loanapplication.invln_ProjectGDV).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Projectestimatedtotalcost).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Projectabnormalcosts).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Projectabnormalcostsinformation).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Privatesectorapproach).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Privatesectorapproachinformation).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Additionalprojects).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Refinancerepayment).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Refinancerepaymentdetails).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_fundingdetailscompletionstatus).ToLowerInvariant()}",
+            invln_fieldstoupdate = FundingCrmFieldNameMapper.Map(FundingViewOption.GetAllFields),
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
