@@ -8,7 +8,7 @@ namespace HE.InvestmentLoans.Contract.User.ValueObjects;
 
 public class LastName : ValueObject
 {
-    private LastName(string value)
+    public LastName(string value)
     {
         if (value!.IsNotProvided())
         {
@@ -30,7 +30,7 @@ public class LastName : ValueObject
         Value = value;
     }
 
-    private string Value { get; }
+    public string Value { get; }
 
     public static LastName New(string value) => new(value);
 

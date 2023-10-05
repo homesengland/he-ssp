@@ -7,7 +7,7 @@ namespace HE.InvestmentLoans.Contract.User.ValueObjects;
 
 public class SecondaryTelephoneNumber : ValueObject
 {
-    private SecondaryTelephoneNumber(string value)
+    public SecondaryTelephoneNumber(string value)
     {
         if (value?.Length > MaximumInputLength.ShortInput)
         {
@@ -22,7 +22,7 @@ public class SecondaryTelephoneNumber : ValueObject
         Value = value!;
     }
 
-    private string Value { get; }
+    public string Value { get; }
 
     public static SecondaryTelephoneNumber New(string value) => new(value);
 
