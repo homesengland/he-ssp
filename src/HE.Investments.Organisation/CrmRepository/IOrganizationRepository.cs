@@ -13,4 +13,6 @@ public interface IOrganizationRepository
     Entity? GetDefaultAccount(IOrganizationServiceAsync2 service);
 
     Entity? GetOrganizationViaCompanyHouseNumber(IOrganizationServiceAsync2 service, string companyHouseNumber);
+
+    Task<Entity?> SearchForOrganizationsByOrganizationId(IOrganizationServiceAsync2 service, string organizationId);
 }
