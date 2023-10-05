@@ -91,7 +91,7 @@ public class OrganizationRepository : IOrganizationRepository
         return result1.Entities.FirstOrDefault();
     }
 
-    public async Task<EntityCollection?> SearchForOrganizationsByName(IOrganizationServiceAsync2 service, IEnumerable<string> names, bool recordsWithoutCopanyNumberIncluded)
+    public async Task<EntityCollection?> SearchForOrganizationsByName(IOrganizationServiceAsync2 service, IEnumerable<string> names, bool recordWithCompanyHouseNumberIncluded)
     {
         if (names != null)
         {
@@ -109,14 +109,14 @@ public class OrganizationRepository : IOrganizationRepository
 
             var numberOfRequestsInQuery = 1;
             var recordsWithoutCompanyNumberFilter = new FilterExpression();
-            if (!recordsWithoutCopanyNumberIncluded)
+            if (!recordWithCompanyHouseNumberIncluded)
             {
                 recordsWithoutCompanyNumberFilter = new FilterExpression
                 {
                     FilterOperator = LogicalOperator.And,
                     Conditions =
                     {
-                        new ConditionExpression("he_companieshousenumber", ConditionOperator.NotNull),
+                        new ConditionExpression("he_companieshousenumber", ConditionOperator.Null),
                     },
                 };
             }
