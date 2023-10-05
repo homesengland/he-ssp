@@ -206,6 +206,7 @@ namespace DataverseModel
 			public const string stageidName = "stageidname";
 			public const string StateCode = "statecode";
 			public const string StatusCode = "statuscode";
+			public const string team_invln_loanapplication = "team_invln_loanapplication";
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
 			public const string TransactionCurrencyId = "transactioncurrencyid";
 			public const string TransactionCurrencyIdName = "transactioncurrencyidname";
@@ -1850,6 +1851,20 @@ namespace DataverseModel
 				this.OnPropertyChanging("lk_invln_loanapplication_modifiedonbehalfby");
 				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_invln_loanapplication_modifiedonbehalfby", null, value);
 				this.OnPropertyChanged("lk_invln_loanapplication_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_invln_loanapplication
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_loanapplication")]
+		public DataverseModel.Team team_invln_loanapplication
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Team>("team_invln_loanapplication", null);
 			}
 		}
 		

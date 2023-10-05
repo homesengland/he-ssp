@@ -93,6 +93,7 @@ namespace DataverseModel
 			public const string SolutionId = "solutionid";
 			public const string StateCode = "statecode";
 			public const string StatusCode = "statuscode";
+			public const string team_environmentvariablevalue = "team_environmentvariablevalue";
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
 			public const string user_environmentvariablevalue = "user_environmentvariablevalue";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
@@ -723,6 +724,20 @@ namespace DataverseModel
 				this.OnPropertyChanging("lk_environmentvariablevalue_modifiedonbehalfby");
 				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_environmentvariablevalue_modifiedonbehalfby", null, value);
 				this.OnPropertyChanged("lk_environmentvariablevalue_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_environmentvariablevalue
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_environmentvariablevalue")]
+		public DataverseModel.Team team_environmentvariablevalue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Team>("team_environmentvariablevalue", null);
 			}
 		}
 		

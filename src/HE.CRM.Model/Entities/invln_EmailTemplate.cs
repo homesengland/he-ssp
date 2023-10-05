@@ -82,6 +82,7 @@ namespace DataverseModel
 			public const string OwningUserName = "owningusername";
 			public const string StateCode = "statecode";
 			public const string StatusCode = "statuscode";
+			public const string team_invln_emailtemplate = "team_invln_emailtemplate";
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
 			public const string user_invln_emailtemplate = "user_invln_emailtemplate";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
@@ -586,6 +587,20 @@ namespace DataverseModel
 				this.OnPropertyChanging("lk_invln_emailtemplate_modifiedonbehalfby");
 				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_invln_emailtemplate_modifiedonbehalfby", null, value);
 				this.OnPropertyChanged("lk_invln_emailtemplate_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_invln_emailtemplate
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_emailtemplate")]
+		public DataverseModel.Team team_invln_emailtemplate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Team>("team_invln_emailtemplate", null);
 			}
 		}
 		
