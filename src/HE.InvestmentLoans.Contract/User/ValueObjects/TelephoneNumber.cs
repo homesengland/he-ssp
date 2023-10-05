@@ -8,7 +8,7 @@ namespace HE.InvestmentLoans.Contract.User.ValueObjects;
 
 public class TelephoneNumber : ValueObject
 {
-    private TelephoneNumber(string value)
+    public TelephoneNumber(string value)
     {
         if (value!.IsNotProvided())
         {
@@ -30,7 +30,7 @@ public class TelephoneNumber : ValueObject
         Value = value;
     }
 
-    private string Value { get; }
+    public string Value { get; }
 
     public static TelephoneNumber New(string value) => new(value);
 
