@@ -51,6 +51,17 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
         return new List<OrganizationDetailsDto>();
     }
 
+    public async Task<OrganizationDetailsDto> SearchOrganizationInCrmByOrganizationId(string organizationId)
+    {
+        var retrievedEntities = await _organizationRepository.SearchForOrganizationsByOrganizationId(_organizationService, organizationId);
+        if (retrievedEntities != null)
+        {
+            return MapEntityToDto(retrievedEntities);
+        }
+
+        return new OrganizationDetailsDto();
+    }
+
     private OrganizationDetailsDto MapEntityToDto(Entity account)
     {
         var organization = new OrganizationDetailsDto()

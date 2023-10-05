@@ -215,4 +215,19 @@ public class OrganizationRepository : IOrganizationRepository
 
         return null;
     }
+
+    public async Task<Entity?> SearchForOrganizationsByOrganizationId(IOrganizationServiceAsync2 service, string organizationId)
+    {
+        if (Guid.TryParse(organizationId, out var organizationGuid))
+        {
+            var cols = new ColumnSet("name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3", "address1_city", "address1_postalcode", "address1_country");
+
+            var retrievedEntity = await service.RetrieveAsync("account", organizationGuid, cols);
+            return retrievedEntity;
+        }
+        else
+        {
+            throw new ArgumentException("Given organization id is not valid Guid");
+        }
+    }
 }
