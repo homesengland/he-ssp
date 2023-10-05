@@ -16,6 +16,27 @@ namespace HE.InvestmentLoans.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum openaischemaversion
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Number_10 = 0,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum aioperationoverridetype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Upsert = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Delete = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum goal_fiscalperiod
 	{
 		
@@ -683,7 +704,7 @@ namespace HE.InvestmentLoans.CRM.Model
 		ApplicationDeclined = 858110012,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Induediligence = 858110013,
+		InDueDiligence = 858110013,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApprovedSubjecttoContract = 858110014,
@@ -882,6 +903,24 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Submitted = 858110003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_planningstatus
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Applicationhasnotbeensubmitted = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Notyetreceivedresult = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Receivedoutlineorreservedmattersconsent = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Receivedfullplanningpermission = 858110003,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -3775,6 +3814,24 @@ namespace HE.InvestmentLoans.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_planningpermissionstatusset
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Applicationhasnotbeensubmitted = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Notyetreceivedresult = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Receivedoutlineorreservedmattersconsent = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Receivedfullplanningpermission = 858110003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_permission
 	{
 		
@@ -3828,6 +3885,24 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		HoTFeeIndemnity = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum aiplugintype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Dataverse = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CustomConnector = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SharedConnector = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Workflow = 4,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -7758,24 +7833,6 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Hidden = 100000002,
-	}
-	
-	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
-	public enum invln_planningpermissionstatusset
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Applicationhasnotbeensubmitted = 858110000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Notyetreceivedresult = 858110001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Receivedoutlineorreservedmattersconsent = 858110002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Receivedfullplanningpermission = 858110003,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -17922,16 +17979,10 @@ namespace HE.InvestmentLoans.CRM.Model
 		ApplicationSubmitted = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Inactive858110002 = 858110002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ApplicationUnderReview = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		HoldRequested = 858110005,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Withdrawn = 858110004,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CashflowRequested = 858110007,
@@ -17961,7 +18012,7 @@ namespace HE.InvestmentLoans.CRM.Model
 		ApplicationDeclined = 858110014,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Induediligence = 858110015,
+		InDueDiligence = 858110015,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		SentforPreCompleteApproval = 858110016,
@@ -17980,6 +18031,9 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Withdrawn = 858110021,
 	}
 	
 	/// <summary>
@@ -19797,6 +19851,24 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_address")]
+		public string invln_Address
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_address");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Address");
+				this.SetAttributeValue("invln_address", value);
+				this.OnPropertyChanged("invln_Address");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_affordablehousing")]
 		public System.Nullable<bool> invln_Affordablehousing
 		{
@@ -20109,6 +20181,39 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_planningpermissionstatus")]
+		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_planningpermissionstatusset> invln_planningpermissionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_planningpermissionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.InvestmentLoans.CRM.Model.invln_planningpermissionstatusset)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_planningpermissionstatusset), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_planningpermissionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_planningpermissionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_planningpermissionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_planningpermissionstatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_planningreferencenumber")]
 		public string invln_Planningreferencenumber
 		{
@@ -20121,6 +20226,57 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanging("invln_Planningreferencenumber");
 				this.SetAttributeValue("invln_planningreferencenumber", value);
 				this.OnPropertyChanged("invln_Planningreferencenumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_planningstatus")]
+		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_planningstatus> invln_Planningstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_planningstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.InvestmentLoans.CRM.Model.invln_planningstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_planningstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Planningstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_planningstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_planningstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_Planningstatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_postcode")]
+		public string invln_Postcode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_postcode");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Postcode");
+				this.SetAttributeValue("invln_postcode", value);
+				this.OnPropertyChanged("invln_Postcode");
 			}
 		}
 		
@@ -20295,6 +20451,42 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanging("invln_Siteownership");
 				this.SetAttributeValue("invln_siteownership", value);
 				this.OnPropertyChanged("invln_Siteownership");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_startdate")]
+		public System.Nullable<System.DateTime> invln_startdate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_startdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_startdate");
+				this.SetAttributeValue("invln_startdate", value);
+				this.OnPropertyChanged("invln_startdate");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalbuildperiod")]
+		public string invln_Totalbuildperiod
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_totalbuildperiod");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Totalbuildperiod");
+				this.SetAttributeValue("invln_totalbuildperiod", value);
+				this.OnPropertyChanged("invln_Totalbuildperiod");
 			}
 		}
 		
