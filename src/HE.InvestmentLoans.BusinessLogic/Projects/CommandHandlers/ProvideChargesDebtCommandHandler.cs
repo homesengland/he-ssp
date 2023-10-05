@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,13 +30,7 @@ public class ProvideChargesDebtCommandHandler : ProjectCommandHandlerBase, IRequ
                     return;
                 }
 
-                if(request.ChargesDebtInfo.IsNotProvided())
-                {
-                    return;
-                }
-
-                // TODO
-                project.ProvideChargesDebt(new ChargesDebt(request.ChargesDebt), new ChargesDebtInfo(request.ChargesDebtInfo));
+                project.ProvideChargesDebt(ChargesDebt.From(request.ChargesDebt, request.ChargesDebtInfo));
             },
             request.LoanApplicationId,
             request.ProjectId,

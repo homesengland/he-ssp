@@ -26,11 +26,11 @@ public class ProjectViewModel
 
     public string[]? HomeTypes { get; set; }
 
-    public string? OtherHomeType { get; set; }
+    public string? OtherHomeTypes { get; set; }
 
     public string? ProjectType { get; set; }
 
-    public bool? ChargesDebt { get; set; }
+    public string? ChargesDebt { get; set; }
 
     public string? ChargesDebtInfo { get; set; }
 

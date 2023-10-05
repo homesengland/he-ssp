@@ -7,6 +7,7 @@ using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
@@ -36,11 +37,11 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
             ProjectId = project.Id!.Value,
             Name = project.Name?.Value,
             HomesCount = project.HomesCount?.Value,
-            HomeTypes = project.HomeTypes?.Value,
-            OtherHomeType = project.OtherHomeType?.Value,
+            HomeTypes = project.HomesTypes?.HomesTypesValue,
+            OtherHomeTypes = project.HomesTypes?.OtherHomesTypesValue,
             ProjectType = project.ProjectType?.Value,
-            ChargesDebt = project.ChargesDebt?.Value,
-            ChargesDebtInfo = project.ChargesDebtInfo?.Value,
+            ChargesDebt = project.ChargesDebt?.Exist.MapToCommonResponse(),
+            ChargesDebtInfo = project.ChargesDebt?.Value,
             AffordableHomes = project.AffordableHomes?.Value,
             ApplicationId = applicationProjects.LoanApplicationId.Value,
         };

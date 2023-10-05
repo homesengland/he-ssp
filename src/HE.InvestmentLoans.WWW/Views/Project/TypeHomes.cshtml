@@ -1,14 +1,16 @@
+@using HE.InvestmentLoans.Contract.Projects;
+
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
 
-    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.TypeHomes));
-    var (conditionalInputInvalid, conditionalInputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.TypeHomesOther));
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors("TypeHomes");
+    var (conditionalInputInvalid, conditionalInputErrors) = @ViewData.ModelState.GetErrors("TypeHomesOther");
 }
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="Project" asp-action="TypeHomes" asp-route-id="@Model.ApplicationId" asp-route-site="@Model.ProjectId" asp-method="post" novalidate>
 
-        <gds-back-link href="@Url.Action("GoBack","Site") text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back","Project",  new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.TypeHomes}) text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
@@ -31,7 +33,7 @@
                               asp-condtionalprimaryindexes="4">
 
                     <gds-div-form-group>
-                        <gds-input title="Other" govuk-formgroup-asp-for="@Model.OtherHomeType" class="govuk-!-width-two-third" type="text" value=@Model?.OtherHomeType asp-excludelabel/>
+                        <gds-input title="Other" govuk-formgroup-asp-for="@Model.OtherHomeTypes" class="govuk-!-width-two-third" type="text" value=@Model?.OtherHomeTypes asp-excludelabel/>
                     </gds-div-form-group>
                 </gds-checkbox>
 

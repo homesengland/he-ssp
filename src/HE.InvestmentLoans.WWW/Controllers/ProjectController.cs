@@ -127,7 +127,7 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.TypeHomes)]
     public async Task<IActionResult> TypeHomes(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
     {
-        var result = await _mediator.Send(new ProvideHomeTypesCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HomeTypes, model.OtherHomeType), token);
+        var result = await _mediator.Send(new ProvideHomesTypesCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HomeTypes, model.OtherHomeTypes), token);
 
         if (result.HasValidationErrors)
         {
@@ -177,7 +177,7 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.ChargesDebt)]
     public async Task<IActionResult> ChargesDebt(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
     {
-        var result = await _mediator.Send(new ProvideProjectTypeCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.ProjectType), token);
+        var result = await _mediator.Send(new ProvideChargesDebtCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.ChargesDebt, model.ChargesDebtInfo), token);
 
         if (result.HasValidationErrors)
         {

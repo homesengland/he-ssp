@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
@@ -23,16 +24,7 @@ public class ProvideHomesCountCommandHandler : ProjectCommandHandlerBase, IReque
     public async Task<OperationResult> Handle(ProvideHomesCountCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            project =>
-            {
-                if (request.HomesCount.IsNotProvided())
-                {
-                    return;
-                }
-
-                // TODO
-                project.ProvideHomesCount(new HomesCount(request.HomesCount));
-            },
+            project => project.ProvideHomesCount(new HomesCount(request.HomesCount)),
             request.LoanApplicationId,
             request.ProjectId,
             cancellationToken);

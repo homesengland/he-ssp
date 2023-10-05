@@ -13,25 +13,24 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
-public class ProvideHomeTypesCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideHomeTypesCommand, OperationResult>
+public class ProvideHomesTypesCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideHomesTypesCommand, OperationResult>
 {
-    public ProvideHomeTypesCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger)
+    public ProvideHomesTypesCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger)
         : base(repository, loanUserContext, logger)
     {
     }
 
-    public async Task<OperationResult> Handle(ProvideHomeTypesCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(ProvideHomesTypesCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
             project =>
             {
-                if (request.HomeTypes.IsNotProvided())
+                if (request.HomesTypes.IsNotProvided())
                 {
                     return;
                 }
 
-                // TODO
-                project.ProvideHomesTypes(new HomeTypes(request.HomeTypes), new OtherHomeType(request.OtherHomeType));
+                project.ProvideHomesTypes(new HomesTypes(request.HomesTypes, request.OtherHomesTypes));
             },
             request.LoanApplicationId,
             request.ProjectId,

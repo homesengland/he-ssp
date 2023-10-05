@@ -1,12 +1,14 @@
+@using HE.InvestmentLoans.Contract.Projects;
+
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
-    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.Type));
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors("Type");
 }
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="Project" asp-action="Type" asp-route-id="@Model.ApplicationId" asp-route-site="@Model.ProjectId" asp-method="post" novalidate>
 
-        <gds-back-link href="@Url.Action("GoBack","Site")" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back","Project",  new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.Type})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>

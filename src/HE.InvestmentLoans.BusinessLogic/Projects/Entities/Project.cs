@@ -15,15 +15,16 @@ public class Project
         IsNewlyCreated = true;
     }
 
-    public Project(ProjectId id, ProjectName name, StartDate startDate, HomesCount homesCount, HomeTypes homesTypes, OtherHomeType otherHomeType, ProjectType projectType)
+    public Project(ProjectId id, ProjectName name, StartDate startDate, HomesCount homesCount, HomesTypes homesTypes, ProjectType projectType, ChargesDebt chargesDebt, AffordableHomes affordableHomes)
     {
         Id = id;
         Name = name;
         StartDate = startDate;
         HomesCount = homesCount;
-        HomeTypes = homesTypes;
-        OtherHomeType = otherHomeType;
+        HomesTypes = homesTypes;
         ProjectType = projectType;
+        ChargesDebt = chargesDebt;
+        AffordableHomes = affordableHomes;
 
         IsNewlyCreated = false;
     }
@@ -36,15 +37,11 @@ public class Project
 
     public HomesCount HomesCount { get; private set; }
 
-    public HomeTypes HomeTypes { get; private set; }
-
-    public OtherHomeType OtherHomeType { get; private set; }
+    public HomesTypes HomesTypes { get; private set; }
 
     public ProjectType ProjectType { get; private set; }
 
     public ChargesDebt ChargesDebt { get; private set; }
-
-    public ChargesDebtInfo ChargesDebtInfo { get; private set; }
 
     public AffordableHomes AffordableHomes { get; private set; }
 
@@ -133,10 +130,9 @@ public class Project
         HomesCount = homesCount;
     }
 
-    public void ProvideHomesTypes(HomeTypes homeTypes, OtherHomeType otherHomeType)
+    public void ProvideHomesTypes(HomesTypes homesTypes)
     {
-        HomeTypes = homeTypes;
-        OtherHomeType = otherHomeType;
+        HomesTypes = homesTypes;
     }
 
     public void ProvideProjectType(ProjectType projectType)
@@ -144,10 +140,9 @@ public class Project
         ProjectType = projectType;
     }
 
-    public void ProvideChargesDebt(ChargesDebt chargesDebt, ChargesDebtInfo chargesDebtInfo)
+    public void ProvideChargesDebt(ChargesDebt chargesDebt)
     {
         ChargesDebt = chargesDebt;
-        ChargesDebtInfo = chargesDebtInfo;
     }
 
     public void ProvideAffordableHomes(AffordableHomes affordableHomes)

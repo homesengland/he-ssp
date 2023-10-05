@@ -77,9 +77,11 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                 projectFromCrm.Name.IsNotProvided() ? null! : new ProjectName(projectFromCrm.Name),
                 null!,
                 projectFromCrm.numberOfHomes.IsNotProvided() ? null! : new HomesCount(projectFromCrm.numberOfHomes),
-                projectFromCrm.typeOfHomes.IsNotProvided() ? null! : new HomeTypes(projectFromCrm.typeOfHomes),
-                projectFromCrm.otherTypeOfHomes.IsNotProvided() ? null!: new OtherHomeType(projectFromCrm.otherTypeOfHomes),
-                projectFromCrm.typeOfSite.IsNotProvided() ? null! : new ProjectType(projectFromCrm.typeOfSite)));
+                projectFromCrm.typeOfHomes.IsNotProvided() ? null! : new HomesTypes(projectFromCrm.typeOfHomes, projectFromCrm.otherTypeOfHomes),
+                projectFromCrm.typeOfSite.IsNotProvided() ? null! : new ProjectType(projectFromCrm.typeOfSite),
+                projectFromCrm.existingLegalCharges.IsNotProvided() ? null! : new ChargesDebt(projectFromCrm.existingLegalCharges ?? false, projectFromCrm.existingLegalChargesInformation),
+                projectFromCrm.numberOfAffordableHomes.IsNotProvided() ? null! : new AffordableHomes(projectFromCrm.numberOfAffordableHomes)
+                ));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
@@ -154,6 +156,13 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                 siteDetailsId = projectToSave.Id.Value.ToString(),
                 Name = projectToSave.Name?.Value,
                 dateOfPurchase = projectToSave.StartDate?.Value,
+                numberOfHomes = projectToSave.HomesCount?.Value,
+                typeOfHomes = projectToSave.HomesTypes?.HomesTypesValue,
+                otherTypeOfHomes = projectToSave.HomesTypes?.OtherHomesTypesValue,
+                typeOfSite = projectToSave.ProjectType?.Value,
+                existingLegalCharges = projectToSave.ChargesDebt?.Exist,
+                existingLegalChargesInformation = projectToSave.ChargesDebt?.Value,
+                numberOfAffordableHomes = projectToSave?.Value,
             };
 
             var req = new invln_updatesinglesitedetailsRequest
@@ -172,5 +181,13 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
     {
         yield return nameof(invln_SiteDetails.invln_Name).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Dateofpurchase).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Numberofhomes).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Typeofhomes).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_OtherTypeofhomes).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_TypeofSite).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Existinglegalcharges).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Existinglegalchargesinformation).ToLowerInvariant();
+
+        // yield return nameof(invln_SiteDetails.invln_Affordablehousing).ToLowerInvariant();
     }
 }

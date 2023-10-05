@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Extensions;
@@ -12,27 +13,17 @@ using HE.InvestmentLoans.Common.Validation;
 namespace HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 public class HomesCount : ValueObject
 {
-    public HomesCount(string value)
+    public HomesCount(string? value)
     {
-        if (value.IsNotProvided())
+        if (value.IsNotProvided() || !Regex.IsMatch(value ?? string.Empty, @"^(?!0)[1-9]\d{0,3}$|^9999$"))
         {
-            // TODO
             OperationResult
                 .New()
-                .AddValidationError(nameof(HomesCount), ValidationErrorMessage.ProjectNameIsEmpty)
+                .AddValidationError(nameof(HomesCount), ValidationErrorMessage.ManyHomesAmount)
                 .CheckErrors();
         }
 
-        if (value.Length > MaximumInputLength.ShortInput)
-        {
-            // TODO
-            OperationResult
-                .New()
-                .AddValidationError(nameof(HomesCount), ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.ProjectName))
-                .CheckErrors();
-        }
-
-        Value = value;
+        Value = value ?? string.Empty;
     }
 
     public static HomesCount Default => new("0");
