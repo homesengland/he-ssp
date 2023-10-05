@@ -42,7 +42,7 @@ public class ProjectController : WorkflowController<ProjectState>
     {
         var result = await _mediator.Send(new CreateProjectCommand(LoanApplicationId.From(id)));
 
-        return await Continue(new { id, projectId = result.Result.Value });
+        return await Continue(new { id, projectId = result.ReturnedData.Value });
     }
 
     [HttpGet("{projectId}/name")]
@@ -83,7 +83,7 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.StartDate)]
     public async Task<IActionResult> StartDate(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
     {
-        var result = await _mediator.Send(new ProvideStartDateCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HasEstimatedStartDate, model.EstimatedStartDay, model.EstimatedStartMonth, model.EstimatedStartYear), token);
+        var result = await _mediator.Send(new ProvideStartDateCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HasEstimatedStartDate, model.EstimatedStartYear, model.EstimatedStartMonth, model.EstimatedStartDay), token);
 
         if (result.HasValidationErrors)
         {
@@ -189,7 +189,7 @@ public class ProjectController : WorkflowController<ProjectState>
         {
             ModelState.AddValidationErrors(result);
 
-            return View("Location", model);
+            return View(model);
         }
 
         return await Continue(new { id, projectId });
@@ -198,6 +198,66 @@ public class ProjectController : WorkflowController<ProjectState>
     [HttpGet("{projectId}/ownership")]
     [WorkflowState(ProjectState.Ownership)]
     public async Task<IActionResult> Ownership(Guid id, Guid projectId)
+    {
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
+    }
+
+    [HttpPost("{projectId}/ownership")]
+    [WorkflowState(ProjectState.Ownership)]
+    public async Task<IActionResult> Ownership(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    {
+        var result = await _mediator.Send(new ProvideLandOwnershipCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.Ownership), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View(model);
+        }
+
+        return await Continue(new { id, projectId });
+    }
+
+    [HttpGet("{projectId}/additional-details")]
+    [WorkflowState(ProjectState.Additional)]
+    public async Task<IActionResult> AdditionalDetails(Guid id, Guid projectId)
+    {
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+
+        return View(result);
+    }
+
+    [HttpPost("{projectId}/additional-details")]
+    [WorkflowState(ProjectState.Additional)]
+    public async Task<IActionResult> AdditionalDetails(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    {
+        var result = await _mediator.Send(
+            new ProvideAdditionalDetailsCommand(
+                LoanApplicationId.From(id),
+                ProjectId.From(projectId),
+                model.PurchaseYear,
+                model.PurchaseMonth,
+                model.PurchaseDay,
+                model.Cost,
+                model.Value,
+                model.Source),
+            token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View(model);
+        }
+
+        return await Continue(new { id, projectId });
+    }
+
+    [HttpGet("{projectId}/grant-funding-exists")]
+    [WorkflowState(ProjectState.GrantFunding)]
+    public async Task<IActionResult> GrantFundingExists(Guid id, Guid projectId)
     {
         var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
 

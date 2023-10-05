@@ -2,7 +2,7 @@
 @using HE.InvestmentLoans.Contract.Projects;
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
-    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.Name));
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel.Name));
 }
 
 <gds-div-grid-column-two-thirds>

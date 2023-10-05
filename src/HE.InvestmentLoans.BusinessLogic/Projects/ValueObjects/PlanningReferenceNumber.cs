@@ -15,7 +15,7 @@ public class PlanningReferenceNumber : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(ProjectName), ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.PlanningReferenceNumber))
+                .AddValidationError(nameof(PlanningReferenceNumber), ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.PlanningReferenceNumber))
                 .CheckErrors();
         }
 

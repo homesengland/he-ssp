@@ -37,4 +37,16 @@ public class ProjectViewModel
     public string? Ownership { get; set; }
 
     public string? CheckAnswers { get; set; }
+
+    public string? PurchaseDay { get; set; }
+
+    public string? PurchaseMonth { get; set; }
+
+    public string? PurchaseYear { get; set; }
+
+    public string? Cost { get; set; }
+
+    public string? Value { get; set; }
+
+    public string? Source { get; set; }
 }

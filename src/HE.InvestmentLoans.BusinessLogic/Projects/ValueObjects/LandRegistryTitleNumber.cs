@@ -12,14 +12,14 @@ public class LandRegistryTitleNumber : ValueObject
         if (value.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError(nameof(LandRegistryTitleNumber), ValidationErrorMessage.EnterLandRegistryTitleNumber)
+                .AddValidationError("LocationLandRegistry", ValidationErrorMessage.EnterLandRegistryTitleNumber)
                 .CheckErrors();
         }
 
         if (value!.Length > MaximumInputLength.LongInput)
         {
             OperationResult.New()
-                .AddValidationError(nameof(LandRegistryTitleNumber), ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.LocationLandRegistry))
+                .AddValidationError("LocationLandRegistry", ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.LocationLandRegistry))
                 .CheckErrors();
         }
 
