@@ -36,7 +36,7 @@ public class SiteDetailsRepository : CrmEntityRepository<invln_SiteDetails, Data
         using (var ctx = new OrganizationServiceContext(service))
         {
             return ctx.CreateQuery<invln_SiteDetails>()
-                .Where(x => x.invln_Loanapplication.Id == loanApplicationId.Id).ToList();
+                .Where(x => x.invln_Loanapplication.Id == loanApplicationId.Id && x.StateCode.Value == (int)invln_sitedetailsState.Active).ToList();
         }
     }
 }
