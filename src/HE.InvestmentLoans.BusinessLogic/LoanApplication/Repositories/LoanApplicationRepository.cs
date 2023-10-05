@@ -47,30 +47,10 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
 
-        return new LoanApplicationEntity(id, userAccount, externalStatus, loanApplicationDto.LastModificationOn, FundingPurposeMapper.Map(loanApplicationDto.fundingReason))
+        return new LoanApplicationEntity(id, userAccount, externalStatus, FundingPurposeMapper.Map(loanApplicationDto.fundingReason), null, loanApplicationDto.LastModificationOn)
         {
             LegacyModel = LoanApplicationMapper.Map(loanApplicationDto),
         };
-    }
-
-    public async Task<UserLoanApplication> GetLoanApplicationSubmit(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
-    {
-        var req = new invln_getsingleloanapplicationforaccountandcontactRequest
-        {
-            invln_accountid = userAccount.AccountId.ToString(),
-            invln_externalcontactid = userAccount.UserGlobalId.ToString(),
-            invln_loanapplicationid = id.ToString(),
-        };
-
-        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
-                       ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
-
-        var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
-                        ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
-
-        var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
-
-        return new UserLoanApplication(id, loanApplicationDto.name, externalStatus, null);
     }
 
     public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount, CancellationToken cancellationToken)
@@ -92,6 +72,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
                 LoanApplicationId.From(x.loanApplicationId),
                 x.name,
                 ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
+                x.createdOn,
                 x.LastModificationOn)).ToList();
     }
 
