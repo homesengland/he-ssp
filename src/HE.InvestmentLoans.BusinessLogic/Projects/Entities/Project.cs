@@ -19,7 +19,15 @@ public class Project
         IsNewlyCreated = true;
     }
 
-    public Project(ProjectId id, ProjectName? name, StartDate? startDate, PlanningReferenceNumber? planningReferenceNumber, Coordinates? coordinates, LandRegistryTitleNumber? landRegistryTitleNumber)
+    public Project(
+        ProjectId id,
+        ProjectName? name,
+        StartDate? startDate,
+        PlanningReferenceNumber? planningReferenceNumber,
+        Coordinates? coordinates,
+        LandRegistryTitleNumber? landRegistryTitleNumber,
+        LandOwnership? landOwnership,
+        AdditionalDetails? additionalDetails)
     {
         IsNewlyCreated = false;
 
@@ -29,6 +37,8 @@ public class Project
         PlanningReferenceNumber = planningReferenceNumber;
         Coordinates = coordinates;
         LandRegistryTitleNumber = landRegistryTitleNumber;
+        LandOwnership = landOwnership;
+        AdditionalDetails = additionalDetails;
     }
 
     public ProjectId Id { get; private set; }
@@ -45,6 +55,10 @@ public class Project
 
     public LandRegistryTitleNumber? LandRegistryTitleNumber { get; private set; }
 
+    public LandOwnership? LandOwnership { get; private set; }
+
+    public AdditionalDetails? AdditionalDetails { get; private set; }
+
     public bool IsNewlyCreated { get; private set; }
 
     public string? CheckAnswers { get; set; }
@@ -58,8 +72,6 @@ public class Project
     public string? PlanningRefEnter { get; set; }
 
     public string? SitePurchaseFrom { get; set; }
-
-    public bool? Ownership { get; set; }
 
     public string? ManyHomes { get; set; }
 
@@ -155,5 +167,20 @@ public class Project
         }
 
         PlanningPermissionStatus = planningPermissionStatus;
+    }
+
+    public void ProvideLandOwnership(LandOwnership landOwnership)
+    {
+        LandOwnership = landOwnership;
+
+        if (!LandOwnership.ApplicantHasFullOwnership)
+        {
+            AdditionalDetails = null!;
+        }
+    }
+
+    public void ProvideAdditionalData(AdditionalDetails additionalDetails)
+    {
+        AdditionalDetails = additionalDetails;
     }
 }

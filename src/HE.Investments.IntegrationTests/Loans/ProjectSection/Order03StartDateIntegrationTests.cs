@@ -67,7 +67,7 @@ public class Order03StartDateIntegrationTests : IntegrationTest
             .HasOneValidationMessages(ValidationErrorMessage.InvalidStartDate);
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = "Many homes view not implemented yet")]
     [Order(3)]
     public async Task Order03_ShouldRedirectToManyHomes_WhenYesIsSelectedAndValidStartDateIsProvided()
     {

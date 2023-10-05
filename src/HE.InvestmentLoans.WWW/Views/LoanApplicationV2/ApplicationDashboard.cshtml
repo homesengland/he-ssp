@@ -1,5 +1,4 @@
 @using HE.InvestmentLoans.Common.Extensions
-@using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 @model ApplicationDashboardModel
 
 <gds-back-link href="@Url.Action("Dashboard", "Home")" text="Back to account homepage" class="govuk-grid-column-full"></gds-back-link>
@@ -26,7 +25,7 @@
             </p>
         </gds-div-grid-column-two-thirds>
     </div>
-    <div class="govuk-grid-column-one-third">
+    <div class="govuk-grid-column-one-third govuk-!-padding-left-0">
 
         <nav class="moj-side-navigation">
             <ul class="moj-side-navigation__list">
@@ -52,25 +51,5 @@
         {
             @await Html.PartialAsync("ApplicationDashboard/_ApplicationDashboardSupportingDocuments", Model.Data.ApplicationId)
         }
-
-        <div class="govuk-!-margin-top-8">
-            <gds-h3 size="ControlSize.M">Request to put your application on hold</gds-h3>
-            <gds-p>
-                You can hold your application for as long as needed.
-            </gds-p>
-            <a class="govuk-button govuk-button--secondary" data-module="govuk-button" href="@Url.Action("", "LoanApplicationV2", new { id = Model.Data.ApplicationId })">
-                Hold application
-            </a>
-        </div>
-
-        <div class="govuk-!-margin-top-8">
-            <gds-h3 size="ControlSize.M">Withdraw your application</gds-h3>
-            <gds-p>
-                To withdraw your application, and notify Homes England that you no longer wish to proceed, click below.
-            </gds-p>
-            <a class="govuk-button govuk-button--warning" data-module="govuk-button" href="@Url.Action("Withdraw", "LoanApplicationV2", new { id = Model.Data.ApplicationId })">
-                Withdraw application
-            </a>
-        </div>
     </div>
 </div>

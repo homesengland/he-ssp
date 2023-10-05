@@ -14,13 +14,6 @@ public class GetByCompaniesHouseNumberTests : TestBase<OrganisationSearchService
 {
     private GetOrganizationByCompaniesHouseNumberResult _response;
 
-    private readonly Mock<IOrganizationCrmSearchService> _organizationCrmSearchServiceMock;
-
-    public GetByCompaniesHouseNumberTests()
-    {
-        _organizationCrmSearchServiceMock = new Mock<IOrganizationCrmSearchService>();
-    }
-
     [Fact]
     public async Task Fail_WhenCompanyHousesReturnsError()
     {
@@ -94,14 +87,12 @@ public class GetByCompaniesHouseNumberTests : TestBase<OrganisationSearchService
 
     private void GivenThatCrmReturns(params OrganizationDetailsDto[] organizationsToReturn)
     {
-        _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrmByCompanyHouseNumber(It.IsAny<IEnumerable<string>>()))
-            .ReturnsAsync(organizationsToReturn.ToList());
+        OrganizationCrmSearchServiceTestBuilder.New().ByCompanyHouseNumberReturns(organizationsToReturn).Register(this);
     }
 
     private void GivenThatCrmReturnsNothing()
     {
-        _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrmByCompanyHouseNumber(It.IsAny<IEnumerable<string>>()))
-            .ReturnsAsync(Array.Empty<OrganizationDetailsDto>());
+        OrganizationCrmSearchServiceTestBuilder.New().ByCompanyHouseNumberReturnsNothing().Register(this);
     }
 
     private void GivenThatComanyHousesReturnsNothing()
@@ -121,7 +112,6 @@ public class GetByCompaniesHouseNumberTests : TestBase<OrganisationSearchService
 
     private async Task WhenGettingOrganizationByCompaniesHouseNumber()
     {
-        RegisterDependency(_organizationCrmSearchServiceMock.Object);
         _response = await TestCandidate.GetByCompaniesHouseNumber("any number", CancellationToken.None);
     }
 

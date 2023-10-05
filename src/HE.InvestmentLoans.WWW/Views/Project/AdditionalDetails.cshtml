@@ -1,0 +1,147 @@
+@using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+@using HE.InvestmentLoans.Contract.Projects.ViewModels;
+@using HE.InvestmentLoans.Contract.Projects;
+@using He.AspNetCore.Mvc.Gds.Components.Enums
+@model ProjectViewModel;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+    var (dateInputInvalid, dateInputErrors) = @ViewData.ModelState.GetErrors(nameof(PurchaseDate));
+
+    var (dayInputInvalid, dayInputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.PurchaseDay));
+    var (monthInputInvalid, monthInputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.PurchaseMonth));
+    var (yearInputInvalid, yearInputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.PurchaseYear));
+
+    var isDateFormInvalid = dateInputInvalid || dayInputInvalid || monthInputInvalid || yearInputInvalid;
+    var errorsList = new string[] { dateInputErrors, dayInputErrors, monthInputErrors, yearInputErrors };
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Project" asp-action="AdditionalDetails" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.Additional})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set role="group">
+            <gds-div-form-group>
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>
+                        @ProjectPageTitles.AdditionalDetails
+                    </gds-fieldset-heading>
+                </gds-legend>
+                <gds-div-hint>
+                    The land can include any buildings to be redeveloped or refurbished.
+                </gds-div-hint>
+
+                <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=@isDateFormInvalid>
+                    <gds-legend size="ControlSize.S">
+                        When was this land purchased?
+                    </gds-legend>
+                    <gds-div-hint>
+                        If you have purchased multiple areas of land, enter the most recent purchase date.
+                    </gds-div-hint>
+                    <gds-div-hint>
+                        For example, 27 3 2022
+                    </gds-div-hint>
+
+                    <gds-div-form-group id="PurchaseDate-form-group" invalid=@isDateFormInvalid>
+
+                        @if (isDateFormInvalid)
+                        {
+                            
+                            foreach (var error in errorsList)
+                            {
+                                <p class="govuk-error-message">
+                                    <span class="govuk-visually-hidden">Error:</span> @error
+                                </p>
+                            }
+                        }
+                        <gds-div-date-input id="PurchaseDate">
+                            <gds-div-date-input-item>
+                                <gds-input govuk-formgroup-asp-for="PurchaseDay" name="PurchaseDay"
+                                           type="text"
+                                           asp-autocomplete="on"
+                                           asp-labelclass="govuk-date-input__label"
+                                           asp-labeltext="Day"
+                                           asp-excludefieldvalidation="true"
+                                           is-invalid="dayInputInvalid || dateInputInvalid"
+                                           value=@Model.PurchaseDay
+                                           pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-2" />
+                            </gds-div-date-input-item>
+                            <gds-div-date-input-item>
+                                <gds-input govuk-formgroup-asp-for="PurchaseMonth" name="PurchaseMonth"
+                                           type="text"
+                                           asp-autocomplete="on"
+                                           asp-hiddenlabeltext=""
+                                           asp-labelclass="govuk-date-input__label"
+                                           asp-labeltext="Month"
+                                           asp-excludefieldvalidation="true"
+                                           is-invalid="monthInputInvalid || dateInputInvalid"
+                                           value=@Model.PurchaseMonth
+                                           pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-2" />
+                            </gds-div-date-input-item>
+                            <gds-div-date-input-item>
+                                <gds-input govuk-formgroup-asp-for="PurchaseYear" name="PurchaseYear"
+                                           type="text"
+                                           asp-autocomplete="on"
+                                           asp-hiddenlabeltext=""
+                                           asp-labelclass="govuk-date-input__label"
+                                           asp-labeltext="Year"
+                                           asp-excludefieldvalidation="true"
+                                           is-invalid="yearInputInvalid || dateInputInvalid"
+                                           value=@Model.PurchaseYear
+                                           pattern="[0-9]*" inputmode="numeric" class="govuk-date-input__input govuk-input--width-4" />
+                            </gds-div-date-input-item>
+                        </gds-div-date-input>
+                    </gds-div-form-group>
+                </gds-field-set>
+
+                <gds-field-set class="govuk-!-margin-bottom-6" role="group">
+                    <legend>
+                        <gds-label for="Cost" size="ControlSize.S">
+                            What was the purchase cost of the land?
+                        </gds-label>
+                    </legend>
+                    <gds-div-hint>
+                        If there are multiple land areas, include the combined purchase value.
+                    </gds-div-hint>
+                    <gds-div-hint>
+                        If you do not know, enter the nearest estimate.
+                    </gds-div-hint>
+                    <gds-input govuk-formgroup-asp-for="Cost" type="text" asp-excludelabel
+                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.Cost />
+                </gds-field-set>
+
+                <gds-field-set class="govuk-!-margin-bottom-6" role="group">
+                    <legend>
+                        <gds-label for="Value" size="ControlSize.S">
+                            What is the current value of the land?
+                        </gds-label>
+                    </legend>
+                    <gds-div-hint>
+                        If you do not know, enter the nearest estimate.
+                    </gds-div-hint>
+
+                    <gds-input govuk-formgroup-asp-for="Value" type="text" asp-excludelabel
+                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.Value />
+                </gds-field-set>
+
+                <gds-field-set class="govuk-!-margin-bottom-6" role="group">
+                    <gds-legend size="ControlSize.S">
+                        What is the source of this valuation?
+                    </gds-legend>
+                    <gds-radio govuk-formgroup-asp-for="Source" asp-isexcludeheader
+                               asp-selectlistitems="TemporaryFormOptions.SiteAdditionalSource">
+                    </gds-radio>
+                </gds-field-set>
+            </gds-div-form-group>
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Continue
+            </button>
+
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>
