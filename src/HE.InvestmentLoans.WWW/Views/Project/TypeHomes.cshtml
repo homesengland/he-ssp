@@ -22,7 +22,7 @@
                     Select all that apply.
                 </gds-div-hint>
 
-                <gds-checkbox govuk-formgroup-asp-for="@Model.HomesTypes"
+                <gds-checkbox govuk-formgroup-asp-for="@Model.HomeTypes"
                               asp-selectlistitems="TemporaryFormOptions.SiteTypeHomesCheckbox"
                               asp-haschildcheckboxs="false"
                               asp-ischeckboxgroup="true"
@@ -31,7 +31,7 @@
                               asp-condtionalprimaryindexes="4">
 
                     <gds-div-form-group>
-                        <gds-input title="Other" govuk-formgroup-asp-for="@Model.OtherHomeTypes" class="govuk-!-width-two-third" type="text" value=@Model?.OtherHomeTypes asp-excludelabel/>
+                        <gds-input title="Other" govuk-formgroup-asp-for="@Model.OtherHomeType" class="govuk-!-width-two-third" type="text" value=@Model?.OtherHomeType asp-excludelabel/>
                     </gds-div-form-group>
                 </gds-checkbox>
 

@@ -15,13 +15,14 @@ public class Project
         IsNewlyCreated = true;
     }
 
-    public Project(ProjectId id, ProjectName name, StartDate startDate, HomesCount homesCount, HomesTypes homesTypes, ProjectType projectType)
+    public Project(ProjectId id, ProjectName name, StartDate startDate, HomesCount homesCount, HomeTypes homesTypes, OtherHomeType otherHomeType, ProjectType projectType)
     {
         Id = id;
         Name = name;
         StartDate = startDate;
         HomesCount = homesCount;
-        HomesTypes = homesTypes;
+        HomeTypes = homesTypes;
+        OtherHomeType = otherHomeType;
         ProjectType = projectType;
 
         IsNewlyCreated = false;
@@ -35,9 +36,17 @@ public class Project
 
     public HomesCount HomesCount { get; private set; }
 
-    public HomesTypes HomesTypes { get; private set; }
+    public HomeTypes HomeTypes { get; private set; }
+
+    public OtherHomeType OtherHomeType { get; private set; }
 
     public ProjectType ProjectType { get; private set; }
+
+    public ChargesDebt ChargesDebt { get; private set; }
+
+    public ChargesDebtInfo ChargesDebtInfo { get; private set; }
+
+    public AffordableHomes AffordableHomes { get; private set; }
 
     public bool IsNewlyCreated { get; private set; }
 
@@ -45,7 +54,7 @@ public class Project
 
     public string? NameLegacy { get; set; }
 
-    public string? AffordableHomes { get; set; }
+    public string? AffordableHomesLegacy { get; set; }
 
     public bool? PlanningRef { get; set; }
 
@@ -55,15 +64,15 @@ public class Project
 
     public bool? Ownership { get; set; }
 
-    public string? ManyHomes { get; set; }
+    public string? ManyHomesLegacy { get; set; }
 
     public string? GrantFunding { get; set; }
 
     public string? TitleNumber { get; set; }
 
-    public string[]? TypeHomes { get; set; }
+    public string[]? TypeHomesLegacy { get; set; }
 
-    public string? TypeHomesOther { get; set; }
+    public string? TypeHomesOtherLegacy { get; set; }
 
     public string? HomesToBuild { get; set; }
 
@@ -101,9 +110,9 @@ public class Project
 
     public string? Type { get; set; }
 
-    public bool? ChargesDebt { get; set; }
+    public bool? ChargesDebtLegacy { get; set; }
 
-    public string? ChargesDebtInfo { get; set; }
+    public string? ChargesDebtInfoLegacy { get; set; }
 
     public bool IsSoftDeleted { get; private set; }
 
@@ -124,14 +133,26 @@ public class Project
         HomesCount = homesCount;
     }
 
-    public void ProvideHomesTypes(HomesTypes homesTypes)
+    public void ProvideHomesTypes(HomeTypes homeTypes, OtherHomeType otherHomeType)
     {
-        HomesTypes = homesTypes;
+        HomeTypes = homeTypes;
+        OtherHomeType = otherHomeType;
     }
 
     public void ProvideProjectType(ProjectType projectType)
     {
         ProjectType = projectType;
+    }
+
+    public void ProvideChargesDebt(ChargesDebt chargesDebt, ChargesDebtInfo chargesDebtInfo)
+    {
+        ChargesDebt = chargesDebt;
+        ChargesDebtInfo = chargesDebtInfo;
+    }
+
+    public void ProvideAffordableHomes(AffordableHomes affordableHomes)
+    {
+        AffordableHomes = affordableHomes;
     }
 
     public void MarkAsDeleted()

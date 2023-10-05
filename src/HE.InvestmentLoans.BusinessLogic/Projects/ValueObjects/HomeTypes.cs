@@ -10,16 +10,16 @@ using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Validation;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
-public class HomesTypes : ValueObject
+public class HomeTypes : ValueObject
 {
-    public HomesTypes(string[] value)
+    public HomeTypes(string[] value)
     {
         if (value.IsNotProvided())
         {
             // TODO
             OperationResult
                 .New()
-                .AddValidationError(nameof(HomesTypes), ValidationErrorMessage.ProjectNameIsEmpty)
+                .AddValidationError(nameof(HomeTypes), ValidationErrorMessage.ProjectNameIsEmpty)
                 .CheckErrors();
         }
 
@@ -28,7 +28,7 @@ public class HomesTypes : ValueObject
             // TODO
             OperationResult
                 .New()
-                .AddValidationError(nameof(HomesTypes), ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.ProjectName))
+                .AddValidationError(nameof(HomeTypes), ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.ProjectName))
                 .CheckErrors();
         }
 

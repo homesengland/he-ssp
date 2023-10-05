@@ -77,7 +77,8 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                 projectFromCrm.Name.IsNotProvided() ? null! : new ProjectName(projectFromCrm.Name),
                 null!,
                 projectFromCrm.numberOfHomes.IsNotProvided() ? null! : new HomesCount(projectFromCrm.numberOfHomes),
-                projectFromCrm.typeOfHomes.IsNotProvided() ? null! : new HomesTypes(projectFromCrm.typeOfHomes),
+                projectFromCrm.typeOfHomes.IsNotProvided() ? null! : new HomeTypes(projectFromCrm.typeOfHomes),
+                projectFromCrm.otherTypeOfHomes.IsNotProvided() ? null!: new OtherHomeType(projectFromCrm.otherTypeOfHomes),
                 projectFromCrm.typeOfSite.IsNotProvided() ? null! : new ProjectType(projectFromCrm.typeOfSite)));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
@@ -104,9 +105,9 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         return new Project
         {
             NameLegacy = projectFromCrm.siteName,
-            ManyHomes = projectFromCrm.numberOfHomes,
-            TypeHomes = projectFromCrm.typeOfHomes,
-            TypeHomesOther = projectFromCrm.otherTypeOfHomes,
+            ManyHomesLegacy = projectFromCrm.numberOfHomes,
+            TypeHomesLegacy = projectFromCrm.typeOfHomes,
+            TypeHomesOtherLegacy = projectFromCrm.otherTypeOfHomes,
             Type = projectFromCrm.typeOfSite,
             PlanningRef = projectFromCrm.haveAPlanningReferenceNumber,
             PlanningRefEnter = projectFromCrm.planningReferenceNumber,
@@ -121,9 +122,9 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             GrantFundingAmount = projectFromCrm.howMuch,
             GrantFundingName = projectFromCrm.nameOfGrantFund,
             GrantFundingPurpose = projectFromCrm.reason,
-            ChargesDebt = projectFromCrm.existingLegalCharges,
-            ChargesDebtInfo = projectFromCrm.existingLegalChargesInformation,
-            AffordableHomes = projectFromCrm.numberOfAffordableHomes,
+            ChargesDebtLegacy = projectFromCrm.existingLegalCharges,
+            ChargesDebtInfoLegacy = projectFromCrm.existingLegalChargesInformation,
+            AffordableHomesLegacy = projectFromCrm.numberOfAffordableHomes,
         };
     }
 

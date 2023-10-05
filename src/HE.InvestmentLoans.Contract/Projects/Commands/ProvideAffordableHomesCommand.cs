@@ -8,4 +8,4 @@ using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using MediatR;
 
 namespace HE.InvestmentLoans.Contract.Projects.Commands;
-public record ProvideHomesTypesCommand(LoanApplicationId LoanApplicationId, ProjectId ProjectId, string[] HomesTypes) : IRequest<OperationResult>;
+public record ProvideAffordableHomesCommand(LoanApplicationId LoanApplicationId, ProjectId ProjectId, string AffordableHomes) : IRequest<OperationResult>;

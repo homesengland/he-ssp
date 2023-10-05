@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,25 +13,30 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
-public class ProvideHomeTypesCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideHomeTypesCommand, OperationResult>
+public class ProvideChargesDebtCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideChargesDebtCommand, OperationResult>
 {
-    public ProvideHomeTypesCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger)
+    public ProvideChargesDebtCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger)
         : base(repository, loanUserContext, logger)
     {
     }
 
-    public async Task<OperationResult> Handle(ProvideHomeTypesCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(ProvideChargesDebtCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
             project =>
             {
-                if (request.HomeTypes.IsNotProvided())
+                if (request.ChargesDebt.IsNotProvided())
+                {
+                    return;
+                }
+
+                if(request.ChargesDebtInfo.IsNotProvided())
                 {
                     return;
                 }
 
                 // TODO
-                project.ProvideHomesTypes(new HomeTypes(request.HomeTypes), new OtherHomeType(request.OtherHomeType));
+                project.ProvideChargesDebt(new ChargesDebt(request.ChargesDebt), new ChargesDebtInfo(request.ChargesDebtInfo));
             },
             request.LoanApplicationId,
             request.ProjectId,

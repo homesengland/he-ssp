@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects;
 using Stateless;
 
@@ -50,20 +51,20 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
            .Permit(Trigger.Back, ProjectState.Name)
            .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
-        //_machine.Configure(State.ManyHomes)
-        //    .Permit(Trigger.Continue, State.TypeHomes)
-        //    .Permit(Trigger.Back, State.StartDate)
-        //    .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(ProjectState.ManyHomes)
+            .Permit(Trigger.Continue, ProjectState.TypeHomes)
+            .Permit(Trigger.Back, ProjectState.StartDate)
+            .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
-        //_machine.Configure(State.TypeHomes)
-        //    .Permit(Trigger.Continue, State.Type)
-        //    .Permit(Trigger.Back, State.ManyHomes)
-        //    .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(ProjectState.TypeHomes)
+            .Permit(Trigger.Continue, ProjectState.Type)
+            .Permit(Trigger.Back, ProjectState.ManyHomes)
+            .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
-        //_machine.Configure(State.Type)
-        //    .Permit(Trigger.Continue, State.PlanningRef)
-        //    .Permit(Trigger.Back, State.TypeHomes)
-        //    .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(ProjectState.Type)
+            .Permit(Trigger.Continue, ProjectState.PlanningRef)
+            .Permit(Trigger.Back, ProjectState.TypeHomes)
+            .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
         //_machine.Configure(State.PlanningRef)
         //    .PermitIf(Trigger.Continue, State.PlanningRefEnter, () => _site.PlanningRef == CommonResponse.Yes)
@@ -118,16 +119,16 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
         //    .Permit(Trigger.Back, State.GrantFunding)
         //    .Permit(Trigger.Change, State.CheckAnswers);
 
-        //_machine.Configure(State.ChargesDebt)
-        //    .Permit(Trigger.Continue, State.AffordableHomes)
-        //    .PermitIf(Trigger.Back, State.GrantFundingMore, () => _site.GrantFunding == CommonResponse.Yes)
-        //    .PermitIf(Trigger.Back, State.GrantFunding, () => _site.GrantFunding != CommonResponse.Yes)
-        //    .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(ProjectState.ChargesDebt)
+            .Permit(Trigger.Continue, ProjectState.AffordableHomes)
+            .PermitIf(Trigger.Back, ProjectState.GrantFundingMore) // () => _site.GrantFunding == CommonResponse.Yes)
+            .PermitIf(Trigger.Back, ProjectState.GrantFunding) //, () => _site.GrantFunding != CommonResponse.Yes)
+            .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
-        //_machine.Configure(State.AffordableHomes)
-        //   .Permit(Trigger.Continue, State.CheckAnswers)
-        //   .Permit(Trigger.Back, State.ChargesDebt)
-        //   .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(ProjectState.AffordableHomes)
+           .Permit(Trigger.Continue, ProjectState.CheckAnswers)
+           .Permit(Trigger.Back, ProjectState.ChargesDebt)
+           .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
         //_machine.Configure(State.CheckAnswers)
         //    .PermitIf(Trigger.Continue, State.Complete, () => _site.CheckAnswers == CommonResponse.Yes)
