@@ -8,4 +8,3 @@ public enum CompanyStructureFieldsSet
     GetAllFields,
     SaveAllFields,
 }
-
