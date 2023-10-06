@@ -5,11 +5,12 @@ namespace HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 public class UserLoanApplication : ValueObject
 {
-    public UserLoanApplication(LoanApplicationId id, string applicationName, ApplicationStatus status, DateTime? lastModificationDate)
+    public UserLoanApplication(LoanApplicationId id, string applicationName, ApplicationStatus status, DateTime? createdOn, DateTime? lastModificationDate)
     {
         Id = id;
         ApplicationName = applicationName;
         Status = status;
+        CreatedOn = createdOn;
         LastModificationDate = lastModificationDate;
     }
 
@@ -20,6 +21,8 @@ public class UserLoanApplication : ValueObject
     public ApplicationStatus Status { get; }
 
     public DateTime? LastModificationDate { get; }
+
+    public DateTime? CreatedOn { get; }
 
     protected override IEnumerable<object> GetAtomicValues()
     {

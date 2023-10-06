@@ -100,7 +100,8 @@
     "invln_portalpermissionlevel",
     "invln_sitedetails",
     "invln_webrole",
-    "systemuser"
+    "systemuser",
+    "team"
   ],
   "entityTypesFolder": "..\\Entities",
   "generateActions": true,

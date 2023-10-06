@@ -515,6 +515,11 @@ namespace DataverseModel
 			public const string Referencinglk_systemuser_modifiedonbehalfby = "lk_systemuser_modifiedonbehalfby";
 			public const string Referencinglk_systemuserbase_createdby = "lk_systemuserbase_createdby";
 			public const string Referencinglk_systemuserbase_modifiedby = "lk_systemuserbase_modifiedby";
+			public const string lk_team_createdonbehalfby = "lk_team_createdonbehalfby";
+			public const string lk_team_modifiedonbehalfby = "lk_team_modifiedonbehalfby";
+			public const string lk_teambase_administratorid = "lk_teambase_administratorid";
+			public const string lk_teambase_createdby = "lk_teambase_createdby";
+			public const string lk_teambase_modifiedby = "lk_teambase_modifiedby";
 			public const string MiddleName = "middlename";
 			public const string MobileAlertEMail = "mobilealertemail";
 			public const string MobileOfflineProfileId = "mobileofflineprofileid";
@@ -576,6 +581,7 @@ namespace DataverseModel
 			public const string system_user_contacts = "system_user_contacts";
 			public const string SystemUserId = "systemuserid";
 			public const string Id = "systemuserid";
+			public const string teammembership_association = "teammembership_association";
 			public const string TerritoryId = "territoryid";
 			public const string TerritoryIdName = "territoryidname";
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
@@ -4794,6 +4800,106 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N lk_team_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_team_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Team> lk_team_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Team>("lk_team_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_team_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.Team>("lk_team_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_team_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_team_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_team_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Team> lk_team_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Team>("lk_team_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_team_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.Team>("lk_team_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_team_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_teambase_administratorid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_teambase_administratorid")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Team> lk_teambase_administratorid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Team>("lk_teambase_administratorid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_teambase_administratorid");
+				this.SetRelatedEntities<DataverseModel.Team>("lk_teambase_administratorid", null, value);
+				this.OnPropertyChanged("lk_teambase_administratorid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_teambase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_teambase_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Team> lk_teambase_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Team>("lk_teambase_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_teambase_createdby");
+				this.SetRelatedEntities<DataverseModel.Team>("lk_teambase_createdby", null, value);
+				this.OnPropertyChanged("lk_teambase_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_teambase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_teambase_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Team> lk_teambase_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Team>("lk_teambase_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_teambase_modifiedby");
+				this.SetRelatedEntities<DataverseModel.Team>("lk_teambase_modifiedby", null, value);
+				this.OnPropertyChanged("lk_teambase_modifiedby");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N system_user_accounts
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("system_user_accounts")]
@@ -5090,6 +5196,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("Referenceduser_parent_user");
 				this.SetRelatedEntities<DataverseModel.SystemUser>("user_parent_user", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referenceduser_parent_user");
+			}
+		}
+		
+		/// <summary>
+		/// N:N teammembership_association
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("teammembership_association")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.Team> teammembership_association
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.Team>("teammembership_association", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("teammembership_association");
+				this.SetRelatedEntities<DataverseModel.Team>("teammembership_association", null, value);
+				this.OnPropertyChanged("teammembership_association");
 			}
 		}
 		

@@ -27,14 +27,14 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    private readonly IDateTimeProvider _dateTime;
+    private readonly IDateTimeProvider _timeProvider;
 
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
     public ApplicationProjectsRepository(IHttpContextAccessor httpContextAccessor, IDateTimeProvider dateTime, IOrganizationServiceAsync2 serviceClient)
     {
         _httpContextAccessor = httpContextAccessor;
-        _dateTime = dateTime;
+        _timeProvider = dateTime;
         _serviceClient = serviceClient;
     }
 
@@ -52,7 +52,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
         var projectToDelete = loanApplicationSessionModel.Sites.FirstOrDefault(p => p.Id == projectId) ?? throw new NotFoundException(nameof(SiteViewModel).ToString(), projectId);
 
-        loanApplicationSessionModel!.SetTimestamp(_dateTime.Now);
+        loanApplicationSessionModel!.SetTimestamp(_timeProvider.Now);
         loanApplicationSessionModel!.Sites.Remove(projectToDelete);
 
         _httpContextAccessor.HttpContext?.Session.Set(loanApplicationId.ToString(), loanApplicationSessionModel);
@@ -76,11 +76,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                                  ?? throw new NotFoundException(nameof(ApplicationProjects), loanApplicationId.ToString());
 
         var projectsFromCrm = loanApplicationDto.siteDetailsList.Select(
-            projectFromCrm =>
-            {
-                var additionalDetails = MapAdditionalDetails(projectFromCrm);
-
-                return new Project(
+            projectFromCrm => new Project(
                                 ProjectId.From(projectFromCrm.siteDetailsId),
                                 projectFromCrm.Name.IsProvided() ? new ProjectName(projectFromCrm.Name) : null,
                                 null,
@@ -88,8 +84,9 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                                 projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null,
                                 projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null,
                                 projectFromCrm.siteOwnership.IsProvided() ? new LandOwnership(projectFromCrm.siteOwnership!.Value) : null,
-                                additionalDetails);
-            });
+                                AdditionalDetailsMapper.MapFromCrm(projectFromCrm, _timeProvider.Now),
+                                projectFromCrm.IsProvided() ? GrantFundingStatusMapper.FromString(projectFromCrm.publicSectorFunding) : null,
+                                PublicSectorGrantFundingMapper.MapFromCrm(projectFromCrm)));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
@@ -169,6 +166,11 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                 siteCost = projectToSave.AdditionalDetails?.Cost.ToString(),
                 currentValue = projectToSave.AdditionalDetails?.CurrentValue.ToString(),
                 valuationSource = projectToSave.AdditionalDetails.IsProvided() ? SourceOfValuationMapper.ToString(projectToSave.AdditionalDetails!.SourceOfValuation) : null!,
+                publicSectorFunding = projectToSave.GrantFundingStatus.IsProvided() ? GrantFundingStatusMapper.ToString(projectToSave.GrantFundingStatus!.Value) : null,
+                whoProvided = projectToSave.PublicSectorGrantFunding?.ProviderName?.Value,
+                howMuch = projectToSave.PublicSectorGrantFunding?.Amount?.ToString(),
+                nameOfGrantFund = projectToSave.PublicSectorGrantFunding?.GrantOrFundName?.Value,
+                reason = projectToSave.PublicSectorGrantFunding?.Purpose?.Value,
             };
 
             var req = new invln_updatesinglesitedetailsRequest
@@ -181,22 +183,6 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
             await _serviceClient.ExecuteAsync(req, cancellationToken);
         }
-    }
-
-    private AdditionalDetails MapAdditionalDetails(SiteDetailsDto projectFromCrm)
-    {
-        return AdditionalDetailsExistsIn(projectFromCrm) ?
-            new AdditionalDetails(
-                projectFromCrm.dateOfPurchase.IsProvided() ? new PurchaseDate(new ProjectDate(projectFromCrm.dateOfPurchase!.Value), _dateTime.Now) : null!,
-                projectFromCrm.siteCost.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.siteCost, CultureInfo.InvariantCulture)) : null!,
-                projectFromCrm.currentValue.IsProvided() ? new Pounds(decimal.Parse(projectFromCrm.currentValue, CultureInfo.InvariantCulture)) : null!,
-                SourceOfValuationMapper.FromString(projectFromCrm.valuationSource)!.Value) :
-                null!;
-    }
-
-    private bool AdditionalDetailsExistsIn(SiteDetailsDto projectFromCrm)
-    {
-        return projectFromCrm.dateOfPurchase.IsProvided() && projectFromCrm.siteCost.IsProvided() && projectFromCrm.currentValue.IsProvided() && projectFromCrm.valuationSource.IsProvided();
     }
 
     private IEnumerable<string> CrmSiteNames()
@@ -212,5 +198,10 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         yield return nameof(invln_SiteDetails.invln_Sitecost).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_currentvalue).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Valuationsource).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Publicsectorfunding).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Whoprovided).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Reason).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_HowMuch).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Nameofgrantfund).ToLowerInvariant();
     }
 }

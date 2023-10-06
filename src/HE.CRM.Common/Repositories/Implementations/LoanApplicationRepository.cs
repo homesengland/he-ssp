@@ -51,7 +51,6 @@ namespace HE.CRM.Common.Repositories.Implementations
 	                                <entity name='invln_loanapplication'>"
                                     + fieldsToRetrieve +
                                     @"<filter>
-                                              <condition attribute=""statuscode"" operator=""ne"" value=""858110021"" />
                                               <condition attribute=""statuscode"" operator=""ne"" value=""2"" />
                                               <condition attribute=""invln_account"" operator=""eq"" value=""" + accountId + @""" />
                                               <condition attribute=""invln_loanapplicationid"" operator=""eq"" value=""" + loanApplicationId + @""" />

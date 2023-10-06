@@ -19,15 +19,15 @@
     //     typeHomesList.Add(Model.TypeHomesOther);
     // }
 
-    // var grantFundingMore = new List<string>();
+    var grantFundingMore = new List<string>();
 
-    // if (Model?.GrantFundingName != null)
-    // {
-    //     grantFundingMore.Add($"Previous funding: {Model.GrantFundingSource}");
-    //     grantFundingMore.Add($"Amount: {MoneyLabelHelper.Pounds(Model.GrantFundingAmount)}");
-    //     grantFundingMore.Add($"Name of the grant/found: {Model.GrantFundingName}");
-    //     grantFundingMore.Add($"It was for: {Model.GrantFundingPurpose}");
-    // }
+    if (Model?.GrantFundingProviderName != null)
+    {
+        grantFundingMore.Add($"Previous funding: {Model.GrantFundingProviderName}");
+        grantFundingMore.Add($"Amount: {MoneyLabelHelper.Pounds(Model.GrantFundingAmount)}");
+        grantFundingMore.Add($"Name of the grant/found: {Model.GrantFundingName}");
+        grantFundingMore.Add($"It was for: {Model.GrantFundingPurpose}");
+    }
 
     var additionalProjectDetails = new List<string>();
 
@@ -150,24 +150,26 @@
         })
     }
 
-    @*@await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
-    { "Title", "Public sector grant funding" },
-    { "Value", TemporaryFormOptions.GrantFunding.GetSummaryLabel(Model?.GrantFunding) },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "GrantFunding" }) }
+        { "Title", ProjectFieldNames.GrantFundingExists },
+        { "Value", TemporaryFormOptions.GrantFunding.GetSummaryLabel(Model?.GrantFundingStatus) },
+        { "Link", Url.Action("GrantFundingExists", "Project", new { id = id, redirect = "CheckAnswers" }) },
+        { "LinkId", "grant-funding-exists" },
     })
 
-    @if (Model.GrantFunding == "Yes")
+    @if (Model.GrantFundingStatus == "Yes")
     {
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
         {
-        { "Title", "Additional information" },
+        { "Title", ProjectFieldNames.GrantFunding },
         { "Value", grantFundingMore },
-        { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "GrantFundingMore" }) }
+        { "Link", Url.Action("GrantFunding", "Project", new { id = id, redirect = "CheckAnswers" }) },
+        { "LinkId", "grant-funding" },
         })
     }
 
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    @*@await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
     { "Title", "Legal charges" },
     { "Value", Model?.ChargesDebtInfo != null ? $"{ Model.ChargesDebt }, { Model.ChargesDebtInfo }" : $"{ Model?.ChargesDebt }" },

@@ -59,7 +59,8 @@ invln_portal|
 invln_portalpermissionlevel|
 invln_sitedetails|
 invln_webrole|
-systemuser</EntitiesWhitelist>
+systemuser|
+team</EntitiesWhitelist>
     <EntityAttributeSpecifiedNames />
     <EntityPrefixesToSkip />
     <EntityPrefixesWhitelist />

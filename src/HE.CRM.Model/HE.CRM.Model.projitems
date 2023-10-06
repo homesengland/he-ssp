@@ -55,6 +55,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_SiteDetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Webrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\SystemUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Team.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\activityfileattachment_objectcode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\activitypointer_ActivityTypeCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\activitypointer_DeliveryPriorityCode.cs" />

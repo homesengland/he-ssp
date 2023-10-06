@@ -116,18 +116,17 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             .Permit(Trigger.Continue, ProjectState.GrantFunding)
             .Permit(Trigger.Back, ProjectState.Ownership);
 
-        //_machine.Configure(State.GrantFunding)
-        //   .PermitIf(Trigger.Continue, State.GrantFundingMore, () => _site.GrantFunding == CommonResponse.Yes)
-        //   .PermitIf(Trigger.Continue, State.ChargesDebt, () => _site.GrantFunding != CommonResponse.Yes)
+        _machine.Configure(ProjectState.GrantFunding)
+           .PermitIf(Trigger.Continue, ProjectState.GrantFundingMore, () => _model.GrantFundingStatus == CommonResponse.Yes)
+           .PermitIf(Trigger.Continue, ProjectState.ChargesDebt, () => _model.GrantFundingStatus != CommonResponse.Yes);
         //   .PermitIf(Trigger.Back, State.Additional, () => _site.Ownership == CommonResponse.Yes)
         //   .PermitIf(Trigger.Back, State.Ownership, () => _site.Ownership != CommonResponse.Yes)
         //   .PermitIf(Trigger.Change, State.GrantFundingMore, () => _site.GrantFunding == CommonResponse.Yes)
         //   .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.GrantFunding != CommonResponse.Yes);
 
-        //_machine.Configure(State.GrantFundingMore)
-        //    .Permit(Trigger.Continue, State.ChargesDebt)
-        //    .Permit(Trigger.Back, State.GrantFunding)
-        //    .Permit(Trigger.Change, State.CheckAnswers);
+        _machine.Configure(ProjectState.GrantFundingMore)
+            .Permit(Trigger.Continue, ProjectState.ChargesDebt)
+            .Permit(Trigger.Back, ProjectState.GrantFunding);
 
         //_machine.Configure(State.ChargesDebt)
         //    .Permit(Trigger.Continue, State.AffordableHomes)

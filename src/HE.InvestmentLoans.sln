@@ -58,9 +58,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investment.AHP.Domain", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investment.AHP.Contract", "HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj", "{DD7F96A1-1EB8-4C82-9EEB-9294A620F980}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.InvestmentLoans.Common.Contract", "HE.InvestmentLoans.Common.Contract\HE.InvestmentLoans.Common.Contract.csproj", "{70CEFB8C-A400-45A0-8587-BB967C5166C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.InvestmentLoans.Common.Contract", "HE.InvestmentLoans.Common.Contract\HE.InvestmentLoans.Common.Contract.csproj", "{70CEFB8C-A400-45A0-8587-BB967C5166C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.TestsUtils", "HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj", "{A0214710-D6D8-4712-8A8C-503C1CF89D5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.TestsUtils", "HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj", "{A0214710-D6D8-4712-8A8C-503C1CF89D5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
