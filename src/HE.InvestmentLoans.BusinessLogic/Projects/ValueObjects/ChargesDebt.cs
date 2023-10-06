@@ -13,9 +13,9 @@ using HE.InvestmentLoans.Common.Validation;
 namespace HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 public class ChargesDebt : ValueObject
 {
-    public ChargesDebt(bool exist, string? value)
+    public ChargesDebt(bool exist, string? info)
     {
-        if (exist && value.IsNotProvided())
+        if (exist && info.IsNotProvided())
         {
             OperationResult
                 .New()
@@ -23,7 +23,7 @@ public class ChargesDebt : ValueObject
                 .CheckErrors();
         }
 
-        if (value.IsProvided() && value?.Length >= MaximumInputLength.ShortInput)
+        if (info.IsProvided() && info?.Length >= MaximumInputLength.ShortInput)
         {
             OperationResult
                 .New()
@@ -32,14 +32,14 @@ public class ChargesDebt : ValueObject
         }
 
         Exist = exist;
-        Value = value ?? string.Empty;
+        Info = info ?? string.Empty;
     }
 
     public bool Exist { get; }
 
-    public string Value { get; }
+    public string Info { get; }
 
-    public static ChargesDebt From(string existsString, string? value)
+    public static ChargesDebt From(string existsString, string? info)
     {
         var exists = existsString.MapToNonNullableBool();
 
@@ -48,19 +48,19 @@ public class ChargesDebt : ValueObject
             return new ChargesDebt(exists, null);
         }
 
-        if (value.IsNotProvided())
+        if (info.IsNotProvided())
         {
             OperationResult.New()
                 .AddValidationError(nameof(ChargesDebt), ValidationErrorMessage.EnterExistingLegal)
                 .CheckErrors();
         }
 
-        return new ChargesDebt(exists, value);
+        return new ChargesDebt(exists, info);
     }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Exist;
-        yield return Value;
+        yield return Info;
     }
 }

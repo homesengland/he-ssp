@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,16 +23,7 @@ public class ProvideAffordableHomesCommandHandler : ProjectCommandHandlerBase, I
     public async Task<OperationResult> Handle(ProvideAffordableHomesCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            project =>
-            {
-                if (request.AffordableHomes.IsNotProvided())
-                {
-                    return;
-                }
-
-                // TODO
-                project.ProvideAffordableHomes(new AffordableHomes(request.AffordableHomes));
-            },
+            project => project.ProvideAffordableHomes(new AffordableHomes(request.AffordableHomes)),
             request.LoanApplicationId,
             request.ProjectId,
             cancellationToken);

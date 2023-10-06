@@ -184,7 +184,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                 otherTypeOfHomes = projectToSave.HomesTypes?.OtherHomesTypesValue,
                 typeOfSite = projectToSave.ProjectType?.Value,
                 existingLegalCharges = projectToSave.ChargesDebt?.Exist,
-                existingLegalChargesInformation = projectToSave.ChargesDebt?.Value,
+                existingLegalChargesInformation = projectToSave.ChargesDebt?.Info,
                 numberOfAffordableHomes = projectToSave?.Value,
             };
 

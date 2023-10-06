@@ -45,7 +45,7 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
             OtherHomeTypes = project.HomesTypes?.OtherHomesTypesValue,
             ProjectType = project.ProjectType?.Value,
             ChargesDebt = project.ChargesDebt?.Exist.MapToCommonResponse(),
-            ChargesDebtInfo = project.ChargesDebt?.Value,
+            ChargesDebtInfo = project.ChargesDebt?.Info,
             AffordableHomes = project.AffordableHomes?.Value,
             ApplicationId = applicationProjects.LoanApplicationId.Value,
             PlanningReferenceNumberExists = project.PlanningReferenceNumber?.Exists.MapToCommonResponse(),

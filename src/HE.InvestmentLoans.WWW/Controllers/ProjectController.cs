@@ -168,7 +168,6 @@ public class ProjectController : WorkflowController<ProjectState>
             ModelState.AddValidationErrors(result);
 
             return View("Type", model);
-            return View(model);
         }
 
         return await Continue(new { id, projectId });
