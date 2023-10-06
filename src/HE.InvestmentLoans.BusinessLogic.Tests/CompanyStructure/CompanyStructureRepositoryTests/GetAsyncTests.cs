@@ -30,7 +30,8 @@ public class GetAsyncTests : TestBase<CompanyStructureRepository>
         RegisterDependency(organizationServiceMock);
 
         // when
-        var result = await TestCandidate.GetAsync(loanApplicationId,
+        var result = await TestCandidate.GetAsync(
+            loanApplicationId,
             UserAccountTestData.UserAccountOne,
             CompanyStructureFieldsSet.GetAllFields,
             CancellationToken.None);
@@ -60,7 +61,8 @@ public class GetAsyncTests : TestBase<CompanyStructureRepository>
         RegisterDependency(organizationServiceMock);
 
         // when
-        var result = await TestCandidate.GetAsync(loanApplicationId,
+        var result = await TestCandidate.GetAsync(
+            loanApplicationId,
             UserAccountTestData.UserAccountOne,
             CompanyStructureFieldsSet.GetAllFields,
             CancellationToken.None);

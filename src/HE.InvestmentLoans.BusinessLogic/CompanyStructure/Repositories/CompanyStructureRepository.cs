@@ -27,7 +27,7 @@ public class CompanyStructureRepository : ICompanyStructureRepository
         _appConfig = appConfig;
     }
 
-    public async Task<CompanyStructureEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount,CompanyStructureFieldsSet companyStructureFieldsSet, CancellationToken cancellationToken)
+    public async Task<CompanyStructureEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CompanyStructureFieldsSet companyStructureFieldsSet, CancellationToken cancellationToken)
     {
         var fieldsToRetrieve = CompanyStructureCrmFieldNameMapper.Map(companyStructureFieldsSet);
 

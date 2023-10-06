@@ -1,7 +1,7 @@
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.CRM.Model;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
+namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 public class ApplicationStatusMapper
 {
     public static int MapToCrmStatus(ApplicationStatus status)

@@ -36,7 +36,8 @@ public class GetCompanyStructureQueryHandlerTests : TestBase<GetCompanyStructure
             .BuildMockAndRegister(this);
 
         // when
-        var result = await TestCandidate.Handle(new GetCompanyStructureQuery(loanApplicationId, CompanyStructureFieldsSet.GetAllFields),
+        var result = await TestCandidate.Handle(
+            new GetCompanyStructureQuery(loanApplicationId, CompanyStructureFieldsSet.GetAllFields),
             CancellationToken.None);
 
         // then

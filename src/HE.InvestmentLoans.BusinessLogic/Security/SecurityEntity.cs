@@ -9,8 +9,13 @@ namespace HE.InvestmentLoans.BusinessLogic.Security;
 
 public class SecurityEntity
 {
-    public SecurityEntity(LoanApplicationId applicationId, Debenture debenture, DirectorLoans directLoans, DirectorLoansSubordinate directorLoansSubordinate,
-        SectionStatus status, ApplicationStatus loanApplicationStatus)
+    public SecurityEntity(
+        LoanApplicationId applicationId,
+        Debenture debenture,
+        DirectorLoans directLoans,
+        DirectorLoansSubordinate directorLoansSubordinate,
+        SectionStatus status,
+        ApplicationStatus loanApplicationStatus)
     {
         LoanApplicationId = applicationId;
         Debenture = debenture;

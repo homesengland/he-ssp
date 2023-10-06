@@ -15,7 +15,8 @@ internal sealed class SecurityEntityTestBuilder
         _entity = entity;
     }
 
-    public static SecurityEntityTestBuilder New() => new(new SecurityEntity(LoanApplicationIdTestData.LoanApplicationIdOne,
+    public static SecurityEntityTestBuilder New() => new(new SecurityEntity(
+        LoanApplicationIdTestData.LoanApplicationIdOne,
         null!,
         null!,
         null!,
