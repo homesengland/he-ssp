@@ -18,4 +18,9 @@ public class SharepointFileUploadModel
 
     [Required]
     public IFormFile File { get; set; }
+
+    [Required]
+    public string Metadata { get; set; }
+
+    public bool? Overwrite{ get; set; }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using HE.DocumentService.SharePoint.Configurartion;
+using HE.DocumentService.SharePoint.Constants;
 using HE.DocumentService.SharePoint.Exceptions;
 using HE.DocumentService.SharePoint.Extensions;
 using HE.DocumentService.SharePoint.Interfaces;
@@ -13,6 +14,7 @@ using HE.DocumentService.SharePoint.Models.File;
 using HE.DocumentService.SharePoint.Models.Table;
 using Microsoft.Graph;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.News.DataModel;
 using File = Microsoft.SharePoint.Client.File;
 
 namespace HE.DocumentService.SharePoint.Services;
@@ -65,7 +67,7 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
                 item => item["Modified"],
                 item => item["File_x0020_Size"]),
                 items => items.ListItemCollectionPosition);
-        _spContext.Load(listItems);
+        //_spContext.Load(listItems);
         await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
 
 #pragma warning disable CA2000 // Dispose objects before losing scope
@@ -112,16 +114,28 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
             throw new SharepointException($"Max file size is {Math.Round((double)_spConfig.FileMaxSize / 1024 / 1024, 2)}MB");
         }
 
-        var fci = new FileCreationInformation
+        try
         {
-            ContentStream = new MemoryStream(bytes),
-            Url = item.File.FileName,
-            Overwrite = true
-        };
+            var file = folder.Files.Add(new FileCreationInformation
+            {
+                ContentStream = new MemoryStream(bytes),
+                Url = item.File.FileName,
+                Overwrite = item.Overwrite ?? false
+            });
 
-        folder.Files.Add(fci);
+            var fileFields = file.ListItemAllFields;
 
-        await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
+            fileFields["_ModerationComments"] = item.Metadata;
+            fileFields.Update();
+            await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
+        }
+        catch (ServerException ex)
+        {
+            if (ex.ServerErrorCode == SPErrorCodes.FileAlreadyExists)
+            {
+                throw new SharepointException($"File {item.File.FileName} already exists");
+            }
+        }
     }
 
     private string GetFolderPath(string listName, string folderPath)
