@@ -52,4 +52,13 @@ public class ApplicationProjects
 
         projectToDelete.MarkAsDeleted();
     }
+
+    internal Project Remove(ProjectId projectId)
+    {
+        var projectToRemove = Projects.FirstOrDefault(c => c.Id == projectId) ?? throw new NotFoundException(nameof(Project), projectId.Value);
+
+        projectToRemove.Delete();
+
+        return projectToRemove;
+    }
 }

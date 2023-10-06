@@ -138,51 +138,75 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
         if (projectToSave.IsNewlyCreated)
         {
-            var siteDetails = new SiteDetailsDto
-            {
-                siteDetailsId = projectToSave.Id.Value.ToString(),
-            };
-
-            var req = new invln_createsinglesitedetailRequest
-            {
-                invln_sitedetails = CrmResponseSerializer.Serialize(siteDetails),
-                invln_loanapplicationid = applicationProjects.LoanApplicationId.Value.ToString(),
-            };
-
-            var resp = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_createsinglesitedetailResponse;
+            await CreateNewProject(applicationProjects, projectToSave, cancellationToken);
+        }
+        else if (projectToSave.IsSoftDeleted)
+        {
+            await DeleteProject(projectToSave, cancellationToken);
         }
         else
         {
-            var siteDetails = new SiteDetailsDto
-            {
-                siteDetailsId = projectToSave.Id.Value.ToString(),
-                Name = projectToSave.Name?.Value,
-                haveAPlanningReferenceNumber = projectToSave.PlanningReferenceNumber?.Exists,
-                planningReferenceNumber = projectToSave.PlanningReferenceNumber?.Value,
-                siteCoordinates = projectToSave.Coordinates?.Value,
-                landRegistryTitleNumber = projectToSave.LandRegistryTitleNumber?.Value,
-                siteOwnership = projectToSave.LandOwnership?.ApplicantHasFullOwnership,
-                dateOfPurchase = projectToSave.AdditionalDetails?.PurchaseDate.AsDateTime(),
-                siteCost = projectToSave.AdditionalDetails?.Cost.ToString(),
-                currentValue = projectToSave.AdditionalDetails?.CurrentValue.ToString(),
-                valuationSource = projectToSave.AdditionalDetails.IsProvided() ? SourceOfValuationMapper.ToString(projectToSave.AdditionalDetails!.SourceOfValuation) : null!,
-                publicSectorFunding = projectToSave.GrantFundingStatus.IsProvided() ? GrantFundingStatusMapper.ToString(projectToSave.GrantFundingStatus!.Value) : null,
-                whoProvided = projectToSave.PublicSectorGrantFunding?.ProviderName?.Value,
-                howMuch = projectToSave.PublicSectorGrantFunding?.Amount?.ToString(),
-                nameOfGrantFund = projectToSave.PublicSectorGrantFunding?.GrantOrFundName?.Value,
-                reason = projectToSave.PublicSectorGrantFunding?.Purpose?.Value,
-            };
-
-            var req = new invln_updatesinglesitedetailsRequest
-            {
-                invln_sitedetail = CrmResponseSerializer.Serialize(siteDetails),
-                invln_loanapplicationid = applicationProjects.LoanApplicationId.Value.ToString(),
-                invln_fieldstoupdate = string.Join(",", CrmSiteNames()),
-                invln_sitedetailsid = projectId.ToString(),
-            };
-
-            await _serviceClient.ExecuteAsync(req, cancellationToken);
+            await UpdateProject(applicationProjects, projectId, projectToSave, cancellationToken);
         }
+    }
+
+    private async Task DeleteProject(Project projectToDelete, CancellationToken cancellationToken)
+    {
+        var req = new invln_deletesitedetailsRequest
+        {
+            invln_sitedetailsid = projectToDelete.Id.Value.ToString(),
+        };
+
+        await _serviceClient.ExecuteAsync(req, cancellationToken);
+    }
+
+    private async Task UpdateProject(ApplicationProjects applicationProjects, ProjectId projectId, Project projectToSave, CancellationToken cancellationToken)
+    {
+        var siteDetails = new SiteDetailsDto
+        {
+            siteDetailsId = projectToSave.Id.Value.ToString(),
+            Name = projectToSave.Name?.Value,
+            haveAPlanningReferenceNumber = projectToSave.PlanningReferenceNumber?.Exists,
+            planningReferenceNumber = projectToSave.PlanningReferenceNumber?.Value,
+            siteCoordinates = projectToSave.Coordinates?.Value,
+            landRegistryTitleNumber = projectToSave.LandRegistryTitleNumber?.Value,
+            siteOwnership = projectToSave.LandOwnership?.ApplicantHasFullOwnership,
+            dateOfPurchase = projectToSave.AdditionalDetails?.PurchaseDate.AsDateTime(),
+            siteCost = projectToSave.AdditionalDetails?.Cost.ToString(),
+            currentValue = projectToSave.AdditionalDetails?.CurrentValue.ToString(),
+            valuationSource = projectToSave.AdditionalDetails.IsProvided() ? SourceOfValuationMapper.ToString(projectToSave.AdditionalDetails!.SourceOfValuation) : null!,
+            publicSectorFunding = projectToSave.GrantFundingStatus.IsProvided() ? GrantFundingStatusMapper.ToString(projectToSave.GrantFundingStatus!.Value) : null,
+            whoProvided = projectToSave.PublicSectorGrantFunding?.ProviderName?.Value,
+            howMuch = projectToSave.PublicSectorGrantFunding?.Amount?.ToString(),
+            nameOfGrantFund = projectToSave.PublicSectorGrantFunding?.GrantOrFundName?.Value,
+            reason = projectToSave.PublicSectorGrantFunding?.Purpose?.Value,
+        };
+
+        var req = new invln_updatesinglesitedetailsRequest
+        {
+            invln_sitedetail = CrmResponseSerializer.Serialize(siteDetails),
+            invln_loanapplicationid = applicationProjects.LoanApplicationId.Value.ToString(),
+            invln_fieldstoupdate = string.Join(",", CrmSiteNames()),
+            invln_sitedetailsid = projectId.ToString(),
+        };
+
+        await _serviceClient.ExecuteAsync(req, cancellationToken);
+    }
+
+    private async Task CreateNewProject(ApplicationProjects applicationProjects, Project projectToSave, CancellationToken cancellationToken)
+    {
+        var siteDetails = new SiteDetailsDto
+        {
+            siteDetailsId = projectToSave.Id.Value.ToString(),
+        };
+
+        var req = new invln_createsinglesitedetailRequest
+        {
+            invln_sitedetails = CrmResponseSerializer.Serialize(siteDetails),
+            invln_loanapplicationid = applicationProjects.LoanApplicationId.Value.ToString(),
+        };
+
+        await _serviceClient.ExecuteAsync(req, cancellationToken);
     }
 
     private IEnumerable<string> CrmSiteNames()

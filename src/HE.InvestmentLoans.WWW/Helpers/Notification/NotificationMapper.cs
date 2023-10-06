@@ -9,7 +9,7 @@ public static class NotificationMapper
         return bodyType switch
         {
             NotificationBodyType.WithdrawApplication => NotificationBody.ApplicationWithdrawnWithName(valueToDisplay),
-            NotificationBodyType.DeleteProject => string.Empty,
+            NotificationBodyType.DeleteProject => NotificationBody.ProjectRemoved(valueToDisplay),
             _ => string.Empty,
         };
     }
