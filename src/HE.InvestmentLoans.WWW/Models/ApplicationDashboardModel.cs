@@ -20,10 +20,4 @@ public class ApplicationDashboardModel
         var statusesAllowedForWithdraw = ApplicationStatusDivision.GetAllStatusesAllowedForWithdraw();
         return statusesAllowedForWithdraw.Contains(LoanApplicationStatus);
     }
-
-    public bool IsReadonly()
-    {
-        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
-        return readonlyStatuses.Contains(LoanApplicationStatus);
-    }
 }
