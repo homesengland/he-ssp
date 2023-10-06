@@ -70,4 +70,12 @@ public class CompaniesHouseApiTestBuilder : TestObjectBuilder<ICompaniesHouseApi
 
         return this;
     }
+
+    public CompaniesHouseApiTestBuilder SearchReturnsTotalOrganizations(PagingQueryParams pagingQueryParams, int numberOfOrganizations)
+    {
+        Mock.Setup(c => c.Search(It.IsAny<string>(), pagingQueryParams, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(CompaniesHouseSearchResult.New(Enumerable.Empty<CompanyDetailsItem>().ToList(), numberOfOrganizations));
+
+        return this;
+    }
 }

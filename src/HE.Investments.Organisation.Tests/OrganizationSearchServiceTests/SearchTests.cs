@@ -215,7 +215,7 @@ public class SearchTests : TestBase<OrganisationSearchService>
     }
 
     [Fact]
-    public async Task ShouldNotReturnSpvCompanies_WhenThereAreOnTwoPAges()
+    public async Task ShouldNotReturnSpvCompanies_WhenThereAreOnTwoPages()
     {
         // given
         var spvCompany1 = OrganizationDetailsDtoTestBuilder.NewSpvCompany("CRM1").Build();

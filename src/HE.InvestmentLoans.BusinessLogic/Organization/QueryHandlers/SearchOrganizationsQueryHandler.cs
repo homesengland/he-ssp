@@ -29,7 +29,7 @@ internal class SearchOrganizationsQueryHandler : IRequestHandler<SearchOrganizat
         var viewmodel = new OrganizationViewModel
         {
             Organizations = companyHousesResult.Items
-            .Select(c => new OrganizationBasicDetails(c.Name, c.Street, c.City, c.PostalCode, c.CompanyNumber)),
+            .Select(c => new OrganizationBasicDetails(c.Name, c.Street, c.City, c.PostalCode, c.CompanyNumber, c.OrganisationId)),
             Name = request.SearchPhrase,
             TotalOrganizations = companyHousesResult.TotalItems,
             Page = request.Page,

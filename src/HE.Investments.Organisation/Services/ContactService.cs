@@ -98,10 +98,11 @@ public class ContactService : IContactService
         return Task.FromResult<ContactRolesDto?>(null);
     }
 
-    public Task<Guid> LinkContactWithOrganization(IOrganizationServiceAsync2 service, string contactExternalId, string organizationNumber, string portalType)
+    public async Task<Guid> LinkContactWithOrganization(IOrganizationServiceAsync2 service, string contactExternalId, string organizationNumber, string portalType)
     {
         var contact = _contactRepository.GetContactViaExternalId(service, contactExternalId);
-        var organization = _organizationRepository.GetOrganizationViaCompanyHouseNumber(service, organizationNumber);
+        var organization = await _organizationRepository.SearchForOrganizationsByOrganizationId(service, organizationNumber);
+        organization ??= _organizationRepository.GetOrganizationViaCompanyHouseNumber(service, organizationNumber);
         var defaultRole = _webRoleRepository.GetDefaultPortalRoles(service, portalType);
         var contactWebroleToCreate = new Entity("invln_contactwebrole")
         {
@@ -112,7 +113,7 @@ public class ContactService : IContactService
                 { "invln_webroleid", defaultRole.First().ToEntityReference() },
             },
         };
-        return Task.FromResult(service.Create(contactWebroleToCreate));
+        return service.Create(contactWebroleToCreate);
     }
 
     private ContactDto MapContactEntityToDto(Entity contact)
