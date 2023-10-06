@@ -154,42 +154,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         }
         else
         {
-            var siteDetails = new SiteDetailsDto
-            {
-                siteDetailsId = projectToSave.Id.Value.ToString(),
-                Name = projectToSave.Name?.Value,
-                haveAPlanningReferenceNumber = projectToSave.PlanningReferenceNumber?.Exists,
-                planningReferenceNumber = projectToSave.PlanningReferenceNumber?.Value,
-                siteCoordinates = projectToSave.Coordinates?.Value,
-                landRegistryTitleNumber = projectToSave.LandRegistryTitleNumber?.Value,
-                siteOwnership = projectToSave.LandOwnership?.ApplicantHasFullOwnership,
-                dateOfPurchase = projectToSave.AdditionalDetails?.PurchaseDate.AsDateTime(),
-                siteCost = projectToSave.AdditionalDetails?.Cost.ToString(),
-                currentValue = projectToSave.AdditionalDetails?.CurrentValue.ToString(),
-                valuationSource = projectToSave.AdditionalDetails.IsProvided() ? SourceOfValuationMapper.ToString(projectToSave.AdditionalDetails!.SourceOfValuation) : null!,
-                publicSectorFunding = projectToSave.GrantFundingStatus.IsProvided() ? GrantFundingStatusMapper.ToString(projectToSave.GrantFundingStatus!.Value) : null,
-                whoProvided = projectToSave.PublicSectorGrantFunding?.ProviderName?.Value,
-                howMuch = projectToSave.PublicSectorGrantFunding?.Amount?.ToString(),
-                nameOfGrantFund = projectToSave.PublicSectorGrantFunding?.GrantOrFundName?.Value,
-                reason = projectToSave.PublicSectorGrantFunding?.Purpose?.Value,
-                numberOfHomes = projectToSave.HomesCount?.Value,
-                typeOfHomes = projectToSave.HomesTypes?.HomesTypesValue,
-                otherTypeOfHomes = projectToSave.HomesTypes?.OtherHomesTypesValue,
-                typeOfSite = projectToSave.ProjectType?.Value,
-                existingLegalCharges = projectToSave.ChargesDebt?.Exist,
-                existingLegalChargesInformation = projectToSave.ChargesDebt?.Info,
-                numberOfAffordableHomes = projectToSave?.Value,
-            };
-
-            var req = new invln_updatesinglesitedetailsRequest
-            {
-                invln_sitedetail = CrmResponseSerializer.Serialize(siteDetails),
-                invln_loanapplicationid = applicationProjects.LoanApplicationId.Value.ToString(),
-                invln_fieldstoupdate = string.Join(",", CrmSiteNames()),
-                invln_sitedetailsid = projectId.ToString(),
-            };
-
-            await _serviceClient.ExecuteAsync(req, cancellationToken);
+            await UpdateProject(applicationProjects, projectId, projectToSave, cancellationToken);
         }
     }
 
@@ -223,6 +188,13 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             howMuch = projectToSave.PublicSectorGrantFunding?.Amount?.ToString(),
             nameOfGrantFund = projectToSave.PublicSectorGrantFunding?.GrantOrFundName?.Value,
             reason = projectToSave.PublicSectorGrantFunding?.Purpose?.Value,
+            numberOfHomes = projectToSave.HomesCount?.Value,
+            typeOfHomes = projectToSave.HomesTypes?.HomesTypesValue,
+            otherTypeOfHomes = projectToSave.HomesTypes?.OtherHomesTypesValue,
+            typeOfSite = projectToSave.ProjectType?.Value,
+            existingLegalCharges = projectToSave.ChargesDebt?.Exist,
+            existingLegalChargesInformation = projectToSave.ChargesDebt?.Info,
+            numberOfAffordableHomes = projectToSave?.Value,
         };
 
         var req = new invln_updatesinglesitedetailsRequest

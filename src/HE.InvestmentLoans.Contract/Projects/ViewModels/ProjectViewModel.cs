@@ -74,5 +74,5 @@ public class ProjectViewModel
 
     public string? CheckAnswers { get; set; }
 
-  public string DeleteProject { get; set; }
+    public string DeleteProject { get; set; }
 }
