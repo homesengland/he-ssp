@@ -31,7 +31,6 @@ public static class ProjectCrmFieldNameMapper
     private static readonly string ChargesDebtInformation = $"{nameof(invln_SiteDetails.invln_Existinglegalchargesinformation).ToLowerInvariant()},";
 
     // private static readonly string ProjectStatus = $"{nameof(invln_SiteDetails.invln_sitedetailscompletionstatus).ToLowerInvariant()}"; // TODO
-
     public static string Map(ProjectFieldsSet projectFieldsSet)
     {
         var result = projectFieldsSet switch

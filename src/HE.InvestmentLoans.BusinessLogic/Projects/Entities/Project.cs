@@ -176,7 +176,8 @@ public class Project
     {
         if (PlanningReferenceNumber.IsNotProvided() || !PlanningReferenceNumber!.Exists)
         {
-            throw new DomainException($"Cannot provide planning permission status because project id: {Id}, has no planning reference number.",
+            throw new DomainException(
+                $"Cannot provide planning permission status because project id: {Id}, has no planning reference number.",
                 LoanApplicationErrorCodes.PlanningReferenceNumberNotExists);
         }
 
@@ -212,7 +213,8 @@ public class Project
     {
         if (GrantFundingStatus != PublicSectorGrantFundingStatus.Received)
         {
-            throw new DomainException($"Cannot provide more information about grant funding that has not been received. Current status: {GrantFundingStatus}",
+            throw new DomainException(
+                $"Cannot provide more information about grant funding that has not been received. Current status: {GrantFundingStatus}",
                 LoanApplicationErrorCodes.GrantFundingNotExists);
         }
 

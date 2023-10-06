@@ -63,7 +63,10 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         return loanApplicationSessionModel;
     }
 
-    public async Task<ApplicationProjects> GetById(LoanApplicationId loanApplicationId, UserAccount userAccount, ProjectFieldsSet projectFieldsSet,
+    public async Task<ApplicationProjects> GetById(
+        LoanApplicationId loanApplicationId,
+        UserAccount userAccount,
+        ProjectFieldsSet projectFieldsSet,
         CancellationToken cancellationToken)
     {
         var fieldsToRetrieve = ProjectCrmFieldNameMapper.Map(projectFieldsSet);
@@ -102,7 +105,11 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
 
-    public async Task<Project> GetById(LoanApplicationId loanApplicationId, ProjectId projectId, UserAccount userAccount, ProjectFieldsSet projectFieldsSet,
+    public async Task<Project> GetById(
+        LoanApplicationId loanApplicationId,
+        ProjectId projectId,
+        UserAccount userAccount,
+        ProjectFieldsSet projectFieldsSet,
         CancellationToken cancellationToken)
     {
         var fieldsToRetrieve = ProjectCrmFieldNameMapper.Map(projectFieldsSet);
