@@ -224,7 +224,6 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         yield return nameof(invln_SiteDetails.invln_TypeofSite).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Existinglegalcharges).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Existinglegalchargesinformation).ToLowerInvariant();
-
-        // yield return nameof(invln_SiteDetails.invln_Affordablehousing).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Affordablehousing).ToLowerInvariant();
     }
 }
