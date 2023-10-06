@@ -30,7 +30,7 @@ public class ProvideStartDateCommandHandler : ProjectCommandHandlerBase, IReques
                     return;
                 }
 
-                project.ProvideStartDate(StartDate.From(request.Exists, request.Day, request.Month, request.Year));
+                project.ProvideStartDate(StartDate.From(request.Exists, request.Year, request.Month, request.Day));
             },
             request.LoanApplicationId,
             request.ProjectId,

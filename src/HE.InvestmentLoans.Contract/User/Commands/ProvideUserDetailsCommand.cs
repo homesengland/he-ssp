@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.Common.Validation;
 using MediatR;
 
 namespace HE.InvestmentLoans.Contract.User.Commands;
@@ -7,4 +8,4 @@ public record ProvideUserDetailsCommand(
     string LastName,
     string JobTitle,
     string TelephoneNumber,
-    string SecondaryTelephoneNumber) : IRequest;
+    string SecondaryTelephoneNumber) : IRequest<OperationResult>;

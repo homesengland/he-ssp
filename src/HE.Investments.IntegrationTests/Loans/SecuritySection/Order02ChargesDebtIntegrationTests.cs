@@ -54,7 +54,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
 
         // when
         var directorLoansPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", TextTestData.TextWithLenght1501 } });
+            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", TextTestData.TextThatExceedsLongInputLimit } });
 
         // then
         directorLoansPage
@@ -91,7 +91,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
 
         // when
         var directorLoansPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", TextTestData.TextWithLenght1000 } });
+            continueButton, new Dictionary<string, string> { { "ChargesDebtCompany", CommonResponse.Yes }, { "ChargesDebtCompanyInfo", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         directorLoansPage

@@ -10,7 +10,7 @@ public class ApplicationStatusMapper
         {
             ApplicationStatus.Draft => (int)invln_externalstatus.Draft,
             ApplicationStatus.ApplicationSubmitted => (int)invln_externalstatus.ApplicationSubmitted,
-            ApplicationStatus.InDueDiligence => (int)invln_externalstatus.Induediligence,
+            ApplicationStatus.InDueDiligence => (int)invln_externalstatus.InDueDiligence,
             ApplicationStatus.ContractSigned => (int)invln_externalstatus.ContractSignedSubjecttoCP,
             ApplicationStatus.CspSatisfied => (int)invln_externalstatus.CPsSatisfied,
             ApplicationStatus.LoanAvailable => (int)invln_externalstatus.LoanAvailable,
@@ -38,7 +38,7 @@ public class ApplicationStatusMapper
         {
             (int)invln_externalstatus.Draft => ApplicationStatus.Draft,
             (int)invln_externalstatus.ApplicationSubmitted => ApplicationStatus.ApplicationSubmitted,
-            (int)invln_externalstatus.Induediligence => ApplicationStatus.InDueDiligence,
+            (int)invln_externalstatus.InDueDiligence => ApplicationStatus.InDueDiligence,
             (int)invln_externalstatus.ContractSignedSubjecttoCP => ApplicationStatus.ContractSigned,
             (int)invln_externalstatus.CPsSatisfied => ApplicationStatus.CspSatisfied,
             (int)invln_externalstatus.LoanAvailable => ApplicationStatus.LoanAvailable,

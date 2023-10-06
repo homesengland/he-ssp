@@ -4,6 +4,8 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
 using HE.CRM.Model.CrmSerializedParameters;
+using HE.CRM.Plugins.Services.GovNotifyEmail;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
+using System.Xml.Linq;
 
 namespace HE.CRM.Plugins.Services.LoanApplication
 {
@@ -30,6 +33,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         private readonly IEnvironmentVariableRepository _environmentVariableRepositoryAdmin;
         private readonly ISystemUserRepository _systemUserRepositoryAdmin;
 
+        private readonly IGovNotifyEmailService _govNotifyEmailService;
+
         #endregion
 
         #region Constructors
@@ -46,6 +51,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             _govNotifyEmailRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IGovNotifyEmailRepository>();
             _environmentVariableRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IEnvironmentVariableRepository>();
             _systemUserRepositoryAdmin = CrmRepositoriesFactory.GetSystem<ISystemUserRepository>();
+
+            _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
         }
 
         #endregion
@@ -120,8 +127,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 _loanApplicationRepository.Update(new invln_Loanapplication()
                 {
                     Id = target.Id,
-                    invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.UnderReview),
-                    StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.UnderReview)
+                    invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationUnderReview),
+                    StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationUnderReview)
                 });
             }
         }
@@ -317,9 +324,18 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 {
                     var projectName = string.Empty;
                     var numberOfHomes = 0;
+                    var isFirst = true;
                     foreach (var siteDetail in relatedSiteDetails)
                     {
-                        projectName += $"{siteDetail.invln_Name}, ";
+                        if (isFirst)
+                        {
+                            projectName += $"{siteDetail.invln_Name}";
+                            isFirst = false;
+                        }
+                        else
+                        {
+                            projectName += $", {siteDetail.invln_Name}";
+                        }
                         numberOfHomes += siteDetail.invln_Numberofhomes ?? 0;
                     }
                     if (projectName.Length > 100)
@@ -341,170 +357,125 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 {
                     case (int)invln_Loanapplication_StatusCode.Draft:
                         statusLabel = "Draft";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "is now being edited by the applicant";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Draft);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApplicationSubmitted:
                         statusLabel = "Application submitted";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationSubmitted);
                         break;
                     case (int)invln_Loanapplication_StatusCode.Inactive:
                         statusLabel = "Inactive";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.NA);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApplicationUnderReview:
                         statusLabel = "Application under review";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationUnderReview);
                         break;
                     case (int)invln_Loanapplication_StatusCode.HoldRequested:
                         statusLabel = "Hold requested";
-                        pastFormStatus = "requested to be put on hold.";
+                        pastFormStatus = "has been requested to be put on hold";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.HoldRequested);
                         break;
                     case (int)invln_Loanapplication_StatusCode.Withdrawn:
                         statusLabel = "Withdrawn";
-                        pastFormStatus = "withdrawn";
+                        pastFormStatus = "has been withdrawn";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Withdrawn);
                         break;
                     case (int)invln_Loanapplication_StatusCode.CashflowRequested:
                         statusLabel = "Cashflow requested";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.CashflowRequested);
                         break;
                     case (int)invln_Loanapplication_StatusCode.CashflowUnderReview:
                         statusLabel = "Cashflow under review";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.CashflowUnderReview);
                         break;
                     case (int)invln_Loanapplication_StatusCode.OnHold:
                         statusLabel = "On hold";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.OnHold);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ReferredBacktoApplicant:
                         statusLabel = "Reffered back to applicant";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ReferredBacktoApplicant);
                         break;
                     case (int)invln_Loanapplication_StatusCode.UnderReview:
                         statusLabel = "Under review";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.UnderReview);
                         break;
                     case (int)invln_Loanapplication_StatusCode.SentforApproval:
                         statusLabel = "Sent for approval";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.SentforApproval);
                         break;
                     case (int)invln_Loanapplication_StatusCode.NotApproved:
                         statusLabel = "Not Approved";
-                        pastFormStatus = "been not approved and has been returned.";
+                        pastFormStatus = "has not been approved and has been returned";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.SentforApproval);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApprovedSubjecttoDueDiligence:
                         statusLabel = "Approved subject to due diligence";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApprovedSubjecttoDueDiligence);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApplicationDeclined:
                         statusLabel = "Application declined";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationDeclined);
                         break;
                     case (int)invln_Loanapplication_StatusCode.InDueDiligence:
-                        statusLabel = "In due diligence";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        statusLabel = "In Due Diligence";
+                        pastFormStatus = "has been returned without approval on Pre-Complete";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
                         break;
                     case (int)invln_Loanapplication_StatusCode.SentforPreCompleteApproval:
-                        statusLabel = "Sent for pre complete approval";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        statusLabel = "Sent for Pre-Complete Approval";
+                        pastFormStatus = "has been sent for Pre-Complete approval";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.InDueDiligence);
                         break;
                     case (int)invln_Loanapplication_StatusCode.ApprovedSubjectToContract:
                         statusLabel = "Approved Subject to Contract";
-                        pastFormStatus = "approved subject to contract.";
+                        pastFormStatus = "has been approved subject to contract";
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApprovedSubjecttoContract);
                         break;
                     case (int)invln_Loanapplication_StatusCode.CPsSatisfied:
                         statusLabel = "CPs Satisfied";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.CPsSatisfied);
                         break;
                     case (int)invln_Loanapplication_StatusCode.AwaitingCPSatisfaction:
                         statusLabel = "Awaiting CP satisfaction";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ContractSignedSubjecttoCP);
                         break;
                     case (int)invln_Loanapplication_StatusCode.LoanAvailable:
                         statusLabel = "Loan available";
-                        pastFormStatus = "changed to " + statusLabel; //TODO: to update
+                        pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.LoanAvailable);
                         break;
                     default:
                         break;
                 }
-
-                var req1 = new invln_sendinternalcrmnotificationRequest()
+                var owner = target.OwnerId ?? preImage.OwnerId;
+                if (owner.LogicalName != Team.EntityLogicalName)
                 {
-                    invln_notificationbody = $"[Application ref no {target.invln_Name ?? preImage.invln_Name} - Status change to '{statusLabel}](?pagetype=entityrecord&etn=invln_loanapplication&id={target.Id})'",
-                    invln_notificationowner = target.OwnerId == null ? preImage.OwnerId.Id.ToString() : target.OwnerId.Id.ToString(),
-                    invln_notificationtitle = "Information",
-                    invln_emailid = "email.todelete@wp.pl",// TODO: delete this parameter
-                };
-                _ = _loanApplicationRepositoryAdmin.ExecuteNotificatioRequest(req1);
-
-                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("INTERNAL_LOAN_APP_STATUS_CHANGE");
-                var emailToCreate = new invln_govnotifyemail()
-                {
-                    OwnerId = target.OwnerId ?? preImage.OwnerId,
-                    RegardingObjectId = target.ToEntityReference(),
-                    StatusCode = new OptionSetValue((int)invln_govnotifyemail_StatusCode.Draft),
-                    invln_notificationsettingid = emailTemplate?.ToEntityReference(),
-                };
-                var emailId = _govNotifyEmailRepositoryAdmin.Create(emailToCreate);
-
-                if (emailTemplate != null)
-                {
-                    var orgUrl = _environmentVariableRepositoryAdmin.GetEnvironmentVariableValue("invln_environmenturl") ?? "";
-                    var ownerData = _systemUserRepositoryAdmin.GetById(emailToCreate.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
-                    var subject = $"Application ref no {target.invln_Name ?? preImage.invln_Name} - Status change to '{statusLabel}";
-                    var govNotParams = new INTERNAL_LOAN_APP_STATUS_CHANGE()
+                    var req1 = new invln_sendinternalcrmnotificationRequest()
                     {
-                        templateId = emailTemplate?.invln_templateid,
-                        personalisation = new parameters()
-                        {
-                            recipientEmail = ownerData.InternalEMailAddress,
-                            username = ownerData.FullName,
-                            applicationId = preImage.invln_Name,
-                            applicationUrl = orgUrl + "/main.aspx?appid=2576a100-db47-ee11-be6f-002248c653e1&pagetype=entityrecord&etn=invln_loanapplication&id=" + target.Id,
-                            subject = subject,
-                            statusAtBody = pastFormStatus
-                        }
+                        invln_notificationbody = $"[Application ref no {target.invln_Name ?? preImage.invln_Name} - Status change to '{statusLabel}](?pagetype=entityrecord&etn=invln_loanapplication&id={target.Id})'",
+                        invln_notificationowner = target.OwnerId == null ? preImage.OwnerId.Id.ToString() : target.OwnerId.Id.ToString(),
+                        invln_notificationtitle = "Information",
                     };
+                    _ = _loanApplicationRepositoryAdmin.ExecuteNotificatioRequest(req1);
 
-                    var options = new JsonSerializerOptions
-                    {
-                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                        WriteIndented = true
-                    };
-                    // TODO: delete after MVP when update possible from gov notify returned data
-                    _govNotifyEmailRepositoryAdmin.Update(new invln_govnotifyemail()
-                    {
-                        Id = emailId,
-                        Subject = subject,
-                        invln_body = JsonSerializer.Serialize(govNotParams, options)
-                    });
-                    //
-                    var govNotReq = new invln_sendgovnotifyemailRequest()
-                    {
-                        invln_emailid = emailId.ToString(),
-                        invln_govnotifyparameters = JsonSerializer.Serialize(govNotParams, options),
-                    };
-                    _ = _loanApplicationRepositoryAdmin.ExecuteGovNotifyNotificationRequest(govNotReq);
+                    var subject = $"Application ref no {target.invln_Name ?? preImage.invln_Name} - Status change to '{statusLabel}'";
+                    _govNotifyEmailService.SendGovNotifyEmail(target.OwnerId ?? preImage.OwnerId, target.ToEntityReference(), subject, preImage.invln_Name, pastFormStatus, invln_Loanapplication.EntityLogicalName.ToLower(), target.Id.ToString());
                 }
             }
         }
@@ -598,6 +569,23 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
         }
 
+        public void SendEmailToNewOwner(invln_Loanapplication target, invln_Loanapplication preImage)
+        {
+            if (target.OwnerId.Id != preImage.OwnerId.Id && target.OwnerId.LogicalName != Team.EntityLogicalName)
+            {
+                var subject = $"Application ref no {target.invln_Name ?? preImage.invln_Name} - Assigned to you";
+                var pastFormStatus = "has been assigned to you";
+                _govNotifyEmailService.SendGovNotifyEmail(target.OwnerId, target.ToEntityReference(), subject, preImage.invln_Name, pastFormStatus, invln_Loanapplication.EntityLogicalName.ToLower(), target.Id.ToString());
+                var req1 = new invln_sendinternalcrmnotificationRequest()
+                {
+                    invln_notificationbody = "",
+                    invln_notificationowner = target.OwnerId.Id.ToString(),
+                    invln_notificationtitle = $"[Application ref no {target.invln_Name ?? preImage.invln_Name} - Assigned to you](?pagetype=entityrecord&etn=invln_loanapplication&id={target.Id})'",
+                };
+                _ = _loanApplicationRepositoryAdmin.ExecuteNotificatioRequest(req1);
+            }
+        }
+
         private bool CheckIfExternalStatusCanBeChanged(int oldStatus, int newStatus)
         {
             if (oldStatus != (int)invln_ExternalStatus.Draft)
@@ -631,7 +619,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
             return generatedAttribuesFetchXml;
         }
-
         #endregion
     }
 }

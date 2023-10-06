@@ -1,7 +1,12 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investments.Organisation.Services;
-internal interface IOrganizationCrmSearchService
+
+public interface IOrganizationCrmSearchService
 {
-    IEnumerable<OrganizationDetailsDto> SearchOrganizationInCrm(IEnumerable<string> organisationNumbers);
+    Task<IList<OrganizationDetailsDto>> SearchOrganizationInCrmByName(string organisationNames, bool recordsWithCompanyHouseNumberIncluded);
+
+    Task<IList<OrganizationDetailsDto>> SearchOrganizationInCrmByCompanyHouseNumber(IEnumerable<string> organisationNumbers);
+
+    Task<OrganizationDetailsDto> SearchOrganizationInCrmByOrganizationId(string organizationIds);
 }

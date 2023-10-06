@@ -1,0 +1,94 @@
+@using HE.InvestmentLoans.Contract.Projects.ViewModels;
+@using HE.InvestmentLoans.Contract.Projects;
+@model ProjectViewModel;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors("GrantFundingMore");
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Project" asp-action="GrantFunding" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.GrantFunding})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set role="group">
+            <gds-div-form-group invalid="inputInvalid">
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>
+                        @ProjectPageTitles.GrantFunding
+                    </gds-fieldset-heading>
+                </gds-legend>
+                <gds-div-hint class="govuk-!-margin-bottom-6">
+                    Tell us more about any public sector grant funding this land has received.
+                </gds-div-hint>
+
+                <gds-field-set role="group">
+                    <legend>
+                        <gds-label for="GrantFundingProviderName" size="ControlSize.M">
+                            Who provided the previous funding?
+                        </gds-label>
+                    </legend>
+
+                    <gds-input-wrapper class="govuk-!-margin-bottom-6">
+                        <gds-input govuk-formgroup-asp-for="GrantFundingProviderName"
+                                   value="@Model.GrantFundingProviderName"
+                                   type="text"
+                                   asp-excludelabel/>
+                    </gds-input-wrapper>
+                </gds-field-set>
+
+                <gds-field-set role="group">
+                    <legend>
+                        <gds-label for="GrantFundingAmount" size="ControlSize.M">
+                            How much funding have they provided?
+                        </gds-label>
+                    </legend>
+
+                    <gds-input class="govuk-!-width-one-quarter govuk-!-margin-bottom-6"
+                                   govuk-formgroup-asp-for="GrantFundingAmount"
+                                   value="@Model.GrantFundingAmount"
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                                   type="text" 
+                                   asp-excludelabel/>
+                </gds-field-set>
+
+                <gds-field-set role="group">
+                    <legend>
+                        <gds-label for="GrantFundingName" size="ControlSize.M">
+                            What is the name of the grant or fund?
+                        </gds-label>
+                    </legend>
+
+                    <gds-input-wrapper class="govuk-!-margin-bottom-6">
+                        <gds-input govuk-formgroup-asp-for="GrantFundingName"
+                                   value="@Model.GrantFundingName"
+                                   type="text"
+                                   asp-excludelabel/>
+                    </gds-input-wrapper>
+                </gds-field-set>
+
+                <gds-field-set role="group">
+                    <legend>
+                        <gds-label for="GrantFundingPurpose" size="ControlSize.M">
+                            What was it for?
+                        </gds-label>
+                    </legend>
+                    <gds-text-area asp-for="GrantFundingPurpose"
+                                   rows="5"></gds-text-area>
+                </gds-field-set>
+            </gds-div-form-group>
+
+            @Html.HiddenFor(c => c.ProjectId)
+            @Html.HiddenFor(c => c.ApplicationId)
+
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Continue
+            </button>
+
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>

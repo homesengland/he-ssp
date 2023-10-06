@@ -1,9 +1,12 @@
+using System.Globalization;
 using System.Linq;
 using System.Security.Policy;
 using System.Threading;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.BusinessLogic.Generic;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
@@ -11,6 +14,7 @@ using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.AspNetCore.Http;
@@ -23,14 +27,14 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    private readonly IDateTimeProvider _dateTime;
+    private readonly IDateTimeProvider _timeProvider;
 
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
     public ApplicationProjectsRepository(IHttpContextAccessor httpContextAccessor, IDateTimeProvider dateTime, IOrganizationServiceAsync2 serviceClient)
     {
         _httpContextAccessor = httpContextAccessor;
-        _dateTime = dateTime;
+        _timeProvider = dateTime;
         _serviceClient = serviceClient;
     }
 
@@ -48,7 +52,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
         var projectToDelete = loanApplicationSessionModel.Sites.FirstOrDefault(p => p.Id == projectId) ?? throw new NotFoundException(nameof(SiteViewModel).ToString(), projectId);
 
-        loanApplicationSessionModel!.SetTimestamp(_dateTime.Now);
+        loanApplicationSessionModel!.SetTimestamp(_timeProvider.Now);
         loanApplicationSessionModel!.Sites.Remove(projectToDelete);
 
         _httpContextAccessor.HttpContext?.Session.Set(loanApplicationId.ToString(), loanApplicationSessionModel);
@@ -73,15 +77,21 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
         var projectsFromCrm = loanApplicationDto.siteDetailsList.Select(
             projectFromCrm => new Project(
-                ProjectId.From(projectFromCrm.siteDetailsId),
-                projectFromCrm.Name.IsNotProvided() ? null! : new ProjectName(projectFromCrm.Name),
-                null!,
-                projectFromCrm.numberOfHomes.IsNotProvided() ? null! : new HomesCount(projectFromCrm.numberOfHomes),
-                projectFromCrm.typeOfHomes.IsNotProvided() ? null! : new HomesTypes(projectFromCrm.typeOfHomes, projectFromCrm.otherTypeOfHomes),
-                projectFromCrm.typeOfSite.IsNotProvided() ? null! : new ProjectType(projectFromCrm.typeOfSite),
-                projectFromCrm.existingLegalCharges.IsNotProvided() ? null! : new ChargesDebt(projectFromCrm.existingLegalCharges ?? false, projectFromCrm.existingLegalChargesInformation),
-                projectFromCrm.numberOfAffordableHomes.IsNotProvided() ? null! : new AffordableHomes(projectFromCrm.numberOfAffordableHomes)
-                ));
+                                ProjectId.From(projectFromCrm.siteDetailsId),
+                                projectFromCrm.Name.IsProvided() ? new ProjectName(projectFromCrm.Name) : null,
+                                null,
+                                projectFromCrm.numberOfHomes.IsProvided() ? new HomesCount(projectFromCrm.numberOfHomes) : null,
+                                projectFromCrm.typeOfHomes.IsProvided() ? new HomesTypes(projectFromCrm.typeOfHomes, projectFromCrm.otherTypeOfHomes) : null,
+                                projectFromCrm.typeOfSite.IsProvided() ? new ProjectType(projectFromCrm.typeOfSite) : null,
+                                projectFromCrm.haveAPlanningReferenceNumber.IsProvided() ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber) : null,
+                                projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null,
+                                projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null,
+                                projectFromCrm.siteOwnership.IsProvided() ? new LandOwnership(projectFromCrm.siteOwnership!.Value) : null,
+                                AdditionalDetailsMapper.MapFromCrm(projectFromCrm, _timeProvider.Now),
+                                projectFromCrm.IsProvided() ? GrantFundingStatusMapper.FromString(projectFromCrm.publicSectorFunding) : null,
+                                PublicSectorGrantFundingMapper.MapFromCrm(projectFromCrm),
+                                projectFromCrm.existingLegalCharges.IsProvided() ? new ChargesDebt(projectFromCrm.existingLegalCharges ?? false, projectFromCrm.existingLegalChargesInformation) : null,
+                                projectFromCrm.numberOfAffordableHomes.IsProvided() ? new AffordableHomes(projectFromCrm.numberOfAffordableHomes) : null));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
@@ -155,7 +165,20 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             {
                 siteDetailsId = projectToSave.Id.Value.ToString(),
                 Name = projectToSave.Name?.Value,
-                dateOfPurchase = projectToSave.StartDate?.Value,
+                haveAPlanningReferenceNumber = projectToSave.PlanningReferenceNumber?.Exists,
+                planningReferenceNumber = projectToSave.PlanningReferenceNumber?.Value,
+                siteCoordinates = projectToSave.Coordinates?.Value,
+                landRegistryTitleNumber = projectToSave.LandRegistryTitleNumber?.Value,
+                siteOwnership = projectToSave.LandOwnership?.ApplicantHasFullOwnership,
+                dateOfPurchase = projectToSave.AdditionalDetails?.PurchaseDate.AsDateTime(),
+                siteCost = projectToSave.AdditionalDetails?.Cost.ToString(),
+                currentValue = projectToSave.AdditionalDetails?.CurrentValue.ToString(),
+                valuationSource = projectToSave.AdditionalDetails.IsProvided() ? SourceOfValuationMapper.ToString(projectToSave.AdditionalDetails!.SourceOfValuation) : null!,
+                publicSectorFunding = projectToSave.GrantFundingStatus.IsProvided() ? GrantFundingStatusMapper.ToString(projectToSave.GrantFundingStatus!.Value) : null,
+                whoProvided = projectToSave.PublicSectorGrantFunding?.ProviderName?.Value,
+                howMuch = projectToSave.PublicSectorGrantFunding?.Amount?.ToString(),
+                nameOfGrantFund = projectToSave.PublicSectorGrantFunding?.GrantOrFundName?.Value,
+                reason = projectToSave.PublicSectorGrantFunding?.Purpose?.Value,
                 numberOfHomes = projectToSave.HomesCount?.Value,
                 typeOfHomes = projectToSave.HomesTypes?.HomesTypesValue,
                 otherTypeOfHomes = projectToSave.HomesTypes?.OtherHomesTypesValue,
@@ -180,7 +203,21 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
     private IEnumerable<string> CrmSiteNames()
     {
         yield return nameof(invln_SiteDetails.invln_Name).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Haveaplanningreferencenumber).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Planningreferencenumber).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Sitecoordinates).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Landregistrytitlenumber).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Siteownership).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Siteownership).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Dateofpurchase).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Sitecost).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_currentvalue).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Valuationsource).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Publicsectorfunding).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Whoprovided).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Reason).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_HowMuch).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Nameofgrantfund).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Numberofhomes).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Typeofhomes).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_OtherTypeofhomes).ToLowerInvariant();

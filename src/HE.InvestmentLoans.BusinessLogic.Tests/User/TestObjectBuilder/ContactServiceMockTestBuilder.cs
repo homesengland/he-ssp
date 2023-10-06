@@ -1,16 +1,7 @@
 extern alias Org;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.BusinessLogic.Tests.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
-using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.Common.Tests.TestFramework;
-using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.TestsUtils.TestFramework;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Moq;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;

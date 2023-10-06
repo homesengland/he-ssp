@@ -1,8 +1,7 @@
-using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.Common.Tests.TestFramework;
+using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;

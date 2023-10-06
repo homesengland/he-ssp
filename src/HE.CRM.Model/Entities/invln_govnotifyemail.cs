@@ -137,6 +137,7 @@ namespace DataverseModel
 			public const string invln_govnotifyemail_systemuser_modifiedby = "invln_govnotifyemail_systemuser_modifiedby";
 			public const string invln_govnotifyemail_systemuser_modifiedonbehalfby = "invln_govnotifyemail_systemuser_modifiedonbehalfby";
 			public const string invln_govnotifyemail_systemuser_owninguser = "invln_govnotifyemail_systemuser_owninguser";
+			public const string invln_govnotifyemail_team_owningteam = "invln_govnotifyemail_team_owningteam";
 			public const string invln_loanapplication_invln_govnotifyemails = "invln_loanapplication_invln_govnotifyemails";
 			public const string invln_notificationid = "invln_notificationid";
 			public const string invln_notificationsetting_invln_govnotifyemail_emailtemplate = "invln_notificationsetting_invln_govnotifyemail_emailtemplate";
@@ -1795,6 +1796,20 @@ namespace DataverseModel
 			get
 			{
 				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_govnotifyemail_systemuser_owninguser", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_govnotifyemail_team_owningteam
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_govnotifyemail_team_owningteam")]
+		public DataverseModel.Team invln_govnotifyemail_team_owningteam
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Team>("invln_govnotifyemail_team_owningteam", null);
 			}
 		}
 		

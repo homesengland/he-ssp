@@ -1,16 +1,14 @@
 extern alias Org;
 
-using FluentAssertions.Specialized;
 using HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Tests.Extensions.FluentAssertionsExtensions;
-using HE.InvestmentLoans.Common.Tests.TestFramework;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
-using MediatR;
+using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Org.HE.Common.IntegrationModel.PortalIntegrationModel;
 using Org.HE.Investments.Organisation.Contract;
@@ -140,11 +138,11 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
 
     private OrganisationSearchItem OrganizationThatDoesNotExistInCrm()
     {
-        return new OrganisationSearchItem("12345", "anyName", "anyCity", "Any Street 1", "ABCD 123", false);
+        return new OrganisationSearchItem("12345", "anyName", "anyCity", "Any Street 1", "ABCD 123", null, false);
     }
 
     private OrganisationSearchItem OrganizationThatExistsInCrm()
     {
-        return new OrganisationSearchItem("12345", "anyName", "anyCity", "Any Street 1", "ABCD 123", true);
+        return new OrganisationSearchItem("12345", "anyName", "anyCity", "Any Street 1", "ABCD 123", "IdFromCrm123", true);
     }
 }

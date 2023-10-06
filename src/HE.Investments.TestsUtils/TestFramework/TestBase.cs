@@ -2,7 +2,7 @@ using AutoFixture;
 using AutoFixture.AutoMoq;
 using Moq;
 
-namespace HE.InvestmentLoans.Common.Tests.TestFramework;
+namespace HE.Investments.TestsUtils.TestFramework;
 
 public class TestBase<TTestClass> : IRegisterDependency
     where TTestClass : class

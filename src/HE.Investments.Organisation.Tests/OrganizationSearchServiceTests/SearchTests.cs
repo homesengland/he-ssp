@@ -1,33 +1,26 @@
 using FluentAssertions;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
 using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Services;
-using Microsoft.Extensions.Logging;
-using Moq;
+using HE.Investments.Organisation.Tests.TestAssertions;
+using HE.Investments.Organisation.Tests.TestObjectBuilders;
+using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.Investments.Organisation.Tests.OrganizationSearchServiceTests;
 
-public class SearchTests
+public class SearchTests : TestBase<OrganisationSearchService>
 {
-    private OrganisationSearchService _searchService;
     private OrganisationSearchResult _response;
-
-    private readonly Mock<ICompaniesHouseApi> _companiesHouseApiMock;
-    private readonly Mock<IOrganizationCrmSearchService> _organizationCrmSearchServiceMock;
-
-    public SearchTests()
-    {
-        _companiesHouseApiMock = new Mock<ICompaniesHouseApi>();
-        _organizationCrmSearchServiceMock = new Mock<IOrganizationCrmSearchService>();
-    }
 
     [Fact]
     public async Task Fail_WhenCompanyHousesReturnsError()
     {
-        GivenThatCompanyHousesReturnsError();
+        CompaniesHouseApiTestBuilder
+            .New()
+            .SearchReturnsError()
+            .Register(this);
 
         await WhenSearchingOrganizations();
 
@@ -49,7 +42,8 @@ public class SearchTests
     [Fact]
     public async Task ReturnNothing_WhenCompanyHousesReturnsNothing()
     {
-        GivenThatComanyHousesReturnsNothing();
+        GivenThatCompanyHousesReturnsNothing();
+        GivenThatCrmReturnsNothing();
 
         await WhenSearchingOrganizations();
 
@@ -60,6 +54,7 @@ public class SearchTests
     public async Task ReturnTotalNumberOfOrganizationsFromCompanyHouses()
     {
         GivenThatCompanyHousesReturnsTotalOrganizations(10);
+        GivenThatCrmReturnsNothing();
 
         await WhenSearchingOrganizations();
 
@@ -139,51 +134,142 @@ public class SearchTests
         foundOrganization.PostalCode.Should().Be("PO16 7GZ");
     }
 
-    private void GivenThatCrmReturns(params OrganizationDetailsDto[] organizationsToReturn)
+    [Fact]
+    public async Task ShouldReturnSpvOrganisation_WhenItExistInCrm()
     {
-        _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrm(It.IsAny<IEnumerable<string>>()))
-            .Returns(organizationsToReturn.ToList());
+        // given
+        var organizationDetailsDto = OrganizationDetailsDtoTestBuilder.NewSpvCompany().Build();
+        GivenThatCompanyHousesReturnsNothing();
+
+        OrganizationCrmSearchServiceTestBuilder
+            .New()
+            .ByNameReturns(organizationDetailsDto.registeredCompanyName, organizationDetailsDto)
+            .ByCompanyHouseNumberReturnsNothing()
+            .Register(this);
+
+        // when
+        var result = await TestCandidate.Search(organizationDetailsDto.registeredCompanyName, new PagingQueryParams(1, 1), CancellationToken.None);
+
+        // then
+        result.IsSuccessfull().Should().BeTrue();
+        result.TotalItems.Should().Be(1);
+        result.Items.Should().ContainSingle(
+            organizationDetailsDto.registeredCompanyName,
+            organizationDetailsDto.companyRegistrationNumber,
+            organizationDetailsDto.organisationId,
+            true);
+    }
+
+    [Fact]
+    public async Task ShouldReturnSpvOrganisationAndCompanyHouseCompany_WhenItExistInCrmAndCompanyHouse()
+    {
+        // given
+        var spvCompany = OrganizationDetailsDtoTestBuilder.NewSpvCompany().Build();
+        var companyFromCompanyHouse = CompanyDetailsItemTestBuilder.New().Build();
+
+        GivenThatCompanyHousesReturns(companyFromCompanyHouse);
+
+        OrganizationCrmSearchServiceTestBuilder
+            .New()
+            .ByNameReturns(spvCompany.registeredCompanyName, spvCompany)
+            .ByCompanyHouseNumberReturnsNothing()
+            .Register(this);
+
+        // when
+        var result = await TestCandidate.Search(spvCompany.registeredCompanyName, new PagingQueryParams(2, 1), CancellationToken.None);
+
+        // then
+        result.IsSuccessfull().Should().BeTrue();
+        result.TotalItems.Should().Be(2);
+        result.Items.Count.Should().Be(2);
+        result.Items.First().ShouldBe(companyFromCompanyHouse.CompanyName, companyFromCompanyHouse.CompanyNumber, null, false);
+        result.Items.Last().ShouldBe(spvCompany.registeredCompanyName, spvCompany.companyRegistrationNumber, spvCompany.organisationId, true);
+    }
+
+    [Fact]
+    public async Task ShouldNotReturnSpvCompany_WhenItIsOutOfPaging()
+    {
+        // given
+        var spvCompany1 = OrganizationDetailsDtoTestBuilder.NewSpvCompany("CRM1").Build();
+        var spvCompany2 = OrganizationDetailsDtoTestBuilder.NewSpvCompany("CRM2").Build();
+
+        var companyFromCompanyHouse1 = CompanyDetailsItemTestBuilder.New("1111111").Build();
+
+        GivenThatCompanyHousesReturns(companyFromCompanyHouse1);
+
+        OrganizationCrmSearchServiceTestBuilder
+            .New()
+            .ByNameReturns(spvCompany1.registeredCompanyName, spvCompany1, spvCompany2)
+            .ByCompanyHouseNumberReturnsNothing()
+            .Register(this);
+
+        // when
+        var result = await TestCandidate.Search(spvCompany1.registeredCompanyName, new PagingQueryParams(2, 1), CancellationToken.None);
+
+        // then
+        result.IsSuccessfull().Should().BeTrue();
+        result.TotalItems.Should().Be(3);
+        result.Items.Count.Should().Be(2);
+        result.Items.First().ShouldBe(companyFromCompanyHouse1.CompanyName, companyFromCompanyHouse1.CompanyNumber, null, false);
+        result.Items[1].ShouldBe(spvCompany1.registeredCompanyName, spvCompany1.companyRegistrationNumber, spvCompany1.organisationId, true);
+    }
+
+    [Fact]
+    public async Task ShouldNotReturnSpvCompanies_WhenThereAreOnTwoPAges()
+    {
+        // given
+        var spvCompany1 = OrganizationDetailsDtoTestBuilder.NewSpvCompany("CRM1").Build();
+        var spvCompany2 = OrganizationDetailsDtoTestBuilder.NewSpvCompany("CRM2").Build();
+        var spvCompany3 = OrganizationDetailsDtoTestBuilder.NewSpvCompany("CRM3").Build();
+        var spvCompany4 = OrganizationDetailsDtoTestBuilder.NewSpvCompany("CRM4").Build();
+
+        CompaniesHouseApiTestBuilder.New().SearchReturnsTotalOrganizations(1).Register(this);
+
+        OrganizationCrmSearchServiceTestBuilder
+            .New()
+            .ByNameReturns(spvCompany1.registeredCompanyName, spvCompany1, spvCompany2, spvCompany3, spvCompany4)
+            .ByCompanyHouseNumberReturnsNothing()
+            .Register(this);
+
+        // when
+        var result = await TestCandidate.Search(spvCompany1.registeredCompanyName, new PagingQueryParams(2, 4), CancellationToken.None);
+
+        // then
+        result.IsSuccessfull().Should().BeTrue();
+        result.TotalItems.Should().Be(5);
+        result.Items.Count.Should().Be(1);
+        result.Items.Single().ShouldBe(spvCompany4.registeredCompanyName, spvCompany4.companyRegistrationNumber, spvCompany4.organisationId, true);
+    }
+
+    private void GivenThatCrmReturns(params OrganizationDetailsDto[] crmOrganization)
+    {
+        OrganizationCrmSearchServiceTestBuilder.New().ByCompanyHouseNumberReturns(crmOrganization).ByNameReturnsNothing().Register(this);
     }
 
     private void GivenThatCrmReturnsNothing()
     {
-        _organizationCrmSearchServiceMock.Setup(c => c.SearchOrganizationInCrm(It.IsAny<IEnumerable<string>>()))
-            .Returns(Enumerable.Empty<OrganizationDetailsDto>());
+        OrganizationCrmSearchServiceTestBuilder.New().ByNameReturnsNothing().ByCompanyHouseNumberReturnsNothing().Register(this);
     }
 
-    private void GivenThatComanyHousesReturnsNothing()
+    private void GivenThatCompanyHousesReturnsNothing()
     {
-        _companiesHouseApiMock.Setup(c => c.Search(It.IsAny<string>(), It.IsAny<PagingQueryParams>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(CompaniesHouseSearchResult.New(Enumerable.Empty<CompanyDetailsItem>().ToList(), 0));
+        CompaniesHouseApiTestBuilder.New().SearchReturnsNothing().Register(this);
     }
 
     private void GivenThatCompanyHousesReturns(params CompanyDetailsItem[] organizationsToReturn)
     {
-        _companiesHouseApiMock
-            .Setup(c => c.Search(It.IsAny<string>(), It.IsAny<PagingQueryParams>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(CompaniesHouseSearchResult.New(organizationsToReturn.ToList(), organizationsToReturn.Length));
+        CompaniesHouseApiTestBuilder.New().SearchReturns(organizationsToReturn).Register(this);
     }
 
     private void GivenThatCompanyHousesReturnsTotalOrganizations(int numberOfOrganizations)
     {
-        _companiesHouseApiMock
-            .Setup(c => c.Search(It.IsAny<string>(), It.IsAny<PagingQueryParams>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(CompaniesHouseSearchResult.New(Enumerable.Empty<CompanyDetailsItem>().ToList(), numberOfOrganizations));
+        CompaniesHouseApiTestBuilder.New().SearchReturnsTotalOrganizations(numberOfOrganizations).Register(this);
     }
 
-    private void GivenThatCompanyHousesReturnsError()
+    private async Task<OrganisationSearchResult> WhenSearchingOrganizations(string searchPhrase = "any phrase")
     {
-        _companiesHouseApiMock
-            .Setup(c => c.Search(It.IsAny<string>(), It.IsAny<PagingQueryParams>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new HttpRequestException());
-    }
-
-    private async Task WhenSearchingOrganizations()
-    {
-        var loggerMock = new Mock<ILogger<OrganisationSearchService>>();
-        _searchService = new OrganisationSearchService(_companiesHouseApiMock.Object, _organizationCrmSearchServiceMock.Object, loggerMock.Object);
-
-        _response = await _searchService.Search("any phrase", new PagingQueryParams(1, 1), CancellationToken.None);
+        _response = await TestCandidate.Search(searchPhrase, new PagingQueryParams(1, 1), CancellationToken.None);
+        return _response;
     }
 
     private CompanyDetailsItem OrganizationWithCompanyHouseNumber(string number)
@@ -209,12 +295,7 @@ public class SearchTests
         {
             CompanyNumber = companyNumber,
             CompanyName = name,
-            OfficeAddress = new OfficeAddress
-            {
-                PostalCode = postalcode,
-                AddressLine1 = street,
-                Locality = city,
-            }
+            OfficeAddress = new OfficeAddress { PostalCode = postalcode, AddressLine1 = street, Locality = city, }
         };
     }
 }

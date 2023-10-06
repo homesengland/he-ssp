@@ -112,7 +112,7 @@
                                 <a href="@Url.Action("Workflow", "Site", new {id = Model.ID, projectId = site.Id })">
                                     @if(site.Name.IsNotProvided())
                                     {
-                                        @ProjectName.Default
+                                        @ProjectName.Default.Value
                                     }
                                     else
                                     {

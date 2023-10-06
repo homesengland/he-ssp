@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User.QueryHandlers;
-using HE.InvestmentLoans.Common.Tests.TestFramework;
 using HE.InvestmentLoans.Contract.User.Queries;
+using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.User.QueryHandlers;
@@ -37,8 +32,8 @@ public class GetUserAccountQueryHandlerTests : TestBase<GetUserAccountQueryHandl
         result.Email.Should().Be(userAccount.UserEmail);
         result.UserGlobalId.Should().Be(userAccount.UserGlobalId.ToString());
         result.SelectedAccountId.Should().Be(userAccount.AccountId);
-        result.FirstName.Should().Be(userDetails.FirstName);
-        result.LastName.Should().Be(userDetails.LastName);
-        result.TelephoneNumber.Should().Be(userDetails.TelephoneNumber);
+        result.FirstName.Should().Be(userDetails.FirstName?.ToString());
+        result.LastName.Should().Be(userDetails.LastName?.ToString());
+        result.TelephoneNumber.Should().Be(userDetails.TelephoneNumber?.ToString());
     }
 }

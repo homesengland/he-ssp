@@ -54,7 +54,7 @@ public class Order06RepaymentSystemIntegrationTests : IntegrationTest
 
         // when
         repaymentSystemPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "Refinance", FundingFormOption.Refinance }, { "RefinanceInfo", TextTestData.TextWithLenght1501 } });
+            continueButton, new Dictionary<string, string> { { "Refinance", FundingFormOption.Refinance }, { "RefinanceInfo", TextTestData.TextThatExceedsLongInputLimit } });
 
         // then
         repaymentSystemPage
@@ -91,7 +91,7 @@ public class Order06RepaymentSystemIntegrationTests : IntegrationTest
 
         // when
         var additionalProjectsPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "Refinance", FundingFormOption.Refinance }, { "RefinanceInfo", TextTestData.TextWithLenght1000 } });
+            continueButton, new Dictionary<string, string> { { "Refinance", FundingFormOption.Refinance }, { "RefinanceInfo", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         additionalProjectsPage

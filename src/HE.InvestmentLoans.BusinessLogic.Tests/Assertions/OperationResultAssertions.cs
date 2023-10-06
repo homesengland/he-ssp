@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions.Collections;
-using FluentAssertions.Primitives;
-using FluentAssertions.Specialized;
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Validation;
+using Xunit.Sdk;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 public static class OperationResultAssertions
@@ -16,6 +9,17 @@ public static class OperationResultAssertions
         this GenericCollectionAssertions<ErrorItem> operationResultAssertions, string errorMessage)
     {
         operationResultAssertions.ContainSingle(x => x.ErrorMessage == errorMessage);
+        return operationResultAssertions;
+    }
+
+    public static GenericCollectionAssertions<ErrorItem> ContainsErrorMessages(
+        this GenericCollectionAssertions<ErrorItem> operationResultAssertions, params string[] errorMessages)
+    {
+        foreach (var message in errorMessages)
+        {
+            operationResultAssertions.Contain(x => x.ErrorMessage == message);
+        }
+
         return operationResultAssertions;
     }
 }

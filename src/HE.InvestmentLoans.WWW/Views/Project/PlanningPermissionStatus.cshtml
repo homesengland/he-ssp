@@ -1,0 +1,45 @@
+@using HE.InvestmentLoans.Contract.Projects;
+@model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
+
+@{
+    var id = ViewContext.RouteData.Values["id"];
+
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.GrantFunding));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Project" asp-action="PlanningPermissionStatus" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.PlanningPermissionStatus})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="inputInvalid">
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>
+                        What is the status of your planning permission application for this project?
+                    </gds-fieldset-heading>
+                </gds-legend>
+
+                <gds-custom-radio 
+                    asp-for="PlanningPermissionStatus"
+                    value="@Model.PlanningPermissionStatus"
+                    radio-items="TemporaryFormOptions.PermissionStatus"
+                >
+
+                </gds-custom-radio>
+
+            </gds-div-form-group>
+
+            @Html.HiddenFor(c => c.ProjectId)
+            @Html.HiddenFor(c => c.ApplicationId)
+
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit">
+                Continue
+            </button>
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>

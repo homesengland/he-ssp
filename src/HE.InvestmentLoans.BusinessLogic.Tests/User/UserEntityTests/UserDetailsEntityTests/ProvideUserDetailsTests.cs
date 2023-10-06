@@ -1,14 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.User.ValueObjects;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.User.UserEntityTests.UserDetailsEntityTests;
@@ -20,15 +12,22 @@ public class ProvideUserDetailsTests
         // given
         var userDetailsEntity = UserDetailsEntityTestBuilder.New().Build();
 
-        var newUserDetails = new UserDetails("Jacob", "Smith", "Developer", "john.smith@test.com", "12345678", "87654321", false);
+        var newUserDetails = new UserDetails(
+            FirstName.New("Jacob"),
+            LastName.New("Smith"),
+            JobTitle.New("Developer"),
+            "john.smith@test.com",
+            TelephoneNumber.New("12345678"),
+            SecondaryTelephoneNumber.New("87654321"),
+            false);
 
         // when
         userDetailsEntity.ProvideUserDetails(
-            newUserDetails.FirstName!,
-            newUserDetails.LastName!,
-            newUserDetails.JobTitle!,
-            newUserDetails.TelephoneNumber!,
-            newUserDetails.SecondaryTelephoneNumber!,
+            newUserDetails.FirstName!.ToString(),
+            newUserDetails.LastName!.ToString(),
+            newUserDetails.JobTitle!.ToString(),
+            newUserDetails.TelephoneNumber!.ToString(),
+            newUserDetails.SecondaryTelephoneNumber!.ToString(),
             newUserDetails.Email!);
 
         // then

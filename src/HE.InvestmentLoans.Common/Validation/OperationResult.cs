@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Extensions;
 
 namespace HE.InvestmentLoans.Common.Validation;
 
@@ -9,7 +10,7 @@ public class OperationResult
         Errors = new List<ErrorItem>();
     }
 
-    public IList<ErrorItem> Errors { get; }
+    public IList<ErrorItem> Errors { get; protected set; }
 
     public bool IsValid => Errors.Count == 0;
 
@@ -21,6 +22,36 @@ public class OperationResult
 
     public static OperationResult<TResult> Success<TResult>(TResult result) => new(result);
 
+    public static void ThrowValidationError(string affectedField, string validationMessage) => New().AddValidationError(affectedField, validationMessage).CheckErrors();
+
+    public static OperationResult<TReturnedData> ResultOf<TReturnedData>(Func<TReturnedData> action)
+        where TReturnedData : class
+    {
+        var operationResult = OperationResult.New();
+
+        var returnedData = operationResult.CatchResult(action);
+
+        return operationResult.Returns(returnedData);
+    }
+
+    public TReturnedData CatchResult<TReturnedData>(Func<TReturnedData> action, string overriddenFieldName = null!)
+        where TReturnedData : class
+    {
+        try
+        {
+            return action();
+        }
+        catch (DomainValidationException ex)
+        {
+            var result = ex.OperationResult;
+            var error = result.Errors.Single();
+
+            AddValidationError(overriddenFieldName.IsProvided() ? overriddenFieldName : error.AffectedField, error.ErrorMessage);
+
+            return null!;
+        }
+    }
+
     public OperationResult AddValidationError(ErrorItem errorItem)
     {
         Errors.Add(errorItem);
@@ -30,6 +61,27 @@ public class OperationResult
     public OperationResult AddValidationError(string affectedField, string validationMessage)
     {
         return AddValidationError(new ErrorItem(affectedField, validationMessage));
+    }
+
+    public OperationResult<TResult> Returns<TResult>(TResult returnedObject)
+    {
+        return new OperationResult<TResult>(Errors, returnedObject);
+    }
+
+    public OperationResult OverrideError(string message, string overriddenAffectedField, string overriddenValidationMessage)
+    {
+        var error = Errors.FirstOrDefault(c => c.ErrorMessage == message);
+
+        if (error is null)
+        {
+            return this;
+        }
+
+        Errors.Remove(error);
+
+        Errors.Add(new ErrorItem(overriddenAffectedField, overriddenValidationMessage));
+
+        return this;
     }
 
     public string GetAllErrors()

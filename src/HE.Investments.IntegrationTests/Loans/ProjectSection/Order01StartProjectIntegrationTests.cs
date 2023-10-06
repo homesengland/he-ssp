@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Extensions;
@@ -26,9 +27,11 @@ public class Order01StartProjectIntegrationTests : IntegrationTest
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
+
+        Skip.If(UserData.IsDeveloperProvidedUserData && UserData.ProjectInDraftStateId.IsProvided(), "Developer provided their own project");
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(Skip = LoansConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_ShouldOpenProjectStartingPage_WhenCompanyStructureLinkIsClickedOnTaskListPage()
     {
@@ -48,7 +51,7 @@ public class Order01StartProjectIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, startProjectPage);
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(Skip = LoansConfig.SkipTest)]
     [Order(2)]
     public async Task Order02_ShouldRedirectToProjectNameAndAddNewProjectToTaskList_WhenStartButtonIsClicked()
     {

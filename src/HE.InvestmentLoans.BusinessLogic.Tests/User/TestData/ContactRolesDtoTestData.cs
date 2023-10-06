@@ -1,10 +1,5 @@
 extern alias Org;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 

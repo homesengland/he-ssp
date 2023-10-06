@@ -75,10 +75,10 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         completeProfilePage.HasGdsSubmitButton("save-and-continue-button", out var saveAndContinueButton);
         var organizationSearchPage = await TestClient.SubmitButton(saveAndContinueButton, new Dictionary<string, string>
         {
-            { "FirstName", UserData.FirstName },
-            { "LastName", UserData.LastName },
+            { "FirstName", UserData.FirstName.ToString() },
+            { "LastName", UserData.LastName.ToString() },
             { "JobTitle", "AI Tester" },
-            { "TelephoneNumber", UserData.TelephoneNumber },
+            { "TelephoneNumber", UserData.TelephoneNumber.ToString() },
         });
 
         // then
@@ -161,6 +161,6 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         // then
         dashboardPage
             .UrlEndWith(PagesUrls.DashboardPage)
-            .HasTitle($"{UserData.OrganizationName} home page");
+            .HasTitle($"{UserData.OrganizationName} LUHBF applications");
     }
 }

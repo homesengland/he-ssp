@@ -1,20 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ApplicationProject.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
-using HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
-using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Tests.TestFramework;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
-using static FluentAssertions.FluentActions;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
 public class CreateProjectCommandHandlerTests : TestBase<CreateProjectCommandHandler>
@@ -57,6 +47,6 @@ public class CreateProjectCommandHandlerTests : TestBase<CreateProjectCommandHan
 
         var response = await TestCandidate.Handle(_command, CancellationToken.None);
 
-        projects.Projects.Single().Id.Should().Be(response.Result);
+        projects.Projects.Single().Id.Should().Be(response.ReturnedData);
     }
 }

@@ -91,13 +91,83 @@ public class OrganizationRepository : IOrganizationRepository
         return result1.Entities.FirstOrDefault();
     }
 
-    public EntityCollection? SearchForOrganizations(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers)
+    public async Task<EntityCollection?> SearchForOrganizationsByName(IOrganizationServiceAsync2 service, IEnumerable<string> names, bool recordWithCompanyHouseNumberIncluded)
+    {
+        if (names != null)
+        {
+            var filter1 = new FilterExpression
+            {
+                FilterOperator = LogicalOperator.And,
+            };
+
+            var cols = new ColumnSet("name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3", "address1_city", "address1_postalcode", "address1_country");
+
+            var query = new QueryExpression("account")
+            {
+                ColumnSet = cols,
+            };
+
+            var numberOfRequestsInQuery = 1;
+            var recordsWithoutCompanyNumberFilter = new FilterExpression();
+            if (!recordWithCompanyHouseNumberIncluded)
+            {
+                recordsWithoutCompanyNumberFilter = new FilterExpression
+                {
+                    FilterOperator = LogicalOperator.And,
+                    Conditions =
+                    {
+                        new ConditionExpression("he_companieshousenumber", ConditionOperator.Null),
+                    },
+                };
+            }
+
+            var retrievedEntitiesCollection = new EntityCollection();
+            EntityCollection retrievedEntities;
+            foreach (var name in names)
+            {
+                var condition1 = new ConditionExpression("name", ConditionOperator.Like, $"%{name}%");
+                filter1.Conditions.Add(condition1);
+                numberOfRequestsInQuery++;
+                if (numberOfRequestsInQuery >= 490)
+                {
+                    numberOfRequestsInQuery = 0;
+                    query.Criteria.AddFilter(filter1);
+
+                    retrievedEntities = service.RetrieveMultiple(query);
+                    if (retrievedEntities != null)
+                    {
+                        retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);
+                    }
+
+                    query.Criteria.AddFilter(recordsWithoutCompanyNumberFilter);
+
+                    filter1.Conditions.Clear();
+                    query.Criteria.Filters.Clear();
+                }
+            }
+
+            query.Criteria.AddFilter(filter1);
+            query.Criteria.AddFilter(recordsWithoutCompanyNumberFilter);
+
+            retrievedEntities = await service.RetrieveMultipleAsync(query);
+            if (retrievedEntities != null)
+            {
+                retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);
+            }
+
+            return retrievedEntitiesCollection;
+        }
+
+        return null;
+    }
+
+    public async Task<EntityCollection?> SearchForOrganizationsByCompanyHouseNumber(IOrganizationServiceAsync2 service, IEnumerable<string> organizationNumbers)
     {
         if (organizationNumbers != null)
         {
             var filter1 = new FilterExpression
             {
-                FilterOperator = LogicalOperator.Or,
+                FilterOperator = LogicalOperator.And,
             };
 
             var cols = new ColumnSet("name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3", "address1_city", "address1_postalcode", "address1_country");
@@ -134,7 +204,7 @@ public class OrganizationRepository : IOrganizationRepository
 
             query.Criteria.AddFilter(filter1);
 
-            retrievedEntities = service.RetrieveMultiple(query);
+            retrievedEntities = await service.RetrieveMultipleAsync(query);
             if (retrievedEntities != null)
             {
                 retrievedEntitiesCollection.Entities.AddRange(retrievedEntities.Entities);
@@ -144,5 +214,20 @@ public class OrganizationRepository : IOrganizationRepository
         }
 
         return null;
+    }
+
+    public async Task<Entity?> SearchForOrganizationsByOrganizationId(IOrganizationServiceAsync2 service, string organizationId)
+    {
+        if (Guid.TryParse(organizationId, out var organizationGuid))
+        {
+            var cols = new ColumnSet("name", "he_companieshousenumber", "address1_line1", "address1_line2", "address1_line3", "address1_city", "address1_postalcode", "address1_country");
+
+            var retrievedEntity = await service.RetrieveAsync("account", organizationGuid, cols);
+            return retrievedEntity;
+        }
+        else
+        {
+            throw new ArgumentException("Given organization id is not valid Guid");
+        }
     }
 }

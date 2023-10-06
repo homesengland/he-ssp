@@ -54,7 +54,7 @@ public class Order04AbnormalCostsIntegrationTests : IntegrationTest
 
         // when
         abnormalCostsPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.Yes }, { "AbnormalCostsInfo", TextTestData.TextWithLenght1501 } });
+            continueButton, new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.Yes }, { "AbnormalCostsInfo", TextTestData.TextThatExceedsLongInputLimit } });
 
         // then
         abnormalCostsPage
@@ -91,7 +91,7 @@ public class Order04AbnormalCostsIntegrationTests : IntegrationTest
 
         // when
         var privateSectorFundingPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.Yes }, { "AbnormalCostsInfo", TextTestData.TextWithLenght1000 } });
+            continueButton, new Dictionary<string, string> { { "AbnormalCosts", CommonResponse.Yes }, { "AbnormalCostsInfo", TextTestData.TextThatNotExceedsLongInputLimit } });
 
         // then
         privateSectorFundingPage
