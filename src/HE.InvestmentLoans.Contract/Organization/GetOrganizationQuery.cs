@@ -3,4 +3,4 @@ using MediatR;
 
 namespace HE.InvestmentLoans.Contract.Organization;
 
-public record GetOrganizationByCompanyHouseNumberQuery(string CompanyHouseNumber) : IRequest<OrganizationBasicDetails>;
+public record GetOrganizationQuery(string CompanyHouseNumberOrOrganisationId) : IRequest<OrganizationBasicDetails>;

@@ -1,8 +1,8 @@
-@model HE.InvestmentLoans.Contract.Application.ValueObjects.LoanApplicationId
+@model ApplicationDashboardModel
 @{
     var data = new List<(string Title, string Desription, string Link)>
     {
-        ("Application details",  "You can view or edit your company and project information.", Url.Action("TaskList", "LoanApplicationV2", new { id = Model.Value })),
+        ("Application details",  "You can view or edit your company and project information.", Url.Action("TaskList", "LoanApplicationV2", new { id = Model.LoanApplicationId })),
         ("Conditions management", "You can upload evidence to satisfy your Conditions Precedent and Subsequent.", null),
         ("Letters", "You'll be able to download letters and upload your signed copies here.", Url.Link("#", null)),
     };
@@ -33,17 +33,20 @@
     <gds-p>
         This will notify Homes England that you no longer wish to proceed with this application at this time. You can revisit this later on and submit once you're ready.
     </gds-p>
-    <a class="govuk-button govuk-button--secondary" data-module="govuk-button" href="@Url.Action("", "LoanApplicationV2", new { id = Model.Value })">
+    <a class="govuk-button govuk-button--secondary" data-module="govuk-button" href="@Url.Action("", "LoanApplicationV2", new { id = Model.LoanApplicationId })">
         Hold
     </a>
 </div>
 
-<div class="govuk-!-margin-top-2">
-    <gds-h3 size="ControlSize.M">Withdraw</gds-h3>
-    <gds-p>
-        This will notify Homes England that you no longer wish to proceed. Your application will be permanently deleted.
-    </gds-p>
-    <a class="govuk-button govuk-button--warning" data-module="govuk-button" href="@Url.Action("Withdraw", "LoanApplicationV2", new { id = Model.Value })">
-        Withdraw
-    </a>
-</div>
+@if (Model.CanBeWithdrawn())
+{
+    <div class="govuk-!-margin-top-2">
+        <gds-h3 size="ControlSize.M">Withdraw</gds-h3>
+        <gds-p>
+            This will notify Homes England that you no longer wish to proceed. Your application will be permanently deleted.
+        </gds-p>
+        <a class="govuk-button govuk-button--warning" data-module="govuk-button" href="@Url.Action("Withdraw", "LoanApplicationV2", new { id = Model.LoanApplicationId })">
+            Withdraw
+        </a>
+    </div>
+}

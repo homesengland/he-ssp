@@ -2,10 +2,13 @@ using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.Funding.Entities;
 using HE.InvestmentLoans.BusinessLogic.Funding.Mappers;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Models.App;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -23,19 +26,21 @@ public class FundingRepository : IFundingRepository
         _appConfig = appConfig;
     }
 
-    public async Task<FundingEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<FundingEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, FundingFieldsSet fundingFieldsSet, CancellationToken cancellationToken)
     {
+        var fieldsToRetrieve = FundingCrmFieldNameMapper.Map(fundingFieldsSet);
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
+            invln_fieldstoretrieve = fieldsToRetrieve,
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
                        ?? throw new NotFoundException(nameof(FundingEntity), loanApplicationId.ToString());
 
-        var loanApplicationDto = JsonSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
+        var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                                  ?? throw new NotFoundException(nameof(FundingEntity), loanApplicationId.ToString());
 
         return new FundingEntity(
@@ -46,7 +51,8 @@ public class FundingRepository : IFundingRepository
             FundingEntityMapper.MapPrivateSectorFunding(loanApplicationDto.privateSectorApproach, loanApplicationDto.privateSectorApproachInformation),
             FundingEntityMapper.MapRepaymentSystem(loanApplicationDto.refinanceRepayment, loanApplicationDto.refinanceRepaymentDetails),
             FundingEntityMapper.MapAdditionalProjects(loanApplicationDto.additionalProjects),
-            SectionStatusMapper.Map(loanApplicationDto.FundingDetailsCompletionStatus));
+            SectionStatusMapper.Map(loanApplicationDto.FundingDetailsCompletionStatus),
+            ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus));
     }
 
     public async Task SaveAsync(FundingEntity funding, UserAccount userAccount, CancellationToken cancellationToken)
@@ -72,16 +78,7 @@ public class FundingRepository : IFundingRepository
             invln_loanapplicationid = funding.LoanApplicationId.Value.ToString(),
             invln_accountid = userAccount.AccountId.ToString(),
             invln_contactexternalid = userAccount.UserGlobalId.ToString(),
-            invln_fieldstoupdate = $"{nameof(invln_Loanapplication.invln_ProjectGDV).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Projectestimatedtotalcost).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Projectabnormalcosts).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Projectabnormalcostsinformation).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Privatesectorapproach).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Privatesectorapproachinformation).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Additionalprojects).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Refinancerepayment).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_Refinancerepaymentdetails).ToLowerInvariant()}," +
-                                   $"{nameof(invln_Loanapplication.invln_fundingdetailscompletionstatus).ToLowerInvariant()}",
+            invln_fieldstoupdate = FundingCrmFieldNameMapper.Map(FundingFieldsSet.SaveAllFields),
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);

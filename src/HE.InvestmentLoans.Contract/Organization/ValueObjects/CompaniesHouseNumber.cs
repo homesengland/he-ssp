@@ -16,7 +16,7 @@ public class CompaniesHouseNumber : ValueObject
         _value = value;
     }
 
-    public override string? ToString()
+    public override string ToString()
     {
         return _value;
     }

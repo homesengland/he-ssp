@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.Funding.Entities;
 using HE.InvestmentLoans.BusinessLogic.Funding.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
@@ -23,7 +24,7 @@ public class FundingRepositoryTestBuilder
         UserAccount userAccount,
         FundingEntity fundingEntity)
     {
-        _mock.Setup(x => x.GetAsync(loanApplicationId, userAccount, CancellationToken.None)).ReturnsAsync(fundingEntity);
+        _mock.Setup(x => x.GetAsync(loanApplicationId, userAccount, It.IsAny<FundingFieldsSet>(), CancellationToken.None)).ReturnsAsync(fundingEntity);
         return this;
     }
 

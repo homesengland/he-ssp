@@ -225,9 +225,7 @@ public class OrganizationRepository : IOrganizationRepository
             var retrievedEntity = await service.RetrieveAsync("account", organizationGuid, cols);
             return retrievedEntity;
         }
-        else
-        {
-            throw new ArgumentException("Given organization id is not valid Guid");
-        }
+
+        return null;
     }
 }

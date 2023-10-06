@@ -32,7 +32,7 @@ public class GetByCompaniesHouseNumberTests : TestBase<OrganisationSearchService
 
         await WhenGettingOrganizationByCompaniesHouseNumber();
 
-        _response.Item.CompanyNumber.Should().Be("1234");
+        _response.Item!.CompanyNumber.Should().Be("1234");
     }
 
     [Fact]
@@ -59,7 +59,7 @@ public class GetByCompaniesHouseNumberTests : TestBase<OrganisationSearchService
 
         var foundOrganization = _response.Item;
 
-        foundOrganization.CompanyNumber.Should().Be("1234");
+        foundOrganization!.CompanyNumber.Should().Be("1234");
         foundOrganization.Name.Should().Be("CompanyName");
         foundOrganization.City.Should().Be("Sheffield");
         foundOrganization.Street.Should().Be("Letsby Avenue");
@@ -78,7 +78,7 @@ public class GetByCompaniesHouseNumberTests : TestBase<OrganisationSearchService
 
         var foundOrganization = _response.Item;
 
-        foundOrganization.CompanyNumber.Should().Be("1234");
+        foundOrganization!.CompanyNumber.Should().Be("1234");
         foundOrganization.Name.Should().Be("CrmName");
         foundOrganization.City.Should().Be("CrmCity");
         foundOrganization.Street.Should().Be("CrmStreet");

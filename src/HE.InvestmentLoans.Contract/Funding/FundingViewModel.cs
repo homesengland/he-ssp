@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Helper;
 using HE.InvestmentLoans.Contract.ViewModels;
 
 namespace HE.InvestmentLoans.Contract.Funding;
@@ -12,6 +13,8 @@ public class FundingViewModel : ICompletedSectionViewModel
     }
 
     public Guid LoanApplicationId { get; set; }
+
+    public ApplicationStatus LoanApplicationStatus { get; set; }
 
     public string? GrossDevelopmentValue { get; set; }
 
@@ -83,10 +86,11 @@ public class FundingViewModel : ICompletedSectionViewModel
         return State == SectionStatus.InProgress;
     }
 
-    public bool IsEditable()
+    public bool IsReadOnly()
     {
-        return true;
+        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
+        return readonlyStatuses.Contains(LoanApplicationStatus);
     }
 
-    public bool IsReadOnly() => IsEditable() is false;
+    public bool IsEditable() => IsReadOnly() is false;
 }

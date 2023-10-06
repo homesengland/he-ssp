@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
@@ -13,11 +14,44 @@ public class OrganisationSearchService : IOrganisationSearchService
     private readonly IOrganizationCrmSearchService _organizationCrmSearchService;
     private readonly ILogger<OrganisationSearchService> _logger;
 
-    public OrganisationSearchService(ICompaniesHouseApi companiesHouseApi, IOrganizationCrmSearchService organizationCrmSearchService, ILogger<OrganisationSearchService> logger)
+    public OrganisationSearchService(
+        ICompaniesHouseApi companiesHouseApi,
+        IOrganizationCrmSearchService organizationCrmSearchService,
+        ILogger<OrganisationSearchService> logger)
     {
         _companiesHouseApi = companiesHouseApi;
         _organizationCrmSearchService = organizationCrmSearchService;
         _logger = logger;
+    }
+
+    public async Task<GetOrganizationByCompaniesHouseNumberResult> GetByOrganisationId(string organisationId, CancellationToken cancellationToken)
+    {
+        var result = await _organizationCrmSearchService.SearchOrganizationInCrmByOrganizationId(organisationId);
+        if (result is null)
+        {
+            return new GetOrganizationByCompaniesHouseNumberResult(null, $"Organization with id {organisationId} not found");
+        }
+
+        return new GetOrganizationByCompaniesHouseNumberResult(
+            new OrganisationSearchItem(
+                result.companyRegistrationNumber,
+                result.registeredCompanyName,
+                result.city,
+                result.addressLine1,
+                result.postalcode,
+                result.organisationId,
+                true));
+    }
+
+    public async Task<GetOrganizationByCompaniesHouseNumberResult> GetByOrganisation(string companiesHouseNumberOrOrganisationId, CancellationToken cancellationToken)
+    {
+        var result = await GetByOrganisationId(companiesHouseNumberOrOrganisationId, cancellationToken);
+        if (result.Item is not null)
+        {
+            return result;
+        }
+
+        return await GetByCompaniesHouseNumber(companiesHouseNumberOrOrganisationId, cancellationToken);
     }
 
     public async Task<OrganisationSearchResult> Search(string organisationName, PagingQueryParams pagingParams, CancellationToken cancellationToken)
@@ -44,7 +78,7 @@ public class OrganisationSearchService : IOrganisationSearchService
 
         if (!companyHousesResult.IsSuccessfull())
         {
-            return new GetOrganizationByCompaniesHouseNumberResult(null!, companyHousesResult.Error);
+            return new GetOrganizationByCompaniesHouseNumberResult(null!, companyHousesResult.Error!);
         }
 
         var companyHousesOrganizations = companyHousesResult.Items.ToList();
@@ -126,20 +160,42 @@ public class OrganisationSearchService : IOrganisationSearchService
         }
         catch (HttpRequestException ex)
         {
-            _logger.LogError(ex, "Error occured while fetching organizations data from Company House API: {Message}", ex.Message);
+            if (pagingParams.StartIndex > 1 && ex.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                // Company House API returns 500 error when we try to fetch page that does not exist
+                // But we need TotalItems (Hits) to be able to calculate paging.
+                return await GetTotalItemsResult(organisationName, pagingParams, cancellationToken);
+            }
 
-            return new OrganisationSearchResult(null!, 0, ex.Message);
+            _logger.LogError(ex, "Error occured while fetching organizations data from Company House API: {Message}", ex.Message);
+            return new OrganisationSearchResult(Array.Empty<OrganisationSearchItem>(), 0, ex.Message);
+        }
+    }
+
+    private async Task<OrganisationSearchResult> GetTotalItemsResult(string organisationName, PagingQueryParams pagingParams, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var companyHouseApiResult = await _companiesHouseApi.Search(organisationName, pagingParams with { StartIndex = 1 }, cancellationToken);
+            return new OrganisationSearchResult(Array.Empty<OrganisationSearchItem>(), companyHouseApiResult.Hits, null);
+        }
+        catch (HttpRequestException ex)
+        {
+            _logger.LogError(ex, "Error occured while fetching organizations data from Company House API: {Message}", ex.Message);
+            return new OrganisationSearchResult(Array.Empty<OrganisationSearchItem>(), 0, ex.Message);
         }
     }
 
     private async Task<IList<OrganizationDetailsDto>> GetMatchingOrganizationsFromCrm(IEnumerable<OrganisationSearchItem> companyHousesOrganizations)
     {
-        var organizationCompanyNumbers = companyHousesOrganizations.Select(x => x.CompanyNumber);
+        var organizationCompanyNumbers = companyHousesOrganizations.Where(x => !string.IsNullOrEmpty(x.CompanyNumber)).Select(x => x.CompanyNumber!);
 
         return await _organizationCrmSearchService.SearchOrganizationInCrmByCompanyHouseNumber(organizationCompanyNumbers);
     }
 
-    private IList<OrganisationSearchItem> MergeResults(IList<OrganisationSearchItem> companyHousesOrganizations, IList<OrganizationDetailsDto> organizationsFromCrm)
+    private IList<OrganisationSearchItem> MergeResults(
+        IList<OrganisationSearchItem> companyHousesOrganizations,
+        IList<OrganizationDetailsDto> organizationsFromCrm)
     {
         var organizationsThatExistInCrm = companyHousesOrganizations.Join(
                 organizationsFromCrm,

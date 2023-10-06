@@ -89,7 +89,7 @@ public class Project
 
     public AffordableHomes? AffordableHomes { get; private set; }
 
-    public bool IsNewlyCreated { get; private set; }
+    public bool IsNewlyCreated { get; }
 
     public string? CheckAnswers { get; set; }
 
@@ -267,5 +267,10 @@ public class Project
         }
 
         PublicSectorGrantFunding = publicSectorGrantFunding;
+    }
+
+    internal void Delete()
+    {
+        IsSoftDeleted = true;
     }
 }

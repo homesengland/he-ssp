@@ -73,4 +73,6 @@ public class ProjectViewModel
     public string? AffordableHomes { get; set; }
 
     public string? CheckAnswers { get; set; }
+
+  public string DeleteProject { get; set; }
 }

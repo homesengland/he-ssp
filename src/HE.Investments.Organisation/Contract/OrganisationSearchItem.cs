@@ -1,7 +1,7 @@
 namespace HE.Investments.Organisation.Contract;
 
 public record OrganisationSearchItem(
-    string CompanyNumber,
+    string? CompanyNumber,
     string Name,
     string City,
     string Street,

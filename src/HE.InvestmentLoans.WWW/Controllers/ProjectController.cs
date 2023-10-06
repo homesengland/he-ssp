@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
-using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Funding.Commands;
@@ -12,9 +12,11 @@ using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.Contract.Security.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
+using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using NuGet.Common;
 using ProjectId = HE.InvestmentLoans.Contract.Application.ValueObjects.ProjectId;
 
@@ -45,6 +47,23 @@ public class ProjectController : WorkflowController<ProjectState>
         var result = await _mediator.Send(new CreateProjectCommand(LoanApplicationId.From(id)));
 
         return await Continue(new { id, projectId = result.ReturnedData.Value });
+    }
+
+    [HttpGet("{projectId}/delete")]
+    public IActionResult Delete(Guid id, Guid projectId)
+    {
+        return View(new ProjectViewModel { ApplicationId = id, ProjectId = projectId });
+    }
+
+    [HttpPost("{projectId}/delete")]
+    public async Task<IActionResult> Delete(Guid id, Guid projectId, ProjectViewModel project)
+    {
+        if (project.DeleteProject == CommonResponse.Yes)
+        {
+            await _mediator.Send(new DeleteProjectCommand(LoanApplicationId.From(id), ProjectId.From(projectId)));
+        }
+
+        return RedirectToAction(nameof(LoanApplicationV2Controller.TaskList), new ControllerName(nameof(LoanApplicationV2Controller)).WithoutPrefix(), new { id });
     }
 
     [HttpGet("{projectId}/name")]

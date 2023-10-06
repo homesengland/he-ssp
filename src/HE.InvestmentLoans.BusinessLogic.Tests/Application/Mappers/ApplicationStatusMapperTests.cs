@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.Contract.Application.Enums;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Application.Mappers;
@@ -11,7 +12,7 @@ public class ApplicationStatusMapperTests
     [DataRow(ApplicationStatus.ApplicationSubmitted, 858110001)]
     [DataRow(ApplicationStatus.InDueDiligence, 858110013)]
     [DataRow(ApplicationStatus.ContractSigned, 858110015)]
-    [DataRow(ApplicationStatus.CspSatisfied, 858110016)]
+    [DataRow(ApplicationStatus.CpsSatisfied, 858110016)]
     [DataRow(ApplicationStatus.LoanAvailable, 858110017)]
     [DataRow(ApplicationStatus.HoldRequested, 858110004)]
     [DataRow(ApplicationStatus.OnHold, 858110005)]
@@ -39,7 +40,7 @@ public class ApplicationStatusMapperTests
     [DataRow(858110001, ApplicationStatus.ApplicationSubmitted)]
     [DataRow(858110013, ApplicationStatus.InDueDiligence)]
     [DataRow(858110015, ApplicationStatus.ContractSigned)]
-    [DataRow(858110016, ApplicationStatus.CspSatisfied)]
+    [DataRow(858110016, ApplicationStatus.CpsSatisfied)]
     [DataRow(858110017, ApplicationStatus.LoanAvailable)]
     [DataRow(858110004, ApplicationStatus.HoldRequested)]
     [DataRow(858110005, ApplicationStatus.OnHold)]

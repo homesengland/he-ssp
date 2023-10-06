@@ -3,7 +3,7 @@ using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
-namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.QueryHandlers;
+namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.Mappers;
 
 public static class CompanyStructureViewModelMapper
 {
@@ -13,6 +13,7 @@ public static class CompanyStructureViewModelMapper
         {
             Purpose = MapCompanyPurpose(companyStructureEntity.Purpose),
             LoanApplicationId = companyStructureEntity.LoanApplicationId.Value,
+            LoanApplicationStatus = companyStructureEntity.LoanApplicationStatus,
             OrganisationMoreInformation = companyStructureEntity.MoreInformation?.Information,
             HomesBuilt = companyStructureEntity.HomesBuilt?.ToString(),
             CheckAnswers = companyStructureEntity.Status == SectionStatus.Completed ? CommonResponse.Yes : null,
