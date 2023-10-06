@@ -19,11 +19,16 @@
                 </gds-h1>
                 <p class="govuk-body govuk-!-margin-bottom-2"> @singleData.Desription</p>
             </dt>
-            <gds-summary-list-actions-v2>
-                <gds-link href=@(@singleData.Link ?? "#") id=@($"edit-link-{singleData.Title.ToLowerInvariant().Replace(' ', '-')}")>
-                    View or edit
-                </gds-link>
-            </gds-summary-list-actions-v2>
+
+            @if(!Model.IsReadonly())
+            {
+                <gds-summary-list-actions-v2>
+                    <gds-link href=@(@singleData.Link ?? "#") id=@($"edit-link-{singleData.Title.ToLowerInvariant().Replace(' ', '-')}")>
+                        View or edit
+                    </gds-link>
+                </gds-summary-list-actions-v2>
+            }
+
         </gds-summary-list-row-v2>
     }
 </gds-summary-list>
