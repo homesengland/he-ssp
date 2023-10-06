@@ -5,6 +5,7 @@
 @using HE.InvestmentLoans.WWW.Controllers
 @using HE.InvestmentLoans.BusinessLogic.ViewModel
 @using System.Globalization
+@using HE.InvestmentLoans.Contract.Application.Enums
 @inject MediatR.IMediator mediator
 @{
     var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
@@ -36,7 +37,11 @@
                             Complete company information
                         </a>
                     </span>
-                    @if (Model.Company.IsCompleted())
+                    @if (Model.Status == ApplicationStatus.Withdrawn)
+                    {
+                        <gds-task-list-item-status status=Withdrawn>Withdrawn</gds-task-list-item-status>
+                    }
+                    else if (Model.Company.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
@@ -63,7 +68,11 @@
                             Provide details about funding
                         </a>
                     </span>
-                    @if (Model.Funding.IsCompleted())
+                    @if (Model.Status == ApplicationStatus.Withdrawn)
+                    {
+                        <gds-task-list-item-status status=Withdrawn>Withdrawn</gds-task-list-item-status>
+                    }
+                    else if (Model.Funding.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
@@ -82,7 +91,11 @@
                             Provide details about security
                         </a>
                     </span>
-                    @if (Model.Security.IsCompleted())
+                    @if (Model.Status == ApplicationStatus.Withdrawn)
+                    {
+                    <gds-task-list-item-status status=Withdrawn>Withdrawn</gds-task-list-item-status>
+                    }
+                    else if (Model.Security.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
@@ -119,13 +132,21 @@
                                     }
                                 </a>
                             </span>
+
                             <div class="task-list-remove-link">
-                                <a href="@Url.Action("Delete","Project", new {id = Model.ID, projectId = site.Id })">
-                                    Remove
-                                </a>
+                                @if (Model.Status != ApplicationStatus.Withdrawn)
+                                {
+                                    <a href="@Url.Action("Delete", "Project", new { id = Model.ID, projectId = site.Id })">
+                                        Remove
+                                    </a>
+                                }
                             </div>
                             <div>
-                                @if (site.IsCompleted())
+                                @if (Model.Status == ApplicationStatus.Withdrawn)
+                                {
+                                    <gds-task-list-item-status status=Withdrawn>Withdrawn</gds-task-list-item-status>
+                                }
+                                else if (site.IsCompleted())
                                 {
                                     <gds-task-list-item-status class="task-list-project-tag" status=Completed>Completed</gds-task-list-item-status>
                                 }
@@ -141,17 +162,19 @@
                         </div>
                     </li>
                 }
-
-                <li class="app-task-list__item">
-                    <span class="app-task-list__task-name">
+                @if (Model.Status != ApplicationStatus.Withdrawn)
+                {
+                    <li class="app-task-list__item">
                         <span class="app-task-list__task-name">
-                            <a id="add-project-link" href="@Url.Action("StartProjectPost", "Project", new {id = Model.ID})">
-                                Add another
-                            </a>
-                        </span>
+                            <span class="app-task-list__task-name">
+                                <a id="add-project-link" href="@Url.Action("StartProjectPost", "Project", new {id = Model.ID})">
+                                    Add another
+                                </a>
+                            </span>
 
-                    </span>
-                </li>
+                        </span>
+                    </li>
+                }
             </ul>
         </li>
     </ul>
