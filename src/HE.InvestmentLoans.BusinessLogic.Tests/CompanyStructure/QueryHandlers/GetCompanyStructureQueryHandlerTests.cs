@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.CompanyStructure.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
@@ -35,7 +36,9 @@ public class GetCompanyStructureQueryHandlerTests : TestBase<GetCompanyStructure
             .BuildMockAndRegister(this);
 
         // when
-        var result = await TestCandidate.Handle(new GetCompanyStructureQuery(loanApplicationId), CancellationToken.None);
+        var result = await TestCandidate.Handle(
+            new GetCompanyStructureQuery(loanApplicationId, CompanyStructureFieldsSet.GetAllFields),
+            CancellationToken.None);
 
         // then
         result.ViewModel.Purpose.Should().Be("Yes");

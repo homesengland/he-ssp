@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
-namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
+namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.Mappers;
 
 public static class CompanyStructureMapper
 {

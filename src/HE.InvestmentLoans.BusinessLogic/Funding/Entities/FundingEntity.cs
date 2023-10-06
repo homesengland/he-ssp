@@ -16,7 +16,8 @@ public class FundingEntity
         PrivateSectorFunding? privateSectorFunding,
         RepaymentSystem? repaymentSystem,
         AdditionalProjects? additionalProjects,
-        SectionStatus status)
+        SectionStatus status,
+        ApplicationStatus loanApplicationStatus)
     {
         LoanApplicationId = loanApplicationId;
         GrossDevelopmentValue = grossDevelopmentValue;
@@ -26,6 +27,7 @@ public class FundingEntity
         RepaymentSystem = repaymentSystem;
         AdditionalProjects = additionalProjects;
         Status = status;
+        LoanApplicationStatus = loanApplicationStatus;
     }
 
     public GrossDevelopmentValue? GrossDevelopmentValue { get; private set; }
@@ -43,6 +45,8 @@ public class FundingEntity
     public SectionStatus Status { get; private set; }
 
     public LoanApplicationId LoanApplicationId { get; }
+
+    public ApplicationStatus LoanApplicationStatus { get; }
 
     public void ProvideGrossDevelopmentValue(GrossDevelopmentValue? grossDevelopmentValue)
     {

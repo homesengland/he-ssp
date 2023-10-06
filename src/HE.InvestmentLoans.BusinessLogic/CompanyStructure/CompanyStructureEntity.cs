@@ -15,7 +15,8 @@ public class CompanyStructureEntity
         OrganisationMoreInformation? moreInformation,
         OrganisationMoreInformationFile? moreInformationFile,
         HomesBuilt? homesBuilt,
-        SectionStatus status)
+        SectionStatus status,
+        ApplicationStatus loanApplicationStatus)
     {
         LoanApplicationId = loanApplicationId;
         Purpose = purpose;
@@ -23,6 +24,7 @@ public class CompanyStructureEntity
         MoreInformationFile = moreInformationFile;
         HomesBuilt = homesBuilt;
         Status = status;
+        LoanApplicationStatus = loanApplicationStatus;
     }
 
     public CompanyPurpose? Purpose { get; private set; }
@@ -36,6 +38,8 @@ public class CompanyStructureEntity
     public SectionStatus Status { get; private set; }
 
     public LoanApplicationId LoanApplicationId { get; }
+
+    public ApplicationStatus LoanApplicationStatus { get; }
 
     public void ProvideCompanyPurpose(CompanyPurpose? purpose)
     {

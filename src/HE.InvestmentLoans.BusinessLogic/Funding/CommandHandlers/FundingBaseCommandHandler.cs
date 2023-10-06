@@ -2,6 +2,7 @@ using HE.InvestmentLoans.BusinessLogic.Funding.Entities;
 using HE.InvestmentLoans.BusinessLogic.Funding.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using Microsoft.Extensions.Logging;
@@ -25,7 +26,7 @@ public class FundingBaseCommandHandler
     protected async Task<OperationResult> Perform(Action<FundingEntity> action, LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
     {
         var userAccount = await _loanUserContext.GetSelectedAccount();
-        var funding = await _repository.GetAsync(loanApplicationId, userAccount, cancellationToken);
+        var funding = await _repository.GetAsync(loanApplicationId, userAccount, FundingFieldsSet.GetAllFields, cancellationToken);
 
         try
         {

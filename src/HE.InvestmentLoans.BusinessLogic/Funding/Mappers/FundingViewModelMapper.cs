@@ -13,6 +13,7 @@ public static class FundingViewModelMapper
         return new FundingViewModel
         {
             LoanApplicationId = fundingEntity.LoanApplicationId.Value,
+            LoanApplicationStatus = fundingEntity.LoanApplicationStatus,
             GrossDevelopmentValue = fundingEntity.GrossDevelopmentValue?.ToString(),
             TotalCosts = fundingEntity.EstimatedTotalCosts?.ToString(),
             AbnormalCosts = MapAbnormalCosts(fundingEntity.AbnormalCosts),

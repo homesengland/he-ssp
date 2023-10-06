@@ -172,7 +172,15 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     {
         var response = await _mediator.Send(new GetApplicationDashboardQuery(LoanApplicationId.From(id)));
 
-        return View("ApplicationDashboard", new ApplicationDashboardModel { LoanApplicationId = LoanApplicationId.From(id), Data = response, IsOverviewSectionSelected = true });
+        return View(
+            "ApplicationDashboard",
+            new ApplicationDashboardModel
+            {
+                LoanApplicationId = LoanApplicationId.From(id),
+                LoanApplicationStatus = response.ApplicationStatus,
+                Data = response,
+                IsOverviewSectionSelected = true,
+            });
     }
 
     [HttpGet("{id}/dashboard/supporting-documents")]

@@ -4,6 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
@@ -29,7 +30,11 @@ public class GetAsyncTests : TestBase<CompanyStructureRepository>
         RegisterDependency(organizationServiceMock);
 
         // when
-        var result = await TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, CancellationToken.None);
+        var result = await TestCandidate.GetAsync(
+            loanApplicationId,
+            UserAccountTestData.UserAccountOne,
+            CompanyStructureFieldsSet.GetAllFields,
+            CancellationToken.None);
 
         // then
         result.LoanApplicationId.Should().Be(loanApplicationId);
@@ -56,7 +61,11 @@ public class GetAsyncTests : TestBase<CompanyStructureRepository>
         RegisterDependency(organizationServiceMock);
 
         // when
-        var result = await TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, CancellationToken.None);
+        var result = await TestCandidate.GetAsync(
+            loanApplicationId,
+            UserAccountTestData.UserAccountOne,
+            CompanyStructureFieldsSet.GetAllFields,
+            CancellationToken.None);
 
         // then
         result.LoanApplicationId.Should().Be(loanApplicationId);
@@ -74,7 +83,8 @@ public class GetAsyncTests : TestBase<CompanyStructureRepository>
         var loanApplicationId = LoanApplicationIdTestData.LoanApplicationIdOne;
 
         // when
-        var action = () => TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, CancellationToken.None);
+        var action = () =>
+            TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, CompanyStructureFieldsSet.GetAllFields, CancellationToken.None);
 
         // then
         await action.Should().ThrowExactlyAsync<NotFoundException>().WithMessage($"*{loanApplicationId}*");

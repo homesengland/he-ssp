@@ -1,7 +1,7 @@
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.CRM.Model;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
+namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 public class ApplicationStatusMapper
 {
     public static int MapToCrmStatus(ApplicationStatus status)
@@ -12,7 +12,7 @@ public class ApplicationStatusMapper
             ApplicationStatus.ApplicationSubmitted => (int)invln_externalstatus.ApplicationSubmitted,
             ApplicationStatus.InDueDiligence => (int)invln_externalstatus.InDueDiligence,
             ApplicationStatus.ContractSigned => (int)invln_externalstatus.ContractSignedSubjecttoCP,
-            ApplicationStatus.CspSatisfied => (int)invln_externalstatus.CPsSatisfied,
+            ApplicationStatus.CpsSatisfied => (int)invln_externalstatus.CPsSatisfied,
             ApplicationStatus.LoanAvailable => (int)invln_externalstatus.LoanAvailable,
             ApplicationStatus.HoldRequested => (int)invln_externalstatus.HoldRequested,
             ApplicationStatus.OnHold => (int)invln_externalstatus.OnHold,
@@ -40,7 +40,7 @@ public class ApplicationStatusMapper
             (int)invln_externalstatus.ApplicationSubmitted => ApplicationStatus.ApplicationSubmitted,
             (int)invln_externalstatus.InDueDiligence => ApplicationStatus.InDueDiligence,
             (int)invln_externalstatus.ContractSignedSubjecttoCP => ApplicationStatus.ContractSigned,
-            (int)invln_externalstatus.CPsSatisfied => ApplicationStatus.CspSatisfied,
+            (int)invln_externalstatus.CPsSatisfied => ApplicationStatus.CpsSatisfied,
             (int)invln_externalstatus.LoanAvailable => ApplicationStatus.LoanAvailable,
             (int)invln_externalstatus.HoldRequested => ApplicationStatus.HoldRequested,
             (int)invln_externalstatus.OnHold => ApplicationStatus.OnHold,

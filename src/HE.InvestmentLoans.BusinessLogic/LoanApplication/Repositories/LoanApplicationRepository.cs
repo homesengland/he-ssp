@@ -205,7 +205,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         await _serviceClient.ExecuteAsync(request, cancellationToken);
     }
 
-    public async Task WithdrawSubmit(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken)
+    public async Task WithdrawSubmitted(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken)
     {
         var crmWithdrawStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Withdrawn);
 
