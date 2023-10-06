@@ -15,8 +15,8 @@ using HE.InvestmentLoans.WWW.Routing;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.CodeAnalysis;
 using NuGet.Common;
 using ProjectId = HE.InvestmentLoans.Contract.Application.ValueObjects.ProjectId;
 
