@@ -129,7 +129,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        return View("TaskListV2", response.LoanApplication.LegacyModel);
+        return View("TaskList", response.LoanApplication.LegacyModel);
     }
 
     [HttpPost("{id}/task-list")]
