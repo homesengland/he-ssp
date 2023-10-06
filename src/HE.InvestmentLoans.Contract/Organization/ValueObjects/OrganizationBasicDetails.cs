@@ -25,7 +25,7 @@ public class OrganizationBasicDetails : ValueObject
 
     public string? OrganisationId { get; }
 
-    protected override IEnumerable<object> GetAtomicValues()
+    protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Name;
         yield return Street;

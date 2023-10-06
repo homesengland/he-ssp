@@ -72,8 +72,7 @@ public class OrganisationSearchService : IOrganisationSearchService
         return new OrganisationSearchResult(mergedResult, companyHousesResult.TotalItems + foundSpvCompaniesCount, null!);
     }
 
-    public async Task<GetOrganizationByCompaniesHouseNumberResult> GetByCompaniesHouseNumber(string? companiesHouseNumber,
-        CancellationToken cancellationToken)
+    public async Task<GetOrganizationByCompaniesHouseNumberResult> GetByCompaniesHouseNumber(string? companiesHouseNumber, CancellationToken cancellationToken)
     {
         var companyHousesResult = await GetOrganizationFromCompanyHousesApi(null!, companiesHouseNumber, new PagingQueryParams(1, 0), cancellationToken);
 
@@ -173,8 +172,7 @@ public class OrganisationSearchService : IOrganisationSearchService
         }
     }
 
-    private async Task<OrganisationSearchResult> GetTotalItemsResult(string organisationName, PagingQueryParams pagingParams,
-        CancellationToken cancellationToken)
+    private async Task<OrganisationSearchResult> GetTotalItemsResult(string organisationName, PagingQueryParams pagingParams, CancellationToken cancellationToken)
     {
         try
         {
@@ -190,12 +188,13 @@ public class OrganisationSearchService : IOrganisationSearchService
 
     private async Task<IList<OrganizationDetailsDto>> GetMatchingOrganizationsFromCrm(IEnumerable<OrganisationSearchItem> companyHousesOrganizations)
     {
-        var organizationCompanyNumbers = companyHousesOrganizations.Select(x => x.CompanyNumber);
+        var organizationCompanyNumbers = companyHousesOrganizations.Where(x => !string.IsNullOrEmpty(x.CompanyNumber)).Select(x => x.CompanyNumber!);
 
         return await _organizationCrmSearchService.SearchOrganizationInCrmByCompanyHouseNumber(organizationCompanyNumbers);
     }
 
-    private IList<OrganisationSearchItem> MergeResults(IList<OrganisationSearchItem> companyHousesOrganizations,
+    private IList<OrganisationSearchItem> MergeResults(
+        IList<OrganisationSearchItem> companyHousesOrganizations,
         IList<OrganizationDetailsDto> organizationsFromCrm)
     {
         var organizationsThatExistInCrm = companyHousesOrganizations.Join(
