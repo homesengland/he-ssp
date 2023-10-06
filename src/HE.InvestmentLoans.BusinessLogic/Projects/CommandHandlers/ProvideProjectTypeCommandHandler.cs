@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,16 +23,7 @@ public class ProvideProjectTypeCommandHandler : ProjectCommandHandlerBase, IRequ
     public async Task<OperationResult> Handle(ProvideProjectTypeCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            project =>
-            {
-                if (request.ProjectType.IsNotProvided())
-                {
-                    return;
-                }
-
-                // TODO
-                project.ProvideProjectType(new ProjectType(request.ProjectType));
-            },
+            project => project.ProvideProjectType(new ProjectType(request.ProjectType)),
             request.LoanApplicationId,
             request.ProjectId,
             cancellationToken);
