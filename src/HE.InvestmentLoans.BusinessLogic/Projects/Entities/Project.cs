@@ -5,6 +5,7 @@ using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.Entities;
@@ -29,7 +30,8 @@ public class Project
         LandOwnership? landOwnership,
         AdditionalDetails? additionalDetails,
         PublicSectorGrantFundingStatus? grantFundingStatus,
-        PublicSectorGrantFunding? publicSectorGrantFunding)
+        PublicSectorGrantFunding? publicSectorGrantFunding,
+        ApplicationStatus loanApplicationStatus)
     {
         IsNewlyCreated = false;
 
@@ -43,9 +45,12 @@ public class Project
         AdditionalDetails = additionalDetails;
         GrantFundingStatus = grantFundingStatus;
         PublicSectorGrantFunding = publicSectorGrantFunding;
+        LoanApplicationStatus = loanApplicationStatus;
     }
 
     public ProjectId Id { get; private set; }
+
+    public ApplicationStatus LoanApplicationStatus { get; }
 
     public ProjectName? Name { get; private set; }
 
@@ -171,7 +176,8 @@ public class Project
     {
         if (PlanningReferenceNumber.IsNotProvided() || !PlanningReferenceNumber!.Exists)
         {
-            throw new DomainException($"Cannot provide planning permission status because project id: {Id}, has no planning reference number.", LoanApplicationErrorCodes.PlanningReferenceNumberNotExists);
+            throw new DomainException($"Cannot provide planning permission status because project id: {Id}, has no planning reference number.",
+                LoanApplicationErrorCodes.PlanningReferenceNumberNotExists);
         }
 
         PlanningPermissionStatus = planningPermissionStatus;
@@ -206,7 +212,8 @@ public class Project
     {
         if (GrantFundingStatus != PublicSectorGrantFundingStatus.Received)
         {
-            throw new DomainException($"Cannot provide more information about grant funding that has not been received. Current status: {GrantFundingStatus}", LoanApplicationErrorCodes.GrantFundingNotExists);
+            throw new DomainException($"Cannot provide more information about grant funding that has not been received. Current status: {GrantFundingStatus}",
+                LoanApplicationErrorCodes.GrantFundingNotExists);
         }
 
         PublicSectorGrantFunding = publicSectorGrantFunding;

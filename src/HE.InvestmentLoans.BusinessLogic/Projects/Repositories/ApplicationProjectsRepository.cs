@@ -5,6 +5,7 @@ using System.Threading;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.Generic;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
@@ -15,6 +16,7 @@ using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.AspNetCore.Http;
@@ -60,13 +62,16 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         return loanApplicationSessionModel;
     }
 
-    public async Task<ApplicationProjects> GetById(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<ApplicationProjects> GetById(LoanApplicationId loanApplicationId, UserAccount userAccount, ProjectFieldsSet projectFieldsSet, CancellationToken cancellationToken)
     {
+        var fieldsToRetrieve = ProjectCrmFieldNameMapper.Map(projectFieldsSet);
+
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
+            // invln_fieldstoretrieve = fieldsToRetrieve,
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
@@ -86,18 +91,22 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                                 projectFromCrm.siteOwnership.IsProvided() ? new LandOwnership(projectFromCrm.siteOwnership!.Value) : null,
                                 AdditionalDetailsMapper.MapFromCrm(projectFromCrm, _timeProvider.Now),
                                 projectFromCrm.IsProvided() ? GrantFundingStatusMapper.FromString(projectFromCrm.publicSectorFunding) : null,
-                                PublicSectorGrantFundingMapper.MapFromCrm(projectFromCrm)));
+                                PublicSectorGrantFundingMapper.MapFromCrm(projectFromCrm),
+                                ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus)));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
 
-    public async Task<Project> GetById(LoanApplicationId loanApplicationId, ProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<Project> GetById(LoanApplicationId loanApplicationId, ProjectId projectId, UserAccount userAccount, ProjectFieldsSet projectFieldsSet, CancellationToken cancellationToken)
     {
+        var fieldsToRetrieve = ProjectCrmFieldNameMapper.Map(projectFieldsSet);
+
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
+            invln_fieldstoretrieve = fieldsToRetrieve,
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
@@ -186,7 +195,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         {
             invln_sitedetail = CrmResponseSerializer.Serialize(siteDetails),
             invln_loanapplicationid = applicationProjects.LoanApplicationId.Value.ToString(),
-            invln_fieldstoupdate = string.Join(",", CrmSiteNames()),
+            invln_fieldstoupdate = string.Join(",", ProjectCrmFieldNameMapper.Map(ProjectFieldsSet.SaveAllFields)),
             invln_sitedetailsid = projectId.ToString(),
         };
 
@@ -207,25 +216,5 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
-    }
-
-    private IEnumerable<string> CrmSiteNames()
-    {
-        yield return nameof(invln_SiteDetails.invln_Name).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Haveaplanningreferencenumber).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Planningreferencenumber).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Sitecoordinates).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Landregistrytitlenumber).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Siteownership).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Siteownership).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Dateofpurchase).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Sitecost).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_currentvalue).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Valuationsource).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Publicsectorfunding).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Whoprovided).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Reason).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_HowMuch).ToLowerInvariant();
-        yield return nameof(invln_SiteDetails.invln_Nameofgrantfund).ToLowerInvariant();
     }
 }

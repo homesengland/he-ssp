@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects;
@@ -10,6 +5,7 @@ using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using Stateless;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+
 public class ProjectWorkflow : IStateRouting<ProjectState>
 {
     private readonly StateMachine<ProjectState, Trigger> _machine;
@@ -49,9 +45,15 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
         };
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1005:Single line comments should begin with single space", Justification = "Commented lines will help in next refactoring steps")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1515:Single-line comment should be preceded by blank line", Justification = "Commented lines will help in next refactoring steps")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1512:Single-line comments should not be followed by blank line", Justification = "Commented lines will help in next refactoring steps")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules",
+        "SA1005:Single line comments should begin with single space",
+        Justification = "Commented lines will help in next refactoring steps")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules",
+        "SA1515:Single-line comment should be preceded by blank line",
+        Justification = "Commented lines will help in next refactoring steps")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules",
+        "SA1512:Single-line comments should not be followed by blank line",
+        Justification = "Commented lines will help in next refactoring steps")]
     private void ConfigureTransitions()
     {
         _machine.Configure(ProjectState.Index)
@@ -63,9 +65,9 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
         _machine.Configure(ProjectState.StartDate)
-           .Permit(Trigger.Continue, ProjectState.ManyHomes)
-           .Permit(Trigger.Back, ProjectState.Name)
-           .Permit(Trigger.Change, ProjectState.CheckAnswers);
+            .Permit(Trigger.Continue, ProjectState.ManyHomes)
+            .Permit(Trigger.Back, ProjectState.Name)
+            .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
         //_machine.Configure(State.ManyHomes)
         //    .Permit(Trigger.Continue, State.TypeHomes)
@@ -83,24 +85,24 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
         //    .Permit(Trigger.Change, State.CheckAnswers);
 
         _machine.Configure(ProjectState.PlanningRef)
-           .PermitIf(Trigger.Continue, ProjectState.PlanningRefEnter, () => _model.PlanningReferenceNumberExists == CommonResponse.Yes)
-           .PermitIf(Trigger.Continue, ProjectState.Location, () => _model.PlanningReferenceNumberExists == CommonResponse.No)
-           .Permit(Trigger.Back, ProjectState.Type);
+            .PermitIf(Trigger.Continue, ProjectState.PlanningRefEnter, () => _model.PlanningReferenceNumberExists == CommonResponse.Yes)
+            .PermitIf(Trigger.Continue, ProjectState.Location, () => _model.PlanningReferenceNumberExists == CommonResponse.No)
+            .Permit(Trigger.Back, ProjectState.Type);
 
         _machine.Configure(ProjectState.PlanningRefEnter)
-           .Permit(Trigger.Continue, ProjectState.PlanningPermissionStatus)
-           .Permit(Trigger.Back, ProjectState.PlanningRef);
+            .Permit(Trigger.Continue, ProjectState.PlanningPermissionStatus)
+            .Permit(Trigger.Back, ProjectState.PlanningRef);
 
         _machine.Configure(ProjectState.PlanningPermissionStatus)
-           .Permit(Trigger.Continue, ProjectState.Location)
-           .Permit(Trigger.Back, ProjectState.PlanningRefEnter);
+            .Permit(Trigger.Continue, ProjectState.Location)
+            .Permit(Trigger.Back, ProjectState.PlanningRefEnter);
         //    .PermitIf(Trigger.Change, State.Location, () => _site.Location == null)
         //    .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.Location != null);
 
         _machine.Configure(ProjectState.Location)
-           .Permit(Trigger.Continue, ProjectState.Ownership)
-           .PermitIf(Trigger.Back, ProjectState.PlanningPermissionStatus, () => _model.PlanningReferenceNumberExists == CommonResponse.Yes)
-           .PermitIf(Trigger.Back, ProjectState.PlanningRef, () => _model.PlanningReferenceNumberExists != CommonResponse.Yes);
+            .Permit(Trigger.Continue, ProjectState.Ownership)
+            .PermitIf(Trigger.Back, ProjectState.PlanningPermissionStatus, () => _model.PlanningReferenceNumberExists == CommonResponse.Yes)
+            .PermitIf(Trigger.Back, ProjectState.PlanningRef, () => _model.PlanningReferenceNumberExists != CommonResponse.Yes);
         //.Permit(Trigger.Change, ProjectState.CheckAnswers);
 
         _machine.Configure(ProjectState.Ownership)
@@ -117,8 +119,8 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             .Permit(Trigger.Back, ProjectState.Ownership);
 
         _machine.Configure(ProjectState.GrantFunding)
-           .PermitIf(Trigger.Continue, ProjectState.GrantFundingMore, () => _model.GrantFundingStatus == CommonResponse.Yes)
-           .PermitIf(Trigger.Continue, ProjectState.ChargesDebt, () => _model.GrantFundingStatus != CommonResponse.Yes);
+            .PermitIf(Trigger.Continue, ProjectState.GrantFundingMore, () => _model.GrantFundingStatus == CommonResponse.Yes)
+            .PermitIf(Trigger.Continue, ProjectState.ChargesDebt, () => _model.GrantFundingStatus != CommonResponse.Yes);
         //   .PermitIf(Trigger.Back, State.Additional, () => _site.Ownership == CommonResponse.Yes)
         //   .PermitIf(Trigger.Back, State.Ownership, () => _site.Ownership != CommonResponse.Yes)
         //   .PermitIf(Trigger.Change, State.GrantFundingMore, () => _site.GrantFunding == CommonResponse.Yes)
@@ -138,6 +140,11 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
         //   .Permit(Trigger.Continue, State.CheckAnswers)
         //   .Permit(Trigger.Back, State.ChargesDebt)
         //   .Permit(Trigger.Change, State.CheckAnswers);
+
+        _machine.Configure(ProjectState.CheckAnswers)
+            .Permit(Trigger.Continue, ProjectState.Complete)
+            .PermitIf(Trigger.Back, ProjectState.AffordableHomes, () => _model.IsEditable())
+            .PermitIf(Trigger.Back, ProjectState.Complete, () => _model.IsReadOnly());
 
         //_machine.Configure(State.CheckAnswers)
         //    .PermitIf(Trigger.Continue, State.Complete, () => _site.CheckAnswers == CommonResponse.Yes)
