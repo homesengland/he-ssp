@@ -112,7 +112,6 @@ public class ProjectController : WorkflowController<ProjectState>
     {
         var result = await _mediator.Send(new ProvideHomesCountCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HomesCount), token);
 
-
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
