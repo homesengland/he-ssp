@@ -181,17 +181,17 @@
     <gds-h2 size="ControlSize.M">Check and submit</gds-h2>
     <p>You must complete all sections before you can submit your application.</p>
     <form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.ID" asp-method="post" novalidate>
-        @if (loanApllicationWorkflow.IsFilled())
-        {
-                <gds-button data-module="govuk-button" name="action" value="Continue">
-                    Check and submit application
-                </gds-button>
-        }
-        else
+        @if (!loanApllicationWorkflow.IsFilled() || Model.Status == ApplicationStatus.Withdrawn)
         {
             <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button">
                 Check and submit application
             </button>
+        }
+        else
+        {
+            <gds-button data-module="govuk-button" name="action" value="Continue">
+                Check and submit application
+            </gds-button>
         }
     </form>
     <gds-link href="@Url.Action("ReportProblem","LoanApplication", new {id = Model.ID})">
