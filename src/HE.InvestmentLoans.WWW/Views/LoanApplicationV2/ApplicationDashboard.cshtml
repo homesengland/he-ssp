@@ -48,7 +48,7 @@
     <div class="govuk-grid-column-two-thirds">
         @if (Model.IsOverviewSectionSelected)
         {
-            @await Html.PartialAsync("ApplicationDashboard/_ApplicationDashboardOverview", Model.Data.ApplicationId)
+            @await Html.PartialAsync("ApplicationDashboard/_ApplicationDashboardOverview", Model)
         }
         else
         {
