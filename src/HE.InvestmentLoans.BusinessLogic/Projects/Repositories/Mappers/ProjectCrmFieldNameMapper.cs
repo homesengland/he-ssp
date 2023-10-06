@@ -29,7 +29,8 @@ public static class ProjectCrmFieldNameMapper
     private static readonly string GrantOrFundName = $"{nameof(invln_SiteDetails.invln_Nameofgrantfund).ToLowerInvariant()},";
     private static readonly string ChargesDebtExists = $"{nameof(invln_SiteDetails.invln_Existinglegalcharges).ToLowerInvariant()},";
     private static readonly string ChargesDebtInformation = $"{nameof(invln_SiteDetails.invln_Existinglegalchargesinformation).ToLowerInvariant()},";
-    private static readonly string ProjectStatus = $"{nameof(invln_SiteDetails.invln_Nameofgrantfund).ToLowerInvariant()}"; // TODO
+
+    // private static readonly string ProjectStatus = $"{nameof(invln_SiteDetails.invln_sitedetailscompletionstatus).ToLowerInvariant()}"; // TODO
 
     public static string Map(ProjectFieldsSet projectFieldsSet)
     {
@@ -102,6 +103,7 @@ public static class ProjectCrmFieldNameMapper
         };
 
         return result;
-        // return result + ProjectStatus; TODO
+
+        // return result + ProjectStatus; //TODO
     }
 }
