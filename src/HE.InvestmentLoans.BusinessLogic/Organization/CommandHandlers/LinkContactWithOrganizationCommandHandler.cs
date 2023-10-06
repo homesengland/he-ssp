@@ -37,7 +37,7 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
                 CommonErrorCodes.ContactAlreadyLinkedWithOrganization);
         }
 
-        var result = await _organisationSearchService.GetByCompaniesHouseNumber(request.Number.ToString(), cancellationToken);
+        var result = await _organisationSearchService.GetByOrganisation(request.Number.ToString(), cancellationToken);
 
         if (!result.IsSuccessfull())
         {

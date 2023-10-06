@@ -49,7 +49,7 @@
             <p class="govuk-body govuk-!-margin-bottom-6">Companies house number: @Model.ViewModel.CompaniesHouseNumber</p>
         </li>
     </gds-ul>
-    <form asp-controller="Organization" asp-action="ConfirmOrganizationPost" asp-route-organizationNumber=@Model.ViewModel.CompaniesHouseNumber asp-method="post" novalidate>
+    <form asp-controller="Organization" asp-action="ConfirmOrganizationPost" asp-route-organizationNumberOrId=@(Model.ViewModel.OrganisationId ?? Model.ViewModel.CompaniesHouseNumber) asp-method="post" novalidate>
         <gds-div-form-group>
             <gds-field-set>
                 <gds-legend class="govuk-fieldset__legend--m">

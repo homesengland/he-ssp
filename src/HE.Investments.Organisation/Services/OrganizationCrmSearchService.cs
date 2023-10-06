@@ -51,7 +51,7 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
         return new List<OrganizationDetailsDto>();
     }
 
-    public async Task<OrganizationDetailsDto> SearchOrganizationInCrmByOrganizationId(string organizationId)
+    public async Task<OrganizationDetailsDto?> SearchOrganizationInCrmByOrganizationId(string organizationId)
     {
         var retrievedEntities = await _organizationRepository.SearchForOrganizationsByOrganizationId(_organizationService, organizationId);
         if (retrievedEntities != null)
@@ -59,7 +59,7 @@ internal class OrganizationCrmSearchService : IOrganizationCrmSearchService
             return MapEntityToDto(retrievedEntities);
         }
 
-        return new OrganizationDetailsDto();
+        return null;
     }
 
     private OrganizationDetailsDto MapEntityToDto(Entity account)

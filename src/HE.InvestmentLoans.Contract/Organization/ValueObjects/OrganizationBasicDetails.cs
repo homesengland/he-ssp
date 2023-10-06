@@ -3,13 +3,14 @@ using HE.InvestmentLoans.Contract.Domain;
 namespace HE.InvestmentLoans.Contract.Organization.ValueObjects;
 public class OrganizationBasicDetails : ValueObject
 {
-    public OrganizationBasicDetails(string name, string street, string city, string postalCode, string companiesHouseNumber)
+    public OrganizationBasicDetails(string name, string street, string city, string postalCode, string? companiesHouseNumber, string? organisationId)
     {
         Name = name;
         Street = street;
         City = city;
         PostalCode = postalCode;
         CompaniesHouseNumber = companiesHouseNumber;
+        OrganisationId = organisationId;
     }
 
     public string Name { get; }
@@ -20,7 +21,9 @@ public class OrganizationBasicDetails : ValueObject
 
     public string PostalCode { get; }
 
-    public string CompaniesHouseNumber { get; }
+    public string? CompaniesHouseNumber { get; }
+
+    public string? OrganisationId { get; }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
@@ -29,5 +32,6 @@ public class OrganizationBasicDetails : ValueObject
         yield return City;
         yield return PostalCode;
         yield return CompaniesHouseNumber;
+        yield return OrganisationId;
     }
 }

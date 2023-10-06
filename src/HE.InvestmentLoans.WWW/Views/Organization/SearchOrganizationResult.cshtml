@@ -23,7 +23,7 @@
             @foreach (var organization in Model.Organizations)
             {
                 <li>
-                <gds-link href="@Url.Action("ConfirmOrganization", "Organization", new { organizationNumber = organization.CompaniesHouseNumber })" id=@($"company-link-{organization.CompaniesHouseNumber}")><b>@organization.Name</b></gds-link><br />
+                <gds-link href="@Url.Action("ConfirmOrganization", "Organization", new { organizationNumberOrId = organization.OrganisationId ?? organization.CompaniesHouseNumber })" id=@($"company-link-{organization.CompaniesHouseNumber ?? organization.OrganisationId}")><b>@organization.Name</b></gds-link><br />
                     @if (organization.Street.IsProvided())
                     {
                         <span class="govuk-body">@organization.Street</span><br />

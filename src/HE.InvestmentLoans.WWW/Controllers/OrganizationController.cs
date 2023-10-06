@@ -51,27 +51,27 @@ public class OrganizationController : Controller
         return View(response.Result);
     }
 
-    [HttpGet("{organizationNumber}/confirm")]
-    public async Task<IActionResult> ConfirmOrganization(string organizationNumber)
+    [HttpGet("{organizationNumberOrId}/confirm")]
+    public async Task<IActionResult> ConfirmOrganization(string organizationNumberOrId)
     {
-        var response = await _mediator.Send(new GetOrganizationByCompanyHouseNumberQuery(organizationNumber));
+        var response = await _mediator.Send(new GetOrganizationQuery(organizationNumberOrId));
 
         return View("ConfirmYourSelection", new ConfirmModel<OrganizationBasicDetails> { ViewModel = response });
     }
 
-    [HttpPost("{organizationNumber}/confirm")]
-    public async Task<IActionResult> ConfirmOrganizationPost(string organizationNumber, ConfirmModel<OrganizationBasicDetails> model)
+    [HttpPost("{organizationNumberOrId}/confirm")]
+    public async Task<IActionResult> ConfirmOrganizationPost(string organizationNumberOrId, ConfirmModel<OrganizationBasicDetails> model)
     {
         if (string.IsNullOrEmpty(model.Response))
         {
             ModelState.AddModelError(nameof(model.Response), ValidationErrorMessage.ChooseYourAnswer);
-            model.ViewModel = await _mediator.Send(new GetOrganizationByCompanyHouseNumberQuery(organizationNumber));
+            model.ViewModel = await _mediator.Send(new GetOrganizationQuery(organizationNumberOrId));
             return View("ConfirmYourSelection", model);
         }
 
         if (model.Response == CommonResponse.Yes)
         {
-            await _mediator.Send(new LinkContactWithOrganizationCommand(new CompaniesHouseNumber(organizationNumber)));
+            await _mediator.Send(new LinkContactWithOrganizationCommand(new CompaniesHouseNumber(organizationNumberOrId)));
             return RedirectToAction(nameof(HomeController.Dashboard), new ControllerName(nameof(HomeController)).WithoutPrefix());
         }
 

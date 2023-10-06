@@ -76,7 +76,7 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
 
         OrganizationSearchServiceTestBuilder
             .New()
-            .ReturnsNoOrganization()
+            .GeOrganisationReturnsNoOrganization()
             .Register(this);
 
         // when
