@@ -24,7 +24,7 @@ public class CompanyStructureRepositoryTestBuilder
         UserAccount userAccount,
         CompanyStructureEntity companyStructureEntity)
     {
-        _mock.Setup(x => x.GetAsync(loanApplicationId, userAccount, CompanyStructureFieldsSet.GetAllFields, CancellationToken.None))
+        _mock.Setup(x => x.GetAsync(loanApplicationId, userAccount, It.IsAny<CompanyStructureFieldsSet>(), CancellationToken.None))
             .ReturnsAsync(companyStructureEntity);
         return this;
     }

@@ -24,7 +24,7 @@ public class FundingRepositoryTestBuilder
         UserAccount userAccount,
         FundingEntity fundingEntity)
     {
-        _mock.Setup(x => x.GetAsync(loanApplicationId, userAccount, FundingFieldsSet.GetAllFields, CancellationToken.None)).ReturnsAsync(fundingEntity);
+        _mock.Setup(x => x.GetAsync(loanApplicationId, userAccount, It.IsAny<FundingFieldsSet>(), CancellationToken.None)).ReturnsAsync(fundingEntity);
         return this;
     }
 
