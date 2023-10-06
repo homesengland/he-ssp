@@ -91,9 +91,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                 ProjectId.From(projectFromCrm.siteDetailsId),
                 projectFromCrm.Name.IsProvided() ? new ProjectName(projectFromCrm.Name) : null,
                 null,
-                projectFromCrm.haveAPlanningReferenceNumber.IsProvided()
-                    ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber)
-                    : null,
+                projectFromCrm.haveAPlanningReferenceNumber.IsProvided() ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber) : null,
                 projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null,
                 projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null,
                 projectFromCrm.siteOwnership.IsProvided() ? new LandOwnership(projectFromCrm.siteOwnership!.Value) : null,

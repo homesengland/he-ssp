@@ -45,13 +45,16 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
         };
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules",
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.SpacingRules",
         "SA1005:Single line comments should begin with single space",
         Justification = "Commented lines will help in next refactoring steps")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules",
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.LayoutRules",
         "SA1515:Single-line comment should be preceded by blank line",
         Justification = "Commented lines will help in next refactoring steps")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.LayoutRules",
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "StyleCop.CSharp.LayoutRules",
         "SA1512:Single-line comments should not be followed by blank line",
         Justification = "Commented lines will help in next refactoring steps")]
     private void ConfigureTransitions()
