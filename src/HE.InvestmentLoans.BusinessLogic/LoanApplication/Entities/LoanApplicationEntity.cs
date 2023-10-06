@@ -89,7 +89,7 @@ public class LoanApplicationEntity
 
     public async Task Withdraw(ILoanApplicationRepository loanApplicationRepository, WithdrawReason withdrawReason, CancellationToken cancellationToken)
     {
-        var statusesAfterSubmit = ApplicationStatusDivision.GetAllStatusesAfterSubmit();
+        var statusesAfterSubmit = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
 
         if (ExternalStatus == ApplicationStatus.Draft)
         {

@@ -88,7 +88,7 @@ public class FundingViewModel : ICompletedSectionViewModel
 
     public bool IsReadOnly()
     {
-        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesAfterSubmit();
+        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
         return readonlyStatuses.Contains(LoanApplicationStatus);
     }
 

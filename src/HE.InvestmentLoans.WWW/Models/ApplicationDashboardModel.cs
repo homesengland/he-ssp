@@ -17,13 +17,13 @@ public class ApplicationDashboardModel
 
     public bool CanBeWithdrawn()
     {
-        var statusesAllowedForWithdraw = ApplicationStatusDivision.GetStatusesAllowedForWithdraw();
+        var statusesAllowedForWithdraw = ApplicationStatusDivision.GetAllStatusesAllowedForWithdraw();
         return statusesAllowedForWithdraw.Contains(LoanApplicationStatus);
     }
 
     public bool IsReadonly()
     {
-        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesAfterSubmit();
+        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
         return readonlyStatuses.Contains(LoanApplicationStatus);
     }
 }

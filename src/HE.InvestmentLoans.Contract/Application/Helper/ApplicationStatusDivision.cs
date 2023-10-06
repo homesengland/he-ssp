@@ -4,7 +4,7 @@ namespace HE.InvestmentLoans.Contract.Application.Helper;
 
 public static class ApplicationStatusDivision
 {
-    public static IEnumerable<ApplicationStatus> GetAllStatusesAfterSubmit()
+    public static IEnumerable<ApplicationStatus> GetAllStatusesForReadonlyMode()
     {
         yield return ApplicationStatus.ApplicationSubmitted;
         yield return ApplicationStatus.ApplicationUnderReview;
@@ -22,9 +22,10 @@ public static class ApplicationStatusDivision
         yield return ApplicationStatus.ApprovedSubjectToContract;
         yield return ApplicationStatus.AwaitingCpSatisfaction;
         yield return ApplicationStatus.CpsSatisfied;
+        yield return ApplicationStatus.Withdrawn;
     }
 
-    public static IEnumerable<ApplicationStatus> GetStatusesAllowedForWithdraw()
+    public static IEnumerable<ApplicationStatus> GetAllStatusesAllowedForWithdraw()
     {
         yield return ApplicationStatus.ApplicationSubmitted;
         yield return ApplicationStatus.ApplicationUnderReview;
