@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.Security;
 using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
@@ -20,7 +21,7 @@ internal sealed class SecurityRepositoryTestBuilder
     public SecurityRepositoryTestBuilder ReturnsSecurityEntity(
         SecurityEntity securityEntity)
     {
-        _mock.Setup(x => x.GetAsync(It.IsAny<LoanApplicationId>(), It.IsAny<UserAccount>(), It.IsAny<CancellationToken>())).ReturnsAsync(securityEntity);
+        _mock.Setup(x => x.GetAsync(It.IsAny<LoanApplicationId>(), It.IsAny<UserAccount>(), It.IsAny<SecurityFieldsSet>(), It.IsAny<CancellationToken>())).ReturnsAsync(securityEntity);
         return this;
     }
 
@@ -31,7 +32,7 @@ internal sealed class SecurityRepositoryTestBuilder
 
         buildAction(builder);
 
-        _mock.Setup(x => x.GetAsync(It.IsAny<LoanApplicationId>(), It.IsAny<UserAccount>(), It.IsAny<CancellationToken>())).ReturnsAsync(builder.Build());
+        _mock.Setup(x => x.GetAsync(It.IsAny<LoanApplicationId>(), It.IsAny<UserAccount>(), It.IsAny<SecurityFieldsSet>(), It.IsAny<CancellationToken>())).ReturnsAsync(builder.Build());
 
         return this;
     }

@@ -15,7 +15,16 @@ public class FundingEntityTestBuilder
     }
 
     public static FundingEntityTestBuilder New() =>
-        new(new FundingEntity(LoanApplicationIdTestData.LoanApplicationIdOne, null, null, null, null, null, null, SectionStatus.NotStarted));
+        new(new FundingEntity(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            SectionStatus.NotStarted,
+            ApplicationStatus.Draft));
 
     public FundingEntityTestBuilder WithGrossDevelopmentValue()
     {

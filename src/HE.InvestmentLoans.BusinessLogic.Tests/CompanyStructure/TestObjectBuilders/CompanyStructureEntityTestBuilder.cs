@@ -16,7 +16,14 @@ public class CompanyStructureEntityTestBuilder
     }
 
     public static CompanyStructureEntityTestBuilder New() =>
-        new(new CompanyStructureEntity(LoanApplicationIdTestData.LoanApplicationIdOne, null, null, null, null, SectionStatus.NotStarted));
+        new(new CompanyStructureEntity(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            null,
+            null,
+            null,
+            null,
+            SectionStatus.NotStarted,
+            ApplicationStatus.Draft));
 
     public CompanyStructureEntityTestBuilder WithHomesBuild()
     {

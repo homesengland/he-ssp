@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
@@ -23,7 +24,8 @@ public class CompanyStructureRepositoryTestBuilder
         UserAccount userAccount,
         CompanyStructureEntity companyStructureEntity)
     {
-        _mock.Setup(x => x.GetAsync(loanApplicationId, userAccount, CancellationToken.None)).ReturnsAsync(companyStructureEntity);
+        _mock.Setup(x => x.GetAsync(loanApplicationId, userAccount, CompanyStructureFieldsSet.GetAllFields, CancellationToken.None))
+            .ReturnsAsync(companyStructureEntity);
         return this;
     }
 

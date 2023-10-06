@@ -29,7 +29,7 @@ public class GetAsyncTests : TestBase<FundingRepository>
         RegisterDependency(organizationServiceMock);
 
         // when
-        var result = await TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, FundingFieldsSet.GetAllFields,CancellationToken.None);
+        var result = await TestCandidate.GetAsync(loanApplicationId, UserAccountTestData.UserAccountOne, FundingFieldsSet.GetAllFields, CancellationToken.None);
 
         // then
         result.LoanApplicationId.Should().Be(loanApplicationId);

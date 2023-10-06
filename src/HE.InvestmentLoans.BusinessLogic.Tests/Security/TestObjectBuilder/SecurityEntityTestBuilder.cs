@@ -5,6 +5,7 @@ using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Security.TestObjectBuilder;
+
 internal sealed class SecurityEntityTestBuilder
 {
     private readonly SecurityEntity _entity;
@@ -14,7 +15,12 @@ internal sealed class SecurityEntityTestBuilder
         _entity = entity;
     }
 
-    public static SecurityEntityTestBuilder New() => new(new SecurityEntity(LoanApplicationIdTestData.LoanApplicationIdOne, null!, null!, null!, SectionStatus.NotStarted));
+    public static SecurityEntityTestBuilder New() => new(new SecurityEntity(LoanApplicationIdTestData.LoanApplicationIdOne,
+        null!,
+        null!,
+        null!,
+        SectionStatus.NotStarted,
+        ApplicationStatus.Draft));
 
     public SecurityEntityTestBuilder WithDebenture(Debenture debenture)
     {
