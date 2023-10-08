@@ -157,6 +157,15 @@ public static class HtmlDocumentExtensions
         return dictionary;
     }
 
+    public static string NotificationMessage(this IHtmlDocument htmlDocument)
+    {
+        var notificationTitle = htmlDocument.GetElementsByClassName("govuk-notification-banner__heading").SingleOrDefault();
+
+        notificationTitle.Should().NotBeNull("Cannot find notification banner at a page.");
+
+        return notificationTitle!.TextContent.Trim();
+    }
+
     public static IDictionary<string, string> GetTaskListItems(this IHtmlDocument htmlDocument)
     {
         var summaryRows = htmlDocument.GetElementsByClassName("app-task-list__item");
@@ -171,7 +180,14 @@ public static class HtmlDocumentExtensions
         return dictionary;
     }
 
-    public static (string Name, string Status) GetProjectFromTaskList(this IHtmlDocument htmlDocument, string id)
+    public static bool ProjectExistsAtTaskList(this IHtmlDocument htmlDocument, string id)
+    {
+        var projects = htmlDocument.GetTaskListProjects();
+
+        return projects.ContainsKey(id);
+    }
+
+    public static (string Name, string Status, string RemoveUrl) GetProjectFromTaskList(this IHtmlDocument htmlDocument, string id)
     {
         var projects = htmlDocument.GetTaskListProjects();
 
@@ -183,11 +199,11 @@ public static class HtmlDocumentExtensions
         return htmlDocument.GetTaskListProjects()[id];
     }
 
-    public static IDictionary<string, (string Name, string Status)> GetTaskListProjects(this IHtmlDocument htmlDocument)
+    public static IDictionary<string, (string Name, string Status, string RemoveUrl)> GetTaskListProjects(this IHtmlDocument htmlDocument)
     {
         var projectRows = htmlDocument.GetElementsByClassName("task-list-grid-container");
 
-        var dictionary = new Dictionary<string, (string Name, string Status)>();
+        var dictionary = new Dictionary<string, (string Name, string Status, string RemoveUrl)>();
         foreach (var row in projectRows)
         {
             var projectLink = row
@@ -200,7 +216,9 @@ public static class HtmlDocumentExtensions
 
             var status = row.GetElementsByClassName("app-task-list__tag").FirstOrDefault()?.InnerHtml.Trim() ?? string.Empty;
 
-            dictionary[id] = (name, status);
+            var removeUrl = row.GetElementsByClassName("task-list-remove-link").First().GetElementsByTagName("a").First().GetAttribute("href")!;
+
+            dictionary[id] = (name, status, removeUrl);
         }
 
         return dictionary;

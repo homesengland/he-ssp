@@ -72,7 +72,7 @@ public class Order01StartProjectIntegrationTests : IntegrationTest
 
         var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
 
-        var (name, status) = taskList.GetProjectFromTaskList(projectId);
+        var (name, status, _) = taskList.GetProjectFromTaskList(projectId);
 
         name.Should().Be("New project");
         status.Should().Be("Not Started");

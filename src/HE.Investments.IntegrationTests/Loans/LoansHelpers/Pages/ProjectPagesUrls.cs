@@ -36,6 +36,8 @@ internal sealed class ProjectPagesUrls
 
     public const string CheckAnswersSuffix = "/check-answers";
 
+    public const string DeleteSuffix = "/delete";
+
     public static string Start(string applicationId)
     {
         return $"application/{applicationId}{StartSuffix}";
@@ -94,5 +96,10 @@ internal sealed class ProjectPagesUrls
     public static string CheckAnswers(string applicationId, string projectId)
     {
         return $"application/{applicationId}/project/{projectId}{CheckAnswersSuffix}";
+    }
+
+    public static string Delete(string applicationId, string projectId)
+    {
+        return $"application/{applicationId}/project/{projectId}{DeleteSuffix}";
     }
 }
