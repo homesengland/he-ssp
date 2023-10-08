@@ -60,11 +60,12 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
     private void ConfigureTransitions()
     {
         _machine.Configure(ProjectState.Index)
-            .Permit(Trigger.Continue, ProjectState.Name);
+            .Permit(Trigger.Continue, ProjectState.Name)
+            .Permit(Trigger.Back, ProjectState.TaskList);
 
         _machine.Configure(ProjectState.Name)
             .Permit(Trigger.Continue, ProjectState.StartDate)
-            .Permit(Trigger.Back, ProjectState.Index);
+            .Permit(Trigger.Back, ProjectState.TaskList);
 
         _machine.Configure(ProjectState.StartDate)
            .Permit(Trigger.Continue, ProjectState.ManyHomes)

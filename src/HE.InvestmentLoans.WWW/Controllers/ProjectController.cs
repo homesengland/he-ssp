@@ -523,7 +523,7 @@ public class ProjectController : WorkflowController<ProjectState>
         return View(result);
     }
 
-    [HttpGet("back")]
+    [HttpGet("{projectId}/back")]
     public Task<IActionResult> Back(ProjectState currentPage, Guid id, Guid projectId)
     {
         return Back(currentPage, new { id, projectId });
