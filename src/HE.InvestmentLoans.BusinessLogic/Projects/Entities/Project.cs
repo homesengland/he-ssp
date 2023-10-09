@@ -35,7 +35,7 @@ public class Project
         PublicSectorGrantFundingStatus? grantFundingStatus,
         PublicSectorGrantFunding? publicSectorGrantFunding,
         ChargesDebt? chargesDebt,
-        AffordableHomes? affordableHomes)
+        AffordableHomes? affordableHomes,
         ApplicationStatus loanApplicationStatus)
     {
         IsNewlyCreated = false;

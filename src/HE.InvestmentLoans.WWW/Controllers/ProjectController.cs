@@ -136,7 +136,7 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.ManyHomes)]
     public async Task<IActionResult> ManyHomes(Guid id, Guid projectId)
     {
-        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.ManyHomes));
 
         return View(result);
     }
@@ -161,7 +161,7 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.TypeHomes)]
     public async Task<IActionResult> TypeHomes(Guid id, Guid projectId)
     {
-        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.TypeOfHomes));
 
         return View(result);
     }
@@ -186,7 +186,7 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.Type)]
     public async Task<IActionResult> Type(Guid id, Guid projectId)
     {
-        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.TypeOfProject));
 
         return View(result);
     }
@@ -483,7 +483,7 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.AffordableHomes)]
     public async Task<IActionResult> AffordableHomes(Guid id, Guid projectId)
     {
-        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId)));
+        var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.AffordableHomes));
 
         return View(result);
     }
