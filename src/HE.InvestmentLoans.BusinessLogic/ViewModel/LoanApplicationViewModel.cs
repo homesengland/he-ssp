@@ -24,6 +24,8 @@ public class LoanApplicationViewModel
 
     public Guid ID { get; set; }
 
+    public ApplicationStatus Status { get; set; }
+
     public LoanApplicationWorkflow.State State
     {
         get;

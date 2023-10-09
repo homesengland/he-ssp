@@ -29,7 +29,7 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
 
     public async Task<ProjectViewModel> Handle(GetProjectQuery request, CancellationToken cancellationToken)
     {
-        var applicationProjects = await _applicationProjectsRepository.GetById(request.ApplicationId, await _loanUserContext.GetSelectedAccount(), cancellationToken);
+        var applicationProjects = await _applicationProjectsRepository.GetById(request.ApplicationId, await _loanUserContext.GetSelectedAccount(), request.ProjectFieldsSet, cancellationToken);
 
         var project = applicationProjects.Projects.FirstOrDefault(c => c.Id == request.ProjectId)
             ?? throw new NotFoundException(nameof(Project), request.ProjectId.ToString());
@@ -64,6 +64,7 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
             GrantFundingAmount = project.PublicSectorGrantFunding?.Amount?.ToString(),
             GrantFundingName = project.PublicSectorGrantFunding?.GrantOrFundName?.Value,
             GrantFundingPurpose = project.PublicSectorGrantFunding?.Purpose?.Value,
+            LoanApplicationStatus = project.LoanApplicationStatus,
         };
     }
 }

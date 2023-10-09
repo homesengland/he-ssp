@@ -5,6 +5,7 @@ using System.Threading;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.Generic;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
@@ -15,6 +16,7 @@ using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using Microsoft.AspNetCore.Http;
@@ -41,7 +43,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
     public ApplicationProjects GetAll(LoanApplicationId loanApplicationId, UserAccount userAccount)
     {
         var loanApplication = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationEntity>(loanApplicationId.ToString())
-            ?? throw new NotFoundException(nameof(LoanApplicationEntity).ToString(), loanApplicationId.ToString());
+                              ?? throw new NotFoundException(nameof(LoanApplicationEntity).ToString(), loanApplicationId.ToString());
 
         return loanApplication.ApplicationProjects;
     }
@@ -50,7 +52,8 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
     {
         var loanApplicationSessionModel = _httpContextAccessor.HttpContext?.Session.Get<LoanApplicationViewModel>(loanApplicationId.ToString())!;
 
-        var projectToDelete = loanApplicationSessionModel.Sites.FirstOrDefault(p => p.Id == projectId) ?? throw new NotFoundException(nameof(SiteViewModel).ToString(), projectId);
+        var projectToDelete = loanApplicationSessionModel.Sites.FirstOrDefault(p => p.Id == projectId) ??
+                              throw new NotFoundException(nameof(SiteViewModel).ToString(), projectId);
 
         loanApplicationSessionModel!.SetTimestamp(_timeProvider.Now);
         loanApplicationSessionModel!.Sites.Remove(projectToDelete);
@@ -60,17 +63,25 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         return loanApplicationSessionModel;
     }
 
-    public async Task<ApplicationProjects> GetById(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<ApplicationProjects> GetById(
+        LoanApplicationId loanApplicationId,
+        UserAccount userAccount,
+        ProjectFieldsSet projectFieldsSet,
+        CancellationToken cancellationToken)
     {
+        var fieldsToRetrieve = ProjectCrmFieldNameMapper.Map(projectFieldsSet);
+
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
+
+            // invln_fieldstoretrieve = fieldsToRetrieve, // TODO
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
-                      ?? throw new NotFoundException(nameof(Project), loanApplicationId.ToString());
+                       ?? throw new NotFoundException(nameof(Project), loanApplicationId.ToString());
 
         var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                                  ?? throw new NotFoundException(nameof(ApplicationProjects), loanApplicationId.ToString());
@@ -91,28 +102,38 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                                 projectFromCrm.IsProvided() ? GrantFundingStatusMapper.FromString(projectFromCrm.publicSectorFunding) : null,
                                 PublicSectorGrantFundingMapper.MapFromCrm(projectFromCrm),
                                 projectFromCrm.existingLegalCharges.IsProvided() ? new ChargesDebt(projectFromCrm.existingLegalCharges ?? false, projectFromCrm.existingLegalChargesInformation) : null,
-                                projectFromCrm.numberOfAffordableHomes.IsProvided() ? new AffordableHomes(projectFromCrm.numberOfAffordableHomes) : null));
+                                projectFromCrm.numberOfAffordableHomes.IsProvided() ? new AffordableHomes(projectFromCrm.numberOfAffordableHomes) : null,
+                                ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus)));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
 
-    public async Task<Project> GetById(LoanApplicationId loanApplicationId, ProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task<Project> GetById(
+        LoanApplicationId loanApplicationId,
+        ProjectId projectId,
+        UserAccount userAccount,
+        ProjectFieldsSet projectFieldsSet,
+        CancellationToken cancellationToken)
     {
+        var fieldsToRetrieve = ProjectCrmFieldNameMapper.Map(projectFieldsSet);
+
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
         {
             invln_accountid = userAccount.AccountId.ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
+
+            // invln_fieldstoretrieve = fieldsToRetrieve, // TODO
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
-                      ?? throw new NotFoundException(nameof(Project), loanApplicationId.ToString());
+                       ?? throw new NotFoundException(nameof(Project), loanApplicationId.ToString());
 
         var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                                  ?? throw new NotFoundException(nameof(Project), projectId.ToString());
 
         var projectFromCrm = loanApplicationDto.siteDetailsList.FirstOrDefault(c => c.siteDetailsId == projectId.Value.ToString())
-                                ?? throw new NotFoundException(nameof(Project), projectId.ToString());
+                             ?? throw new NotFoundException(nameof(Project), projectId.ToString());
 
         return new Project
         {
@@ -160,10 +181,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
     private async Task DeleteProject(Project projectToDelete, CancellationToken cancellationToken)
     {
-        var req = new invln_deletesitedetailsRequest
-        {
-            invln_sitedetailsid = projectToDelete.Id.Value.ToString(),
-        };
+        var req = new invln_deletesitedetailsRequest { invln_sitedetailsid = projectToDelete.Id.Value.ToString(), };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
     }
@@ -182,8 +200,10 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             dateOfPurchase = projectToSave.AdditionalDetails?.PurchaseDate.AsDateTime(),
             siteCost = projectToSave.AdditionalDetails?.Cost.ToString(),
             currentValue = projectToSave.AdditionalDetails?.CurrentValue.ToString(),
-            valuationSource = projectToSave.AdditionalDetails.IsProvided() ? SourceOfValuationMapper.ToString(projectToSave.AdditionalDetails!.SourceOfValuation) : null!,
-            publicSectorFunding = projectToSave.GrantFundingStatus.IsProvided() ? GrantFundingStatusMapper.ToString(projectToSave.GrantFundingStatus!.Value) : null,
+            valuationSource =
+                projectToSave.AdditionalDetails.IsProvided() ? SourceOfValuationMapper.ToString(projectToSave.AdditionalDetails!.SourceOfValuation) : null!,
+            publicSectorFunding =
+                projectToSave.GrantFundingStatus.IsProvided() ? GrantFundingStatusMapper.ToString(projectToSave.GrantFundingStatus!.Value) : null,
             whoProvided = projectToSave.PublicSectorGrantFunding?.ProviderName?.Value,
             howMuch = projectToSave.PublicSectorGrantFunding?.Amount?.ToString(),
             nameOfGrantFund = projectToSave.PublicSectorGrantFunding?.GrantOrFundName?.Value,
@@ -201,8 +221,10 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         {
             invln_sitedetail = CrmResponseSerializer.Serialize(siteDetails),
             invln_loanapplicationid = applicationProjects.LoanApplicationId.Value.ToString(),
-            invln_fieldstoupdate = string.Join(",", CrmSiteNames()),
+            invln_fieldstoupdate = string.Join(",", CrmSiteNames()), // TODO to delete
             invln_sitedetailsid = projectId.ToString(),
+
+            // invln_fieldstoupdate = string.Join(",", ProjectCrmFieldNameMapper.Map(ProjectFieldsSet.SaveAllFields)), // TODO to add
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
@@ -210,10 +232,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
     private async Task CreateNewProject(ApplicationProjects applicationProjects, Project projectToSave, CancellationToken cancellationToken)
     {
-        var siteDetails = new SiteDetailsDto
-        {
-            siteDetailsId = projectToSave.Id.Value.ToString(),
-        };
+        var siteDetails = new SiteDetailsDto { siteDetailsId = projectToSave.Id.Value.ToString(), };
 
         var req = new invln_createsinglesitedetailRequest
         {
@@ -224,7 +243,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         await _serviceClient.ExecuteAsync(req, cancellationToken);
     }
 
-    private IEnumerable<string> CrmSiteNames()
+    private IEnumerable<string> CrmSiteNames() // TODO to delete
     {
         yield return nameof(invln_SiteDetails.invln_Name).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Haveaplanningreferencenumber).ToLowerInvariant();

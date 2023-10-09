@@ -2,6 +2,7 @@ using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
@@ -24,7 +25,7 @@ internal sealed class ApplicationProjectsRepositoryBuilder : IDependencyTestBuil
     public ApplicationProjectsRepositoryBuilder ReturnsNoProjects()
     {
         _mock
-            .Setup(m => m.GetById(It.IsAny<LoanApplicationId>(), It.IsAny<UserAccount>(), It.IsAny<CancellationToken>()))
+            .Setup(m => m.GetById(It.IsAny<LoanApplicationId>(), It.IsAny<UserAccount>(), It.IsAny<ProjectFieldsSet>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((ApplicationProjects)null!);
 
         return this;
@@ -45,7 +46,7 @@ internal sealed class ApplicationProjectsRepositoryBuilder : IDependencyTestBuil
         }
 
         _mock
-            .Setup(m => m.GetById(_applicationId, It.IsAny<UserAccount>(), It.IsAny<CancellationToken>()))
+            .Setup(m => m.GetById(_applicationId, It.IsAny<UserAccount>(), It.IsAny<ProjectFieldsSet>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(applicationProjects);
 
         return this;

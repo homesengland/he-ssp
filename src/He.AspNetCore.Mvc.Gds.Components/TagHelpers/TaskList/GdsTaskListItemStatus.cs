@@ -29,6 +29,10 @@ namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.TaskList
             {
                 TagConstruct.ConstructClass(output, $"{CssConstants.GovUkTag} {CssConstants.GovUkAppTaskListTag} {CssConstants.GovUkTag}--blue");
             }
+            else if (Status == GdsTaskListItemStatusText.Withdrawn)
+            {
+                TagConstruct.ConstructClass(output, $"{CssConstants.GovUkTag} {CssConstants.GovUkAppTaskListTag} {CssConstants.GovUkTag}--red");
+            }
             else
             {
                 TagConstruct.ConstructClass(output, $"{CssConstants.GovUkTag} {CssConstants.GovUkAppTaskListTag} {CssConstants.GovUkTag}--grey");

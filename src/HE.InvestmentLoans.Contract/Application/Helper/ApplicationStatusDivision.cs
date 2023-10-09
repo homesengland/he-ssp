@@ -6,6 +6,11 @@ public static class ApplicationStatusDivision
 {
     public static IEnumerable<ApplicationStatus> GetAllStatusesForReadonlyMode()
     {
+        yield return ApplicationStatus.Withdrawn;
+    }
+
+    public static IEnumerable<ApplicationStatus> GetAllStatusesAfterSubmit()
+    {
         yield return ApplicationStatus.ApplicationSubmitted;
         yield return ApplicationStatus.ApplicationUnderReview;
         yield return ApplicationStatus.HoldRequested;
