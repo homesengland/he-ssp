@@ -586,6 +586,21 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
         }
 
+        public string GetFileLocationForApplicationLoan(string loanApplicationId)
+        {
+            if (Guid.TryParse(loanApplicationId, out Guid loanGuid))
+            {
+                var loanApplication = _loanApplicationRepository.GetById(loanGuid, new string[] { nameof(invln_Loanapplication.invln_Name).ToLower() });
+                var charsToReplace = new char[] { '-', '{', '}' };
+                foreach(var replChar in charsToReplace)
+                {
+                    loanApplicationId = loanApplicationId.Replace(replChar.ToString(), string.Empty);
+                }
+                return $"{loanApplication.invln_Name}_{loanApplicationId}";
+            }
+            return string.Empty;
+        }
+
         private bool CheckIfExternalStatusCanBeChanged(int oldStatus, int newStatus)
         {
             if (oldStatus != (int)invln_ExternalStatus.Draft)
@@ -619,6 +634,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             }
             return generatedAttribuesFetchXml;
         }
+
         #endregion
     }
 }

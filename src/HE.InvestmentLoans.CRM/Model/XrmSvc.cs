@@ -22186,4 +22186,62 @@ namespace HE.InvestmentLoans.CRM.Model
 		{
 		}
 	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getfilelocationforapplicationloan")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getfilelocationforapplicationloanRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public invln_getfilelocationforapplicationloanRequest()
+		{
+			this.RequestName = "invln_getfilelocationforapplicationloan";
+			this.invln_loanapplicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getfilelocationforapplicationloan")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getfilelocationforapplicationloanResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getfilelocationforapplicationloanResponse()
+		{
+		}
+		
+		public string invln_filelocation
+		{
+			get
+			{
+				if (this.Results.Contains("invln_filelocation"))
+				{
+					return ((string)(this.Results["invln_filelocation"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
 }
