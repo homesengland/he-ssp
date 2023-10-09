@@ -207,12 +207,12 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     public async Task WithdrawSubmitted(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken)
     {
-        var crmWithdrawStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Withdrawn);
+        var crmWithdrawnStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Withdrawn);
 
         var request = new invln_changeloanapplicationexternalstatusRequest
         {
             invln_loanapplicationid = loanApplicationId.ToString(),
-            invln_statusexternal = crmWithdrawStatus,
+            invln_statusexternal = crmWithdrawnStatus,
             invln_changereason = withdrawReason.ToString(),
         };
 

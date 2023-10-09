@@ -27,6 +27,15 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             DateTimeTestData.SeptemberDay20Year2023At0736,
             DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(1)));
 
+    public static LoanApplicationTestBuilder NewSubmitted(UserAccount userAccount) => new(
+        new LoanApplicationEntity(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            userAccount,
+            ApplicationStatus.ApplicationSubmitted,
+            FundingPurpose.BuildingNewHomes,
+            DateTimeTestData.SeptemberDay20Year2023At0736,
+            DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(1)));
+
     public LoanApplicationTestBuilder WithCreatedOn(DateTime createdOn)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.CreatedOn), createdOn);
