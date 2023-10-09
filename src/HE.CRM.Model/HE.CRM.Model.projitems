@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deletesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_generaterichtextdocument.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getfilelocationforapplicationloan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganizationdetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleloanapplicationforaccountandcontact.cs" />

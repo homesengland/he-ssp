@@ -13,6 +13,7 @@ invln_deleteloanapplication|
 invln_deletesitedetails|
 invln_generaterichtextdocument|
 invln_getcontactrole|
+invln_getfilelocationforapplicationloan|
 invln_getloanapplicationsforaccountandcontact|
 invln_getorganizationdetails|
 invln_getsingleloanapplicationforaccountandcontact|
