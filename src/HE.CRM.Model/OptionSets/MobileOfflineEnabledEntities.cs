@@ -135,9 +135,6 @@ namespace DataverseModel
 		LeadProduct = 27,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		LoanApplicationBPF = 10998,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Note = 5,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

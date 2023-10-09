@@ -60,5 +60,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public DateTime? startDate { get; set; }
 
         public bool? affordableHousing { get; set; }
+
+        public OptionSetValue completionStatus { get; set; }
     }
 }
