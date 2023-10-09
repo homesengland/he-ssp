@@ -61,6 +61,7 @@ namespace DataverseModel
 			public const string invln_Address = "invln_address";
 			public const string invln_Affordablehousing = "invln_affordablehousing";
 			public const string invln_Completiondate = "invln_completiondate";
+			public const string invln_completionstatus = "invln_completionstatus";
 			public const string invln_Conductedby = "invln_conductedby";
 			public const string invln_ConductedbyName = "invln_conductedbyname";
 			public const string invln_currentvalue = "invln_currentvalue";
@@ -305,6 +306,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Completiondate");
 				this.SetAttributeValue("invln_completiondate", value);
 				this.OnPropertyChanged("invln_Completiondate");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_completionstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_completionstatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_completionstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_completionstatus");
+				this.SetAttributeValue("invln_completionstatus", value);
+				this.OnPropertyChanged("invln_completionstatus");
 			}
 		}
 		

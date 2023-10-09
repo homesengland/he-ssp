@@ -5661,9 +5661,6 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Partner = 1,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		LoanApplicationBPF = 10998,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -19899,6 +19896,39 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanging("invln_Completiondate");
 				this.SetAttributeValue("invln_completiondate", value);
 				this.OnPropertyChanged("invln_Completiondate");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_completionstatus")]
+		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus> invln_completionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_completionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.InvestmentLoans.CRM.Model.invln_sectioncompletionstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_completionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_completionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_completionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_completionstatus");
 			}
 		}
 		
