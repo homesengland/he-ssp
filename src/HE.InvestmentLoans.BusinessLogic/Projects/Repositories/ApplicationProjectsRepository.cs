@@ -88,17 +88,22 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
         var projectsFromCrm = loanApplicationDto.siteDetailsList.Select(
             projectFromCrm => new Project(
-                ProjectId.From(projectFromCrm.siteDetailsId),
-                projectFromCrm.Name.IsProvided() ? new ProjectName(projectFromCrm.Name) : null,
-                null,
-                projectFromCrm.haveAPlanningReferenceNumber.IsProvided() ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber) : null,
-                projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null,
-                projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null,
-                projectFromCrm.siteOwnership.IsProvided() ? new LandOwnership(projectFromCrm.siteOwnership!.Value) : null,
-                AdditionalDetailsMapper.MapFromCrm(projectFromCrm, _timeProvider.Now),
-                projectFromCrm.IsProvided() ? GrantFundingStatusMapper.FromString(projectFromCrm.publicSectorFunding) : null,
-                PublicSectorGrantFundingMapper.MapFromCrm(projectFromCrm),
-                ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus)));
+                                ProjectId.From(projectFromCrm.siteDetailsId),
+                                projectFromCrm.Name.IsProvided() ? new ProjectName(projectFromCrm.Name) : null,
+                                null,
+                                projectFromCrm.numberOfHomes.IsProvided() ? new HomesCount(projectFromCrm.numberOfHomes) : null,
+                                projectFromCrm.typeOfHomes.IsProvided() ? new HomesTypes(projectFromCrm.typeOfHomes, projectFromCrm.otherTypeOfHomes) : null,
+                                projectFromCrm.typeOfSite.IsProvided() ? new ProjectType(projectFromCrm.typeOfSite) : null,
+                                projectFromCrm.haveAPlanningReferenceNumber.IsProvided() ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber) : null,
+                                projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null,
+                                projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null,
+                                projectFromCrm.siteOwnership.IsProvided() ? new LandOwnership(projectFromCrm.siteOwnership!.Value) : null,
+                                AdditionalDetailsMapper.MapFromCrm(projectFromCrm, _timeProvider.Now),
+                                projectFromCrm.IsProvided() ? GrantFundingStatusMapper.FromString(projectFromCrm.publicSectorFunding) : null,
+                                PublicSectorGrantFundingMapper.MapFromCrm(projectFromCrm),
+                                projectFromCrm.existingLegalCharges.IsProvided() ? new ChargesDebt(projectFromCrm.existingLegalCharges ?? false, projectFromCrm.existingLegalChargesInformation) : null,
+                                projectFromCrm.numberOfAffordableHomes.IsProvided() ? new AffordableHomes(projectFromCrm.numberOfAffordableHomes) : null,
+                                ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus)));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
@@ -133,12 +138,15 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         return new Project
         {
             NameLegacy = projectFromCrm.siteName,
-            ManyHomes = projectFromCrm.numberOfHomes,
-            TypeHomes = projectFromCrm.typeOfHomes,
-            TypeHomesOther = projectFromCrm.otherTypeOfHomes,
+            ManyHomesLegacy = projectFromCrm.numberOfHomes,
+            TypeHomesLegacy = projectFromCrm.typeOfHomes,
+            TypeHomesOtherLegacy = projectFromCrm.otherTypeOfHomes,
             Type = projectFromCrm.typeOfSite,
             PlanningRef = projectFromCrm.haveAPlanningReferenceNumber,
             PlanningRefEnter = projectFromCrm.planningReferenceNumber,
+            LocationCoordinates = projectFromCrm.siteCoordinates,
+            Ownership = projectFromCrm.siteOwnership,
+            LocationLandRegistry = projectFromCrm.landRegistryTitleNumber,
             PurchaseDate = projectFromCrm.dateOfPurchase,
             Cost = projectFromCrm.siteCost,
             Value = projectFromCrm.currentValue,
@@ -147,9 +155,9 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             GrantFundingAmount = projectFromCrm.howMuch,
             GrantFundingName = projectFromCrm.nameOfGrantFund,
             GrantFundingPurpose = projectFromCrm.reason,
-            ChargesDebt = projectFromCrm.existingLegalCharges,
-            ChargesDebtInfo = projectFromCrm.existingLegalChargesInformation,
-            AffordableHomes = projectFromCrm.numberOfAffordableHomes,
+            ChargesDebtLegacy = projectFromCrm.existingLegalCharges,
+            ChargesDebtInfoLegacy = projectFromCrm.existingLegalChargesInformation,
+            AffordableHomesLegacy = projectFromCrm.numberOfAffordableHomes,
         };
     }
 
@@ -200,6 +208,13 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             howMuch = projectToSave.PublicSectorGrantFunding?.Amount?.ToString(),
             nameOfGrantFund = projectToSave.PublicSectorGrantFunding?.GrantOrFundName?.Value,
             reason = projectToSave.PublicSectorGrantFunding?.Purpose?.Value,
+            numberOfHomes = projectToSave.HomesCount?.Value,
+            typeOfHomes = projectToSave.HomesTypes?.HomesTypesValue,
+            otherTypeOfHomes = projectToSave.HomesTypes?.OtherHomesTypesValue,
+            typeOfSite = projectToSave.ProjectType?.Value,
+            existingLegalCharges = projectToSave.ChargesDebt?.Exist,
+            existingLegalChargesInformation = projectToSave.ChargesDebt?.Info,
+            numberOfAffordableHomes = projectToSave?.Value,
         };
 
         var req = new invln_updatesinglesitedetailsRequest
@@ -246,5 +261,12 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         yield return nameof(invln_SiteDetails.invln_Reason).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_HowMuch).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Nameofgrantfund).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Numberofhomes).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Typeofhomes).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_OtherTypeofhomes).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_TypeofSite).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Existinglegalcharges).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Existinglegalchargesinformation).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_Affordablehousing).ToLowerInvariant();
     }
 }

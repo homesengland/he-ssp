@@ -22,6 +22,14 @@ public class ProjectViewModel : ICompletedSectionViewModel
 
     public string? EstimatedStartYear { get; set; }
 
+    public string? HomesCount { get; set; }
+
+    public string[]? HomeTypes { get; set; }
+
+    public string? OtherHomeTypes { get; set; }
+
+    public string? ProjectType { get; set; }
+
     public string? PlanningReferenceNumberExists { get; set; }
 
     public string? PlanningReferenceNumber { get; set; }
@@ -35,8 +43,6 @@ public class ProjectViewModel : ICompletedSectionViewModel
     public string? LocationLandRegistry { get; set; }
 
     public string? Ownership { get; set; }
-
-    public string? CheckAnswers { get; set; }
 
     public string? PurchaseDay { get; set; }
 
@@ -59,6 +65,14 @@ public class ProjectViewModel : ICompletedSectionViewModel
     public string? GrantFundingAmount { get; set; }
 
     public string? GrantFundingPurpose { get; set; }
+
+    public string? ChargesDebt { get; set; }
+
+    public string? ChargesDebtInfo { get; set; }
+
+    public string? AffordableHomes { get; set; }
+
+    public string? CheckAnswers { get; set; }
 
     public string DeleteProject { get; set; }
 

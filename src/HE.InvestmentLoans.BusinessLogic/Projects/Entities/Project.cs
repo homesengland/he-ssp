@@ -24,6 +24,9 @@ public class Project
         ProjectId id,
         ProjectName? name,
         StartDate? startDate,
+        HomesCount? homesCount,
+        HomesTypes? homesTypes,
+        ProjectType? projectType,
         PlanningReferenceNumber? planningReferenceNumber,
         Coordinates? coordinates,
         LandRegistryTitleNumber? landRegistryTitleNumber,
@@ -31,6 +34,8 @@ public class Project
         AdditionalDetails? additionalDetails,
         PublicSectorGrantFundingStatus? grantFundingStatus,
         PublicSectorGrantFunding? publicSectorGrantFunding,
+        ChargesDebt? chargesDebt,
+        AffordableHomes? affordableHomes,
         ApplicationStatus loanApplicationStatus)
     {
         IsNewlyCreated = false;
@@ -38,6 +43,9 @@ public class Project
         Id = id;
         Name = name;
         StartDate = startDate;
+        HomesCount = homesCount;
+        HomesTypes = homesTypes;
+        ProjectType = projectType;
         PlanningReferenceNumber = planningReferenceNumber;
         Coordinates = coordinates;
         LandRegistryTitleNumber = landRegistryTitleNumber;
@@ -45,6 +53,10 @@ public class Project
         AdditionalDetails = additionalDetails;
         GrantFundingStatus = grantFundingStatus;
         PublicSectorGrantFunding = publicSectorGrantFunding;
+        ChargesDebt = chargesDebt;
+        AffordableHomes = affordableHomes;
+
+        IsNewlyCreated = false;
         LoanApplicationStatus = loanApplicationStatus;
     }
 
@@ -55,6 +67,12 @@ public class Project
     public ProjectName? Name { get; private set; }
 
     public StartDate? StartDate { get; private set; }
+
+    public HomesCount? HomesCount { get; private set; }
+
+    public HomesTypes? HomesTypes { get; private set; }
+
+    public ProjectType? ProjectType { get; private set; }
 
     public PlanningReferenceNumber? PlanningReferenceNumber { get; private set; }
 
@@ -72,13 +90,17 @@ public class Project
 
     public PublicSectorGrantFunding? PublicSectorGrantFunding { get; private set; }
 
+    public ChargesDebt? ChargesDebt { get; private set; }
+
+    public AffordableHomes? AffordableHomes { get; private set; }
+
     public bool IsNewlyCreated { get; }
 
     public string? CheckAnswers { get; set; }
 
     public string? NameLegacy { get; set; }
 
-    public string? AffordableHomes { get; set; }
+    public string? AffordableHomesLegacy { get; set; }
 
     public bool? PlanningRef { get; set; }
 
@@ -86,15 +108,17 @@ public class Project
 
     public string? SitePurchaseFrom { get; set; }
 
-    public string? ManyHomes { get; set; }
+    public bool? Ownership { get; set; }
+
+    public string? ManyHomesLegacy { get; set; }
 
     public string? GrantFunding { get; set; }
 
     public string? TitleNumber { get; set; }
 
-    public string[]? TypeHomes { get; set; }
+    public string[]? TypeHomesLegacy { get; set; }
 
-    public string? TypeHomesOther { get; set; }
+    public string? TypeHomesOtherLegacy { get; set; }
 
     public string? HomesToBuild { get; set; }
 
@@ -112,6 +136,14 @@ public class Project
 
     public string? Source { get; set; }
 
+    public string? LocationOption { get; set; }
+
+    public string? LocationCoordinates { get; set; }
+
+    public string? LocationLandRegistry { get; set; }
+
+    public string? Location { get; set; }
+
     public string? PlanningStatus { get; set; }
 
     public string? GrantFundingName { get; set; }
@@ -124,9 +156,9 @@ public class Project
 
     public string? Type { get; set; }
 
-    public bool? ChargesDebt { get; set; }
+    public bool? ChargesDebtLegacy { get; set; }
 
-    public string? ChargesDebtInfo { get; set; }
+    public string? ChargesDebtInfoLegacy { get; set; }
 
     public bool IsSoftDeleted { get; private set; }
 
@@ -140,6 +172,21 @@ public class Project
     public void ProvideStartDate(StartDate startDate)
     {
         StartDate = startDate;
+    }
+
+    public void ProvideHomesCount(HomesCount homesCount)
+    {
+        HomesCount = homesCount;
+    }
+
+    public void ProvideHomesTypes(HomesTypes homesTypes)
+    {
+        HomesTypes = homesTypes;
+    }
+
+    public void ProvideProjectType(ProjectType projectType)
+    {
+        ProjectType = projectType;
     }
 
     public void MarkAsDeleted()
@@ -197,6 +244,16 @@ public class Project
     public void ProvideAdditionalData(AdditionalDetails additionalDetails)
     {
         AdditionalDetails = additionalDetails;
+    }
+
+    public void ProvideChargesDebt(ChargesDebt chargesDebt)
+    {
+        ChargesDebt = chargesDebt;
+    }
+
+    public void ProvideAffordableHomes(AffordableHomes affordableHomes)
+    {
+        AffordableHomes = affordableHomes;
     }
 
     internal void ProvideGrantFundingStatus(PublicSectorGrantFundingStatus grantFundingStatus)
