@@ -5,6 +5,7 @@
 @using HE.InvestmentLoans.WWW.Controllers
 @using HE.InvestmentLoans.BusinessLogic.ViewModel
 @using System.Globalization
+@using HE.InvestmentLoans.Contract.Application.Enums
 @inject MediatR.IMediator mediator
 @{
     var securityWorkflow = new SecurityWorkflow(Model);
@@ -37,7 +38,11 @@
                             Complete company information
                         </a>
                     </span>
-                    @if (Model.Company.IsCompleted())
+                    @if (Model.Status == ApplicationStatus.Withdrawn)
+                                        {
+                                            <gds-task-list-item-status status=Withdrawn>Withdrawn</gds-task-list-item-status>
+                                        }
+                    else if (Model.Company.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
@@ -64,7 +69,11 @@
                             Provide details about funding
                         </a>
                     </span>
-                    @if (Model.Funding.IsCompleted())
+                    @if (Model.Status == ApplicationStatus.Withdrawn)
+                    {
+                    <gds-task-list-item-status status=Withdrawn>Withdrawn</gds-task-list-item-status>
+                    }
+                    else if (Model.Funding.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
@@ -83,7 +92,11 @@
                             Provide details about security
                         </a>
                     </span>
-                    @if (Model.Security.IsCompleted())
+                    @if (Model.Status == ApplicationStatus.Withdrawn)
+                    {
+                    <gds-task-list-item-status status=Withdrawn>Withdrawn</gds-task-list-item-status>
+                    }
+                    else if (Model.Security.IsCompleted())
                     {
                         <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
                     }
@@ -121,12 +134,19 @@
                                 </a>
                             </span>
                             <div class="task-list-remove-link">
-                                <a href="@Url.Action("Workflow","Site", new {id = Model.ID, site=site.Id, ending = "DeleteProject" })">
-                                    Remove
-                                </a>
+                                @if (Model.Status != ApplicationStatus.Withdrawn)
+                                {
+                                    <a href="@Url.Action("Workflow", "Site", new { id = Model.ID, site = site.Id, ending = "DeleteProject" })">
+                                        Remove
+                                    </a>
+                                }
                             </div>
                             <div>
-                                @if (new SiteWorkflow(Model, mediator, site.Id.Value).IsCompleted())
+                                @if (Model.Status == ApplicationStatus.Withdrawn)
+                                {
+                                    <gds-task-list-item-status status=Withdrawn>Withdrawn</gds-task-list-item-status>
+                                }
+                                else if (new SiteWorkflow(Model, mediator, site.Id.Value).IsCompleted())
                                 {
                                     <gds-task-list-item-status class="task-list-project-tag" status=Completed>Completed</gds-task-list-item-status>
                                 }
@@ -142,34 +162,36 @@
                         </div>
                     </li>
                 }
-
-                <li class="app-task-list__item">
-                    <span class="app-task-list__task-name">
+                @if (Model.Status != ApplicationStatus.Withdrawn)
+                {
+                    <li class="app-task-list__item">
                         <span class="app-task-list__task-name">
-                            <a id="add-project-link" href="@Url.Action("CreateSite", "Site", new {id = Model.ID})">
-                                Add another
-                            </a>
-                        </span>
+                            <span class="app-task-list__task-name">
+                                <a id="add-project-link" href="@Url.Action("CreateSite", "Site", new { id = Model.ID })">
+                                    Add another
+                                </a>
+                            </span>
 
-                    </span>
-                </li>
-            </ul>
+                        </span>
+                    </li>
+                }
+                </ul>
         </li>
     </ul>
     <gds-h2 size="ControlSize.M">Check and submit</gds-h2>
     <p>You must complete all sections before you can submit your application.</p>
     <form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.ID" asp-method="post" novalidate>
-        @if (loanApllicationWorkflow.IsFilled())
-        {
-            <gds-button data-module="govuk-button" name="action" value="Continue">
-                Check and submit application
-            </gds-button>
-        }
-        else
+        @if (!loanApllicationWorkflow.IsFilled() || Model.Status == ApplicationStatus.Withdrawn)
         {
             <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button">
                 Check and submit application
             </button>
+        }
+        else
+        {
+            <gds-button data-module="govuk-button" name="action" value="Continue">
+                Check and submit application
+            </gds-button>
         }
     </form>
     <gds-link href="@Url.Action("ReportProblem","LoanApplication", new {id = Model.ID})">

@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Helper;
+using HE.InvestmentLoans.Contract.ViewModels;
 
 namespace HE.InvestmentLoans.Contract.Projects.ViewModels;
-public class ProjectViewModel
+
+public class ProjectViewModel : ICompletedSectionViewModel
 {
     public Guid ApplicationId { get; set; }
+
+    public ApplicationStatus LoanApplicationStatus { get; set; }
 
     public Guid ProjectId { get; set; }
 
@@ -61,4 +61,12 @@ public class ProjectViewModel
     public string? GrantFundingPurpose { get; set; }
 
     public string DeleteProject { get; set; }
+
+    public bool IsReadOnly()
+    {
+        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
+        return readonlyStatuses.Contains(LoanApplicationStatus);
+    }
+
+    public bool IsEditable() => IsReadOnly() is false;
 }
