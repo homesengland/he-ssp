@@ -249,7 +249,7 @@ public class SiteValidator : AbstractValidator<SiteViewModel>
         {
             RuleFor(item => item.CheckAnswers)
             .NotEmpty()
-            .WithMessage(ValidationErrorMessage.SecurityCheckAnswers);
+            .WithMessage(ValidationErrorMessage.NoCheckAnswers);
 
             When(item => item.CheckAnswers == CommonResponse.Yes, () => RuleFor(m => m)
                     .Must(x => x.AllInformationIsProvided())

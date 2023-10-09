@@ -96,7 +96,7 @@ namespace HE.CRM.Plugins.Tests.CustomApis
             Assert.IsNotNull(retrievedSiteDetail.invln_Planningreferencenumber);
             Assert.AreEqual(loanApplication.Id, retrievedSiteDetail.invln_Loanapplication.Id);
         }
-        
+
         [TestMethod]
         public void UpdateSingleSiteDetails_LoanApplicationWithGivenIdExists_ShouldUpdateRecord()
         {

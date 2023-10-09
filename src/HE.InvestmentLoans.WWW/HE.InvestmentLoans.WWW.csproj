@@ -67,6 +67,7 @@
   <ItemGroup>
     <Folder Include="Helpers\Organisation\" />
     <Folder Include="Views\Shared\TaskList\" />
+    <Folder Include="Utils\Serialization\" />
   </ItemGroup>
 
   <ItemGroup>

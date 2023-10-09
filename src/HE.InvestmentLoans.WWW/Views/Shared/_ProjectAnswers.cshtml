@@ -4,20 +4,20 @@
     var id = ViewContext.RouteData.Values["id"];
     var typeHomesList = new List<string>();
 
-    // if (Model?.TypeHomes != null)
-    // {
-    //     foreach (var typeHome in Model.TypeHomes)
-    //     {
-    //         if (typeHome != "other")
-    //         {
-    //             typeHomesList.Add(typeHome);
-    //         }
-    //     }
-    // }
-    // if (!string.IsNullOrEmpty(Model?.TypeHomesOther))
-    // {
-    //     typeHomesList.Add(Model.TypeHomesOther);
-    // }
+    if (Model?.HomeTypes != null)
+    {
+        foreach (var typeHome in Model.HomeTypes)
+        {
+            if (typeHome != "other")
+            {
+                typeHomesList.Add(typeHome);
+            }
+        }
+    }
+    if (!string.IsNullOrEmpty(Model?.OtherHomeTypes))
+    {
+        typeHomesList.Add(Model.OtherHomeTypes);
+    }
 
     var grantFundingMore = new List<string>();
 
@@ -65,29 +65,32 @@
                { "IsEditable", Model?.IsEditable() }
            })
 
-    @*     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-    {
-    { "Title", "Number of homes" },
-    { "Value", Model?.ManyHomes },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "ManyHomes" }) },
-    { "IsEditable", Model?.IsEditable() }
-    })
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Number of homes" },
+        { "Value", Model?.HomesCount },
+        { "Link", Url.Action("ManyHomes", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+        { "LinkId", "number-of-homes" },
+        { "IsEditable", Model?.IsEditable() }
+        })
 
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-    {
-    { "Title", "Type of homes" },
-    { "Value", TemporaryFormOptions.SiteTypeHomesCheckbox.GetSummaryLabel(typeHomesList) },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "TypeHomes" }) },
-    { "IsEditable", Model?.IsEditable() }
-    })
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Type of homes" },
+        { "Value", TemporaryFormOptions.SiteTypeHomesCheckbox.GetSummaryLabel(typeHomesList) },
+        { "Link", Url.Action("TypeHomes", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+        { "LinkId", "homes-type" },
+        { "IsEditable", Model?.IsEditable() }
+        })
 
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-    {
-    { "Title", "Type of project" },
-    { "Value", TemporaryFormOptions.SiteType.GetSummaryLabel(Model?.Type) },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "Type" }) },
-    { "IsEditable", Model?.IsEditable() }
-    }) *@
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+        { "Title", "Type of project" },
+        { "Value", TemporaryFormOptions.SiteType.GetSummaryLabel(Model?.ProjectType) },
+        { "Link", Url.Action("Type", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+        { "LinkId", "project-type" },
+        { "IsEditable", Model?.IsEditable() }
+        })
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
            {
@@ -185,20 +188,22 @@
                })
     }
 
-    @*@await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
-    { "Title", "Legal charges" },
-    { "Value", Model?.ChargesDebtInfo != null ? $"{ Model.ChargesDebt }, { Model.ChargesDebtInfo }" : $"{ Model?.ChargesDebt }" },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "ChargesDebt" }) },
-    { "IsEditable", Model?.IsEditable() }
+        { "Title", "Legal charges" },
+        { "Value", Model?.ChargesDebtInfo != null ? $"{ Model.ChargesDebt }, { Model.ChargesDebtInfo }" : $"{ Model?.ChargesDebt }" },
+        { "Link", Url.Action("GrantFunding", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+        { "LinkId", "charges-debt" },
+        { "IsEditable", Model?.IsEditable() }
     })
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
-    { "Title", "Affordable homes" },
-    { "Value", Model?.AffordableHomes },
-    { "Link", Url.Action("Change","Site", new {id = id, site=Model.Id, state = "AffordableHomes" }) },
-    { "IsEditable", Model?.IsEditable() }
-    }) *@
+        { "Title", "Affordable homes" },
+        { "Value", Model?.AffordableHomes },
+        { "Link", Url.Action("GrantFunding", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+        { "LinkId", "affordable-homes" },
+        { "IsEditable", Model?.IsEditable() }
+    })
 
 </gds-summary-list>

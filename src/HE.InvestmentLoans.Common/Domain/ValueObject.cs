@@ -17,7 +17,7 @@ public abstract class ValueObject
         return a.Equals(b);
     }
 
-    public static bool operator !=(ValueObject a, ValueObject b) => !(a == b);
+    public static bool operator !=(ValueObject? a, ValueObject? b) => !(a == b);
 
     public override bool Equals(object? obj)
     {

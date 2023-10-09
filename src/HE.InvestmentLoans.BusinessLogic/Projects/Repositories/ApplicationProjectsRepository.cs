@@ -7,6 +7,7 @@ using HE.InvestmentLoans.BusinessLogic.Generic;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.Enums;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
@@ -102,8 +103,9 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                                 projectFromCrm.IsProvided() ? GrantFundingStatusMapper.FromString(projectFromCrm.publicSectorFunding) : null,
                                 PublicSectorGrantFundingMapper.MapFromCrm(projectFromCrm),
                                 projectFromCrm.existingLegalCharges.IsProvided() ? new ChargesDebt(projectFromCrm.existingLegalCharges ?? false, projectFromCrm.existingLegalChargesInformation) : null,
-                                projectFromCrm.numberOfAffordableHomes.IsProvided() ? new AffordableHomes(projectFromCrm.numberOfAffordableHomes) : null,
-                                ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus)));
+                                projectFromCrm.affordableHousing.IsProvided() ? new AffordableHomes(projectFromCrm.affordableHousing.MapToCommonResponse()) : null,
+                                ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus),
+                                PlanningPermissionStatusMapper.Map(projectFromCrm.planningPermissionStatus)));
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);
     }
@@ -215,7 +217,9 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             existingLegalCharges = projectToSave.ChargesDebt?.Exist,
             existingLegalChargesInformation = projectToSave.ChargesDebt?.Info,
             numberOfAffordableHomes = projectToSave?.Value,
-            startDate = projectToSave.StartDate?.Value,
+            startDate = projectToSave?.StartDate?.Value,
+            planningPermissionStatus = projectToSave!.Status.IsProvided() ? PlanningPermissionStatusMapper.Map(projectToSave.PlanningPermissionStatus) : null,
+            affordableHousing = projectToSave.AffordableHomes?.Value?.MapToBool(),
         };
 
         var req = new invln_updatesinglesitedetailsRequest
@@ -270,5 +274,6 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         yield return nameof(invln_SiteDetails.invln_Existinglegalchargesinformation).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_Affordablehousing).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_startdate).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_planningpermissionstatus).ToLowerInvariant();
     }
 }

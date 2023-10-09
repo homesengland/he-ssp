@@ -4,7 +4,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Project" asp-action="AffordableHomes" asp-route-id="@Model.ApplicationId" asp-route-site="@Model.ProjectId" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="AffordableHomes" asp-route-id="@Model.ApplicationId" asp-route-site="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <gds-back-link href="@Url.Action("GoBack","Site")" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>

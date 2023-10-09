@@ -20,7 +20,7 @@ public static class ValidationErrorMessage
 
     public const string CheckAnswersOption = "You have not completed this section. Select no if you want to come back later";
 
-    public const string SecurityCheckAnswers = "Select whether you have completed this section";
+    public const string NoCheckAnswers = "Select whether you have completed this section";
 
     public const string NoStartDate = "Enter a build start date";
 

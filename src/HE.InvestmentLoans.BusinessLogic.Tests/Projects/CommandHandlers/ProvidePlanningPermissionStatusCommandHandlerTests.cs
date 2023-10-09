@@ -29,7 +29,7 @@ public class ProvidePlanningPermissionStatusCommandHandlerTests : TestBase<Provi
         var applicationProjects = ApplicationProjectsBuilder
             .New()
             .WithoutDefaultProject()
-            .WithProjectWithPlanningReferenceNumber()
+            .WithProjectWithPlanningReferenceNumber("number")
             .Build();
 
         Given(ApplicationProjectsRepositoryBuilder
