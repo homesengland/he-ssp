@@ -25,7 +25,7 @@ namespace HE.CRM.Plugins.Handlers.LoanApplications
 
         public override void DoWork()
         {
-            CrmServicesFactory.Get<ILoanApplicationService>().SendInternalNotificationOnStatusChange(target, preImage);
+            //CrmServicesFactory.Get<ILoanApplicationService>().SendInternalNotificationOnStatusChange(target, preImage);
         }
 
         #endregion

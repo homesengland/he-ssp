@@ -140,6 +140,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Loanstatuschange"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_Loanstatuschange> invln_LoanstatuschangeSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_Loanstatuschange>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_notificationsetting"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_notificationsetting> invln_notificationsettingSet
