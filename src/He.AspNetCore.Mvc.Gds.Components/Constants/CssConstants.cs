@@ -491,5 +491,15 @@ namespace He.AspNetCore.Mvc.Gds.Components.Constants
         ///  The gov uk pagination.
         /// </summary>
         public const string GovUkPagination = "govuk-pagination";
+
+        /// <summary>
+        ///  The gov uk notification banner.
+        /// </summary>
+        public const string GovUkNotificationBannerSuccess = "govuk-notification-banner--success";
+
+        /// <summary>
+        ///  The gov uk notification banner content.
+        /// </summary>
+        public const string GovUkNotificationBannerContent = "govuk-notification-banner__content";
     }
 }

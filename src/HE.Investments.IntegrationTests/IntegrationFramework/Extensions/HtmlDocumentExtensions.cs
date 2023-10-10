@@ -42,7 +42,10 @@ public static class HtmlDocumentExtensions
         var anchorElement = elementById as IHtmlAnchorElement;
         anchorElement.Should().NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
 
-        anchorElement!.GetElementsByClassName("govuk-button").SingleOrDefault().Should().NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
+        anchorElement!.GetElementsByClassName("govuk-button")
+            .SingleOrDefault()
+            .Should()
+            .NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
         return anchorElement;
     }
 
@@ -80,9 +83,9 @@ public static class HtmlDocumentExtensions
             .SelectMany(e => e.GetElementsByClassName(CssConstants.GovUkErrorMessage));
 
         var fieldValidationErrors = fieldValidationElements!
-                                .Select(x => x.TextContent.Replace("Error:", string.Empty).Trim())
-                                .Where(x => !string.IsNullOrEmpty(x))
-                                .ToArray();
+            .Select(x => x.TextContent.Replace("Error:", string.Empty).Trim())
+            .Where(x => !string.IsNullOrEmpty(x))
+            .ToArray();
 
         fieldValidationErrors.Should().NotBeEmpty();
 
@@ -171,8 +174,10 @@ public static class HtmlDocumentExtensions
         foreach (var row in projectRows)
         {
             var projectLink = row
-                .GetElementsByClassName("task-list-project-name").First()
-                .GetElementsByTagName("a").First();
+                .GetElementsByClassName("task-list-project-name")
+                .First()
+                .GetElementsByTagName("a")
+                .First();
 
             var id = projectLink.GetAttribute("href")!.GetProjectGuidFromRelativePath();
 
@@ -184,6 +189,17 @@ public static class HtmlDocumentExtensions
         }
 
         return dictionary;
+    }
+
+    public static string GetSuccessNotificationBannerBody(this IHtmlDocument htmlDocument)
+    {
+        var successNotificationBanner = htmlDocument.GetElementsByClassName(CssConstants.GovUkNotificationBannerSuccess).FirstOrDefault();
+        successNotificationBanner.Should().NotBeNull("Success notification banner does not exist");
+
+        var notificationBannerContent = successNotificationBanner.GetElementsByClassName(CssConstants.GovUkNotificationBannerContent).FirstOrDefault();
+        notificationBannerContent.Should().NotBeNull("Notification banner does not have content");
+
+        return notificationBannerContent!.InnerHtml.Trim();
     }
 
     private static string GetValueFor(AngleSharp.Dom.IElement summaryRow)

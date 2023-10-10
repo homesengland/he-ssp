@@ -77,4 +77,10 @@ public static class HtmlFluentExtensions
 
         return htmlDocument;
     }
+
+    public static IHtmlDocument HasSuccessNotificationBanner(this IHtmlDocument htmlDocument, string bodyText)
+    {
+        htmlDocument.GetSuccessNotificationBannerBody().Should().Contain(bodyText);
+        return htmlDocument;
+    }
 }

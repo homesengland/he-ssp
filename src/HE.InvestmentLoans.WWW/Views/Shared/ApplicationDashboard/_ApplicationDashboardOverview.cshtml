@@ -45,7 +45,8 @@
         <gds-p>
             This will notify Homes England that you no longer wish to proceed. Your application will be permanently deleted.
         </gds-p>
-        <a class="govuk-button govuk-button--warning" data-module="govuk-button" href="@Url.Action("Withdraw", "LoanApplicationV2", new { id = Model.LoanApplicationId })">
+        <a class="govuk-button govuk-button--warning" data-module="govuk-button"
+           href="@Url.Action("Withdraw", "LoanApplicationV2", new { id = Model.LoanApplicationId })" id="withdraw-application">
             Withdraw
         </a>
     </div>
