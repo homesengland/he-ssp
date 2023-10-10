@@ -49,7 +49,7 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
                 }
                 else if (target.invln_changesource.Value == (int)invln_ChangesourceSet.External)
                 {
-                    EnternalStatusPart(target, loanApplicationToUpdate);
+                    ExternalStatusPart(target, loanApplicationToUpdate);
                 }
                 else if (target.invln_changesource.Value == (int)invln_ChangesourceSet.Automated)
                 {
@@ -203,9 +203,9 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
 
         }
 
-        private void EnternalStatusPart(invln_Loanstatuschange statusChange, invln_Loanapplication loanApplication)
+        private void ExternalStatusPart(invln_Loanstatuschange statusChange, invln_Loanapplication loanApplication)
         {
-            SetInternalStatus(loanApplication);
+           // SetInternalStatus(loanApplication);
         }
 
         private void SetInternalStatus( invln_Loanapplication loanApplication)
