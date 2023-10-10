@@ -1,3 +1,4 @@
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Assertions;
@@ -74,6 +75,20 @@ public static class HtmlFluentExtensions
         {
             htmlDocument.ContainsValidationMessage(validationMessage);
         }
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasLinkButtonForTestId(this IHtmlDocument htmlDocument, string dataTestId, out IHtmlAnchorElement htmlElement)
+    {
+        htmlElement = htmlDocument.GetLinkButtonByTestId(dataTestId);
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasElementForTestId(this IHtmlDocument htmlDocument, string dataTestId, out IElement htmlElement)
+    {
+        htmlElement = htmlDocument.GetElementByTestId(dataTestId);
 
         return htmlDocument;
     }

@@ -1,0 +1,11 @@
+@model IList<ActionModel>
+@if (Model.Any())
+{
+    <span class="separator"></span>
+    @foreach (var action in Model)
+    {
+        <strong class="govuk-!-display-inline-block govuk-!-padding-top-3">
+            <a href="@Url.Action(action.Action, action.Controller)">@action.Label</a>
+        </strong>
+    }
+}

@@ -1,4 +1,5 @@
 using System.Text;
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
@@ -44,6 +45,25 @@ public static class HtmlDocumentExtensions
 
         anchorElement!.GetElementsByClassName("govuk-button").SingleOrDefault().Should().NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
         return anchorElement;
+    }
+
+    public static IElement GetElementByTestId(this IHtmlDocument htmlDocument, string testId)
+    {
+        var elements = htmlDocument.QuerySelectorAll($"[data-testid='{testId}']");
+        elements.Should().NotBeNull($"Element with data-testid {testId} should exist");
+        elements.Length.Should().Be(1, $"Only one element with data-testid {testId} should exist");
+        return elements.First();
+    }
+
+    public static IHtmlAnchorElement GetLinkButtonByTestId(this IHtmlDocument htmlDocument, string testId)
+    {
+        var element = GetElementByTestId(htmlDocument, testId);
+
+        var buttonElement = element as IHtmlAnchorElement;
+        buttonElement.Should().NotBeNull($"Element with data-testid {testId} should be ItmlAnchorElement");
+        buttonElement!.ClassName.Should().Contain("govuk-button", $"Element with data-testid {testId} should be HtmlButtonElement with govuk-button class name");
+
+        return buttonElement;
     }
 
     public static string GetPageTitle(this IHtmlDocument htmlDocument)
