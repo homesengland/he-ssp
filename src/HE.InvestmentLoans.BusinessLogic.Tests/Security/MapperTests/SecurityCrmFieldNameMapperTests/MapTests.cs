@@ -7,111 +7,36 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Security.MapperTests.SecurityCr
 
 public class MapTests
 {
-    [Fact]
-    public void ShouldReturnExternalStatusAndSecurityDetailsCompletionStatusWhenSecurityFieldsSetIsGetEmpty()
+    [Theory]
+    [InlineData(SecurityFieldsSet.GetEmpty, "invln_externalstatus,")]
+    [InlineData(SecurityFieldsSet.ChargesDebtCompany, "invln_debentureholder,", "invln_outstandinglegalchargesordebt,")]
+    [InlineData(SecurityFieldsSet.DirLoans, "invln_directorloans,")]
+    [InlineData(SecurityFieldsSet.DirLoansSub, "invln_confirmationdirectorloanscanbesubordinated,", "invln_reasonfordirectorloannotsubordinated,")]
+    [InlineData(
+        SecurityFieldsSet.GetAllFields,
+        "invln_externalstatus,",
+        "invln_debentureholder,",
+        "invln_outstandinglegalchargesordebt,",
+        "invln_directorloans,",
+        "invln_confirmationdirectorloanscanbesubordinated,",
+        "invln_reasonfordirectorloannotsubordinated,")]
+    [InlineData(
+        SecurityFieldsSet.SaveAllFields,
+        "invln_debentureholder,",
+        "invln_outstandinglegalchargesordebt,",
+        "invln_directorloans,",
+        "invln_confirmationdirectorloanscanbesubordinated,",
+        "invln_reasonfordirectorloannotsubordinated,")]
+    public void ShouldReturnAllRequiredCrmFieldsWhenSpecificSecurityFieldsSetIsProvided(
+        SecurityFieldsSet fieldSet,
+        params string[] crmFields)
     {
-        // given
-        var getEmpty = SecurityFieldsSet.GetEmpty;
-
-        // when
-        var result = SecurityCrmFieldNameMapper.Map(getEmpty);
+        // given && when
+        var result = SecurityCrmFieldNameMapper.Map(fieldSet);
 
         // then
         result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_ExternalStatus).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_securitydetailscompletionstatus).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnDebentureHolderWithOutstandingLegalChargesOrDebtAndSecurityDetailsCompletionStatusWhenSecurityFieldsSetIsChargesDebtCompany()
-    {
-        // given
-        var chargesDebtCompany = SecurityFieldsSet.ChargesDebtCompany;
-
-        // when
-        var result = SecurityCrmFieldNameMapper.Map(chargesDebtCompany);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_DebentureHolder).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Outstandinglegalchargesordebt).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_securitydetailscompletionstatus).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnDirectorLoansAndSecurityDetailsCompletionStatusWhenSecurityFieldsSetIsDirLoans()
-    {
-        // given
-        var dirLoans = SecurityFieldsSet.DirLoans;
-
-        // when
-        var result = SecurityCrmFieldNameMapper.Map(dirLoans);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_Directorloans).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_securitydetailscompletionstatus).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void
-        ShouldReturnConfirmationDirectorLoansCanBeSubordinatedWithReasonForDirectorLoanNotSubordinatedAndSecurityDetailsCompletionStatusWhenSecurityFieldsSetIsDirLoansSub()
-    {
-        // given
-        var dirLoansSub = SecurityFieldsSet.DirLoansSub;
-
-        // when
-        var result = SecurityCrmFieldNameMapper.Map(dirLoansSub);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_Confirmationdirectorloanscanbesubordinated).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Reasonfordirectorloannotsubordinated).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_securitydetailscompletionstatus).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnAllFieldsWhenSecurityFieldsSetIsGetAllFields()
-    {
-        // given
-        var getAllFields = SecurityFieldsSet.GetAllFields;
-
-        // when
-        var result = SecurityCrmFieldNameMapper.Map(getAllFields);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_ExternalStatus).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_DebentureHolder).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Outstandinglegalchargesordebt).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Directorloans).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Confirmationdirectorloanscanbesubordinated).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Reasonfordirectorloannotsubordinated).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_securitydetailscompletionstatus).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnAllFieldsExceptExternalStatusWhenSecurityFieldsSetIsSaveAllFields()
-    {
-        // given
-        var saveAllFields = SecurityFieldsSet.SaveAllFields;
-
-        // when
-        var result = SecurityCrmFieldNameMapper.Map(saveAllFields);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_DebentureHolder).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Outstandinglegalchargesordebt).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Directorloans).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Confirmationdirectorloanscanbesubordinated).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Reasonfordirectorloannotsubordinated).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_securitydetailscompletionstatus).ToLowerInvariant()}");
+            .Contain($"{nameof(invln_Loanapplication.invln_securitydetailscompletionstatus).ToLowerInvariant()}")
+            .And.ContainAll(crmFields.Select(field => field));
     }
 }
