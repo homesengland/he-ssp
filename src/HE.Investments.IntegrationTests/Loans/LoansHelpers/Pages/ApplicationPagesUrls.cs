@@ -12,6 +12,10 @@ public static class ApplicationPagesUrls
 
     public const string TaskListSuffix = "/task-list";
 
+    public const string CheckApplicationSuffix = "/check";
+
+    public const string ApplicationSubmittedSuffix = "/submitted";
+
     public static string TaskList(string applicationId) => $"application/{applicationId}{TaskListSuffix}";
 
     public static string ApplicationDashboard(string applicationId) => $"application/{applicationId}/dashboard";

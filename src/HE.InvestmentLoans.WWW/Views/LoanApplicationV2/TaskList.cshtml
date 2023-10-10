@@ -183,13 +183,13 @@
     <form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.ID" asp-method="post" novalidate>
         @if (!loanApllicationWorkflow.IsFilled() || Model.Status == ApplicationStatus.Withdrawn)
         {
-            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button">
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="submit-application">
                 Check and submit application
             </button>
         }
         else
         {
-            <gds-button data-module="govuk-button" name="action" value="Continue">
+            <gds-button data-module="govuk-button" name="action" value="Continue" id="submit-application">
                 Check and submit application
             </gds-button>
         }
