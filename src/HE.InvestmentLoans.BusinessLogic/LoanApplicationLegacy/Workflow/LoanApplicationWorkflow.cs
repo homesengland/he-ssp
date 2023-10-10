@@ -31,6 +31,8 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
     private readonly Func<Task<LoanApplicationViewModel>> _modelFactory;
 
+    private readonly Func<Task<bool>> _isLoanApplicationExist;
+
     public LoanApplicationWorkflow(LoanApplicationViewModel model, IMediator mediator)
     {
         _model = model;
@@ -39,13 +41,13 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         ConfigureTransitions();
     }
 
-    public LoanApplicationWorkflow(State currentState, Func<Task<LoanApplicationViewModel>> modelFactory)
+    public LoanApplicationWorkflow(State currentState, Func<Task<LoanApplicationViewModel>> modelFactory, Func<Task<bool>> isLoanApplicationExist)
     {
         _model = new LoanApplicationViewModel { GoodChangeMode = true };
         _machine = new StateMachine<State, Trigger>(currentState);
-
-        ConfigureTransitions();
+        _isLoanApplicationExist = isLoanApplicationExist;
         _modelFactory = modelFactory;
+        ConfigureTransitions();
     }
 
     public async Task<State> NextState(Trigger trigger)
@@ -63,10 +65,10 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
     public bool IsFilled()
     {
         return _model.Company.IsCompleted()
-            && (_model.Security.State == SectionStatus.Completed || _model.Security.IsFlowCompleted)
-            && (_model.Funding.IsCompleted() || _model.Funding.IsFlowCompleted)
-            && (_model.Sites.All(x => x.State == SiteWorkflow.State.Complete) || _model.Sites.All(x => x.IsFlowCompleted))
-            && _model.Sites.Count > 0;
+               && (_model.Security.State == SectionStatus.Completed || _model.Security.IsFlowCompleted)
+               && (_model.Funding.IsCompleted() || _model.Funding.IsFlowCompleted)
+               && (_model.Sites.All(x => x.State == SiteWorkflow.State.Complete) || _model.Sites.All(x => x.IsFlowCompleted))
+               && _model.Sites.Count > 0;
     }
 
     public bool IsBeingChecked()
@@ -77,10 +79,10 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
     public bool IsFilled(LoanApplicationViewModel application)
     {
         return application.Company.IsCompleted()
-            && (application.Security.State == SectionStatus.Completed || application.Security.IsFlowCompleted)
-            && (application.Funding.IsCompleted() || application.Funding.IsFlowCompleted)
-            && (application.Sites.All(x => x.State == SiteWorkflow.State.Complete) || application.Sites.All(x => x.IsFlowCompleted))
-            && application.Sites.Count > 0;
+               && (application.Security.State == SectionStatus.Completed || application.Security.IsFlowCompleted)
+               && (application.Funding.IsCompleted() || application.Funding.IsFlowCompleted)
+               && (application.Sites.All(x => x.State == SiteWorkflow.State.Complete) || application.Sites.All(x => x.IsFlowCompleted))
+               && application.Sites.Count > 0;
     }
 
     public async Task<bool> StateCanBeAccessed(State nextState)
@@ -96,7 +98,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
     private void ConfigureTransitions()
     {
         _machine.Configure(State.Index)
-          .Permit(Trigger.Continue, State.AboutLoan);
+        .Permit(Trigger.Continue, State.AboutLoan);
 
         _machine.Configure(State.AboutLoan)
             .Permit(Trigger.Continue, State.CheckYourDetails)
@@ -124,7 +126,8 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
             .Permit(Trigger.Withdraw, State.Withdraw);
 
         _machine.Configure(State.Withdraw)
-            .Permit(Trigger.Continue, State.UserDashboard)
+            .PermitIf(Trigger.Continue, State.ApplicationDashboard, () => _isLoanApplicationExist().Result)
+            .PermitIf(Trigger.Continue, State.UserDashboard, () => _isLoanApplicationExist().Result is false)
             .Permit(Trigger.Back, State.ApplicationDashboard);
 
         _machine.OnTransitionCompletedAsync(x =>

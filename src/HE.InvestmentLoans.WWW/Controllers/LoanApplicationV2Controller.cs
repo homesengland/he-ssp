@@ -2,6 +2,7 @@ using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Commands;
@@ -134,9 +135,10 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
     [HttpPost("{id}/task-list")]
     [WorkflowState(LoanApplicationWorkflow.State.TaskList)]
-    public Task<IActionResult> TaskListPost(Guid id)
+    public async Task<IActionResult> TaskListPost(Guid id)
     {
-        return Continue(new { Id = id });
+        await _mediator.Send(new SubmitLoanApplicationCommand(LoanApplicationId.From(id)));
+        return await Continue(new { Id = id });
     }
 
     [HttpGet("{id}/check")]
@@ -212,7 +214,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
             return View("Withdraw", new WithdrawModel { LoanApplicationId = LoanApplicationId.From(id) });
         }
 
-        return await Continue();
+        return await Continue(new { Id = id });
     }
 
     [HttpGet("back")]
@@ -230,6 +232,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return Task.FromResult<IStateRouting<LoanApplicationWorkflow.State>>(
             new LoanApplicationWorkflow(
                 currentState,
-                async () => (await _mediator.Send(new GetLoanApplicationQuery(applicationId!))).LoanApplication.LegacyModel));
+                async () => (await _mediator.Send(new GetLoanApplicationQuery(applicationId!))).LoanApplication.LegacyModel,
+                async () => applicationId.IsProvided() && await _mediator.Send(new IsLoanApplicationExistQuery(applicationId!))));
     }
 }
