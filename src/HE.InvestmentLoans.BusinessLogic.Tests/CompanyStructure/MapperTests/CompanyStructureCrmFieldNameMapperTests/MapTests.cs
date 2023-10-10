@@ -7,104 +7,32 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.MapperTests.Co
 
 public class MapTests
 {
-    [Fact]
-    public void ShouldReturnExternalStatusAndCompanyStructureCompletionStatusWhenCompanyStructureFieldsSetIsGetEmpty()
+    [Theory]
+    [InlineData(CompanyStructureFieldsSet.GetEmpty, "invln_externalstatus")]
+    [InlineData(CompanyStructureFieldsSet.CompanyPurpose, "invln_companypurpose")]
+    [InlineData(CompanyStructureFieldsSet.HomesBuilt, "invln_companyexperience")]
+    [InlineData(CompanyStructureFieldsSet.MoreInformationAboutOrganization, "invln_companystructureinformation")]
+    [InlineData(
+        CompanyStructureFieldsSet.GetAllFields,
+        "invln_externalstatus",
+        "invln_companypurpose",
+        "invln_companyexperience",
+        "invln_companystructureinformation")]
+    [InlineData(
+        CompanyStructureFieldsSet.SaveAllFields,
+        "invln_companypurpose",
+        "invln_companyexperience",
+        "invln_companystructureinformation")]
+    public void ShouldReturnAllRequiredCrmFieldsWhenSpecificCompanyStructureFieldsSetIsProvided(
+        CompanyStructureFieldsSet fieldSet,
+        params string[] crmFields)
     {
-        // given
-        var getEmpty = CompanyStructureFieldsSet.GetEmpty;
-
-        // when
-        var result = CompanyStructureCrmFieldNameMapper.Map(getEmpty);
+        // given && when
+        var result = CompanyStructureCrmFieldNameMapper.Map(fieldSet);
 
         // then
         result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_ExternalStatus).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_companystructureandexperiencecompletionst).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnCompanyPurposeAndCompanyStructureCompletionStatusWhenCompanyStructureFieldsSetIsCompanyPurpose()
-    {
-        // given
-        var companyPurpose = CompanyStructureFieldsSet.CompanyPurpose;
-
-        // when
-        var result = CompanyStructureCrmFieldNameMapper.Map(companyPurpose);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_CompanyPurpose).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_companystructureandexperiencecompletionst).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnCompanyExperienceAndCompanyStructureCompletionStatusWhenCompanyStructureFieldsSetIsHomesBuilt()
-    {
-        // given
-        var homesBuilt = CompanyStructureFieldsSet.HomesBuilt;
-
-        // when
-        var result = CompanyStructureCrmFieldNameMapper.Map(homesBuilt);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_CompanyExperience).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_companystructureandexperiencecompletionst).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnCompanyStructureInformationAndCompanyStructureCompletionStatusWhenCompanyStructureFieldsSetIsMoreInformationAboutOrganization()
-    {
-        // given
-        var moreInformationAboutOrganization = CompanyStructureFieldsSet.MoreInformationAboutOrganization;
-
-        // when
-        var result = CompanyStructureCrmFieldNameMapper.Map(moreInformationAboutOrganization);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_Companystructureinformation).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_companystructureandexperiencecompletionst).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnAllFieldsWhenCompanyStructureFieldsSetIsGetAllFields()
-    {
-        // given
-        var getAllFields = CompanyStructureFieldsSet.GetAllFields;
-
-        // when
-        var result = CompanyStructureCrmFieldNameMapper.Map(getAllFields);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_ExternalStatus).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_CompanyPurpose).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Companystructureinformation).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_CompanyExperience).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_companystructureandexperiencecompletionst).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnAllFieldsExceptExternalStatusWhenCompanyStructureFieldsSetIsSaveAllFields()
-    {
-        // given
-        var saveAllFields = CompanyStructureFieldsSet.SaveAllFields;
-
-        // when
-        var result = CompanyStructureCrmFieldNameMapper.Map(saveAllFields);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_CompanyPurpose).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Companystructureinformation).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_CompanyExperience).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_companystructureandexperiencecompletionst).ToLowerInvariant()}");
+            .ContainAll(crmFields.Select(field => field))
+            .And.Contain($"{nameof(invln_Loanapplication.invln_companystructureandexperiencecompletionst).ToLowerInvariant()}");
     }
 }

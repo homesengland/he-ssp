@@ -7,168 +7,47 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Funding.MapperTests.FundingCrmF
 
 public class MapTests
 {
-    [Fact]
-    public void ShouldReturnExternalStatusAndFundingDetailsCompletionStatusWhenFundingFieldsSetIsGetEmpty()
+    [Theory]
+    [InlineData(FundingFieldsSet.GetEmpty, "invln_externalstatus,")]
+    [InlineData(FundingFieldsSet.GDV, "invln_projectgdv")]
+    [InlineData(FundingFieldsSet.EstimatedTotalCosts, "invln_projectestimatedtotalcost")]
+    [InlineData(FundingFieldsSet.PrivateSectorFunding, "invln_privatesectorapproach", "invln_privatesectorapproachinformation")]
+    [InlineData(FundingFieldsSet.AbnormalCosts, "invln_projectabnormalcosts", "invln_projectabnormalcostsinformation")]
+    [InlineData(FundingFieldsSet.RepaymentSystem, "invln_refinancerepayment", "invln_refinancerepaymentdetails")]
+    [InlineData(FundingFieldsSet.AdditionalProjects, "invln_additionalprojects")]
+    [InlineData(
+        FundingFieldsSet.GetAllFields,
+        "invln_externalstatus,",
+        "invln_projectgdv",
+        "invln_projectestimatedtotalcost",
+        "invln_privatesectorapproach",
+        "invln_privatesectorapproachinformation",
+        "invln_projectabnormalcosts",
+        "invln_projectabnormalcostsinformation",
+        "invln_refinancerepayment",
+        "invln_refinancerepaymentdetails",
+        "invln_additionalprojects")]
+    [InlineData(
+        FundingFieldsSet.SaveAllFields,
+        "invln_projectgdv",
+        "invln_projectestimatedtotalcost",
+        "invln_privatesectorapproach",
+        "invln_privatesectorapproachinformation",
+        "invln_projectabnormalcosts",
+        "invln_projectabnormalcostsinformation",
+        "invln_refinancerepayment",
+        "invln_refinancerepaymentdetails",
+        "invln_additionalprojects")]
+    public void ShouldReturnAllRequiredCrmFieldsWhenSpecificFundingFieldsSetIsProvided(
+        FundingFieldsSet fieldSet,
+        params string[] crmFields)
     {
-        // given
-        var getEmpty = FundingFieldsSet.GetEmpty;
-
-        // when
-        var result = FundingCrmFieldNameMapper.Map(getEmpty);
+        // given && when
+        var result = FundingCrmFieldNameMapper.Map(fieldSet);
 
         // then
         result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_ExternalStatus).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_fundingdetailscompletionstatus).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnProjectGdvAndFundingDetailsCompletionStatusWhenFundingFieldsSetIsGdv()
-    {
-        // given
-        var projectGdv = FundingFieldsSet.GDV;
-
-        // when
-        var result = FundingCrmFieldNameMapper.Map(projectGdv);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_ProjectGDV).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_fundingdetailscompletionstatus).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnProjectEstimatedTotalCostAndFundingDetailsCompletionStatusWhenFundingFieldsSetIsEstimatedTotalCosts()
-    {
-        // given
-        var estimatedTotalCosts = FundingFieldsSet.EstimatedTotalCosts;
-
-        // when
-        var result = FundingCrmFieldNameMapper.Map(estimatedTotalCosts);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_Projectestimatedtotalcost).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_fundingdetailscompletionstatus).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void
-        ShouldReturnPrivateSectorApproachWithPrivateSectorApproachInformationAndFundingDetailsCompletionStatusWhenFundingFieldsSetIsPrivateSectorFunding()
-    {
-        // given
-        var privateSectorFunding = FundingFieldsSet.PrivateSectorFunding;
-
-        // when
-        var result = FundingCrmFieldNameMapper.Map(privateSectorFunding);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_Privatesectorapproach).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Privatesectorapproachinformation).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_fundingdetailscompletionstatus).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnProjectAbnormalCostsWithProjectAbnormalCostsInformationAndFundingDetailsCompletionStatusWhenFundingFieldsSetIsAbnormalCosts()
-    {
-        // given
-        var abnormalCosts = FundingFieldsSet.AbnormalCosts;
-
-        // when
-        var result = FundingCrmFieldNameMapper.Map(abnormalCosts);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_Projectabnormalcosts).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Projectabnormalcostsinformation).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_fundingdetailscompletionstatus).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnRefinanceRepaymentWithRefinanceRepaymentDetailsAndFundingDetailsCompletionStatusWhenFundingFieldsSetIsRepaymentSystem()
-    {
-        // given
-        var repaymentSystem = FundingFieldsSet.RepaymentSystem;
-
-        // when
-        var result = FundingCrmFieldNameMapper.Map(repaymentSystem);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_Refinancerepayment).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Refinancerepaymentdetails).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_fundingdetailscompletionstatus).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnAdditionalProjectsAndFundingDetailsCompletionStatusWhenFundingFieldsSetIsAdditionalProjects()
-    {
-        // given
-        var additionalProjects = FundingFieldsSet.AdditionalProjects;
-
-        // when
-        var result = FundingCrmFieldNameMapper.Map(additionalProjects);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_Additionalprojects).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_fundingdetailscompletionstatus).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnAllFieldsWhenFundingFieldsSetIsGetAllFields()
-    {
-        // given
-        var getAllFields = FundingFieldsSet.GetAllFields;
-
-        // when
-        var result = FundingCrmFieldNameMapper.Map(getAllFields);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_ExternalStatus).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_ProjectGDV).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Projectestimatedtotalcost).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Projectabnormalcosts).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Projectabnormalcostsinformation).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Privatesectorapproach).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Privatesectorapproachinformation).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Additionalprojects).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Refinancerepayment).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Refinancerepaymentdetails).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_fundingdetailscompletionstatus).ToLowerInvariant()}");
-    }
-
-    [Fact]
-    public void ShouldReturnAllFieldsExceptExternalStatusWhenFundingFieldsSetIsSaveAllFields()
-    {
-        // given
-        var saveAllFields = FundingFieldsSet.SaveAllFields;
-
-        // when
-        var result = FundingCrmFieldNameMapper.Map(saveAllFields);
-
-        // then
-        result.Should()
-            .ContainAll(
-                $"{nameof(invln_Loanapplication.invln_ProjectGDV).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Projectestimatedtotalcost).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Projectabnormalcosts).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Projectabnormalcostsinformation).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Privatesectorapproach).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Privatesectorapproachinformation).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Additionalprojects).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Refinancerepayment).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_Refinancerepaymentdetails).ToLowerInvariant()},",
-                $"{nameof(invln_Loanapplication.invln_fundingdetailscompletionstatus).ToLowerInvariant()}");
+            .ContainAll(crmFields.Select(field => field))
+            .And.Contain($"{nameof(invln_Loanapplication.invln_fundingdetailscompletionstatus).ToLowerInvariant()}");
     }
 }
