@@ -55,12 +55,12 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         public string whoProvided { get; set; }
 
-        public OptionSetValue planningPermissionStatus { get; set; }
+        public int? planningPermissionStatus { get; set; }
 
         public DateTime? startDate { get; set; }
 
         public bool? affordableHousing { get; set; }
 
-        public OptionSetValue completionStatus { get; set; }
+        public int? completionStatus { get; set; }
     }
 }
