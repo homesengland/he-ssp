@@ -6,7 +6,7 @@ using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
-namespace HE.InvestmentLoans.IntegrationTests.Loans;
+namespace HE.InvestmentLoans.IntegrationTests.Loans.Application;
 
 [Order(3)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]

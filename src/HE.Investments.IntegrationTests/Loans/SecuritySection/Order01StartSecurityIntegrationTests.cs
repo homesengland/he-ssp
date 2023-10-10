@@ -29,16 +29,16 @@ public class Order01StartSecurityIntegrationTests : IntegrationTest
         var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
 
         // when
-        var linkToCompanyStructureSection = taskList.GetAnchorElementById("security-section-link");
-        var startCompanyStructurePage = await TestClient.NavigateTo(linkToCompanyStructureSection);
+        var linkToSecuritySection = taskList.GetAnchorElementById("security-section-link");
+        var startSecurityPage = await TestClient.NavigateTo(linkToSecuritySection);
 
         // then
-        startCompanyStructurePage
+        startSecurityPage
             .UrlEndWith(SecurityPageUrls.StartSuffix)
             .HasTitle(SecurityPageTitles.Index)
             .HasGdsSubmitButton("start-now-button", out _);
 
-        SetSharedData(SharedKeys.CurrentPageKey, startCompanyStructurePage);
+        SetSharedData(SharedKeys.CurrentPageKey, startSecurityPage);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -46,8 +46,8 @@ public class Order01StartSecurityIntegrationTests : IntegrationTest
     public async Task Order02_ShouldMoveToNextPageCompanyPurpose_WhenStartButtonIsClicked()
     {
         // given
-        var startCompanyStructurePage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
-        var startNow = startCompanyStructurePage.GetGdsSubmitButtonById("start-now-button");
+        var startSecurityPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
+        var startNow = startSecurityPage.GetGdsSubmitButtonById("start-now-button");
 
         // when
         var companyPurposePage = await TestClient.SubmitButton(startNow);

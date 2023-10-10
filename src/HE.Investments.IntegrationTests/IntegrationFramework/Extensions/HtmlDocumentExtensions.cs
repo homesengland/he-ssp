@@ -196,10 +196,18 @@ public static class HtmlDocumentExtensions
         var successNotificationBanner = htmlDocument.GetElementsByClassName(CssConstants.GovUkNotificationBannerSuccess).FirstOrDefault();
         successNotificationBanner.Should().NotBeNull("Success notification banner does not exist");
 
-        var notificationBannerContent = successNotificationBanner.GetElementsByClassName(CssConstants.GovUkNotificationBannerContent).FirstOrDefault();
+        var notificationBannerContent = successNotificationBanner?.GetElementsByClassName(CssConstants.GovUkNotificationBannerContent).FirstOrDefault();
         notificationBannerContent.Should().NotBeNull("Notification banner does not have content");
 
         return notificationBannerContent!.InnerHtml.Trim();
+    }
+
+    public static string GetInsetText(this IHtmlDocument htmlDocument)
+    {
+        var insetText = htmlDocument.GetElementsByClassName(CssConstants.GovUkInsetText).FirstOrDefault();
+        insetText.Should().NotBeNull("Inset text does not exist");
+
+        return insetText!.InnerHtml.Trim();
     }
 
     private static string GetValueFor(AngleSharp.Dom.IElement summaryRow)

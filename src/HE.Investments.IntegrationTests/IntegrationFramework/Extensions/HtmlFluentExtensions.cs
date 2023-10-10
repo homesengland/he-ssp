@@ -83,4 +83,10 @@ public static class HtmlFluentExtensions
         htmlDocument.GetSuccessNotificationBannerBody().Should().Contain(bodyText);
         return htmlDocument;
     }
+
+    public static IHtmlDocument HasInsetText(this IHtmlDocument htmlDocument, string title)
+    {
+        htmlDocument.GetInsetText().Should().Be(title);
+        return htmlDocument;
+    }
 }
