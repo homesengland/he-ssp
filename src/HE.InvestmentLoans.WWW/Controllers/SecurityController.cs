@@ -156,7 +156,7 @@ public class SecurityController : WorkflowController<SecurityState>
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
 
-        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id!), SecurityFieldsSet.GetEmpty));
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id!), SecurityFieldsSet.GetAllFields));
 
         return new SecurityWorkflow(currentState, response.ViewModel);
     }

@@ -529,7 +529,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return ProjectWorkflow.ForStartPage();
         }
 
-        var response = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id!), ProjectId.From(projectId!), ProjectFieldsSet.GetEmpty));
+        var response = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id!), ProjectId.From(projectId!), ProjectFieldsSet.GetAllFields));
 
         return new ProjectWorkflow(currentState, response);
     }
