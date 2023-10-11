@@ -448,6 +448,7 @@ namespace DataverseModel
 			public const string invln_govnotifyemail_systemuser_modifiedonbehalfby = "invln_govnotifyemail_systemuser_modifiedonbehalfby";
 			public const string invln_govnotifyemail_systemuser_owninguser = "invln_govnotifyemail_systemuser_owninguser";
 			public const string invln_sitedetails_systemuser = "invln_sitedetails_systemuser";
+			public const string invln_systemuser_invln_loanstatuschange_changedbyuserid = "invln_systemuser_invln_loanstatuschange_changedbyuserid";
 			public const string IsDisabled = "isdisabled";
 			public const string IsEmailAddressApprovedByO365Admin = "isemailaddressapprovedbyo365admin";
 			public const string IsIntegrationUser = "isintegrationuser";
@@ -491,6 +492,10 @@ namespace DataverseModel
 			public const string lk_invln_loanapplication_createdonbehalfby = "lk_invln_loanapplication_createdonbehalfby";
 			public const string lk_invln_loanapplication_modifiedby = "lk_invln_loanapplication_modifiedby";
 			public const string lk_invln_loanapplication_modifiedonbehalfby = "lk_invln_loanapplication_modifiedonbehalfby";
+			public const string lk_invln_loanstatuschange_createdby = "lk_invln_loanstatuschange_createdby";
+			public const string lk_invln_loanstatuschange_createdonbehalfby = "lk_invln_loanstatuschange_createdonbehalfby";
+			public const string lk_invln_loanstatuschange_modifiedby = "lk_invln_loanstatuschange_modifiedby";
+			public const string lk_invln_loanstatuschange_modifiedonbehalfby = "lk_invln_loanstatuschange_modifiedonbehalfby";
 			public const string lk_invln_notificationsetting_createdby = "lk_invln_notificationsetting_createdby";
 			public const string lk_invln_notificationsetting_createdonbehalfby = "lk_invln_notificationsetting_createdonbehalfby";
 			public const string lk_invln_notificationsetting_modifiedby = "lk_invln_notificationsetting_modifiedby";
@@ -597,6 +602,7 @@ namespace DataverseModel
 			public const string user_invln_emailnotification = "user_invln_emailnotification";
 			public const string user_invln_emailtemplate = "user_invln_emailtemplate";
 			public const string user_invln_loanapplication = "user_invln_loanapplication";
+			public const string user_invln_loanstatuschange = "user_invln_loanstatuschange";
 			public const string user_invln_notificationsetting = "user_invln_notificationsetting";
 			public const string user_invln_portal = "user_invln_portal";
 			public const string user_invln_portalpermissionlevel = "user_invln_portalpermissionlevel";
@@ -3600,6 +3606,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N invln_systemuser_invln_loanstatuschange_changedbyuserid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_systemuser_invln_loanstatuschange_changedbyuserid")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Loanstatuschange> invln_systemuser_invln_loanstatuschange_changedbyuserid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Loanstatuschange>("invln_systemuser_invln_loanstatuschange_changedbyuserid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_systemuser_invln_loanstatuschange_changedbyuserid");
+				this.SetRelatedEntities<DataverseModel.invln_Loanstatuschange>("invln_systemuser_invln_loanstatuschange_changedbyuserid", null, value);
+				this.OnPropertyChanged("invln_systemuser_invln_loanstatuschange_changedbyuserid");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N lk_accountbase_createdby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_accountbase_createdby")]
@@ -4316,6 +4342,86 @@ namespace DataverseModel
 				this.OnPropertyChanging("lk_invln_loanapplication_modifiedonbehalfby");
 				this.SetRelatedEntities<DataverseModel.invln_Loanapplication>("lk_invln_loanapplication_modifiedonbehalfby", null, value);
 				this.OnPropertyChanged("lk_invln_loanapplication_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_loanstatuschange_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_loanstatuschange_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Loanstatuschange> lk_invln_loanstatuschange_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Loanstatuschange>("lk_invln_loanstatuschange_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_loanstatuschange_createdby");
+				this.SetRelatedEntities<DataverseModel.invln_Loanstatuschange>("lk_invln_loanstatuschange_createdby", null, value);
+				this.OnPropertyChanged("lk_invln_loanstatuschange_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_loanstatuschange_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_loanstatuschange_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Loanstatuschange> lk_invln_loanstatuschange_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Loanstatuschange>("lk_invln_loanstatuschange_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_loanstatuschange_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_Loanstatuschange>("lk_invln_loanstatuschange_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_loanstatuschange_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_loanstatuschange_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_loanstatuschange_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Loanstatuschange> lk_invln_loanstatuschange_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Loanstatuschange>("lk_invln_loanstatuschange_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_loanstatuschange_modifiedby");
+				this.SetRelatedEntities<DataverseModel.invln_Loanstatuschange>("lk_invln_loanstatuschange_modifiedby", null, value);
+				this.OnPropertyChanged("lk_invln_loanstatuschange_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_loanstatuschange_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_loanstatuschange_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Loanstatuschange> lk_invln_loanstatuschange_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Loanstatuschange>("lk_invln_loanstatuschange_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_loanstatuschange_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_Loanstatuschange>("lk_invln_loanstatuschange_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_loanstatuschange_modifiedonbehalfby");
 			}
 		}
 		
@@ -5096,6 +5202,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("user_invln_loanapplication");
 				this.SetRelatedEntities<DataverseModel.invln_Loanapplication>("user_invln_loanapplication", null, value);
 				this.OnPropertyChanged("user_invln_loanapplication");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N user_invln_loanstatuschange
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_loanstatuschange")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Loanstatuschange> user_invln_loanstatuschange
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Loanstatuschange>("user_invln_loanstatuschange", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_invln_loanstatuschange");
+				this.SetRelatedEntities<DataverseModel.invln_Loanstatuschange>("user_invln_loanstatuschange", null, value);
+				this.OnPropertyChanged("user_invln_loanstatuschange");
 			}
 		}
 		
