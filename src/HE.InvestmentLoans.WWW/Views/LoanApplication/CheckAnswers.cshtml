@@ -1,8 +1,8 @@
-@using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+@using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 @inject MediatR.IMediator mediator
 @model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
 @{
-    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
+    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model);
 }
 
 <gds-div-grid-column-two-thirds>

@@ -1,9 +1,10 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Funding;
 using HE.InvestmentLoans.Contract.Funding.Enums;
 using Stateless;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+namespace HE.InvestmentLoans.BusinessLogic.Funding;
 
 public class FundingWorkflow : IStateRouting<FundingState>
 {
