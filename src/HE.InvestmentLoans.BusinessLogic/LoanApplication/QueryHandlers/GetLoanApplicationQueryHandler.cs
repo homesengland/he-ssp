@@ -34,6 +34,7 @@ public class GetLoanApplicationQueryHandler : IRequestHandler<GetLoanApplication
         loanApplication.LegacyModel.Company.LoanApplicationId = loanApplication.Id.Value;
         loanApplication.LegacyModel.Security.LoanApplicationId = loanApplication.Id.Value;
         loanApplication.LegacyModel.Funding.LoanApplicationId = loanApplication.Id.Value;
+        loanApplication.LegacyModel.SetTimestamp(loanApplication.LastModificationDate ?? loanApplication.CreatedOn);
         return new GetLoanApplicationQueryResponse(loanApplication);
     }
 }

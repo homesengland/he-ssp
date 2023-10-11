@@ -32,7 +32,7 @@ public class LoanApplicationViewModel
         set;
     }
 
-    public DateTime Timestamp { get; set; }
+    public DateTime? Timestamp { get; set; }
 
     public CompanyStructureViewModel Company { get; set; }
 
@@ -85,7 +85,7 @@ public class LoanApplicationViewModel
         return Tuple.Create(isDeletedProjectInCache, deletedProjectFromCache);
     }
 
-    public void SetTimestamp(DateTime timestamp)
+    public void SetTimestamp(DateTime? timestamp)
     {
         Timestamp = timestamp;
     }
