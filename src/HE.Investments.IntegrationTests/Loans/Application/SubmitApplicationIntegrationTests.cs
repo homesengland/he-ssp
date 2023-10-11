@@ -26,10 +26,10 @@ public class SubmitApplicationIntegrationTests : IntegrationTest
     {
         // given
         var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+        var submitLoanApplicationButton = taskList.GetGdsSubmitButtonById("submit-application");
 
         // when
-        var submitLoanApplicationButton = taskList.GetAnchorElementById("submit-application");
-        var checkApplicationPage = await TestClient.NavigateTo(submitLoanApplicationButton);
+        var checkApplicationPage = await TestClient.SubmitButton(submitLoanApplicationButton);
 
         // then
         checkApplicationPage
