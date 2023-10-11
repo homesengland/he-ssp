@@ -117,7 +117,6 @@ https://design-patterns.service.justice.gov.uk/components/side-navigation/
 }
 
 .separator{
-  border: 1px solid #B1B4B6;
-  display: inline-block;
-  width: 100%;
+  border-top: 2px solid #B1B4B6;
+  margin: 0px;
 }

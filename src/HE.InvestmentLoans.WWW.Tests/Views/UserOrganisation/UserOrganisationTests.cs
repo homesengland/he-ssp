@@ -51,6 +51,25 @@ public class UserOrganisationTests : ViewTestBase
     }
 
     [Fact]
+    public async Task ShouldDisplayUserOrganisation_ForProgrammesToAccessWithMissingApplications()
+    {
+        // given
+        var model = CreateTestModel(
+            programmesToAccess: new List<ProgrammeToAccessModel>
+            {
+                new(
+                    new ProgrammeModel("P1", "Desc1", "C", "V", "Ct"),
+                    new List<ApplicationBasicDetailsModel>()),
+            });
+
+        // when
+        var document = await Render(_viewPath, model);
+
+        // then
+        AssertUserOrganisation(document, model, programmesToAccessExist: false);
+    }
+
+    [Fact]
     public async Task ShouldDisplayUserOrganisation_ForMissingProgrammesToApply()
     {
         // given
@@ -88,7 +107,6 @@ public class UserOrganisationTests : ViewTestBase
             .HasElementWithText("p", $"Welcome {model.UserName}")
             .HasElementWithText("h3", $"{model.OrganisationName}'s Homes England account")
             .HasElementWithText("div", "Your request to be part of", isLimitedUser)
-            .HasElementWithText("h3", $"Programmes you can access in {model.OrganisationName}", programmesToAccessExist)
             .HasElementWithText("p", "You have not yet applied for a service. To apply, select a funding programme below.", !programmesToAccessExist)
             .HasElementWithText("h3", "Programmes you can apply for", programmesToApplyExist);
 

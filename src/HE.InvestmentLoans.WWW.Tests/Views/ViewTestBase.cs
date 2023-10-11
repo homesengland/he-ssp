@@ -1,13 +1,12 @@
 using AngleSharp;
 using AngleSharp.Html.Dom;
 using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
-using HE.InvestmentLoans.Common.Models.App;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Razor.Templating.Core;
 using NotificationModel = HE.InvestmentLoans.Common.Contract.Models.NotificationModel;
 
-namespace HE.InvestmentLoans.WWW.Tests;
+namespace HE.InvestmentLoans.WWW.Tests.Views;
 
 public abstract class ViewTestBase
 {
