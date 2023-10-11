@@ -104,6 +104,21 @@ public class SiteViewModel
 
     public bool IsInProgress() => Status == SectionStatus.InProgress;
 
+    public SectionStatus GetSectionStatus()
+    {
+        if (AllInformationIsProvided())
+        {
+            return SectionStatus.Completed;
+        }
+
+        if (AnyBasicInformationIsProvided())
+        {
+            return SectionStatus.InProgress;
+        }
+
+        return SectionStatus.NotStarted;
+    }
+
     public void RemoveAlternativeRoutesData()
     {
         if (TypeHomes != null && !TypeHomes.Contains(CommonResponse.Other))

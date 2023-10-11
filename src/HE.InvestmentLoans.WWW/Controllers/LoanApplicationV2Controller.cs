@@ -128,9 +128,9 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     [WorkflowState(FundingState.Complete)]
     public async Task<IActionResult> TaskList(Guid id)
     {
-        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetTaskListDataQuery(LoanApplicationId.From(id)));
 
-        return View("TaskList", response.LoanApplication.LegacyModel);
+        return View("TaskListV2", response);
     }
 
     [HttpPost("{id}/task-list")]
