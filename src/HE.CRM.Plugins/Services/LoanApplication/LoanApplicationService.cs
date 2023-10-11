@@ -226,11 +226,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 {
                     return;
                 }
-                var loanStatusChangeToCreate = new invln_Loanstatuschange()
-                {
-                    invln_changefrom = retrievedLoanApplication.StatusCode,
-                    invln_changesource = new OptionSetValue((int)invln_ChangesourceSet.External),
-                };
 
                 var loanWithNewStatusCodes = MapExternalStatusToInternal(new OptionSetValue(externalStatus));
                 var loanToUpdate = new invln_Loanapplication()
@@ -240,8 +235,13 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     StateCode = loanWithNewStatusCodes.StateCode,
                 };
 
-                loanStatusChangeToCreate.invln_changeto = loanWithNewStatusCodes.StatusCode;
-                loanStatusChangeToCreate.invln_Loanapplication = loanToUpdate.ToEntityReference();
+                var loanStatusChangeToCreate = new invln_Loanstatuschange()
+                {
+                    invln_changefrom = retrievedLoanApplication.StatusCode,
+                    invln_changesource = new OptionSetValue((int)invln_ChangesourceSet.External),
+                    invln_changeto = loanWithNewStatusCodes.StatusCode,
+                    invln_Loanapplication = loanToUpdate.ToEntityReference()
+                };
 
                 if (!string.IsNullOrEmpty(changeReason))
                 {

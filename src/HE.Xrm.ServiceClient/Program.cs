@@ -57,7 +57,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 invln_loanapplicationid = "0beee88c-e540-ee11-bdf3-002248c652b4",
                 invln_changereason = "reason",
-                invln_statusexternal = (int)invln_ExternalStatus.ApplicationUnderReview,
+                invln_statusexternal = (int)invln_ExternalStatus.ApplicationSubmitted,
             };
             serviceClient.Execute(req2);
             Console.WriteLine("A web service connection was not established.");
