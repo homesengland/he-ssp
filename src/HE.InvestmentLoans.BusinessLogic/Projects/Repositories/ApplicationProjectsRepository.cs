@@ -90,6 +90,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         var projectsFromCrm = loanApplicationDto.siteDetailsList.Select(
             projectFromCrm => new Project(
                                 ProjectId.From(projectFromCrm.siteDetailsId),
+                                SectionStatusMapper.Map(projectFromCrm.completionStatus),
                                 projectFromCrm.Name.IsProvided() ? new ProjectName(projectFromCrm.Name) : null,
                                 projectFromCrm.startDate.IsProvided() ? new StartDate(true, new ProjectDate(projectFromCrm.startDate!.Value)) : new StartDate(false, null),
                                 projectFromCrm.numberOfHomes.IsProvided() ? new HomesCount(projectFromCrm.numberOfHomes) : null,
@@ -220,6 +221,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             startDate = projectToSave?.StartDate?.Value,
             planningPermissionStatus = projectToSave!.Status.IsProvided() ? PlanningPermissionStatusMapper.Map(projectToSave.PlanningPermissionStatus) : null,
             affordableHousing = projectToSave.AffordableHomes?.Value?.MapToBool(),
+            completionStatus = SectionStatusMapper.Map(projectToSave.Status),
         };
 
         var req = new invln_updatesinglesitedetailsRequest
@@ -275,5 +277,6 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         yield return nameof(invln_SiteDetails.invln_Affordablehousing).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_startdate).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_planningpermissionstatus).ToLowerInvariant();
+        yield return nameof(invln_SiteDetails.invln_completionstatus).ToLowerInvariant();
     }
 }

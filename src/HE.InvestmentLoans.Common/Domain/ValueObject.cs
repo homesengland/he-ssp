@@ -40,5 +40,5 @@ public abstract class ValueObject
         return GetAtomicValues().Aggregate(1, HashCode.Combine);
     }
 
-    protected abstract IEnumerable<object> GetAtomicValues();
+    protected abstract IEnumerable<object?> GetAtomicValues();
 }

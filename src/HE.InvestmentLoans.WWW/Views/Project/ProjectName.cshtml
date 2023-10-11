@@ -6,7 +6,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("Back", "Project" , new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.Name})" text="Back" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.Action("TaskList", "LoanApplicationV2" , new {id = Model.ApplicationId})" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     <partial name="_ErrorSummaryPartial" model="null" />
     <form asp-controller="Project" asp-action="ProjectName" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
@@ -33,7 +33,7 @@
             @Html.HiddenFor(c => c.ProjectId)
             @Html.HiddenFor(c => c.ApplicationId)
 
-        <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Continue
             </button>
     </form>

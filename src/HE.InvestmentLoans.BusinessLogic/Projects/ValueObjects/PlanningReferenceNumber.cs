@@ -34,9 +34,9 @@ public class PlanningReferenceNumber : ValueObject
         return new PlanningReferenceNumber(existsString.MapToNonNullableBool(), value);
     }
 
-    protected override IEnumerable<object> GetAtomicValues()
+    protected override IEnumerable<object?> GetAtomicValues()
     {
-        yield return Value!;
+        yield return Value;
         yield return Exists;
     }
 }

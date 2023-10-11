@@ -27,7 +27,7 @@ public static class LoanApplicationMapper
             {
                 Id = Guid.Parse(c.siteDetailsId),
                 Name = c.Name,
-                Status = Contract.Application.Enums.SectionStatus.NotStarted,
+                Status = SectionStatusMapper.Map(c.completionStatus),
             }).ToList(),
         };
     }

@@ -18,10 +18,13 @@ public class Project
         StateChanged = false;
 
         IsNewlyCreated = true;
+
+        Status = SectionStatus.NotStarted;
     }
 
     public Project(
         ProjectId id,
+        SectionStatus status,
         ProjectName? name,
         StartDate? startDate,
         HomesCount? homesCount,
@@ -42,6 +45,7 @@ public class Project
         IsNewlyCreated = false;
 
         Id = id;
+        Status = status;
         Name = name;
         StartDate = startDate;
         HomesCount = homesCount;
@@ -233,6 +237,10 @@ public class Project
             if (planningReferenceNumber!.Exists && planningReferenceNumber.Value.IsNotProvided() && PlanningReferenceNumber!.Exists)
             {
                 PlanningReferenceNumber = new PlanningReferenceNumber(planningReferenceNumber.Exists, PlanningReferenceNumber.Value);
+            }
+            else
+            {
+                PlanningReferenceNumber = planningReferenceNumber;
             }
         }
         else

@@ -9,6 +9,7 @@ using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
+using HE.InvestmentLoans.Contract.Security.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;
@@ -299,7 +300,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View(model);
         }
 
-        return await Continue(new { id, projectId, redirect });
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/location")]
@@ -523,13 +524,21 @@ public class ProjectController : WorkflowController<ProjectState>
         return View(result);
     }
 
-    [HttpGet("{projectId}/check-answers")]
+    [HttpPost("{projectId}/check-answers")]
     [WorkflowState(ProjectState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(new CheckProjectAnswersCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.CheckAnswers), token);
 
-        return View(result);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            var response = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.GetAllFields), token);
+            return View("CheckAnswers", response);
+        }
+
+        return await Continue(new { id, projectId });
     }
 
     [HttpGet("{projectId}/back")]

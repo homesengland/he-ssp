@@ -7,6 +7,7 @@ using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
+using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -19,7 +20,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_WhenUndefinedAnswerIsProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         // when
         var action = () => project.CheckAnswers(YesNoAnswers.Undefined);
@@ -32,7 +33,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_WhenStartDateIsNotProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvideStartDate(null);
 
@@ -47,7 +48,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_WhenHomesCountIsNotProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvideHomesCount(null);
 
@@ -62,7 +63,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_WhenProjectTypeIsNotProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvideProjectType(null);
 
@@ -77,7 +78,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_WhenNoHomeTypeIsProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvideHomesTypes(new HomesTypes(Array.Empty<string>(), string.Empty));
 
@@ -92,7 +93,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_WhenPlanningReferenceNumberIsNotProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvidePlanningReferenceNumber(null);
 
@@ -107,7 +108,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_WhenPlanningReferenceExistsAndNoNumberIsProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvidePlanningReferenceNumber(null);
         project.ProvidePlanningReferenceNumber(new PlanningReferenceNumber(true, null));
@@ -123,7 +124,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_WhenPlanningReferenceExistsAndPlanningPermissionStatusIsNotProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvidePlanningReferenceNumber(new PlanningReferenceNumber(true, "number"));
         project.ProvidePlanningPermissionStatus(null);
@@ -139,7 +140,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_WhenNoLocationIsProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvideCoordinates(null);
         project.ProvideLandRegistryNumber(null);
@@ -155,7 +156,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_WhenNoOwnershipInformationIsProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvideLandOwnership(null);
 
@@ -170,7 +171,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_WhenApplicantHasFullOwnershipOfTheLandButAdditionalDataNotProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvideLandOwnership(new LandOwnership(true));
         project.ProvideAdditionalData(null);
@@ -186,7 +187,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_GrantFundingInformationIsNotProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvideGrantFundingStatus(null);
 
@@ -201,7 +202,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_GrantFundingWasReceivedButNoAdditionalInformationIsProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvideGrantFundingStatus(PublicSectorGrantFundingStatus.Received);
         project.ProvideGrantFundingInformation(null);
@@ -217,7 +218,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_ChargesDebtIsNotProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvideGrantFundingStatus(PublicSectorGrantFundingStatus.Received);
         project.ProvideGrantFundingInformation(null);
@@ -233,7 +234,7 @@ public class CheckAnswersTests
     public void ThrowValidationError_WhenAffordableHomesNotProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.ProvideAffordableHomes(null);
 
@@ -248,7 +249,7 @@ public class CheckAnswersTests
     public void ShouldChangeStatusToCompleted_WhenAllDataIsProvided()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         // when
         project.CheckAnswers(YesNoAnswers.Yes);
@@ -261,7 +262,7 @@ public class CheckAnswersTests
     public void ShouldChangeStatusBackToInProgress_WhenNoIsSelected()
     {
         // given
-        var project = ProjectTestBuilder.New().ReadyToBeCompleted().Build();
+        var project = ProjectTestData.ProjectReadyToBeCompleted();
 
         project.CheckAnswers(YesNoAnswers.Yes);
 

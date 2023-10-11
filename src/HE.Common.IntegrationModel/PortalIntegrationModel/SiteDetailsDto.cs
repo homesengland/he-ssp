@@ -62,7 +62,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         public bool? affordableHousing { get; set; }
 
-        [JsonIgnore]
         public int? completionStatus { get; set; }
     }
 }
