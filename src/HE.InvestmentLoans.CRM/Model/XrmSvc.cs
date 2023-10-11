@@ -385,6 +385,21 @@ namespace HE.InvestmentLoans.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_changesourceset
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Internal = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		External = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Automated = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum msft_datastate
 	{
 		
@@ -599,58 +614,67 @@ namespace HE.InvestmentLoans.CRM.Model
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Draft = 858110000,
+		Inactive = 2,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Submitted = 858110001,
+		Withdrawn = 858110021,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Underreview = 858110002,
+		Draft = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Sentforapproval = 858110003,
+		ApplicationSubmitted = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ISPapproved = 858110004,
+		ApplicationUnderReview = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Feeindemnitysigned = 858110005,
+		HoldRequested = 858110005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SentforPreCompleteapproval = 858110006,
+		CashflowRequested = 858110007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Approvedsubjecttocontract = 858110007,
+		CashflowUnderReview = 858110008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		AwaitingCPSatisfaction = 858110008,
+		OnHold = 858110006,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CPssatisfied = 858110009,
+		ReferredBacktoApplicant = 858110009,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Loanavailable = 858110010,
+		UnderReview = 858110010,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Inactive = 858110011,
+		SentforApproval = 858110011,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Holdrequested = 858110012,
+		NotApproved = 858110012,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Onhold = 858110013,
+		ApprovedSubjecttoDueDiligence = 858110013,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Referredbacktoapplicant = 858110014,
+		ApplicationDeclined = 858110014,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Withdrawn = 858110015,
+		InDueDiligence = 858110015,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Notapproved = 858110016,
+		SentforPreCompleteApproval = 858110016,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Applicationdeclined = 858110017,
+		ApprovedSubjectToContract = 858110017,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AwaitingCPSatisfaction = 858110018,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CPsSatisfied = 858110019,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LoanAvailable = 858110020,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -2323,6 +2347,18 @@ namespace HE.InvestmentLoans.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum mainfewshotentitytype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OOB = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Custom = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum he_yesorno
 	{
 		
@@ -3780,6 +3816,24 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		English_Canada = 4105,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum registrationstatustype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotRegistered = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Registered = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InProgress = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Failed = 3,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -5397,6 +5451,24 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CustomAPI = 192350000,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum makerfewshotsqlcorrectness
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PendingValidation = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Valid = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Invalid = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotSure = 3,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -18181,60 +18253,6 @@ namespace HE.InvestmentLoans.CRM.Model
 		}
 		
 		/// <summary>
-		/// Have you reviewed the loan application data to send cashflow request?
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_applicationdatareviewed")]
-		public System.Nullable<bool> invln_Applicationdatareviewed
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_applicationdatareviewed");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_Applicationdatareviewed");
-				this.SetAttributeValue("invln_applicationdatareviewed", value);
-				this.OnPropertyChanged("invln_Applicationdatareviewed");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowchecked")]
-		public System.Nullable<bool> invln_Cashflowchecked
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_cashflowchecked");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_Cashflowchecked");
-				this.SetAttributeValue("invln_cashflowchecked", value);
-				this.OnPropertyChanged("invln_Cashflowchecked");
-			}
-		}
-		
-		/// <summary>
-		/// Cashflow submitted by the borrower anc status can be changed to "Cashflow under review"
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cashflowsubmitted")]
-		public System.Nullable<bool> invln_Cashflowsubmitted
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_cashflowsubmitted");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_Cashflowsubmitted");
-				this.SetAttributeValue("invln_cashflowsubmitted", value);
-				this.OnPropertyChanged("invln_Cashflowsubmitted");
-			}
-		}
-		
-		/// <summary>
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_commerciallysensitive")]
@@ -18372,24 +18390,6 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanging("invln_Contact");
 				this.SetAttributeValue("invln_contact", value);
 				this.OnPropertyChanged("invln_Contact");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_cpssatisfied")]
-		public System.Nullable<bool> invln_CPssatisfied
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_cpssatisfied");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_CPssatisfied");
-				this.SetAttributeValue("invln_cpssatisfied", value);
-				this.OnPropertyChanged("invln_CPssatisfied");
 			}
 		}
 		
@@ -18618,60 +18618,6 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ispapproved")]
-		public System.Nullable<bool> invln_ISPapproved
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_ispapproved");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_ISPapproved");
-				this.SetAttributeValue("invln_ispapproved", value);
-				this.OnPropertyChanged("invln_ISPapproved");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ispassignedtotheriskteam")]
-		public System.Nullable<bool> invln_ISPassignedtotheRiskteam
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_ispassignedtotheriskteam");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_ISPassignedtotheRiskteam");
-				this.SetAttributeValue("invln_ispassignedtotheriskteam", value);
-				this.OnPropertyChanged("invln_ISPassignedtotheRiskteam");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ispreviewedfinished")]
-		public System.Nullable<bool> invln_ISPReviewedfinished
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_ispreviewedfinished");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_ISPReviewedfinished");
-				this.SetAttributeValue("invln_ispreviewedfinished", value);
-				this.OnPropertyChanged("invln_ISPReviewedfinished");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanamountrequested")]
 		public Microsoft.Xrm.Sdk.Money invln_Loanamountrequested
 		{
@@ -18861,24 +18807,6 @@ namespace HE.InvestmentLoans.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ownerselected")]
-		public System.Nullable<bool> invln_OwnerSelected
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_ownerselected");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_OwnerSelected");
-				this.SetAttributeValue("invln_ownerselected", value);
-				this.OnPropertyChanged("invln_OwnerSelected");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_planningpermissionstatus")]
 		public System.Nullable<HE.InvestmentLoans.CRM.Model.invln_planningpermissionstatusset> invln_planningpermissionstatus
 		{
@@ -18906,42 +18834,6 @@ namespace HE.InvestmentLoans.CRM.Model
 					this.SetAttributeValue("invln_planningpermissionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
 				}
 				this.OnPropertyChanged("invln_planningpermissionstatus");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_precompletereportapproved")]
-		public System.Nullable<bool> invln_PreCompletereportApproved
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_precompletereportapproved");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_PreCompletereportApproved");
-				this.SetAttributeValue("invln_precompletereportapproved", value);
-				this.OnPropertyChanged("invln_PreCompletereportApproved");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_precompletereportsubmitted")]
-		public System.Nullable<bool> invln_PreCompletereportsubmitted
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_precompletereportsubmitted");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_PreCompletereportsubmitted");
-				this.SetAttributeValue("invln_precompletereportsubmitted", value);
-				this.OnPropertyChanged("invln_PreCompletereportsubmitted");
 			}
 		}
 		
@@ -19314,24 +19206,6 @@ namespace HE.InvestmentLoans.CRM.Model
 				this.OnPropertyChanging("invln_statuschangereason");
 				this.SetAttributeValue("invln_statuschangereason", value);
 				this.OnPropertyChanged("invln_statuschangereason");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_subjecttocontractapproved")]
-		public System.Nullable<bool> invln_SubjecttocontractApproved
-		{
-			get
-			{
-				return this.GetAttributeValue<System.Nullable<bool>>("invln_subjecttocontractapproved");
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_SubjecttocontractApproved");
-				this.SetAttributeValue("invln_subjecttocontractapproved", value);
-				this.OnPropertyChanged("invln_SubjecttocontractApproved");
 			}
 		}
 		
@@ -22236,6 +22110,64 @@ namespace HE.InvestmentLoans.CRM.Model
 				if (this.Results.Contains("invln_filelocation"))
 				{
 					return ((string)(this.Results["invln_filelocation"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getorganisationchangedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getorganisationchangedetailsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public invln_getorganisationchangedetailsRequest()
+		{
+			this.RequestName = "invln_getorganisationchangedetails";
+			this.invln_accountid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getorganisationchangedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getorganisationchangedetailsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getorganisationchangedetailsResponse()
+		{
+		}
+		
+		public string invln_whorequested
+		{
+			get
+			{
+				if (this.Results.Contains("invln_whorequested"))
+				{
+					return ((string)(this.Results["invln_whorequested"]));
 				}
 				else
 				{
