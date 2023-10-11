@@ -12,7 +12,9 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.InvestmentLoans.IntegrationTests.Loans.SecuritySection;
+using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Helpers;
+using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Views.Project.Consts;
 using Microsoft.AspNetCore.Razor.Language.Intermediate;
 using Xunit;
@@ -22,13 +24,13 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.ProjectSection;
 
 [Order(2)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order99CheckAnswersIntegrationTests : IntegrationTest
+public class Order98CheckAnswersIntegrationTests : IntegrationTest
 {
     private readonly string _projectId;
 
     private readonly string _applicationLoanId;
 
-    public Order99CheckAnswersIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order98CheckAnswersIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
@@ -47,10 +49,18 @@ public class Order99CheckAnswersIntegrationTests : IntegrationTest
 
         // then
         projectSummary[ProjectFieldNames.Name].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
+        projectSummary[ProjectFieldNames.StartDate].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
         projectSummary[ProjectFieldNames.PlanningReferenceNumberExists].Should().Be(CommonResponse.Yes);
         projectSummary[ProjectFieldNames.PlanningReferenceNumber].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
-        projectSummary[ProjectFieldNames.PlanningReferenceNumber].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
+
+        var statusDisplay = TemporaryFormOptions.PermissionStatus.GetSummaryLabel(ProjectFormOption.PlanningPermissionStatusOptions.NotSubmitted);
+        projectSummary[ProjectFieldNames.PlanningPermissionStatus].Should().Be(statusDisplay);
+
         projectSummary[ProjectFieldNames.LandRegistryTitleNumber].Should().Be(TextTestData.TextThatNotExceedsLongInputLimit);
+        projectSummary[ProjectFieldNames.LandRegistryTitleNumber].Should().Be(TextTestData.TextThatNotExceedsLongInputLimit);
+
+        projectSummary.Should().NotContainKey(ProjectFieldNames.Coordinates);
+
         projectSummary[ProjectFieldNames.LandOwnership].Should().Be(CommonResponse.Yes);
 
         CheckIfAdditionalDetailsAreCorrect(projectSummary);
@@ -58,7 +68,6 @@ public class Order99CheckAnswersIntegrationTests : IntegrationTest
         projectSummary[ProjectFieldNames.GrantFundingExists].Should().Be(CommonResponse.Yes);
         CheckIfGrantFundingInformationIsCorrect(projectSummary);
 
-        // projectSummary[ProjectFieldNames.StartDate].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
         SetSharedData(SharedKeys.CurrentPageKey, checkAnswersPage);
     }
 

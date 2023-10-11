@@ -1,5 +1,6 @@
 #pragma warning disable IDE0005 // Using directive is unnecessary.
 using System;
+using System.Text.Json.Serialization;
 using Microsoft.Xrm.Sdk;
 #pragma warning restore IDE0005 // Using directive is unnecessary.
 

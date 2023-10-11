@@ -52,7 +52,7 @@ public class CheckAnswersTests
         var action = () => companyStructureEntity.CheckAnswers(YesNoAnswers.Undefined);
 
         // then
-        action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.SecurityCheckAnswers);
+        action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.NoCheckAnswers);
         companyStructureEntity.Status.Should().NotBe(SectionStatus.Completed);
     }
 

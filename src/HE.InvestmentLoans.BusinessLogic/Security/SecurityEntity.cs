@@ -97,7 +97,7 @@ public class SecurityEntity
                 break;
             case YesNoAnswers.Undefined:
                 OperationResult.New()
-                    .AddValidationError(nameof(CheckAnswers), ValidationErrorMessage.SecurityCheckAnswers)
+                    .AddValidationError(nameof(CheckAnswers), ValidationErrorMessage.NoCheckAnswers)
                     .CheckErrors();
                 break;
             default:

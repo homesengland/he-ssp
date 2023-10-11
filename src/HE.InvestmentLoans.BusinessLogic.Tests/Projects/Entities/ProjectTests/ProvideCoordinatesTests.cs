@@ -1,5 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
+using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.Entities.ProjectTests;
@@ -25,5 +27,18 @@ public class ProvideCoordinatesTests
         project.ProvideCoordinates(LocationTestData.AnyCoordinates);
 
         project.LandRegistryTitleNumber.Should().BeNull();
+    }
+
+    [Fact]
+    public void ShouldChangeStatusToInProgress()
+    {
+        // given
+        var project = new Project();
+
+        // when
+        project.ProvideCoordinates(LocationTestData.AnyCoordinates);
+
+        // then
+        project.Status.Should().Be(SectionStatus.InProgress);
     }
 }

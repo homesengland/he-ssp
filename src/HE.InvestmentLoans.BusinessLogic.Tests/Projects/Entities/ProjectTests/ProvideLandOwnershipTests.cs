@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.Entities.ProjectTests;
@@ -38,5 +40,20 @@ public class ProvideLandOwnershipTests
 
         // then
         project.AdditionalDetails.Should().BeNull();
+    }
+
+    [Fact]
+    public void ShouldChangeStatusToInProgress()
+    {
+        // given
+        var project = new Project();
+
+        var ownership = new LandOwnership(false);
+
+        // when
+        project.ProvideLandOwnership(ownership);
+
+        // then
+        project.Status.Should().Be(SectionStatus.InProgress);
     }
 }

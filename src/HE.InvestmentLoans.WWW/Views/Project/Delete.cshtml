@@ -17,7 +17,7 @@
             <gds-div-form-group invalid="inputInvalid">
                 <gds-legend size="ControlSize.L" class="govuk-!-margin-bottom-1">
                     <gds-fieldset-heading>
-                        Are you sure you want to remove @(Model.Name ?? ProjectName.Default.Value)?
+                        @ProjectPageTitles.Delete(Model.Name ?? ProjectName.Default.Value)
                     </gds-fieldset-heading>
                 </gds-legend>
 
@@ -29,7 +29,7 @@
             @Html.HiddenFor(c => c.ProjectId)
             @Html.HiddenFor(c => c.ApplicationId)
 
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Continue
             </button>
         </gds-field-set>

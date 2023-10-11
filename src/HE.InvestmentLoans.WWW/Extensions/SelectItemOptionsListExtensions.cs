@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 using HE.InvestmentLoans.WWW.Helpers;
 using HE.InvestmentLoans.WWW.Models;
@@ -74,7 +75,7 @@ public static class SelectItemOptionsListExtensions
     public static string GetSummaryLabel(this List<SelectListItem> options, string value)
     {
         var result = options
-            .Where(r => r.Value == value)
+            .Where(r => r.Value?.ToLower(CultureInfo.InvariantCulture) == value?.ToLower(CultureInfo.InvariantCulture))
             .Select(r => r.Text)
             .FirstOrDefault();
         return result ?? value;

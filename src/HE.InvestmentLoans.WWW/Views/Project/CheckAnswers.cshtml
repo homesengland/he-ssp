@@ -1,3 +1,4 @@
+@using HE.InvestmentLoans.Contract.Projects;
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @inject ModelExpressionProvider modelProvider
 
@@ -6,9 +7,9 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.ApplicationId" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
-
-        <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.ApplicationId, id = id })" text="Back" class="govuk-!-margin-bottom-8">
+    <form asp-controller="Project" asp-action="CheckAnswers" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
+        
+        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.CheckAnswers})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
         <partial name="_ErrorSummaryPartial" model="null" />

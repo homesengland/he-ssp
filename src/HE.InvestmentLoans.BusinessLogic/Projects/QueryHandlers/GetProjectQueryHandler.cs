@@ -10,6 +10,7 @@ using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
@@ -36,6 +37,8 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
 
         var additionalDetailsAreProvided = project.AdditionalDetails.IsProvided();
 
+        var startDate = project.StartDate?.Value;
+
         return new ProjectViewModel
         {
             ProjectId = project.Id!.Value,
@@ -50,6 +53,7 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
             ApplicationId = applicationProjects.LoanApplicationId.Value,
             PlanningReferenceNumberExists = project.PlanningReferenceNumber?.Exists.MapToCommonResponse(),
             PlanningReferenceNumber = project.PlanningReferenceNumber?.Value,
+            LocationOption = project.Coordinates is not null ? ProjectFormOption.Coordinates : project.LandRegistryTitleNumber is not null ? ProjectFormOption.LandRegistryTitleNumber : null,
             LocationCoordinates = project.Coordinates?.Value,
             LocationLandRegistry = project.LandRegistryTitleNumber?.Value,
             Ownership = project.LandOwnership?.ApplicantHasFullOwnership.MapToCommonResponse(),
@@ -65,6 +69,11 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
             GrantFundingName = project.PublicSectorGrantFunding?.GrantOrFundName?.Value,
             GrantFundingPurpose = project.PublicSectorGrantFunding?.Purpose?.Value,
             LoanApplicationStatus = project.LoanApplicationStatus,
+            HasEstimatedStartDate = project.StartDate?.Exists.MapToCommonResponse(),
+            EstimatedStartDay = startDate.HasValue ? startDate.Value.Day.ToString(CultureInfo.InvariantCulture) : null,
+            EstimatedStartMonth = startDate.HasValue ? startDate.Value.Month.ToString(CultureInfo.InvariantCulture) : null,
+            EstimatedStartYear = startDate.HasValue ? startDate.Value.Year.ToString(CultureInfo.InvariantCulture) : null,
+            PlanningPermissionStatus = PlanningPermissionStatusMapper.MapToString(project.PlanningPermissionStatus),
         };
     }
 }

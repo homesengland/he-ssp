@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using HE.InvestmentLoans.BusinessLogic.Generic;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using Xunit;
 using static HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData.PublicSectorGrantFundingTestData;
 
@@ -63,5 +65,20 @@ public class ProvideMoreInformationTests
         project.PublicSectorGrantFunding!.Amount.Should().Be(new Pounds(1));
         project.PublicSectorGrantFunding!.GrantOrFundName.Should().Be(new ShortText("text"));
         project.PublicSectorGrantFunding!.Purpose.Should().Be(new LongText("text"));
+    }
+
+    [Fact]
+    public void ShouldChangeStatusToInProgress()
+    {
+        // given
+        var project = new Project();
+
+        project.ProvideGrantFundingStatus(PublicSectorGrantFundingStatus.Received);
+
+        // when
+        project.ProvideGrantFundingInformation(new PublicSectorGrantFunding(new ShortText("text"), new Pounds(1), new ShortText("text"), new LongText("text")));
+
+        // then
+        project.Status.Should().Be(SectionStatus.InProgress);
     }
 }

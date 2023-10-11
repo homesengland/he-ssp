@@ -1,5 +1,8 @@
+using HE.InvestmentLoans.BusinessLogic.Generic;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using Xunit;
 using static HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData.PlanningPermissionStatusTestData;
 using static HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData.PlanningReferenceNumberTestData;
@@ -39,5 +42,18 @@ public class ProvidePlanningStatusTests
         project.ProvidePlanningPermissionStatus(AnyStatus);
 
         project.PlanningPermissionStatus.Should().Be(AnyStatus);
+    }
+
+    [Fact]
+    public void ShouldChangeStatusToInProgress()
+    {
+        // given
+        var project = new Project();
+
+        // when
+        project.ProvidePlanningReferenceNumber(ExistingReferenceNumber);
+
+        // then
+        project.Status.Should().Be(SectionStatus.InProgress);
     }
 }
