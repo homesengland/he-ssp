@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.IntegrationTests.Config;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -140,7 +141,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
             .HasTitle("Development loan application")
             .ExtractLastSavedDateFromTaskListPage(out var dateTime);
 
-        dateTime.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMinutes(2));
+        dateTime.Should().BeCloseTo(DateTime.UtcNow.ConvertUtcToUkLocalTime(), TimeSpan.FromMinutes(2));
 
         var applicationGuid = taskListPage.Url.GetApplicationGuidFromUrl();
         applicationGuid.Should().NotBeEmpty();

@@ -64,11 +64,16 @@ public class LoanApplicationEntity
         SyncToLegacyModel();
     }
 
-    public async Task Submit(ICanSubmitLoanApplication canSubmitLoanApplication, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task Submit(ICanSubmitLoanApplication canSubmitLoanApplication, CancellationToken cancellationToken)
     {
         CheckIfCanBeSubmitted();
 
         await canSubmitLoanApplication.Submit(Id, cancellationToken);
+    }
+
+    public bool CanBeSubmitted()
+    {
+        return IsReadyToSubmit() && !IsSubmitted();
     }
 
     public void CheckIfCanBeSubmitted()

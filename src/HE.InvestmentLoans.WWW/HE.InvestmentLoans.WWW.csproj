@@ -66,6 +66,7 @@
 
   <ItemGroup>
     <Folder Include="Helpers\Organisation\" />
+    <Folder Include="Views\Shared\TaskList\" />
   </ItemGroup>
 
   <ItemGroup>
