@@ -21,7 +21,7 @@
     Development loan application
 </gds-h1>
 <gds-div-hint class="govuk-!-margin-bottom-8 govuk-grid-column-full" id="last-saved-label">
-    Last saved on @Model.Timestamp.ToString("d MMMM yyyy 'at' h:mm tt", new CultureInfo("en-US"))
+    Last saved on @Model.Timestamp?.ConvertUtcToUkLocalTime() ?? "-"
 </gds-div-hint>
 <gds-div-grid-column-two-thirds>
     <ul class="app-task-list">
