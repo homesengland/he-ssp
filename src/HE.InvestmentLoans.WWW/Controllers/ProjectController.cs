@@ -523,6 +523,15 @@ public class ProjectController : WorkflowController<ProjectState>
         return View(result);
     }
 
+    [HttpGet("{projectId}/check-answers")]
+    [WorkflowState(ProjectState.CheckAnswers)]
+    public async Task<IActionResult> CheckAnswers(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    {
+        var result = await _mediator.Send(new CheckProjectAnswersCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.CheckAnswers), token);
+
+        return View(result);
+    }
+
     [HttpGet("{projectId}/back")]
     public Task<IActionResult> Back(ProjectState currentPage, Guid id, Guid projectId)
     {
