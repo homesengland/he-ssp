@@ -4,8 +4,6 @@ using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Queries;
-using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.InvestmentLoans.Contract.Funding.Commands;
 using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
