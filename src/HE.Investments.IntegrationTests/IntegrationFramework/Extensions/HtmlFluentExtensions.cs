@@ -1,3 +1,4 @@
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Assertions;
