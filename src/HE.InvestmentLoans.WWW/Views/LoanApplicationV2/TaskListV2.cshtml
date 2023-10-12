@@ -5,7 +5,6 @@
 @using HE.InvestmentLoans.Contract.Application.Enums
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Spans
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
@@ -133,9 +132,8 @@
             </button>
         }
     </form>
-    <gds-link href="@Url.Action("ReportProblem","LoanApplication", new {id = Model.Id})">
+    <gds-link href="#">
         Report a problem with this page
-        <gds-span-visually-hidden> @Url.Action("ReportProblem","LoanApplication", new {id = Model.Id})</gds-span-visually-hidden>
     </gds-link>
 </gds-div-grid-column-two-thirds>
 
