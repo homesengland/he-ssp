@@ -12,7 +12,10 @@ public static class TaskListExtensions
         lastSavedLabel.Should().NotBeNull("Last saved data should be visible");
 
         var dateTimeAsString = lastSavedLabel!.TextContent.Trim().Replace("Last saved on ", string.Empty).Replace("at ", string.Empty);
-        dateTime = DateTime.Parse(dateTimeAsString, CultureInfo.InvariantCulture);
+
+        var customFormatProvider = new DateTimeFormatInfo { ShortDatePattern = "dd.MM.yyyy", LongTimePattern = "HH:mm:ss" };
+
+        dateTime = DateTime.Parse(dateTimeAsString, customFormatProvider);
         return taskListPage;
     }
 }
