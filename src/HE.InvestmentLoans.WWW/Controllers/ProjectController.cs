@@ -524,7 +524,11 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.AffordableHomes)]
     public async Task<IActionResult> AffordableHomes(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
-        var result = await _mediator.Send(new ProvideAffordableHomesCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.AffordableHomes),
+        var result = await _mediator.Send(
+            new ProvideAffordableHomesCommand(
+                LoanApplicationId.From(id),
+                ProjectId.From(projectId),
+                model.AffordableHomes),
             token);
 
         if (result.HasValidationErrors)
@@ -556,7 +560,8 @@ public class ProjectController : WorkflowController<ProjectState>
         {
             ModelState.AddValidationErrors(result);
 
-            var response = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.GetAllFields),
+            var response = await _mediator.Send(
+                new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.GetAllFields),
                 token);
             return View("CheckAnswers", response);
         }
