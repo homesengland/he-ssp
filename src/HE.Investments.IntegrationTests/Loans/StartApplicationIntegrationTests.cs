@@ -141,7 +141,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
             .HasTitle("Development loan application")
             .ExtractLastSavedDateFromTaskListPage(out var dateTime);
 
-        // dateTime.Should().BeCloseTo(DateTime.UtcNow.ConvertUtcToUkLocalTime(), TimeSpan.FromMinutes(2));
+        dateTime.Should().BeCloseTo(DateTime.UtcNow.ConvertUtcToUkLocalTime(), TimeSpan.FromMinutes(2));
 
         var applicationGuid = taskListPage.Url.GetApplicationGuidFromUrl();
         applicationGuid.Should().NotBeEmpty();
