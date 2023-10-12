@@ -1,8 +1,15 @@
 @using HE.InvestmentLoans.Common.Extensions
+@using HE.InvestmentLoans.WWW.Routing
 @model ApplicationDashboardModel
-
-<gds-back-link href="@Url.Action("Dashboard", "Home")" text="Back to account homepage" class="govuk-grid-column-full"></gds-back-link>
-
+@{
+    ViewBag.Breadcrumbs = BreadcrumbsBuilder
+        .New()
+        .WithOrganisations()
+        .WithOrganisation(Model.Data.ApplicationName)
+        .WithLuhbfApplications()
+        .WithApplication(Model.Data.ApplicationName, Model.Data.ApplicationId.Value)
+        .Build();
+}
 <div class="govuk-grid-column-full govuk-!-padding-top-6">
     <div class="govuk-!-margin-top-4">
         @await Html.PartialAsync("_Notification")
