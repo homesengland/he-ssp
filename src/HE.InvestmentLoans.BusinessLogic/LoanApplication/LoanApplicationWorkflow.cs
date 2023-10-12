@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application.Enums;
-using MediatR;
 using Stateless;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication;
@@ -55,11 +54,6 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         return _machine.State;
     }
 
-    public string GetName()
-    {
-        return Enum.GetName(typeof(State), _model.State) ?? string.Empty;
-    }
-
     public bool IsFilled()
     {
         return _model.Company.IsCompleted()
@@ -67,11 +61,6 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
                && (_model.Funding.IsCompleted() || _model.Funding.IsFlowCompleted)
                && (_model.Sites.All(x => x.Status == SectionStatus.Completed) || _model.Sites.All(x => x.IsFlowCompleted))
                && _model.Sites.Count > 0;
-    }
-
-    public bool IsBeingChecked()
-    {
-        return _model.State == State.CheckApplication;
     }
 
     public bool IsFilled(LoanApplicationViewModel application)
