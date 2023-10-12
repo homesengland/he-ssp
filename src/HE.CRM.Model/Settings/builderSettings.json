@@ -115,6 +115,7 @@
     "invln_getcontactrole*",
     "invln_getfilelocationforapplicationloan*",
     "invln_getloanapplicationsforaccountandcontact*",
+    "invln_getorganisationchangedetails*",
     "invln_getorganizationdetails*",
     "invln_getsingleloanapplicationforaccountandcontact*",
     "invln_gettemporaryportaldata*",
