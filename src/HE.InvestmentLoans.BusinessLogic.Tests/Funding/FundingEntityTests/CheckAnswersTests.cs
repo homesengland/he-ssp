@@ -51,7 +51,7 @@ public class CheckAnswersTests
         var action = () => fundingEntity.CheckAnswers(YesNoAnswers.Undefined);
 
         // then
-        action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.SecurityCheckAnswers);
+        action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(ValidationErrorMessage.NoCheckAnswers);
         fundingEntity.Status.Should().NotBe(SectionStatus.Completed);
     }
 

@@ -1,6 +1,5 @@
 using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
@@ -9,6 +8,7 @@ using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Helper;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using StackExchange.Redis;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
@@ -64,11 +64,22 @@ public class LoanApplicationEntity
         SyncToLegacyModel();
     }
 
-    public async Task Submit(ICanSubmitLoanApplication canSubmitLoanApplication, UserAccount userAccount, CancellationToken cancellationToken)
+    public bool IsReadOnly()
+    {
+        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
+        return readonlyStatuses.Contains(ExternalStatus);
+    }
+
+    public async Task Submit(ICanSubmitLoanApplication canSubmitLoanApplication, CancellationToken cancellationToken)
     {
         CheckIfCanBeSubmitted();
 
         await canSubmitLoanApplication.Submit(Id, cancellationToken);
+    }
+
+    public bool CanBeSubmitted()
+    {
+        return IsReadyToSubmit() && !IsSubmitted();
     }
 
     public void CheckIfCanBeSubmitted()

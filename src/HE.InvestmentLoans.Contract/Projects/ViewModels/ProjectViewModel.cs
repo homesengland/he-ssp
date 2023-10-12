@@ -74,7 +74,7 @@ public class ProjectViewModel : ICompletedSectionViewModel
 
     public string? CheckAnswers { get; set; }
 
-    public string DeleteProject { get; set; }
+    public string? DeleteProject { get; set; }
 
     public bool IsReadOnly()
     {

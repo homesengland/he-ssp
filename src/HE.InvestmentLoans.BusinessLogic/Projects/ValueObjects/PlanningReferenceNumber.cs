@@ -7,11 +7,11 @@ using HE.InvestmentLoans.Common.Validation;
 namespace HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 public class PlanningReferenceNumber : ValueObject
 {
-    public PlanningReferenceNumber(bool exists, string value)
+    public PlanningReferenceNumber(bool exists, string? value)
     {
         Exists = exists;
 
-        if (Exists && value.IsProvided() && value.Length > MaximumInputLength.ShortInput)
+        if (Exists && value.IsProvided() && value!.Length > MaximumInputLength.ShortInput)
         {
             OperationResult
                 .New()
@@ -27,14 +27,14 @@ public class PlanningReferenceNumber : ValueObject
 
     public bool Exists { get; }
 
-    public string Value { get; }
+    public string? Value { get; }
 
-    public static PlanningReferenceNumber FromString(string existsString, string value)
+    public static PlanningReferenceNumber FromString(string existsString, string? value)
     {
         return new PlanningReferenceNumber(existsString.MapToNonNullableBool(), value);
     }
 
-    protected override IEnumerable<object> GetAtomicValues()
+    protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Value;
         yield return Exists;

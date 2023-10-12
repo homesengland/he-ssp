@@ -1,9 +1,9 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.Projects.Enums;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
@@ -15,13 +15,14 @@ public class Project
     public Project()
     {
         Id = new ProjectId(Guid.NewGuid());
-        StateChanged = false;
-
         IsNewlyCreated = true;
+
+        Status = SectionStatus.NotStarted;
     }
 
     public Project(
         ProjectId id,
+        SectionStatus status,
         ProjectName? name,
         StartDate? startDate,
         HomesCount? homesCount,
@@ -36,11 +37,13 @@ public class Project
         PublicSectorGrantFunding? publicSectorGrantFunding,
         ChargesDebt? chargesDebt,
         AffordableHomes? affordableHomes,
-        ApplicationStatus loanApplicationStatus)
+        ApplicationStatus loanApplicationStatus,
+        PlanningPermissionStatus? planningPermissionStatus)
     {
         IsNewlyCreated = false;
 
         Id = id;
+        Status = status;
         Name = name;
         StartDate = startDate;
         HomesCount = homesCount;
@@ -58,6 +61,7 @@ public class Project
 
         IsNewlyCreated = false;
         LoanApplicationStatus = loanApplicationStatus;
+        PlanningPermissionStatus = planningPermissionStatus;
     }
 
     public ProjectId Id { get; private set; }
@@ -94,126 +98,118 @@ public class Project
 
     public AffordableHomes? AffordableHomes { get; private set; }
 
+    public SectionStatus Status { get; private set; }
+
     public bool IsNewlyCreated { get; }
-
-    public string? CheckAnswers { get; set; }
-
-    public string? NameLegacy { get; set; }
-
-    public string? AffordableHomesLegacy { get; set; }
-
-    public bool? PlanningRef { get; set; }
-
-    public string? PlanningRefEnter { get; set; }
-
-    public string? SitePurchaseFrom { get; set; }
-
-    public bool? Ownership { get; set; }
-
-    public string? ManyHomesLegacy { get; set; }
-
-    public string? GrantFunding { get; set; }
-
-    public string? TitleNumber { get; set; }
-
-    public string[]? TypeHomesLegacy { get; set; }
-
-    public string? TypeHomesOtherLegacy { get; set; }
-
-    public string? HomesToBuild { get; set; }
-
-    public string? PurchaseDay { get; set; }
-
-    public string? PurchaseMonth { get; set; }
-
-    public string? PurchaseYear { get; set; }
-
-    public DateTime? PurchaseDate { get; set; }
-
-    public string? Cost { get; set; }
-
-    public string? Value { get; set; }
-
-    public string? Source { get; set; }
-
-    public string? LocationOption { get; set; }
-
-    public string? LocationCoordinates { get; set; }
-
-    public string? LocationLandRegistry { get; set; }
-
-    public string? Location { get; set; }
-
-    public string? PlanningStatus { get; set; }
-
-    public string? GrantFundingName { get; set; }
-
-    public string? GrantFundingSource { get; set; }
-
-    public string? GrantFundingAmount { get; set; }
-
-    public string? GrantFundingPurpose { get; set; }
-
-    public string? Type { get; set; }
-
-    public bool? ChargesDebtLegacy { get; set; }
-
-    public string? ChargesDebtInfoLegacy { get; set; }
 
     public bool IsSoftDeleted { get; private set; }
 
-    public bool StateChanged { get; set; }
-
-    public void ChangeName(ProjectName newName)
-    {
-        Name = newName;
-    }
-
-    public void ProvideStartDate(StartDate startDate)
-    {
-        StartDate = startDate;
-    }
-
-    public void ProvideHomesCount(HomesCount homesCount)
-    {
-        HomesCount = homesCount;
-    }
-
-    public void ProvideHomesTypes(HomesTypes homesTypes)
-    {
-        HomesTypes = homesTypes;
-    }
-
-    public void ProvideProjectType(ProjectType projectType)
-    {
-        ProjectType = projectType;
-    }
-
-    public void MarkAsDeleted()
+    public void Delete()
     {
         IsSoftDeleted = true;
     }
 
-    public void ProvidePlanningReferenceNumber(PlanningReferenceNumber planningReferenceNumber)
+    public void ChangeName(ProjectName? newName)
     {
-        PlanningReferenceNumber = planningReferenceNumber;
+        if (Name != newName)
+        {
+            UncompleteSection();
+        }
+
+        Name = newName;
     }
 
-    public void ProvideCoordinates(Coordinates coordinates)
+    public void ProvideStartDate(StartDate? startDate)
+    {
+        if (StartDate != startDate)
+        {
+            UncompleteSection();
+        }
+
+        StartDate = startDate;
+    }
+
+    public void ProvideHomesCount(HomesCount? homesCount)
+    {
+        if (HomesCount != homesCount)
+        {
+            UncompleteSection();
+        }
+
+        HomesCount = homesCount;
+    }
+
+    public void ProvideHomesTypes(HomesTypes? homesTypes)
+    {
+        if (HomesTypes != homesTypes)
+        {
+            UncompleteSection();
+        }
+
+        HomesTypes = homesTypes;
+    }
+
+    public void ProvideProjectType(ProjectType? projectType)
+    {
+        if (ProjectType != projectType)
+        {
+            UncompleteSection();
+        }
+
+        ProjectType = projectType;
+    }
+
+    public void ProvidePlanningReferenceNumber(PlanningReferenceNumber? planningReferenceNumber)
+    {
+        if (PlanningReferenceNumber == planningReferenceNumber)
+        {
+            return;
+        }
+
+        if (planningReferenceNumber.IsProvided() && PlanningReferenceNumber.IsProvided())
+        {
+            if (planningReferenceNumber!.Exists && planningReferenceNumber.Value.IsNotProvided() && PlanningReferenceNumber!.Exists)
+            {
+                PlanningReferenceNumber = new PlanningReferenceNumber(planningReferenceNumber.Exists, PlanningReferenceNumber.Value);
+            }
+            else
+            {
+                PlanningReferenceNumber = planningReferenceNumber;
+            }
+        }
+        else
+        {
+            PlanningReferenceNumber = planningReferenceNumber;
+        }
+
+        UncompleteSection();
+    }
+
+    public void ProvideCoordinates(Coordinates? coordinates)
     {
         if (coordinates.IsProvided())
         {
             LandRegistryTitleNumber = null!;
         }
 
+        if (Coordinates != coordinates)
+        {
+            UncompleteSection();
+        }
+
         Coordinates = coordinates;
     }
 
-    public void ProvideLandRegistryNumber(LandRegistryTitleNumber landRegistryTitleNumber)
+    public void ProvideLandRegistryNumber(LandRegistryTitleNumber? landRegistryTitleNumber)
     {
         if (landRegistryTitleNumber.IsProvided())
         {
             Coordinates = null!;
+        }
+
+        if (LandRegistryTitleNumber != landRegistryTitleNumber)
+        {
+            UncompleteSection();
         }
 
         LandRegistryTitleNumber = landRegistryTitleNumber;
@@ -228,36 +224,68 @@ public class Project
                 LoanApplicationErrorCodes.PlanningReferenceNumberNotExists);
         }
 
+        if (PlanningPermissionStatus != planningPermissionStatus)
+        {
+            UncompleteSection();
+        }
+
         PlanningPermissionStatus = planningPermissionStatus;
     }
 
-    public void ProvideLandOwnership(LandOwnership landOwnership)
+    public void ProvideLandOwnership(LandOwnership? landOwnership)
     {
+        if (LandOwnership != landOwnership)
+        {
+            UncompleteSection();
+        }
+
         LandOwnership = landOwnership;
 
-        if (!LandOwnership.ApplicantHasFullOwnership)
+        if (LandOwnership is null || !LandOwnership.ApplicantHasFullOwnership)
         {
-            AdditionalDetails = null!;
+            AdditionalDetails = null;
         }
+
+        UncompleteSection();
     }
 
-    public void ProvideAdditionalData(AdditionalDetails additionalDetails)
+    public void ProvideAdditionalData(AdditionalDetails? additionalDetails)
     {
+        if (additionalDetails != AdditionalDetails)
+        {
+            UncompleteSection();
+        }
+
         AdditionalDetails = additionalDetails;
     }
 
-    public void ProvideChargesDebt(ChargesDebt chargesDebt)
+    public void ProvideChargesDebt(ChargesDebt? chargesDebt)
     {
+        if (ChargesDebt != chargesDebt)
+        {
+            UncompleteSection();
+        }
+
         ChargesDebt = chargesDebt;
     }
 
-    public void ProvideAffordableHomes(AffordableHomes affordableHomes)
+    public void ProvideAffordableHomes(AffordableHomes? affordableHomes)
     {
+        if (AffordableHomes != affordableHomes)
+        {
+            UncompleteSection();
+        }
+
         AffordableHomes = affordableHomes;
     }
 
-    internal void ProvideGrantFundingStatus(PublicSectorGrantFundingStatus grantFundingStatus)
+    internal void ProvideGrantFundingStatus(PublicSectorGrantFundingStatus? grantFundingStatus)
     {
+        if (GrantFundingStatus != grantFundingStatus)
+        {
+            UncompleteSection();
+        }
+
         GrantFundingStatus = grantFundingStatus;
 
         if (grantFundingStatus != PublicSectorGrantFundingStatus.Received)
@@ -266,7 +294,7 @@ public class Project
         }
     }
 
-    internal void ProvideGrantFundingInformation(PublicSectorGrantFunding publicSectorGrantFunding)
+    internal void ProvideGrantFundingInformation(PublicSectorGrantFunding? publicSectorGrantFunding)
     {
         if (GrantFundingStatus != PublicSectorGrantFundingStatus.Received)
         {
@@ -275,11 +303,60 @@ public class Project
                 LoanApplicationErrorCodes.GrantFundingNotExists);
         }
 
+        if (PublicSectorGrantFunding != publicSectorGrantFunding)
+        {
+            UncompleteSection();
+        }
+
         PublicSectorGrantFunding = publicSectorGrantFunding;
     }
 
-    internal void Delete()
+    internal void CheckAnswers(YesNoAnswers answer)
     {
-        IsSoftDeleted = true;
+        switch (answer)
+        {
+            case YesNoAnswers.Yes:
+                if (!CanBeCompleted())
+                {
+                    OperationResult.New().AddValidationError(nameof(CheckAnswers), ValidationErrorMessage.CheckAnswersOption).CheckErrors();
+                }
+
+                CompleteSection();
+                break;
+            case YesNoAnswers.No:
+                UncompleteSection();
+                break;
+            case YesNoAnswers.Undefined:
+                OperationResult.New()
+                    .AddValidationError(nameof(CheckAnswers), ValidationErrorMessage.NoCheckAnswers)
+                    .CheckErrors();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(answer), answer, null);
+        }
+    }
+
+    private bool CanBeCompleted()
+    {
+        return StartDate.IsProvided() &&
+            PlanningReferenceNumber.IsProvided() && (!PlanningReferenceNumber!.Exists || (PlanningReferenceNumber.Value.IsProvided() && PlanningPermissionStatus.IsProvided())) &&
+            HomesCount.IsProvided() &&
+            HomesTypes.IsProvided() && HomesTypes!.HomesTypesValue.Any() &&
+            ProjectType.IsProvided() &&
+            (Coordinates.IsProvided() || LandRegistryTitleNumber.IsProvided()) &&
+            LandOwnership.IsProvided() && (!LandOwnership!.ApplicantHasFullOwnership || AdditionalDetails.IsProvided()) &&
+            GrantFundingStatus.IsProvided() && (GrantFundingStatus != PublicSectorGrantFundingStatus.Received || PublicSectorGrantFunding.IsProvided()) &&
+            ChargesDebt.IsProvided() &&
+            AffordableHomes.IsProvided();
+    }
+
+    private void CompleteSection()
+    {
+        Status = SectionStatus.Completed;
+    }
+
+    private void UncompleteSection()
+    {
+        Status = SectionStatus.InProgress;
     }
 }

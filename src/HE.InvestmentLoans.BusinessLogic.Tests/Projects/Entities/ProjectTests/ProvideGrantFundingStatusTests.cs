@@ -7,6 +7,7 @@ using HE.InvestmentLoans.BusinessLogic.Generic;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.Entities.ProjectTests;
@@ -44,5 +45,18 @@ public class ProvideGrantFundingStatusTests
 
         // then
         project.PublicSectorGrantFunding.Should().BeNull();
+    }
+
+    [Fact]
+    public void ShouldChangeStatusToInProgress()
+    {
+        // given
+        var project = new Project();
+
+        // when
+        project.ProvideGrantFundingStatus(PublicSectorGrantFundingStatus.Received);
+
+        // then
+        project.Status.Should().Be(SectionStatus.InProgress);
     }
 }

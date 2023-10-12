@@ -1,18 +1,15 @@
-@model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel;
-@using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+@model HE.InvestmentLoans.Contract.Application.Queries.GetTaskListDataQueryResponse
+@using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 @using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
-@using HE.InvestmentLoans.Common.Extensions;
-@using HE.InvestmentLoans.WWW.Controllers
-@using HE.InvestmentLoans.BusinessLogic.ViewModel
-@using System.Globalization
+@using HE.InvestmentLoans.Common.Extensions
 @using HE.InvestmentLoans.Contract.Application.Enums
-@inject MediatR.IMediator mediator
-@{
-    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
-}
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
 
-
-<gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.ID })" text="Back to application dashboard" class="govuk-grid-column-full"></gds-back-link>
+<gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.Id })" text="Back to application dashboard" class="govuk-grid-column-full"></gds-back-link>
 
     <gds-div-grid-column-two-thirds>
         @await Html.PartialAsync("_Notification")
@@ -21,7 +18,7 @@
     Development loan application
 </gds-h1>
 <gds-div-hint class="govuk-!-margin-bottom-8 govuk-grid-column-full" id="last-saved-label">
-    Last saved on @Model.Timestamp.ToString("d MMMM yyyy 'at' h:mm tt", new CultureInfo("en-US"))
+    Last saved on @Model.LastSavedOn.ConvertUtcToUkLocalTime()
 </gds-div-hint>
 <gds-div-grid-column-two-thirds>
     <ul class="app-task-list">
@@ -33,26 +30,11 @@
             <ul class="app-task-list__items">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("StartCompanyStructure","CompanyStructureV2", new { id = Model.ID })" id="company-structure-section-link">
+                        <a href="@Url.Action("StartCompanyStructure","CompanyStructureV2", new { id = Model.Id })" id="company-structure-section-link">
                             Complete company information
                         </a>
                     </span>
-                    @if (Model.Status == ApplicationStatus.Withdrawn)
-                    {
-                        <gds-task-list-item-status status=Withdrawn>Withdrawn</gds-task-list-item-status>
-                    }
-                    else if (Model.Company.IsCompleted())
-                    {
-                        <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
-                    }
-                    else if (Model.Company.IsProgress())
-                    {
-                        <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
-                    }
-                    else
-                    {
-                        <gds-task-list-item-status status=NotStarted>Not started</gds-task-list-item-status>
-                    }
+                    <section-status-tag status=@Model.Sections.CompanyStructure additional-classes="app-task-list__tag"></section-status-tag>
                 </li>
             </ul>
         </li>
@@ -64,49 +46,19 @@
             <ul class="app-task-list__items">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("StartFunding","FundingV2", new {id = Model.ID})" id="funding-section-link">
+                        <a href="@Url.Action("StartFunding","FundingV2", new {id = Model.Id})" id="funding-section-link">
                             Provide details about funding
                         </a>
                     </span>
-                    @if (Model.Status == ApplicationStatus.Withdrawn)
-                    {
-                        <gds-task-list-item-status status=Withdrawn>Withdrawn</gds-task-list-item-status>
-                    }
-                    else if (Model.Funding.IsCompleted())
-                    {
-                        <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
-                    }
-                    else if (Model.Funding.IsInProgress())
-                    {
-                        <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
-                    }
-                    else
-                    {
-                        <gds-task-list-item-status status=NotStarted>Not started</gds-task-list-item-status>
-                    }
+                   <section-status-tag status=@Model.Sections.Funding additional-classes="app-task-list__tag"></section-status-tag>
                 </li>
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("StartSecurity","Security", new {id = Model.ID})" id="security-section-link">
+                        <a href="@Url.Action("StartSecurity","Security", new {id = Model.Id})" id="security-section-link">
                             Provide details about security
                         </a>
                     </span>
-                    @if (Model.Status == ApplicationStatus.Withdrawn)
-                    {
-                    <gds-task-list-item-status status=Withdrawn>Withdrawn</gds-task-list-item-status>
-                    }
-                    else if (Model.Security.IsCompleted())
-                    {
-                        <gds-task-list-item-status status=Completed>Completed</gds-task-list-item-status>
-                    }
-                    else if (Model.Security.IsInProgress())
-                    {
-                        <gds-task-list-item-status status=InProgress>In Progress</gds-task-list-item-status>
-                    }
-                    else
-                    {
-                        <gds-task-list-item-status status=NotStarted>Not started</gds-task-list-item-status>
-                    }
+                   <section-status-tag status=@Model.Sections.Security additional-classes="app-task-list__tag"></section-status-tag>
                 </li>
             </ul>
         </li>
@@ -116,19 +68,19 @@
             </h2>
             <gds-div-hint>Tell us about your project or projects. You can add more than one. You will need to start a new application for each company if you have different companies per project.</gds-div-hint>
             <ul class="app-task-list__items">
-                @foreach (var site in Model.Sites)
+                @foreach (var project in Model.Sections.Projects)
                 {
                     <li class="app-task-list__item">
                         <div class="task-list-grid-container">
                             <span class="app-task-list__task-name task-list-project-name">
-                                <a href="@Url.Action("StartProject", "Project", new {id = Model.ID, projectId = site.Id })">
-                                    @if(site.Name.IsNotProvided())
+                                <a href="@Url.Action("StartProject", "Project", new { id = Model.Id, projectId = project.Id })">
+                                    @if(project.Name.IsNotProvided())
                                     {
                                         @ProjectName.Default.Value
                                     }
                                     else
                                     {
-                                        @site.Name
+                                        @project.Name
                                     }
                                 </a>
                             </span>
@@ -136,28 +88,13 @@
                             <div class="task-list-remove-link">
                                 @if (Model.Status != ApplicationStatus.Withdrawn)
                                 {
-                                    <a href="@Url.Action("Delete", "Project", new { id = Model.ID, projectId = site.Id })">
+                                    <a href="@Url.Action("Delete", "Project", new { id = Model.Id, projectId = project.Id })">
                                         Remove
                                     </a>
                                 }
                             </div>
                             <div>
-                                @if (Model.Status == ApplicationStatus.Withdrawn)
-                                {
-                                    <gds-task-list-item-status status=Withdrawn>Withdrawn</gds-task-list-item-status>
-                                }
-                                else if (site.IsCompleted())
-                                {
-                                    <gds-task-list-item-status class="task-list-project-tag" status=Completed>Completed</gds-task-list-item-status>
-                                }
-                                else if (!site.IsInProgress())
-                                {
-                                    <gds-task-list-item-status class="task-list-project-tag" status=NotStarted>Not Started</gds-task-list-item-status>
-                                }
-                                else
-                                {
-                                    <gds-task-list-item-status class="task-list-project-tag" status=InProgress>In Progress</gds-task-list-item-status>
-                                }
+                                <section-status-tag status=@project.Status additional-classes="app-task-list__tag"></section-status-tag>
                             </div>
                         </div>
                     </li>
@@ -167,7 +104,7 @@
                     <li class="app-task-list__item">
                         <span class="app-task-list__task-name">
                             <span class="app-task-list__task-name">
-                                <a id="add-project-link" href="@Url.Action("StartProjectPost", "Project", new {id = Model.ID})">
+                                <a id="add-project-link" href="@Url.Action("StartProject", "Project", new {id = Model.Id})">
                                     Add another
                                 </a>
                             </span>
@@ -180,23 +117,23 @@
     </ul>
     <gds-h2 size="ControlSize.M">Check and submit</gds-h2>
     <p>You must complete all sections before you can submit your application.</p>
-    <form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.ID" asp-method="post" novalidate>
-        @if (!loanApllicationWorkflow.IsFilled() || Model.Status == ApplicationStatus.Withdrawn)
+    <form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.Id" asp-method="post" novalidate>
+        @if (Model.CanBeSubmitted)
         {
-            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="submit-application">
+            <gds-button data-module="govuk-button" name="action" value="Continue">
                 Check and submit application
-            </button>
+            </gds-button>
+
         }
         else
         {
-            <gds-button data-module="govuk-button" name="action" value="Continue" id="submit-application">
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button">
                 Check and submit application
-            </gds-button>
+            </button>
         }
     </form>
-    <gds-link href="@Url.Action("ReportProblem","LoanApplication", new {id = Model.ID})">
+    <gds-link href="#">
         Report a problem with this page
-        <gds-span-visually-hidden> @Url.Action("ReportProblem","LoanApplication", new {id = Model.ID})</gds-span-visually-hidden>
     </gds-link>
 </gds-div-grid-column-two-thirds>
 

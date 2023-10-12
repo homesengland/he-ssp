@@ -19,7 +19,7 @@ internal static class SourceOfValuationMapper
 
         return valuationSource.ToLower(CultureInfo.InvariantCulture) switch
         {
-            "selfestimate" => SourceOfValuation.SelfEstimate,
+            "customerestimate" => SourceOfValuation.SelfEstimate,
             "estateagentestimate" => SourceOfValuation.EstateAgentEstimate,
             "ricsredbookvaluation" => SourceOfValuation.RicsRedBookValuation,
             _ => null,
@@ -30,9 +30,20 @@ internal static class SourceOfValuationMapper
     {
         return valuationSource switch
         {
-            SourceOfValuation.SelfEstimate => "selfEstimate",
+            SourceOfValuation.SelfEstimate => "customerEstimate",
             SourceOfValuation.EstateAgentEstimate => "estateAgentEstimate",
             SourceOfValuation.RicsRedBookValuation => "ricsRedBookValuation",
+            _ => throw new ArgumentException($"Cannot convert {valuationSource} to SourceOfValuation."),
+        };
+    }
+
+    public static string ToCrmString(SourceOfValuation valuationSource)
+    {
+        return valuationSource switch
+        {
+            SourceOfValuation.SelfEstimate => "customerestimate",
+            SourceOfValuation.EstateAgentEstimate => "estateagentestimate",
+            SourceOfValuation.RicsRedBookValuation => "ricsredbookvaluation",
             _ => throw new ArgumentException($"Cannot convert {valuationSource} to SourceOfValuation."),
         };
     }

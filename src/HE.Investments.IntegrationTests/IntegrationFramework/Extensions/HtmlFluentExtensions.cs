@@ -78,6 +78,20 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasLinkButtonForTestId(this IHtmlDocument htmlDocument, string dataTestId, out IHtmlAnchorElement htmlElement)
+    {
+        htmlElement = htmlDocument.GetLinkButtonByTestId(dataTestId);
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasElementForTestId(this IHtmlDocument htmlDocument, string dataTestId, out IElement htmlElement)
+    {
+        htmlElement = htmlDocument.GetElementByTestId(dataTestId);
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument HasSuccessNotificationBanner(this IHtmlDocument htmlDocument, string bodyText)
     {
         htmlDocument.GetSuccessNotificationBannerBody().Should().Contain(bodyText);

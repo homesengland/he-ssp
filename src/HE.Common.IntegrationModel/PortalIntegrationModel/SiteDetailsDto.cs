@@ -1,5 +1,6 @@
 #pragma warning disable IDE0005 // Using directive is unnecessary.
 using System;
+using System.Text.Json.Serialization;
 using Microsoft.Xrm.Sdk;
 #pragma warning restore IDE0005 // Using directive is unnecessary.
 
@@ -55,12 +56,12 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         public string whoProvided { get; set; }
 
-        public OptionSetValue planningPermissionStatus { get; set; }
+        public int? planningPermissionStatus { get; set; }
 
         public DateTime? startDate { get; set; }
 
         public bool? affordableHousing { get; set; }
 
-        public OptionSetValue completionStatus { get; set; }
+        public int? completionStatus { get; set; }
     }
 }

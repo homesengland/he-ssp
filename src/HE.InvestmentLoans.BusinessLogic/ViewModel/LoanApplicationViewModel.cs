@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -32,7 +32,7 @@ public class LoanApplicationViewModel
         set;
     }
 
-    public DateTime Timestamp { get; set; }
+    public DateTime? Timestamp { get; set; }
 
     public CompanyStructureViewModel Company { get; set; }
 
@@ -85,7 +85,7 @@ public class LoanApplicationViewModel
         return Tuple.Create(isDeletedProjectInCache, deletedProjectFromCache);
     }
 
-    public void SetTimestamp(DateTime timestamp)
+    public void SetTimestamp(DateTime? timestamp)
     {
         Timestamp = timestamp;
     }
@@ -104,7 +104,7 @@ public class LoanApplicationViewModel
         return Company.IsCompleted()
             && (Security.State == SectionStatus.Completed || Security.IsFlowCompleted)
             && (Funding.IsCompleted() || Funding.IsFlowCompleted)
-            && (Sites.All(x => x.State == SiteWorkflow.State.Complete) || Sites.All(x => x.IsFlowCompleted))
+            && (Sites.All(x => x.Status == SectionStatus.Completed) || Sites.All(x => x.IsFlowCompleted))
             && Sites.Count > 0;
     }
 

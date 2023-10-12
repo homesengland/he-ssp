@@ -115,3 +115,8 @@ https://design-patterns.service.justice.gov.uk/components/side-navigation/
     border-color: rgba(0, 0, 0, 0);
   }
 }
+
+.separator{
+  border-top: 2px solid #B1B4B6;
+  margin: 0px;
+}

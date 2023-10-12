@@ -9,13 +9,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 
 public interface IApplicationProjectsRepository
 {
-    public ApplicationProjects GetAll(LoanApplicationId loanApplicationId, UserAccount userAccount);
-
-    public Task<Project> GetById(LoanApplicationId loanApplicationId, ProjectId projectId, UserAccount userAccount, ProjectFieldsSet projectFieldsSet, CancellationToken cancellationToken);
-
     Task SaveAsync(ApplicationProjects applicationProjects, ProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken);
-
-    public LoanApplicationViewModel LegacyDeleteProject(Guid loanApplicationId, Guid projectId);
 
     Task<ApplicationProjects> GetById(LoanApplicationId loanApplicationId, UserAccount userAccount, ProjectFieldsSet projectFieldsSet, CancellationToken cancellationToken);
 }

@@ -18,58 +18,67 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Applicationdeclined = 858110017,
+		ApplicationDeclined = 858110014,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Approvedsubjecttocontract = 858110007,
+		ApplicationSubmitted = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		AwaitingCPSatisfaction = 858110008,
+		ApplicationUnderReview = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CPssatisfied = 858110009,
+		ApprovedSubjectToContract = 858110017,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Draft = 858110000,
+		ApprovedSubjecttoDueDiligence = 858110013,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Feeindemnitysigned = 858110005,
+		AwaitingCPSatisfaction = 858110018,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Holdrequested = 858110012,
+		CashflowRequested = 858110007,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Inactive = 858110011,
+		CashflowUnderReview = 858110008,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		ISPapproved = 858110004,
+		CPsSatisfied = 858110019,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Loanavailable = 858110010,
+		Draft = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Notapproved = 858110016,
+		HoldRequested = 858110005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Onhold = 858110013,
+		Inactive = 2,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Referredbacktoapplicant = 858110014,
+		InDueDiligence = 858110015,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Sentforapproval = 858110003,
+		LoanAvailable = 858110020,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SentforPreCompleteapproval = 858110006,
+		NotApproved = 858110012,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Submitted = 858110001,
+		OnHold = 858110006,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Underreview = 858110002,
+		ReferredBacktoApplicant = 858110009,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Withdrawn = 858110015,
+		SentforApproval = 858110011,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SentforPreCompleteApproval = 858110016,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReview = 858110010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Withdrawn = 858110021,
 	}
 }
 #pragma warning restore CS1591

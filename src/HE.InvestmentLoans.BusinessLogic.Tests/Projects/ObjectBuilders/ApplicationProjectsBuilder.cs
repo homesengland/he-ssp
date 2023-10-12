@@ -1,4 +1,6 @@
+using System.Security.Policy;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
@@ -40,13 +42,13 @@ internal sealed class ApplicationProjectsBuilder
         return this;
     }
 
-    public ApplicationProjectsBuilder WithProjectWithPlanningReferenceNumber()
+    public ApplicationProjectsBuilder WithProjectWithPlanningReferenceNumber(string number)
     {
         var projectId = _applicationProjects.AddEmptyProject();
 
         var project = _applicationProjects.Projects.First(p => p.Id == projectId);
 
-        project.ProvidePlanningReferenceNumber(PlanningReferenceNumberTestData.ExistingReferenceNumber);
+        project.ProvidePlanningReferenceNumber(new PlanningReferenceNumber(true, number));
 
         return this;
     }

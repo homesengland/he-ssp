@@ -170,4 +170,34 @@ public class ProvidePlanningReferenceNumberCommandHandlerTests : TestBase<Provid
         project.PlanningReferenceNumber!.Exists.Should().BeTrue();
         project.PlanningReferenceNumber.Value.Should().Be("number");
     }
+
+    [Fact]
+    public async Task ShouldNotChangePlanningReferenceNumber_WhenPlanningReferenceNumberExistAndValueIsNotProvided()
+    {
+        // given
+        var applicationProjects = ApplicationProjectsBuilder
+            .New()
+            .WithoutDefaultProject()
+            .WithProjectWithPlanningReferenceNumber("number")
+            .Build();
+
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
+            .Returns(applicationProjects));
+
+        var project = applicationProjects.Projects.Single();
+        var projectId = project.Id;
+
+        // when
+        _command = new ProvidePlanningReferenceNumberCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, CommonResponse.Yes, null);
+
+        await TestCandidate.Handle(_command, CancellationToken.None);
+
+        // then
+        project.PlanningReferenceNumber.Should().NotBeNull();
+
+        project.PlanningReferenceNumber!.Exists.Should().BeTrue();
+        project.PlanningReferenceNumber.Value.Should().Be("number");
+    }
 }

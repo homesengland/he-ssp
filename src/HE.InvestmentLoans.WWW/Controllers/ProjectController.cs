@@ -1,4 +1,6 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
+using HE.InvestmentLoans.BusinessLogic.Projects;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Enums;
@@ -9,6 +11,7 @@ using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
+using HE.InvestmentLoans.Contract.Security.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;
@@ -36,8 +39,9 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.Index)]
     public async Task<IActionResult> StartProject(Guid id, Guid projectId)
     {
-        var response = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.GetEmpty));
-        if (response.IsReadOnly())
+        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
+
+        if (response.LoanApplication.IsReadOnly())
         {
             return RedirectToAction("CheckAnswers", new { Id = id, ProjectId = projectId });
         }
@@ -85,7 +89,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/name")]
     [WorkflowState(ProjectState.Name)]
-    public async Task<IActionResult> ProjectName(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> ProjectName(Guid id, Guid projectId, ProjectViewModel model, [FromQuery] string redirect, CancellationToken token)
     {
         var result = await _mediator.Send(new ChangeProjectNameCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.Name), token);
 
@@ -96,7 +100,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View("ProjectName", model);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/start-date")]
@@ -110,7 +114,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/start-date")]
     [WorkflowState(ProjectState.StartDate)]
-    public async Task<IActionResult> StartDate(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> StartDate(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(
             new ProvideStartDateCommand(
@@ -129,7 +133,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View("StartDate", model);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/many-homes")]
@@ -143,7 +147,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/many-homes")]
     [WorkflowState(ProjectState.ManyHomes)]
-    public async Task<IActionResult> ManyHomes(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> ManyHomes(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(new ProvideHomesCountCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HomesCount), token);
 
@@ -154,7 +158,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View("ManyHomes", model);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/type-homes")]
@@ -168,7 +172,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/type-homes")]
     [WorkflowState(ProjectState.TypeHomes)]
-    public async Task<IActionResult> TypeHomes(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> TypeHomes(Guid id, Guid projectId, ProjectViewModel model, [FromQuery] string redirect, CancellationToken token)
     {
         var result = await _mediator.Send(new ProvideHomesTypesCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HomeTypes, model.OtherHomeTypes), token);
 
@@ -179,7 +183,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View("TypeHomes", model);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/type")]
@@ -193,7 +197,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/type")]
     [WorkflowState(ProjectState.Type)]
-    public async Task<IActionResult> Type(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> Type(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(new ProvideProjectTypeCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.ProjectType), token);
 
@@ -204,7 +208,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View("Type", model);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/planning-ref-number-exists")]
@@ -221,7 +225,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/planning-ref-number-exists")]
     [WorkflowState(ProjectState.PlanningRef)]
-    public async Task<IActionResult> PlanningReferenceNumberExists(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> PlanningReferenceNumberExists(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(
             new ProvidePlanningReferenceNumberCommand(
@@ -238,7 +242,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View("PlanningReferenceNumberExists", model);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(new { id, projectId, redirect });
     }
 
     [HttpGet("{projectId}/planning-ref-number")]
@@ -252,7 +256,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/planning-ref-number")]
     [WorkflowState(ProjectState.PlanningRefEnter)]
-    public async Task<IActionResult> PlanningReferenceNumber(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> PlanningReferenceNumber(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(
             new ProvidePlanningReferenceNumberCommand(
@@ -269,7 +273,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View("PlanningReferenceNumber", model);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(new { id, projectId, redirect });
     }
 
     [HttpGet("{projectId}/planning-permission-status")]
@@ -286,7 +290,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/planning-permission-status")]
     [WorkflowState(ProjectState.PlanningPermissionStatus)]
-    public async Task<IActionResult> PlanningPermissionStatus(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> PlanningPermissionStatus(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(
             new ProvidePlanningPermissionStatusCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.PlanningPermissionStatus),
@@ -299,7 +303,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View(model);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/location")]
@@ -313,7 +317,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/location")]
     [WorkflowState(ProjectState.Location)]
-    public async Task<IActionResult> Location(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> Location(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(
             new ProvideLocationCommand(
@@ -331,7 +335,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View(model);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/ownership")]
@@ -345,7 +349,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/ownership")]
     [WorkflowState(ProjectState.Ownership)]
-    public async Task<IActionResult> Ownership(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> Ownership(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(new ProvideLandOwnershipCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.Ownership), token);
 
@@ -356,7 +360,12 @@ public class ProjectController : WorkflowController<ProjectState>
             return View(model);
         }
 
-        return await Continue(new { id, projectId });
+        if (model.Ownership == CommonResponse.Yes)
+        {
+            return await Continue(new { id, projectId, redirect });
+        }
+
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/additional-details")]
@@ -370,7 +379,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/additional-details")]
     [WorkflowState(ProjectState.Additional)]
-    public async Task<IActionResult> AdditionalDetails(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> AdditionalDetails(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(
             new ProvideAdditionalDetailsCommand(
@@ -391,7 +400,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View(model);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/grant-funding-exists")]
@@ -405,7 +414,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/grant-funding-exists")]
     [WorkflowState(ProjectState.GrantFunding)]
-    public async Task<IActionResult> GrantFundingExists(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> GrantFundingExists(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(
             new ProvideGrantFundingStatusCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.GrantFundingStatus),
@@ -418,7 +427,12 @@ public class ProjectController : WorkflowController<ProjectState>
             return View(model);
         }
 
-        return await Continue(new { id, projectId });
+        if (model.GrantFundingStatus == CommonResponse.Yes)
+        {
+            return await Continue(new { id, projectId, redirect });
+        }
+
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/grant-funding")]
@@ -432,7 +446,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/grant-funding")]
     [WorkflowState(ProjectState.GrantFundingMore)]
-    public async Task<IActionResult> GrantFunding(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> GrantFunding(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(
             new ProvideGrantFundingInformationCommand(
@@ -451,7 +465,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View(model);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/charges-debt")]
@@ -465,7 +479,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/charges-debt")]
     [WorkflowState(ProjectState.ChargesDebt)]
-    public async Task<IActionResult> ChargesDebt(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> ChargesDebt(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(new ProvideChargesDebtCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.ChargesDebt, model.ChargesDebtInfo), token);
 
@@ -476,7 +490,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View("ChargesDebt", model);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/affordable-homes")]
@@ -490,7 +504,7 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/affordable-homes")]
     [WorkflowState(ProjectState.AffordableHomes)]
-    public async Task<IActionResult> AffordableHomes(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> AffordableHomes(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(new ProvideAffordableHomesCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.AffordableHomes), token);
 
@@ -501,7 +515,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View("AffordableHomes", model);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/check-answers")]
@@ -513,7 +527,24 @@ public class ProjectController : WorkflowController<ProjectState>
         return View(result);
     }
 
-    [HttpGet("back")]
+    [HttpPost("{projectId}/check-answers")]
+    [WorkflowState(ProjectState.CheckAnswers)]
+    public async Task<IActionResult> CheckAnswers(Guid id, Guid projectId, ProjectViewModel model, CancellationToken token)
+    {
+        var result = await _mediator.Send(new CheckProjectAnswersCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.CheckAnswers), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            var response = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.GetAllFields), token);
+            return View("CheckAnswers", response);
+        }
+
+        return await Continue(new { id, projectId });
+    }
+
+    [HttpGet("{projectId}/back")]
     public Task<IActionResult> Back(ProjectState currentPage, Guid id, Guid projectId)
     {
         return Back(currentPage, new { id, projectId });

@@ -8,6 +8,8 @@ public static class ProjectPageTitles
 
     public const string StartDate = "Do you have an estimated build start date for this project?";
 
+    public const string ManyHomes = "How many homes are you building?";
+
     public const string PlanningReferenceNumberExists = "Do you have a planning reference number?";
 
     public const string PlanningReferenceNumber = "What is your planning reference number?";
@@ -25,4 +27,6 @@ public static class ProjectPageTitles
     public const string GrantFunding = "Provide more information";
 
     public const string ChargesDebt = "To the best of your knowledge, are there any legal charges outstanding or debt secured on this land?";
+
+    public static string Delete(string projectName) => $"Are you sure you want to remove {projectName}?";
 }

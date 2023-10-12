@@ -1,3 +1,11 @@
+@using HE.InvestmentLoans.Contract.Projects
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Details
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
     var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.ChargesDebt));
@@ -5,9 +13,9 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Project" asp-action="ChargesDebt" asp-route-id="@Model.ApplicationId" asp-route-site="@Model.ProjectId" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="ChargesDebt" asp-route-id="@Model.ApplicationId" asp-route-site="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
-        <gds-back-link href="@Url.Action("GoBack","Site")" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.ChargesDebt})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>

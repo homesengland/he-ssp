@@ -133,6 +133,7 @@
     <Compile Include="Handlers\CustomApi\GetContactRoleHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetFileLocationForApplicationLoanHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetInvestmentsLoansForAccountAndContactHandler.cs" />
+    <Compile Include="Handlers\CustomApi\GetOrganisationChangeDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetOrganizationDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetSingleInvestmentLoanForAccountAndContactHandler.cs" />
     <Compile Include="Handlers\CustomApi\ReturnUserProfileHandler.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Handlers\LoanApplications\SendEmailToNewOwnerHandler.cs" />
     <Compile Include="Handlers\LoanApplications\SendInternalNotificationOnStatusChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\SetFieldsWhenChangingStatusFromDraftHandler.cs" />
+    <Compile Include="Handlers\LoanStatusChange\SendNotificationOnCreateHandler.cs" />
     <Compile Include="Models\AzureAdToken.cs" />
     <Compile Include="Plugins\Contract\RejectAddingWhenRelatedLoanInApprovedStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeLoanApplicationExternalStatusPlugin.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="Plugins\CustomApi\GetContactRolePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetFileLocationForApplicationLoanPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetInvestmentsLoansForAccountAndContactPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\GetOrganisationChangeDetailsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetOrganizationDetailsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleInvestmentLoanForAccountAndContactPlugin.cs" />
     <Compile Include="Plugins\CustomApi\ReturnUserProfilePlugin.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="Plugins\CustomApi\UpdateSingleSiteDetailsPlugin.cs" />
     <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateUserProfilePlugin.cs" />
+    <Compile Include="Plugins\LoanStatusChange\SendNotificationOnCreatePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\ChangeApplicationStatusOnOwnerChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\ChangeInternalStatusOnExternalStatusChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\CheckIfOwnerCanBeChangedPlugin.cs" />
@@ -242,6 +246,8 @@
     <Compile Include="Services\HttpServices\AzureAdHttpClientService.cs" />
     <Compile Include="Services\LoanApplication\ILoanApplicationService.cs" />
     <Compile Include="Services\LoanApplication\LoanApplicationService.cs" />
+    <Compile Include="Services\LoanStatusChange\ILoanStatusChangeService.cs" />
+    <Compile Include="Services\LoanStatusChange\LoanStatusChangeService.cs" />
     <Compile Include="Services\RichTextService\IRichTextService.cs" />
     <Compile Include="Services\RichTextService\RichTextService.cs" />
     <Compile Include="Services\SiteDetails\ISiteDetailsService.cs" />

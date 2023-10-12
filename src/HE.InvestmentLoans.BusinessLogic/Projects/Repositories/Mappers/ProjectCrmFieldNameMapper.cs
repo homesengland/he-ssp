@@ -17,6 +17,7 @@ public static class ProjectCrmFieldNameMapper
     private static readonly string NumberOfHomes = $"{nameof(invln_SiteDetails.invln_Numberofhomes).ToLowerInvariant()},";
     private static readonly string TypeOfProject = $"{nameof(invln_SiteDetails.invln_TypeofSite).ToLowerInvariant()},";
     private static readonly string TypeOfHomes = $"{nameof(invln_SiteDetails.invln_Typeofhomes).ToLowerInvariant()},";
+    private static readonly string TypeOfHomesOther = $"{nameof(invln_SiteDetails.invln_OtherTypeofhomes).ToLowerInvariant()},";
     private static readonly string StartDate = $"{nameof(invln_SiteDetails.invln_startdate).ToLowerInvariant()},";
     private static readonly string DateOfPurchase = $"{nameof(invln_SiteDetails.invln_Dateofpurchase).ToLowerInvariant()},";
     private static readonly string SiteCost = $"{nameof(invln_SiteDetails.invln_Sitecost).ToLowerInvariant()},";
@@ -45,7 +46,7 @@ public static class ProjectCrmFieldNameMapper
             ProjectFieldsSet.Location => SiteCoordinates + LandRegistryTitleNumber,
             ProjectFieldsSet.ManyHomes => NumberOfHomes,
             ProjectFieldsSet.TypeOfProject => TypeOfProject,
-            ProjectFieldsSet.TypeOfHomes => TypeOfHomes,
+            ProjectFieldsSet.TypeOfHomes => TypeOfHomes + TypeOfHomesOther,
             ProjectFieldsSet.Ownership => SiteOwnership,
             ProjectFieldsSet.PlanningPermissionStatus => PlanningPermissionStatus,
             ProjectFieldsSet.PlanningReferenceNumber => PlanningReferenceNumber,
@@ -63,6 +64,7 @@ public static class ProjectCrmFieldNameMapper
                                              NumberOfHomes +
                                              TypeOfProject +
                                              TypeOfHomes +
+                                             TypeOfHomesOther +
                                              StartDate +
                                              DateOfPurchase +
                                              SiteCost +
@@ -86,6 +88,7 @@ public static class ProjectCrmFieldNameMapper
                                               NumberOfHomes +
                                               TypeOfProject +
                                               TypeOfHomes +
+                                              TypeOfHomesOther +
                                               StartDate +
                                               DateOfPurchase +
                                               SiteCost +

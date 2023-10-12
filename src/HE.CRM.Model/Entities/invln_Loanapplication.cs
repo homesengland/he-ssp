@@ -155,6 +155,7 @@ namespace DataverseModel
 			public const string invln_loanid = "invln_loanid";
 			public const string invln_loanportaldata = "invln_loanportaldata";
 			public const string invln_loanportaldataid = "invln_loanportaldataid";
+			public const string invln_loanstatuschange_Loanapplication = "invln_loanstatuschange_Loanapplication";
 			public const string invln_Name = "invln_name";
 			public const string invln_numberofhomes = "invln_numberofhomes";
 			public const string invln_NumberofSites = "invln_numberofsites";
@@ -1699,6 +1700,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_loanapplication_invln_govnotifyemails");
 				this.SetRelatedEntities<DataverseModel.invln_govnotifyemail>("invln_loanapplication_invln_govnotifyemails", null, value);
 				this.OnPropertyChanged("invln_loanapplication_invln_govnotifyemails");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_loanstatuschange_Loanapplication
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanstatuschange_Loanapplication")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Loanstatuschange> invln_loanstatuschange_Loanapplication
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Loanstatuschange>("invln_loanstatuschange_Loanapplication", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_loanstatuschange_Loanapplication");
+				this.SetRelatedEntities<DataverseModel.invln_Loanstatuschange>("invln_loanstatuschange_Loanapplication", null, value);
+				this.OnPropertyChanged("invln_loanstatuschange_Loanapplication");
 			}
 		}
 		

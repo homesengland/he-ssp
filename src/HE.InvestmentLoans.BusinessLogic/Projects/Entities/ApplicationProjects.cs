@@ -50,7 +50,7 @@ public class ApplicationProjects
 
         _projects.Remove(projectToDelete);
 
-        projectToDelete.MarkAsDeleted();
+        projectToDelete.Delete();
     }
 
     internal Project Remove(ProjectId projectId)

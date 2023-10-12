@@ -1,8 +1,8 @@
-@using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+@using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 @model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel;
-@inject MediatR.IMediator mediator
+
 @{
-    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
+    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model);
 }
 
 <gds-div-grid-column-two-thirds>
@@ -26,7 +26,7 @@
         <gds-h2>Project details</gds-h2>
         @foreach (var site in Model.Sites)
         {
-            @await Html.PartialAsync("_SiteAnswers", site)
+            @await Html.PartialAsync("_ProjectAnswers", site)
         }
 
 

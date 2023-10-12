@@ -1,4 +1,3 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.Enums;
 
@@ -8,7 +7,6 @@ public class SiteViewModel
 {
     public SiteViewModel()
     {
-        State = SiteWorkflow.State.Index;
         StateChanged = false;
     }
 
@@ -80,10 +78,6 @@ public class SiteViewModel
 
     public string? ChargesDebtInfo { get; set; }
 
-    public SiteWorkflow.State State { get; set; }
-
-    public SiteWorkflow.State PreviousState { get; set; }
-
     public Guid? Id { get; set; }
 
     public bool StateChanged { get; set; }
@@ -103,6 +97,11 @@ public class SiteViewModel
     public bool IsCompleted() => Status == SectionStatus.Completed;
 
     public bool IsInProgress() => Status == SectionStatus.InProgress;
+
+    public SectionStatus GetSectionStatus()
+    {
+        return Status;
+    }
 
     public void RemoveAlternativeRoutesData()
     {

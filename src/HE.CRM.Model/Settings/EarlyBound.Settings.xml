@@ -15,6 +15,7 @@ invln_generaterichtextdocument|
 invln_getcontactrole|
 invln_getfilelocationforapplicationloan|
 invln_getloanapplicationsforaccountandcontact|
+invln_getorganisationchangedetails|
 invln_getorganizationdetails|
 invln_getsingleloanapplicationforaccountandcontact|
 invln_gettemporaryportaldata|
@@ -55,6 +56,7 @@ invln_emailnotification|
 invln_emailtemplate|
 invln_govnotifyemail|
 invln_loanapplication|
+invln_loanstatuschange|
 invln_notificationsetting|
 invln_portal|
 invln_portalpermissionlevel|

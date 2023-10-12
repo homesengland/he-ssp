@@ -30,6 +30,31 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         _dateTime = dateTime;
     }
 
+    public async Task<bool> IsExist(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var req = new invln_getsingleloanapplicationforaccountandcontactRequest
+        {
+            invln_accountid = userAccount.AccountId.ToString(),
+            invln_externalcontactid = userAccount.UserGlobalId.ToString(),
+            invln_loanapplicationid = loanApplicationId.ToString(),
+            invln_fieldstoretrieve = nameof(invln_Loanapplication.invln_LoanapplicationId).ToLowerInvariant(),
+        };
+
+        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse;
+        if (response.IsNotProvided())
+        {
+            return false;
+        }
+
+        var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response!.invln_loanapplication)?.FirstOrDefault();
+        if (loanApplicationDto.IsNotProvided() || loanApplicationDto!.loanApplicationId.IsNotProvided())
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public async Task<LoanApplicationEntity> GetLoanApplication(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest

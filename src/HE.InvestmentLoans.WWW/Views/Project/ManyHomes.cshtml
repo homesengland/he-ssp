@@ -7,7 +7,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Project" asp-action="ManyHomes" asp-route-id="@Model.ApplicationId" asp-route-site="@Model.ProjectId" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="ManyHomes" asp-route-id="@Model.ApplicationId" asp-route-site="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <gds-back-link href="@Url.Action("Back","Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.ManyHomes})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
@@ -17,7 +17,7 @@
                 <legend>
                     <gds-label-wrapper>
                         <gds-label size="@ControlSize.L" for="ManyHomes">
-                            How many homes are you building?
+                            @ProjectPageTitles.ManyHomes
                         </gds-label>
                     </gds-label-wrapper>
                 </legend>
