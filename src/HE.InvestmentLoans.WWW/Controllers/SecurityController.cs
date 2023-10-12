@@ -117,7 +117,10 @@ public class SecurityController : WorkflowController<SecurityState>
     public async Task<IActionResult> DirLoansSubPost(Guid id, SecurityViewModel viewModel, CancellationToken token)
     {
         var result = await _mediator.Send(
-            new ProvideDirectorLoansSubordinateCommand(LoanApplicationId.From(id), viewModel.DirLoansSub, viewModel.DirLoansSubMore),
+            new ProvideDirectorLoansSubordinateCommand(
+                LoanApplicationId.From(id),
+                viewModel.DirLoansSub,
+                viewModel.DirLoansSubMore),
             token);
 
         if (result.HasValidationErrors)
