@@ -11,15 +11,11 @@ using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
-using HE.InvestmentLoans.Contract.Security.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Routing;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.CodeAnalysis;
-using NuGet.Common;
 using ProjectId = HE.InvestmentLoans.Contract.Application.ValueObjects.ProjectId;
 
 namespace HE.InvestmentLoans.WWW.Controllers;
@@ -232,7 +228,11 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/planning-ref-number-exists")]
     [WorkflowState(ProjectState.PlanningRef)]
-    public async Task<IActionResult> PlanningReferenceNumberExists(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model,
+    public async Task<IActionResult> PlanningReferenceNumberExists(
+        Guid id,
+        Guid projectId,
+        [FromQuery] string redirect,
+        ProjectViewModel model,
         CancellationToken token)
     {
         var result = await _mediator.Send(
@@ -264,7 +264,11 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/planning-ref-number")]
     [WorkflowState(ProjectState.PlanningRefEnter)]
-    public async Task<IActionResult> PlanningReferenceNumber(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model,
+    public async Task<IActionResult> PlanningReferenceNumber(
+        Guid id,
+        Guid projectId,
+        [FromQuery] string redirect,
+        ProjectViewModel model,
         CancellationToken token)
     {
         var result = await _mediator.Send(
@@ -299,11 +303,13 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/planning-permission-status")]
     [WorkflowState(ProjectState.PlanningPermissionStatus)]
-    public async Task<IActionResult> PlanningPermissionStatus(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model,
-        CancellationToken token)
+    public async Task<IActionResult> PlanningPermissionStatus(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
         var result = await _mediator.Send(
-            new ProvidePlanningPermissionStatusCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.PlanningPermissionStatus),
+            new ProvidePlanningPermissionStatusCommand(
+                LoanApplicationId.From(id),
+                ProjectId.From(projectId),
+                model.PlanningPermissionStatus),
             token);
 
         if (result.HasValidationErrors)
