@@ -73,7 +73,7 @@
                     <li class="app-task-list__item">
                         <div class="task-list-grid-container">
                             <span class="app-task-list__task-name task-list-project-name">
-                                <a href="@Url.Action("ProjectName", "Project", new { id = Model.Id, projectId = project.Id })">
+                                <a href="@Url.Action("StartProject", "Project", new { id = Model.Id, projectId = project.Id })">
                                     @if(project.Name.IsNotProvided())
                                     {
                                         @ProjectName.Default.Value
