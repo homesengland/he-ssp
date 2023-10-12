@@ -19,7 +19,7 @@ namespace HE.CRM.Plugins.Handlers.LoanStatusChange
 
         public override void DoWork()
         {
-            CrmServicesFactory.Get<ILoanStatusChangeService>().SendNotificationOnCreate(target);
+            CrmServicesFactory.Get<ILoanStatusChangeService>().SendNotificationOnLoanStatusChangeCreate(target);
         }
 
         #endregion
