@@ -1,4 +1,6 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
+using HE.InvestmentLoans.BusinessLogic.Projects;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Enums;
@@ -35,12 +37,13 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpGet("start")]
     [WorkflowState(ProjectState.Index)]
-    public async Task<IActionResult> StartProject(Guid id, Guid projectId)
+    public async Task<IActionResult> StartProject(Guid id)
     {
-        var response = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.GetEmpty));
-        if (response.IsReadOnly())
+        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
+
+        if (response.LoanApplication.IsReadOnly())
         {
-            return RedirectToAction("CheckAnswers", new { Id = id, ProjectId = projectId });
+            return RedirectToAction("CheckAnswers", new { Id = id });
         }
 
         return View("Index", LoanApplicationId.From(id));

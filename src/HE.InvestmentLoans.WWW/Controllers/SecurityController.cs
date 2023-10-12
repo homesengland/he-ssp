@@ -1,4 +1,5 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication;
+using HE.InvestmentLoans.BusinessLogic.Security;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;

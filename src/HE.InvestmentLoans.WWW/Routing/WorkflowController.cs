@@ -1,5 +1,5 @@
 using System.Reflection;
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;

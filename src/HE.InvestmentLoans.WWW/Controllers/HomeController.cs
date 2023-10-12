@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Contract.Application.Queries;

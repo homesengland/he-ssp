@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
@@ -8,7 +9,7 @@ using HE.InvestmentLoans.Contract.Security;
 using MediatR;
 using Stateless;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+namespace HE.InvestmentLoans.BusinessLogic.Security;
 
 public class SecurityWorkflow : IStateRouting<SecurityState>
 {

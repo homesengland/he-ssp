@@ -1,8 +1,9 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using Stateless;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure;
 
 public class CompanyStructureWorkflow : IStateRouting<CompanyStructureState>
 {

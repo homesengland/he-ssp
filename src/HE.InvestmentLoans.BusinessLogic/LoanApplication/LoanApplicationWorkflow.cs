@@ -5,7 +5,7 @@ using HE.InvestmentLoans.Contract.Application.Enums;
 using MediatR;
 using Stateless;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+namespace HE.InvestmentLoans.BusinessLogic.LoanApplication;
 
 [SuppressMessage("Ordering Rules", "SA1201", Justification = "Need to refactored in the fure")]
 public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.State>
@@ -26,18 +26,16 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
     }
 
     private readonly StateMachine<State, Trigger> _machine;
-    private readonly IMediator _mediator;
     private readonly LoanApplicationViewModel _model;
 
     private readonly Func<Task<LoanApplicationViewModel>> _modelFactory;
 
     private readonly Func<Task<bool>> _isLoanApplicationExist;
 
-    public LoanApplicationWorkflow(LoanApplicationViewModel model, IMediator mediator)
+    public LoanApplicationWorkflow(LoanApplicationViewModel model)
     {
         _model = model;
         _machine = new StateMachine<State, Trigger>(model.State);
-        _mediator = mediator;
         ConfigureTransitions();
     }
 
@@ -67,7 +65,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         return _model.Company.IsCompleted()
                && (_model.Security.State == SectionStatus.Completed || _model.Security.IsFlowCompleted)
                && (_model.Funding.IsCompleted() || _model.Funding.IsFlowCompleted)
-               && (_model.Sites.All(x => x.State == SiteWorkflow.State.Complete) || _model.Sites.All(x => x.IsFlowCompleted))
+               && (_model.Sites.All(x => x.Status == SectionStatus.Completed) || _model.Sites.All(x => x.IsFlowCompleted))
                && _model.Sites.Count > 0;
     }
 
@@ -81,7 +79,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         return application.Company.IsCompleted()
                && (application.Security.State == SectionStatus.Completed || application.Security.IsFlowCompleted)
                && (application.Funding.IsCompleted() || application.Funding.IsFlowCompleted)
-               && (application.Sites.All(x => x.State == SiteWorkflow.State.Complete) || application.Sites.All(x => x.IsFlowCompleted))
+               && (application.Sites.All(x => x.Status == SectionStatus.Completed) || application.Sites.All(x => x.IsFlowCompleted))
                && application.Sites.Count > 0;
     }
 
@@ -129,16 +127,5 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
             .PermitIf(Trigger.Continue, State.ApplicationDashboard, () => _isLoanApplicationExist().Result)
             .PermitIf(Trigger.Continue, State.UserDashboard, () => _isLoanApplicationExist().Result is false)
             .Permit(Trigger.Back, State.ApplicationDashboard);
-
-        _machine.OnTransitionCompletedAsync(x =>
-        {
-            if (_model.GoodChangeMode)
-            {
-                return Task.CompletedTask;
-            }
-
-            _model.State = x.Destination;
-            return _mediator.Send(new Commands.Update() { Model = _model });
-        });
     }
 }

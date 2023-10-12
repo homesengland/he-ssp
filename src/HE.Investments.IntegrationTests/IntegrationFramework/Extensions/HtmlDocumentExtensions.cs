@@ -224,7 +224,7 @@ public static class HtmlDocumentExtensions
         return dictionary;
     }
 
-    private static string GetValueFor(AngleSharp.Dom.IElement summaryRow)
+    private static string GetValueFor(IElement summaryRow)
     {
         var valueRow = summaryRow.GetElementsByClassName("govuk-summary-list__value").Single();
 

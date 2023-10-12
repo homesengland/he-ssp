@@ -1,10 +1,11 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using Stateless;
 
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+namespace HE.InvestmentLoans.BusinessLogic.Projects;
 
 public class ProjectWorkflow : IStateRouting<ProjectState>
 {
@@ -45,18 +46,6 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
         };
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "StyleCop.CSharp.SpacingRules",
-        "SA1005:Single line comments should begin with single space",
-        Justification = "Commented lines will help in next refactoring steps")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "StyleCop.CSharp.LayoutRules",
-        "SA1515:Single-line comment should be preceded by blank line",
-        Justification = "Commented lines will help in next refactoring steps")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage(
-        "StyleCop.CSharp.LayoutRules",
-        "SA1512:Single-line comments should not be followed by blank line",
-        Justification = "Commented lines will help in next refactoring steps")]
     private void ConfigureTransitions()
     {
         _machine.Configure(ProjectState.Index)
@@ -98,14 +87,11 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
         _machine.Configure(ProjectState.PlanningPermissionStatus)
             .Permit(Trigger.Continue, ProjectState.Location)
             .Permit(Trigger.Back, ProjectState.PlanningRefEnter);
-        //    .PermitIf(Trigger.Change, State.Location, () => _site.Location == null)
-        //    .PermitIf(Trigger.Change, State.CheckAnswers, () => _site.Location != null);
 
         _machine.Configure(ProjectState.Location)
             .Permit(Trigger.Continue, ProjectState.Ownership)
             .PermitIf(Trigger.Back, ProjectState.PlanningPermissionStatus, () => _model.PlanningReferenceNumberExists == CommonResponse.Yes)
             .PermitIf(Trigger.Back, ProjectState.PlanningRef, () => _model.PlanningReferenceNumberExists != CommonResponse.Yes);
-        //.Permit(Trigger.Change, ProjectState.CheckAnswers);
 
         _machine.Configure(ProjectState.Ownership)
             .PermitIf(Trigger.Continue, ProjectState.Additional, () => _model.Ownership == CommonResponse.Yes)
@@ -126,16 +112,10 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             .Permit(Trigger.Continue, ProjectState.ChargesDebt)
             .Permit(Trigger.Back, ProjectState.GrantFunding);
 
-        //_machine.Configure(State.ChargesDebt)
-        //    .Permit(Trigger.Continue, State.AffordableHomes)
-        //    .PermitIf(Trigger.Back, State.GrantFundingMore, () => _site.GrantFunding == CommonResponse.Yes)
-        //    .PermitIf(Trigger.Back, State.GrantFunding, () => _site.GrantFunding != CommonResponse.Yes)
-        //    .Permit(Trigger.Change, State.CheckAnswers);
-
         _machine.Configure(ProjectState.ChargesDebt)
             .Permit(Trigger.Continue, ProjectState.AffordableHomes)
-            .PermitIf(Trigger.Back, ProjectState.GrantFundingMore) // () => _site.GrantFunding == CommonResponse.Yes)
-            .PermitIf(Trigger.Back, ProjectState.GrantFunding) //, () => _site.GrantFunding != CommonResponse.Yes)
+            .PermitIf(Trigger.Back, ProjectState.GrantFundingMore)
+            .PermitIf(Trigger.Back, ProjectState.GrantFunding)
             .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
         _machine.Configure(ProjectState.AffordableHomes)
@@ -147,32 +127,5 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             .Permit(Trigger.Continue, ProjectState.Complete)
             .PermitIf(Trigger.Back, ProjectState.AffordableHomes, () => _model.IsEditable())
             .PermitIf(Trigger.Back, ProjectState.Complete, () => _model.IsReadOnly());
-
-        //_machine.Configure(State.CheckAnswers)
-        //    .PermitIf(Trigger.Continue, State.Complete, () => _site.CheckAnswers == CommonResponse.Yes)
-        //    .IgnoreIf(Trigger.Continue, () => _site.CheckAnswers != CommonResponse.Yes)
-        //    .Permit(Trigger.Back, State.AffordableHomes)
-        //    .OnExit(() =>
-        //    {
-        //        if (_site.CheckAnswers == CommonResponse.Yes)
-        //        {
-        //            _site.SetFlowCompletion(true);
-        //        }
-        //    });
-
-        //_machine.Configure(State.Complete)
-        //    .Permit(Trigger.Back, State.CheckAnswers);
-
-        //_machine.Configure(State.DeleteProject)
-        //    .Permit(Trigger.Back, State.TaskList);
-
-        //_machine.OnTransitionCompletedAsync(x =>
-        //{
-        //    _site.State = x.Destination;
-
-        //    _site.RemoveAlternativeRoutesData();
-
-        //    return _mediator.Send(new Commands.Update() { Model = _model });
-        //});
     }
 }
