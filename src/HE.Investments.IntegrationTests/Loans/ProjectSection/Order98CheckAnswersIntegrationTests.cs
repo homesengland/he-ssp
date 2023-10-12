@@ -49,7 +49,7 @@ public class Order98CheckAnswersIntegrationTests : IntegrationTest
 
         // then
         projectSummary[ProjectFieldNames.Name].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
-        projectSummary[ProjectFieldNames.StartDate].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
+        projectSummary[ProjectFieldNames.StartDate].Should().Contain(DateTimeTestData.CorrectDateDisplay);
         projectSummary[ProjectFieldNames.PlanningReferenceNumberExists].Should().Be(CommonResponse.Yes);
         projectSummary[ProjectFieldNames.PlanningReferenceNumber].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
 

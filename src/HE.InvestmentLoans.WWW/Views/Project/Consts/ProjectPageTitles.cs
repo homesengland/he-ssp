@@ -8,6 +8,8 @@ public static class ProjectPageTitles
 
     public const string StartDate = "Do you have an estimated build start date for this project?";
 
+    public const string ManyHomes = "How many homes are you building?";
+
     public const string PlanningReferenceNumberExists = "Do you have a planning reference number?";
 
     public const string PlanningReferenceNumber = "What is your planning reference number?";

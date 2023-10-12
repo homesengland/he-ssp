@@ -100,17 +100,7 @@ public class SiteViewModel
 
     public SectionStatus GetSectionStatus()
     {
-        if (AllInformationIsProvided())
-        {
-            return SectionStatus.Completed;
-        }
-
-        if (AnyBasicInformationIsProvided())
-        {
-            return SectionStatus.InProgress;
-        }
-
-        return SectionStatus.NotStarted;
+        return Status;
     }
 
     public void RemoveAlternativeRoutesData()
