@@ -4,7 +4,6 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Extensions;
-using Xunit.Sdk;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 
@@ -43,7 +42,10 @@ public static class HtmlDocumentExtensions
         var anchorElement = elementById as IHtmlAnchorElement;
         anchorElement.Should().NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
 
-        anchorElement!.GetElementsByClassName("govuk-button").SingleOrDefault().Should().NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
+        anchorElement!.GetElementsByClassName("govuk-button")
+            .SingleOrDefault()
+            .Should()
+            .NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
         return anchorElement;
     }
 
@@ -61,7 +63,8 @@ public static class HtmlDocumentExtensions
 
         var buttonElement = element as IHtmlAnchorElement;
         buttonElement.Should().NotBeNull($"Element with data-testid {testId} should be ItmlAnchorElement");
-        buttonElement!.ClassName.Should().Contain("govuk-button", $"Element with data-testid {testId} should be HtmlButtonElement with govuk-button class name");
+        buttonElement!.ClassName.Should()
+            .Contain("govuk-button", $"Element with data-testid {testId} should be HtmlButtonElement with govuk-button class name");
 
         return buttonElement;
     }
@@ -100,9 +103,9 @@ public static class HtmlDocumentExtensions
             .SelectMany(e => e.GetElementsByClassName(CssConstants.GovUkErrorMessage));
 
         var fieldValidationErrors = fieldValidationElements!
-                                .Select(x => x.TextContent.Replace("Error:", string.Empty).Trim())
-                                .Where(x => !string.IsNullOrEmpty(x))
-                                .ToArray();
+            .Select(x => x.TextContent.Replace("Error:", string.Empty).Trim())
+            .Where(x => !string.IsNullOrEmpty(x))
+            .ToArray();
 
         fieldValidationErrors.Should().NotBeEmpty();
 
@@ -207,8 +210,10 @@ public static class HtmlDocumentExtensions
         foreach (var row in projectRows)
         {
             var projectLink = row
-                .GetElementsByClassName("task-list-project-name").First()
-                .GetElementsByTagName("a").First();
+                .GetElementsByClassName("task-list-project-name")
+                .First()
+                .GetElementsByTagName("a")
+                .First();
 
             var id = projectLink.GetAttribute("href")!.GetProjectGuidFromRelativePath();
 
@@ -224,7 +229,26 @@ public static class HtmlDocumentExtensions
         return dictionary;
     }
 
-    private static string GetValueFor(IElement summaryRow)
+    public static string GetSuccessNotificationBannerBody(this IHtmlDocument htmlDocument)
+    {
+        var successNotificationBanner = htmlDocument.GetElementsByClassName(CssConstants.GovUkNotificationBannerSuccess).FirstOrDefault();
+        successNotificationBanner.Should().NotBeNull("Success notification banner does not exist");
+
+        var notificationBannerContent = successNotificationBanner?.GetElementsByClassName(CssConstants.GovUkNotificationBannerContent).FirstOrDefault();
+        notificationBannerContent.Should().NotBeNull("Notification banner does not have content");
+
+        return notificationBannerContent!.InnerHtml.Trim();
+    }
+
+    public static string GetInsetText(this IHtmlDocument htmlDocument)
+    {
+        var insetText = htmlDocument.GetElementsByClassName(CssConstants.GovUkInsetText).FirstOrDefault();
+        insetText.Should().NotBeNull("Inset text does not exist");
+
+        return insetText!.InnerHtml.Trim();
+    }
+
+    private static string GetValueFor(AngleSharp.Dom.IElement summaryRow)
     {
         var valueRow = summaryRow.GetElementsByClassName("govuk-summary-list__value").Single();
 

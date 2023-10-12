@@ -35,13 +35,13 @@
 
         @if (loanApllicationWorkflow.IsFilled())
         {
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="accept-and-submit">
                 Accept and submit
             </button>
         }
         else
         {
-            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button">
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="accept-and-submit">
                 Accept and submit
             </button>
         }
