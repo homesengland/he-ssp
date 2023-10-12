@@ -84,6 +84,11 @@ public class ProjectController : WorkflowController<ProjectState>
     {
         var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.ProjectName));
 
+        if (result.IsReadOnly())
+        {
+            return RedirectToAction("CheckAnswers", new { Id = id, ProjectId = projectId });
+        }
+
         return View(result);
     }
 
@@ -174,7 +179,9 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.TypeHomes)]
     public async Task<IActionResult> TypeHomes(Guid id, Guid projectId, ProjectViewModel model, [FromQuery] string redirect, CancellationToken token)
     {
-        var result = await _mediator.Send(new ProvideHomesTypesCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HomeTypes, model.OtherHomeTypes), token);
+        var result = await _mediator.Send(
+            new ProvideHomesTypesCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.HomeTypes, model.OtherHomeTypes),
+            token);
 
         if (result.HasValidationErrors)
         {
@@ -225,7 +232,8 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/planning-ref-number-exists")]
     [WorkflowState(ProjectState.PlanningRef)]
-    public async Task<IActionResult> PlanningReferenceNumberExists(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> PlanningReferenceNumberExists(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model,
+        CancellationToken token)
     {
         var result = await _mediator.Send(
             new ProvidePlanningReferenceNumberCommand(
@@ -256,7 +264,8 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/planning-ref-number")]
     [WorkflowState(ProjectState.PlanningRefEnter)]
-    public async Task<IActionResult> PlanningReferenceNumber(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> PlanningReferenceNumber(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model,
+        CancellationToken token)
     {
         var result = await _mediator.Send(
             new ProvidePlanningReferenceNumberCommand(
@@ -290,7 +299,8 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/planning-permission-status")]
     [WorkflowState(ProjectState.PlanningPermissionStatus)]
-    public async Task<IActionResult> PlanningPermissionStatus(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> PlanningPermissionStatus(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model,
+        CancellationToken token)
     {
         var result = await _mediator.Send(
             new ProvidePlanningPermissionStatusCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.PlanningPermissionStatus),
@@ -481,7 +491,9 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.ChargesDebt)]
     public async Task<IActionResult> ChargesDebt(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
-        var result = await _mediator.Send(new ProvideChargesDebtCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.ChargesDebt, model.ChargesDebtInfo), token);
+        var result = await _mediator.Send(
+            new ProvideChargesDebtCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.ChargesDebt, model.ChargesDebtInfo),
+            token);
 
         if (result.HasValidationErrors)
         {
@@ -506,7 +518,8 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.AffordableHomes)]
     public async Task<IActionResult> AffordableHomes(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
     {
-        var result = await _mediator.Send(new ProvideAffordableHomesCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.AffordableHomes), token);
+        var result = await _mediator.Send(new ProvideAffordableHomesCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.AffordableHomes),
+            token);
 
         if (result.HasValidationErrors)
         {
@@ -537,7 +550,8 @@ public class ProjectController : WorkflowController<ProjectState>
         {
             ModelState.AddValidationErrors(result);
 
-            var response = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.GetAllFields), token);
+            var response = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.GetAllFields),
+                token);
             return View("CheckAnswers", response);
         }
 
