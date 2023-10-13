@@ -118,6 +118,6 @@ public class IntegrationUserData
         OrganizationRegistrationNumber = "Not provided";
         OrganizationAddress = "12 Wharf Street";
 
-        LoanApplicationIdInDraftState = "6ef83a12-4659-ee11-be6f-002248c653e1";
+        LoanApplicationIdInDraftState = string.Empty;
     }
 }

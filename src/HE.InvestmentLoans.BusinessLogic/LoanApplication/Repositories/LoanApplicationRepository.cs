@@ -72,7 +72,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
 
-        return new LoanApplicationEntity(id, userAccount, externalStatus, FundingPurposeMapper.Map(loanApplicationDto.fundingReason), null, loanApplicationDto.LastModificationOn)
+        return new LoanApplicationEntity(id, userAccount, externalStatus, FundingPurposeMapper.Map(loanApplicationDto.fundingReason), loanApplicationDto.createdOn, loanApplicationDto.LastModificationOn)
         {
             LegacyModel = LoanApplicationMapper.Map(loanApplicationDto, _dateTime.Now),
         };
@@ -132,7 +132,6 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var response = (invln_sendinvestmentloansdatatocrmResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);
         var newLoanApplicationId = LoanApplicationId.From(response.invln_loanapplicationid);
         loanApplication.SetId(newLoanApplicationId);
-        LegacySave(loanApplication.LegacyModel);
     }
 
     public async Task Submit(LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
@@ -174,12 +173,5 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         };
 
         await _serviceClient.ExecuteAsync(request, cancellationToken);
-    }
-
-    public void LegacySave(LoanApplicationViewModel legacyModel)
-    {
-        legacyModel.Timestamp = _dateTime.Now;
-
-        _httpContextAccessor.HttpContext?.Session.Set(legacyModel.ID.ToString(), legacyModel);
     }
 }
