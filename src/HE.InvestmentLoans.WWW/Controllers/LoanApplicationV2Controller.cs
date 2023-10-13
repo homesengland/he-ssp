@@ -139,7 +139,6 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     [WorkflowState(LoanApplicationWorkflow.State.TaskList)]
     public async Task<IActionResult> TaskListPost(Guid id)
     {
-        await _mediator.Send(new SubmitLoanApplicationCommand(LoanApplicationId.From(id)));
         return await Continue(new { Id = id });
     }
 
