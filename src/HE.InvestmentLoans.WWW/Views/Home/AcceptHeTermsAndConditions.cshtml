@@ -28,9 +28,11 @@
 
         <gds-p>
             Before creating an account, you must read the
-            <a href=@privacyLink>
-                Homes England privacy notice
-            </a>.
+            <a href=@privacyLink>Homes England privacy notice</a>.
+        </gds-p>
+
+        <gds-p>
+            If you have already created an account, you can <a href="@Url.Action("SignIn", "HeIdentity")">sign in</a>.
         </gds-p>
 
         <gds-checkbox govuk-formgroup-asp-for="AcceptHeTermsAndConditions"
@@ -41,14 +43,9 @@
                       asp-excludelabel="true">
         </gds-checkbox>
 
-        <gds-button-group class="govuk-!-margin-top-9">
-            <gds-button data-module="govuk-button" type="submit" name="redirect" value=@RedirectOption.SignUp>
-                Create an account
-            </gds-button>
-            <gds-button secondary class="govuk-!-margin-left-6" data-module="govuk-button" type="submit" name="redirect" value=@RedirectOption.SignUp>
-                Sign to your account
-            </gds-button>
-        </gds-button-group>
+        <gds-button data-module="govuk-button" type="submit" name="redirect" value=@RedirectOption.SignUp>
+            Create an account
+        </gds-button>
     </form>
 
 
