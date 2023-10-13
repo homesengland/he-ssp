@@ -74,7 +74,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         return new LoanApplicationEntity(id, userAccount, externalStatus, FundingPurposeMapper.Map(loanApplicationDto.fundingReason), null, loanApplicationDto.LastModificationOn)
         {
-            LegacyModel = LoanApplicationMapper.Map(loanApplicationDto),
+            LegacyModel = LoanApplicationMapper.Map(loanApplicationDto, _dateTime.Now),
         };
     }
 
@@ -99,88 +99,6 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
                 ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
                 x.createdOn,
                 x.LastModificationOn)).ToList();
-    }
-
-    public async Task Save(LoanApplicationViewModel loanApplication, UserAccount userAccount)
-    {
-        var siteDetailsDtos = new List<SiteDetailsDto>();
-        foreach (var site in loanApplication.Sites)
-        {
-            var siteDetail = new SiteDetailsDto()
-            {
-                Name = site.Name,
-                siteName = site.Name,
-                numberOfHomes = site.ManyHomes,
-                typeOfHomes = site.TypeHomes,
-                otherTypeOfHomes = site.TypeHomesOther,
-                typeOfSite = site.Type,
-                haveAPlanningReferenceNumber = site.PlanningRef!.MapToBool(),
-                planningReferenceNumber = site.PlanningRefEnter,
-                siteCoordinates = site.LocationCoordinates,
-                siteOwnership = site.Ownership!.MapToBool(),
-                landRegistryTitleNumber = site.LocationLandRegistry,
-                dateOfPurchase = site.PurchaseDate,
-                siteCost = site.Cost,
-                currentValue = site.Value,
-                valuationSource = site.Source,
-                publicSectorFunding = site.GrantFunding,
-                howMuch = site.GrantFundingAmount,
-                nameOfGrantFund = site.GrantFundingName,
-                reason = site.GrantFundingPurpose,
-                existingLegalCharges = site.ChargesDebt!.MapToBool(),
-                existingLegalChargesInformation = site.ChargesDebtInfo,
-                numberOfAffordableHomes = site.AffordableHomes,
-            };
-            siteDetailsDtos.Add(siteDetail);
-        }
-
-        var loanApplicationDto = new LoanApplicationDto()
-        {
-            loanApplicationId = loanApplication.ID.ToString(),
-            name = loanApplication.Account.RegisteredName,
-            contactEmailAdress = loanApplication.Account.EmailAddress,
-            fundingReason = FundingPurposeMapper.Map(loanApplication.Purpose),
-
-            // COMPANY
-            companyPurpose = loanApplication.Company.Purpose!.MapToBool(),
-            existingCompany = loanApplication.Company.OrganisationMoreInformation,
-            companyExperience = loanApplication.Company.HomesBuilt?.TryParseNullableInt(),
-            CompanyStructureAndExperienceCompletionStatus = SectionStatusMapper.Map(loanApplication.Company.State),
-
-            // FUNDING
-            projectGdv = loanApplication.Funding.GrossDevelopmentValue?.TryParseNullableDecimal(),
-            projectEstimatedTotalCost = loanApplication.Funding.TotalCosts?.TryParseNullableDecimal(),
-            projectAbnormalCosts = loanApplication.Funding.AbnormalCosts!.MapToBool(),
-            projectAbnormalCostsInformation = loanApplication.Funding.AbnormalCostsInfo,
-            privateSectorApproach = loanApplication.Funding.PrivateSectorFunding!.MapToBool(),
-            privateSectorApproachInformation = loanApplication.Funding.PrivateSectorFundingResult,
-            additionalProjects = loanApplication.Funding.AdditionalProjects!.MapToBool(),
-            refinanceRepayment = loanApplication.Funding.Refinance,
-            refinanceRepaymentDetails = loanApplication.Funding.RefinanceInfo,
-            FundingDetailsCompletionStatus = SectionStatusMapper.Map(loanApplication.Funding.State),
-
-            // SECURITY
-            outstandingLegalChargesOrDebt = loanApplication.Security.ChargesDebtCompany!.MapToBool(),
-            debentureHolder = loanApplication.Security.ChargesDebtCompanyInfo,
-            directorLoans = loanApplication.Security.DirLoans!.MapToBool(),
-            confirmationDirectorLoansCanBeSubordinated = loanApplication.Security.DirLoansSub!.MapToBool(),
-            reasonForDirectorLoanNotSubordinated = loanApplication.Security.DirLoansSubMore,
-            SecurityDetailsCompletionStatus = SectionStatusMapper.Map(loanApplication.Security.State),
-
-            // SITEDETAILS
-            siteDetailsList = siteDetailsDtos,
-        };
-
-        var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);
-        var req = new invln_sendinvestmentloansdatatocrmRequest
-        {
-            invln_entityfieldsparameters = loanApplicationSerialized,
-            invln_accountid = userAccount.AccountId.ToString(),
-            invln_contactexternalid = userAccount.UserGlobalId.ToString(),
-            invln_loanapplicationid = loanApplication.ID.ToString(),
-        };
-
-        await _serviceClient.ExecuteAsync(req);
     }
 
     public async Task Save(LoanApplicationEntity loanApplication, UserDetails userDetails, CancellationToken cancellationToken)

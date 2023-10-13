@@ -1,10 +1,11 @@
 @using HE.InvestmentLoans.Contract.Projects;
+@using HE.InvestmentLoans.Contract.Projects.ViewModels;
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 
 @{
     var id = ViewContext.RouteData.Values["id"];
 
-    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.GrantFunding));
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.PlanningPermissionStatus));
 }
 
 <gds-div-grid-column-two-thirds>

@@ -64,28 +64,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
                                  ?? throw new NotFoundException(nameof(ApplicationProjects), loanApplicationId.ToString());
 
-        var projectsFromCrm = loanApplicationDto.siteDetailsList.Select(
-            projectFromCrm => new Project(
-                                ProjectId.From(projectFromCrm.siteDetailsId),
-                                SectionStatusMapper.Map(projectFromCrm.completionStatus),
-                                projectFromCrm.Name.IsProvided() ? new ProjectName(projectFromCrm.Name) : null,
-                                projectFromCrm.startDate.IsProvided() ? new StartDate(true, new ProjectDate(projectFromCrm.startDate!.Value)) : new StartDate(false, null),
-                                projectFromCrm.numberOfHomes.IsProvided() ? new HomesCount(projectFromCrm.numberOfHomes) : null,
-                                projectFromCrm.typeOfHomes.IsProvided() ? new HomesTypes(projectFromCrm.typeOfHomes, projectFromCrm.otherTypeOfHomes) : null,
-                                projectFromCrm.typeOfSite.IsProvided() ? new ProjectType(projectFromCrm.typeOfSite) : null,
-                                projectFromCrm.haveAPlanningReferenceNumber.IsProvided() ? new PlanningReferenceNumber(projectFromCrm.haveAPlanningReferenceNumber!.Value, projectFromCrm.planningReferenceNumber) : null,
-                                projectFromCrm.siteCoordinates.IsProvided() ? new Coordinates(projectFromCrm.siteCoordinates) : null,
-                                projectFromCrm.landRegistryTitleNumber.IsProvided() ? new LandRegistryTitleNumber(projectFromCrm.landRegistryTitleNumber) : null,
-                                projectFromCrm.siteOwnership.IsProvided() ? new LandOwnership(projectFromCrm.siteOwnership!.Value) : null,
-                                AdditionalDetailsMapper.MapFromCrm(projectFromCrm, _timeProvider.Now),
-                                projectFromCrm.IsProvided() ? GrantFundingStatusMapper.FromString(projectFromCrm.publicSectorFunding) : null,
-                                PublicSectorGrantFundingMapper.MapFromCrm(projectFromCrm),
-                                projectFromCrm.existingLegalCharges.IsProvided() ? new ChargesDebt(projectFromCrm.existingLegalCharges ?? false, projectFromCrm.existingLegalChargesInformation) : null,
-                                projectFromCrm.affordableHousing.IsProvided() ? new AffordableHomes(projectFromCrm.affordableHousing.MapToCommonResponse()) : null,
-                                ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus),
-                                PlanningPermissionStatusMapper.Map(projectFromCrm.planningPermissionStatus)));
-
-        return new ApplicationProjects(loanApplicationId, projectsFromCrm);
+        return ApplicationProjectsMapper.Map(loanApplicationDto, _timeProvider.Now);
     }
 
     public async Task SaveAsync(ApplicationProjects applicationProjects, ProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
