@@ -61,7 +61,6 @@ public class LoanApplicationEntity
         }
 
         Id = newId;
-
     }
 
     public bool IsReadOnly()

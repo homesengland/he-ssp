@@ -14,14 +14,12 @@ public class SubmitLoanApplicationCommandHandler : IRequestHandler<SubmitLoanApp
     private readonly ICanSubmitLoanApplication _canSubmitLoanApplication;
 
     private readonly ILoanUserContext _loanUserContext;
-    private readonly IHttpContextAccessor _contextAccessor;
 
-    public SubmitLoanApplicationCommandHandler(ILoanApplicationRepository loanApplicationRepository, ILoanUserContext loanUserContext, ICanSubmitLoanApplication canSubmitLoanApplication, IHttpContextAccessor contextAccessor)
+    public SubmitLoanApplicationCommandHandler(ILoanApplicationRepository loanApplicationRepository, ILoanUserContext loanUserContext, ICanSubmitLoanApplication canSubmitLoanApplication)
     {
         _loanApplicationRepository = loanApplicationRepository;
         _loanUserContext = loanUserContext;
         _canSubmitLoanApplication = canSubmitLoanApplication;
-        _contextAccessor = contextAccessor;
     }
 
     public async Task Handle(SubmitLoanApplicationCommand request, CancellationToken cancellationToken)
