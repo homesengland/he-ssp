@@ -49,4 +49,33 @@ internal static class ProjectTestData
 
         return project;
     }
+
+    public static Project ProjectWithoutAlternativeData()
+    {
+        var project = new Project();
+
+        project.ChangeName(new ProjectName("name"));
+
+        project.ProvideStartDate(StartDateTestData.CorrectDate);
+
+        project.ProvideHomesCount(HomesCountTestData.ValidHomesCount);
+
+        project.ProvideHomesTypes(new HomesTypes(new string[] { "Home" }, string.Empty));
+
+        project.ProvideProjectType(new ProjectType("Greenfield"));
+
+        project.ProvidePlanningReferenceNumber(PlanningReferenceNumberTestData.NonExistingReferenceNumber);
+
+        project.ProvideLandOwnership(new LandOwnership(false));
+
+        project.ProvideCoordinates(new Coordinates(LocationTestData.CorrectCoordinates));
+
+        project.ProvideGrantFundingStatus(PublicSectorGrantFundingStatus.NotReceived);
+
+        project.ProvideAffordableHomes(new AffordableHomes(CommonResponse.Yes));
+
+        project.ProvideChargesDebt(new ChargesDebt(false, null));
+
+        return project;
+    }
 }
