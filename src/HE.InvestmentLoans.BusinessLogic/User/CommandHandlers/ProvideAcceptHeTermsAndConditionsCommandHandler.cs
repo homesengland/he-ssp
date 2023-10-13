@@ -20,7 +20,7 @@ public class ProvideAcceptHeTermsAndConditionsCommandHandler : IRequestHandler<P
     {
         try
         {
-            await Task.Run(() => AcceptHeTermsAndConditions.FromString(request.HeTermsAndConditions), cancellationToken);
+            AcceptHeTermsAndConditions.FromString(request.HeTermsAndConditions);
         }
         catch (DomainValidationException domainValidationException)
         {
@@ -28,6 +28,6 @@ public class ProvideAcceptHeTermsAndConditionsCommandHandler : IRequestHandler<P
             return domainValidationException.OperationResult;
         }
 
-        return OperationResult.Success();
+        return await Task.FromResult(OperationResult.Success());
     }
 }
