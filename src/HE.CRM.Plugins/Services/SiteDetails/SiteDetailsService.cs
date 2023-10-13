@@ -85,7 +85,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 var loanApplicationToUpdate = new invln_Loanapplication()
                 {
                     Id = siteDetails.invln_Loanapplication.Id,
-                    invln_lastmmodificationdate = DateTime.Now,
+                    invln_lastmmodificationdate = DateTime.UtcNow,
                 };
 
                 _loanApplicationRepository.Update(loanApplicationToUpdate);
