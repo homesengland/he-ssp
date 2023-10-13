@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HE.CRM.Model.CrmSerializedParameters
+namespace HE.CRM.Model.CrmSerialiedParameters
 {
-    public class INTERNAL_LOAN_APP_STATUS_CHANGE
+    public class EXTERNAL_APPLICATION_STATUS_INFORMATION
     {
         public string templateId { get; set; }
-        public parameters_INTERNAL_LOAN_APP_STATUS_CHANGE personalisation { get; set; }
-        
+        public parameters_EXTERNAL_APPLICATION_STATUS_INFORMATION personalisation { get; set; }
+
     }
 
-    public class parameters_INTERNAL_LOAN_APP_STATUS_CHANGE
+    public class parameters_EXTERNAL_APPLICATION_STATUS_INFORMATION
     {
         // Required always
         public string subject { get; set; }
@@ -19,7 +19,7 @@ namespace HE.CRM.Model.CrmSerializedParameters
         // Additional
         public string username { get; set; }
         public string applicationId { get; set; }
-        public string applicationUrl { get; set; }
-        public string statusAtBody { get; set; }
+        public string previousStatus { get; set; }
+        public string newStatus { get; set; }
     }
 }

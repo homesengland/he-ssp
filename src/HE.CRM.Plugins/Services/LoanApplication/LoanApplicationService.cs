@@ -620,8 +620,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             if (target.OwnerId.Id != preImage.OwnerId.Id && target.OwnerId.LogicalName != Team.EntityLogicalName)
             {
                 var subject = $"Application ref no {target.invln_Name ?? preImage.invln_Name} - Assigned to you";
-                var pastFormStatus = "has been assigned to you";
-                _govNotifyEmailService.SendGovNotifyEmail(target.OwnerId, target.ToEntityReference(), subject, preImage.invln_Name, pastFormStatus, invln_Loanapplication.EntityLogicalName.ToLower(), target.Id.ToString());
+                _govNotifyEmailService.SendNotifications_INTERNAL_LOAN_APP_OWNER_CHANGE(target, subject, target.invln_Name ?? preImage.invln_Name);
                 var req1 = new invln_sendinternalcrmnotificationRequest()
                 {
                     invln_notificationbody = "",
