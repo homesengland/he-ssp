@@ -5,7 +5,7 @@
     ViewBag.Breadcrumbs = BreadcrumbsBuilder
         .New()
         .WithOrganisations()
-        .WithOrganisation(Model.Data.ApplicationName)
+        .WithOrganisation(Model.Data.OrganizationName)
         .WithLuhbfApplications()
         .WithApplication(Model.Data.ApplicationName, Model.Data.ApplicationId.Value)
         .Build();
