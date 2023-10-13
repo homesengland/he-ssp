@@ -44,7 +44,7 @@ public class HomeController : Controller
             return RedirectToAction(nameof(OrganizationController.SearchOrganization), new ControllerName(nameof(OrganizationController)).WithoutPrefix());
         }
 
-        return RedirectToAction(nameof(Dashboard));
+        return RedirectToAction(nameof(UserOrganisationController.Index), new ControllerName(nameof(UserOrganisationController)).WithoutPrefix());
     }
 
     public IActionResult Privacy()
