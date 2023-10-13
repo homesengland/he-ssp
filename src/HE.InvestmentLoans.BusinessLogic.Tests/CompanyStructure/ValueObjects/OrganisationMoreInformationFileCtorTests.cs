@@ -4,6 +4,8 @@ using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestData;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using HE.Investments.DocumentService.Models.File;
+using Microsoft.AspNetCore.Http;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.ValueObjects;
@@ -20,18 +22,17 @@ public class OrganisationMoreInformationFileCtorTests
     public void ShouldOrganisationMoreInformationFile(string fileName)
     {
         // given & when
-        var organisationMoreInformationFile = new OrganisationMoreInformationFile(fileName, ByteArrayTestData.ByteArray1Kb, 1);
+        var organisationMoreInformationFile = new OrganisationMoreInformationFile(new FileData(fileName, ByteArrayTestData.ByteArray1Kb), 1);
 
         // then
-        organisationMoreInformationFile.FileName.Should().Be(fileName);
-        organisationMoreInformationFile.Content.Should().NotBeEmpty();
+        organisationMoreInformationFile.File.Name.Should().Be(fileName);
     }
 
     [Fact]
     public void ShouldThrowDomainValidationException_WhenFileSizeIsToBig()
     {
         // given & when
-        var action = () => new OrganisationMoreInformationFile("validFileName.doc", ByteArrayTestData.ByteArray1MbAnd1Kb, 1);
+        var action = () => new OrganisationMoreInformationFile(new FileData("validFileName.doc", ByteArrayTestData.ByteArray1MbAnd1Kb), 1);
 
         // then
         action
@@ -44,7 +45,7 @@ public class OrganisationMoreInformationFileCtorTests
     public void ShouldThrowDomainValidationExceptionWithTwoError_WhenFileSizeIsToBigAndFileNameIsIncorrect()
     {
         // given & when
-        var action = () => new OrganisationMoreInformationFile("validFileName.xxx", ByteArrayTestData.ByteArray1MbAnd1Kb, 1);
+        var action = () => new OrganisationMoreInformationFile(new FileData("validFileName.xxx", ByteArrayTestData.ByteArray1MbAnd1Kb), 1);
 
         // then
         action

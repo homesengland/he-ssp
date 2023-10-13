@@ -24,8 +24,14 @@ public class SharepointFilesController : CustomControllerBase
         return rows;
     }
 
+    [HttpPost("UploadAsForm")]
+    public async Task Upload([FromForm] FileUploadModel<IFormFile> item)
+    {
+        await Service<ISharePointFilesService>().UploadFile(item);
+    }
+
     [HttpPost("Upload")]
-    public async Task Upload([FromForm] SharepointFileUploadModel item)
+    public async Task Upload(FileUploadModel<FileData> item)
     {
         await Service<ISharePointFilesService>().UploadFile(item);
     }

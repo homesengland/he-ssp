@@ -19,10 +19,12 @@ public class ProvideCompanyPurposeCommandHandler : CompanyStructureBaseCommandHa
     public async Task<OperationResult> Handle(ProvideCompanyPurposeCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            x =>
+            (companyStructure, userAccount) =>
             {
                 var companyPurpose = request.CompanyPurpose.IsProvided() ? CompanyPurpose.FromString(request.CompanyPurpose!) : null;
-                x.ProvideCompanyPurpose(companyPurpose);
+                companyStructure.ProvideCompanyPurpose(companyPurpose);
+
+                return Task.CompletedTask;
             },
             request.LoanApplicationId,
             cancellationToken);

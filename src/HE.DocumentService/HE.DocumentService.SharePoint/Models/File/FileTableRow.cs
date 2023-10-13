@@ -13,4 +13,6 @@ public class FileTableRow
     public string FileName { get; set; }
 
     public int Size { get; set; }
+
+    public string Metadata { get; set; }
 }

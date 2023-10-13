@@ -5,6 +5,7 @@ using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.WWW.Config;
 using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Middlewares;
+using HE.Investments.DocumentService.Extensions;
 using Microsoft.FeatureManagement;
 
 #pragma warning disable CA1852
@@ -35,6 +36,7 @@ builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
+builder.Services.AddDocumentServiceModule();
 
 var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<ExceptionFilter>());
 builder.AddIdentityProviderConfiguration(mvcBuilder);

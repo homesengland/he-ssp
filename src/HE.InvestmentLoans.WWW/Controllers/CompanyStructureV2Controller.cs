@@ -64,7 +64,36 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     public async Task<IActionResult> MoreInformationAboutOrganization(Guid id)
     {
         var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureFieldsSet.MoreInformationAboutOrganization));
+        response.ViewModel.OrganisationMoreInformationFiles = (await _mediator.Send(new GetCompanyStructureFilesQuery(id))).Items;
+
         return View("MoreInformationAboutOrganization", response.ViewModel);
+    }
+
+    [HttpGet("more-information-about-organization-remove-file")]
+    [WorkflowState(CompanyStructureState.ExistingCompany)]
+    public async Task<IActionResult> MoreInformationAboutOrganizationRemoveFile(Guid id, string fileName, CancellationToken cancellationToken)
+    {
+        var loanApplicationId = LoanApplicationId.From(id);
+
+        var result = await _mediator.Send(
+            new ProvideMoreInformationAboutOrganizationRemoveFileCommand(loanApplicationId, fileName),
+            cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+        }
+
+        return RedirectToAction("MoreInformationAboutOrganization", new { Id = id });
+    }
+
+    [HttpGet("more-information-about-organization-download-file")]
+    [WorkflowState(CompanyStructureState.ExistingCompany)]
+    public async Task<IActionResult> MoreInformationAboutOrganizationDownloadFile(Guid id, string fileName, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetCompanyStructureFileQuery(id, fileName), cancellationToken);
+
+        return File(response.Data, "application/octet-stream", response.Name);
     }
 
     [HttpPost("more-information-about-organization")]
@@ -73,27 +102,38 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     {
         if (formFile != null)
         {
-            viewModel.CompanyInfoFileName = formFile.FileName;
-            using var memoryStream = new MemoryStream();
-            await formFile.CopyToAsync(memoryStream, cancellationToken);
-            viewModel.OrganisationMoreInformationFile = memoryStream.ToArray();
-        }
-
-        var result = await _mediator.Send(
-            new ProvideMoreInformationAboutOrganizationCommand(
+            var result = await _mediator.Send(
+            new ProvideMoreInformationAboutOrganizationFileCommand(
                 LoanApplicationId.From(id),
-                viewModel.OrganisationMoreInformation,
-                viewModel.CompanyInfoFileName,
-                viewModel.OrganisationMoreInformationFile),
+                viewModel.OrganisationMoreInformationFiles,
+                formFile),
             cancellationToken);
 
-        if (result.HasValidationErrors)
-        {
-            ModelState.AddValidationErrors(result);
-            return View("MoreInformationAboutOrganization", viewModel);
-        }
+            if (result.HasValidationErrors)
+            {
+                ModelState.AddValidationErrors(result);
+                return View("MoreInformationAboutOrganization", viewModel);
+            }
 
-        return await Continue(new { Id = id });
+            return RedirectToAction("MoreInformationAboutOrganization", new { Id = id });
+        }
+        else
+        {
+            var result = await _mediator.Send(
+                new ProvideMoreInformationAboutOrganizationCommand(
+                    LoanApplicationId.From(id),
+                    viewModel.OrganisationMoreInformation,
+                    viewModel.OrganisationMoreInformationFiles),
+                cancellationToken);
+
+            if (result.HasValidationErrors)
+            {
+                ModelState.AddValidationErrors(result);
+                return View("MoreInformationAboutOrganization", viewModel);
+            }
+
+            return await Continue(new { Id = id });
+        }
     }
 
     [HttpGet("how-many-homes-built")]

@@ -46,9 +46,11 @@ public static class ValidationErrorMessage
 
     public const string HomesBuiltIncorrectNumber = "The number of homes your organisation has built in the past 3 years must be 99,999 or less";
 
-    public const string FileIncorrectSize = "The selected file must be smaller than or equal to {0}MB";
+    public const string FileIncorrectSize = "The selected file must be smaller than {0}MB";
 
     public const string FileIncorrectFormat = "The selected file must be a PDF, Word Doc, JPEG or RTF";
+
+    public const string FilesMaxCount = "You can only select up to {0} files";
 
     public const string LoanPurpose = "Select what you need Homes England funding for";
 

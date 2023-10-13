@@ -12,7 +12,9 @@ public class GetCompanyStructureQueryHandler : IRequestHandler<GetCompanyStructu
 
     private readonly ICompanyStructureRepository _companyStructureRepository;
 
-    public GetCompanyStructureQueryHandler(ILoanUserContext loanUserContext, ICompanyStructureRepository companyStructureRepository)
+    public GetCompanyStructureQueryHandler(
+        ILoanUserContext loanUserContext,
+        ICompanyStructureRepository companyStructureRepository)
     {
         _loanUserContext = loanUserContext;
         _companyStructureRepository = companyStructureRepository;

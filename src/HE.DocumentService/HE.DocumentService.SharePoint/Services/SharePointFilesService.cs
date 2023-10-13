@@ -12,9 +12,11 @@ using HE.DocumentService.SharePoint.Extensions;
 using HE.DocumentService.SharePoint.Interfaces;
 using HE.DocumentService.SharePoint.Models.File;
 using HE.DocumentService.SharePoint.Models.Table;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Graph;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.News.DataModel;
+using Portable.Xaml.Markup;
 using File = Microsoft.SharePoint.Client.File;
 
 namespace HE.DocumentService.SharePoint.Services;
@@ -65,7 +67,8 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
                 item => item["FileRef"],
                 item => item["FileLeafRef"],
                 item => item["Modified"],
-                item => item["File_x0020_Size"]),
+                item => item["File_x0020_Size"],
+                item => item["_ModerationComments"]),
                 items => items.ListItemCollectionPosition);
         //_spContext.Load(listItems);
         await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
@@ -96,30 +99,28 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
         await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
     }
 
-    public async Task UploadFile(SharepointFileUploadModel item)
+    public async Task UploadFile(FileUploadModel<IFormFile> item) => await UploadFile(_mapper.Map<FileUploadModel<FileData>>(item));
+
+    public async Task UploadFile(FileUploadModel<FileData> item)
     {
-        var folder = _sharePointFolderService.CreateFolderIfNotExist(item.ListTitle, item.FolderPath);
-
-        using var ms = new MemoryStream();
-        await item.File.CopyToAsync(ms);
-        var bytes = ms.ToArray();
-
-        if (bytes.Length == 0)
+        if (item.File.Data.Length == 0)
         {
             throw new SharepointException("The file is 0 bytes. Something went wrong, contact your system administrator.");
         }
 
-        if (bytes.Length > _spConfig.FileMaxSize)
+        if (item.File.Data.Length > _spConfig.FileMaxSize)
         {
             throw new SharepointException($"Max file size is {Math.Round((double)_spConfig.FileMaxSize / 1024 / 1024, 2)}MB");
         }
 
         try
         {
+            var folder = _sharePointFolderService.CreateFolderIfNotExist(item.ListTitle, item.FolderPath);
+
             var file = folder.Files.Add(new FileCreationInformation
             {
-                ContentStream = new MemoryStream(bytes),
-                Url = item.File.FileName,
+                ContentStream = new MemoryStream(item.File.Data),
+                Url = item.File.Name,
                 Overwrite = item.Overwrite ?? false
             });
 
@@ -133,7 +134,7 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
         {
             if (ex.ServerErrorCode == SPErrorCodes.FileAlreadyExists)
             {
-                throw new SharepointException($"File {item.File.FileName} already exists");
+                throw new SharepointException($"File {item.File.Name} already exists");
             }
         }
     }

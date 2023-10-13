@@ -6,8 +6,6 @@ public interface IAppConfig
 
     public string? AppName { get; set; }
 
-    public int MaxFileSizeInMegabytes { get; set; }
-
     public CacheConfig Cache { get; set; }
 
     public DataverseConfig? Dataverse { get; set; }

@@ -1,7 +1,10 @@
 using System.Globalization;
+using System.Threading;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Domain;
+using HE.Investments.DocumentService.Models.File;
+using Microsoft.AspNetCore.Http;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
@@ -17,15 +20,15 @@ public class OrganisationMoreInformationFile : ValueObject
         AllowedFileExtension.RTF,
     };
 
-    public OrganisationMoreInformationFile(string fileName, byte[] content, int maxFileSizeInMb)
+    public OrganisationMoreInformationFile(FileData file, int maxFileSizeInMb)
     {
         var operationResult = OperationResult.New();
-        if (!_allowedExtensions.Contains(Path.GetExtension(fileName).ToLowerInvariant()))
+        if (!_allowedExtensions.Contains(Path.GetExtension(file.Name).ToLowerInvariant()))
         {
             operationResult.AddValidationError(nameof(OrganisationMoreInformationFile), ValidationErrorMessage.FileIncorrectFormat);
         }
 
-        if (content.Length > maxFileSizeInMb * 1024 * 1024)
+        if (file.Data.Length > maxFileSizeInMb * 1024 * 1024)
         {
             operationResult.AddValidationError(
                 nameof(OrganisationMoreInformationFile),
@@ -33,17 +36,13 @@ public class OrganisationMoreInformationFile : ValueObject
         }
 
         operationResult.CheckErrors();
-        FileName = fileName;
-        Content = content;
+        File = file;
     }
 
-    public string FileName { get; }
-
-    public byte[] Content { get; }
+    public FileData File { get; }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
-        yield return FileName;
-        yield return Content;
+        yield return File;
     }
 }

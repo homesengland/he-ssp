@@ -20,10 +20,12 @@ public class ProvideHowManyHomesBuiltCommandHandler :
     public async Task<OperationResult> Handle(ProvideHowManyHomesBuiltCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            x =>
+            (companyStructure, userAccount) =>
             {
                 var homesBuild = request.HomesBuilt.IsProvided() ? HomesBuilt.FromString(request.HomesBuilt!) : null;
-                x.ProvideHowManyHomesBuilt(homesBuild);
+                companyStructure.ProvideHowManyHomesBuilt(homesBuild);
+
+                return Task.CompletedTask;
             },
             request.LoanApplicationId,
             cancellationToken);

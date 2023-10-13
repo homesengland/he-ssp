@@ -39,7 +39,7 @@ public class ProvideMoreInformationAboutOrganizationCommandHandlerTests : TestBa
 
         // when
         var result = await TestCandidate.Handle(
-            new ProvideMoreInformationAboutOrganizationCommand(loanApplicationId, newMoreInformation, null, null),
+            new ProvideMoreInformationAboutOrganizationCommand(loanApplicationId, newMoreInformation, null),
             CancellationToken.None);
 
         // then
