@@ -12,8 +12,6 @@ public class SiteViewModel
 
     public SectionStatus Status { get; set; }
 
-    public string? CheckAnswers { get; set; }
-
     public string? DefaultName { get; set; }
 
     public string? Name { get; set; }
@@ -24,27 +22,17 @@ public class SiteViewModel
 
     public string? PlanningRefEnter { get; set; }
 
-    public string? SitePurchaseFrom { get; set; }
-
     public string? Ownership { get; set; }
 
     public string? ManyHomes { get; set; }
 
     public string? GrantFunding { get; set; }
 
-    public string? TitleNumber { get; set; }
-
     public string[]? TypeHomes { get; set; }
 
     public string? TypeHomesOther { get; set; }
 
     public string? HomesToBuild { get; set; }
-
-    public string? PurchaseDay { get; set; }
-
-    public string? PurchaseMonth { get; set; }
-
-    public string? PurchaseYear { get; set; }
 
     public DateTime? PurchaseDate { get; set; }
 
@@ -101,164 +89,5 @@ public class SiteViewModel
     public SectionStatus GetSectionStatus()
     {
         return Status;
-    }
-
-    public void RemoveAlternativeRoutesData()
-    {
-        if (TypeHomes != null && !TypeHomes.Contains(CommonResponse.Other))
-        {
-            TypeHomesOther = null;
-        }
-
-        if (PlanningRef == CommonResponse.No)
-        {
-            PlanningRefEnter = null;
-            Location = null;
-            PlanningStatus = null;
-        }
-
-        if (LocationOption == ProjectFormOption.Coordinates)
-        {
-            LocationLandRegistry = null;
-        }
-        else if (LocationOption == ProjectFormOption.LandRegistryTitleNumber)
-        {
-            LocationCoordinates = null;
-        }
-
-        if (Ownership == CommonResponse.No)
-        {
-            PurchaseDate = null;
-            Cost = null;
-            Value = null;
-            Source = null;
-        }
-
-        if (GrantFunding != CommonResponse.Yes)
-        {
-            GrantFundingSource = null;
-            GrantFundingAmount = null;
-            GrantFundingName = null;
-            GrantFundingPurpose = null;
-        }
-
-        if (ChargesDebt == CommonResponse.No)
-        {
-            ChargesDebtInfo = null;
-        }
-    }
-
-    public bool AllInformationIsProvided()
-    {
-        return BasicInformationProvided() &&
-            PlanningReferenceProvided() &&
-            OwnershipInformationProvided() &&
-            GrantFundingInformationProvided();
-    }
-
-    public bool AnyBasicInformationIsProvided()
-    {
-        return !string.IsNullOrEmpty(Name) ||
-                !string.IsNullOrEmpty(ManyHomes) ||
-                !string.IsNullOrEmpty(HasEstimatedStartDate) ||
-                TypeHomes != null || TypeHomes?.Length > 0 ||
-                !string.IsNullOrEmpty(Type) ||
-                !string.IsNullOrEmpty(ChargesDebt) ||
-                !string.IsNullOrEmpty(PlanningRef) ||
-                !string.IsNullOrEmpty(Ownership) ||
-                !string.IsNullOrEmpty(GrantFunding) ||
-                !string.IsNullOrEmpty(AffordableHomes) ||
-                !string.IsNullOrEmpty(CheckAnswers);
-    }
-
-    public void SetFlowCompletion(bool value)
-    {
-        IsFlowCompleted = value;
-    }
-
-    private bool BasicInformationProvided()
-    {
-        return !string.IsNullOrEmpty(Name) &&
-                !string.IsNullOrEmpty(ManyHomes) &&
-                !string.IsNullOrEmpty(HasEstimatedStartDate) &&
-                TypeHomes != null && TypeHomes.Length > 0 &&
-                !string.IsNullOrEmpty(Type) &&
-                !string.IsNullOrEmpty(ChargesDebt) &&
-                !string.IsNullOrEmpty(AffordableHomes);
-    }
-
-    private bool PlanningReferenceProvided()
-    {
-        if (string.IsNullOrEmpty(PlanningRef))
-        {
-            return false;
-        }
-
-        if (PlanningRef == CommonResponse.Yes && !PlanningInformationProvided())
-        {
-            return false;
-        }
-
-        return ProjectLocationProvided();
-    }
-
-    private bool PlanningInformationProvided()
-    {
-        return !string.IsNullOrEmpty(PlanningRefEnter) && !string.IsNullOrEmpty(PlanningStatus);
-    }
-
-    private bool ProjectLocationProvided()
-    {
-        if (string.IsNullOrEmpty(LocationOption))
-        {
-            return false;
-        }
-
-        if (LocationOption == ProjectFormOption.Coordinates)
-        {
-            return !string.IsNullOrEmpty(LocationCoordinates);
-        }
-        else
-        {
-            return !string.IsNullOrEmpty(LocationLandRegistry);
-        }
-    }
-
-    private bool OwnershipInformationProvided()
-    {
-        if (string.IsNullOrEmpty(Ownership))
-        {
-            return false;
-        }
-
-        if (Ownership == CommonResponse.No)
-        {
-            return true;
-        }
-
-        return !string.IsNullOrEmpty(PurchaseDay)
-                && !string.IsNullOrEmpty(PurchaseMonth)
-                && !string.IsNullOrEmpty(PurchaseYear)
-                && !string.IsNullOrEmpty(Cost)
-                && !string.IsNullOrEmpty(Value)
-                && !string.IsNullOrEmpty(Source);
-    }
-
-    private bool GrantFundingInformationProvided()
-    {
-        if (string.IsNullOrEmpty(GrantFunding))
-        {
-            return false;
-        }
-
-        if (GrantFunding is CommonResponse.No or CommonResponse.DoNotKnow)
-        {
-            return true;
-        }
-
-        return !string.IsNullOrEmpty(GrantFundingName) &&
-            !string.IsNullOrEmpty(GrantFundingSource) &&
-            !string.IsNullOrEmpty(GrantFundingAmount) &&
-            !string.IsNullOrEmpty(GrantFundingPurpose);
     }
 }

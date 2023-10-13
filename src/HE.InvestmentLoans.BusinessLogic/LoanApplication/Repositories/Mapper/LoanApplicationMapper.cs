@@ -1,8 +1,12 @@
 using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.BusinessLogic.Projects;
+using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.Funding;
 using HE.InvestmentLoans.Contract.Security;
@@ -11,7 +15,7 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 
 public static class LoanApplicationMapper
 {
-    public static LoanApplicationViewModel Map(LoanApplicationDto loanApplicationDto)
+    public static LoanApplicationViewModel Map(LoanApplicationDto loanApplicationDto, DateTime now)
     {
         return new LoanApplicationViewModel
         {
@@ -23,12 +27,7 @@ public static class LoanApplicationMapper
             Security = MapToSecurityViewModel(loanApplicationDto),
             Account = MapToAccountDetailsViewModel(loanApplicationDto),
             ReferenceNumber = loanApplicationDto.name,
-            Sites = loanApplicationDto.siteDetailsList.Select(c => new SiteViewModel
-            {
-                Id = Guid.Parse(c.siteDetailsId),
-                Name = c.Name,
-                Status = SectionStatusMapper.Map(c.completionStatus),
-            }).ToList(),
+            Projects = ApplicationProjectsMapper.Map(loanApplicationDto, now).Projects.Select(p => ProjectMapper.MapToViewModel(p, LoanApplicationId.From(loanApplicationDto.loanApplicationId))),
         };
     }
 

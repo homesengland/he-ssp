@@ -61,7 +61,7 @@ public class LoanApplicationEntity
         }
 
         Id = newId;
-        SyncToLegacyModel();
+
     }
 
     public bool IsReadOnly()
@@ -120,8 +120,8 @@ public class LoanApplicationEntity
     {
         const int minimumHomesToBuild = 5;
         var cultureInfo = CultureInfo.InvariantCulture;
-        var result = LegacyModel.Sites
-                        .Select(site => site.ManyHomes)
+        var result = LegacyModel.Projects
+                        .Select(site => site.HomesCount)
                         .Where(manyHomes => !string.IsNullOrEmpty(manyHomes))
                         .Select(manyHomes => int.TryParse(manyHomes, NumberStyles.Integer, cultureInfo, out var parsedValue) ? parsedValue : 0)
                         .Aggregate(0, (x, y) => x + y);
@@ -137,15 +137,5 @@ public class LoanApplicationEntity
     private bool IsSubmitted()
     {
         return ExternalStatus == ApplicationStatus.ApplicationSubmitted;
-    }
-
-    private void SyncToLegacyModel()
-    {
-        LegacyModel = new LoanApplicationViewModel
-        {
-            ID = Id.Value,
-            State = LoanApplicationWorkflow.State.TaskList,
-        };
-        LegacyModel.AddNewSite();
     }
 }

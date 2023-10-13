@@ -24,9 +24,9 @@
         @await Html.PartialAsync("_SecurityAnswers", Model.Security)
 
         <gds-h2>Project details</gds-h2>
-        @foreach (var site in Model.Sites)
+        @foreach (var project in Model.Projects)
         {
-            @await Html.PartialAsync("_ProjectAnswers", site)
+            @await Html.PartialAsync("_ProjectAnswers", project)
         }
 
 

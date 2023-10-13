@@ -29,19 +29,6 @@ public class SubmitLoanApplicationCommandHandler : IRequestHandler<SubmitLoanApp
         var loanApplication = await _loanApplicationRepository
                                 .GetLoanApplication(request.LoanApplicationId, await _loanUserContext.GetSelectedAccount(), cancellationToken);
 
-        var sessionModel = _contextAccessor.HttpContext?.Session.Get<LoanApplicationViewModel>(request.LoanApplicationId.ToString());
-
-        if (sessionModel != null)
-        {
-            loanApplication.LegacyModel.UseSectionsFrom(sessionModel);
-        }
-
-        // Added temporarily until saving every section to crm is implemented
-        loanApplication.CheckIfCanBeSubmitted();
-
-        // Added temporarily until saving every section to crm is implemented
-        await _loanApplicationRepository.Save(loanApplication.LegacyModel, await _loanUserContext.GetSelectedAccount());
-
         await loanApplication.Submit(_canSubmitLoanApplication, cancellationToken);
     }
 }
