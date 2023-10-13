@@ -147,7 +147,9 @@
     <Compile Include="Handlers\LoanApplications\SendEmailToNewOwnerHandler.cs" />
     <Compile Include="Handlers\LoanApplications\SendInternalNotificationOnStatusChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\SetFieldsWhenChangingStatusFromDraftHandler.cs" />
+    <Compile Include="Handlers\LoanApplications\SetLastModificationDateHandler.cs" />
     <Compile Include="Handlers\LoanStatusChange\SendNotificationOnCreateHandler.cs" />
+    <Compile Include="Handlers\SiteDetails\SetLastModificationDateOnRelatedLoanApplicationHandler.cs" />
     <Compile Include="Models\AzureAdToken.cs" />
     <Compile Include="Plugins\Contract\RejectAddingWhenRelatedLoanInApprovedStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeLoanApplicationExternalStatusPlugin.cs" />
@@ -167,6 +169,7 @@
     <Compile Include="Plugins\CustomApi\UpdateSingleSiteDetailsPlugin.cs" />
     <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateUserProfilePlugin.cs" />
+    <Compile Include="Plugins\LoanApplications\SetLastModificationDatePlugin.cs" />
     <Compile Include="Plugins\LoanStatusChange\SendNotificationOnCreatePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\ChangeApplicationStatusOnOwnerChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\ChangeInternalStatusOnExternalStatusChangePlugin.cs" />
@@ -174,6 +177,7 @@
     <Compile Include="Plugins\LoanApplications\SendEmailToNewOwnerPlugin.cs" />
     <Compile Include="Plugins\LoanApplications\SendInternalNotificationOnStatusChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\SetFieldsWhenChangingStatusFromDraftPlugin.cs" />
+    <Compile Include="Plugins\SiteDetails\SetLastModificationDateOnRelatedLoanApplicationPlugin.cs" />
     <Compile Include="Services\Accounts\AccountService.cs" />
     <Compile Include="Services\Accounts\IAccountService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

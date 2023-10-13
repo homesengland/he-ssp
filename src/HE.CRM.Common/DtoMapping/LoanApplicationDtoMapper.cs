@@ -111,7 +111,7 @@ namespace HE.CRM.Common.DtoMapping
                 SiteDetailsCompletionStatus = loanApplication.invln_sitedetailscompletionstatus?.Value,
 
                 //OTHRER ATTRIBUTES
-                LastModificationOn = loanApplication.ModifiedOn,
+                LastModificationOn = loanApplication.invln_lastmmodificationdate,
                 loanApplicationExternalStatus = loanApplication.invln_ExternalStatus?.Value,
 
                 name = loanApplication.invln_Name,
