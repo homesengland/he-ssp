@@ -114,8 +114,8 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
 
         _machine.Configure(ProjectState.ChargesDebt)
             .Permit(Trigger.Continue, ProjectState.AffordableHomes)
-            .PermitIf(Trigger.Back, ProjectState.GrantFundingMore)
-            .PermitIf(Trigger.Back, ProjectState.GrantFunding)
+            .PermitIf(Trigger.Back, ProjectState.GrantFundingMore, () => _model.GrantFundingStatus == CommonResponse.Yes)
+            .PermitIf(Trigger.Back, ProjectState.GrantFunding, () => _model.GrantFundingStatus != CommonResponse.Yes)
             .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
         _machine.Configure(ProjectState.AffordableHomes)
