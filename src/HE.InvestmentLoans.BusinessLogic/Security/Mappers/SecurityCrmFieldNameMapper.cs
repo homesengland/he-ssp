@@ -26,7 +26,7 @@ public static class SecurityCrmFieldNameMapper
             SecurityFieldsSet.GetEmpty => ExternalStatus,
             SecurityFieldsSet.ChargesDebtCompany => DebentureHolder + OutstandingLegalChargesOrDebt,
             SecurityFieldsSet.DirLoans => DirectorLoans,
-            SecurityFieldsSet.DirLoansSub => ConfirmationDirectorLoansCanBeSubordinated + ReasonForDirectorLoanNotSubordinated,
+            SecurityFieldsSet.DirLoansSub => DirectorLoans + ConfirmationDirectorLoansCanBeSubordinated + ReasonForDirectorLoanNotSubordinated,
             SecurityFieldsSet.GetAllFields => ExternalStatus +
                                               DebentureHolder +
                                               OutstandingLegalChargesOrDebt +

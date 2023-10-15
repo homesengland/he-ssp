@@ -191,8 +191,8 @@
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
         { "Title", "Legal charges" },
-        { "Value", Model?.ChargesDebtInfo != null ? $"{ Model.ChargesDebt }, { Model.ChargesDebtInfo }" : $"{ Model?.ChargesDebt }" },
-        { "Link", Url.Action("GrantFunding", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+        { "Value", Model?.ChargesDebtInfo != null ? $"{ Model.ChargesDebt }, { Model.ChargesDebtInfo }" :  Model?.ChargesDebt },
+        { "Link", Url.Action("ChargesDebt", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
         { "LinkId", "charges-debt" },
         { "IsEditable", Model?.IsEditable() }
     })
@@ -201,7 +201,7 @@
     {
         { "Title", "Affordable homes" },
         { "Value", Model?.AffordableHomes },
-        { "Link", Url.Action("GrantFunding", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+        { "Link", Url.Action("AffordableHomes", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
         { "LinkId", "affordable-homes" },
         { "IsEditable", Model?.IsEditable() }
     })

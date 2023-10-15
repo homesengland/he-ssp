@@ -1,4 +1,5 @@
 @using HE.InvestmentLoans.Contract.Projects
+@using HE.InvestmentLoans.Contract.Projects.ViewModels;
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
@@ -8,8 +9,8 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Details
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.ChargesDebt));
-    var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.ChargesDebtInfo));
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.ChargesDebt));
+    var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.ChargesDebtInfo));
 }
 
 <gds-div-grid-column-two-thirds>

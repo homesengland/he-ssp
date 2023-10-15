@@ -246,6 +246,20 @@ public class CheckAnswersTests
     }
 
     [Fact]
+    public void ShouldChangeStatusToCompleted_WhenAllDataWithoutAlternativeDataIsProvided()
+    {
+        // given
+        var project = ProjectTestData.ProjectWithoutAlternativeData();
+        project.ProvideGrantFundingStatus(PublicSectorGrantFundingStatus.Unknown);
+
+        // when
+        project.CheckAnswers(YesNoAnswers.Yes);
+
+        // then
+        project.Status.Should().Be(SectionStatus.Completed);
+    }
+
+    [Fact]
     public void ShouldChangeStatusToCompleted_WhenAllDataIsProvided()
     {
         // given

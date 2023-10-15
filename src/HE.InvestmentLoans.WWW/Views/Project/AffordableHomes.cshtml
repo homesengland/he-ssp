@@ -1,4 +1,5 @@
 @using HE.InvestmentLoans.Contract.Projects
+@using HE.InvestmentLoans.Contract.Projects.ViewModels;
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
@@ -7,7 +8,7 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.AffordableHomes));
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.AffordableHomes));
 }
 
 <gds-div-grid-column-two-thirds>

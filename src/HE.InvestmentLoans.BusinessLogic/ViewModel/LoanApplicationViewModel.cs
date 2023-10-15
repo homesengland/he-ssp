@@ -4,6 +4,7 @@ using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.Funding;
+using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.Contract.Security;
 
 namespace HE.InvestmentLoans.BusinessLogic.ViewModel;
@@ -15,8 +16,7 @@ public class LoanApplicationViewModel
         Company = new CompanyStructureViewModel();
         Funding = new FundingViewModel();
         Security = new SecurityViewModel();
-        Sites = new List<SiteViewModel>();
-        Projects = new List<Project>();
+        Projects = new List<ProjectViewModel>();
         ID = Guid.NewGuid();
         State = LoanApplicationWorkflow.State.AboutLoan;
         Account = TemporaryAccount();
@@ -40,9 +40,7 @@ public class LoanApplicationViewModel
 
     public SecurityViewModel Security { get; set; }
 
-    public List<SiteViewModel> Sites { get; set; }
-
-    public List<Project> Projects { get; set; }
+    public IEnumerable<ProjectViewModel> Projects { get; set; }
 
     public AccountDetailsViewModel Account { get; set; }
 
@@ -54,37 +52,6 @@ public class LoanApplicationViewModel
 
     public string? WithdrawReason { get; set; }
 
-    public SiteViewModel AddNewSite()
-    {
-        const string newProjectName = "New project";
-
-        var site = new SiteViewModel
-        {
-            Id = Guid.NewGuid(),
-            DefaultName = newProjectName,
-        };
-
-        Sites.Add(site);
-
-        return site;
-    }
-
-    public Tuple<bool, string> ToggleDeleteProjectName(ICacheService cacheService, string passedDeleteProjectName = "")
-    {
-        const string deleteProjectKey = "DeleteProject";
-        var isDeletedProjectInCache = true;
-        var deletedProjectFromCache = cacheService.GetValue<string>(deleteProjectKey) ?? string.Empty;
-
-        if (string.IsNullOrEmpty(deletedProjectFromCache))
-        {
-            isDeletedProjectInCache = false;
-        }
-
-        cacheService.SetValue(deleteProjectKey, passedDeleteProjectName);
-
-        return Tuple.Create(isDeletedProjectInCache, deletedProjectFromCache);
-    }
-
     public void SetTimestamp(DateTime? timestamp)
     {
         Timestamp = timestamp;
@@ -94,7 +61,6 @@ public class LoanApplicationViewModel
     {
         Projects = model.Projects;
         Security = model.Security;
-        Sites = model.Sites;
         Funding = model.Funding;
         Timestamp = model.Timestamp;
     }
@@ -104,8 +70,8 @@ public class LoanApplicationViewModel
         return Company.IsCompleted()
             && (Security.State == SectionStatus.Completed || Security.IsFlowCompleted)
             && (Funding.IsCompleted() || Funding.IsFlowCompleted)
-            && (Sites.All(x => x.Status == SectionStatus.Completed) || Sites.All(x => x.IsFlowCompleted))
-            && Sites.Count > 0;
+            && Projects.All(x => x.Status == SectionStatus.Completed)
+            && Projects.Any();
     }
 
     private AccountDetailsViewModel TemporaryAccount() => new()

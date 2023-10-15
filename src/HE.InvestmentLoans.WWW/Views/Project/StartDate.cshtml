@@ -1,8 +1,9 @@
 @using HE.InvestmentLoans.Contract.Projects;
+@using HE.InvestmentLoans.Contract.Projects.ViewModels;
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.HasEstimatedStartDate));
-    var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.EstimatedStartDay));
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.HasEstimatedStartDate));
+    var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.EstimatedStartDay));
 }
 
 <gds-div-grid-column-two-thirds>
