@@ -34,6 +34,9 @@ public class OrganizationRepository : IOrganizationRepository
                 organizationDetailsDto.addressLine3,
                 organizationDetailsDto.city,
                 organizationDetailsDto.postalcode,
-                organizationDetailsDto.country));
+                organizationDetailsDto.country),
+            new ContactInformation(
+                organizationDetailsDto.compayAdminContactTelephone,
+                organizationDetailsDto.compayAdminContactEmail));
     }
 }

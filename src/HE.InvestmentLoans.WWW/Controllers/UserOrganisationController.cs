@@ -40,8 +40,32 @@ public class UserOrganisationController : Controller
                 new List<ProgrammeModel> { ProgrammesConsts.LoansProgramme },
                 new List<ActionModel>
                 {
-                    new ActionModel($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", string.Empty, "Dashboard"),
+                    new ActionModel($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "OrganizationDetails", "UserOrganisation"),
                     new ActionModel($"Manage your account", string.Empty, "Dashboard"),
                 }));
     }
+
+    [HttpGet("organization-details")]
+    public async Task<IActionResult> OrganizationDetails()
+    {
+        var organisationResult = await _mediator.Send(new GetUserOrganisationInformationQuery());
+
+        var address = new List<string>
+        {
+            organisationResult.OrganizationBasicInformation?.Address.Line1 ?? string.Empty,
+            organisationResult.OrganizationBasicInformation.Address.Line2 ?? string.Empty,
+            organisationResult.OrganizationBasicInformation.Address.City ?? string.Empty,
+            organisationResult.OrganizationBasicInformation.Address.PostalCode ?? string.Empty,
+        };
+
+        return View(
+            "OrganizationDetails",
+            new OrganisationDetailsModel(
+                organisationResult.OrganizationBasicInformation.RegisteredCompanyName,
+                organisationResult.OrganizationBasicInformation.ContactInformation.PhoneNUmber,
+                address,
+                organisationResult.OrganizationBasicInformation.CompanyRegistrationNumber,
+                "Smaple org requsgsaj"));
+    }
+
 }

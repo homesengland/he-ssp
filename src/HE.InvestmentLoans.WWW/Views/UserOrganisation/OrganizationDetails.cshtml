@@ -1,0 +1,63 @@
+@model HE.InvestmentLoans.WWW.Models.OrganisationDetailsModel;
+
+<gds-div-grid-column-full>
+    <form asp-controller="Organisation" asp-action="OrganisationDetails" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("Index", "UserOrganisation", new {})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <gds-h1 class="govuk-heading-xl govuk-!-margin-bottom-9">
+            Manage @Model.OrganisationName details
+        </gds-h1>
+
+        <gds-h3 class="govuk-heading-l">
+            Organisation details
+        </gds-h3>
+
+        <gds-summary-list class="govuk-!-margin-bottom-9">
+
+            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            {
+            { "Title", "Registered company name" },
+            { "Value", Model.OrganisationName },
+            { "Link", "" },
+            { "LinkId", "" },
+            { "IsEditable", false }
+            })
+
+            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            {
+            { "Title", "Organisation phone number" },
+            { "Value", Model.OrganisationPhoneNumber },
+            { "Link", "" },
+            { "LinkId", "" },
+            { "IsEditable", false }
+            })
+
+            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            {
+            { "Title", "Organisation address" },
+            { "Value", Model.OrganisationAddress },
+            { "Link", ""},
+            { "LinkId", "" },
+            { "IsEditable", false }
+            })
+
+            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            {
+            { "Title", "Companies House Registration number" },
+            { "Value", Model.CompaniesHouseNumber },
+            { "Link", "" },
+            { "LinkId", "" },
+            { "IsEditable", false }
+            })
+
+        </gds-summary-list>
+
+        <gds-div-grid-column-two-thirds class="govuk-!-padding-0">
+            <div class="govuk-inset-text" data-testid="user-organisation-limited-user">
+                Your request to be part of @Model.OrganisationName has been received. It will be reviewed and approved. In the meantime you can start a new application. You will not be able to see all of @Model.OrganisationName applications until you have been approved.
+            </div>
+        </gds-div-grid-column-two-thirds>
+    </form>
+</gds-div-grid-column-full>
