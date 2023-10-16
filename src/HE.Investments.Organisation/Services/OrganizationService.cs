@@ -9,9 +9,9 @@ public class OrganizationService : IOrganizationService
     private readonly IOrganizationServiceAsync2 _service;
 
     private readonly string youRequested = "You requested";
-    //private readonly string someoneElseRequested = "Someoneelse requested";
-    //private readonly string noRequest = "No request";
 
+    // private readonly string someoneElseRequested = "Someoneelse requested";
+    // private readonly string noRequest = "No request";
     public OrganizationService(IOrganizationServiceAsync2 service)
     {
         _service = service;
@@ -25,7 +25,7 @@ public class OrganizationService : IOrganizationService
 
     public string GetOrganisationChangeDetailsRequest(Guid accountId)
     {
-        //var account = await _service.RetrieveAsync("account", accountId, new ColumnSet(true));
+        // var account = await _service.RetrieveAsync("account", accountId, new ColumnSet(true));
         return youRequested;
     }
 
