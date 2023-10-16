@@ -24,8 +24,19 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
         _mediator = mediator;
     }
 
+    public async Task<IActionResult> Index(Guid id)
+    {
+        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureFieldsSet.GetEmpty));
+        if (response.ViewModel.IsReadOnly())
+        {
+            return RedirectToAction("CheckAnswers", new { Id = id });
+        }
+
+        return RedirectToAction("StartCompanyStructure", new { Id = id });
+    }
+
     [HttpGet("start-company-structure")]
-    [WorkflowState(CompanyStructureState.Index)]
+    [WorkflowState(CompanyStructureState.StartCompanyStructure)]
     public async Task<IActionResult> StartCompanyStructure(Guid id)
     {
         var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureFieldsSet.GetEmpty));
@@ -38,7 +49,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     }
 
     [HttpPost("start-company-structure")]
-    [WorkflowState(CompanyStructureState.Index)]
+    [WorkflowState(CompanyStructureState.StartCompanyStructure)]
     public async Task<IActionResult> StartCompanyStructurePost(Guid id)
     {
         return await Continue(new { Id = id });
@@ -156,7 +167,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     protected override async Task<IStateRouting<CompanyStructureState>> Routing(CompanyStructureState currentState)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
-        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id!), CompanyStructureFieldsSet.GetEmpty));
+        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id!), CompanyStructureFieldsSet.GetAllFields));
 
         return new CompanyStructureWorkflow(currentState, response.ViewModel);
     }
