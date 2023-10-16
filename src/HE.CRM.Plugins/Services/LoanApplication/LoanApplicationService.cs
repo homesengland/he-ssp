@@ -131,7 +131,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     Id = target.Id,
                     invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationUnderReview),
                     StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationUnderReview),
-                    invln_lastmmodificationdate = DateTime.UtcNow,
             });
             }
         }
@@ -173,6 +172,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
             var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, loanApplicationContact, accountId);
             loanApplicationToCreate.invln_lastmmodificationdate = DateTime.UtcNow;
+            loanApplicationToCreate.invln_lastchangebyid = requestContact.ToEntityReference();
             Guid loanApplicationGuid = Guid.NewGuid();
             if (!string.IsNullOrEmpty(loanApplicationId) && Guid.TryParse(loanApplicationId, out Guid loanAppId))
             {
@@ -236,7 +236,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     StatusCode = loanWithNewStatusCodes.StatusCode,
                     StateCode = loanWithNewStatusCodes.StateCode,
                     invln_ExternalStatus = new OptionSetValue(externalStatus),
-                    invln_lastmmodificationdate = DateTime.UtcNow,
                 };
 
                 var loanStatusChangeToCreate = new invln_Loanstatuschange()
@@ -291,6 +290,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 }
                 loanApplicationToUpdate.Id = applicationId;
                 loanApplicationToUpdate.invln_lastmmodificationdate = DateTime.UtcNow;
+                loanApplicationToUpdate.invln_lastchangebyid = contact.ToEntityReference();
+
                 _loanApplicationRepository.Update(loanApplicationToUpdate);
             }
         }
@@ -304,7 +305,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     Id = applicationId,
                     invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Withdrawn),
                     StateCode = new OptionSetValue(1),
-                    invln_lastmmodificationdate = DateTime.UtcNow,
                 };
                 _loanApplicationRepository.Update(loanApplicationToUpdate);
 
