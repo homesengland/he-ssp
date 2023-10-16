@@ -8,7 +8,7 @@ public class OrganizationService : IOrganizationService
 {
     private readonly IOrganizationServiceAsync2 _service;
 
-    private readonly string youRequested = "You requested";
+    private readonly string _youRequested = "You requested";
 
     // private readonly string someoneElseRequested = "Someoneelse requested";
     // private readonly string noRequest = "No request";
@@ -26,7 +26,7 @@ public class OrganizationService : IOrganizationService
     public string GetOrganisationChangeDetailsRequest(Guid accountId)
     {
         // var account = await _service.RetrieveAsync("account", accountId, new ColumnSet(true));
-        return youRequested;
+        return _youRequested;
     }
 
     public async Task<OrganizationDetailsDto> GetOrganizationDetails(string accountid, string contactExternalId)
