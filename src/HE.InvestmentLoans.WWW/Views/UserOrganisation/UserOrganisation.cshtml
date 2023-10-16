@@ -1,7 +1,13 @@
 @using HE.InvestmentLoans.WWW.Models.UserOrganisation
+@using HE.InvestmentLoans.WWW.Routing
 @model HE.InvestmentLoans.WWW.Models.UserOrganisation.UserOrganisationModel;
 @{
     ViewData["Title"] = "Organization";
+    ViewBag.Breadcrumbs = BreadcrumbsBuilder
+        .New()
+        .WithOrganisations()
+        .WithOrganisation(Model.OrganisationName)
+        .Build();
 }
 
 <div class="govuk-grid-column-full">

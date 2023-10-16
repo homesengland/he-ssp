@@ -10,7 +10,12 @@ namespace HE.InvestmentLoans.WWW.Tests.Views;
 
 public abstract class ViewTestBase
 {
-    protected async Task<IHtmlDocument> Render<TModel>(string viewPath, TModel model, Action<ServiceCollection>? mockDependencies = null)
+    protected async Task<IHtmlDocument> Render<TModel>(
+        string viewPath,
+        TModel? model = null,
+        Dictionary<string, object>? viewBagOrViewData = null,
+        Action<ServiceCollection>? mockDependencies = null)
+    where TModel : class
     {
         var notificationServiceMock = new Mock<INotificationService>();
         notificationServiceMock
@@ -22,7 +27,7 @@ public abstract class ViewTestBase
         mockDependencies?.Invoke(services);
         services.AddRazorTemplating();
 
-        var html = await RazorTemplateEngine.RenderPartialAsync(viewPath, model);
+        var html = await RazorTemplateEngine.RenderPartialAsync(viewPath, model, viewBagOrViewData);
 
         var document = await BrowsingContext.New().OpenAsync(r => r.Content(html), CancellationToken.None);
         return document as IHtmlDocument ?? throw new InvalidOperationException();

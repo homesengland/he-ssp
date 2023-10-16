@@ -1,3 +1,4 @@
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 
@@ -17,6 +18,16 @@ public static class HtmlFluentExtensions
         {
             filtered.Count.Should().Be(0, $"Element '{tagName}' with innerText {text} should not exist");
         }
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument IsEmpty(this IHtmlDocument htmlDocument)
+    {
+        var body = htmlDocument.GetElementsByTagName("body").FirstOrDefault();
+
+        body.Should().NotBeNull();
+        body!.ChildElementCount.Should().Be(0, "Document is not empty.");
 
         return htmlDocument;
     }

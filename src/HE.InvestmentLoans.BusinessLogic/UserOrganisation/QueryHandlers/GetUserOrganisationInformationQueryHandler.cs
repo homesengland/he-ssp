@@ -34,8 +34,9 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
         var userDetails = await _loanUserRepository.GetUserDetails(_loanUserContext.UserGlobalId);
 
         var userLoanApplications = (await _loanApplicationRepository
-            .LoadAllLoanApplications(account, cancellationToken))
-            .OrderByDescending(application => application.LastModificationDate ?? DateTime.MinValue);
+                .LoadAllLoanApplications(account, cancellationToken))
+            .OrderByDescending(application => application.CreatedOn ?? DateTime.MinValue)
+            .ThenByDescending(x => x.LastModificationDate);
 
         return new GetUserOrganisationInformationQueryResponse(
             organisationDetails,

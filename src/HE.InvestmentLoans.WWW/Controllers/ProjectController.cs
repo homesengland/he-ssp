@@ -47,8 +47,13 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("start")]
     [WorkflowState(ProjectState.Index)]
-    public async Task<IActionResult> StartProjectPost(Guid id)
+    public async Task<IActionResult> StartProjectPost(Guid id, [FromQuery] Guid? existingProjectId)
     {
+        if (existingProjectId.IsProvided())
+        {
+            return RedirectToAction(nameof(ProjectName), new { id, projectId = existingProjectId });
+        }
+
         var result = await _mediator.Send(new CreateProjectCommand(LoanApplicationId.From(id)));
 
         return await Continue(new { id, projectId = result.ReturnedData.Value });
