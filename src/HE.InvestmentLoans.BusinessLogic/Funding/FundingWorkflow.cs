@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Funding;
 using HE.InvestmentLoans.Contract.Funding.Enums;
 using Stateless;
@@ -39,7 +40,7 @@ public class FundingWorkflow : IStateRouting<FundingState>
             return FundingState.CheckAnswers;
         }
 
-        if (targetState != FundingState.Index)
+        if (targetState != FundingState.Index || _model.State == SectionStatus.NotStarted)
         {
             return targetState;
         }

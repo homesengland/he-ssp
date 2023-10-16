@@ -25,6 +25,7 @@ public static class FundingViewModelMapper
             RefinanceInfo = fundingEntity.RepaymentSystem?.Refinance?.AdditionalInformation,
             AdditionalProjects = MapAdditionalProjects(fundingEntity.AdditionalProjects),
             CheckAnswers = fundingEntity.Status == SectionStatus.Completed ? CommonResponse.Yes : null,
+            State = fundingEntity.Status,
         };
     }
 

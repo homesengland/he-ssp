@@ -24,17 +24,6 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
         _mediator = mediator;
     }
 
-    public async Task<IActionResult> Index(Guid id)
-    {
-        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureFieldsSet.GetEmpty));
-        if (response.ViewModel.IsReadOnly())
-        {
-            return RedirectToAction("CheckAnswers", new { Id = id });
-        }
-
-        return RedirectToAction("StartCompanyStructure", new { Id = id });
-    }
-
     [HttpGet("start-company-structure")]
     [WorkflowState(CompanyStructureState.StartCompanyStructure)]
     public async Task<IActionResult> StartCompanyStructure(Guid id)

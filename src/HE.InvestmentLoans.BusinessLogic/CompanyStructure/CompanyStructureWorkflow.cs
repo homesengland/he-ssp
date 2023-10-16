@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using Stateless;
 
@@ -37,7 +38,7 @@ public class CompanyStructureWorkflow : IStateRouting<CompanyStructureState>
             return CompanyStructureState.CheckAnswers;
         }
 
-        if (targetState != CompanyStructureState.StartCompanyStructure)
+        if (targetState != CompanyStructureState.StartCompanyStructure || _model.State == SectionStatus.NotStarted)
         {
             return targetState;
         }
