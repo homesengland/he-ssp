@@ -23,7 +23,7 @@ public class OrganizationService : IOrganizationService
         return _service.Create(organizationToCreate);
     }
 
-    public async Task<string> GetOrganisationChangeDetailsRequest(Guid accountId)
+    public string GetOrganisationChangeDetailsRequest(Guid accountId)
     {
         //var account = await _service.RetrieveAsync("account", accountId, new ColumnSet(true));
         return youRequested;
