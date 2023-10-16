@@ -650,6 +650,19 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             return string.Empty;
         }
 
+        public void CreateDocumentLocation(invln_Loanapplication target)
+        {
+            var documentLocation = _sharepointDocumentLocationRepository.GetByAttribute(nameof(SharePointDocumentLocation.Name).ToLower(), "Loan Application documents").FirstOrDefault();
+            var documentToCreate = new SharePointDocumentLocation()
+            {
+                RegardingObjectId = target.ToEntityReference(),
+                Name = $"Documents on Loans DEV 1",
+                RelativeUrl = $"{target.invln_Name}",
+                ParentSiteOrLocation = documentLocation.ToEntityReference(),
+            };
+            _ = _sharepointDocumentLocationRepository.Create(documentToCreate);
+        }
+
         private bool CheckIfExternalStatusCanBeChanged(int oldStatus, int newStatus)
         {
             if (oldStatus != (int)invln_ExternalStatus.Draft)
@@ -682,19 +695,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 }
             }
             return generatedAttribuesFetchXml;
-        }
-
-        public void CreateDocumentLocation(invln_Loanapplication target)
-        {
-            var documentLocation = _sharepointDocumentLocationRepository.GetByAttribute(nameof(SharePointDocumentLocation.Name), "Loan Application documents").FirstOrDefault();
-            var documentToCreate = new SharePointDocumentLocation()
-            {
-                RegardingObjectId = target.ToEntityReference(),
-                Name = $"Documents on Loans DEV 1",
-                RelativeUrl = $"{target.invln_Name}",
-                ParentSiteOrLocation = documentLocation.ToEntityReference(),
-            };
-            _ = _sharepointDocumentLocationRepository.Create(documentToCreate);
         }
 
         #endregion
