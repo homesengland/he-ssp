@@ -619,6 +619,7 @@ namespace DataverseModel
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_contact_invln_contactwebrole_Contactid = "invln_contact_invln_contactwebrole_Contactid";
 			public const string invln_contact_invln_loanapplication = "invln_contact_invln_loanapplication";
+			public const string invln_contact_invln_loanapplication_contactid = "invln_contact_invln_loanapplication_contactid";
 			public const string invln_contact_invln_loanstatuschange_changedbycontactid = "invln_contact_invln_loanstatuschange_changedbycontactid";
 			public const string invln_externalid = "invln_externalid";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
@@ -5588,6 +5589,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_contact_invln_contactwebrole_Contactid");
 				this.SetRelatedEntities<DataverseModel.invln_contactwebrole>("invln_contact_invln_contactwebrole_Contactid", null, value);
 				this.OnPropertyChanged("invln_contact_invln_contactwebrole_Contactid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_contact_invln_loanapplication_contactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_loanapplication_contactid")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Loanapplication> invln_contact_invln_loanapplication_contactid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Loanapplication>("invln_contact_invln_loanapplication_contactid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_loanapplication_contactid");
+				this.SetRelatedEntities<DataverseModel.invln_Loanapplication>("invln_contact_invln_loanapplication_contactid", null, value);
+				this.OnPropertyChanged("invln_contact_invln_loanapplication_contactid");
 			}
 		}
 		

@@ -130,8 +130,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 {
                     Id = target.Id,
                     invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationUnderReview),
-                    StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationUnderReview)
-                });
+                    StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationUnderReview),
+            });
             }
         }
 
@@ -171,6 +171,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             loanApplicationFromPortal.numberOfSites = numberOfSites.ToString();
 
             var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, loanApplicationContact, accountId);
+            loanApplicationToCreate.invln_lastmmodificationdate = DateTime.UtcNow;
+            loanApplicationToCreate.invln_lastchangebyid = requestContact.ToEntityReference();
             Guid loanApplicationGuid = Guid.NewGuid();
             if (!string.IsNullOrEmpty(loanApplicationId) && Guid.TryParse(loanApplicationId, out Guid loanAppId))
             {
@@ -287,6 +289,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     }
                 }
                 loanApplicationToUpdate.Id = applicationId;
+                loanApplicationToUpdate.invln_lastmmodificationdate = DateTime.UtcNow;
+                loanApplicationToUpdate.invln_lastchangebyid = contact.ToEntityReference();
+
                 _loanApplicationRepository.Update(loanApplicationToUpdate);
             }
         }
@@ -299,7 +304,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 {
                     Id = applicationId,
                     invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Withdrawn),
-                    StateCode = new OptionSetValue(1)
+                    StateCode = new OptionSetValue(1),
                 };
                 _loanApplicationRepository.Update(loanApplicationToUpdate);
 
@@ -644,6 +649,11 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 return $"{loanApplication.invln_Name}_{loanApplicationId}";
             }
             return string.Empty;
+        }
+
+        public void SetLastModificationDate(invln_Loanapplication target)
+        {
+            target.invln_lastmmodificationdate = DateTime.UtcNow;
         }
 
         private bool CheckIfExternalStatusCanBeChanged(int oldStatus, int newStatus)
