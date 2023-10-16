@@ -126,6 +126,7 @@ namespace DataverseModel
 			public const string invln_Confirmationdirectorloanscanbesubordinated = "invln_confirmationdirectorloanscanbesubordinated";
 			public const string invln_Contact = "invln_contact";
 			public const string invln_contact_invln_loanapplication = "invln_contact_invln_loanapplication";
+			public const string invln_contact_invln_loanapplication_contactid = "invln_contact_invln_loanapplication_contactid";
 			public const string invln_ContactName = "invln_contactname";
 			public const string invln_Dateapproved = "invln_dateapproved";
 			public const string invln_Datesubmitted = "invln_datesubmitted";
@@ -138,6 +139,8 @@ namespace DataverseModel
 			public const string invln_InternalStatus = "invln_internalstatus";
 			public const string invln_invln_emailnotification_Regarding_invln_l = "invln_invln_emailnotification_Regarding_invln_l";
 			public const string invln_invln_loanapplication_invln_contract_Loanapplication = "invln_invln_loanapplication_invln_contract_Loanapplication";
+			public const string invln_lastchangebyid = "invln_lastchangebyid";
+			public const string invln_lastchangebyidName = "invln_lastchangebyidname";
 			public const string invln_lastmmodificationdate = "invln_lastmmodificationdate";
 			public const string invln_Loanamountrequested = "invln_loanamountrequested";
 			public const string invln_loanamountrequested_Base = "invln_loanamountrequested_base";
@@ -632,6 +635,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_InternalStatus");
 				this.SetAttributeValue("invln_internalstatus", value);
 				this.OnPropertyChanged("invln_InternalStatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastchangebyid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_lastchangebyid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_lastchangebyid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_lastchangebyid");
+				this.SetAttributeValue("invln_lastchangebyid", value);
+				this.OnPropertyChanged("invln_lastchangebyid");
 			}
 		}
 		
@@ -1574,6 +1594,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_contact_invln_loanapplication");
 				this.SetRelatedEntities<DataverseModel.Contact>("invln_contact_invln_loanapplication", null, value);
 				this.OnPropertyChanged("invln_contact_invln_loanapplication");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_contact_invln_loanapplication_contactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastchangebyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_loanapplication_contactid")]
+		public DataverseModel.Contact invln_contact_invln_loanapplication_contactid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Contact>("invln_contact_invln_loanapplication_contactid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_loanapplication_contactid");
+				this.SetRelatedEntity<DataverseModel.Contact>("invln_contact_invln_loanapplication_contactid", null, value);
+				this.OnPropertyChanged("invln_contact_invln_loanapplication_contactid");
 			}
 		}
 		
