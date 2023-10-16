@@ -1,6 +1,5 @@
 using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
@@ -9,6 +8,7 @@ using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Helper;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using StackExchange.Redis;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
@@ -61,14 +61,24 @@ public class LoanApplicationEntity
         }
 
         Id = newId;
-        SyncToLegacyModel();
     }
 
-    public async Task Submit(ICanSubmitLoanApplication canSubmitLoanApplication, UserAccount userAccount, CancellationToken cancellationToken)
+    public bool IsReadOnly()
+    {
+        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
+        return readonlyStatuses.Contains(ExternalStatus);
+    }
+
+    public async Task Submit(ICanSubmitLoanApplication canSubmitLoanApplication, CancellationToken cancellationToken)
     {
         CheckIfCanBeSubmitted();
 
         await canSubmitLoanApplication.Submit(Id, cancellationToken);
+    }
+
+    public bool CanBeSubmitted()
+    {
+        return IsReadyToSubmit() && !IsSubmitted();
     }
 
     public void CheckIfCanBeSubmitted()
@@ -89,7 +99,7 @@ public class LoanApplicationEntity
 
     public async Task Withdraw(ILoanApplicationRepository loanApplicationRepository, WithdrawReason withdrawReason, CancellationToken cancellationToken)
     {
-        var statusesAfterSubmit = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
+        var statusesAfterSubmit = ApplicationStatusDivision.GetAllStatusesAfterSubmit();
 
         if (ExternalStatus == ApplicationStatus.Draft)
         {
@@ -109,8 +119,8 @@ public class LoanApplicationEntity
     {
         const int minimumHomesToBuild = 5;
         var cultureInfo = CultureInfo.InvariantCulture;
-        var result = LegacyModel.Sites
-                        .Select(site => site.ManyHomes)
+        var result = LegacyModel.Projects
+                        .Select(site => site.HomesCount)
                         .Where(manyHomes => !string.IsNullOrEmpty(manyHomes))
                         .Select(manyHomes => int.TryParse(manyHomes, NumberStyles.Integer, cultureInfo, out var parsedValue) ? parsedValue : 0)
                         .Aggregate(0, (x, y) => x + y);
@@ -126,15 +136,5 @@ public class LoanApplicationEntity
     private bool IsSubmitted()
     {
         return ExternalStatus == ApplicationStatus.ApplicationSubmitted;
-    }
-
-    private void SyncToLegacyModel()
-    {
-        LegacyModel = new LoanApplicationViewModel
-        {
-            ID = Id.Value,
-            State = LoanApplicationWorkflow.State.TaskList,
-        };
-        LegacyModel.AddNewSite();
     }
 }

@@ -30,6 +30,31 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         _dateTime = dateTime;
     }
 
+    public async Task<bool> IsExist(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var req = new invln_getsingleloanapplicationforaccountandcontactRequest
+        {
+            invln_accountid = userAccount.AccountId.ToString(),
+            invln_externalcontactid = userAccount.UserGlobalId.ToString(),
+            invln_loanapplicationid = loanApplicationId.ToString(),
+            invln_fieldstoretrieve = nameof(invln_Loanapplication.invln_LoanapplicationId).ToLowerInvariant(),
+        };
+
+        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse;
+        if (response.IsNotProvided())
+        {
+            return false;
+        }
+
+        var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response!.invln_loanapplication)?.FirstOrDefault();
+        if (loanApplicationDto.IsNotProvided() || loanApplicationDto!.loanApplicationId.IsNotProvided())
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public async Task<LoanApplicationEntity> GetLoanApplication(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
@@ -47,9 +72,9 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
 
-        return new LoanApplicationEntity(id, userAccount, externalStatus, FundingPurposeMapper.Map(loanApplicationDto.fundingReason), null, loanApplicationDto.LastModificationOn)
+        return new LoanApplicationEntity(id, userAccount, externalStatus, FundingPurposeMapper.Map(loanApplicationDto.fundingReason), loanApplicationDto.createdOn, loanApplicationDto.LastModificationOn)
         {
-            LegacyModel = LoanApplicationMapper.Map(loanApplicationDto),
+            LegacyModel = LoanApplicationMapper.Map(loanApplicationDto, _dateTime.Now),
         };
     }
 
@@ -74,88 +99,6 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
                 ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
                 x.createdOn,
                 x.LastModificationOn)).ToList();
-    }
-
-    public async Task Save(LoanApplicationViewModel loanApplication, UserAccount userAccount)
-    {
-        var siteDetailsDtos = new List<SiteDetailsDto>();
-        foreach (var site in loanApplication.Sites)
-        {
-            var siteDetail = new SiteDetailsDto()
-            {
-                Name = site.Name,
-                siteName = site.Name,
-                numberOfHomes = site.ManyHomes,
-                typeOfHomes = site.TypeHomes,
-                otherTypeOfHomes = site.TypeHomesOther,
-                typeOfSite = site.Type,
-                haveAPlanningReferenceNumber = site.PlanningRef!.MapToBool(),
-                planningReferenceNumber = site.PlanningRefEnter,
-                siteCoordinates = site.LocationCoordinates,
-                siteOwnership = site.Ownership!.MapToBool(),
-                landRegistryTitleNumber = site.LocationLandRegistry,
-                dateOfPurchase = site.PurchaseDate,
-                siteCost = site.Cost,
-                currentValue = site.Value,
-                valuationSource = site.Source,
-                publicSectorFunding = site.GrantFunding,
-                howMuch = site.GrantFundingAmount,
-                nameOfGrantFund = site.GrantFundingName,
-                reason = site.GrantFundingPurpose,
-                existingLegalCharges = site.ChargesDebt!.MapToBool(),
-                existingLegalChargesInformation = site.ChargesDebtInfo,
-                numberOfAffordableHomes = site.AffordableHomes,
-            };
-            siteDetailsDtos.Add(siteDetail);
-        }
-
-        var loanApplicationDto = new LoanApplicationDto()
-        {
-            loanApplicationId = loanApplication.ID.ToString(),
-            name = loanApplication.Account.RegisteredName,
-            contactEmailAdress = loanApplication.Account.EmailAddress,
-            fundingReason = FundingPurposeMapper.Map(loanApplication.Purpose),
-
-            // COMPANY
-            companyPurpose = loanApplication.Company.Purpose!.MapToBool(),
-            existingCompany = loanApplication.Company.OrganisationMoreInformation,
-            companyExperience = loanApplication.Company.HomesBuilt?.TryParseNullableInt(),
-            CompanyStructureAndExperienceCompletionStatus = SectionStatusMapper.Map(loanApplication.Company.State),
-
-            // FUNDING
-            projectGdv = loanApplication.Funding.GrossDevelopmentValue?.TryParseNullableDecimal(),
-            projectEstimatedTotalCost = loanApplication.Funding.TotalCosts?.TryParseNullableDecimal(),
-            projectAbnormalCosts = loanApplication.Funding.AbnormalCosts!.MapToBool(),
-            projectAbnormalCostsInformation = loanApplication.Funding.AbnormalCostsInfo,
-            privateSectorApproach = loanApplication.Funding.PrivateSectorFunding!.MapToBool(),
-            privateSectorApproachInformation = loanApplication.Funding.PrivateSectorFundingResult,
-            additionalProjects = loanApplication.Funding.AdditionalProjects!.MapToBool(),
-            refinanceRepayment = loanApplication.Funding.Refinance,
-            refinanceRepaymentDetails = loanApplication.Funding.RefinanceInfo,
-            FundingDetailsCompletionStatus = SectionStatusMapper.Map(loanApplication.Funding.State),
-
-            // SECURITY
-            outstandingLegalChargesOrDebt = loanApplication.Security.ChargesDebtCompany!.MapToBool(),
-            debentureHolder = loanApplication.Security.ChargesDebtCompanyInfo,
-            directorLoans = loanApplication.Security.DirLoans!.MapToBool(),
-            confirmationDirectorLoansCanBeSubordinated = loanApplication.Security.DirLoansSub!.MapToBool(),
-            reasonForDirectorLoanNotSubordinated = loanApplication.Security.DirLoansSubMore,
-            SecurityDetailsCompletionStatus = SectionStatusMapper.Map(loanApplication.Security.State),
-
-            // SITEDETAILS
-            siteDetailsList = siteDetailsDtos,
-        };
-
-        var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);
-        var req = new invln_sendinvestmentloansdatatocrmRequest
-        {
-            invln_entityfieldsparameters = loanApplicationSerialized,
-            invln_accountid = userAccount.AccountId.ToString(),
-            invln_contactexternalid = userAccount.UserGlobalId.ToString(),
-            invln_loanapplicationid = loanApplication.ID.ToString(),
-        };
-
-        await _serviceClient.ExecuteAsync(req);
     }
 
     public async Task Save(LoanApplicationEntity loanApplication, UserDetails userDetails, CancellationToken cancellationToken)
@@ -189,7 +132,6 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         var response = (invln_sendinvestmentloansdatatocrmResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);
         var newLoanApplicationId = LoanApplicationId.From(response.invln_loanapplicationid);
         loanApplication.SetId(newLoanApplicationId);
-        LegacySave(loanApplication.LegacyModel);
     }
 
     public async Task Submit(LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
@@ -207,12 +149,12 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     public async Task WithdrawSubmitted(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken)
     {
-        var crmWithdrawStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Withdrawn);
+        var crmWithdrawnStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Withdrawn);
 
         var request = new invln_changeloanapplicationexternalstatusRequest
         {
             invln_loanapplicationid = loanApplicationId.ToString(),
-            invln_statusexternal = crmWithdrawStatus,
+            invln_statusexternal = crmWithdrawnStatus,
             invln_changereason = withdrawReason.ToString(),
         };
 
@@ -231,12 +173,5 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         };
 
         await _serviceClient.ExecuteAsync(request, cancellationToken);
-    }
-
-    public void LegacySave(LoanApplicationViewModel legacyModel)
-    {
-        legacyModel.Timestamp = _dateTime.Now;
-
-        _httpContextAccessor.HttpContext?.Session.Set(legacyModel.ID.ToString(), legacyModel);
     }
 }

@@ -22,9 +22,13 @@
 
   <ItemGroup>
     <Compile Remove="Filters\**" />
+    <Compile Remove="Views\Shared\TaskList\**" />
     <Content Remove="Filters\**" />
+    <Content Remove="Views\Shared\TaskList\**" />
     <EmbeddedResource Remove="Filters\**" />
+    <EmbeddedResource Remove="Views\Shared\TaskList\**" />
     <None Remove="Filters\**" />
+    <None Remove="Views\Shared\TaskList\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,6 +71,14 @@
 
   <ItemGroup>
     <Folder Include="Helpers\Organisation\" />
+    <Folder Include="Utils\Serialization\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Project\ManyHomes.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

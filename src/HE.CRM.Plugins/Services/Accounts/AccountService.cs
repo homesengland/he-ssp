@@ -14,6 +14,10 @@ namespace HE.CRM.Plugins.Services.Accounts
         private readonly IAccountRepository _accountRepository;
         private readonly IContactRepository _contactRepository;
 
+        private readonly string youRequested = "You requested";
+        private readonly string someoneElseRequested = "Someoneelse requested";
+        private readonly string noRequest = "No request";
+
         #endregion
 
         #region Constructors
@@ -31,6 +35,16 @@ namespace HE.CRM.Plugins.Services.Accounts
         public string GenerateRandomAccountSampleName()
         {
             return this.GenerateRandomNumber().ToString();
+        }
+
+        public string GetOrganisationChangeDetails(string accountId)
+        {
+            if(Guid.TryParse(accountId, out Guid accountGuid))
+            {
+                var account = _accountRepository.GetById(accountGuid);
+                return youRequested;
+            }
+            return string.Empty;
         }
 
         public OrganizationDetailsDto GetOrganizationDetails(string accountid, string contactExternalId)

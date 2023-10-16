@@ -10,6 +10,7 @@ using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
@@ -29,34 +30,11 @@ public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectVi
 
     public async Task<ProjectViewModel> Handle(GetProjectQuery request, CancellationToken cancellationToken)
     {
-        var applicationProjects = await _applicationProjectsRepository.GetById(request.ApplicationId, await _loanUserContext.GetSelectedAccount(), cancellationToken);
+        var applicationProjects = await _applicationProjectsRepository.GetById(request.ApplicationId, await _loanUserContext.GetSelectedAccount(), request.ProjectFieldsSet, cancellationToken);
 
         var project = applicationProjects.Projects.FirstOrDefault(c => c.Id == request.ProjectId)
             ?? throw new NotFoundException(nameof(Project), request.ProjectId.ToString());
 
-        var additionalDetailsAreProvided = project.AdditionalDetails.IsProvided();
-
-        return new ProjectViewModel
-        {
-            ProjectId = project.Id!.Value,
-            Name = project.Name?.Value,
-            ApplicationId = applicationProjects.LoanApplicationId.Value,
-            PlanningReferenceNumberExists = project.PlanningReferenceNumber?.Exists.MapToCommonResponse(),
-            PlanningReferenceNumber = project.PlanningReferenceNumber?.Value,
-            LocationCoordinates = project.Coordinates?.Value,
-            LocationLandRegistry = project.LandRegistryTitleNumber?.Value,
-            Ownership = project.LandOwnership?.ApplicantHasFullOwnership.MapToCommonResponse(),
-            PurchaseYear = project.AdditionalDetails?.PurchaseDate.AsDateTime().Year.ToString(CultureInfo.InvariantCulture),
-            PurchaseMonth = project.AdditionalDetails?.PurchaseDate.AsDateTime().Month.ToString(CultureInfo.InvariantCulture),
-            PurchaseDay = project.AdditionalDetails?.PurchaseDate.AsDateTime().Day.ToString(CultureInfo.InvariantCulture),
-            Cost = project.AdditionalDetails?.Cost.ToString(),
-            Value = project.AdditionalDetails?.CurrentValue.ToString(),
-            Source = additionalDetailsAreProvided ? SourceOfValuationMapper.ToString(project.AdditionalDetails!.SourceOfValuation) : null,
-            GrantFundingStatus = project.GrantFundingStatus.IsProvided() ? GrantFundingStatusMapper.ToString(project.GrantFundingStatus!.Value) : null,
-            GrantFundingProviderName = project.PublicSectorGrantFunding?.ProviderName?.Value,
-            GrantFundingAmount = project.PublicSectorGrantFunding?.Amount?.ToString(),
-            GrantFundingName = project.PublicSectorGrantFunding?.GrantOrFundName?.Value,
-            GrantFundingPurpose = project.PublicSectorGrantFunding?.Purpose?.Value,
-        };
+        return ProjectMapper.MapToViewModel(project, applicationProjects.LoanApplicationId);
     }
 }

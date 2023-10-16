@@ -1,0 +1,32 @@
+@model IList<HE.InvestmentLoans.WWW.Models.UserOrganisation.ProgrammeModel>
+@if (Model.Any())
+{
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+                <gds-h3 size="ControlSize.M">
+                    Programmes you can apply for
+                </gds-h3>
+            </dt>
+        </div>
+        @foreach (var programme in Model)
+        {
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                    <gds-h3 size="ControlSize.M">
+                        @programme.Name
+                    </gds-h3>
+                    <gds-p>
+                        @programme.Description
+                    </gds-p>
+                    <a class="govuk-button"
+                       data-module="govuk-button"
+                       data-testid=@($"user-organisation-start-new-application-{programme.Name.ToLowerInvariant().Replace(' ', '-')}")
+                       href="@Url.Action(programme.CreateAction, programme.Controller)">
+                        Start new application
+                    </a>
+                </dt>
+            </div>
+        }
+    </dl>
+}

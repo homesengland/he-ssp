@@ -1,4 +1,6 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication;
+using HE.InvestmentLoans.BusinessLogic.Security;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
@@ -93,6 +95,11 @@ public class SecurityController : WorkflowController<SecurityState>
             return View("DirLoans", viewModel);
         }
 
+        if (viewModel.DirLoans == CommonResponse.Yes)
+        {
+            return await Continue(new { id, redirect });
+        }
+
         return await Continue(redirect, new { Id = id });
     }
 
@@ -109,7 +116,12 @@ public class SecurityController : WorkflowController<SecurityState>
     [WorkflowState(SecurityState.DirLoansSub)]
     public async Task<IActionResult> DirLoansSubPost(Guid id, SecurityViewModel viewModel, CancellationToken token)
     {
-        var result = await _mediator.Send(new ProvideDirectorLoansSubordinateCommand(LoanApplicationId.From(id), viewModel.DirLoansSub, viewModel.DirLoansSubMore), token);
+        var result = await _mediator.Send(
+            new ProvideDirectorLoansSubordinateCommand(
+                LoanApplicationId.From(id),
+                viewModel.DirLoansSub,
+                viewModel.DirLoansSubMore),
+            token);
 
         if (result.HasValidationErrors)
         {
@@ -156,7 +168,7 @@ public class SecurityController : WorkflowController<SecurityState>
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
 
-        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id!), SecurityFieldsSet.GetEmpty));
+        var response = await _mediator.Send(new GetSecurity(LoanApplicationId.From(id!), SecurityFieldsSet.GetAllFields));
 
         return new SecurityWorkflow(currentState, response.ViewModel);
     }

@@ -1,9 +1,9 @@
 using System.Text;
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Extensions;
-using Xunit.Sdk;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 
@@ -42,8 +42,31 @@ public static class HtmlDocumentExtensions
         var anchorElement = elementById as IHtmlAnchorElement;
         anchorElement.Should().NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
 
-        anchorElement!.GetElementsByClassName("govuk-button").SingleOrDefault().Should().NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
+        anchorElement!.GetElementsByClassName("govuk-button")
+            .SingleOrDefault()
+            .Should()
+            .NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
         return anchorElement;
+    }
+
+    public static IElement GetElementByTestId(this IHtmlDocument htmlDocument, string testId)
+    {
+        var elements = htmlDocument.QuerySelectorAll($"[data-testid='{testId}']");
+        elements.Should().NotBeNull($"Element with data-testid {testId} should exist");
+        elements.Length.Should().Be(1, $"Only one element with data-testid {testId} should exist");
+        return elements.First();
+    }
+
+    public static IHtmlAnchorElement GetLinkButtonByTestId(this IHtmlDocument htmlDocument, string testId)
+    {
+        var element = GetElementByTestId(htmlDocument, testId);
+
+        var buttonElement = element as IHtmlAnchorElement;
+        buttonElement.Should().NotBeNull($"Element with data-testid {testId} should be ItmlAnchorElement");
+        buttonElement!.ClassName.Should()
+            .Contain("govuk-button", $"Element with data-testid {testId} should be HtmlButtonElement with govuk-button class name");
+
+        return buttonElement;
     }
 
     public static string GetPageTitle(this IHtmlDocument htmlDocument)
@@ -80,9 +103,9 @@ public static class HtmlDocumentExtensions
             .SelectMany(e => e.GetElementsByClassName(CssConstants.GovUkErrorMessage));
 
         var fieldValidationErrors = fieldValidationElements!
-                                .Select(x => x.TextContent.Replace("Error:", string.Empty).Trim())
-                                .Where(x => !string.IsNullOrEmpty(x))
-                                .ToArray();
+            .Select(x => x.TextContent.Replace("Error:", string.Empty).Trim())
+            .Where(x => !string.IsNullOrEmpty(x))
+            .ToArray();
 
         fieldValidationErrors.Should().NotBeEmpty();
 
@@ -137,6 +160,15 @@ public static class HtmlDocumentExtensions
         return dictionary;
     }
 
+    public static string NotificationMessage(this IHtmlDocument htmlDocument)
+    {
+        var notificationTitle = htmlDocument.GetElementsByClassName("govuk-notification-banner__heading").SingleOrDefault();
+
+        notificationTitle.Should().NotBeNull("Cannot find notification banner at a page.");
+
+        return notificationTitle!.TextContent.Trim();
+    }
+
     public static IDictionary<string, string> GetTaskListItems(this IHtmlDocument htmlDocument)
     {
         var summaryRows = htmlDocument.GetElementsByClassName("app-task-list__item");
@@ -151,7 +183,14 @@ public static class HtmlDocumentExtensions
         return dictionary;
     }
 
-    public static (string Name, string Status) GetProjectFromTaskList(this IHtmlDocument htmlDocument, string id)
+    public static bool ProjectExistsAtTaskList(this IHtmlDocument htmlDocument, string id)
+    {
+        var projects = htmlDocument.GetTaskListProjects();
+
+        return projects.ContainsKey(id);
+    }
+
+    public static (string Name, string Status, string RemoveUrl) GetProjectFromTaskList(this IHtmlDocument htmlDocument, string id)
     {
         var projects = htmlDocument.GetTaskListProjects();
 
@@ -163,16 +202,18 @@ public static class HtmlDocumentExtensions
         return htmlDocument.GetTaskListProjects()[id];
     }
 
-    public static IDictionary<string, (string Name, string Status)> GetTaskListProjects(this IHtmlDocument htmlDocument)
+    public static IDictionary<string, (string Name, string Status, string RemoveUrl)> GetTaskListProjects(this IHtmlDocument htmlDocument)
     {
         var projectRows = htmlDocument.GetElementsByClassName("task-list-grid-container");
 
-        var dictionary = new Dictionary<string, (string Name, string Status)>();
+        var dictionary = new Dictionary<string, (string Name, string Status, string RemoveUrl)>();
         foreach (var row in projectRows)
         {
             var projectLink = row
-                .GetElementsByClassName("task-list-project-name").First()
-                .GetElementsByTagName("a").First();
+                .GetElementsByClassName("task-list-project-name")
+                .First()
+                .GetElementsByTagName("a")
+                .First();
 
             var id = projectLink.GetAttribute("href")!.GetProjectGuidFromRelativePath();
 
@@ -180,10 +221,31 @@ public static class HtmlDocumentExtensions
 
             var status = row.GetElementsByClassName("app-task-list__tag").FirstOrDefault()?.InnerHtml.Trim() ?? string.Empty;
 
-            dictionary[id] = (name, status);
+            var removeUrl = row.GetElementsByClassName("task-list-remove-link").First().GetElementsByTagName("a").First().GetAttribute("href")!;
+
+            dictionary[id] = (name, status, removeUrl);
         }
 
         return dictionary;
+    }
+
+    public static string GetSuccessNotificationBannerBody(this IHtmlDocument htmlDocument)
+    {
+        var successNotificationBanner = htmlDocument.GetElementsByClassName(CssConstants.GovUkNotificationBannerSuccess).FirstOrDefault();
+        successNotificationBanner.Should().NotBeNull("Success notification banner does not exist");
+
+        var notificationBannerContent = successNotificationBanner?.GetElementsByClassName(CssConstants.GovUkNotificationBannerContent).FirstOrDefault();
+        notificationBannerContent.Should().NotBeNull("Notification banner does not have content");
+
+        return notificationBannerContent!.InnerHtml.Trim();
+    }
+
+    public static string GetInsetText(this IHtmlDocument htmlDocument)
+    {
+        var insetText = htmlDocument.GetElementsByClassName(CssConstants.GovUkInsetText).FirstOrDefault();
+        insetText.Should().NotBeNull("Inset text does not exist");
+
+        return insetText!.InnerHtml.Trim();
     }
 
     private static string GetValueFor(AngleSharp.Dom.IElement summaryRow)

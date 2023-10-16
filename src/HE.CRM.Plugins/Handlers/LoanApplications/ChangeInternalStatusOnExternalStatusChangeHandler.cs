@@ -26,7 +26,7 @@ namespace HE.CRM.Plugins.Handlers.LoanApplications
 
         public override void DoWork()
         {
-            CrmServicesFactory.Get<ILoanApplicationService>().ChangeInternalStatusOnExternalStatusChange(target, preImage);
+            //CrmServicesFactory.Get<ILoanApplicationService>().ChangeInternalStatusOnExternalStatusChange(target, preImage);
         }
 
         #endregion

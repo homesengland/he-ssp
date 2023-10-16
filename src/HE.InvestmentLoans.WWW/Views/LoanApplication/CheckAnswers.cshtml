@@ -1,13 +1,12 @@
-@using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
-@inject MediatR.IMediator mediator
+@using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 @model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel
 @{
-    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
+    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model);
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="LoanApplication" asp-action="Workflow" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("GoBack","LoanApplication", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
+    <form asp-controller="LoanApplicationV2" asp-action="Submit" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new {id = Model.ID})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
         <gds-h1 size="ControlSize.Xl">
@@ -25,9 +24,9 @@
         @await Html.PartialAsync("_SecurityAnswers", Model.Security)
 
         <gds-h2>Project details</gds-h2>
-        @foreach (var site in Model.Sites)
+        @foreach (var project in Model.Projects)
         {
-            @await Html.PartialAsync("_SiteAnswers", site)
+            @await Html.PartialAsync("_ProjectAnswers", project)
         }
 
 
@@ -48,7 +47,7 @@
         }
     </form>
 
-    <gds-link href="@Url.Action("GoBack","LoanApplication", new {id = Model.ID})">
+    <gds-link href="@Url.Action("Back","LoanApplicationV2", new {id = Model.ID})">
         Return to application
     </gds-link>
 </gds-div-grid-column-two-thirds>

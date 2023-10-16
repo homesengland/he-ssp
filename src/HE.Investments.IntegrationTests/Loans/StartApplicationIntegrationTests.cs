@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.IntegrationTests.Config;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -26,19 +27,30 @@ public class StartApplicationIntegrationTests : IntegrationTest
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(1)]
-    public async Task Order01_ShouldRedirectToDashboardPage_WhenUserIsLoggedIn()
+    public async Task Order01_ShouldRedirectToUserOrganisationPage_WhenUserIsLoggedIn()
     {
         // given & when
         var mainPage = await TestClient.NavigateTo(PagesUrls.MainPage);
 
         // then
-        mainPage.UrlEndWith(PagesUrls.DashboardPage);
-        SetSharedData(CurrentPageKey, mainPage);
+        mainPage.UrlEndWith(UserOrganisationPagesUrls.UserOrganisation);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(2)]
-    public async Task Order02_ShouldRedirectToApplyForALoanPage_WhenStartApplicationButtonIsClicked()
+    public async Task Order02_ShouldRedirectToDashboardPage()
+    {
+        // given && when
+        var dashboardPage = await TestClient.NavigateTo(PagesUrls.DashboardPage);
+
+        // then
+        dashboardPage.UrlEndWith(PagesUrls.DashboardPage);
+        SetSharedData(CurrentPageKey, dashboardPage);
+    }
+
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(3)]
+    public async Task Order03_ShouldRedirectToApplyForALoanPage_WhenStartApplicationButtonIsClicked()
     {
         // given
         var dashboardPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
@@ -56,8 +68,8 @@ public class StartApplicationIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(3)]
-    public async Task Order03_ShouldRedirectToAboutLoanPage_WhenStartNowButtonIsClicked()
+    [Order(4)]
+    public async Task Order04_ShouldRedirectToAboutLoanPage_WhenStartNowButtonIsClicked()
     {
         // given
         var applyForLoanPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
@@ -75,8 +87,8 @@ public class StartApplicationIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(4)]
-    public async Task Order04_ShouldRedirectToCheckYouDetailsPageAndDisplayMyData_WhenContinueButtonIsClicked()
+    [Order(5)]
+    public async Task Order05_ShouldRedirectToCheckYouDetailsPageAndDisplayMyData_WhenContinueButtonIsClicked()
     {
         // given
         var aboutLoanPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
@@ -101,8 +113,8 @@ public class StartApplicationIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(5)]
-    public async Task Order05_ShouldRedirectToLoanPurpose_WhenContinueButtonIsClicked()
+    [Order(6)]
+    public async Task Order06_ShouldRedirectToLoanPurpose_WhenContinueButtonIsClicked()
     {
         // given
         var checkYourDetailsPage = GetSharedData<IHtmlDocument>(CurrentPageKey);
@@ -120,8 +132,8 @@ public class StartApplicationIntegrationTests : IntegrationTest
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(6)]
-    public async Task Order06_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
+    [Order(7)]
+    public async Task Order07_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
     {
         // given
         var loanPurpose = GetSharedData<IHtmlDocument>(CurrentPageKey);
@@ -129,10 +141,8 @@ public class StartApplicationIntegrationTests : IntegrationTest
         // when
         var continueButton = loanPurpose.GetGdsSubmitButtonById("continue-button");
         var taskListPage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string>
-            {
-                { "FundingPurpose", FundingPurpose.BuildingNewHomes.ToString() },
-            });
+            continueButton,
+            new Dictionary<string, string> { { "FundingPurpose", FundingPurpose.BuildingNewHomes.ToString() }, });
 
         // then
         taskListPage
@@ -140,7 +150,7 @@ public class StartApplicationIntegrationTests : IntegrationTest
             .HasTitle("Development loan application")
             .ExtractLastSavedDateFromTaskListPage(out var dateTime);
 
-        dateTime.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMinutes(2));
+        dateTime.Should().BeCloseTo(DateTime.UtcNow.ConvertUtcToUkLocalTime(), TimeSpan.FromMinutes(2));
 
         var applicationGuid = taskListPage.Url.GetApplicationGuidFromUrl();
         applicationGuid.Should().NotBeEmpty();

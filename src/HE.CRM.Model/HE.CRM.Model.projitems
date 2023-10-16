@@ -18,7 +18,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deletesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_generaterichtextdocument.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getfilelocationforapplicationloan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganisationchangedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganizationdetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleloanapplicationforaccountandcontact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettemporaryportaldata.cs" />
@@ -36,6 +38,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\RetrieveEnvironmentVariableSecretValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\RetrieveEnvironmentVariableValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\UpsertMultiple.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\EXTERNAL_APPLICATION_ACTION_REQUIRED.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\EXTERNAL_APPLICATION_STATUS_INFORMATION.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\EXTERNAL_APPLICATION_STATUS_CONFIRMATION.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\EXTERNAL_KYC_STATUS_CHANGE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\INTERNAL_LOAN_APP_OWNER_CHANGE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\INTERNAL_LOAN_APP_STATUS_CHANGE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Account.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Contact.cs" />
@@ -49,6 +56,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_EmailTemplate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_govnotifyemail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanapplication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanstatuschange.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_notificationsetting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portalpermissionlevel.cs" />
@@ -115,6 +123,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Incident_CaseOriginCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\InitialCommunication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Addressverificationtype.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ChangesourceSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConditionSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConditionStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConditionType.cs" />
@@ -149,6 +158,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\IsInherited.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\knowledgearticle_ExpirationState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Lead_SalesStage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\mainfewshotentitytype.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\MakerFewshotSQLCorrectness.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Metric_GoalType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\MobileOfflineEnabledEntities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdynce_ContentState.cs" />
@@ -440,6 +451,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\qooi_skippricecalculation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\RangeEnds_options.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\RecurrenceRule_MonthOfYear.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\registrationstatustype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\RepeatPattern_options.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\ResourceType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\RunDesktopFlowconnectiontype.cs" />

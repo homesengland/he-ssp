@@ -1,13 +1,14 @@
 @using HE.InvestmentLoans.Contract.Projects;
+@using HE.InvestmentLoans.Contract.Projects.ViewModels;
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
     var id = ViewContext.RouteData.Values["id"];
 
-    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.PlanningRef));
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.PlanningReferenceNumberExists));
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Project" asp-action="PlanningReferenceNumberExists" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="PlanningReferenceNumberExists" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]"  asp-method="post" novalidate>
 
         <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.PlanningRef})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>

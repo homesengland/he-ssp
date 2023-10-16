@@ -3,14 +3,12 @@ using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Funding.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Pipelines;
 using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Utils;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.InvestmentLoans.BusinessLogic.Config;
@@ -21,7 +19,7 @@ public static class BusinessLogicModule
     {
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining<LoanApplicationRepository>();
-        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+
         services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
         services.AddScoped<ICanSubmitLoanApplication, LoanApplicationRepository>();
         services.AddScoped<ILoanUserRepository, LoanUserRepository>();

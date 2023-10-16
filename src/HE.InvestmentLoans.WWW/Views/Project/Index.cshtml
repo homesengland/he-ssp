@@ -1,9 +1,11 @@
 @model HE.InvestmentLoans.Contract.Application.ValueObjects.LoanApplicationId;
-
+@{
+    var existingProjectId = Context.Request.Query["projectId"];
+}
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Project" asp-action="StartProjectPost" asp-route-id="@Model.Value" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","Project", new {id = Model.Value })" text="Back to application" class="govuk-!-margin-bottom-8">
+    <form asp-controller="Project" asp-action="StartProjectPost" asp-route-id="@Model.Value" asp-route-existingProjectId="@existingProjectId" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("TaskList", "LoanApplicationV2" , new {id = Model.Value})" text="Back to application" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
         <gds-h1 class="govuk-heading-xl">

@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Security.CommandHandler;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -28,7 +29,7 @@ public class ProjectCommandHandlerBase
     {
         var userAccount = await _loanUserContext.GetSelectedAccount();
 
-        var applicationProjects = await _repository.GetById(loanApplicationId, userAccount, cancellationToken)
+        var applicationProjects = await _repository.GetById(loanApplicationId, userAccount, ProjectFieldsSet.GetAllFields, cancellationToken)
             ?? throw new NotFoundException(nameof(ApplicationProjects), loanApplicationId);
 
         var project = applicationProjects.Projects.FirstOrDefault(p => p.Id == projectId)

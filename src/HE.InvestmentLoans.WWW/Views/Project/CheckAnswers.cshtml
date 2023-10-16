@@ -1,16 +1,10 @@
+@using HE.InvestmentLoans.Contract.Projects;
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
-@inject ModelExpressionProvider modelProvider
-
-@{
-    var id = ViewContext.RouteData.Values["id"];
-
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel x) => x.CheckAnswers));
-}
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.ApplicationId" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="CheckAnswers" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
 
-        <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.ApplicationId, id = id })" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.CheckAnswers})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
         <partial name="_ErrorSummaryPartial" model="null" />
@@ -19,25 +13,10 @@
             Check your answers
         </gds-h1>
 
+        <partial name="Sections/_WithdrawnInformation" model="Model"/>
+
         @await Html.PartialAsync("_ProjectAnswers", Model)
 
-        <gds-div-form-group>
-            <gds-field-set>
-                <gds-legend class="govuk-fieldset__legend--m">
-                    Have you completed this section?
-                </gds-legend>
-
-                <gds-radio govuk-formgroup-asp-for="CheckAnswers"
-                           asp-selectlistitems="TemporaryFormOptions.CheckAnswersCompletion"
-                           asp-isexcludeheader>
-                </gds-radio>
-
-            </gds-field-set>
-        </gds-div-form-group>
-
-        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
-            Continue
-        </button>
-
+        <partial name="Sections/_HaveYouCompletedThisSection" model="Model"/>
     </form>
 </gds-div-grid-column-two-thirds>

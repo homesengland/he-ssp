@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -72,7 +66,7 @@ public class Order01StartProjectIntegrationTests : IntegrationTest
 
         var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
 
-        var (name, status) = taskList.GetProjectFromTaskList(projectId);
+        var (name, status, _) = taskList.GetProjectFromTaskList(projectId);
 
         name.Should().Be("New project");
         status.Should().Be("Not Started");

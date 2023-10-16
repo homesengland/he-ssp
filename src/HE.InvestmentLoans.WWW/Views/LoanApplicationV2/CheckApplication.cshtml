@@ -1,8 +1,8 @@
-@using HE.InvestmentLoans.BusinessLogic.LoanApplicationLegacy.Workflow;
+@using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 @model HE.InvestmentLoans.BusinessLogic.ViewModel.LoanApplicationViewModel;
-@inject MediatR.IMediator mediator
+
 @{
-    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model, mediator);
+    var loanApllicationWorkflow = new LoanApplicationWorkflow(Model);
 }
 
 <gds-div-grid-column-two-thirds>
@@ -24,9 +24,9 @@
         @await Html.PartialAsync("_SecurityAnswers", Model.Security)
 
         <gds-h2>Project details</gds-h2>
-        @foreach (var site in Model.Sites)
+        @foreach (var project in Model.Projects)
         {
-            @await Html.PartialAsync("_SiteAnswers", site)
+            @await Html.PartialAsync("_ProjectAnswers", project)
         }
 
 
@@ -35,13 +35,13 @@
 
         @if (loanApllicationWorkflow.IsFilled())
         {
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="accept-and-submit">
                 Accept and submit
             </button>
         }
         else
         {
-            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button">
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="accept-and-submit">
                 Accept and submit
             </button>
         }

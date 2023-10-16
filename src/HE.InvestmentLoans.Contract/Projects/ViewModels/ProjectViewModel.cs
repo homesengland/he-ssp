@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Helper;
+using HE.InvestmentLoans.Contract.ViewModels;
 
 namespace HE.InvestmentLoans.Contract.Projects.ViewModels;
-public class ProjectViewModel
+
+public class ProjectViewModel : ICompletedSectionViewModel
 {
     public Guid ApplicationId { get; set; }
+
+    public ApplicationStatus LoanApplicationStatus { get; set; }
 
     public Guid ProjectId { get; set; }
 
@@ -21,6 +21,14 @@ public class ProjectViewModel
     public string? EstimatedStartMonth { get; set; }
 
     public string? EstimatedStartYear { get; set; }
+
+    public string? HomesCount { get; set; }
+
+    public string[]? HomeTypes { get; set; }
+
+    public string? OtherHomeTypes { get; set; }
+
+    public string? ProjectType { get; set; }
 
     public string? PlanningReferenceNumberExists { get; set; }
 
@@ -35,8 +43,6 @@ public class ProjectViewModel
     public string? LocationLandRegistry { get; set; }
 
     public string? Ownership { get; set; }
-
-    public string? CheckAnswers { get; set; }
 
     public string? PurchaseDay { get; set; }
 
@@ -60,5 +66,23 @@ public class ProjectViewModel
 
     public string? GrantFundingPurpose { get; set; }
 
-    public string DeleteProject { get; set; }
+    public string? ChargesDebt { get; set; }
+
+    public string? ChargesDebtInfo { get; set; }
+
+    public string? AffordableHomes { get; set; }
+
+    public string? CheckAnswers { get; set; }
+
+    public string? DeleteProject { get; set; }
+
+    public SectionStatus Status { get; set; }
+
+    public bool IsReadOnly()
+    {
+        var readonlyStatuses = ApplicationStatusDivision.GetAllStatusesForReadonlyMode();
+        return readonlyStatuses.Contains(LoanApplicationStatus);
+    }
+
+    public bool IsEditable() => IsReadOnly() is false;
 }

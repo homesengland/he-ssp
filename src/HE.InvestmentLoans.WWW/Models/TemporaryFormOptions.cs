@@ -52,7 +52,7 @@ public static class TemporaryFormOptions
     {
         new SelectListItem()
         {
-            Value = "selfEstimate",
+            Value = "customerEstimate",
             Text = "Self estimate",
         },
         new SelectListItem()
@@ -128,12 +128,12 @@ public static class TemporaryFormOptions
     {
         new SelectListItem()
         {
-            Value = "Greenfield",
+            Value = "greenfield",
             Text = "Greenfield",
         },
         new SelectListItem()
         {
-            Value = "Brownfield",
+            Value = "brownfield",
             Text = "Brownfield",
         },
     };

@@ -48,7 +48,7 @@ public class ApplicationStatusTag : TextWithIdTagHelper
             ApplicationStatus.SentForApproval => TagColour.Green,
             ApplicationStatus.ApprovedSubjectToContract => TagColour.Green,
             ApplicationStatus.ApprovedSubjectToDueDiligence => TagColour.Green,
-            ApplicationStatus.ContractSigned => TagColour.Green,
+            ApplicationStatus.AwaitingCpSatisfaction => TagColour.Green,
             ApplicationStatus.CpsSatisfied => TagColour.Green,
             ApplicationStatus.LoanAvailable => TagColour.Green,
             ApplicationStatus.Withdrawn => TagColour.Red,

@@ -1,0 +1,65 @@
+@using HE.InvestmentLoans.WWW.Models.UserOrganisation
+@using HE.InvestmentLoans.WWW.Routing
+@model HE.InvestmentLoans.WWW.Models.UserOrganisation.UserOrganisationModel;
+@{
+    ViewData["Title"] = "Organization";
+    ViewBag.Breadcrumbs = BreadcrumbsBuilder
+        .New()
+        .WithOrganisations()
+        .WithOrganisation(Model.OrganisationName)
+        .Build();
+}
+
+<div class="govuk-grid-column-full">
+    <div class="govuk-grid-column-full govuk-!-padding-0">
+
+        @await Html.PartialAsync("_Notification")
+
+        <gds-p class="govuk-!-margin-top-4 govuk-!-margin-bottom-0">
+            Welcome @Model?.UserName
+        </gds-p>
+        <gds-h1 size="ControlSize.L" class="govuk-!-padding-top-0 govuk-!-margin-bottom-0">
+            @Model.OrganisationName's Homes England account
+        </gds-h1>
+    </div>
+
+    <gds-div-grid-column-two-thirds class="govuk-!-padding-0">
+        @if (Model.IsLimitedUser)
+        {
+            <div class="govuk-inset-text" data-testid="user-organisation-limited-user">
+                Your request to be part of @Model.OrganisationName has been received. It will be reviewed and approved. In the meantime you can start a new application. You will not be able to see all of @Model.OrganisationName applications until you have been approved.
+            </div>
+        }
+    </gds-div-grid-column-two-thirds>
+
+    <div class="govuk-grid-column-full govuk-!-padding-0">
+
+        @if (!Model.ProgrammesToToAccess.Any() || Model.ProgrammesToToAccess.All(p => !p.Applications.Any()))
+        {
+            <gds-p>
+                You have not yet applied for a service. To apply, select a funding programme below.
+            </gds-p>
+        }
+
+        <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0 govuk-!-padding-right-6">
+            @if (Model.ProgrammesToToAccess.Any(p => p.Applications.Any()))
+            {
+                @foreach (var programmeToAccess in Model.ProgrammesToToAccess)
+                {
+                    @await Html.PartialAsync(
+                               "/Views/UserOrganisation/_ApplicationsCard.cshtml",
+                               new UserApplicationsModel(
+                                   programmeToAccess.Programme.Name,
+                                   programmeToAccess.Applications,
+                                   programmeToAccess.Programme.ViewAction,
+                                   programmeToAccess.Programme.Controller))
+                }
+            }
+
+            @await Html.PartialAsync("/Views/UserOrganisation/_ProgrammesToApply.cshtml", Model.ProgrammesToApply)
+        </gds-div-grid-column-two-thirds>
+        <div class="govuk-grid-column-one-third">
+            @await Html.PartialAsync("_ActionsPanel", Model.Actions)
+        </div>
+    </div>
+</div>

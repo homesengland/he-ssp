@@ -1,22 +1,29 @@
+@using HE.InvestmentLoans.Contract.Projects
 @using HE.InvestmentLoans.Contract.Projects.ViewModels;
-@model ProjectViewModel;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Details
+@model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
-    var id = ViewContext.RouteData.Values["id"];
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.ChargesDebt));
-    var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.ChargesDebtInfo));
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.ChargesDebt));
+    var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.ChargesDebtInfo));
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Site" asp-action="Workflow" asp-route-id="@id" asp-route-site="@Model.ApplicationId" asp-route-ending="ChargesDebt" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="ChargesDebt" asp-route-id="@Model.ApplicationId" asp-route-site="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
-        <gds-back-link href="@Url.Action("GoBack","Site", new {site=Model.ApplicationId, id = id })" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.ChargesDebt})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
         <partial name="_ErrorSummaryPartial" model="null" />
         <gds-field-set>
             <gds-div-form-group invalid="radioInvalid">
                 <gds-legend size="ControlSize.L">
                     <gds-fieldset-heading>
-                        @ProjectPageTitles.ChargesDebt
+                        To the best of your knowledge, are there any legal charges outstanding or debt secured on this land?
                     </gds-fieldset-heading>
                 </gds-legend>
                 <gds-div-hint class="govuk-!-margin-bottom-6">
@@ -24,8 +31,8 @@
                     Do not include any debentures.
                 </gds-div-hint>
 
-                @* <gds-radio-yes-no asp-for="ChargesDebt"
-                                  inner-input-for="ChargesDebtInfo"
+                <gds-radio-yes-no asp-for="@Model.ChargesDebt"
+                                  inner-input-for="@Model.ChargesDebtInfo"
                                   with-yes-input
                                   inner-input-text="Tell us more about any existing legal charges or debt secured on this land."
                                   inner-input-value="@Model.ChargesDebtInfo"
@@ -33,13 +40,17 @@
                                   is-conditional-input-invalid="conditionalInputInvalid"
                                   conditional-input-error="@inputErrors"
                                   value="@Model.ChargesDebt">
-                </gds-radio-yes-no> *@
+                </gds-radio-yes-no>
 
                 <gds-details-summary label="Help with debentures">
                     A debenture is a legal document that provides loan security to the lender. It is a written agreement between a lender and a borrower which is registered at Companies House.
                     It gives the lender security over the company's assets by securing those assets for the lender should the company default or become insolvent.
                 </gds-details-summary>
             </gds-div-form-group>
+
+            @Html.HiddenFor(c => c.ProjectId)
+            @Html.HiddenFor(c => c.ApplicationId)
+
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Continue
             </button>
@@ -47,7 +58,8 @@
 
     </form>
 
+
     <partial name="_HomeAndCheckAnswersLinks" />
 </gds-div-grid-column-two-thirds>
 
-@* @await Html.YesNoConditionalInputScript(nameof(Model.ChargesDebt)) *@
+@await Html.YesNoConditionalInputScript(nameof(Model.ChargesDebt))

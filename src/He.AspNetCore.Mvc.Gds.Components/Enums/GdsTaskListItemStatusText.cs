@@ -8,6 +8,7 @@ namespace He.AspNetCore.Mvc.Gds.Components.Enums
     {
         Completed,
         InProgress,
-        NotStarted
+        NotStarted,
+        Withdrawn,
     }
 }

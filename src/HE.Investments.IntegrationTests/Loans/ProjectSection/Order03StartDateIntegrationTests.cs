@@ -67,7 +67,7 @@ public class Order03StartDateIntegrationTests : IntegrationTest
             .HasOneValidationMessages(ValidationErrorMessage.InvalidStartDate);
     }
 
-    [Fact(Skip = "Many homes view not implemented yet")]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(3)]
     public async Task Order03_ShouldRedirectToManyHomes_WhenYesIsSelectedAndValidStartDateIsProvided()
     {
@@ -75,13 +75,15 @@ public class Order03StartDateIntegrationTests : IntegrationTest
         var startDate = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.StartDate(_applicationLoanId, _projectId)));
         var continueButton = startDate.GetGdsSubmitButtonById("continue-button");
 
+        var (year, month, day) = DateTimeTestData.CorrectDateAsStrings;
+
         // when
         startDate = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "HasEstimatedStartDate", CommonResponse.Yes }, { "EstimatedStartDay", "31" }, { "EstimatedStartMonth", "1" }, { "EstimatedStartYear", "2020" } });
+            continueButton, new Dictionary<string, string> { { "HasEstimatedStartDate", CommonResponse.Yes }, { "EstimatedStartDay", day }, { "EstimatedStartMonth", month }, { "EstimatedStartYear", year } });
 
         // then
         startDate
             .UrlEndWith(ProjectPagesUrls.ManyHomesSuffix)
-            .HasTitle(ProjectPageTitles.StartDate);
+            .HasLabelTitle(ProjectPageTitles.ManyHomes);
     }
 }

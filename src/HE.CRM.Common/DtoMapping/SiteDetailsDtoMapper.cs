@@ -35,9 +35,10 @@ namespace HE.CRM.Common.DtoMapping
                 invln_TypeofSite = MapTypeOfSite(siteDetail.typeOfSite),
                 invln_Valuationsource = MapValuationSource(siteDetail.valuationSource),
                 invln_Whoprovided = siteDetail.whoProvided,
-                invln_planningpermissionstatus = siteDetail.planningPermissionStatus,
+                invln_planningpermissionstatus = MapNullableIntToOptionSetValue(siteDetail.planningPermissionStatus),
                 invln_startdate = siteDetail.startDate,
-                invln_Affordablehousing = siteDetail.affordableHousing
+                invln_Affordablehousing = siteDetail.affordableHousing,
+                invln_completionstatus = MapNullableIntToOptionSetValue(siteDetail.completionStatus),
             };
             if (Guid.TryParse(loanApplicationGuid, out Guid applicationId))
             {
@@ -78,8 +79,9 @@ namespace HE.CRM.Common.DtoMapping
                 valuationSource = MapValuationSourceOptionSetToString(siteDetails.invln_Valuationsource),
                 whoProvided = siteDetails.invln_Whoprovided,
                 startDate = siteDetails.invln_startdate,
-                planningPermissionStatus = siteDetails.invln_planningpermissionstatus,
-                affordableHousing = siteDetails.invln_Affordablehousing
+                planningPermissionStatus = siteDetails.invln_planningpermissionstatus?.Value,
+                affordableHousing = siteDetails.invln_Affordablehousing,
+                completionStatus = siteDetails.invln_completionstatus?.Value,
             };
             return siteDetailToReturn;
         }
@@ -229,6 +231,15 @@ namespace HE.CRM.Common.DtoMapping
                     return "brownfield";
             }
 
+            return null;
+        }
+
+        public static OptionSetValue MapNullableIntToOptionSetValue(int? valueToMap)
+        {
+            if (valueToMap.HasValue)
+            {
+                return new OptionSetValue(valueToMap.Value);
+            }
             return null;
         }
 
