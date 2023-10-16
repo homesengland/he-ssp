@@ -19,7 +19,7 @@ namespace HE.CRM.Plugins.Handlers.LoanApplications
 
         public override void DoWork()
         {
-           // CrmServicesFactory.Get<ILoanApplicationService>().CreateDocumentLocation(target);
+            CrmServicesFactory.Get<ILoanApplicationService>().CreateDocumentLocation(target);
         }
 
         #endregion

@@ -686,35 +686,13 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
         public void CreateDocumentLocation(invln_Loanapplication target)
         {
-            //TracingService.Trace("1");
-            //var context = new ClientContext("https://homesandcommunities.sharepoint.com.mcas.ms/sites/Dev-Investments");
-            //TracingService.Trace("2");
-            //var list = context.Web.Lists.GetByTitle("invln_loanapplication");
-            //TracingService.Trace("3");
-            //var folder = list.RootFolder;
-            //TracingService.Trace("4");
-            //context.Load(folder);
-            //TracingService.Trace("5");
-            //context.ExecuteQuery();
-            //TracingService.Trace("6");
-
-            //var newItemInfo = new ListItemCreationInformation
-            //{
-            //    UnderlyingObjectType = FileSystemObjectType.Folder,
-            //    LeafName = target.invln_Name
-            //};
-            //var newListItem = list.AddItem(newItemInfo);
-            //newListItem["Title"] = target.invln_Name;
-            //newListItem.Update();
-
-            //context.ExecuteQuery();
-
+            var documentLocation = _sharepointDocumentLocationRepository.GetByAttribute(nameof(SharePointDocumentLocation.Name), "Loan Application documents").FirstOrDefault();
             var documentToCreate = new SharePointDocumentLocation()
             {
                 RegardingObjectId = target.ToEntityReference(),
                 Name = $"Documents on Loans DEV 1",
                 RelativeUrl = $"{target.invln_Name}",
-                ParentSiteOrLocation = new EntityReference(SharePointDocumentLocation.EntityLogicalName, new Guid("318b5c70-303c-ee11-bdf4-002248c652b4")),
+                ParentSiteOrLocation = documentLocation.ToEntityReference(),
             };
             _ = _sharepointDocumentLocationRepository.Create(documentToCreate);
         }
