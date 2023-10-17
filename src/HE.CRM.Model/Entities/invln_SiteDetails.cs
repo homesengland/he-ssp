@@ -75,6 +75,7 @@ namespace DataverseModel
 			public const string invln_Landregistrytitlenumber = "invln_landregistrytitlenumber";
 			public const string invln_Loanapplication = "invln_loanapplication";
 			public const string invln_LoanapplicationName = "invln_loanapplicationname";
+			public const string invln_localauthority = "invln_localauthority";
 			public const string invln_MSPresent = "invln_mspresent";
 			public const string invln_Name = "invln_name";
 			public const string invln_Nameofgrantfund = "invln_nameofgrantfund";
@@ -84,6 +85,7 @@ namespace DataverseModel
 			public const string invln_Planningreferencenumber = "invln_planningreferencenumber";
 			public const string invln_Planningstatus = "invln_planningstatus";
 			public const string invln_Postcode = "invln_postcode";
+			public const string invln_projecthasstartdate = "invln_projecthasstartdate";
 			public const string invln_Publicsectorfunding = "invln_publicsectorfunding";
 			public const string invln_Reason = "invln_reason";
 			public const string invln_Sitecoordinates = "invln_sitecoordinates";
@@ -505,6 +507,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthority")]
+		public string invln_localauthority
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_localauthority");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_localauthority");
+				this.SetAttributeValue("invln_localauthority", value);
+				this.OnPropertyChanged("invln_localauthority");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mspresent")]
 		public System.Nullable<bool> invln_MSPresent
 		{
@@ -655,6 +674,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Postcode");
 				this.SetAttributeValue("invln_postcode", value);
 				this.OnPropertyChanged("invln_Postcode");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_projecthasstartdate")]
+		public System.Nullable<bool> invln_projecthasstartdate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_projecthasstartdate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_projecthasstartdate");
+				this.SetAttributeValue("invln_projecthasstartdate", value);
+				this.OnPropertyChanged("invln_projecthasstartdate");
 			}
 		}
 		

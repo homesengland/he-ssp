@@ -40,8 +40,8 @@ public class UserOrganisationController : Controller
                 new List<ProgrammeModel> { ProgrammesConsts.LoansProgramme },
                 new List<ActionModel>
                 {
-                    new ActionModel($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", string.Empty, "Dashboard"),
-                    new ActionModel($"Manage your account", string.Empty, "Dashboard"),
+                    new($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", string.Empty, "Dashboard"),
+                    new($"Manage your account", string.Empty, "Dashboard"),
                 }));
     }
 }

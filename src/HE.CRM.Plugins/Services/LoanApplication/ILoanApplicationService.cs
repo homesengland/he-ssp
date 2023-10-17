@@ -18,6 +18,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         void ChangeInternalStatusOnExternalStatusChange(invln_Loanapplication target, invln_Loanapplication preImage);
         void SendEmailToNewOwner(invln_Loanapplication target, invln_Loanapplication preImage);
         string GetFileLocationForApplicationLoan(string loanApplicationId);
+        void SetLastModificationDate(invln_Loanapplication target);
         void CreateDocumentLocation(invln_Loanapplication target);
     }
 }

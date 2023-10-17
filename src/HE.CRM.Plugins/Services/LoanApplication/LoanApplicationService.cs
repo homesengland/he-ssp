@@ -133,8 +133,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 {
                     Id = target.Id,
                     invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationUnderReview),
-                    StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationUnderReview)
-                });
+                    StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationUnderReview),
+            });
             }
         }
 
@@ -174,6 +174,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             loanApplicationFromPortal.numberOfSites = numberOfSites.ToString();
 
             var loanApplicationToCreate = LoanApplicationDtoMapper.MapLoanApplicationDtoToRegularEntity(loanApplicationFromPortal, loanApplicationContact, accountId);
+            loanApplicationToCreate.invln_lastmmodificationdate = DateTime.UtcNow;
+            loanApplicationToCreate.invln_lastchangebyid = requestContact.ToEntityReference();
             Guid loanApplicationGuid = Guid.NewGuid();
             if (!string.IsNullOrEmpty(loanApplicationId) && Guid.TryParse(loanApplicationId, out Guid loanAppId))
             {
@@ -290,6 +292,9 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     }
                 }
                 loanApplicationToUpdate.Id = applicationId;
+                loanApplicationToUpdate.invln_lastmmodificationdate = DateTime.UtcNow;
+                loanApplicationToUpdate.invln_lastchangebyid = contact.ToEntityReference();
+
                 _loanApplicationRepository.Update(loanApplicationToUpdate);
             }
         }
@@ -302,7 +307,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 {
                     Id = applicationId,
                     invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Withdrawn),
-                    StateCode = new OptionSetValue(1)
+                    StateCode = new OptionSetValue(1),
                 };
                 _loanApplicationRepository.Update(loanApplicationToUpdate);
 
@@ -623,8 +628,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             if (target.OwnerId.Id != preImage.OwnerId.Id && target.OwnerId.LogicalName != Team.EntityLogicalName)
             {
                 var subject = $"Application ref no {target.invln_Name ?? preImage.invln_Name} - Assigned to you";
-                var pastFormStatus = "has been assigned to you";
-                _govNotifyEmailService.SendGovNotifyEmail(target.OwnerId, target.ToEntityReference(), subject, preImage.invln_Name, pastFormStatus, invln_Loanapplication.EntityLogicalName.ToLower(), target.Id.ToString());
+                _govNotifyEmailService.SendNotifications_INTERNAL_LOAN_APP_OWNER_CHANGE(target, subject, target.invln_Name ?? preImage.invln_Name);
                 var req1 = new invln_sendinternalcrmnotificationRequest()
                 {
                     invln_notificationbody = "",
@@ -656,6 +660,11 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 ParentSiteOrLocation = documentLocation.ToEntityReference(),
             };
             _ = _sharepointDocumentLocationRepository.Create(documentToCreate);
+        }
+
+        public void SetLastModificationDate(invln_Loanapplication target)
+        {
+            target.invln_lastmmodificationdate = DateTime.UtcNow;
         }
 
         private bool CheckIfExternalStatusCanBeChanged(int oldStatus, int newStatus)

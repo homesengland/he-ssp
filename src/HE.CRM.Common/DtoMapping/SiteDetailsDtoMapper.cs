@@ -39,6 +39,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_startdate = siteDetail.startDate,
                 invln_Affordablehousing = siteDetail.affordableHousing,
                 invln_completionstatus = MapNullableIntToOptionSetValue(siteDetail.completionStatus),
+                invln_projecthasstartdate = siteDetail.projectHasStartDate,
             };
             if (Guid.TryParse(loanApplicationGuid, out Guid applicationId))
             {
@@ -82,6 +83,7 @@ namespace HE.CRM.Common.DtoMapping
                 planningPermissionStatus = siteDetails.invln_planningpermissionstatus?.Value,
                 affordableHousing = siteDetails.invln_Affordablehousing,
                 completionStatus = siteDetails.invln_completionstatus?.Value,
+                projectHasStartDate = siteDetails.invln_projecthasstartdate,
             };
             return siteDetailToReturn;
         }

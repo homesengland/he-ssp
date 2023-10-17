@@ -105,7 +105,7 @@ public class UserOrganisationTests : ViewTestBase
     {
         document
             .HasElementWithText("p", $"Welcome {model.UserName}")
-            .HasElementWithText("h3", $"{model.OrganisationName}'s Homes England account")
+            .HasElementWithText("h1", $"{model.OrganisationName}'s Homes England account")
             .HasElementWithText("div", "Your request to be part of", isLimitedUser)
             .HasElementWithText("p", "You have not yet applied for a service. To apply, select a funding programme below.", !programmesToAccessExist)
             .HasElementWithText("h3", "Programmes you can apply for", programmesToApplyExist);

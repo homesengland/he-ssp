@@ -8,15 +8,15 @@
     };
 }
 
-<gds-h3 size="ControlSize.M"> Overview</gds-h3>
+<gds-h2 size="ControlSize.M"> Overview</gds-h2>
 <gds-summary-list class="govuk-!-margin-bottom-4">
     @foreach (var singleData in data)
     {
         <gds-summary-list-row-v2>
             <dt class="govuk-summary-list__key govuk-!-width-three-quarters">
-                <gds-h1 size="ControlSize.S">
+                <gds-h3 size="ControlSize.S">
                     @singleData.Title
-                </gds-h1>
+                </gds-h3>
                 <p class="govuk-body govuk-!-margin-bottom-2"> @singleData.Desription</p>
             </dt>
             <gds-summary-list-actions-v2>
@@ -29,7 +29,7 @@
 </gds-summary-list>
 
 <div class="govuk-!-margin-top-8">
-    <gds-h3 size="ControlSize.M">Request to hold</gds-h3>
+    <gds-h2 size="ControlSize.M">Request to hold</gds-h2>
     <gds-p>
         This will notify Homes England that you no longer wish to proceed with this application at this time. You can revisit this later on and submit once you're ready.
     </gds-p>
@@ -41,7 +41,7 @@
 @if (Model.CanBeWithdrawn())
 {
     <div class="govuk-!-margin-top-2">
-        <gds-h3 size="ControlSize.M">Withdraw</gds-h3>
+        <gds-h2 size="ControlSize.M">Withdraw</gds-h2>
         <gds-p>
             This will notify Homes England that you no longer wish to proceed. Your application will be permanently deleted.
         </gds-p>

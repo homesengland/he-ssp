@@ -14,6 +14,6 @@ public static class UriExtensions
 
     public static string GetProjectGuidFromRelativePath(this string uri)
     {
-        return uri.Split('=').Last();
+        return uri.Split('/')[^2];
     }
 }

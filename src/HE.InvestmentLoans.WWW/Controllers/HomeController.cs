@@ -1,8 +1,12 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Authorization;
+using HE.InvestmentLoans.Common.Utils.Enums;
+using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Queries;
+using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.WWW.Attributes;
+using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Routing;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using MediatR;
@@ -40,7 +44,7 @@ public class HomeController : Controller
             return RedirectToAction(nameof(OrganizationController.SearchOrganization), new ControllerName(nameof(OrganizationController)).WithoutPrefix());
         }
 
-        return RedirectToAction(nameof(Dashboard));
+        return RedirectToAction(nameof(UserOrganisationController.Index), new ControllerName(nameof(UserOrganisationController)).WithoutPrefix());
     }
 
     public IActionResult Privacy()
@@ -54,5 +58,35 @@ public class HomeController : Controller
     public async Task<IActionResult> Dashboard()
     {
         return View(await _mediator.Send(new GetDashboardDataQuery()));
+    }
+
+    [HttpGet("/accept-he-terms-and-conditions")]
+    public IActionResult AcceptHeTermsAndConditions()
+    {
+        return View();
+    }
+
+    [HttpPost("/accept-he-terms-and-conditions")]
+    public async Task<IActionResult> AcceptHeTermsAndConditionsPost(
+        AcceptHeTermsAndConditionsModel model,
+        RedirectOption redirect,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new ProvideAcceptHeTermsAndConditionsCommand(model.AcceptHeTermsAndConditions),
+            cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("AcceptHeTermsAndConditions", model);
+        }
+
+        if (redirect == RedirectOption.SignIn)
+        {
+            return RedirectToAction("SignIn", "HeIdentity");
+        }
+
+        return RedirectToAction("SignUp", "HeIdentity");
     }
 }

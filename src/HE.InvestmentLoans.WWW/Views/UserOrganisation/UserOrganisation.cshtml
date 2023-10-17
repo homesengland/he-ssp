@@ -1,7 +1,13 @@
 @using HE.InvestmentLoans.WWW.Models.UserOrganisation
+@using HE.InvestmentLoans.WWW.Routing
 @model HE.InvestmentLoans.WWW.Models.UserOrganisation.UserOrganisationModel;
 @{
     ViewData["Title"] = "Organization";
+    ViewBag.Breadcrumbs = BreadcrumbsBuilder
+        .New()
+        .WithOrganisations()
+        .WithOrganisation(Model.OrganisationName)
+        .Build();
 }
 
 <div class="govuk-grid-column-full">
@@ -12,9 +18,9 @@
         <gds-p class="govuk-!-margin-top-4 govuk-!-margin-bottom-0">
             Welcome @Model?.UserName
         </gds-p>
-        <gds-h3 size="ControlSize.L" class="govuk-!-padding-top-0 govuk-!-margin-bottom-0">
+        <gds-h1 size="ControlSize.L" class="govuk-!-padding-top-0 govuk-!-margin-bottom-0">
             @Model.OrganisationName's Homes England account
-        </gds-h3>
+        </gds-h1>
     </div>
 
     <gds-div-grid-column-two-thirds class="govuk-!-padding-0">

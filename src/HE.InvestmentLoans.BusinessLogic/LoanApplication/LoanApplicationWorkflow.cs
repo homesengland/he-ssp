@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -59,8 +60,8 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         return _model.Company.IsCompleted()
                && (_model.Security.State == SectionStatus.Completed || _model.Security.IsFlowCompleted)
                && (_model.Funding.IsCompleted() || _model.Funding.IsFlowCompleted)
-               && (_model.Sites.All(x => x.Status == SectionStatus.Completed) || _model.Sites.All(x => x.IsFlowCompleted))
-               && _model.Sites.Count > 0;
+               && _model.Projects.All(x => x.Status == SectionStatus.Completed)
+               && _model.Projects.Any();
     }
 
     public bool IsFilled(LoanApplicationViewModel application)
@@ -68,8 +69,8 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         return application.Company.IsCompleted()
                && (application.Security.State == SectionStatus.Completed || application.Security.IsFlowCompleted)
                && (application.Funding.IsCompleted() || application.Funding.IsFlowCompleted)
-               && (application.Sites.All(x => x.Status == SectionStatus.Completed) || application.Sites.All(x => x.IsFlowCompleted))
-               && application.Sites.Count > 0;
+               && application.Projects.All(x => x.Status == SectionStatus.Completed)
+               && application.Projects.Any();
     }
 
     public async Task<bool> StateCanBeAccessed(State nextState)

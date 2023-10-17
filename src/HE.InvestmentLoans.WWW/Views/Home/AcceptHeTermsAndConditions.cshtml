@@ -1,0 +1,52 @@
+@using HE.InvestmentLoans.Common.Utils.Enums
+@model AcceptHeTermsAndConditionsModel;
+@{
+    var privacyLink = "https://www.gov.uk/government/publications/homes-england-privacy-notice/homes-england-privacy-notice#home-building-fund-and-affordable-housing-programme";
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.Action("WhatTheHomeBuildingFundIs", "Guidance")" text="Back" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
+    <partial name="_ErrorSummaryPartial" model="null"/>
+    <form asp-controller="Home" asp-action="AcceptHeTermsAndConditions" asp-method="post" novalidate>
+        <gds-h1 size="@ControlSize.L">
+            Information about your Homes England account
+        </gds-h1>
+
+        <gds-ul class="govuk-!-padding-left-0">
+            You can use your Homes England account to apply for and manage grants and loans. This includes:
+            <gds-li class="govuk-!-margin-left-5">
+                applying for a Levelling Up Home Building Fund loan
+            </gds-li>
+            <gds-li class="govuk-!-margin-left-5">
+                applying for funding through the Affordable Homes Programme 2021 to 2026
+            </gds-li>
+            <gds-li class="govuk-!-margin-left-5">
+                managing any ongoing applications
+            </gds-li>
+        </gds-ul>
+
+        <gds-p>
+            Before creating an account, you must read the
+            <a href=@privacyLink>Homes England privacy notice</a>.
+        </gds-p>
+
+        <gds-p>
+            If you have already created an account, you can <a href="@Url.Action("SignIn", "HeIdentity")">sign in</a>.
+        </gds-p>
+
+        <gds-checkbox govuk-formgroup-asp-for="AcceptHeTermsAndConditions"
+                      value="AcceptHeTermsAndConditions"
+                      asp-selectlistitems='@(new List<SelectListItem> { new() { Text = $"I have read and understood the <a class=\"govuk-link\" href={privacyLink}>privacy notice</a>", Value = "checked", } })'
+                      asp-ischeckboxgroup="true"
+                      asp-isexcludeheader="true"
+                      asp-excludelabel="true">
+        </gds-checkbox>
+
+        <gds-button data-module="govuk-button" type="submit" name="redirect" value=@RedirectOption.SignUp>
+            Create an account
+        </gds-button>
+    </form>
+
+
+</gds-div-grid-column-two-thirds>

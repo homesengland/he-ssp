@@ -22,21 +22,22 @@ public abstract class WorkflowController<TState> : Controller
             return;
         }
 
-        if (stateAttribute.State is not TState state)
+        if (stateAttribute.State is not TState current)
         {
             throw new ArgumentException($"Controller action and state mismatch. {ControllerContext.ActionDescriptor.ControllerName} inherits from {nameof(WorkflowController<TState>)}, and requires");
         }
-        else
+
+        var routing = await Routing(current);
+        var targetState = routing.CurrentState(current);
+
+        if (targetState.Equals(current) && await routing.StateCanBeAccessed(current))
         {
-            if (await (await Routing(state)).StateCanBeAccessed(state))
-            {
-                await base.OnActionExecutionAsync(context, next);
-            }
-            else
-            {
-                throw new UnauthorizedAccessException();
-            }
+            await base.OnActionExecutionAsync(context, next);
+            return;
         }
+
+        var workflowAction = GetWorkflowAction(targetState);
+        context.Result = new RedirectToActionResult(workflowAction.ActionName, workflowAction.ControllerName.WithoutPrefix(), context.RouteData.Values.Skip(2));
     }
 
     public Task<IActionResult> Continue()
@@ -106,17 +107,17 @@ public abstract class WorkflowController<TState> : Controller
         var routing = await Routing(currentState);
         var nextState = await routing.NextState(trigger);
 
-        return RedirectToState(nextState, trigger, routeData);
+        return RedirectToState(nextState, routeData);
     }
 
     private IActionResult ChangeState(TState targetState, object routeData)
     {
-        return RedirectToState(targetState, Trigger.Change, routeData);
+        return RedirectToState(targetState, routeData);
     }
 
-    private IActionResult RedirectToState(TState nextState, Trigger trigger, object routeData)
+    private IActionResult RedirectToState(TState nextState, object routeData)
     {
-        var nextAction = WorkflowGetMethodsFromAllControllers().FirstOrDefault(x => x.State.Equals(nextState)) ?? throw WorkflowActionCannotBePerformedException.CannotFindDestination(trigger, nextState);
+        var nextAction = GetWorkflowAction(nextState);
 
         if (routeData is null)
         {
@@ -126,6 +127,11 @@ public abstract class WorkflowController<TState> : Controller
         {
             return RedirectToAction(nextAction.ActionName, nextAction.ControllerName.WithoutPrefix(), routeData);
         }
+    }
+
+    private WorkflowAction<TState> GetWorkflowAction(TState nextState)
+    {
+        return WorkflowGetMethodsFromAllControllers().FirstOrDefault(x => x.State.Equals(nextState)) ?? throw WorkflowActionCannotBePerformedException.CannotFindDestination(nextState);
     }
 
     private IList<WorkflowAction<TState>> WorkflowGetMethodsFromAllControllers()

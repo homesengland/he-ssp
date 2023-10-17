@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,11 +18,11 @@ internal static class GrantFundingStatusMapper
             return null;
         }
 
-        return value!.TitleCaseFirstLetterInString() switch
+        return value!.ToLower(CultureInfo.InvariantCulture) switch
         {
-            CommonResponse.Yes => PublicSectorGrantFundingStatus.Received,
-            CommonResponse.No => PublicSectorGrantFundingStatus.NotReceived,
-            CommonResponse.DoNotKnow => PublicSectorGrantFundingStatus.Unknown,
+            CommonResponse.Lowercase.Yes => PublicSectorGrantFundingStatus.Received,
+            CommonResponse.Lowercase.No => PublicSectorGrantFundingStatus.NotReceived,
+            CommonResponse.Lowercase.DoNotKnow => PublicSectorGrantFundingStatus.Unknown,
             _ => null,
         };
     }

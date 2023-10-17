@@ -69,6 +69,6 @@ public class GuidanceIntegrationTests : IntegrationTest
             .UrlEndWith(GuidancePagesUrls.Apply)
             .GetAnchorElementById("apply-link")
             .PathName.Should()
-            .EndWith("/application");
+            .EndWith("/accept-he-terms-and-conditions");
     }
 }

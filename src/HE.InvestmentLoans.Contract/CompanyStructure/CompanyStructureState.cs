@@ -1,8 +1,8 @@
 namespace HE.InvestmentLoans.Contract.CompanyStructure;
 
-public enum CompanyStructureState : int
+public enum CompanyStructureState
 {
-    Index = 1,
+    StartCompanyStructure = 1,
     Purpose,
     ExistingCompany,
     HomesBuilt,

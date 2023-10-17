@@ -70,7 +70,7 @@ public static class ValidationErrorMessage
 
     public const string EnterTelephoneNumber = "Enter your preferred telephone number";
 
-    public const string AcceptTermsAndConditions = "You cannot continue unless you have selected that you have read the terms and conditions";
+    public const string AcceptTermsAndConditions = "Select that you have read and understood the privacy notice";
 
     public const string DirectorLoansDoesNotExist = "Cannot add director loans subordinate because director loans does not exist.";
 

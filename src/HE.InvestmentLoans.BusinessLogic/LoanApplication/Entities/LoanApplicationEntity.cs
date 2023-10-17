@@ -1,5 +1,6 @@
 using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
@@ -14,7 +15,7 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
 public class LoanApplicationEntity
 {
-    public LoanApplicationEntity(LoanApplicationId id, UserAccount userAccount, ApplicationStatus externalStatus, FundingPurpose fundingReason, DateTime? createdOn, DateTime? lastModificationDate)
+    public LoanApplicationEntity(LoanApplicationId id, UserAccount userAccount, ApplicationStatus externalStatus, FundingPurpose fundingReason, DateTime? createdOn, DateTime? lastModificationDate, LoanApplicationSection companyStructure)
     {
         Id = id;
         UserAccount = userAccount;
@@ -23,6 +24,7 @@ public class LoanApplicationEntity
         LastModificationDate = lastModificationDate;
         FundingReason = fundingReason;
         CreatedOn = createdOn;
+        CompanyStructure = companyStructure;
     }
 
     public LoanApplicationId Id { get; private set; }
@@ -32,6 +34,8 @@ public class LoanApplicationEntity
     public ApplicationProjects ApplicationProjects { get; private set; }
 
     public LoanApplicationViewModel LegacyModel { get; set; }
+
+    public LoanApplicationSection CompanyStructure { get; private set; }
 
     public ApplicationStatus ExternalStatus { get; set; }
 
@@ -46,7 +50,7 @@ public class LoanApplicationEntity
     // TODO: #77804
     public string Name => ReferenceNumber;
 
-    public static LoanApplicationEntity New(UserAccount userAccount) => new(LoanApplicationId.New(), userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null);
+    public static LoanApplicationEntity New(UserAccount userAccount) => new(LoanApplicationId.New(), userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, LoanApplicationSection.New());
 
     public void SaveApplicationProjects(ApplicationProjects applicationProjects)
     {
@@ -61,7 +65,6 @@ public class LoanApplicationEntity
         }
 
         Id = newId;
-        SyncToLegacyModel();
     }
 
     public bool IsReadOnly()
@@ -120,8 +123,8 @@ public class LoanApplicationEntity
     {
         const int minimumHomesToBuild = 5;
         var cultureInfo = CultureInfo.InvariantCulture;
-        var result = LegacyModel.Sites
-                        .Select(site => site.ManyHomes)
+        var result = LegacyModel.Projects
+                        .Select(site => site.HomesCount)
                         .Where(manyHomes => !string.IsNullOrEmpty(manyHomes))
                         .Select(manyHomes => int.TryParse(manyHomes, NumberStyles.Integer, cultureInfo, out var parsedValue) ? parsedValue : 0)
                         .Aggregate(0, (x, y) => x + y);
@@ -131,21 +134,11 @@ public class LoanApplicationEntity
 
     private bool IsReadyToSubmit()
     {
-        return LegacyModel.IsReadyToSubmit();
+        return CompanyStructure.IsCompleted() && LegacyModel.IsReadyToSubmit();
     }
 
     private bool IsSubmitted()
     {
         return ExternalStatus == ApplicationStatus.ApplicationSubmitted;
-    }
-
-    private void SyncToLegacyModel()
-    {
-        LegacyModel = new LoanApplicationViewModel
-        {
-            ID = Id.Value,
-            State = LoanApplicationWorkflow.State.TaskList,
-        };
-        LegacyModel.AddNewSite();
     }
 }

@@ -1,9 +1,10 @@
 @using HE.InvestmentLoans.Contract.Projects;
+@using HE.InvestmentLoans.Contract.Projects.ViewModels;
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
     var id = ViewContext.RouteData.Values["id"];
 
-    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.BusinessLogic.ViewModel.SiteViewModel.PlanningRef));
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.PlanningReferenceNumberExists));
 }
 
 <gds-div-grid-column-two-thirds>
