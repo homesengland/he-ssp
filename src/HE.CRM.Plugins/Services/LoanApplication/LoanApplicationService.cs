@@ -655,7 +655,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             var documentToCreate = new SharePointDocumentLocation()
             {
                 RegardingObjectId = target.ToEntityReference(),
-                Name = $"Documents on Loans DEV 1",
+                Name = $"Documents on Loans",
                 RelativeUrl = $"{target.invln_Name}",
                 ParentSiteOrLocation = documentLocation.ToEntityReference(),
             };
