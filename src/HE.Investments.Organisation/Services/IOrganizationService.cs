@@ -8,5 +8,5 @@ public interface IOrganizationService
 
     Guid CreateOrganization(OrganizationDetailsDto organizationDetails);
 
-    string GetOrganisationChangeDetailsRequest(Guid accountId);
+    Task<string> GetOrganisationChangeDetailsRequest(Guid accountId);
 }

@@ -6,4 +6,6 @@ namespace HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
 public interface IOrganizationRepository
 {
     public Task<OrganizationBasicInformation> GetBasicInformation(UserAccount userAccount, CancellationToken cancellationToken);
+
+    public Task<string> GetOrganisationChangeRequestDetails(UserAccount userAccount, CancellationToken cancellationToken);
 }

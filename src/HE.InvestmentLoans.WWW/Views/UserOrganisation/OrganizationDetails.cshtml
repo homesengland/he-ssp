@@ -53,11 +53,27 @@
             })
 
         </gds-summary-list>
-
-        <gds-div-grid-column-two-thirds class="govuk-!-padding-0">
-            <div class="govuk-inset-text" data-testid="user-organisation-limited-user">
-                Your request to be part of @Model.OrganisationName has been received. It will be reviewed and approved. In the meantime you can start a new application. You will not be able to see all of @Model.OrganisationName applications until you have been approved.
-            </div>
-        </gds-div-grid-column-two-thirds>
+        @if (Model.CurrentOrganisationDataState == "You requested")
+        {
+            <gds-div-grid-column-two-thirds class="govuk-!-padding-0">
+                <div class="govuk-inset-text" data-testid="user-organisation-limited-user">
+                    Your request to details is pending. You cannot request to make additional chnages until this change has been completed.
+                </div>
+            </gds-div-grid-column-two-thirds>
+        }
+        @if (Model.CurrentOrganisationDataState == "No pending request")
+        {
+            <gds-p>
+                <gds-link href="">
+                    Request to change organisation details
+                </gds-link>
+            </gds-p>
+        }
+        @if (Model.CurrentOrganisationDataState == "Pending request")
+        {
+            <gds-p>
+                    To change your organisation details, contact your Transaction Manager.
+            </gds-p>
+        }
     </form>
 </gds-div-grid-column-full>

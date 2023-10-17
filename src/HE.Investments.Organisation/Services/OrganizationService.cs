@@ -1,4 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
@@ -23,10 +24,12 @@ public class OrganizationService : IOrganizationService
         return _service.Create(organizationToCreate);
     }
 
-    public string GetOrganisationChangeDetailsRequest(Guid accountId)
+    public async Task<string> GetOrganisationChangeDetailsRequest(Guid accountId)
     {
+        // temporary mock of async method
         // var account = await _service.RetrieveAsync("account", accountId, new ColumnSet(true));
-        return _youRequested;
+        var result = await Task.Run(() => _youRequested);
+        return result;
     }
 
     public async Task<OrganizationDetailsDto> GetOrganizationDetails(string accountid, string contactExternalId)

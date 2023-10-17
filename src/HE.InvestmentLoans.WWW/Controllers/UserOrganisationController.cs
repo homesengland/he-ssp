@@ -1,4 +1,6 @@
 using HE.InvestmentLoans.Contract.UserOrganisation.Queries;
+using HE.InvestmentLoans.Contract.Organization;
+using HE.InvestmentLoans.CRM.Model;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Models.UserOrganisation;
@@ -50,6 +52,8 @@ public class UserOrganisationController : Controller
     {
         var organisationResult = await _mediator.Send(new GetUserOrganisationInformationQuery());
 
+        var changeReequestDetailsResponse = await _mediator.Send(new GetOrganizationChangeRequestDetailsQuery());
+
         var address = new List<string>
         {
             organisationResult.OrganizationBasicInformation?.Address.Line1 ?? string.Empty,
@@ -65,7 +69,7 @@ public class UserOrganisationController : Controller
                 organisationResult.OrganizationBasicInformation.ContactInformation.PhoneNUmber,
                 address,
                 organisationResult.OrganizationBasicInformation.CompanyRegistrationNumber,
-                "Smaple org requsgsaj"));
+                changeReequestDetailsResponse.ChangeRequestDetails));
     }
 
 }

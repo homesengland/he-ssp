@@ -3,6 +3,7 @@ extern alias Org;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Org::HE.Investments.Organisation.Services;
 
@@ -38,5 +39,16 @@ public class OrganizationRepository : IOrganizationRepository
             new ContactInformation(
                 organizationDetailsDto.compayAdminContactTelephone,
                 organizationDetailsDto.compayAdminContactEmail));
+    }
+
+    public async Task<string> GetOrganisationChangeRequestDetails(UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        if (!userAccount.AccountId.HasValue)
+        {
+            return string.Empty;
+        }
+
+        var changeRequestDetails = await _organizationService.GetOrganisationChangeDetailsRequest(userAccount.AccountId.Value);
+        return changeRequestDetails;
     }
 }
