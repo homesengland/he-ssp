@@ -639,13 +639,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         {
             if (Guid.TryParse(loanApplicationId, out Guid loanGuid))
             {
-                var loanApplication = _loanApplicationRepository.GetById(loanGuid, new string[] { nameof(invln_Loanapplication.invln_Name).ToLower() });
-                var charsToReplace = new char[] { '-', '{', '}' };
-                foreach(var replChar in charsToReplace)
-                {
-                    loanApplicationId = loanApplicationId.Replace(replChar.ToString(), string.Empty);
-                }
-                return $"{loanApplication.invln_Name}_{loanApplicationId}";
+                var relatedDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToLoanApplication(loanGuid);
+                return relatedDocumentLocation.RelativeUrl;
             }
             return string.Empty;
         }
