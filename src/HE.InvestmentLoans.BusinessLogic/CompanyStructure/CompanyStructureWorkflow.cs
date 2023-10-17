@@ -1,5 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using Stateless;
 
@@ -29,15 +31,36 @@ public class CompanyStructureWorkflow : IStateRouting<CompanyStructureState>
         return Task.FromResult(true);
     }
 
+    public CompanyStructureState CurrentState(CompanyStructureState targetState)
+    {
+        if (_model.IsReadOnly())
+        {
+            return CompanyStructureState.CheckAnswers;
+        }
+
+        if (targetState != CompanyStructureState.StartCompanyStructure || _model.State == SectionStatus.NotStarted)
+        {
+            return targetState;
+        }
+
+        return _model switch
+        {
+            { Purpose: var x } when x.IsNotProvided() => CompanyStructureState.Purpose,
+            { OrganisationMoreInformation: var x } when x.IsNotProvided() => CompanyStructureState.ExistingCompany,
+            { HomesBuilt: var x } when x.IsNotProvided() => CompanyStructureState.HomesBuilt,
+            _ => CompanyStructureState.CheckAnswers,
+        };
+    }
+
     private void ConfigureTransitions()
     {
-        _machine.Configure(CompanyStructureState.Index)
+        _machine.Configure(CompanyStructureState.StartCompanyStructure)
             .Permit(Trigger.Continue, CompanyStructureState.Purpose);
 
         _machine.Configure(CompanyStructureState.Purpose)
           .Permit(Trigger.Continue, CompanyStructureState.ExistingCompany)
           .Permit(Trigger.Change, CompanyStructureState.CheckAnswers)
-          .Permit(Trigger.Back, CompanyStructureState.Index);
+          .Permit(Trigger.Back, CompanyStructureState.StartCompanyStructure);
 
         _machine.Configure(CompanyStructureState.ExistingCompany)
             .Permit(Trigger.Continue, CompanyStructureState.HomesBuilt)

@@ -258,7 +258,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
 
         var applicationId = !string.IsNullOrEmpty(id) ? LoanApplicationId.From(Guid.Parse(id)) : null;
-        var response = await _mediator.Send(new GetFundingQuery(applicationId!, FundingFieldsSet.GetEmpty));
+        var response = await _mediator.Send(new GetFundingQuery(applicationId!, FundingFieldsSet.GetAllFields));
 
         return new FundingWorkflow(currentState, response.ViewModel);
     }
