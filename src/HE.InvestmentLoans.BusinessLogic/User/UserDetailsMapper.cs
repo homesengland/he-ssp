@@ -42,7 +42,7 @@ public static class UserDetailsMapper
             JobTitle.FromString(contactDto.jobTitle),
             contactDto.email,
             TelephoneNumber.FromString(contactDto.phoneNumber),
-            SecondaryTelephoneNumber.FromString(contactDto.secondaryPhoneNumber),
+            TelephoneNumber.FromString(contactDto.secondaryPhoneNumber),
             contactDto.isTermsAndConditionsAccepted);
     }
 }

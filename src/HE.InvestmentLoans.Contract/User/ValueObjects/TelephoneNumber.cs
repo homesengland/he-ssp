@@ -10,11 +10,16 @@ public class TelephoneNumber : ValueObject
 {
     public TelephoneNumber(string value)
     {
+        Value = value;
+    }
+
+    public TelephoneNumber(string value, string affectedField, string validationMessage)
+    {
         if (value!.IsNotProvided())
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(UserDetailsViewModel.TelephoneNumber), ValidationErrorMessage.EnterTelephoneNumber)
+                .AddValidationError(affectedField, ValidationErrorMessage.EnterTelephoneNumber)
                 .CheckErrors();
         }
         else if (value!.Length > MaximumInputLength.ShortInput)
@@ -22,8 +27,8 @@ public class TelephoneNumber : ValueObject
             OperationResult
                 .New()
                 .AddValidationError(
-                    nameof(UserDetailsViewModel.TelephoneNumber),
-                    ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.TelephoneNumber))
+                    affectedField,
+                    validationMessage)
                 .CheckErrors();
         }
 
@@ -32,7 +37,7 @@ public class TelephoneNumber : ValueObject
 
     public string Value { get; }
 
-    public static TelephoneNumber New(string value) => new(value);
+    public static TelephoneNumber New(string value, string affectedField, string validationMessage) => new(value, affectedField, validationMessage);
 
     public static TelephoneNumber? FromString(string? telephoneNumber)
     {

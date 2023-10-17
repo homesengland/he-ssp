@@ -113,7 +113,7 @@ public class IntegrationUserData
         FirstName = FirstName.New("John");
         LastName = LastName.New("Doe");
         JobTitle = JobTitle.New("Developer");
-        TelephoneNumber = TelephoneNumber.New("Carq pozdrawia");
+        TelephoneNumber = TelephoneNumber.FromString("Carq pozdrawia")!;
         OrganizationName = "DO_NOT_DELETE_DEFAULT_ACCOUNT";
         OrganizationRegistrationNumber = "Not provided";
         OrganizationAddress = "12 Wharf Street";
