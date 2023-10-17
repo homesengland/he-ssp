@@ -32,7 +32,7 @@ public class GetUserDetailsTests : TestBase<LoanUserRepository>
         result.Email.Should().Be(contactDto.email);
         result.JobTitle.Should().Be(JobTitle.FromString(contactDto.jobTitle));
         result.TelephoneNumber.Should().Be(TelephoneNumber.FromString(contactDto.phoneNumber));
-        result.SecondaryTelephoneNumber.Should().Be(SecondaryTelephoneNumber.FromString(contactDto.secondaryPhoneNumber));
+        result.SecondaryTelephoneNumber.Should().Be(TelephoneNumber.FromString(contactDto.secondaryPhoneNumber));
         result.IsTermsAndConditionsAccepted.Should().Be(contactDto.isTermsAndConditionsAccepted);
     }
 

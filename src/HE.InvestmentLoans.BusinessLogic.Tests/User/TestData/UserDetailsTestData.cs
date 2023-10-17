@@ -5,11 +5,11 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 public static class UserDetailsTestData
 {
     public static readonly UserDetails UserDetailsOne = new(
-        FirstName.New("John"),
-        LastName.New("Doe"),
-        JobTitle.New("Director"),
+        FirstName.FromString("John"),
+        LastName.FromString("Doe"),
+        JobTitle.FromString("Director"),
         "john.doe@test.com",
-        TelephoneNumber.New("888888888"),
-        SecondaryTelephoneNumber.New(string.Empty),
+        TelephoneNumber.FromString("888888888"),
+        TelephoneNumber.FromString(string.Empty),
         true);
 }
