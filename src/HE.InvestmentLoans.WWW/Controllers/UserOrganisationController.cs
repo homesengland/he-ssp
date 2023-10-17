@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.Contract.UserOrganisation.Queries;
 using HE.InvestmentLoans.Contract.Organization;
+using HE.InvestmentLoans.Contract.UserOrganisation.Queries;
 using HE.InvestmentLoans.CRM.Model;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
@@ -71,5 +71,4 @@ public class UserOrganisationController : Controller
                 organisationResult.OrganizationBasicInformation.CompanyRegistrationNumber,
                 changeReequestDetailsResponse.ChangeRequestDetails));
     }
-
 }
