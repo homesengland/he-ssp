@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
@@ -72,7 +73,14 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
 
-        return new LoanApplicationEntity(id, userAccount, externalStatus, FundingPurposeMapper.Map(loanApplicationDto.fundingReason), loanApplicationDto.createdOn, loanApplicationDto.LastModificationOn)
+        return new LoanApplicationEntity(
+            id,
+            userAccount,
+            externalStatus,
+            FundingPurposeMapper.Map(loanApplicationDto.fundingReason),
+            loanApplicationDto.createdOn,
+            loanApplicationDto.LastModificationOn,
+            new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus)))
         {
             LegacyModel = LoanApplicationMapper.Map(loanApplicationDto, _dateTime.Now),
         };
