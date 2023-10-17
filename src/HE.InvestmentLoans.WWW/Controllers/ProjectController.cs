@@ -33,15 +33,8 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpGet("start")]
     [WorkflowState(ProjectState.Index)]
-    public async Task<IActionResult> StartProject(Guid id, Guid projectId)
+    public IActionResult StartProject(Guid id, Guid projectId)
     {
-        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
-
-        if (response.LoanApplication.IsReadOnly())
-        {
-            return RedirectToAction("CheckAnswers", new { Id = id, ProjectId = projectId });
-        }
-
         return View("Index", LoanApplicationId.From(id));
     }
 
