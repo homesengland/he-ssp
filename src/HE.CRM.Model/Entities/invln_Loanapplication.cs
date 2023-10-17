@@ -138,6 +138,9 @@ namespace DataverseModel
 			public const string invln_FundingReason = "invln_fundingreason";
 			public const string invln_invln_emailnotification_Regarding_invln_l = "invln_invln_emailnotification_Regarding_invln_l";
 			public const string invln_invln_loanapplication_invln_contract_Loanapplication = "invln_invln_loanapplication_invln_contract_Loanapplication";
+			public const string invln_lastchangebyid = "invln_lastchangebyid";
+			public const string invln_lastchangebyidName = "invln_lastchangebyidname";
+			public const string invln_lastmmodificationdate = "invln_lastmmodificationdate";
 			public const string invln_Loanamountrequested = "invln_loanamountrequested";
 			public const string invln_loanamountrequested_Base = "invln_loanamountrequested_base";
 			public const string invln_loanapplication_account = "invln_loanapplication_account";
@@ -632,6 +635,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_lastchangebyid");
 				this.SetAttributeValue("invln_lastchangebyid", value);
 				this.OnPropertyChanged("invln_lastchangebyid");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastmmodificationdate")]
+		public System.Nullable<System.DateTime> invln_lastmmodificationdate
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_lastmmodificationdate");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_lastmmodificationdate");
+				this.SetAttributeValue("invln_lastmmodificationdate", value);
+				this.OnPropertyChanged("invln_lastmmodificationdate");
 			}
 		}
 		

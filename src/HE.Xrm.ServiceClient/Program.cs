@@ -55,7 +55,7 @@ namespace HE.Xrm.ServiceClientExample
         {
             var req2 = new invln_getfilelocationforapplicationloanRequest() //get loan applications related to account and contact with given data
             {
-                invln_loanapplicationid = "3435ce97-dd6c-ee11-9ae6-0022480041cf",
+                invln_loanapplicationid = "7ae44329-bc2b-ee11-9965-002248c652b4",
             };
             var resp2 = (invln_getfilelocationforapplicationloanResponse)serviceClient.Execute(req2);
             Console.WriteLine("A web service connection was not established.");
