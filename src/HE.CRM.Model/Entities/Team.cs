@@ -124,6 +124,7 @@ namespace DataverseModel
 			public const string team_invln_portal = "team_invln_portal";
 			public const string team_invln_portalpermissionlevel = "team_invln_portalpermissionlevel";
 			public const string team_invln_sitedetails = "team_invln_sitedetails";
+			public const string team_sharepointdocumentlocation = "team_sharepointdocumentlocation";
 			public const string TeamId = "teamid";
 			public const string Id = "teamid";
 			public const string teammembership_association = "teammembership_association";
@@ -1089,6 +1090,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("team_invln_sitedetails");
 				this.SetRelatedEntities<DataverseModel.invln_SiteDetails>("team_invln_sitedetails", null, value);
 				this.OnPropertyChanged("team_invln_sitedetails");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_sharepointdocumentlocation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_sharepointdocumentlocation")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointDocumentLocation> team_sharepointdocumentlocation
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointDocumentLocation>("team_sharepointdocumentlocation", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_sharepointdocumentlocation");
+				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("team_sharepointdocumentlocation", null, value);
+				this.OnPropertyChanged("team_sharepointdocumentlocation");
 			}
 		}
 		

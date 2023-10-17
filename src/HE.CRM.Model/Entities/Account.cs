@@ -546,6 +546,7 @@ namespace DataverseModel
 			public const string Referencingaccount_master_account = "account_master_account";
 			public const string Referencingaccount_parent_account = "account_parent_account";
 			public const string account_primary_contact = "account_primary_contact";
+			public const string Account_SharepointDocumentLocation = "Account_SharepointDocumentLocation";
 			public const string AccountCategoryCode = "accountcategorycode";
 			public const string AccountClassificationCode = "accountclassificationcode";
 			public const string AccountId = "accountid";
@@ -4744,6 +4745,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("Referencedaccount_parent_account");
 				this.SetRelatedEntities<DataverseModel.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedaccount_parent_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N Account_SharepointDocumentLocation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Account_SharepointDocumentLocation")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointDocumentLocation> Account_SharepointDocumentLocation
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointDocumentLocation>("Account_SharepointDocumentLocation", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Account_SharepointDocumentLocation");
+				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("Account_SharepointDocumentLocation", null, value);
+				this.OnPropertyChanged("Account_SharepointDocumentLocation");
 			}
 		}
 		

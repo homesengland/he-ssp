@@ -16,7 +16,7 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     "HE.CRM.Plugins.Plugins.CustomApi.GetOrganisationChangeDetailsPlugin: invln_getorganisationchangedetails",
     1,
     IsolationModeEnum.Sandbox,
-    Id = "af53b65a-247f-47b4-8c3c-e1f85e851bc7")]
+    Id = "f962b813-eacb-4fe9-ae96-92ad15fad307")]
     public class GetOrganisationChangeDetailsPlugin : PluginBase<DataverseContext>, IPlugin
     {
         #region Constructors

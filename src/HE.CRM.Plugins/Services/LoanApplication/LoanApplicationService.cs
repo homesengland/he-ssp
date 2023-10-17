@@ -2,6 +2,7 @@ using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
+using HE.CRM.Common.Repositories.interfaces;
 using HE.CRM.Common.Repositories.Interfaces;
 using HE.CRM.Model.CrmSerializedParameters;
 using HE.CRM.Plugins.Services.GovNotifyEmail;
@@ -35,6 +36,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         private readonly ISystemUserRepository _systemUserRepositoryAdmin;
 
         private readonly IGovNotifyEmailService _govNotifyEmailService;
+        private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
 
         #endregion
 
@@ -47,6 +49,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
             _webroleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
             _loanStatusChangeRepository = CrmRepositoriesFactory.Get<ILoanStatusChangeRepository>();
+            _sharepointDocumentLocationRepository = CrmRepositoriesFactory.Get<ISharepointDocumentLocationRepository>();
 
             _loanApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<ILoanApplicationRepository>();
             _notificationSettingRepositoryAdmin = CrmRepositoriesFactory.GetSystem<INotificationSettingRepository>();
@@ -640,15 +643,23 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         {
             if (Guid.TryParse(loanApplicationId, out Guid loanGuid))
             {
-                var loanApplication = _loanApplicationRepository.GetById(loanGuid, new string[] { nameof(invln_Loanapplication.invln_Name).ToLower() });
-                var charsToReplace = new char[] { '-', '{', '}' };
-                foreach(var replChar in charsToReplace)
-                {
-                    loanApplicationId = loanApplicationId.Replace(replChar.ToString(), string.Empty);
-                }
-                return $"{loanApplication.invln_Name}_{loanApplicationId}";
+                var relatedDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToLoanApplication(loanGuid);
+                return relatedDocumentLocation.RelativeUrl;
             }
             return string.Empty;
+        }
+
+        public void CreateDocumentLocation(invln_Loanapplication target)
+        {
+            var documentLocation = _sharepointDocumentLocationRepository.GetByAttribute(nameof(SharePointDocumentLocation.Name).ToLower(), "Loan Application documents").FirstOrDefault();
+            var documentToCreate = new SharePointDocumentLocation()
+            {
+                RegardingObjectId = target.ToEntityReference(),
+                Name = $"Documents on Loans",
+                RelativeUrl = $"{target.invln_Name}",
+                ParentSiteOrLocation = documentLocation.ToEntityReference(),
+            };
+            _ = _sharepointDocumentLocationRepository.Create(documentToCreate);
         }
 
         public void SetLastModificationDate(invln_Loanapplication target)

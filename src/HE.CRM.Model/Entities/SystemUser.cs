@@ -516,6 +516,10 @@ namespace DataverseModel
 			public const string lk_invln_webrole_createdonbehalfby = "lk_invln_webrole_createdonbehalfby";
 			public const string lk_invln_webrole_modifiedby = "lk_invln_webrole_modifiedby";
 			public const string lk_invln_webrole_modifiedonbehalfby = "lk_invln_webrole_modifiedonbehalfby";
+			public const string lk_sharepointdocumentlocationbase_createdby = "lk_sharepointdocumentlocationbase_createdby";
+			public const string lk_sharepointdocumentlocationbase_createdonbehalfby = "lk_sharepointdocumentlocationbase_createdonbehalfby";
+			public const string lk_sharepointdocumentlocationbase_modifiedby = "lk_sharepointdocumentlocationbase_modifiedby";
+			public const string lk_sharepointdocumentlocationbase_modifiedonbehalfby = "lk_sharepointdocumentlocationbase_modifiedonbehalfby";
 			public const string Referencinglk_systemuser_createdonbehalfby = "lk_systemuser_createdonbehalfby";
 			public const string Referencinglk_systemuser_modifiedonbehalfby = "lk_systemuser_modifiedonbehalfby";
 			public const string Referencinglk_systemuserbase_createdby = "lk_systemuserbase_createdby";
@@ -608,6 +612,7 @@ namespace DataverseModel
 			public const string user_invln_portalpermissionlevel = "user_invln_portalpermissionlevel";
 			public const string user_invln_sitedetails = "user_invln_sitedetails";
 			public const string Referencinguser_parent_user = "user_parent_user";
+			public const string user_sharepointdocumentlocation = "user_sharepointdocumentlocation";
 			public const string UserLicenseType = "userlicensetype";
 			public const string UserPuid = "userpuid";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
@@ -4826,6 +4831,86 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N lk_sharepointdocumentlocationbase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointdocumentlocationbase_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointDocumentLocation> lk_sharepointdocumentlocationbase_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointDocumentLocation>("lk_sharepointdocumentlocationbase_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_sharepointdocumentlocationbase_createdby");
+				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("lk_sharepointdocumentlocationbase_createdby", null, value);
+				this.OnPropertyChanged("lk_sharepointdocumentlocationbase_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_sharepointdocumentlocationbase_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointdocumentlocationbase_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointDocumentLocation> lk_sharepointdocumentlocationbase_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointDocumentLocation>("lk_sharepointdocumentlocationbase_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_sharepointdocumentlocationbase_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("lk_sharepointdocumentlocationbase_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_sharepointdocumentlocationbase_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_sharepointdocumentlocationbase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointdocumentlocationbase_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointDocumentLocation> lk_sharepointdocumentlocationbase_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointDocumentLocation>("lk_sharepointdocumentlocationbase_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_sharepointdocumentlocationbase_modifiedby");
+				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("lk_sharepointdocumentlocationbase_modifiedby", null, value);
+				this.OnPropertyChanged("lk_sharepointdocumentlocationbase_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_sharepointdocumentlocationbase_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointdocumentlocationbase_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointDocumentLocation> lk_sharepointdocumentlocationbase_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointDocumentLocation>("lk_sharepointdocumentlocationbase_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_sharepointdocumentlocationbase_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("lk_sharepointdocumentlocationbase_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_sharepointdocumentlocationbase_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N lk_systemuser_createdonbehalfby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_systemuser_createdonbehalfby", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
@@ -5322,6 +5407,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("Referenceduser_parent_user");
 				this.SetRelatedEntities<DataverseModel.SystemUser>("user_parent_user", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referenceduser_parent_user");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N user_sharepointdocumentlocation
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_sharepointdocumentlocation")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointDocumentLocation> user_sharepointdocumentlocation
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointDocumentLocation>("user_sharepointdocumentlocation", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_sharepointdocumentlocation");
+				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("user_sharepointdocumentlocation", null, value);
+				this.OnPropertyChanged("user_sharepointdocumentlocation");
 			}
 		}
 		

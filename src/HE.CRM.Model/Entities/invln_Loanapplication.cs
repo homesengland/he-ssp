@@ -146,6 +146,7 @@ namespace DataverseModel
 			public const string invln_loanapplication_account = "invln_loanapplication_account";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
 			public const string invln_loanapplication_invln_govnotifyemails = "invln_loanapplication_invln_govnotifyemails";
+			public const string invln_loanapplication_SharePointDocumentLocations = "invln_loanapplication_SharePointDocumentLocations";
 			public const string invln_LoanapplicationId = "invln_loanapplicationid";
 			public const string Id = "invln_loanapplicationid";
 			public const string invln_loanid = "invln_loanid";
@@ -1516,6 +1517,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_loanapplication_invln_govnotifyemails");
 				this.SetRelatedEntities<DataverseModel.invln_govnotifyemail>("invln_loanapplication_invln_govnotifyemails", null, value);
 				this.OnPropertyChanged("invln_loanapplication_invln_govnotifyemails");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_loanapplication_SharePointDocumentLocations
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_SharePointDocumentLocations")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointDocumentLocation> invln_loanapplication_SharePointDocumentLocations
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointDocumentLocation>("invln_loanapplication_SharePointDocumentLocations", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_SharePointDocumentLocations");
+				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("invln_loanapplication_SharePointDocumentLocations", null, value);
+				this.OnPropertyChanged("invln_loanapplication_SharePointDocumentLocations");
 			}
 		}
 		
