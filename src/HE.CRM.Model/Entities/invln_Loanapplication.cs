@@ -136,7 +136,6 @@ namespace DataverseModel
 			public const string invln_ExternalStatus = "invln_externalstatus";
 			public const string invln_fundingdetailscompletionstatus = "invln_fundingdetailscompletionstatus";
 			public const string invln_FundingReason = "invln_fundingreason";
-			public const string invln_InternalStatus = "invln_internalstatus";
 			public const string invln_invln_emailnotification_Regarding_invln_l = "invln_invln_emailnotification_Regarding_invln_l";
 			public const string invln_invln_loanapplication_invln_contract_Loanapplication = "invln_invln_loanapplication_invln_contract_Loanapplication";
 			public const string invln_lastchangebyid = "invln_lastchangebyid";
@@ -618,23 +617,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_FundingReason");
 				this.SetAttributeValue("invln_fundingreason", value);
 				this.OnPropertyChanged("invln_FundingReason");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_internalstatus")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_InternalStatus
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_internalstatus");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_InternalStatus");
-				this.SetAttributeValue("invln_internalstatus", value);
-				this.OnPropertyChanged("invln_InternalStatus");
 			}
 		}
 		
