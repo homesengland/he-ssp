@@ -7,21 +7,35 @@ public static class NotificationMapper
 {
     public static string MapBodyTypeToDescription(NotificationBodyType bodyType, IDictionary<NotificationServiceKeys, string> valuesToDisplay)
     {
-        return bodyType switch
+        var text = bodyType switch
         {
-            NotificationBodyType.WithdrawApplication => NotificationBody.ApplicationWithdrawnWithName(valuesToDisplay),
-            NotificationBodyType.DeleteProject => NotificationBody.ProjectRemoved(valuesToDisplay),
+            NotificationBodyType.WithdrawApplication => NotificationBody.ApplicationWithdrawnWithName,
+            NotificationBodyType.DeleteProject => NotificationBody.ProjectRemoved,
             _ => string.Empty,
         };
+
+        foreach (var value in valuesToDisplay)
+        {
+            text = text.Replace($"<{value.Key}>", value.Value);
+        }
+
+        return text;
     }
 
     public static string MapBodyTypeToLinkDescription(NotificationBodyType bodyType, IDictionary<NotificationServiceKeys, string> valuesToDisplay)
     {
-        return bodyType switch
+        var text = bodyType switch
         {
-            NotificationBodyType.WithdrawApplication => NotificationBodyLink.ContactEmailIfThereIsAProblem(valuesToDisplay),
+            NotificationBodyType.WithdrawApplication => NotificationBodyLink.ContactEmailIfThereIsAProblem,
             NotificationBodyType.DeleteProject => string.Empty,
             _ => string.Empty,
         };
+
+        foreach (var value in valuesToDisplay)
+        {
+            text = text.Replace($"<{value.Key}>", value.Value);
+        }
+
+        return text;
     }
 }
