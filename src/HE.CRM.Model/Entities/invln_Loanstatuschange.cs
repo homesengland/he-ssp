@@ -73,7 +73,6 @@ namespace DataverseModel
 			public const string invln_LoanstatuschangeId = "invln_loanstatuschangeid";
 			public const string Id = "invln_loanstatuschangeid";
 			public const string invln_Name = "invln_name";
-			public const string invln_Status = "invln_status";
 			public const string invln_systemuser_invln_loanstatuschange_changedbyuserid = "invln_systemuser_invln_loanstatuschange_changedbyuserid";
 			public const string lk_invln_loanstatuschange_createdby = "lk_invln_loanstatuschange_createdby";
 			public const string lk_invln_loanstatuschange_createdonbehalfby = "lk_invln_loanstatuschange_createdonbehalfby";
@@ -404,23 +403,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Name");
 				this.SetAttributeValue("invln_name", value);
 				this.OnPropertyChanged("invln_Name");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_status")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Status
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_status");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Status");
-				this.SetAttributeValue("invln_status", value);
-				this.OnPropertyChanged("invln_Status");
 			}
 		}
 		
