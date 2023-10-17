@@ -3,6 +3,7 @@ using HE.InvestmentLoans.Common.Contract.Models;
 using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Common.Utils.Constants.Notification;
+using HE.InvestmentLoans.Common.Utils.Enums;
 
 namespace HE.InvestmentLoans.Common.Contract.Services;
 public class NotificationService : INotificationService
@@ -20,7 +21,7 @@ public class NotificationService : INotificationService
 
     public Tuple<bool, NotificationModel?> Pop()
     {
-        var key = $"{NotificationServiceKey.Notification}-{UserGlobalId}";
+        var key = $"{NotificationServiceCacheKey.Notification}-{UserGlobalId}";
         var isInCache = false;
         var valueFromCache = _cacheService.GetValue<NotificationModel?>(key);
 
@@ -33,10 +34,10 @@ public class NotificationService : INotificationService
         return Tuple.Create(isInCache, valueFromCache);
     }
 
-    public void NotifySuccess(NotificationBodyType notificationBodyType, string valueToDisplay)
+    public void NotifySuccess(NotificationBodyType notificationBodyType, IDictionary<NotificationServiceKeys, string> valuesToDisplay)
     {
-        var key = $"{NotificationServiceKey.Notification}-{UserGlobalId}";
-        var notificationModel = new NotificationModel(NotificationTitle.Success, NotificationType.Success, notificationBodyType, valueToDisplay);
+        var key = $"{NotificationServiceCacheKey.Notification}-{UserGlobalId}";
+        var notificationModel = new NotificationModel(NotificationTitle.Success, NotificationType.Success, notificationBodyType, valuesToDisplay);
 
         _cacheService.SetValue(key, notificationModel);
     }
