@@ -110,10 +110,10 @@ public class IntegrationUserData
 
         UserGlobalId = "auth0|64a3bdb420d21a3fc5193e4d";
         Email = "luci_001@pwc.com";
-        FirstName = FirstName.FromString("John")!;
-        LastName = LastName.FromString("Doe")!;
-        JobTitle = JobTitle.FromString("Developer")!;
-        TelephoneNumber = TelephoneNumber.FromString("Carq pozdrawia")!;
+        FirstName = FirstName.New("John");
+        LastName = LastName.New("Doe");
+        JobTitle = JobTitle.New("Developer");
+        TelephoneNumber = TelephoneNumber.New("Carq pozdrawia");
         OrganizationName = "DO_NOT_DELETE_DEFAULT_ACCOUNT";
         OrganizationRegistrationNumber = "Not provided";
         OrganizationAddress = "12 Wharf Street";
