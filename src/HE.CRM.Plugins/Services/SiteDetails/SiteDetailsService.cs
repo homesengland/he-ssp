@@ -13,6 +13,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
         #region Fields
 
         private readonly ISiteDetailsRepository siteDetailsRepository;
+        private readonly ILoanApplicationRepository _loanApplicationRepository;
 
         #endregion
 
@@ -21,6 +22,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
         public SiteDetailsService(CrmServiceArgs args) : base(args)
         {
             siteDetailsRepository = CrmRepositoriesFactory.Get<ISiteDetailsRepository>();
+            _loanApplicationRepository = CrmRepositoriesFactory.Get<ILoanApplicationRepository>();
         }
 
         #endregion
@@ -50,6 +52,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 }
                 siteDetailToUpdate.Id = detailsId;
                 siteDetailsRepository.Update(siteDetailToUpdate);
+                SetLastModificationDateOnRelatedLoanApplication(siteDetailToUpdate);
             }
         }
         public void DeleteSiteDetails(string siteDetailsId)
@@ -62,6 +65,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                     StateCode = new Microsoft.Xrm.Sdk.OptionSetValue(1),
                 };
                 siteDetailsRepository.Update(siteDetailsToUpdate);
+                SetLastModificationDateOnRelatedLoanApplication(siteDetailsToUpdate);
             }
         }
 
@@ -70,6 +74,22 @@ namespace HE.CRM.Plugins.Services.SiteDetails
             var deserilizedSiteDetail = JsonSerializer.Deserialize<SiteDetailsDto>(siteDetail);
             var siteDetailsToCreate = SiteDetailsDtoMapper.MapSiteDetailsDtoToRegularEntity(deserilizedSiteDetail, loanApplicationId);
             siteDetailsRepository.Create(siteDetailsToCreate);
+
+            SetLastModificationDateOnRelatedLoanApplication(siteDetailsToCreate);
+        }
+
+        public void SetLastModificationDateOnRelatedLoanApplication(invln_SiteDetails siteDetails)
+        {
+            if (siteDetails.invln_Loanapplication != null)
+            {
+                var loanApplicationToUpdate = new invln_Loanapplication()
+                {
+                    Id = siteDetails.invln_Loanapplication.Id,
+                    invln_lastmmodificationdate = DateTime.UtcNow,
+                };
+
+                _loanApplicationRepository.Update(loanApplicationToUpdate);
+            }
         }
         #endregion
     }

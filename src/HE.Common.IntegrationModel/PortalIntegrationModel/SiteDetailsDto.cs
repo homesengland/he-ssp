@@ -63,5 +63,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public bool? affordableHousing { get; set; }
 
         public int? completionStatus { get; set; }
+
+        public bool? projectHasStartDate { get; set; }
     }
 }

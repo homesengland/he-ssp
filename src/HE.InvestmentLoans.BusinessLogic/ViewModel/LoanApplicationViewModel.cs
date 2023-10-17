@@ -13,7 +13,6 @@ public class LoanApplicationViewModel
 {
     public LoanApplicationViewModel()
     {
-        Company = new CompanyStructureViewModel();
         Funding = new FundingViewModel();
         Security = new SecurityViewModel();
         Projects = new List<ProjectViewModel>();
@@ -67,8 +66,7 @@ public class LoanApplicationViewModel
 
     public bool IsReadyToSubmit()
     {
-        return Company.IsCompleted()
-            && (Security.State == SectionStatus.Completed || Security.IsFlowCompleted)
+        return (Security.State == SectionStatus.Completed || Security.IsFlowCompleted)
             && (Funding.IsCompleted() || Funding.IsFlowCompleted)
             && Projects.All(x => x.Status == SectionStatus.Completed)
             && Projects.Any();

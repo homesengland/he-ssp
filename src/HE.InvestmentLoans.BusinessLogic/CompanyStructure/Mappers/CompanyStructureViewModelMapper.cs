@@ -17,6 +17,7 @@ public static class CompanyStructureViewModelMapper
             OrganisationMoreInformation = companyStructureEntity.MoreInformation?.Information,
             HomesBuilt = companyStructureEntity.HomesBuilt?.ToString(),
             CheckAnswers = companyStructureEntity.Status == SectionStatus.Completed ? CommonResponse.Yes : null,
+            State = companyStructureEntity.Status,
         };
     }
 

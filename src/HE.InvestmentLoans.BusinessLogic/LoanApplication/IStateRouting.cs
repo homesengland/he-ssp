@@ -7,5 +7,7 @@ public interface IStateRouting<TState>
 {
     Task<TState> NextState(Trigger trigger);
 
+    TState CurrentState(TState targetState) => targetState;
+
     Task<bool> StateCanBeAccessed(TState nextState);
 }
