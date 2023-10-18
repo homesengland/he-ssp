@@ -4,6 +4,8 @@ public class AppConfig : IAppConfig
 {
     public string? SupportEmail { get; set; }
 
+    public string? FundingSupportEmail { get; set; }
+
     public string? AppName { get; set; }
 
     public int MaxFileSizeInMegabytes { get; set; }
