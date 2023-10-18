@@ -16,40 +16,28 @@
 
         <gds-summary-list class="govuk-!-margin-bottom-9">
 
-            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Registered company name" },
             { "Value", Model.OrganisationName },
-            { "Link", "" },
-            { "LinkId", "" },
-            { "IsEditable", false }
             })
 
-            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Organisation phone number" },
             { "Value", Model.OrganisationPhoneNumber },
-            { "Link", "" },
-            { "LinkId", "" },
-            { "IsEditable", false }
             })
 
-            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Organisation address" },
             { "Value", Model.OrganisationAddress },
-            { "Link", ""},
-            { "LinkId", "" },
-            { "IsEditable", false }
             })
 
-            @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+            @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
             {
             { "Title", "Companies House Registration number" },
             { "Value", Model.CompaniesHouseNumber },
-            { "Link", "" },
-            { "LinkId", "" },
-            { "IsEditable", false }
             })
 
         </gds-summary-list>
@@ -57,7 +45,7 @@
         {
             <gds-div-grid-column-two-thirds class="govuk-!-padding-0">
                 <div class="govuk-inset-text" data-testid="user-organisation-limited-user">
-                    Your request to details is pending. You cannot request to make additional chnages until this change has been completed.
+                    Your request to change details is pending. You cannot request to make additional changes until this change has been completed.
                 </div>
             </gds-div-grid-column-two-thirds>
         }

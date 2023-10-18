@@ -42,33 +42,23 @@ public class UserOrganisationController : Controller
                 new List<ProgrammeModel> { ProgrammesConsts.LoansProgramme },
                 new List<ActionModel>
                 {
-                    new ActionModel($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "OrganizationDetails", "UserOrganisation"),
+                    new ActionModel($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation"),
                     new ActionModel($"Manage your account", string.Empty, "Dashboard"),
                 }));
     }
 
-    [HttpGet("organization-details")]
-    public async Task<IActionResult> OrganizationDetails()
+    [HttpGet("details")]
+    public async Task<IActionResult> Details()
     {
-        var organisationResult = await _mediator.Send(new GetUserOrganisationInformationQuery());
-
-        var changeReequestDetailsResponse = await _mediator.Send(new GetOrganizationChangeRequestDetailsQuery());
-
-        var address = new List<string>
-        {
-            organisationResult.OrganizationBasicInformation?.Address.Line1 ?? string.Empty,
-            organisationResult.OrganizationBasicInformation.Address.Line2 ?? string.Empty,
-            organisationResult.OrganizationBasicInformation.Address.City ?? string.Empty,
-            organisationResult.OrganizationBasicInformation.Address.PostalCode ?? string.Empty,
-        };
+        var organisationResult = await _mediator.Send(new GetOrganisationDetailsQuery());
 
         return View(
             "OrganizationDetails",
             new OrganisationDetailsModel(
-                organisationResult.OrganizationBasicInformation.RegisteredCompanyName,
-                organisationResult.OrganizationBasicInformation.ContactInformation.PhoneNUmber,
-                address,
-                organisationResult.OrganizationBasicInformation.CompanyRegistrationNumber,
-                changeReequestDetailsResponse.ChangeRequestDetails));
+                organisationResult.CompanyName,
+                organisationResult.CompanyPhoneNumber,
+                organisationResult.AddressLines,
+                organisationResult.CompanyHouseNumber,
+                organisationResult.ChangeRequestDetails));
     }
 }

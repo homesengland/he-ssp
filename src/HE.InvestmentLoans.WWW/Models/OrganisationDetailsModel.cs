@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.WWW.Models;
+﻿namespace HE.InvestmentLoans.WWW.Models;
 
 public record OrganisationDetailsModel(
     string OrganisationName,

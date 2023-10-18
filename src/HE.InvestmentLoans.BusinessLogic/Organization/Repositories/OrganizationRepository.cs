@@ -41,6 +41,7 @@ public class OrganizationRepository : IOrganizationRepository
                 organizationDetailsDto.compayAdminContactEmail));
     }
 
+
     public async Task<string> GetOrganisationChangeRequestDetails(UserAccount userAccount, CancellationToken cancellationToken)
     {
         if (!userAccount.AccountId.HasValue)
