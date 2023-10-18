@@ -65,8 +65,7 @@ public class LoanApplicationViewModel
 
     public bool IsReadyToSubmit()
     {
-        return (Funding.IsCompleted() || Funding.IsFlowCompleted)
-            && Projects.All(x => x.Status == SectionStatus.Completed)
+        return Projects.All(x => x.Status == SectionStatus.Completed)
             && Projects.Any();
     }
 

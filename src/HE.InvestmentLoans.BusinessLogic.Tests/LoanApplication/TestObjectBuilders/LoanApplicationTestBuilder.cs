@@ -8,6 +8,7 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Tests;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.WWW.Attributes;
 using HE.Investments.TestsUtils;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
@@ -29,6 +30,7 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             FundingPurpose.BuildingNewHomes,
             DateTimeTestData.SeptemberDay20Year2023At0736,
             DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(1),
+            LoanApplicationSection.New(),
             "Anonymous",
             LoanApplicationSection.New(),
             LoanApplicationSection.New()));
@@ -43,13 +45,21 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             DateTimeTestData.SeptemberDay20Year2023At0736,
             DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(1),
             "Anonymous",
-            new LoanApplicationSection(SectionStatus.Completed),
-            new LoanApplicationSection(SectionStatus.Completed)));
+            LoanApplicationSectionTestData.CompletedSection,
+            LoanApplicationSectionTestData.CompletedSection,
+            LoanApplicationSectionTestData.CompletedSection));
 
     public LoanApplicationTestBuilder WithCreatedOn(DateTime createdOn)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.CreatedOn), createdOn);
         return this;
+    }
+
+    public LoanApplicationTestBuilder WithAllCompletedSections()
+    {
+        return WithCompanyStructureSection(LoanApplicationSectionTestData.CompletedSection)
+            .WithFundingSection(LoanApplicationSectionTestData.CompletedSection)
+            .WithSecuritySection(LoanApplicationSectionTestData.CompletedSection);
     }
 
     public LoanApplicationTestBuilder WithCompanyStructureSection(LoanApplicationSection companyStructureSection)
@@ -62,6 +72,13 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
     public LoanApplicationTestBuilder WithSecuritySection(LoanApplicationSection companyStructureSection)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.Security), companyStructureSection);
+
+        return this;
+    }
+
+    public LoanApplicationTestBuilder WithFundingSection(LoanApplicationSection companyStructureSection)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.Funding), companyStructureSection);
 
         return this;
     }

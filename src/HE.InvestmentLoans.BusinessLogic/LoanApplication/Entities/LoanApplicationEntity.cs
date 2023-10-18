@@ -15,7 +15,7 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
 public class LoanApplicationEntity
 {
-    public LoanApplicationEntity(LoanApplicationId id, LoanApplicationName name, UserAccount userAccount, ApplicationStatus externalStatus, FundingPurpose fundingReason, DateTime? createdOn, DateTime? lastModificationDate, string lastModifiedBy, LoanApplicationSection companyStructure, LoanApplicationSection security)
+    public LoanApplicationEntity(LoanApplicationId id, LoanApplicationName name, UserAccount userAccount, ApplicationStatus externalStatus, FundingPurpose fundingReason, DateTime? createdOn, DateTime? lastModificationDate, string lastModifiedBy, LoanApplicationSection companyStructure, LoanApplicationSection security, LoanApplicationSection funding)
     {
         Id = id;
         Name = name;
@@ -28,6 +28,7 @@ public class LoanApplicationEntity
         CreatedOn = createdOn;
         CompanyStructure = companyStructure;
         Security = security;
+        Funding = funding;
     }
 
     public LoanApplicationId Id { get; private set; }
@@ -44,6 +45,8 @@ public class LoanApplicationEntity
 
     public LoanApplicationSection Security { get; private set; }
 
+    public LoanApplicationSection Funding { get; private set; }
+
     public ApplicationStatus ExternalStatus { get; set; }
 
     public DateTime? LastModificationDate { get; }
@@ -56,7 +59,7 @@ public class LoanApplicationEntity
 
     public string ReferenceNumber => LegacyModel.ReferenceNumber ?? string.Empty;
 
-    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, LoanApplicationSection.New(), string.Empty, LoanApplicationSection.New());
+    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, LoanApplicationSection.New(), LoanApplicationSection.New(), string.Empty, LoanApplicationSection.New());
 
     public void SaveApplicationProjects(ApplicationProjects applicationProjects)
     {
@@ -140,7 +143,7 @@ public class LoanApplicationEntity
 
     private bool IsReadyToSubmit()
     {
-        return Security.IsCompleted() && CompanyStructure.IsCompleted() && LegacyModel.IsReadyToSubmit();
+        return Funding.IsCompleted() && Security.IsCompleted() && CompanyStructure.IsCompleted() && LegacyModel.IsReadyToSubmit();
     }
 
     private bool IsSubmitted()
