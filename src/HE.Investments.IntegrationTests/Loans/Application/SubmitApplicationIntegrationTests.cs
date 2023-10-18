@@ -20,7 +20,7 @@ public class SubmitApplicationIntegrationTests : IntegrationTest
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = "LoansConfig.SkipTest")]
     [Order(1)]
     public async Task Order01_ShouldOpenCheckAllAnswersPage_WhenAllApplicationSectionAreFilled()
     {
@@ -40,7 +40,7 @@ public class SubmitApplicationIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, checkApplicationPage);
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = "LoansConfig.SkipTest")]
     [Order(2)]
     public async Task Order02_ShouldMoveToApplicationSubmitted_WhenAcceptAndSubmitButtonIsClicked()
     {

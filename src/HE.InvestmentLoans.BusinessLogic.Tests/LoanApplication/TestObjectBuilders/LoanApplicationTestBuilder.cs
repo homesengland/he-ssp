@@ -30,7 +30,8 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             DateTimeTestData.SeptemberDay20Year2023At0736,
             DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(1),
             "Anonymous",
-            new LoanApplicationSection(SectionStatus.NotStarted)));
+            LoanApplicationSection.New(),
+            LoanApplicationSection.New()));
 
     public static LoanApplicationTestBuilder NewSubmitted(UserAccount userAccount) => new(
         new LoanApplicationEntity(
@@ -42,7 +43,8 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             DateTimeTestData.SeptemberDay20Year2023At0736,
             DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(1),
             "Anonymous",
-            new LoanApplicationSection(SectionStatus.NotStarted)));
+            new LoanApplicationSection(SectionStatus.Completed),
+            new LoanApplicationSection(SectionStatus.Completed)));
 
     public LoanApplicationTestBuilder WithCreatedOn(DateTime createdOn)
     {
@@ -53,6 +55,14 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
     public LoanApplicationTestBuilder WithCompanyStructureSection(LoanApplicationSection companyStructureSection)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.CompanyStructure), companyStructureSection);
+
+        return this;
+    }
+
+    public LoanApplicationTestBuilder WithSecuritySection(LoanApplicationSection companyStructureSection)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.Security), companyStructureSection);
+
         return this;
     }
 }

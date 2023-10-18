@@ -29,7 +29,7 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
             new Sections(
                 MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.CompanyStructure.Status),
                 MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.LegacyModel.Funding.State),
-                MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.LegacyModel.Security.State),
+                MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.Security.Status),
                 loanApplication.LegacyModel.Projects
                     .Select(x => new ProjectSection(x.ProjectId, x.Name, MapToSectionStatus(loanApplication.ExternalStatus, x.Status)))
                     .ToArray()),

@@ -19,7 +19,19 @@ public class CanBeSubmittedTests
     {
         var entity = LoanApplicationTestBuilder
             .NewDraft()
-            .WithCompanyStructureSection(CompanyStructureSectionTestData.CompletedSection)
+            .WithCompanyStructureSection(LoanApplicationSectionTestData.InCompletedSection)
+            .Build();
+
+        entity.CanBeSubmitted().Should().BeFalse();
+    }
+
+    [Fact]
+    public void CannotBeSubmitted_WhenSecuritySectionIsNotCompleted()
+    {
+        var entity = LoanApplicationTestBuilder
+            .NewDraft()
+            .WithCompanyStructureSection(LoanApplicationSectionTestData.CompletedSection)
+            .WithSecuritySection(LoanApplicationSectionTestData.InCompletedSection)
             .Build();
 
         entity.CanBeSubmitted().Should().BeFalse();

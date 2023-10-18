@@ -23,7 +23,7 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = "LoansConfig.SkipTest")]
     [Order(1)]
     public async Task Order01_ShouldOpenWithdrawPage_WhenApplicationIsInDraftState()
     {
@@ -43,7 +43,7 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, withdrawPage);
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = "LoansConfig.SkipTest")]
     [Order(2)]
     public async Task Order02_ShouldDisplayValidationError_WhenWithdrawReasonIsNotProvided()
     {
@@ -63,7 +63,7 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
             .ContainsValidationMessage(ValidationErrorMessage.EnterWhyYouWantToWithdrawApplication);
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = "LoansConfig.SkipTest")]
     [Order(3)]
     public async Task Order03_ShouldDisplayValidationError_WhenWithdrawReasonIsLongerThan1500Characters()
     {
@@ -83,7 +83,7 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
             .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.WithdrawReason));
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = "LoansConfig.SkipTest")]
     [Order(4)]
     public async Task Order04_ShouldMoveToMainDashboard_WhenWithdrawReasonIsProvided()
     {

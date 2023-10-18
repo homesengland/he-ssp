@@ -14,7 +14,6 @@ public class LoanApplicationViewModel
     public LoanApplicationViewModel()
     {
         Funding = new FundingViewModel();
-        Security = new SecurityViewModel();
         Projects = new List<ProjectViewModel>();
         ID = Guid.NewGuid();
         State = LoanApplicationWorkflow.State.AboutLoan;
@@ -66,8 +65,7 @@ public class LoanApplicationViewModel
 
     public bool IsReadyToSubmit()
     {
-        return (Security.State == SectionStatus.Completed || Security.IsFlowCompleted)
-            && (Funding.IsCompleted() || Funding.IsFlowCompleted)
+        return (Funding.IsCompleted() || Funding.IsFlowCompleted)
             && Projects.All(x => x.Status == SectionStatus.Completed)
             && Projects.Any();
     }
