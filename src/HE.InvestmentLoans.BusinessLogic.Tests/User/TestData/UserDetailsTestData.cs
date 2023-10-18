@@ -9,7 +9,7 @@ public static class UserDetailsTestData
         LastName.FromString("Doe"),
         JobTitle.FromString("Director"),
         "john.doe@test.com",
-        TelephoneNumber.FromString("888888888"),
-        TelephoneNumber.FromString(string.Empty),
+        TelephoneNumber.FromString("888888888", nameof(UserDetails.TelephoneNumber)),
+        TelephoneNumber.FromString(string.Empty, nameof(UserDetails.SecondaryTelephoneNumber)),
         true);
 }

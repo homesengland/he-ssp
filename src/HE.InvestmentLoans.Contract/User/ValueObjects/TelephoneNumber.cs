@@ -8,12 +8,7 @@ namespace HE.InvestmentLoans.Contract.User.ValueObjects;
 
 public class TelephoneNumber : ValueObject
 {
-    public TelephoneNumber(string value)
-    {
-        Value = value;
-    }
-
-    public TelephoneNumber(string value, string affectedField, string validationMessage)
+    public TelephoneNumber(string value, string affectedField)
     {
         if (value!.IsNotProvided())
         {
@@ -22,13 +17,22 @@ public class TelephoneNumber : ValueObject
                 .AddValidationError(affectedField, ValidationErrorMessage.EnterTelephoneNumber)
                 .CheckErrors();
         }
-        else if (value!.Length > MaximumInputLength.ShortInput)
+        else if (affectedField == nameof(UserDetailsViewModel.TelephoneNumber) && value!.Length > MaximumInputLength.ShortInput)
         {
             OperationResult
                 .New()
                 .AddValidationError(
                     affectedField,
-                    validationMessage)
+                    ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.TelephoneNumber))
+                .CheckErrors();
+        }
+        else if (affectedField == nameof(UserDetailsViewModel.SecondaryTelephoneNumber) && value!.Length > MaximumInputLength.ShortInput)
+        {
+            OperationResult
+                .New()
+                .AddValidationError(
+                    affectedField,
+                    ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.SecondaryTelephoneNumber))
                 .CheckErrors();
         }
 
@@ -37,16 +41,16 @@ public class TelephoneNumber : ValueObject
 
     public string Value { get; }
 
-    public static TelephoneNumber New(string value, string affectedField, string validationMessage) => new(value, affectedField, validationMessage);
+    public static TelephoneNumber New(string value, string affectedField) => new(value, affectedField);
 
-    public static TelephoneNumber? FromString(string? telephoneNumber)
+    public static TelephoneNumber? FromString(string? value, string affectedField)
     {
-        if (string.IsNullOrEmpty(telephoneNumber))
+        if (string.IsNullOrEmpty(value))
         {
             return null;
         }
 
-        return new TelephoneNumber(telephoneNumber);
+        return new TelephoneNumber(value, affectedField);
     }
 
     public override string ToString()

@@ -22,8 +22,8 @@ public class MapContactDtoToUserDetailsTests
         userDetailsEntity.LastName.Should().Be(LastName.FromString(contactDto.lastName));
         userDetailsEntity.JobTitle.Should().Be(JobTitle.FromString(contactDto.jobTitle));
         userDetailsEntity.Email.Should().Be(contactDto.email);
-        userDetailsEntity.TelephoneNumber.Should().Be(TelephoneNumber.FromString(contactDto.phoneNumber));
-        userDetailsEntity.SecondaryTelephoneNumber.Should().Be(TelephoneNumber.FromString(contactDto.secondaryPhoneNumber));
+        userDetailsEntity.TelephoneNumber.Should().Be(TelephoneNumber.FromString(contactDto.phoneNumber, nameof(userDetailsEntity.TelephoneNumber)));
+        userDetailsEntity.SecondaryTelephoneNumber.Should().Be(TelephoneNumber.FromString(contactDto.secondaryPhoneNumber, nameof(userDetailsEntity.SecondaryTelephoneNumber)));
         userDetailsEntity.IsTermsAndConditionsAccepted.Should().Be(contactDto.isTermsAndConditionsAccepted);
     }
 }

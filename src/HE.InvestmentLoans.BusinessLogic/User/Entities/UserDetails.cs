@@ -53,18 +53,12 @@ public class UserDetails
         var lastNameResult = operationResult.CatchResult(() => LastName.New(lastName));
         var jobTitleResult = operationResult.CatchResult(() => JobTitle.New(jobTitle));
         var telephoneNumberResult = operationResult.CatchResult(() =>
-            TelephoneNumber.New(
-                telephoneNumber,
-                nameof(TelephoneNumber),
-                ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.TelephoneNumber)));
+            TelephoneNumber.New(telephoneNumber, nameof(TelephoneNumber)));
         TelephoneNumber? secondaryTelephoneNumberResult = null;
 
         if (secondaryTelephoneNumber.IsProvided())
         {
-            secondaryTelephoneNumberResult = operationResult.CatchResult(() => TelephoneNumber.New(
-                secondaryTelephoneNumber,
-                nameof(SecondaryTelephoneNumber),
-                ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.SecondaryTelephoneNumber)));
+            secondaryTelephoneNumberResult = operationResult.CatchResult(() => TelephoneNumber.New(secondaryTelephoneNumber, nameof(SecondaryTelephoneNumber)));
         }
 
         operationResult.CheckErrors();

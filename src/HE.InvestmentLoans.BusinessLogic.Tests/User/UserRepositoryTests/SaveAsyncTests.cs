@@ -33,8 +33,8 @@ public class SaveAsyncTests : TestBase<LoanUserRepository>
             LastName.FromString("Smith"),
             JobTitle.FromString("Developer"),
             "john.smith@test.com",
-            TelephoneNumber.FromString("12345678"),
-            TelephoneNumber.FromString("87654321"),
+            TelephoneNumber.FromString("12345678", nameof(UserDetails.TelephoneNumber)),
+            TelephoneNumber.FromString("87654321", nameof(UserDetails.SecondaryTelephoneNumber)),
             false);
 
         // when
