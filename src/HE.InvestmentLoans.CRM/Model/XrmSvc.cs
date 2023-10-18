@@ -948,6 +948,12 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Completed = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Submitted = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotSubmitted = 858110004,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
