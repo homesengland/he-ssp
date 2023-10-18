@@ -121,6 +121,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             existingLegalCharges = projectToSave.ChargesDebt?.Exist,
             existingLegalChargesInformation = projectToSave.ChargesDebt?.Info,
             numberOfAffordableHomes = projectToSave?.AffordableHomes?.Value,
+            projectHasStartDate = projectToSave?.StartDate?.Exists,
             startDate = projectToSave?.StartDate?.Value,
             planningPermissionStatus = projectToSave!.Status.IsProvided() ? PlanningPermissionStatusMapper.Map(projectToSave.PlanningPermissionStatus) : null,
             affordableHousing = projectToSave.AffordableHomes?.Value?.MapToBool(),
@@ -181,5 +182,6 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         yield return nameof(invln_SiteDetails.invln_startdate).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_planningpermissionstatus).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_completionstatus).ToLowerInvariant();
+        yield return "invln_projecthasstartdate";
     }
 }
