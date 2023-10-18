@@ -8,19 +8,19 @@
 
     if (notificationModel != null)
     {
-        description = NotificationMapper.MapBodyTypeToDescription(notificationModel.NotificationBodyType, notificationModel.ValueToDisplay);
-        linkDescription = NotificationMapper.MapBodyTypeToLinkDescription(notificationModel.NotificationBodyType);
+        description = NotificationMapper.MapBodyTypeToDescription(notificationModel.NotificationBodyType, notificationModel.ValuesToDisplay);
+        linkDescription = NotificationMapper.MapBodyTypeToLinkDescription(notificationModel.NotificationBodyType, notificationModel.ValuesToDisplay);
     }
 }
 
 @if (isNotificationInCache)
 {
-    <div class="govuk-notification-banner @(notificationModel.Type == NotificationType.Success ? "govuk-notification-banner--success" : "") govuk-!-margin-bottom-8" role="alert"
+    <div class="govuk-notification-banner @(notificationModel?.Type == NotificationType.Success ? "govuk-notification-banner--success" : "") govuk-!-margin-bottom-8" role="alert"
         aria-labelledby="govuk-notification-banner-title"
         data-module="govuk-notification-banner">
     <div class="govuk-notification-banner__header">
         <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-                @notificationModel.Title
+                @notificationModel?.Title
         </h2>
     </div>
     <div class="govuk-notification-banner__content">

@@ -98,8 +98,11 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         public int? planningPermissionStatus { get; set; }
 
+
         public DateTime? startDate { get; set; }
 
         public DateTime? createdOn { get; set; }
+
+        public string ApplicationName { get; set; }
     }
 }

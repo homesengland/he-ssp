@@ -118,6 +118,7 @@ namespace DataverseModel
 			public const string invln_Account = "invln_account";
 			public const string invln_AccountName = "invln_accountname";
 			public const string invln_Additionalprojects = "invln_additionalprojects";
+			public const string invln_applicationname = "invln_applicationname";
 			public const string invln_CommerciallySensitive = "invln_commerciallysensitive";
 			public const string invln_CompanyExperience = "invln_companyexperience";
 			public const string invln_CompanyPurpose = "invln_companypurpose";
@@ -363,6 +364,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Additionalprojects");
 				this.SetAttributeValue("invln_additionalprojects", value);
 				this.OnPropertyChanged("invln_Additionalprojects");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_applicationname")]
+		public string invln_applicationname
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_applicationname");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_applicationname");
+				this.SetAttributeValue("invln_applicationname", value);
+				this.OnPropertyChanged("invln_applicationname");
 			}
 		}
 		

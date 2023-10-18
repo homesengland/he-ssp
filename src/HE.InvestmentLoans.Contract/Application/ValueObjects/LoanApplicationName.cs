@@ -8,4 +8,9 @@ public class LoanApplicationName : ShortText
         : base(value, nameof(LoanApplicationName))
     {
     }
+
+    public static LoanApplicationName CreateOrDefault(string? name)
+    {
+        return new LoanApplicationName(string.IsNullOrWhiteSpace(name) ? "unknown" : name);
+    }
 }

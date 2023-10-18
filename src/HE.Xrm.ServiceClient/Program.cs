@@ -53,11 +53,11 @@ namespace HE.Xrm.ServiceClientExample
 
         private static void TestLoan(ServiceClient serviceClient)
         {
-            var req2 = new invln_getfilelocationforapplicationloanRequest() //get loan applications related to account and contact with given data
+            var req2 = new invln_checkifloanapplicationwithgivennameexistsRequest() //get loan applications related to account and contact with given data
             {
-                invln_loanapplicationid = "7ae44329-bc2b-ee11-9965-002248c652b4",
+                invln_loanname = "gfdgfdggh3234342 dsfs32 432 f ds s",
             };
-            var resp2 = (invln_getfilelocationforapplicationloanResponse)serviceClient.Execute(req2);
+            var resp2 = (invln_checkifloanapplicationwithgivennameexistsResponse)serviceClient.Execute(req2);
             Console.WriteLine("A web service connection was not established.");
         }
 
