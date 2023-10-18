@@ -45,7 +45,7 @@ public class WithdrawLoanApplicationCommandHandler : IRequestHandler<WithdrawLoa
             var withdrawReason = WithdrawReason.New(request.WithdrawReason);
             var valuesToDisplay = new Dictionary<NotificationServiceKeys, string>
             {
-                { NotificationServiceKeys.Name, loanApplication.Name },
+                { NotificationServiceKeys.Name, loanApplication.Name.Value },
                 { NotificationServiceKeys.Email, _appConfig.FundingSupportEmail ?? "funding support" },
             };
 

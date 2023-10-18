@@ -8,7 +8,7 @@ public record GetApplicationDashboardQuery(LoanApplicationId ApplicationId) : IR
 
 public record GetApplicationDashboardQueryResponse(
     LoanApplicationId ApplicationId,
-    string ApplicationName,
+    LoanApplicationName ApplicationName,
     ApplicationStatus ApplicationStatus,
     string ApplicationReferenceNumber,
     string OrganizationName,

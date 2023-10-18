@@ -15,9 +15,10 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
 public class LoanApplicationEntity
 {
-    public LoanApplicationEntity(LoanApplicationId id, UserAccount userAccount, ApplicationStatus externalStatus, FundingPurpose fundingReason, DateTime? createdOn, DateTime? lastModificationDate, LoanApplicationSection companyStructure)
+    public LoanApplicationEntity(LoanApplicationId id, LoanApplicationName name, UserAccount userAccount, ApplicationStatus externalStatus, FundingPurpose fundingReason, DateTime? createdOn, DateTime? lastModificationDate, LoanApplicationSection companyStructure)
     {
         Id = id;
+        Name = name;
         UserAccount = userAccount;
         ApplicationProjects = new ApplicationProjects(Id);
         ExternalStatus = externalStatus;
@@ -28,6 +29,8 @@ public class LoanApplicationEntity
     }
 
     public LoanApplicationId Id { get; private set; }
+
+    public LoanApplicationName Name { get; private set; }
 
     public UserAccount UserAccount { get; }
 
@@ -47,10 +50,7 @@ public class LoanApplicationEntity
 
     public string ReferenceNumber => LegacyModel.ReferenceNumber ?? string.Empty;
 
-    // TODO: #77804
-    public string Name => ReferenceNumber;
-
-    public static LoanApplicationEntity New(UserAccount userAccount) => new(LoanApplicationId.New(), userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, LoanApplicationSection.New());
+    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, LoanApplicationSection.New());
 
     public void SaveApplicationProjects(ApplicationProjects applicationProjects)
     {

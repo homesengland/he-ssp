@@ -121,28 +121,49 @@ public class StartApplicationIntegrationTests : IntegrationTest
 
         // when
         var continueButton = checkYourDetailsPage.GetGdsSubmitButtonById("continue-button");
-        var loanPurpose = await TestClient.SubmitButton(continueButton);
+        var loanPurposePage = await TestClient.SubmitButton(continueButton);
 
         // then
-        loanPurpose
+        loanPurposePage
             .UrlEndWith(ApplicationPagesUrls.LoanPurpose)
             .HasTitle("What do you require Homes England funding for?");
 
-        SetSharedData(CurrentPageKey, loanPurpose);
+        SetSharedData(CurrentPageKey, loanPurposePage);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(7)]
-    public async Task Order07_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
+    public async Task Order07_ShouldRedirectToApplicationName_WhenContinueButtonIsClicked()
     {
         // given
-        var loanPurpose = GetSharedData<IHtmlDocument>(CurrentPageKey);
+        var loanPurposePage = GetSharedData<IHtmlDocument>(CurrentPageKey);
 
         // when
-        var continueButton = loanPurpose.GetGdsSubmitButtonById("continue-button");
-        var taskListPage = await TestClient.SubmitButton(
+        var continueButton = loanPurposePage.GetGdsSubmitButtonById("continue-button");
+        var applicationNamePage = await TestClient.SubmitButton(
             continueButton,
             new Dictionary<string, string> { { "FundingPurpose", FundingPurpose.BuildingNewHomes.ToString() }, });
+
+        // then
+        applicationNamePage
+            .UrlEndWith(ApplicationPagesUrls.ApplicationName)
+            .HasTitle("Name your application");
+
+        SetSharedData(CurrentPageKey, applicationNamePage);
+    }
+
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(8)]
+    public async Task Order08_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
+    {
+        // given
+        var applicationNamePage = GetSharedData<IHtmlDocument>(CurrentPageKey);
+
+        // when
+        var continueButton = applicationNamePage.GetGdsSubmitButtonById("continue-button");
+        var taskListPage = await TestClient.SubmitButton(
+            continueButton,
+            new Dictionary<string, string> { { "LoanApplicationName", $"Application-{Guid.NewGuid()}" }, });
 
         // then
         taskListPage

@@ -11,6 +11,8 @@ public interface ILoanApplicationRepository
 
     Task<bool> IsExist(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken);
 
+    Task<bool> IsExist(LoanApplicationName loanApplicationName, UserAccount userAccount, CancellationToken cancellationToken);
+
     Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount, CancellationToken cancellationToken);
 
     Task Save(LoanApplicationEntity loanApplication, UserDetails userDetails, CancellationToken cancellationToken);

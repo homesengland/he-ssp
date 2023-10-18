@@ -36,7 +36,7 @@ public class UserOrganisationController : Controller
                     new(
                         ProgrammesConsts.LoansProgramme,
                         userOrganisationResult.LoanApplications.Select(a =>
-                                new ApplicationBasicDetailsModel(a.Id.Value, a.ApplicationName, a.Status))
+                                new ApplicationBasicDetailsModel(a.Id.Value, a.ApplicationName.Value, a.Status))
                             .ToList()),
                 },
                 new List<ProgrammeModel> { ProgrammesConsts.LoansProgramme },

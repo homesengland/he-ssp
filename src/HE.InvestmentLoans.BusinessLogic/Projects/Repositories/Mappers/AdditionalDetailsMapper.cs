@@ -1,14 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.InvestmentLoans.BusinessLogic.Generic;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Contract.Common;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 internal static class AdditionalDetailsMapper

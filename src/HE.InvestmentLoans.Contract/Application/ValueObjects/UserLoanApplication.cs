@@ -5,7 +5,7 @@ namespace HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 public class UserLoanApplication : ValueObject
 {
-    public UserLoanApplication(LoanApplicationId id, string applicationName, ApplicationStatus status, DateTime? createdOn, DateTime? lastModificationDate)
+    public UserLoanApplication(LoanApplicationId id, LoanApplicationName applicationName, ApplicationStatus status, DateTime? createdOn, DateTime? lastModificationDate)
     {
         Id = id;
         ApplicationName = applicationName;
@@ -16,7 +16,7 @@ public class UserLoanApplication : ValueObject
 
     public LoanApplicationId Id { get; }
 
-    public string ApplicationName { get; }
+    public LoanApplicationName ApplicationName { get; }
 
     public ApplicationStatus Status { get; }
 

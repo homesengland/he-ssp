@@ -4,9 +4,9 @@ using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Validation;
-using HE.InvestmentLoans.Contract.Funding;
 
-namespace HE.InvestmentLoans.BusinessLogic.Generic;
+namespace HE.InvestmentLoans.Contract.Common;
+
 public class Pounds : ValueObject
 {
     public Pounds(decimal value)

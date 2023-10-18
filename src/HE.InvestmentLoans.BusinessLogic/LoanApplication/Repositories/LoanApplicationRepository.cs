@@ -3,7 +3,6 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
@@ -11,7 +10,6 @@ using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
-using Microsoft.AspNetCore.Http;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
@@ -20,14 +18,11 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
     private readonly IDateTimeProvider _dateTime;
 
-    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IHttpContextAccessor httpContextAccessor, IDateTimeProvider dateTime)
+    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IDateTimeProvider dateTime)
     {
         _serviceClient = serviceClient;
-        _httpContextAccessor = httpContextAccessor;
         _dateTime = dateTime;
     }
 
@@ -56,6 +51,18 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         return true;
     }
 
+    public async Task<bool> IsExist(LoanApplicationName loanApplicationName, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        var req = new invln_checkifloanapplicationwithgivennameexistsRequest
+        {
+            invln_loanname = loanApplicationName.Value,
+            invln_organisationid = userAccount.AccountId?.ToString(),
+        };
+
+        var response = (invln_checkifloanapplicationwithgivennameexistsResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);
+        return response.invln_loanexists;
+    }
+
     public async Task<LoanApplicationEntity> GetLoanApplication(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
@@ -75,6 +82,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         return new LoanApplicationEntity(
             id,
+            LoanApplicationName.CreateOrDefault(loanApplicationDto.ApplicationName),
             userAccount,
             externalStatus,
             FundingPurposeMapper.Map(loanApplicationDto.fundingReason),
@@ -103,7 +111,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         return loanApplicationDtos.Select(x =>
             new UserLoanApplication(
                 LoanApplicationId.From(x.loanApplicationId),
-                x.name,
+                LoanApplicationName.CreateOrDefault(x.ApplicationName),
                 ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
                 x.createdOn,
                 x.LastModificationOn)).ToList();
@@ -127,6 +135,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount, userDetails),
             fundingReason = FundingPurposeMapper.Map(loanApplication.FundingReason),
             siteDetailsList = siteDetailsDtos,
+            ApplicationName = loanApplication.Name.Value,
         };
 
         var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);

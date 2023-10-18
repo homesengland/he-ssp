@@ -47,7 +47,7 @@
                     <td class="govuk-table__cell">
                         <span class="app-task-list__task-name">
                             <strong>
-                                <a href="@Url.Action("ApplicationDashboard", "LoanApplicationV2", new { id = application.Id.Value })" id=@($"open-application-link-{application.Id.Value}")>@application.ApplicationName</a>
+                                <a href="@Url.Action("ApplicationDashboard", "LoanApplicationV2", new { id = application.Id.Value })" id=@($"open-application-link-{application.Id.Value}")>@application.ApplicationName.Value</a>
                             </strong>
                         </span>
                     </td>
