@@ -11,6 +11,7 @@ public static class NotificationMapper
         {
             NotificationBodyType.WithdrawApplication => NotificationBody.ApplicationWithdrawnWithName,
             NotificationBodyType.DeleteProject => NotificationBody.ProjectRemoved,
+            NotificationBodyType.FilesUpload => NotificationBody.FilesSuccesfullyUploaded,
             _ => string.Empty,
         };
 

@@ -15,7 +15,8 @@ public class OrganizationBasicInformationTestBuilder
         new(new OrganizationBasicInformation(
             OrganizationBasicInformationTestData.OrganizationBasicInformationOne.RegisteredCompanyName,
             OrganizationBasicInformationTestData.OrganizationBasicInformationOne.CompanyRegistrationNumber,
-            OrganizationBasicInformationTestData.OrganizationBasicInformationOne.Address));
+            OrganizationBasicInformationTestData.OrganizationBasicInformationOne.Address,
+            OrganizationBasicInformationTestData.OrganizationBasicInformationOne.ContactInformation));
 
     public OrganizationBasicInformation Build()
     {
