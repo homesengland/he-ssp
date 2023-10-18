@@ -62,6 +62,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portalpermissionlevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_SiteDetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Webrole.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\SharePointDocumentLocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\SystemUser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Team.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\activityfileattachment_objectcode.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Satisfactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_SatisfiedBy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sectioncompletionstatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_SecurityCover.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Source.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sourceofincome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Typeofhomes.cs" />

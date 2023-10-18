@@ -1,6 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using Stateless;
@@ -16,6 +18,7 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
     public ProjectWorkflow()
     {
         _machine = new StateMachine<ProjectState, Trigger>(ProjectState.Index);
+        _model = new ProjectViewModel();
 
         ConfigureTransitions();
     }
@@ -43,6 +46,38 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
         return nextState switch
         {
             _ => Task.FromResult(true),
+        };
+    }
+
+    public ProjectState CurrentState(ProjectState targetState)
+    {
+        if (_model.IsReadOnly())
+        {
+            return ProjectState.CheckAnswers;
+        }
+
+        if (targetState != ProjectState.Name || _model.Status == SectionStatus.NotStarted)
+        {
+            return targetState;
+        }
+
+        return _model switch
+        {
+            { Name: var x } when x.IsNotProvided() => ProjectState.Name,
+            { HasEstimatedStartDate: var x } when x.IsNotProvided() => ProjectState.StartDate,
+            { HomesCount: var x } when x.IsNotProvided() => ProjectState.ManyHomes,
+            { HomeTypes: var x } when x.IsNotProvided() => ProjectState.TypeHomes,
+            { ProjectType: var x } when x.IsNotProvided() => ProjectState.Type,
+            { PlanningReferenceNumberExists: var x } when x.IsNotProvided() => ProjectState.PlanningRef,
+            { PlanningReferenceNumberExists: CommonResponse.Yes, PlanningReferenceNumber: var x } when x.IsNotProvided() => ProjectState.PlanningRefEnter,
+            { PlanningReferenceNumberExists: CommonResponse.No, LocationOption: var x } when x.IsNotProvided() => ProjectState.Location,
+            { Ownership: var x } when x.IsNotProvided() => ProjectState.Ownership,
+            { Ownership: CommonResponse.Yes, Source: var x } when x.IsNotProvided() => ProjectState.Additional,
+            { Ownership: CommonResponse.No, GrantFundingStatus: var x } when x.IsNotProvided() => ProjectState.GrantFunding,
+            { GrantFundingStatus: CommonResponse.Yes, GrantFundingName: var x } when x.IsNotProvided() => ProjectState.GrantFundingMore,
+            { ChargesDebt: var x } when x.IsNotProvided() => ProjectState.ChargesDebt,
+            { AffordableHomes: var x } when x.IsNotProvided() => ProjectState.AffordableHomes,
+            _ => ProjectState.CheckAnswers,
         };
     }
 

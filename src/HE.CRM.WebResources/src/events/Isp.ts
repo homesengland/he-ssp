@@ -13,5 +13,6 @@ export class Isp {
   public static onLoad(eCtx) {
     const eventLogic = new Isp(eCtx)
     eventLogic.ispService.setFieldsAvailabilityOnLoad()
+    eventLogic.ispService.setStaticFieldsOnLoad()
   }
 }

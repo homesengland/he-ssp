@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -13,30 +14,15 @@ namespace HE.InvestmentLoans.BusinessLogic.Security;
 
 public class SecurityWorkflow : IStateRouting<SecurityState>
 {
-    private readonly LoanApplicationViewModel _model;
     private readonly StateMachine<SecurityState, Trigger> _machine;
-    private readonly SecurityViewModel _model2;
-
-    public SecurityWorkflow(LoanApplicationViewModel model)
-    {
-        _model = model;
-        _machine = new StateMachine<SecurityState, Trigger>(SecurityState.Index);
-
-        ConfigureTransitions();
-    }
+    private readonly SecurityViewModel _model;
 
     public SecurityWorkflow(SecurityState currentState, SecurityViewModel model)
     {
-        _model = new LoanApplicationViewModel { GoodChangeMode = true };
-        _model2 = model;
+        _model = model;
         _machine = new StateMachine<SecurityState, Trigger>(currentState);
 
         ConfigureTransitions();
-    }
-
-    public string GetName()
-    {
-        return Enum.GetName(typeof(SecurityState), _model.Security.State) ?? string.Empty;
     }
 
     public async Task<SecurityState> NextState(Trigger trigger)
@@ -51,6 +37,27 @@ public class SecurityWorkflow : IStateRouting<SecurityState>
         return Task.FromResult(true);
     }
 
+    public SecurityState CurrentState(SecurityState targetState)
+    {
+        if (_model.IsReadOnly())
+        {
+            return SecurityState.CheckAnswers;
+        }
+
+        if (targetState != SecurityState.Index || _model.State == SectionStatus.NotStarted)
+        {
+            return targetState;
+        }
+
+        return _model switch
+        {
+            { ChargesDebtCompany: var x } when x.IsNotProvided() => SecurityState.ChargesDebtCompany,
+            { DirLoans: var x } when x.IsNotProvided() => SecurityState.DirLoans,
+            { DirLoans: CommonResponse.Yes, DirLoansSub: var dirLoansSub } when dirLoansSub.IsNotProvided() => SecurityState.DirLoansSub,
+            _ => SecurityState.CheckAnswers,
+        };
+    }
+
     private void ConfigureTransitions()
     {
         _machine.Configure(SecurityState.Index)
@@ -62,10 +69,10 @@ public class SecurityWorkflow : IStateRouting<SecurityState>
             .Permit(Trigger.Change, SecurityState.CheckAnswers);
 
         _machine.Configure(SecurityState.DirLoans)
-            .PermitIf(Trigger.Continue, SecurityState.DirLoansSub, () => _model2.DirLoans == CommonResponse.Yes)
-            .PermitIf(Trigger.Continue, SecurityState.CheckAnswers, () => _model2.DirLoans != CommonResponse.Yes)
-            .PermitIf(Trigger.Change, SecurityState.DirLoansSub, () => _model2.DirLoans == CommonResponse.Yes)
-            .PermitIf(Trigger.Change, SecurityState.CheckAnswers, () => _model2.DirLoans != CommonResponse.Yes)
+            .PermitIf(Trigger.Continue, SecurityState.DirLoansSub, () => _model.DirLoans == CommonResponse.Yes)
+            .PermitIf(Trigger.Continue, SecurityState.CheckAnswers, () => _model.DirLoans != CommonResponse.Yes)
+            .PermitIf(Trigger.Change, SecurityState.DirLoansSub, () => _model.DirLoans == CommonResponse.Yes)
+            .PermitIf(Trigger.Change, SecurityState.CheckAnswers, () => _model.DirLoans != CommonResponse.Yes)
             .Permit(Trigger.Back, SecurityState.ChargesDebtCompany);
 
         _machine.Configure(SecurityState.DirLoansSub)
@@ -75,9 +82,9 @@ public class SecurityWorkflow : IStateRouting<SecurityState>
 
         _machine.Configure(SecurityState.CheckAnswers)
            .Permit(Trigger.Continue, SecurityState.Complete)
-           .PermitIf(Trigger.Back, SecurityState.Complete, () => _model2.IsReadOnly())
-           .PermitIf(Trigger.Back, SecurityState.DirLoansSub, () => _model2.IsEditable() && _model2.DirLoans == CommonResponse.Yes)
-           .PermitIf(Trigger.Back, SecurityState.DirLoans, () => _model2.IsEditable() && _model2.DirLoans != CommonResponse.Yes);
+           .PermitIf(Trigger.Back, SecurityState.Complete, () => _model.IsReadOnly())
+           .PermitIf(Trigger.Back, SecurityState.DirLoansSub, () => _model.IsEditable() && _model.DirLoans == CommonResponse.Yes)
+           .PermitIf(Trigger.Back, SecurityState.DirLoans, () => _model.IsEditable() && _model.DirLoans != CommonResponse.Yes);
 
         _machine.Configure(SecurityState.Complete)
           .Permit(Trigger.Back, SecurityState.CheckAnswers);

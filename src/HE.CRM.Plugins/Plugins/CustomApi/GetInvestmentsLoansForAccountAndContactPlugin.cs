@@ -16,7 +16,7 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     "HE.CRM.Plugins.Plugins.CustomApi.GetInvestmentsLoansForAccountAndContactPlugin: invln_getloanapplicationsforaccountandcontact",
     1,
     IsolationModeEnum.Sandbox,
-    Id = "af53b65a-247f-47b4-8c3c-e1f85e851bc7")]
+    Id = "1af27057-ec49-4ed0-a1ef-1a8fcf254372")]
     public class GetInvestmentsLoansForAccountAndContactPlugin : PluginBase<DataverseContext>, IPlugin
     {
         #region Constructors

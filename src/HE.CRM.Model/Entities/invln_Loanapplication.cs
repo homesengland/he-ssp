@@ -136,7 +136,6 @@ namespace DataverseModel
 			public const string invln_ExternalStatus = "invln_externalstatus";
 			public const string invln_fundingdetailscompletionstatus = "invln_fundingdetailscompletionstatus";
 			public const string invln_FundingReason = "invln_fundingreason";
-			public const string invln_InternalStatus = "invln_internalstatus";
 			public const string invln_invln_emailnotification_Regarding_invln_l = "invln_invln_emailnotification_Regarding_invln_l";
 			public const string invln_invln_loanapplication_invln_contract_Loanapplication = "invln_invln_loanapplication_invln_contract_Loanapplication";
 			public const string invln_lastchangebyid = "invln_lastchangebyid";
@@ -147,6 +146,7 @@ namespace DataverseModel
 			public const string invln_loanapplication_account = "invln_loanapplication_account";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
 			public const string invln_loanapplication_invln_govnotifyemails = "invln_loanapplication_invln_govnotifyemails";
+			public const string invln_loanapplication_SharePointDocumentLocations = "invln_loanapplication_SharePointDocumentLocations";
 			public const string invln_LoanapplicationId = "invln_loanapplicationid";
 			public const string Id = "invln_loanapplicationid";
 			public const string invln_loanid = "invln_loanid";
@@ -618,23 +618,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_FundingReason");
 				this.SetAttributeValue("invln_fundingreason", value);
 				this.OnPropertyChanged("invln_FundingReason");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_internalstatus")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_InternalStatus
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_internalstatus");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_InternalStatus");
-				this.SetAttributeValue("invln_internalstatus", value);
-				this.OnPropertyChanged("invln_InternalStatus");
 			}
 		}
 		
@@ -1534,6 +1517,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_loanapplication_invln_govnotifyemails");
 				this.SetRelatedEntities<DataverseModel.invln_govnotifyemail>("invln_loanapplication_invln_govnotifyemails", null, value);
 				this.OnPropertyChanged("invln_loanapplication_invln_govnotifyemails");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_loanapplication_SharePointDocumentLocations
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_SharePointDocumentLocations")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointDocumentLocation> invln_loanapplication_SharePointDocumentLocations
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointDocumentLocation>("invln_loanapplication_SharePointDocumentLocations", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_SharePointDocumentLocations");
+				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("invln_loanapplication_SharePointDocumentLocations", null, value);
+				this.OnPropertyChanged("invln_loanapplication_SharePointDocumentLocations");
 			}
 		}
 		

@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application.Enums;

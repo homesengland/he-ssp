@@ -206,6 +206,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.SharePointDocumentLocation"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.SharePointDocumentLocation> SharePointDocumentLocationSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.SharePointDocumentLocation>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.SystemUser"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.SystemUser> SystemUserSet

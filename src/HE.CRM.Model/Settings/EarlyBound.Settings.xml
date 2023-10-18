@@ -62,6 +62,7 @@ invln_portal|
 invln_portalpermissionlevel|
 invln_sitedetails|
 invln_webrole|
+sharepointdocumentlocation|
 systemuser|
 team</EntitiesWhitelist>
     <EntityAttributeSpecifiedNames />

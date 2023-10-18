@@ -1,5 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Funding;
 using HE.InvestmentLoans.Contract.Funding.Enums;
 using Stateless;
@@ -29,6 +31,30 @@ public class FundingWorkflow : IStateRouting<FundingState>
     public Task<bool> StateCanBeAccessed(FundingState nextState)
     {
         return Task.FromResult(true);
+    }
+
+    public FundingState CurrentState(FundingState targetState)
+    {
+        if (_model.IsReadOnly())
+        {
+            return FundingState.CheckAnswers;
+        }
+
+        if (targetState != FundingState.Index || _model.State == SectionStatus.NotStarted)
+        {
+            return targetState;
+        }
+
+        return _model switch
+        {
+            { GrossDevelopmentValue: var x } when x.IsNotProvided() => FundingState.GDV,
+            { TotalCosts: var x } when x.IsNotProvided() => FundingState.TotalCosts,
+            { AbnormalCosts: var x } when x.IsNotProvided() => FundingState.AbnormalCosts,
+            { PrivateSectorFunding: var x } when x.IsNotProvided() => FundingState.PrivateSectorFunding,
+            { Refinance: var x } when x.IsNotProvided() => FundingState.Refinance,
+            { AdditionalProjects: var x } when x.IsNotProvided() => FundingState.AdditionalProjects,
+            _ => FundingState.CheckAnswers,
+        };
     }
 
     private void ConfigureTransitions()

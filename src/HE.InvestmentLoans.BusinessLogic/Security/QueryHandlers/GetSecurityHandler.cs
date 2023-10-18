@@ -31,6 +31,7 @@ internal class GetSecurityHandler : IRequestHandler<GetSecurity, GetSecurityResp
                 DirLoans = security.DirectorLoans?.Exists.MapToCommonResponse(),
                 DirLoansSub = security.DirectorLoansSubordinate?.CanBeSubordinated.MapToCommonResponse(),
                 DirLoansSubMore = security.DirectorLoansSubordinate?.ReasonWhyCannotBeSubordinated,
+                State = security.Status,
             });
     }
 }
