@@ -29,9 +29,12 @@ public class TelephoneNumber : ValueObject
         }
 
         Value = value;
+        AffectedField = affectedField;
     }
 
     public string Value { get; }
+
+    public string AffectedField { get; }
 
     public static TelephoneNumber New(string value, string affectedField = nameof(UserDetailsViewModel.TelephoneNumber)) => new(value, affectedField);
 
