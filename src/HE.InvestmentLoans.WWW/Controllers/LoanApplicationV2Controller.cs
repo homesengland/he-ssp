@@ -1,9 +1,7 @@
 using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -11,7 +9,6 @@ using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.Funding.Enums;
-using HE.InvestmentLoans.Contract.Funding.Queries;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Security;
@@ -108,11 +105,31 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
 
         if (model.FundingPurpose == FundingPurpose.BuildingNewHomes)
         {
-            var loanApplicationId = await _mediator.Send(new StartApplicationCommand(), cancellationToken);
-            return RedirectToAction(nameof(TaskList), new { id = loanApplicationId.Value });
+            return RedirectToAction(nameof(ApplicationName));
         }
 
         return RedirectToAction(nameof(Ineligible));
+    }
+
+    [HttpGet("application-name")]
+    [WorkflowState(LoanApplicationWorkflow.State.ApplicationName)]
+    public IActionResult ApplicationName()
+    {
+        return View("ApplicationName", new ApplicationNameModel());
+    }
+
+    [HttpPost("application-name")]
+    [WorkflowState(LoanApplicationWorkflow.State.ApplicationName)]
+    public async Task<IActionResult> ApplicationNamePost(ApplicationNameModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new StartApplicationCommand(model.LoanApplicationName), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("ApplicationName", model);
+        }
+
+        return RedirectToAction(nameof(TaskList), new { id = result.ReturnedData!.Value });
     }
 
     [HttpGet("ineligible")]

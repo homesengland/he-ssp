@@ -41,7 +41,7 @@ public class WithdrawLoanApplicationCommandHandler : IRequestHandler<WithdrawLoa
 
             await loanApplication.Withdraw(_loanApplicationRepository, withdrawReason, cancellationToken);
 
-            _notificationService.NotifySuccess(NotificationBodyType.WithdrawApplication, loanApplication.Name);
+            _notificationService.NotifySuccess(NotificationBodyType.WithdrawApplication, loanApplication.Name.Value);
 
             return OperationResult.Success();
         }

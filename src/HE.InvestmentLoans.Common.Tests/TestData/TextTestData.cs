@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.Generic;
+using HE.InvestmentLoans.Contract.Common;
 
 namespace HE.InvestmentLoans.Common.Tests.TestData;
 

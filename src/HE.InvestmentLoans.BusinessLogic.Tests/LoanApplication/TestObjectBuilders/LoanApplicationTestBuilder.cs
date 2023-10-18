@@ -21,6 +21,7 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
     public static LoanApplicationTestBuilder NewDraft(UserAccount userAccount) => new(
         new LoanApplicationEntity(
             LoanApplicationIdTestData.LoanApplicationIdOne,
+            LoanApplicationNameTestData.MyFirstApplication,
             userAccount,
             ApplicationStatus.Draft,
             FundingPurpose.BuildingNewHomes,
@@ -30,6 +31,7 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
     public static LoanApplicationTestBuilder NewSubmitted(UserAccount userAccount) => new(
         new LoanApplicationEntity(
             LoanApplicationIdTestData.LoanApplicationIdOne,
+            LoanApplicationNameTestData.MyFirstApplication,
             userAccount,
             ApplicationStatus.ApplicationSubmitted,
             FundingPurpose.BuildingNewHomes,

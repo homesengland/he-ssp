@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using Microsoft.Xrm.Sdk;
 using Stateless;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication;
@@ -16,6 +17,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         UserDashboard,
         AboutLoan,
         CheckYourDetails,
+        ApplicationName,
         LoanPurpose,
         TaskList,
         CheckApplication,
@@ -97,6 +99,9 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
         _machine.Configure(State.LoanPurpose)
             .Permit(Trigger.Back, State.CheckYourDetails);
+
+        _machine.Configure(State.ApplicationName)
+            .Permit(Trigger.Back, State.LoanPurpose);
 
         _machine.Configure(State.Ineligible)
             .Permit(Trigger.Back, State.LoanPurpose);

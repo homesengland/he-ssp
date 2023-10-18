@@ -24,7 +24,7 @@ public class GetApplicationDashboardQueryHandler : IRequestHandler<GetApplicatio
 
         return new GetApplicationDashboardQueryResponse(
             request.ApplicationId,
-            loanApplication.ReferenceNumber,
+            loanApplication.Name,
             loanApplication.ExternalStatus,
             loanApplication.ReferenceNumber,
             account.AccountName,

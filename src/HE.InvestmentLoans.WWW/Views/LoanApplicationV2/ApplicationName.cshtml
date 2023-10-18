@@ -1,0 +1,24 @@
+@using HE.InvestmentLoans.BusinessLogic.LoanApplication;
+@model ApplicationNameModel;
+
+<form asp-controller="LoanApplicationV2" asp-action="ApplicationNamePost" asp-method="post" novalidate>
+    <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.ApplicationName})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+
+    <gds-h1 size="ControlSize.L">
+        Name your application
+    </gds-h1>
+
+    <div class="govuk-!-padding-bottom-4">
+        <gds-p>We will use this to differentiate between applications. 100 character limit. You won't be able to change this later.</gds-p>
+    </div>
+
+    <gds-input
+        class="govuk-input--width-20"
+        govuk-formgroup-asp-for="LoanApplicationName"
+        name="LoanApplicationName"
+        value=@Model.LoanApplicationName />
+
+    <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+        Continue
+    </button>
+</form>

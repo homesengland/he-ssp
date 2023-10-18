@@ -1,17 +1,12 @@
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.BusinessLogic.Generic;
-using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
+using FluentAssertions;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Contract.Funding.ValueObjects;
+using HE.InvestmentLoans.Contract.Common;
 using Xunit;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.Generic.ValueObjects;
+namespace HE.InvestmentLoans.Contract.Tests.Common;
+
 public class PoundsTests
 {
     [Theory]
@@ -43,7 +38,10 @@ public class PoundsTests
         var action = () => Pounds.FromString(estimatedTotalCostsAsString);
 
         // then
-        action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(GenericValidationError.InvalidPoundsValue);
+        action.Should()
+            .ThrowExactly<DomainValidationException>()
+            .Which.OperationResult.Errors.Should()
+            .ContainSingle(x => x.ErrorMessage == GenericValidationError.InvalidPoundsValue);
     }
 
     [Fact]
@@ -53,6 +51,9 @@ public class PoundsTests
         var action = () => Pounds.FromString(null);
 
         // then
-        action.Should().ThrowExactly<DomainValidationException>().WithOnlyOneErrorMessage(GenericValidationError.InvalidPoundsValue);
+        action.Should()
+            .ThrowExactly<DomainValidationException>()
+            .Which.OperationResult.Errors.Should()
+            .ContainSingle(x => x.ErrorMessage == GenericValidationError.InvalidPoundsValue);
     }
 }

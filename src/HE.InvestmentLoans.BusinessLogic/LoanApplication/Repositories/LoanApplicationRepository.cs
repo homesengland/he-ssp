@@ -2,7 +2,6 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
@@ -10,7 +9,6 @@ using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
-using Microsoft.AspNetCore.Http;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
@@ -19,14 +17,11 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
     private readonly IDateTimeProvider _dateTime;
 
-    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IHttpContextAccessor httpContextAccessor, IDateTimeProvider dateTime)
+    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IDateTimeProvider dateTime)
     {
         _serviceClient = serviceClient;
-        _httpContextAccessor = httpContextAccessor;
         _dateTime = dateTime;
     }
 
@@ -72,7 +67,8 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
 
-        return new LoanApplicationEntity(id, userAccount, externalStatus, FundingPurposeMapper.Map(loanApplicationDto.fundingReason), loanApplicationDto.createdOn, loanApplicationDto.LastModificationOn)
+        // TODO: #77804 Map Loan Application Name from ApplicationName
+        return new LoanApplicationEntity(id, new LoanApplicationName(loanApplicationDto.name), userAccount, externalStatus, FundingPurposeMapper.Map(loanApplicationDto.fundingReason), loanApplicationDto.createdOn, loanApplicationDto.LastModificationOn)
         {
             LegacyModel = LoanApplicationMapper.Map(loanApplicationDto, _dateTime.Now),
         };
@@ -95,7 +91,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         return loanApplicationDtos.Select(x =>
             new UserLoanApplication(
                 LoanApplicationId.From(x.loanApplicationId),
-                x.name,
+                new LoanApplicationName(x.name), // TODO: #77804 Map Loan Application Name from ApplicationName
                 ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
                 x.createdOn,
                 x.LastModificationOn)).ToList();
@@ -119,6 +115,9 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount, userDetails),
             fundingReason = FundingPurposeMapper.Map(loanApplication.FundingReason),
             siteDetailsList = siteDetailsDtos,
+
+            // TODO: #77804 Map ApplicationName from Loan Application Name
+            // applicationName = loanApplication.Name.Value,
         };
 
         var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);

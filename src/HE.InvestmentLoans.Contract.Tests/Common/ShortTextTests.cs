@@ -1,35 +1,47 @@
-using HE.InvestmentLoans.BusinessLogic.Generic;
-using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
+using FluentAssertions;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract.Common;
 using Xunit;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.Generic.ValueObjects;
+namespace HE.InvestmentLoans.Contract.Tests.Common;
+
 public class ShortTextTests
 {
     [Fact]
     public void ShouldThrowValidationError_WhenNumberExceedsShortInputLimit()
     {
+        // given && when
         var action = () => new ShortText(TextTestData.TextThatExceedsShortInputLimit);
 
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(GenericValidationError.TextTooLong);
+        // then
+        action.Should()
+            .ThrowExactly<DomainValidationException>()
+            .Which.OperationResult.Errors.Should()
+            .ContainSingle(x => x.ErrorMessage == GenericValidationError.TextTooLong);
     }
 
     [Fact]
     public void ShouldThrowValidationError_WhenTextNotProvided()
     {
+        // given && when
         var action = () => new ShortText(null);
 
-        action.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(GenericValidationError.NoValueProvided);
+        // then
+        action.Should()
+            .ThrowExactly<DomainValidationException>()
+            .Which.OperationResult.Errors.Should()
+            .ContainSingle(x => x.ErrorMessage == GenericValidationError.NoValueProvided);
     }
 
     [Fact]
     public void ShouldCreateText_WhenNumberDoesNotExceedShortInputLimit()
     {
+        // given && when
         var text = new ShortText(TextTestData.TextThatNotExceedsShortInputLimit);
 
+        // then
         text.Value.Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
     }
 }

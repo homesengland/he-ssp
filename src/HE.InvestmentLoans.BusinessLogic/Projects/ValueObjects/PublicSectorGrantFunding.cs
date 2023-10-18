@@ -1,17 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.BusinessLogic.Generic;
-using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.Common.Domain;
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Validation;
-using HE.InvestmentLoans.Contract;
+using HE.InvestmentLoans.Contract.Common;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 

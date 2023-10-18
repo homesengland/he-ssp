@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HE.InvestmentLoans.BusinessLogic.Generic;
+using HE.InvestmentLoans.Contract.Common;
 using StackExchange.Redis;
 
 namespace HE.InvestmentLoans.Common.Tests.TestData;

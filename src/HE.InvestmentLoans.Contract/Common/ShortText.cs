@@ -4,22 +4,23 @@ using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Validation;
 
-namespace HE.InvestmentLoans.BusinessLogic.Generic;
-public class LongText : ValueObject
+namespace HE.InvestmentLoans.Contract.Common;
+
+public class ShortText : ValueObject
 {
-    public LongText(string value)
+    public ShortText(string? value, string fieldName = nameof(ShortText))
     {
         if (value.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError(nameof(LongText), GenericValidationError.NoValueProvided)
+                .AddValidationError(fieldName, GenericValidationError.NoValueProvided)
                 .CheckErrors();
         }
 
-        if (value!.Length > MaximumInputLength.LongInput)
+        if (value!.Length > MaximumInputLength.ShortInput)
         {
             OperationResult.New()
-                .AddValidationError(nameof(LongText), GenericValidationError.TextTooLong)
+                .AddValidationError(fieldName, GenericValidationError.TextTooLong)
                 .CheckErrors();
         }
 

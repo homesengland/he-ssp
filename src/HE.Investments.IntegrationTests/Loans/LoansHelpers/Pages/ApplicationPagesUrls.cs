@@ -10,6 +10,8 @@ public static class ApplicationPagesUrls
 
     public const string LoanPurpose = "/application/loan-purpose";
 
+    public const string ApplicationName = "/application/application-name";
+
     public const string TaskListSuffix = "/task-list";
 
     public const string CheckApplicationSuffix = "/check";
