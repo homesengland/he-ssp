@@ -22,17 +22,17 @@ public class OrganisationMoreInformationFileCtorTests
     public void ShouldOrganisationMoreInformationFile(string fileName)
     {
         // given & when
-        var organisationMoreInformationFile = new OrganisationMoreInformationFile(new FileData(fileName, ByteArrayTestData.ByteArray1Kb), 1);
+        var organisationMoreInformationFile = new OrganisationMoreInformationFile(fileName, ByteArrayTestData.ByteArray1Kb, 1);
 
         // then
-        organisationMoreInformationFile.File.Name.Should().Be(fileName);
+        organisationMoreInformationFile.FileName.Should().Be(fileName);
     }
 
     [Fact]
     public void ShouldThrowDomainValidationException_WhenFileSizeIsToBig()
     {
         // given & when
-        var action = () => new OrganisationMoreInformationFile(new FileData("validFileName.doc", ByteArrayTestData.ByteArray1MbAnd1Kb), 1);
+        var action = () => new OrganisationMoreInformationFile("validFileName.doc", ByteArrayTestData.ByteArray1MbAnd1Kb, 1);
 
         // then
         action
@@ -45,7 +45,7 @@ public class OrganisationMoreInformationFileCtorTests
     public void ShouldThrowDomainValidationExceptionWithTwoError_WhenFileSizeIsToBigAndFileNameIsIncorrect()
     {
         // given & when
-        var action = () => new OrganisationMoreInformationFile(new FileData("validFileName.xxx", ByteArrayTestData.ByteArray1MbAnd1Kb), 1);
+        var action = () => new OrganisationMoreInformationFile("validFileName.xxx", ByteArrayTestData.ByteArray1MbAnd1Kb, 1);
 
         // then
         action

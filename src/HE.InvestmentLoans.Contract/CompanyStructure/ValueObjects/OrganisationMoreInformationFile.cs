@@ -20,15 +20,15 @@ public class OrganisationMoreInformationFile : ValueObject
         AllowedFileExtension.RTF,
     };
 
-    public OrganisationMoreInformationFile(FileData file, int maxFileSizeInMb)
+    public OrganisationMoreInformationFile(string fileName, byte[] content, int maxFileSizeInMb)
     {
         var operationResult = OperationResult.New();
-        if (!_allowedExtensions.Contains(Path.GetExtension(file.Name).ToLowerInvariant()))
+        if (!_allowedExtensions.Contains(Path.GetExtension(fileName).ToLowerInvariant()))
         {
             operationResult.AddValidationError(nameof(OrganisationMoreInformationFile), ValidationErrorMessage.FileIncorrectFormat);
         }
 
-        if (file.Data.Length > maxFileSizeInMb * 1024 * 1024)
+        if (content.Length > maxFileSizeInMb * 1024 * 1024)
         {
             operationResult.AddValidationError(
                 nameof(OrganisationMoreInformationFile),
@@ -36,13 +36,18 @@ public class OrganisationMoreInformationFile : ValueObject
         }
 
         operationResult.CheckErrors();
-        File = file;
+
+        FileName = fileName;
+        Content = content;
     }
 
-    public FileData File { get; }
+    public string FileName { get; }
+
+    public byte[] Content { get; }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
-        yield return File;
+        yield return FileName;
+        yield return Content;
     }
 }

@@ -99,42 +99,23 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 
     [HttpPost("more-information-about-organization")]
     [WorkflowState(CompanyStructureState.ExistingCompany)]
-    public async Task<IActionResult> MoreInformationAboutOrganizationPost(Guid id, CompanyStructureViewModel viewModel, [FromForm(Name = "File")] IFormFile formFile, CancellationToken cancellationToken)
+    public async Task<IActionResult> MoreInformationAboutOrganizationPost(Guid id, CompanyStructureViewModel viewModel, [FromForm(Name = "File")] List<IFormFile> formFiles, CancellationToken cancellationToken)
     {
-        if (formFile != null)
-        {
-            var result = await _mediator.Send(
-            new ProvideMoreInformationAboutOrganizationFileCommand(
+        var result = await _mediator.Send(
+            new ProvideMoreInformationAboutOrganizationCommand(
                 LoanApplicationId.From(id),
+                viewModel.OrganisationMoreInformation,
                 viewModel.OrganisationMoreInformationFiles,
-                formFile),
+                formFiles),
             cancellationToken);
 
-            if (result.HasValidationErrors)
-            {
-                ModelState.AddValidationErrors(result);
-                return View("MoreInformationAboutOrganization", viewModel);
-            }
-
-            return RedirectToAction("MoreInformationAboutOrganization", new { Id = id });
-        }
-        else
+        if (result.HasValidationErrors)
         {
-            var result = await _mediator.Send(
-                new ProvideMoreInformationAboutOrganizationCommand(
-                    LoanApplicationId.From(id),
-                    viewModel.OrganisationMoreInformation,
-                    viewModel.OrganisationMoreInformationFiles),
-                cancellationToken);
-
-            if (result.HasValidationErrors)
-            {
-                ModelState.AddValidationErrors(result);
-                return View("MoreInformationAboutOrganization", viewModel);
-            }
-
-            return await Continue(new { Id = id });
+            ModelState.AddValidationErrors(result);
+            return View("MoreInformationAboutOrganization", viewModel);
         }
+
+        return await Continue(new { Id = id });
     }
 
     [HttpGet("how-many-homes-built")]
