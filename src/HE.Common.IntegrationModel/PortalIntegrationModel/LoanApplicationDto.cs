@@ -102,5 +102,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public DateTime? startDate { get; set; }
 
         public DateTime? createdOn { get; set; }
+
+        public string ApplicationName { get; set; }
     }
 }

@@ -20,5 +20,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         string GetFileLocationForApplicationLoan(string loanApplicationId);
         void SetLastModificationDate(invln_Loanapplication target);
         void CreateDocumentLocation(invln_Loanapplication target);
+        bool CheckIfLoanApplicationWithGivenNameExists(string loanName, string organisationId);
     }
 }
