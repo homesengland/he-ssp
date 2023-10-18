@@ -51,6 +51,20 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         return true;
     }
 
+    public async Task<bool> IsExist(LoanApplicationName loanApplicationName, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        // var req = new invln_checkifloanapplicationwithgivennameexistsRequest
+        // {
+        //     invln_loanname = loanApplicationName.Value,
+        //     invln_organisationid = userAccount.AccountId?.ToString(),
+        // };
+        //
+        // var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_checkifloanapplicationwithgivennameexistsResponse;
+        // return response?.invln_loanexists ?? false; // TODO: what value should be default?
+
+        return false;
+    }
+
     public async Task<LoanApplicationEntity> GetLoanApplication(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest
@@ -68,10 +82,9 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
 
-        // TODO: #77804 Map Loan Application Name from ApplicationName
         return new LoanApplicationEntity(
             id,
-            new LoanApplicationName(loanApplicationDto.name),
+            LoanApplicationName.CreateOrDefault(loanApplicationDto.ApplicationName),
             userAccount,
             externalStatus,
             FundingPurposeMapper.Map(loanApplicationDto.fundingReason),
@@ -100,7 +113,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         return loanApplicationDtos.Select(x =>
             new UserLoanApplication(
                 LoanApplicationId.From(x.loanApplicationId),
-                new LoanApplicationName(x.name), // TODO: #77804 Map Loan Application Name from ApplicationName
+                LoanApplicationName.CreateOrDefault(x.ApplicationName),
                 ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
                 x.createdOn,
                 x.LastModificationOn)).ToList();
@@ -124,9 +137,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount, userDetails),
             fundingReason = FundingPurposeMapper.Map(loanApplication.FundingReason),
             siteDetailsList = siteDetailsDtos,
-
-            // TODO: #77804 Map ApplicationName from Loan Application Name
-            // applicationName = loanApplication.Name.Value,
+            ApplicationName = loanApplication.Name.Value,
         };
 
         var loanApplicationSerialized = CrmResponseSerializer.Serialize(loanApplicationDto);

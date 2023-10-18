@@ -36,8 +36,7 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
             var applicationName = new LoanApplicationName(request.ApplicationName);
             var newLoanApplication = LoanApplicationEntity.New(userAccount, applicationName);
 
-            // TODO: #77804 Check whether Application with the same Name already exists within the same userAccount.AccountId
-            if (applicationName.Value == "Test")
+            if (await _applicationRepository.IsExist(applicationName, userAccount, cancellationToken))
             {
                 return new OperationResult<LoanApplicationId?>(
                     new[] { new ErrorItem(nameof(LoanApplicationName), "This name has been used for another application") },
