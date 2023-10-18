@@ -45,20 +45,15 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
         {
             if (target.invln_changesource != null)
             {
-                var loanApplication = _loanApplicationRepository.GetById(target.invln_Loanapplication.Id, new string[] { nameof(invln_Loanapplication.OwnerId).ToLower(), nameof(invln_Loanapplication.invln_Name).ToLower() });
-                SendInternalNotification(target, loanApplication);
-
-                //if (target.invln_changesource.Value == (int)invln_ChangesourceSet.Internal)
-                //{
-                //    //InternalStatusPart(target, loanApplicationToUpdate);
-                //}
+                var loanApplication = _loanApplicationRepository.GetById(target.invln_Loanapplication.Id, new string[] { nameof(invln_Loanapplication.OwnerId).ToLower(), nameof(invln_Loanapplication.invln_Name).ToLower(), nameof(invln_Loanapplication.invln_Contact).ToLower() });
+                SendNotification(target, loanApplication);
             }
         }
         #endregion
 
         #region Private Methods
 
-        private void SendInternalNotification(invln_Loanstatuschange loanStatusChange, invln_Loanapplication loanApplication)
+        private void SendNotification(invln_Loanstatuschange loanStatusChange, invln_Loanapplication loanApplication)
         {
             var statusLabel = string.Empty;
             var pastFormStatus = string.Empty;
@@ -67,10 +62,15 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
                 case (int)invln_InternalStatus.Draft:
                     statusLabel = "Draft";
                     pastFormStatus = "is now being edited by the applicant";
+                    if (loanStatusChange.invln_changefrom == null)
+                    {
+                        _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_STATUS_CONFIRMATION(loanStatusChange, loanApplication, "saved your development loan application as draft");
+                    }
                     break;
                 case (int)invln_InternalStatus.ApplicationSubmitted:
                     statusLabel = "Application submitted";
                     pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
+                    _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_STATUS_CONFIRMATION(loanStatusChange, loanApplication, "submitted your application");
                     break;
                 case (int)invln_InternalStatus.Inactive:
                     statusLabel = "Inactive";
@@ -79,6 +79,7 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
                 case (int)invln_InternalStatus.ApplicationUnderReview:
                     statusLabel = "Application under review";
                     pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
+                    _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_STATUS_INFORMATION(loanStatusChange, loanApplication);
                     break;
                 case (int)invln_InternalStatus.HoldRequested:
                     statusLabel = "Hold requested";
@@ -87,6 +88,14 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
                 case (int)invln_InternalStatus.Withdrawn:
                     statusLabel = "Withdrawn";
                     pastFormStatus = "has been withdrawn";
+                    if (loanStatusChange.invln_changesource?.Value == (int)invln_ChangesourceSet.External)
+                    {
+                        _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_STATUS_CONFIRMATION(loanStatusChange, loanApplication, "withdrawn your application");
+                    }
+                    else if(loanStatusChange.invln_changesource?.Value == (int)invln_ChangesourceSet.Internal)
+                    {
+                        _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_STATUS_INFORMATION(loanStatusChange, loanApplication);
+                    }
                     break;
                 case (int)invln_InternalStatus.CashflowRequested:
                     statusLabel = "Cashflow requested";
@@ -107,6 +116,7 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
                 case (int)invln_InternalStatus.UnderReview:
                     statusLabel = "Under review";
                     pastFormStatus = "has been submitted by the borrower for your review";
+                    _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_STATUS_INFORMATION(loanStatusChange, loanApplication);
                     break;
                 case (int)invln_InternalStatus.SentforApproval:
                     statusLabel = "Sent for approval";
@@ -154,6 +164,7 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
 
             SendInternalCrmNotification(loanStatusChange, loanApplication, statusLabel);
             _govNotifyEmailService.SendNotifications_INTERNAL_LOAN_APP_STATUS_CHANGE(loanStatusChange, loanApplication, statusLabel, pastFormStatus);
+
         }
 
         public void SendInternalCrmNotification(invln_Loanstatuschange statusChange, invln_Loanapplication loanApplication, string statusLabel)
