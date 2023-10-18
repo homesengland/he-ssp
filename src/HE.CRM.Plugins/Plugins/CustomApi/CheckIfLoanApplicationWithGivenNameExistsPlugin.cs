@@ -8,16 +8,28 @@ using System.Collections.Generic;
 namespace HE.CRM.Plugins.Plugins.CustomApi
 {
     [CrmPluginRegistration(
-    "invln_changeloanapplicationexternalstatus",
+    "invln_checkifloanapplicationwithgivennameexists",
     "none",
     StageEnum.PostOperation,
     ExecutionModeEnum.Synchronous,
     "",
-    "HE.CRM.Plugins.Plugins.CustomApi.ChangeLoanApplicationExternalStatusPlugin: invln_changeloanapplicationexternalstatus",
+    "HE.CRM.Plugins.Plugins.CustomApi.CheckIfLoanApplicationWithGivenNameExistsPlugin: invln_checkifloanapplicationwithgivennameexists",
     1,
     IsolationModeEnum.Sandbox,
-    Id = "f58b6af4-7c28-4348-a2a1-d8c5fcb87d4b")]
-    public class CheckIfLoanApplicationWithGivenNameExistsPlugin
+    Id = "b1154182-cea2-4e51-8efb-2787e6c6d205")]
+    public class CheckIfLoanApplicationWithGivenNameExistsPlugin : PluginBase<DataverseContext>, IPlugin
     {
+        #region Constructors
+        public CheckIfLoanApplicationWithGivenNameExistsPlugin(string unsecureConfig, string secureConfig) : base(unsecureConfig, secureConfig)
+        {
+        }
+        #endregion
+
+        #region Base Methods Overrides
+        public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
+        {
+            registeredHandlers.Add(handlerFactory.GetHandler<CheckIfLoanApplicationWithGivenNameExistsHandler>());
+        }
+        #endregion
     }
 }

@@ -54,6 +54,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_Projectestimatedtotalcost = loanApplicationDto.projectEstimatedTotalCost.HasValue ? new Money(loanApplicationDto.projectEstimatedTotalCost.Value) : null,
                 invln_planningpermissionstatus = MapNullableIntToOptionSetValue(loanApplicationDto.planningPermissionStatus),
                 invln_startdate = loanApplicationDto.startDate,
+                invln_applicationname = loanApplicationDto.ApplicationName,
             };
 
             if (loanApplicationDto.loanApplicationExternalStatus.HasValue)
@@ -121,6 +122,7 @@ namespace HE.CRM.Common.DtoMapping
                 planningPermissionStatus = loanApplication.invln_planningpermissionstatus?.Value,
                 startDate = loanApplication.invln_startdate,
                 createdOn = loanApplication.CreatedOn,
+                ApplicationName = loanApplication.invln_applicationname,
             };
             if(loanApplication.invln_Account != null)
             {

@@ -126,6 +126,7 @@
     <Compile Include="Handlers\Accounts\OnCurrentCrrFieldUpdateHandler.cs" />
     <Compile Include="Handlers\Contract\RejectAddingWhenRelatedLoanInApprovedStatusHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeLoanApplicationExternalStatusHandler.cs" />
+    <Compile Include="Handlers\CustomApi\CheckIfLoanApplicationWithGivenNameExistsHandler.cs" />
     <Compile Include="Handlers\CustomApi\CreateSingleSiteDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteLoanApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteSiteDetailsHandler.cs" />

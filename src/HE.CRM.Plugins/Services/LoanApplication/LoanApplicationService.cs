@@ -667,6 +667,11 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             target.invln_lastmmodificationdate = DateTime.UtcNow;
         }
 
+        public bool CheckIfLoanApplicationWithGivenNameExists(string loanName)
+        {
+            return _loanApplicationRepository.LoanWithGivenNameExists(loanName);
+        }
+
         private bool CheckIfExternalStatusCanBeChanged(int oldStatus, int newStatus)
         {
             if (oldStatus != (int)invln_ExternalStatus.Draft)

@@ -125,6 +125,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Incident_CaseOriginCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\InitialCommunication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Addressverificationtype.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ApprovalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_BaseRate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ChangesourceSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ConditionSource.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Rating.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_refinancerepayment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Repaymenttype.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ReportFrequency.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Role.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Satisfactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_SatisfiedBy.cs" />
@@ -157,6 +159,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_SecurityCover.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Source.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sourceofincome.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_StrategicAssessmentBanding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Typeofhomes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_TypeofSite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Valuationsource.cs" />

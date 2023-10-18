@@ -101,6 +101,15 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
+        public bool LoanWithGivenNameExists(string loanName)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<invln_Loanapplication>()
+                    .Where(x => x.invln_Name == loanName).AsEnumerable().Any();
+            }
+        }
+
         #endregion
     }
 }
