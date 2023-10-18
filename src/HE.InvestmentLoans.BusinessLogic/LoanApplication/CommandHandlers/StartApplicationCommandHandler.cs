@@ -1,5 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Validation;
@@ -15,17 +17,19 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
     private readonly ILoanUserContext _loanUserContext;
 
     private readonly ILoanApplicationRepository _applicationRepository;
+    private readonly IApplicationProjectsRepository _applicationProjectsRepository;
 
     private readonly ILogger<StartApplicationCommandHandler> _logger;
 
     public StartApplicationCommandHandler(
         ILoanUserContext loanUserContext,
         ILoanApplicationRepository applicationRepository,
-        ILogger<StartApplicationCommandHandler> logger)
+        ILogger<StartApplicationCommandHandler> logger, IApplicationProjectsRepository applicationProjectsRepository)
     {
         _loanUserContext = loanUserContext;
         _applicationRepository = applicationRepository;
         _logger = logger;
+        _applicationProjectsRepository = applicationProjectsRepository;
     }
 
     public async Task<OperationResult<LoanApplicationId?>> Handle(StartApplicationCommand request, CancellationToken cancellationToken)
@@ -33,7 +37,8 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
         try
         {
             var userAccount = await _loanUserContext.GetSelectedAccount();
-            var applicationName = new LoanApplicationName(request.ApplicationName);
+    
+        var applicationName = new LoanApplicationName(request.ApplicationName);
             var newLoanApplication = LoanApplicationEntity.New(userAccount, applicationName);
 
             if (await _applicationRepository.IsExist(applicationName, userAccount, cancellationToken))
@@ -43,7 +48,10 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
                     null);
             }
 
-            await _applicationRepository.Save(newLoanApplication, await _loanUserContext.GetUserDetails(), cancellationToken);
+            var applicationProjects = new ApplicationProjects(newLoanApplication.Id);
+
+        await _applicationProjectsRepository.SaveAllAsync(applicationProjects, userAccount, cancellationToken);
+        await _applicationRepository.Save(newLoanApplication, await _loanUserContext.GetUserDetails(), cancellationToken);
 
             return OperationResult.Success<LoanApplicationId?>(newLoanApplication.Id);
         }

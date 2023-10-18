@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
@@ -15,7 +16,16 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
 public class LoanApplicationEntity
 {
-    public LoanApplicationEntity(LoanApplicationId id, LoanApplicationName name, UserAccount userAccount, ApplicationStatus externalStatus, FundingPurpose fundingReason, DateTime? createdOn, DateTime? lastModificationDate, string lastModifiedBy, LoanApplicationSection companyStructure, LoanApplicationSection security, LoanApplicationSection funding)
+    public LoanApplicationEntity(
+        LoanApplicationId id,
+        LoanApplicationName name, UserAccount userAccount,
+        ApplicationStatus externalStatus,
+        FundingPurpose fundingReason,
+        DateTime? createdOn,
+        DateTime? lastModificationDate,
+        string lastModifiedBy, LoanApplicationSection companyStructure,
+        LoanApplicationSection security,
+        LoanApplicationSection funding)
     {
         Id = id;
         Name = name;
@@ -29,6 +39,7 @@ public class LoanApplicationEntity
         CompanyStructure = companyStructure;
         Security = security;
         Funding = funding;
+        ProjectsSection = ProjectsSection.Empty();
     }
 
     public LoanApplicationId Id { get; private set; }
@@ -46,6 +57,8 @@ public class LoanApplicationEntity
     public LoanApplicationSection Security { get; private set; }
 
     public LoanApplicationSection Funding { get; private set; }
+
+    public ProjectsSection ProjectsSection { get; private set; }
 
     public ApplicationStatus ExternalStatus { get; set; }
 
@@ -131,19 +144,13 @@ public class LoanApplicationEntity
     public bool IsEnoughHomesToBuild()
     {
         const int minimumHomesToBuild = 5;
-        var cultureInfo = CultureInfo.InvariantCulture;
-        var result = LegacyModel.Projects
-                        .Select(site => site.HomesCount)
-                        .Where(manyHomes => !string.IsNullOrEmpty(manyHomes))
-                        .Select(manyHomes => int.TryParse(manyHomes, NumberStyles.Integer, cultureInfo, out var parsedValue) ? parsedValue : 0)
-                        .Aggregate(0, (x, y) => x + y);
 
-        return result >= minimumHomesToBuild;
+        return ProjectsSection.TotalHomesBuilt() >= minimumHomesToBuild;
     }
 
     private bool IsReadyToSubmit()
     {
-        return Funding.IsCompleted() && Security.IsCompleted() && CompanyStructure.IsCompleted() && LegacyModel.IsReadyToSubmit();
+        return ProjectsSection.IsCompleted() && Funding.IsCompleted() && Security.IsCompleted() && CompanyStructure.IsCompleted();
     }
 
     private bool IsSubmitted()
