@@ -138,6 +138,11 @@ namespace HE.CRM.Common.DtoMapping
             {
                 loanApplicationDto.projectEstimatedTotalCost = loanApplication.invln_Projectestimatedtotalcost.Value;
             }
+            if (loanApplication.invln_lastchangebyid != null)
+            {
+                loanApplicationDto.lastModificationById = loanApplication.invln_lastchangebyid.Id;
+                loanApplicationDto.lastModificationByName = loanApplication.invln_lastchangebyid.Name;
+            }
             if (contact != null)
             {
                 loanApplicationDto.LoanApplicationContact = new UserAccountDto()

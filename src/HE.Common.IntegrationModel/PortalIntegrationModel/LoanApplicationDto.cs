@@ -104,5 +104,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public DateTime? createdOn { get; set; }
 
         public string ApplicationName { get; set; }
+        public Guid? lastModificationById { get; set; }
+        public string lastModificationByName { get; set; }
     }
 }
