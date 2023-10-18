@@ -101,12 +101,12 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        public bool LoanWithGivenNameExists(string loanName)
+        public bool LoanWithGivenNameExists(string loanName, Guid organisationId)
         {
             using (var ctx = new OrganizationServiceContext(service))
             {
                 return ctx.CreateQuery<invln_Loanapplication>()
-                    .Where(x => x.invln_Name == loanName).AsEnumerable().Any();
+                    .Where(x => x.invln_Name == loanName && x.invln_Account.Id == organisationId).AsEnumerable().Any();
             }
         }
 

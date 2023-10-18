@@ -667,9 +667,16 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             target.invln_lastmmodificationdate = DateTime.UtcNow;
         }
 
-        public bool CheckIfLoanApplicationWithGivenNameExists(string loanName)
+        public bool CheckIfLoanApplicationWithGivenNameExists(string loanName, string organisationId)
         {
-            return _loanApplicationRepository.LoanWithGivenNameExists(loanName);
+            if (Guid.TryParse(organisationId, out Guid organisationGuid))
+            {
+                return _loanApplicationRepository.LoanWithGivenNameExists(loanName, organisationGuid);
+            }
+            else
+            {
+                throw new InvalidPluginExecutionException("Organisation Guid is not valid");
+            }
         }
 
         private bool CheckIfExternalStatusCanBeChanged(int oldStatus, int newStatus)

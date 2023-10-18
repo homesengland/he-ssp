@@ -11,6 +11,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         #region Fields
 
         private string loanName => ExecutionData.GetInputParameter<string>(invln_checkifloanapplicationwithgivennameexistsRequest.Fields.invln_loanname);
+        private string organisationId => ExecutionData.GetInputParameter<string>(invln_checkifloanapplicationwithgivennameexistsRequest.Fields.invln_organisationid);
 
         #endregion
 
