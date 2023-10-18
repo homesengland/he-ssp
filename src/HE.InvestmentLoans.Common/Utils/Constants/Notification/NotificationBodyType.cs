@@ -3,5 +3,5 @@ public enum NotificationBodyType
 {
     WithdrawApplication,
     DeleteProject,
-    Html,
+    FilesUpload,
 }
