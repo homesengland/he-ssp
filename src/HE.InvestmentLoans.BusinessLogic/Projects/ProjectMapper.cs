@@ -50,10 +50,13 @@ internal class ProjectMapper
             GrantFundingName = project.PublicSectorGrantFunding?.GrantOrFundName?.Value,
             GrantFundingPurpose = project.PublicSectorGrantFunding?.Purpose?.Value,
             LoanApplicationStatus = project.LoanApplicationStatus,
+
             HasEstimatedStartDate = project.StartDate?.Exists.MapToCommonResponse(),
+
             EstimatedStartDay = startDate.HasValue ? startDate.Value.Day.ToString(CultureInfo.InvariantCulture) : null,
             EstimatedStartMonth = startDate.HasValue ? startDate.Value.Month.ToString(CultureInfo.InvariantCulture) : null,
             EstimatedStartYear = startDate.HasValue ? startDate.Value.Year.ToString(CultureInfo.InvariantCulture) : null,
+
             PlanningPermissionStatus = PlanningPermissionStatusMapper.MapToString(project.PlanningPermissionStatus),
             Status = project.Status,
         };
