@@ -141,6 +141,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Fundingtypeforadditionalprojects.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FundRecoveryRate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_IDverificationtype.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Impact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_InternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Messagetype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Permission.cs" />
