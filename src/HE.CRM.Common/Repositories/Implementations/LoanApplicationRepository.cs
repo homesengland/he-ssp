@@ -106,7 +106,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             using (var ctx = new OrganizationServiceContext(service))
             {
                 return ctx.CreateQuery<invln_Loanapplication>()
-                    .Where(x => x.invln_Name == loanName && x.invln_Account.Id == organisationId).AsEnumerable().Any();
+                    .Where(x => x.invln_applicationname == loanName && x.invln_Account.Id == organisationId).AsEnumerable().Any();
             }
         }
 
