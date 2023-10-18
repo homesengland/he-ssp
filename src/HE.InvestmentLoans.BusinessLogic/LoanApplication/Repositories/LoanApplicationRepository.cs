@@ -53,16 +53,14 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     public async Task<bool> IsExist(LoanApplicationName loanApplicationName, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        // var req = new invln_checkifloanapplicationwithgivennameexistsRequest
-        // {
-        //     invln_loanname = loanApplicationName.Value,
-        //     invln_organisationid = userAccount.AccountId?.ToString(),
-        // };
-        //
-        // var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_checkifloanapplicationwithgivennameexistsResponse;
-        // return response?.invln_loanexists ?? false; // TODO: what value should be default?
+        var req = new invln_checkifloanapplicationwithgivennameexistsRequest
+        {
+            invln_loanname = loanApplicationName.Value,
+            invln_organisationid = userAccount.AccountId?.ToString(),
+        };
 
-        return false;
+        var response = (invln_checkifloanapplicationwithgivennameexistsResponse)await _serviceClient.ExecuteAsync(req, cancellationToken);
+        return response.invln_loanexists;
     }
 
     public async Task<LoanApplicationEntity> GetLoanApplication(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
