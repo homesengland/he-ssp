@@ -31,7 +31,7 @@ public class IntegrationUserData
             OrganizationName = userConfig.OrganizationName;
             OrganizationRegistrationNumber = userConfig.OrganizationRegistrationNumber;
             OrganizationAddress = userConfig.OrganizationAddress;
-            TelephoneNumber = TelephoneNumber.New(userConfig.TelephoneNumber, nameof(TelephoneNumber));
+            TelephoneNumber = TelephoneNumber.New(userConfig.TelephoneNumber);
             LoanApplicationIdInDraftState = userConfig.LoanApplicationIdInDraftState;
             ProjectInDraftStateId = userConfig.ProjectIdInDraftState;
 
@@ -62,7 +62,7 @@ public class IntegrationUserData
 
     public string ContactName => $"{FirstName} {LastName}";
 
-    public TelephoneNumber TelephoneNumber { get; private set; } = TelephoneNumber.New("01427 611 833", nameof(TelephoneNumber));
+    public TelephoneNumber TelephoneNumber { get; private set; } = TelephoneNumber.New("01427 611 833");
 
     public string LoanApplicationIdInDraftState { get; private set; }
 
@@ -113,7 +113,7 @@ public class IntegrationUserData
         FirstName = FirstName.New("John");
         LastName = LastName.New("Doe");
         JobTitle = JobTitle.New("Developer");
-        TelephoneNumber = TelephoneNumber.New("Carq pozdrawia", nameof(TelephoneNumber));
+        TelephoneNumber = TelephoneNumber.New("Carq pozdrawia");
         OrganizationName = "DO_NOT_DELETE_DEFAULT_ACCOUNT";
         OrganizationRegistrationNumber = "Not provided";
         OrganizationAddress = "12 Wharf Street";

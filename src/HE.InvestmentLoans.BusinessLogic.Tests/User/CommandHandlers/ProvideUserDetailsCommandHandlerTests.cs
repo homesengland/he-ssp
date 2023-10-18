@@ -34,7 +34,7 @@ public class ProvideUserDetailsCommandHandlerTests : TestBase<ProvideUserDetails
             LastName.FromString("Smith"),
             JobTitle.FromString("Developer"),
             "john.smith@test.com",
-            TelephoneNumber.FromString("12345678", nameof(UserDetails.TelephoneNumber)),
+            TelephoneNumber.FromString("12345678"),
             TelephoneNumber.FromString("87654321", nameof(UserDetails.SecondaryTelephoneNumber)),
             false);
 

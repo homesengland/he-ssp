@@ -31,7 +31,7 @@ public class GetUserDetailsTests : TestBase<LoanUserRepository>
         result.LastName.Should().Be(LastName.FromString(contactDto.lastName));
         result.Email.Should().Be(contactDto.email);
         result.JobTitle.Should().Be(JobTitle.FromString(contactDto.jobTitle));
-        result.TelephoneNumber.Should().Be(TelephoneNumber.FromString(contactDto.phoneNumber, nameof(result.TelephoneNumber)));
+        result.TelephoneNumber.Should().Be(TelephoneNumber.FromString(contactDto.phoneNumber));
         result.SecondaryTelephoneNumber.Should().Be(TelephoneNumber.FromString(contactDto.secondaryPhoneNumber, nameof(result.SecondaryTelephoneNumber)));
         result.IsTermsAndConditionsAccepted.Should().Be(contactDto.isTermsAndConditionsAccepted);
     }

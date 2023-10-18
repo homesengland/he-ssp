@@ -17,22 +17,14 @@ public class TelephoneNumber : ValueObject
                 .AddValidationError(affectedField, ValidationErrorMessage.EnterTelephoneNumber)
                 .CheckErrors();
         }
-        else if (affectedField == nameof(UserDetailsViewModel.TelephoneNumber) && value!.Length > MaximumInputLength.ShortInput)
+        else if (value!.Length > MaximumInputLength.ShortInput)
         {
             OperationResult
                 .New()
                 .AddValidationError(
                     affectedField,
-                    ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.TelephoneNumber))
-                .CheckErrors();
-        }
-        else if (affectedField == nameof(UserDetailsViewModel.SecondaryTelephoneNumber) && value!.Length > MaximumInputLength.ShortInput)
-        {
-            OperationResult
-                .New()
-                .AddValidationError(
-                    affectedField,
-                    ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.SecondaryTelephoneNumber))
+                    ValidationErrorMessage
+                        .ShortInputLengthExceeded(FieldNameForInputLengthValidation.TelephoneNumberType(affectedField)))
                 .CheckErrors();
         }
 
@@ -41,9 +33,9 @@ public class TelephoneNumber : ValueObject
 
     public string Value { get; }
 
-    public static TelephoneNumber New(string value, string affectedField) => new(value, affectedField);
+    public static TelephoneNumber New(string value, string affectedField = nameof(UserDetailsViewModel.TelephoneNumber)) => new(value, affectedField);
 
-    public static TelephoneNumber? FromString(string? value, string affectedField)
+    public static TelephoneNumber? FromString(string? value, string affectedField = nameof(UserDetailsViewModel.TelephoneNumber))
     {
         if (string.IsNullOrEmpty(value))
         {

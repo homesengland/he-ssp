@@ -41,7 +41,7 @@ public static class UserDetailsMapper
             LastName.FromString(contactDto.lastName),
             JobTitle.FromString(contactDto.jobTitle),
             contactDto.email,
-            TelephoneNumber.FromString(contactDto.phoneNumber, nameof(UserDetailsViewModel.TelephoneNumber)),
+            TelephoneNumber.FromString(contactDto.phoneNumber),
             TelephoneNumber.FromString(contactDto.secondaryPhoneNumber, nameof(UserDetailsViewModel.SecondaryTelephoneNumber)),
             contactDto.isTermsAndConditionsAccepted);
     }

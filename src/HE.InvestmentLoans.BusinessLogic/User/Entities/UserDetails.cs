@@ -52,8 +52,7 @@ public class UserDetails
         var firstNameResult = operationResult.CatchResult(() => FirstName.New(firstName));
         var lastNameResult = operationResult.CatchResult(() => LastName.New(lastName));
         var jobTitleResult = operationResult.CatchResult(() => JobTitle.New(jobTitle));
-        var telephoneNumberResult = operationResult.CatchResult(() =>
-            TelephoneNumber.New(telephoneNumber, nameof(TelephoneNumber)));
+        var telephoneNumberResult = operationResult.CatchResult(() => TelephoneNumber.New(telephoneNumber));
         TelephoneNumber? secondaryTelephoneNumberResult = null;
 
         if (secondaryTelephoneNumber.IsProvided())
