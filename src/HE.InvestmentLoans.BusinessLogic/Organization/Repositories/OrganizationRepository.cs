@@ -2,7 +2,9 @@ extern alias Org;
 
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Org::HE.Investments.Organisation.Services;
 
@@ -34,6 +36,34 @@ public class OrganizationRepository : IOrganizationRepository
                 organizationDetailsDto.addressLine3,
                 organizationDetailsDto.city,
                 organizationDetailsDto.postalcode,
-                organizationDetailsDto.country));
+                organizationDetailsDto.country),
+            new ContactInformation(
+                organizationDetailsDto.compayAdminContactTelephone,
+                organizationDetailsDto.compayAdminContactEmail));
+    }
+
+    public async Task<OrganisationChangeRequestState> GetOrganisationChangeRequestDetails(UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        if (!userAccount.AccountId.HasValue)
+        {
+            return OrganisationChangeRequestState.NoPendingRequest;
+        }
+
+        var changeRequestDetails = await _organizationService.GetOrganisationChangeDetailsRequest(userAccount.AccountId.Value);
+
+        // TODO: to be updated when organisation service start returning final results
+        switch (changeRequestDetails)
+        {
+            case "You requested":
+                return OrganisationChangeRequestState.PendingRequestByYou;
+            case "No Request":
+                return OrganisationChangeRequestState.NoPendingRequest;
+            case "Pending request":
+                return OrganisationChangeRequestState.PendingRequestByOthers;
+            default:
+                break;
+        }
+
+        throw new ArgumentOutOfRangeException(changeRequestDetails, nameof(changeRequestDetails) + "has incorrect value!");
     }
 }

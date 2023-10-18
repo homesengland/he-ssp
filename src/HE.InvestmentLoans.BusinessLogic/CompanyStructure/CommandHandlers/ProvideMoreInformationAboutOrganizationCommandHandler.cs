@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 using HE.InvestmentLoans.Common.Extensions;
@@ -11,6 +12,7 @@ using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.Notification;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
@@ -21,6 +23,7 @@ using HE.Investments.DocumentService.Services;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 
@@ -67,7 +70,8 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                 var filesCount = request.OrganisationMoreInformationFiles?.Count + request.FormFiles.Count;
                 companyStructure.ProvideFilesWithMoreInformation(new OrganisationMoreInformationFiles(filesCount));
 
-                var uploadedFilesNotify = string.Empty;
+                var filesUploaded = string.Empty;
+
                 foreach (var formFile in request.FormFiles)
                 {
                     var file = new FileData(formFile);
@@ -86,12 +90,16 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                         Overwrite = true,
                     });
 
-                    uploadedFilesNotify += $"<div>{file.Name} successfully uploaded</div>";
+                    filesUploaded += $"{file.Name}, ";
                 }
 
-                if (!string.IsNullOrEmpty(uploadedFilesNotify))
+                if (!string.IsNullOrEmpty(filesUploaded))
                 {
-                    _notificationService.NotifySuccess(NotificationBodyType.Html, uploadedFilesNotify);
+                    var valuesToDisplay = new Dictionary<NotificationServiceKeys, string>
+                    {
+                        { NotificationServiceKeys.Name, filesUploaded[..^2] },
+                    };
+                    _notificationService.NotifySuccess(NotificationBodyType.FilesUpload, valuesToDisplay);
                 }
             },
             request.LoanApplicationId,
