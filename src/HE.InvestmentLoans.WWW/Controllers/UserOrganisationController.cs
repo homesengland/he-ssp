@@ -1,4 +1,6 @@
+using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.UserOrganisation.Queries;
+using HE.InvestmentLoans.CRM.Model;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Models.UserOrganisation;
@@ -40,8 +42,16 @@ public class UserOrganisationController : Controller
                 new List<ProgrammeModel> { ProgrammesConsts.LoansProgramme },
                 new List<ActionModel>
                 {
-                    new($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", string.Empty, "Dashboard"),
-                    new($"Manage your account", string.Empty, "Dashboard"),
+                    new ActionModel($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation"),
+                    new ActionModel($"Manage your account", string.Empty, "Dashboard"),
                 }));
+    }
+
+    [HttpGet("details")]
+    public async Task<IActionResult> Details()
+    {
+        var organisationResult = await _mediator.Send(new GetOrganisationDetailsQuery());
+
+        return View("OrganizationDetails", organisationResult.OrganisationDetailsViewModel);
     }
 }
