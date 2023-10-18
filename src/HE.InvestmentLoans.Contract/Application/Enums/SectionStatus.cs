@@ -10,5 +10,8 @@ public enum SectionStatus
     [Description("In Progress")]
     InProgress,
     Completed,
+    Submitted,
+    [Description("Not Submitted")]
+    NotSubmitted,
     Withdrawn,
 }
