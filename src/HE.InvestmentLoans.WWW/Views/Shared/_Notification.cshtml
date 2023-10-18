@@ -25,13 +25,7 @@
     </div>
     <div class="govuk-notification-banner__content">
             <h3 class="govuk-notification-banner__heading">
-                @if (notificationModel.NotificationBodyType == NotificationBodyType.Html)
-                {
-                    @Html.Raw(notificationModel.ValueToDisplay)
-                } else
-                {
-                    @description
-                }
+                @description
                 @if (!string.IsNullOrEmpty(linkDescription))
                 {
                     <br />
