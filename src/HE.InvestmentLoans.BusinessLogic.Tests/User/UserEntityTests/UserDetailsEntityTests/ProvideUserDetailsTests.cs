@@ -13,12 +13,12 @@ public class ProvideUserDetailsTests
         var userDetailsEntity = UserDetailsEntityTestBuilder.New().Build();
 
         var newUserDetails = new UserDetails(
-            FirstName.New("Jacob"),
-            LastName.New("Smith"),
-            JobTitle.New("Developer"),
+            FirstName.FromString("Jacob"),
+            LastName.FromString("Smith"),
+            JobTitle.FromString("Developer"),
             "john.smith@test.com",
-            TelephoneNumber.New("12345678"),
-            SecondaryTelephoneNumber.New("87654321"),
+            TelephoneNumber.FromString("12345678"),
+            TelephoneNumber.FromString("87654321", nameof(UserDetails.SecondaryTelephoneNumber)),
             false);
 
         // when

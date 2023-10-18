@@ -25,4 +25,9 @@ public static class FieldNameForInputLengthValidation
     public const string WithdrawReason = "Reason for withdrawing application";
     public const string StartDate = "build start date";
     public const string PlanningReferenceNumber = "Planning reference number";
+
+    public static string TelephoneNumberType(string affectedField)
+    {
+        return affectedField == nameof(TelephoneNumber) ? TelephoneNumber : SecondaryTelephoneNumber;
+    }
 }

@@ -31,7 +31,7 @@ public class IntegrationUserData
             OrganizationName = userConfig.OrganizationName;
             OrganizationRegistrationNumber = userConfig.OrganizationRegistrationNumber;
             OrganizationAddress = userConfig.OrganizationAddress;
-            TelephoneNumber = TelephoneNumber.FromString(userConfig.TelephoneNumber)!;
+            TelephoneNumber = TelephoneNumber.New(userConfig.TelephoneNumber);
             LoanApplicationIdInDraftState = userConfig.LoanApplicationIdInDraftState;
             ProjectInDraftStateId = userConfig.ProjectIdInDraftState;
 
@@ -62,7 +62,7 @@ public class IntegrationUserData
 
     public string ContactName => $"{FirstName} {LastName}";
 
-    public TelephoneNumber TelephoneNumber { get; private set; } = TelephoneNumber.FromString("01427 611 833")!;
+    public TelephoneNumber TelephoneNumber { get; private set; } = TelephoneNumber.New("01427 611 833");
 
     public string LoanApplicationIdInDraftState { get; private set; }
 
@@ -110,10 +110,10 @@ public class IntegrationUserData
 
         UserGlobalId = "auth0|64a3bdb420d21a3fc5193e4d";
         Email = "luci_001@pwc.com";
-        FirstName = FirstName.FromString("John")!;
-        LastName = LastName.FromString("Doe")!;
-        JobTitle = JobTitle.FromString("Developer")!;
-        TelephoneNumber = TelephoneNumber.FromString("Carq pozdrawia")!;
+        FirstName = FirstName.New("John");
+        LastName = LastName.New("Doe");
+        JobTitle = JobTitle.New("Developer");
+        TelephoneNumber = TelephoneNumber.New("Carq pozdrawia");
         OrganizationName = "DO_NOT_DELETE_DEFAULT_ACCOUNT";
         OrganizationRegistrationNumber = "Not provided";
         OrganizationAddress = "12 Wharf Street";

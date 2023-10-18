@@ -13,7 +13,6 @@ public class CompanyStructureEntity
         LoanApplicationId loanApplicationId,
         CompanyPurpose? purpose,
         OrganisationMoreInformation? moreInformation,
-        OrganisationMoreInformationFile? moreInformationFile,
         HomesBuilt? homesBuilt,
         SectionStatus status,
         ApplicationStatus loanApplicationStatus)
@@ -21,7 +20,6 @@ public class CompanyStructureEntity
         LoanApplicationId = loanApplicationId;
         Purpose = purpose;
         MoreInformation = moreInformation;
-        MoreInformationFile = moreInformationFile;
         HomesBuilt = homesBuilt;
         Status = status;
         LoanApplicationStatus = loanApplicationStatus;
@@ -32,6 +30,8 @@ public class CompanyStructureEntity
     public OrganisationMoreInformation? MoreInformation { get; private set; }
 
     public OrganisationMoreInformationFile? MoreInformationFile { get; private set; }
+
+    public OrganisationMoreInformationFiles? MoreInformationFiles { get; private set; }
 
     public HomesBuilt? HomesBuilt { get; private set; }
 
@@ -63,7 +63,7 @@ public class CompanyStructureEntity
         UnCompleteSection();
     }
 
-    public void ProvideFileWithMoreInformation(OrganisationMoreInformationFile? moreInformationFile)
+    public void ProvideFileWithMoreInformation(OrganisationMoreInformationFile moreInformationFile)
     {
         if (MoreInformationFile == moreInformationFile)
         {
@@ -71,6 +71,17 @@ public class CompanyStructureEntity
         }
 
         MoreInformationFile = moreInformationFile;
+        UnCompleteSection();
+    }
+
+    public void ProvideFilesWithMoreInformation(OrganisationMoreInformationFiles moreInformationFiles)
+    {
+        if (MoreInformationFiles == moreInformationFiles)
+        {
+            return;
+        }
+
+        MoreInformationFiles = moreInformationFiles;
         UnCompleteSection();
     }
 

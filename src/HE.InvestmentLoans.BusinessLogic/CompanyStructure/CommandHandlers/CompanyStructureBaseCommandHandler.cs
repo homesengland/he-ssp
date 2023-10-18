@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
@@ -23,14 +24,14 @@ public class CompanyStructureBaseCommandHandler
         _logger = logger;
     }
 
-    protected async Task<OperationResult> Perform(Action<CompanyStructureEntity> action, LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
+    protected async Task<OperationResult> Perform(Func<CompanyStructureEntity, UserAccount, Task> action, LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
     {
         var userAccount = await _loanUserContext.GetSelectedAccount();
         var companyStructure = await _repository.GetAsync(loanApplicationId, userAccount, CompanyStructureFieldsSet.GetAllFields, cancellationToken);
 
         try
         {
-            action(companyStructure);
+            await action(companyStructure, userAccount);
         }
         catch (DomainValidationException domainValidationException)
         {

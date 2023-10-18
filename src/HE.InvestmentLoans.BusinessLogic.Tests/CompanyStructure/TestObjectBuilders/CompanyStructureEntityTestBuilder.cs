@@ -21,7 +21,6 @@ public class CompanyStructureEntityTestBuilder
             null,
             null,
             null,
-            null,
             SectionStatus.NotStarted,
             ApplicationStatus.Draft));
 

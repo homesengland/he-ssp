@@ -1,22 +1,23 @@
 @using HE.InvestmentLoans.Common.Models.App;
 @using HE.InvestmentLoans.Contract.CompanyStructure
+@using HE.Investments.DocumentService.Configs;
 @model HE.InvestmentLoans.Contract.CompanyStructure.CompanyStructureViewModel
 @inject ModelExpressionProvider modelProvider
-@inject IAppConfig appConfig
+@inject IDocumentServiceConfig config
 @{
     var (hasError, fileInputError) = ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((CompanyStructureViewModel x) => x.OrganisationMoreInformationFile));
 }
 
-@Html.Hidden("MaxFileSizeInMegabytes", appConfig.MaxFileSizeInMegabytes)
+@Html.Hidden("MaxFileSizeInMegabytes", config.MaxFileSizeInMegabytes)
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="CompanyStructureV2" asp-action="MoreInformationAboutOrganizationPost" asp-route-id="@Model.LoanApplicationId" enctype="multipart/form-data" asp-method="post" novalidate>
+    <form id="formWithFile" asp-controller="CompanyStructureV2" asp-action="MoreInformationAboutOrganizationPost" asp-route-id="@Model.LoanApplicationId" enctype="multipart/form-data" asp-method="post" novalidate>
         <gds-back-link href="@Url.Action("Back","CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.ExistingCompany})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
+        @await Html.PartialAsync("_Notification")
         <partial name="_ErrorSummaryPartial" model="null" />
-
+        
         @Html.HiddenFor(x => x.LoanApplicationId)
-
         <gds-field-set>
             <gds-error-form-group asp-for="OrganisationMoreInformation">
                 <legend>
@@ -37,6 +38,27 @@
                 <gds-div-hint>
                     You can also upload any relevant files such as company structure charts.
                 </gds-div-hint>
+                    @for (int i = 0; i < Model.OrganisationMoreInformationFiles.Count; i++)
+                    {
+                        <div>
+                            <div class="govuk-grid-row">
+                                <div class="govuk-grid-column-two-thirds">
+                                    <a class="govuk-label govuk-label--s" href="@Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, fileName = @Model.OrganisationMoreInformationFiles[i].FileName })">
+                                        @Model.OrganisationMoreInformationFiles[i].FileName
+                                    </a>
+                                    @Html.HiddenFor(model => Model.OrganisationMoreInformationFiles[i].FileName)
+                                </div>
+                            <div class="govuk-grid-column-one-third govuk-!-text-align-right">
+                                    <a href="@Url.Action("MoreInformationAboutOrganizationRemoveFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, fileName = @Model.OrganisationMoreInformationFiles[i].FileName })">
+                                        Remove
+                                    </a>
+                                </div>
+                            </div>
+                            <label class="govuk-label" for="File">
+                                uploaded @Model.OrganisationMoreInformationFiles[i].FileMetadata?.CreateDate.ToString("HH:mm dd/MM/yy") by @Model.OrganisationMoreInformationFiles[i].FileMetadata?.Creator
+                            </label>
+                        </div>
+                    }
 
                     <p class="govuk-error-message">
                         <span class="govuk-visually-hidden">Error:</span>
@@ -53,7 +75,7 @@
                     <label class="govuk-label" for="File">
                         Upload a file
                     </label>
-                    <input class="govuk-file-upload" id="File" name="File" type="file">
+                    <input class="govuk-file-upload" id="File" name="File" type="file" multiple>
                 </div>
             </gds-error-form-group>
             <button class="govuk-button" id="continue-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
@@ -62,8 +84,7 @@
         </gds-field-set>
     </form>
 
-
     <partial name="_HomeAndCheckAnswersLinks" />
 </gds-div-grid-column-two-thirds>
 
-<script src="/javascripts/ExistingCompany.file-validation.js"></script>
+<script src="/javascripts/file-helper.js"></script>

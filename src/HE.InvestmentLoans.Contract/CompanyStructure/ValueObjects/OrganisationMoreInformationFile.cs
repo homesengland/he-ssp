@@ -1,7 +1,10 @@
 using System.Globalization;
+using System.Threading;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Domain;
+using HE.Investments.DocumentService.Models.File;
+using Microsoft.AspNetCore.Http;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
@@ -33,6 +36,7 @@ public class OrganisationMoreInformationFile : ValueObject
         }
 
         operationResult.CheckErrors();
+
         FileName = fileName;
         Content = content;
     }

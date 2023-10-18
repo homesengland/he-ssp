@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Helper;
 using HE.InvestmentLoans.Contract.ViewModels;
+using HE.Investments.DocumentService.Models.File;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure;
 
@@ -30,6 +31,8 @@ public class CompanyStructureViewModel : ICompletedSectionViewModel
     public SectionStatus State { get; set; }
 
     public bool StateChanged { get; set; }
+
+    public List<FileTableRow>? OrganisationMoreInformationFiles { get; set; }
 
     public bool IsCompleted()
     {
