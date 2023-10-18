@@ -4,6 +4,8 @@ using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestData;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using HE.Investments.DocumentService.Models.File;
+using Microsoft.AspNetCore.Http;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.ValueObjects;
@@ -24,7 +26,6 @@ public class OrganisationMoreInformationFileCtorTests
 
         // then
         organisationMoreInformationFile.FileName.Should().Be(fileName);
-        organisationMoreInformationFile.Content.Should().NotBeEmpty();
     }
 
     [Fact]

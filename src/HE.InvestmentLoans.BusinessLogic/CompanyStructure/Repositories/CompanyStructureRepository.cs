@@ -49,7 +49,6 @@ public class CompanyStructureRepository : ICompanyStructureRepository
             loanApplicationId,
             CompanyStructureMapper.MapCompanyPurpose(loanApplicationDto.companyPurpose),
             CompanyStructureMapper.MapMoreInformation(loanApplicationDto.existingCompany),
-            CompanyStructureMapper.MapMoreInformationFile(null, null, _appConfig.MaxFileSizeInMegabytes),
             CompanyStructureMapper.MapHomesBuild(loanApplicationDto.companyExperience),
             SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus),
             ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus));

@@ -17,6 +17,14 @@ public class CheckAnswersCompanyStructureSectionCommandHandler : CompanyStructur
 
     public async Task<OperationResult> Handle(CheckAnswersCompanyStructureSectionCommand request, CancellationToken cancellationToken)
     {
-        return await Perform(x => x.CheckAnswers(request.YesNoAnswer.ToYesNoAnswer()), request.LoanApplicationId, cancellationToken);
+        return await Perform(
+            (companyStructure, userAccount) =>
+            {
+                companyStructure.CheckAnswers(request.YesNoAnswer.ToYesNoAnswer());
+
+                return Task.CompletedTask;
+            },
+            request.LoanApplicationId,
+            cancellationToken);
     }
 }
