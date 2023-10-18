@@ -1,8 +1,11 @@
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.User.Entities;
+
 public class UserDetails
 {
     public UserDetails(
@@ -11,7 +14,7 @@ public class UserDetails
         JobTitle? jobTitle,
         string? email,
         TelephoneNumber? telephoneNumber,
-        SecondaryTelephoneNumber? secondaryTelephoneNumber,
+        TelephoneNumber? secondaryTelephoneNumber,
         bool? isTermsAndConditionsAccepted)
     {
         FirstName = firstName;
@@ -33,18 +36,29 @@ public class UserDetails
 
     public TelephoneNumber? TelephoneNumber { get; private set; }
 
-    public SecondaryTelephoneNumber? SecondaryTelephoneNumber { get; private set; }
+    public TelephoneNumber? SecondaryTelephoneNumber { get; private set; }
 
     public bool? IsTermsAndConditionsAccepted { get; private set; }
 
-    public void ProvideUserDetails(string firstName, string lastName, string jobTitle, string telephoneNumber, string secondaryTelephoneNumber, string userEmail)
+    public void ProvideUserDetails(
+        string firstName,
+        string lastName,
+        string jobTitle,
+        string telephoneNumber,
+        string secondaryTelephoneNumber,
+        string userEmail)
     {
         var operationResult = OperationResult.New();
         var firstNameResult = operationResult.CatchResult(() => FirstName.New(firstName));
         var lastNameResult = operationResult.CatchResult(() => LastName.New(lastName));
         var jobTitleResult = operationResult.CatchResult(() => JobTitle.New(jobTitle));
         var telephoneNumberResult = operationResult.CatchResult(() => TelephoneNumber.New(telephoneNumber));
-        var secondaryTelephoneNumberResult = operationResult.CatchResult(() => SecondaryTelephoneNumber.New(secondaryTelephoneNumber));
+        TelephoneNumber? secondaryTelephoneNumberResult = null;
+
+        if (secondaryTelephoneNumber.IsProvided())
+        {
+            secondaryTelephoneNumberResult = operationResult.CatchResult(() => TelephoneNumber.New(secondaryTelephoneNumber, nameof(SecondaryTelephoneNumber)));
+        }
 
         operationResult.CheckErrors();
 
@@ -60,9 +74,9 @@ public class UserDetails
     public bool IsProfileCompleted()
     {
         return FirstName.IsProvided() &&
-                LastName.IsProvided() &&
-                JobTitle.IsProvided() &&
-                TelephoneNumber.IsProvided() &&
-                IsTermsAndConditionsAccepted == true;
+               LastName.IsProvided() &&
+               JobTitle.IsProvided() &&
+               TelephoneNumber.IsProvided() &&
+               IsTermsAndConditionsAccepted == true;
     }
 }
