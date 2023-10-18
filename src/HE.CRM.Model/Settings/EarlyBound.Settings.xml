@@ -9,6 +9,7 @@
   <ExtensionConfig>
     <ActionPrefixesWhitelist />
     <ActionsWhitelist>invln_changeloanapplicationexternalstatus|
+invln_checkifloanapplicationwithgivennameexists|
 invln_deleteloanapplication|
 invln_deletesitedetails|
 invln_generaterichtextdocument|

@@ -1,26 +1,41 @@
 using HE.InvestmentLoans.Common.Utils.Constants.Notification;
+using HE.InvestmentLoans.Common.Utils.Enums;
 
 namespace HE.InvestmentLoans.WWW.Helpers.Notification;
 
 public static class NotificationMapper
 {
-    public static string MapBodyTypeToDescription(NotificationBodyType bodyType, string valueToDisplay)
+    public static string MapBodyTypeToDescription(NotificationBodyType bodyType, IDictionary<NotificationServiceKeys, string> valuesToDisplay)
     {
-        return bodyType switch
+        var text = bodyType switch
         {
-            NotificationBodyType.WithdrawApplication => NotificationBody.ApplicationWithdrawnWithName(valueToDisplay),
-            NotificationBodyType.DeleteProject => NotificationBody.ProjectRemoved(valueToDisplay),
+            NotificationBodyType.WithdrawApplication => NotificationBody.ApplicationWithdrawnWithName,
+            NotificationBodyType.DeleteProject => NotificationBody.ProjectRemoved,
             _ => string.Empty,
         };
+
+        foreach (var value in valuesToDisplay)
+        {
+            text = text.Replace($"<{value.Key}>", value.Value);
+        }
+
+        return text;
     }
 
-    public static string MapBodyTypeToLinkDescription(NotificationBodyType bodyType)
+    public static string MapBodyTypeToLinkDescription(NotificationBodyType bodyType, IDictionary<NotificationServiceKeys, string> valuesToDisplay)
     {
-        return bodyType switch
+        var text = bodyType switch
         {
             NotificationBodyType.WithdrawApplication => NotificationBodyLink.ContactEmailIfThereIsAProblem,
             NotificationBodyType.DeleteProject => string.Empty,
             _ => string.Empty,
         };
+
+        foreach (var value in valuesToDisplay)
+        {
+            text = text.Replace($"<{value.Key}>", value.Value);
+        }
+
+        return text;
     }
 }
