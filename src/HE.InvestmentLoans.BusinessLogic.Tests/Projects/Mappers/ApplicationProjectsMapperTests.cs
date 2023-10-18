@@ -9,12 +9,13 @@ using HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
+using HE.InvestmentLoans.Common.Tests.TestData;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.Mappers;
 public class ApplicationProjectsMapperTests
 {
-    private readonly DateTime _now = new(2023, 10, 17);
+    private readonly DateTime _now = DateTimeTestData.SeptemberDay20Year2023At0736;
 
     [Fact]
     public void StartDateShouldBeEmpty_WhenStartDateExistNotProvided()
@@ -65,7 +66,7 @@ public class ApplicationProjectsMapperTests
     }
 
     [Fact]
-    public void StartDateShouldExistAndHasValue_WhenProjectHasNoStartDate()
+    public void StartDateShouldExistAndHasValue_WhenProjectHasStartDate()
     {
         // given
         var dto = LoanApplicationDtoTestBuilder
