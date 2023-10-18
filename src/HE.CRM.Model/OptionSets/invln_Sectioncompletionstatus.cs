@@ -25,6 +25,12 @@ namespace DataverseModel
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Notstarted = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotSubmitted = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Submitted = 858110003,
 	}
 }
 #pragma warning restore CS1591
