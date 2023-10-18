@@ -52,13 +52,6 @@ public class UserOrganisationController : Controller
     {
         var organisationResult = await _mediator.Send(new GetOrganisationDetailsQuery());
 
-        return View(
-            "OrganizationDetails",
-            new OrganisationDetailsModel(
-                organisationResult.CompanyName,
-                organisationResult.CompanyPhoneNumber,
-                organisationResult.AddressLines,
-                organisationResult.CompanyHouseNumber,
-                organisationResult.ChangeRequestDetails));
+        return View("OrganizationDetails", organisationResult.OrganisationDetailsViewModel);
     }
 }

@@ -20,23 +20,22 @@ public class GetOrganisationDetailsQueryHandler : IRequestHandler<GetOrganisatio
     public async Task<GetOrganisationDetailsQueryResponse> Handle(GetOrganisationDetailsQuery request, CancellationToken cancellationToken)
     {
         var basicInformation = await _organizationRepository.GetBasicInformation(await _loanUserContext.GetSelectedAccount(), cancellationToken);
+        var address = new List<string>()
+        {
+            basicInformation.Address.Line1,
+            basicInformation.Address.Line2,
+            basicInformation.Address.City,
+            basicInformation.Address.PostalCode,
+        };
 
         var organisationDataChengeRequestState = await _organizationRepository.GetOrganisationChangeRequestDetails(await _loanUserContext.GetSelectedAccount(), cancellationToken);
 
-        var address = new List<string>()
-        {
-            basicInformation.Address.Line1 ?? string.Empty,
-            basicInformation.Address.Line2 ?? string.Empty,
-            basicInformation.Address.Line3 ?? string.Empty,
-            basicInformation.Address.City ?? string.Empty,
-            basicInformation.Address.PostalCode ?? string.Empty,
-        };
-
         return new GetOrganisationDetailsQueryResponse(
-            basicInformation.RegisteredCompanyName,
-            basicInformation.ContactInformation.PhoneNUmber,
-            address,
-            basicInformation.CompanyRegistrationNumber,
-            organisationDataChengeRequestState);
+            new OrganisationDetailsViewModel(
+                basicInformation.RegisteredCompanyName,
+                basicInformation.ContactInformation.PhoneNUmber,
+                address,
+                basicInformation.CompanyRegistrationNumber,
+                organisationDataChengeRequestState));
     }
 }

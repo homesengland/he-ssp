@@ -1,4 +1,15 @@
-@model HE.InvestmentLoans.WWW.Models.OrganisationDetailsModel;
+@using HE.InvestmentLoans.Common.Utils.Enums
+@using HE.InvestmentLoans.Common.Utils.Constants.ViewName
+@using HE.InvestmentLoans.WWW.Routing
+@model HE.InvestmentLoans.Contract.Organization.OrganisationDetailsViewModel
+@{
+    //ViewData["Title"] = "Organization details";
+    ViewBag.Breadcrumbs = BreadcrumbsBuilder
+        .New()
+        .WithOrganisations()
+        .WithOrganisation(Model.Name)
+        .Build();
+}
 
 <gds-div-grid-column-full>
     <form asp-controller="Organisation" asp-action="OrganisationDetails" asp-method="post" novalidate>
@@ -7,10 +18,10 @@
         </gds-back-link>
 
         <gds-h1 class="govuk-heading-xl govuk-!-margin-bottom-9">
-            Manage @Model.OrganisationName details
+            Manage @Model.Name details
         </gds-h1>
 
-        <gds-h3 class="govuk-heading-l">
+        <gds-h3 class="govuk-heading-l" data-testid="user-organisation-details">
             Organisation details
         </gds-h3>
 
@@ -18,49 +29,49 @@
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
             {
-            { "Title", "Registered company name" },
-            { "Value", Model.OrganisationName },
+            { "Title", OrganisationDetailsView.Name },
+            { "Value", Model.Name },
             })
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
             {
-            { "Title", "Organisation phone number" },
-            { "Value", Model.OrganisationPhoneNumber },
+            { "Title", OrganisationDetailsView.PhoneNumber },
+            { "Value", Model.PhoneNumber },
             })
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
             {
-            { "Title", "Organisation address" },
-            { "Value", Model.OrganisationAddress },
+            { "Title", OrganisationDetailsView.Address },
+            { "Value", Model.AddressLines },
             })
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
             {
-            { "Title", "Companies House Registration number" },
-            { "Value", Model.CompaniesHouseNumber },
+            { "Title", OrganisationDetailsView.HouseNumber },
+            { "Value", Model.HouseNumber },
             })
 
         </gds-summary-list>
-        @if (Model.CurrentOrganisationDataState == "You requested")
+        @if (Model.ChangeRequestState == OrganisationChangeRequestState.PendingRequestByYou)
         {
             <gds-div-grid-column-two-thirds class="govuk-!-padding-0">
-                <div class="govuk-inset-text" data-testid="user-organisation-limited-user">
-                    Your request to change details is pending. You cannot request to make additional changes until this change has been completed.
+                <div class="govuk-inset-text">
+                    @OrganisationDetailsView.PendingRequestByYou
                 </div>
             </gds-div-grid-column-two-thirds>
         }
-        @if (Model.CurrentOrganisationDataState == "No pending request")
+        @if (Model.ChangeRequestState == OrganisationChangeRequestState.NoPendingRequest)
         {
             <gds-p>
                 <gds-link href="">
-                    Request to change organisation details
+                    @OrganisationDetailsView.NoPendingRequest
                 </gds-link>
             </gds-p>
         }
-        @if (Model.CurrentOrganisationDataState == "Pending request")
+        @if (Model.ChangeRequestState == OrganisationChangeRequestState.PendingRequestByOthers)
         {
             <gds-p>
-                    To change your organisation details, contact your Transaction Manager.
+                @OrganisationDetailsView.PendingRequestByOthers
             </gds-p>
         }
     </form>
