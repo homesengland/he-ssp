@@ -6,22 +6,26 @@ using System.Text;
 using System.Threading.Tasks;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
+using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 public class ProjectBasicData : LoanApplicationSection
 {
-    public ProjectBasicData(SectionStatus status, ProjectId id, HomesBuilt homesBuilt)
+    public ProjectBasicData(SectionStatus status, ProjectId id, HomesCount? homesCount, ProjectName name)
         : base(status)
     {
         Id = id;
-        HomesBuilt = homesBuilt;
+        HomesCount = homesCount;
+        Name = name;
     }
 
     public ProjectId Id { get; }
 
-    public HomesBuilt HomesBuilt { get; }
+    public HomesCount? HomesCount { get; }
 
-    public static ProjectBasicData New(ProjectId id, HomesBuilt homesBuilt) => new(SectionStatus.NotStarted, id, homesBuilt);
+    public ProjectName Name { get; }
+
+    public static ProjectBasicData New(ProjectId id, HomesCount homesCount, ProjectName name) => new(SectionStatus.NotStarted, id, homesCount, name);
 }

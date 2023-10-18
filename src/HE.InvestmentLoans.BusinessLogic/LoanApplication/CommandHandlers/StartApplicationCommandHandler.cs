@@ -24,7 +24,8 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
     public StartApplicationCommandHandler(
         ILoanUserContext loanUserContext,
         ILoanApplicationRepository applicationRepository,
-        ILogger<StartApplicationCommandHandler> logger, IApplicationProjectsRepository applicationProjectsRepository)
+        ILogger<StartApplicationCommandHandler> logger,
+        IApplicationProjectsRepository applicationProjectsRepository)
     {
         _loanUserContext = loanUserContext;
         _applicationRepository = applicationRepository;
@@ -37,8 +38,8 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
         try
         {
             var userAccount = await _loanUserContext.GetSelectedAccount();
-    
-        var applicationName = new LoanApplicationName(request.ApplicationName);
+
+            var applicationName = new LoanApplicationName(request.ApplicationName);
             var newLoanApplication = LoanApplicationEntity.New(userAccount, applicationName);
 
             if (await _applicationRepository.IsExist(applicationName, userAccount, cancellationToken))
@@ -48,10 +49,10 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
                     null);
             }
 
-            var applicationProjects = new ApplicationProjects(newLoanApplication.Id);
+            await _applicationRepository.Save(newLoanApplication, await _loanUserContext.GetUserDetails(), cancellationToken);
 
-        await _applicationProjectsRepository.SaveAllAsync(applicationProjects, userAccount, cancellationToken);
-        await _applicationRepository.Save(newLoanApplication, await _loanUserContext.GetUserDetails(), cancellationToken);
+            var applicationProjects = new ApplicationProjects(newLoanApplication.Id);
+            await _applicationProjectsRepository.SaveAllAsync(applicationProjects, userAccount, cancellationToken);
 
             return OperationResult.Success<LoanApplicationId?>(newLoanApplication.Id);
         }

@@ -18,19 +18,21 @@ public class LoanApplicationEntity
 {
     public LoanApplicationEntity(
         LoanApplicationId id,
-        LoanApplicationName name, UserAccount userAccount,
+        LoanApplicationName name,
+        UserAccount userAccount,
         ApplicationStatus externalStatus,
         FundingPurpose fundingReason,
         DateTime? createdOn,
         DateTime? lastModificationDate,
         string lastModifiedBy, LoanApplicationSection companyStructure,
         LoanApplicationSection security,
-        LoanApplicationSection funding)
+        LoanApplicationSection funding,
+        ProjectsSection projectsSection,
+        string referenceNumber)
     {
         Id = id;
         Name = name;
         UserAccount = userAccount;
-        ApplicationProjects = new ApplicationProjects(Id);
         ExternalStatus = externalStatus;
         LastModificationDate = lastModificationDate;
         LastModifiedBy = lastModifiedBy;
@@ -39,7 +41,8 @@ public class LoanApplicationEntity
         CompanyStructure = companyStructure;
         Security = security;
         Funding = funding;
-        ProjectsSection = ProjectsSection.Empty();
+        ProjectsSection = projectsSection;
+        ReferenceNumber = referenceNumber;
     }
 
     public LoanApplicationId Id { get; private set; }
@@ -47,10 +50,6 @@ public class LoanApplicationEntity
     public LoanApplicationName Name { get; private set; }
 
     public UserAccount UserAccount { get; }
-
-    public ApplicationProjects ApplicationProjects { get; private set; }
-
-    public LoanApplicationViewModel LegacyModel { get; set; }
 
     public LoanApplicationSection CompanyStructure { get; private set; }
 
@@ -70,14 +69,9 @@ public class LoanApplicationEntity
 
     public FundingPurpose FundingReason { get; private set; }
 
-    public string ReferenceNumber => LegacyModel.ReferenceNumber ?? string.Empty;
+    public string ReferenceNumber { get; private set; }
 
-    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, LoanApplicationSection.New(), LoanApplicationSection.New(), string.Empty, LoanApplicationSection.New());
-
-    public void SaveApplicationProjects(ApplicationProjects applicationProjects)
-    {
-        ApplicationProjects = applicationProjects;
-    }
+    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, LoanApplicationSection.New(), LoanApplicationSection.New(), string.Empty, LoanApplicationSection.New(), ProjectsSection.Empty(), string.Empty);
 
     public void SetId(LoanApplicationId newId)
     {

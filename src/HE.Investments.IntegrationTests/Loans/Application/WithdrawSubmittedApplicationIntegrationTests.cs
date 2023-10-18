@@ -85,7 +85,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
             .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.WithdrawReason));
     }
 
-    [Fact(Skip =    "LoansConfig.SkipTest")]
+    [Fact(Skip = "LoansConfig.SkipTest")]
     [Order(4)]
     public async Task Order04_ShouldMoveToApplicationDashboard_WhenWithdrawReasonIsProvided()
     {

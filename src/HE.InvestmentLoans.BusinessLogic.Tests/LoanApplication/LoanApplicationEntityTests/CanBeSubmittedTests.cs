@@ -20,7 +20,7 @@ public class CanBeSubmittedTests
         var entity = LoanApplicationTestBuilder
             .NewDraft()
             .WithAllCompletedSections()
-            .WithCompanyStructureSection(LoanApplicationSectionTestData.IncompletedSection)
+            .WithCompanyStructureSection(LoanApplicationSectionTestData.IncompleteSection)
             .Build();
 
         entity.CanBeSubmitted().Should().BeFalse();
@@ -32,7 +32,7 @@ public class CanBeSubmittedTests
         var entity = LoanApplicationTestBuilder
             .NewDraft()
             .WithAllCompletedSections()
-            .WithSecuritySection(LoanApplicationSectionTestData.IncompletedSection)
+            .WithSecuritySection(LoanApplicationSectionTestData.IncompleteSection)
             .Build();
 
         entity.CanBeSubmitted().Should().BeFalse();
@@ -44,9 +44,42 @@ public class CanBeSubmittedTests
         var entity = LoanApplicationTestBuilder
             .NewDraft()
             .WithAllCompletedSections()
-            .WithFundingSection(LoanApplicationSectionTestData.IncompletedSection)
+            .WithFundingSection(LoanApplicationSectionTestData.IncompleteSection)
             .Build();
 
         entity.CanBeSubmitted().Should().BeFalse();
+    }
+
+    [Fact]
+    public void CannotBeSubmitted_WhenProjectSectionIsNotCompleted()
+    {
+        var entity = LoanApplicationTestBuilder
+            .NewDraft()
+            .WithAllCompletedSections()
+            .WithProjectSection(LoanApplicationSectionTestData.IncompleteProjectsSection)
+            .Build();
+
+        entity.CanBeSubmitted().Should().BeFalse();
+    }
+
+    [Fact]
+    public void CannotBeSubmitted_WhenProjectWasSubmittedAlready()
+    {
+        var entity = LoanApplicationTestBuilder
+            .NewSubmitted()
+            .Build();
+
+        entity.CanBeSubmitted().Should().BeFalse();
+    }
+
+    [Fact]
+    public void CanBeSubmitted_WhenAllSectionsAreCompleteAndApplicationIsInDraftStatus()
+    {
+        var entity = LoanApplicationTestBuilder
+            .NewDraft()
+            .WithAllCompletedSections()
+            .Build();
+
+        entity.CanBeSubmitted().Should().BeTrue();
     }
 }
