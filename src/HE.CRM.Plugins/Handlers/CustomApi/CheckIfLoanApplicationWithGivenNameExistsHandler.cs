@@ -23,7 +23,7 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
 
         public override void DoWork()
         {
-            var loanExists = CrmServicesFactory.Get<ILoanApplicationService>().CheckIfLoanApplicationWithGivenNameExists(loanName);
+            var loanExists = CrmServicesFactory.Get<ILoanApplicationService>().CheckIfLoanApplicationWithGivenNameExists(loanName, organisationId);
             ExecutionData.SetOutputParameter(invln_checkifloanapplicationwithgivennameexistsResponse.Fields.invln_loanexists, loanExists);
         }
 
