@@ -29,6 +29,7 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             FundingPurpose.BuildingNewHomes,
             DateTimeTestData.SeptemberDay20Year2023At0736,
             DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(1),
+            "Anonymous",
             new LoanApplicationSection(SectionStatus.NotStarted)));
 
     public static LoanApplicationTestBuilder NewSubmitted(UserAccount userAccount) => new(
@@ -40,6 +41,7 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             FundingPurpose.BuildingNewHomes,
             DateTimeTestData.SeptemberDay20Year2023At0736,
             DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(1),
+            "Anonymous",
             new LoanApplicationSection(SectionStatus.NotStarted)));
 
     public LoanApplicationTestBuilder WithCreatedOn(DateTime createdOn)

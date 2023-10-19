@@ -115,7 +115,8 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
                 LoanApplicationName.CreateOrDefault(x.ApplicationName),
                 ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
                 x.createdOn,
-                x.LastModificationOn)).ToList();
+                x.LastModificationOn,
+                x.lastModificationByName)).ToList();
     }
 
     public async Task Save(LoanApplicationEntity loanApplication, UserDetails userDetails, CancellationToken cancellationToken)
