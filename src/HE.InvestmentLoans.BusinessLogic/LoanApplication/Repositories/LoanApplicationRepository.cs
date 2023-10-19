@@ -88,6 +88,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             FundingPurposeMapper.Map(loanApplicationDto.fundingReason),
             loanApplicationDto.createdOn,
             loanApplicationDto.LastModificationOn,
+            loanApplicationDto.lastModificationByName,
             new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus)))
         {
             LegacyModel = LoanApplicationMapper.Map(loanApplicationDto, _dateTime.Now),
@@ -114,7 +115,8 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
                 LoanApplicationName.CreateOrDefault(x.ApplicationName),
                 ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
                 x.createdOn,
-                x.LastModificationOn)).ToList();
+                x.LastModificationOn,
+                x.lastModificationByName)).ToList();
     }
 
     public async Task Save(LoanApplicationEntity loanApplication, UserDetails userDetails, CancellationToken cancellationToken)
