@@ -33,7 +33,8 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
                 loanApplication.LegacyModel.Projects
                     .Select(x => new ProjectSection(x.ProjectId, x.Name, MapToSectionStatus(loanApplication.ExternalStatus, x.Status)))
                     .ToArray()),
-            loanApplication.LastModificationDate ?? loanApplication.CreatedOn ?? DateTime.MinValue);
+            loanApplication.LastModificationDate ?? loanApplication.CreatedOn ?? DateTime.MinValue,
+            loanApplication.LastModifiedBy);
     }
 
     private SectionStatus MapToSectionStatus(ApplicationStatus status, SectionStatus sectionStatus)

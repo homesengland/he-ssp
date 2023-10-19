@@ -12,4 +12,5 @@ public record GetApplicationDashboardQueryResponse(
     ApplicationStatus ApplicationStatus,
     string ApplicationReferenceNumber,
     string OrganizationName,
-    DateTime? LastEditedOn);
+    DateTime? LastEditedOn,
+    string LastEditedBy);

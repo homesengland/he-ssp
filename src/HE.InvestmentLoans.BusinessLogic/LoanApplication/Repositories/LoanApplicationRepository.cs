@@ -88,6 +88,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             FundingPurposeMapper.Map(loanApplicationDto.fundingReason),
             loanApplicationDto.createdOn,
             loanApplicationDto.LastModificationOn,
+            loanApplicationDto.lastModificationByName,
             new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus)))
         {
             LegacyModel = LoanApplicationMapper.Map(loanApplicationDto, _dateTime.Now),

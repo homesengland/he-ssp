@@ -15,7 +15,7 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
 public class LoanApplicationEntity
 {
-    public LoanApplicationEntity(LoanApplicationId id, LoanApplicationName name, UserAccount userAccount, ApplicationStatus externalStatus, FundingPurpose fundingReason, DateTime? createdOn, DateTime? lastModificationDate, LoanApplicationSection companyStructure)
+    public LoanApplicationEntity(LoanApplicationId id, LoanApplicationName name, UserAccount userAccount, ApplicationStatus externalStatus, FundingPurpose fundingReason, DateTime? createdOn, DateTime? lastModificationDate,string lastModifiedBy, LoanApplicationSection companyStructure)
     {
         Id = id;
         Name = name;
@@ -23,6 +23,7 @@ public class LoanApplicationEntity
         ApplicationProjects = new ApplicationProjects(Id);
         ExternalStatus = externalStatus;
         LastModificationDate = lastModificationDate;
+        LastModifiedBy = lastModifiedBy;
         FundingReason = fundingReason;
         CreatedOn = createdOn;
         CompanyStructure = companyStructure;
@@ -44,13 +45,15 @@ public class LoanApplicationEntity
 
     public DateTime? LastModificationDate { get; }
 
+    public string LastModifiedBy { get; }
+
     public DateTime? CreatedOn { get; }
 
     public FundingPurpose FundingReason { get; private set; }
 
     public string ReferenceNumber => LegacyModel.ReferenceNumber ?? string.Empty;
 
-    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, LoanApplicationSection.New());
+    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, string.Empty, LoanApplicationSection.New());
 
     public void SaveApplicationProjects(ApplicationProjects applicationProjects)
     {

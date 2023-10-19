@@ -2,14 +2,6 @@
 @using HE.InvestmentLoans.Common.Utils.Constants.ViewName
 @using HE.InvestmentLoans.WWW.Routing
 @model HE.InvestmentLoans.Contract.Organization.OrganisationDetailsViewModel
-@{
-    //ViewData["Title"] = "Organization details";
-    ViewBag.Breadcrumbs = BreadcrumbsBuilder
-        .New()
-        .WithOrganisations()
-        .WithOrganisation(Model.Name)
-        .Build();
-}
 
 <gds-div-grid-column-full>
     <form asp-controller="Organisation" asp-action="OrganisationDetails" asp-method="post" novalidate>
