@@ -85,6 +85,7 @@ public class OrganizationService : IOrganizationService
                 { "address1_city", organizationDetailsDto.city },
                 { "address1_postalcode", organizationDetailsDto.postalcode },
                 { "address1_country", organizationDetailsDto.country },
+                { "address1_county", organizationDetailsDto.county },
             },
         };
         return organizationEntity;

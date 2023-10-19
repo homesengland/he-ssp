@@ -14,6 +14,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string city { get; set; }
         public string postalcode { get; set; }
         public string country { get; set; }
+        public string county { get; set; }
 
         //COMPANY ADMIN CONTACT
         public string compayAdminContactName { get; set; }
