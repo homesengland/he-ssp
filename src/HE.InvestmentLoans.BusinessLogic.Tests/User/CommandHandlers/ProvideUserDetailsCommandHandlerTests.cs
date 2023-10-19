@@ -18,11 +18,9 @@ public class ProvideUserDetailsCommandHandlerTests : TestBase<ProvideUserDetails
             .New()
             .Register(this)
             .UserAccountFromMock;
+        var userDetails = UserDetailsEntityTestBuilder.New().Build();
 
-        var userDetails = LoanUserContextTestBuilder
-            .New()
-            .Register(this)
-            .UserDetailsFromMock;
+        RegisterDependency(LoanUserContextTestBuilder.New().ReturnUserDetails(userDetails).Build());
 
         var userRepositoryMock = UserRepositoryTestBuilder
             .New()

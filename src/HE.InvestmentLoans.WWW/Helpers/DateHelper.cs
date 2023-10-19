@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.InvestmentLoans.Common.Extensions;
 
 namespace HE.InvestmentLoans.WWW.Helpers;
 
@@ -26,5 +27,10 @@ public static class DateHelper
         }
 
         return string.Empty;
+    }
+
+    public static string DisplayAsUkFormatDateTime(DateTime? utcDateTime)
+    {
+        return utcDateTime?.ConvertUtcToUkLocalTime().ToString(CultureInfo.GetCultureInfo("en-GB"));
     }
 }

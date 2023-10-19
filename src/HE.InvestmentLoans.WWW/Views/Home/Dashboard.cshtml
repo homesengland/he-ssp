@@ -56,7 +56,7 @@
                         <application-status-tag application-status="@application.Status"></application-status-tag>
                     </td>
 
-                    <td class="govuk-table__cell">@application.LastModificationDate?.ConvertUtcToUkLocalTime()</td>
+                    <td class="govuk-table__cell">FormatAs @DateHelper.DisplayAsUkFormatDateTime(application.LastModificationDate)</td>
 
                 </tr>
             }
