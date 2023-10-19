@@ -56,6 +56,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Emailnotification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_EmailTemplate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_govnotifyemail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ISP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanstatuschange.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_notificationsetting.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\DependencyType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\EmailServerProfile_AuthenticationProtocol.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\EntityType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\field_security_permission_ReadUnmasked.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Field_Security_Permission_Type.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\flipswitch_options.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\FullSyncState.cs" />
