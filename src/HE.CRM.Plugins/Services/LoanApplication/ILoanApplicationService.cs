@@ -15,11 +15,11 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         void CheckIfOwnerCanBeChanged(invln_Loanapplication target, invln_Loanapplication preImage);
         void SetFieldsWhenChangingStatusFromDraft(invln_Loanapplication target, invln_Loanapplication preImage);
         void SendInternalNotificationOnStatusChange(invln_Loanapplication target, invln_Loanapplication preImage);
-        void ChangeInternalStatusOnExternalStatusChange(invln_Loanapplication target, invln_Loanapplication preImage);
         void SendEmailToNewOwner(invln_Loanapplication target, invln_Loanapplication preImage);
         string GetFileLocationForApplicationLoan(string loanApplicationId);
         void SetLastModificationDate(invln_Loanapplication target);
         void CreateDocumentLocation(invln_Loanapplication target);
         bool CheckIfLoanApplicationWithGivenNameExists(string loanName, string organisationId);
+        void AssignLoanToTmTeam(invln_Loanapplication target);
     }
 }

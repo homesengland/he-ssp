@@ -31,118 +31,133 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
 
         public void SendNotifications_EXTERNAL_APPLICATION_STATUS_CONFIRMATION(invln_Loanstatuschange statusChange, invln_Loanapplication loanApplication, string actionCompleted)
         {
-            this.TracingService.Trace("EXTERNAL_APPLICATION_STATUS_CONFIRMATION");
-            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("EXTERNAL_APPLICATION_STATUS_CONFIRMATION");
-            var loanContactData = _contactRepositoryAdmin.GetById(loanApplication.invln_Contact.Id, nameof(Contact.EMailAddress1).ToLower(), nameof(SystemUser.FullName).ToLower());
-            var subject = "Your have " + actionCompleted;
-            var govNotParams = new EXTERNAL_APPLICATION_STATUS_CONFIRMATION()
+            if (loanApplication.invln_Contact != null)
             {
-                templateId = emailTemplate?.invln_templateid,
-                personalisation = new parameters_EXTERNAL_APPLICATION_STATUS_CONFIRMATION()
+                this.TracingService.Trace("EXTERNAL_APPLICATION_STATUS_CONFIRMATION");
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("EXTERNAL_APPLICATION_STATUS_CONFIRMATION");
+                var loanContactData = _contactRepositoryAdmin.GetById(loanApplication.invln_Contact.Id, nameof(Contact.EMailAddress1).ToLower(), nameof(SystemUser.FullName).ToLower());
+                var subject = "Your have " + actionCompleted;
+                var govNotParams = new EXTERNAL_APPLICATION_STATUS_CONFIRMATION()
                 {
-                    recipientEmail = loanContactData.EMailAddress1,
-                    username = loanContactData.FullName,
-                    subject = subject,
-                    actionCompleted = actionCompleted
-                }
-            };
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_EXTERNAL_APPLICATION_STATUS_CONFIRMATION()
+                    {
+                        recipientEmail = loanContactData.EMailAddress1,
+                        username = loanContactData.FullName ?? "NO NAME",
+                        subject = subject,
+                        actionCompleted = actionCompleted
+                    }
+                };
 
-            var options = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true
-            };
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
 
-            var parameters = JsonSerializer.Serialize(govNotParams, options);
-            this.SendGovNotifyEmail(loanApplication.OwnerId, loanApplication.ToEntityReference(), subject, parameters, emailTemplate);
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(loanApplication.OwnerId, loanApplication.ToEntityReference(), subject, parameters, emailTemplate);
+            }
         }
 
         public void SendNotifications_EXTERNAL_APPLICATION_STATUS_INFORMATION(invln_Loanstatuschange statusChange, invln_Loanapplication loanApplication)
         {
-            this.TracingService.Trace("EXTERNAL_APPLICATION_STATUS_INFORMATION");
-            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("EXTERNAL_APPLICATION_STATUS_INFORMATION");
-            var loanContactData = _contactRepositoryAdmin.GetById(loanApplication.invln_Contact.Id, nameof(Contact.EMailAddress1).ToLower(), nameof(SystemUser.FullName).ToLower());
-            var subject = emailTemplate?.invln_subject;
-            var govNotParams = new EXTERNAL_APPLICATION_STATUS_INFORMATION()
+            if (loanApplication.invln_Contact != null)
             {
-                templateId = emailTemplate?.invln_templateid,
-                personalisation = new parameters_EXTERNAL_APPLICATION_STATUS_INFORMATION()
+                this.TracingService.Trace("EXTERNAL_APPLICATION_STATUS_INFORMATION");
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("EXTERNAL_APPLICATION_STATUS_INFORMATION");
+                var loanContactData = _contactRepositoryAdmin.GetById(loanApplication.invln_Contact.Id, nameof(Contact.EMailAddress1).ToLower(), nameof(SystemUser.FullName).ToLower());
+                var subject = emailTemplate?.invln_subject;
+                var govNotParams = new EXTERNAL_APPLICATION_STATUS_INFORMATION()
                 {
-                    recipientEmail = loanContactData.EMailAddress1,
-                    username = loanContactData.FullName,
-                    subject = subject,
-                    applicationId = loanApplication.invln_Name,
-                    previousStatus = statusChange.FormattedValues[nameof(invln_Loanstatuschange.invln_changefrom).ToLower()],
-                    newStatus = statusChange.FormattedValues[nameof(invln_Loanstatuschange.invln_changeto).ToLower()],
-                }
-            };
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_EXTERNAL_APPLICATION_STATUS_INFORMATION()
+                    {
+                        recipientEmail = loanContactData.EMailAddress1,
+                        username = loanContactData.FullName ?? "NO NAME",
+                        subject = subject,
+                        applicationId = loanApplication.invln_Name,
+                        previousStatus = statusChange.FormattedValues[nameof(invln_Loanstatuschange.invln_changefrom).ToLower()],
+                        newStatus = statusChange.FormattedValues[nameof(invln_Loanstatuschange.invln_changeto).ToLower()],
+                    }
+                };
 
-            var options = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true
-            };
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
 
-            var parameters = JsonSerializer.Serialize(govNotParams, options);
-            this.SendGovNotifyEmail(loanApplication.OwnerId, loanApplication.ToEntityReference(), subject, parameters, emailTemplate);
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(loanApplication.OwnerId, loanApplication.ToEntityReference(), subject, parameters, emailTemplate);
+
+            }
         }
 
         public void SendNotifications_INTERNAL_LOAN_APP_STATUS_CHANGE(invln_Loanstatuschange statusChange, invln_Loanapplication loanApplication, string statusLabel, string pastFormStatus)
         {
-            this.TracingService.Trace("INTERNAL_LOAN_APP_STATUS_CHANGE");
-            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("INTERNAL_LOAN_APP_STATUS_CHANGE");
-            var subject = $"Application ref no {loanApplication.invln_Name} - Status change to '{statusLabel}'";
-            var ownerData = _systemUserRepositoryAdmin.GetById(loanApplication.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
-            var govNotParams = new INTERNAL_LOAN_APP_STATUS_CHANGE()
+            if (loanApplication.OwnerId.LogicalName == SystemUser.EntityLogicalName)
             {
-                templateId = emailTemplate?.invln_templateid,
-                personalisation = new parameters_INTERNAL_LOAN_APP_STATUS_CHANGE()
+                this.TracingService.Trace("INTERNAL_LOAN_APP_STATUS_CHANGE");
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("INTERNAL_LOAN_APP_STATUS_CHANGE");
+                var subject = $"Application ref no {loanApplication.invln_Name} - Status change to '{statusLabel}'";
+                var ownerData = _systemUserRepositoryAdmin.GetById(loanApplication.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
+                var govNotParams = new INTERNAL_LOAN_APP_STATUS_CHANGE()
                 {
-                    recipientEmail = ownerData.InternalEMailAddress,
-                    username = ownerData.FullName,
-                    applicationId = loanApplication.invln_Name,
-                    applicationUrl = GetLoanApplicationUrl(loanApplication.ToEntityReference()),
-                    subject = subject,
-                    statusAtBody = pastFormStatus
-                }
-            };
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_INTERNAL_LOAN_APP_STATUS_CHANGE()
+                    {
+                        recipientEmail = ownerData.InternalEMailAddress,
+                        username = ownerData.FullName ?? "NO NAME",
+                        applicationId = loanApplication.invln_Name,
+                        applicationUrl = GetLoanApplicationUrl(loanApplication.ToEntityReference()),
+                        subject = subject,
+                        statusAtBody = pastFormStatus
+                    }
+                };
 
-            var options = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true
-            };
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
 
-            var parameters = JsonSerializer.Serialize(govNotParams, options);
-            this.SendGovNotifyEmail(loanApplication.OwnerId, loanApplication.ToEntityReference(), subject, parameters, emailTemplate);
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(loanApplication.OwnerId, loanApplication.ToEntityReference(), subject, parameters, emailTemplate);
+
+            }
         }
 
         public void SendNotifications_INTERNAL_LOAN_APP_OWNER_CHANGE(invln_Loanapplication loanApplication, string subject, string appId)
         {
-            this.TracingService.Trace("INTERNAL_LOAN_APP_OWNER_CHANGE");
-            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("INTERNAL_LOAN_APP_OWNER_CHANGE");
-            var ownerData = _systemUserRepositoryAdmin.GetById(loanApplication.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
-            var govNotParams = new INTERNAL_LOAN_APP_OWNER_CHANGE()
+            if (loanApplication.OwnerId.LogicalName == SystemUser.EntityLogicalName)
             {
-                templateId = emailTemplate?.invln_templateid,
-                personalisation = new parameters_INTERNAL_LOAN_APP_OWNER_CHANGE()
+                this.TracingService.Trace("INTERNAL_LOAN_APP_OWNER_CHANGE");
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("INTERNAL_LOAN_APP_OWNER_CHANGE");
+                var ownerData = _systemUserRepositoryAdmin.GetById(loanApplication.OwnerId.Id, nameof(SystemUser.InternalEMailAddress).ToLower(), nameof(SystemUser.FullName).ToLower());
+                var govNotParams = new INTERNAL_LOAN_APP_OWNER_CHANGE()
                 {
-                    recipientEmail = ownerData.InternalEMailAddress,
-                    username = ownerData.FullName,
-                    applicationId = appId,
-                    applicationUrl = GetLoanApplicationUrl(loanApplication.ToEntityReference()),
-                    subject = subject,
-                }
-            };
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_INTERNAL_LOAN_APP_OWNER_CHANGE()
+                    {
+                        recipientEmail = ownerData.InternalEMailAddress,
+                        username = ownerData.FullName ?? "NO NAME",
+                        applicationId = appId,
+                        applicationUrl = GetLoanApplicationUrl(loanApplication.ToEntityReference()),
+                        subject = subject,
+                    }
+                };
 
-            var options = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true
-            };
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
 
-            var parameters = JsonSerializer.Serialize(govNotParams, options);
-            this.SendGovNotifyEmail(loanApplication.OwnerId, loanApplication.ToEntityReference(), subject, parameters, emailTemplate);
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(loanApplication.OwnerId, loanApplication.ToEntityReference(), subject, parameters, emailTemplate);
+
+            }
         }
 
         private string GetLoanApplicationUrl(EntityReference loanApplicationId)

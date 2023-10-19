@@ -28,15 +28,16 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         private readonly IContactRepository _contactRepository;
         private readonly IWebRoleRepository _webroleRepository;
         private readonly ILoanStatusChangeRepository _loanStatusChangeRepository;
+        private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
 
         private readonly ILoanApplicationRepository _loanApplicationRepositoryAdmin;
         private readonly INotificationSettingRepository _notificationSettingRepositoryAdmin;
         private readonly IGovNotifyEmailRepository _govNotifyEmailRepositoryAdmin;
         private readonly IEnvironmentVariableRepository _environmentVariableRepositoryAdmin;
         private readonly ISystemUserRepository _systemUserRepositoryAdmin;
+        private readonly ITeamRepository _teamRepositoryAdmin;
 
         private readonly IGovNotifyEmailService _govNotifyEmailService;
-        private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
 
         #endregion
 
@@ -56,6 +57,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             _govNotifyEmailRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IGovNotifyEmailRepository>();
             _environmentVariableRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IEnvironmentVariableRepository>();
             _systemUserRepositoryAdmin = CrmRepositoriesFactory.GetSystem<ISystemUserRepository>();
+            _teamRepositoryAdmin = CrmRepositoriesFactory.GetSystem<ITeamRepository>();
 
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
         }
@@ -134,7 +136,17 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     Id = target.Id,
                     invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.ApplicationUnderReview),
                     StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationUnderReview),
-            });
+                });
+
+                var loanStatusChangeToCreate = new invln_Loanstatuschange()
+                {
+                    invln_changefrom = new OptionSetValue((int)invln_InternalStatus.ApplicationSubmitted),
+                    invln_changesource = new OptionSetValue((int)invln_ChangesourceSet.Automated),
+                    invln_changeto = new OptionSetValue((int)invln_InternalStatus.ApplicationUnderReview),
+                    invln_Loanapplication = target.ToEntityReference()
+                };
+
+                _loanStatusChangeRepository.Create(loanStatusChangeToCreate);
             }
         }
 
@@ -331,7 +343,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         {
             TracingService.Trace($"preImage: value {preImage.StatusCode.Value}, other {preImage.StatusCode}");
             TracingService.Trace($"target: value {target.StatusCode?.Value}, other {target.StatusCode}");
-            if (((preImage.StatusCode.Value == (int)invln_Loanapplication_StatusCode.Draft && target.StatusCode == null) || (target.StatusCode != null && target.StatusCode.Value == (int)invln_Loanapplication_StatusCode.Draft)) && target.OwnerId.Id != preImage.OwnerId.Id)
+            if (((preImage.StatusCode.Value == (int)invln_Loanapplication_StatusCode.Draft && target.StatusCode == null) || (target.StatusCode != null && target.StatusCode.Value == (int)invln_Loanapplication_StatusCode.Draft)) && target.OwnerId.Id != preImage.OwnerId.Id && target.OwnerId.LogicalName != Team.EntityLogicalName)
             {
                 throw new InvalidPluginExecutionException("Cannot change owner when status is set to draft");
             }
@@ -440,95 +452,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                         break;
                     case (int)invln_Loanapplication_StatusCode.LoanAvailable:
                         target.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.LoanAvailable);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        public void ChangeInternalStatusOnExternalStatusChange(invln_Loanapplication target, invln_Loanapplication preImage)
-        {
-            if (target.invln_ExternalStatus.Value != preImage.invln_ExternalStatus.Value)
-            {
-                TracingService.Trace($"new status {target.invln_ExternalStatus.Value}");
-                switch (target.invln_ExternalStatus.Value)
-                {
-                    case (int)invln_ExternalStatus.Draft:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Draft);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.ApplicationSubmitted:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationSubmitted);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.NA:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Inactive);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Inactive);
-                        break;
-                    case (int)invln_ExternalStatus.ApplicationUnderReview:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationUnderReview);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.HoldRequested:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.HoldRequested);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.Withdrawn:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.Withdrawn);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Inactive);
-                        break;
-                    case (int)invln_ExternalStatus.CashflowRequested:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.CashflowRequested);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.CashflowUnderReview:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.CashflowUnderReview);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.OnHold:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.OnHold);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.ReferredBacktoApplicant:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ReferredBacktoApplicant);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.UnderReview:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.UnderReview);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.SentforApproval:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.SentforApproval);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.ApprovedSubjecttoDueDiligence:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApprovedSubjecttoDueDiligence);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.ApplicationDeclined:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApplicationDeclined);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.InDueDiligence:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.InDueDiligence);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.ApprovedSubjecttoContract:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.ApprovedSubjectToContract);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.ContractSignedSubjecttoCP:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.AwaitingCPSatisfaction);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.LoanAvailable:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.LoanAvailable);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
-                        break;
-                    case (int)invln_ExternalStatus.CPsSatisfied:
-                        target.StatusCode = new OptionSetValue((int)invln_Loanapplication_StatusCode.CPsSatisfied);
-                        target.StateCode = new OptionSetValue((int)invln_loanapplicationState.Active);
                         break;
                     default:
                         break;
@@ -660,6 +583,19 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 ParentSiteOrLocation = documentLocation.ToEntityReference(),
             };
             _ = _sharepointDocumentLocationRepository.Create(documentToCreate);
+        }
+
+        public void AssignLoanToTmTeam(invln_Loanapplication target)
+        {
+            var tmTeam = _teamRepositoryAdmin.GetTeamByName("TM Team");
+            if (tmTeam != null)
+            {
+                this._loanApplicationRepositoryAdmin.Update(new invln_Loanapplication()
+                {
+                    Id = target.Id,
+                    OwnerId = tmTeam.ToEntityReference()
+                });
+            }
         }
 
         public void SetLastModificationDate(invln_Loanapplication target)
