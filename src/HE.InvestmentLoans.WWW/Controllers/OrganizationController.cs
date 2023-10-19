@@ -1,9 +1,11 @@
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Organization;
+using HE.InvestmentLoans.Contract.Organization.Commands;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
+using HE.InvestmentLoans.WWW.Models.Organisation;
 using HE.InvestmentLoans.WWW.Utils.ValueObjects;
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
@@ -15,12 +17,13 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 
 [Route("organization")]
 [AuthorizeWithoutLinkedOrganiztionOnly]
-public class OrganizationController : Controller
+public class OrganizationController : BaseController
 {
     private readonly IMediator _mediator;
     private readonly ICompaniesHouseApi _companiesHouseApi;
 
     public OrganizationController(IMediator mediator, ICompaniesHouseApi companiesHouseApi)
+    : base(mediator)
     {
         _mediator = mediator;
         _companiesHouseApi = companiesHouseApi;
@@ -94,5 +97,31 @@ public class OrganizationController : Controller
     public async Task<CompaniesHouseGetByCompanyNumberResult> SearchOrganizationCompanyDemo(string companyNumber, CancellationToken cancellationToken = default)
     {
         return await _companiesHouseApi.GetByCompanyNumber(companyNumber, cancellationToken);
+    }
+
+    [HttpGet("create")]
+    public IActionResult CreateOrganisation()
+    {
+        return View();
+    }
+
+    [HttpPost("create")]
+    public async Task<IActionResult> CreateOrganisation(CreateOrganisationModel viewModel, CancellationToken cancellationToken)
+    {
+        var command = new CreateAndLinkOrganisationCommand(
+            viewModel.Name,
+            viewModel.AddressLine1,
+            viewModel.AddressLine2,
+            viewModel.TownOrCity,
+            viewModel.County,
+            viewModel.Postcode);
+
+        return await ExecuteCommand(
+            command,
+            () => RedirectToAction(
+                nameof(UserOrganisationController.Index),
+                new ControllerName(nameof(UserOrganisationController)).WithoutPrefix()),
+            () => View(viewModel),
+            cancellationToken);
     }
 }

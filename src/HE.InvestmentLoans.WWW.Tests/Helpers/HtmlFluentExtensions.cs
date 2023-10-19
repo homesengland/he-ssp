@@ -22,6 +22,20 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasInput(this IHtmlDocument htmlDocument, string fieldName, string? text = null)
+    {
+        var inputs = htmlDocument.GetElementsByName(fieldName);
+        inputs.Length.Should().Be(1, $"Only one element input with name {fieldName} should exist");
+
+        if (!string.IsNullOrEmpty(text))
+        {
+            var labels = htmlDocument.GetElementsByTagAndText("label", text);
+            labels.Count.Should().Be(1, $"Only one element input with label with innerText {text} should exist");
+        }
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument IsEmpty(this IHtmlDocument htmlDocument)
     {
         var body = htmlDocument.GetElementsByTagName("body").FirstOrDefault();

@@ -142,8 +142,8 @@
     <Compile Include="Handlers\CustomApi\UpdateSingleLoanApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleSiteDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateUserProfileHandler.cs" />
+    <Compile Include="Handlers\LoanApplications\AssignLoanToTmTeamOnCreateHandler.cs" />
     <Compile Include="Handlers\LoanApplications\ChangeApplicationStatusOnOwnerChangeHandler.cs" />
-    <Compile Include="Handlers\LoanApplications\ChangeInternalStatusOnExternalStatusChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\CheckIfOwnerCanBeChangedHandler.cs" />
     <Compile Include="Handlers\LoanApplications\CreateDocumentLocationOnCreateHandler.cs" />
     <Compile Include="Handlers\LoanApplications\SendEmailToNewOwnerHandler.cs" />
@@ -170,10 +170,10 @@
     <Compile Include="Plugins\CustomApi\UpdateSingleSiteDetailsPlugin.cs" />
     <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateUserProfilePlugin.cs" />
+    <Compile Include="Plugins\LoanApplications\AssignLoanToTmTeamOnCreatePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\CreateDocumentLocationOnCreatePlugin.cs" />
     <Compile Include="Plugins\LoanStatusChange\SendNotificationOnCreatePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\ChangeApplicationStatusOnOwnerChangePlugin.cs" />
-    <Compile Include="Plugins\LoanApplications\ChangeInternalStatusOnExternalStatusChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\CheckIfOwnerCanBeChangedPlugin.cs" />
     <Compile Include="Plugins\LoanApplications\SendEmailToNewOwnerPlugin.cs" />
     <Compile Include="Plugins\LoanApplications\SendInternalNotificationOnStatusChangePlugin.cs" />
@@ -256,6 +256,8 @@
     <Compile Include="Services\RichTextService\RichTextService.cs" />
     <Compile Include="Services\SiteDetails\ISiteDetailsService.cs" />
     <Compile Include="Services\SiteDetails\SiteDetailsService.cs" />
+    <Compile Include="Services\Teams\ITeamService.cs" />
+    <Compile Include="Services\Teams\TeamService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">

@@ -52,9 +52,35 @@ public class OperationResult
         }
     }
 
+    // This is not true that method returns not nullable object in case of error.
+    // But this is useful for validation errors aggregation for nested value objects.
+    // Child can be nullable, but we still need aggregated errors for parent.
+    public TReturnedData Aggregate<TReturnedData>(Func<TReturnedData> action)
+        where TReturnedData : class
+    {
+        try
+        {
+            return action();
+        }
+        catch (DomainValidationException ex)
+        {
+            var result = ex.OperationResult;
+
+            AddValidationErrors(result.Errors);
+
+            return null!;
+        }
+    }
+
     public OperationResult AddValidationError(ErrorItem errorItem)
     {
         Errors.Add(errorItem);
+        return this;
+    }
+
+    public OperationResult AddValidationErrors(IList<ErrorItem> errorItem)
+    {
+        Errors.AddRange(errorItem);
         return this;
     }
 

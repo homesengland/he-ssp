@@ -36,6 +36,7 @@ public static class BusinessLogicModule
     private static void AddOrganizationSubmodule(this IServiceCollection services)
     {
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+        services.AddScoped<IContactRepository, ContactRepository>();
     }
 
     private static void AddSecuritySubmodule(this IServiceCollection services)

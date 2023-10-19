@@ -3,7 +3,6 @@ using AngleSharp.Html.Dom;
 using FluentAssertions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Enums;
-using HE.InvestmentLoans.IntegrationTests.Config;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers;

@@ -31,7 +31,7 @@
                 <strong>LUHBF</strong>
             </p>
             <p class="govuk-body govuk-!-margin-bottom-1">
-                Last edited @Model.Data.LastEditedOn?.ConvertUtcToUkLocalTime()
+                Last edited @DateHelper.DisplayAsUkFormatDateTime(Model.Data.LastEditedOn)
             </p>
         </gds-div-grid-column-two-thirds>
     </div>
