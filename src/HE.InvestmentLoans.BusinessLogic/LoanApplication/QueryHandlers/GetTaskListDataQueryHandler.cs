@@ -38,11 +38,11 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
 
     private SectionStatus MapToSectionStatus(ApplicationStatus status, SectionStatus sectionStatus)
     {
-        if (status == ApplicationStatus.Withdrawn)
+        return status switch
         {
-            return SectionStatus.Withdrawn;
-        }
-
-        return sectionStatus;
+            ApplicationStatus.Withdrawn => SectionStatus.Withdrawn,
+            ApplicationStatus.ApplicationSubmitted => SectionStatus.Submitted,
+            _ => sectionStatus,
+        };
     }
 }

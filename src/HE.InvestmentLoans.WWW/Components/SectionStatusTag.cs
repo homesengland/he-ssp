@@ -42,6 +42,8 @@ public class SectionStatusTag : TextWithIdTagHelper
         {
             SectionStatus.NotStarted => TagColour.Grey,
             SectionStatus.InProgress => TagColour.Blue,
+            SectionStatus.Submitted => TagColour.Green,
+            SectionStatus.NotSubmitted => TagColour.Red,
             SectionStatus.Withdrawn => TagColour.Red,
             SectionStatus.Completed => null,
             _ => TagColour.Grey,

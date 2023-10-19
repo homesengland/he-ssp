@@ -9,29 +9,34 @@
     <partial name="_ErrorSummaryPartial" model="null"/>
 
     <form asp-controller="Organization" asp-action="CreateOrganisation" asp-method="post" novalidate>
-        <gds-h1 size="ControlSize.L">
-            Organisation Details
-        </gds-h1>
-
-        <gds-p>
-            Enter your organisation’s name manually. This may mean you have not yet established your organisation, or we could not find it in our initial search.
-        </gds-p>
-
         <gds-field-set role="group">
-            <gds-input asp-excludelabel
+            <gds-legend size="ControlSize.L">
+                <gds-fieldset-heading>
+                    Organisation Details
+                </gds-fieldset-heading>
+            </gds-legend>
+
+            <gds-p>
+                Enter your organisation’s name manually. This may mean you have not yet established your organisation, or we could not find it in our initial search.
+            </gds-p>
+
+            <gds-input asp-hiddenlabeltext="Name"
                        govuk-formgroup-asp-for="Name"
                        value="@Model?.Name"/>
         </gds-field-set>
 
-        <gds-h1 size="ControlSize.M">
-            Registered address
-        </gds-h1>
-
-        <gds-p>
-            If you have not established your organisation, enter the intended registered address.
-        </gds-p>
 
         <gds-field-set role="group">
+            <gds-legend size="ControlSize.M">
+                <gds-fieldset-heading>
+                    Registered address
+                </gds-fieldset-heading>
+            </gds-legend>
+
+            <gds-p>
+                If you have not established your organisation, enter the intended registered address.
+            </gds-p>
+
             <gds-input
                 govuk-formgroup-asp-for="AddressLine1"
                 name="AddressLine1"
