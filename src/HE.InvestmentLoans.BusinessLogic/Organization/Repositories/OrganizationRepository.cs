@@ -1,5 +1,6 @@
 extern alias Org;
 
+using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
@@ -65,5 +66,22 @@ public class OrganizationRepository : IOrganizationRepository
         }
 
         throw new ArgumentOutOfRangeException(changeRequestDetails, nameof(changeRequestDetails) + "has incorrect value!");
+    }
+
+    public async Task<Guid> CreateOrganisation(OrganisationToCreate organisation)
+    {
+        var id = _organizationService.CreateOrganization(new Org.HE.Common.IntegrationModel.PortalIntegrationModel.OrganizationDetailsDto
+        {
+            registeredCompanyName = organisation.Name,
+            addressLine1 = organisation.Address.AddressLine1,
+            addressLine2 = organisation.Address.AddressLine2,
+            addressLine3 = organisation.Address.AddressLine3,
+            city = organisation.Address.TownOrCity,
+            country = organisation.Address.County,
+            postalcode = organisation.Address.Postcode.Value,
+            county = organisation.Address.County,
+        });
+
+        return await Task.FromResult(id);
     }
 }
