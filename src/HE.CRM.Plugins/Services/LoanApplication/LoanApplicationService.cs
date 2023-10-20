@@ -209,7 +209,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
 
                 var loanStatusChangeToCreate = new invln_Loanstatuschange()
                 {
-                    invln_changeto = new OptionSetValue((int)invln_ExternalStatus.Withdrawn),
+                    invln_changeto = new OptionSetValue((int)invln_InternalStatus.Draft),
                     invln_changesource = new OptionSetValue((int)invln_ChangesourceSet.External),
                     invln_Loanapplication = new EntityReference(invln_Loanapplication.EntityLogicalName, loanApplicationGuid),
                 };
