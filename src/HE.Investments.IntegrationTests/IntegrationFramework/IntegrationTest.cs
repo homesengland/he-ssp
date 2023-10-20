@@ -1,8 +1,6 @@
 using AngleSharp.Html.Dom;
 using HE.InvestmentLoans.IntegrationTests.Config;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Helpers.DataPackages;
 using HE.InvestmentLoans.IntegrationTests.Loans;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;

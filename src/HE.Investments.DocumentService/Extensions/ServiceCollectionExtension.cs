@@ -11,15 +11,14 @@ public static class ServiceCollectionExtension
 {
     public static void AddDocumentServiceModule(this IServiceCollection services)
     {
-#pragma warning disable IDE0078 // Use pattern matching
         var retryPolicyNeedsTrueResponse =
             Policy.HandleResult<HttpResponseMessage>(ex => ex.StatusCode != HttpStatusCode.OK && (ex.StatusCode != HttpStatusCode.Forbidden || ex.StatusCode != HttpStatusCode.Unauthorized))
                 .WaitAndRetryAsync(
                     3,
-                    sleepDurationProvider => TimeSpan.FromSeconds(10),
-                    onRetry: (response, sleepDuration, attempt, context) => { }
+                    _ => TimeSpan.FromSeconds(10),
+                    onRetry: (_, _, _, _) => { }
                 );
-#pragma warning restore IDE0078 // Use pattern matching
+
         services.AddHttpClient("HE.Investments.DocumentService").AddPolicyHandler(retryPolicyNeedsTrueResponse);
         services.AddSingleton<IHttpDocumentService, HttpDocumentService>();
 

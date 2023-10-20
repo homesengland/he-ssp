@@ -10,7 +10,7 @@ namespace HE.Investments.DocumentService.Models.Table;
 
 public class TableResult<T>
 {
-    public List<T> Items { get; set; }
+    public IList<T> Items { get; set; }
 
     [Required]
     public int TotalCount { get; set; }
