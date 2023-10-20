@@ -13,10 +13,16 @@ export class IspService {
   private static locationAndDevelopmentValue: string = "Please provide a detailed overview of the project including commentary on: location, building programme/phrasing, designs & specifications, underlying assumptions, construction challenges, environmental factors, home types, sales values and local market dynamics."
   private static projectFundamentalsValue: string = "Please provide an overview of the project's fundamentals, including commentary on: Project costs, assessment of contractor & professional team, type of build contracts, planning details, any CIL/S.106/S.278 requirements. Also highlight any key delivery risks and any extraneous due diligence or conditions of support."
   private static overviewValue: string = "Please detail the proposed facility structure, including commentary on: project funding structure, Homes England facility structure (incl. facility term, repayment, any non-standard proposals), facility documentation type. Please also comment on: repayment and exit strategy, other debt/interests, security. Also use this text box to justify any policy exceptions and detail any non-standard assumptions for land value."
+  private static monitoringAndControlsValue: string = "*The Borrower is required to submit a monitoring and progress report on a periodic basis to Homes England and Monitoring Surveyor providing, but not limited to, the following information: milestone progress (including delays and proposed mitigation steps), disposal information, costs forecasting and a cashflow.\n" +
+  "*Unaudited accounts must be provided within 180 days of the end of each financial year and a compliance certificate (confirming compliance with, inter alia, the financial covenants) and accounts on a periodic basis.\n"+
+  "*Homes England will receive progress reports from the monitoring surveyor on a periodic basis and the monitoring surveyor will verify the costs to be funded and all claims for funding (including recycled receipts requests).\n"
   private static financialAnalysisValue: string = "Please provide a financial summary for the Borrower / contractor."
   private static staticAnalysisValue: string = "Please provide rationale for the proposed CRR."
   private static underSensitivityAnalisysValue: string = "Please provide commentary on sensitivity analyses conducted and highlight any likely stressed scenarios."
   private static summaryValue: string = "Please summarise the output of your Homes England policy assessment exercise."
+  private static strategicValue: string = "The Strategic Case considers the fit with fund objectives and capital allocation approach set out in the Fund Business Case."
+  private static economicValue: string = "The Economic Case considers Value for Money (VfM) and consists of three tests: economy, efficiency and effectiveness."
+  private static deliverabilityValue: string = "Deliverability considers how projects perform against commercial, financial and management arrangements with a focus on achievement of outputs delivered."
   private static recommendationValue: string = "Please summarise your recommendation to the Approver."
   private static standardConditionsToBeWaivedValue: string = "Please highlight any Standard Conditions that do not apply to this proposal and the rationale for those exclusion(s)."
 
@@ -33,6 +39,7 @@ export class IspService {
         }
       })
     }
+    var firstLegalCharge = this.common.getAttributeValue('')
   }
 
   public setStaticFieldsOnLoad() {
@@ -48,12 +55,16 @@ export class IspService {
     this.common.setAttributeValue('invln_staticprojectfundamentals', IspService.projectFundamentalsValue)
 
     this.common.setAttributeValue('invln_staticoverview', IspService.overviewValue)
+    this.common.setAttributeValue('invln_staticmonitoringcontrols', IspService.monitoringAndControlsValue)
 
     this.common.setAttributeValue('invln_staticfinancialanalysis', IspService.financialAnalysisValue)
     this.common.setAttributeValue('invln_staticcrranalysis', IspService.staticAnalysisValue)
     this.common.setAttributeValue('invln_undersensitivityanalysissection', IspService.underSensitivityAnalisysValue)
 
     this.common.setAttributeValue('invln_staticsummary', IspService.summaryValue)
+    this.common.setAttributeValue('invln_staticeconomic', IspService.economicValue)
+    this.common.setAttributeValue('invln_staticdeliverability', IspService.deliverabilityValue)
+    this.common.setAttributeValue('invln_staticstrategic', IspService.strategicValue)
 
     this.common.setAttributeValue('invln_staticrecommendation', IspService.recommendationValue)
     this.common.setAttributeValue('invln_staticstandardconditionstobewaived', IspService.standardConditionsToBeWaivedValue)
