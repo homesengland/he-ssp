@@ -11,6 +11,8 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         #region Fields
 
         private string siteDetailsId => ExecutionData.GetInputParameter<string>(invln_getsinglesitedetailsRequest.Fields.invln_sitedetailsid);
+        private string externalContactId => ExecutionData.GetInputParameter<string>(invln_getsinglesitedetailsRequest.Fields.invln_externalcontactid);
+        private string accountId => ExecutionData.GetInputParameter<string>(invln_getsinglesitedetailsRequest.Fields.invln_accountid);
         private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getsinglesitedetailsRequest.Fields.invln_fieldstoretrieve);
 
         #endregion
@@ -18,13 +20,13 @@ namespace HE.CRM.Plugins.Handlers.CustomApi
         #region Base Methods Overrides
         public override bool CanWork()
         {
-            return !string.IsNullOrEmpty(siteDetailsId);
+            return !string.IsNullOrEmpty(siteDetailsId) && !string.IsNullOrEmpty(externalContactId) && !string.IsNullOrEmpty(accountId);
         }
 
         public override void DoWork()
         {
             this.TracingService.Trace("GetSingleSiteDetail");
-            var siteDetailsSerialized = CrmServicesFactory.Get<ISiteDetailsService>().GetSingleSiteDetail(siteDetailsId, fieldsToRetrieve);
+            var siteDetailsSerialized = CrmServicesFactory.Get<ISiteDetailsService>().GetSingleSiteDetail(siteDetailsId, accountId, externalContactId, fieldsToRetrieve);
             if (siteDetailsSerialized != null)
             {
                 ExecutionData.SetOutputParameter(invln_getsinglesitedetailsResponse.Fields.invln_sitedetail, siteDetailsSerialized);
