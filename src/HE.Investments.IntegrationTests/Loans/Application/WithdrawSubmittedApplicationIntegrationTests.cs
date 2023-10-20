@@ -25,7 +25,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
     }
 
-    [Fact(Skip = "LoansConfig.SkipTest")]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_ShouldOpenWithdrawPage_WhenApplicationIsInApplicationSubmittedState()
     {
@@ -45,7 +45,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, withdrawPage);
     }
 
-    [Fact(Skip = "LoansConfig.SkipTest")]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(2)]
     public async Task Order02_ShouldDisplayValidationError_WhenWithdrawReasonIsNotProvided()
     {
@@ -65,7 +65,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
             .ContainsValidationMessage(ValidationErrorMessage.EnterWhyYouWantToWithdrawApplication);
     }
 
-    [Fact(Skip = "LoansConfig.SkipTest")]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(3)]
     public async Task Order03_ShouldDisplayValidationError_WhenWithdrawReasonIsLongerThan1500Characters()
     {
@@ -85,7 +85,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
             .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.WithdrawReason));
     }
 
-    [Fact(Skip = "LoansConfig.SkipTest")]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(4)]
     public async Task Order04_ShouldMoveToApplicationDashboard_WhenWithdrawReasonIsProvided()
     {
@@ -107,7 +107,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, applicationDashboardPage);
     }
 
-    [Fact(Skip = "LoansConfig.SkipTest")]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(5)]
     public void Order05_ShouldNotSeeWithdrawButton_WhenApplicationWasAlreadyWithdrawn()
     {
@@ -121,7 +121,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
         withdrawApplicationButton.Should().BeNull();
     }
 
-    [Fact(Skip = "LoansConfig.SkipTest")]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(6)]
     public async Task Order06_ShouldSeeCompanyStructureInReadOnlyMode_WhenApplicationIsInWithdrawnState()
     {
@@ -138,7 +138,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
             .HasInsetText(_withdrawnInsetText);
     }
 
-    [Fact(Skip = "LoansConfig.SkipTest")]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(7)]
     public async Task Order07_ShouldSeeFundingInReadOnlyMode_WhenApplicationIsInWithdrawnState()
     {
@@ -155,7 +155,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
             .HasInsetText(_withdrawnInsetText);
     }
 
-    [Fact(Skip = "LoansConfig.SkipTest")]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(8)]
     public async Task Order08_ShouldSeeSecurityInReadOnlyMode_WhenApplicationIsInWithdrawnState()
     {
