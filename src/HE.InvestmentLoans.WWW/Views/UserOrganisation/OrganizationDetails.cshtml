@@ -27,14 +27,14 @@
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
             {
-            { "Title", OrganisationDetailsView.PhoneNumber },
-            { "Value", Model.PhoneNumber },
+                { "Title", OrganisationDetailsView.PhoneNumber },
+                { "Value", Model.PhoneNumber },
             })
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
             {
-            { "Title", OrganisationDetailsView.Address },
-            { "Value", Model.AddressLines },
+                { "Title", OrganisationDetailsView.Address },
+                { "Value", Model.AddressLines },
             })
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)

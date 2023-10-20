@@ -16,7 +16,7 @@
         </gds-back-link>
         @await Html.PartialAsync("_Notification")
         <partial name="_ErrorSummaryPartial" model="null" />
-        
+
         @Html.HiddenFor(x => x.LoanApplicationId)
         <gds-field-set>
             <gds-error-form-group asp-for="OrganisationMoreInformation">
@@ -38,7 +38,7 @@
                 <gds-div-hint>
                     You can also upload any relevant files such as company structure charts.
                 </gds-div-hint>
-                    @for (int i = 0; i < Model.OrganisationMoreInformationFiles.Count; i++)
+                    @for (int i = 0; i < Model.OrganisationMoreInformationFiles?.Count; i++)
                     {
                         <div>
                             <div class="govuk-grid-row">
