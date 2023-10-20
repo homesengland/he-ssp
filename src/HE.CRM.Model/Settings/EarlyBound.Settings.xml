@@ -19,6 +19,7 @@ invln_getloanapplicationsforaccountandcontact|
 invln_getorganisationchangedetails|
 invln_getorganizationdetails|
 invln_getsingleloanapplicationforaccountandcontact|
+invln_getsinglesitedetails|
 invln_gettemporaryportaldata|
 invln_linkcontactwithorganization|
 invln_returnuserprofile|
