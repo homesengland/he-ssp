@@ -31,7 +31,7 @@
                 <strong>LUHBF</strong>
             </p>
             <p class="govuk-body govuk-!-margin-bottom-1">
-                Last edited @DateHelper.DisplayAsUkFormatDateTime(Model.Data.LastEditedOn)
+                Last edited @DateHelper.DisplayAsUkFormatDateTime(Model.Data.LastEditedOn) @(!string.IsNullOrEmpty(Model.Data.LastEditedBy) ? $"by {Model.Data.LastEditedBy}" : string.Empty)
             </p>
         </gds-div-grid-column-two-thirds>
     </div>

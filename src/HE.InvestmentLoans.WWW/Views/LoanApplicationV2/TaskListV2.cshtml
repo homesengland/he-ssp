@@ -3,11 +3,6 @@
 @using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 @using HE.InvestmentLoans.Common.Extensions
 @using HE.InvestmentLoans.Contract.Application.Enums
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
-@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Buttons
 
 <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.Id })" text="Back to application dashboard" class="govuk-grid-column-full"></gds-back-link>
 
@@ -18,7 +13,7 @@
     Development loan application
 </gds-h1>
 <gds-div-hint class="govuk-!-margin-bottom-8 govuk-grid-column-full" id="last-saved-label">
-    Last saved on @DateHelper.DisplayAsUkFormatDateTime(Model.LastSavedOn)
+    Last saved on @DateHelper.DisplayAsUkFormatDateTime(Model.LastSavedOn) @(!string.IsNullOrEmpty(Model.LastModifiedBy) ? $"by {Model.LastModifiedBy}" : string.Empty)
 </gds-div-hint>
 <gds-div-grid-column-two-thirds>
     <ul class="app-task-list">

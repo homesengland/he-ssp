@@ -65,6 +65,9 @@ namespace DataverseModel
 		Draft = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FeeIndemnitySigned = 858110022,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		HoldRequested = 858110005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

@@ -13,12 +13,21 @@ namespace DataverseModel
 {
 	
 	
+	/// <summary>
+	/// Field permission to read unmasked values.
+	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum AIPluginType
+	public enum field_security_permission_ReadUnmasked
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Dataverse = 0,
+		AllRecords = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotAllowed = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OneRecord = 1,
 	}
 }
 #pragma warning restore CS1591

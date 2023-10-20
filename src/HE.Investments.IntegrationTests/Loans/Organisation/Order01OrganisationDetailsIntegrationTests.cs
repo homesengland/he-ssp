@@ -26,7 +26,7 @@ public class Order01OrganisationDetailsIntegrationTests : IntegrationTest
         // then
         userOrganisationPage
             .UrlEndWith(UserOrganisationPagesUrls.UserOrganisationDetails)
-            .HasTitle($"{UserData.OrganizationName}'s Homes England account")
+            .HasTitle($"Manage {UserData.OrganizationName} details")
             .HasElementForTestId("user-organisation-details", out _);
     }
 }

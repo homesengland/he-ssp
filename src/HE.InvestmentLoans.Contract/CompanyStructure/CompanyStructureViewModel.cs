@@ -32,7 +32,7 @@ public class CompanyStructureViewModel : ICompletedSectionViewModel
 
     public bool StateChanged { get; set; }
 
-    public List<FileTableRow>? OrganisationMoreInformationFiles { get; set; }
+    public IList<FileTableRow>? OrganisationMoreInformationFiles { get; set; }
 
     public bool IsCompleted()
     {

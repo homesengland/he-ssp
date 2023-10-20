@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganisationchangedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganizationdetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleloanapplicationforaccountandcontact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettemporaryportaldata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_linkcontactwithorganization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_returnuserprofile.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\DependencyType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\EmailServerProfile_AuthenticationProtocol.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\EntityType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\field_security_permission_ReadUnmasked.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Field_Security_Permission_Type.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\flipswitch_options.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\FullSyncState.cs" />
