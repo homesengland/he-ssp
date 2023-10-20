@@ -24,7 +24,8 @@ public class LoanApplicationEntity
         FundingPurpose fundingReason,
         DateTime? createdOn,
         DateTime? lastModificationDate,
-        string lastModifiedBy, LoanApplicationSection companyStructure,
+        string lastModifiedBy,
+        LoanApplicationSection companyStructure,
         LoanApplicationSection security,
         LoanApplicationSection funding,
         ProjectsSection projectsSection,
@@ -71,7 +72,7 @@ public class LoanApplicationEntity
 
     public string ReferenceNumber { get; private set; }
 
-    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, LoanApplicationSection.New(), LoanApplicationSection.New(), string.Empty, LoanApplicationSection.New(), ProjectsSection.Empty(), string.Empty);
+    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, string.Empty, LoanApplicationSection.New(), LoanApplicationSection.New(), LoanApplicationSection.New(), ProjectsSection.Empty(), string.Empty);
 
     public void SetId(LoanApplicationId newId)
     {

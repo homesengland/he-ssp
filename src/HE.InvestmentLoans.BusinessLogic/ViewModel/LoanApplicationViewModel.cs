@@ -37,8 +37,6 @@ public class LoanApplicationViewModel
 
     public IEnumerable<ProjectViewModel> Projects { get; set; }
 
-    public AccountDetailsViewModel Account { get; set; }
-
     public FundingPurpose? Purpose { get; set; }
 
     public string? ReferenceNumber { get; set; }

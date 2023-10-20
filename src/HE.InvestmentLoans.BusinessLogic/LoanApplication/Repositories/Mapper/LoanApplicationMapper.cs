@@ -26,7 +26,6 @@ public static class LoanApplicationMapper
             Company = MapToCompanyStructureViewModel(loanApplicationDto),
             Funding = MapToFundingViewModel(loanApplicationDto),
             Security = MapToSecurityViewModel(loanApplicationDto),
-            Account = MapToAccountDetailsViewModel(loanApplicationDto),
             ReferenceNumber = loanApplicationDto.name,
             Projects = ApplicationProjectsMapper.Map(loanApplicationDto, now).Projects.Select(p => ProjectMapper.MapToViewModel(p, LoanApplicationId.From(loanApplicationDto.loanApplicationId))),
         };
@@ -47,11 +46,6 @@ public static class LoanApplicationMapper
             ContactLastName = userDetails.LastName?.ToString(),
             ContactTelephoneNumber = userDetails.TelephoneNumber?.ToString(),
         };
-    }
-
-    private static AccountDetailsViewModel MapToAccountDetailsViewModel(LoanApplicationDto loanApplicationDto)
-    {
-        return new AccountDetailsViewModel { EmailAddress = loanApplicationDto.contactEmailAdress, };
     }
 
     private static SecurityViewModel MapToSecurityViewModel(LoanApplicationDto loanApplicationDto)

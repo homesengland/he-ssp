@@ -67,26 +67,6 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         return response.invln_loanexists;
     }
 
-    public async Task<LoanApplicationViewModel> GetLoanApplicationDetails(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
-    {
-        var req = new invln_getsingleloanapplicationforaccountandcontactRequest
-        {
-            invln_accountid = userAccount.AccountId.ToString(),
-            invln_externalcontactid = userAccount.UserGlobalId.ToString(),
-            invln_loanapplicationid = id.ToString(),
-        };
-
-        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
-                       ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
-
-        var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
-                        ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
-
-        var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
-
-        return LoanApplicationMapper.FromCrmDto(loanApplicationDto, _dateTime.Now);
-    }
-
     public async Task<LoanApplicationEntity> GetLoanApplication(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var req = new invln_getsingleloanapplicationforaccountandcontactRequest

@@ -20,6 +20,4 @@ public interface ILoanApplicationRepository
     Task WithdrawSubmitted(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken);
 
     Task WithdrawDraft(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken);
-
-    Task<LoanApplicationViewModel> GetLoanApplicationDetails(LoanApplicationId id, UserAccount userAccount, CancellationToken cancellationToken);
 }
