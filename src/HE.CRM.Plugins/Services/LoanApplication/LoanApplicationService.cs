@@ -206,6 +206,14 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 this.TracingService.Trace("Create invln_Loanapplication");
                 loanApplicationToCreate.invln_ExternalStatus = new OptionSetValue((int)invln_ExternalStatus.Draft);
                 loanApplicationGuid = _loanApplicationRepository.Create(loanApplicationToCreate);
+
+                var loanStatusChangeToCreate = new invln_Loanstatuschange()
+                {
+                    invln_changeto = new OptionSetValue((int)invln_ExternalStatus.Withdrawn),
+                    invln_changesource = new OptionSetValue((int)invln_ChangesourceSet.External),
+                    invln_Loanapplication = new EntityReference(invln_Loanapplication.EntityLogicalName, loanApplicationGuid),
+                };
+                _ = _loanStatusChangeRepository.Create(loanStatusChangeToCreate);
             }
 
             if (loanApplicationFromPortal.siteDetailsList != null && loanApplicationFromPortal.siteDetailsList.Count > 0)
