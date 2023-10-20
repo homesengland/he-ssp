@@ -57,6 +57,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Emailnotification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_EmailTemplate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_govnotifyemail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ISP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanstatuschange.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_notificationsetting.cs" />
