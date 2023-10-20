@@ -22,6 +22,8 @@ namespace DataverseModel
 		{
 			public const string invln_sitedetailsid = "invln_sitedetailsid";
 			public const string invln_fieldstoretrieve = "invln_fieldstoretrieve";
+			public const string invln_externalcontactid = "invln_externalcontactid";
+			public const string invln_accountid = "invln_accountid";
 		}
 		
 		public const string ActionLogicalName = "invln_getsinglesitedetails";
@@ -64,10 +66,50 @@ namespace DataverseModel
 			}
 		}
 		
+		public string invln_externalcontactid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_externalcontactid"))
+				{
+					return ((string)(this.Parameters["invln_externalcontactid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_externalcontactid"] = value;
+			}
+		}
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
 		public invln_getsinglesitedetailsRequest()
 		{
 			this.RequestName = "invln_getsinglesitedetails";
 			this.invln_sitedetailsid = default(string);
+			this.invln_externalcontactid = default(string);
+			this.invln_accountid = default(string);
 		}
 	}
 	

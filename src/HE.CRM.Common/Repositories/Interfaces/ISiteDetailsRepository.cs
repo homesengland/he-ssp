@@ -11,6 +11,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
     {
         void DeleteSiteDetailsRelatedToLoanApplication(EntityReference loanApplicationId);
         List<invln_SiteDetails> GetSiteDetailRelatedToLoanApplication(EntityReference loanApplicationId);
-        invln_SiteDetails GetsiteDetailWithFieldsToRetrieve(Guid siteDetailsGuid, string attributes);
+        invln_SiteDetails GetSiteDetailForAccountAndContact(Guid siteDetailsGuid, string accountId, string contactExternalId, string attributes = null);
     }
 }
