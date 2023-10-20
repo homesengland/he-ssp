@@ -16,5 +16,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         invln_sendinternalcrmnotificationResponse ExecuteNotificatioRequest(invln_sendinternalcrmnotificationRequest request);
         invln_sendgovnotifyemailResponse ExecuteGovNotifyNotificationRequest(invln_sendgovnotifyemailRequest request);
         bool LoanWithGivenNameExists(string loanName, Guid organisationId);
+        invln_Loanapplication GetLoanApplicationRelatedToSiteDetails(Guid siteDetailsId);
     }
 }

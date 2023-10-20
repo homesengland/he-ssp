@@ -58,7 +58,7 @@ namespace HE.Xrm.ServiceClientExample
                 invln_sitedetailsid = "90f75d09-7e5b-ee11-8def-002248c65419",
                 invln_fieldstoretrieve = $"{nameof(invln_SiteDetails.invln_Name).ToLower()},{nameof(invln_SiteDetails.invln_Numberofhomes).ToLower()}",
                 invln_accountid = "429d11ab-15fe-ed11-8f6c-002248c653e1",
-                invln_externalcontactid = "auth0|64a26f0d878561f7f41798"
+                invln_externalcontactid = "auth0|64a26f0d878561f7f4179859"
             };
             var resp2 = (invln_getsinglesitedetailsResponse)serviceClient.Execute(req2);
             Console.WriteLine("A web service connection was not established.");
