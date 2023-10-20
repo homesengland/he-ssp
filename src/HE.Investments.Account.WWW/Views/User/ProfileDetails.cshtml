@@ -1,0 +1,88 @@
+@model HE.Investments.Account.Contract.User.UserProfileDetailsViewModel;
+@{
+    ViewData["Title"] = "Profile details";
+    var callback = Context.Request.Query["callback"];
+}
+
+<gds-div-grid-column-two-thirds>
+    <partial name="_ErrorSummaryPartial" model="null" />
+
+    <gds-h1 size="ControlSize.L" class="govuk-!-margin-top-9">
+        Complete your details
+    </gds-h1>
+
+    <gds-p>
+        Register as an individual, we will ask you for your organisation details later.
+    </gds-p>
+
+    <form asp-controller="User" asp-action="SaveProfileDetails" asp-method="post" novalidate>
+        <gds-field-set role="group">
+            <legend>
+                <gds-label for="FirstName" size="ControlSize.S">
+                    First name
+                </gds-label>
+            </legend>
+            <gds-input asp-excludelabel
+                       govuk-formgroup-asp-for="FirstName"
+                       value="@Model?.FirstName"
+                               type="text" />
+        </gds-field-set>
+
+        <gds-field-set role="group">
+            <legend>
+                <gds-label for="LastName" size="ControlSize.S">
+                    Last name
+                </gds-label>
+            </legend>
+
+            <gds-input asp-excludelabel
+                       govuk-formgroup-asp-for="LastName"
+                       value="@Model?.LastName"
+                       type="text" />
+        </gds-field-set>
+
+        <gds-field-set role="group">
+            <legend>
+                <gds-label for="JobTitle" size="ControlSize.S">
+                    Job title
+                </gds-label>
+            </legend>
+
+            <gds-input asp-excludelabel
+                       govuk-formgroup-asp-for="JobTitle"
+                       value="@Model?.JobTitle"
+                       type="text" />
+        </gds-field-set>
+
+        <gds-field-set role="group">
+            <legend>
+                <gds-label for="TelephoneNumber" size="ControlSize.S">
+                    Preferred telephone number
+                </gds-label>
+            </legend>
+
+            <gds-input asp-excludelabel
+                       govuk-formgroup-asp-for="TelephoneNumber"
+                       value="@Model?.TelephoneNumber"
+                       type="text" />
+        </gds-field-set>
+
+        <gds-field-set role="group">
+            <legend>
+                <gds-label for="SecondaryTelephoneNumber" size="ControlSize.S">
+                    Secondary telephone number (optional)
+                </gds-label>
+            </legend>
+
+            <gds-input asp-excludelabel
+                       govuk-formgroup-asp-for="SecondaryTelephoneNumber"
+                       value="@Model?.SecondaryTelephoneNumber"
+                       type="text" />
+        </gds-field-set>
+
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="save-and-continue-button">
+            Save and continue
+        </button>
+    </form>
+
+</gds-div-grid-column-two-thirds>
