@@ -490,6 +490,21 @@ namespace HE.InvestmentLoans.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_impact
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		High = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Medium = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Low = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum msft_datastate
 	{
 		
@@ -702,6 +717,9 @@ namespace HE.InvestmentLoans.CRM.Model
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_internalstatus
 	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FeeIndemnitySigned = 858110022,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
@@ -4044,15 +4062,6 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Dataverse = 0,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CustomConnector = 1,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SharedConnector = 3,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Workflow = 4,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -5547,6 +5556,21 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CustomAPI = 192350000,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum field_security_permission_readunmasked
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotAllowed = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OneRecord = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AllRecords = 3,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -18213,6 +18237,9 @@ namespace HE.InvestmentLoans.CRM.Model
 		LoanAvailable = 858110020,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FeeIndemnitySigned = 858110022,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -22440,6 +22467,83 @@ namespace HE.InvestmentLoans.CRM.Model
 				else
 				{
 					return default(bool);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getsinglesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsinglesitedetailsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_sitedetailsid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_sitedetailsid"))
+				{
+					return ((string)(this.Parameters["invln_sitedetailsid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_sitedetailsid"] = value;
+			}
+		}
+		
+		public string invln_fieldstoretrieve
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoretrieve"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoretrieve"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoretrieve"] = value;
+			}
+		}
+		
+		public invln_getsinglesitedetailsRequest()
+		{
+			this.RequestName = "invln_getsinglesitedetails";
+			this.invln_sitedetailsid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getsinglesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsinglesitedetailsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getsinglesitedetailsResponse()
+		{
+		}
+		
+		public string invln_sitedetail
+		{
+			get
+			{
+				if (this.Results.Contains("invln_sitedetail"))
+				{
+					return ((string)(this.Results["invln_sitedetail"]));
+				}
+				else
+				{
+					return default(string);
 				}
 			}
 		}
