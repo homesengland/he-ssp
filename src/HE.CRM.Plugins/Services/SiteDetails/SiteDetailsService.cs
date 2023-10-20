@@ -91,6 +91,11 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 _loanApplicationRepository.Update(loanApplicationToUpdate);
             }
         }
+
+        public invln_SiteDetails GetSingleSiteDetail(string siteDetailsId, string fieldsToRetrieve = null)
+        {
+            
+        }
         #endregion
     }
 }
