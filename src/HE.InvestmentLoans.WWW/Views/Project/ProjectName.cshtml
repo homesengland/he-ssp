@@ -1,5 +1,6 @@
 @using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 @using HE.InvestmentLoans.Contract.Projects;
+@using HE.Investments.Common.WWW.Extensions
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
     var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel.Name));
@@ -14,7 +15,7 @@
                     @ProjectPageTitles.Name
             </gds-h1>
             <gds-div-form-group invalid="inputInvalid">
-                
+
                 <label for="Name" class="govuk-label--m">What is the project name?</label>
 
                 <gds-div-hint>

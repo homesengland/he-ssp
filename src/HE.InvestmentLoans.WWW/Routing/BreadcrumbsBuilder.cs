@@ -1,5 +1,5 @@
 using HE.InvestmentLoans.WWW.Controllers;
-using HE.InvestmentLoans.WWW.Utils.ValueObjects;
+using HE.Investments.Common.WWW.Utils;
 
 namespace HE.InvestmentLoans.WWW.Routing;
 

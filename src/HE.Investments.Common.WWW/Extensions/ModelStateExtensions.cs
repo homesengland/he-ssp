@@ -1,11 +1,11 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace HE.InvestmentLoans.WWW.Extensions;
+namespace HE.Investments.Common.WWW.Extensions;
 
 public static class ModelStateExtensions
 {
-    public static (bool HasAnyError, string Messge) GetErrors(this ModelStateDictionary modelState, string key)
+    public static (bool HasAnyError, string Messge) GetErrors(this ModelStateDictionary? modelState, string key)
     {
         if (modelState is null)
         {
@@ -13,7 +13,6 @@ public static class ModelStateExtensions
         }
 
         var hasError = modelState.GetFieldValidationState(key) == ModelValidationState.Invalid;
-
         if (!hasError)
         {
             return (false, string.Empty);
@@ -22,7 +21,7 @@ public static class ModelStateExtensions
         return (true, modelState[key]!.GetErrorMessage());
     }
 
-    public static string GetErrorMessage(this ModelStateEntry modelStateEntry)
+    public static string GetErrorMessage(this ModelStateEntry? modelStateEntry)
     {
         if (modelStateEntry is null)
         {

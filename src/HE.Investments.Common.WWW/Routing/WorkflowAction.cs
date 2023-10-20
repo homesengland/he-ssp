@@ -1,6 +1,6 @@
-using HE.InvestmentLoans.WWW.Utils.ValueObjects;
+using HE.Investments.Common.WWW.Utils;
 
-namespace HE.InvestmentLoans.WWW.Routing;
+namespace HE.Investments.Common.WWW.Routing;
 
 public class WorkflowAction<TState>
     where TState : Enum

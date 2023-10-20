@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace HE.InvestmentLoans.WWW.Helpers;
+namespace HE.Investments.Common.WWW.Helpers;
 
 public static class SelectListHelper
 {

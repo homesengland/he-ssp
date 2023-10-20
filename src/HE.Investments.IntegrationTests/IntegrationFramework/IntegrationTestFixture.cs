@@ -51,8 +51,6 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
             x.AddSingleton<IHttpDocumentService, DocumentServiceMock>();
         });
 
-
-
         base.ConfigureWebHost(builder);
     }
 }
