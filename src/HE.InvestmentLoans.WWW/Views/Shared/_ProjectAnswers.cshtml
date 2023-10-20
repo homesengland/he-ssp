@@ -67,7 +67,7 @@
 
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
         {
-        { "Title", "Number of homes" },
+        { "Title", ProjectFieldNames.ManyHomes },
         { "Value", Model?.HomesCount },
         { "Link", Url.Action("ManyHomes", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
         { "LinkId", "number-of-homes" },
@@ -76,7 +76,7 @@
 
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
         {
-        { "Title", "Type of homes" },
+        { "Title", ProjectFieldNames.TypeHomes },
         { "Value", TemporaryFormOptions.SiteTypeHomesCheckbox.GetSummaryLabel(typeHomesList) },
         { "Link", Url.Action("TypeHomes", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
         { "LinkId", "homes-type" },
@@ -85,7 +85,7 @@
 
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
         {
-        { "Title", "Type of project" },
+        { "Title", ProjectFieldNames.ProjectType },
         { "Value", TemporaryFormOptions.SiteType.GetSummaryLabel(Model?.ProjectType) },
         { "Link", Url.Action("Type", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
         { "LinkId", "project-type" },
@@ -190,7 +190,7 @@
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
-        { "Title", "Legal charges" },
+        { "Title", ProjectFieldNames.ChargesDebt },
         { "Value", Model?.ChargesDebtInfo != null ? $"{ Model.ChargesDebt }, { Model.ChargesDebtInfo }" :  Model?.ChargesDebt },
         { "Link", Url.Action("ChargesDebt", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
         { "LinkId", "charges-debt" },
@@ -199,7 +199,7 @@
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
     {
-        { "Title", "Affordable homes" },
+        { "Title", ProjectFieldNames.AffordableHomes },
         { "Value", Model?.AffordableHomes },
         { "Link", Url.Action("AffordableHomes", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
         { "LinkId", "affordable-homes" },

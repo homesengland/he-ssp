@@ -18,7 +18,7 @@ public class HomesTypes : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(HomesTypes), ValidationErrorMessage.TypeHomesOtherType)
+                .AddValidationError("OtherHomeTypes", ValidationErrorMessage.TypeHomesOtherType)
                 .CheckErrors();
         }
 
@@ -26,7 +26,7 @@ public class HomesTypes : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(HomesTypes), ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.OtherHomeType))
+                .AddValidationError("OtherHomeTypes", ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.OtherHomeType))
                 .CheckErrors();
         }
 

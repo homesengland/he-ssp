@@ -564,7 +564,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View("CheckAnswers", response);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(new { id });
     }
 
     [HttpGet("{projectId}/back")]

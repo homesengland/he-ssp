@@ -16,6 +16,10 @@ internal sealed class ProjectPagesUrls
 
     public const string ManyHomesSuffix = "/many-homes";
 
+    public const string TypeHomesSuffix = "/type-homes";
+
+    public const string ProjectTypeSuffix = "/type";
+
     public const string PlanningReferenceNumberExistsSuffix = "/planning-ref-number-exists";
 
     public const string PlanningReferenceNumberSuffix = "/planning-ref-number";
@@ -34,6 +38,8 @@ internal sealed class ProjectPagesUrls
 
     public const string ChargesDebtSuffix = "/charges-debt";
 
+    public const string AffordableHomesSuffix = "/affordable-homes";
+
     public const string CheckAnswersSuffix = "/check-answers";
 
     public const string DeleteSuffix = "/delete";
@@ -51,6 +57,21 @@ internal sealed class ProjectPagesUrls
     public static string StartDate(string applicationId, string projectId)
     {
         return $"application/{applicationId}/project/{projectId}{StartDateSuffix}";
+    }
+
+    public static string ManyHomes(string applicationId, string projectId)
+    {
+        return $"application/{applicationId}/project/{projectId}{ManyHomesSuffix}";
+    }
+
+    public static string TypeHomes(string applicationId, string projectId)
+    {
+        return $"application/{applicationId}/project/{projectId}{TypeHomesSuffix}";
+    }
+
+    public static string ProjectType(string applicationId, string projectId)
+    {
+        return $"application/{applicationId}/project/{projectId}{ProjectTypeSuffix}";
     }
 
     public static string PlanningReferenceNumberExists(string applicationId, string projectId)
@@ -91,6 +112,16 @@ internal sealed class ProjectPagesUrls
     public static string GrantFunding(string applicationId, string projectId)
     {
         return $"application/{applicationId}/project/{projectId}{GrantFundingSuffix}";
+    }
+
+    public static string ChargesDebt(string applicationId, string projectId)
+    {
+        return $"application/{applicationId}/project/{projectId}{ChargesDebtSuffix}";
+    }
+
+    public static string AffordableHomes(string applicationId, string projectId)
+    {
+        return $"application/{applicationId}/project/{projectId}{AffordableHomesSuffix}";
     }
 
     public static string CheckAnswers(string applicationId, string projectId)
