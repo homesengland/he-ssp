@@ -53,8 +53,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
             invln_accountid = userAccount.AccountId.ToString(),
             invln_externalcontactid = userAccount.UserGlobalId.ToString(),
             invln_loanapplicationid = loanApplicationId.ToString(),
-
-            // invln_fieldstoretrieve = fieldsToRetrieve, // TODO
+            invln_fieldstoretrieve = fieldsToRetrieve, // TODO
         };
 
         var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getsingleloanapplicationforaccountandcontactResponse
@@ -131,9 +130,9 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         {
             invln_sitedetail = CrmResponseSerializer.Serialize(siteDetails),
             invln_loanapplicationid = applicationProjects.LoanApplicationId.Value.ToString(),
-            invln_fieldstoupdate = string.Join(",", CrmSiteNames()), // TODO to delete
+            //invln_fieldstoupdate = string.Join(",", CrmSiteNames()), // TODO to delete
             invln_sitedetailsid = projectId.ToString(),
-
+            invln_fieldstoupdate = ProjectCrmFieldNameMapper.Map(ProjectFieldsSet.SaveAllFields),
             // invln_fieldstoupdate = string.Join(",", ProjectCrmFieldNameMapper.Map(ProjectFieldsSet.SaveAllFields)), // TODO to add
         };
 
@@ -181,6 +180,6 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         yield return nameof(invln_SiteDetails.invln_startdate).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_planningpermissionstatus).ToLowerInvariant();
         yield return nameof(invln_SiteDetails.invln_completionstatus).ToLowerInvariant();
-        yield return "invln_projecthasstartdate";
+        yield return nameof(invln_SiteDetails.invln_projecthasstartdate).ToLowerInvariant();
     }
 }

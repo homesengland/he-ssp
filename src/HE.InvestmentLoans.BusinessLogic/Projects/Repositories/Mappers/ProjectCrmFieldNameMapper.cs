@@ -18,6 +18,7 @@ public static class ProjectCrmFieldNameMapper
     private static readonly string TypeOfProject = $"{nameof(invln_SiteDetails.invln_TypeofSite).ToLowerInvariant()},";
     private static readonly string TypeOfHomes = $"{nameof(invln_SiteDetails.invln_Typeofhomes).ToLowerInvariant()},";
     private static readonly string TypeOfHomesOther = $"{nameof(invln_SiteDetails.invln_OtherTypeofhomes).ToLowerInvariant()},";
+    private static readonly string ProjectHasStartDate = $"{nameof(invln_SiteDetails.invln_projecthasstartdate).ToLowerInvariant()},";
     private static readonly string StartDate = $"{nameof(invln_SiteDetails.invln_startdate).ToLowerInvariant()},";
     private static readonly string DateOfPurchase = $"{nameof(invln_SiteDetails.invln_Dateofpurchase).ToLowerInvariant()},";
     private static readonly string SiteCost = $"{nameof(invln_SiteDetails.invln_Sitecost).ToLowerInvariant()},";
@@ -37,7 +38,7 @@ public static class ProjectCrmFieldNameMapper
         var result = projectFieldsSet switch
         {
             ProjectFieldsSet.GetEmpty => ExternalStatus,
-            ProjectFieldsSet.StartDate => StartDate,
+            ProjectFieldsSet.StartDate => ProjectHasStartDate + StartDate,
             ProjectFieldsSet.ProjectName => Name,
             ProjectFieldsSet.AdditionalDetails => DateOfPurchase + SiteCost + CurrentValue + ValuationSource,
             ProjectFieldsSet.ChargesDebt => ChargesDebtExists + ChargesDebtInformation,
@@ -65,6 +66,7 @@ public static class ProjectCrmFieldNameMapper
                                              TypeOfProject +
                                              TypeOfHomes +
                                              TypeOfHomesOther +
+                                             ProjectHasStartDate +
                                              StartDate +
                                              DateOfPurchase +
                                              SiteCost +
@@ -89,6 +91,7 @@ public static class ProjectCrmFieldNameMapper
                                               TypeOfProject +
                                               TypeOfHomes +
                                               TypeOfHomesOther +
+                                              ProjectHasStartDate +
                                               StartDate +
                                               DateOfPurchase +
                                               SiteCost +
