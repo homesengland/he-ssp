@@ -7,4 +7,6 @@ public static class SharedKeys
     public const string ApplicationLoanIdInDraftStatusKey = nameof(ApplicationLoanIdInDraftStatusKey);
 
     public const string ProjectIdInDraftStatusKey = nameof(ProjectIdInDraftStatusKey);
+
+    public const string ProjectToDeleteId = nameof(ProjectToDeleteId);
 }

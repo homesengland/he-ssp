@@ -21,7 +21,7 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = "LoansConfig.SkipTest")]
     [Order(1)]
     public async Task Order01_ShouldDisplayValidationError_WhenTextIsTooLong()
     {
@@ -41,7 +41,7 @@ public class Order03MoreInformationAboutOrganizationIntegrationTests : Integrati
         SetSharedData(SharedKeys.CurrentPageKey, moreInformationAboutOrganizationPage);
     }
 
-    [Fact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = "LoansConfig.SkipTest")]
     [Order(2)]
     public async Task Order02_ShouldMoveToNextPageHowManyHomesBuilt_WhenTextHas1000CharsAndContinueButtonIsClicked()
     {
