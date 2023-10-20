@@ -5,6 +5,7 @@ using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
+using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.Plugins.Services.SiteDetails
 {
@@ -92,9 +93,39 @@ namespace HE.CRM.Plugins.Services.SiteDetails
             }
         }
 
-        public invln_SiteDetails GetSingleSiteDetail(string siteDetailsId, string fieldsToRetrieve = null)
+        public string GetSingleSiteDetail(string siteDetailsId, string fieldsToRetrieve = null)
         {
-            
+            if(Guid.TryParse(siteDetailsId, out Guid siteDetailsGuid))
+            {
+                invln_SiteDetails retrievedSiteDetail;
+                if (!string.IsNullOrEmpty(fieldsToRetrieve))
+                {
+                    var attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+                    retrievedSiteDetail = siteDetailsRepository.GetsiteDetailWithFieldsToRetrieve(siteDetailsGuid, attributes);
+                }
+                else
+                {
+                    retrievedSiteDetail = siteDetailsRepository.GetById(siteDetailsGuid);
+                }
+
+                var siteDetailsDto = SiteDetailsDtoMapper.MapSiteDetailsToDto(retrievedSiteDetail);
+                return JsonSerializer.Serialize(siteDetailsDto);
+            }
+            return null;
+        }
+
+        private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
+        {
+            var fields = fieldsToRetrieve.Split(',');
+            var generatedAttribuesFetchXml = "";
+            if (fields.Length > 0)
+            {
+                foreach (var field in fields)
+                {
+                    generatedAttribuesFetchXml += $"<attribute name=\"{field}\" />";
+                }
+            }
+            return generatedAttribuesFetchXml;
         }
         #endregion
     }

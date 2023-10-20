@@ -16,7 +16,7 @@ namespace HE.CRM.Plugins.Plugins.CustomApi
     "HE.CRM.Plugins.Plugins.CustomApi.GetSingleSiteDetailsPlugin: invln_getsinglesitedetails",
     1,
     IsolationModeEnum.Sandbox,
-    Id = "1be484ff-ab9b-4b0b-93c8-bebc330c4118")]
+    Id = "0b691aab-6947-4f17-a745-32a30766fd49")]
     public class GetSingleSiteDetailsPlugin : PluginBase<DataverseContext>, IPlugin
     {
         #region Constructors
