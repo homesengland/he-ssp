@@ -42,4 +42,10 @@ public class MemoryCacheService : ICacheService
         var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(_config.ExpireMinutes));
         _memoryCache.Set(key, value, cacheEntryOptions);
     }
+
+    public Task SetValueAsync<T>(string key, T value)
+    {
+        SetValue(key, value);
+        return Task.CompletedTask;
+    }
 }
