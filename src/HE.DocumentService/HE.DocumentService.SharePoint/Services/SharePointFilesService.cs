@@ -13,6 +13,7 @@ using HE.DocumentService.SharePoint.Interfaces;
 using HE.DocumentService.SharePoint.Models.File;
 using HE.DocumentService.SharePoint.Models.Table;
 using Microsoft.AspNetCore.Http;
+using Microsoft.BusinessData.MetadataModel;
 using Microsoft.Graph;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.News.DataModel;
@@ -45,10 +46,7 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
                         <Query>
                             <Where>
                                 <And>
-                                    <Eq>
-                                        <FieldRef Name='FileDirRef'/>
-                                        <Value Type='Text'>{GetFolderPath(filter.ListAlias, filter.FolderPath)}</Value>
-                                    </Eq>
+                                    {GetCamlQueryForFolderPaths(filter.ListAlias, filter.FolderPaths)}
                                     <Eq>
                                         <FieldRef Name='FSObjType' />
                                         <Value Type='FSObjType'>0</Value>
@@ -66,9 +64,11 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
                 item => item["ID"],
                 item => item["FileRef"],
                 item => item["FileLeafRef"],
+                item => item["FileDirRef"],
                 item => item["Modified"],
                 item => item["File_x0020_Size"],
-                item => item["_ModerationComments"]),
+                item => item["_ModerationComments"],
+                item => item["Editor"]),
                 items => items.ListItemCollectionPosition);
         //_spContext.Load(listItems);
         await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
@@ -77,6 +77,9 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
         var data = listItems.MapDataTable();
 #pragma warning restore CA2000 // Dispose objects before losing scope
         var rows = _mapper.Map<List<FileTableRow>>(data.Rows);
+
+        var chunkToRemove = $"{new Uri(_spConfig.SiteUrl).AbsolutePath}/{filter.ListAlias}/";
+        rows.ForEach(row => row.FolderPath = row.FolderPath.Replace(chunkToRemove, ""));
 
         return new TableResult<FileTableRow>(rows, pagingInfo: listItems.ListItemCollectionPosition?.PagingInfo);
     }
@@ -142,5 +145,17 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
     private string GetFolderPath(string listName, string folderPath)
     {
         return $"{new Uri(_spConfig.SiteUrl).AbsolutePath}/{listName}/{folderPath}";
+    }
+
+    private string GetCamlQueryForFolderPaths(string listAlias, List<string> folderPaths)
+    {
+        var result = string.Join("", folderPaths.Select(folderPath => $@"
+                                        <Eq>
+                                            <FieldRef Name='FileDirRef'/>
+                                            <Value Type='Text'>{GetFolderPath(listAlias, folderPath)}</Value>
+                                        </Eq>
+                                    "));
+
+        return folderPaths.Count > 1 ? $"<Or>{result}</Or>" : result;
     }
 }

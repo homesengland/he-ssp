@@ -19,8 +19,7 @@ public class FileTableFilter
     public string ListAlias { get; set; }
 
     [Required]
-    [DefaultValue("0000000_DA2123DAE440EE11BDF3002248C653E1")]
-    public string FolderPath { get; set; }
+    public List<string> FolderPaths { get; set; }
 
     [DefaultValue(null)]
     public string? PagingInfo { get; set; }

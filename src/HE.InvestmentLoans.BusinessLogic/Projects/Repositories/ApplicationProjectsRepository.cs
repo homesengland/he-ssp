@@ -65,6 +65,14 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         return ApplicationProjectsMapper.Map(loanApplicationDto, _timeProvider.Now);
     }
 
+    public async Task SaveAllAsync(ApplicationProjects applicationProjects, UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        foreach (var projectId in applicationProjects.Projects.Select(p => p.Id))
+        {
+            await SaveAsync(applicationProjects, projectId, userAccount, cancellationToken);
+        }
+    }
+
     public async Task SaveAsync(ApplicationProjects applicationProjects, ProjectId projectId, UserAccount userAccount, CancellationToken cancellationToken)
     {
         var projectToSave = applicationProjects.Projects.First(c => c.Id == projectId);

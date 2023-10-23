@@ -8,6 +8,7 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Tests;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.WWW.Attributes;
 using HE.Investments.TestsUtils;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
@@ -17,7 +18,6 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
     public LoanApplicationTestBuilder(LoanApplicationEntity item)
     {
         Item = item;
-        Item.LegacyModel = new LoanApplicationViewModel { ReferenceNumber = ReferenceNumberTestData.One, };
     }
 
     public static LoanApplicationTestBuilder NewDraft(UserAccount? userAccount = null) => new(
@@ -30,19 +30,27 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
             DateTimeTestData.SeptemberDay20Year2023At0736,
             DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(1),
             "Anonymous",
-            new LoanApplicationSection(SectionStatus.NotStarted)));
+            LoanApplicationSection.New(),
+            LoanApplicationSection.New(),
+            LoanApplicationSection.New(),
+            ProjectsSection.Empty(),
+            ReferenceNumberTestData.One));
 
-    public static LoanApplicationTestBuilder NewSubmitted(UserAccount userAccount) => new(
+    public static LoanApplicationTestBuilder NewSubmitted(UserAccount? userAccount = null) => new(
         new LoanApplicationEntity(
             LoanApplicationIdTestData.LoanApplicationIdOne,
             LoanApplicationNameTestData.MyFirstApplication,
-            userAccount,
+            userAccount ?? UserAccountTestData.UserAccountOne,
             ApplicationStatus.ApplicationSubmitted,
             FundingPurpose.BuildingNewHomes,
             DateTimeTestData.SeptemberDay20Year2023At0736,
             DateTimeTestData.SeptemberDay20Year2023At0736.AddHours(1),
             "Anonymous",
-            new LoanApplicationSection(SectionStatus.NotStarted)));
+            LoanApplicationSectionTestData.CompletedSection,
+            LoanApplicationSectionTestData.CompletedSection,
+            LoanApplicationSectionTestData.CompletedSection,
+            LoanApplicationSectionTestData.CompletedProjectsSection,
+            ReferenceNumberTestData.One));
 
     public LoanApplicationTestBuilder WithCreatedOn(DateTime createdOn)
     {
@@ -50,9 +58,39 @@ public class LoanApplicationTestBuilder : TestEntityBuilderBase<LoanApplicationE
         return this;
     }
 
+    public LoanApplicationTestBuilder WithAllCompletedSections()
+    {
+        return WithCompanyStructureSection(LoanApplicationSectionTestData.CompletedSection)
+            .WithFundingSection(LoanApplicationSectionTestData.CompletedSection)
+            .WithSecuritySection(LoanApplicationSectionTestData.CompletedSection)
+            .WithProjectSection(LoanApplicationSectionTestData.CompletedProjectsSection);
+    }
+
     public LoanApplicationTestBuilder WithCompanyStructureSection(LoanApplicationSection companyStructureSection)
     {
         PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.CompanyStructure), companyStructureSection);
+
+        return this;
+    }
+
+    public LoanApplicationTestBuilder WithSecuritySection(LoanApplicationSection companyStructureSection)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.Security), companyStructureSection);
+
+        return this;
+    }
+
+    public LoanApplicationTestBuilder WithFundingSection(LoanApplicationSection companyStructureSection)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.Funding), companyStructureSection);
+
+        return this;
+    }
+
+    public LoanApplicationTestBuilder WithProjectSection(ProjectsSection projectsSection)
+    {
+        PrivatePropertySetter.SetPropertyWithNoSetter(Item, nameof(Item.ProjectsSection), projectsSection);
+
         return this;
     }
 }
