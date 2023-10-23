@@ -404,3 +404,4 @@ Log*.txt
 /HE.DocumentService.Api/appsettings.Development.json
 
 tests/
+/HE.Investment.AHP.WWW/appsettings.Development.json

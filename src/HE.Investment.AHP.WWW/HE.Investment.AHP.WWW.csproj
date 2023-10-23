@@ -44,6 +44,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HE.InvestmentLoans.Common\HE.InvestmentLoans.Common.csproj" />
+    <ProjectReference Include="..\He.Investments.AspNetCore.UI.Common\He.Investments.AspNetCore.UI.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
