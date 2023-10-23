@@ -4,18 +4,28 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Events;
 using HE.InvestmentLoans.Contract.Application.Helper;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using StackExchange.Redis;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
-public class LoanApplicationEntity
+public class LoanApplicationEntity : DomainEntity
 {
-    public LoanApplicationEntity(LoanApplicationId id, LoanApplicationName name, UserAccount userAccount, ApplicationStatus externalStatus, FundingPurpose fundingReason, DateTime? createdOn, DateTime? lastModificationDate, string lastModifiedBy, LoanApplicationSection companyStructure)
+    public LoanApplicationEntity(
+        LoanApplicationId id,
+        LoanApplicationName name,
+        UserAccount userAccount,
+        ApplicationStatus externalStatus,
+        FundingPurpose fundingReason,
+        DateTime? createdOn,
+        DateTime? lastModificationDate,
+        string lastModifiedBy,
+        LoanApplicationSection companyStructure)
     {
         Id = id;
         Name = name;
@@ -31,7 +41,7 @@ public class LoanApplicationEntity
 
     public LoanApplicationId Id { get; private set; }
 
-    public LoanApplicationName Name { get; private set; }
+    public LoanApplicationName Name { get; }
 
     public UserAccount UserAccount { get; }
 
@@ -39,7 +49,7 @@ public class LoanApplicationEntity
 
     public LoanApplicationViewModel LegacyModel { get; set; }
 
-    public LoanApplicationSection CompanyStructure { get; private set; }
+    public LoanApplicationSection CompanyStructure { get; }
 
     public ApplicationStatus ExternalStatus { get; set; }
 
@@ -53,12 +63,16 @@ public class LoanApplicationEntity
 
     public string ReferenceNumber => LegacyModel.ReferenceNumber ?? string.Empty;
 
-    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, string.Empty, LoanApplicationSection.New());
-
-    public void SaveApplicationProjects(ApplicationProjects applicationProjects)
-    {
-        ApplicationProjects = applicationProjects;
-    }
+    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(
+            LoanApplicationId.New(),
+            name,
+            userAccount,
+            ApplicationStatus.Draft,
+            FundingPurpose.BuildingNewHomes,
+            null,
+            null,
+            string.Empty,
+            LoanApplicationSection.New());
 
     public void SetId(LoanApplicationId newId)
     {
@@ -120,6 +134,8 @@ public class LoanApplicationEntity
         {
             throw new DomainException("Loan application cannot be withdrawn", CommonErrorCodes.LoanApplicationCannotBeWithdrawn);
         }
+
+        Publish(new LoanApplicationHasBeenWithdrawnEvent(Id, Name));
     }
 
     public bool IsEnoughHomesToBuild()
@@ -127,10 +143,10 @@ public class LoanApplicationEntity
         const int minimumHomesToBuild = 5;
         var cultureInfo = CultureInfo.InvariantCulture;
         var result = LegacyModel.Projects
-                        .Select(site => site.HomesCount)
-                        .Where(manyHomes => !string.IsNullOrEmpty(manyHomes))
-                        .Select(manyHomes => int.TryParse(manyHomes, NumberStyles.Integer, cultureInfo, out var parsedValue) ? parsedValue : 0)
-                        .Aggregate(0, (x, y) => x + y);
+            .Select(site => site.HomesCount)
+            .Where(manyHomes => !string.IsNullOrEmpty(manyHomes))
+            .Select(manyHomes => int.TryParse(manyHomes, NumberStyles.Integer, cultureInfo, out var parsedValue) ? parsedValue : 0)
+            .Aggregate(0, (x, y) => x + y);
 
         return result >= minimumHomesToBuild;
     }

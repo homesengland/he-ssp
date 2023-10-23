@@ -20,12 +20,9 @@ public class CompanyStructureRepository : ICompanyStructureRepository
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    private readonly IAppConfig _appConfig;
-
-    public CompanyStructureRepository(IOrganizationServiceAsync2 serviceClient, IAppConfig appConfig)
+    public CompanyStructureRepository(IOrganizationServiceAsync2 serviceClient)
     {
         _serviceClient = serviceClient;
-        _appConfig = appConfig;
     }
 
     public async Task<CompanyStructureEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CompanyStructureFieldsSet companyStructureFieldsSet, CancellationToken cancellationToken)
