@@ -1,6 +1,5 @@
-using HE.Investment.AHP.Contract.Finance.Commands;
+using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
@@ -29,10 +28,10 @@ public class FinanceController : Controller
     [HttpPost("start")]
     public async Task<IActionResult> StartProjectPost()
     {
-        var result = await _mediator.Send(new AddFinancialSchemeCommand());
+        var result = await _mediator.Send(new CreateFinancialDetailsCommand());
 
         // TODO: redirect to next page
-        return View("Index", result.HasValidationErrors);
+        return View("Index", result.ReturnedData.FinancialDetailsId);
 
         // return await Continue(new { id, projectId = result.ReturnedData.Value });
     }

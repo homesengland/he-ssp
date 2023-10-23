@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Finance\Queries\" />
+    <Folder Include="FinancialDetails\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
