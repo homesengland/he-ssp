@@ -22,13 +22,13 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.ProjectSection;
 public class Order99DeleteProjectIntegrationTests : IntegrationTest
 {
     private readonly string _applicationLoanId;
-    private readonly string _projectId;
+    private readonly string? _projectId;
 
     public Order99DeleteProjectIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
-        _projectId = UserData.ProjectInDraftStateId;
+        _projectId = GetSharedDataOrNull<string>(SharedKeys.ProjectToDeleteId);
     }
 
     [SkippableFact(Skip = LoansConfig.SkipTest)]
@@ -55,7 +55,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
 
         SetCurrentPage(deleteProjectPage);
 
-        UserData.SetProjectId(projectId);
+        SetSharedData(SharedKeys.ProjectToDeleteId, projectId);
     }
 
     [SkippableFact(Skip = LoansConfig.SkipTest)]
@@ -63,7 +63,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
     public async Task Order02_ShouldRedirectToTaskListAndDoNotDeleteProject_WhenNoAnswerWasSelected()
     {
         // given
-        var deleteProjectPage = await GetCurrentPage(ProjectPagesUrls.Delete(_applicationLoanId, _projectId));
+        var deleteProjectPage = await GetCurrentPage(ProjectPagesUrls.Delete(_applicationLoanId, _projectId!));
 
         var continueButton = deleteProjectPage.GetGdsSubmitButtonById("continue-button");
 
@@ -75,7 +75,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
             .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
             .HasTitle("Development loan application");
 
-        taskList.ProjectExistsAtTaskList(_projectId).Should().BeTrue();
+        taskList.ProjectExistsAtTaskList(_projectId!).Should().BeTrue();
     }
 
     [SkippableFact(Skip = LoansConfig.SkipTest)]
@@ -83,7 +83,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
     public async Task Order03_ShouldRedirectToTaskListAndDoNotDeleteProject_WhenNoWasSelected()
     {
         // given
-        var deleteProjectPage = await GetCurrentPage(ProjectPagesUrls.Delete(_applicationLoanId, _projectId));
+        var deleteProjectPage = await GetCurrentPage(ProjectPagesUrls.Delete(_applicationLoanId, _projectId!));
 
         var continueButton = deleteProjectPage.GetGdsSubmitButtonById("continue-button");
 
@@ -95,7 +95,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
             .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
             .HasTitle("Development loan application");
 
-        taskList.ProjectExistsAtTaskList(_projectId).Should().BeTrue();
+        taskList.ProjectExistsAtTaskList(_projectId!).Should().BeTrue();
     }
 
     [SkippableFact(Skip = LoansConfig.SkipTest)]
@@ -103,7 +103,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
     public async Task Order04_ShouldRedirectToTaskListAndDoDeleteProjectAndShowNotification_WhenYesWasSelected()
     {
         // given
-        var deleteProjectPage = await GetCurrentPage(ProjectPagesUrls.Delete(_applicationLoanId, _projectId));
+        var deleteProjectPage = await GetCurrentPage(ProjectPagesUrls.Delete(_applicationLoanId, _projectId!));
 
         var continueButton = deleteProjectPage.GetGdsSubmitButtonById("continue-button");
 
@@ -115,7 +115,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
             .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
             .HasTitle("Development loan application");
 
-        taskList.ProjectExistsAtTaskList(_projectId).Should().BeFalse();
+        taskList.ProjectExistsAtTaskList(_projectId!).Should().BeFalse();
 
         taskList.NotificationMessage().Should().Be($"New project removed");
     }

@@ -1,8 +1,12 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
+using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Events;
@@ -85,6 +89,13 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
 
+        var projects = loanApplicationDto.siteDetailsList.Select(
+            site => new ProjectBasicData(
+                SectionStatusMapper.Map(site.completionStatus),
+                ProjectId.From(site.siteDetailsId),
+                site.numberOfHomes.IsProvided() ? new HomesCount(site.numberOfHomes) : null,
+                site.Name.IsProvided() ? new ProjectName(site.Name) : ProjectName.Default));
+
         return new LoanApplicationEntity(
             id,
             LoanApplicationName.CreateOrDefault(loanApplicationDto.ApplicationName),
@@ -94,10 +105,11 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             loanApplicationDto.createdOn,
             loanApplicationDto.LastModificationOn,
             loanApplicationDto.lastModificationByName,
-            new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus)))
-        {
-            LegacyModel = LoanApplicationMapper.Map(loanApplicationDto, _dateTime.Now),
-        };
+            new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus)),
+            new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.SecurityDetailsCompletionStatus)),
+            new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.FundingDetailsCompletionStatus)),
+            new ProjectsSection(projects),
+            loanApplicationDto.name);
     }
 
     public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount, CancellationToken cancellationToken)
@@ -126,22 +138,10 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     public async Task Save(LoanApplicationEntity loanApplication, UserDetails userDetails, CancellationToken cancellationToken)
     {
-        var siteDetailsDtos = new List<SiteDetailsDto>();
-        foreach (var site in loanApplication.ApplicationProjects.Projects)
-        {
-            var siteDetail = new SiteDetailsDto()
-            {
-                Name = site.Name?.Value,
-                siteName = site.Name?.Value,
-            };
-            siteDetailsDtos.Add(siteDetail);
-        }
-
         var loanApplicationDto = new LoanApplicationDto()
         {
             LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount, userDetails),
             fundingReason = FundingPurposeMapper.Map(loanApplication.FundingReason),
-            siteDetailsList = siteDetailsDtos,
             ApplicationName = loanApplication.Name.Value,
         };
 

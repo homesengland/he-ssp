@@ -37,7 +37,7 @@ public class Order03StartDateIntegrationTests : IntegrationTest
 
         // when
         startDatePage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "HasEstimatedStartDate", CommonResponse.Yes } });
+            continueButton, new Dictionary<string, string> { { "HasEstimatedStartDate", CommonResponse.Yes }, { "EstimatedStartDay", string.Empty }, { "EstimatedStartMonth", string.Empty }, { "EstimatedStartYear", string.Empty } });
 
         // then
         startDatePage

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
@@ -25,18 +26,25 @@ public class LoanApplicationEntity : DomainEntity
         DateTime? createdOn,
         DateTime? lastModificationDate,
         string lastModifiedBy,
-        LoanApplicationSection companyStructure)
+        LoanApplicationSection companyStructure,
+        LoanApplicationSection security,
+        LoanApplicationSection funding,
+        ProjectsSection projectsSection,
+        string referenceNumber)
     {
         Id = id;
         Name = name;
         UserAccount = userAccount;
-        ApplicationProjects = new ApplicationProjects(Id);
         ExternalStatus = externalStatus;
         LastModificationDate = lastModificationDate;
         LastModifiedBy = lastModifiedBy;
         FundingReason = fundingReason;
         CreatedOn = createdOn;
         CompanyStructure = companyStructure;
+        Security = security;
+        Funding = funding;
+        ProjectsSection = projectsSection;
+        ReferenceNumber = referenceNumber;
     }
 
     public LoanApplicationId Id { get; private set; }
@@ -45,11 +53,13 @@ public class LoanApplicationEntity : DomainEntity
 
     public UserAccount UserAccount { get; }
 
-    public ApplicationProjects ApplicationProjects { get; private set; }
+    public LoanApplicationSection CompanyStructure { get; private set; }
 
-    public LoanApplicationViewModel LegacyModel { get; set; }
+    public LoanApplicationSection Security { get; private set; }
 
-    public LoanApplicationSection CompanyStructure { get; }
+    public LoanApplicationSection Funding { get; private set; }
+
+    public ProjectsSection ProjectsSection { get; private set; }
 
     public ApplicationStatus ExternalStatus { get; set; }
 
@@ -61,18 +71,9 @@ public class LoanApplicationEntity : DomainEntity
 
     public FundingPurpose FundingReason { get; private set; }
 
-    public string ReferenceNumber => LegacyModel.ReferenceNumber ?? string.Empty;
+    public string ReferenceNumber { get; private set; }
 
-    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(
-            LoanApplicationId.New(),
-            name,
-            userAccount,
-            ApplicationStatus.Draft,
-            FundingPurpose.BuildingNewHomes,
-            null,
-            null,
-            string.Empty,
-            LoanApplicationSection.New());
+    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, string.Empty, LoanApplicationSection.New(), LoanApplicationSection.New(), LoanApplicationSection.New(), ProjectsSection.Empty(), string.Empty);
 
     public void SetId(LoanApplicationId newId)
     {
@@ -141,19 +142,13 @@ public class LoanApplicationEntity : DomainEntity
     public bool IsEnoughHomesToBuild()
     {
         const int minimumHomesToBuild = 5;
-        var cultureInfo = CultureInfo.InvariantCulture;
-        var result = LegacyModel.Projects
-            .Select(site => site.HomesCount)
-            .Where(manyHomes => !string.IsNullOrEmpty(manyHomes))
-            .Select(manyHomes => int.TryParse(manyHomes, NumberStyles.Integer, cultureInfo, out var parsedValue) ? parsedValue : 0)
-            .Aggregate(0, (x, y) => x + y);
 
-        return result >= minimumHomesToBuild;
+        return ProjectsSection.TotalHomesBuilt() >= minimumHomesToBuild;
     }
 
     private bool IsReadyToSubmit()
     {
-        return CompanyStructure.IsCompleted() && LegacyModel.IsReadyToSubmit();
+        return ProjectsSection.IsCompleted() && Funding.IsCompleted() && Security.IsCompleted() && CompanyStructure.IsCompleted();
     }
 
     private bool IsSubmitted()

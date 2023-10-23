@@ -35,12 +35,6 @@ public class UserController : Controller
         return await _mediator.Send(new GetDashboardDataQuery());
     }
 
-    [Route("application-loan/{id}")]
-    public async Task<GetLoanApplicationQueryResponse> ApplicationLoan(string id)
-    {
-        return await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
-    }
-
     [Route("organization-details")]
     public async Task<GetOrganizationBasicInformationQueryResponse> OrganizationDetails()
     {
