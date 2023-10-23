@@ -4,9 +4,14 @@ using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Funding.Entities;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
+using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Utils;
@@ -17,6 +22,7 @@ using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using HE.InvestmentLoans.CRM.Model;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Models.File;
 using HE.Investments.DocumentService.Services;
@@ -24,6 +30,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
+using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 
@@ -34,9 +41,11 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
 
     private readonly IHttpDocumentService _documentService;
 
-    private readonly IDateTimeProvider _dateTime;
-
     private readonly INotificationService _notificationService;
+
+    private readonly ILoanUserContext _loanUserContext;
+
+    private readonly ICompanyStructureRepository _repository;
 
     public ProvideMoreInformationAboutOrganizationCommandHandler(
                 ICompanyStructureRepository repository,
@@ -44,20 +53,20 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                 IDocumentServiceConfig config,
                 ILogger<CompanyStructureBaseCommandHandler> logger,
                 IHttpDocumentService documentService,
-                IDateTimeProvider dateTime,
                 INotificationService notificationService)
         : base(repository, loanUserContext, logger)
     {
         _config = config;
         _documentService = documentService;
-        _dateTime = dateTime;
         _notificationService = notificationService;
+        _loanUserContext = loanUserContext;
+        _repository = repository;
     }
 
     public async Task<OperationResult> Handle(ProvideMoreInformationAboutOrganizationCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            async (companyStructure, userAccount) =>
+            async companyStructure =>
             {
                 companyStructure.ProvideMoreInformation(
                     request.OrganisationMoreInformation.IsProvided() ? new OrganisationMoreInformation(request.OrganisationMoreInformation!) : null);
@@ -71,6 +80,7 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                 companyStructure.ProvideFilesWithMoreInformation(new OrganisationMoreInformationFiles(filesCount));
 
                 var filesUploaded = string.Empty;
+                var userDetails = await _loanUserContext.GetUserDetails();
 
                 foreach (var formFile in request.FormFiles)
                 {
@@ -80,12 +90,11 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                     await _documentService.UploadAsync(new FileUploadModel()
                     {
                         ListTitle = _config.ListTitle,
-                        FolderPath = "0000000_DA2123DAE440EE11BDF3002248C653E1",
+                        FolderPath = $"{await _repository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken)}/more-information-about-organization/external",
                         File = file,
                         Metadata = JsonSerializer.Serialize(new FileMetadata
                         {
-                            CreateDate = _dateTime.Now,
-                            Creator = userAccount.AccountName,
+                            Creator = $"{userDetails.FirstName} {userDetails.LastName}",
                         }),
                         Overwrite = true,
                     });

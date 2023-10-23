@@ -11,6 +11,7 @@ using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
+using MediatR;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
@@ -49,6 +50,19 @@ public class CompanyStructureRepository : ICompanyStructureRepository
             CompanyStructureMapper.MapHomesBuild(loanApplicationDto.companyExperience),
             SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus),
             ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus));
+    }
+
+    public async Task<string> GetFilesLocationAsync(LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
+    {
+        var req = new invln_getfilelocationforapplicationloanRequest
+        {
+            invln_loanapplicationid = loanApplicationId.ToString(),
+        };
+
+        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_getfilelocationforapplicationloanResponse
+                       ?? throw new NotFoundException(nameof(CompanyStructureEntity), loanApplicationId.ToString());
+
+        return response.invln_filelocation;
     }
 
     public async Task SaveAsync(CompanyStructureEntity companyStructure, UserAccount userAccount, CancellationToken cancellationToken)
