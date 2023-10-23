@@ -66,7 +66,7 @@ public class RedisService : ICacheService
 
     public async Task SetValueAsync<T>(string key, T value)
     {
-       await Cache.StringSetAsync(GetKey(key), JsonSerializer.Serialize(value), TimeSpan.FromMinutes(_appConfig.Cache.ExpireMinutes));
+        await Cache.StringSetAsync(GetKey(key), JsonSerializer.Serialize(value), TimeSpan.FromMinutes(_appConfig.Cache.ExpireMinutes));
     }
 
     private string GetKey(string key) => $"{_appConfig.AppName}_{key}";

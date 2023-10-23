@@ -108,7 +108,8 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                     {
                         { NotificationServiceKeys.Name, filesUploaded[..^2] },
                     };
-                    _notificationService.NotifySuccess(NotificationBodyType.FilesUpload, valuesToDisplay);
+
+                    await _notificationService.NotifySuccess(NotificationBodyType.FilesUpload, valuesToDisplay);
                 }
             },
             request.LoanApplicationId,

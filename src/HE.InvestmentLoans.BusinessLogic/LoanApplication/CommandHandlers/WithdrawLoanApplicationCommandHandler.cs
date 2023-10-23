@@ -34,7 +34,6 @@ public class WithdrawLoanApplicationCommandHandler : IRequestHandler<WithdrawLoa
                                 .GetLoanApplication(request.LoanApplicationId, await _loanUserContext.GetSelectedAccount(), cancellationToken);
             var withdrawReason = WithdrawReason.New(request.WithdrawReason);
 
-
             await loanApplication.Withdraw(_loanApplicationRepository, withdrawReason, cancellationToken);
             await _loanApplicationRepository.DispatchEvents(loanApplication, cancellationToken);
             return OperationResult.Success();

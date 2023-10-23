@@ -9,4 +9,3 @@ public interface IEventHandler<TEvent> : INotificationHandler<TEvent>
 {
     new Task Handle(TEvent domainEvent, CancellationToken cancellationToken);
 }
-

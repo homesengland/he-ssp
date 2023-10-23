@@ -11,14 +11,21 @@ using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Events;
 using HE.InvestmentLoans.Contract.Application.Helper;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using StackExchange.Redis;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
 public class LoanApplicationEntity : DomainEntity
 {
-    public LoanApplicationEntity(LoanApplicationId id, LoanApplicationName name, UserAccount userAccount, ApplicationStatus externalStatus,
-        FundingPurpose fundingReason, DateTime? createdOn, DateTime? lastModificationDate, string lastModifiedBy, LoanApplicationSection companyStructure)
+    public LoanApplicationEntity(
+        LoanApplicationId id,
+        LoanApplicationName name,
+        UserAccount userAccount,
+        ApplicationStatus externalStatus,
+        FundingPurpose fundingReason,
+        DateTime? createdOn,
+        DateTime? lastModificationDate,
+        string lastModifiedBy,
+        LoanApplicationSection companyStructure)
     {
         Id = id;
         Name = name;
@@ -34,7 +41,7 @@ public class LoanApplicationEntity : DomainEntity
 
     public LoanApplicationId Id { get; private set; }
 
-    public LoanApplicationName Name { get; private set; }
+    public LoanApplicationName Name { get; }
 
     public UserAccount UserAccount { get; }
 
