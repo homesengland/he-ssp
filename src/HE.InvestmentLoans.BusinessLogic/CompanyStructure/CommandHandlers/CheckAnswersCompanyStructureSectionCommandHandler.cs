@@ -18,7 +18,7 @@ public class CheckAnswersCompanyStructureSectionCommandHandler : CompanyStructur
     public async Task<OperationResult> Handle(CheckAnswersCompanyStructureSectionCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            (companyStructure, userAccount) =>
+            companyStructure =>
             {
                 companyStructure.CheckAnswers(request.YesNoAnswer.ToYesNoAnswer());
 

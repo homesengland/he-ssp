@@ -24,14 +24,14 @@ public class CompanyStructureBaseCommandHandler
         _logger = logger;
     }
 
-    protected async Task<OperationResult> Perform(Func<CompanyStructureEntity, UserAccount, Task> action, LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
+    protected async Task<OperationResult> Perform(Func<CompanyStructureEntity, Task> action, LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
     {
         var userAccount = await _loanUserContext.GetSelectedAccount();
         var companyStructure = await _repository.GetAsync(loanApplicationId, userAccount, CompanyStructureFieldsSet.GetAllFields, cancellationToken);
 
         try
         {
-            await action(companyStructure, userAccount);
+            await action(companyStructure);
         }
         catch (DomainValidationException domainValidationException)
         {

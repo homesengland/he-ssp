@@ -7,4 +7,4 @@ using MediatR;
 namespace HE.InvestmentLoans.Contract.CompanyStructure.Queries;
 
 public record GetCompanyStructureFilesQuery(
-    Guid LoanApplicationId) : IRequest<TableResult<FileTableRow>>;
+    LoanApplicationId LoanApplicationId) : IRequest<TableResult<FileTableRow>>;

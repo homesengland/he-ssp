@@ -8,4 +8,5 @@ namespace HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 
 public record ProvideMoreInformationAboutOrganizationRemoveFileCommand(
                 LoanApplicationId LoanApplicationId,
+                string FolderPath,
                 string FileName) : IRequest<OperationResult>;
