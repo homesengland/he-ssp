@@ -1,6 +1,7 @@
-@model HE.InvestmentLoans.Contract.ViewModels.IEditableViewModel
+@using HE.InvestmentLoans.Contract.Application.Enums
+@model HE.InvestmentLoans.Contract.ViewModels.ICompletedSectionViewModel
 
- @if (Model.IsReadOnly())
+ @if (Model.IsReadOnly() && Model.GetApplicationStatus() == ApplicationStatus.Withdrawn)
 {
     <gds-div-inset-text>
         Your application has been withdrawn, contact your Transaction Manager if you need to discuss a change
