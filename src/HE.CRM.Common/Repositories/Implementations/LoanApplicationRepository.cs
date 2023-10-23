@@ -110,6 +110,17 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
+        public invln_Loanapplication GetLoanApplicationRelatedToSiteDetails(Guid siteDetailsId)
+        {
+            using (var ctx = new DataverseContext(service))
+            {
+                return (from la in ctx.invln_LoanapplicationSet
+                        join sd in ctx.invln_SiteDetailsSet on la.Id equals sd.invln_Loanapplication.Id
+                        where sd.invln_SiteDetailsId == siteDetailsId
+                        select la).FirstOrDefault();
+            }
+        }
+
         #endregion
     }
 }

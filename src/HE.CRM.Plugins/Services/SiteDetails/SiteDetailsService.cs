@@ -93,7 +93,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
             }
         }
 
-        public string GetSingleSiteDetail(string siteDetailsId, string fieldsToRetrieve = null)
+        public string GetSingleSiteDetail(string siteDetailsId, string accountId, string contactExternalId, string fieldsToRetrieve = null)
         {
             if(Guid.TryParse(siteDetailsId, out Guid siteDetailsGuid))
             {
@@ -101,15 +101,22 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 if (!string.IsNullOrEmpty(fieldsToRetrieve))
                 {
                     var attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
-                    retrievedSiteDetail = siteDetailsRepository.GetsiteDetailWithFieldsToRetrieve(siteDetailsGuid, attributes);
+                    retrievedSiteDetail = siteDetailsRepository.GetSiteDetailForAccountAndContact(siteDetailsGuid, accountId, contactExternalId, attributes);
                 }
                 else
                 {
                     retrievedSiteDetail = siteDetailsRepository.GetById(siteDetailsGuid);
                 }
-
-                var siteDetailsDto = SiteDetailsDtoMapper.MapSiteDetailsToDto(retrievedSiteDetail);
-                return JsonSerializer.Serialize(siteDetailsDto);
+                if(retrievedSiteDetail != null)
+                {
+                    var siteDetailsDto = SiteDetailsDtoMapper.MapSiteDetailsToDto(retrievedSiteDetail);
+                    var relatedLoan = _loanApplicationRepository.GetLoanApplicationRelatedToSiteDetails(siteDetailsGuid);
+                    if (relatedLoan != null)
+                    {
+                        siteDetailsDto.loanApplicationStatus = relatedLoan.invln_ExternalStatus?.Value;
+                    }
+                    return JsonSerializer.Serialize(siteDetailsDto);
+                }
             }
             return null;
         }

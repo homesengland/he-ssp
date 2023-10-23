@@ -5,16 +5,17 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Events;
 using HE.InvestmentLoans.Contract.Application.Helper;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using StackExchange.Redis;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
-public class LoanApplicationEntity
+public class LoanApplicationEntity : DomainEntity
 {
     public LoanApplicationEntity(
         LoanApplicationId id,
@@ -48,7 +49,7 @@ public class LoanApplicationEntity
 
     public LoanApplicationId Id { get; private set; }
 
-    public LoanApplicationName Name { get; private set; }
+    public LoanApplicationName Name { get; }
 
     public UserAccount UserAccount { get; }
 
@@ -134,6 +135,8 @@ public class LoanApplicationEntity
         {
             throw new DomainException("Loan application cannot be withdrawn", CommonErrorCodes.LoanApplicationCannotBeWithdrawn);
         }
+
+        Publish(new LoanApplicationHasBeenWithdrawnEvent(Id, Name));
     }
 
     public bool IsEnoughHomesToBuild()

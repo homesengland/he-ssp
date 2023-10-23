@@ -622,6 +622,8 @@ namespace DataverseModel
 			public const string invln_contact_invln_loanapplication_contactid = "invln_contact_invln_loanapplication_contactid";
 			public const string invln_contact_invln_loanstatuschange_changedbycontactid = "invln_contact_invln_loanstatuschange_changedbycontactid";
 			public const string invln_externalid = "invln_externalid";
+			public const string invln_invln_isp_TMName_contact = "invln_invln_isp_TMName_contact";
+			public const string invln_isp_Name_contact = "invln_isp_Name_contact";
 			public const string invln_loanapplication_contact = "invln_loanapplication_contact";
 			public const string invln_PEP = "invln_pep";
 			public const string invln_role = "invln_role";
@@ -5629,6 +5631,46 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_contact_invln_loanstatuschange_changedbycontactid");
 				this.SetRelatedEntities<DataverseModel.invln_Loanstatuschange>("invln_contact_invln_loanstatuschange_changedbycontactid", null, value);
 				this.OnPropertyChanged("invln_contact_invln_loanstatuschange_changedbycontactid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_isp_TMName_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_isp_TMName_contact")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ISP> invln_invln_isp_TMName_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ISP>("invln_invln_isp_TMName_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_isp_TMName_contact");
+				this.SetRelatedEntities<DataverseModel.invln_ISP>("invln_invln_isp_TMName_contact", null, value);
+				this.OnPropertyChanged("invln_invln_isp_TMName_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_isp_Name_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_isp_Name_contact")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ISP> invln_isp_Name_contact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ISP>("invln_isp_Name_contact", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_isp_Name_contact");
+				this.SetRelatedEntities<DataverseModel.invln_ISP>("invln_isp_Name_contact", null, value);
+				this.OnPropertyChanged("invln_isp_Name_contact");
 			}
 		}
 		

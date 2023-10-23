@@ -34,11 +34,11 @@ public class NotificationService : INotificationService
         return Tuple.Create(isInCache, valueFromCache);
     }
 
-    public void NotifySuccess(NotificationBodyType notificationBodyType, IDictionary<NotificationServiceKeys, string> valuesToDisplay)
+    public async Task NotifySuccess(NotificationBodyType notificationBodyType, IDictionary<NotificationServiceKeys, string> valuesToDisplay)
     {
         var key = $"{NotificationServiceCacheKey.Notification}-{UserGlobalId}";
         var notificationModel = new NotificationModel(NotificationTitle.Success, NotificationType.Success, notificationBodyType, valuesToDisplay);
 
-        _cacheService.SetValue(key, notificationModel);
+        await _cacheService.SetValueAsync(key, notificationModel);
     }
 }

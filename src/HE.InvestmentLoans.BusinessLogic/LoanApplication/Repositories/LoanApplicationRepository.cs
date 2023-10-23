@@ -8,6 +8,8 @@ using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
+using HE.InvestmentLoans.Common.Domain;
+using HE.InvestmentLoans.Common.Events;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
@@ -24,10 +26,13 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     private readonly IDateTimeProvider _dateTime;
 
-    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IDateTimeProvider dateTime)
+    private readonly IEventDispatcher _eventDispatcher;
+
+    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IDateTimeProvider dateTime, IEventDispatcher eventDispatcher)
     {
         _serviceClient = serviceClient;
         _dateTime = dateTime;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<bool> IsExist(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -192,5 +197,10 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         };
 
         await _serviceClient.ExecuteAsync(request, cancellationToken);
+    }
+
+    public async Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken)
+    {
+        await _eventDispatcher.Publish(domainEntity, cancellationToken);
     }
 }
