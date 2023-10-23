@@ -6,14 +6,13 @@ using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
+
 public class ProvideHomesCountCommandHandlerTests : TestBase<ProvideHomesCountCommandHandler>
 {
     private ProvideHomesCountCommand _command;
@@ -48,7 +47,7 @@ public class ProvideHomesCountCommandHandlerTests : TestBase<ProvideHomesCountCo
         Given(ApplicationProjectsRepositoryBuilder
             .New()
             .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ReturnsAllProjects(applicationProjects));
 
         _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, ProjectIdTestData.AnyProjectId, ValidHomesCount());
 
@@ -65,13 +64,13 @@ public class ProvideHomesCountCommandHandlerTests : TestBase<ProvideHomesCountCo
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
+
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, InvalidHomesCount_EmptyString());
 
@@ -88,13 +87,13 @@ public class ProvideHomesCountCommandHandlerTests : TestBase<ProvideHomesCountCo
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
+
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, InvalidHomesCount_TooLong());
 
@@ -111,12 +110,13 @@ public class ProvideHomesCountCommandHandlerTests : TestBase<ProvideHomesCountCo
             .WithDefaultProject()
             .Build();
 
-        var projectId = applicationProjects.Projects.Single().Id;
+        var project = applicationProjects.Projects.Single();
+        var projectId = project.Id;
 
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, InvalidHomesCount_WithLetters());
 
@@ -133,12 +133,13 @@ public class ProvideHomesCountCommandHandlerTests : TestBase<ProvideHomesCountCo
             .WithDefaultProject()
             .Build();
 
-        var projectId = applicationProjects.Projects.Single().Id;
+        var project = applicationProjects.Projects.Single();
+        var projectId = project.Id;
 
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, InvalidHomesCount_StartWithZero());
 
@@ -160,8 +161,8 @@ public class ProvideHomesCountCommandHandlerTests : TestBase<ProvideHomesCountCo
 
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         _command = new ProvideHomesCountCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, ValidHomesCount());
 

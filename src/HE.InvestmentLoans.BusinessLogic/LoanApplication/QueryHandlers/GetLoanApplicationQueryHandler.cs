@@ -35,7 +35,7 @@ public class GetLoanApplicationQueryHandler : IRequestHandler<GetLoanApplication
         var fundingResponse = await _mediator.Send(new GetFundingQuery(request.Id, FundingFieldsSet.GetAllFields), cancellationToken);
 
         var selectedAccount = await _loanUserContext.GetSelectedAccount();
-        var projects = await _applicationProjectsRepository.GetById(request.Id, selectedAccount, ProjectFieldsSet.GetAllFields, cancellationToken);
+        var projects = await _applicationProjectsRepository.GetAllAsync(request.Id, selectedAccount, cancellationToken);
         var loanApplication = await _loanApplicationRepository.GetLoanApplication(request.Id, selectedAccount, cancellationToken);
 
         var viewModel = new LoanApplicationViewModel
