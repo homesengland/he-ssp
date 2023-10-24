@@ -1,7 +1,7 @@
 using Dawn;
 using HE.InvestmentLoans.Common.Domain;
 
-namespace HE.InvestmentLoans.WWW.Utils.ValueObjects;
+namespace HE.Investments.Common.WWW.Utils;
 
 public class ControllerName : ValueObject
 {
@@ -17,7 +17,7 @@ public class ControllerName : ValueObject
         return _name.Replace("Controller", string.Empty, StringComparison.CurrentCulture);
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (obj is string s)
         {

@@ -6,7 +6,7 @@ using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.User;
 using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.Contract.User.Queries;
-using HE.InvestmentLoans.WWW.Utils.ValueObjects;
+using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

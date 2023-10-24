@@ -1,13 +1,12 @@
 using System.Reflection;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.WWW.Utils.ValueObjects;
+using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace HE.InvestmentLoans.WWW.Routing;
+namespace HE.Investments.Common.WWW.Routing;
 
 public abstract class WorkflowController<TState> : Controller
     where TState : struct, Enum
@@ -76,7 +75,7 @@ public abstract class WorkflowController<TState> : Controller
         return ChangeState(nextState, routeData);
     }
 
-    public Task<IActionResult> Continue(TState currentState, object routeData)
+    public Task<IActionResult> Continue(TState currentState, object? routeData)
     {
         return ChangeState(Trigger.Continue, currentState, routeData);
     }
@@ -95,14 +94,27 @@ public abstract class WorkflowController<TState> : Controller
         return Back(currentStateAttribute.StateAs<TState>(), routeData);
     }
 
-    public Task<IActionResult> Back(TState currentState, object routeData)
+    public Task<IActionResult> Back(TState currentState, object? routeData)
     {
         return ChangeState(Trigger.Back, currentState, routeData);
     }
 
     protected abstract Task<IStateRouting<TState>> Routing(TState currentState);
 
-    private async Task<IActionResult> ChangeState(Trigger trigger, TState currentState, object routeData)
+    private static WorkflowStateAttribute? CurrentActionStateAttribute(ActionDescriptor actionDescriptor)
+    {
+        return actionDescriptor.FilterDescriptors
+            .Where(x => x.Filter is WorkflowStateAttribute)
+            .Select(x => x.Filter as WorkflowStateAttribute)
+            .FirstOrDefault();
+    }
+
+    private static bool IsWorkflowGetMethod(MethodInfo method)
+    {
+        return method.GetCustomAttributes(typeof(WorkflowStateAttribute), false).Length > 0 && method.GetCustomAttributes(typeof(HttpGetAttribute), false).Length > 0;
+    }
+
+    private async Task<IActionResult> ChangeState(Trigger trigger, TState currentState, object? routeData)
     {
         var routing = await Routing(currentState);
         var nextState = await routing.NextState(trigger);
@@ -115,7 +127,7 @@ public abstract class WorkflowController<TState> : Controller
         return RedirectToState(targetState, routeData);
     }
 
-    private IActionResult RedirectToState(TState nextState, object routeData)
+    private IActionResult RedirectToState(TState nextState, object? routeData)
     {
         var nextAction = GetWorkflowAction(nextState);
 
@@ -134,11 +146,12 @@ public abstract class WorkflowController<TState> : Controller
         return WorkflowGetMethodsFromAllControllers().FirstOrDefault(x => x.State.Equals(nextState)) ?? throw WorkflowActionCannotBePerformedException.CannotFindDestination(nextState);
     }
 
-    private IList<WorkflowAction<TState>> WorkflowGetMethodsFromAllControllers()
+    private IEnumerable<WorkflowAction<TState>> WorkflowGetMethodsFromAllControllers()
     {
-        return Assembly
-            .GetExecutingAssembly()
+        return GetType()
+            .Assembly
             .GetTypes()
+            .Where(x => x.IsAssignableTo(typeof(Controller)))
             .SelectMany(t => t.GetMethods())
             .Where(IsWorkflowGetMethod)
             .SelectMany(m =>
@@ -149,25 +162,12 @@ public abstract class WorkflowController<TState> : Controller
                 {
                     if (workflowStateAttribute.State is TState state)
                     {
-                        workflowMethods.Add(new WorkflowAction<TState>(new ControllerName(m.DeclaringType.Name), m.Name, state));
+                        workflowMethods.Add(new WorkflowAction<TState>(new ControllerName(m.DeclaringType!.Name), m.Name, state));
                     }
                 }
 
                 return workflowMethods;
             })
             .ToList();
-    }
-
-    private bool IsWorkflowGetMethod(MethodInfo method)
-    {
-        return method.GetCustomAttributes(typeof(WorkflowStateAttribute), false).Length > 0 && method.GetCustomAttributes(typeof(HttpGetAttribute), false).Length > 0;
-    }
-
-    private WorkflowStateAttribute CurrentActionStateAttribute(ActionDescriptor actionDescriptor)
-    {
-        return actionDescriptor.FilterDescriptors
-            .Where(x => x.Filter is WorkflowStateAttribute)
-            .Select(x => x.Filter as WorkflowStateAttribute)
-            .FirstOrDefault();
     }
 }

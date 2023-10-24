@@ -66,13 +66,9 @@
     <ProjectReference Include="..\HE.InvestmentLoans.Common.Contract\HE.InvestmentLoans.Common.Contract.csproj" />
     <ProjectReference Include="..\HE.InvestmentLoans.Common\HE.InvestmentLoans.Common.csproj" />
     <ProjectReference Include="..\He.Investments.AspNetCore.UI.Common\He.Investments.AspNetCore.UI.Common.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
     <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj" />
     <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Helpers\Organisation\" />
-    <Folder Include="Utils\Serialization\" />
   </ItemGroup>
 
   <ItemGroup>

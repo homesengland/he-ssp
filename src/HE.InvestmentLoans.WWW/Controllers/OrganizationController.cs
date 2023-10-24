@@ -6,11 +6,10 @@ using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Models.Organisation;
-using HE.InvestmentLoans.WWW.Utils.ValueObjects;
+using HE.Investments.Common.WWW.Utils;
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.InvestmentLoans.WWW.Controllers;

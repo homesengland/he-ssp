@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.WWW.Controllers;
-using HE.InvestmentLoans.WWW.Utils.ValueObjects;
+using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
