@@ -7,13 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\HE.InvestmentLoans.BusinessLogic\HE.InvestmentLoans.BusinessLogic.csproj" />
-      <ProjectReference Include="..\HE.InvestmentLoans.Common\HE.InvestmentLoans.Common.csproj" />
-      <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj" />
+      <PackageReference Include="MediatR" Version="12.1.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	    <PackageReference Include="Stateless" Version="5.13.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Stateless" Version="5.13.0" />
+      <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj" />
+      <ProjectReference Include="..\HE.InvestmentLoans.Common\HE.InvestmentLoans.Common.csproj" />
+      <ProjectReference Include="..\HE.InvestmentLoans.BusinessLogic\HE.InvestmentLoans.BusinessLogic.csproj" />
     </ItemGroup>
 
 </Project>

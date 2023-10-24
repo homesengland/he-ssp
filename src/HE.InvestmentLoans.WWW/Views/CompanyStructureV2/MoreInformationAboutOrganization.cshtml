@@ -58,19 +58,21 @@
                                 uploaded @Model.OrganisationMoreInformationFiles[i].Modified.ToString("HH:mm dd/MM/yy")
                                 by @(Model.OrganisationMoreInformationFiles[i].FileMetadata?.Creator ?? Model.OrganisationMoreInformationFiles[i].Editor)
                             </label>
+                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].Editor)
+                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].FolderPath)
+                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].Metadata)
+                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].Modified)
                         </div>
                     }
 
                     <p class="govuk-error-message">
                         <span class="govuk-visually-hidden">Error:</span>
-                        @if (hasError)
-                        {
-                            @fileInputError
-                        }
-                        else
-                        {
-                            <span id="client-error-message"/>
-                        }
+                        <span id="error-messages">
+                            @if (hasError)
+                            {
+                                @fileInputError
+                            }
+                        </span>
                     </p>
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="File">

@@ -14,9 +14,7 @@ namespace HE.CRM.Plugins.Services.Accounts
         private readonly IAccountRepository _accountRepository;
         private readonly IContactRepository _contactRepository;
 
-        private readonly string youRequested = "You requested";
-        private readonly string someoneElseRequested = "Someoneelse requested";
-        private readonly string noRequest = "No request";
+        private readonly string _youRequested = "You requested";
 
         #endregion
 
@@ -42,7 +40,7 @@ namespace HE.CRM.Plugins.Services.Accounts
             if(Guid.TryParse(accountId, out Guid accountGuid))
             {
                 var account = _accountRepository.GetById(accountGuid);
-                return youRequested;
+                return _youRequested;
             }
             return string.Empty;
         }
