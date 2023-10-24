@@ -28,11 +28,9 @@ public class FinanceController : Controller
     [HttpPost("start")]
     public async Task<IActionResult> StartProjectPost()
     {
-        var result = await _mediator.Send(new CreateFinancialDetailsCommand());
+        var result = await _mediator.Send(new StartFinancialDetailsCommand());
 
         // TODO: redirect to next page
         return View("Index", result.ReturnedData.FinancialDetailsId);
-
-        // return await Continue(new { id, projectId = result.ReturnedData.Value });
     }
 }

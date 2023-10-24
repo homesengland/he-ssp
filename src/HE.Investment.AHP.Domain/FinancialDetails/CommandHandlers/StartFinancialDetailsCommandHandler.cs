@@ -12,23 +12,23 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 
 namespace HE.Investment.AHP.BusinessLogic.FinancialDetails.CommandHandlers;
-public class CreateFinancialDetailsCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<CreateFinancialDetailsCommand, OperationResult<CreateFinancialDetailsCommandResult>>
+public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<StartFinancialDetailsCommand, OperationResult<StartFinancialDetailsCommandResult>>
 {
     private readonly IFinancialDetailsRepository _financialDetailsRepository;
 
 
-    public CreateFinancialDetailsCommandHandler(IFinancialDetailsRepository financialDetailsRepository, ILogger<CreateFinancialDetailsCommandHandler> logger)
+    public StartFinancialDetailsCommandHandler(IFinancialDetailsRepository financialDetailsRepository, ILogger<StartFinancialDetailsCommandHandler> logger)
         : base(financialDetailsRepository, logger)
     {
         _financialDetailsRepository = financialDetailsRepository;
     }
 
-    public async Task<OperationResult<CreateFinancialDetailsCommandResult>> Handle(CreateFinancialDetailsCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<StartFinancialDetailsCommandResult>> Handle(StartFinancialDetailsCommand request, CancellationToken cancellationToken)
     {
         var financialDetails = new FinancialDetailsEntity();
         await _financialDetailsRepository.SaveAsync(financialDetails, cancellationToken);
 
-        return OperationResult.Success(new CreateFinancialDetailsCommandResult(financialDetails.Id.Value));
+        return OperationResult.Success(new StartFinancialDetailsCommandResult(financialDetails.Id.Value));
     }
 }
 

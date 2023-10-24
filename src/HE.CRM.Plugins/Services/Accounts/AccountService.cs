@@ -15,8 +15,6 @@ namespace HE.CRM.Plugins.Services.Accounts
         private readonly IContactRepository _contactRepository;
 
         private readonly string _youRequested = "You requested";
-        //private readonly string _someoneElseRequested = "Someoneelse requested";
-        //private readonly string _noRequest = "No request";
 
         #endregion
 
