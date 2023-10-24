@@ -1,5 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.Funding;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication;
+using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
@@ -8,7 +8,7 @@ using HE.InvestmentLoans.Contract.Funding.Commands;
 using HE.InvestmentLoans.Contract.Funding.Enums;
 using HE.InvestmentLoans.Contract.Funding.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
-using HE.InvestmentLoans.WWW.Routing;
+using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

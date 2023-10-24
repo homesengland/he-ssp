@@ -19,6 +19,7 @@ invln_getloanapplicationsforaccountandcontact|
 invln_getorganisationchangedetails|
 invln_getorganizationdetails|
 invln_getsingleloanapplicationforaccountandcontact|
+invln_getsinglesitedetails|
 invln_gettemporaryportaldata|
 invln_linkcontactwithorganization|
 invln_returnuserprofile|
@@ -56,6 +57,7 @@ invln_contract|
 invln_emailnotification|
 invln_emailtemplate|
 invln_govnotifyemail|
+invln_isp|
 invln_loanapplication|
 invln_loanstatuschange|
 invln_notificationsetting|

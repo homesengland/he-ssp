@@ -32,7 +32,7 @@ public class LoanApplicationRepositoryTestBuilder
         _mock.Setup(x => x
                 .LoadAllLoanApplications(userAccount, CancellationToken.None))
                     .ReturnsAsync(loanApplicationEntities.Select(x =>
-                        new UserLoanApplication(x.Id, x.Name, x.ExternalStatus, x.CreatedOn, x.LastModificationDate))
+                        new UserLoanApplication(x.Id, x.Name, x.ExternalStatus, x.CreatedOn, x.LastModificationDate, x.LastModifiedBy))
                 .ToList());
 
         return this;

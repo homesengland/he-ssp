@@ -1,18 +1,9 @@
 @using HE.InvestmentLoans.Common.Utils.Enums
 @using HE.InvestmentLoans.Common.Utils.Constants.ViewName
-@using HE.InvestmentLoans.WWW.Routing
 @model HE.InvestmentLoans.Contract.Organization.OrganisationDetailsViewModel
-@{
-    //ViewData["Title"] = "Organization details";
-    ViewBag.Breadcrumbs = BreadcrumbsBuilder
-        .New()
-        .WithOrganisations()
-        .WithOrganisation(Model.Name)
-        .Build();
-}
 
 <gds-div-grid-column-full>
-    <form asp-controller="Organisation" asp-action="OrganisationDetails" asp-method="post" novalidate>
+    <form asp-controller="UserOrganisation" asp-action="Details" asp-method="post" novalidate>
 
         <gds-back-link href="@Url.Action("Index", "UserOrganisation", new {})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
@@ -35,14 +26,14 @@
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
             {
-            { "Title", OrganisationDetailsView.PhoneNumber },
-            { "Value", Model.PhoneNumber },
+                { "Title", OrganisationDetailsView.PhoneNumber },
+                { "Value", Model.PhoneNumber },
             })
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
             {
-            { "Title", OrganisationDetailsView.Address },
-            { "Value", Model.AddressLines },
+                { "Title", OrganisationDetailsView.Address },
+                { "Value", Model.AddressLines },
             })
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)

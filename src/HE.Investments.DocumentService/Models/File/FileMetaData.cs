@@ -9,7 +9,5 @@ namespace HE.Investments.DocumentService.Models.File;
 
 public class FileMetadata
 {
-    public DateTime CreateDate { get; set; }
-
     public string Creator { get; set; }
 }

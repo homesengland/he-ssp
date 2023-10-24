@@ -19,7 +19,7 @@ public class ProvideCompanyPurposeCommandHandler : CompanyStructureBaseCommandHa
     public async Task<OperationResult> Handle(ProvideCompanyPurposeCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            (companyStructure, userAccount) =>
+            companyStructure =>
             {
                 var companyPurpose = request.CompanyPurpose.IsProvided() ? CompanyPurpose.FromString(request.CompanyPurpose!) : null;
                 companyStructure.ProvideCompanyPurpose(companyPurpose);

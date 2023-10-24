@@ -8,6 +8,7 @@ using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
+
 public class ProvideLandOwnershipCommandHandlerTests : TestBase<ProvideLandOwnershipCommandHandler>
 {
     public ProvideLandOwnershipCommandHandlerTests()
@@ -29,11 +30,13 @@ public class ProvideLandOwnershipCommandHandlerTests : TestBase<ProvideLandOwner
 
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         // when
-        var result = await TestCandidate.Handle(new ProvideLandOwnershipCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, CommonResponse.Yes), CancellationToken.None);
+        var result = await TestCandidate.Handle(
+            new ProvideLandOwnershipCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, CommonResponse.Yes),
+            CancellationToken.None);
 
         // then
         result.HasValidationErrors.Should().BeFalse();

@@ -69,10 +69,11 @@ public class IntegrationTestClient
         foreach (var formValue in formValues)
         {
             var radiosFound = HandleRadioInputs(form, formValue);
+            var checkboxesFound = HandleCheckboxInputs(form, formValue);
             var textAreaFound = HandleTextAreaInputs(form, formValue);
             var inputFound = HandleInputs(form, formValue);
 
-            if (!radiosFound && !textAreaFound && !inputFound)
+            if (!radiosFound && !textAreaFound && !inputFound && !checkboxesFound)
             {
                 throw new HtmlElementNotFoundException($"Cannot found any input with name {formValue.Key}");
             }
@@ -117,6 +118,37 @@ public class IntegrationTestClient
         }
 
         var inputElement = radioInputsWithFormName.SingleOrDefault(x => x!.Value == formValue.Value) ?? throw new HtmlElementNotFoundException($"None of radio buttons for property {formValue.Key}, has value {formValue.Value}");
+
+        inputElement!.IsChecked = true;
+
+        return true;
+    }
+
+    private static bool HandleCheckboxInputs(IHtmlFormElement form, KeyValuePair<string, string> formValue)
+    {
+        var checkboxInputs = form.Elements
+            .Select(x => x as IHtmlInputElement)
+            .Where(x => x is not null && x.Type == "checkbox")
+            .ToList();
+
+        var checkboxInputsWithFormName = checkboxInputs.Where(checkbox => checkbox!.Name.IsProvided() && checkbox.Name!.Contains(formValue.Key)).ToList();
+
+        if (!checkboxInputsWithFormName.Any())
+        {
+            return false;
+        }
+
+        foreach (var checkbox in checkboxInputsWithFormName)
+        {
+            checkbox!.IsChecked = false;
+        }
+
+        if (formValue.Value == string.Empty)
+        {
+            return true;
+        }
+
+        var inputElement = checkboxInputsWithFormName.SingleOrDefault(x => x!.Value == formValue.Value) ?? throw new HtmlElementNotFoundException($"None of checkboxes for property {formValue.Key}, has value {formValue.Value}");
 
         inputElement!.IsChecked = true;
 

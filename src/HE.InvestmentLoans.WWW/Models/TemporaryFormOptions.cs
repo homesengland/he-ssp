@@ -1,5 +1,5 @@
 using HE.InvestmentLoans.Contract.Application.Enums;
-using HE.InvestmentLoans.WWW.Helpers;
+using HE.Investments.Common.WWW.Helpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HE.InvestmentLoans.WWW.Models;

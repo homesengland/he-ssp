@@ -17,7 +17,6 @@ public enum ProjectFieldsSet
     PlanningReferenceNumber,
     PlanningReferenceNumberExists,
     AffordableHomes,
-    GetEmpty,
     GetAllFields,
     SaveAllFields,
 }

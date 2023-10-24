@@ -9,6 +9,7 @@ using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
+
 public class ProvidePlanningPermissionStatusCommandHandlerTests : TestBase<ProvidePlanningPermissionStatusCommandHandler>
 {
     private ProvidePlanningPermissionStatusCommand _command;
@@ -32,13 +33,13 @@ public class ProvidePlanningPermissionStatusCommandHandlerTests : TestBase<Provi
             .WithProjectWithPlanningReferenceNumber("number")
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
+
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         // when
         _command = new ProvidePlanningPermissionStatusCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, statusAsString);

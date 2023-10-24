@@ -63,7 +63,7 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
 
         return _model switch
         {
-            { Name: var x } when x.IsNotProvided() => ProjectState.Name,
+            { ProjectName: var x } when x.IsNotProvided() => ProjectState.Name,
             { HasEstimatedStartDate: var x } when x.IsNotProvided() => ProjectState.StartDate,
             { HomesCount: var x } when x.IsNotProvided() => ProjectState.ManyHomes,
             { HomeTypes: var x } when x.IsNotProvided() => ProjectState.TypeHomes,

@@ -1,6 +1,4 @@
-using HE.InvestmentLoans.Common.Routing;
-
-namespace HE.InvestmentLoans.BusinessLogic.LoanApplication;
+namespace HE.InvestmentLoans.Common.Routing;
 
 public interface IStateRouting<TState>
     where TState : Enum

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace HE.InvestmentLoans.WWW.Routing;
+namespace HE.Investments.Common.WWW.Routing;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 public class WorkflowStateAttribute : ActionFilterAttribute

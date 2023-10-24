@@ -174,6 +174,7 @@ dotnet_diagnostic.ca1061.severity = warning
 dotnet_diagnostic.ca1062.severity = none
 dotnet_diagnostic.ca1063.severity = warning
 dotnet_diagnostic.ca1064.severity = warning
+
 dotnet_diagnostic.ca1065.severity = warning
 dotnet_diagnostic.ca1301.severity = warning
 dotnet_diagnostic.ca1303.severity = none
@@ -185,6 +186,7 @@ dotnet_diagnostic.ca1405.severity = warning
 dotnet_diagnostic.ca1410.severity = warning
 dotnet_diagnostic.ca1415.severity = warning
 dotnet_diagnostic.ca1707.severity = none
+dotnet_diagnostic.ca1711.severity = none
 dotnet_diagnostic.ca1821.severity = warning
 dotnet_diagnostic.ca1822.severity = none
 dotnet_diagnostic.ca1848.severity = none

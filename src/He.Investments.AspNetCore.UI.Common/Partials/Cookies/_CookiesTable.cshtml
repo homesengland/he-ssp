@@ -1,0 +1,27 @@
+@model IList<He.Investments.AspNetCore.UI.Common.Models.Cookies.CookieModel>
+
+<table class="govuk-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Name</th>
+        <th scope="col" class="govuk-table__header">Purpose</th>
+        <th scope="col" class="govuk-table__header">Expires</th>
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    @foreach (var cookie in Model)
+    {
+        <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+                @cookie.Name
+            </td>
+            <td class="govuk-table__cell">
+                @cookie.Purpose
+            </td>
+            <td class="govuk-table__cell">
+                @cookie.Expires
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -5,13 +5,14 @@ namespace HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 public class UserLoanApplication : ValueObject
 {
-    public UserLoanApplication(LoanApplicationId id, LoanApplicationName applicationName, ApplicationStatus status, DateTime? createdOn, DateTime? lastModificationDate)
+    public UserLoanApplication(LoanApplicationId id, LoanApplicationName applicationName, ApplicationStatus status, DateTime? createdOn, DateTime? lastModificationDate, string lastModifiedBy)
     {
         Id = id;
         ApplicationName = applicationName;
         Status = status;
         CreatedOn = createdOn;
         LastModificationDate = lastModificationDate;
+        LastModifiedBy = lastModifiedBy;
     }
 
     public LoanApplicationId Id { get; }
@@ -22,6 +23,8 @@ public class UserLoanApplication : ValueObject
 
     public DateTime? LastModificationDate { get; }
 
+    public string LastModifiedBy { get; }
+
     public DateTime? CreatedOn { get; }
 
     protected override IEnumerable<object> GetAtomicValues()
@@ -30,5 +33,6 @@ public class UserLoanApplication : ValueObject
         yield return ApplicationName;
         yield return Status;
         yield return LastModificationDate!;
+        yield return LastModifiedBy;
     }
 }

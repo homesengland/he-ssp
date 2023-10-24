@@ -4,12 +4,15 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AngleSharp.Html.Dom;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using HE.InvestmentLoans.Common.Tests.TestData;
+using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
+using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.InvestmentLoans.IntegrationTests.Loans.SecuritySection;
 using HE.InvestmentLoans.WWW.Extensions;
@@ -50,6 +53,9 @@ public class Order98CheckAnswersIntegrationTests : IntegrationTest
         // then
         projectSummary[ProjectFieldNames.Name].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
         projectSummary[ProjectFieldNames.StartDate].Should().Contain(DateTimeTestData.CorrectDateDisplay);
+        projectSummary[ProjectFieldNames.ManyHomes].Should().Contain("1");
+        projectSummary[ProjectFieldNames.TypeHomes].Should().Contain(TextTestData.TextThatNotExceedsShortInputLimit);
+        projectSummary[ProjectFieldNames.ProjectType].Should().Contain("Greenfield");
         projectSummary[ProjectFieldNames.PlanningReferenceNumberExists].Should().Be(CommonResponse.Yes);
         projectSummary[ProjectFieldNames.PlanningReferenceNumber].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
 
@@ -68,7 +74,47 @@ public class Order98CheckAnswersIntegrationTests : IntegrationTest
         projectSummary[ProjectFieldNames.GrantFundingExists].Should().Be(CommonResponse.Yes);
         CheckIfGrantFundingInformationIsCorrect(projectSummary);
 
-        SetSharedData(SharedKeys.CurrentPageKey, checkAnswersPage);
+        projectSummary[ProjectFieldNames.ChargesDebt].Should().Contain(CommonResponse.Yes).And.Contain(TextTestData.TextThatNotExceedsLongInputLimit);
+        projectSummary[ProjectFieldNames.AffordableHomes].Should().Be(CommonResponse.Yes);
+
+        SetCurrentPage(checkAnswersPage);
+    }
+
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(2)]
+    public async Task Order02_ShouldDisplayValidationError_WhenNoAnswersAreSelected()
+    {
+        // given
+        var checkYourAnswersPage = await GetCurrentPage(ProjectPagesUrls.CheckAnswers(_applicationLoanId, _projectId));
+        var continueButton = checkYourAnswersPage.GetGdsSubmitButtonById("continue-button");
+
+        // when
+        checkYourAnswersPage = await TestClient.SubmitButton(
+            continueButton, new Dictionary<string, string> { { "CheckAnswers", string.Empty } });
+
+        // then
+        checkYourAnswersPage
+            .UrlEndWith(ProjectPagesUrls.CheckAnswersSuffix)
+            .HasTitle(ProjectPageTitles.CheckAnswers)
+            .HasOneValidationMessages(ValidationErrorMessage.NoCheckAnswers);
+    }
+
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(3)]
+    public async Task Order03_ShouldCompletedSection_WhenYesAnswerIsSelected()
+    {
+        // given
+        var checkYourAnswersPage = await GetCurrentPage(ProjectPagesUrls.CheckAnswers(_applicationLoanId, _projectId));
+        var continueButton = checkYourAnswersPage.GetGdsSubmitButtonById("continue-button");
+
+        // when
+        var taskListPage = await TestClient.SubmitButton(
+            continueButton, new Dictionary<string, string> { { "CheckAnswers", CommonResponse.Yes } });
+
+        // then
+        var (_, status, _) = taskListPage.GetProjectFromTaskList(_projectId);
+
+        status.Should().Be("Completed");
     }
 
     private static void CheckIfAdditionalDetailsAreCorrect(IDictionary<string, string> projectSummary)

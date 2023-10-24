@@ -28,12 +28,13 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
             loanApplication.CanBeSubmitted(),
             new Sections(
                 MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.CompanyStructure.Status),
-                MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.LegacyModel.Funding.State),
-                MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.LegacyModel.Security.State),
-                loanApplication.LegacyModel.Projects
-                    .Select(x => new ProjectSection(x.ProjectId, x.Name, MapToSectionStatus(loanApplication.ExternalStatus, x.Status)))
+                MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.Funding.Status),
+                MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.Security.Status),
+                loanApplication.ProjectsSection.Projects
+                    .Select(x => new ProjectSection(x.Id.Value, x.Name.Value, MapToSectionStatus(loanApplication.ExternalStatus, x.Status)))
                     .ToArray()),
-            loanApplication.LastModificationDate ?? loanApplication.CreatedOn ?? DateTime.MinValue);
+            loanApplication.LastModificationDate ?? loanApplication.CreatedOn ?? DateTime.MinValue,
+            loanApplication.LastModifiedBy);
     }
 
     private SectionStatus MapToSectionStatus(ApplicationStatus status, SectionStatus sectionStatus)

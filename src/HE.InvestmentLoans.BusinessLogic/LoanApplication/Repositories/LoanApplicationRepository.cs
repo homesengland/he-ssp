@@ -1,9 +1,15 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
+using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
+using HE.InvestmentLoans.Common.Domain;
+using HE.InvestmentLoans.Common.Events;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
@@ -20,10 +26,13 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
     private readonly IDateTimeProvider _dateTime;
 
-    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IDateTimeProvider dateTime)
+    private readonly IEventDispatcher _eventDispatcher;
+
+    public LoanApplicationRepository(IOrganizationServiceAsync2 serviceClient, IDateTimeProvider dateTime, IEventDispatcher eventDispatcher)
     {
         _serviceClient = serviceClient;
         _dateTime = dateTime;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<bool> IsExist(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -80,6 +89,13 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
 
+        var projects = loanApplicationDto.siteDetailsList.Select(
+            site => new ProjectBasicData(
+                SectionStatusMapper.Map(site.completionStatus),
+                ProjectId.From(site.siteDetailsId),
+                site.numberOfHomes.IsProvided() ? new HomesCount(site.numberOfHomes) : null,
+                site.Name.IsProvided() ? new ProjectName(site.Name) : ProjectName.Default));
+
         return new LoanApplicationEntity(
             id,
             LoanApplicationName.CreateOrDefault(loanApplicationDto.ApplicationName),
@@ -88,10 +104,12 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             FundingPurposeMapper.Map(loanApplicationDto.fundingReason),
             loanApplicationDto.createdOn,
             loanApplicationDto.LastModificationOn,
-            new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus)))
-        {
-            LegacyModel = LoanApplicationMapper.Map(loanApplicationDto, _dateTime.Now),
-        };
+            loanApplicationDto.lastModificationByName,
+            new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus)),
+            new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.SecurityDetailsCompletionStatus)),
+            new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.FundingDetailsCompletionStatus)),
+            new ProjectsSection(projects),
+            loanApplicationDto.name);
     }
 
     public async Task<IList<UserLoanApplication>> LoadAllLoanApplications(UserAccount userAccount, CancellationToken cancellationToken)
@@ -114,27 +132,16 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
                 LoanApplicationName.CreateOrDefault(x.ApplicationName),
                 ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
                 x.createdOn,
-                x.LastModificationOn)).ToList();
+                x.LastModificationOn,
+                x.lastModificationByName)).ToList();
     }
 
     public async Task Save(LoanApplicationEntity loanApplication, UserDetails userDetails, CancellationToken cancellationToken)
     {
-        var siteDetailsDtos = new List<SiteDetailsDto>();
-        foreach (var site in loanApplication.ApplicationProjects.Projects)
-        {
-            var siteDetail = new SiteDetailsDto()
-            {
-                Name = site.Name?.Value,
-                siteName = site.Name?.Value,
-            };
-            siteDetailsDtos.Add(siteDetail);
-        }
-
         var loanApplicationDto = new LoanApplicationDto()
         {
             LoanApplicationContact = LoanApplicationMapper.MapToUserAccountDto(loanApplication.UserAccount, userDetails),
             fundingReason = FundingPurposeMapper.Map(loanApplication.FundingReason),
-            siteDetailsList = siteDetailsDtos,
             ApplicationName = loanApplication.Name.Value,
         };
 
@@ -190,5 +197,10 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
         };
 
         await _serviceClient.ExecuteAsync(request, cancellationToken);
+    }
+
+    public async Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken)
+    {
+        await _eventDispatcher.Publish(domainEntity, cancellationToken);
     }
 }

@@ -1,7 +1,6 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplication;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.Projects;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
@@ -12,8 +11,8 @@ using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.WWW.Attributes;
-using HE.InvestmentLoans.WWW.Routing;
-using HE.InvestmentLoans.WWW.Utils.ValueObjects;
+using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ProjectId = HE.InvestmentLoans.Contract.Application.ValueObjects.ProjectId;
@@ -90,7 +89,7 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.Name)]
     public async Task<IActionResult> ProjectName(Guid id, Guid projectId, ProjectViewModel model, [FromQuery] string redirect, CancellationToken token)
     {
-        var result = await _mediator.Send(new ChangeProjectNameCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.Name), token);
+        var result = await _mediator.Send(new ChangeProjectNameCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.ProjectName), token);
 
         if (result.HasValidationErrors)
         {
@@ -564,7 +563,7 @@ public class ProjectController : WorkflowController<ProjectState>
             return View("CheckAnswers", response);
         }
 
-        return await Continue(new { id, projectId });
+        return await Continue(new { id });
     }
 
     [HttpGet("{projectId}/back")]

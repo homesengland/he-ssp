@@ -1,5 +1,6 @@
 @using HE.InvestmentLoans.Contract.Projects.ViewModels;
 @using HE.InvestmentLoans.Contract.Projects;
+@using HE.Investments.Common.WWW.Extensions
 @model ProjectViewModel;
 @{
     var id = ViewContext.RouteData.Values["id"];
@@ -49,7 +50,7 @@
                                    govuk-formgroup-asp-for="GrantFundingAmount"
                                    value="@Model.GrantFundingAmount"
                                    asp-prefixtext=@(GdsInputPrefixText.Pounds)
-                                   type="text" 
+                                   type="text"
                                    asp-excludelabel/>
                 </gds-field-set>
 

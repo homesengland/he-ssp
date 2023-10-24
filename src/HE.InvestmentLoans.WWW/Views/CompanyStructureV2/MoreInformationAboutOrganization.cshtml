@@ -1,5 +1,5 @@
-@using HE.InvestmentLoans.Common.Models.App;
 @using HE.InvestmentLoans.Contract.CompanyStructure
+@using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.DocumentService.Configs;
 @model HE.InvestmentLoans.Contract.CompanyStructure.CompanyStructureViewModel
 @inject ModelExpressionProvider modelProvider
@@ -16,7 +16,7 @@
         </gds-back-link>
         @await Html.PartialAsync("_Notification")
         <partial name="_ErrorSummaryPartial" model="null" />
-        
+
         @Html.HiddenFor(x => x.LoanApplicationId)
         <gds-field-set>
             <gds-error-form-group asp-for="OrganisationMoreInformation">
@@ -38,24 +38,25 @@
                 <gds-div-hint>
                     You can also upload any relevant files such as company structure charts.
                 </gds-div-hint>
-                    @for (int i = 0; i < Model.OrganisationMoreInformationFiles.Count; i++)
+                    @for (int i = 0; i < Model.OrganisationMoreInformationFiles?.Count; i++)
                     {
                         <div>
                             <div class="govuk-grid-row">
                                 <div class="govuk-grid-column-two-thirds">
-                                    <a class="govuk-label govuk-label--s" href="@Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, fileName = @Model.OrganisationMoreInformationFiles[i].FileName })">
+                                    <a class="govuk-label govuk-label--s" href="@Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, folderPath = @Model.OrganisationMoreInformationFiles[i].FolderPath, fileName = @Model.OrganisationMoreInformationFiles[i].FileName })">
                                         @Model.OrganisationMoreInformationFiles[i].FileName
                                     </a>
                                     @Html.HiddenFor(model => Model.OrganisationMoreInformationFiles[i].FileName)
                                 </div>
                             <div class="govuk-grid-column-one-third govuk-!-text-align-right">
-                                    <a href="@Url.Action("MoreInformationAboutOrganizationRemoveFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, fileName = @Model.OrganisationMoreInformationFiles[i].FileName })">
+                                    <a href="@Url.Action("MoreInformationAboutOrganizationRemoveFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, folderPath = @Model.OrganisationMoreInformationFiles[i].FolderPath, fileName = @Model.OrganisationMoreInformationFiles[i].FileName })">
                                         Remove
                                     </a>
                                 </div>
                             </div>
                             <label class="govuk-label" for="File">
-                                uploaded @Model.OrganisationMoreInformationFiles[i].FileMetadata?.CreateDate.ToString("HH:mm dd/MM/yy") by @Model.OrganisationMoreInformationFiles[i].FileMetadata?.Creator
+                                uploaded @Model.OrganisationMoreInformationFiles[i].Modified.ToString("HH:mm dd/MM/yy")
+                                by @(Model.OrganisationMoreInformationFiles[i].FileMetadata?.Creator ?? Model.OrganisationMoreInformationFiles[i].Editor)
                             </label>
                         </div>
                     }
