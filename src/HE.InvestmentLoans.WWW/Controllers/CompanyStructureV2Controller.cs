@@ -174,7 +174,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
         return await Back(currentPage, new { Id = id });
     }
 
-    protected override async Task<IStateRouting<CompanyStructureState>> Routing(CompanyStructureState currentState)
+    protected override async Task<IStateRouting<CompanyStructureState>> Routing(CompanyStructureState currentState, object routeData = null)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
         var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id!), CompanyStructureFieldsSet.GetAllFields));

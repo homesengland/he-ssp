@@ -1,12 +1,11 @@
 @using HE.Investment.AHP.BusinessLogic.HomeTypes
 @using HE.Investment.AHP.WWW.Models.HomeTypes
-@model HE.Investment.AHP.WWW.Models.HomeTypes.TypeOfHousingModel;
+@model HE.Investment.AHP.WWW.Models.HomeTypes.HousingTypeModel;
 
+<form asp-controller="HomeTypes" asp-action="HousingType" asp-method="post" novalidate>
+    <gds-back-link href="@Url.Action("Back","HomeTypes", new { financialSchemeId = ViewContext.RouteData.Values["financialSchemeId"], currentPage = HomeTypesWorkflowState.HousingType})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
-<form asp-controller="HomeTypes" asp-action="TypeOfHousing" asp-method="post" novalidate>
-    <gds-back-link href="@Url.Action("Back","HomeTypes", new { currentPage = HomeTypesWorkflow.State.TypeOfHousing})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
-
-    <gds-div-hint>@Model.SchemeName</gds-div-hint>
+    <gds-div-hint>@Model.FinancialSchemeName</gds-div-hint>
     <gds-h1 size="ControlSize.L">
         Type of housing
     </gds-h1>

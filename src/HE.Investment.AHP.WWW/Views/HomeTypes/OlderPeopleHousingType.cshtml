@@ -1,0 +1,10 @@
+@using HE.Investment.AHP.BusinessLogic.HomeTypes
+
+<form asp-controller="HomeTypes" asp-action="HomeInformation" asp-method="post" novalidate>
+    <gds-back-link href="@Url.Action("Back","HomeTypes", new { financialSchemeId = ViewContext.RouteData.Values["financialSchemeId"], homeTypeId = ViewContext.RouteData.Values["homeTypeId"], currentPage = HomeTypesWorkflowState.OlderPeopleHousingType})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+
+    <gds-h1 size="ControlSize.L">
+        What type of housing will you be providing for older people?
+    </gds-h1>
+</form>
+
