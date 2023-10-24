@@ -166,7 +166,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        return View("CheckApplication", response.LoanApplication.LegacyModel);
+        return View("CheckApplication", response.LoanApplication);
     }
 
     [HttpPost("{id}/submit")]
@@ -251,7 +251,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return Task.FromResult<IStateRouting<LoanApplicationWorkflow.State>>(
             new LoanApplicationWorkflow(
                 currentState,
-                async () => (await _mediator.Send(new GetLoanApplicationQuery(applicationId!))).LoanApplication.LegacyModel,
+                async () => (await _mediator.Send(new GetLoanApplicationQuery(applicationId!))).LoanApplication,
                 async () => applicationId.IsProvided() && await _mediator.Send(new IsLoanApplicationExistQuery(applicationId!))));
     }
 }

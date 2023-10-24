@@ -65,5 +65,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? completionStatus { get; set; }
 
         public bool? projectHasStartDate { get; set; }
+
+        public int? loanApplicationStatus { get; set; }
     }
 }

@@ -39,7 +39,7 @@ public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand,
             { NotificationServiceKeys.Name, deletedProject.Name?.Value ?? ProjectName.Default.Value },
         };
 
-        _notificationService.NotifySuccess(NotificationBodyType.DeleteProject, valuesToDisplay);
+        await _notificationService.NotifySuccess(NotificationBodyType.DeleteProject, valuesToDisplay);
 
         await _applicationProjectsRepository.SaveAsync(applicationProjects, request.ProjectId, userAccount, cancellationToken);
 
