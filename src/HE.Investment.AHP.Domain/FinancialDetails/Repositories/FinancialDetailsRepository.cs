@@ -15,12 +15,10 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    //private readonly IFinancialDetailsServiceAsync _serviceClient;
 
-    public FinancialDetailsRepository(IHttpContextAccessor httpContextAccessor, IDateTimeProvider dateTime)//, IFinancialDetailsServiceAsync serviceClient)
+    public FinancialDetailsRepository(IHttpContextAccessor httpContextAccessor, IDateTimeProvider dateTime)
     {
         _httpContextAccessor = httpContextAccessor;
-        //_serviceClient = serviceClient;
     }
 
     public async Task<FinancialDetailsEntity> GetById(FinancialDetailsId financialDetailsId, CancellationToken cancellationToken)
@@ -33,24 +31,5 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
     public async Task SaveAsync(FinancialDetailsEntity financialDetailsEntity, CancellationToken cancellationToken)
     {
         await Task.Run(() => _httpContextAccessor.HttpContext?.Response.Cookies.Append(financialDetailsEntity.Id.ToString(), JsonSerializer.Serialize(financialDetailsEntity)), cancellationToken);
-
-        //if (projectToSave.IsNewlyCreated)
-        //{
-        //    await CreateNewProject(applicationProjects, projectToSave, cancellationToken);
-        //}
-        //else if (projectToSave.IsSoftDeleted)
-        //{
-        //    await DeleteProject(projectToSave, cancellationToken);
-        //}
-        //else
-        //{
-        //    await UpdateProject(applicationProjects, projectId, projectToSave, cancellationToken);
-        //}
-
     }
-
-    // private async Task UpdateProject(FinancialDetailsEntity financialDetailsEntity, CancellationToken cancellationToken)
-    // {
-    //     await Task.Run(() => _httpContextAccessor.HttpContext?.Response.Cookies.Append(financialDetailsEntity.Id.ToString(), JsonSerializer.Serialize(financialDetailsEntity)), cancellationToken);
-    // }
 }
