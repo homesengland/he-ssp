@@ -5,4 +5,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Commands;
 
-public record SaveHousingTypeCommand(string FinancialSchemeId, string? HomeTypeId, string? HomeTypeName, HousingType HousingType) : IRequest<OperationResult<HomeTypeId>>;
+public record SaveHousingTypeCommand(string FinancialSchemeId, string? HomeTypeId, string? HomeTypeName, HousingType HousingType) : IRequest<OperationResult<HomeTypeId?>>;

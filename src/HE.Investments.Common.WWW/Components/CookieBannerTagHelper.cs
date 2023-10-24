@@ -1,9 +1,9 @@
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
-using He.Investments.AspNetCore.UI.Common.Utils;
+using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace He.Investments.AspNetCore.UI.Common.Components;
+namespace HE.Investments.Common.WWW.Components;
 
 public class CookieBannerTagHelper : TagHelper
 {

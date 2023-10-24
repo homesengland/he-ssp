@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Mappers;
+using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using MediatR;
 
@@ -22,6 +23,7 @@ internal sealed class GetHousingTypeSectionQueryHandler : IRequestHandler<GetHou
     public async Task<HousingTypeSection> Handle(GetHousingTypeSectionQuery request, CancellationToken cancellationToken)
     {
         var homeType = await _repository.GetById(
+            request.FinancialSchemeId,
             new HomeTypeId(request.HomeTypeId),
             new[] { HomeTypeSectionType.HousingType },
             cancellationToken);

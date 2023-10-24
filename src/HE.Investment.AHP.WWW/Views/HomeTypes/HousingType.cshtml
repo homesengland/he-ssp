@@ -5,6 +5,9 @@
 <form asp-controller="HomeTypes" asp-action="HousingType" asp-method="post" novalidate>
     <gds-back-link href="@Url.Action("Back","HomeTypes", new { financialSchemeId = ViewContext.RouteData.Values["financialSchemeId"], currentPage = HomeTypesWorkflowState.HousingType})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    @Html.HiddenFor(x => x.FinancialSchemeName)
+
     <gds-div-hint>@Model.FinancialSchemeName</gds-div-hint>
     <gds-h1 size="ControlSize.L">
         Type of housing

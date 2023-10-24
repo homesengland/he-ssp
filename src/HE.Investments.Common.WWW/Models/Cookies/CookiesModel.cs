@@ -1,4 +1,4 @@
-namespace He.Investments.AspNetCore.UI.Common.Models.Cookies;
+namespace HE.Investments.Common.WWW.Models.Cookies;
 
 public record CookiesModel(IList<CookieModel> EssentialCookies, IList<CookieModel> AdditionalCookies);
 

@@ -67,7 +67,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             return View(model);
         }
 
-        return await Continue(new { financialSchemeId, homeTypeId = result.ReturnedData.Value });
+        return await Continue(new { financialSchemeId, homeTypeId = result.ReturnedData!.Value });
     }
 
     [WorkflowState(HomeTypesWorkflowState.HomeInformation)]

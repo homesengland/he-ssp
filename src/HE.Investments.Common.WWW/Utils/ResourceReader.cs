@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace He.Investments.AspNetCore.UI.Common.Utils;
+namespace HE.Investments.Common.WWW.Utils;
 
 internal static class ResourceReader
 {
