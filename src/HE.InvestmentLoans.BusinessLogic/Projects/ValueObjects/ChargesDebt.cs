@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HE.InvestmentLoans.BusinessLogic.Projects.Consts;
 using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
@@ -19,7 +20,7 @@ public class ChargesDebt : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError("ChargesDebtInfo", ValidationErrorMessage.EnterExistingLegal)
+                .AddValidationError(ProjectValidationFieldNames.ChargesDebtInfo, ValidationErrorMessage.EnterExistingLegal)
                 .CheckErrors();
         }
 
@@ -27,7 +28,7 @@ public class ChargesDebt : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError("ChargesDebtInfo", ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.ChargesDebtInfo))
+                .AddValidationError(ProjectValidationFieldNames.ChargesDebtInfo, ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.ChargesDebtInfo))
                 .CheckErrors();
         }
 

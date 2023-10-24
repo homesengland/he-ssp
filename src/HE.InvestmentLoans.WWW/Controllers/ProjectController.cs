@@ -90,7 +90,7 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.Name)]
     public async Task<IActionResult> ProjectName(Guid id, Guid projectId, ProjectViewModel model, [FromQuery] string redirect, CancellationToken token)
     {
-        var result = await _mediator.Send(new ChangeProjectNameCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.Name), token);
+        var result = await _mediator.Send(new ChangeProjectNameCommand(LoanApplicationId.From(id), ProjectId.From(projectId), model.ProjectName), token);
 
         if (result.HasValidationErrors)
         {

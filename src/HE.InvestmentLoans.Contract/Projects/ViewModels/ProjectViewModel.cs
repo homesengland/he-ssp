@@ -12,7 +12,7 @@ public class ProjectViewModel : ICompletedSectionViewModel
 
     public Guid ProjectId { get; set; }
 
-    public string? Name { get; set; }
+    public string? ProjectName { get; set; }
 
     public string? HasEstimatedStartDate { get; set; }
 

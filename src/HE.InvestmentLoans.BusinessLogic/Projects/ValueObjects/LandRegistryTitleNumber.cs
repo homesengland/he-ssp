@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.Projects.Consts;
 using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
@@ -12,14 +13,14 @@ public class LandRegistryTitleNumber : ValueObject
         if (value.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError("LocationLandRegistry", ValidationErrorMessage.EnterLandRegistryTitleNumber)
+                .AddValidationError(ProjectValidationFieldNames.LandRegistryTitleNumber, ValidationErrorMessage.EnterLandRegistryTitleNumber)
                 .CheckErrors();
         }
 
         if (value!.Length > MaximumInputLength.LongInput)
         {
             OperationResult.New()
-                .AddValidationError("LocationLandRegistry", ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.LocationLandRegistry))
+                .AddValidationError(ProjectValidationFieldNames.LandRegistryTitleNumber, ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.LocationLandRegistry))
                 .CheckErrors();
         }
 
