@@ -16,7 +16,7 @@
             <gds-div-form-group invalid="inputInvalid">
                 <gds-legend size="ControlSize.L">
                     <gds-fieldset-heading>
-                        What type of project is this?
+                        @ProjectPageTitles.ProjectType
                     </gds-fieldset-heading>
                 </gds-legend>
 
@@ -34,7 +34,7 @@
             @Html.HiddenFor(c => c.ProjectId)
             @Html.HiddenFor(c => c.ApplicationId)
 
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Continue
             </button>
         </gds-field-set>

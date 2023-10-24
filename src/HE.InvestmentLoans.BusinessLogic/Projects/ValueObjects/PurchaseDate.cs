@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HE.InvestmentLoans.BusinessLogic.Projects.Consts;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Validation;
@@ -14,7 +15,7 @@ public class PurchaseDate
     {
         if (date.Value.IsAfter(now))
         {
-            OperationResult.ThrowValidationError("PurchaseDay", ValidationErrorMessage.FuturePurchaseDate);
+            OperationResult.ThrowValidationError(ProjectValidationFieldNames.PurchaseDay, ValidationErrorMessage.FuturePurchaseDate);
         }
 
         Date = date;
@@ -26,8 +27,8 @@ public class PurchaseDate
     {
         var operationResult = OperationResult.ResultOf(() => ProjectDate.FromString(year, month, day));
 
-        operationResult.OverrideError(GenericValidationError.NoDate, "PurchaseDate", ValidationErrorMessage.NoPurchaseDate);
-        operationResult.OverrideError(GenericValidationError.InvalidDate, "PurchaseDate", ValidationErrorMessage.IncorrectPurchaseDate);
+        operationResult.OverrideError(GenericValidationError.NoDate, ProjectValidationFieldNames.PurchaseDate, ValidationErrorMessage.NoPurchaseDate);
+        operationResult.OverrideError(GenericValidationError.InvalidDate, ProjectValidationFieldNames.PurchaseDate, ValidationErrorMessage.IncorrectPurchaseDate);
 
         operationResult.CheckErrors();
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using HE.InvestmentLoans.BusinessLogic.Projects.Consts;
 using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
@@ -20,7 +21,7 @@ public class HomesCount : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(HomesCount), ValidationErrorMessage.ManyHomesAmount)
+                .AddValidationError(ProjectValidationFieldNames.HomesCount, ValidationErrorMessage.ManyHomesAmount)
                 .CheckErrors();
         }
 

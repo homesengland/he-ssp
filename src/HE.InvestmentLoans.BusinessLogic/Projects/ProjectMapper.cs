@@ -23,7 +23,7 @@ internal class ProjectMapper
         return new ProjectViewModel
         {
             ProjectId = project.Id!.Value,
-            Name = project.Name?.Value,
+            ProjectName = project.Name?.Value,
             HomesCount = project.HomesCount?.Value,
             HomeTypes = project.HomesTypes?.HomesTypesValue,
             OtherHomeTypes = project.HomesTypes?.OtherHomesTypesValue,

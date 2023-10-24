@@ -39,7 +39,7 @@ public class Order02ProjectNameIntegrationTests : IntegrationTest
 
         // when
         projectNamePage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "Name", TextTestData.TextThatExceedsShortInputLimit } });
+            continueButton, new Dictionary<string, string> { { "ProjectName", TextTestData.TextThatExceedsShortInputLimit } });
 
         // then
         projectNamePage
@@ -61,7 +61,7 @@ public class Order02ProjectNameIntegrationTests : IntegrationTest
 
         // when
         var startDatePage = await TestClient.SubmitButton(
-            continueButton, new Dictionary<string, string> { { "Name", TextTestData.TextThatNotExceedsShortInputLimit } });
+            continueButton, new Dictionary<string, string> { { "ProjectName", TextTestData.TextThatNotExceedsShortInputLimit } });
 
         // then
         startDatePage

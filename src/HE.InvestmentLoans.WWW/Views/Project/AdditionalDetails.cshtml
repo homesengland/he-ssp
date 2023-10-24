@@ -1,3 +1,4 @@
+@using HE.InvestmentLoans.BusinessLogic.Projects.Consts;
 @using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 @using HE.InvestmentLoans.Contract.Projects.ViewModels;
 @using HE.InvestmentLoans.Contract.Projects;
@@ -6,11 +7,11 @@
 @model ProjectViewModel;
 @{
     var id = ViewContext.RouteData.Values["id"];
-    var (dateInputInvalid, dateInputErrors) = @ViewData.ModelState.GetErrors(nameof(PurchaseDate));
+    var (dateInputInvalid, dateInputErrors) = @ViewData.ModelState.GetErrors(ProjectValidationFieldNames.PurchaseDate);
 
-    var (dayInputInvalid, dayInputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.PurchaseDay));
-    var (monthInputInvalid, monthInputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.PurchaseMonth));
-    var (yearInputInvalid, yearInputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.PurchaseYear));
+    var (dayInputInvalid, dayInputErrors) = @ViewData.ModelState.GetErrors(ProjectValidationFieldNames.PurchaseDay);
+    var (monthInputInvalid, monthInputErrors) = @ViewData.ModelState.GetErrors(ProjectValidationFieldNames.PurchaseDay);
+    var (yearInputInvalid, yearInputErrors) = @ViewData.ModelState.GetErrors(ProjectValidationFieldNames.PurchaseDay);
 
     var isDateFormInvalid = dateInputInvalid || dayInputInvalid || monthInputInvalid || yearInputInvalid;
     var errorsList = new string[] { dateInputErrors, dayInputErrors, monthInputErrors, yearInputErrors };
