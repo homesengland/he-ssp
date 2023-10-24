@@ -20,7 +20,7 @@ public class HomeTypesEntity
             return;
         }
 
-        if (_homeTypes.Where(x => x.Id != homeTypeId).Any(x => x.Name.Value == name))
+        if (_homeTypes.Where(x => x.Id != homeTypeId).Any(x => x.Name?.Value == name))
         {
             throw new DomainValidationException(
                 new OperationResult().AddValidationErrors(new List<ErrorItem>
