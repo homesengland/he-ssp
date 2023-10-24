@@ -1,9 +1,10 @@
+@using HE.InvestmentLoans.BusinessLogic.Projects.Consts;
 @using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 @using HE.InvestmentLoans.Contract.Projects;
 @using HE.Investments.Common.WWW.Extensions
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 @{
-    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel.Name));
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(ProjectValidationFieldNames.ProjectName);
 }
 
 <gds-div-grid-column-two-thirds>
@@ -25,8 +26,8 @@
                 <gds-input-wrapper class="govuk-!-margin-bottom-6">
                     <gds-input class="govuk-!-width-two-third"
                                asp-excludelabel
-                               govuk-formgroup-asp-for="Name"
-                               value="@Model.Name"
+                               govuk-formgroup-asp-for="ProjectName"
+                               value="@Model.ProjectName"
                                type="text" />
                 </gds-input-wrapper>
             </gds-div-form-group>

@@ -13,7 +13,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Project" asp-action="AffordableHomes" asp-route-id="@Model.ApplicationId" asp-route-site="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+    <form asp-controller="Project" asp-action="AffordableHomes" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
 
         <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.AffordableHomes})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
@@ -22,7 +22,7 @@
             <gds-div-form-group invalid="radioInvalid">
                 <gds-legend size="ControlSize.L">
                     <gds-fieldset-heading>
-                        Is your project made up of more than 50% affordable housing?
+                        @ProjectPageTitles.AffordableHomes
                     </gds-fieldset-heading>
                 </gds-legend>
                 <gds-div-hint class="govuk-!-margin-bottom-6">
@@ -36,7 +36,7 @@
             @Html.HiddenFor(c => c.ProjectId)
             @Html.HiddenFor(c => c.ApplicationId)
 
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Continue
             </button>
         </gds-field-set>

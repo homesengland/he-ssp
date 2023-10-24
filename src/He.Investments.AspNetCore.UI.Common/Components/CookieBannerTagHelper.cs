@@ -24,7 +24,7 @@ public class CookieBannerTagHelper : TagHelper
         output.Attributes.Add("aria-label", $"Can we store additional cookies?");
 
         var content = ResourceReader.Read("CookieBannerTemplate.html")
-            .Replace("CookiesPage", CookiesPageUrl);
+            .Replace("[CookiesPage]", CookiesPageUrl);
 
         output.Content.SetHtmlContent(content);
     }

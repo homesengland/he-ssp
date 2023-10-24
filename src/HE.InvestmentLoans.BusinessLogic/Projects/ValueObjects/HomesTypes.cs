@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HE.InvestmentLoans.BusinessLogic.Projects.Consts;
 using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
@@ -18,7 +19,7 @@ public class HomesTypes : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(HomesTypes), ValidationErrorMessage.TypeHomesOtherType)
+                .AddValidationError(ProjectValidationFieldNames.OtherHomeType, ValidationErrorMessage.TypeHomesOtherType)
                 .CheckErrors();
         }
 
@@ -26,7 +27,7 @@ public class HomesTypes : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(HomesTypes), ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.OtherHomeType))
+                .AddValidationError(ProjectValidationFieldNames.OtherHomeType, ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.OtherHomeType))
                 .CheckErrors();
         }
 

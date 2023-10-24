@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HE.InvestmentLoans.BusinessLogic.Projects.Consts;
 using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
@@ -19,15 +20,15 @@ public class ChargesDebt : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(ChargesDebt), ValidationErrorMessage.EnterExistingLegal)
+                .AddValidationError(ProjectValidationFieldNames.ChargesDebtInfo, ValidationErrorMessage.EnterExistingLegal)
                 .CheckErrors();
         }
 
-        if (info.IsProvided() && info?.Length >= MaximumInputLength.ShortInput)
+        if (info.IsProvided() && info?.Length >= MaximumInputLength.LongInput)
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(ChargesDebt), ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.ChargesDebtInfo))
+                .AddValidationError(ProjectValidationFieldNames.ChargesDebtInfo, ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.ChargesDebtInfo))
                 .CheckErrors();
         }
 
@@ -51,7 +52,7 @@ public class ChargesDebt : ValueObject
         if (info.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError(nameof(ChargesDebt), ValidationErrorMessage.EnterExistingLegal)
+                .AddValidationError("ChargesDebtInfo", ValidationErrorMessage.EnterExistingLegal)
                 .CheckErrors();
         }
 

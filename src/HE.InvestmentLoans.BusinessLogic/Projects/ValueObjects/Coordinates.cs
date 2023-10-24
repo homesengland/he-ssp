@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.Projects.Consts;
 using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
@@ -12,14 +13,14 @@ public class Coordinates : ValueObject
         if (value.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError("LocationCoordinates", ValidationErrorMessage.EnterCoordinates)
+                .AddValidationError(ProjectValidationFieldNames.Coordinates, ValidationErrorMessage.EnterCoordinates)
                 .CheckErrors();
         }
 
         if (value!.Length > MaximumInputLength.LongInput)
         {
             OperationResult.New()
-                .AddValidationError("LocationCoordinates", ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.LocationCoordinates))
+                .AddValidationError(ProjectValidationFieldNames.Coordinates, ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.LocationCoordinates))
                 .CheckErrors();
         }
 
