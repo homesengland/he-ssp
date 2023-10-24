@@ -1,9 +1,9 @@
 using System.Collections.Concurrent;
-using HE.Investment.AHP.BusinessLogic.HomeTypes.Entities;
-using HE.Investment.AHP.BusinessLogic.HomeTypes.ValueObjects;
+using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
 
-namespace HE.Investment.AHP.BusinessLogic.HomeTypes;
+namespace HE.Investment.AHP.Domain.HomeTypes;
 
 public class HomeTypeRepository : IHomeTypeRepository
 {

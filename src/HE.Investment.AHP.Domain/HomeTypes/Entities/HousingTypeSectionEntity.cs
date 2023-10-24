@@ -1,6 +1,6 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 
-namespace HE.Investment.AHP.BusinessLogic.HomeTypes.Entities;
+namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 public class HousingTypeSectionEntity : IHomeTypeSectionEntity
 {

@@ -1,7 +1,7 @@
-using HE.Investment.AHP.BusinessLogic.HomeTypes.ValueObjects;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Extensions;
 
-namespace HE.Investment.AHP.BusinessLogic.HomeTypes.Entities;
+namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 public class HomeTypeEntity
 {

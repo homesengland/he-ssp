@@ -1,7 +1,7 @@
-using HE.Investment.AHP.BusinessLogic.HomeTypes.Entities;
 using HE.Investment.AHP.Contract.HomeTypes;
+using HE.Investment.AHP.Domain.HomeTypes.Entities;
 
-namespace HE.Investment.AHP.BusinessLogic.HomeTypes.Mappers;
+namespace HE.Investment.AHP.Domain.HomeTypes.Mappers;
 
 public class HousingTypeSectionMapper : IHomeTypeSectionMapper<HousingTypeSection>
 {

@@ -1,11 +1,11 @@
-using HE.Investment.AHP.BusinessLogic.HomeTypes.Entities;
-using HE.Investment.AHP.BusinessLogic.HomeTypes.Mappers;
-using HE.Investment.AHP.BusinessLogic.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
+using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.Mappers;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using MediatR;
 
-namespace HE.Investment.AHP.BusinessLogic.HomeTypes.QueryHandlers;
+namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
 internal sealed class GetHousingTypeSectionQueryHandler : IRequestHandler<GetHousingTypeSectionQuery, HousingTypeSection>
 {

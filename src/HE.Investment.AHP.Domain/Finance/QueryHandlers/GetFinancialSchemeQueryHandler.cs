@@ -2,7 +2,7 @@ using HE.Investment.AHP.Contract.Finance;
 using HE.Investment.AHP.Contract.Finance.Queries;
 using MediatR;
 
-namespace HE.Investment.AHP.BusinessLogic.Finance.QueryHandlers;
+namespace HE.Investment.AHP.Domain.Finance.QueryHandlers;
 
 public class GetFinancialSchemeQueryHandler : IRequestHandler<GetFinancialSchemeQuery, FinancialScheme>
 {

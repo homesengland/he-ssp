@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.Contract.Common;
 
-namespace HE.Investment.AHP.BusinessLogic.HomeTypes.ValueObjects;
+namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
 public class HomeTypeName : ShortText
 {

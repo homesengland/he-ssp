@@ -1,7 +1,7 @@
-using HE.Investment.AHP.BusinessLogic.HomeTypes;
-using HE.Investment.AHP.BusinessLogic.HomeTypes.Commands;
 using HE.Investment.AHP.Contract.Finance.Queries;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
+using HE.Investment.AHP.Domain.HomeTypes;
+using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Routing;

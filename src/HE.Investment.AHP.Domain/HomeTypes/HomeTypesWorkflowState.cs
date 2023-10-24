@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.BusinessLogic.HomeTypes;
+namespace HE.Investment.AHP.Domain.HomeTypes;
 
 public enum HomeTypesWorkflowState
 {

@@ -2,7 +2,7 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.InvestmentLoans.Common.Routing;
 using Stateless;
 
-namespace HE.Investment.AHP.BusinessLogic.HomeTypes;
+namespace HE.Investment.AHP.Domain.HomeTypes;
 
 public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 {

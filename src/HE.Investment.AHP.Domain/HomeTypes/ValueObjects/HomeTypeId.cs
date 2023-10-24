@@ -1,7 +1,7 @@
 using Dawn;
 using HE.InvestmentLoans.Common.Domain;
 
-namespace HE.Investment.AHP.BusinessLogic.HomeTypes.ValueObjects;
+namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
 public class HomeTypeId : ValueObject
 {

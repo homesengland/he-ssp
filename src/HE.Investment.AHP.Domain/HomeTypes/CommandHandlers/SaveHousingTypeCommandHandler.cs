@@ -1,10 +1,10 @@
-using HE.Investment.AHP.BusinessLogic.HomeTypes.Commands;
-using HE.Investment.AHP.BusinessLogic.HomeTypes.Entities;
-using HE.Investment.AHP.BusinessLogic.HomeTypes.ValueObjects;
+using HE.Investment.AHP.Domain.HomeTypes.Commands;
+using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Validation;
 using MediatR;
 
-namespace HE.Investment.AHP.BusinessLogic.HomeTypes.CommandHandlers;
+namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
 
 public class SaveHousingTypeCommandHandler : IRequestHandler<SaveHousingTypeCommand, OperationResult<HomeTypeId>>
 {

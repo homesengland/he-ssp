@@ -1,7 +1,7 @@
-using HE.Investment.AHP.BusinessLogic.HomeTypes.Entities;
-using HE.Investment.AHP.BusinessLogic.HomeTypes.ValueObjects;
+using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
-namespace HE.Investment.AHP.BusinessLogic.HomeTypes;
+namespace HE.Investment.AHP.Domain.HomeTypes;
 
 public interface IHomeTypeRepository
 {

@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.BusinessLogic.HomeTypes.Entities;
+namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [Flags]
 public enum HomeTypeSectionType
