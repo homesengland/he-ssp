@@ -1,0 +1,27 @@
+@model string
+@{
+    ViewData["Title"] = "Scheme details";
+}
+<div class="govuk-grid-column-three-quarters">
+    <gds-back-link href="@Url.Action("Index", "Home")" text="Back" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
+    <span class="govuk-caption-m">
+        @Model
+    </span>
+    <gds-h1 class="govuk-heading-xl">
+        Scheme details
+    </gds-h1>
+    <div class="govuk-!-padding-bottom-8">
+        <gds-p class="govuk-!-margin-bottom-0">In this section, you’ll need to provide information about your schemes. This includes</gds-p>
+        <gds-ul class="govuk-!-padding-left-6" asp-lists=@(new[] { "the scheme name and tenure", "the funding you require on a scheme", "local housing needs", "discussions you’ve had with local stakeholders" })>
+        </gds-ul>
+        <gds-p>Each scheme must be for a single tenure. If you are developing a multi-tenure site, submit each tenure as a separate scheme.</gds-p>
+        <gds-p>When naming your schemes, ensure you use names that enable you to easily differentiate between them. For example including the tenure in the scheme name.</gds-p>
+        <gds-p>In another section, we'll ask you about the financial details for this scheme. You'll need to apportion the development and acquisition costs, as well as any borrowing and other contributions across the different schemes on the site.</gds-p>
+    </div>
+    <a href="#">
+        <gds-button-start type="button">
+            Start now
+        </gds-button-start>
+    </a>
+</div>
