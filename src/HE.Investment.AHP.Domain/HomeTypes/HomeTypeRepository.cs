@@ -9,9 +9,9 @@ public class HomeTypeRepository : IHomeTypeRepository
 {
     private static readonly IDictionary<string, HomeTypeEntity> HomeTypes = new ConcurrentDictionary<string, HomeTypeEntity>();
 
-    public Task<HomeTypeEntity> Get(
+    public Task<HomeTypeEntity> GetById(
         HomeTypeId homeTypeId,
-        HomeTypeSectionType sectionTypes,
+        IReadOnlyCollection<HomeTypeSectionType> sectionTypes,
         CancellationToken cancellationToken)
     {
         var homeType = Get(homeTypeId);
@@ -26,7 +26,7 @@ public class HomeTypeRepository : IHomeTypeRepository
     public Task<HomeTypeEntity> Save(
         string financialSchemeId,
         HomeTypeEntity homeType,
-        HomeTypeSectionType sectionTypes,
+        IReadOnlyCollection<HomeTypeSectionType> sectionTypes,
         CancellationToken cancellationToken)
     {
         if (homeType.IsNew)

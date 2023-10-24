@@ -21,9 +21,9 @@ internal sealed class GetHousingTypeSectionQueryHandler : IRequestHandler<GetHou
 
     public async Task<HousingTypeSection> Handle(GetHousingTypeSectionQuery request, CancellationToken cancellationToken)
     {
-        var homeType = await _repository.Get(
+        var homeType = await _repository.GetById(
             new HomeTypeId(request.HomeTypeId),
-            HomeTypeSectionType.HousingType,
+            new[] { HomeTypeSectionType.HousingType },
             cancellationToken);
 
         return _mapper.Map(homeType);

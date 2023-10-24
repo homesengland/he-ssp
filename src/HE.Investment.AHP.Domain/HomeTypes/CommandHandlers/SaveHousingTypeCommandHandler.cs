@@ -22,7 +22,7 @@ public class SaveHousingTypeCommandHandler : IRequestHandler<SaveHousingTypeComm
         homeType.ChangeName(request.HomeTypeName);
         homeType.HousingTypeSectionEntity.ChangeHousingType(request.HousingType);
 
-        await _repository.Save(request.FinancialSchemeId, homeType, HomeTypeSectionType.HousingType, cancellationToken);
+        await _repository.Save(request.FinancialSchemeId, homeType, new[] { HomeTypeSectionType.HousingType }, cancellationToken);
 
         return new OperationResult<HomeTypeId>(homeType.Id!);
     }
@@ -34,6 +34,6 @@ public class SaveHousingTypeCommandHandler : IRequestHandler<SaveHousingTypeComm
             return new HomeTypeEntity(homeTypeId, new HousingTypeSectionEntity());
         }
 
-        return await _repository.Get(new HomeTypeId(homeTypeId!), HomeTypeSectionType.HousingType, cancellationToken);
+        return await _repository.GetById(new HomeTypeId(homeTypeId), new[] { HomeTypeSectionType.HousingType }, cancellationToken);
     }
 }
