@@ -20,6 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="He.AspNetCore.Mvc.Gds.Components" Version="1.0.154" />
     <PackageReference Include="He.AspNetCore.Mvc.GdsTagHelpers" Version="1.0.65" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.20" />
