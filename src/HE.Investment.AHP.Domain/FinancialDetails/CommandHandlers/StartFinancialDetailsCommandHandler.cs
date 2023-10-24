@@ -16,7 +16,6 @@ public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandle
 {
     private readonly IFinancialDetailsRepository _financialDetailsRepository;
 
-
     public StartFinancialDetailsCommandHandler(IFinancialDetailsRepository financialDetailsRepository, ILogger<StartFinancialDetailsCommandHandler> logger)
         : base(financialDetailsRepository, logger)
     {
