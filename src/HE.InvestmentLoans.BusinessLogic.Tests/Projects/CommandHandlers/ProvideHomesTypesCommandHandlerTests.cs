@@ -1,19 +1,17 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
-using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
+
 public class ProvideHomesTypesCommandHandlerTests : TestBase<ProvideHomesTypesCommandHandler>
 {
     private ProvideHomesTypesCommand _command;
@@ -30,7 +28,11 @@ public class ProvideHomesTypesCommandHandlerTests : TestBase<ProvideHomesTypesCo
             .New()
             .ReturnsNoProjects());
 
-        _command = new ProvideHomesTypesCommand(LoanApplicationIdTestData.LoanApplicationIdOne, ProjectIdTestData.AnyProjectId, ValidHomesTypes_WithoutOtherSelected(), string.Empty);
+        _command = new ProvideHomesTypesCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            ProjectIdTestData.AnyProjectId,
+            ValidHomesTypes_WithoutOtherSelected(),
+            string.Empty);
 
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
@@ -48,9 +50,13 @@ public class ProvideHomesTypesCommandHandlerTests : TestBase<ProvideHomesTypesCo
         Given(ApplicationProjectsRepositoryBuilder
             .New()
             .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ReturnsAllProjects(applicationProjects));
 
-        _command = new ProvideHomesTypesCommand(LoanApplicationIdTestData.LoanApplicationIdOne, ProjectIdTestData.AnyProjectId, ValidHomesTypes_WithoutOtherSelected(), string.Empty);
+        _command = new ProvideHomesTypesCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            ProjectIdTestData.AnyProjectId,
+            ValidHomesTypes_WithoutOtherSelected(),
+            string.Empty);
 
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
@@ -65,15 +71,19 @@ public class ProvideHomesTypesCommandHandlerTests : TestBase<ProvideHomesTypesCo
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
 
-        _command = new ProvideHomesTypesCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, ValidHomesTypes_WithOtherSelected(), InvalidOtherHomesTypes());
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
+
+        _command = new ProvideHomesTypesCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            projectId!,
+            ValidHomesTypes_WithOtherSelected(),
+            InvalidOtherHomesTypes());
 
         var result = await TestCandidate.Handle(_command, CancellationToken.None);
 
@@ -88,13 +98,13 @@ public class ProvideHomesTypesCommandHandlerTests : TestBase<ProvideHomesTypesCo
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
+
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         _command = new ProvideHomesTypesCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, ValidHomesTypes_WithoutOtherSelected(), null!);
 
@@ -120,10 +130,14 @@ public class ProvideHomesTypesCommandHandlerTests : TestBase<ProvideHomesTypesCo
 
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
-        _command = new ProvideHomesTypesCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, ValidHomesTypes_WithOtherSelected(), ValidOtherHomesTypes());
+        _command = new ProvideHomesTypesCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            projectId!,
+            ValidHomesTypes_WithOtherSelected(),
+            ValidOtherHomesTypes());
 
         await TestCandidate.Handle(_command, CancellationToken.None);
 

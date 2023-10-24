@@ -1,12 +1,10 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
-using HE.InvestmentLoans.BusinessLogic.Security.CommandHandler;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
@@ -29,11 +27,8 @@ public class ProjectCommandHandlerBase
     {
         var userAccount = await _loanUserContext.GetSelectedAccount();
 
-        var applicationProjects = await _repository.GetById(loanApplicationId, userAccount, ProjectFieldsSet.GetAllFields, cancellationToken)
+        var project = await _repository.GetByIdAsync(projectId, userAccount, ProjectFieldsSet.GetAllFields, cancellationToken)
             ?? throw new NotFoundException(nameof(ApplicationProjects), loanApplicationId);
-
-        var project = applicationProjects.Projects.FirstOrDefault(p => p.Id == projectId)
-            ?? throw new NotFoundException(nameof(Project), projectId);
 
         try
         {
@@ -46,7 +41,7 @@ public class ProjectCommandHandlerBase
             return domainValidationException.OperationResult;
         }
 
-        await _repository.SaveAsync(applicationProjects, projectId, userAccount, cancellationToken);
+        await _repository.SaveAsync(loanApplicationId, project, cancellationToken);
         return OperationResult.Success();
     }
 }

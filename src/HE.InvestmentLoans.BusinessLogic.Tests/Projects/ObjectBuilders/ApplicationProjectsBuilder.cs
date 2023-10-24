@@ -44,9 +44,7 @@ internal sealed class ApplicationProjectsBuilder
 
     public ApplicationProjectsBuilder WithProjectWithPlanningReferenceNumber(string number)
     {
-        var projectId = _applicationProjects.AddEmptyProject();
-
-        var project = _applicationProjects.Projects.First(p => p.Id == projectId);
+        var project = _applicationProjects.AddEmptyProject();
 
         project.ProvidePlanningReferenceNumber(new PlanningReferenceNumber(true, number));
 

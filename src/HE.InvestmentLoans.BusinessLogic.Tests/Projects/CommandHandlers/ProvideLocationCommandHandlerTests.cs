@@ -14,6 +14,7 @@ using Xunit;
 using static HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData.LocationTestData;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
+
 public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationCommandHandler>
 {
     private ProvideLocationCommand _command;
@@ -52,7 +53,7 @@ public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationComman
         Given(ApplicationProjectsRepositoryBuilder
             .New()
             .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ReturnsAllProjects(applicationProjects));
 
         _command = new ProvideLocationCommand(LoanApplicationIdTestData.LoanApplicationIdOne, ProjectIdTestData.AnyProjectId, null!, null!, null!);
 
@@ -60,7 +61,7 @@ public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationComman
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
         // then
-        (await action.Should().ThrowExactlyAsync<NotFoundException>()).ForEntity(nameof(Project));
+        (await action.Should().ThrowExactlyAsync<NotFoundException>()).ForEntity(nameof(ApplicationProjects));
     }
 
     [Fact]
@@ -72,13 +73,13 @@ public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationComman
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
+
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         // when
         _command = new ProvideLocationCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, ProjectFormOption.Coordinates, NoCoordinates, null!);
@@ -99,16 +100,21 @@ public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationComman
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
 
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
+
         // when
-        _command = new ProvideLocationCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, ProjectFormOption.Coordinates, CorrectCoordinates, null!);
+        _command = new ProvideLocationCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            projectId,
+            ProjectFormOption.Coordinates,
+            CorrectCoordinates,
+            null!);
 
         var result = await TestCandidate.Handle(_command, CancellationToken.None);
 
@@ -127,16 +133,21 @@ public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationComman
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
 
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
+
         // when
-        _command = new ProvideLocationCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, ProjectFormOption.LandRegistryTitleNumber, null!, NoLandRegistryNumber);
+        _command = new ProvideLocationCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            projectId,
+            ProjectFormOption.LandRegistryTitleNumber,
+            null!,
+            NoLandRegistryNumber);
 
         var result = await TestCandidate.Handle(_command, CancellationToken.None);
 
@@ -154,16 +165,21 @@ public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationComman
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
 
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
+
         // when
-        _command = new ProvideLocationCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, ProjectFormOption.LandRegistryTitleNumber, null!, CorrectLandRegistryNumber);
+        _command = new ProvideLocationCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            projectId,
+            ProjectFormOption.LandRegistryTitleNumber,
+            null!,
+            CorrectLandRegistryNumber);
 
         var result = await TestCandidate.Handle(_command, CancellationToken.None);
 
@@ -182,13 +198,13 @@ public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationComman
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
+
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         // when
         _command = new ProvideLocationCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, null!, CorrectCoordinates, CorrectLandRegistryNumber);
@@ -211,16 +227,21 @@ public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationComman
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
 
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
+
         // when
-        _command = new ProvideLocationCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, IncorrectLocationType, CorrectCoordinates, CorrectLandRegistryNumber);
+        _command = new ProvideLocationCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            projectId,
+            IncorrectLocationType,
+            CorrectCoordinates,
+            CorrectLandRegistryNumber);
 
         // when
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);

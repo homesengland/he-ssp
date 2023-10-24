@@ -31,7 +31,7 @@ public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand,
         var userAccount = await _loanUserContext.GetSelectedAccount();
 
         var applicationProjects =
-            await _applicationProjectsRepository.GetById(request.LoanApplicationId, userAccount, ProjectFieldsSet.GetEmpty, cancellationToken);
+            await _applicationProjectsRepository.GetAllAsync(request.LoanApplicationId, userAccount, cancellationToken);
 
         var deletedProject = applicationProjects.Remove(request.ProjectId);
         var valuesToDisplay = new Dictionary<NotificationServiceKeys, string>
@@ -41,7 +41,7 @@ public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand,
 
         await _notificationService.NotifySuccess(NotificationBodyType.DeleteProject, valuesToDisplay);
 
-        await _applicationProjectsRepository.SaveAsync(applicationProjects, request.ProjectId, userAccount, cancellationToken);
+        await _applicationProjectsRepository.SaveAsync(request.LoanApplicationId, deletedProject, cancellationToken);
 
         return OperationResult.Success();
     }

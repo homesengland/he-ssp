@@ -14,6 +14,7 @@ internal sealed class ApplicationProjectsRepositoryBuilder : IDependencyTestBuil
     private readonly Mock<IApplicationProjectsRepository> _mock;
 
     private LoanApplicationId _applicationId;
+    private ProjectId _projectId;
 
     public ApplicationProjectsRepositoryBuilder()
     {
@@ -25,7 +26,7 @@ internal sealed class ApplicationProjectsRepositoryBuilder : IDependencyTestBuil
     public ApplicationProjectsRepositoryBuilder ReturnsNoProjects()
     {
         _mock
-            .Setup(m => m.GetById(It.IsAny<LoanApplicationId>(), It.IsAny<UserAccount>(), It.IsAny<ProjectFieldsSet>(), It.IsAny<CancellationToken>()))
+            .Setup(m => m.GetAllAsync(It.IsAny<LoanApplicationId>(), It.IsAny<UserAccount>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((ApplicationProjects)null!);
 
         return this;
@@ -38,7 +39,14 @@ internal sealed class ApplicationProjectsRepositoryBuilder : IDependencyTestBuil
         return this;
     }
 
-    public ApplicationProjectsRepositoryBuilder Returns(ApplicationProjects applicationProjects)
+    public ApplicationProjectsRepositoryBuilder ForProject(ProjectId projectId)
+    {
+        _projectId = projectId;
+
+        return this;
+    }
+
+    public ApplicationProjectsRepositoryBuilder ReturnsAllProjects(ApplicationProjects applicationProjects)
     {
         if (_applicationId.IsNotProvided())
         {
@@ -46,8 +54,22 @@ internal sealed class ApplicationProjectsRepositoryBuilder : IDependencyTestBuil
         }
 
         _mock
-            .Setup(m => m.GetById(_applicationId, It.IsAny<UserAccount>(), It.IsAny<ProjectFieldsSet>(), It.IsAny<CancellationToken>()))
+            .Setup(m => m.GetAllAsync(_applicationId, It.IsAny<UserAccount>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(applicationProjects);
+
+        return this;
+    }
+
+    public ApplicationProjectsRepositoryBuilder ReturnsOneProject(Project project)
+    {
+        if (_projectId.IsNotProvided())
+        {
+            throw new InvalidOperationException($"Expected projectId is not provided. Consider using {nameof(ForProject)}() method");
+        }
+
+        _mock
+            .Setup(m => m.GetByIdAsync(_projectId, It.IsAny<UserAccount>(), It.IsAny<ProjectFieldsSet>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(project);
 
         return this;
     }
