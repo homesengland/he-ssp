@@ -27,7 +27,7 @@ public class CreateProjectCommandHandlerTests : TestBase<CreateProjectCommandHan
             ApplicationProjectsRepositoryBuilder
             .New()
             .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(projects));
+            .ReturnsAllProjects(projects));
 
         await TestCandidate.Handle(_command, CancellationToken.None);
 
@@ -43,7 +43,7 @@ public class CreateProjectCommandHandlerTests : TestBase<CreateProjectCommandHan
             ApplicationProjectsRepositoryBuilder
             .New()
             .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(projects));
+            .ReturnsAllProjects(projects));
 
         var response = await TestCandidate.Handle(_command, CancellationToken.None);
 

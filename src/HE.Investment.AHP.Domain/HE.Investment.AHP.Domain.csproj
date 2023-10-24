@@ -8,9 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj" />
       <ProjectReference Include="..\HE.InvestmentLoans.BusinessLogic\HE.InvestmentLoans.BusinessLogic.csproj" />
       <ProjectReference Include="..\HE.InvestmentLoans.Common\HE.InvestmentLoans.Common.csproj" />
+      <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj" />
     </ItemGroup>
 
     <ItemGroup>

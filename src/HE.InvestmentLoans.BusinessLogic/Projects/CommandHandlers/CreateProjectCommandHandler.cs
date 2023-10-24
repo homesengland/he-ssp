@@ -1,6 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
@@ -22,12 +21,12 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
     public async Task<OperationResult<ProjectId>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
         var applicationProjects =
-            await _applicationProjectsRepository.GetById(request.Id, await _loanUserContext.GetSelectedAccount(), ProjectFieldsSet.GetEmpty, cancellationToken);
+            await _applicationProjectsRepository.GetAllAsync(request.LoanApplicationId, await _loanUserContext.GetSelectedAccount(), cancellationToken);
 
-        var projectId = applicationProjects.AddEmptyProject();
+        var project = applicationProjects.AddEmptyProject();
 
-        await _applicationProjectsRepository.SaveAsync(applicationProjects, projectId, await _loanUserContext.GetSelectedAccount(), cancellationToken);
+        await _applicationProjectsRepository.SaveAsync(request.LoanApplicationId, project, cancellationToken);
 
-        return OperationResult.Success(projectId);
+        return OperationResult.Success(project.Id);
     }
 }

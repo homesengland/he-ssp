@@ -50,14 +50,15 @@ public static class ListItemCollectionExtension
                         else if (type == "System.DateTime")
                         {
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-                            if (obj.Value.ToString().Length > 0)
+                            var val = obj.Value.ToString();
+                            if (val.Length > 0)
                             {
-                                var date = obj.Value.ToString().Split(' ');
-                                if (date[0].Length > 0)
+                                if (DateTime.TryParse(val, out var r))
                                 {
-                                    dr[obj.Key] = date[0];
+                                    dr[obj.Key] = r;
                                 }
                             }
+                            dr[obj.Key] = obj.Value;
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
                         }
                         else

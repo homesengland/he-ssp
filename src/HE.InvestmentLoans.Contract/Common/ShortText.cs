@@ -8,19 +8,23 @@ namespace HE.InvestmentLoans.Contract.Common;
 
 public class ShortText : ValueObject
 {
-    public ShortText(string? value, string fieldName = nameof(ShortText))
+    public ShortText(
+        string? value,
+        string fieldName = nameof(ShortText),
+        string noValueProvidedErrorMessage = GenericValidationError.NoValueProvided,
+        string textTooLongErrorMessage = GenericValidationError.TextTooLong)
     {
         if (value.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError(fieldName, GenericValidationError.NoValueProvided)
+                .AddValidationError(fieldName, noValueProvidedErrorMessage)
                 .CheckErrors();
         }
 
         if (value!.Length > MaximumInputLength.ShortInput)
         {
             OperationResult.New()
-                .AddValidationError(fieldName, GenericValidationError.TextTooLong)
+                .AddValidationError(fieldName, textTooLongErrorMessage)
                 .CheckErrors();
         }
 

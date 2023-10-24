@@ -1,19 +1,16 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
-using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Tests.TestData;
-using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
+
 public class ProvideProjectTypeCommandHandlerTests : TestBase<ProvideProjectTypeCommandHandler>
 {
     private ProvideProjectTypeCommand _command;
@@ -48,7 +45,7 @@ public class ProvideProjectTypeCommandHandlerTests : TestBase<ProvideProjectType
         Given(ApplicationProjectsRepositoryBuilder
             .New()
             .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ReturnsAllProjects(applicationProjects));
 
         _command = new ProvideProjectTypeCommand(LoanApplicationIdTestData.LoanApplicationIdOne, ProjectIdTestData.AnyProjectId, ValidProjectType());
 
@@ -70,8 +67,8 @@ public class ProvideProjectTypeCommandHandlerTests : TestBase<ProvideProjectType
 
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         _command = new ProvideProjectTypeCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, ValidProjectType());
 

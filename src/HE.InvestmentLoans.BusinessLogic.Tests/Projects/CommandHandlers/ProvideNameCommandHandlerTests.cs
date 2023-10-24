@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
+using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
@@ -14,6 +15,7 @@ using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
+
 public class ProvideNameCommandHandlerTests : TestBase<ChangeProjectNameCommandHandler>
 {
     private ChangeProjectNameCommand _command;
@@ -48,13 +50,13 @@ public class ProvideNameCommandHandlerTests : TestBase<ChangeProjectNameCommandH
         Given(ApplicationProjectsRepositoryBuilder
             .New()
             .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ReturnsAllProjects(applicationProjects));
 
         _command = new ChangeProjectNameCommand(LoanApplicationIdTestData.LoanApplicationIdOne, ProjectIdTestData.AnyProjectId, ValidProjectName());
 
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
-        await action.Should().ThrowAsync<NotFoundException>();
+        (await action.Should().ThrowExactlyAsync<NotFoundException>()).ForEntity(nameof(ApplicationProjects));
     }
 
     [Fact]
@@ -68,7 +70,7 @@ public class ProvideNameCommandHandlerTests : TestBase<ChangeProjectNameCommandH
         Given(ApplicationProjectsRepositoryBuilder
             .New()
             .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ReturnsAllProjects(applicationProjects));
 
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
@@ -89,12 +91,13 @@ public class ProvideNameCommandHandlerTests : TestBase<ChangeProjectNameCommandH
             .WithDefaultProject()
             .Build();
 
-        var projectId = applicationProjects.Projects.Single().Id;
+        var project = applicationProjects.Projects.Single();
+        var projectId = project.Id;
 
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         _command = new ChangeProjectNameCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, TextTestData.TextThatExceedsShortInputLimit);
 
@@ -116,8 +119,8 @@ public class ProvideNameCommandHandlerTests : TestBase<ChangeProjectNameCommandH
 
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         _command = new ChangeProjectNameCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, ValidProjectName());
 

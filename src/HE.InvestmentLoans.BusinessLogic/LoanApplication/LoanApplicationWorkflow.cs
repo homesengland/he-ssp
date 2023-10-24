@@ -41,7 +41,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
     public LoanApplicationWorkflow(State currentState, Func<Task<LoanApplicationViewModel>> modelFactory, Func<Task<bool>> isLoanApplicationExist)
     {
-        _model = new LoanApplicationViewModel { GoodChangeMode = true };
+        _model = new LoanApplicationViewModel();
         _machine = new StateMachine<State, Trigger>(currentState);
         _isLoanApplicationExist = isLoanApplicationExist;
         _modelFactory = modelFactory;

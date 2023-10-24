@@ -11,10 +11,6 @@
     {
 }
 
-@{
-    var cookieConsent = Context.Request.Cookies["CookieConsent"] == "Yes";
-}
-
 @section HeadCss
     {
     <partial name="_LoadStylesheetPartial" />
@@ -22,6 +18,10 @@
 
 @section HeadScripts {
 
+}
+
+@section CookieBanner{
+    <partial name="_CookieBanner" />
 }
 
 <gds-div-grid-row>

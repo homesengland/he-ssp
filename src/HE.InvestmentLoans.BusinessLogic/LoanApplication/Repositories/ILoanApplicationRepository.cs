@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
+using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
@@ -20,4 +21,6 @@ public interface ILoanApplicationRepository
     Task WithdrawSubmitted(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken);
 
     Task WithdrawDraft(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken);
+
+    Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken);
 }

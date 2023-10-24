@@ -93,4 +93,9 @@ public class FundingViewModel : ICompletedSectionViewModel
     }
 
     public bool IsEditable() => IsReadOnly() is false;
+
+    public ApplicationStatus GetApplicationStatus()
+    {
+        return LoanApplicationStatus;
+    }
 }

@@ -110,6 +110,11 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 if(retrievedSiteDetail != null)
                 {
                     var siteDetailsDto = SiteDetailsDtoMapper.MapSiteDetailsToDto(retrievedSiteDetail);
+                    var relatedLoan = _loanApplicationRepository.GetLoanApplicationRelatedToSiteDetails(siteDetailsGuid);
+                    if (relatedLoan != null)
+                    {
+                        siteDetailsDto.loanApplicationStatus = relatedLoan.invln_ExternalStatus?.Value;
+                    }
                     return JsonSerializer.Serialize(siteDetailsDto);
                 }
             }

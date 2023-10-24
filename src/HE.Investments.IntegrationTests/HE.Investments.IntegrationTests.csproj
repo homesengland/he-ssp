@@ -22,6 +22,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="IntegrationFramework\Helpers\Components\**" />
+    <Compile Remove="IntegrationFramework\TestData\**" />
+    <EmbeddedResource Remove="IntegrationFramework\Helpers\Components\**" />
+    <EmbeddedResource Remove="IntegrationFramework\TestData\**" />
+    <None Remove="IntegrationFramework\Helpers\Components\**" />
+    <None Remove="IntegrationFramework\TestData\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AngleSharp" Version="1.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.21" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
@@ -53,11 +62,6 @@
   <ItemGroup>
     <ProjectReference Include="..\HE.InvestmentLoans.Common.Tests\HE.InvestmentLoans.Common.Tests.csproj" />
     <ProjectReference Include="..\HE.InvestmentLoans.WWW\HE.InvestmentLoans.WWW.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="IntegrationFramework\Helpers\Components\" />
-    <Folder Include="IntegrationFramework\TestData\" />
   </ItemGroup>
 
 </Project>
