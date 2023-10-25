@@ -7,9 +7,9 @@ public class HomeTypesRepository : IHomeTypesRepository
 {
     public static readonly IDictionary<string, IList<HomeTypeEntity>> HomeTypes = new ConcurrentDictionary<string, IList<HomeTypeEntity>>();
 
-    public Task<HomeTypesEntity> GetByFinancialSchemeId(string financialSchemeId, CancellationToken cancellationToken)
+    public Task<HomeTypesEntity> GetBySchemeId(string schemeId, CancellationToken cancellationToken)
     {
-        if (!HomeTypes.TryGetValue(financialSchemeId, out var homeTypes))
+        if (!HomeTypes.TryGetValue(schemeId, out var homeTypes))
         {
             return Task.FromResult(new HomeTypesEntity(Enumerable.Empty<HomeTypeBasicDetailsEntity>()));
         }

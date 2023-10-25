@@ -23,7 +23,7 @@ internal sealed class GetHousingTypeSectionQueryHandler : IRequestHandler<GetHou
     public async Task<HousingTypeSection> Handle(GetHousingTypeSectionQuery request, CancellationToken cancellationToken)
     {
         var homeType = await _repository.GetById(
-            request.FinancialSchemeId,
+            request.SchemeId,
             new HomeTypeId(request.HomeTypeId),
             new[] { HomeTypeSectionType.HousingType },
             cancellationToken);

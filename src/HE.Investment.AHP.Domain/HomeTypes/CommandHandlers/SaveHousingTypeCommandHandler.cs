@@ -25,8 +25,8 @@ public class SaveHousingTypeCommandHandler : HomeTypeCommandHandlerBase, IReques
 
     public async Task<OperationResult<HomeTypeId?>> Handle(SaveHousingTypeCommand request, CancellationToken cancellationToken)
     {
-        var homeTypes = await _homeTypesRepository.GetByFinancialSchemeId(request.FinancialSchemeId, cancellationToken);
-        var homeType = await GetOrCreateHomeTypeEntity(request.FinancialSchemeId, request.HomeTypeId, cancellationToken);
+        var homeTypes = await _homeTypesRepository.GetBySchemeId(request.SchemeId, cancellationToken);
+        var homeType = await GetOrCreateHomeTypeEntity(request.SchemeId, request.HomeTypeId, cancellationToken);
 
         var validationErrors = PerformWithValidation(
             () => homeTypes.ValidateNameUniqueness(homeType.Id, request.HomeTypeName),
@@ -37,18 +37,18 @@ public class SaveHousingTypeCommandHandler : HomeTypeCommandHandlerBase, IReques
             return new OperationResult<HomeTypeId?>(validationErrors, null);
         }
 
-        await _homeTypeRepository.Save(request.FinancialSchemeId, homeType, new[] { HomeTypeSectionType.HousingType }, cancellationToken);
+        await _homeTypeRepository.Save(request.SchemeId, homeType, new[] { HomeTypeSectionType.HousingType }, cancellationToken);
 
         return new OperationResult<HomeTypeId?>(homeType.Id!);
     }
 
-    private async Task<HomeTypeEntity> GetOrCreateHomeTypeEntity(string financialSchemeId, string? homeTypeId, CancellationToken cancellationToken)
+    private async Task<HomeTypeEntity> GetOrCreateHomeTypeEntity(string schemeId, string? homeTypeId, CancellationToken cancellationToken)
     {
         if (string.IsNullOrEmpty(homeTypeId))
         {
             return new HomeTypeEntity(homeTypeId, new HousingTypeSectionEntity());
         }
 
-        return await _homeTypeRepository.GetById(financialSchemeId, new HomeTypeId(homeTypeId), new[] { HomeTypeSectionType.HousingType }, cancellationToken);
+        return await _homeTypeRepository.GetById(schemeId, new HomeTypeId(homeTypeId), new[] { HomeTypeSectionType.HousingType }, cancellationToken);
     }
 }

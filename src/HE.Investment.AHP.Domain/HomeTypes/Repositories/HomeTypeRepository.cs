@@ -7,12 +7,12 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Repositories;
 public class HomeTypeRepository : IHomeTypeRepository
 {
     public Task<HomeTypeEntity> GetById(
-        string financialSchemeId,
+        string schemeId,
         HomeTypeId homeTypeId,
         IReadOnlyCollection<HomeTypeSectionType> sectionTypes,
         CancellationToken cancellationToken)
     {
-        var homeType = Get(financialSchemeId, homeTypeId);
+        var homeType = Get(schemeId, homeTypeId);
         if (homeType != null)
         {
             return Task.FromResult(homeType);
@@ -22,7 +22,7 @@ public class HomeTypeRepository : IHomeTypeRepository
     }
 
     public Task<HomeTypeEntity> Save(
-        string financialSchemeId,
+        string schemeId,
         HomeTypeEntity homeType,
         IReadOnlyCollection<HomeTypeSectionType> sectionTypes,
         CancellationToken cancellationToken)
@@ -33,13 +33,13 @@ public class HomeTypeRepository : IHomeTypeRepository
         }
 
         // TODO: update fields in CRM depending on SectionTypes
-        Save(financialSchemeId, homeType);
+        Save(schemeId, homeType);
         return Task.FromResult(homeType);
     }
 
-    private HomeTypeEntity? Get(string financialSchemeId, HomeTypeId homeTypeId)
+    private HomeTypeEntity? Get(string schemeId, HomeTypeId homeTypeId)
     {
-        if (HomeTypesRepository.HomeTypes.TryGetValue(financialSchemeId, out var homeTypes))
+        if (HomeTypesRepository.HomeTypes.TryGetValue(schemeId, out var homeTypes))
         {
             return homeTypes.FirstOrDefault(x => x.Id == homeTypeId);
         }
@@ -47,9 +47,9 @@ public class HomeTypeRepository : IHomeTypeRepository
         return null;
     }
 
-    private void Save(string financialSchemeId, HomeTypeEntity entity)
+    private void Save(string schemeId, HomeTypeEntity entity)
     {
-        if (HomeTypesRepository.HomeTypes.TryGetValue(financialSchemeId, out var homeTypes))
+        if (HomeTypesRepository.HomeTypes.TryGetValue(schemeId, out var homeTypes))
         {
             var existingHomeType = homeTypes.FirstOrDefault(x => x.Id == entity.Id);
             if (existingHomeType != null)
@@ -61,7 +61,7 @@ public class HomeTypeRepository : IHomeTypeRepository
         }
         else
         {
-            HomeTypesRepository.HomeTypes.Add(financialSchemeId, new List<HomeTypeEntity> { entity });
+            HomeTypesRepository.HomeTypes.Add(schemeId, new List<HomeTypeEntity> { entity });
         }
     }
 }
