@@ -15,11 +15,11 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.Application.Order01StartAppl
 
 [Order(1)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class StartApplicationIntegrationTests : IntegrationTest
+public class Order01StartApplicationIntegrationTests : IntegrationTest
 {
     private const string CurrentPageKey = nameof(CurrentPageKey);
 
-    public StartApplicationIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order01StartApplicationIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
     }

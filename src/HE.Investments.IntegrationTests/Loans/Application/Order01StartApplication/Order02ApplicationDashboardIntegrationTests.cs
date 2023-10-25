@@ -6,15 +6,15 @@ using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
-namespace HE.InvestmentLoans.IntegrationTests.Loans.Dashboards;
+namespace HE.InvestmentLoans.IntegrationTests.Loans.Application.Order01StartApplication;
 
 [Order(2)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class ApplicationDashboardIntegrationTests : IntegrationTest
+public class Order02ApplicationDashboardIntegrationTests : IntegrationTest
 {
     private readonly string _applicationLoanId;
 
-    public ApplicationDashboardIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order02ApplicationDashboardIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
