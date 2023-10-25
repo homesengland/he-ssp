@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.WWW.Models.HomeTypes;
+namespace HE.Investment.AHP.Contract.HomeTypes;
 
 public enum HousingType
 {

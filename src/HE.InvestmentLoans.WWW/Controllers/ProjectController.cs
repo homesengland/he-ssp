@@ -572,7 +572,7 @@ public class ProjectController : WorkflowController<ProjectState>
         return Back(currentPage, new { id, projectId });
     }
 
-    protected override async Task<IStateRouting<ProjectState>> Routing(ProjectState currentState)
+    protected override async Task<IStateRouting<ProjectState>> Routing(ProjectState currentState, object routeData = null)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
         var projectId = Request.RouteValues.FirstOrDefault(x => x.Key == "projectId").Value as string;

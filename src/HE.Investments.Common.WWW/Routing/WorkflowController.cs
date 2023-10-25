@@ -99,7 +99,7 @@ public abstract class WorkflowController<TState> : Controller
         return ChangeState(Trigger.Back, currentState, routeData);
     }
 
-    protected abstract Task<IStateRouting<TState>> Routing(TState currentState);
+    protected abstract Task<IStateRouting<TState>> Routing(TState currentState, object? routeData = null);
 
     private static WorkflowStateAttribute? CurrentActionStateAttribute(ActionDescriptor actionDescriptor)
     {
@@ -116,7 +116,7 @@ public abstract class WorkflowController<TState> : Controller
 
     private async Task<IActionResult> ChangeState(Trigger trigger, TState currentState, object? routeData)
     {
-        var routing = await Routing(currentState);
+        var routing = await Routing(currentState, routeData);
         var nextState = await routing.NextState(trigger);
 
         return RedirectToState(nextState, routeData);

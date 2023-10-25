@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investments.Common.WWW.Helpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
