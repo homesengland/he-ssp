@@ -6,7 +6,7 @@ using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
-namespace HE.InvestmentLoans.IntegrationTests.Loans.Application;
+namespace HE.InvestmentLoans.IntegrationTests.Loans.Application.Order03SubmitApplication;
 
 [Order(3)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
@@ -55,5 +55,7 @@ public class SubmitApplicationIntegrationTests : IntegrationTest
         applicationSubmittedPage
             .UrlEndWith(ApplicationPagesUrls.ApplicationSubmittedSuffix)
             .HasGdsSubmitButton("application-submitted-to-dashboard", out _);
+
+        UserData.SetSubmittedLoanApplicationId(_applicationLoanId);
     }
 }
