@@ -24,7 +24,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     }
 
     [WorkflowState(HomeTypesWorkflowState.Index)]
-    [HttpGet("")]
+    [HttpGet]
     public IActionResult Index()
     {
         return View();
