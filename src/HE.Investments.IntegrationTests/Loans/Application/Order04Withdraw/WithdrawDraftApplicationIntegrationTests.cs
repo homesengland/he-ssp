@@ -17,38 +17,9 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.Application.Order04Withdraw;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
 {
-    private readonly string _applicationLoanId;
-
     public WithdrawDraftApplicationIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
-        _applicationLoanId = UserData.SubmittedLoanApplicationId;
-    }
-
-    [Fact(Skip = LoansConfig.SkipTest)]
-    [Order(8)]
-    public async Task Order08_ShouldCreateLoanApplicationWithDraftStatus_WhenContinueButtonIsClicked()
-    {
-        // given
-        var applicationNamePage = GetSharedData<IHtmlDocument>(CurrentPageKey);
-
-        // when
-        var continueButton = applicationNamePage.GetGdsSubmitButtonById("continue-button");
-        var taskListPage = await TestClient.SubmitButton(
-            continueButton,
-            new Dictionary<string, string> { { "LoanApplicationName", $"Application-{Guid.NewGuid()}" }, });
-
-        // then
-        taskListPage
-            .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
-            .HasTitle("Development loan application")
-            .ExtractLastSavedDateFromTaskListPage(out var dateTime);
-
-        dateTime.Should().BeCloseTo(DateTime.UtcNow.ConvertUtcToUkLocalTime(), TimeSpan.FromMinutes(2));
-
-        var applicationGuid = taskListPage.Url.GetApplicationGuidFromUrl();
-        applicationGuid.Should().NotBeEmpty();
-        UserData.SetApplicationLoanId(applicationGuid);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -56,7 +27,9 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
     public async Task Order01_ShouldOpenWithdrawPage_WhenApplicationIsInDraftState()
     {
         // given
-        var applicationDashboardPage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationDashboard(_applicationLoanId));
+        var applicationToWithdrawId = await CreateNewApplicationDraft();
+
+        var applicationDashboardPage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationDashboard(applicationToWithdrawId));
 
         // when
         var withdrawApplicationButton = applicationDashboardPage.GetAnchorElementById("withdraw-application");
@@ -126,8 +99,21 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
 
         // then
         dashboardPage
-            .UrlEndWith(PagesUrls.DashboardPage)
+            .UrlWithoutQueryEndsWith(PagesUrls.DashboardPage)
             .HasSuccessNotificationBanner("project has been withdrawn")
             .HasNotEmptyTitle();
+    }
+
+    private async Task<string> CreateNewApplicationDraft()
+    {
+        var applicationNamePage = await TestClient.NavigateTo(ApplicationPagesUrls.ApplicationName);
+
+        var continueButton = applicationNamePage.GetGdsSubmitButtonById("continue-button");
+        var taskListPage = await TestClient.SubmitButton(
+            continueButton,
+            ("LoanApplicationName", $"Application-{Guid.NewGuid()}"));
+
+        var applicationToWithdrawId = taskListPage.Url.GetApplicationGuidFromUrl();
+        return applicationToWithdrawId;
     }
 }

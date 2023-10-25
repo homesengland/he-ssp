@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
+using FluentAssertions;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
@@ -111,14 +112,11 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
     [Order(5)]
     public void Order05_ShouldNotSeeWithdrawButton_WhenApplicationWasAlreadyWithdrawn()
     {
-        // given
+        // given & when
         var applicationDashboardPage = GetSharedData<IHtmlDocument>(SharedKeys.CurrentPageKey);
 
-        // when
-        var withdrawApplicationButton = applicationDashboardPage.GetAnchorElementById("withdraw-application");
-
         // then
-        withdrawApplicationButton.Should().BeNull();
+        applicationDashboardPage.DoesNotHaveGdsButton("withdraw-application");
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

@@ -64,6 +64,13 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument DoesNotHaveGdsButton(this IHtmlDocument htmlDocument, string elementId)
+    {
+        htmlDocument.GetElementById(elementId).Should().BeNull();
+        return htmlDocument;
+    }
+
+
     public static IHtmlDocument HasOneValidationMessages(this IHtmlDocument htmlDocument, string validationMessage)
     {
         return htmlDocument.ContainsOnlyOneValidationMessage(validationMessage);

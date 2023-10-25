@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
+using He.AspNetCore.Mvc.Gds.Components.Constants;
+using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
@@ -26,6 +28,9 @@ public class SubmitApplicationIntegrationTests : IntegrationTest
     {
         // given
         var taskList = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+
+        await RemoveNonCompletedProjectsFrom(taskList);
+
         var submitLoanApplicationButton = taskList.GetGdsSubmitButtonById("submit-application");
 
         // when
@@ -54,8 +59,24 @@ public class SubmitApplicationIntegrationTests : IntegrationTest
         // then
         applicationSubmittedPage
             .UrlEndWith(ApplicationPagesUrls.ApplicationSubmittedSuffix)
-            .HasGdsSubmitButton("application-submitted-to-dashboard", out _);
+            .HasGdsButton("application-submitted-to-dashboard");
 
         UserData.SetSubmittedLoanApplicationId(_applicationLoanId);
+    }
+
+    private async Task RemoveNonCompletedProjectsFrom(IHtmlDocument taskList)
+    {
+        var projects = taskList.GetTaskListProjects();
+
+        var nonCompletedProjectRemoveUrls = projects.Where(p => p.Value.Status != "Completed").Select(p => p.Value.RemoveUrl);
+
+        foreach (var removeUrl in nonCompletedProjectRemoveUrls)
+        {
+            var deleteProjectPage = await TestClient.NavigateTo(removeUrl);
+
+            var continueButton = deleteProjectPage.GetGdsSubmitButtonById("continue-button");
+
+            await TestClient.SubmitButton(continueButton, (nameof(ProjectViewModel.DeleteProject), CommonResponse.Yes));
+        }
     }
 }
