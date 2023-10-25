@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.IntegrationTests.Config;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Auth;
-using HE.InvestmentLoans.IntegrationTests.Loans.CompanyStructureSection.Mock;
+using HE.InvestmentLoans.IntegrationTests.Loans.Application.Order02Sections.CompanyStructureSection.Mock;
 using HE.Investments.DocumentService.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
