@@ -70,7 +70,6 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
-
     public static IHtmlDocument HasOneValidationMessages(this IHtmlDocument htmlDocument, string validationMessage)
     {
         return htmlDocument.ContainsOnlyOneValidationMessage(validationMessage);

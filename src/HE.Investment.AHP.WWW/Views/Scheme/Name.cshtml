@@ -1,0 +1,31 @@
+@model HE.Investment.AHP.WWW.Models.Scheme.SchemeModel
+@{
+    ViewData["Title"] = "Create scheme";
+}
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.Action("Index", "Scheme")" text="Back" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
+    <partial name="_ErrorSummaryPartial" model="null"/>
+    <form asp-controller="Scheme" asp-action="Name" asp-method="post" novalidate>
+        <gds-field-set role="group">
+            <gds-legend size="ControlSize.L">
+                <gds-fieldset-heading>
+                    What is the name of the scheme?
+                </gds-fieldset-heading>
+            </gds-legend>
+
+            <gds-p >You should make this something that will help you differentiate it from your other schemes within your site. For example, Village Way – Affordable Rent or Village Way – Shared Ownership.</gds-p>
+
+            @Html.HiddenFor(m => m.Id)
+
+            <gds-input asp-hiddenlabeltext="Name"
+                       govuk-formgroup-asp-for="Name"
+                       value="@Model?.Name"/>
+        </gds-field-set>
+
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="save-and-continue-button">
+            Save and continue
+        </button>
+    </form>
+
+</gds-div-grid-column-two-thirds>
