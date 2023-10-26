@@ -12,7 +12,9 @@ public class SchemeEntity
     }
 
     public SchemeId Id { get; }
+
     public SchemeName Name { get; private set; }
+
     public SchemeTenure? Tenure { get; private set; }
 
     public void ChangeName(SchemeName name)

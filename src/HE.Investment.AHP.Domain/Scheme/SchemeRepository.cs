@@ -5,17 +5,6 @@ using HE.InvestmentLoans.Common.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Scheme;
 
-public interface ISchemeRepository
-{
-    Task<SchemeEntity> GetById(SchemeId schemeId, CancellationToken cancellationToken);
-
-    Task<IList<SchemeEntity>> GetAll(CancellationToken cancellationToken);
-
-    Task<SchemeEntity> Save(
-        SchemeEntity scheme,
-        CancellationToken cancellationToken);
-}
-
 public class SchemeRepository : ISchemeRepository
 {
     private static readonly IDictionary<string, SchemeEntity> Schemes = new ConcurrentDictionary<string, SchemeEntity>();

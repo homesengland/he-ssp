@@ -3,7 +3,7 @@ using Stateless;
 
 namespace HE.Investment.AHP.Domain.Scheme.Workflows;
 
-public class SchemeWorkflow: IStateRouting<SchemeWorkflowState>
+public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 {
     private readonly StateMachine<SchemeWorkflowState, Trigger> _machine;
 

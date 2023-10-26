@@ -14,15 +14,11 @@
         <LangVersion>10</LangVersion>
     </PropertyGroup>
 
-  <PropertyGroup>
-    <NoWarn>SA1118</NoWarn>
-  </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)'!='DEBUG'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  
+
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
       <PrivateAssets>all</PrivateAssets>

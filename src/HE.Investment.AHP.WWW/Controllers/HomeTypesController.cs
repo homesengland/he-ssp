@@ -9,10 +9,12 @@ using HE.InvestmentLoans.Common.Validation;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
+[Authorize]
 [Route("{schemeId}/home-types")]
 public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 {

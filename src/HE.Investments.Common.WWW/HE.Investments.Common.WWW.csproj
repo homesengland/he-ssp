@@ -13,7 +13,6 @@
 
   <PropertyGroup>
     <NoWarn>1591</NoWarn>
-    <NoWarn>SA1118</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'!='DEBUG'">

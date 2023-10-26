@@ -8,11 +8,16 @@ namespace HE.Investment.AHP.Domain.Scheme.ValueObjects;
 
 public class SchemeTenure : ValueObject
 {
-    public Tenure Value { get; private set; }
-
     public SchemeTenure(string value)
     {
         Build(value).CheckErrors();
+    }
+
+    public Tenure Value { get; private set; }
+
+    protected override IEnumerable<object?> GetAtomicValues()
+    {
+        yield return Value;
     }
 
     private OperationResult Build(string value)
@@ -22,10 +27,5 @@ public class SchemeTenure : ValueObject
         Value = EnumValidator<Tenure>.For(value, nameof(Tenure), operationResult);
 
         return operationResult;
-    }
-
-    protected override IEnumerable<object?> GetAtomicValues()
-    {
-        yield return Value;
     }
 }

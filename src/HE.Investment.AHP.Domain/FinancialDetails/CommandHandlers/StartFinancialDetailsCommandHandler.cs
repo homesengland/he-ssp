@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.Investment.AHP.BusinessLogic.FinancialDetails.Entities;
-using HE.Investment.AHP.BusinessLogic.FinancialDetails.Repositories;
 using HE.Investment.AHP.Contract.FinancialDetails.Commands;
+using HE.Investment.AHP.Domain.FinancialDetails.Entities;
+using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.InvestmentLoans.Common.Validation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
 
-namespace HE.Investment.AHP.BusinessLogic.FinancialDetails.CommandHandlers;
+namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
 public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<StartFinancialDetailsCommand, OperationResult<StartFinancialDetailsCommandResult>>
 {
     private readonly IFinancialDetailsRepository _financialDetailsRepository;
@@ -30,4 +24,3 @@ public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandle
         return OperationResult.Success(new StartFinancialDetailsCommandResult(financialDetails.Id.Value));
     }
 }
-

@@ -4,7 +4,7 @@ using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 
-public class UpdateSchemeTenureCommandHandler  : UpdateSchemeCommandHandler<UpdateSchemeTenureCommand>
+public class UpdateSchemeTenureCommandHandler : UpdateSchemeCommandHandler<UpdateSchemeTenureCommand>
 {
     public UpdateSchemeTenureCommandHandler(ISchemeRepository repository, IDomainExceptionHandler domainExceptionHandler)
         : base(repository, domainExceptionHandler)

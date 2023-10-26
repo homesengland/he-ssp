@@ -7,11 +7,12 @@ using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Validation;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-// TODO: Add authorization attribute when implemented
+[Authorize]
 [Route("scheme")]
 public class SchemeController : WorkflowController<SchemeWorkflowState>
 {
