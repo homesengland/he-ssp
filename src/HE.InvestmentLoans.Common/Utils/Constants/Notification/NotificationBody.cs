@@ -4,7 +4,7 @@ namespace HE.InvestmentLoans.Common.Utils.Constants.Notification;
 
 public static class NotificationBody
 {
-    public const string ApplicationWithdrawnWithName = "<Name> poject has been withdrawn.";
+    public const string ApplicationWithdrawnWithName = "<Name> project has been withdrawn.";
 
     public const string ProjectRemoved = "<Name> removed";
 

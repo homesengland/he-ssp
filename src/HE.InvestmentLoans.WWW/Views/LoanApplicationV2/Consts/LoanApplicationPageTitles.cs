@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.WWW.Views.LoanApplicationV2.Const;
+namespace HE.InvestmentLoans.WWW.Views.LoanApplicationV2.Consts;
 
 public class LoanApplicationPageTitles
 {
