@@ -2,6 +2,8 @@ using HE.Investment.AHP.BusinessLogic.FinancialDetails.Repositories;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Mappers;
+using HE.Investment.AHP.Domain.Scheme;
+using HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.Common.Utils;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
@@ -14,9 +16,11 @@ public static class DomainModule
     public static void AddDomainModule(this IServiceCollection services)
     {
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
+        services.AddScoped<IDomainExceptionHandler, DomainExceptionHandler>();
 
         AddHomeTypes(services);
         AddFinancialDetails(services);
+        AddScheme(services);
     }
 
     private static void AddHomeTypes(IServiceCollection services)
@@ -31,5 +35,10 @@ public static class DomainModule
     private static void AddFinancialDetails(IServiceCollection services)
     {
         services.AddScoped<IFinancialDetailsRepository, FinancialDetailsRepository>();
+    }
+
+    private static void AddScheme(IServiceCollection services)
+    {
+        services.AddSingleton<ISchemeRepository, SchemeRepository>();
     }
 }
