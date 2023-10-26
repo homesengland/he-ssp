@@ -1,20 +1,18 @@
-using System.Collections.Concurrent;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
 
-namespace HE.Investment.AHP.Domain.HomeTypes;
+namespace HE.Investment.AHP.Domain.HomeTypes.Repositories;
 
 public class HomeTypeRepository : IHomeTypeRepository
 {
-    private static readonly IDictionary<string, HomeTypeEntity> HomeTypes = new ConcurrentDictionary<string, HomeTypeEntity>();
-
     public Task<HomeTypeEntity> GetById(
+        string schemeId,
         HomeTypeId homeTypeId,
         IReadOnlyCollection<HomeTypeSectionType> sectionTypes,
         CancellationToken cancellationToken)
     {
-        var homeType = Get(homeTypeId);
+        var homeType = Get(schemeId, homeTypeId);
         if (homeType != null)
         {
             return Task.FromResult(homeType);
@@ -24,7 +22,7 @@ public class HomeTypeRepository : IHomeTypeRepository
     }
 
     public Task<HomeTypeEntity> Save(
-        string financialSchemeId,
+        string schemeId,
         HomeTypeEntity homeType,
         IReadOnlyCollection<HomeTypeSectionType> sectionTypes,
         CancellationToken cancellationToken)
@@ -35,27 +33,35 @@ public class HomeTypeRepository : IHomeTypeRepository
         }
 
         // TODO: update fields in CRM depending on SectionTypes
-        Save(homeType);
+        Save(schemeId, homeType);
         return Task.FromResult(homeType);
     }
 
-    private HomeTypeEntity? Get(HomeTypeId homeTypeId)
+    private HomeTypeEntity? Get(string schemeId, HomeTypeId homeTypeId)
     {
-        if (HomeTypes.TryGetValue(homeTypeId.Value, out var homeTypeEntity))
+        if (HomeTypesRepository.HomeTypes.TryGetValue(schemeId, out var homeTypes))
         {
-            return homeTypeEntity;
+            return homeTypes.FirstOrDefault(x => x.Id == homeTypeId);
         }
 
         return null;
     }
 
-    private void Save(HomeTypeEntity entity)
+    private void Save(string schemeId, HomeTypeEntity entity)
     {
-        if (HomeTypes.ContainsKey(entity.Id!.Value))
+        if (HomeTypesRepository.HomeTypes.TryGetValue(schemeId, out var homeTypes))
         {
-            HomeTypes.Remove(entity.Id!.Value);
-        }
+            var existingHomeType = homeTypes.FirstOrDefault(x => x.Id == entity.Id);
+            if (existingHomeType != null)
+            {
+                homeTypes.Remove(existingHomeType);
+            }
 
-        HomeTypes[entity.Id!.Value] = entity;
+            homeTypes.Add(entity);
+        }
+        else
+        {
+            HomeTypesRepository.HomeTypes.Add(schemeId, new List<HomeTypeEntity> { entity });
+        }
     }
 }
