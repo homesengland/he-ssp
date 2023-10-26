@@ -364,6 +364,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 (preImage.invln_ExternalStatus != null && target.invln_ExternalStatus != null && preImage.invln_ExternalStatus.Value == (int)invln_ExternalStatus.Draft
                 && target.invln_ExternalStatus.Value == (int)invln_ExternalStatus.ApplicationSubmitted))
             {
+                target.invln_Datesubmitted = DateTime.UtcNow;
                 var relatedSiteDetails = _siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(target.ToEntityReference());
                 if (relatedSiteDetails != null && relatedSiteDetails.Count > 0)
                 {
