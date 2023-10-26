@@ -7,6 +7,7 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Assertions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
+using HE.InvestmentLoans.WWW.Views.LoanApplicationV2.Const;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -39,7 +40,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
         // then
         withdrawPage
             .UrlEndWith(ApplicationPagesUrls.WithdrawSuffix)
-            .HasLabelTitle("Why are you withdrawing your application")
+            .HasLabelTitle(LoanApplicationPageTitles.Withdraw)
             .HasGdsSubmitButton("continue-button", out _);
 
         SetSharedData(SharedKeys.CurrentPageKey, withdrawPage);
@@ -61,7 +62,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
         // then
         withdrawPage
             .UrlEndWith(ApplicationPagesUrls.WithdrawSuffix)
-            .HasLabelTitle("Why are you withdrawing your application")
+            .HasLabelTitle(LoanApplicationPageTitles.Withdraw)
             .ContainsValidationMessage(ValidationErrorMessage.EnterWhyYouWantToWithdrawApplication);
     }
 
@@ -81,7 +82,7 @@ public class WithdrawSubmittedApplicationIntegrationTests : IntegrationTest
         // then
         withdrawPage
             .UrlEndWith(ApplicationPagesUrls.WithdrawSuffix)
-            .HasLabelTitle("Why are you withdrawing your application")
+            .HasLabelTitle(LoanApplicationPageTitles.Withdraw)
             .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.WithdrawReason));
     }
 
