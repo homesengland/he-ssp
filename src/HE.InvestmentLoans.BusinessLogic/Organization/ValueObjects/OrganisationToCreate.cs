@@ -1,17 +1,16 @@
 using HE.InvestmentLoans.Common.Domain;
-using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Validation;
 
 namespace HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 
 public class OrganisationToCreate : ValueObject
 {
-    public OrganisationToCreate(string name, OrganisationAddress address)
+    public OrganisationToCreate(OrganisationName name, OrganisationAddress address)
     {
-        Build(name, address).CheckErrors();
+        Name = name;
+        Address = address;
     }
 
-    public string Name { get; private set; }
+    public OrganisationName Name { get; private set; }
 
     public OrganisationAddress Address { get; private set; }
 
@@ -19,19 +18,5 @@ public class OrganisationToCreate : ValueObject
     {
         yield return Name;
         yield return Address;
-    }
-
-    private OperationResult Build(string name, OrganisationAddress address)
-    {
-        var operationResult = OperationResult.New();
-
-        Name = Validator
-            .For(name, nameof(Name), operationResult)
-            .IsProvided(OrganisationErrorMessages.MissingOrganisationName)
-            .IsShortInput();
-
-        Address = address;
-
-        return operationResult;
     }
 }

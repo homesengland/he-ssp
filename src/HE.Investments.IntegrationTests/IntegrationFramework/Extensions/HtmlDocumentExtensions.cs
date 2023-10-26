@@ -237,7 +237,7 @@ public static class HtmlDocumentExtensions
         var notificationBannerContent = successNotificationBanner?.GetElementsByClassName(CssConstants.GovUkNotificationBannerContent).FirstOrDefault();
         notificationBannerContent.Should().NotBeNull("Notification banner does not have content");
 
-        return notificationBannerContent!.InnerHtml.Trim();
+        return notificationBannerContent!.TextContent.Trim();
     }
 
     public static string GetInsetText(this IHtmlDocument htmlDocument)

@@ -8,16 +8,17 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Organization.ValueObjects;
 
 public class OrganisationToCreateTests
 {
-    private readonly string _name = "Organizacja narodów Antonia";
-
     [Fact]
     public void ShouldCreate()
     {
-        // given & when
-        var result = new OrganisationToCreate(_name, OrganisationAddressTests.CreateAddress());
+        // given
+        var name = "Organizacja narodów Antonia";
+
+        // when
+        var result = new OrganisationToCreate(OrganisationNameTests.CreateName(name), OrganisationAddressTests.CreateAddress());
 
         // then
-        result.Name.Should().Be(_name);
+        result.Name.Value.Should().Be(name);
     }
 
     [Theory]
@@ -26,7 +27,7 @@ public class OrganisationToCreateTests
     public void ShouldThrowException_WhenNameIsInvalid(string name, string expectedErrorMessage)
     {
         // given & when
-        var result = () => new OrganisationToCreate(name, OrganisationAddressTests.CreateAddress());
+        var result = () => new OrganisationToCreate(OrganisationNameTests.CreateName(name), OrganisationAddressTests.CreateAddress());
 
         // then
         result.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(expectedErrorMessage);

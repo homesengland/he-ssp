@@ -22,7 +22,8 @@ public class OperationResult
 
     public static OperationResult<TResult> Success<TResult>(TResult result) => new(result);
 
-    public static void ThrowValidationError(string affectedField, string validationMessage) => New().AddValidationError(affectedField, validationMessage).CheckErrors();
+    public static void ThrowValidationError(string affectedField, string validationMessage) =>
+        New().AddValidationError(affectedField, validationMessage).CheckErrors();
 
     public static OperationResult<TReturnedData> ResultOf<TReturnedData>(Func<TReturnedData> action)
         where TReturnedData : class

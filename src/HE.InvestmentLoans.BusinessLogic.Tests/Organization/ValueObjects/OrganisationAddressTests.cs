@@ -12,7 +12,7 @@ public class OrganisationAddressTests
     private static readonly string AddressLine2 = "2a";
     private static readonly string AddressLine3 = "5";
     private static readonly string TownOrCity = "Chorzów";
-    private static readonly Postcode Postcode = new("PO16 7GZ");
+    private static readonly string Postcode = "PO16 7GZ";
     private static readonly string County = "test";
     private static readonly string Country = "UK";
 
@@ -21,6 +21,7 @@ public class OrganisationAddressTests
         string? addressLine2 = null,
         string? addressLine3 = null,
         string? townOrCity = null,
+        string? postcode = null,
         string? county = null,
         string? country = null)
     {
@@ -29,7 +30,7 @@ public class OrganisationAddressTests
             addressLine2 ?? AddressLine2,
             addressLine3 ?? AddressLine3,
             townOrCity ?? TownOrCity,
-            Postcode,
+            postcode ?? Postcode,
             county ?? County,
             country ?? Country);
     }
@@ -48,7 +49,7 @@ public class OrganisationAddressTests
         result.TownOrCity.Should().Be(TownOrCity);
         result.County.Should().Be(County);
         result.Country.Should().Be(Country);
-        result.Postcode.Should().Be(Postcode);
+        result.Postcode.Value.Should().Be(Postcode);
     }
 
     [Fact]
@@ -65,7 +66,7 @@ public class OrganisationAddressTests
         result.TownOrCity.Should().Be(TownOrCity);
         result.County.Should().BeNull();
         result.Country.Should().BeNull();
-        result.Postcode.Should().Be(Postcode);
+        result.Postcode.Value.Should().Be(Postcode);
     }
 
     [Theory]
