@@ -118,6 +118,16 @@ public class UserOrganisationTests : ViewTestBase
         return document;
     }
 
+    private static List<ProgrammeToAccessModel> ProgrammesToToAccess()
+    {
+        return new List<ProgrammeToAccessModel>
+        {
+            new(
+                new ProgrammeModel("P1", "Desc1", "C", "V", "Ct"),
+                new List<ApplicationBasicDetailsModel> { new(Guid.NewGuid(), "AP1", ApplicationStatus.Withdrawn) }),
+        };
+    }
+
     private UserOrganisationModel CreateTestModel(
         string? orgName = null,
         string? userName = null,
@@ -130,12 +140,7 @@ public class UserOrganisationTests : ViewTestBase
             orgName ?? "Organizacja Narodów Śląskich",
             userName ?? "Jan Muzykant",
             isLimitedUser,
-            programmesToAccess ?? new List<ProgrammeToAccessModel>
-            {
-                new(
-                    new ProgrammeModel("P1", "Desc1", "C", "V", "Ct"),
-                    new List<ApplicationBasicDetailsModel> { new(Guid.NewGuid(), "AP1", ApplicationStatus.Withdrawn) }),
-            },
+            programmesToAccess ?? ProgrammesToToAccess(),
             programmesToApply ?? new List<ProgrammeModel> { new ProgrammeModel("P2", "D2", "C", "V", "Ct") },
             actions ?? new List<ActionModel> { new ActionModel("Action Name", "A", "C") });
     }

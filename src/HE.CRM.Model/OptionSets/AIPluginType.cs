@@ -18,16 +18,7 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CustomConnector = 1,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Dataverse = 0,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SharedConnector = 3,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Workflow = 4,
 	}
 }
 #pragma warning restore CS1591

@@ -1,6 +1,6 @@
 @model HE.InvestmentLoans.Contract.Funding.FundingViewModel
-@using HE.InvestmentLoans.Contract.Funding
 @using HE.InvestmentLoans.Contract.Funding.Enums;
+@using HE.Investments.Common.WWW.Extensions
 @inject ModelExpressionProvider modelProvider
 
 @{
@@ -16,7 +16,7 @@
             <gds-div-form-group invalid="inputInvalid">
                 <legend>
                     <gds-label-wrapper>
-                        <gds-label size="@ControlSize.L" for="Funding.GrossDevelopmentValue">
+                        <gds-label size="@ControlSize.L" for="GrossDevelopmentValue">
                             @FundingPageTitles.GrossDevelopmentValue
                         </gds-label>
                     </gds-label-wrapper>

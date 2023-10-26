@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>Default</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NoWarn>1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'!='DEBUG'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dawn.Guard" Version="1.12.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.20" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HE.InvestmentLoans.Common\HE.InvestmentLoans.Common.csproj" />
+    <ProjectReference Include="..\He.AspNetCore.Mvc.Gds.Components\He.AspNetCore.Mvc.Gds.Components.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Partials\Errors\_ErrorSummaryPartial.cshtml" />
+    <EmbeddedResource Include="Partials\Cookies\_AdditionalCookies.cshtml" />
+    <EmbeddedResource Include="Partials\Cookies\_Cookies.cshtml" />
+    <EmbeddedResource Include="Partials\Cookies\_CookiesTable.cshtml" />
+    <EmbeddedResource Include="Partials\Cookies\_EssentialCookies.cshtml" />
+    <EmbeddedResource Include="Partials\_ViewImports.cshtml" />
+    <EmbeddedResource Include="Templates\CookieBannerTemplate.html" />
+  </ItemGroup>
+
+</Project>

@@ -8,5 +8,7 @@ public interface ICompanyStructureRepository
 {
     Task<CompanyStructureEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CompanyStructureFieldsSet companyStructureFieldsSet, CancellationToken cancellationToken);
 
+    Task<string> GetFilesLocationAsync(LoanApplicationId loanApplicationId, CancellationToken cancellationToken);
+
     Task SaveAsync(CompanyStructureEntity companyStructure, UserAccount userAccount, CancellationToken cancellationToken);
 }

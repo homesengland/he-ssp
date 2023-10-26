@@ -9,5 +9,5 @@ namespace HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 public record ProvideMoreInformationAboutOrganizationCommand(
                 LoanApplicationId LoanApplicationId,
                 string? OrganisationMoreInformation,
-                List<FileTableRow>? OrganisationMoreInformationFiles,
+                IList<FileTableRow>? OrganisationMoreInformationFiles,
                 List<IFormFile>? FormFiles) : IRequest<OperationResult>;

@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.Projects.Consts;
 using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
@@ -30,16 +31,16 @@ public class PublicSectorGrantFunding : ValueObject
         var aggregatedResult = OperationResult.New();
 
         var providerName = providerNameString.IsProvided() ? aggregatedResult.CatchResult(() => new ShortText(providerNameString)) : null;
-        aggregatedResult.OverrideError(GenericValidationError.TextTooLong, "GrantFundingProviderName", ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingProviderName));
+        aggregatedResult.OverrideError(GenericValidationError.TextTooLong, ProjectValidationFieldNames.GrantFunding.ProviderName, ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingProviderName));
 
         var amount = amountString.IsProvided() ? aggregatedResult.CatchResult(() => Pounds.FromString(amountString)) : null;
-        aggregatedResult.OverrideError(GenericValidationError.InvalidPoundsValue, "GrantFundingAmount", ValidationErrorMessage.IncorrectGrantFundingAmount);
+        aggregatedResult.OverrideError(GenericValidationError.InvalidPoundsValue, ProjectValidationFieldNames.GrantFunding.Amount, ValidationErrorMessage.IncorrectGrantFundingAmount);
 
         var grantOrFoundName = grantOrFoundNameString.IsProvided() ? aggregatedResult.CatchResult(() => new ShortText(grantOrFoundNameString)) : null;
-        aggregatedResult.OverrideError(GenericValidationError.TextTooLong, "GrantFundingName", ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingName));
+        aggregatedResult.OverrideError(GenericValidationError.TextTooLong, ProjectValidationFieldNames.GrantFunding.FundingName, ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingName));
 
         var purpose = purposeString.IsProvided() ? aggregatedResult.CatchResult(() => new LongText(purposeString)) : null;
-        aggregatedResult.OverrideError(GenericValidationError.TextTooLong, "GrantFundingPurpose", ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingPurpose));
+        aggregatedResult.OverrideError(GenericValidationError.TextTooLong, ProjectValidationFieldNames.GrantFunding.Purpose, ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.GrantFundingPurpose));
 
         aggregatedResult.CheckErrors();
 

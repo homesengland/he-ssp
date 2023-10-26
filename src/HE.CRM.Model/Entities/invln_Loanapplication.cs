@@ -65,6 +65,9 @@ namespace DataverseModel
 		Draft = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FeeIndemnitySigned = 858110022,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		HoldRequested = 858110005,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -138,6 +141,7 @@ namespace DataverseModel
 			public const string invln_fundingdetailscompletionstatus = "invln_fundingdetailscompletionstatus";
 			public const string invln_FundingReason = "invln_fundingreason";
 			public const string invln_invln_emailnotification_Regarding_invln_l = "invln_invln_emailnotification_Regarding_invln_l";
+			public const string invln_invln_isp_Loanapplication_invln_loanappli = "invln_invln_isp_Loanapplication_invln_loanappli";
 			public const string invln_invln_loanapplication_invln_contract_Loanapplication = "invln_invln_loanapplication_invln_contract_Loanapplication";
 			public const string invln_lastchangebyid = "invln_lastchangebyid";
 			public const string invln_lastchangebyidName = "invln_lastchangebyidname";
@@ -1495,6 +1499,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_emailnotification_Regarding_invln_l");
 				this.SetRelatedEntities<DataverseModel.invln_Emailnotification>("invln_invln_emailnotification_Regarding_invln_l", null, value);
 				this.OnPropertyChanged("invln_invln_emailnotification_Regarding_invln_l");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_isp_Loanapplication_invln_loanappli
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_isp_Loanapplication_invln_loanappli")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ISP> invln_invln_isp_Loanapplication_invln_loanappli
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ISP>("invln_invln_isp_Loanapplication_invln_loanappli", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_isp_Loanapplication_invln_loanappli");
+				this.SetRelatedEntities<DataverseModel.invln_ISP>("invln_invln_isp_Loanapplication_invln_loanappli", null, value);
+				this.OnPropertyChanged("invln_invln_isp_Loanapplication_invln_loanappli");
 			}
 		}
 		

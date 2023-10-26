@@ -24,9 +24,7 @@ public class GetCompanyStructureFileQueryHandler : IRequestHandler<GetCompanyStr
 
     public async Task<FileData> Handle(GetCompanyStructureFileQuery request, CancellationToken cancellationToken)
     {
-        var folderPath = "0000000_DA2123DAE440EE11BDF3002248C653E1";
-
-        var result = await _documentService.DownloadAsync(_config.ListAlias, folderPath, request.FileName);
+        var result = await _documentService.DownloadAsync(_config.ListAlias, request.FolderPath, request.FileName);
 
         return result;
     }

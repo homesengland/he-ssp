@@ -118,6 +118,7 @@ namespace DataverseModel
 			public const string team_invln_contract = "team_invln_contract";
 			public const string team_invln_emailnotification = "team_invln_emailnotification";
 			public const string team_invln_emailtemplate = "team_invln_emailtemplate";
+			public const string team_invln_isp = "team_invln_isp";
 			public const string team_invln_loanapplication = "team_invln_loanapplication";
 			public const string team_invln_loanstatuschange = "team_invln_loanstatuschange";
 			public const string team_invln_notificationsetting = "team_invln_notificationsetting";
@@ -970,6 +971,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("team_invln_emailtemplate");
 				this.SetRelatedEntities<DataverseModel.invln_EmailTemplate>("team_invln_emailtemplate", null, value);
 				this.OnPropertyChanged("team_invln_emailtemplate");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_isp
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_isp")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ISP> team_invln_isp
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ISP>("team_invln_isp", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_isp");
+				this.SetRelatedEntities<DataverseModel.invln_ISP>("team_invln_isp", null, value);
+				this.OnPropertyChanged("team_invln_isp");
 			}
 		}
 		

@@ -399,8 +399,7 @@ FodyWeavers.xsd
 
 Log*.txt
 /HE.Xrm.ServiceClient/appsettings.json
-/HE.InvestmentLoans.WWW/appsettings.Development.json
 /HE.InvestmentLoans.WWW/Certificates
-/HE.DocumentService.Api/appsettings.Development.json
 
 tests/
+**/appsettings.Development.json

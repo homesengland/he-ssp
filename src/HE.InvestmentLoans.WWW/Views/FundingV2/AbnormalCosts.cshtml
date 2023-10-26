@@ -1,6 +1,6 @@
 @model HE.InvestmentLoans.Contract.Funding.FundingViewModel
-@using HE.InvestmentLoans.Contract.Funding
 @using HE.InvestmentLoans.Contract.Funding.Enums;
+@using HE.Investments.Common.WWW.Extensions
 @inject ModelExpressionProvider modelProvider
 @{
     var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((HE.InvestmentLoans.Contract.Funding.FundingViewModel x) => x.AbnormalCosts));

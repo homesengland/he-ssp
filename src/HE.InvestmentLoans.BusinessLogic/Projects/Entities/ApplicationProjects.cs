@@ -29,12 +29,12 @@ public class ApplicationProjects
 
     public IList<Project> ActiveProjects => Projects.Where(p => !p.IsSoftDeleted).ToList();
 
-    public ProjectId AddEmptyProject()
+    public Project AddEmptyProject()
     {
         var project = new Project();
         _projects.Add(project);
 
-        return project.Id!;
+        return project;
     }
 
     public void UpdateProject(Project project)

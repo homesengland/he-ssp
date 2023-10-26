@@ -1,5 +1,6 @@
 using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
@@ -15,9 +16,9 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 
 public static class LoanApplicationMapper
 {
-    public static LoanApplicationViewModel Map(LoanApplicationDto loanApplicationDto, DateTime now)
+    public static LoanApplicationViewModel FromCrmDto(LoanApplicationDto loanApplicationDto, DateTime now)
     {
-        return new LoanApplicationViewModel
+        var model = new LoanApplicationViewModel
         {
             ID = Guid.Parse(loanApplicationDto.loanApplicationId),
             Status = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus),
@@ -25,10 +26,13 @@ public static class LoanApplicationMapper
             Company = MapToCompanyStructureViewModel(loanApplicationDto),
             Funding = MapToFundingViewModel(loanApplicationDto),
             Security = MapToSecurityViewModel(loanApplicationDto),
-            Account = MapToAccountDetailsViewModel(loanApplicationDto),
             ReferenceNumber = loanApplicationDto.name,
             Projects = ApplicationProjectsMapper.Map(loanApplicationDto, now).Projects.Select(p => ProjectMapper.MapToViewModel(p, LoanApplicationId.From(loanApplicationDto.loanApplicationId))),
         };
+
+        model.SetTimestamp(loanApplicationDto.LastModificationOn ?? loanApplicationDto.createdOn);
+
+        return model;
     }
 
     public static UserAccountDto MapToUserAccountDto(UserAccount userAccount, UserDetails userDetails)
@@ -44,15 +48,11 @@ public static class LoanApplicationMapper
         };
     }
 
-    private static AccountDetailsViewModel MapToAccountDetailsViewModel(LoanApplicationDto loanApplicationDto)
-    {
-        return new AccountDetailsViewModel { EmailAddress = loanApplicationDto.contactEmailAdress, };
-    }
-
     private static SecurityViewModel MapToSecurityViewModel(LoanApplicationDto loanApplicationDto)
     {
         return new SecurityViewModel
         {
+            LoanApplicationId = Guid.Parse(loanApplicationDto.loanApplicationId),
             ChargesDebtCompany = loanApplicationDto.outstandingLegalChargesOrDebt.MapToCommonResponse(),
             ChargesDebtCompanyInfo = loanApplicationDto.debentureHolder,
             DirLoans = loanApplicationDto.directorLoans.MapToCommonResponse(),
@@ -66,6 +66,7 @@ public static class LoanApplicationMapper
     {
         return new FundingViewModel
         {
+            LoanApplicationId = Guid.Parse(loanApplicationDto.loanApplicationId),
             GrossDevelopmentValue = loanApplicationDto.projectGdv?.ToString("0.##", CultureInfo.InvariantCulture),
             TotalCosts = loanApplicationDto.projectEstimatedTotalCost?.ToString("0.##", CultureInfo.InvariantCulture),
             AbnormalCosts = loanApplicationDto.projectAbnormalCosts.MapToCommonResponse(),
@@ -83,6 +84,7 @@ public static class LoanApplicationMapper
     {
         return new CompanyStructureViewModel
         {
+            LoanApplicationId = Guid.Parse(loanApplicationDto.loanApplicationId),
             Purpose = loanApplicationDto.companyPurpose.MapToCommonResponse(),
             OrganisationMoreInformation = loanApplicationDto.existingCompany,
             HomesBuilt = loanApplicationDto.companyExperience.ToString(),

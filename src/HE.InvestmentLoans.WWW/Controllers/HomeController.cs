@@ -7,8 +7,8 @@ using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
-using HE.InvestmentLoans.WWW.Routing;
-using HE.InvestmentLoans.WWW.Utils.ValueObjects;
+using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

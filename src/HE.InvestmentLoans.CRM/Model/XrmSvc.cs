@@ -385,6 +385,255 @@ namespace HE.InvestmentLoans.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_tenure
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Affordablerent = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Socialrent = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Sharedownership = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Renttobuy = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HOLD = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OPSO = 858110005,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_typeofhousing
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		General = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Housingfordisabledandvulnerablepeople = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Housingforolderpeople = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_typeofhousingfordisabledvulnerable
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Designatedhousingfordisabledandvulnerablepeoplewithaccesstosupport = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Designatedsupportedhousingfordisabledandvulnerablepeople = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Purposedesignedhousingfordisabledandvulnerablepeoplewithaccesstosupport = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Purposedesignedsupportedhousingfordisabledandvulnerablepeople = 858110003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_happiprinciples
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AAdaptabilityandcarereadydesign = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BBalconiesandoutdoorspace = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CDaylightinthehomeandinsharedspaces = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DEnergyefficiencyandsustainabledesign = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		EExternalsharedsurfacesandhomezones = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FPlantstreesandthenaturalenvironment = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		GPositiveuseofcirculationspace = 858110006,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HSharedfacilitiesandhubs = 858110007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ISpaceandflexibility = 858110008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		JStorageforbelongingsandbicycles = 858110009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		KNone = 858110010,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_revenuefunding
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Yesrevenuefundingisneededandhasbeenidentified = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Revenuefundingisneededbuthasnotyetbeenidentified = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Norevenuefundingisnotneeded = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_revenuefundingsources
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SupportingPeople = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SocialServicesDepartment = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DrugsActionTeamHousingDepartment = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OtherLocalAuthoritySource = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NHSEngland = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ClinicalCommissioningGroupLocalAreaTeam = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HealthandWellbeingBoard = 858110006,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NHSTrust_egFoundationTrustMentalhealthTrust = 858110007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Otherhealthsource = 858110008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ProbationService = 858110009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HomeOffice = 858110010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Providersreserves = 858110011,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Charity = 858110012,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Other = 858110013,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CrimeandDisorderReductionPartnerships = 858110014,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DepartmentforEducation = 858110015,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LocalAreaAgreements = 858110016,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		YouthOffendingTeams = 858110017,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NationalLottery = 858110018,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_wheelchairstandard
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category1VisitableDwelling = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category2Accessibleandacceptabledwelling = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category3Wheelchairuserdwellings = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_whichndssstandardshavebeenmet
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Builtinstoragespacesize = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Bedroomareas = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Bedroomwidths = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_mmccategories
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category1Premanufacturing3Dprimarystructuralsystems = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category2Premanufacturing2Dprimarystructuralsystems = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category3PremanufacturedcomponentsNonsystemisedprimarystructure = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category4AdditivemanufacturingStructuralandnonstructural = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category5PremanufacturingNonstructuralassembliesandsubassemblies = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category6Traditionalbuildingproductledsitelabourreductionproductivityimprovements = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category7Siteprocessledlabourreductionproductivityassuranceimprovements = 858110006,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_milestone
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Acquisition = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Planning = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SoS = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PC = 858110003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_changesourceset
 	{
 		
@@ -396,6 +645,75 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Automated = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_typeofolderpeopleshousing
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Designatedsupportedhousing = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Housingforolderpeoplewithaccesstosupportasrequired = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Housingforolderpeoplewithsomespecialdesignfeatures = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Housingforolderpeoplewithallspecialdesignfeatures = 858110003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_facilities
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Sharedfacilities = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Selfcontainedfacilities = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Mixofselfcontainedandsharedfacilities = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_newstatus
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Declined = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Withdrawn = 858110001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_tenurechoice
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Sharedownership = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Affordablerent = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Renttobuy = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Socialrent = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Specialistrent = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Extracare = 858110005,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -423,6 +741,96 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		ECRefRate = 858110001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_newbuildactivitytype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AcquisitionandWorks = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OffTheShelf = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WorksOnly = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LandInclusivePackage_packagedeal = 858110003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_rehabactivitytype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AcquisitionandWorks_rehab = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ExistingSatisfactory = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PurchaseandRepair = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LeaseandRepair = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Reimprovement = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Conversion = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WorksOnly = 858110006,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_homesdesignedforuseofparticulargrou
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Peoplefromethnicminoritybackground = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Disabledpeople = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Faithgroups = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Peopleatriskofdomesticviolence = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Youngpeople = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Olderpeople = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Noneoftheabove = 858110006,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_mmccategory1subcategories
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Number_1astructuralchassisonlynotfittedout = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Number_1bstructuralchassisandinternalfitout = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Number_1cstructuralchassisfitoutandexternalcladdingroofingcomplete = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Number_1dstructuralchassisandinternalfitoutpoddedroomassemblesbathroomskitchensetc = 858110003,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -463,6 +871,99 @@ namespace HE.InvestmentLoans.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_clientgroup
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		APeoplewithalcoholproblems = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BMilitaryveteranswithsupportneeds = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CYoungpeopleleavingcare = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DPeoplewithdrugproblems = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		GPeoplewithmultiplecomplexneeds = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		IRoughsleepers = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		MPeoplewithmentalhealthproblems = 858110006,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NPeoplewithlearningdisabilitiesorautism = 858110007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OOffendersandpeopleatriskofoffending = 858110008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PPeoplewithphysicalorsensorydisabilities = 858110009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		QHomelessfamilieswithsupportneeds = 858110010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RRefugees = 858110011,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SSinglehomelesspeoplewithsupportneeds = 858110012,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		VTeenageparents = 858110013,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WPeopleatriskofdomesticviolence = 858110014,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		XPeoplewithHIVorAIDS = 858110015,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		YYoungpeopleatrisk = 858110016,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_buildingtype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		House = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Flat = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Bedsit = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Bungalow = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Maisonette = 858110004,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_mmccategory2subcategories
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Number_2abasicframingonlyinclwallsfloorsstairsroof = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Number_2benhancedconsolidationinsulationinternalliningsetc = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Number_2cfurtherenhancedconsolidationinsulationliningsexternalcladdingroofingdoorswindows = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_securitycover
 	{
 		
@@ -486,6 +987,21 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Quarterly = 858110001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_impact
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		High = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Medium = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Low = 858110002,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -702,6 +1218,9 @@ namespace HE.InvestmentLoans.CRM.Model
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_internalstatus
 	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FeeIndemnitySigned = 858110022,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
@@ -4044,15 +4563,6 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Dataverse = 0,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		CustomConnector = 1,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		SharedConnector = 3,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Workflow = 4,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -5547,6 +6057,21 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CustomAPI = 192350000,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum field_security_permission_readunmasked
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotAllowed = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OneRecord = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AllRecords = 3,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -18213,6 +18738,9 @@ namespace HE.InvestmentLoans.CRM.Model
 		LoanAvailable = 858110020,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FeeIndemnitySigned = 858110022,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -22440,6 +22968,123 @@ namespace HE.InvestmentLoans.CRM.Model
 				else
 				{
 					return default(bool);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getsinglesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsinglesitedetailsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_sitedetailsid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_sitedetailsid"))
+				{
+					return ((string)(this.Parameters["invln_sitedetailsid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_sitedetailsid"] = value;
+			}
+		}
+		
+		public string invln_fieldstoretrieve
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoretrieve"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoretrieve"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoretrieve"] = value;
+			}
+		}
+		
+		public string invln_externalcontactid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_externalcontactid"))
+				{
+					return ((string)(this.Parameters["invln_externalcontactid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_externalcontactid"] = value;
+			}
+		}
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public invln_getsinglesitedetailsRequest()
+		{
+			this.RequestName = "invln_getsinglesitedetails";
+			this.invln_sitedetailsid = default(string);
+			this.invln_externalcontactid = default(string);
+			this.invln_accountid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getsinglesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsinglesitedetailsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getsinglesitedetailsResponse()
+		{
+		}
+		
+		public string invln_sitedetail
+		{
+			get
+			{
+				if (this.Results.Contains("invln_sitedetail"))
+				{
+					return ((string)(this.Results["invln_sitedetail"]));
+				}
+				else
+				{
+					return default(string);
 				}
 			}
 		}

@@ -1,3 +1,4 @@
+@using HE.Investments.Common.WWW.Extensions
 @model string
 @{
     var validationErrors = ViewBag.ValidationErrors;
@@ -46,4 +47,7 @@
             </gds-error-summary-message>
         </gds-error-summary-body>
     </gds-error-summary>
+} else
+{
+    <div id="validation-summary"></div>
 }

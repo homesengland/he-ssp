@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HE.InvestmentLoans.BusinessLogic.Projects.Consts;
 using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
@@ -20,7 +21,7 @@ public class StartDate : ValueObject
         if (exists && value.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError(nameof(StartDate), ValidationErrorMessage.NoStartDate)
+                .AddValidationError(ProjectValidationFieldNames.StartDate, ValidationErrorMessage.NoStartDate)
                 .CheckErrors();
         }
 
@@ -44,8 +45,8 @@ public class StartDate : ValueObject
 
         var operationResult = OperationResult.ResultOf(() => ProjectDate.FromString(year, month, day));
 
-        operationResult.OverrideError(GenericValidationError.NoDate, "EstimatedStartDay", ValidationErrorMessage.NoStartDate);
-        operationResult.OverrideError(GenericValidationError.InvalidDate, "EstimatedStartDay", ValidationErrorMessage.InvalidStartDate);
+        operationResult.OverrideError(GenericValidationError.NoDate, ProjectValidationFieldNames.StartDay, ValidationErrorMessage.NoStartDate);
+        operationResult.OverrideError(GenericValidationError.InvalidDate, ProjectValidationFieldNames.StartDay, ValidationErrorMessage.InvalidStartDate);
 
         operationResult.CheckErrors();
 

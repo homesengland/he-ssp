@@ -1,0 +1,51 @@
+@using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Models.HomeTypes
+@model HE.Investment.AHP.WWW.Models.HomeTypes.HousingTypeModel;
+
+<form asp-controller="HomeTypes" asp-action="HousingType" asp-method="post" novalidate>
+    <gds-back-link href="@Url.Action("Back","HomeTypes", new { schemeId = ViewContext.RouteData.Values["schemeId"], currentPage = HomeTypesWorkflowState.HousingType})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    @Html.HiddenFor(x => x.FinancialSchemeName)
+
+    <gds-div-hint>@Model.FinancialSchemeName</gds-div-hint>
+    <gds-h1 size="ControlSize.L">
+        Type of housing
+    </gds-h1>
+
+    <gds-div-hint class="govuk-!-margin-bottom-6">Each type of property needs to be its own home type. If they have any differences, you will need to create a new home type. You will also be able to copy an existing home type and edit it.</gds-div-hint>
+
+    <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
+        <gds-field-set>
+            <gds-legend class="govuk-!-margin-bottom-0">
+                <gds-h2 class="govuk-!-margin-bottom-0">Home type name</gds-h2>
+            </gds-legend>
+            <gds-input
+                asp-hiddenlabeltext="Home type name"
+                asp-labelclass="govuk-label"
+                asp-hinttext="Enter a name that will help you identify these homes from others on this scheme."
+                govuk-formgroup-asp-for="HomeTypeName"
+                name="HomeTypeName"
+                value=@Model.HomeTypeName/>
+
+            <gds-legend>
+                <gds-h2 class="govuk-!-margin-bottom-0">Type of housing</gds-h2>
+            </gds-legend>
+            <gds-custom-radio
+                asp-for="HousingType"
+                value="@Model.HousingType"
+                radio-items="HomeTypesFormOptions.HousingTypes"
+                class="govuk-!-margin-top-8 govuk-!-margin-bottom-8">
+            </gds-custom-radio>
+
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                Save and continue
+            </button>
+
+
+        </gds-field-set>
+
+        <gds-link>Save and return to application</gds-link>
+    </gds-div-grid-column-two-thirds>
+</form>
+

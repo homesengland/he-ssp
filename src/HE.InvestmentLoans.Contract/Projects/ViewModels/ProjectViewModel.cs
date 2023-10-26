@@ -12,7 +12,7 @@ public class ProjectViewModel : ICompletedSectionViewModel
 
     public Guid ProjectId { get; set; }
 
-    public string? Name { get; set; }
+    public string? ProjectName { get; set; }
 
     public string? HasEstimatedStartDate { get; set; }
 
@@ -85,4 +85,9 @@ public class ProjectViewModel : ICompletedSectionViewModel
     }
 
     public bool IsEditable() => IsReadOnly() is false;
+
+    public ApplicationStatus GetApplicationStatus()
+    {
+        return LoanApplicationStatus;
+    }
 }

@@ -1,10 +1,10 @@
 @model HE.InvestmentLoans.Contract.Funding.FundingViewModel
-@using HE.InvestmentLoans.Contract.Funding
 @using HE.InvestmentLoans.Contract.Funding.Enums;
+@using HE.Investments.Common.WWW.Extensions
 @inject ModelExpressionProvider modelProvider
 @{
     var refinanceInfoName = modelProvider.GetExpressionText((HE.InvestmentLoans.Contract.Funding.FundingViewModel x) => x.RefinanceInfo);
-    
+
     var ids = new string[] { refinanceInfoName };
     var labels = new string[] { "Tell us more about your refinance exit strategy." };
     var names = new string[] { refinanceInfoName };

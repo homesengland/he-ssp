@@ -2,6 +2,7 @@ using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -15,7 +16,7 @@ using HE.InvestmentLoans.Contract.Security;
 using HE.InvestmentLoans.Contract.User.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
-using HE.InvestmentLoans.WWW.Routing;
+using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -165,7 +166,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     {
         var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
 
-        return View("CheckApplication", response.LoanApplication.LegacyModel);
+        return View("CheckApplication", response.LoanApplication);
     }
 
     [HttpPost("{id}/submit")]
@@ -241,7 +242,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return Back(currentPage, new { Id = applicationId });
     }
 
-    protected override Task<IStateRouting<LoanApplicationWorkflow.State>> Routing(LoanApplicationWorkflow.State currentState)
+    protected override Task<IStateRouting<LoanApplicationWorkflow.State>> Routing(LoanApplicationWorkflow.State currentState, object routeData = null)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
 
@@ -250,7 +251,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return Task.FromResult<IStateRouting<LoanApplicationWorkflow.State>>(
             new LoanApplicationWorkflow(
                 currentState,
-                async () => (await _mediator.Send(new GetLoanApplicationQuery(applicationId!))).LoanApplication.LegacyModel,
+                async () => (await _mediator.Send(new GetLoanApplicationQuery(applicationId!))).LoanApplication,
                 async () => applicationId.IsProvided() && await _mediator.Send(new IsLoanApplicationExistQuery(applicationId!))));
     }
 }

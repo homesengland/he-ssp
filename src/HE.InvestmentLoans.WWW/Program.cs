@@ -5,14 +5,17 @@ using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.WWW.Config;
 using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Middlewares;
+using HE.Investments.Common.WWW;
 using HE.Investments.DocumentService.Extensions;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.FeatureManagement;
 
 #pragma warning disable CA1852
 #pragma warning disable CA1812
 var builder = WebApplication.CreateBuilder(args);
 #pragma warning restore CA1812
-#pragma warning restore CA1852 
+#pragma warning restore CA1852
 
 builder.Configuration.AddEnvironmentVariables();
 builder.Services.Configure<AppConfig>(builder.Configuration.GetSection("AppConfiguration"));
@@ -40,6 +43,13 @@ builder.Services.AddDocumentServiceModule();
 
 var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<ExceptionFilter>());
 builder.AddIdentityProviderConfiguration(mvcBuilder);
+
+var assembly = typeof(AssemblyMarkup).Assembly;
+builder.Services.AddControllersWithViews()
+    .AddApplicationPart(assembly)
+    .AddRazorRuntimeCompilation();
+builder.Services.Configure<MvcRazorRuntimeCompilationOptions>(
+    options => options.FileProviders.Add(new EmbeddedFileProvider(assembly)));
 
 var app = builder.Build();
 

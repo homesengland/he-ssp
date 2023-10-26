@@ -14,6 +14,7 @@ using Xunit;
 using static HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData.ProjectDateTestData;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
+
 public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateCommandHandler>
 {
     private ProvideStartDateCommand _command;
@@ -32,7 +33,13 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
             .ReturnsNoProjects());
 
         var (day, month, year) = CorrectDateAsStrings;
-        _command = new ProvideStartDateCommand(LoanApplicationIdTestData.LoanApplicationIdOne, ProjectIdTestData.AnyProjectId, CommonResponse.Yes, year, month, day);
+        _command = new ProvideStartDateCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            ProjectIdTestData.AnyProjectId,
+            CommonResponse.Yes,
+            year,
+            month,
+            day);
 
         // when
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
@@ -53,16 +60,22 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
         Given(ApplicationProjectsRepositoryBuilder
             .New()
             .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ReturnsAllProjects(applicationProjects));
 
         var (day, month, year) = CorrectDateAsStrings;
-        _command = new ProvideStartDateCommand(LoanApplicationIdTestData.LoanApplicationIdOne, ProjectIdTestData.AnyProjectId, CommonResponse.Yes, year, month, day);
+        _command = new ProvideStartDateCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            ProjectIdTestData.AnyProjectId,
+            CommonResponse.Yes,
+            year,
+            month,
+            day);
 
         // when
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
         // then
-        (await action.Should().ThrowExactlyAsync<NotFoundException>()).ForEntity(nameof(Project));
+        (await action.Should().ThrowExactlyAsync<NotFoundException>()).ForEntity(nameof(ApplicationProjects));
     }
 
     [Fact]
@@ -74,12 +87,13 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
             .WithDefaultProject()
             .Build();
 
+        var project = applicationProjects.Projects.Single();
+        var projectId = project.Id;
+
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
-        var project = applicationProjects.Projects.Single();
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         var (day, month, year) = IncorrectDateAsStrings;
 
@@ -101,12 +115,13 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
             .WithDefaultProject()
             .Build();
 
+        var project = applicationProjects.Projects.Single();
+        var projectId = project.Id;
+
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
-        var project = applicationProjects.Projects.Single();
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         var (year, month, day) = CorrectDateAsStrings;
 
@@ -131,12 +146,13 @@ public class ProvideStartDateCommandHandlerTests : TestBase<ProvideStartDateComm
             .WithDefaultProject()
             .Build();
 
+        var project = applicationProjects.Projects.Single();
+        var projectId = project.Id;
+
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
-        var project = applicationProjects.Projects.Single();
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         var (day, month, year) = CorrectDateAsStrings;
 

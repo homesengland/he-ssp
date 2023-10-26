@@ -20,10 +20,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HE.InvestmentLoans.Common\HE.InvestmentLoans.Common.csproj" />
   </ItemGroup>
 
 </Project>

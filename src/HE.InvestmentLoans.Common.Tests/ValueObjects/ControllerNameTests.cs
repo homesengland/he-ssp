@@ -1,5 +1,5 @@
 using FluentAssertions;
-using HE.InvestmentLoans.WWW.Utils.ValueObjects;
+using HE.Investments.Common.WWW.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HE.InvestmentLoans.Common.Tests.ValueObjects;

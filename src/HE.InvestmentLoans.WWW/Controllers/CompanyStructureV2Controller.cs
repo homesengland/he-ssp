@@ -1,5 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication;
+using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
@@ -7,7 +7,7 @@ using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
-using HE.InvestmentLoans.WWW.Routing;
+using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -64,20 +64,21 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     [WorkflowState(CompanyStructureState.ExistingCompany)]
     public async Task<IActionResult> MoreInformationAboutOrganization(Guid id)
     {
-        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureFieldsSet.MoreInformationAboutOrganization));
-        response.ViewModel.OrganisationMoreInformationFiles = (await _mediator.Send(new GetCompanyStructureFilesQuery(id))).Items;
+        var loanApplicationId = LoanApplicationId.From(id);
+        var response = await _mediator.Send(new GetCompanyStructureQuery(loanApplicationId, CompanyStructureFieldsSet.MoreInformationAboutOrganization));
+        response.ViewModel.OrganisationMoreInformationFiles = (await _mediator.Send(new GetCompanyStructureFilesQuery(loanApplicationId))).Items;
 
         return View("MoreInformationAboutOrganization", response.ViewModel);
     }
 
     [HttpGet("more-information-about-organization-remove-file")]
     [WorkflowState(CompanyStructureState.ExistingCompany)]
-    public async Task<IActionResult> MoreInformationAboutOrganizationRemoveFile(Guid id, string fileName, CancellationToken cancellationToken)
+    public async Task<IActionResult> MoreInformationAboutOrganizationRemoveFile(Guid id, string folderPath, string fileName, CancellationToken cancellationToken)
     {
         var loanApplicationId = LoanApplicationId.From(id);
 
         var result = await _mediator.Send(
-            new ProvideMoreInformationAboutOrganizationRemoveFileCommand(loanApplicationId, fileName),
+            new ProvideMoreInformationAboutOrganizationRemoveFileCommand(loanApplicationId, folderPath, fileName),
             cancellationToken);
 
         if (result.HasValidationErrors)
@@ -90,9 +91,9 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 
     [HttpGet("more-information-about-organization-download-file")]
     [WorkflowState(CompanyStructureState.ExistingCompany)]
-    public async Task<IActionResult> MoreInformationAboutOrganizationDownloadFile(Guid id, string fileName, CancellationToken cancellationToken)
+    public async Task<IActionResult> MoreInformationAboutOrganizationDownloadFile(Guid id, string folderPath, string fileName, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetCompanyStructureFileQuery(id, fileName), cancellationToken);
+        var response = await _mediator.Send(new GetCompanyStructureFileQuery(id, folderPath, fileName), cancellationToken);
 
         return File(response.Data, "application/octet-stream", response.Name);
     }
@@ -174,7 +175,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
         return await Back(currentPage, new { Id = id });
     }
 
-    protected override async Task<IStateRouting<CompanyStructureState>> Routing(CompanyStructureState currentState)
+    protected override async Task<IStateRouting<CompanyStructureState>> Routing(CompanyStructureState currentState, object routeData = null)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
         var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id!), CompanyStructureFieldsSet.GetAllFields));

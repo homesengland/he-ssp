@@ -7,4 +7,5 @@ namespace HE.InvestmentLoans.Contract.CompanyStructure.Queries;
 
 public record GetCompanyStructureFileQuery(
     Guid LoanApplicationId,
+    string FolderPath,
     string FileName) : IRequest<FileData>;

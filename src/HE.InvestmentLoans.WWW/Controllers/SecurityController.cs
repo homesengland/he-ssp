@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.BusinessLogic.Security;
+using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
@@ -8,7 +8,7 @@ using HE.InvestmentLoans.Contract.Security;
 using HE.InvestmentLoans.Contract.Security.Commands;
 using HE.InvestmentLoans.Contract.Security.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
-using HE.InvestmentLoans.WWW.Routing;
+using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -164,7 +164,7 @@ public class SecurityController : WorkflowController<SecurityState>
         return Back(currentPage, new { Id = id });
     }
 
-    protected override async Task<IStateRouting<SecurityState>> Routing(SecurityState currentState)
+    protected override async Task<IStateRouting<SecurityState>> Routing(SecurityState currentState, object routeData = null)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
 

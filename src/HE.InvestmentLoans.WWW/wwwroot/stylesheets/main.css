@@ -1,0 +1,8 @@
+.govuk-breadcrumbs__link--inactive{
+  pointer-events: none;
+}
+
+.separator{
+  border-top: 2px solid #B1B4B6;
+  margin: 0px;
+}

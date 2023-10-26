@@ -6,7 +6,6 @@ using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects.Commands;
@@ -14,6 +13,7 @@ using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
+
 public class ProvideChargesDebtCommandHandlerTests : TestBase<ProvideChargesDebtCommandHandler>
 {
     private ProvideChargesDebtCommand _command;
@@ -30,7 +30,11 @@ public class ProvideChargesDebtCommandHandlerTests : TestBase<ProvideChargesDebt
             .New()
             .ReturnsNoProjects());
 
-        _command = new ProvideChargesDebtCommand(LoanApplicationIdTestData.LoanApplicationIdOne, ProjectIdTestData.AnyProjectId, ValidChargesDebt_NoSelected(), ValidChargesDebtInfo());
+        _command = new ProvideChargesDebtCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            ProjectIdTestData.AnyProjectId,
+            ValidChargesDebt_NoSelected(),
+            ValidChargesDebtInfo());
 
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
@@ -48,9 +52,13 @@ public class ProvideChargesDebtCommandHandlerTests : TestBase<ProvideChargesDebt
         Given(ApplicationProjectsRepositoryBuilder
             .New()
             .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ReturnsAllProjects(applicationProjects));
 
-        _command = new ProvideChargesDebtCommand(LoanApplicationIdTestData.LoanApplicationIdOne, ProjectIdTestData.AnyProjectId, ValidChargesDebt_NoSelected(), ValidChargesDebtInfo());
+        _command = new ProvideChargesDebtCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            ProjectIdTestData.AnyProjectId,
+            ValidChargesDebt_NoSelected(),
+            ValidChargesDebtInfo());
 
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
 
@@ -65,15 +73,19 @@ public class ProvideChargesDebtCommandHandlerTests : TestBase<ProvideChargesDebt
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
 
-        _command = new ProvideChargesDebtCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, ValidChargesDebt_YesSelected(), InvalidChargesDebtInfo());
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
+
+        _command = new ProvideChargesDebtCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            projectId!,
+            ValidChargesDebt_YesSelected(),
+            InvalidChargesDebtInfo());
 
         var result = await TestCandidate.Handle(_command, CancellationToken.None);
 
@@ -88,13 +100,13 @@ public class ProvideChargesDebtCommandHandlerTests : TestBase<ProvideChargesDebt
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
+
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         _command = new ProvideChargesDebtCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, ValidChargesDebt_NoSelected(), null!);
 
@@ -116,10 +128,14 @@ public class ProvideChargesDebtCommandHandlerTests : TestBase<ProvideChargesDebt
 
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
-        _command = new ProvideChargesDebtCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId!, ValidChargesDebt_YesSelected(), ValidChargesDebtInfo());
+        _command = new ProvideChargesDebtCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            projectId!,
+            ValidChargesDebt_YesSelected(),
+            ValidChargesDebtInfo());
 
         await TestCandidate.Handle(_command, CancellationToken.None);
 

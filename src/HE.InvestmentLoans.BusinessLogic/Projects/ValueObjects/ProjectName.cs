@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HE.InvestmentLoans.BusinessLogic.Projects.Consts;
 using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
@@ -18,7 +19,7 @@ public class ProjectName : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError(nameof(ProjectName), ValidationErrorMessage.ProjectNameIsEmpty)
+                .AddValidationError(ProjectValidationFieldNames.ProjectName, ValidationErrorMessage.ProjectNameIsEmpty)
                 .CheckErrors();
         }
 
@@ -26,7 +27,7 @@ public class ProjectName : ValueObject
         {
             OperationResult
                 .New()
-                .AddValidationError("Name", ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.ProjectName))
+                .AddValidationError(ProjectValidationFieldNames.ProjectName, ValidationErrorMessage.ShortInputLengthExceeded(FieldNameForInputLengthValidation.ProjectName))
                 .CheckErrors();
         }
 

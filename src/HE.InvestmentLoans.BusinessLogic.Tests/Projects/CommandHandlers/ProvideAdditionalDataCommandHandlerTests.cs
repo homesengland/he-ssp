@@ -13,6 +13,7 @@ using static HE.InvestmentLoans.Common.Tests.TestData.PoundsTestData;
 using static HE.InvestmentLoans.Common.Tests.TestData.SourceOfValuationTestData;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
+
 public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAdditionalDataCommandHandler>
 {
     public ProvideAdditionalDataCommandHandlerTests()
@@ -34,8 +35,8 @@ public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAddition
 
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         GivenCurrentDate(CorrectDateTime);
 
@@ -53,11 +54,12 @@ public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAddition
             CancellationToken.None);
 
         // then
-        result.Errors.Should().ContainsErrorMessages(
-            ValidationErrorMessage.NoPurchaseDate,
-            ValidationErrorMessage.IncorrectProjectCost,
-            ValidationErrorMessage.IncorrectProjectValue,
-            ValidationErrorMessage.EnterMoreDetails);
+        result.Errors.Should()
+            .ContainsErrorMessages(
+                ValidationErrorMessage.NoPurchaseDate,
+                ValidationErrorMessage.IncorrectProjectCost,
+                ValidationErrorMessage.IncorrectProjectValue,
+                ValidationErrorMessage.EnterMoreDetails);
     }
 
     [Fact]
@@ -74,8 +76,8 @@ public class ProvideAdditionalDataCommandHandlerTests : TestBase<ProvideAddition
 
         Given(ApplicationProjectsRepositoryBuilder
             .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         GivenCurrentDate(CorrectDateTime);
 

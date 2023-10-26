@@ -10,6 +10,7 @@ using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.CommandHandlers;
+
 public class ProvidePlanningReferenceNumberCommandHandlerTests : TestBase<ProvidePlanningReferenceNumberCommandHandler>
 {
     private ProvidePlanningReferenceNumberCommand _command;
@@ -28,7 +29,11 @@ public class ProvidePlanningReferenceNumberCommandHandlerTests : TestBase<Provid
             .ReturnsNoProjects());
 
         // when
-        _command = new ProvidePlanningReferenceNumberCommand(LoanApplicationIdTestData.LoanApplicationIdOne, ProjectIdTestData.AnyProjectId, CommonResponse.Yes, null!);
+        _command = new ProvidePlanningReferenceNumberCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            ProjectIdTestData.AnyProjectId,
+            CommonResponse.Yes,
+            null!);
 
         // then
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
@@ -48,10 +53,14 @@ public class ProvidePlanningReferenceNumberCommandHandlerTests : TestBase<Provid
         Given(ApplicationProjectsRepositoryBuilder
             .New()
             .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
+            .ReturnsAllProjects(applicationProjects));
 
         // when
-        _command = new ProvidePlanningReferenceNumberCommand(LoanApplicationIdTestData.LoanApplicationIdOne, ProjectIdTestData.AnyProjectId, CommonResponse.Yes, null!);
+        _command = new ProvidePlanningReferenceNumberCommand(
+            LoanApplicationIdTestData.LoanApplicationIdOne,
+            ProjectIdTestData.AnyProjectId,
+            CommonResponse.Yes,
+            null!);
 
         // then
         var action = () => TestCandidate.Handle(_command, CancellationToken.None);
@@ -68,13 +77,13 @@ public class ProvidePlanningReferenceNumberCommandHandlerTests : TestBase<Provid
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
+
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         // when
         _command = new ProvidePlanningReferenceNumberCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, null!, null!);
@@ -94,13 +103,13 @@ public class ProvidePlanningReferenceNumberCommandHandlerTests : TestBase<Provid
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
+
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         // when
         _command = new ProvidePlanningReferenceNumberCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, CommonResponse.No, null!);
@@ -122,13 +131,13 @@ public class ProvidePlanningReferenceNumberCommandHandlerTests : TestBase<Provid
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
+
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         // when
         _command = new ProvidePlanningReferenceNumberCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, CommonResponse.Yes, null!);
@@ -151,13 +160,13 @@ public class ProvidePlanningReferenceNumberCommandHandlerTests : TestBase<Provid
             .WithDefaultProject()
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
+
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         // when
         _command = new ProvidePlanningReferenceNumberCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, CommonResponse.Yes, "number");
@@ -181,13 +190,13 @@ public class ProvidePlanningReferenceNumberCommandHandlerTests : TestBase<Provid
             .WithProjectWithPlanningReferenceNumber("number")
             .Build();
 
-        Given(ApplicationProjectsRepositoryBuilder
-            .New()
-            .For(LoanApplicationIdTestData.LoanApplicationIdOne)
-            .Returns(applicationProjects));
-
         var project = applicationProjects.Projects.Single();
         var projectId = project.Id;
+
+        Given(ApplicationProjectsRepositoryBuilder
+            .New()
+            .ForProject(projectId)
+            .ReturnsOneProject(project));
 
         // when
         _command = new ProvidePlanningReferenceNumberCommand(LoanApplicationIdTestData.LoanApplicationIdOne, projectId, CommonResponse.Yes, null);
