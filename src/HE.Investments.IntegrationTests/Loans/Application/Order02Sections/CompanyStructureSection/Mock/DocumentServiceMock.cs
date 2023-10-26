@@ -29,4 +29,9 @@ public class DocumentServiceMock : IHttpDocumentService
     {
         throw new NotImplementedException();
     }
+
+    public Task CreateFoldersAsync(string listTitle, List<string> folderPaths)
+    {
+        return Task.CompletedTask;
+    }
 }

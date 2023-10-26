@@ -20,4 +20,6 @@ public interface ISharePointFilesService
     Task<FileData> DownloadFile(string listAlias, string folderPath, string fileName);
 
     Task RemoveFile(string listAlias, string folderPath, string fileName);
+
+    void CreateFolders(string listTitle, List<string> folderPaths);
 }
