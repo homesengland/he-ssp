@@ -5,7 +5,7 @@ using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.WWW.Config;
 using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Middlewares;
-using He.Investments.AspNetCore.UI.Common;
+using HE.Investments.Common.WWW;
 using HE.Investments.DocumentService.Extensions;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.FileProviders;

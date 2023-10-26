@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json;
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Constants;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Funding.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
@@ -90,7 +91,7 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                     await _documentService.UploadAsync(new FileUploadModel()
                     {
                         ListTitle = _config.ListTitle,
-                        FolderPath = $"{await _repository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken)}/more-information-about-organization/external",
+                        FolderPath = $"{await _repository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken)}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
                         File = file,
                         Metadata = JsonSerializer.Serialize(new FileMetadata
                         {

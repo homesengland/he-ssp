@@ -1,0 +1,12 @@
+@model IList<HE.Investments.Common.WWW.Models.Cookies.CookieModel>
+
+@if (Model.Any())
+{
+    <gds-h1 size="ControlSize.M">
+        Additional cookies (optional)
+    </gds-h1>
+    <gds-p>
+        Service will work without additional cookies, but you will not be able to take advantage of some functionality.
+    </gds-p>
+    @await Html.PartialAsync("_CookiesTable.cshtml", @Model)
+}
