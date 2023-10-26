@@ -6,7 +6,7 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 
-public class CreateSchemeCommandHandler : IRequestHandler<CreateSchemeCommand, OperationResult<SchemeId>>
+public class CreateSchemeCommandHandler : IRequestHandler<CreateSchemeCommand, OperationResult<SchemeId?>>
 {
     private readonly ISchemeRepository _repository;
     private readonly IDomainExceptionHandler _domainExceptionHandler;
@@ -17,7 +17,7 @@ public class CreateSchemeCommandHandler : IRequestHandler<CreateSchemeCommand, O
         _domainExceptionHandler = domainExceptionHandler;
     }
 
-    public async Task<OperationResult<SchemeId>> Handle(CreateSchemeCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<SchemeId?>> Handle(CreateSchemeCommand request, CancellationToken cancellationToken)
     {
         return await _domainExceptionHandler.Handle(async () =>
         {
@@ -25,7 +25,7 @@ public class CreateSchemeCommandHandler : IRequestHandler<CreateSchemeCommand, O
 
             await _repository.Save(scheme, cancellationToken);
 
-            return new OperationResult<SchemeId>(scheme.Id);
+            return new OperationResult<SchemeId?>(scheme.Id);
         });
     }
 }

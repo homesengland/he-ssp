@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Scheme.Commands;
 
-public record UpdateSchemeNameCommand(string Id, string Name) : IRequest<OperationResult<SchemeId>>, IUpdateSchemeCommand;
+public record UpdateSchemeNameCommand(string Id, string Name) : IRequest<OperationResult<SchemeId?>>, IUpdateSchemeCommand;

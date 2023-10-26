@@ -40,7 +40,8 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     }
 
     [WorkflowState(SchemeWorkflowState.SchemeName)]
-    [HttpGet("name/{schemeId?}")]
+    [HttpGet("name")]
+    [HttpGet("{schemeId}/name")]
     public async Task<IActionResult> Name(string schemeId, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(schemeId))
@@ -54,7 +55,8 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     }
 
     [WorkflowState(SchemeWorkflowState.SchemeName)]
-    [HttpPost("name/{schemeId?}")]
+    [HttpPost("name")]
+    [HttpPost("{schemeId}/name")]
     public async Task<IActionResult> Name(SchemeModel model, CancellationToken cancellationToken)
     {
         var result = string.IsNullOrWhiteSpace(model.Id)
@@ -71,7 +73,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     }
 
     [WorkflowState(SchemeWorkflowState.SchemeTenure)]
-    [HttpGet("tenure/{schemeId}")]
+    [HttpGet("{schemeId}/tenure")]
     public async Task<IActionResult> Tenure(string schemeId, CancellationToken cancellationToken)
     {
         var scheme = await _mediator.Send(new GetSchemeQuery(schemeId), cancellationToken);
@@ -80,7 +82,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     }
 
     [WorkflowState(SchemeWorkflowState.SchemeTenure)]
-    [HttpPost("tenure/{schemeId}")]
+    [HttpPost("{schemeId}/tenure")]
     public async Task<IActionResult> Tenure(SchemeModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new UpdateSchemeTenureCommand(model.Id, model.Tenure), cancellationToken);

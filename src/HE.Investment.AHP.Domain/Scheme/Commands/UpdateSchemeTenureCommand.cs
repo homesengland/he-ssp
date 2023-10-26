@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Scheme.Commands;
 
-public record UpdateSchemeTenureCommand(string Id, string Tenure) : IRequest<OperationResult<SchemeId>>, IUpdateSchemeCommand;
+public record UpdateSchemeTenureCommand(string Id, string Tenure) : IRequest<OperationResult<SchemeId?>>, IUpdateSchemeCommand;
