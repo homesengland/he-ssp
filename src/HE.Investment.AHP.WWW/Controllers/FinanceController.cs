@@ -1,9 +1,11 @@
 using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
+[Authorize]
 [Route("finance")]
 public class FinanceController : Controller
 {

@@ -6,11 +6,16 @@ namespace HE.Investment.AHP.Domain.Scheme.ValueObjects;
 
 public class SchemeName : ValueObject
 {
-    public string Name { get; private set; }
-
     public SchemeName(string value)
     {
         Build(value).CheckErrors();
+    }
+
+    public string Name { get; private set; }
+
+    protected override IEnumerable<object?> GetAtomicValues()
+    {
+        yield return Name;
     }
 
     private OperationResult Build(string name)
@@ -23,10 +28,5 @@ public class SchemeName : ValueObject
             .IsShortInput();
 
         return operationResult;
-    }
-
-    protected override IEnumerable<object?> GetAtomicValues()
-    {
-        yield return Name;
     }
 }

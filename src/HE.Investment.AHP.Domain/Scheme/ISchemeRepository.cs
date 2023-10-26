@@ -9,7 +9,5 @@ public interface ISchemeRepository
 
     Task<IList<SchemeEntity>> GetAll(CancellationToken cancellationToken);
 
-    Task<SchemeEntity> Save(
-        SchemeEntity scheme,
-        CancellationToken cancellationToken);
+    Task<SchemeEntity> Save(SchemeEntity scheme, CancellationToken cancellationToken);
 }

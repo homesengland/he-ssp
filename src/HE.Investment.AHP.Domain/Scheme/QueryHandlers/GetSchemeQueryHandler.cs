@@ -17,6 +17,6 @@ public class GetSchemeQueryHandler : IRequestHandler<GetSchemeQuery, ContractSch
     {
         var scheme = await _repository.GetById(new(request.SchemeId), cancellationToken);
 
-        return new ContractScheme(scheme.Id.Value, scheme.Name.Name, scheme.Tenure != null ? scheme.Tenure.Value.ToString() : null);
+        return new ContractScheme(scheme.Id.Value, scheme.Name.Name, scheme.Tenure?.Value.ToString());
     }
 }
