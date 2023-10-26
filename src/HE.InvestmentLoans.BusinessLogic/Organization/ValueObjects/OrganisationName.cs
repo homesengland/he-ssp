@@ -11,19 +11,19 @@ public class OrganisationName : ValueObject
         Build(name).CheckErrors();
     }
 
-    public string Name { get; private set; }
+    public string Value { get; private set; }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
-        yield return Name;
+        yield return Value;
     }
 
     private OperationResult Build(string name)
     {
         var operationResult = OperationResult.New();
 
-        Name = Validator
-            .For(name, nameof(Name), operationResult)
+        Value = Validator
+            .For(name, nameof(Value), operationResult)
             .IsProvided(OrganisationErrorMessages.MissingOrganisationName)
             .IsShortInput();
 
