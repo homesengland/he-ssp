@@ -6,8 +6,8 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 
-public abstract class UpdateSchemeCommandHandler<TRequest> : IRequestHandler<TRequest, OperationResult<SchemeId>>
-where TRequest : IRequest<OperationResult<SchemeId>>, IUpdateSchemeCommand
+public abstract class UpdateSchemeCommandHandler<TRequest> : IRequestHandler<TRequest, OperationResult<SchemeId?>>
+where TRequest : IRequest<OperationResult<SchemeId?>>, IUpdateSchemeCommand
 {
     private readonly ISchemeRepository _repository;
     private readonly IDomainExceptionHandler _domainExceptionHandler;
@@ -18,7 +18,7 @@ where TRequest : IRequest<OperationResult<SchemeId>>, IUpdateSchemeCommand
         _domainExceptionHandler = domainExceptionHandler;
     }
 
-    public async Task<OperationResult<SchemeId>> Handle(TRequest request, CancellationToken cancellationToken)
+    public async Task<OperationResult<SchemeId?>> Handle(TRequest request, CancellationToken cancellationToken)
     {
         return await _domainExceptionHandler.Handle(async () =>
         {
@@ -28,7 +28,7 @@ where TRequest : IRequest<OperationResult<SchemeId>>, IUpdateSchemeCommand
 
             await _repository.Save(scheme, cancellationToken);
 
-            return new OperationResult<SchemeId>(scheme.Id);
+            return new OperationResult<SchemeId?>(scheme.Id);
         });
     }
 

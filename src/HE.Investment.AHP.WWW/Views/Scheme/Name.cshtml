@@ -3,9 +3,9 @@
     ViewData["Title"] = "Create scheme";
 }
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("Index", "Scheme")" text="Back" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.Action("Index", "Scheme", new { schemeId = Model?.Id })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
-    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml");
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Scheme" asp-action="Name" asp-method="post" novalidate>
         <gds-field-set role="group">
             <gds-legend size="ControlSize.L">
