@@ -74,6 +74,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Conditions"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_Conditions> invln_ConditionsSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_Conditions>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_contactwebrole"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_contactwebrole> invln_contactwebroleSet
@@ -191,6 +202,17 @@ namespace DataverseModel
 			get
 			{
 				return this.CreateQuery<DataverseModel.invln_portalpermissionlevel>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_ProjectSpecificCondition"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_ProjectSpecificCondition> invln_ProjectSpecificConditionSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_ProjectSpecificCondition>();
 			}
 		}
 		

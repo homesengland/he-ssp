@@ -68,9 +68,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.InvestmentLoans.Contract
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.DocumentService", "HE.Investments.DocumentService\HE.Investments.DocumentService.csproj", "{5A9C6D50-26D6-40DA-8092-07A0D4B54162}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Common.WWW", "HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj", "{EB63EAEA-8A3B-48CA-9412-F843D4B51294}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Common.WWW", "HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj", "{EB63EAEA-8A3B-48CA-9412-F843D4B51294}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "He.Investments.AspNetCore.UI.Common", "He.Investments.AspNetCore.UI.Common\He.Investments.AspNetCore.UI.Common.csproj", "{A2BEBF7A-9DA4-46F9-BB24-8B4646B9C303}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "He.Investments.AspNetCore.UI.Common", "He.Investments.AspNetCore.UI.Common\He.Investments.AspNetCore.UI.Common.csproj", "{A2BEBF7A-9DA4-46F9-BB24-8B4646B9C303}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
