@@ -9,23 +9,18 @@ namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 public class CreateSchemeCommandHandler : IRequestHandler<CreateSchemeCommand, OperationResult<SchemeId?>>
 {
     private readonly ISchemeRepository _repository;
-    private readonly IDomainExceptionHandler _domainExceptionHandler;
 
-    public CreateSchemeCommandHandler(ISchemeRepository repository, IDomainExceptionHandler domainExceptionHandler)
+    public CreateSchemeCommandHandler(ISchemeRepository repository)
     {
         _repository = repository;
-        _domainExceptionHandler = domainExceptionHandler;
     }
 
     public async Task<OperationResult<SchemeId?>> Handle(CreateSchemeCommand request, CancellationToken cancellationToken)
     {
-        return await _domainExceptionHandler.Handle(async () =>
-        {
-            var scheme = new SchemeEntity(new SchemeId(Guid.NewGuid().ToString()), new SchemeName(request.Name));
+        var scheme = new SchemeEntity(new SchemeId(Guid.NewGuid().ToString()), new SchemeName(request.Name));
 
-            await _repository.Save(scheme, cancellationToken);
+        await _repository.Save(scheme, cancellationToken);
 
-            return new OperationResult<SchemeId?>(scheme.Id);
-        });
+        return new OperationResult<SchemeId?>(scheme.Id);
     }
 }
