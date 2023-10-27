@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.WWW.Routing;
 using HE.InvestmentLoans.WWW.Tests.Helpers;
+using HE.Investments.Common.WWW.Routing;
 using Xunit;
 
 #pragma warning disable CA1716

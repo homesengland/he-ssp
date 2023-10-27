@@ -35,13 +35,17 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
     private void ConfigureTransitions()
     {
         _machine.Configure(HomeTypesWorkflowState.Index)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.HousingType);
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.List);
+
+        _machine.Configure(HomeTypesWorkflowState.List)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.HousingType)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.Index);
 
         _machine.Configure(HomeTypesWorkflowState.HousingType)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeInformation, () => _homeTypeModel.HousingTypeSection?.HousingType is HousingType.Undefined or HousingType.General)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.DisabledPeopleHousingType, () => _homeTypeModel.HousingTypeSection?.HousingType is HousingType.HousingForDisabledAndVulnerablePeople)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.OlderPeopleHousingType, () => _homeTypeModel.HousingTypeSection?.HousingType is HousingType.HousingForOlderPeople)
-            .Permit(Trigger.Back, HomeTypesWorkflowState.Index);
+            .Permit(Trigger.Back, HomeTypesWorkflowState.List);
 
         _machine.Configure(HomeTypesWorkflowState.HomeInformation)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HousingType);

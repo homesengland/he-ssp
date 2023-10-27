@@ -6,10 +6,21 @@ namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
 public static class HomeTypesFormOptions
 {
-    public static List<SelectListItem> HousingTypes { get; } = new()
+    private static readonly IEnumerable<HousingType> AvailableHousingTypes =
+        new[] { HousingType.General, HousingType.HousingForOlderPeople, HousingType.HousingForDisabledAndVulnerablePeople };
+
+    public static IList<SelectListItem> HousingTypes { get; } =
+        AvailableHousingTypes.Select(x => SelectListHelper.FromEnum(x, GetHousingTypeDescription(x))).ToList();
+
+    public static string GetHousingTypeDescription(HousingType housingType)
     {
-        SelectListHelper.FromEnum(HousingType.General, "General"),
-        SelectListHelper.FromEnum(HousingType.HousingForOlderPeople, "Housing for older people"),
-        SelectListHelper.FromEnum(HousingType.HousingForDisabledAndVulnerablePeople, "Housing for disabled and vulnerable people"),
-    };
+        return housingType switch
+        {
+            HousingType.Undefined => string.Empty,
+            HousingType.General => "General",
+            HousingType.HousingForOlderPeople => "Housing for older people",
+            HousingType.HousingForDisabledAndVulnerablePeople => "Housing for disabled and vulnerable people",
+            _ => throw new ArgumentOutOfRangeException(nameof(housingType), housingType, null),
+        };
+    }
 }

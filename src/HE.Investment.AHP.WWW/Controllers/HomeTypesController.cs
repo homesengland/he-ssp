@@ -23,17 +23,32 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         _mediator = mediator;
     }
 
-    [WorkflowState(HomeTypesWorkflowState.Index)]
-    [HttpGet]
-    public IActionResult Index()
-    {
-        return View();
-    }
-
     [HttpGet("/HomeTypes/back")]
     public Task<IActionResult> Back(string schemeId, string homeTypeId, HomeTypesWorkflowState currentPage)
     {
         return Back(currentPage, new { schemeId, homeTypeId });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.Index)]
+    [HttpGet]
+    public async Task<IActionResult> Index([FromRoute] string schemeId, CancellationToken cancellationToken)
+    {
+        var scheme = await _mediator.Send(new GetFinancialSchemeQuery(schemeId), cancellationToken);
+        return View(new HomeTypeModelBase(scheme.Name));
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.List)]
+    [HttpGet("list")]
+    public async Task<IActionResult> List([FromRoute] string schemeId, CancellationToken cancellationToken)
+    {
+        return View(await FetchListModel(schemeId, cancellationToken));
+    }
+
+    [HttpPost("{homeTypeId}/duplicate")]
+    public async Task<IActionResult> Duplicate([FromRoute] string schemeId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new DuplicateHousingTypeCommand(schemeId, homeTypeId), cancellationToken);
+        return View("List", await FetchListModel(schemeId, cancellationToken));
     }
 
     [WorkflowState(HomeTypesWorkflowState.HousingType)]
@@ -104,5 +119,16 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
         var homeTypes = await _mediator.Send(new GetHomeTypeQuery(schemeId, homeTypeId));
         return new HomeTypesWorkflow(currentState, homeTypes);
+    }
+
+    private async Task<HomeTypeListModel> FetchListModel(string schemeId, CancellationToken cancellationToken)
+    {
+        var scheme = await _mediator.Send(new GetFinancialSchemeQuery(schemeId), cancellationToken);
+        var homeTypes = await _mediator.Send(new GetHomeTypesQuery(schemeId), cancellationToken);
+
+        return new HomeTypeListModel(scheme.Name)
+        {
+            HomeTypes = homeTypes.Select(x => new HomeTypeItemModel(x.HomeTypeId, x.Name, x.HousingType, x.NumberOfHomes)).ToList(),
+        };
     }
 }

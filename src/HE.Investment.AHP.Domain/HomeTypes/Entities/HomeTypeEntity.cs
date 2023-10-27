@@ -28,6 +28,11 @@ public class HomeTypeEntity
         Name = name != null ? new HomeTypeName(name) : null;
     }
 
+    public HomeTypeEntity Duplicate(HomeTypeName newName)
+    {
+        return new HomeTypeEntity(newName.Value, _sections.Select(x => x.Value).ToArray());
+    }
+
     public bool IsCompleted()
     {
         return Name.IsProvided() && _sections.All(x => x.Value.IsCompleted());

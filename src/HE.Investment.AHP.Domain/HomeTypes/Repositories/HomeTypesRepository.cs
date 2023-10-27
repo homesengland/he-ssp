@@ -15,6 +15,6 @@ public class HomeTypesRepository : IHomeTypesRepository
         }
 
         return Task.FromResult(new HomeTypesEntity(homeTypes.Select(x =>
-            new HomeTypeBasicDetailsEntity(x.Id!, x.Name, x.HousingTypeSectionEntity.HousingType, 1))));
+            new HomeTypeBasicDetailsEntity(x.Id!, x.Name, x.HousingTypeSectionEntity.HousingType))));
     }
 }
