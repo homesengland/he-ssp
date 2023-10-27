@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Commands;
 
-public record DuplicateHousingTypeCommand(string SchemeId, string HomeTypeId) : IRequest<OperationResult<HomeTypeId>>;
+public record DuplicateHomeTypeCommand(string ApplicationId, string HomeTypeId) : IRequest<OperationResult<HomeTypeId>>;

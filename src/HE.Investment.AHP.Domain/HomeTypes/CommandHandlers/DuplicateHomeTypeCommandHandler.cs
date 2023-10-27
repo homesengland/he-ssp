@@ -7,32 +7,32 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
 
-public class DuplicateHousingTypeCommandHandler : IRequestHandler<DuplicateHousingTypeCommand, OperationResult<HomeTypeId>>
+public class DuplicateHomeTypeCommandHandler : IRequestHandler<DuplicateHomeTypeCommand, OperationResult<HomeTypeId>>
 {
     private readonly IHomeTypesRepository _homeTypesRepository;
 
     private readonly IHomeTypeRepository _homeTypeRepository;
 
-    public DuplicateHousingTypeCommandHandler(IHomeTypesRepository homeTypesRepository, IHomeTypeRepository homeTypeRepository)
+    public DuplicateHomeTypeCommandHandler(IHomeTypesRepository homeTypesRepository, IHomeTypeRepository homeTypeRepository)
     {
         _homeTypesRepository = homeTypesRepository;
         _homeTypeRepository = homeTypeRepository;
     }
 
-    public async Task<OperationResult<HomeTypeId>> Handle(DuplicateHousingTypeCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<HomeTypeId>> Handle(DuplicateHomeTypeCommand request, CancellationToken cancellationToken)
     {
         var homeTypeId = new HomeTypeId(request.HomeTypeId);
-        var homeTypes = await _homeTypesRepository.GetBySchemeId(request.SchemeId, cancellationToken);
+        var homeTypes = await _homeTypesRepository.GetByApplicationId(request.ApplicationId, cancellationToken);
         var homeType = await _homeTypeRepository.GetById(
-            request.SchemeId,
+            request.ApplicationId,
             homeTypeId,
-            HomeTypeSectionTypes.All, // TODO: use in other places
+            HomeTypeSegmentTypes.All,
             cancellationToken);
 
         var duplicatedName = homeTypes.DuplicateName(homeTypeId);
         var duplicatedHomeType = homeType.Duplicate(duplicatedName);
 
-        await _homeTypeRepository.Save(request.SchemeId, duplicatedHomeType, HomeTypeSectionTypes.All, cancellationToken);
+        await _homeTypeRepository.Save(request.ApplicationId, duplicatedHomeType, HomeTypeSegmentTypes.All, cancellationToken);
 
         return OperationResult.Success(duplicatedHomeType.Id!);
     }

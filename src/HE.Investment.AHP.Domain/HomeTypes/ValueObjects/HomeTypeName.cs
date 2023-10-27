@@ -6,7 +6,7 @@ namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
 public class HomeTypeName : ShortText
 {
-    private static readonly Regex NumberSuffixRegex = new Regex(@" - \d", RegexOptions.Compiled);
+    private static readonly Regex NumberSuffixRegex = new(@" - \d", RegexOptions.Compiled);
 
     public HomeTypeName(string? value)
         : base(value, nameof(HomeTypeName))

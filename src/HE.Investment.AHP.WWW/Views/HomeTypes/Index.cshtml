@@ -1,33 +1,41 @@
 @using HE.Investment.AHP.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeModelBase;
 
-<div class="govuk-grid-column-three-quarters">
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+}
+
+<div class="govuk-grid-column-full">
     <gds-back-link href="@Url.Action("Index","Home")" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
-    <gds-div-hint>@Model.SchemeName</gds-div-hint>
+    <gds-div-hint>@Model.ApplicationName</gds-div-hint>
     <gds-h1 size="ControlSize.L">
         Home types
     </gds-h1>
 
     <gds-p>
-        Each home type must only contain homes with the same details. If there are any differences in the information gathered, you’ll create a new home type for those homes. This could include differences in floor area, the rent or shared ownership details.
+        In this section, you’ll need to provide information about the homes on this application. This includes:
     </gds-p>
-    <gds-p>
-        Where you have homes on your scheme that are identical across the details gathered here, you are able to record those as one home type.
-    </gds-p>
-
-    <gds-p class="govuk-!-margin-bottom-0">In this section, you’ll need to provide information about the homes on a scheme. This includes:</gds-p>
     <gds-ul>
-        <gds-li>the number of homes of this home type on the scheme</gds-li>
+        <gds-li>the number of homes</gds-li>
         <gds-li>building information</gds-li>
-        <gds-li>the floor area and how you're meeting the Nationally Described Space Standards</gds-li>
+        <gds-li>the floor area </gds-li>
+        <gds-li>Nationally Described Space Standards</gds-li>
         <gds-li>the design and client group information for specialist housing</gds-li>
-        <gds-li>Rent or Shared Ownership details, depending on the tenure of the scheme</gds-li>
-        <gds-li>MMC if you indicated earlier there was a mix on your site</gds-li>
+        <gds-li>Rent or Shared Ownership details, depending on the tenure of your application</gds-li>
+        <gds-li>Modern Methods of Construction (MMC)</gds-li>
     </gds-ul>
 
-    <gds-p>Once you have created one home type, you will be able to duplicate this and amend any necessary details to create another.</gds-p>
+    <gds-p class="govuk-!-margin-top-8">
+        Where you have homes on your application that are identical, you are able to record those as one home type.
+    </gds-p>
+    <gds-p>
+        If there are any differences in the homes, you’ll need to create a new home type.
+    </gds-p>
+    <gds-p>
+        Once you have created one home type, you will be able to duplicate this and amend any necessary details to create another.
+    </gds-p>
 
-    <a href="/@this.GetSchemeId()/home-types/list">
+    <a href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "List", applicationId })">
         <gds-button type="button" class="govuk-!-margin-top-8">Continue</gds-button>
     </a>
 </div>

@@ -2,7 +2,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Mappers;
 
-public interface IHomeTypeSectionMapper<out TSection>
+public interface IHomeTypeSegmentMapper<out TSegment>
 {
-    public TSection Map(HomeTypeEntity homeType);
+    public TSegment Map(HomeTypeEntity homeType);
 }

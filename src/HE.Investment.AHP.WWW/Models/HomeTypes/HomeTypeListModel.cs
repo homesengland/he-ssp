@@ -2,8 +2,8 @@ namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
 public class HomeTypeListModel : HomeTypeModelBase
 {
-    public HomeTypeListModel(string schemeName)
-        : base(schemeName)
+    public HomeTypeListModel(string applicationName)
+        : base(applicationName)
     {
     }
 

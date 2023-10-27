@@ -34,11 +34,8 @@ public class HomeTypesEntity
 
     public HomeTypeName DuplicateName(HomeTypeId homeTypeId)
     {
-        var homeType = _homeTypes.SingleOrDefault(x => x.Id == homeTypeId);
-        if (homeType == null)
-        {
-            throw new NotFoundException(nameof(HomeTypeEntity), homeTypeId);
-        }
+        var homeType = _homeTypes.SingleOrDefault(x => x.Id == homeTypeId)
+                       ?? throw new NotFoundException(nameof(HomeTypeEntity), homeTypeId);
 
         var suffixIndex = 1;
         var duplicatedName = homeType.Name ?? new HomeTypeName("Duplicate");

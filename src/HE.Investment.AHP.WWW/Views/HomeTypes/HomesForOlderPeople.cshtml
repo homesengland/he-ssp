@@ -3,14 +3,15 @@
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var homeTypeId = this.GetHomeTypeIdFromRoute();}
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+}
 
 <div class="govuk-grid-column-full">
     <form asp-controller="HomeTypes" asp-action="HomeInformation" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","HomeTypes", new { applicationId, homeTypeId, currentPage = HomeTypesWorkflowState.HomeInformation})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <gds-back-link href="@Url.Action("Back","HomeTypes", new { applicationId, homeTypeId, currentPage = HomeTypesWorkflowState.HomesForOlderPeople})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
         <gds-h1 size="ControlSize.L">
-            Home information
+            What type of housing will you be providing for older people?
         </gds-h1>
     </form>
 </div>

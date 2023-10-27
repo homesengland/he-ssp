@@ -11,9 +11,9 @@ public abstract class BreadcrumbsBuilderBase
         return _breadcrumbs;
     }
 
-    protected void AddBreadcrumb(string text, string? action = null, string? controller = null, object? parameters = null)
+    protected void AddBreadcrumb(string text, string? action = null, string? controller = null, object? parameters = null, string? cssClass = null)
     {
-        _breadcrumbs.Add(new Breadcrumb(text, action, controller, parameters));
+        _breadcrumbs.Add(new Breadcrumb(text, action, controller, parameters, cssClass));
     }
 
     protected string GetControllerName(string fullTypeName)

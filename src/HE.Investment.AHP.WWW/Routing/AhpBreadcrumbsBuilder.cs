@@ -21,15 +21,15 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
     public AhpBreadcrumbsBuilder WithSchemes()
     {
         // TODO: fix after implementing schemes
-        AddBreadcrumb("Schemes");
+        AddBreadcrumb("Schemes", cssClass: "govuk-!-padding-right-4");
 
         return this;
     }
 
-    public AhpBreadcrumbsBuilder WithScheme(string schemeId, string schemeName)
+    public AhpBreadcrumbsBuilder WithApplication(string applicationId, string applicationName)
     {
-        // TODO: fix this after implementing schemes
-        AddBreadcrumb(schemeName, nameof(SchemeController.Index), GetControllerName(nameof(SchemeController)));
+        // TODO: fix this after implementing schemes/applications
+        AddBreadcrumb(applicationName, nameof(SchemeController.Index), GetControllerName(nameof(SchemeController)));
 
         return this;
     }

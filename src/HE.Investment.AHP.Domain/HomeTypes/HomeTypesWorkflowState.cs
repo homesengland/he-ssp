@@ -4,8 +4,10 @@ public enum HomeTypesWorkflowState
 {
     Index = 1,
     List,
-    HousingType,
-    DisabledPeopleHousingType,
-    OlderPeopleHousingType,
+    RemoveHomeType,
+    NewHomeTypeDetails,
+    HomeTypeDetails,
     HomeInformation,
+    HomesForDisabledPeople,
+    HomesForOlderPeople,
 }

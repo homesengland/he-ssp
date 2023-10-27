@@ -2,10 +2,10 @@ namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
 public class HomeTypeModelBase
 {
-    public HomeTypeModelBase(string schemeName)
+    public HomeTypeModelBase(string applicationName)
     {
-        SchemeName = schemeName;
+        ApplicationName = applicationName;
     }
 
-    public string SchemeName { get; set; }
+    public string ApplicationName { get; set; }
 }

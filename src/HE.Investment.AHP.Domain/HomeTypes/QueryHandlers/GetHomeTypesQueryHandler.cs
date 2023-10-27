@@ -6,7 +6,7 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
-internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQuery, IList<HomeTypeBasicDetails>>
+internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQuery, IList<HomeTypeDetails>>
 {
     private readonly IHomeTypesRepository _repository;
 
@@ -15,16 +15,16 @@ internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQue
         _repository = repository;
     }
 
-    public async Task<IList<HomeTypeBasicDetails>> Handle(GetHomeTypesQuery request, CancellationToken cancellationToken)
+    public async Task<IList<HomeTypeDetails>> Handle(GetHomeTypesQuery request, CancellationToken cancellationToken)
     {
-        var homeTypes = await _repository.GetBySchemeId(request.SchemeId, cancellationToken);
+        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, cancellationToken);
 
         return homeTypes.HomeTypes.Select(Map).ToList();
     }
 
-    private static HomeTypeBasicDetails Map(HomeTypeBasicDetailsEntity entity)
+    private static HomeTypeDetails Map(HomeTypeBasicDetailsEntity entity)
     {
-        return new HomeTypeBasicDetails(
+        return new HomeTypeDetails(
             entity.Id.Value,
             entity.Name?.Value,
             entity.NumberOfHomes,
