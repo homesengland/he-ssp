@@ -4,4 +4,5 @@ public enum NotificationBodyType
     WithdrawApplication,
     DeleteProject,
     FilesUpload,
+    FileRemove,
 }
