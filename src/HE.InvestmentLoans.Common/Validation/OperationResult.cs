@@ -3,7 +3,7 @@ using HE.InvestmentLoans.Common.Extensions;
 
 namespace HE.InvestmentLoans.Common.Validation;
 
-public class OperationResult
+public class OperationResult : IOperationResult
 {
     public OperationResult()
     {

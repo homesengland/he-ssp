@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.Scheme;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.Common.Utils;
+using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.Investment.AHP.Domain.Config;
@@ -14,7 +15,7 @@ public static class DomainModule
     public static void AddDomainModule(this IServiceCollection services)
     {
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
-        services.AddScoped<IDomainExceptionHandler, DomainExceptionHandler>();
+        services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
 
         AddHomeTypes(services);
         AddFinancialDetails(services);
