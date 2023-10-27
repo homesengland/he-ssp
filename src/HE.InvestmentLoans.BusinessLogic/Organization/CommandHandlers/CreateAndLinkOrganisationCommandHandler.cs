@@ -1,5 +1,5 @@
 extern alias Org;
-
+using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
 using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User;
@@ -32,7 +32,7 @@ public class CreateAndLinkOrganisationCommandHandler : IRequestHandler<CreateAnd
     {
         try
         {
-            if (await _loanUserContext.IsLinkedWithOrganization())
+            if (!await _loanUserContext.IsLinkedWithOrganization())
             {
                 throw new DomainException(
                     $"Cannot link organization to user account id: {_loanUserContext.UserGlobalId}, because it is already linked to other organization.",
@@ -43,7 +43,7 @@ public class CreateAndLinkOrganisationCommandHandler : IRequestHandler<CreateAnd
             var name = operationResult.Aggregate(() => new OrganisationName(request.Name));
             var address = operationResult.Aggregate(() =>
                 new OrganisationAddress(request.AddressLine1, request.AddressLine2, null, request.TownOrCity, request.Postcode, request.County, null));
-            var organisation = operationResult.Aggregate(() => new OrganisationToCreate(name, address));
+            var organisation = operationResult.Aggregate(() => new OrganisationEntity(name, address));
 
             operationResult.CheckErrors();
 

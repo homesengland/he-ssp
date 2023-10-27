@@ -1,5 +1,5 @@
 extern alias Org;
-
+using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
 using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
@@ -67,7 +67,7 @@ public class OrganizationRepository : IOrganizationRepository
         throw new ArgumentOutOfRangeException(changeRequestDetails, nameof(changeRequestDetails) + "has incorrect value!");
     }
 
-    public async Task<Guid> CreateOrganisation(OrganisationToCreate organisation)
+    public async Task<Guid> CreateOrganisation(OrganisationEntity organisation)
     {
         var id = _organizationService.CreateOrganization(new Org.HE.Common.IntegrationModel.PortalIntegrationModel.OrganizationDetailsDto
         {
@@ -82,5 +82,11 @@ public class OrganizationRepository : IOrganizationRepository
         });
 
         return await Task.FromResult(id);
+    }
+
+    public Task Update(OrganisationEntity organisation, CancellationToken cancellationToken)
+    {
+        // todo waiting for crm endpoint
+        throw new NotImplementedException();
     }
 }

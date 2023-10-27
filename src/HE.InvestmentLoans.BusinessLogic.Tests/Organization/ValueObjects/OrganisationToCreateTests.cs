@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
 using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.Common.Exceptions;
@@ -15,10 +16,10 @@ public class OrganisationToCreateTests
         var name = "Organizacja narodów Antonia";
 
         // when
-        var result = new OrganisationToCreate(OrganisationNameTests.CreateName(name), OrganisationAddressTests.CreateAddress());
+        var result = new OrganisationEntity(OrganisationNameTests.CreateName(name), OrganisationAddressTests.CreateAddress());
 
         // then
-        result.Name.Value.Should().Be(name);
+        result.Name.Name.Should().Be(name);
     }
 
     [Theory]
@@ -27,7 +28,7 @@ public class OrganisationToCreateTests
     public void ShouldThrowException_WhenNameIsInvalid(string name, string expectedErrorMessage)
     {
         // given & when
-        var result = () => new OrganisationToCreate(OrganisationNameTests.CreateName(name), OrganisationAddressTests.CreateAddress());
+        var result = () => new OrganisationEntity(OrganisationNameTests.CreateName(name), OrganisationAddressTests.CreateAddress());
 
         // then
         result.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(expectedErrorMessage);

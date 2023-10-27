@@ -1,10 +1,11 @@
 using HE.InvestmentLoans.Contract.Organization;
+using HE.InvestmentLoans.Contract.UserOrganisation.Commands;
 using HE.InvestmentLoans.Contract.UserOrganisation.Queries;
-using HE.InvestmentLoans.CRM.Model;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Models.UserOrganisation;
 using HE.InvestmentLoans.WWW.Utils;
+using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,11 +13,12 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 
 [Route("user-organisation")]
 [AuthorizeWithCompletedProfile]
-public class UserOrganisationController : Controller
+public class UserOrganisationController : BaseController
 {
     private readonly IMediator _mediator;
 
     public UserOrganisationController(IMediator mediator)
+        : base(mediator)
     {
         _mediator = mediator;
     }
@@ -53,5 +55,34 @@ public class UserOrganisationController : Controller
         var organisationResult = await _mediator.Send(new GetOrganisationDetailsQuery());
 
         return View("OrganizationDetails", organisationResult.OrganisationDetailsViewModel);
+    }
+
+    [HttpGet("request-details-change")]
+    public async Task<IActionResult> ChangeOrganisationDetails()
+    {
+        var organisationResult = await _mediator.Send(new GetOrganisationDetailsQuery());
+
+        return View(organisationResult.OrganisationDetailsViewModel);
+    }
+
+    [HttpPost("request-details-change")]
+    public async Task<IActionResult> ChangeOrganisationDetails(OrganisationDetailsViewModel viewModel, CancellationToken cancellationToken)
+    {
+        var command = new ChangeOrganisationDetailsCommand(
+            viewModel.Name,
+            viewModel.PhoneNumber,
+            viewModel.AddressLine1,
+            viewModel.AddressLine2,
+            viewModel.TownOrCity,
+            viewModel.County,
+            viewModel.Postcode);
+
+        return await ExecuteCommand(
+            command,
+            () => RedirectToAction(
+                nameof(UserOrganisationController.Details),
+                new ControllerName(nameof(UserOrganisationController)).WithoutPrefix()),
+            () => View(viewModel),
+            cancellationToken);
     }
 }
