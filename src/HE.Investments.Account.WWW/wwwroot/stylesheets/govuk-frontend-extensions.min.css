@@ -1,0 +1,52 @@
+.task-list-grid-container {
+    display: grid;
+    grid-template-columns: 1fr auto 150px;
+    gap: 10px;
+}
+
+.task-list-remove-link {
+    grid-column: 2;
+}
+
+.task-list-project-name {
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 28.124em) {
+    .task-list-project-tag {
+      float: right;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+}
+
+.guidance-list_list-item::before {
+    content: "—";
+    padding-right: 10px;
+    color: #b1b4b6;
+    font-weight: bold;
+}
+
+.guidance-aside-content {
+    margin-top: 35em;
+}
+
+.guidance-next-link-container {
+    display: flex;
+    align-items: center;
+}
+
+.guidance-link-arrow {
+    color: #505a5f;
+    fill: currentcolor;
+    forced-color-adjust: auto;
+    margin-right: 10px;
+}
+
+.guidance-mainpart-link {
+    font-weight: bold;
+}
+
+.guidance-subpart-link {
+    text-decoration: underline;
+}

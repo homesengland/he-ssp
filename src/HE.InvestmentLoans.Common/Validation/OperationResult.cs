@@ -73,6 +73,23 @@ public class OperationResult
         }
     }
 
+    public OperationResult WithValidation(Action action)
+    {
+        try
+        {
+            action();
+        }
+        catch (DomainValidationException ex)
+        {
+            var result = ex.OperationResult;
+            var error = result.Errors.Single();
+
+            AddValidationError(error.AffectedField, error.ErrorMessage);
+        }
+
+        return this;
+    }
+
     public OperationResult AddValidationError(ErrorItem errorItem)
     {
         Errors.Add(errorItem);

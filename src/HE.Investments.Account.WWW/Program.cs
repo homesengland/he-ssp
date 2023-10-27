@@ -1,11 +1,8 @@
-using HE.Investment.AHP.WWW.Config;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Infrastructure.Middlewares;
-using HE.Investments.Common.WWW;
+using HE.Investments.Account.WWW.Config;
+using HE.Investments.Account.WWW.Middlewares;
 using HE.Investments.Common.WWW.Partials;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,14 +13,14 @@ builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 builder.Services.AddCommonPartialsViews();
-var mvcBuilder = builder.Services.AddControllersWithViews(options =>
-    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
+var mvcBuilder = builder.Services.AddControllersWithViews();
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/home/error");
+    app.UsePageNotFound();
     app.UseHsts();
 }
 
@@ -39,9 +36,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
-#pragma warning disable CA1050
-public partial class Program
-{
-}
-#pragma warning restore CA1050
