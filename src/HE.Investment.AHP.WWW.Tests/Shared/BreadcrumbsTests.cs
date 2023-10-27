@@ -1,14 +1,14 @@
-using HE.InvestmentLoans.WWW.Tests.Helpers;
+using HE.Investment.AHP.WWW.Tests.Helpers;
+using HE.Investment.AHP.WWW.Tests.Views;
 using HE.Investments.Common.WWW.Routing;
-using Xunit;
 
 #pragma warning disable CA1716
-namespace HE.InvestmentLoans.WWW.Tests.Views.Shared;
+namespace HE.Investment.AHP.WWW.Tests.Shared;
 #pragma warning restore CA1716
 
 public class BreadcrumbsTests : ViewTestBase
 {
-    private readonly string _viewPath = "/Views/Shared/_Breadcrumbs.cshtml";
+    private readonly string _viewPath = "~/Partials/_Breadcrumbs.cshtml";
 
     [Fact]
     public async Task ShouldDisplayBreadcrumbs()
