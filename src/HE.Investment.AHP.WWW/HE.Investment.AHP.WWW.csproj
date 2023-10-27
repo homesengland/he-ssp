@@ -24,7 +24,7 @@
     <PackageReference Include="He.AspNetCore.Mvc.Gds.Components" Version="1.0.154" />
     <PackageReference Include="He.AspNetCore.Mvc.GdsTagHelpers" Version="1.0.65" />
     <PackageReference Include="MediatR" Version="12.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.20" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24" />
     <PackageReference Include="Microsoft.FeatureManagement" Version="2.6.1" />
     <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.6.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
