@@ -1,4 +1,4 @@
-﻿@model HE.InvestmentLoans.Contract.CompanyStructure.CompanyStructureViewModel
+@model HE.InvestmentLoans.Contract.CompanyStructure.CompanyStructureViewModel
 @{
     var id = ViewContext.RouteData.Values["id"];
 }
@@ -10,14 +10,20 @@
                { "Link", Url.Action("Purpose", "CompanyStructureV2", new { id, state = "Purpose" }) },
                { "IsEditable", Model.IsEditable() }
            })
-
-    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
-           {
-               { "Title", "Additional information" },
-               { "Value", Model.OrganisationMoreInformation },
-               { "Link", Url.Action("MoreInformationAboutOrganization", "CompanyStructureV2", new { id, state = "ExistingCompany" }) },
-               { "IsEditable", Model.IsEditable() }
-           })
+    @{
+        var files = Model.OrganisationMoreInformationFiles.ToDictionary(
+            key => key.FileName,
+            value => Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, folderPath = value.FolderPath, fileName = value.FileName })
+        );
+        @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+        {
+            { "Title", "Additional information" },
+            { "Value", Model.OrganisationMoreInformation },
+            { "Link", Url.Action("MoreInformationAboutOrganization", "CompanyStructureV2", new { id, state = "ExistingCompany" }) },
+            { "IsEditable", Model.IsEditable() },
+            { "Files", files }
+        })
+    }
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
            {
