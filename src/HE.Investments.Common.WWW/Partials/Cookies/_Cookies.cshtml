@@ -1,0 +1,27 @@
+@using HE.Investments.Common.WWW.Models.Cookies
+@model HE.Investments.Common.WWW.Models.Cookies.CookiesModel
+@{
+    var model = new CookiesModel(
+        new List<CookieModel>
+        {
+            new("he_identity", "Used to store number of identity identifier chunks.", "Session"),
+            new("he_identityC{X}", "Used to store chunk of identity identifier.", "Session"),
+            new("emailToVerify", "Used to store your email address.", "Session"),
+            new(".AspNetCore.Session", "Used to track and identify session requests from a browser.", "Session"),
+            new(".AspNetCore.Antiforgery.{X}", "Used to store Antiforgery token to protect requests.", "Session"),
+            new("accept_additional_cookies", "Saves your additional cookie consent settings.", "1 year")
+        },
+        new List<CookieModel>( )
+        );
+}
+<gds-h1 class="govuk-!-margin-top-9" size="ControlSize.L">
+    Cookies
+</gds-h1>
+<gds-p>
+    Cookies are small files saved on your phone, tablet or computer when you visit a website.
+</gds-p>
+<gds-p>
+    We use cookies to make this application work and collect information about how you use our service.
+</gds-p>
+@await Html.PartialAsync("_EssentialCookies.cshtml", @model.EssentialCookies)
+@await Html.PartialAsync("_AdditionalCookies.cshtml", @model.AdditionalCookies)

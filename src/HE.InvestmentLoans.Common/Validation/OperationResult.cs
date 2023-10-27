@@ -22,7 +22,8 @@ public class OperationResult
 
     public static OperationResult<TResult> Success<TResult>(TResult result) => new(result);
 
-    public static void ThrowValidationError(string affectedField, string validationMessage) => New().AddValidationError(affectedField, validationMessage).CheckErrors();
+    public static void ThrowValidationError(string affectedField, string validationMessage) =>
+        New().AddValidationError(affectedField, validationMessage).CheckErrors();
 
     public static OperationResult<TReturnedData> ResultOf<TReturnedData>(Func<TReturnedData> action)
         where TReturnedData : class
@@ -70,6 +71,23 @@ public class OperationResult
 
             return null!;
         }
+    }
+
+    public OperationResult WithValidation(Action action)
+    {
+        try
+        {
+            action();
+        }
+        catch (DomainValidationException ex)
+        {
+            var result = ex.OperationResult;
+            var error = result.Errors.Single();
+
+            AddValidationError(error.AffectedField, error.ErrorMessage);
+        }
+
+        return this;
     }
 
     public OperationResult AddValidationError(ErrorItem errorItem)

@@ -25,6 +25,13 @@ public abstract class BaseController : Controller
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
+            var validationErrors = new List<KeyValuePair<string, string>>();
+            foreach (var validationResult in result.Errors)
+            {
+                validationErrors.Add(new KeyValuePair<string, string>(validationResult.AffectedField, validationResult.ErrorMessage));
+            }
+
+            ViewBag.ValidationErrors = validationErrors;
 
             return onError();
         }

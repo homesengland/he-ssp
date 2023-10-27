@@ -1,21 +1,12 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:36035",
-      "sslPort": 44359
-    }
-  },
   "profiles": {
-    "https": {
+    "HE.Investment.AHP.WWW": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "https://localhost:7090;http://localhost:5008",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7090;http://localhost:5008"
+      }
     },
     "IIS Express": {
       "commandName": "IISExpress",

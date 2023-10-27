@@ -1,7 +1,9 @@
 using HE.Investment.AHP.WWW.Config;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Infrastructure.Middlewares;
-using He.Investments.AspNetCore.UI.Common;
+using HE.Investments.Common.WWW;
+using HE.Investments.Common.WWW.Partials;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.FeatureManagement;
@@ -13,15 +15,10 @@ builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
-var mvcBuilder = builder.Services.AddControllersWithViews();
+builder.Services.AddCommonPartialsViews();
+var mvcBuilder = builder.Services.AddControllersWithViews(options =>
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 builder.AddIdentityProviderConfiguration(mvcBuilder);
-
-var assembly = typeof(AssemblyMarkup).Assembly;
-builder.Services.AddControllersWithViews()
-    .AddApplicationPart(assembly)
-    .AddRazorRuntimeCompilation();
-builder.Services.Configure<MvcRazorRuntimeCompilationOptions>(
-    options => options.FileProviders.Add(new EmbeddedFileProvider(assembly)));
 
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())
@@ -40,6 +37,10 @@ app.UseMiddleware<HeaderSecurityMiddleware>();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "action",
+    pattern: "{controller}/{id}/{action}");
 
 app.Run();
 

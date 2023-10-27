@@ -5,7 +5,8 @@ using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.WWW.Config;
 using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Middlewares;
-using He.Investments.AspNetCore.UI.Common;
+using HE.Investments.Common.WWW;
+using HE.Investments.Common.WWW.Partials;
 using HE.Investments.DocumentService.Extensions;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.FileProviders;
@@ -40,16 +41,10 @@ builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 builder.Services.AddDocumentServiceModule();
+builder.Services.AddCommonPartialsViews();
 
 var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<ExceptionFilter>());
 builder.AddIdentityProviderConfiguration(mvcBuilder);
-
-var assembly = typeof(AssemblyMarkup).Assembly;
-builder.Services.AddControllersWithViews()
-    .AddApplicationPart(assembly)
-    .AddRazorRuntimeCompilation();
-builder.Services.Configure<MvcRazorRuntimeCompilationOptions>(
-    options => options.FileProviders.Add(new EmbeddedFileProvider(assembly)));
 
 var app = builder.Build();
 

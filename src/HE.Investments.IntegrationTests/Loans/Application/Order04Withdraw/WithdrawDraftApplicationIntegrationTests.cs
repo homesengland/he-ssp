@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
@@ -8,6 +7,7 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
+using HE.InvestmentLoans.WWW.Views.LoanApplicationV2.Consts;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -38,7 +38,7 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
         // then
         withdrawPage
             .UrlEndWith(ApplicationPagesUrls.WithdrawSuffix)
-            .HasLabelTitle("Why are you withdrawing your application")
+            .HasLabelTitle(LoanApplicationPageTitles.Withdraw)
             .HasGdsSubmitButton("continue-button", out _);
 
         SetSharedData(SharedKeys.CurrentPageKey, withdrawPage);
@@ -60,7 +60,7 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
         // then
         withdrawPage
             .UrlEndWith(ApplicationPagesUrls.WithdrawSuffix)
-            .HasLabelTitle("Why are you withdrawing your application")
+            .HasLabelTitle(LoanApplicationPageTitles.Withdraw)
             .ContainsValidationMessage(ValidationErrorMessage.EnterWhyYouWantToWithdrawApplication);
     }
 
@@ -80,7 +80,7 @@ public class WithdrawDraftApplicationIntegrationTests : IntegrationTest
         // then
         withdrawPage
             .UrlEndWith(ApplicationPagesUrls.WithdrawSuffix)
-            .HasLabelTitle("Why are you withdrawing your application")
+            .HasLabelTitle(LoanApplicationPageTitles.Withdraw)
             .ContainsValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.WithdrawReason));
     }
 

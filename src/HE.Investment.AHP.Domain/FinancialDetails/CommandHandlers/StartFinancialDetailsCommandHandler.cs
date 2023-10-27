@@ -26,4 +26,3 @@ public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandle
         return OperationResult.Success(new StartFinancialDetailsCommandResult(financialDetails.Id.Value));
     }
 }
-

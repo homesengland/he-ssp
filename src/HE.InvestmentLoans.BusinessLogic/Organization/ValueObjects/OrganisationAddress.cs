@@ -11,7 +11,7 @@ public class OrganisationAddress : ValueObject
         string? addressLine2,
         string? addressLine3,
         string townOrCity,
-        Postcode postcode,
+        string postcode,
         string? county,
         string? country)
     {
@@ -43,7 +43,7 @@ public class OrganisationAddress : ValueObject
         yield return Country;
     }
 
-    private OperationResult Build(string line1, string? line2, string? line3, string city, Postcode postcode, string? county, string? country)
+    private OperationResult Build(string line1, string? line2, string? line3, string city, string postcode, string? county, string? country)
     {
         var operationResult = OperationResult.New();
 
@@ -73,7 +73,7 @@ public class OrganisationAddress : ValueObject
             .For(country, nameof(Country), operationResult)
             .IsShortInput();
 
-        Postcode = postcode;
+        Postcode = operationResult.Aggregate(() => new Postcode(postcode));
 
         return operationResult;
     }
