@@ -143,6 +143,7 @@
     <Compile Include="Handlers\CustomApi\UpdateSingleLoanApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleSiteDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateUserProfileHandler.cs" />
+    <Compile Include="Handlers\ISPs\SetFieldsOnSentForApprovalChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\AssignLoanToTmTeamOnCreateHandler.cs" />
     <Compile Include="Handlers\LoanApplications\ChangeApplicationStatusOnOwnerChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\CheckIfOwnerCanBeChangedHandler.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Plugins\CustomApi\UpdateSingleSiteDetailsPlugin.cs" />
     <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateUserProfilePlugin.cs" />
+    <Compile Include="Plugins\ISPs\SetFieldsOnSentForApprovalChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\AssignLoanToTmTeamOnCreatePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\CreateDocumentLocationOnCreatePlugin.cs" />
     <Compile Include="Plugins\LoanStatusChange\SendNotificationOnCreatePlugin.cs" />
@@ -250,6 +252,8 @@
     <Compile Include="Services\GovNotifyEmail\GovNotifyEmailService.cs" />
     <Compile Include="Services\GovNotifyEmail\IGovNotifyEmailService.cs" />
     <Compile Include="Services\HttpServices\AzureAdHttpClientService.cs" />
+    <Compile Include="Services\ISPs\IIspService.cs" />
+    <Compile Include="Services\ISPs\IspService.cs" />
     <Compile Include="Services\LoanApplication\ILoanApplicationService.cs" />
     <Compile Include="Services\LoanApplication\LoanApplicationService.cs" />
     <Compile Include="Services\LoanStatusChange\ILoanStatusChangeService.cs" />

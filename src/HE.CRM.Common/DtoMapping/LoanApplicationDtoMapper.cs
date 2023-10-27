@@ -123,6 +123,7 @@ namespace HE.CRM.Common.DtoMapping
                 startDate = loanApplication.invln_startdate,
                 createdOn = loanApplication.CreatedOn,
                 ApplicationName = loanApplication.invln_applicationname,
+                dateSubmitted = loanApplication.invln_Datesubmitted,
             };
             if(loanApplication.invln_Account != null)
             {

@@ -8,7 +8,8 @@ public class HomeTypeName : ShortText
 {
     private static readonly Regex NumberSuffixRegex = new Regex(@" - \d", RegexOptions.Compiled);
 
-    public HomeTypeName(string? value) : base(value, nameof(HomeTypeName))
+    public HomeTypeName(string? value)
+        : base(value, nameof(HomeTypeName))
     {
     }
 

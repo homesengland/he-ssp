@@ -49,4 +49,10 @@ public class SharepointFilesController : CustomControllerBase
     {
         await Service<ISharePointFilesService>().RemoveFile(listAlias, folderPath, fileName);
     }
+
+    [HttpPost("CreateFolders")]
+    public void CreateFolders(string listTitle, List<string> folderPaths)
+    {
+        Service<ISharePointFilesService>().CreateFolders(listTitle, folderPaths);
+    }
 }

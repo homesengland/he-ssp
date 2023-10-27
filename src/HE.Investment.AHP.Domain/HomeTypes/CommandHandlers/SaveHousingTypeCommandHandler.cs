@@ -17,7 +17,8 @@ public class SaveHousingTypeCommandHandler : HomeTypeCommandHandlerBase, IReques
     public SaveHousingTypeCommandHandler(
         IHomeTypesRepository homeTypesRepository,
         IHomeTypeRepository homeTypeRepository,
-        ILogger<SaveHousingTypeCommand> logger) : base(logger)
+        ILogger<SaveHousingTypeCommand> logger)
+        : base(logger)
     {
         _homeTypesRepository = homeTypesRepository;
         _homeTypeRepository = homeTypeRepository;

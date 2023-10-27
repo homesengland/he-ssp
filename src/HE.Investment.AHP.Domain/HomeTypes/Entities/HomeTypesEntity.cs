@@ -27,7 +27,7 @@ public class HomeTypesEntity
             throw new DomainValidationException(
                 new OperationResult().AddValidationErrors(new List<ErrorItem>
                 {
-                    new(nameof(HomeTypeName), "Enter a different name. Home types cannot have the same name")
+                    new(nameof(HomeTypeName), "Enter a different name. Home types cannot have the same name"),
                 }));
         }
     }

@@ -21,4 +21,6 @@ public interface IHttpDocumentService
     Task DeleteAsync(string listAlias, string folderPath, string fileName);
 
     Task<FileData> DownloadAsync(string listAlias, string folderPath, string fileName);
+
+    Task CreateFoldersAsync(string listTitle, List<string> folderPaths);
 }

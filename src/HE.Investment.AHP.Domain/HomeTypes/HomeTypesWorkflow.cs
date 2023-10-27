@@ -17,7 +17,8 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
         ConfigureTransitions();
     }
 
-    public HomeTypesWorkflow() : this(HomeTypesWorkflowState.HousingType, new HomeType())
+    public HomeTypesWorkflow()
+        : this(HomeTypesWorkflowState.HousingType, new HomeType())
     {
     }
 

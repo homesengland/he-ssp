@@ -64,4 +64,8 @@
     <ProjectReference Include="..\HE.InvestmentLoans.WWW\HE.InvestmentLoans.WWW.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Loans\Dashboards\" />
+  </ItemGroup>
+
 </Project>
