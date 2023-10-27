@@ -36,6 +36,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.20" />
     <PackageReference Include="Microsoft.FeatureManagement" Version="2.6.1" />
     <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.6.1" />
+    <PackageReference Include="NuGet.Common" Version="6.7.0" />
+    <PackageReference Include="NuGet.Protocol" Version="6.7.0" />
     <PackageReference Include="StackExchange.Redis.Extensions.Core" Version="9.1.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
       <PrivateAssets>all</PrivateAssets>
