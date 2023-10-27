@@ -142,6 +142,11 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
         }
     }
 
+    public void CreateFolders(string listTitle, List<string> folderPaths)
+    {
+        folderPaths.ForEach(folderPath => _sharePointFolderService.CreateFolderIfNotExist(listTitle, folderPath));
+    }
+
     private string GetFolderPath(string listName, string folderPath)
     {
         return $"{new Uri(_spConfig.SiteUrl).AbsolutePath}/{listName}/{folderPath}";

@@ -5,7 +5,6 @@ using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
-using Microsoft.Crm.Sdk.Messages;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Org::HE.Investments.Organisation.Services;
 
@@ -72,7 +71,7 @@ public class OrganizationRepository : IOrganizationRepository
     {
         var id = _organizationService.CreateOrganization(new Org.HE.Common.IntegrationModel.PortalIntegrationModel.OrganizationDetailsDto
         {
-            registeredCompanyName = organisation.Name,
+            registeredCompanyName = organisation.Name.ToString(),
             addressLine1 = organisation.Address.AddressLine1,
             addressLine2 = organisation.Address.AddressLine2,
             addressLine3 = organisation.Address.AddressLine3,

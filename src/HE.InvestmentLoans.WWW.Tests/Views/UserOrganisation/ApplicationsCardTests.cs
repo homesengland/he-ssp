@@ -46,7 +46,7 @@ public class ApplicationsCardTests : ViewTestBase
         document
             .HasElementWithText("h3", $"Applications")
             .HasElementWithText("p", "other(s)", false)
-            .HasElementWithText("a", "View all", false);
+            .HasElementWithText("a", "View all");
 
         AssertApplications(model, document);
     }
@@ -75,20 +75,25 @@ public class ApplicationsCardTests : ViewTestBase
         }
     }
 
+    private static ApplicationBasicDetailsModel[] ApplicationBasicDetailsModels()
+    {
+        return new[]
+        {
+            new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap1", ApplicationStatus.New),
+            new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap2", ApplicationStatus.New),
+            new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap3", ApplicationStatus.ApplicationDeclined),
+            new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap4", ApplicationStatus.New),
+            new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap5", ApplicationStatus.Draft),
+            new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap6", ApplicationStatus.New),
+            new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap7", ApplicationStatus.New),
+        };
+    }
+
     private UserApplicationsModel CreateTestModel(IList<ApplicationBasicDetailsModel>? applications = null)
     {
         return new UserApplicationsModel(
             "Nagłówek",
-            applications ?? new[]
-            {
-                new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap1", ApplicationStatus.New),
-                new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap2", ApplicationStatus.New),
-                new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap3", ApplicationStatus.ApplicationDeclined),
-                new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap4", ApplicationStatus.New),
-                new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap5", ApplicationStatus.Draft),
-                new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap6", ApplicationStatus.New),
-                new ApplicationBasicDetailsModel(Guid.NewGuid(), "Ap7", ApplicationStatus.New),
-            },
+            applications ?? ApplicationBasicDetailsModels(),
             "A",
             "C");
     }
