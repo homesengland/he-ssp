@@ -1,4 +1,3 @@
-using HE.Investment.AHP.BusinessLogic.FinancialDetails.CommandHandlers;
 using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
