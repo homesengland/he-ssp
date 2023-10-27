@@ -2,6 +2,7 @@ using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Infrastructure.Middlewares;
 using HE.Investments.Account.WWW.Config;
 using HE.Investments.Account.WWW.Middlewares;
+using HE.Investments.Common.WWW.Partials;
 using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
+builder.Services.AddCommonPartialsViews();
 var mvcBuilder = builder.Services.AddControllersWithViews();
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 
