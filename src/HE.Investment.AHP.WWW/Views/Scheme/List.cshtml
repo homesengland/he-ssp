@@ -13,7 +13,7 @@
         @foreach (var scheme in Model)
         {
             <gds-p>
-                <a href="@Url.Action("Name", "Scheme", new { schemeId = scheme.Id })"> @scheme.Name </a>
+                <a href="@Url.RouteUrl("action", new { action = "name", controller = "scheme", id = scheme.Id })"> @scheme.Name </a>
             </gds-p>
         }
     </div>

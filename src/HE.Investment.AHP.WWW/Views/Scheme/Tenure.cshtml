@@ -19,7 +19,7 @@
 <gds-div-grid-column-two-thirds>
     <gds-back-link href="@Url.Action("Name", "Scheme", new { schemeId = Model.Id })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
-    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml");
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <span class="govuk-caption-m">
         @Model.Name
     </span>
@@ -40,9 +40,9 @@
 
                 @if (isTenureInvalid)
                 {
-                    <p class="govuk-error-message">
-                        <span class="govuk-visually-hidden">Error:</span> @tenureError
-                    </p>
+                    <span class="govuk-error-message" data-valmsg-for="Tenure">
+                        <span class="govuk-visually-hidden">Error:</span>@tenureError
+                    </span>
                 }
 
                 <gds-custom-radio

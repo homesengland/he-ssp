@@ -38,6 +38,10 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+    name: "action",
+    pattern: "{controller}/{id}/{action}");
+
 app.Run();
 
 #pragma warning disable CA1050

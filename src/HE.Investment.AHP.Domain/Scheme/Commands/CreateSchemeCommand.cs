@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Scheme.Commands;
 
-public record CreateSchemeCommand(string Name) : IRequest<OperationResult<SchemeId>>;
+public record CreateSchemeCommand(string Name) : IRequest<OperationResult<SchemeId?>>;

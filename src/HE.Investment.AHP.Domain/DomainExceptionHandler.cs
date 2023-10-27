@@ -13,7 +13,7 @@ public class DomainExceptionHandler : IDomainExceptionHandler
         _logger = logger;
     }
 
-    public async Task<OperationResult<TResult>> Handle<TResult>(Func<Task<OperationResult<TResult>>> action)
+    public async Task<OperationResult<TResult?>> Handle<TResult>(Func<Task<OperationResult<TResult?>>> action)
     {
         try
         {
@@ -23,7 +23,7 @@ public class DomainExceptionHandler : IDomainExceptionHandler
         {
             _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
 
-            return new OperationResult<TResult>(domainValidationException.OperationResult.Errors, default!);
+            return new OperationResult<TResult?>(domainValidationException.OperationResult.Errors, default);
         }
     }
 }
