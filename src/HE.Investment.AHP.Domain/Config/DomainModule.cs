@@ -1,5 +1,5 @@
-using HE.Investment.AHP.BusinessLogic.FinancialDetails.Repositories;
 using HE.Investment.AHP.Contract.HomeTypes;
+using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
