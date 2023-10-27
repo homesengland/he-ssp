@@ -41,7 +41,8 @@ public class ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler : C
     public async Task<OperationResult> Handle(ProvideMoreInformationAboutOrganizationRemoveFileCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            async companyStructure => {
+            async companyStructure =>
+            {
                 await _documentService.DeleteAsync(
                     _config.ListAlias,
                     request.FolderPath,
