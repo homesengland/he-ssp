@@ -61,7 +61,6 @@
                                    asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model.PurchasePrice />
                     </gds-field-set>
                 </gds-div-form-group>
-                <p>@Model.FinancialDetailsId</p>
 
                 @Html.HiddenFor(model => model.FinancialDetailsId)
                 @Html.HiddenFor(model => model.IsPurchasePriceKnown)
