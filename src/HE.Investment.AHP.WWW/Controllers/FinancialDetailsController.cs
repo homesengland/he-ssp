@@ -60,4 +60,26 @@ public class FinancialDetailsController : Controller
 
         return View("LandValue", id);
     }
+
+    [HttpGet("{financialDetailsId}/land-value")]
+    public async Task<IActionResult> LandValue(Guid financialDetailsId)
+    {
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(FinancialDetailsId.From(financialDetailsId)));
+        return View(financialDetails);
+    }
+
+    [HttpPost("{financialDetailsId}/land-value")]
+    public async Task<IActionResult> LandValue(Guid id, FinancialDetailsViewModel model)
+    {
+        var result = await _mediator.Send(new ProvidePurchasePriceCommand(FinancialDetailsId.From(id), model.PurchasePrice, model.IsPurchasePriceKnown ?? false));
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("LandValue", model);
+        }
+
+        return View("OtherSchemeCost", id);
+    }
 }

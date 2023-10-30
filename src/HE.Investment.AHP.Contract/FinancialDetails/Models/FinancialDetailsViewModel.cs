@@ -12,12 +12,14 @@ public class FinancialDetailsViewModel
         FinancialDetailsId financialDetailsId,
         string? financialSchemaName,
         bool? isPurchasePriceKnown,
-        string? purchasePrice)
+        string? purchasePrice,
+        string? isSchemaOnPublicLand)
     {
         FinancialDetailsId = financialDetailsId;
         FinancialSchemaName = financialSchemaName;
         IsPurchasePriceKnown = isPurchasePriceKnown;
         PurchasePrice = purchasePrice;
+        IsSchemaOnPublicLand = isSchemaOnPublicLand;
     }
 
     public FinancialDetailsId FinancialDetailsId { get; }
@@ -27,4 +29,6 @@ public class FinancialDetailsViewModel
     public bool? IsPurchasePriceKnown { get; }
 
     public string? PurchasePrice { get; }
+
+    public string? IsSchemaOnPublicLand { get; }
 }

@@ -1,4 +1,4 @@
-﻿using HE.Investment.AHP.Contract.FinancialDetails.Models;
+using HE.Investment.AHP.Contract.FinancialDetails.Models;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
@@ -27,6 +27,7 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
             financialDetails.Id,
             schemeName,
             financialDetails.PurchasePrice?.IsFinal,
-            financialDetails.PurchasePrice?.Value);
+            financialDetails.PurchasePrice?.Value,
+            financialDetails.IsSchemaOnPublicLand ? "Yes" : "No");
     }
 }
