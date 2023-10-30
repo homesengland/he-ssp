@@ -52,6 +52,7 @@ retrieveenvironmentvariablevalue</ActionsWhitelist>
 contact|
 environmentvariabledefinition|
 environmentvariablevalue|
+invln_conditions|
 invln_contactwebrole|
 invln_contract|
 invln_emailnotification|
@@ -63,6 +64,7 @@ invln_loanstatuschange|
 invln_notificationsetting|
 invln_portal|
 invln_portalpermissionlevel|
+invln_projectspecificcondition|
 invln_sitedetails|
 invln_webrole|
 sharepointdocumentlocation|
