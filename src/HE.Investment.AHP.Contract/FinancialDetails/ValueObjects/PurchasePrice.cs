@@ -17,7 +17,7 @@ public class PurchasePrice : ValueObject
         }
 
         if (!int.TryParse(value, out var price) || price <= 0)
-    {
+        {
             OperationResult.New()
                 .AddValidationError(FinancialDetailsValidationFieldNames.PurchasePrice, FinancialDetailsValidationErrors.InvalidPurchasePrice)
                 .CheckErrors();
