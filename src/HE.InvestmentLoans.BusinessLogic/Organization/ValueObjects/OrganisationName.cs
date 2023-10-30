@@ -6,26 +6,30 @@ namespace HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 
 public class OrganisationName : ValueObject
 {
-    public OrganisationName(string name)
+    public OrganisationName(
+        string name,
+        string notProvidedErrorMessage = OrganisationErrorMessages.MissingOrganisationName,
+        string? lengthErrorMessage = null)
     {
-        Build(name).CheckErrors();
+        Build(name, notProvidedErrorMessage, lengthErrorMessage).CheckErrors();
     }
 
-    public string Value { get; private set; }
+    public string Name { get; private set; }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
-        yield return Value;
+        yield return Name;
     }
 
-    private OperationResult Build(string name)
+    private OperationResult Build(string name, string? notProvidedErrorMessage, string? lengthErrorMessage)
     {
         var operationResult = OperationResult.New();
+        lengthErrorMessage = lengthErrorMessage != null ? ValidationErrorMessage.ShortInputLengthExceeded(lengthErrorMessage) : null;
 
-        Value = Validator
-            .For(name, nameof(Value), operationResult)
-            .IsProvided(OrganisationErrorMessages.MissingOrganisationName)
-            .IsShortInput();
+        Name = Validator
+            .For(name, nameof(Name), operationResult)
+            .IsProvided(notProvidedErrorMessage)
+            .IsShortInput(lengthErrorMessage);
 
         return operationResult;
     }

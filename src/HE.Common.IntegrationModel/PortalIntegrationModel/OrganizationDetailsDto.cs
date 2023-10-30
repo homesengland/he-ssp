@@ -6,6 +6,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string registeredCompanyName { get; set; }
         public string companyRegistrationNumber { get; set; }
         public string rpNumber { get; set; }
+        public string organisationPhoneNumber { get; set; }
 
         //COMPANY ADDRESS
         public string addressLine1 { get; set; }
