@@ -1,6 +1,6 @@
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
-public interface IHomeTypeSectionEntity
+public interface IHomeTypeSegmentEntity
 {
     HomeTypeSegmentType SegmentType { get; }
 
