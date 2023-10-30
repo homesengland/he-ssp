@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -7,6 +8,8 @@ namespace HE.Investments.Common.WWW.Components;
 public class LinkButtonTagHelper : TagHelper
 {
     public string ActionUrl { get; set; }
+
+    public bool IsSecondary { get; set; }
 
     public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
@@ -20,8 +23,9 @@ public class LinkButtonTagHelper : TagHelper
 
         var content = await output.GetChildContentAsync();
 
+        var cssClass = IsSecondary ? "govuk-button govuk-button--secondary" : "govuk-button govuk-button--primary";
         var contentBuilder = new StringBuilder();
-        contentBuilder.Append($" <button class=\"govuk-button govuk-button--secondary\" data-module=\"govuk-button\" type=\"button\">");
+        contentBuilder.Append(CultureInfo.InvariantCulture, $"<button class=\"{cssClass}\" data-module=\"govuk-button\" type=\"button\">");
         contentBuilder.Append(content.GetContent());
         contentBuilder.Append("</button>");
 

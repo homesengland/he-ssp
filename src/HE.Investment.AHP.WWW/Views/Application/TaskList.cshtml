@@ -38,7 +38,7 @@
         </gds-div-inset-text>
     }
 
-    <link-button action-url="@Url.Action("List", "Scheme")">Return to schemes</link-button>
+    <link-button action-url="@Url.Action("Index", "Application")" is-secondary="true" >Return to applications</link-button>
 </gds-div-grid-column-two-thirds>
 <div class="govuk-grid-column-one-third">
     @await Html.PartialAsync("_Help.cshtml")
