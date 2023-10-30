@@ -49,11 +49,11 @@
       <_Parameter1>HE.Investments.Organisation.Tests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-  
+
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
-  
+
   <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
 
 </Project>
