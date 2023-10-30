@@ -1,6 +1,6 @@
+using HE.Investment.AHP.Domain.Application;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investment.AHP.Domain.Scheme;
 using HE.InvestmentLoans.Common.Utils;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +33,6 @@ public static class DomainModule
 
     private static void AddScheme(IServiceCollection services)
     {
-        services.AddSingleton<ISchemeRepository, SchemeRepository>();
+        services.AddSingleton<IApplicationRepository, ApplicationRepository>();
     }
 }

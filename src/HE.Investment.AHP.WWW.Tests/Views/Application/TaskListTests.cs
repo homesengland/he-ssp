@@ -72,6 +72,6 @@ public class TaskListTests : ViewTestBase
             .HasElementWithText("h1", model.Name)
             .HasElementWithText("p", incompleteText, incompleteSectionsExist)
             .HasElementWithText("div", "You must complete all the sections before you can submit your application.", incompleteSectionsExist)
-            .HasElementWithText("button", "Return to schemes");
+            .HasElementWithText("button", "Return to applications");
     }
 }
