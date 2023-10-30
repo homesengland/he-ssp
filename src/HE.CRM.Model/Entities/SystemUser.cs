@@ -528,6 +528,10 @@ namespace DataverseModel
 			public const string lk_invln_sitedetails_createdonbehalfby = "lk_invln_sitedetails_createdonbehalfby";
 			public const string lk_invln_sitedetails_modifiedby = "lk_invln_sitedetails_modifiedby";
 			public const string lk_invln_sitedetails_modifiedonbehalfby = "lk_invln_sitedetails_modifiedonbehalfby";
+			public const string lk_invln_standardcondition_createdby = "lk_invln_standardcondition_createdby";
+			public const string lk_invln_standardcondition_createdonbehalfby = "lk_invln_standardcondition_createdonbehalfby";
+			public const string lk_invln_standardcondition_modifiedby = "lk_invln_standardcondition_modifiedby";
+			public const string lk_invln_standardcondition_modifiedonbehalfby = "lk_invln_standardcondition_modifiedonbehalfby";
 			public const string lk_invln_webrole_createdby = "lk_invln_webrole_createdby";
 			public const string lk_invln_webrole_createdonbehalfby = "lk_invln_webrole_createdonbehalfby";
 			public const string lk_invln_webrole_modifiedby = "lk_invln_webrole_modifiedby";
@@ -631,6 +635,7 @@ namespace DataverseModel
 			public const string user_invln_portalpermissionlevel = "user_invln_portalpermissionlevel";
 			public const string user_invln_projectspecificcondition = "user_invln_projectspecificcondition";
 			public const string user_invln_sitedetails = "user_invln_sitedetails";
+			public const string user_invln_standardcondition = "user_invln_standardcondition";
 			public const string Referencinguser_parent_user = "user_parent_user";
 			public const string user_sharepointdocumentlocation = "user_sharepointdocumentlocation";
 			public const string UserLicenseType = "userlicensetype";
@@ -5091,6 +5096,86 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N lk_invln_standardcondition_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_standardcondition_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_StandardCondition> lk_invln_standardcondition_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_StandardCondition>("lk_invln_standardcondition_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_standardcondition_createdby");
+				this.SetRelatedEntities<DataverseModel.invln_StandardCondition>("lk_invln_standardcondition_createdby", null, value);
+				this.OnPropertyChanged("lk_invln_standardcondition_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_standardcondition_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_standardcondition_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_StandardCondition> lk_invln_standardcondition_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_StandardCondition>("lk_invln_standardcondition_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_standardcondition_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_StandardCondition>("lk_invln_standardcondition_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_standardcondition_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_standardcondition_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_standardcondition_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_StandardCondition> lk_invln_standardcondition_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_StandardCondition>("lk_invln_standardcondition_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_standardcondition_modifiedby");
+				this.SetRelatedEntities<DataverseModel.invln_StandardCondition>("lk_invln_standardcondition_modifiedby", null, value);
+				this.OnPropertyChanged("lk_invln_standardcondition_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_standardcondition_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_standardcondition_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_StandardCondition> lk_invln_standardcondition_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_StandardCondition>("lk_invln_standardcondition_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_standardcondition_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_StandardCondition>("lk_invln_standardcondition_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_standardcondition_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N lk_invln_webrole_createdby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_webrole_createdby")]
@@ -5807,6 +5892,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("user_invln_sitedetails");
 				this.SetRelatedEntities<DataverseModel.invln_SiteDetails>("user_invln_sitedetails", null, value);
 				this.OnPropertyChanged("user_invln_sitedetails");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N user_invln_standardcondition
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_standardcondition")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_StandardCondition> user_invln_standardcondition
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_StandardCondition>("user_invln_standardcondition", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_invln_standardcondition");
+				this.SetRelatedEntities<DataverseModel.invln_StandardCondition>("user_invln_standardcondition", null, value);
+				this.OnPropertyChanged("user_invln_standardcondition");
 			}
 		}
 		

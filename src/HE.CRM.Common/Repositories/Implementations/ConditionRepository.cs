@@ -22,5 +22,14 @@ namespace HE.CRM.Common.Repositories.Implementations
                      .Where(x => x.invln_Loanapplication.Id == loanId && x.invln_ConditionSource.Value == (int)invln_ConditionSource.Bespoke).ToList();
             }
         }
+
+        public List<invln_Conditions> GetConditionsForLoanApplication(Guid loanId)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<invln_Conditions>()
+                     .Where(x => x.invln_Loanapplication.Id == loanId).ToList();
+            }
+        }
     }
 }

@@ -49,13 +49,17 @@
     <TypeScriptCompile Include="rollup.config.ts" />
     <TypeScriptCompile Include="src\Common.ts" />
     <TypeScriptCompile Include="src\events\Account.ts" />
+    <TypeScriptCompile Include="src\events\Condition.ts" />
     <TypeScriptCompile Include="src\events\Isp.ts" />
+    <TypeScriptCompile Include="src\events\LoanApplication.ts" />
     <TypeScriptCompile Include="src\events\Precomplete.ts" />
     <TypeScriptCompile Include="src\events\VfT.ts" />
     <TypeScriptCompile Include="src\Main.ts" />
     <TypeScriptCompile Include="src\OptionSet.ts" />
     <TypeScriptCompile Include="src\services\AccountService.ts" />
+    <TypeScriptCompile Include="src\services\ConditionService.ts" />
     <TypeScriptCompile Include="src\services\IspService.ts" />
+    <TypeScriptCompile Include="src\services\LoanApplicationService.ts" />
     <TypeScriptCompile Include="src\services\PrecompleteService.ts" />
     <TypeScriptCompile Include="src\services\VfTService.ts" />
   </ItemGroup>
