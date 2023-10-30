@@ -11,7 +11,7 @@
                { "IsEditable", Model.IsEditable() }
            })
     @{
-        var files = Model.OrganisationMoreInformationFiles.ToDictionary(
+        var files = Model.OrganisationMoreInformationFiles?.ToDictionary(
             key => key.FileName,
             value => Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, folderPath = value.FolderPath, fileName = value.FileName })
         );
