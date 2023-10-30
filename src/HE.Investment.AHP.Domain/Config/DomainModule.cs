@@ -1,11 +1,7 @@
-using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
-using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.Scheme;
-using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.Common.Utils;
-using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.Investment.AHP.Domain.Config;
