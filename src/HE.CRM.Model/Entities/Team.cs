@@ -127,6 +127,7 @@ namespace DataverseModel
 			public const string team_invln_portalpermissionlevel = "team_invln_portalpermissionlevel";
 			public const string team_invln_projectspecificcondition = "team_invln_projectspecificcondition";
 			public const string team_invln_sitedetails = "team_invln_sitedetails";
+			public const string team_invln_standardcondition = "team_invln_standardcondition";
 			public const string team_sharepointdocumentlocation = "team_sharepointdocumentlocation";
 			public const string TeamId = "teamid";
 			public const string Id = "teamid";
@@ -1153,6 +1154,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("team_invln_sitedetails");
 				this.SetRelatedEntities<DataverseModel.invln_SiteDetails>("team_invln_sitedetails", null, value);
 				this.OnPropertyChanged("team_invln_sitedetails");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_standardcondition
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_standardcondition")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_StandardCondition> team_invln_standardcondition
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_StandardCondition>("team_invln_standardcondition", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_standardcondition");
+				this.SetRelatedEntities<DataverseModel.invln_StandardCondition>("team_invln_standardcondition", null, value);
+				this.OnPropertyChanged("team_invln_standardcondition");
 			}
 		}
 		

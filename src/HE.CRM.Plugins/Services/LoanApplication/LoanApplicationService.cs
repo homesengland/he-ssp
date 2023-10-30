@@ -29,6 +29,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         private readonly IWebRoleRepository _webroleRepository;
         private readonly ILoanStatusChangeRepository _loanStatusChangeRepository;
         private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
+        private readonly IStandardConditionsRepository _standardConditionsRepository;
+        private readonly IConditionRepository _conditionRepository;
 
         private readonly ILoanApplicationRepository _loanApplicationRepositoryAdmin;
         private readonly INotificationSettingRepository _notificationSettingRepositoryAdmin;
@@ -51,6 +53,8 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             _webroleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
             _loanStatusChangeRepository = CrmRepositoriesFactory.Get<ILoanStatusChangeRepository>();
             _sharepointDocumentLocationRepository = CrmRepositoriesFactory.Get<ISharepointDocumentLocationRepository>();
+            _standardConditionsRepository = CrmRepositoriesFactory.Get<IStandardConditionsRepository>();
+            _conditionRepository = CrmRepositoriesFactory.Get<IConditionRepository>();
 
             _loanApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<ILoanApplicationRepository>();
             _notificationSettingRepositoryAdmin = CrmRepositoriesFactory.GetSystem<INotificationSettingRepository>();
@@ -621,6 +625,26 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             else
             {
                 throw new InvalidPluginExecutionException("Organisation Guid is not valid");
+            }
+        }
+
+        public void CreateStandardConditions(invln_Loanapplication target)
+        {
+            if (target.StatusCode.Value == (int)invln_Loanapplication_StatusCode.ApprovedSubjectToContract)
+            {
+                var standardConditions = _standardConditionsRepository.RetrieveAll();
+                foreach (var standardCondition in standardConditions)
+                {
+                    var conditionToCreate = new invln_Conditions()
+                    {
+                        invln_ConditionDefinition = standardCondition.invln_ConditionDefinition,
+                        invln_SatisfiedBy = standardCondition.invln_SatisfiedBy,
+                        invln_Name = standardCondition.invln_Name,
+                        invln_StandardCondition = standardCondition.ToEntityReference(),
+                        invln_Loanapplication = target.ToEntityReference(),
+                    };
+                    _conditionRepository.Create(conditionToCreate);
+                }
             }
         }
 

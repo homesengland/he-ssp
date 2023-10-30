@@ -66,6 +66,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portalpermissionlevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ProjectSpecificCondition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_SiteDetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_StandardCondition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Webrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\SharePointDocumentLocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\SystemUser.cs" />

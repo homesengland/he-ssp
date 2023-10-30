@@ -21,5 +21,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         void CreateDocumentLocation(invln_Loanapplication target);
         bool CheckIfLoanApplicationWithGivenNameExists(string loanName, string organisationId);
         void AssignLoanToTmTeam(invln_Loanapplication target);
+        void CreateStandardConditions(invln_Loanapplication target);
     }
 }

@@ -228,6 +228,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_StandardCondition"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_StandardCondition> invln_StandardConditionSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_StandardCondition>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Webrole"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_Webrole> invln_WebroleSet
