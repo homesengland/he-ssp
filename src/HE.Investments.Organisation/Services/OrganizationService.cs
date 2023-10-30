@@ -44,7 +44,7 @@ public class OrganizationService : IOrganizationService
 
     public async Task<ContactDto?> GetOrganisationChangeDetailsRequestContact(Guid accountId)
     {
-        var organisationChangeDetailsRequest = _organisationChangeRequestRepository.GetChangeRequestForOrganisation(_service, accountId);
+        var organisationChangeDetailsRequest = await _organisationChangeRequestRepository.GetChangeRequestForOrganisation(_service, accountId);
         if (organisationChangeDetailsRequest != null)
         {
             var contactReference = (EntityReference)organisationChangeDetailsRequest["invln_contactid"];
