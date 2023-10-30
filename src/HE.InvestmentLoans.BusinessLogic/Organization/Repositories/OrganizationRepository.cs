@@ -84,9 +84,19 @@ public class OrganizationRepository : IOrganizationRepository
         return await Task.FromResult(id);
     }
 
-    public Task Update(OrganisationEntity organisation, CancellationToken cancellationToken)
+    public async Task Update(OrganisationEntity organisation, CancellationToken cancellationToken)
     {
-        // todo waiting for crm endpoint
-        throw new NotImplementedException();
+        await _organizationService.CreateOrganisationChangeRequest(new Org.HE.Common.IntegrationModel.PortalIntegrationModel.OrganizationDetailsDto
+        {
+            registeredCompanyName = organisation.Name.ToString(),
+            organisationPhoneNumber = organisation.PhoneNumber.ToString(),
+            addressLine1 = organisation.Address.AddressLine1,
+            addressLine2 = organisation.Address.AddressLine2,
+            addressLine3 = organisation.Address.AddressLine3,
+            city = organisation.Address.TownOrCity,
+            country = organisation.Address.County,
+            postalcode = organisation.Address.Postcode.Value,
+            county = organisation.Address.County,
+        });
     }
 }

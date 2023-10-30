@@ -54,7 +54,7 @@
         @if (Model.ChangeRequestState == OrganisationChangeRequestState.NoPendingRequest)
         {
             <gds-p>
-                <gds-link href="">
+                <gds-link href=@Url.Action("ChangeOrganisationDetails", "UserOrganisation")>
                     @OrganisationDetailsView.NoPendingRequest
                 </gds-link>
             </gds-p>
