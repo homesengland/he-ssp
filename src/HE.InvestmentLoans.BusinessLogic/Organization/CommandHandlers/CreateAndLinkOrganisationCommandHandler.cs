@@ -33,7 +33,7 @@ public class CreateAndLinkOrganisationCommandHandler : IRequestHandler<CreateAnd
     {
         try
         {
-            if (!await _loanUserContext.IsLinkedWithOrganization())
+            if (await _loanUserContext.IsLinkedWithOrganization())
             {
                 throw new DomainException(
                     $"Cannot link organization to user account id: {_loanUserContext.UserGlobalId}, because it is already linked to other organization.",
