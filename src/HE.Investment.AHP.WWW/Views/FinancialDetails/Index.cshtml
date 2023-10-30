@@ -1,11 +1,12 @@
-@using HE.Investment.AHP.WWW.Views.Finance.Consts
+@using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts
 @model Guid
 @{
     ViewData["Title"] = "Financial details";
+    var financialDetailsId = Context.Request.Query["financialDetailsId"];
 }
 <div id="mainContainer" role="main">
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="Finance" asp-action="Index" asp-route-id="@Model" asp-method="post" novalidate>
+        <form asp-controller="FinancialDetails" asp-action="Start" asp-route-financialSchemeId="@Model" asp-route-financialDetailsId="@financialDetailsId" asp-method="post" novalidate>
         <div id="backButton" role="navigation">
             <gds-back-link href="@Url.Action("Index", "Home")" text="Back" class="govuk-!-margin-bottom-8">
             </gds-back-link>
