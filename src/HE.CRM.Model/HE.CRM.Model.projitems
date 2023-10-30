@@ -62,6 +62,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanstatuschange.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_notificationsetting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_organisationchangerequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portalpermissionlevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ProjectSpecificCondition.cs" />

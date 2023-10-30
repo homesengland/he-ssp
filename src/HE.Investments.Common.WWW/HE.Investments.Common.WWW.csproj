@@ -40,6 +40,7 @@
     <EmbeddedResource Include="Partials\Cookies\_CookiesTable.cshtml" />
     <EmbeddedResource Include="Partials\Cookies\_EssentialCookies.cshtml" />
     <EmbeddedResource Include="Partials\_Breadcrumbs.cshtml" />
+    <EmbeddedResource Include="Partials\TaskList\_TaskList.cshtml" />
     <EmbeddedResource Include="Partials\_ViewImports.cshtml" />
     <EmbeddedResource Include="Templates\CookieBannerTemplate.html" />
   </ItemGroup>

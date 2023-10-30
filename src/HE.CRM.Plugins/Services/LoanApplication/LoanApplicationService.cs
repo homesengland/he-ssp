@@ -368,7 +368,6 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 (preImage.invln_ExternalStatus != null && target.invln_ExternalStatus != null && preImage.invln_ExternalStatus.Value == (int)invln_ExternalStatus.Draft
                 && target.invln_ExternalStatus.Value == (int)invln_ExternalStatus.ApplicationSubmitted))
             {
-                target.invln_Datesubmitted = DateTime.UtcNow;
                 var relatedSiteDetails = _siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(target.ToEntityReference());
                 if (relatedSiteDetails != null && relatedSiteDetails.Count > 0)
                 {
@@ -396,7 +395,14 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                     target.invln_numberofhomes = numberOfHomes.ToString();
                 }
             }
+
+            if ((target.StatusCode != null && target.StatusCode.Value == (int)invln_Loanapplication_StatusCode.ApplicationSubmitted) ||
+                (target.invln_ExternalStatus != null && target.invln_ExternalStatus.Value == (int)invln_ExternalStatus.ApplicationSubmitted))
+            {
+                target.invln_Datesubmitted = DateTime.UtcNow;
+            }
         }
+
         public void SendInternalNotificationOnStatusChange(invln_Loanapplication target, invln_Loanapplication preImage)
         {
             if (target.StatusCode != null && preImage.StatusCode != null && target.StatusCode.Value != preImage.StatusCode.Value)

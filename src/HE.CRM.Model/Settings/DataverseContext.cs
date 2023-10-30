@@ -184,6 +184,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_organisationchangerequest"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_organisationchangerequest> invln_organisationchangerequestSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_organisationchangerequest>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_portal"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_portal> invln_portalSet

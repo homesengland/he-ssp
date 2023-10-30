@@ -18,6 +18,12 @@ public class OrganizationService : IOrganizationService
         _service = service;
     }
 
+    public async Task<Guid> CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails)
+    {
+        var organisationChangeRequestToCreate = MapOrganizationDtoToOrganizationChangeRequestEntity(organizationDetails);
+        return await _service.CreateAsync(organisationChangeRequestToCreate);
+    }
+
     public Guid CreateOrganization(OrganizationDetailsDto organizationDetails)
     {
         var organizationToCreate = MapOrganizationDtoToEntity(organizationDetails);
@@ -89,5 +95,24 @@ public class OrganizationService : IOrganizationService
             },
         };
         return organizationEntity;
+    }
+
+    private Entity MapOrganizationDtoToOrganizationChangeRequestEntity(OrganizationDetailsDto organizationDetailsDto)
+    {
+        var organisationChangeRequestEntity = new Entity("invln_organisationchangerequest")
+        {
+            Attributes = new AttributeCollection()
+            {
+                { "invln_registeredcompanyname", organizationDetailsDto.registeredCompanyName },
+                { "invln_organisationphonenumber", organizationDetailsDto.organisationPhoneNumber },
+                { "invln_addressline1", organizationDetailsDto.addressLine1 },
+                { "invln_addressline2", organizationDetailsDto.addressLine2 },
+                { "invln_townorcity", organizationDetailsDto.city },
+                { "invln_county", organizationDetailsDto.county },
+                { "invln_postcode", organizationDetailsDto.postalcode },
+                { "invln_organisationid", new EntityReference("account", new Guid(organizationDetailsDto.organisationId)) },
+            },
+        };
+        return organisationChangeRequestEntity;
     }
 }
