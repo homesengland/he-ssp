@@ -504,6 +504,10 @@ namespace DataverseModel
 			public const string lk_invln_notificationsetting_createdonbehalfby = "lk_invln_notificationsetting_createdonbehalfby";
 			public const string lk_invln_notificationsetting_modifiedby = "lk_invln_notificationsetting_modifiedby";
 			public const string lk_invln_notificationsetting_modifiedonbehalfby = "lk_invln_notificationsetting_modifiedonbehalfby";
+			public const string lk_invln_organisationchangerequest_createdby = "lk_invln_organisationchangerequest_createdby";
+			public const string lk_invln_organisationchangerequest_createdonbehalfby = "lk_invln_organisationchangerequest_createdonbehalfby";
+			public const string lk_invln_organisationchangerequest_modifiedby = "lk_invln_organisationchangerequest_modifiedby";
+			public const string lk_invln_organisationchangerequest_modifiedonbehalfby = "lk_invln_organisationchangerequest_modifiedonbehalfby";
 			public const string lk_invln_portal_createdby = "lk_invln_portal_createdby";
 			public const string lk_invln_portal_createdonbehalfby = "lk_invln_portal_createdonbehalfby";
 			public const string lk_invln_portal_modifiedby = "lk_invln_portal_modifiedby";
@@ -613,6 +617,7 @@ namespace DataverseModel
 			public const string user_invln_loanapplication = "user_invln_loanapplication";
 			public const string user_invln_loanstatuschange = "user_invln_loanstatuschange";
 			public const string user_invln_notificationsetting = "user_invln_notificationsetting";
+			public const string user_invln_organisationchangerequest = "user_invln_organisationchangerequest";
 			public const string user_invln_portal = "user_invln_portal";
 			public const string user_invln_portalpermissionlevel = "user_invln_portalpermissionlevel";
 			public const string user_invln_sitedetails = "user_invln_sitedetails";
@@ -4596,6 +4601,86 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N lk_invln_organisationchangerequest_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_organisationchangerequest_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_organisationchangerequest> lk_invln_organisationchangerequest_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_organisationchangerequest>("lk_invln_organisationchangerequest_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_organisationchangerequest_createdby");
+				this.SetRelatedEntities<DataverseModel.invln_organisationchangerequest>("lk_invln_organisationchangerequest_createdby", null, value);
+				this.OnPropertyChanged("lk_invln_organisationchangerequest_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_organisationchangerequest_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_organisationchangerequest_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_organisationchangerequest> lk_invln_organisationchangerequest_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_organisationchangerequest>("lk_invln_organisationchangerequest_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_organisationchangerequest_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_organisationchangerequest>("lk_invln_organisationchangerequest_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_organisationchangerequest_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_organisationchangerequest_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_organisationchangerequest_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_organisationchangerequest> lk_invln_organisationchangerequest_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_organisationchangerequest>("lk_invln_organisationchangerequest_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_organisationchangerequest_modifiedby");
+				this.SetRelatedEntities<DataverseModel.invln_organisationchangerequest>("lk_invln_organisationchangerequest_modifiedby", null, value);
+				this.OnPropertyChanged("lk_invln_organisationchangerequest_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_organisationchangerequest_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_organisationchangerequest_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_organisationchangerequest> lk_invln_organisationchangerequest_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_organisationchangerequest>("lk_invln_organisationchangerequest_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_organisationchangerequest_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_organisationchangerequest>("lk_invln_organisationchangerequest_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_organisationchangerequest_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N lk_invln_portal_createdby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_portal_createdby")]
@@ -5432,6 +5517,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("user_invln_notificationsetting");
 				this.SetRelatedEntities<DataverseModel.invln_notificationsetting>("user_invln_notificationsetting", null, value);
 				this.OnPropertyChanged("user_invln_notificationsetting");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N user_invln_organisationchangerequest
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_organisationchangerequest")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_organisationchangerequest> user_invln_organisationchangerequest
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_organisationchangerequest>("user_invln_organisationchangerequest", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_invln_organisationchangerequest");
+				this.SetRelatedEntities<DataverseModel.invln_organisationchangerequest>("user_invln_organisationchangerequest", null, value);
+				this.OnPropertyChanged("user_invln_organisationchangerequest");
 			}
 		}
 		

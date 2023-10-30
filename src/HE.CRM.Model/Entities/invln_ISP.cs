@@ -253,6 +253,7 @@ namespace DataverseModel
 			public const string invln_SalesProfessionalk = "invln_salesprofessionalk";
 			public const string invln_salesprofessionalk_Base = "invln_salesprofessionalk_base";
 			public const string invln_SalesProfessionalpercent = "invln_salesprofessionalpercent";
+			public const string invln_securities = "invln_securities";
 			public const string invln_Security = "invln_security";
 			public const string invln_SecurityCover = "invln_securitycover";
 			public const string invln_SendforApproval = "invln_sendforapproval";
@@ -3535,6 +3536,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_SalesProfessionalpercent");
 				this.SetAttributeValue("invln_salesprofessionalpercent", value);
 				this.OnPropertyChanged("invln_SalesProfessionalpercent");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securities")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValueCollection invln_securities
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValueCollection>("invln_securities");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_securities");
+				this.SetAttributeValue("invln_securities", value);
+				this.OnPropertyChanged("invln_securities");
 			}
 		}
 		
