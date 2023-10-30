@@ -4,17 +4,20 @@ namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
 
 public class FinancialDetailsEntity
 {
-    public FinancialDetailsEntity(FinancialSchemeId financialSchemeId)
+    public FinancialDetailsEntity(FinancialSchemeId financialSchemeId, bool isPurchasePriceKnown)
     {
-        Id = new FinancialDetailsId(Guid.NewGuid());
+        FinancialDetailsId = new FinancialDetailsId(Guid.NewGuid());
         FinancialSchemeId = financialSchemeId;
+        IsPurchasePriceKnown = isPurchasePriceKnown;
     }
 
     public FinancialSchemeId FinancialSchemeId { get; }
 
-    public FinancialDetailsId Id { get; }
+    public FinancialDetailsId FinancialDetailsId { get; }
 
     public PurchasePrice PurchasePrice { get; set; }
+
+    public bool IsPurchasePriceKnown { get; set; }
 
     public void ProvidePurchasePrice(PurchasePrice price)
     {

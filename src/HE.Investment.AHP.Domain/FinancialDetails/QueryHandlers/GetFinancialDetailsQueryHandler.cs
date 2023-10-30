@@ -1,4 +1,4 @@
-﻿using HE.Investment.AHP.Contract.FinancialDetails.Models;
+using HE.Investment.AHP.Contract.FinancialDetails.Models;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
@@ -24,9 +24,9 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
         var schemeName = "Sample schema"; // TODO: implement getting schema name
 
         return new FinancialDetailsViewModel(
-            financialDetails.Id,
+            financialDetails.FinancialDetailsId,
             schemeName,
-            financialDetails.PurchasePrice?.IsFinal,
+            financialDetails.IsPurchasePriceKnown,
             financialDetails.PurchasePrice?.Value);
     }
 }
