@@ -1,9 +1,8 @@
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
-public enum HomeTypeSectionType
+public enum HomeTypeSegmentType
 {
     Undefined = 0,
-    HousingType,
     HomeInformation,
     DisabledAndVulnerablePeople,
     OlderPeople,

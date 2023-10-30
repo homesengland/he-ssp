@@ -13,6 +13,8 @@ public class HomeTypesEntity
         _homeTypes = homeTypes.ToList();
     }
 
+    public IEnumerable<HomeTypeBasicDetailsEntity> HomeTypes => _homeTypes;
+
     public void ValidateNameUniqueness(HomeTypeId? homeTypeId, string? name)
     {
         if (string.IsNullOrEmpty(name))
@@ -28,5 +30,21 @@ public class HomeTypesEntity
                     new(nameof(HomeTypeName), "Enter a different name. Home types cannot have the same name"),
                 }));
         }
+    }
+
+    public HomeTypeName DuplicateName(HomeTypeId homeTypeId)
+    {
+        var homeType = _homeTypes.SingleOrDefault(x => x.Id == homeTypeId)
+                       ?? throw new NotFoundException(nameof(HomeTypeEntity), homeTypeId);
+
+        var suffixIndex = 1;
+        var duplicatedName = homeType.Name ?? new HomeTypeName("Duplicate");
+
+        while (_homeTypes.Any(x => x.Name == duplicatedName))
+        {
+            duplicatedName = duplicatedName.Duplicate(suffixIndex++);
+        }
+
+        return duplicatedName;
     }
 }

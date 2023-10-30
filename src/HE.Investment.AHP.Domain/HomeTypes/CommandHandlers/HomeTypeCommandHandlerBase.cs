@@ -25,7 +25,7 @@ public abstract class HomeTypeCommandHandlerBase
             catch (DomainValidationException domainValidationException)
             {
                 _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
-                return domainValidationException.OperationResult.Errors;
+                errors.AddRange(domainValidationException.OperationResult.Errors);
             }
         }
 

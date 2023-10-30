@@ -1,4 +1,4 @@
-@using HE.InvestmentLoans.WWW.Routing
+@using HE.Investments.Common.WWW.Routing
 @{
     var breadcrumbs = ViewBag.Breadcrumbs as IList<Breadcrumb>;
 }
@@ -12,7 +12,7 @@
             {
                 var breadcrumb = breadcrumbs[i - 1];
                 var isLast = i == breadcrumbs.Count;
-                <li class="govuk-breadcrumbs__list-item">
+                <li class="govuk-breadcrumbs__list-item @breadcrumb.CssClass">
                     @if (string.IsNullOrEmpty(breadcrumb.Action) || isLast)
                     {
                         <span
