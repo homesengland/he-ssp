@@ -99,6 +99,7 @@
     "invln_loanapplication",
     "invln_loanstatuschange",
     "invln_notificationsetting",
+    "invln_organisationchangerequest",
     "invln_portal",
     "invln_portalpermissionlevel",
     "invln_projectspecificcondition",
