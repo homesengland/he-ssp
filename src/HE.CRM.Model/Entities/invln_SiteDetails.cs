@@ -85,9 +85,12 @@ namespace DataverseModel
 			public const string invln_Planningreferencenumber = "invln_planningreferencenumber";
 			public const string invln_Planningstatus = "invln_planningstatus";
 			public const string invln_Postcode = "invln_postcode";
+			public const string invln_Programme = "invln_programme";
 			public const string invln_projecthasstartdate = "invln_projecthasstartdate";
 			public const string invln_Publicsectorfunding = "invln_publicsectorfunding";
 			public const string invln_Reason = "invln_reason";
+			public const string invln_Region = "invln_region";
+			public const string invln_RegionName = "invln_regionname";
 			public const string invln_Sitecoordinates = "invln_sitecoordinates";
 			public const string invln_Sitecost = "invln_sitecost";
 			public const string invln_sitecost_Base = "invln_sitecost_base";
@@ -677,6 +680,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_programme")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Programme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_programme");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Programme");
+				this.SetAttributeValue("invln_programme", value);
+				this.OnPropertyChanged("invln_Programme");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_projecthasstartdate")]
 		public System.Nullable<bool> invln_projecthasstartdate
 		{
@@ -725,6 +745,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Reason");
 				this.SetAttributeValue("invln_reason", value);
 				this.OnPropertyChanged("invln_Reason");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_region")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Region
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_region");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Region");
+				this.SetAttributeValue("invln_region", value);
+				this.OnPropertyChanged("invln_Region");
 			}
 		}
 		

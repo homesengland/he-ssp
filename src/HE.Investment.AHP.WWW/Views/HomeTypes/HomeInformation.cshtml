@@ -1,9 +1,16 @@
 @using HE.Investment.AHP.Domain.HomeTypes
-<form asp-controller="HomeTypes" asp-action="HomeInformation" asp-method="post" novalidate>
-    <gds-back-link href="@Url.Action("Back","HomeTypes", new { schemeId = ViewContext.RouteData.Values["schemeId"], homeTypeId = ViewContext.RouteData.Values["homeTypeId"], currentPage = HomeTypesWorkflowState.HomeInformation})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+@using HE.Investment.AHP.WWW.Extensions
 
-    <gds-h1 size="ControlSize.L">
-        Home information
-    </gds-h1>
-</form>
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();}
 
+<div class="govuk-grid-column-full">
+    <form asp-controller="HomeTypes" asp-action="HomeInformation" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","HomeTypes", new { applicationId, homeTypeId, currentPage = HomeTypesWorkflowState.HomeInformation})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+
+        <gds-h1 size="ControlSize.L">
+            Home information
+        </gds-h1>
+    </form>
+</div>

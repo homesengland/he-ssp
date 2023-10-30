@@ -150,7 +150,9 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     [WorkflowState(CompanyStructureState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(Guid id, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureFieldsSet.GetAllFields), cancellationToken);
+        var loanApplicationId = LoanApplicationId.From(id);
+        var response = await _mediator.Send(new GetCompanyStructureQuery(loanApplicationId, CompanyStructureFieldsSet.GetAllFields), cancellationToken);
+        response.ViewModel.OrganisationMoreInformationFiles = (await _mediator.Send(new GetCompanyStructureFilesQuery(loanApplicationId), cancellationToken)).Items;
         return View("CheckAnswers", response.ViewModel);
     }
 

@@ -6,8 +6,8 @@ namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 
 public class UpdateSchemeTenureCommandHandler : UpdateSchemeCommandHandler<UpdateSchemeTenureCommand>
 {
-    public UpdateSchemeTenureCommandHandler(ISchemeRepository repository, IDomainExceptionHandler domainExceptionHandler)
-        : base(repository, domainExceptionHandler)
+    public UpdateSchemeTenureCommandHandler(ISchemeRepository repository)
+        : base(repository)
     {
     }
 

@@ -26,7 +26,7 @@ public class OrganisationNameTests
         var name = new OrganisationName(organisationName);
 
         // then
-        name.Value.Should().Be(organisationName);
+        name.Name.Should().Be(organisationName);
     }
 
     [Fact]

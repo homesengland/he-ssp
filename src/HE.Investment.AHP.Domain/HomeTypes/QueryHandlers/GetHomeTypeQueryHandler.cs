@@ -1,7 +1,6 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
-using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using MediatR;
@@ -12,34 +11,25 @@ internal sealed class GetHomeTypeQueryHandler : IRequestHandler<GetHomeTypeQuery
 {
     private readonly IHomeTypeRepository _repository;
 
-    private readonly IHomeTypeSectionMapper<HousingTypeSection> _housingTypeSectionMapper;
-
-    public GetHomeTypeQueryHandler(
-        IHomeTypeRepository repository,
-        IHomeTypeSectionMapper<HousingTypeSection> housingTypeSectionMapper)
+    public GetHomeTypeQueryHandler(IHomeTypeRepository repository)
     {
         _repository = repository;
-        _housingTypeSectionMapper = housingTypeSectionMapper;
     }
 
     public async Task<HomeType> Handle(GetHomeTypeQuery request, CancellationToken cancellationToken)
     {
         var homeType = await _repository.GetById(
-            request.SchemeId,
+            request.ApplicationId,
             new HomeTypeId(request.HomeTypeId),
-            new[]
-            {
-                HomeTypeSectionType.HousingType,
-                HomeTypeSectionType.HomeInformation,
-                HomeTypeSectionType.DisabledAndVulnerablePeople,
-                HomeTypeSectionType.OlderPeople,
-            },
+            HomeTypeSegmentTypes.All,
             cancellationToken);
 
         return new HomeType
         {
+            // TODO: map all segments when available
             HomeTypeId = request.HomeTypeId,
-            HousingTypeSection = _housingTypeSectionMapper.Map(homeType),
+            HomeTypeName = homeType.Name?.Value,
+            HousingType = homeType.HousingType,
         };
     }
 }

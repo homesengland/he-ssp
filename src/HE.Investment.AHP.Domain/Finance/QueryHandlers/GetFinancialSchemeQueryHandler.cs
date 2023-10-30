@@ -8,6 +8,6 @@ public class GetFinancialSchemeQueryHandler : IRequestHandler<GetFinancialScheme
 {
     public Task<FinancialScheme> Handle(GetFinancialSchemeQuery request, CancellationToken cancellationToken)
     {
-        return Task.FromResult(new FinancialScheme(request.FinancialSchemeId, "Church road scheme"));
+        return Task.FromResult(new FinancialScheme(request.FinancialSchemeId, "Church road application"));
     }
 }

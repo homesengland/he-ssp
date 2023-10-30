@@ -7,29 +7,24 @@ using MediatR;
 namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 
 public abstract class UpdateSchemeCommandHandler<TRequest> : IRequestHandler<TRequest, OperationResult<SchemeId?>>
-where TRequest : IRequest<OperationResult<SchemeId?>>, IUpdateSchemeCommand
+    where TRequest : IRequest<OperationResult<SchemeId?>>, IUpdateSchemeCommand
 {
     private readonly ISchemeRepository _repository;
-    private readonly IDomainExceptionHandler _domainExceptionHandler;
 
-    protected UpdateSchemeCommandHandler(ISchemeRepository repository, IDomainExceptionHandler domainExceptionHandler)
+    protected UpdateSchemeCommandHandler(ISchemeRepository repository)
     {
         _repository = repository;
-        _domainExceptionHandler = domainExceptionHandler;
     }
 
     public async Task<OperationResult<SchemeId?>> Handle(TRequest request, CancellationToken cancellationToken)
     {
-        return await _domainExceptionHandler.Handle(async () =>
-        {
-            var scheme = await _repository.GetById(new SchemeId(request.Id), cancellationToken);
+        var scheme = await _repository.GetById(new SchemeId(request.Id), cancellationToken);
 
-            Update(request, scheme);
+        Update(request, scheme);
 
-            await _repository.Save(scheme, cancellationToken);
+        await _repository.Save(scheme, cancellationToken);
 
-            return new OperationResult<SchemeId?>(scheme.Id);
-        });
+        return new OperationResult<SchemeId?>(scheme.Id);
     }
 
     protected abstract void Update(TRequest request, SchemeEntity scheme);

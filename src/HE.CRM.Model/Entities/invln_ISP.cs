@@ -152,8 +152,10 @@ namespace DataverseModel
 			public const string invln_interestshortfallmarginedsecurityk_Base = "invln_interestshortfallmarginedsecurityk_base";
 			public const string invln_InterestShortfallValuek = "invln_interestshortfallvaluek";
 			public const string invln_interestshortfallvaluek_Base = "invln_interestshortfallvaluek_base";
+			public const string invln_invln_isp_invln_conditions_ispid = "invln_invln_isp_invln_conditions_ispid";
 			public const string invln_invln_isp_Loanapplication_invln_loanappli = "invln_invln_isp_Loanapplication_invln_loanappli";
 			public const string invln_invln_isp_TMName_contact = "invln_invln_isp_TMName_contact";
+			public const string invln_invln_projectspecificcondition_ISP_invln_ = "invln_invln_projectspecificcondition_ISP_invln_";
 			public const string invln_isp_Name_contact = "invln_isp_Name_contact";
 			public const string invln_ISPId = "invln_ispid";
 			public const string Id = "invln_ispid";
@@ -253,6 +255,7 @@ namespace DataverseModel
 			public const string invln_SalesProfessionalk = "invln_salesprofessionalk";
 			public const string invln_salesprofessionalk_Base = "invln_salesprofessionalk_base";
 			public const string invln_SalesProfessionalpercent = "invln_salesprofessionalpercent";
+			public const string invln_securities = "invln_securities";
 			public const string invln_Security = "invln_security";
 			public const string invln_SecurityCover = "invln_securitycover";
 			public const string invln_SendforApproval = "invln_sendforapproval";
@@ -3538,6 +3541,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securities")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValueCollection invln_securities
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValueCollection>("invln_securities");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_securities");
+				this.SetAttributeValue("invln_securities", value);
+				this.OnPropertyChanged("invln_securities");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_security")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Security
 		{
@@ -4785,6 +4805,46 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_isp_invln_conditions_ispid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_isp_invln_conditions_ispid")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Conditions> invln_invln_isp_invln_conditions_ispid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Conditions>("invln_invln_isp_invln_conditions_ispid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_isp_invln_conditions_ispid");
+				this.SetRelatedEntities<DataverseModel.invln_Conditions>("invln_invln_isp_invln_conditions_ispid", null, value);
+				this.OnPropertyChanged("invln_invln_isp_invln_conditions_ispid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_projectspecificcondition_ISP_invln_
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_projectspecificcondition_ISP_invln_")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ProjectSpecificCondition> invln_invln_projectspecificcondition_ISP_invln_
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ProjectSpecificCondition>("invln_invln_projectspecificcondition_ISP_invln_", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_projectspecificcondition_ISP_invln_");
+				this.SetRelatedEntities<DataverseModel.invln_ProjectSpecificCondition>("invln_invln_projectspecificcondition_ISP_invln_", null, value);
+				this.OnPropertyChanged("invln_invln_projectspecificcondition_ISP_invln_");
 			}
 		}
 		
