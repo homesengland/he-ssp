@@ -1,5 +1,5 @@
 import { CommonLib } from '../Common'
-import { ExternalStatus } from "../OptionSet"
+import { ExternalStatus, Securities } from "../OptionSet"
 
 export class IspService {
   common: CommonLib
@@ -36,6 +36,62 @@ export class IspService {
       Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id).then(result => {
         if (result.invln_externalstatus == ExternalStatus.sentForApproval) {
           this.common.disableAllFields()
+        }
+      })
+    }
+  }
+
+  public setFieldsVisibilityBasedOnSecurity() {
+    var loanApplication = this.common.getLookupValue('invln_loanapplication')
+    this.hideFirstLegalChargeFields(true);
+    this.hideSubsequentChargeFields(true);
+    this.hideDebentureFields(true);
+    this.hidePersonalGuaranteeFields(true);
+    this.hideCostOverrunGuaranteeFields(true);
+    this.hideInterestShortfallFields(true);
+    this.hideOtherFields(true);
+    this.hideParentCompanyGuaranteeFields(true);
+    this.hideSubordinatedDeedFields(true);
+    this.hideCompletionGuaranteeFields(true);
+    if (loanApplication != null) {
+      Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id).then(result => {
+        if (result != null && result.invln_securities != null) {
+          var securitiesArray : string[] = result.invln_securities.split(",");
+          securitiesArray.forEach(element => {
+            debugger;
+            switch (element) {
+              case Securities.debenture.toString():
+                this.hideDebentureFields(false);
+                break;
+              case Securities.firstLegalCharge.toString():
+                this.hideFirstLegalChargeFields(false);
+                break;
+              case Securities.subsequentCharge.toString():
+                this.hideSubsequentChargeFields(false);
+                break;
+              case Securities.personalGuarantee.toString():
+                this.hidePersonalGuaranteeFields(false);
+                break;
+              case Securities.parentCompanyGuarantee.toString():
+                this.hideParentCompanyGuaranteeFields(false);
+                break;
+              case Securities.subordinatedDeed.toString():
+                this.hideSubordinatedDeedFields(false);
+                break;
+              case Securities.costOverrunGuarantee.toString():
+                this.hideCostOverrunGuaranteeFields(false);
+                break;
+              case Securities.completionGuarantee.toString():
+                this.hideCompletionGuaranteeFields(false);
+                break;
+              case Securities.interestShortfall.toString():
+                this.hideInterestShortfallFields(false);
+                break;
+              case Securities.other.toString():
+                this.hideOtherFields(false);
+                break;
+            }
+          })
         }
       })
     }
@@ -198,4 +254,65 @@ export class IspService {
     this.common.setControlRequiredV2('invln_tmname', sendForApproval)
     this.common.setControlRequiredV2('invln_datesentforapproval', sendForApproval)
   }
+
+  private hideFirstLegalChargeFields(isDisabled: boolean) {
+    this.common.hideControl('invln_firstlegalchargedescription', isDisabled);
+    this.common.hideControl('invln_firstlegalchargemarginedsecurityvalue', isDisabled);
+    this.common.hideControl('invln_firstlegalchargevaluek', isDisabled);
+  }
+
+  private hideSubsequentChargeFields(isDisabled: boolean) {
+    this.common.hideControl('invln_subsequentchargedescription', isDisabled);
+    this.common.hideControl('invln_subsequentchargemarginedsecurityvalue', isDisabled);
+    this.common.hideControl('invln_subsequentchargevaluek', isDisabled);
+  }
+
+  private hideDebentureFields(isDisabled: boolean) {
+    this.common.hideControl('invln_debenturedescription', isDisabled);
+    this.common.hideControl('invln_debenturemarginedsecurityk', isDisabled);
+    this.common.hideControl('invln_debenturevaluek', isDisabled);
+  }
+
+  private hidePersonalGuaranteeFields(isDisabled: boolean) {
+    this.common.hideControl('invln_personalguaranteedescription', isDisabled);
+    this.common.hideControl('invln_personalguaranteemarginedsecurityk', isDisabled);
+    this.common.hideControl('invln_personalguaranteevaluek', isDisabled);
+  }
+
+  private hideCostOverrunGuaranteeFields(isDisabled: boolean) {
+    this.common.hideControl('invln_costoverrunguarantee', isDisabled);
+    this.common.hideControl('invln_costoverrunmarginedsecurityk', isDisabled);
+    this.common.hideControl('invln_costoverrunvaluek', isDisabled);
+  }
+
+  private hideInterestShortfallFields(isDisabled: boolean) {
+    this.common.hideControl('invln_interestshortfalldescription', isDisabled);
+    this.common.hideControl('invln_interestshortfallmarginedsecurityk', isDisabled);
+    this.common.hideControl('invln_interestshortfallvaluek', isDisabled);
+  }
+
+  private hideOtherFields(isDisabled: boolean) {
+    this.common.hideControl('invln_otherdescription', isDisabled);
+    this.common.hideControl('invln_othervaluek', isDisabled);
+    this.common.hideControl('invln_othermarginedsecurityk', isDisabled);
+  }
+
+  private hideParentCompanyGuaranteeFields(isDisabled: boolean) {
+    this.common.hideControl('invln_parentcompanyguaranteedescription', isDisabled);
+    this.common.hideControl('invln_parentcompanyguaranteevaluek', isDisabled);
+    this.common.hideControl('invln_parentcompanyguaranteemarginedsecurityk', isDisabled);
+  }
+
+  private hideSubordinatedDeedFields(isDisabled: boolean) {
+    this.common.hideControl('invln_subordinateddeeddescription', isDisabled);
+    this.common.hideControl('invln_subordinateddeedvaluek', isDisabled);
+    this.common.hideControl('invln_subordinateddeedmarginedsecurityk', isDisabled);
+  }
+
+  private hideCompletionGuaranteeFields(isDisabled: boolean) {
+    this.common.hideControl('invln_completionguaranteedescription', isDisabled);
+    this.common.hideControl('invln_completionguaranteevaluek', isDisabled);
+    this.common.hideControl('invln_completionguaranteemarginedsecurityk', isDisabled);
+  }
+
 }

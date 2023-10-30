@@ -1,4 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Organisation.CrmRepository;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
@@ -8,14 +9,23 @@ namespace HE.Investments.Organisation.Services;
 public class OrganizationService : IOrganizationService
 {
     private readonly IOrganizationServiceAsync2 _service;
+    private readonly IOrganisationChangeRequestRepository _organisationChangeRequestRepository;
 
     private readonly string _youRequested = "You requested";
 
     // private readonly string someoneElseRequested = "Someoneelse requested";
     // private readonly string noRequest = "No request";
-    public OrganizationService(IOrganizationServiceAsync2 service)
+    public OrganizationService(IOrganizationServiceAsync2 service, IOrganisationChangeRequestRepository organisationChangeRequestRepository)
     {
         _service = service;
+        _organisationChangeRequestRepository = organisationChangeRequestRepository;
+    }
+
+    public async Task<Guid> CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails, Guid contactId)
+    {
+        var organisationChangeRequestToCreate = MapOrganizationDtoToOrganizationChangeRequestEntity(organizationDetails);
+        organisationChangeRequestToCreate["invln_contactid"] = new EntityReference("contact", contactId);
+        return await _service.CreateAsync(organisationChangeRequestToCreate);
     }
 
     public Guid CreateOrganization(OrganizationDetailsDto organizationDetails)
@@ -30,6 +40,24 @@ public class OrganizationService : IOrganizationService
         // var account = await _service.RetrieveAsync("account", accountId, new ColumnSet(true));
         var result = await Task.Run(() => _youRequested);
         return result;
+    }
+
+    public async Task<ContactDto?> GetOrganisationChangeDetailsRequestContact(Guid accountId)
+    {
+        var organisationChangeDetailsRequest = await _organisationChangeRequestRepository.GetChangeRequestForOrganisation(_service, accountId);
+        if (organisationChangeDetailsRequest != null)
+        {
+            var contactReference = (EntityReference)organisationChangeDetailsRequest["invln_contactid"];
+            return new ContactDto()
+            {
+                contactId = contactReference.Id.ToString(),
+                firstName = contactReference.Name,
+            };
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public async Task<OrganizationDetailsDto> GetOrganizationDetails(string accountid, string contactExternalId)
@@ -89,5 +117,24 @@ public class OrganizationService : IOrganizationService
             },
         };
         return organizationEntity;
+    }
+
+    private Entity MapOrganizationDtoToOrganizationChangeRequestEntity(OrganizationDetailsDto organizationDetailsDto)
+    {
+        var organisationChangeRequestEntity = new Entity("invln_organisationchangerequest")
+        {
+            Attributes = new AttributeCollection()
+            {
+                { "invln_registeredcompanyname", organizationDetailsDto.registeredCompanyName },
+                { "invln_organisationphonenumber", organizationDetailsDto.organisationPhoneNumber },
+                { "invln_addressline1", organizationDetailsDto.addressLine1 },
+                { "invln_addressline2", organizationDetailsDto.addressLine2 },
+                { "invln_townorcity", organizationDetailsDto.city },
+                { "invln_county", organizationDetailsDto.county },
+                { "invln_postcode", organizationDetailsDto.postalcode },
+                { "invln_organisationid", new EntityReference("account", new Guid(organizationDetailsDto.organisationId)) },
+            },
+        };
+        return organisationChangeRequestEntity;
     }
 }

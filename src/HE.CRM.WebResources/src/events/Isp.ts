@@ -16,6 +16,7 @@ export class Isp {
     eventLogic.ispService.setFieldsAvailabilityOnLoad()
     eventLogic.ispService.setStaticFieldsOnLoad()
     eventLogic.ispService.setFieldsRequirementBasedOnSendOnApproval()
+    eventLogic.ispService.setFieldsVisibilityBasedOnSecurity()
   }
 
   public static onSendOnApprovalChange(eCtx) {

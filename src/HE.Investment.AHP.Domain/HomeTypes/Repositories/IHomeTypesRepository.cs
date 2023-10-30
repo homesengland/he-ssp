@@ -4,5 +4,5 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Repositories;
 
 public interface IHomeTypesRepository
 {
-    Task<HomeTypesEntity> GetBySchemeId(string schemeId, CancellationToken cancellationToken);
+    Task<HomeTypesEntity> GetByApplicationId(string applicationId, CancellationToken cancellationToken);
 }

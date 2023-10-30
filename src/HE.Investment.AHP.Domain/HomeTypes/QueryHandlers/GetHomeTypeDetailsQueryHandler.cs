@@ -1,0 +1,33 @@
+using HE.Investment.AHP.Contract.HomeTypes;
+using HE.Investment.AHP.Contract.HomeTypes.Queries;
+using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using MediatR;
+
+namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
+
+internal sealed class GetHomeTypeDetailsQueryHandler : IRequestHandler<GetHomeTypeDetailsQuery, HomeTypeDetails>
+{
+    private readonly IHomeTypeRepository _repository;
+
+    public GetHomeTypeDetailsQueryHandler(IHomeTypeRepository repository)
+    {
+        _repository = repository;
+    }
+
+    public async Task<HomeTypeDetails> Handle(GetHomeTypeDetailsQuery request, CancellationToken cancellationToken)
+    {
+        var homeType = await _repository.GetById(
+            request.ApplicationId,
+            new HomeTypeId(request.HomeTypeId),
+            Array.Empty<HomeTypeSegmentType>(),
+            cancellationToken);
+
+        return new HomeTypeDetails(
+            request.HomeTypeId,
+            homeType.Name?.Value,
+            null, // TODO: fetch number of homes when available
+            homeType.HousingType);
+    }
+}

@@ -1,10 +1,6 @@
-﻿using DataverseModel;
+using DataverseModel;
 using HE.Base.Repositories;
 using HE.CRM.Common.Repositories.interfaces;
-using HE.CRM.Common.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HE.CRM.Common.Repositories.Implementations
 {

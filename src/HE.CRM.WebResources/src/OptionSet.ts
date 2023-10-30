@@ -14,3 +14,16 @@ export enum CreditRatingAgency {
 export enum ExternalStatus {
   sentForApproval = 858110010,
 }
+
+export enum Securities {
+  debenture = 858110000,
+  firstLegalCharge = 858110001,
+  subsequentCharge = 858110002,
+  personalGuarantee = 858110003,
+  parentCompanyGuarantee = 858110004,
+  subordinatedDeed = 858110005,
+  costOverrunGuarantee = 858110006,
+  completionGuarantee = 858110007,
+  interestShortfall = 858110008,
+  other = 858110009,
+}

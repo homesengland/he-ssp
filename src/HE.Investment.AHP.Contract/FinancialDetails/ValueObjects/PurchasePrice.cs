@@ -1,3 +1,4 @@
+using Dawn;
 using HE.Investment.AHP.Contract.Domain;
 using HE.Investment.AHP.Contract.FinancialDetails.Const;
 using HE.InvestmentLoans.Common.Extensions;
@@ -16,7 +17,7 @@ public class PurchasePrice : ValueObject
         }
 
         if (!int.TryParse(value, out var price) || price <= 0)
-        {
+    {
             OperationResult.New()
                 .AddValidationError(FinancialDetailsValidationFieldNames.PurchasePrice, FinancialDetailsValidationErrors.InvalidPurchasePrice)
                 .CheckErrors();
@@ -27,8 +28,11 @@ public class PurchasePrice : ValueObject
 
     public string Value { get; }
 
+    public bool IsFinal { get; }
+
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;
+        yield return IsFinal;
     }
 }

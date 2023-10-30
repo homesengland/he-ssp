@@ -9,4 +9,6 @@ public static class NotificationBody
     public const string ProjectRemoved = "<Name> removed";
 
     public const string FilesSuccesfullyUploaded = "<Name> successfully uploaded";
+
+    public const string FileSuccesfullyRemoved = "<Name> successfully removed";
 }
