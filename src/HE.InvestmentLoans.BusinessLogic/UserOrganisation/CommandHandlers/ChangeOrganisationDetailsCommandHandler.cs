@@ -1,4 +1,5 @@
 extern alias Org;
+
 using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
 using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;

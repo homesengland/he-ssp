@@ -1,6 +1,6 @@
 extern alias Org;
+
 using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
-using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
