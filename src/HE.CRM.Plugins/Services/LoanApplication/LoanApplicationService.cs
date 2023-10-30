@@ -633,17 +633,25 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             if (target.StatusCode.Value == (int)invln_Loanapplication_StatusCode.ApprovedSubjectToContract)
             {
                 var standardConditions = _standardConditionsRepository.RetrieveAll();
+                TracingService.Trace(target.Id.ToString());
+                var loanConditions = _conditionRepository.GetConditionsForLoanApplication(target.Id);
                 foreach (var standardCondition in standardConditions)
                 {
+                    if (loanConditions.Any(x => x.invln_Name == standardCondition.invln_Name))
+                    {
+                        continue;
+                    }
                     var conditionToCreate = new invln_Conditions()
                     {
                         invln_ConditionDefinition = standardCondition.invln_ConditionDefinition,
                         invln_SatisfiedBy = standardCondition.invln_SatisfiedBy,
                         invln_Name = standardCondition.invln_Name,
+                        invln_ConditionType = new OptionSetValue((int)invln_ConditionType.Precedent),
                         invln_StandardCondition = standardCondition.ToEntityReference(),
                         invln_Loanapplication = target.ToEntityReference(),
                     };
                     _conditionRepository.Create(conditionToCreate);
+
                 }
             }
         }
