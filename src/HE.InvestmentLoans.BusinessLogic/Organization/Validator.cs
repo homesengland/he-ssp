@@ -37,7 +37,7 @@ public class Validator
         return this;
     }
 
-    public Validator IsShortInput()
+    public Validator IsShortInput(string? errorMessage = null)
     {
         if (_value.IsNotProvided())
         {
@@ -46,7 +46,7 @@ public class Validator
 
         if (_value!.Length > MaximumInputLength.ShortInput)
         {
-            AddError(_fieldName, GenericValidationError.TextTooLong);
+            AddError(_fieldName, errorMessage ?? GenericValidationError.TextTooLong);
         }
 
         return this;
