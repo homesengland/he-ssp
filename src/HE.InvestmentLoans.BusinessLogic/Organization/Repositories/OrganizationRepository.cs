@@ -44,10 +44,7 @@ public class OrganizationRepository : IOrganizationRepository
 
     public async Task<OrganisationChangeRequestState> GetOrganisationChangeRequestDetails(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        if (!Guid.TryParse(userAccount.AccountId.ToString(), out var accountId))
-        {
-            throw new NotFoundException(nameof(OrganisationEntity), accountId);
-        }
+        var accountId = userAccount.AccountId ?? throw new NotFoundException(nameof(userAccount.AccountId));
 
         var response = await _organizationService.GetOrganisationChangeDetailsRequestContact(accountId);
 
