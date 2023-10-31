@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
+﻿namespace HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 
 public static class FinancialDetailsPageTitles
 {
