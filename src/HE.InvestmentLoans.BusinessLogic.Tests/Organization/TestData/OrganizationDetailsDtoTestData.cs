@@ -11,7 +11,7 @@ public static class OrganizationDetailsDtoTestData
         companyRegistrationNumber = "112233",
         city = "Warsaw",
         country = "Poland",
-        postalcode = "123456",
+        postalcode = "CH65 1AY",
         addressLine1 = "Aleje Jerozolimskie",
         addressLine2 = "100",
         addressLine3 = "12",
@@ -19,5 +19,6 @@ public static class OrganizationDetailsDtoTestData
         compayAdminContactName = "Joe Doe",
         compayAdminContactTelephone = "888888888",
         rpNumber = "10",
+        organisationPhoneNumber = "543 123 864"
     };
 }
