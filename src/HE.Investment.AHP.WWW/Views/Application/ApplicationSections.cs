@@ -23,7 +23,7 @@ public static class ApplicationSections
                 "Home types",
                 "Complete information about the type of homes, information about the homes, home design and rent details.",
                 "Add homes types",
-                "#",
+                "homeTypes",
                 homeTypesSectionStatus),
             new(
                 "Financial details",

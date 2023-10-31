@@ -28,8 +28,7 @@ public class AhpBreadcrumbsBuilder : BreadcrumbsBuilderBase
 
     public AhpBreadcrumbsBuilder WithApplication(string applicationId, string applicationName)
     {
-        // TODO: fix this after implementing schemes/applications
-        AddBreadcrumb(applicationName, nameof(SchemeController.Index), GetControllerName(nameof(SchemeController)));
+        AddBreadcrumb(applicationName, nameof(ApplicationController.TaskList), GetControllerName(nameof(ApplicationController)), new { applicationId });
 
         return this;
     }

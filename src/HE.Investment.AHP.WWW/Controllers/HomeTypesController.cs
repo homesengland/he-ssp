@@ -1,5 +1,5 @@
 using System.Globalization;
-using HE.Investment.AHP.Contract.Finance.Queries;
+using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
@@ -30,7 +30,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet]
     public async Task<IActionResult> Index([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetFinancialSchemeQuery(applicationId), cancellationToken);
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         return View(new HomeTypeModelBase(application.Name));
     }
 
@@ -44,7 +44,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("List")]
     public async Task<IActionResult> List([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetFinancialSchemeQuery(applicationId), cancellationToken);
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var homeTypes = await _mediator.Send(new GetHomeTypesQuery(applicationId), cancellationToken);
 
         return View(new HomeTypeListModel(application.Name)
@@ -64,7 +64,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/Remove")]
     public async Task<IActionResult> Remove([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetFinancialSchemeQuery(applicationId), cancellationToken);
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var homeTypeDetails = await _mediator.Send(new GetHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
 
         return View("RemoveHomeTypeConfirmation", new RemoveHomeTypeModel(application.Name, homeTypeDetails.Name));
@@ -74,7 +74,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("HomeTypeDetails")]
     public async Task<IActionResult> NewHomeTypeDetails([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetFinancialSchemeQuery(applicationId), cancellationToken);
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         return View("HomeTypeDetails", new HomeTypeDetailsModel(application.Name));
     }
 
@@ -89,7 +89,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/HomeTypeDetails")]
     public async Task<IActionResult> HomeTypeDetails([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetFinancialSchemeQuery(applicationId), cancellationToken);
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var homeTypeDetails = await _mediator.Send(new GetHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
         return View(new HomeTypeDetailsModel(application.Name)
         {
@@ -109,7 +109,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     [HttpGet("{homeTypeId}/HomeInformation")]
     public async Task<IActionResult> HomeInformation([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetFinancialSchemeQuery(applicationId), cancellationToken);
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
 
         return View(new HomeInformationModel(application.Name)

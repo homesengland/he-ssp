@@ -11,5 +11,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
     public interface IConditionRepository : ICrmEntityRepository<invln_Conditions, DataverseContext>
     {
         List<invln_Conditions> GetBespokeConditionsForLoanApplication(Guid loanId);
+        List<invln_Conditions> GetConditionsForLoanApplication(Guid loanId);
     }
 }

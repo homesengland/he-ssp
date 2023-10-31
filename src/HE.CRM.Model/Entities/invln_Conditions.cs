@@ -66,6 +66,7 @@ namespace DataverseModel
 			public const string invln_ConditionStatus = "invln_conditionstatus";
 			public const string invln_ConditionType = "invln_conditiontype";
 			public const string invln_DueDate = "invln_duedate";
+			public const string invln_invln_conditions_StandardCondition_invln_ = "invln_invln_conditions_StandardCondition_invln_";
 			public const string invln_invln_isp_invln_conditions_ispid = "invln_invln_isp_invln_conditions_ispid";
 			public const string invln_ispid = "invln_ispid";
 			public const string invln_ispidName = "invln_ispidname";
@@ -723,6 +724,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Conditions_invln_Loanapplication_in");
 				this.SetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_Conditions_invln_Loanapplication_in", null, value);
 				this.OnPropertyChanged("invln_Conditions_invln_Loanapplication_in");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_invln_conditions_StandardCondition_invln_
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_standardcondition")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_conditions_StandardCondition_invln_")]
+		public DataverseModel.invln_StandardCondition invln_invln_conditions_StandardCondition_invln_
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_StandardCondition>("invln_invln_conditions_StandardCondition_invln_", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_conditions_StandardCondition_invln_");
+				this.SetRelatedEntity<DataverseModel.invln_StandardCondition>("invln_invln_conditions_StandardCondition_invln_", null, value);
+				this.OnPropertyChanged("invln_invln_conditions_StandardCondition_invln_");
 			}
 		}
 		

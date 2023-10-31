@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\NotificationSettingRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\PortalPermissionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\SiteDetailsRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\StandardConditionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\SystemUserRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\TeamRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\WebRoleRepository.cs" />
@@ -47,6 +48,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IProjectSpecificConditionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ISharepointDocumentLocationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ISiteDetailsRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IStandardConditionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ISystemUserRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\interfaces\ITeamRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IWebRoleRepository.cs" />
