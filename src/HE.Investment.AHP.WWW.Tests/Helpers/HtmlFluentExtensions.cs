@@ -36,6 +36,14 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasRadio(this IHtmlDocument htmlDocument, string fieldName, IList<string> options)
+    {
+        var inputs = htmlDocument.GetElementsByName(fieldName);
+        inputs.Length.Should().Be(options.Count, $"{options.Count} inputs with name {fieldName} should exist");
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument IsEmpty(this IHtmlDocument htmlDocument)
     {
         var body = htmlDocument.GetElementsByTagName("body").FirstOrDefault();
