@@ -53,10 +53,12 @@ public class OrganizationService : IOrganizationService
         if (organisationChangeDetailsRequest != null)
         {
             var contactReference = (EntityReference)organisationChangeDetailsRequest["invln_contactid"];
+            var retrievedContact = _service.Retrieve("contact", contactReference.Id, new ColumnSet("invln_externalid"));
             return new ContactDto()
             {
                 contactId = contactReference.Id.ToString(),
                 firstName = contactReference.Name,
+                contactExternalId = retrievedContact["invln_externalid"].ToString(),
             };
         }
         else
