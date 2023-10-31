@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 

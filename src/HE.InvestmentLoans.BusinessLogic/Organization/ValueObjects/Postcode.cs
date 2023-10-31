@@ -1,7 +1,6 @@
-using System.Text.Json.Serialization;
-using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 

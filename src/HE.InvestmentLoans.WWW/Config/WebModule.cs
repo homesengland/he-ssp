@@ -4,10 +4,10 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Contract.Services;
 using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
-using HE.InvestmentLoans.Common.Events;
 using HE.InvestmentLoans.Common.Infrastructure;
 using HE.InvestmentLoans.CRM.Extensions;
 using HE.InvestmentLoans.WWW.Models;
+using HE.Investments.Common.Events;
 using HE.Investments.Organisation.Config;
 
 namespace HE.InvestmentLoans.WWW.Config;

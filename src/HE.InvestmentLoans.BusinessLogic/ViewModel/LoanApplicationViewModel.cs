@@ -1,6 +1,4 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication;
-using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
-using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.Funding;

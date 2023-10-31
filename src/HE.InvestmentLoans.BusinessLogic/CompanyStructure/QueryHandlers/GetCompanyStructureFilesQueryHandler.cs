@@ -1,8 +1,5 @@
-using System.Collections.Generic;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Constants;
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Mappers;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Models.File;

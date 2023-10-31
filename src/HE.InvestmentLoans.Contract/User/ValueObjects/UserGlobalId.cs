@@ -1,5 +1,5 @@
 using Dawn;
-using HE.InvestmentLoans.Contract.Domain;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.Contract.User.ValueObjects;
 public class UserGlobalId : ValueObject

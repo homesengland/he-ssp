@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.Contract.Domain;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.Contract.Funding.ValueObjects;
 public class Repay : ValueObject

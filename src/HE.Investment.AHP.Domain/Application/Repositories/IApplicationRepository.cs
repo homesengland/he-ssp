@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Domain.Application.Entities;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
-namespace HE.Investment.AHP.Domain.Application;
+namespace HE.Investment.AHP.Domain.Application.Repositories;
 
 public interface IApplicationRepository
 {
