@@ -1,11 +1,8 @@
 using HE.Investment.AHP.WWW.Config;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Infrastructure.Middlewares;
-using HE.Investments.Common.WWW;
 using HE.Investments.Common.WWW.Partials;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);

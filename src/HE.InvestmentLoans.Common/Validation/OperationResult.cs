@@ -5,9 +5,9 @@ namespace HE.InvestmentLoans.Common.Validation;
 
 public class OperationResult : IOperationResult
 {
-    public OperationResult()
+    public OperationResult(IEnumerable<ErrorItem>? errors = null)
     {
-        Errors = new List<ErrorItem>();
+        Errors = errors?.ToList() ?? new List<ErrorItem>();
     }
 
     public IList<ErrorItem> Errors { get; protected set; }

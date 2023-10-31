@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
@@ -6,7 +7,22 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Repositories;
 
 public class HomeTypeRepository : IHomeTypeRepository
 {
-    public Task<HomeTypeEntity> GetById(
+    private static readonly IDictionary<string, IList<HomeTypeEntity>> HomeTypes = new ConcurrentDictionary<string, IList<HomeTypeEntity>>();
+
+    public Task<HomeTypesEntity> GetByApplicationId(
+        string applicationId,
+        IReadOnlyCollection<HomeTypeSegmentType> segments,
+        CancellationToken cancellationToken)
+    {
+        if (!HomeTypes.TryGetValue(applicationId, out var homeTypes))
+        {
+            return Task.FromResult(new HomeTypesEntity(Enumerable.Empty<HomeTypeEntity>()));
+        }
+
+        return Task.FromResult(new HomeTypesEntity(homeTypes));
+    }
+
+    public Task<IHomeTypeEntity> GetById(
         string applicationId,
         HomeTypeId homeTypeId,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
@@ -15,31 +31,32 @@ public class HomeTypeRepository : IHomeTypeRepository
         var homeType = Get(applicationId, homeTypeId);
         if (homeType != null)
         {
-            return Task.FromResult(homeType);
+            return Task.FromResult<IHomeTypeEntity>(homeType);
         }
 
         throw new NotFoundException(nameof(HomeTypeEntity), homeTypeId);
     }
 
-    public Task<HomeTypeEntity> Save(
+    public Task<IHomeTypeEntity> Save(
         string applicationId,
-        HomeTypeEntity homeType,
+        IHomeTypeEntity homeType,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken)
     {
-        if (homeType.IsNew)
+        var entity = (HomeTypeEntity)homeType;
+        if (entity.IsNew)
         {
-            homeType.Id = new HomeTypeId(Guid.NewGuid().ToString("D"));
+            entity.Id = new HomeTypeId(Guid.NewGuid().ToString("D"));
         }
 
         // TODO: update fields in CRM depending on SegmentTypes
-        Save(applicationId, homeType);
+        Save(applicationId, entity);
         return Task.FromResult(homeType);
     }
 
     private HomeTypeEntity? Get(string applicationId, HomeTypeId homeTypeId)
     {
-        if (HomeTypesRepository.HomeTypes.TryGetValue(applicationId, out var homeTypes))
+        if (HomeTypes.TryGetValue(applicationId, out var homeTypes))
         {
             return homeTypes.FirstOrDefault(x => x.Id == homeTypeId);
         }
@@ -49,7 +66,7 @@ public class HomeTypeRepository : IHomeTypeRepository
 
     private void Save(string applicationId, HomeTypeEntity entity)
     {
-        if (HomeTypesRepository.HomeTypes.TryGetValue(applicationId, out var homeTypes))
+        if (HomeTypes.TryGetValue(applicationId, out var homeTypes))
         {
             var existingHomeType = homeTypes.FirstOrDefault(x => x.Id == entity.Id);
             if (existingHomeType != null)
@@ -61,7 +78,7 @@ public class HomeTypeRepository : IHomeTypeRepository
         }
         else
         {
-            HomeTypesRepository.HomeTypes.Add(applicationId, new List<HomeTypeEntity> { entity });
+            HomeTypes.Add(applicationId, new List<HomeTypeEntity> { entity });
         }
     }
 }
