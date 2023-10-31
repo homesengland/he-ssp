@@ -1,0 +1,46 @@
+@using HE.Investments.Common.WWW.Components
+@using HE.Investment.AHP.WWW.Routing
+@model HE.Investment.AHP.WWW.Models.Application.ApplicationModel
+@{
+    ViewData["Title"] = "Application details";
+    var totalSectionsCount = Model.Sections.Count;
+    var incompleteSectionsCount = Model.Sections.Count(s => s.Status == SectionStatus.NotStarted || s.Status == SectionStatus.InProgress);
+    var completeSectionsCount = Model.Sections.Count(s => s.Status == SectionStatus.Completed);
+    ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
+        .New()
+        .WithSites()
+        .WithSchemes()
+        .Build();
+}
+<div class="govuk-grid-column-full govuk-!-padding-top-8">
+    <span class="govuk-caption-l">
+        @Model.SiteName
+    </span>
+    <gds-h1 class="govuk-heading-xl">
+        @Model.Name
+    </gds-h1>
+
+    @if (incompleteSectionsCount > 0)
+    {
+        <gds-h3 class="govuk-heading-s">
+            Application incomplete
+            <gds-p>You have completed @completeSectionsCount of @totalSectionsCount sections.</gds-p>
+        </gds-h3>
+    }
+</div>
+<gds-div-grid-column-two-thirds>
+    @await Html.PartialAsync("~/Partials/TaskList/_TaskList.cshtml", @Model.Sections)
+
+    @if (incompleteSectionsCount > 0)
+    {
+        <gds-div-inset-text>
+            You must complete all the sections before you can submit your application.
+        </gds-div-inset-text>
+    }
+
+    <link-button action-url="@Url.Action("Index", "Application")" is-secondary="true" >Return to applications</link-button>
+</gds-div-grid-column-two-thirds>
+<div class="govuk-grid-column-one-third">
+    @await Html.PartialAsync("_Help.cshtml")
+</div>
+

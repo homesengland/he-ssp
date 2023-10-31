@@ -121,25 +121,34 @@ namespace DataverseModel
 			public const string invln_Account = "invln_account";
 			public const string invln_AccountName = "invln_accountname";
 			public const string invln_Additionalprojects = "invln_additionalprojects";
+			public const string invln_Additionalreturns = "invln_additionalreturns";
 			public const string invln_applicationname = "invln_applicationname";
+			public const string invln_AssessedasSPPI = "invln_assessedassppi";
 			public const string invln_CommerciallySensitive = "invln_commerciallysensitive";
 			public const string invln_CompanyExperience = "invln_companyexperience";
 			public const string invln_CompanyPurpose = "invln_companypurpose";
 			public const string invln_companystructureandexperiencecompletionst = "invln_companystructureandexperiencecompletionst";
 			public const string invln_Companystructureinformation = "invln_companystructureinformation";
+			public const string invln_Conditions_invln_Loanapplication_in = "invln_Conditions_invln_Loanapplication_in";
 			public const string invln_Confirmationdirectorloanscanbesubordinated = "invln_confirmationdirectorloanscanbesubordinated";
 			public const string invln_Contact = "invln_contact";
 			public const string invln_contact_invln_loanapplication = "invln_contact_invln_loanapplication";
 			public const string invln_contact_invln_loanapplication_contactid = "invln_contact_invln_loanapplication_contactid";
 			public const string invln_ContactName = "invln_contactname";
+			public const string invln_CostGuarantee = "invln_costguarantee";
+			public const string invln_CustomSecurity = "invln_customsecurity";
 			public const string invln_Dateapproved = "invln_dateapproved";
 			public const string invln_Datesubmitted = "invln_datesubmitted";
 			public const string invln_DebentureHolder = "invln_debentureholder";
+			public const string invln_Developmenttype = "invln_developmenttype";
 			public const string invln_Directorloans = "invln_directorloans";
 			public const string invln_ExistingCompany = "invln_existingcompany";
 			public const string invln_ExternalStatus = "invln_externalstatus";
+			public const string invln_FinalConclusion = "invln_finalconclusion";
 			public const string invln_fundingdetailscompletionstatus = "invln_fundingdetailscompletionstatus";
 			public const string invln_FundingReason = "invln_fundingreason";
+			public const string invln_InterestGuarantee = "invln_interestguarantee";
+			public const string invln_InvestedbyBorrower = "invln_investedbyborrower";
 			public const string invln_invln_emailnotification_Regarding_invln_l = "invln_invln_emailnotification_Regarding_invln_l";
 			public const string invln_invln_isp_Loanapplication_invln_loanappli = "invln_invln_isp_Loanapplication_invln_loanappli";
 			public const string invln_invln_loanapplication_invln_contract_Loanapplication = "invln_invln_loanapplication_invln_contract_Loanapplication";
@@ -158,6 +167,7 @@ namespace DataverseModel
 			public const string invln_loanportaldata = "invln_loanportaldata";
 			public const string invln_loanportaldataid = "invln_loanportaldataid";
 			public const string invln_loanstatuschange_Loanapplication = "invln_loanstatuschange_Loanapplication";
+			public const string invln_LTGDV = "invln_ltgdv";
 			public const string invln_Name = "invln_name";
 			public const string invln_numberofhomes = "invln_numberofhomes";
 			public const string invln_NumberofSites = "invln_numberofsites";
@@ -167,21 +177,32 @@ namespace DataverseModel
 			public const string invln_Privatesectorapproachinformation = "invln_privatesectorapproachinformation";
 			public const string invln_Projectabnormalcosts = "invln_projectabnormalcosts";
 			public const string invln_Projectabnormalcostsinformation = "invln_projectabnormalcostsinformation";
+			public const string invln_Projectedprofitmargin = "invln_projectedprofitmargin";
 			public const string invln_Projectestimatedtotalcost = "invln_projectestimatedtotalcost";
 			public const string invln_projectestimatedtotalcost_Base = "invln_projectestimatedtotalcost_base";
 			public const string invln_ProjectGDV = "invln_projectgdv";
 			public const string invln_projectgdv_Base = "invln_projectgdv_base";
 			public const string invln_ProjectName = "invln_projectname";
+			public const string invln_rateofinterest = "invln_rateofinterest";
 			public const string invln_Reasonfordirectorloannotsubordinated = "invln_reasonfordirectorloannotsubordinated";
 			public const string invln_Refinancerepayment = "invln_refinancerepayment";
 			public const string invln_Refinancerepaymentdetails = "invln_refinancerepaymentdetails";
 			public const string invln_Region = "invln_region";
+			public const string invln_Securities = "invln_securities";
+			public const string invln_SecurityDetails = "invln_securitydetails";
 			public const string invln_securitydetailscompletionstatus = "invln_securitydetailscompletionstatus";
+			public const string invln_SecurityMSV = "invln_securitymsv";
+			public const string invln_securitymsv_Base = "invln_securitymsv_base";
+			public const string invln_SecurityType = "invln_securitytype";
+			public const string invln_SecurityValue = "invln_securityvalue";
+			public const string invln_securityvalue_Base = "invln_securityvalue_base";
 			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
 			public const string invln_sitedetailscompletionstatus = "invln_sitedetailscompletionstatus";
 			public const string invln_source = "invln_source";
+			public const string invln_specialpurposevehicleprovided = "invln_specialpurposevehicleprovided";
 			public const string invln_startdate = "invln_startdate";
 			public const string invln_statuschangereason = "invln_statuschangereason";
+			public const string invln_Warranty = "invln_warranty";
 			public const string lk_invln_loanapplication_createdby = "lk_invln_loanapplication_createdby";
 			public const string lk_invln_loanapplication_createdonbehalfby = "lk_invln_loanapplication_createdonbehalfby";
 			public const string lk_invln_loanapplication_modifiedby = "lk_invln_loanapplication_modifiedby";
@@ -371,6 +392,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_additionalreturns")]
+		public System.Nullable<bool> invln_Additionalreturns
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_additionalreturns");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Additionalreturns");
+				this.SetAttributeValue("invln_additionalreturns", value);
+				this.OnPropertyChanged("invln_Additionalreturns");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_applicationname")]
 		public string invln_applicationname
 		{
@@ -385,6 +423,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_applicationname");
 				this.SetAttributeValue("invln_applicationname", value);
 				this.OnPropertyChanged("invln_applicationname");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_assessedassppi")]
+		public System.Nullable<bool> invln_AssessedasSPPI
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_assessedassppi");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_AssessedasSPPI");
+				this.SetAttributeValue("invln_assessedassppi", value);
+				this.OnPropertyChanged("invln_AssessedasSPPI");
 			}
 		}
 		
@@ -507,6 +562,40 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_costguarantee")]
+		public System.Nullable<bool> invln_CostGuarantee
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_costguarantee");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CostGuarantee");
+				this.SetAttributeValue("invln_costguarantee", value);
+				this.OnPropertyChanged("invln_CostGuarantee");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_customsecurity")]
+		public string invln_CustomSecurity
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_customsecurity");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_CustomSecurity");
+				this.SetAttributeValue("invln_customsecurity", value);
+				this.OnPropertyChanged("invln_CustomSecurity");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_dateapproved")]
 		public System.Nullable<System.DateTime> invln_Dateapproved
 		{
@@ -555,6 +644,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_DebentureHolder");
 				this.SetAttributeValue("invln_debentureholder", value);
 				this.OnPropertyChanged("invln_DebentureHolder");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_developmenttype")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Developmenttype
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_developmenttype");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Developmenttype");
+				this.SetAttributeValue("invln_developmenttype", value);
+				this.OnPropertyChanged("invln_Developmenttype");
 			}
 		}
 		
@@ -609,6 +715,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_finalconclusion")]
+		public string invln_FinalConclusion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_finalconclusion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_FinalConclusion");
+				this.SetAttributeValue("invln_finalconclusion", value);
+				this.OnPropertyChanged("invln_FinalConclusion");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundingdetailscompletionstatus")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_fundingdetailscompletionstatus
 		{
@@ -640,6 +763,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_FundingReason");
 				this.SetAttributeValue("invln_fundingreason", value);
 				this.OnPropertyChanged("invln_FundingReason");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_interestguarantee")]
+		public System.Nullable<bool> invln_InterestGuarantee
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_interestguarantee");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_InterestGuarantee");
+				this.SetAttributeValue("invln_interestguarantee", value);
+				this.OnPropertyChanged("invln_InterestGuarantee");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_investedbyborrower")]
+		public System.Nullable<bool> invln_InvestedbyBorrower
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_investedbyborrower");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_InvestedbyBorrower");
+				this.SetAttributeValue("invln_investedbyborrower", value);
+				this.OnPropertyChanged("invln_InvestedbyBorrower");
 			}
 		}
 		
@@ -791,6 +948,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_loanportaldataid");
 				this.SetAttributeValue("invln_loanportaldataid", value);
 				this.OnPropertyChanged("invln_loanportaldataid");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ltgdv")]
+		public System.Nullable<bool> invln_LTGDV
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_ltgdv");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_LTGDV");
+				this.SetAttributeValue("invln_ltgdv", value);
+				this.OnPropertyChanged("invln_LTGDV");
 			}
 		}
 		
@@ -947,6 +1121,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_projectedprofitmargin")]
+		public System.Nullable<bool> invln_Projectedprofitmargin
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_projectedprofitmargin");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Projectedprofitmargin");
+				this.SetAttributeValue("invln_projectedprofitmargin", value);
+				this.OnPropertyChanged("invln_Projectedprofitmargin");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_projectestimatedtotalcost")]
 		public Microsoft.Xrm.Sdk.Money invln_Projectestimatedtotalcost
 		{
@@ -1024,6 +1215,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_rateofinterest")]
+		public System.Nullable<bool> invln_rateofinterest
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_rateofinterest");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_rateofinterest");
+				this.SetAttributeValue("invln_rateofinterest", value);
+				this.OnPropertyChanged("invln_rateofinterest");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_reasonfordirectorloannotsubordinated")]
 		public string invln_Reasonfordirectorloannotsubordinated
 		{
@@ -1092,6 +1300,40 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securities")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValueCollection invln_Securities
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValueCollection>("invln_securities");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Securities");
+				this.SetAttributeValue("invln_securities", value);
+				this.OnPropertyChanged("invln_Securities");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitydetails")]
+		public string invln_SecurityDetails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_securitydetails");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SecurityDetails");
+				this.SetAttributeValue("invln_securitydetails", value);
+				this.OnPropertyChanged("invln_SecurityDetails");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitydetailscompletionstatus")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_securitydetailscompletionstatus
 		{
@@ -1106,6 +1348,83 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_securitydetailscompletionstatus");
 				this.SetAttributeValue("invln_securitydetailscompletionstatus", value);
 				this.OnPropertyChanged("invln_securitydetailscompletionstatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitymsv")]
+		public Microsoft.Xrm.Sdk.Money invln_SecurityMSV
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_securitymsv");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SecurityMSV");
+				this.SetAttributeValue("invln_securitymsv", value);
+				this.OnPropertyChanged("invln_SecurityMSV");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Security MSV in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitymsv_base")]
+		public Microsoft.Xrm.Sdk.Money invln_securitymsv_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_securitymsv_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitytype")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_SecurityType
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_securitytype");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SecurityType");
+				this.SetAttributeValue("invln_securitytype", value);
+				this.OnPropertyChanged("invln_SecurityType");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_SecurityValue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_securityvalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_SecurityValue");
+				this.SetAttributeValue("invln_securityvalue", value);
+				this.OnPropertyChanged("invln_SecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_securityvalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_securityvalue_base");
 			}
 		}
 		
@@ -1143,6 +1462,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_specialpurposevehicleprovided")]
+		public System.Nullable<bool> invln_specialpurposevehicleprovided
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_specialpurposevehicleprovided");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_specialpurposevehicleprovided");
+				this.SetAttributeValue("invln_specialpurposevehicleprovided", value);
+				this.OnPropertyChanged("invln_specialpurposevehicleprovided");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_startdate")]
 		public System.Nullable<System.DateTime> invln_startdate
 		{
@@ -1174,6 +1510,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_statuschangereason");
 				this.SetAttributeValue("invln_statuschangereason", value);
 				this.OnPropertyChanged("invln_statuschangereason");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_warranty")]
+		public System.Nullable<bool> invln_Warranty
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_warranty");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Warranty");
+				this.SetAttributeValue("invln_warranty", value);
+				this.OnPropertyChanged("invln_Warranty");
 			}
 		}
 		
@@ -1479,6 +1832,26 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_Conditions_invln_Loanapplication_in
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_Conditions_invln_Loanapplication_in")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Conditions> invln_Conditions_invln_Loanapplication_in
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Conditions>("invln_Conditions_invln_Loanapplication_in", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Conditions_invln_Loanapplication_in");
+				this.SetRelatedEntities<DataverseModel.invln_Conditions>("invln_Conditions_invln_Loanapplication_in", null, value);
+				this.OnPropertyChanged("invln_Conditions_invln_Loanapplication_in");
 			}
 		}
 		

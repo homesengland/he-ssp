@@ -37,7 +37,18 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestLoan(serviceClient);
+                    var test = new OrganizationDetailsDto()
+                    {
+                        registeredCompanyName = "test program",
+                        organisationPhoneNumber = "543234324",
+                        addressLine1 = "line111111",
+                        addressLine2 = "line 2222222",
+                        city = "lomza",
+                        county = "conttttyyy",
+                        postalcode = "12-123",
+                        organisationId = "0461e384-494e-ee11-be6f-002248c65419",
+                    };
+                    _ = CreateOrganisationChangeRequest(test, serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -49,6 +60,30 @@ namespace HE.Xrm.ServiceClientExample
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
+        }
+
+        private static Guid CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails, ServiceClient serviceClient)
+        {
+            var organisationChangeRequestToCreate = MapOrganizationDtoToOrganizationChangeRequestEntity(organizationDetails);
+            return serviceClient.Create(organisationChangeRequestToCreate);
+        }
+        private static Entity MapOrganizationDtoToOrganizationChangeRequestEntity(OrganizationDetailsDto organizationDetailsDto)
+        {
+            var organisationChangeRequestEntity = new Entity("invln_organisationchangerequest")
+            {
+                Attributes = new AttributeCollection()
+            {
+                { "invln_registeredcompanyname", organizationDetailsDto.registeredCompanyName },
+                { "invln_organisationphonenumber", organizationDetailsDto.organisationPhoneNumber },
+                { "invln_addressline1", organizationDetailsDto.addressLine1 },
+                { "invln_addressline2", organizationDetailsDto.addressLine2 },
+                { "invln_townorcity", organizationDetailsDto.city },
+                { "invln_county", organizationDetailsDto.county },
+                { "invln_postcode", organizationDetailsDto.postalcode },
+                { "invln_organisationid", new EntityReference("account", new Guid(organizationDetailsDto.organisationId)) },
+            },
+            };
+            return organisationChangeRequestEntity;
         }
 
         private static void TestLoan(ServiceClient serviceClient)

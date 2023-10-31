@@ -1,9 +1,71 @@
 @using HE.Investment.AHP.Domain.HomeTypes
-<form asp-controller="HomeTypes" asp-action="HomeInformation" asp-method="post" novalidate>
-    <gds-back-link href="@Url.Action("Back","HomeTypes", new { schemeId = ViewContext.RouteData.Values["schemeId"], homeTypeId = ViewContext.RouteData.Values["homeTypeId"], currentPage = HomeTypesWorkflowState.HomeInformation})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+@using HE.Investment.AHP.WWW.Extensions
+@model HE.Investment.AHP.WWW.Models.HomeTypes.HomeInformationModel;
 
-    <gds-h1 size="ControlSize.L">
-        Home information
-    </gds-h1>
-</form>
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+}
 
+<div class="govuk-grid-column-full">
+    <form asp-controller="HomeTypes" asp-action="HomeInformation" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","HomeTypes", new { applicationId, homeTypeId, currentPage = HomeTypesWorkflowState.HomeInformation})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+
+        @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+        <gds-div-hint>@Model.HomeInformationHeader</gds-div-hint>
+        <gds-h1 size="ControlSize.L">
+            Home information
+        </gds-h1>
+
+        <gds-field-set>
+            <gds-legend>
+                <gds-h2 class="govuk-!-margin-bottom-0">Enter the number of homes you are delivering</gds-h2>
+            </gds-legend>
+            <gds-input
+                class="govuk-input--width-2"
+                asp-hiddenlabeltext="Enter the number of homes you are delivering"
+                govuk-formgroup-asp-for="NumberOfHomes"
+                name="NumberOfHomes"
+                value=@Model.NumberOfHomes/>
+
+            <gds-legend>
+                <gds-h2 class="govuk-!-margin-bottom-0">Enter the number of bedrooms in each home</gds-h2>
+            </gds-legend>
+            <gds-input
+                class="govuk-input--width-2"
+                asp-hiddenlabeltext="Enter the number of homes you are delivering"
+                govuk-formgroup-asp-for="NumberOfBedrooms"
+                name="NumberOfBedrooms"
+                value=@Model.NumberOfBedrooms/>
+
+            <gds-legend>
+                <gds-h2 class="govuk-!-margin-bottom-0">Enter the maximum occupancy of each home</gds-h2>
+            </gds-legend>
+            <gds-input
+                class="govuk-input--width-2"
+                asp-hiddenlabeltext="Enter the number of homes you are delivering"
+                asp-hinttext="This is the maximum number of people who can live in each home."
+                govuk-formgroup-asp-for="MaximumOccupancy"
+                name="MaximumOccupancy"
+                value=@Model.MaximumOccupancy/>
+
+            <gds-legend>
+                <gds-h2 class="govuk-!-margin-bottom-0">Enter how many storeys each home has</gds-h2>
+            </gds-legend>
+            <gds-input
+                class="govuk-input--width-2"
+                asp-hiddenlabeltext="Enter how many storeys each home has"
+                asp-hinttext="If the homes are in a multi storey development, enter how many storeys are in each individual home."
+                govuk-formgroup-asp-for="NumberOfStoreys"
+                name="NumberOfStoreys"
+                value=@Model.NumberOfStoreys/>
+
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                Save and continue
+            </button>
+        </gds-field-set>
+
+        <gds-link>Save and return to application</gds-link>
+    </form>
+</div>

@@ -1,0 +1,31 @@
+@using HE.Investments.Common.WWW.Components
+@model IList<HE.Investments.Common.WWW.Models.TaskList.TaskListSectionModel>
+<ul class="app-task-list">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        var item = Model[i];
+        <li>
+            <h2 class="app-task-list__section">
+                <span class="govuk-prototype-kit-task-list__section-number">@(i + 1). </span> @item.Header
+            </h2>
+            <gds-div-hint>@item.Description</gds-div-hint>
+            <ul class="app-task-list__items">
+                <li class="app-task-list__item">
+                    <span class="app-task-list__task-name">
+                        @if (item.Status == SectionStatus.CannotStartYet)
+                        {
+                            <span>@item.Action</span>
+                        }
+                        else
+                        {
+                            <a href=@item.ActionUrl>
+                                @item.Action
+                            </a>
+                        }
+                    </span>
+                    <section-status status=@item.Status additional-classes="app-task-list__tag"></section-status>
+                </li>
+            </ul>
+        </li>
+    }
+</ul>

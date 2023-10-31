@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
 using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Utils.Enums;
@@ -11,5 +12,7 @@ public interface IOrganizationRepository
 
     public Task<OrganisationChangeRequestState> GetOrganisationChangeRequestDetails(UserAccount userAccount, CancellationToken cancellationToken);
 
-    Task<Guid> CreateOrganisation(OrganisationToCreate organisation);
+    Task<Guid> CreateOrganisation(OrganisationEntity organisation);
+
+    Task Update(OrganisationEntity organisation, CancellationToken cancellationToken);
 }

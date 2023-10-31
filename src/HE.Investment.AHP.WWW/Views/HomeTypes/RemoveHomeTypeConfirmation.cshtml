@@ -1,0 +1,20 @@
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.Domain.HomeTypes
+@model HE.Investment.AHP.WWW.Models.HomeTypes.RemoveHomeTypeModel;
+
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+}
+
+<div class="govuk-grid-column-three-quarters">
+            <gds-back-link href="@Url.Action("Back","HomeTypes", new { applicationId, homeTypeId, currentPage = HomeTypesWorkflowState.RemoveHomeType})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-div-hint>@Model.ApplicationName</gds-div-hint>
+    <gds-h1 size="ControlSize.L">
+        Remove @Model.HomeTypeName Home type
+    </gds-h1>
+
+    <gds-p>
+        Do you really want to remove this Home Type?
+    </gds-p>
+</div>

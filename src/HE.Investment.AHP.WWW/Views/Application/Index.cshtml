@@ -1,0 +1,25 @@
+@model HE.Investment.AHP.WWW.Models.Application.ApplicationsModel
+@{
+    ViewData["Title"] = "Applications";
+}
+<div class="govuk-grid-column-three-quarters">
+    <gds-back-link href="@Url.Action("Index", "Home")" text="Back" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
+
+    <gds-h1 class="govuk-heading-xl">
+        @Model.SiteName
+    </gds-h1>
+    <gds-div-hint class="govuk-!-margin-bottom-8">
+        View and add applications to this site and submit them for review.
+    </gds-div-hint>
+    <div class="govuk-!-padding-bottom-8">
+        @foreach (var application in Model.Applications)
+        {
+            <gds-p>
+                <a href="@Url.Action("TaskList", "Application", new { applicationId = application.Id })"> @application.Name </a>
+            </gds-p>
+        }
+    </div>
+
+    <link-button action-url="@Url.Action("Name", "Application")">Create a new application</link-button>
+</div>

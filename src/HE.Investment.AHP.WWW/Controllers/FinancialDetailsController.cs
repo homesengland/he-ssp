@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[Route("fiancial-details")]
+[Route("financial-details")]
 public class FinancialDetailsController : Controller
 {
     private readonly IMediator _mediator;

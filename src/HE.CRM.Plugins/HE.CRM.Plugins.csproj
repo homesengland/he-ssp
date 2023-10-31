@@ -143,11 +143,14 @@
     <Compile Include="Handlers\CustomApi\UpdateSingleLoanApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleSiteDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateUserProfileHandler.cs" />
+    <Compile Include="Handlers\ISPs\CreateConditionRecordsOnHandler.cs" />
+    <Compile Include="Handlers\ISPs\PopulateFieldsOnCreateHandler.cs" />
     <Compile Include="Handlers\ISPs\SetFieldsOnSentForApprovalChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\AssignLoanToTmTeamOnCreateHandler.cs" />
     <Compile Include="Handlers\LoanApplications\ChangeApplicationStatusOnOwnerChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\CheckIfOwnerCanBeChangedHandler.cs" />
     <Compile Include="Handlers\LoanApplications\CreateDocumentLocationOnCreateHandler.cs" />
+    <Compile Include="Handlers\LoanApplications\CreateStandardConditionsHandler.cs" />
     <Compile Include="Handlers\LoanApplications\SendEmailToNewOwnerHandler.cs" />
     <Compile Include="Handlers\LoanApplications\SendInternalNotificationOnStatusChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\SetFieldsWhenChangingStatusFromDraftHandler.cs" />
@@ -173,9 +176,12 @@
     <Compile Include="Plugins\CustomApi\UpdateSingleSiteDetailsPlugin.cs" />
     <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateUserProfilePlugin.cs" />
+    <Compile Include="Plugins\ISPs\CreateConditionRecordsOnCreate.cs" />
+    <Compile Include="Plugins\ISPs\PopulateFieldsOnCreatePlugin.cs" />
     <Compile Include="Plugins\ISPs\SetFieldsOnSentForApprovalChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\AssignLoanToTmTeamOnCreatePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\CreateDocumentLocationOnCreatePlugin.cs" />
+    <Compile Include="Plugins\LoanApplications\CreateStandardConditionsPlugin.cs" />
     <Compile Include="Plugins\LoanStatusChange\SendNotificationOnCreatePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\ChangeApplicationStatusOnOwnerChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\CheckIfOwnerCanBeChangedPlugin.cs" />

@@ -74,6 +74,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Conditions"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_Conditions> invln_ConditionsSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_Conditions>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_contactwebrole"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_contactwebrole> invln_contactwebroleSet
@@ -173,6 +184,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_organisationchangerequest"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_organisationchangerequest> invln_organisationchangerequestSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_organisationchangerequest>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_portal"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_portal> invln_portalSet
@@ -195,6 +217,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_ProjectSpecificCondition"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_ProjectSpecificCondition> invln_ProjectSpecificConditionSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_ProjectSpecificCondition>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_SiteDetails"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_SiteDetails> invln_SiteDetailsSet
@@ -202,6 +235,17 @@ namespace DataverseModel
 			get
 			{
 				return this.CreateQuery<DataverseModel.invln_SiteDetails>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_StandardCondition"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_StandardCondition> invln_StandardConditionSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_StandardCondition>();
 			}
 		}
 		

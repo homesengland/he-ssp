@@ -20,6 +20,7 @@ public static class ServiceCollectionExtensions
         serviceCollections.AddScoped<IOrganisationSearchService, OrganisationSearchService>();
         serviceCollections.AddScoped<IOrganizationRepository, OrganizationRepository>();
         serviceCollections.AddScoped<IOrganizationCrmSearchService, OrganizationCrmSearchService>();
+        serviceCollections.AddScoped<IOrganisationChangeRequestRepository, OrganisationChangeRequestRepository>();
 
         serviceCollections.AddSingleton<ICompaniesHouseConfig>(x =>
             x.GetRequiredService<IConfiguration>().GetRequiredSection("AppConfiguration:CompaniesHouse").Get<CompaniesHouseConfig>());
