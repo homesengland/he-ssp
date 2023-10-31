@@ -7,7 +7,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 public class OrganisationName : ValueObject
 {
     public OrganisationName(
-        string name,
+        string? name,
         string notProvidedErrorMessage = OrganisationErrorMessages.MissingOrganisationName,
         string? lengthErrorMessage = null)
     {
@@ -26,7 +26,7 @@ public class OrganisationName : ValueObject
         yield return Name;
     }
 
-    private OperationResult Build(string name, string? notProvidedErrorMessage, string? lengthErrorMessage)
+    private OperationResult Build(string? name, string? notProvidedErrorMessage, string? lengthErrorMessage)
     {
         var operationResult = OperationResult.New();
         lengthErrorMessage = lengthErrorMessage != null ? ValidationErrorMessage.ShortInputLengthExceeded(lengthErrorMessage) : null;

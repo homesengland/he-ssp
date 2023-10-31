@@ -28,7 +28,7 @@ public static class NotificationMapper
         return text;
     }
 
-    public static string MapBodyTypeToLinkDescription(NotificationBodyType bodyType, IDictionary<NotificationServiceKeys, string> valuesToDisplay)
+    public static string MapBodyTypeToLinkDescription(NotificationBodyType bodyType, IDictionary<NotificationServiceKeys, string>? valuesToDisplay)
     {
         var text = bodyType switch
         {
@@ -37,9 +37,12 @@ public static class NotificationMapper
             _ => string.Empty,
         };
 
-        foreach (var value in valuesToDisplay)
+        if (valuesToDisplay != null)
         {
-            text = text.Replace($"<{value.Key}>", value.Value);
+            foreach (var value in valuesToDisplay)
+            {
+                text = text.Replace($"<{value.Key}>", value.Value);
+            }
         }
 
         return text;

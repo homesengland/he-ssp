@@ -1,4 +1,5 @@
 extern alias Org;
+
 using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
 using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
@@ -21,7 +22,9 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
     private readonly IOrganizationRepository _repository;
     private readonly INotificationService _notificationService;
 
-    public ChangeOrganisationDetailsCommandHandler(ILoanUserContext loanUserContext, IOrganizationRepository repository,
+    public ChangeOrganisationDetailsCommandHandler(
+        ILoanUserContext loanUserContext,
+        IOrganizationRepository repository,
         INotificationService notificationService)
     {
         _loanUserContext = loanUserContext;
