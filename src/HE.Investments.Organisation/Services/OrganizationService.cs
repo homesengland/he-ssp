@@ -1,6 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CrmRepository;
-using Microsoft.Crm.Sdk.Messages;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
@@ -16,7 +15,8 @@ public class OrganizationService : IOrganizationService
 
     // private readonly string someoneElseRequested = "Someoneelse requested";
     // private readonly string noRequest = "No request";
-    public OrganizationService(IOrganizationServiceAsync2 service, IOrganisationChangeRequestRepository organisationChangeRequestRepository,
+    public OrganizationService(IOrganizationServiceAsync2 service,
+        IOrganisationChangeRequestRepository organisationChangeRequestRepository,
         IContactRepository contactRepository)
     {
         _service = service;
