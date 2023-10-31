@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.Contract.FinancialDetails.Const;
+namespace HE.Investment.AHP.Contract.FinancialDetails.Constants;
 public static class FinancialDetailsValidationErrors
 {
     public const string NoPurchasePrice = "Purchase price is required";

@@ -10,6 +10,12 @@ public class FinancialDetailsEntity
         FinancialDetailsId = new FinancialDetailsId(Guid.NewGuid());
     }
 
+    public FinancialDetailsEntity(bool isPurchasePriceKnown)
+    {
+        FinancialDetailsId = new FinancialDetailsId(Guid.NewGuid());
+        IsPurchasePriceKnown = isPurchasePriceKnown;
+    }
+
     [JsonConstructor]
     public FinancialDetailsEntity(
         FinancialDetailsId financialDetailsId,
