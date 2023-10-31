@@ -16,6 +16,11 @@ public class OrganisationName : ValueObject
 
     public string Name { get; private set; }
 
+    public override string ToString()
+    {
+        return Name;
+    }
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Name;
