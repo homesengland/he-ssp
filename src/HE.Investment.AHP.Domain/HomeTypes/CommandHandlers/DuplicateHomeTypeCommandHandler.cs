@@ -9,30 +9,19 @@ namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
 
 public class DuplicateHomeTypeCommandHandler : IRequestHandler<DuplicateHomeTypeCommand, OperationResult<HomeTypeId>>
 {
-    private readonly IHomeTypesRepository _homeTypesRepository;
+    private readonly IHomeTypeRepository _repository;
 
-    private readonly IHomeTypeRepository _homeTypeRepository;
-
-    public DuplicateHomeTypeCommandHandler(IHomeTypesRepository homeTypesRepository, IHomeTypeRepository homeTypeRepository)
+    public DuplicateHomeTypeCommandHandler(IHomeTypeRepository repository)
     {
-        _homeTypesRepository = homeTypesRepository;
-        _homeTypeRepository = homeTypeRepository;
+        _repository = repository;
     }
 
     public async Task<OperationResult<HomeTypeId>> Handle(DuplicateHomeTypeCommand request, CancellationToken cancellationToken)
     {
-        var homeTypeId = new HomeTypeId(request.HomeTypeId);
-        var homeTypes = await _homeTypesRepository.GetByApplicationId(request.ApplicationId, cancellationToken);
-        var homeType = await _homeTypeRepository.GetById(
-            request.ApplicationId,
-            homeTypeId,
-            HomeTypeSegmentTypes.All,
-            cancellationToken);
+        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, HomeTypeSegmentTypes.All, cancellationToken);
+        var duplicatedHomeType = homeTypes.Duplicate(new HomeTypeId(request.HomeTypeId));
 
-        var duplicatedName = homeTypes.DuplicateName(homeTypeId);
-        var duplicatedHomeType = homeType.Duplicate(duplicatedName);
-
-        await _homeTypeRepository.Save(request.ApplicationId, duplicatedHomeType, HomeTypeSegmentTypes.All, cancellationToken);
+        await _repository.Save(request.ApplicationId, duplicatedHomeType, HomeTypeSegmentTypes.All, cancellationToken);
 
         return OperationResult.Success(duplicatedHomeType.Id!);
     }

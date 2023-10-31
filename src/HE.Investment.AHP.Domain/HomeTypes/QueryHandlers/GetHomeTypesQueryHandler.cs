@@ -8,26 +8,29 @@ namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
 internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQuery, IList<HomeTypeDetails>>
 {
-    private readonly IHomeTypesRepository _repository;
+    private readonly IHomeTypeRepository _repository;
 
-    public GetHomeTypesQueryHandler(IHomeTypesRepository repository)
+    public GetHomeTypesQueryHandler(IHomeTypeRepository repository)
     {
         _repository = repository;
     }
 
     public async Task<IList<HomeTypeDetails>> Handle(GetHomeTypesQuery request, CancellationToken cancellationToken)
     {
-        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, cancellationToken);
+        var homeTypes = await _repository.GetByApplicationId(
+            request.ApplicationId,
+            new[] { HomeTypeSegmentType.HomeInformation },
+            cancellationToken);
 
         return homeTypes.HomeTypes.Select(Map).ToList();
     }
 
-    private static HomeTypeDetails Map(HomeTypeBasicDetailsEntity entity)
+    private static HomeTypeDetails Map(IHomeTypeEntity entity)
     {
         return new HomeTypeDetails(
-            entity.Id.Value,
+            entity.Id!.Value,
             entity.Name?.Value,
-            entity.NumberOfHomes,
+            entity.HomeInformation.NumberOfHomes?.Value,
             entity.HousingType);
     }
 }

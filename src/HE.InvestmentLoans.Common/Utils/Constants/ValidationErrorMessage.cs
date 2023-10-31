@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.InvestmentLoans.Common.Extensions;
 
 namespace HE.InvestmentLoans.Common.Utils.Constants;
@@ -89,6 +90,8 @@ public static class ValidationErrorMessage
     public static string LongInputLengthExceeded(string fieldName) => new($"{fieldName.TitleCaseFirstLetterInString()} must be 1500 characters or less");
 
     public static string MissingRequiredField(string displayName) => $"Enter {displayName}";
+
+    public static string MustBeNumber(string displayName, int minValue, int maxValue) => $"{displayName} must be a number containing no more than {maxValue.ToString(CultureInfo.InvariantCulture).Length} digits ({minValue} - {maxValue})";
 
     public static string StringLengthExceeded(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
 }

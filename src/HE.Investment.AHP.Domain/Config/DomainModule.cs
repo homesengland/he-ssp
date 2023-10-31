@@ -1,7 +1,8 @@
+using HE.Investment.AHP.Domain.Application;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investment.AHP.Domain.Scheme;
 using HE.InvestmentLoans.Common.Utils;
+using HE.Investments.Organisation.Config;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,7 +24,6 @@ public static class DomainModule
     {
         // TODO: change repository to scoped after introducing integration with CRM
         services.AddSingleton<IHomeTypeRepository, HomeTypeRepository>();
-        services.AddSingleton<IHomeTypesRepository, HomeTypesRepository>();
     }
 
     private static void AddFinancialDetails(IServiceCollection services)
@@ -33,6 +33,6 @@ public static class DomainModule
 
     private static void AddScheme(IServiceCollection services)
     {
-        services.AddSingleton<ISchemeRepository, SchemeRepository>();
+        services.AddSingleton<IApplicationRepository, ApplicationRepository>();
     }
 }

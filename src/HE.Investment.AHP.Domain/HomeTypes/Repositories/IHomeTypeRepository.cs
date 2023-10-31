@@ -5,15 +5,20 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Repositories;
 
 public interface IHomeTypeRepository
 {
-    Task<HomeTypeEntity> GetById(
+    Task<HomeTypesEntity> GetByApplicationId(
+        string applicationId,
+        IReadOnlyCollection<HomeTypeSegmentType> segments,
+        CancellationToken cancellationToken);
+
+    Task<IHomeTypeEntity> GetById(
         string applicationId,
         HomeTypeId homeTypeId,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken);
 
-    Task<HomeTypeEntity> Save(
+    Task<IHomeTypeEntity> Save(
         string applicationId,
-        HomeTypeEntity homeType,
+        IHomeTypeEntity homeType,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken);
 }

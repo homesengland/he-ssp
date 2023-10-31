@@ -24,11 +24,11 @@ public class SaveUserProfileDetailsCommandHandler : IRequestHandler<SaveUserProf
 
     public async Task<OperationResult> Handle(SaveUserProfileDetailsCommand request, CancellationToken cancellationToken)
     {
-        var userDetails = await _userRepository.GetUserDetails(_accountUserContext.UserGlobalId);
+        var userDetails = await _userRepository.GetUserProfileInformation(_accountUserContext.UserGlobalId);
 
         try
         {
-            userDetails.ProvideUserDetails(
+            userDetails.ProvideUserProfileDetails(
                 request.FirstName,
                 request.LastName,
                 request.JobTitle,

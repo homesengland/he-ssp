@@ -2,15 +2,13 @@ using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using HE.Investment.AHP.Contract.FinancialDetails.Models;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
-using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Validation;
-using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[Route("fiancial-details")]
+[Route("financial-details")]
 public class FinancialDetailsController : Controller
 {
     private readonly IMediator _mediator;
@@ -58,6 +56,6 @@ public class FinancialDetailsController : Controller
             return View("LandStatus", model);
         }
 
-        return View("LandValue", id);
+        return View(null, id);
     }
 }

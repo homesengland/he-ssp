@@ -1,5 +1,7 @@
+using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Infrastructure;
 using HE.InvestmentLoans.Common.Utils;
+using HE.InvestmentLoans.CRM.Extensions;
 using HE.Investments.Account.Domain.Config;
 using HE.Investments.Account.Domain.User.QueryHandlers;
 using HE.Investments.Account.WWW.Middlewares;
@@ -14,9 +16,10 @@ public static class OrganisationWebModule
         AddConfiguration(services);
         AddMiddlewares(services);
         AddCommonModule(services);
-
+        services.AddHttpUserContext();
+        services.AddCrmConnection();
         services.AddAccountModule();
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUserProfileDetailsQueryHandler).Assembly));
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUserProfileInformationQueryHandler).Assembly));
     }
 
     private static void AddConfiguration(IServiceCollection services)

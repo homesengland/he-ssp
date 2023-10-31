@@ -10,17 +10,23 @@ public class OrganizationService : IOrganizationService
 {
     private readonly IOrganizationServiceAsync2 _service;
     private readonly IOrganisationChangeRequestRepository _organisationChangeRequestRepository;
+    private readonly IContactRepository _contactRepository;
 
-    public OrganizationService(IOrganizationServiceAsync2 service, IOrganisationChangeRequestRepository organisationChangeRequestRepository)
+    public OrganizationService(
+        IOrganizationServiceAsync2 service,
+        IOrganisationChangeRequestRepository organisationChangeRequestRepository,
+        IContactRepository contactRepository)
     {
         _service = service;
         _organisationChangeRequestRepository = organisationChangeRequestRepository;
+        _contactRepository = contactRepository;
     }
 
-    public async Task<Guid> CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails, Guid contactId)
+    public async Task<Guid> CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails, string contactExternalId)
     {
         var organisationChangeRequestToCreate = MapOrganizationDtoToOrganizationChangeRequestEntity(organizationDetails);
-        organisationChangeRequestToCreate["invln_contactid"] = new EntityReference("contact", contactId);
+        var contact = _contactRepository.GetContactViaExternalId(_service, contactExternalId);
+        organisationChangeRequestToCreate["invln_contactid"] = contact?.ToEntityReference();
         return await _service.CreateAsync(organisationChangeRequestToCreate);
     }
 

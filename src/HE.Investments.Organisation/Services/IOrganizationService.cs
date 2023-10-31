@@ -8,7 +8,7 @@ public interface IOrganizationService
 
     Guid CreateOrganization(OrganizationDetailsDto organizationDetails);
 
-    Task<Guid> CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails, Guid contactId);
+    Task<Guid> CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails, string contactExternalId);
 
     Task<ContactDto?> GetOrganisationChangeDetailsRequestContact(Guid accountId);
 }

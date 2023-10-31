@@ -21,13 +21,13 @@ internal sealed class GetHomeTypeDetailsQueryHandler : IRequestHandler<GetHomeTy
         var homeType = await _repository.GetById(
             request.ApplicationId,
             new HomeTypeId(request.HomeTypeId),
-            Array.Empty<HomeTypeSegmentType>(),
+            new[] { HomeTypeSegmentType.HomeInformation },
             cancellationToken);
 
         return new HomeTypeDetails(
             request.HomeTypeId,
             homeType.Name?.Value,
-            null, // TODO: fetch number of homes when available
+            homeType.HomeInformation.NumberOfHomes?.Value,
             homeType.HousingType);
     }
 }
