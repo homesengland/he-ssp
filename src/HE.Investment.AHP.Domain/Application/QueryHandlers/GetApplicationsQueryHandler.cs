@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Domain.Application.Repositories;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.QueryHandlers;
