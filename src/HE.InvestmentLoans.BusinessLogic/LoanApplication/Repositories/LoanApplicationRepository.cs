@@ -12,7 +12,7 @@ using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Events;
+using HE.Investments.Common.Infrastructure.Events;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;

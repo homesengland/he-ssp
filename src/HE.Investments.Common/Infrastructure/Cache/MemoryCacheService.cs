@@ -1,8 +1,8 @@
-using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Services.Interfaces;
+using HE.Investments.Common.Infrastructure.Cache.Config;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace HE.InvestmentLoans.Common.Services;
+namespace HE.Investments.Common.Infrastructure.Cache;
 
 public class MemoryCacheService : ICacheService
 {
@@ -16,11 +16,11 @@ public class MemoryCacheService : ICacheService
         _memoryCache = memoryCache;
     }
 
-    public T? GetValue<T>(string key) => _memoryCache.TryGetValue(key, out T cacheValue) ? cacheValue : default;
+    public T? GetValue<T>(string key) => _memoryCache.TryGetValue(key, out T? cacheValue) ? cacheValue : default;
 
     public async Task<T?> GetValueAsync<T>(string key, Func<Task<T>> loadValue)
     {
-        if (_memoryCache.TryGetValue(key, out T cacheValue))
+        if (_memoryCache.TryGetValue(key, out T? cacheValue))
         {
             return cacheValue;
         }

@@ -1,4 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Account.Domain.User.Entities;
 using HE.Investments.Account.Domain.User.ValueObjects;
 
@@ -28,7 +29,7 @@ public static class UserProfileMapper
             new JobTitle(contactDto.jobTitle),
             contactDto.email,
             new TelephoneNumber(contactDto.phoneNumber),
-            new SecondaryTelephoneNumber(contactDto.secondaryPhoneNumber),
+            contactDto.secondaryPhoneNumber.IsProvided() ? new SecondaryTelephoneNumber(contactDto.secondaryPhoneNumber) : null,
             contactDto.isTermsAndConditionsAccepted);
     }
 }
