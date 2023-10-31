@@ -23,16 +23,13 @@ public class PurchasePrice : ValueObject
                 .CheckErrors();
         }
 
-        Value = value;
+        Value = price;
     }
 
-    public string Value { get; }
-
-    public bool IsFinal { get; }
+    public int Value { get; }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;
-        yield return IsFinal;
     }
 }

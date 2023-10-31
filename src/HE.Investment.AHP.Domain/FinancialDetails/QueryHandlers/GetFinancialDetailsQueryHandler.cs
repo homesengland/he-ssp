@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.Investment.AHP.Contract.FinancialDetails.Models;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
@@ -27,6 +28,6 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
             financialDetails.FinancialDetailsId,
             schemeName,
             financialDetails.IsPurchasePriceKnown,
-            financialDetails.PurchasePrice?.Value);
+            financialDetails.PurchasePrice?.Value.ToString(CultureInfo.InvariantCulture));
     }
 }

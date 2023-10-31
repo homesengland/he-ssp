@@ -21,7 +21,10 @@ public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandle
     {
         // temporary mock, this value needs to be taken from some repo
         var isPurchasePriceKnown = true;
-        var financialDetails = new FinancialDetailsEntity(FinancialSchemeId.From(request.FinancialSchemeId), isPurchasePriceKnown);
+        var financialDetails = new FinancialDetailsEntity
+        {
+            IsPurchasePriceKnown = isPurchasePriceKnown,
+        };
 
         await _financialDetailsRepository.SaveAsync(financialDetails, cancellationToken);
 
