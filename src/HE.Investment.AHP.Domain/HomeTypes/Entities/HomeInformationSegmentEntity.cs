@@ -7,8 +7,6 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 [HomeTypeSegmentType(HomeTypeSegmentType.HomeInformation)]
 public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
 {
-    public HomeTypeSegmentType SegmentType => HomeTypeSegmentType.HomeInformation;
-
     public NumberOfHomes? NumberOfHomes { get; private set; }
 
     public NumberOfBedrooms? NumberOfBedrooms { get; private set; }

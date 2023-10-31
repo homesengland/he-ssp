@@ -15,14 +15,10 @@
         <gds-div-hint>@Model.Header</gds-div-hint>
         <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
             <gds-h1 size="ControlSize.L">
-                What type of housing will you be providing for disabled and vulnerable people?
+                What type of homes will you be providing for disabled and vulnerable people?
             </gds-h1>
 
             <gds-field-set>
-
-                <gds-legend>
-                    <gds-h2 class="govuk-!-margin-bottom-0">What type of homes are you delivering?</gds-h2>
-                </gds-legend>
                 <gds-custom-radio
                     asp-for="HousingType"
                     value="@Model.HousingType"
@@ -33,7 +29,6 @@
                 <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
                     Save and continue
                 </button>
-
             </gds-field-set>
 
             <gds-link>Save and return to application</gds-link>

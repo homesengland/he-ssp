@@ -154,7 +154,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         HomesForDisabledPeopleModel model,
         CancellationToken cancellationToken)
     {
-        return await SaveHomeTypeSegment(new SaveDisablePeopleHousingTypeCommand(applicationId, homeTypeId, model.HousingType), model, cancellationToken);
+        return await SaveHomeTypeSegment(new SaveDisabledPeopleHousingTypeCommand(applicationId, homeTypeId, model.HousingType), model, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.DisablePeopleClientGroup)]

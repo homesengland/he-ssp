@@ -11,7 +11,7 @@ public class HomesForDisabledPeopleTests : HomeTypesTestBase
     private static readonly HomesForDisabledPeopleModel Model = new("My application", "My homes");
 
     [Fact]
-    public async Task ShouldDisplayView_WhenThereAreNoErrors()
+    public async Task ShouldDisplayView()
     {
         // given & when
         var document = await Render(ViewPath, Model);
