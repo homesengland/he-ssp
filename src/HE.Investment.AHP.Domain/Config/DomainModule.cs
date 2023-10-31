@@ -2,6 +2,7 @@ using HE.Investment.AHP.Domain.Application;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.InvestmentLoans.Common.Utils;
+using HE.Investments.Organisation.Config;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 

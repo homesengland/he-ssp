@@ -4,6 +4,7 @@ using System.Text;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.Enums;
 using He.AspNetCore.Mvc.Gds.Components.Extensions;
+using HE.Investments.Common.Extensions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
