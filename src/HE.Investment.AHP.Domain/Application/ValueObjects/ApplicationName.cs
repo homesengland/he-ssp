@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.Organization;
-using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.Application.ValueObjects;
 

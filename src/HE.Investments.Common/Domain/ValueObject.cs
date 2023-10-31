@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.Contract.Domain;
+namespace HE.Investments.Common.Domain;
 
 public abstract class ValueObject
 {
@@ -17,7 +17,7 @@ public abstract class ValueObject
         return a.Equals(b);
     }
 
-    public static bool operator !=(ValueObject a, ValueObject b) => !(a == b);
+    public static bool operator !=(ValueObject? a, ValueObject? b) => !(a == b);
 
     public override bool Equals(object? obj)
     {

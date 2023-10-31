@@ -56,6 +56,12 @@
       <_Parameter1>HE.InvestmentLoans.BusinessLogic.Tests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="HE.InvestmentLoans.Common">
+      <HintPath>..\HE.Investments.Account.WWW\bin\Debug\net6.0\HE.InvestmentLoans.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
 
 </Project>

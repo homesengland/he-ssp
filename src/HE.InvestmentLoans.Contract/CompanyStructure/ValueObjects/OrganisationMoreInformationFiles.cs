@@ -1,11 +1,7 @@
 using System.Globalization;
-using System.Threading;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Validation;
-using HE.InvestmentLoans.Contract.Domain;
-using HE.Investments.DocumentService.Models.File;
-using MediatR;
-using Microsoft.AspNetCore.Http;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
