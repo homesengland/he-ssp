@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.Investments.Common.Infrastructure.Cache.Config;
+using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace HE.Investments.Common.Infrastructure.Cache;

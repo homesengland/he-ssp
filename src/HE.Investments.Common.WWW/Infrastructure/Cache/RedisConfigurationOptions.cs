@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Security;
 using System.Runtime.InteropServices;
 using System.Security.Authentication;
@@ -5,8 +6,9 @@ using System.Security.Cryptography.X509Certificates;
 using HE.Investments.Common.Infrastructure.Cache.Config;
 using StackExchange.Redis;
 
-namespace HE.Investments.Common.WWW.Infrastructure;
+namespace HE.Investments.Common.WWW.Infrastructure.Cache;
 
+[SuppressMessage("Security", "CA5359", Justification = "It's need to be fixed?")]
 public class RedisConfigurationOptions
 {
     private readonly ICacheConfig _cacheConfig;
@@ -19,12 +21,12 @@ public class RedisConfigurationOptions
 
         if (cacheConfig.RedisCertificateEnabled == true)
         {
-            ConfigurationOptions.CertificateValidation += CertificateValidationCallBack;
+            ConfigurationOptions.CertificateValidation += CertificateValidationCallBack!;
             ConfigurationOptions.CertificateSelection += OptionsOnCertificateSelection;
             ConfigurationOptions.Ssl = true;
             ConfigurationOptions.SslProtocols = SslProtocols.Tls12;
             ConfigurationOptions.AbortOnConnectFail = false;
-            ConfigurationOptions.ChannelPrefix = envPrefix;
+            ConfigurationOptions.ChannelPrefix = new RedisChannel(envPrefix, RedisChannel.PatternMode.Auto);
         }
     }
 

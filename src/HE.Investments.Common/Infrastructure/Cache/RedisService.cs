@@ -1,6 +1,6 @@
 using System.Text.Json;
-using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.Investments.Common.Infrastructure.Cache.Config;
+using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using StackExchange.Redis;
 
 namespace HE.Investments.Common.Infrastructure.Cache;

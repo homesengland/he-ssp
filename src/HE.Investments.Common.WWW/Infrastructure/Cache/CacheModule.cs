@@ -1,6 +1,6 @@
-using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.Investments.Common.Infrastructure.Cache;
 using HE.Investments.Common.Infrastructure.Cache.Config;
+using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
