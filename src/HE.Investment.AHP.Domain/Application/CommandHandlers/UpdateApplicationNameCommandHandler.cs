@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Domain.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Entities;
+using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;

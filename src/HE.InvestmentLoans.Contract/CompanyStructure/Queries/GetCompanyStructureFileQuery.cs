@@ -1,5 +1,3 @@
-using HE.InvestmentLoans.Common.Utils.Enums;
-using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.Investments.DocumentService.Models.File;
 using MediatR;
 

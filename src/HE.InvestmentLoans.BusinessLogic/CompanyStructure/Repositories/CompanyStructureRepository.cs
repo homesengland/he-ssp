@@ -1,17 +1,13 @@
 using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Mappers;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Models.App;
-using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
-using MediatR;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;

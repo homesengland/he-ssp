@@ -1,18 +1,13 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
-using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Utils.Constants.Notification;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
-using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 using HE.Investments.DocumentService.Configs;
-using HE.Investments.DocumentService.Models.File;
 using HE.Investments.DocumentService.Services;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;

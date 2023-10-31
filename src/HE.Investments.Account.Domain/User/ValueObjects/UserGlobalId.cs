@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.Contract.Domain;
+using HE.Investments.Common.Domain;
 
 namespace HE.Investments.Account.Domain.User.ValueObjects;
 

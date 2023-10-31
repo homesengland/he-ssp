@@ -1,12 +1,11 @@
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Abstraction;
-using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Tags;
+using HE.Investments.Common.Gds;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace He.AspNetCore.Mvc.Gds.Components.Enums
 {
-
     public class GdsTagTagHelper : TextWithIdTagHelper
     {
         public TagColour Colour { get; set; }

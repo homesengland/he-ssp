@@ -17,7 +17,7 @@ public static class ApplicationSections
                 "Scheme Information",
                 "Complete information about the tenure of your scheme, and other details about the funding you require and discussions you’ve had with local stakeholders.",
                 "Enter scheme information",
-                "#",
+                "scheme",
                 schemeSectionStatus),
             new(
                 "Home types",

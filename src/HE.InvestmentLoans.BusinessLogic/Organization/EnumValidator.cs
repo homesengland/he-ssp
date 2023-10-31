@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Validation;
 

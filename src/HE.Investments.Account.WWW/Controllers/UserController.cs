@@ -28,7 +28,7 @@ public class UserController : Controller
 
     [HttpPost("profile-details")]
     public async Task<IActionResult> SaveProfileDetails(
-        UserProfileDetailsViewModel viewModel,
+        UserProfileDetailsModel viewModel,
         string callback,
         CancellationToken cancellationToken)
     {
@@ -48,7 +48,6 @@ public class UserController : Controller
             return View("ProfileDetails", viewModel);
         }
 
-        // TODO: redirect to next view
-        return View("ProfileDetails", viewModel);
+        return Redirect(callback);
     }
 }

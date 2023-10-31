@@ -1,5 +1,4 @@
 using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
-using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;

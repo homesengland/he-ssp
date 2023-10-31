@@ -24,6 +24,9 @@
     <PackageReference Include="He.AspNetCore.Mvc.GdsTagHelpers" Version="1.0.65" />
     <PackageReference Include="MediatR" Version="12.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="7.0.13" />
     <PackageReference Include="Microsoft.FeatureManagement" Version="3.0.0" />
     <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
@@ -45,6 +48,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HE.InvestmentLoans.Common\HE.InvestmentLoans.Common.csproj" />
+    <ProjectReference Include="..\HE.InvestmentLoans.CRM\HE.InvestmentLoans.CRM.csproj" />
     <ProjectReference Include="..\HE.Investments.Account.Domain\HE.Investments.Account.Domain.csproj" />
     <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
   </ItemGroup>

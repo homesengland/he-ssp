@@ -1,11 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure;
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;

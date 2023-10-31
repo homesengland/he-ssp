@@ -1,17 +1,13 @@
-using System.Collections.Generic;
-using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
-using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Events;
 using HE.InvestmentLoans.Contract.Application.Helper;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 

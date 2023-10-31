@@ -1,10 +1,12 @@
 using He.AspNetCore.Mvc.Gds.Components.Constants;
-using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Abstraction;
-using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Tags;
-using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Gds;
+using HE.Investments.Common.WWW.Components;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using SectionStatus = HE.InvestmentLoans.Contract.Application.Enums.SectionStatus;
+using TextWithIdTagHelper = HE.Investments.Common.WWW.Components.TextWithIdTagHelper;
 
 namespace HE.InvestmentLoans.WWW.Components;
 

@@ -1,8 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 

@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Domain;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
 public class PurchasePrice : ValueObject
