@@ -14,5 +14,5 @@ public interface IOrganizationRepository
 
     Task<Guid> CreateOrganisation(OrganisationEntity organisation);
 
-    Task Update(OrganisationEntity organisation, CancellationToken cancellationToken);
+    Task Update(OrganisationEntity organisation, UserAccount userAccount, CancellationToken cancellationToken);
 }

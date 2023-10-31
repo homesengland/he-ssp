@@ -44,27 +44,25 @@ public class OrganizationRepository : IOrganizationRepository
 
     public async Task<OrganisationChangeRequestState> GetOrganisationChangeRequestDetails(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        if (!userAccount.AccountId.HasValue)
+        if (!Guid.TryParse(userAccount.UserGlobalId.ToString(), out var currentUserId))
         {
             return OrganisationChangeRequestState.NoPendingRequest;
         }
 
-        var changeRequestDetails = await _organizationService.GetOrganisationChangeDetailsRequest(userAccount.AccountId.Value);
+        var response = await _organizationService.GetOrganisationChangeDetailsRequestContact(currentUserId);
 
-        // TODO: to be updated when organisation service start returning final results
-        switch (changeRequestDetails)
+        if (response == null)
         {
-            case "You requested":
-                return OrganisationChangeRequestState.PendingRequestByYou;
-            case "No Request":
-                return OrganisationChangeRequestState.NoPendingRequest;
-            case "Pending request":
-                return OrganisationChangeRequestState.PendingRequestByOthers;
-            default:
-                break;
+            return OrganisationChangeRequestState.NoPendingRequest;
         }
-
-        throw new ArgumentOutOfRangeException(changeRequestDetails, nameof(changeRequestDetails) + "has incorrect value!");
+        else if (response.contactId == currentUserId.ToString())
+        {
+            return OrganisationChangeRequestState.PendingRequestByYou;
+        }
+        else
+        {
+            return OrganisationChangeRequestState.PendingRequestByOthers;
+        }
     }
 
     public async Task<Guid> CreateOrganisation(OrganisationEntity organisation)
@@ -84,19 +82,22 @@ public class OrganizationRepository : IOrganizationRepository
         return await Task.FromResult(id);
     }
 
-    public async Task Update(OrganisationEntity organisation, CancellationToken cancellationToken)
+    public async Task Update(OrganisationEntity organisation, UserAccount userAccount, CancellationToken cancellationToken)
     {
-        await _organizationService.CreateOrganisationChangeRequest(new Org.HE.Common.IntegrationModel.PortalIntegrationModel.OrganizationDetailsDto
-        {
-            registeredCompanyName = organisation.Name.ToString(),
-            organisationPhoneNumber = organisation.PhoneNumber.ToString(),
-            addressLine1 = organisation.Address.AddressLine1,
-            addressLine2 = organisation.Address.AddressLine2,
-            addressLine3 = organisation.Address.AddressLine3,
-            city = organisation.Address.TownOrCity,
-            country = organisation.Address.County,
-            postalcode = organisation.Address.Postcode.Value,
-            county = organisation.Address.County,
-        });
+        await _organizationService.CreateOrganisationChangeRequest(
+            new Org.HE.Common.IntegrationModel.PortalIntegrationModel.OrganizationDetailsDto
+            {
+                organisationId = userAccount.AccountId.ToString(),
+                registeredCompanyName = organisation.Name.ToString(),
+                organisationPhoneNumber = organisation.PhoneNumber.ToString(),
+                addressLine1 = organisation.Address.AddressLine1,
+                addressLine2 = organisation.Address.AddressLine2,
+                addressLine3 = organisation.Address.AddressLine3,
+                city = organisation.Address.TownOrCity,
+                country = organisation.Address.County,
+                postalcode = organisation.Address.Postcode.Value,
+                county = organisation.Address.County,
+            },
+            userAccount.UserGlobalId.ToString());
     }
 }

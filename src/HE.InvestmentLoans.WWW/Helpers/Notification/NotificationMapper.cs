@@ -5,7 +5,7 @@ namespace HE.InvestmentLoans.WWW.Helpers.Notification;
 
 public static class NotificationMapper
 {
-    public static string MapBodyTypeToDescription(NotificationBodyType bodyType, IDictionary<NotificationServiceKeys, string> valuesToDisplay)
+    public static string MapBodyTypeToDescription(NotificationBodyType bodyType, IDictionary<NotificationServiceKeys, string>? valuesToDisplay)
     {
         var text = bodyType switch
         {
@@ -13,12 +13,16 @@ public static class NotificationMapper
             NotificationBodyType.DeleteProject => NotificationBody.ProjectRemoved,
             NotificationBodyType.FileRemove => NotificationBody.FileSuccesfullyRemoved,
             NotificationBodyType.FilesUpload => NotificationBody.FilesSuccesfullyUploaded,
+            NotificationBodyType.ChangeOrganisationDetailsRequest => NotificationBody.ChangeOrganisationDetailsRequested,
             _ => string.Empty,
         };
 
-        foreach (var value in valuesToDisplay)
+        if (valuesToDisplay != null)
         {
-            text = text.Replace($"<{value.Key}>", value.Value);
+            foreach (var value in valuesToDisplay)
+            {
+                text = text.Replace($"<{value.Key}>", value.Value);
+            }
         }
 
         return text;

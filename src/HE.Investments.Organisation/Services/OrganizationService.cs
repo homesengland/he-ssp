@@ -11,10 +11,6 @@ public class OrganizationService : IOrganizationService
     private readonly IOrganizationServiceAsync2 _service;
     private readonly IOrganisationChangeRequestRepository _organisationChangeRequestRepository;
 
-    private readonly string _youRequested = "You requested";
-
-    // private readonly string someoneElseRequested = "Someoneelse requested";
-    // private readonly string noRequest = "No request";
     public OrganizationService(IOrganizationServiceAsync2 service, IOrganisationChangeRequestRepository organisationChangeRequestRepository)
     {
         _service = service;
@@ -34,14 +30,6 @@ public class OrganizationService : IOrganizationService
         return _service.Create(organizationToCreate);
     }
 
-    public async Task<string> GetOrganisationChangeDetailsRequest(Guid accountId)
-    {
-        // temporary mock of async method
-        // var account = await _service.RetrieveAsync("account", accountId, new ColumnSet(true));
-        var result = await Task.Run(() => _youRequested);
-        return result;
-    }
-
     public async Task<ContactDto?> GetOrganisationChangeDetailsRequestContact(Guid accountId)
     {
         var organisationChangeDetailsRequest = await _organisationChangeRequestRepository.GetChangeRequestForOrganisation(_service, accountId);
@@ -54,10 +42,8 @@ public class OrganizationService : IOrganizationService
                 firstName = contactReference.Name,
             };
         }
-        else
-        {
-            return null;
-        }
+
+        return null;
     }
 
     public async Task<OrganizationDetailsDto> GetOrganizationDetails(string accountid, string contactExternalId)
