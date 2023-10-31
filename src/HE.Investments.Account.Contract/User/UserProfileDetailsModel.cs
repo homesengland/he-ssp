@@ -1,6 +1,6 @@
 namespace HE.Investments.Account.Contract.User;
 
-public class UserProfileDetailsViewModel
+public class UserProfileDetailsModel
 {
     public string? FirstName { get; set; }
 

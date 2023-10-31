@@ -5,7 +5,7 @@ namespace HE.Investments.Account.Domain.User.Repositories;
 
 public interface IUserRepository
 {
-    Task<UserDetails> GetUserDetails(UserGlobalId userGlobalId);
+    Task<UserProfileDetails> GetUserProfileInformation(UserGlobalId userGlobalId);
 
-    Task SaveAsync(UserDetails userDetails, UserGlobalId userGlobalId, CancellationToken cancellationToken);
+    Task SaveAsync(UserProfileDetails userProfileDetails, UserGlobalId userGlobalId, CancellationToken cancellationToken);
 }

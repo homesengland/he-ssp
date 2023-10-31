@@ -56,6 +56,6 @@ public class FinancialDetailsController : Controller
             return View("LandStatus", model);
         }
 
-        return View("LandValue", id);
+        return View(null, id);
     }
 }

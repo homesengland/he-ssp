@@ -4,9 +4,9 @@ using HE.Investments.Account.Domain.User.ValueObjects;
 
 namespace HE.Investments.Account.Domain.User.Entities;
 
-public class UserDetails
+public class UserProfileDetails
 {
-    public UserDetails(
+    public UserProfileDetails(
         FirstName? firstName,
         LastName? lastName,
         JobTitle? jobTitle,
@@ -38,7 +38,7 @@ public class UserDetails
 
     public bool? IsTermsAndConditionsAccepted { get; private set; }
 
-    public void ProvideUserDetails(
+    public void ProvideUserProfileDetails(
         string? firstName,
         string? lastName,
         string? jobTitle,
@@ -58,7 +58,7 @@ public class UserDetails
         IsTermsAndConditionsAccepted = true;
     }
 
-    public bool IsProfileCompleted()
+    public bool IsCompleted()
     {
         return FirstName.IsProvided() &&
                LastName.IsProvided() &&
