@@ -61,12 +61,15 @@ public static class HtmlDocumentExtensions
     {
         var element = GetElementByTestId(htmlDocument, testId);
 
-        var buttonElement = element as IHtmlAnchorElement;
-        buttonElement.Should().NotBeNull($"Element with data-testid {testId} should be ItmlAnchorElement");
-        buttonElement!.ClassName.Should()
-            .Contain("govuk-button", $"Element with data-testid {testId} should be HtmlButtonElement with govuk-button class name");
+        var anchorElement = element as IHtmlAnchorElement;
+        anchorElement.Should().NotBeNull($"Element with data-testid {testId} should be IHtmlAnchorElement");
+        var buttonElement = anchorElement!.GetElementsByTagName("button").FirstOrDefault() as IHtmlButtonElement;
+        buttonElement.Should().NotBeNull($"Child element of anchor with data-testid {testId} should be HtmlButtonElement");
 
-        return buttonElement;
+        buttonElement!.ClassName.Should()
+            .Contain("govuk-button", $"Button with data-testid {testId} should be HtmlButtonElement with govuk-button class name");
+
+        return anchorElement;
     }
 
     public static string GetPageTitle(this IHtmlDocument htmlDocument)
