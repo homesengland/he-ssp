@@ -44,18 +44,18 @@ public class OrganizationRepository : IOrganizationRepository
 
     public async Task<OrganisationChangeRequestState> GetOrganisationChangeRequestDetails(UserAccount userAccount, CancellationToken cancellationToken)
     {
-        if (!Guid.TryParse(userAccount.UserGlobalId.ToString(), out var currentUserId))
+        if (!Guid.TryParse(userAccount.AccountId.ToString(), out var accountId))
         {
-            return OrganisationChangeRequestState.NoPendingRequest;
+            throw new NotFoundException(nameof(OrganisationEntity), accountId);
         }
 
-        var response = await _organizationService.GetOrganisationChangeDetailsRequestContact(currentUserId);
+        var response = await _organizationService.GetOrganisationChangeDetailsRequestContact(accountId);
 
         if (response == null)
         {
             return OrganisationChangeRequestState.NoPendingRequest;
         }
-        else if (response.contactId == currentUserId.ToString())
+        else if (response.contactId == userAccount.UserGlobalId.ToString())
         {
             return OrganisationChangeRequestState.PendingRequestByYou;
         }
