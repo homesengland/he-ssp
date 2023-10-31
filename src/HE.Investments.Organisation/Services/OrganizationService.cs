@@ -15,7 +15,8 @@ public class OrganizationService : IOrganizationService
 
     // private readonly string someoneElseRequested = "Someoneelse requested";
     // private readonly string noRequest = "No request";
-    public OrganizationService(IOrganizationServiceAsync2 service,
+    public OrganizationService(
+        IOrganizationServiceAsync2 service,
         IOrganisationChangeRequestRepository organisationChangeRequestRepository,
         IContactRepository contactRepository)
     {
