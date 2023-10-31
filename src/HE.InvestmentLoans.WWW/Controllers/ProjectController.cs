@@ -305,7 +305,11 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/planning-permission-status")]
     [WorkflowState(ProjectState.PlanningPermissionStatus)]
-    public async Task<IActionResult> PlanningPermissionStatus(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model,
+    public async Task<IActionResult> PlanningPermissionStatus(
+        Guid id,
+        Guid projectId,
+        [FromQuery] string redirect,
+        ProjectViewModel model,
         CancellationToken token)
     {
         var result = await _mediator.Send(
