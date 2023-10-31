@@ -33,9 +33,9 @@
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.20" />
-    <PackageReference Include="Microsoft.FeatureManagement" Version="2.6.1" />
-    <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.6.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.24" />
+    <PackageReference Include="Microsoft.FeatureManagement" Version="3.0.0" />
+    <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.0.0" />
     <PackageReference Include="NuGet.Common" Version="6.7.0" />
     <PackageReference Include="NuGet.Protocol" Version="6.7.0" />
     <PackageReference Include="StackExchange.Redis.Extensions.Core" Version="9.1.0" />
@@ -52,12 +52,12 @@
     <PackageReference Include="He.Identity.Auth0" Version="1.0.61" />
     <PackageReference Include="He.Identity.Mvc" Version="1.0.61" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.13" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.13" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageReference Include="StackExchange.Redis" Version="2.6.122" />
 	  <PackageReference Include="Stateless" Version="5.13.0" />
-	  <PackageReference Include="He.AspNetCore.Mvc.Gds.Components" Version="1.0.149" />
+	  <PackageReference Include="He.AspNetCore.Mvc.Gds.Components" Version="1.0.154" />
 	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.15" />
 	  <PackageReference Include="System.Net.Http" Version="4.3.4" />
 	  <PackageReference Include="System.Security.Cryptography.Pkcs" Version="7.0.3" />
