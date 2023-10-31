@@ -1,5 +1,4 @@
-using Dawn;
-using HE.Investment.AHP.Contract.Domain;
+using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
 public class PurchasePrice : ValueObject

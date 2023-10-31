@@ -1,13 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.Common.Domain;
-using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 public class AffordableHomes : ValueObject

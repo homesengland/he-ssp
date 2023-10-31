@@ -1,8 +1,6 @@
 using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects;
-using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;

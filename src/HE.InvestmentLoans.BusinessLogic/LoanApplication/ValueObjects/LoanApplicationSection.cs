@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 public class LoanApplicationSection : ValueObject

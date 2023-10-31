@@ -1,8 +1,7 @@
 using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
-using HE.InvestmentLoans.Common.Events;
+using HE.Investments.Common.Events;
 
-namespace HE.InvestmentLoans.Common.Domain;
+namespace HE.Investments.Common.Domain;
 
 public class DomainEntity
 {
