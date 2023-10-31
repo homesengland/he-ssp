@@ -5,7 +5,7 @@ namespace HE.InvestmentLoans.WWW.Helpers.Notification;
 
 public static class NotificationMapper
 {
-    public static string MapBodyTypeToDescription(NotificationBodyType bodyType, IDictionary<NotificationServiceKeys, string>? valuesToDisplay)
+    public static string MapBodyTypeToDescription(NotificationBodyType bodyType, IDictionary<NotificationServiceKeys, string> valuesToDisplay)
     {
         var text = bodyType switch
         {
@@ -28,7 +28,7 @@ public static class NotificationMapper
         return text;
     }
 
-    public static string MapBodyTypeToLinkDescription(NotificationBodyType bodyType, IDictionary<NotificationServiceKeys, string>? valuesToDisplay)
+    public static string MapBodyTypeToLinkDescription(NotificationBodyType bodyType, IDictionary<NotificationServiceKeys, string> valuesToDisplay)
     {
         var text = bodyType switch
         {
