@@ -1,5 +1,4 @@
 using Dawn;
-using HE.Investment.AHP.Contract.Domain;
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
