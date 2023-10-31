@@ -61,6 +61,7 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .Permit(Trigger.Back, HomeTypesWorkflowState.HomeTypeDetails);
 
         _machine.Configure(HomeTypesWorkflowState.HomesForDisabledPeople)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.DisablePeopleClientGroup)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HomeTypeDetails);
 
         _machine.Configure(HomeTypesWorkflowState.HomesForOlderPeople)

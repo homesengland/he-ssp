@@ -1,8 +1,10 @@
+using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
+[HomeTypeSegmentType(HomeTypeSegmentType.HomeInformation)]
 public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
 {
     public HomeTypeSegmentType SegmentType => HomeTypeSegmentType.HomeInformation;

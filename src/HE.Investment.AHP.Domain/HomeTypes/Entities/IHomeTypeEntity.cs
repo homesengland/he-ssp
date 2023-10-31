@@ -13,5 +13,7 @@ public interface IHomeTypeEntity
 
     HomeInformationSegmentEntity HomeInformation { get; }
 
+    DisabledPeopleHomeTypeDetailsSegmentEntity DisabledPeopleHomeTypeDetails { get; }
+
     void ChangeHousingType(HousingType housingType);
 }
