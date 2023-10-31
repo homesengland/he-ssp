@@ -7,27 +7,29 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
-internal sealed class GetHomeTypeDetailsQueryHandler : IRequestHandler<GetHomeTypeDetailsQuery, HomeTypeDetails>
+internal sealed class GetHomeInformationQueryHandler : IRequestHandler<GetHomeInformationQuery, HomeInformation>
 {
     private readonly IHomeTypeRepository _repository;
 
-    public GetHomeTypeDetailsQueryHandler(IHomeTypeRepository repository)
+    public GetHomeInformationQueryHandler(IHomeTypeRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task<HomeTypeDetails> Handle(GetHomeTypeDetailsQuery request, CancellationToken cancellationToken)
+    public async Task<HomeInformation> Handle(GetHomeInformationQuery request, CancellationToken cancellationToken)
     {
         var homeType = await _repository.GetById(
             request.ApplicationId,
             new HomeTypeId(request.HomeTypeId),
             new[] { HomeTypeSegmentType.HomeInformation },
             cancellationToken);
+        var homeInformation = homeType.HomeInformation;
 
-        return new HomeTypeDetails(
-            request.HomeTypeId,
+        return new HomeInformation(
             homeType.Name?.Value,
-            homeType.HomeInformation.NumberOfHomes?.Value,
-            homeType.HousingType);
+            homeInformation.NumberOfHomes?.Value,
+            homeInformation.NumberOfBedrooms?.Value,
+            homeInformation.MaximumOccupancy?.Value,
+            homeInformation.NumberOfStoreys?.Value);
     }
 }

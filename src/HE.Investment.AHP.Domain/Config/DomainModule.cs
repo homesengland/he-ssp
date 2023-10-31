@@ -23,7 +23,6 @@ public static class DomainModule
     {
         // TODO: change repository to scoped after introducing integration with CRM
         services.AddSingleton<IHomeTypeRepository, HomeTypeRepository>();
-        services.AddSingleton<IHomeTypesRepository, HomeTypesRepository>();
     }
 
     private static void AddFinancialDetails(IServiceCollection services)

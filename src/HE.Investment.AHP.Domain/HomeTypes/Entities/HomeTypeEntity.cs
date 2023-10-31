@@ -4,16 +4,17 @@ using HE.InvestmentLoans.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
-public class HomeTypeEntity
+public class HomeTypeEntity : IHomeTypeEntity
 {
-    private readonly IDictionary<HomeTypeSegmentType, IHomeTypeSectionEntity> _segments;
+    private readonly IDictionary<HomeTypeSegmentType, IHomeTypeSegmentEntity> _segments;
 
     public HomeTypeEntity(
         string? name = null,
         HousingType housingType = HousingType.Undefined,
-        params IHomeTypeSectionEntity[] segments)
+        params IHomeTypeSegmentEntity[] segments)
     {
-        ChangeDetails(name, housingType);
+        ChangeName(name);
+        ChangeHousingType(housingType);
         _segments = segments.ToDictionary(x => x.SegmentType, x => x);
     }
 
@@ -23,11 +24,17 @@ public class HomeTypeEntity
 
     public HousingType HousingType { get; private set; }
 
+    public HomeInformationSegmentEntity HomeInformation => (HomeInformationSegmentEntity)_segments[HomeTypeSegmentType.HomeInformation];
+
     public bool IsNew => Id.IsNotProvided();
 
-    public void ChangeDetails(string? name, HousingType housingType)
+    public void ChangeName(string? name)
     {
         Name = name != null ? new HomeTypeName(name) : null;
+    }
+
+    public void ChangeHousingType(HousingType housingType)
+    {
         HousingType = housingType;
     }
 
