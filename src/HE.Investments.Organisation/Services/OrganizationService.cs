@@ -54,10 +54,10 @@ public class OrganizationService : IOrganizationService
         return null;
     }
 
-    public async Task<OrganizationDetailsDto> GetOrganizationDetails(string accountid, string contactExternalId)
+    public async Task<OrganizationDetailsDto> GetOrganizationDetails(string accountId, string contactExternalId)
     {
         var organizationDetailsDto = new OrganizationDetailsDto();
-        if (Guid.TryParse(accountid, out var organizationId))
+        if (Guid.TryParse(accountId, out var organizationId))
         {
             var account = await _service.RetrieveAsync("account", organizationId, new ColumnSet(new string[]
             {
