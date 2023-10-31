@@ -9,10 +9,10 @@
         <partial name="_ErrorSummaryPartial" model="null"/>
 
         <gds-h1 size="ControlSize.L">
-            @FundingPageTitles.CheckAnswers
+            @(Model.IsReadOnly() ? @FundingPageTitles.ReadOnlyAnswers : @FundingPageTitles.CheckAnswers)
         </gds-h1>
 
-        <partial name="Sections/_WithdrawnInformation" model="Model"/>
+        <partial name="Sections/_ReadOnlyAdditionalInformation" model="Model"/>
 
         @await Html.PartialAsync("_FundingAnswers", Model)
 
