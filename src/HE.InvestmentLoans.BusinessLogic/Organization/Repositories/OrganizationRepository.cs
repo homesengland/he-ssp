@@ -55,7 +55,7 @@ public class OrganizationRepository : IOrganizationRepository
         {
             return OrganisationChangeRequestState.NoPendingRequest;
         }
-        else if (response.contactId == userAccount.UserGlobalId.ToString())
+        else if (response.contactExternalId == userAccount.UserGlobalId.ToString())
         {
             return OrganisationChangeRequestState.PendingRequestByYou;
         }
