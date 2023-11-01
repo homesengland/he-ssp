@@ -40,4 +40,13 @@
     <PackageReference Include="FluentValidation" Version="11.8.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
+  </ItemGroup>
+
 </Project>

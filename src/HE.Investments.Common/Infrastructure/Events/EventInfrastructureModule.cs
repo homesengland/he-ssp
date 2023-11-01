@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HE.Investments.Common.Events;
+namespace HE.Investments.Common.Infrastructure.Events;
 
 public static class EventInfrastructureModule
 {
