@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.InvestmentLoans.Common.Extensions;
@@ -25,7 +26,7 @@ public class Order01StartProjectIntegrationTests : IntegrationTest
         Skip.If(UserData.IsDeveloperProvidedUserData && UserData.ProjectInDraftStateId.IsProvided(), "Developer provided their own project");
     }
 
-    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_ShouldOpenProjectStartingPage_WhenCompanyStructureLinkIsClickedOnTaskListPage()
     {
@@ -45,7 +46,7 @@ public class Order01StartProjectIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, startProjectPage);
     }
 
-    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(2)]
     public async Task Order02_ShouldRedirectToProjectNameAndAddNewProjectToTaskList_WhenStartButtonIsClicked()
     {
