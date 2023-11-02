@@ -5,12 +5,11 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;
 
-public class FundingTests : ViewTestBase
+public class AffordabilityTests : ViewTestBase
 {
-    private const string ViewPath = "/Views/Scheme/Funding.cshtml";
-    private const string FundingError = "Funding error";
-    private const string HousesError = "Houses error";
-    private static readonly SchemeViewModel Model = new("A1", "App Name", "1", null, null, null);
+    private const string ViewPath = "/Views/Scheme/Affordability.cshtml";
+    private const string AffordabilityEvidenceError = "Test error";
+    private static readonly SchemeViewModel Model = new("A1", "App Name", "1", null, null, "old evidence");
 
     [Fact]
     public async Task ShouldDisplayView_WhenThereAreNoErrors()
@@ -28,8 +27,7 @@ public class FundingTests : ViewTestBase
     {
         // given
         var modelState = new ModelStateDictionary();
-        modelState.AddModelError(nameof(SchemeViewModel.RequiredFunding), FundingError);
-        modelState.AddModelError(nameof(SchemeViewModel.HousesToDeliver), HousesError);
+        modelState.AddModelError(nameof(SchemeViewModel.AffordabilityEvidence), AffordabilityEvidenceError);
 
         // when
         var document = await Render(ViewPath, Model, modelStateDictionary: modelState);
@@ -43,17 +41,14 @@ public class FundingTests : ViewTestBase
     {
         document
             .HasElementWithText("span", Model.ApplicationName)
-            .HasElementWithText("h1", "Funding details")
-            .HasElementWithText("h2", "Enter how much AHP CME 21-26 funding you require on this scheme")
-            .HasInput("RequiredFunding")
-            .HasElementWithText("h2", "Enter how many homes you intend to deliver")
-            .HasInput("HousesToDeliver")
+            .HasElementWithText("h1", "Affordability of Shared Ownership")
+            .HasElementWithText("h2", "Tell us about any evidence and analysis you have that the homes will be affordable to the target market")
+            .HasInput("AffordabilityEvidence", value: Model.AffordabilityEvidence)
             .HasElementWithText("button", "Save and continue");
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)
     {
-        AssertError(document, nameof(SchemeViewModel.RequiredFunding), FundingError, exist);
-        AssertError(document, nameof(SchemeViewModel.HousesToDeliver), HousesError, exist);
+        document.HasSummaryErrorMessage(nameof(SchemeViewModel.AffordabilityEvidence), AffordabilityEvidenceError, exist);
     }
 }
