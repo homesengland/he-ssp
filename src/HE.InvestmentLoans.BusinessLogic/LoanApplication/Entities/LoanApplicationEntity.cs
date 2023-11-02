@@ -21,6 +21,7 @@ public class LoanApplicationEntity : DomainEntity
         FundingPurpose fundingReason,
         DateTime? createdOn,
         DateTime? lastModificationDate,
+        DateTime? submittedOn,
         string lastModifiedBy,
         LoanApplicationSection companyStructure,
         LoanApplicationSection security,
@@ -33,6 +34,7 @@ public class LoanApplicationEntity : DomainEntity
         UserAccount = userAccount;
         ExternalStatus = externalStatus;
         LastModificationDate = lastModificationDate;
+        SubmittedOn = submittedOn;
         LastModifiedBy = lastModifiedBy;
         FundingReason = fundingReason;
         CreatedOn = createdOn;
@@ -65,11 +67,13 @@ public class LoanApplicationEntity : DomainEntity
 
     public DateTime? CreatedOn { get; }
 
+    public DateTime? SubmittedOn { get; }
+
     public FundingPurpose FundingReason { get; private set; }
 
     public string ReferenceNumber { get; private set; }
 
-    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, string.Empty, LoanApplicationSection.New(), LoanApplicationSection.New(), LoanApplicationSection.New(), ProjectsSection.Empty(), string.Empty);
+    public static LoanApplicationEntity New(UserAccount userAccount, LoanApplicationName name) => new(LoanApplicationId.New(), name, userAccount, ApplicationStatus.Draft, FundingPurpose.BuildingNewHomes, null, null, null, string.Empty, LoanApplicationSection.New(), LoanApplicationSection.New(), LoanApplicationSection.New(), ProjectsSection.Empty(), string.Empty);
 
     public void SetId(LoanApplicationId newId)
     {
@@ -140,6 +144,22 @@ public class LoanApplicationEntity : DomainEntity
         const int minimumHomesToBuild = 5;
 
         return ProjectsSection.TotalHomesBuilt() >= minimumHomesToBuild;
+    }
+
+    public DateTime? ReturnTaskListDisplayDate()
+    {
+        DateTime? taskListDisplayDate;
+
+        if (ExternalStatus is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
+        {
+            taskListDisplayDate = LastModificationDate ?? CreatedOn;
+        }
+        else
+        {
+            taskListDisplayDate = SubmittedOn;
+        }
+
+        return taskListDisplayDate;
     }
 
     private bool IsReadyToSubmit()

@@ -33,7 +33,7 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
                 loanApplication.ProjectsSection.Projects
                     .Select(x => new ProjectSection(x.Id.Value, x.Name.Value, MapToSectionStatus(loanApplication.ExternalStatus, x.Status)))
                     .ToArray()),
-            loanApplication.LastModificationDate ?? loanApplication.CreatedOn ?? DateTime.MinValue,
+            loanApplication.ReturnTaskListDisplayDate() ?? DateTime.MinValue,
             loanApplication.LastModifiedBy);
     }
 
@@ -42,7 +42,6 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
         return status switch
         {
             ApplicationStatus.Withdrawn => SectionStatus.Withdrawn,
-            ApplicationStatus.ApplicationSubmitted => SectionStatus.Submitted,
             _ => sectionStatus,
         };
     }
