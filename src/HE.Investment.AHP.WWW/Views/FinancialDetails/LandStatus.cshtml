@@ -22,7 +22,7 @@
                     </gds-legend>
                     <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=false>
                         <gds-p>
-                            You told us during the site section of your application that your land status was:<br/>
+                            You told us during the site section of your application that your land status was:<br />
                             @if (Model.IsPurchasePriceKnown ?? false)
                             {
                                 <strong>Unconditional acquisition of freehold or long leasehold interest has occurred.</strong>
@@ -57,12 +57,14 @@
                             The purchase price must be backed by a valuation report from a qualified independent valuer, valid at the date of exchange of purchase contracts.
                         </gds-div-hint>
 
-                        <gds-input govuk-formgroup-asp-for="@Model.PurchasePrice" type="text" asp-excludelabel
-                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.PurchasePrice />
+                        <gds-input govuk-formgroup-asp-for="PurchasePrice" type="text" asp-excludelabel
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model.PurchasePrice />
                     </gds-field-set>
                 </gds-div-form-group>
 
-                @Html.HiddenFor(c => c.FinancialDetailsId.Value)
+                @Html.HiddenFor(model => model.FinancialDetailsId)
+                @Html.HiddenFor(model => model.IsPurchasePriceKnown)
+                @Html.HiddenFor(model => model.FinancialSchemaName)
 
                 <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                     Save and continue

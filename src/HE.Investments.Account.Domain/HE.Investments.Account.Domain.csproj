@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HE.InvestmentLoans.Common\HE.InvestmentLoans.Common.csproj" />
     <ProjectReference Include="..\HE.Investments.Account.Contract\HE.Investments.Account.Contract.csproj" />
+    <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj" />
   </ItemGroup>
 
 </Project>

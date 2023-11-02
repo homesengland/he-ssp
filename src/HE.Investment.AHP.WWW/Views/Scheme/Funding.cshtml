@@ -1,0 +1,50 @@
+@model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
+@{
+    ViewData["Title"] = "Funding details";
+}
+<div class="govuk-grid-column-full">
+    <gds-back-link href="@Url.Action("Index", "Scheme")" text="Back" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <span class="govuk-caption-l">
+        @Model.ApplicationName
+    </span>
+    <form asp-controller="Scheme" asp-action="Funding" asp-method="post" novalidate>
+        <gds-field-set role="group">
+            <gds-legend size="ControlSize.L">
+                <gds-fieldset-heading>
+                    Funding details
+                </gds-fieldset-heading>
+            </gds-legend>
+
+            <gds-legend>
+                <gds-h2 class="govuk-!-margin-bottom-0">Enter how much AHP CME 21-26 funding you require on this scheme</gds-h2>
+            </gds-legend>
+            <gds-input-wrapper class="govuk-!-margin-bottom-6">
+                <gds-input asp-prefixtext="GdsInputPrefixText.Pounds"
+                           class="govuk-input--width-3"
+                           govuk-formgroup-asp-for="RequiredFunding"
+                           value="@Model.RequiredFunding"
+                           asp-excludelabel
+                           type="text"/>
+            </gds-input-wrapper>
+
+            <gds-legend>
+                <gds-h2 class="govuk-!-margin-bottom-0">Enter how many homes you intend to deliver</gds-h2>
+            </gds-legend>
+            <gds-input-wrapper class="govuk-!-margin-bottom-6">
+                <gds-input
+                    class="govuk-input--width-2"
+                    govuk-formgroup-asp-for="HousesToDeliver"
+                    value="@Model.HousesToDeliver"
+                    asp-excludelabel
+                    type="text"/>
+            </gds-input-wrapper>
+
+        </gds-field-set>
+
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="save-and-continue-button">
+            Save and continue
+        </button>
+    </form>
+</div>

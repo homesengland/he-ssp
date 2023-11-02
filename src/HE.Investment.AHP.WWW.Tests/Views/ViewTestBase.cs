@@ -1,6 +1,7 @@
 using AngleSharp;
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Tests.Framework;
+using HE.Investment.AHP.WWW.Tests.Helpers;
 using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,5 +34,11 @@ public abstract class ViewTestBase
 
         var document = await BrowsingContext.New().OpenAsync(r => r.Content(html), CancellationToken.None);
         return document as IHtmlDocument ?? throw new InvalidOperationException();
+    }
+
+    protected void AssertError(IHtmlDocument document, string fieldName, string errorMessage, bool hasError)
+    {
+        document.HasSummaryErrorMessage(fieldName, errorMessage, hasError)
+            .HasErrorMessage(fieldName, errorMessage, hasError);
     }
 }

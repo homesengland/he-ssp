@@ -1,6 +1,7 @@
 using He.Identity.Auth0;
 using He.Identity.Mvc;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.InvestmentLoans.Common.Authorization;
@@ -38,5 +39,11 @@ public static class AuthorizationExtensions
             configuration["AppConfiguration:Auth0:UserConnection"]);
 
         builder.Services.ConfigureIdentityManagementService(x => x.UseAuth0(auth0Config, auth0ManagementConfig));
+    }
+
+    public static void AddHttpUserContext(this IServiceCollection serviceCollections)
+    {
+        serviceCollections.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        serviceCollections.AddScoped<IUserContext, UserContext>(x => new UserContext(x.GetRequiredService<IHttpContextAccessor>()!.HttpContext!));
     }
 }

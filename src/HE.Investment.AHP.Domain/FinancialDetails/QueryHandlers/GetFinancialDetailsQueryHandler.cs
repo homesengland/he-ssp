@@ -1,8 +1,10 @@
+using System.Globalization;
 using HE.Investment.AHP.Contract.FinancialDetails.Models;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using MediatR;
@@ -24,10 +26,10 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
         var schemeName = "Sample schema"; // TODO: implement getting schema name
 
         return new FinancialDetailsViewModel(
-            financialDetails.Id,
+            financialDetails.FinancialDetailsId,
             schemeName,
-            financialDetails.PurchasePrice?.IsFinal,
-            financialDetails.PurchasePrice?.Value,
-            financialDetails.IsSchemaOnPublicLand ? "Yes" : "No");
+            financialDetails.IsPurchasePriceKnown,
+            financialDetails.PurchasePrice?.Value.ToString(CultureInfo.InvariantCulture),
+            (financialDetails.LandOwnership?.Value ?? false) ? CommonResponse.Yes : CommonResponse.No);
     }
 }

@@ -1,11 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 

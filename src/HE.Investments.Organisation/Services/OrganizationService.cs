@@ -1,6 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CrmRepository;
-using Microsoft.Crm.Sdk.Messages;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
@@ -10,21 +9,27 @@ public class OrganizationService : IOrganizationService
 {
     private readonly IOrganizationServiceAsync2 _service;
     private readonly IOrganisationChangeRequestRepository _organisationChangeRequestRepository;
+    private readonly IContactRepository _contactRepository;
 
     private readonly string _youRequested = "You requested";
 
     // private readonly string someoneElseRequested = "Someoneelse requested";
     // private readonly string noRequest = "No request";
-    public OrganizationService(IOrganizationServiceAsync2 service, IOrganisationChangeRequestRepository organisationChangeRequestRepository)
+    public OrganizationService(
+        IOrganizationServiceAsync2 service,
+        IOrganisationChangeRequestRepository organisationChangeRequestRepository,
+        IContactRepository contactRepository)
     {
         _service = service;
         _organisationChangeRequestRepository = organisationChangeRequestRepository;
+        _contactRepository = contactRepository;
     }
 
-    public async Task<Guid> CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails, Guid contactId)
+    public async Task<Guid> CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails, string contactExternalId)
     {
         var organisationChangeRequestToCreate = MapOrganizationDtoToOrganizationChangeRequestEntity(organizationDetails);
-        organisationChangeRequestToCreate["invln_contactid"] = new EntityReference("contact", contactId);
+        var contact = _contactRepository.GetContactViaExternalId(_service, contactExternalId);
+        organisationChangeRequestToCreate["invln_contactid"] = contact?.ToEntityReference();
         return await _service.CreateAsync(organisationChangeRequestToCreate);
     }
 

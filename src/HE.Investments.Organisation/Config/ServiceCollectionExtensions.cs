@@ -11,18 +11,28 @@ public static class ServiceCollectionExtensions
 {
     public static void AddOrganizationsModule(this IServiceCollection serviceCollections)
     {
-        if (!serviceCollections.Any(s => s.ServiceType == typeof(IOrganizationServiceAsync2)))
+        serviceCollections.AddCompaniesHouseHttpClient();
+        serviceCollections.AddScoped<IOrganisationSearchService, OrganisationSearchService>();
+        AddOrganisationCrmModule(serviceCollections);
+
+        serviceCollections.AddSingleton<ICompaniesHouseConfig>(x =>
+            x.GetRequiredService<IConfiguration>().GetRequiredSection("AppConfiguration:CompaniesHouse").Get<CompaniesHouseConfig>());
+    }
+
+    private static void AddOrganisationCrmModule(IServiceCollection serviceCollections)
+    {
+        if (serviceCollections.All(s => s.ServiceType != typeof(IOrganizationServiceAsync2)))
         {
             throw new ConfigurationErrorsException($"{nameof(IOrganizationServiceAsync2)} is required to be added to service collection.");
         }
 
-        serviceCollections.AddCompaniesHouseHttpClient();
-        serviceCollections.AddScoped<IOrganisationSearchService, OrganisationSearchService>();
         serviceCollections.AddScoped<IOrganizationRepository, OrganizationRepository>();
         serviceCollections.AddScoped<IOrganizationCrmSearchService, OrganizationCrmSearchService>();
         serviceCollections.AddScoped<IOrganisationChangeRequestRepository, OrganisationChangeRequestRepository>();
-
-        serviceCollections.AddSingleton<ICompaniesHouseConfig>(x =>
-            x.GetRequiredService<IConfiguration>().GetRequiredSection("AppConfiguration:CompaniesHouse").Get<CompaniesHouseConfig>());
+        serviceCollections.AddScoped<IContactService, ContactService>();
+        serviceCollections.AddScoped<IContactRepository, ContactRepository>();
+        serviceCollections.AddScoped<IWebRoleRepository, WebRoleRepository>();
+        serviceCollections.AddScoped<IPortalPermissionRepository, PortalPermissionRepository>();
+        serviceCollections.AddScoped<IOrganizationService, OrganizationService>();
     }
 }

@@ -1,4 +1,3 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using MediatR;

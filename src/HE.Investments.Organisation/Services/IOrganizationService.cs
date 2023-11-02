@@ -10,7 +10,7 @@ public interface IOrganizationService
 
     Task<string> GetOrganisationChangeDetailsRequest(Guid accountId);
 
-    Task<Guid> CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails, Guid contactId);
+    Task<Guid> CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails, string contactExternalId);
 
     Task<ContactDto?> GetOrganisationChangeDetailsRequestContact(Guid accountId);
 }

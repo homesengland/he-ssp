@@ -27,6 +27,6 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
 
     public async Task SaveAsync(FinancialDetailsEntity financialDetailsEntity, CancellationToken cancellationToken)
     {
-        await Task.Run(() => _httpContextAccessor.HttpContext?.Response.Cookies.Append(financialDetailsEntity.Id.ToString(), JsonSerializer.Serialize(financialDetailsEntity)), cancellationToken);
+        await Task.Run(() => _httpContextAccessor.HttpContext?.Response.Cookies.Append(financialDetailsEntity.FinancialDetailsId.ToString(), JsonSerializer.Serialize(financialDetailsEntity)), cancellationToken);
     }
 }
