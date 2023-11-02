@@ -1,3 +1,5 @@
+using HE.Investments.Common.Infrastructure.Cache.Config;
+
 namespace HE.InvestmentLoans.Common.Models.App;
 
 public class AppConfig : IAppConfig

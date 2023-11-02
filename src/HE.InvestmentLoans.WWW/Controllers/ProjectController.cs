@@ -32,8 +32,18 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpGet("start")]
     [WorkflowState(ProjectState.Index)]
-    public IActionResult StartProject(Guid id, Guid projectId)
+    public async Task<IActionResult> StartProject(Guid id, Guid projectId)
     {
+        if (projectId != Guid.Empty)
+        {
+            var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.ProjectName));
+
+            if (result.IsReadOnly())
+            {
+                return RedirectToAction("CheckAnswers", new { Id = id, ProjectId = projectId });
+            }
+        }
+
         return View("Index", LoanApplicationId.From(id));
     }
 
@@ -76,11 +86,6 @@ public class ProjectController : WorkflowController<ProjectState>
     public async Task<IActionResult> ProjectName(Guid id, Guid projectId)
     {
         var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.ProjectName));
-
-        if (result.IsReadOnly())
-        {
-            return RedirectToAction("CheckAnswers", new { Id = id, ProjectId = projectId });
-        }
 
         return View(result);
     }
@@ -300,7 +305,12 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/planning-permission-status")]
     [WorkflowState(ProjectState.PlanningPermissionStatus)]
-    public async Task<IActionResult> PlanningPermissionStatus(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> PlanningPermissionStatus(
+        Guid id,
+        Guid projectId,
+        [FromQuery] string redirect,
+        ProjectViewModel model,
+        CancellationToken token)
     {
         var result = await _mediator.Send(
             new ProvidePlanningPermissionStatusCommand(

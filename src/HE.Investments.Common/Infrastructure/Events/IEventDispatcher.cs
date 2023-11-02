@@ -1,6 +1,6 @@
 using HE.Investments.Common.Domain;
 
-namespace HE.Investments.Common.Events;
+namespace HE.Investments.Common.Infrastructure.Events;
 
 public interface IEventDispatcher
 {

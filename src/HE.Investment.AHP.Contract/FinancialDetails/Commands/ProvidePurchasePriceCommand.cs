@@ -3,4 +3,4 @@ using HE.InvestmentLoans.Common.Validation;
 using MediatR;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails.Commands;
-public record ProvidePurchasePriceCommand(FinancialDetailsId FinancialDetailsId, string PurchasePrice, bool IsFinal) : IRequest<OperationResult>;
+public record ProvidePurchasePriceCommand(FinancialDetailsId FinancialDetailsId, string PurchasePrice) : IRequest<OperationResult>;

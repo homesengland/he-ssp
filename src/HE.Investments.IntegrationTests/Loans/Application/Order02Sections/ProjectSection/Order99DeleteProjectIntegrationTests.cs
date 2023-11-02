@@ -31,7 +31,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
         _projectId = GetSharedDataOrNull<string>(SharedKeys.ProjectToDeleteId);
     }
 
-    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_RemoveLinkFromTaskListShouldRedirectToDeleteProjectPage()
     {
@@ -58,7 +58,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.ProjectToDeleteId, projectId);
     }
 
-    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(2)]
     public async Task Order02_ShouldRedirectToTaskListAndDoNotDeleteProject_WhenNoAnswerWasSelected()
     {
@@ -78,7 +78,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
         taskList.ProjectExistsAtTaskList(_projectId!).Should().BeTrue();
     }
 
-    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(3)]
     public async Task Order03_ShouldRedirectToTaskListAndDoNotDeleteProject_WhenNoWasSelected()
     {
@@ -98,7 +98,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
         taskList.ProjectExistsAtTaskList(_projectId!).Should().BeTrue();
     }
 
-    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [Fact(Skip = LoansConfig.SkipTest)]
     [Order(4)]
     public async Task Order04_ShouldRedirectToTaskListAndDoDeleteProjectAndShowNotification_WhenYesWasSelected()
     {

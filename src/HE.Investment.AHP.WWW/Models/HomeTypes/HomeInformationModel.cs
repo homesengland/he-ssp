@@ -1,18 +1,16 @@
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class HomeInformationModel : HomeTypeModelBase
+public class HomeInformationModel : ProvidedHomeTypeModelBase
 {
-    public HomeInformationModel(string applicationName)
-        : base(applicationName)
+    public HomeInformationModel(string applicationName, string homeTypeName)
+        : base(applicationName, homeTypeName)
     {
     }
 
     public HomeInformationModel()
-        : this(string.Empty)
+        : this(string.Empty, string.Empty)
     {
     }
-
-    public string HomeTypeName { get; set; }
 
     public string NumberOfHomes { get; set; }
 
@@ -21,6 +19,4 @@ public class HomeInformationModel : HomeTypeModelBase
     public string MaximumOccupancy { get; set; }
 
     public string NumberOfStoreys { get; set; }
-
-    public string HomeInformationHeader => string.IsNullOrEmpty(HomeTypeName) ? ApplicationName : $"{ApplicationName} - {HomeTypeName}";
 }

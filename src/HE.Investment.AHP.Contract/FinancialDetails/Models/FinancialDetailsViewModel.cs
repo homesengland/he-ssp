@@ -8,10 +8,14 @@ using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
 namespace HE.Investment.AHP.Contract.FinancialDetails.Models;
 public class FinancialDetailsViewModel
 {
+    public FinancialDetailsViewModel()
+    {
+    }
+
     public FinancialDetailsViewModel(
         FinancialDetailsId financialDetailsId,
         string? financialSchemaName,
-        bool? isPurchasePriceKnown,
+        bool isPurchasePriceKnown,
         string? purchasePrice)
     {
         FinancialDetailsId = financialDetailsId;
@@ -20,11 +24,11 @@ public class FinancialDetailsViewModel
         PurchasePrice = purchasePrice;
     }
 
-    public FinancialDetailsId FinancialDetailsId { get; }
+    public FinancialDetailsId FinancialDetailsId { get; set; }
 
-    public string? FinancialSchemaName { get; }
+    public string? FinancialSchemaName { get; set; }
 
-    public bool? IsPurchasePriceKnown { get; }
+    public bool IsPurchasePriceKnown { get; set; }
 
-    public string? PurchasePrice { get; }
+    public string? PurchasePrice { get; set; }
 }

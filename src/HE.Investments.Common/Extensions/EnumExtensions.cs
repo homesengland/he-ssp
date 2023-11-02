@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Reflection;
 
 namespace HE.Investments.Common.Extensions;
@@ -16,7 +17,7 @@ public static class EnumExtensions
     /// <returns>the 'Display' attribute string or an empty string if it is not present.</returns>
     public static string GetDisplay(this Enum enumValue)
     {
-        return enumValue?.GetType()?.GetField(enumValue.ToString())?.GetCustomAttribute<DisplayAttribute>()?.Name ?? string.Empty;
+        return enumValue.GetType().GetField(enumValue.ToString())?.GetCustomAttribute<DisplayAttribute>()?.Name ?? string.Empty;
     }
 
     public static string GetDescription(this Enum enumValue)
@@ -32,5 +33,11 @@ public static class EnumExtensions
     public static bool IsNotIn(this Enum value, params Enum[] values)
     {
         return !values.Contains(value);
+    }
+
+    public static IEnumerable<TEnum> GetDefinedValues<TEnum>()
+        where TEnum : struct, Enum
+    {
+        return ((TEnum[])Enum.GetValues(typeof(TEnum))).Where(x => Convert.ToInt32(x, CultureInfo.InvariantCulture) != 0);
     }
 }
