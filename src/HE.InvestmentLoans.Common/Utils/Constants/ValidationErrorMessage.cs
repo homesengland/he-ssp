@@ -81,6 +81,8 @@ public static class ValidationErrorMessage
 
     public const string ProjectNameIsEmpty = "Project name cannot be empty";
 
+    public const string LocalAuthorityNameIsEmpty = "Enter the name of the local authority";
+
     public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
 
     public static string PoundInput(string name) => new($"{name} must be entered as a number, in pounds and pence");

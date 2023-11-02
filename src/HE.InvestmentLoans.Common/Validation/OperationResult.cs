@@ -112,6 +112,11 @@ public class OperationResult : IOperationResult
         return new OperationResult<TResult>(Errors, returnedObject);
     }
 
+    public OperationResult<TResult> AsGeneric<TResult>()
+    {
+        return new OperationResult<TResult>(Errors, default!);
+    }
+
     public OperationResult OverrideError(string message, string overriddenAffectedField, string overriddenValidationMessage)
     {
         var error = Errors.FirstOrDefault(c => c.ErrorMessage == message);

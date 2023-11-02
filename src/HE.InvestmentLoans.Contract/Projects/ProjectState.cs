@@ -11,6 +11,7 @@ public enum ProjectState : int
     CheckPlanning,
     PlanningPermissionStatus,
     Location,
+    LocalAuthoritySearch,
     Ownership,
     Additional,
     GrantFunding,
