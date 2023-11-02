@@ -13,7 +13,7 @@ internal class LocalAuthorityMockedRepository : ILocalAuthorityRepository
         return Task.CompletedTask;
     }
 
-    public Task<(IEnumerable<LocalAuthorityTemporaryDto> Items, int TotalItems)> Search(string phrase, int startPage, int pageSize, CancellationToken cancellationToken)
+    public Task<(IList<LocalAuthorityTemporaryDto> Items, int TotalItems)> Search(string phrase, int startPage, int pageSize, CancellationToken cancellationToken)
     {
         var foundItems = LocalAuthoritiesData.LocalAuthorities
                 .Where(c => c.Name.ToLower(CultureInfo.InvariantCulture).Contains(phrase.ToLower(CultureInfo.InvariantCulture)));
@@ -25,6 +25,6 @@ internal class LocalAuthorityMockedRepository : ILocalAuthorityRepository
                 .Skip(startPage * pageSize)
                 .Take(pageSize);
 
-        return Task.FromResult((itemsAtPage, totalItems));
+        return Task.FromResult(((IList<LocalAuthorityTemporaryDto>)itemsAtPage.ToList(), totalItems));
     }
 }

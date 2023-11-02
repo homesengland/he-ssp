@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace HE.InvestmentLoans.Contract.Projects.ViewModels;
 public class LocalAuthoritiesViewModel
 {
-    public IEnumerable<LocalAuthorityViewModel> Items { get; set; }
+    public IList<LocalAuthorityViewModel> Items { get; set; }
 
     public string Phrase { get; set; }
 

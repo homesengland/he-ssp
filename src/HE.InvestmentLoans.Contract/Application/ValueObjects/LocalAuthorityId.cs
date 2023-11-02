@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dawn;
-using HE.InvestmentLoans.Contract.Domain;
-using Newtonsoft.Json.Linq;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.Contract.Application.ValueObjects;
 public class LocalAuthorityId : ValueObject
