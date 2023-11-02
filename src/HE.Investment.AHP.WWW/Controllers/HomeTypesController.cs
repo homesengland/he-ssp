@@ -112,9 +112,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new HomeInformationModel(application.Name)
+        return View(new HomeInformationModel(application.Name, homeInformation.HomeTypeName)
         {
-            HomeTypeName = homeInformation.HomeTypeName,
             NumberOfHomes = homeInformation.NumberOfHomes?.ToString(CultureInfo.InvariantCulture),
             NumberOfBedrooms = homeInformation.NumberOfBedrooms?.ToString(CultureInfo.InvariantCulture),
             MaximumOccupancy = homeInformation.MaximumOccupancy?.ToString(CultureInfo.InvariantCulture),
@@ -139,8 +138,28 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     }
 
     [WorkflowState(HomeTypesWorkflowState.HomesForDisabledPeople)]
-    [HttpGet("{homeTypeId}/HomesForDisabled")]
-    public IActionResult HomesForDisabledPeople(string homeTypeId)
+    [HttpGet("{homeTypeId}/HomesForDisabledPeople")]
+    public async Task<IActionResult> HomesForDisabledPeople([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var disabledHousingType = await _mediator.Send(new GetDisabledPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
+        return View(new HomesForDisabledPeopleModel(application.Name, disabledHousingType.HomeTypeName) { HousingType = disabledHousingType.HousingType });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.HomesForDisabledPeople)]
+    [HttpPost("{homeTypeId}/HomesForDisabledPeople")]
+    public async Task<IActionResult> HomesForDisabledPeople(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        HomesForDisabledPeopleModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(new SaveDisabledPeopleHousingTypeCommand(applicationId, homeTypeId, model.HousingType), model, cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.DisablePeopleClientGroup)]
+    [HttpGet("{homeTypeId}/DisabledPeopleClientGroup")]
+    public IActionResult DisabledPeopleClientGroup(string homeTypeId)
     {
         return View();
     }
@@ -179,7 +198,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View(model);
+            return View("HomeTypeDetails", model);
         }
 
         return await Continue(new { applicationId, homeTypeId = result.ReturnedData!.Value });
