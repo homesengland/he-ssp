@@ -1,7 +1,7 @@
 using HE.Investments.Common.Domain;
 using MediatR;
 
-namespace HE.Investments.Common.Events;
+namespace HE.Investments.Common.Infrastructure.Events;
 
 public class EventDispatcher : IEventDispatcher
 {

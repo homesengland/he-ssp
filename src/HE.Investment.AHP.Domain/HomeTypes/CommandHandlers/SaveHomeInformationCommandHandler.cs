@@ -1,44 +1,24 @@
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using HE.InvestmentLoans.Common.Validation;
-using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
 
-public class SaveHomeInformationCommandHandler : HomeTypeCommandHandlerBase, IRequestHandler<SaveHomeInformationCommand, OperationResult>
+public class SaveHomeInformationCommandHandler : SaveHomeTypeSegmentCommandHandlerBase<SaveHomeInformationCommand>
 {
-    private readonly IHomeTypeRepository _homeTypeRepository;
-
     public SaveHomeInformationCommandHandler(IHomeTypeRepository homeTypeRepository, ILogger<SaveHomeInformationCommandHandler> logger)
-        : base(logger)
+        : base(homeTypeRepository, logger)
     {
-        _homeTypeRepository = homeTypeRepository;
     }
 
-    public async Task<OperationResult> Handle(SaveHomeInformationCommand request, CancellationToken cancellationToken)
+    protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.HomeInformation };
+
+    protected override IEnumerable<Action<SaveHomeInformationCommand, IHomeTypeEntity>> SaveActions => new[]
     {
-        var homeType = await _homeTypeRepository.GetById(
-            request.ApplicationId,
-            new HomeTypeId(request.HomeTypeId),
-            new[] { HomeTypeSegmentType.HomeInformation },
-            cancellationToken);
-        var homeInformation = homeType.HomeInformation;
-
-        var errors = PerformWithValidation(
-            () => homeInformation.ChangeNumberOfHomes(request.NumberOfHomes),
-            () => homeInformation.ChangeNumberOfBedrooms(request.NumberOfBedrooms),
-            () => homeInformation.ChangeMaximumOccupancy(request.MaximumOccupancy),
-            () => homeInformation.ChangeNumberOfStoreys(request.NumberOfStoreys));
-
-        if (errors.Any())
-        {
-            return new OperationResult(errors);
-        }
-
-        await _homeTypeRepository.Save(request.ApplicationId, homeType, new[] { HomeTypeSegmentType.HomeInformation }, cancellationToken);
-        return OperationResult.Success();
-    }
+        (SaveHomeInformationCommand request, IHomeTypeEntity homeType) => homeType.HomeInformation.ChangeNumberOfHomes(request.NumberOfHomes),
+        (request, homeType) => homeType.HomeInformation.ChangeNumberOfBedrooms(request.NumberOfBedrooms),
+        (request, homeType) => homeType.HomeInformation.ChangeMaximumOccupancy(request.MaximumOccupancy),
+        (request, homeType) => homeType.HomeInformation.ChangeNumberOfStoreys(request.NumberOfStoreys),
+    };
 }

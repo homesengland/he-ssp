@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
 using HE.Investments.Account.Contract.User;
 using HE.Investments.Account.Contract.User.Queries;
@@ -46,6 +47,11 @@ public class UserController : Controller
             ModelState.AddValidationErrors(result);
 
             return View("ProfileDetails", viewModel);
+        }
+
+        if (callback.IsNotProvided())
+        {
+            return RedirectToAction("GetProfileDetails");
         }
 
         return Redirect(callback);

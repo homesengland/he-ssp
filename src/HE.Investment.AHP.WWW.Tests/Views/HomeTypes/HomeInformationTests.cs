@@ -9,7 +9,7 @@ public class HomeInformationTests : HomeTypesTestBase
 {
     private const string ViewPath = "/Views/HomeTypes/HomeInformation.cshtml";
 
-    private static readonly HomeInformationModel Model = new("My application") { HomeTypeName = "My homes" };
+    private static readonly HomeInformationModel Model = new("My application", "My homes");
 
     [Fact]
     public async Task ShouldDisplayView_WhenThereAreNoErrors()

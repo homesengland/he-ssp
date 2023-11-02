@@ -1,5 +1,5 @@
 using MediatR;
 
-namespace HE.Investments.Common.Events;
+namespace HE.Investments.Common.Infrastructure.Events;
 
 public record DomainEvent : INotification;

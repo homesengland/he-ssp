@@ -1,9 +1,9 @@
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Contract.Models;
 using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
-using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Common.Utils.Constants.Notification;
 using HE.InvestmentLoans.Common.Utils.Enums;
+using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 
 namespace HE.InvestmentLoans.Common.Contract.Services;
 public class NotificationService : INotificationService
@@ -34,7 +34,7 @@ public class NotificationService : INotificationService
         return Tuple.Create(isInCache, valueFromCache);
     }
 
-    public async Task NotifySuccess(NotificationBodyType notificationBodyType, IDictionary<NotificationServiceKeys, string> valuesToDisplay)
+    public async Task NotifySuccess(NotificationBodyType notificationBodyType, IDictionary<NotificationServiceKeys, string>? valuesToDisplay)
     {
         var key = $"{NotificationServiceCacheKey.Notification}-{UserGlobalId}";
         var notificationModel = new NotificationModel(NotificationTitle.Success, NotificationType.Success, notificationBodyType, valuesToDisplay);

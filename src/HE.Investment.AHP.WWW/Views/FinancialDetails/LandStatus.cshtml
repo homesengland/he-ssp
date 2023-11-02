@@ -40,7 +40,7 @@
                     </gds-field-set>
                     <gds-field-set class="govuk-!-margin-bottom-6" role="group">
                         <legend>
-                            @if (Model.IsPurchasePriceKnown ?? false)
+                            @if (Model.IsPurchasePriceKnown)
                             {
                                 <gds-label for="@Model.PurchasePrice" size="ControlSize.S">
                                     Enter the purchase price of the land

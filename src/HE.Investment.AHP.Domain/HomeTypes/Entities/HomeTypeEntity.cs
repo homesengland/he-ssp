@@ -1,4 +1,6 @@
+using System.Reflection;
 using HE.Investment.AHP.Contract.HomeTypes;
+using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Extensions;
 
@@ -15,7 +17,7 @@ public class HomeTypeEntity : IHomeTypeEntity
     {
         ChangeName(name);
         ChangeHousingType(housingType);
-        _segments = segments.ToDictionary(x => x.SegmentType, x => x);
+        _segments = segments.ToDictionary(x => GetSegmentType(x.GetType()), x => x);
     }
 
     public HomeTypeId? Id { get; set; }
@@ -24,7 +26,9 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public HousingType HousingType { get; private set; }
 
-    public HomeInformationSegmentEntity HomeInformation => (HomeInformationSegmentEntity)_segments[HomeTypeSegmentType.HomeInformation];
+    public HomeInformationSegmentEntity HomeInformation => GetSegment<HomeInformationSegmentEntity>();
+
+    public DisabledPeopleHomeTypeDetailsSegmentEntity DisabledPeopleHomeTypeDetails => GetSegment<DisabledPeopleHomeTypeDetailsSegmentEntity>();
 
     public bool IsNew => Id.IsNotProvided();
 
@@ -46,5 +50,22 @@ public class HomeTypeEntity : IHomeTypeEntity
     public bool IsCompleted()
     {
         return Name.IsProvided() && _segments.All(x => x.Value.IsCompleted());
+    }
+
+    private static HomeTypeSegmentType GetSegmentType(Type segmentType)
+    {
+        var segmentTypeAttribute = segmentType.GetCustomAttributes<HomeTypeSegmentTypeAttribute>().FirstOrDefault();
+        if (segmentTypeAttribute == null)
+        {
+            throw new ArgumentException($"{segmentType.Name} segment entity is missing {nameof(HomeTypeSegmentTypeAttribute)}.", nameof(segmentType));
+        }
+
+        return segmentTypeAttribute.SegmentType;
+    }
+
+    private TSegment GetSegment<TSegment>()
+        where TSegment : IHomeTypeSegmentEntity
+    {
+        return (TSegment)_segments[GetSegmentType(typeof(TSegment))];
     }
 }
