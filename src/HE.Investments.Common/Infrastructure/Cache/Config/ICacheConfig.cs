@@ -1,6 +1,6 @@
-namespace HE.InvestmentLoans.Common.Models.App;
+namespace HE.Investments.Common.Infrastructure.Cache.Config;
 
-public class CacheConfig : ICacheConfig
+public interface ICacheConfig
 {
     public bool? RedisCertificateEnabled { get; set; }
 

@@ -9,10 +9,10 @@
         <partial name="_ErrorSummaryPartial" model="null"/>
 
         <gds-h1 class="govuk-heading-xl">
-            Check your answers
+            @(Model.IsReadOnly() ? @SecurityPageTitles.ReadOnlyAnswers : @SecurityPageTitles.CheckAnswers)
         </gds-h1>
 
-        <partial name="Sections/_WithdrawnInformation" model="Model"/>
+        <partial name="Sections/_ReadOnlyAdditionalInformation" model="Model"/>
 
         @await Html.PartialAsync("_SecurityAnswers", Model)
 

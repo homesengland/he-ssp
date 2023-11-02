@@ -7,7 +7,7 @@ using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 using HE.InvestmentLoans.Common.Infrastructure;
 using HE.InvestmentLoans.CRM.Extensions;
 using HE.InvestmentLoans.WWW.Models;
-using HE.Investments.Common.Events;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Organisation.Config;
 
 namespace HE.InvestmentLoans.WWW.Config;

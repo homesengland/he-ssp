@@ -36,5 +36,7 @@ public static class ProjectPageTitles
 
     public const string CheckAnswers = "Check your answers";
 
+    public const string ReadOnlyAnswers = "Your answers";
+
     public static string Delete(string projectName) => $"Are you sure you want to remove {projectName}?";
 }

@@ -5,4 +5,5 @@ public enum NotificationBodyType
     DeleteProject,
     FilesUpload,
     FileRemove,
+    ChangeOrganisationDetailsRequest,
 }

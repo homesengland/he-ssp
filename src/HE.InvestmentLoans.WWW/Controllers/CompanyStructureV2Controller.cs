@@ -100,6 +100,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 
     [HttpPost("more-information-about-organization")]
     [WorkflowState(CompanyStructureState.ExistingCompany)]
+    [DisableRequestSizeLimit]
     public async Task<IActionResult> MoreInformationAboutOrganizationPost(Guid id, CompanyStructureViewModel viewModel, [FromForm(Name = "File")] List<IFormFile> formFiles, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(

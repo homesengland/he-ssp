@@ -1,18 +1,23 @@
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Infrastructure.Middlewares;
+using HE.InvestmentLoans.Common.Models.App;
 using HE.Investments.Account.WWW.Config;
 using HE.Investments.Account.WWW.Middlewares;
+using HE.Investments.Common.Infrastructure.Cache.Config;
+using HE.Investments.Common.WWW.Infrastructure.Cache;
 using HE.Investments.Common.WWW.Partials;
 using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
+var appConfig = builder.Configuration.GetSection("AppConfiguration").Get<AppConfig>();
 
 builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 builder.Services.AddCommonPartialsViews();
+builder.Services.AddCache(appConfig.Cache, appConfig.AppName!);
 var mvcBuilder = builder.Services.AddControllersWithViews();
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 

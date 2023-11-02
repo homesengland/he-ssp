@@ -18,7 +18,6 @@ public class OrganisationDetailsViewModel
     {
         Name = name;
         PhoneNumber = phoneNumber;
-        ChangeRequestState = changeRequestState;
         AddressLines = addressLines;
         HouseNumber = houseNumber;
         ChangeRequestState = changeRequestState;

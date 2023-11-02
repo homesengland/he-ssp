@@ -31,6 +31,7 @@ public class SharepointFilesController : CustomControllerBase
     }
 
     [HttpPost("Upload")]
+    [DisableRequestSizeLimit]
     public async Task Upload(FileUploadModel<FileData> item)
     {
         await Service<ISharePointFilesService>().UploadFile(item);

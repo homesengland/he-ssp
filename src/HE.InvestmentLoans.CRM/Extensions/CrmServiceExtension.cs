@@ -5,8 +5,8 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Services.Interfaces;
 using HE.InvestmentLoans.Common.Utils;
+using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.CRM.Extensions;
