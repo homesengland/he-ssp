@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace HE.InvestmentLoans.Contract.Projects.ViewModels;
 public class LocalAuthorityViewModel
 {
-    public Guid Id { get; set; }
+    public string Id { get; set; }
 
     public string Name { get; set; }
 }

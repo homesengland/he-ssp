@@ -21,5 +21,5 @@ public class LocalAuthoritiesViewModel
 
     public Guid ProjectId { get; set; }
 
-    public Guid LocalAuthorityId { get; set; }
+    public string LocalAuthorityId { get; set; }
 }

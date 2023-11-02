@@ -5,4 +5,4 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
-public record LocalAuthorityTemporaryDto(Guid Id, string Name);
+public record LocalAuthorityTemporaryDto(string Id, string Name, string Region);
