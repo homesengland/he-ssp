@@ -160,6 +160,29 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
             }
         }
 
+        public void SendNotifications_EXTERNAL_KYC_STATUS_CHANGE(Contact contact, string subject, Account organisation)
+        {
+            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("EXTERNAL_KYC_STATUS_CHANGE");
+            var govNotParams = new EXTERNAL_KYC_STATUS_CHANGE()
+            {
+                templateId = emailTemplate?.invln_templateid,
+                personalisation = new parameters_EXTERNAL_KYC_STATUS_CHANGE()
+                {
+                    recipientEmail = contact.EMailAddress1,
+                    subject = subject,
+                    username = contact.FullName,
+                }
+            };
+            var options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
+
+            var parameters = JsonSerializer.Serialize(govNotParams, options);
+            this.SendGovNotifyEmail(organisation.OwnerId, organisation.ToEntityReference(), subject, parameters, emailTemplate);
+        }
+
         private string GetLoanApplicationUrl(EntityReference loanApplicationId)
         {
             if (loanApplicationId != null)

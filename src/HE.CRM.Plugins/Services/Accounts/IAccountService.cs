@@ -11,5 +11,6 @@ namespace HE.CRM.Plugins.Services.Accounts
         OrganizationDetailsDto GetOrganizationDetails(string accountid, string contactExternalId);
         void OnCurrentCrrFieldUpdate(Account target, Account preImage);
         string GetOrganisationChangeDetails(string accountId);
+        void SendEmailOnRatingChange(Account target, Account preImage);
     }
 }
