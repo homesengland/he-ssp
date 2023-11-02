@@ -1,5 +1,5 @@
 using AngleSharp.Html.Dom;
-using HE.InvestmentLoans.WWW.Models.Organisation;
+using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.WWW.Tests.Helpers;
 using Xunit;
 
@@ -13,7 +13,7 @@ public class CreateOrganisationTests : ViewTestBase
     public async Task ShouldDisplayView()
     {
         // given & when
-        var document = await Render<CreateOrganisationModel>(_viewPath);
+        var document = await Render<OrganisationDetailsViewModel>(_viewPath);
 
         // then
         AssertView(document);

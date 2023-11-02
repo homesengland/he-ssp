@@ -19,5 +19,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string postcode { get; set; }
         public string country { get; set; }
         public bool? isTermsAndConditionsAccepted { get; set; }
+        public string contactExternalId { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using HE.InvestmentLoans.WWW.Config;
 using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Middlewares;
 using HE.Investments.Common.WWW;
+using HE.Investments.Common.WWW.Infrastructure.Cache;
 using HE.Investments.Common.WWW.Partials;
 using HE.Investments.DocumentService.Extensions;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
@@ -33,8 +34,8 @@ builder.Services.AddSession(options =>
     options.Cookie.Name = sessionCookieName;
     options.IdleTimeout = TimeSpan.FromMinutes(config.Cache.SessionExpireMinutes);
 });
-builder.Services.AddCache(config);
 
+builder.Services.AddCache(config.Cache, config.AppName!);
 builder.Services.AddApplicationInsightsTelemetry();
 
 builder.Services.AddHttpClient();

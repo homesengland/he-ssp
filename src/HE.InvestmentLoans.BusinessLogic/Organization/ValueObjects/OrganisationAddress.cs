@@ -7,11 +7,11 @@ namespace HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 public class OrganisationAddress : ValueObject
 {
     public OrganisationAddress(
-        string addressLine1,
+        string? addressLine1,
         string? addressLine2,
         string? addressLine3,
-        string townOrCity,
-        string postcode,
+        string? townOrCity,
+        string? postcode,
         string? county,
         string? country,
         string? lengthErrorMessage = null)
@@ -45,11 +45,11 @@ public class OrganisationAddress : ValueObject
     }
 
     private OperationResult Build(
-        string line1,
+        string? line1,
         string? line2,
         string? line3,
-        string city,
-        string postcode,
+        string? city,
+        string? postcode,
         string? county,
         string? country,
         string? lengthErrorMessage)

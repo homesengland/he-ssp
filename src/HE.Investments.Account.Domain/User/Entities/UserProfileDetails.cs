@@ -51,7 +51,7 @@ public class UserProfileDetails
             .WithValidation(() => LastName = new LastName(lastName))
             .WithValidation(() => JobTitle = new JobTitle(jobTitle))
             .WithValidation(() => TelephoneNumber = new TelephoneNumber(telephoneNumber))
-            .WithValidation(() => SecondaryTelephoneNumber = secondaryTelephoneNumber == null ? null : new SecondaryTelephoneNumber(secondaryTelephoneNumber))
+            .WithValidation(() => SecondaryTelephoneNumber = secondaryTelephoneNumber.IsProvided() ? new SecondaryTelephoneNumber(secondaryTelephoneNumber) : null)
             .CheckErrors();
 
         Email = userEmail;

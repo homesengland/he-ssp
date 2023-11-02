@@ -6,7 +6,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 
 public class Postcode : ValueObject
 {
-    public Postcode(string value)
+    public Postcode(string? value)
     {
         Build(value).CheckErrors();
     }
@@ -18,7 +18,7 @@ public class Postcode : ValueObject
         yield return Value;
     }
 
-    private OperationResult Build(string value)
+    private OperationResult Build(string? value)
     {
         var operationResult = OperationResult.New();
 

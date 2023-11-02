@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.Common.Services.Interfaces;
+namespace HE.Investments.Common.Infrastructure.Cache.Interfaces;
 
 public interface ICacheService
 {
