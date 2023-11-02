@@ -1,5 +1,4 @@
 @using HE.InvestmentLoans.Contract.Application.Queries;
-@using HE.InvestmentLoans.Common.Extensions
 @using HE.InvestmentLoans.WWW.Routing
 @model GetDashboardDataQueryResponse
 @{
@@ -71,10 +70,8 @@
         </gds-h3>
         <p class="govuk-body govuk-!-margin-bottom-3">You can start a new application here. This will not impact any of your previous applications.</p>
 
-        <a href="/application" id="start-application-link">
-            <gds-button type="button">
-                Start new application
-            </gds-button>
-        </a>
+        <link-button action-url="/application" id="start-application-link">
+            Start new application
+        </link-button>
     </div>
 </gds-column>

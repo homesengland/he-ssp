@@ -19,12 +19,12 @@
                     <gds-p>
                         @programme.Description
                     </gds-p>
-                    <a data-testid=@($"user-organisation-start-new-application-{programme.Name.ToLowerInvariant().Replace(' ', '-')}")
-                       href="@Url.Action(programme.CreateAction, programme.Controller)">
-                        <gds-button type="button" data-module="govuk-button">
-                            Start new application
-                        </gds-button>
-                    </a>
+
+                    <link-button action-url="@Url.Action(programme.CreateAction, programme.Controller)"
+                                 id="start-application-link"
+                                 data-testid=@($"user-organisation-start-new-application-{programme.Name.ToLowerInvariant().Replace(' ', '-')}")>
+                        Start new application
+                    </link-button>
                 </dt>
             </div>
         }
