@@ -29,6 +29,38 @@ namespace HE.CRM.Plugins.Services.GovNotifyEmail
             _contactRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IContactRepository>();
         }
 
+        public void SendNotifications_EXTERNAL_APPLICATION_ACTION_REQUIRED(invln_Loanstatuschange statusChange, invln_Loanapplication loanApplication, string actionRequired)
+        {
+            if (loanApplication.invln_Contact != null)
+            {
+                this.TracingService.Trace("EXTERNAL_APPLICATION_ACTION_REQUIRED");
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("EXTERNAL_APPLICATION_ACTION_REQUIRED");
+                var loanContactData = _contactRepositoryAdmin.GetById(loanApplication.invln_Contact.Id, nameof(Contact.EMailAddress1).ToLower(), nameof(SystemUser.FullName).ToLower());
+                var govNotParams = new EXTERNAL_APPLICATION_ACTION_REQUIRED()
+                {
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_EXTERNAL_APPLICATION_ACTION_REQUIRED()
+                    {
+                        recipientEmail = loanContactData.EMailAddress1,
+                        username = loanContactData.FullName ?? "NO NAME",
+                        subject = emailTemplate.invln_subject,
+                        actionRequired = actionRequired,
+                        applicationId = loanApplication.invln_Name
+                    }
+                };
+
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(loanApplication.OwnerId, loanApplication.ToEntityReference(), emailTemplate.invln_subject, parameters, emailTemplate);
+            }
+        }
+
+
         public void SendNotifications_EXTERNAL_APPLICATION_STATUS_CONFIRMATION(invln_Loanstatuschange statusChange, invln_Loanapplication loanApplication, string actionCompleted)
         {
             if (loanApplication.invln_Contact != null)
