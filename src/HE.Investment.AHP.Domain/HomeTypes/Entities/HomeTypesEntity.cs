@@ -25,7 +25,10 @@ public class HomeTypesEntity
 
         // TODO: remove creating segments when integration with CRM is introduced
         var homeType = new HomeTypeEntity(
-            segments: new IHomeTypeSegmentEntity[] { new HomeInformationSegmentEntity(), new DisabledPeopleHomeTypeDetailsSegmentEntity() });
+            segments: new IHomeTypeSegmentEntity[]
+            {
+                new HomeInformationSegmentEntity(), new DisabledPeopleHomeTypeDetailsSegmentEntity(), new OlderPeopleHomeTypeDetailsSegmentEntity(),
+            });
         _homeTypes.Add(homeType);
 
         return homeType;
