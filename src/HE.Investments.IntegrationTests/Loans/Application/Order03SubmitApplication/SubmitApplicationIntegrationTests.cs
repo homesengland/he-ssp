@@ -77,7 +77,7 @@ public class SubmitApplicationIntegrationTests : IntegrationTest
         // then
         taskListPage
             .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
-            .HasTitle("Development loan application")
+            .HasTitle(UserData.LoanApplicationName)
             .ExtractSubmittedOnDateFromTaskListPage(out var dateTime);
 
         dateTime.Should().BeCloseTo(DateTime.UtcNow.ConvertUtcToUkLocalTime(), TimeSpan.FromMinutes(2));

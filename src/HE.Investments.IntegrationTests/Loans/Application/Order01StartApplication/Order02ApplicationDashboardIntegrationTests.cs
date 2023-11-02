@@ -53,6 +53,6 @@ public class Order02ApplicationDashboardIntegrationTests : IntegrationTest
         // then
         taskListPage
             .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
-            .HasTitle("Development loan application");
+            .HasTitle(UserData.LoanApplicationName);
     }
 }

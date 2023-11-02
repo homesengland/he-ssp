@@ -67,6 +67,8 @@ public class IntegrationUserData
 
     public string LoanApplicationIdInDraftState { get; private set; }
 
+    public string LoanApplicationName { get; private set; }
+
     public string SubmittedLoanApplicationId { get; private set; }
 
     public string ProjectInDraftStateId { get; private set; }
@@ -92,6 +94,14 @@ public class IntegrationUserData
         }
 
         LoanApplicationIdInDraftState = loanApplicationId;
+    }
+
+    public void SetLoanApplicationName()
+    {
+        if (LoanApplicationName.IsNotProvided())
+        {
+            LoanApplicationName = $"Application-{Guid.NewGuid()}";
+        }
     }
 
     public void SetSubmittedLoanApplicationId(string loanApplicationId)

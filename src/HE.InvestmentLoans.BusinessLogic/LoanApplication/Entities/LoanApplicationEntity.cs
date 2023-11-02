@@ -103,6 +103,8 @@ public class LoanApplicationEntity : DomainEntity
         return IsReadyToSubmit() && !IsSubmitted();
     }
 
+    public bool WasSubmitted() => SubmittedOn != null;
+
     public void CheckIfCanBeSubmitted()
     {
         if (!IsReadyToSubmit())

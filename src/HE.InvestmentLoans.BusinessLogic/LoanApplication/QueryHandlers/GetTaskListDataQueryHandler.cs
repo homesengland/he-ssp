@@ -20,12 +20,16 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
 
     public async Task<GetTaskListDataQueryResponse> Handle(GetTaskListDataQuery request, CancellationToken cancellationToken)
     {
-        var loanApplication = await _applicationRepository.GetLoanApplication(request.Id, await _loanUserContext.GetSelectedAccount(), cancellationToken);
+        var userAccount = await _loanUserContext.GetSelectedAccount();
+        var loanApplication = await _applicationRepository.GetLoanApplication(request.Id, userAccount, cancellationToken);
 
         return new GetTaskListDataQueryResponse(
             loanApplication.Id,
+            loanApplication.Name,
+            userAccount.AccountName,
             loanApplication.ExternalStatus,
             loanApplication.CanBeSubmitted(),
+            loanApplication.WasSubmitted(),
             new Sections(
                 MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.CompanyStructure.Status),
                 MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.Funding.Status),
