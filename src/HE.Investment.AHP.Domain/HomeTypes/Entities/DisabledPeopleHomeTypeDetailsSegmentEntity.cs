@@ -8,13 +8,21 @@ public class DisabledPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
 {
     public DisabledPeopleHousingType HousingType { get; private set; }
 
+    public DisabledPeopleClientGroupType ClientGroupType { get; private set; }
+
     public void ChangeHousingType(DisabledPeopleHousingType housingType)
     {
         HousingType = housingType;
     }
 
+    public void ChangeClientGroupType(DisabledPeopleClientGroupType clientGroupType)
+    {
+        ClientGroupType = clientGroupType;
+    }
+
     public bool IsCompleted()
     {
-        return HousingType != DisabledPeopleHousingType.Undefined;
+        return HousingType != DisabledPeopleHousingType.Undefined
+               && ClientGroupType != DisabledPeopleClientGroupType.Undefined;
     }
 }

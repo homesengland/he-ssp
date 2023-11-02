@@ -26,6 +26,7 @@ internal sealed class GetDisabledPeopleHomeTypeDetailsQueryHandler : IRequestHan
 
         return new DisabledPeopleHomeTypeDetails(
             homeType.Name?.Value,
-            homeType.DisabledPeopleHomeTypeDetails.HousingType);
+            homeType.DisabledPeopleHomeTypeDetails.HousingType,
+            homeType.DisabledPeopleHomeTypeDetails.ClientGroupType);
     }
 }

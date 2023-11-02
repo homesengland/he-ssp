@@ -9,6 +9,6 @@ public enum HomeTypesWorkflowState
     HomeTypeDetails,
     HomeInformation,
     HomesForDisabledPeople,
-    DisablePeopleClientGroup,
+    DisabledPeopleClientGroup,
     HomesForOlderPeople,
 }
