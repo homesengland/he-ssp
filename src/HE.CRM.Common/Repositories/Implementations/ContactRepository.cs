@@ -113,5 +113,18 @@ namespace HE.CRM.Common.Repositories.Implementations
                 return (AssociateResponse)ctx.Execute(request);
             }
         }
+
+        public List<Contact> GetContactsForOrganisation(Guid organisationId)
+        {
+            using (DataverseContext ctx = new DataverseContext(service))
+            {
+                return (from cnt in ctx.ContactSet
+                        join cwr in ctx.invln_contactwebroleSet on cnt.ContactId equals cwr.invln_Contactid.Id
+                        join acc in ctx.AccountSet on cwr.invln_Accountid.Id equals acc.Id
+                        where acc.AccountId == organisationId
+                        select cnt).ToList();
+
+            }
+        }
     }
 }

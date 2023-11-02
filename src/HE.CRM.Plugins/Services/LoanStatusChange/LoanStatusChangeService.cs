@@ -103,7 +103,8 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
                     break;
                 case (int)invln_InternalStatus.CashflowUnderReview:
                     statusLabel = "Cashflow under review";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
+                    pastFormStatus = "has been changed"; //TODO: to update
+                    _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_STATUS_INFORMATION(loanStatusChange, loanApplication);
                     break;
                 case (int)invln_InternalStatus.OnHold:
                     statusLabel = "On hold";
