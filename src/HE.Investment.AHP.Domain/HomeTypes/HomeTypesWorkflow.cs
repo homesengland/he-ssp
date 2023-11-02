@@ -58,11 +58,17 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .Permit(Trigger.Back, HomeTypesWorkflowState.List);
 
         _machine.Configure(HomeTypesWorkflowState.HomeInformation)
-            .Permit(Trigger.Back, HomeTypesWorkflowState.HomeTypeDetails);
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeTypeDetails, () => _homeTypeModel.HousingType is HousingType.Undefined or HousingType.General)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.DisabledPeopleClientGroup, () => _homeTypeModel.HousingType == HousingType.HomesForDisabledAndVulnerablePeople)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeTypeDetails, () => _homeTypeModel.HousingType == HousingType.HomesForOlderPeople);
 
         _machine.Configure(HomeTypesWorkflowState.HomesForDisabledPeople)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.DisablePeopleClientGroup)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.DisabledPeopleClientGroup)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HomeTypeDetails);
+
+        _machine.Configure(HomeTypesWorkflowState.DisabledPeopleClientGroup)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.HomeInformation)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.HomesForDisabledPeople);
 
         _machine.Configure(HomeTypesWorkflowState.HomesForOlderPeople)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HomeTypeDetails);
