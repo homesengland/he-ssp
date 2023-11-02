@@ -17,12 +17,15 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.UserOrganisation;
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
 public class Order03RequestOrganisationDetailsChangeIntegrationTests : IntegrationTest
 {
+    private const string TestSkipReason =
+        "User can only request a change of organisation details once, then this page will not be visible. You should add a request to delete your organization details";
+
     public Order03RequestOrganisationDetailsChangeIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
     }
 
-    [Fact(Skip = "User can only request a change of organisation details once, then this page will not be visible. You should add a request to delete your organization details")]
+    [Fact(Skip = TestSkipReason)]
     [Order(1)]
     public async Task Order01_ShouldOpenRequestDetailsChangePage_WhenLinkIsClickedOnTheOrganisationDetailsPage()
     {
@@ -42,7 +45,7 @@ public class Order03RequestOrganisationDetailsChangeIntegrationTests : Integrati
         SetSharedData(SharedKeys.CurrentPageKey, detailsChangePage);
     }
 
-    [Fact(Skip = "User can only request a change of organisation details once, then this page will not be visible. You should add a request to delete your organization details")]
+    [Fact(Skip = TestSkipReason)]
     [Order(2)]
     public async Task Order02_ShouldDisplayValidationError_WhenInputsAreMissing()
     {
@@ -74,7 +77,7 @@ public class Order03RequestOrganisationDetailsChangeIntegrationTests : Integrati
                 OrganisationErrorMessages.MissingOrganisationPostCode);
     }
 
-    [Fact(Skip = "User can only request a change of organisation details once, then this page will not be visible. You should add a request to delete your organization details")]
+    [Fact(Skip = TestSkipReason)]
     [Order(3)]
     public async Task Order03_ShouldDisplayValidationError_WhenInputsAreTooLong()
     {
@@ -105,7 +108,7 @@ public class Order03RequestOrganisationDetailsChangeIntegrationTests : Integrati
                 OrganisationErrorMessages.InvalidOrganisationPostcode);
     }
 
-    [Fact(Skip = "User can only request a change of organisation details once, then this page will not be visible. You should add a request to delete your organization details")]
+    [Fact(Skip = TestSkipReason)]
     [Order(4)]
     public async Task Order04_ShouldRedirectToOrganisationDetailsPage_WhenInputsAreCorrect()
     {

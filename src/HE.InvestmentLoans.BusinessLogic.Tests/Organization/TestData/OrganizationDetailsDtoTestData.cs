@@ -19,6 +19,6 @@ public static class OrganizationDetailsDtoTestData
         compayAdminContactName = "Joe Doe",
         compayAdminContactTelephone = "888888888",
         rpNumber = "10",
-        organisationPhoneNumber = "543 123 864"
+        organisationPhoneNumber = "543 123 864",
     };
 }
