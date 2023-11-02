@@ -16,7 +16,7 @@ public class ProvidePurchasePriceCommandHandler : FinancialDetailsCommandHandler
     public async Task<OperationResult> Handle(ProvidePurchasePriceCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            financialDetails => financialDetails.ProvidePurchasePrice(new PurchasePrice(request.PurchasePrice, request.IsFinal)),
+            financialDetails => financialDetails.ProvidePurchasePrice(new PurchasePrice(request.PurchasePrice)),
             request.FinancialDetailsId,
             cancellationToken);
     }

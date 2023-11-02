@@ -2,6 +2,8 @@ using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using HE.Investment.AHP.Contract.FinancialDetails.Models;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+using HE.Investment.AHP.Domain.FinancialDetails.Entities;
+using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Validation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,14 +27,14 @@ public class FinancialDetailsController : Controller
     }
 
     [HttpPost("start")]
-    public async Task<IActionResult> StartPost(Guid financialSchemeId, [FromQuery] Guid? financialDetailsId)
+    public async Task<IActionResult> StartPost(Guid financialSchemeId, [FromQuery] Guid? financialDetailsId, CancellationToken cancellationToken)
     {
         if (financialDetailsId.HasValue)
         {
             return RedirectToAction(nameof(LandStatus), new { financialDetailsId = financialDetailsId.Value });
         }
 
-        var result = await _mediator.Send(new StartFinancialDetailsCommand(financialSchemeId));
+        var result = await _mediator.Send(new StartFinancialDetailsCommand(financialSchemeId), cancellationToken);
 
         return RedirectToAction(nameof(LandStatus), new { financialDetailsId = result.ReturnedData.FinancialDetailsId });
     }
@@ -45,9 +47,9 @@ public class FinancialDetailsController : Controller
     }
 
     [HttpPost("{financialDetailsId}/land-status")]
-    public async Task<IActionResult> LandStatus(Guid id, FinancialDetailsViewModel model)
+    public async Task<IActionResult> LandStatus(Guid financialDetailsId, FinancialDetailsViewModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvidePurchasePriceCommand(FinancialDetailsId.From(id), model.PurchasePrice, model.IsPurchasePriceKnown ?? false));
+        var result = await _mediator.Send(new ProvidePurchasePriceCommand(FinancialDetailsId.From(financialDetailsId), model.PurchasePrice), cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -56,6 +58,6 @@ public class FinancialDetailsController : Controller
             return View("LandStatus", model);
         }
 
-        return View(null, id);
+        return RedirectToAction(nameof(LandStatus), new { FinancialDetailsId = financialDetailsId });
     }
 }
