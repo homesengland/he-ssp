@@ -17,6 +17,6 @@ namespace HE.CRM.Model.CrmSerialiedParameters
         public string subject { get; set; }
         public string recipientEmail { get; set; }
         // Additional
-        public string contactDetails { get; set; }
+        public string username { get; set; }
     }
 }
