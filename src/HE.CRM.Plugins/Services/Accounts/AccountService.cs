@@ -138,7 +138,7 @@ namespace HE.CRM.Plugins.Services.Accounts
                 else
                 {
                     var contacts = _contactRepository.GetContactsForOrganisation(target.Id);
-                    if (contacts != null)
+                    if (contacts != null && contacts.Count > 0)
                     {
                         TracingService.Trace("Send to users");
                         foreach (var contact in contacts)
