@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.WWW.Views.Organization;
+namespace HE.Investments.Account.WWW.Views.Organisation;
 
 public static class OrganizationPageTitles
 {
