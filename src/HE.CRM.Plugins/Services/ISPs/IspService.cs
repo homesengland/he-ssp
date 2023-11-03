@@ -56,10 +56,10 @@ namespace HE.CRM.Plugins.Services.ISPs
                 }
 
                 var siteDetailsRelatedToLoan = _siteDetailsRepository.GetSiteDetailRelatedToLoanApplication(target.invln_Loanapplication);
-                if (siteDetailsRelatedToLoan != null)
+                if (siteDetailsRelatedToLoan.Any())
                 {
                     var programme = string.Empty;
-                    switch (siteDetailsRelatedToLoan.First().invln_Programme.Value)
+                    switch (siteDetailsRelatedToLoan.First().invln_Programme?.Value)
                     {
                         case (int)invln_Programme.LevellingUpHomeBuildFund:
                             programme = "Leveling Up Home Build Fund";
