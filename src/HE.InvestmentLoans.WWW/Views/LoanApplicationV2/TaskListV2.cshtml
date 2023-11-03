@@ -21,13 +21,13 @@
 @if (Model.Status is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
 {
     <gds-div-hint class="govuk-grid-column-full govuk-!-margin-bottom-2" id="last-saved-label">
-        Last saved on @DateHelper.DisplayAsUkFormatDateTime(Model.DisplayDate) @(!string.IsNullOrEmpty(Model.LastModifiedBy) ? $"by {Model.LastModifiedBy}" : string.Empty)
+        Last saved on @DateHelper.DisplayAsUkFormatDateTime(Model.LastSavedOn) @(!string.IsNullOrEmpty(Model.LastModifiedBy) ? $"by {Model.LastModifiedBy}" : string.Empty)
     </gds-div-hint>
 }
 else
 {
     <gds-div-hint class="govuk-grid-column-full govuk-!-margin-bottom-2" id="submitted-on-label">
-        Submitted on @DateHelper.DisplayAsUkFormatDateTime(Model.DisplayDate)
+        Submitted on @DateHelper.DisplayAsUkFormatDateTime(Model.SubmittedOn)
     </gds-div-hint>
 }
 <div>

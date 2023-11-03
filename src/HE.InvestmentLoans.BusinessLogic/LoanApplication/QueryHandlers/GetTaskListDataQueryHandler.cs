@@ -37,7 +37,8 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
                 loanApplication.ProjectsSection.Projects
                     .Select(x => new ProjectSection(x.Id.Value, x.Name.Value, MapToSectionStatus(loanApplication.ExternalStatus, x.Status)))
                     .ToArray()),
-            loanApplication.ReturnTaskListDisplayDate() ?? DateTime.MinValue,
+            loanApplication.LastModificationDate ?? loanApplication.CreatedOn ?? DateTime.MinValue,
+            loanApplication.SubmittedOn ?? DateTime.MinValue,
             loanApplication.LastModifiedBy);
     }
 

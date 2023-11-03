@@ -148,22 +148,6 @@ public class LoanApplicationEntity : DomainEntity
         return ProjectsSection.TotalHomesBuilt() >= minimumHomesToBuild;
     }
 
-    public DateTime? ReturnTaskListDisplayDate()
-    {
-        DateTime? taskListDisplayDate;
-
-        if (ExternalStatus is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
-        {
-            taskListDisplayDate = LastModificationDate ?? CreatedOn;
-        }
-        else
-        {
-            taskListDisplayDate = SubmittedOn;
-        }
-
-        return taskListDisplayDate;
-    }
-
     private bool IsReadyToSubmit()
     {
         return ProjectsSection.IsCompleted() && Funding.IsCompleted() && Security.IsCompleted() && CompanyStructure.IsCompleted();
