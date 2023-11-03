@@ -47,6 +47,7 @@ public class GetLoanApplicationQueryHandler : IRequestHandler<GetLoanApplication
             Security = securityResponse.ViewModel,
             ReferenceNumber = loanApplication.ReferenceNumber,
             Projects = projects.Projects.Select(project => ProjectMapper.MapToViewModel(project, loanApplication.Id)),
+            WasSubmittedPreviously = loanApplication.WasSubmitted(),
         };
 
         return new GetLoanApplicationQueryResponse(viewModel);

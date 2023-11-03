@@ -41,4 +41,9 @@ public class NotificationService : INotificationService
 
         await _cacheService.SetValueAsync(key, notificationModel);
     }
+
+    public Task NotifySuccess(NotificationBodyType notificationBodyType)
+    {
+        return NotifySuccess(notificationBodyType, null);
+    }
 }

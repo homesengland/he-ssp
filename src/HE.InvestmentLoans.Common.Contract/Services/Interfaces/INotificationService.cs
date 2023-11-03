@@ -6,6 +6,6 @@ namespace HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 public interface INotificationService
 {
     public Task NotifySuccess(NotificationBodyType notificationBodyType, IDictionary<NotificationServiceKeys, string>? valuesToDisplay);
-
+    Task NotifySuccess(NotificationBodyType notificationBodyType);
     public Tuple<bool, NotificationModel?> Pop();
 }

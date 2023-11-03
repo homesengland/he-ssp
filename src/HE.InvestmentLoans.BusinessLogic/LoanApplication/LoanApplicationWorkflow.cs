@@ -20,6 +20,7 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
         LoanPurpose,
         TaskList,
         CheckApplication,
+        ResubmitApplication,
         ApplicationSubmitted,
         Ineligible,
         Withdraw,
@@ -111,6 +112,10 @@ public class LoanApplicationWorkflow : IStateRouting<LoanApplicationWorkflow.Sta
 
         _machine.Configure(State.CheckApplication)
             .Permit(Trigger.Continue, State.ApplicationSubmitted)
+            .Permit(Trigger.Back, State.TaskList);
+
+        _machine.Configure(State.ResubmitApplication)
+            .Permit(Trigger.Continue, State.TaskList)
             .Permit(Trigger.Back, State.TaskList);
 
         _machine.Configure(State.ApplicationDashboard)
