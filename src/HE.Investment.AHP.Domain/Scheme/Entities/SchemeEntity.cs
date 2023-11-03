@@ -18,6 +18,8 @@ public class SchemeEntity
 
     public SalesRisk? SalesRisk { get; private set; }
 
+    public HousingNeeds? HousingNeeds { get; private set; }
+
     public void ChangeFunding(SchemeFunding funding)
     {
         Funding = funding;
@@ -31,5 +33,10 @@ public class SchemeEntity
     public void ChangeSalesRisk(SalesRisk salesRisk)
     {
         SalesRisk = salesRisk;
+    }
+
+    public void ChangeHousingNeeds(HousingNeeds housingNeeds)
+    {
+        HousingNeeds = housingNeeds;
     }
 }

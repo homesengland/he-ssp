@@ -13,8 +13,13 @@ builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 builder.Services.AddCommonPartialsViews();
-var mvcBuilder = builder.Services.AddControllersWithViews(options =>
-    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
+var mvcBuilder = builder.Services
+    .AddControllersWithViews(options =>
+        options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()))
+    .AddMvcOptions(options =>
+        options.Filters.Add(
+            new ResponseCacheAttribute { NoStore = true, Location = ResponseCacheLocation.None }));
+
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 
 var app = builder.Build();

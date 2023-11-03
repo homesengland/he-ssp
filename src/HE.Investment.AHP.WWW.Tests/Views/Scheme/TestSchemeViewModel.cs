@@ -12,5 +12,7 @@ public static class TestSchemeViewModel
             345.45m,
             100,
             "test affordability evidence",
-            "some sales risk");
+            "some sales risk",
+            "type and tenure justification",
+            "scheme and proposal justification");
 }
