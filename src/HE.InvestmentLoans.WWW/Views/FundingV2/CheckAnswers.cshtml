@@ -1,5 +1,6 @@
 @model HE.InvestmentLoans.Contract.Funding.FundingViewModel
 @using HE.InvestmentLoans.Contract.Funding.Enums;
+@using HE.Investments.Common.Gds
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="FundingV2" asp-action="CheckAnswersPost" asp-route-id="@Model.LoanApplicationId" asp-method="post" novalidate>

@@ -4,6 +4,7 @@ using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.Enums;
 using He.AspNetCore.Mvc.Gds.Components.Extensions;
 using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios;
+using HE.Investments.Common.Gds;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Primitives;
