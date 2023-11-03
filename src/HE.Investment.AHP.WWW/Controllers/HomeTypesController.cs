@@ -187,10 +187,19 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     }
 
     [WorkflowState(HomeTypesWorkflowState.HomesForOlderPeople)]
-    [HttpGet("{homeTypeId}/HomesForOlder")]
-    public IActionResult HomesForOlderPeople(string homeTypeId)
+    [HttpGet("{homeTypeId}/HomesForOlderPeople")]
+    public async Task<IActionResult> HomesForOlderPeople([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        return View();
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var olderPeopleHomeType = await _mediator.Send(new GetOlderPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
+        return View(new HomesForOlderPeopleModel(application.Name, olderPeopleHomeType.HomeTypeName) { HousingType = olderPeopleHomeType.HousingType, });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.HomesForOlderPeople)]
+    [HttpPost("{homeTypeId}/HomesForOlderPeople")]
+    public async Task<IActionResult> HomesForOlderPeople([FromRoute] string applicationId, string homeTypeId, HomesForOlderPeopleModel model, CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(new SaveOlderPeopleHousingTypeCommand(applicationId, homeTypeId, model.HousingType), model, cancellationToken);
     }
 
     protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object routeData = null)

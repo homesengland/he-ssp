@@ -4,4 +4,5 @@ public enum SchemeWorkflowState
 {
     Funding = 1,
     Affordability,
+    SalesRisk,
 }

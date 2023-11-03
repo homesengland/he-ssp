@@ -21,20 +21,10 @@
     <gds-back-link href="@Url.Action("Name", "Application", new { schemeId = Model.Id })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <span class="govuk-caption-m">
-        @Model.Name
-    </span>
     <form asp-controller="Application" asp-action="Tenure" asp-method="post" novalidate>
+        <vc:form-header caption="@Model.Name" title="What is the tenure of the homes on this application?"/>
         <gds-field-set role="group">
             <gds-div-form-group invalid="isTenureInvalid">
-                <gds-legend size="ControlSize.L">
-                    <gds-fieldset-heading>
-                        What is the tenure of the homes on this application?
-                    </gds-fieldset-heading>
-                </gds-legend>
-                <gds-div-hint class="govuk-!-margin-bottom-8">
-                    Each application must be for a single tenure. If you are developing a multi-tenure site, each tenure must be applied for within a separate application.
-                </gds-div-hint>
 
                 @Html.HiddenFor(m => m.Id)
 
@@ -59,9 +49,7 @@
             Tenure refers to the conditions around ownership or rental of the properties. For example, Shared Ownership or Social Rent. We provide more information on eligible tenure for affordable housing on our website.
         </gds-details-summary>
 
-        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="save-and-continue-button">
-            Save and continue
-        </button>
+        <vc:form-button/>
     </form>
 
 </gds-div-grid-column-two-thirds>

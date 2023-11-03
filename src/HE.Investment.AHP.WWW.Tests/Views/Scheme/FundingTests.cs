@@ -10,7 +10,7 @@ public class FundingTests : ViewTestBase
     private const string ViewPath = "/Views/Scheme/Funding.cshtml";
     private const string FundingError = "Funding error";
     private const string HousesError = "Houses error";
-    private static readonly SchemeViewModel Model = new("A1", "App Name", "1", null, null, null);
+    private static readonly SchemeViewModel Model = TestSchemeViewModel.Test;
 
     [Fact]
     public async Task ShouldDisplayView_WhenThereAreNoErrors()

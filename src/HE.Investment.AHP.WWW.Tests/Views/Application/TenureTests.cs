@@ -40,7 +40,6 @@ public class TenureTests : ViewTestBase
         document
             .HasElementWithText("span", model.Name)
             .HasElementWithText("h1", "What is the tenure of the homes on this application?")
-            .HasElementWithText("div", "Each application must be for a single tenure. If you are developing a multi-tenure site, each tenure must be applied for within a separate application.")
             .HasSummaryDetails("Tenure refers to the conditions around ownership or rental of the properties")
             .HasElementWithText("button", "Save and continue")
             .HasSummaryErrorMessage(nameof(ApplicationBasicModel.Tenure), errorMessage, !string.IsNullOrEmpty(errorMessage))

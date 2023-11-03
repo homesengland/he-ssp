@@ -30,6 +30,8 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public DisabledPeopleHomeTypeDetailsSegmentEntity DisabledPeopleHomeTypeDetails => GetSegment<DisabledPeopleHomeTypeDetailsSegmentEntity>();
 
+    public OlderPeopleHomeTypeDetailsSegmentEntity OlderPeopleHomeTypeDetails => GetSegment<OlderPeopleHomeTypeDetailsSegmentEntity>();
+
     public bool IsNew => Id.IsNotProvided();
 
     public void ChangeName(string? name)
@@ -37,9 +39,19 @@ public class HomeTypeEntity : IHomeTypeEntity
         Name = name != null ? new HomeTypeName(name) : null;
     }
 
-    public void ChangeHousingType(HousingType housingType)
+    public void ChangeHousingType(HousingType newHousingType)
     {
-        HousingType = housingType;
+        if (HousingType == HousingType.HomesForOlderPeople && newHousingType != HousingType.HomesForOlderPeople)
+        {
+            UpdateSegment(new OlderPeopleHomeTypeDetailsSegmentEntity());
+        }
+
+        if (HousingType == HousingType.HomesForDisabledAndVulnerablePeople && newHousingType != HousingType.HomesForDisabledAndVulnerablePeople)
+        {
+            UpdateSegment(new DisabledPeopleHomeTypeDetailsSegmentEntity());
+        }
+
+        HousingType = newHousingType;
     }
 
     public HomeTypeEntity Duplicate(HomeTypeName newName)
@@ -67,5 +79,12 @@ public class HomeTypeEntity : IHomeTypeEntity
         where TSegment : IHomeTypeSegmentEntity
     {
         return (TSegment)_segments[GetSegmentType(typeof(TSegment))];
+    }
+
+    private void UpdateSegment<TSegment>(TSegment segment)
+        where TSegment : IHomeTypeSegmentEntity
+    {
+        var segmentType = GetSegmentType(typeof(TSegment));
+        _segments[segmentType] = segment;
     }
 }

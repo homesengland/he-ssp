@@ -1,9 +1,12 @@
 @using HE.Investments.Common.Gds
 @model (string Caption, string Title)
 
-<span class="govuk-caption-l">
-    @Model.Caption
-</span>
+@if (!string.IsNullOrWhiteSpace(Model.Caption))
+{
+    <span class="govuk-caption-l">
+        @Model.Caption
+    </span>
+}
 <gds-legend size="ControlSize.L">
     <gds-fieldset-heading>
         @Model.Title
