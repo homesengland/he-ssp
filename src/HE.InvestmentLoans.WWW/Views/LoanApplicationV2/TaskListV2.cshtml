@@ -4,17 +4,36 @@
 @using HE.InvestmentLoans.Common.Extensions
 @using HE.InvestmentLoans.Contract.Application.Enums
 
-<gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.Id })" text="Back to application dashboard" class="govuk-grid-column-full"></gds-back-link>
+<gds-back-link href="@Url.Action("Back", "LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.Id })" text="Back to application dashboard" class="govuk-!-margin-bottom-8 govuk-grid-column-full"></gds-back-link>
 
-    <gds-div-grid-column-two-thirds>
-        @await Html.PartialAsync("_Notification")
-    </gds-div-grid-column-two-thirds>
-<gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-2 govuk-!-margin-top-8 govuk-grid-column-full">
-    Development loan application
+<gds-div-grid-column-two-thirds>
+    @await Html.PartialAsync("_Notification")
+</gds-div-grid-column-two-thirds>
+
+<span class="govuk-caption-m govuk-!-margin-left-3">
+    @Model.OrganisationName
+</span>
+
+<gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-1 govuk-grid-column-full">
+    @Model.ApplicationName.Value
 </gds-h1>
-<gds-div-hint class="govuk-!-margin-bottom-8 govuk-grid-column-full" id="last-saved-label">
-    Last saved on @DateHelper.DisplayAsUkFormatDateTime(Model.LastSavedOn) @(!string.IsNullOrEmpty(Model.LastModifiedBy) ? $"by {Model.LastModifiedBy}" : string.Empty)
-</gds-div-hint>
+
+@if (Model.Status is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
+{
+    <gds-div-hint class="govuk-grid-column-full govuk-!-margin-bottom-2" id="last-saved-label">
+        Last saved on @DateHelper.DisplayAsUkFormatDateTime(Model.LastSavedOn) @(!string.IsNullOrEmpty(Model.LastModifiedBy) ? $"by {Model.LastModifiedBy}" : string.Empty)
+    </gds-div-hint>
+}
+else
+{
+    <gds-div-hint class="govuk-grid-column-full govuk-!-margin-bottom-2" id="submitted-on-label">
+        Submitted on @DateHelper.DisplayAsUkFormatDateTime(Model.SubmittedOn)
+    </gds-div-hint>
+}
+<div>
+    <application-status-tag application-status="@Model.Status" additional-classes="govuk-!-static-margin-left-3"></application-status-tag>
+</div>
+
 <gds-div-grid-column-two-thirds>
     <ul class="app-task-list">
         <li>
@@ -25,7 +44,7 @@
             <ul class="app-task-list__items">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("StartCompanyStructure","CompanyStructureV2", new { id = Model.Id })" id="company-structure-section-link">
+                        <a href="@Url.Action("StartCompanyStructure", "CompanyStructureV2", new { id = Model.Id })" id="company-structure-section-link">
                             Complete company information
                         </a>
                     </span>
@@ -41,19 +60,19 @@
             <ul class="app-task-list__items">
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("StartFunding","FundingV2", new {id = Model.Id})" id="funding-section-link">
+                        <a href="@Url.Action("StartFunding", "FundingV2", new { id = Model.Id })" id="funding-section-link">
                             Provide details about funding
                         </a>
                     </span>
-                   <section-status-tag status=@Model.Sections.Funding additional-classes="app-task-list__tag"></section-status-tag>
+                    <section-status-tag status=@Model.Sections.Funding additional-classes="app-task-list__tag"></section-status-tag>
                 </li>
                 <li class="app-task-list__item">
                     <span class="app-task-list__task-name">
-                        <a href="@Url.Action("StartSecurity","Security", new {id = Model.Id})" id="security-section-link">
+                        <a href="@Url.Action("StartSecurity", "Security", new { id = Model.Id })" id="security-section-link">
                             Provide details about security
                         </a>
                     </span>
-                   <section-status-tag status=@Model.Sections.Security additional-classes="app-task-list__tag"></section-status-tag>
+                    <section-status-tag status=@Model.Sections.Security additional-classes="app-task-list__tag"></section-status-tag>
                 </li>
             </ul>
         </li>
@@ -69,7 +88,7 @@
                         <div class="task-list-grid-container">
                             <span class="app-task-list__task-name task-list-project-name">
                                 <a href="@Url.Action("StartProject", "Project", new { id = Model.Id, projectId = project.Id })">
-                                    @if(project.Name.IsNotProvided())
+                                    @if (project.Name.IsNotProvided())
                                     {
                                         @ProjectName.Default.Value
                                     }
@@ -99,7 +118,7 @@
                     <li class="app-task-list__item">
                         <span class="app-task-list__task-name">
                             <span class="app-task-list__task-name">
-                                <a id="add-project-link" href="@Url.Action("StartProject", "Project", new {id = Model.Id})">
+                                <a id="add-project-link" href="@Url.Action("StartProject", "Project", new { id = Model.Id })">
                                     Add another
                                 </a>
                             </span>
@@ -110,26 +129,9 @@
             </ul>
         </li>
     </ul>
-    <gds-h2 size="ControlSize.M">Check and submit</gds-h2>
-    <p>You must complete all sections before you can submit your application.</p>
-    <form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.Id" asp-method="post" novalidate>
-        @if (Model.CanBeSubmitted)
-        {
-            <gds-button data-module="govuk-button" name="action" value="Continue" id="submit-application">
-                Check and submit application
-            </gds-button>
 
-        }
-        else
-        {
-            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="submit-application">
-                Check and submit application
-            </button>
-        }
-    </form>
-    <gds-link href="#">
-        Report a problem with this page
-    </gds-link>
+    @await Html.PartialAsync("Partials/_TaskListSubmitSection", Model)
+
 </gds-div-grid-column-two-thirds>
 
 <div class="govuk-grid-column-one-third-from-desktop govuk-grid-column-two-thirds govuk-!-margin-top-6">
@@ -139,10 +141,10 @@
             Get help
         </h2>
         <p class="govuk-body-s">
-            <span class="govuk-!-font-weight-bold">Telephone</span> <br />
-            0800 389 2500<br />
-            Monday to Friday 8:30 am to 5:30 pm<br />
-            (except public holidays)<br />
+            <span class="govuk-!-font-weight-bold">Telephone</span> <br/>
+            0800 389 2500<br/>
+            Monday to Friday 8:30 am to 5:30 pm<br/>
+            (except public holidays)<br/>
             Free of charge
         </p>
     </aside>
