@@ -1,0 +1,51 @@
+@using HE.InvestmentLoans.Contract.Projects
+@using HE.InvestmentLoans.Contract.Projects.ViewModels;
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Fieldset
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Legend
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios
+@using HE.Investments.Common.WWW.Extensions
+@model HE.InvestmentLoans.Contract.Projects.ViewModels.LocalAuthoritiesViewModel;
+@{
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(LocalAuthoritiesViewModel.Phrase));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Project" asp-action="LocalAuthoritySearch" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.ProvideLocalAuthority})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+
+        <gds-h1 size="ControlSize.L">
+            @ProjectPageTitles.LocalAuthority
+        </gds-h1>
+
+        <gds-p class="govuk-!-margin-bottom-0">
+            Search for your local authority. If your site is located in more than one local authority, search for the local authority where you have planning permission.
+        </gds-p>
+
+        <gds-field-set>
+            <gds-h1 size="@ControlSize.M" class="govuk-!-margin-top-9">
+                What is your local authority?
+            </gds-h1>
+
+            <gds-div-hint class="govuk-!-margin-top-6 govuk-!-margin-bottom-6">
+                Enter all or part of your authority name.
+            </gds-div-hint>
+
+            <gds-input asp-hiddenlabeltext="Name"
+                       govuk-formgroup-asp-for="Phrase"
+                       type="text" />
+
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="search-organization-button">
+                Search
+            </button>
+            @Html.HiddenFor(c => c.ProjectId)
+            @Html.HiddenFor(c => c.ApplicationId)
+        </gds-field-set>
+
+    </form>
+</gds-div-grid-column-two-thirds>

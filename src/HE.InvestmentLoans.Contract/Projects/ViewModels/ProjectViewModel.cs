@@ -76,6 +76,8 @@ public class ProjectViewModel : ICompletedSectionViewModel
 
     public string? DeleteProject { get; set; }
 
+    public string? LocalAuthorityName { get; set; }
+
     public SectionStatus Status { get; set; }
 
     public bool IsReadOnly()
