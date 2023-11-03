@@ -18,7 +18,9 @@ public class AddSchemeWithFundingCommandHandler : IRequestHandler<AddSchemeWithF
 
     public async Task<OperationResult<SchemeId?>> Handle(AddSchemeWithFundingCommand request, CancellationToken cancellationToken)
     {
-        var scheme = new SchemeEntity(new SchemeId(Guid.NewGuid().ToString()), new SchemeFunding(request.RequiredFunding, request.HousesToDeliver));
+        var scheme = new SchemeEntity(
+            new SchemeId(Guid.NewGuid().ToString()),
+            new SchemeFunding(request.RequiredFunding, request.HousesToDeliver));
 
         await _repository.Save(scheme, cancellationToken);
 

@@ -3,6 +3,7 @@ using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Organization.Commands;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
 using HE.Investments.Common.WWW.Models;

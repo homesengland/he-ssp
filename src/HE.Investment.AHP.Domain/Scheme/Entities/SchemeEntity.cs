@@ -14,8 +14,15 @@ public class SchemeEntity
 
     public SchemeFunding Funding { get; private set; }
 
+    public AffordabilityEvidence? AffordabilityEvidence { get; private set; }
+
     public void ChangeFunding(SchemeFunding funding)
     {
         Funding = funding;
+    }
+
+    public void ChangeAffordabilityEvidence(AffordabilityEvidence affordabilityEvidence)
+    {
+        AffordabilityEvidence = affordabilityEvidence;
     }
 }

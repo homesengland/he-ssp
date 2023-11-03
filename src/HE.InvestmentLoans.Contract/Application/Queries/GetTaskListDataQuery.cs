@@ -6,7 +6,8 @@ namespace HE.InvestmentLoans.Contract.Application.Queries;
 
 public record GetTaskListDataQuery(LoanApplicationId Id) : IRequest<GetTaskListDataQueryResponse>;
 
-public record GetTaskListDataQueryResponse(LoanApplicationId Id, ApplicationStatus Status, bool CanBeSubmitted, Sections Sections, DateTime LastSavedOn, string LastModifiedBy);
+public record GetTaskListDataQueryResponse(LoanApplicationId Id, LoanApplicationName ApplicationName, string OrganisationName, ApplicationStatus Status,
+    bool CanBeSubmitted, bool WasSubmitted, Sections Sections, DateTime LastSavedOn, DateTime SubmittedOn, string LastModifiedBy);
 
 public record Sections(SectionStatus CompanyStructure, SectionStatus Funding, SectionStatus Security, ProjectSection[] Projects);
 

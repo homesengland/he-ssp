@@ -1,9 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
+using FluentAssertions;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
+using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
+using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using Xunit;
 using Xunit.Extensions.Ordering;
@@ -62,6 +65,22 @@ public class SubmitApplicationIntegrationTests : IntegrationTest
             .HasGdsButton("application-submitted-to-dashboard");
 
         UserData.SetSubmittedLoanApplicationId(_applicationLoanId);
+    }
+
+    [Fact(Skip = LoansConfig.SkipTest)]
+    [Order(3)]
+    public async Task Order03_ShouldDisplaySubmittedOnDate_WhenApplicationWasSubmitted()
+    {
+        // given && when
+        var taskListPage = await TestClient.NavigateTo(ApplicationPagesUrls.TaskList(_applicationLoanId));
+
+        // then
+        taskListPage
+            .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
+            .HasTitle(UserData.LoanApplicationName)
+            .ExtractSubmittedOnDateFromTaskListPage(out var dateTime);
+
+        dateTime.Should().BeCloseTo(DateTime.UtcNow.ConvertUtcToUkLocalTime(), TimeSpan.FromMinutes(2));
     }
 
     private async Task RemoveNonCompletedProjectsFrom(IHtmlDocument taskList)

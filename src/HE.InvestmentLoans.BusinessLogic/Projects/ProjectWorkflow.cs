@@ -123,9 +123,13 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             .Permit(Trigger.Back, ProjectState.PlanningRefEnter);
 
         _machine.Configure(ProjectState.Location)
-            .Permit(Trigger.Continue, ProjectState.Ownership)
+            .Permit(Trigger.Continue, ProjectState.ProvideLocalAuthority)
             .PermitIf(Trigger.Back, ProjectState.PlanningPermissionStatus, () => _model.PlanningReferenceNumberExists == CommonResponse.Yes)
             .PermitIf(Trigger.Back, ProjectState.PlanningRef, () => _model.PlanningReferenceNumberExists != CommonResponse.Yes);
+
+        _machine.Configure(ProjectState.ProvideLocalAuthority)
+            .Permit(Trigger.Continue, ProjectState.Ownership)
+            .Permit(Trigger.Back, ProjectState.Location);
 
         _machine.Configure(ProjectState.Ownership)
             .PermitIf(Trigger.Continue, ProjectState.Additional, () => _model.Ownership == CommonResponse.Yes)

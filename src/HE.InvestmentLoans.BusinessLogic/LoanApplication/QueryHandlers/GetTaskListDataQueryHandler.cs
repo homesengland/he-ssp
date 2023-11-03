@@ -20,12 +20,16 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
 
     public async Task<GetTaskListDataQueryResponse> Handle(GetTaskListDataQuery request, CancellationToken cancellationToken)
     {
-        var loanApplication = await _applicationRepository.GetLoanApplication(request.Id, await _loanUserContext.GetSelectedAccount(), cancellationToken);
+        var userAccount = await _loanUserContext.GetSelectedAccount();
+        var loanApplication = await _applicationRepository.GetLoanApplication(request.Id, userAccount, cancellationToken);
 
         return new GetTaskListDataQueryResponse(
             loanApplication.Id,
+            loanApplication.Name,
+            userAccount.AccountName,
             loanApplication.ExternalStatus,
             loanApplication.CanBeSubmitted(),
+            loanApplication.WasSubmitted(),
             new Sections(
                 MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.CompanyStructure.Status),
                 MapToSectionStatus(loanApplication.ExternalStatus, loanApplication.Funding.Status),
@@ -34,6 +38,7 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
                     .Select(x => new ProjectSection(x.Id.Value, x.Name.Value, MapToSectionStatus(loanApplication.ExternalStatus, x.Status)))
                     .ToArray()),
             loanApplication.LastModificationDate ?? loanApplication.CreatedOn ?? DateTime.MinValue,
+            loanApplication.SubmittedOn ?? DateTime.MinValue,
             loanApplication.LastModifiedBy);
     }
 
@@ -42,7 +47,6 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
         return status switch
         {
             ApplicationStatus.Withdrawn => SectionStatus.Withdrawn,
-            ApplicationStatus.ApplicationSubmitted => SectionStatus.Submitted,
             _ => sectionStatus,
         };
     }
