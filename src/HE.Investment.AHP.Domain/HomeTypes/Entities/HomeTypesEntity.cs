@@ -27,7 +27,10 @@ public class HomeTypesEntity
         var homeType = new HomeTypeEntity(
             segments: new IHomeTypeSegmentEntity[]
             {
-                new HomeInformationSegmentEntity(), new DisabledPeopleHomeTypeDetailsSegmentEntity(), new OlderPeopleHomeTypeDetailsSegmentEntity(),
+                new HomeInformationSegmentEntity(),
+                new DisabledPeopleHomeTypeDetailsSegmentEntity(),
+                new OlderPeopleHomeTypeDetailsSegmentEntity(),
+                new DesignPlansSegmentEntity(),
             });
         _homeTypes.Add(homeType);
 

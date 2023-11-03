@@ -22,7 +22,7 @@ internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQue
             new[] { HomeTypeSegmentType.HomeInformation },
             cancellationToken);
 
-        return homeTypes.HomeTypes.Select(Map).ToList();
+        return homeTypes.HomeTypes.Select(Map).OrderBy(x => x.Name).ToList();
     }
 
     private static HomeTypeDetails Map(IHomeTypeEntity entity)
