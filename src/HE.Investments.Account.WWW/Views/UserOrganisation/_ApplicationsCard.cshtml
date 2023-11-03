@@ -1,0 +1,46 @@
+@model HE.Investments.Account.WWW.Models.UserOrganisation.UserApplicationsModel
+@{
+    int itemsToDisplayCount = 5;
+    var itemsToDisplay = Model.Applications.Take(itemsToDisplayCount).ToList();
+    int restItemsCount = Model.Applications.Count() - itemsToDisplayCount;
+}
+@if (itemsToDisplay.Any())
+{
+    <div class="govuk-summary-card" data-testid=@($"user-organisation-programme-card-{Model.Header}")>
+        <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">@Model.Header</h2>
+        </div>
+        <div class="govuk-summary-card__content">
+            <dl class="govuk-summary-list">
+                <gds-h3 size="ControlSize.S">
+                    Applications
+                </gds-h3>
+                @foreach (var application in itemsToDisplay)
+                {
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            <strong>
+                                <a href="@Url.Action(Model.Action, Model.Controller, new { id = application.Id })">@application.ApplicationName</a>
+                            </strong>
+                        </dt>
+                        <dd class="govuk-summary-list__actions">
+                            <application-status-tag application-status="@application.Status"></application-status-tag>
+                        </dd>
+                    </div>
+                }
+                <div class="govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+                    @if (restItemsCount > 0)
+                    {
+                        <gds-p>
+                            @restItemsCount other(s)
+                        </gds-p>
+                    }
+                    @* TODO: Move it to configuration *@
+                    <a class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" href="@Url.Action("Index", "Home")">
+                        View all
+                    </a>
+                </div>
+            </dl>
+        </div>
+    </div>
+}

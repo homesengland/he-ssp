@@ -1,6 +1,6 @@
 using HE.Investments.Common.WWW.Models;
 
-namespace HE.InvestmentLoans.WWW.Models.UserOrganisation;
+namespace HE.Investments.Account.WWW.Models.UserOrganisation;
 
 public record UserOrganisationModel(
     string OrganisationName,

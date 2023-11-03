@@ -1,20 +1,16 @@
 @using HE.InvestmentLoans.Common.Extensions
 @using HE.InvestmentLoans.Contract.Organization.ValueObjects
-@using HE.InvestmentLoans.WWW.Views.Organization
-@using HE.Investments.Common.Gds
-@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Account.WWW.Views.Organisation
 @using HE.Investments.Common.WWW.Models
 @model HE.Investments.Common.WWW.Models.ConfirmModel<OrganizationBasicDetails>
-@inject ModelExpressionProvider ModelProvider
 @{
     ViewData["Title"] = "Organization Select";
-    var (radioInvalid, _) = ViewData.ModelState.GetErrors(ModelProvider.GetExpressionText((ConfirmModel<OrganizationBasicDetails> x) => x.Response));
 }
 
 <gds-div-grid-column-two-thirds>
-    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganization", "Organization")">Back</gds-back-link>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganization", "Organisation")">Back</gds-back-link>
 
-    <partial name="_ErrorSummaryPartial" model="null"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
     <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
         @OrganizationPageTitles.ConfirmYourSelection
@@ -44,7 +40,7 @@
             <p class="govuk-body govuk-!-margin-bottom-6">Companies house number: @Model.ViewModel.CompaniesHouseNumber</p>
         </li>
     </gds-ul>
-    <form asp-controller="Organization" asp-action="ConfirmOrganizationPost" asp-route-organizationNumberOrId=@(Model.ViewModel.OrganisationId ?? Model.ViewModel.CompaniesHouseNumber) asp-method="post" novalidate>
+    <form asp-controller="Organisation" asp-action="ConfirmOrganizationPost" asp-route-organizationNumberOrId=@(Model.ViewModel.OrganisationId ?? Model.ViewModel.CompaniesHouseNumber) asp-method="post" novalidate>
         <gds-div-form-group>
             <gds-field-set>
                 <gds-legend class="govuk-fieldset__legend--m">

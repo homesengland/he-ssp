@@ -2,25 +2,21 @@ using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.UserOrganisation.Commands;
 using HE.InvestmentLoans.Contract.UserOrganisation.Queries;
-using HE.InvestmentLoans.WWW.Attributes;
-using HE.InvestmentLoans.WWW.Models;
-using HE.InvestmentLoans.WWW.Models.UserOrganisation;
-using HE.InvestmentLoans.WWW.Utils;
-using HE.Investments.Common.WWW.Models;
+using HE.Investments.Account.WWW.Controllers.Consts;
+using HE.Investments.Account.WWW.Models.UserOrganisation;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HE.InvestmentLoans.WWW.Controllers;
+namespace HE.Investments.Account.WWW.Controllers;
 
 [Route("user-organisation")]
-[AuthorizeWithCompletedProfile]
-public class UserOrganisationController : BaseController
+public class UserOrganisationController : Controller
 {
     private readonly IMediator _mediator;
 
     public UserOrganisationController(IMediator mediator)
-        : base(mediator)
     {
         _mediator = mediator;
     }
@@ -44,10 +40,10 @@ public class UserOrganisationController : BaseController
                             .ToList()),
                 },
                 new List<ProgrammeModel> { ProgrammesConsts.LoansProgramme },
-                new List<ActionModel>
+                new List<Common.WWW.Models.ActionModel>
                 {
-                    new ActionModel($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation"),
-                    new ActionModel($"Manage your account", string.Empty, "Dashboard"),
+                    new($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation"),
+                    new("Manage your account", string.Empty, "Dashboard"),
                 }));
     }
 
@@ -83,10 +79,11 @@ public class UserOrganisationController : BaseController
             viewModel.County,
             viewModel.Postcode);
 
-        return await ExecuteCommand(
+        return await this.ExecuteCommand(
+            _mediator,
             command,
             () => RedirectToAction(
-                nameof(UserOrganisationController.Details),
+                nameof(Details),
                 new ControllerName(nameof(UserOrganisationController)).WithoutPrefix()),
             () => View(viewModel),
             cancellationToken);

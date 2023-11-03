@@ -3,9 +3,7 @@ using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Organization.Commands;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
-using HE.InvestmentLoans.Contract.Projects.ViewModels;
-using HE.InvestmentLoans.WWW.Attributes;
-using HE.InvestmentLoans.WWW.Models;
+using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Utils;
 using HE.Investments.Organisation.CompaniesHouse;
@@ -13,17 +11,15 @@ using HE.Investments.Organisation.CompaniesHouse.Contract;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HE.InvestmentLoans.WWW.Controllers;
+namespace HE.Investments.Account.WWW.Controllers;
 
-[Route("organization")]
-[AuthorizeWithoutLinkedOrganiztionOnly]
-public class OrganizationController : BaseController
+[Route("organisation")]
+public class OrganisationController : Controller
 {
     private readonly IMediator _mediator;
     private readonly ICompaniesHouseApi _companiesHouseApi;
 
-    public OrganizationController(IMediator mediator, ICompaniesHouseApi companiesHouseApi)
-    : base(mediator)
+    public OrganisationController(IMediator mediator, ICompaniesHouseApi companiesHouseApi)
     {
         _mediator = mediator;
         _companiesHouseApi = companiesHouseApi;
@@ -75,7 +71,7 @@ public class OrganizationController : BaseController
         if (model.Response == CommonResponse.Yes)
         {
             await _mediator.Send(new LinkContactWithOrganizationCommand(new CompaniesHouseNumber(organizationNumberOrId)));
-            return RedirectToAction(nameof(HomeController.Dashboard), new ControllerName(nameof(HomeController)).WithoutPrefix());
+            return RedirectToAction(null);
         }
 
         return RedirectToAction(nameof(SearchOrganization));
@@ -116,12 +112,13 @@ public class OrganizationController : BaseController
             viewModel.County,
             viewModel.Postcode);
 
-        return await ExecuteCommand(
+        return await this.ExecuteCommand(
+            _mediator,
             command,
-            () => RedirectToAction(
+            onSuccess: () => RedirectToAction(
                 nameof(UserOrganisationController.Index),
                 new ControllerName(nameof(UserOrganisationController)).WithoutPrefix()),
-            () => View(viewModel),
+            onError: () => View(viewModel),
             cancellationToken);
     }
 }
