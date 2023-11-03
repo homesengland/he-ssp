@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;
 
-public class AffordabilityTests : ViewTestBase
+public class SalesRiskTests : ViewTestBase
 {
-    private const string ViewPath = "/Views/Scheme/Affordability.cshtml";
-    private const string AffordabilityEvidenceError = "Test error";
+    private const string ViewPath = "/Views/Scheme/SalesRisk.cshtml";
+    private const string SalesRiskError = "Test error";
     private static readonly SchemeViewModel Model = TestSchemeViewModel.Test;
 
     [Fact]
@@ -27,7 +27,7 @@ public class AffordabilityTests : ViewTestBase
     {
         // given
         var modelState = new ModelStateDictionary();
-        modelState.AddModelError(nameof(SchemeViewModel.AffordabilityEvidence), AffordabilityEvidenceError);
+        modelState.AddModelError(nameof(SchemeViewModel.SalesRisk), SalesRiskError);
 
         // when
         var document = await Render(ViewPath, Model, modelStateDictionary: modelState);
@@ -41,14 +41,14 @@ public class AffordabilityTests : ViewTestBase
     {
         document
             .HasElementWithText("span", Model.ApplicationName)
-            .HasElementWithText("h1", "Affordability of Shared Ownership")
-            .HasElementWithText("h2", "Tell us about any evidence and analysis you have that the homes will be affordable to the target market")
-            .HasInput("AffordabilityEvidence", value: Model.AffordabilityEvidence)
+            .HasElementWithText("h1", "Sales risk of Shared Ownership")
+            .HasElementWithText("h2", "Tell us your assessment of the sales risk and how you will mitigate this")
+            .HasInput("SalesRisk", value: Model.SalesRisk)
             .HasElementWithText("button", "Save and continue");
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)
     {
-        document.HasSummaryErrorMessage(nameof(SchemeViewModel.AffordabilityEvidence), AffordabilityEvidenceError, exist);
+        document.HasSummaryErrorMessage(nameof(SchemeViewModel.SalesRisk), SalesRiskError, exist);
     }
 }

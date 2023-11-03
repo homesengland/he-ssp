@@ -95,6 +95,28 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(SchemeWorkflowState.SalesRisk)]
+    [HttpGet("{schemeId}/sales-risk")]
+    public async Task<IActionResult> SalesRisk([FromRoute] string applicationId, string schemeId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var scheme = await _mediator.Send(new GetSchemeQuery(schemeId), cancellationToken);
+
+        return View("SalesRisk", CreateModel(applicationId, application.Name, scheme));
+    }
+
+    [WorkflowState(SchemeWorkflowState.SalesRisk)]
+    [HttpPost("{schemeId}/sales-risk")]
+    public async Task<IActionResult> SalesRisk(SchemeViewModel model, CancellationToken cancellationToken)
+    {
+        return await ExecuteCommand(
+            new ChangeSchemeSalesRiskCommand(model.SchemeId, model.SalesRisk),
+            model.ApplicationId,
+            nameof(SalesRisk),
+            model,
+            cancellationToken);
+    }
+
     protected override async Task<IStateRouting<SchemeWorkflowState>> Routing(SchemeWorkflowState currentState, object routeData = null)
     {
         return await Task.FromResult(new SchemeWorkflow(currentState));
@@ -108,7 +130,8 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             scheme?.SchemeId,
             scheme?.RequiredFunding,
             scheme?.HousesToDeliver,
-            scheme?.AffordabilityEvidence);
+            scheme?.AffordabilityEvidence,
+            scheme?.SalesRisk);
     }
 
     private async Task<IActionResult> ExecuteCommand(

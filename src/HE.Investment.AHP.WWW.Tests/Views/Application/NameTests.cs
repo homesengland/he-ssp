@@ -38,6 +38,7 @@ public class NameTests : ViewTestBase
     {
         document
             .HasElementWithText("h1", "Name your application")
+            .HasElementWithText("p", "Each application must be for a single tenure. If you are developing a multi-tenure site, each tenure must be applied for within a separate application.")
             .HasElementWithText("p", "Each application needs a unique name. You will not be able to edit this later.")
             .HasElementWithText("p", "You should include the tenure type within your application name. For example, Village Way – Affordable Rent or Village Way – Shared Ownership.")
             .HasElementWithText("button", "Continue")

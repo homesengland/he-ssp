@@ -16,6 +16,8 @@ public class SchemeEntity
 
     public AffordabilityEvidence? AffordabilityEvidence { get; private set; }
 
+    public SalesRisk? SalesRisk { get; private set; }
+
     public void ChangeFunding(SchemeFunding funding)
     {
         Funding = funding;
@@ -24,5 +26,10 @@ public class SchemeEntity
     public void ChangeAffordabilityEvidence(AffordabilityEvidence affordabilityEvidence)
     {
         AffordabilityEvidence = affordabilityEvidence;
+    }
+
+    public void ChangeSalesRisk(SalesRisk salesRisk)
+    {
+        SalesRisk = salesRisk;
     }
 }

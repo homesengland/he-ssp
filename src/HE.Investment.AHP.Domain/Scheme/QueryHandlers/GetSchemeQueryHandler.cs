@@ -21,6 +21,7 @@ public class GetSchemeQueryHandler : IRequestHandler<GetSchemeQuery, Contract.Sc
             entity.Id.Value,
             entity.Funding.RequiredFunding,
             entity.Funding.HousesToDeliver,
-            entity.AffordabilityEvidence?.Evidence);
+            entity.AffordabilityEvidence?.Evidence,
+            entity.SalesRisk?.Value);
     }
 }
