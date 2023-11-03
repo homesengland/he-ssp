@@ -3,6 +3,7 @@ using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Models.UserOrganisation;
 using HE.InvestmentLoans.WWW.Tests.Helpers;
+using HE.Investments.Common.WWW.Models;
 using Xunit;
 
 namespace HE.InvestmentLoans.WWW.Tests.Views.UserOrganisation;

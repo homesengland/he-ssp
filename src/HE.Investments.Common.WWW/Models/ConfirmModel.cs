@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.WWW.Models;
+namespace HE.Investments.Common.WWW.Models;
 
 public class ConfirmModel<T>
 {

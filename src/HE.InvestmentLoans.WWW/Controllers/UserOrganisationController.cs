@@ -6,6 +6,7 @@ using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Models.UserOrganisation;
 using HE.InvestmentLoans.WWW.Utils;
+using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

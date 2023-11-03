@@ -1,4 +1,5 @@
-﻿@model HE.InvestmentLoans.Contract.Application.ValueObjects.LoanApplicationId
+﻿@using HE.Investments.Common.Gds
+@model HE.InvestmentLoans.Contract.Application.ValueObjects.LoanApplicationId
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="CompanyStructureV2" asp-action="StartCompanyStructurePost" asp-route-id="@Model.Value" asp-method="post" novalidate>

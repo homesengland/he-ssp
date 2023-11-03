@@ -1,0 +1,36 @@
+@using HE.InvestmentLoans.WWW.Views.Organization
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
+@{
+    ViewData["Title"] = "Organization Not Found";
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganization","Organisation")">Back</gds-back-link>
+
+    <gds-h1 size="ControlSize.L">
+        @OrganizationPageTitles.NoMatch
+
+    </gds-h1>
+
+    <gds-p>
+        We could not find the details you entered in our records.
+    </gds-p>
+
+    <gds-p>
+        If you think you have entered the wrong details, you can
+        <gds-link href="@Url.Action("SearchOrganization","Organisation")">
+            try again using a different name.
+        </gds-link>
+    </gds-p>
+
+    <gds-p>
+        Or,
+        <gds-link href="@Url.Action("CreateOrganisation", "Organisation")">
+            enter the details manually.
+        </gds-link>
+    </gds-p>
+
+</gds-div-grid-column-two-thirds>
