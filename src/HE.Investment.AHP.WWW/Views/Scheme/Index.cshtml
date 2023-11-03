@@ -7,12 +7,7 @@
 <div class="govuk-grid-column-three-quarters">
     <gds-back-link href="@Url.Action("Index", "Home")" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
-    <span class="govuk-caption-l">
-        @Model
-    </span>
-    <gds-h1 class="govuk-heading-xl">
-        Scheme details
-    </gds-h1>
+    <vc:form-header caption="@Model" title="Scheme details"/>
      <div class="govuk-!-padding-bottom-8">
             <gds-p class="govuk-!-margin-bottom-0">In this section, you’ll need to provide information about your schemes. This includes</gds-p>
             <gds-ul class="govuk-!-padding-left-6" asp-lists=@(new[] { "funding you require on a scheme", "local housing needs", "discussions you’ve had with local stakeholders" })>

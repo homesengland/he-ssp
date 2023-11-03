@@ -4,4 +4,5 @@ public record Scheme(
     string SchemeId,
     decimal? RequiredFunding,
     int? HousesToDeliver,
-    string? AffordabilityEvidence);
+    string? AffordabilityEvidence,
+    string? SalesRisk);
