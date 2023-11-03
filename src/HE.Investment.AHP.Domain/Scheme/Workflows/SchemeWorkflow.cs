@@ -27,9 +27,9 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
     private void ConfigureTransitions()
     {
         _machine.Configure(SchemeWorkflowState.Funding)
-            .Permit(Trigger.Continue, SchemeWorkflowState.Partner);
+            .Permit(Trigger.Continue, SchemeWorkflowState.Affordability);
 
-        _machine.Configure(SchemeWorkflowState.Partner)
+        _machine.Configure(SchemeWorkflowState.Affordability)
             .Permit(Trigger.Back, SchemeWorkflowState.Funding);
     }
 }
