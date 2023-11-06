@@ -1,5 +1,5 @@
 using HE.InvestmentLoans.Contract.Application.Enums;
-using HE.InvestmentLoans.Contract.Domain;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.Contract.Application.ValueObjects;
 public class SubmitLoanApplication : ValueObject

@@ -26,7 +26,7 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         Skip.If(UserData.IsDeveloperProvidedUserData, "Developer provided own user which has completed profile and those tests cannot be run");
     }
 
-    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(1)]
     public async Task Order01_ShouldRedirectToCompleteUserProfile_WhenUserIsLoggedInButProfileIsNotCompleted()
     {
@@ -42,7 +42,7 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, completeProfilePage);
     }
 
-    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(2)]
     public async Task Order02_ShouldRedirectToDashboardPage_WhenUserIsLoggedInAndProfileIsCompleted()
     {
@@ -64,7 +64,7 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
                 "Enter your preferred telephone number");
     }
 
-    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(3)]
     public async Task Order03_ShouldNavigateToOrganisationPage_WhenUserCompletedProfile()
     {
@@ -89,7 +89,7 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, organizationSearchPage);
     }
 
-    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(4)]
     public async Task Order04_ShouldRedirectToOrganisationSearch_WhenUserCompletedProfileButNotOrganisationIsNotLinked()
     {
@@ -104,7 +104,7 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, organizationSearchPage);
     }
 
-    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(5)]
     public async Task Order05_ShouldSearchOrganization()
     {
@@ -126,7 +126,7 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, organizationSearchResultPage);
     }
 
-    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(6)]
     public async Task Order06_ShouldSelectOrganizationAndNavigateToConfirmPage()
     {
@@ -145,7 +145,7 @@ public class CompleteUserProfileIntegrationTests : IntegrationTest
         SetSharedData(SharedKeys.CurrentPageKey, confirmationPage);
     }
 
-    [SkippableFact(Skip = LoansConfig.SkipTest)]
+    [SkippableFact(typeof(SkipException), Skip = LoansConfig.SkipTest)]
     [Order(7)]
     public async Task Order07_ShouldConfirmOrganizationAndNavigateToDashboardPage()
     {

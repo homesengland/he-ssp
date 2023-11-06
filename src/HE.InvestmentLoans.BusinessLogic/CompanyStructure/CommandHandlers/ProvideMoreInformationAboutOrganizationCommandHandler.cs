@@ -1,36 +1,19 @@
-using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
 using System.Text.Json;
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Constants;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
-using HE.InvestmentLoans.BusinessLogic.Funding.Entities;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
-using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
-using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Models.App;
-using HE.InvestmentLoans.Common.Utils;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.Notification;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
-using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
-using HE.InvestmentLoans.CRM.Model;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Models.File;
 using HE.Investments.DocumentService.Services;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.Identity.Client;
-using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 
@@ -90,7 +73,7 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                     await _documentService.UploadAsync(new FileUploadModel()
                     {
                         ListTitle = _config.ListTitle,
-                        FolderPath = $"{await _repository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken)}/more-information-about-organization/external",
+                        FolderPath = $"{await _repository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken)}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
                         File = file,
                         Metadata = JsonSerializer.Serialize(new FileMetadata
                         {

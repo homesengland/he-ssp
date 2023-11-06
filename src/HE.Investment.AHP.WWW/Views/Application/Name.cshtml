@@ -1,0 +1,31 @@
+@using HE.Investments.Common.Gds
+@model HE.Investment.AHP.WWW.Models.Application.ApplicationBasicModel
+@{
+    ViewData["Title"] = "Application name";
+}
+<div class="govuk-grid-column-full">
+    <gds-back-link href="@Url.Action("Index", "Application", new { schemeId = Model?.Id })" text="Back" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <form asp-controller="Application" asp-action="Name" asp-method="post" novalidate>
+        <vc:form-header title="Name your application"/>
+        <gds-field-set role="group">
+
+            <gds-p >Each application must be for a single tenure. If you are developing a multi-tenure site, each tenure must be applied for within a separate application.</gds-p>
+
+            <gds-p >Each application needs a unique name. You will not be able to edit this later.</gds-p>
+
+            <gds-p >You should include the tenure type within your application name. For example, Village Way – Affordable Rent or Village Way – Shared Ownership.</gds-p>
+
+            @Html.HiddenFor(m => m.Id)
+
+            <gds-input asp-hiddenlabeltext="Name"
+                       class="govuk-!-width-one-third"
+                       govuk-formgroup-asp-for="Name"
+                       value="@Model?.Name"/>
+        </gds-field-set>
+
+        <vc:form-button text="Continue"/>
+    </form>
+
+</div>

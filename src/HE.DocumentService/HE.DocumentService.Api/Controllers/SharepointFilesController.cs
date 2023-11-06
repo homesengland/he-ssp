@@ -31,6 +31,7 @@ public class SharepointFilesController : CustomControllerBase
     }
 
     [HttpPost("Upload")]
+    [DisableRequestSizeLimit]
     public async Task Upload(FileUploadModel<FileData> item)
     {
         await Service<ISharePointFilesService>().UploadFile(item);
@@ -48,5 +49,11 @@ public class SharepointFilesController : CustomControllerBase
     public async Task Delete(string listAlias, string folderPath, string fileName)
     {
         await Service<ISharePointFilesService>().RemoveFile(listAlias, folderPath, fileName);
+    }
+
+    [HttpPost("CreateFolders")]
+    public void CreateFolders(string listTitle, List<string> folderPaths)
+    {
+        Service<ISharePointFilesService>().CreateFolders(listTitle, folderPaths);
     }
 }

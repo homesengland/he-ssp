@@ -1,0 +1,64 @@
+@model HE.InvestmentLoans.Contract.Organization.OrganisationDetailsViewModel
+@{
+    ViewData["Title"] = "Request to change organisation details";
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Details", "UserOrganisation")">Back</gds-back-link>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <form asp-controller="UserOrganisation" asp-action="ChangeOrganisationDetails" asp-method="post" novalidate>
+        <gds-field-set role="group">
+            <gds-legend size="ControlSize.L" class="govuk-!-margin-bottom-6">
+                <gds-fieldset-heading>
+                    Request to change organisation details
+                </gds-fieldset-heading>
+            </gds-legend>
+
+            <gds-input
+                govuk-formgroup-asp-for="Name"
+                name="Name"
+                asp-labeltext="Registered company name"
+                value=@Model?.Name/>
+
+            <gds-input
+                govuk-formgroup-asp-for="PhoneNumber"
+                name="PhoneNumber"
+                asp-labeltext="Organisation phone number"
+                value=@Model?.PhoneNumber/>
+
+            <gds-input
+                govuk-formgroup-asp-for="AddressLine1"
+                name="AddressLine1"
+                asp-labeltext="Address line 1"/>
+
+            <gds-input
+                govuk-formgroup-asp-for="AddressLine2"
+                name="AddressLine2"
+                asp-labeltext="Address line 2 (optional)"/>
+
+            <gds-input
+                govuk-formgroup-asp-for="TownOrCity"
+                name="TownOrCity"
+                asp-labeltext="Town or city"/>
+
+            <gds-input
+                govuk-formgroup-asp-for="County"
+                name="County"
+                asp-labeltext="County (optional)"/>
+
+            <gds-input
+                govuk-formgroup-asp-for="Postcode"
+                name="Postcode"
+                class="govuk-!-width-one-half"
+                asp-labeltext="Postcode"/>
+
+        </gds-field-set>
+
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="save-and-continue-button">
+            Send request
+        </button>
+    </form>
+
+</gds-div-grid-column-two-thirds>

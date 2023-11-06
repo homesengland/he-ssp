@@ -22,6 +22,14 @@ public static class ProjectPageTitles
 
     public const string Location = "How do you want to provide your project location?";
 
+    public const string LocalAuthority = "Your local authority";
+
+    public const string LocalAuthorityResult = "Select your local authority";
+
+    public const string LocalAuthorityNoMatch = "The details you entered did not match our records";
+
+    public const string LocalAuthorityConfirm = "Confirm your selection";
+
     public const string Ownership = "Do you have full ownership of this land?";
 
     public const string AdditionalDetails = "Additional project details";
@@ -35,6 +43,8 @@ public static class ProjectPageTitles
     public const string AffordableHomes = "Is your project made up of more than 50% affordable housing?";
 
     public const string CheckAnswers = "Check your answers";
+
+    public const string ReadOnlyAnswers = "Your answers";
 
     public static string Delete(string projectName) => $"Are you sure you want to remove {projectName}?";
 }

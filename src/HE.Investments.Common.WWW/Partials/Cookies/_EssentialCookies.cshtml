@@ -1,0 +1,12 @@
+@model IList<HE.Investments.Common.WWW.Models.Cookies.CookieModel>
+
+@if (Model.Any())
+{
+    <gds-h1 size="ControlSize.M">
+        Essential cookies
+    </gds-h1>
+    <gds-p>
+        Essential cookies keep your information secure while you use this site. We do not need to ask permission to use them.
+    </gds-p>
+    @await Html.PartialAsync("_CookiesTable.cshtml", @Model)
+}

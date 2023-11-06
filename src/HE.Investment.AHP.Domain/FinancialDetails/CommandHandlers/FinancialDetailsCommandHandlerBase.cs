@@ -1,12 +1,14 @@
 using HE.Investment.AHP.BusinessLogic.FinancialDetails.Entities;
 using HE.Investment.AHP.BusinessLogic.FinancialDetails.Repositories;
 using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+using HE.Investment.AHP.Domain.FinancialDetails.Entities;
+using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using Microsoft.Extensions.Logging;
 
-namespace HE.Investment.AHP.BusinessLogic.FinancialDetails.CommandHandlers;
+namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
 public class FinancialDetailsCommandHandlerBase
 {
     private readonly IFinancialDetailsRepository _repository;

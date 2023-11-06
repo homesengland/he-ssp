@@ -12,7 +12,22 @@ export class Isp {
 
   public static onLoad(eCtx) {
     const eventLogic = new Isp(eCtx)
+    eventLogic.registerEvents()
     eventLogic.ispService.setFieldsAvailabilityOnLoad()
     eventLogic.ispService.setStaticFieldsOnLoad()
+    eventLogic.ispService.setFieldsRequirementBasedOnSendOnApproval()
+    eventLogic.ispService.setFieldsVisibilityBasedOnSecurity()
+  }
+
+  public static onSendOnApprovalChange(eCtx) {
+    const eventLogic = new Isp(eCtx)
+    eventLogic.ispService.setFieldsRequirementBasedOnSendOnApproval()
+  }
+
+  public registerEvents() {
+    if (this.common.getAttribute('invln_sendforapproval')) {
+      this.common.getAttribute('invln_sendforapproval').removeOnChange(Isp.onSendOnApprovalChange)
+      this.common.getAttribute('invln_sendforapproval').addOnChange(Isp.onSendOnApprovalChange)
+    }
   }
 }

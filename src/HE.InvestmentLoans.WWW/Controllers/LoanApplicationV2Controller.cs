@@ -242,7 +242,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return Back(currentPage, new { Id = applicationId });
     }
 
-    protected override Task<IStateRouting<LoanApplicationWorkflow.State>> Routing(LoanApplicationWorkflow.State currentState)
+    protected override Task<IStateRouting<LoanApplicationWorkflow.State>> Routing(LoanApplicationWorkflow.State currentState, object routeData = null)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
 

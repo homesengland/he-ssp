@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 using HE.Investment.AHP.BusinessLogic.FinancialDetails.Entities;
 using HE.Investment.AHP.BusinessLogic.FinancialDetails.Repositories;
 using HE.Investment.AHP.Contract.FinancialDetails.Commands;
+using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+using HE.Investment.AHP.Domain.FinancialDetails.Entities;
+using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.InvestmentLoans.Common.Validation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 
-namespace HE.Investment.AHP.BusinessLogic.FinancialDetails.CommandHandlers;
+namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
 public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<StartFinancialDetailsCommand, OperationResult<StartFinancialDetailsCommandResult>>
 {
     private readonly IFinancialDetailsRepository _financialDetailsRepository;
@@ -24,10 +27,13 @@ public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandle
 
     public async Task<OperationResult<StartFinancialDetailsCommandResult>> Handle(StartFinancialDetailsCommand request, CancellationToken cancellationToken)
     {
-        var financialDetails = new FinancialDetailsEntity();
+        // temporary mock, this value needs to be taken from some repo
+        var isPurchasePriceKnown = true;
+        var financialDetails = new FinancialDetailsEntity(isPurchasePriceKnown);
+
         await _financialDetailsRepository.SaveAsync(financialDetails, cancellationToken);
 
-        return OperationResult.Success(new StartFinancialDetailsCommandResult(financialDetails.Id.Value));
+        return OperationResult.Success(new StartFinancialDetailsCommandResult(financialDetails.FinancialDetailsId.Value));
     }
 }
 

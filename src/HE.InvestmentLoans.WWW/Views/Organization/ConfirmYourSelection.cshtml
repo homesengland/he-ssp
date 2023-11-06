@@ -1,8 +1,10 @@
 @using HE.InvestmentLoans.Common.Extensions
 @using HE.InvestmentLoans.Contract.Organization.ValueObjects
 @using HE.InvestmentLoans.WWW.Views.Organization
+@using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Extensions
-@model ConfirmModel<OrganizationBasicDetails>
+@using HE.Investments.Common.WWW.Models
+@model HE.Investments.Common.WWW.Models.ConfirmModel<OrganizationBasicDetails>
 @inject ModelExpressionProvider ModelProvider
 @{
     ViewData["Title"] = "Organization Select";
@@ -52,7 +54,7 @@
                 <gds-div-form-group invalid="radioInvalid">
                     <gds-radio
                         govuk-formgroup-asp-for="Response"
-                        asp-selectlistitems="TemporaryFormOptions.YesNo"
+                        asp-selectlistitems="FormOptions.YesNo"
                         asp-isexcludeheader>
                     </gds-radio>
                 </gds-div-form-group>

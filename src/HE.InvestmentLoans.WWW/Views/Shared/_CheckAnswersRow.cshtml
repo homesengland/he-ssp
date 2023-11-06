@@ -5,6 +5,7 @@
     var value = ViewData["Value"];
     var valueList = value as IEnumerable<string>;
     var isEditable = ViewData["IsEditable"] as bool? ?? true;
+    var files = ViewData["Files"] as Dictionary<string, string> ?? null;
 }
 @if (showRow)
 {
@@ -41,7 +42,18 @@
                     <p>Not provided</p>
                 }
             }
+
+            @if (files != null)
+            {
+                @foreach (var file in files)
+                {
+                    <a class="govuk-label govuk-label--s" href="@file.Value">
+                        @file.Key
+                    </a>
+                }
+            }
         </gds-summary-list-value-v2>
+
         @if (isEditable)
         {
             <gds-summary-list-actions-v2>

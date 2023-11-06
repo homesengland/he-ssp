@@ -1,25 +1,29 @@
-using System.Text.Json.Serialization;
-using HE.InvestmentLoans.Common.Domain;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 
 public class Postcode : ValueObject
 {
-    public Postcode(string value)
+    public Postcode(string? value)
     {
         Build(value).CheckErrors();
     }
 
     public string Value { get; private set; }
 
+    public override string ToString()
+    {
+        return Value;
+    }
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Value;
     }
 
-    private OperationResult Build(string value)
+    private OperationResult Build(string? value)
     {
         var operationResult = OperationResult.New();
 

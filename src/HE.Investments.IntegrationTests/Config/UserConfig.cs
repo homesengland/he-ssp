@@ -27,5 +27,7 @@ public class UserConfig
 
     public string LoanApplicationIdInDraftState { get; set; }
 
+    public string SubmittedLoanApplicationId { get; private set; }
+
     public string ProjectIdInDraftState { get; set; }
 }

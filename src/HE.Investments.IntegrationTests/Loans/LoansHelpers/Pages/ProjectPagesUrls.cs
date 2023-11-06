@@ -30,6 +30,8 @@ internal sealed class ProjectPagesUrls
 
     public const string OwnershipSuffix = "/ownership";
 
+    public const string LocalAuthoritySearchSuffix = "/local-authority/search";
+
     public const string AdditionalDetailsSuffix = "/additional-details";
 
     public const string GrantFundingExistsSuffix = "/grant-funding-exists";

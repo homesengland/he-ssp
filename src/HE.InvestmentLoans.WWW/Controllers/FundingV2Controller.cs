@@ -253,7 +253,7 @@ public class FundingV2Controller : WorkflowController<FundingState>
         return await Back(currentPage, new { Id = id });
     }
 
-    protected override async Task<IStateRouting<FundingState>> Routing(FundingState currentState)
+    protected override async Task<IStateRouting<FundingState>> Routing(FundingState currentState, object routeData = null)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
 

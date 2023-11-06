@@ -164,7 +164,7 @@ public class SecurityController : WorkflowController<SecurityState>
         return Back(currentPage, new { Id = id });
     }
 
-    protected override async Task<IStateRouting<SecurityState>> Routing(SecurityState currentState)
+    protected override async Task<IStateRouting<SecurityState>> Routing(SecurityState currentState, object routeData = null)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
 

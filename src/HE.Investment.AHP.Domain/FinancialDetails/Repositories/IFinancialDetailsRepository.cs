@@ -1,7 +1,8 @@
 using HE.Investment.AHP.BusinessLogic.FinancialDetails.Entities;
 using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 
-namespace HE.Investment.AHP.BusinessLogic.FinancialDetails.Repositories;
+namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 
 public interface IFinancialDetailsRepository
 {

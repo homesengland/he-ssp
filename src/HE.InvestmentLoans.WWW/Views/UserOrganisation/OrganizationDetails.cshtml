@@ -5,8 +5,10 @@
 <gds-div-grid-column-full>
     <form asp-controller="UserOrganisation" asp-action="Details" asp-method="post" novalidate>
 
-        <gds-back-link href="@Url.Action("Index", "UserOrganisation", new {})" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Index", "UserOrganisation", new { })" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
+
+        @await Html.PartialAsync("_Notification")
 
         <gds-h1 class="govuk-heading-xl govuk-!-margin-bottom-9">
             Manage @Model.Name details
@@ -19,28 +21,28 @@
         <gds-summary-list class="govuk-!-margin-bottom-9">
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
-            {
-            { "Title", OrganisationDetailsView.Name },
-            { "Value", Model.Name },
-            })
+                   {
+                       { "Title", OrganisationDetailsView.Name },
+                       { "Value", Model.Name },
+                   })
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
-            {
-                { "Title", OrganisationDetailsView.PhoneNumber },
-                { "Value", Model.PhoneNumber },
-            })
+                   {
+                       { "Title", OrganisationDetailsView.PhoneNumber },
+                       { "Value", Model.PhoneNumber },
+                   })
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
-            {
-                { "Title", OrganisationDetailsView.Address },
-                { "Value", Model.AddressLines },
-            })
+                   {
+                       { "Title", OrganisationDetailsView.Address },
+                       { "Value", Model.AddressLines },
+                   })
 
             @await Html.PartialAsync("_SimpleRow", new ViewDataDictionary(ViewData)
-            {
-            { "Title", OrganisationDetailsView.HouseNumber },
-            { "Value", Model.HouseNumber },
-            })
+                   {
+                       { "Title", OrganisationDetailsView.HouseNumber },
+                       { "Value", Model.HouseNumber },
+                   })
 
         </gds-summary-list>
         @if (Model.ChangeRequestState == OrganisationChangeRequestState.PendingRequestByYou)
@@ -54,7 +56,7 @@
         @if (Model.ChangeRequestState == OrganisationChangeRequestState.NoPendingRequest)
         {
             <gds-p>
-                <gds-link href="">
+                <gds-link href=@Url.Action("ChangeOrganisationDetails", "UserOrganisation") id="request-details-change-link">
                     @OrganisationDetailsView.NoPendingRequest
                 </gds-link>
             </gds-p>

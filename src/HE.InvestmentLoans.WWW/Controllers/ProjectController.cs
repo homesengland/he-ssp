@@ -1,3 +1,4 @@
+using System.Diagnostics.Metrics;
 using HE.InvestmentLoans.BusinessLogic.Projects;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
@@ -6,11 +7,14 @@ using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Funding.Commands;
+using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.WWW.Attributes;
+using HE.InvestmentLoans.WWW.Models;
+using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
@@ -32,8 +36,18 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpGet("start")]
     [WorkflowState(ProjectState.Index)]
-    public IActionResult StartProject(Guid id, Guid projectId)
+    public async Task<IActionResult> StartProject(Guid id, Guid projectId)
     {
+        if (projectId != Guid.Empty)
+        {
+            var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.ProjectName));
+
+            if (result.IsReadOnly())
+            {
+                return RedirectToAction("CheckAnswers", new { Id = id, ProjectId = projectId });
+            }
+        }
+
         return View("Index", LoanApplicationId.From(id));
     }
 
@@ -76,11 +90,6 @@ public class ProjectController : WorkflowController<ProjectState>
     public async Task<IActionResult> ProjectName(Guid id, Guid projectId)
     {
         var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.ProjectName));
-
-        if (result.IsReadOnly())
-        {
-            return RedirectToAction("CheckAnswers", new { Id = id, ProjectId = projectId });
-        }
 
         return View(result);
     }
@@ -300,7 +309,12 @@ public class ProjectController : WorkflowController<ProjectState>
 
     [HttpPost("{projectId}/planning-permission-status")]
     [WorkflowState(ProjectState.PlanningPermissionStatus)]
-    public async Task<IActionResult> PlanningPermissionStatus(Guid id, Guid projectId, [FromQuery] string redirect, ProjectViewModel model, CancellationToken token)
+    public async Task<IActionResult> PlanningPermissionStatus(
+        Guid id,
+        Guid projectId,
+        [FromQuery] string redirect,
+        ProjectViewModel model,
+        CancellationToken token)
     {
         var result = await _mediator.Send(
             new ProvidePlanningPermissionStatusCommand(
@@ -349,6 +363,86 @@ public class ProjectController : WorkflowController<ProjectState>
         }
 
         return await Continue(redirect, new { id, projectId });
+    }
+
+    [HttpGet("{projectId}/local-authority/search")]
+    [WorkflowState(ProjectState.ProvideLocalAuthority)]
+    public IActionResult LocalAuthoritySearch(Guid id, Guid projectId)
+    {
+        return View(new LocalAuthoritiesViewModel
+        {
+            ApplicationId = id,
+            ProjectId = projectId,
+        });
+    }
+
+    [HttpPost("{projectId}/local-authority/search")]
+    public IActionResult LocalAuthoritySearch(Guid id, Guid projectId, LocalAuthoritiesViewModel organization)
+    {
+        return RedirectToAction(nameof(LocalAuthorityResult), new { id, projectId, phrase = organization.Phrase });
+    }
+
+    [HttpGet("{projectId}/local-authority/search/result")]
+    public async Task<IActionResult> LocalAuthorityResult(Guid id, Guid projectId, [FromQuery] string phrase, CancellationToken token, [FromQuery] int page = 0)
+    {
+        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, page - 1, 10), token);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View(nameof(LocalAuthoritySearch));
+        }
+
+        if (result.ReturnedData.TotalItems == 0)
+        {
+            return RedirectToAction(nameof(LocalAuthorityNotFound), new { id, projectId });
+        }
+
+        var viewModel = result.ReturnedData;
+
+        viewModel.ApplicationId = id;
+        viewModel.ProjectId = projectId;
+        viewModel.Page = page;
+
+        return View(viewModel);
+    }
+
+    [HttpGet("{projectId}/local-authority/not-found")]
+    public IActionResult LocalAuthorityNotFound(Guid id, Guid projectId)
+    {
+        return View(new LocalAuthoritiesViewModel
+        {
+            ApplicationId = id,
+            ProjectId = projectId,
+        });
+    }
+
+    [HttpGet("{projectId}/local-authority/{localAuthorityId}/confirm")]
+    public IActionResult LocalAuthorityConfirm(Guid id, Guid projectId, string localAuthorityId)
+    {
+        var viewModel = new LocalAuthoritiesViewModel
+        {
+            ApplicationId = id,
+            ProjectId = projectId,
+            LocalAuthorityId = localAuthorityId,
+        };
+
+        return View(new ConfirmModel<LocalAuthoritiesViewModel>(viewModel));
+    }
+
+    [HttpPost("{projectId}/local-authority/{localAuthorityId}/confirm")]
+    [WorkflowState(ProjectState.ProvideLocalAuthority)]
+    public async Task<IActionResult> LocalAuthorityConfirm(Guid id, Guid projectId, string localAuthorityId, ConfirmModel<LocalAuthoritiesViewModel> model, CancellationToken token)
+    {
+        if (model.Response == CommonResponse.Yes)
+        {
+            await _mediator.Send(new ConfirmLocalAuthorityCommand(LoanApplicationId.From(id), ProjectId.From(projectId), LocalAuthorityId.From(localAuthorityId)), token);
+
+            return await Continue(new { id, projectId });
+        }
+
+        return RedirectToAction(nameof(LocalAuthoritySearch), new { id, projectId });
     }
 
     [HttpGet("{projectId}/ownership")]
@@ -572,7 +666,7 @@ public class ProjectController : WorkflowController<ProjectState>
         return Back(currentPage, new { id, projectId });
     }
 
-    protected override async Task<IStateRouting<ProjectState>> Routing(ProjectState currentState)
+    protected override async Task<IStateRouting<ProjectState>> Routing(ProjectState currentState, object routeData = null)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
         var projectId = Request.RouteValues.FirstOrDefault(x => x.Key == "projectId").Value as string;

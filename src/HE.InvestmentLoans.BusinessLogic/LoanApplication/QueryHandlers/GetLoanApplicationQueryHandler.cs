@@ -3,13 +3,11 @@ using HE.InvestmentLoans.BusinessLogic.Projects;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
 using HE.InvestmentLoans.Contract.Funding.Queries;
 using HE.InvestmentLoans.Contract.Security.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 
@@ -31,6 +29,7 @@ public class GetLoanApplicationQueryHandler : IRequestHandler<GetLoanApplication
     public async Task<GetLoanApplicationQueryResponse> Handle(GetLoanApplicationQuery request, CancellationToken cancellationToken)
     {
         var companyStructureResponse = await _mediator.Send(new GetCompanyStructureQuery(request.Id, CompanyStructureFieldsSet.GetAllFields), cancellationToken);
+        companyStructureResponse.ViewModel.OrganisationMoreInformationFiles = (await _mediator.Send(new GetCompanyStructureFilesQuery(request.Id), cancellationToken)).Items;
         var securityResponse = await _mediator.Send(new GetSecurity(request.Id, SecurityFieldsSet.GetAllFields), cancellationToken);
         var fundingResponse = await _mediator.Send(new GetFundingQuery(request.Id, FundingFieldsSet.GetAllFields), cancellationToken);
 

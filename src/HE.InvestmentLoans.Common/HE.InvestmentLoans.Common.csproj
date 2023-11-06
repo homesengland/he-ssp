@@ -37,11 +37,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.6.0" />
+    <PackageReference Include="FluentValidation" Version="11.8.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Authorization\Config\" />
+    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
   </ItemGroup>
 
 </Project>

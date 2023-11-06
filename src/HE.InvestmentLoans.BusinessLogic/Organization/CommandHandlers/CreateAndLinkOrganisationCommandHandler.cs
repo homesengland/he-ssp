@@ -1,5 +1,6 @@
 extern alias Org;
 
+using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
 using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User;
@@ -40,10 +41,10 @@ public class CreateAndLinkOrganisationCommandHandler : IRequestHandler<CreateAnd
             }
 
             var operationResult = OperationResult.New();
-            var postcode = operationResult.Aggregate(() => new Postcode(request.Postcode));
+            var name = operationResult.Aggregate(() => new OrganisationName(request.Name));
             var address = operationResult.Aggregate(() =>
-                new OrganisationAddress(request.AddressLine1, request.AddressLine2, null, request.TownOrCity, postcode, request.County, null));
-            var organisation = operationResult.Aggregate(() => new OrganisationToCreate(request.Name, address));
+                new OrganisationAddress(request.AddressLine1, request.AddressLine2, null, request.TownOrCity, request.Postcode, request.County, null));
+            var organisation = operationResult.Aggregate(() => new OrganisationEntity(name, address));
 
             operationResult.CheckErrors();
 

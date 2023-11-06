@@ -1,0 +1,44 @@
+@using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts
+@model Guid
+@{
+    ViewData["Title"] = "Financial details";
+    var financialDetailsId = Context.Request.Query["financialDetailsId"];
+}
+<div id="mainContainer" role="main">
+<gds-div-grid-column-two-thirds>
+        <form asp-controller="FinancialDetails" asp-action="Start" asp-route-financialSchemeId="@Model" asp-route-financialDetailsId="@financialDetailsId" asp-method="post" novalidate>
+        <div id="backButton" role="navigation">
+            <gds-back-link href="@Url.Action("Index", "Home")" text="Back" class="govuk-!-margin-bottom-8">
+            </gds-back-link>
+        </div>
+        <gds-h1 class="govuk-heading-xl">
+            @FinancePageTitles.StartPage
+        </gds-h1>
+
+        <div class="govuk-!-padding-bottom-8">
+            <gds-p>In this section you'll need to provide financial information related to your scheme. This includes:</gds-p>
+            <gds-ul>
+                <gds-li>land value and acquisition cost</gds-li>
+                <gds-li>other scheme cost</gds-li>
+            </gds-ul>
+            <gds-p>We will also ask for your contributions to funding the scheme. This includes:</gds-p>
+            <gds-ul>
+                <gds-li>borrowing</gds-li>
+                <gds-li>any cross subsidy form sales</gds-li>
+                <gds-li>any grants from other public bodies that you have received or are expecting to receive</gds-li>
+            </gds-ul>
+            <gds-p>The total of your contributions, including the AHP funding required that you entered earlier in the scheme details must equal the total scheme cost.</gds-p>
+            <gds-p>For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this scheme are recorded here.</gds-p>
+            <gds-p>If your scheme is for the refurbishment of existing properties, answer the upcoming questions with regard to the status, value and cost of your property purchases.</gds-p>
+        </div>
+        <button role="navigation" id="start-now-button" class="govuk-button govuk-button--start" data-module="govuk-button" name="action" type="submit" value="Continue">
+            Start now
+            <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+            </svg>
+        </button>
+
+
+    </form>
+</gds-div-grid-column-two-thirds>
+</div>

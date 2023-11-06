@@ -1,4 +1,5 @@
 @using HE.InvestmentLoans.Contract.CompanyStructure
+@using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.DocumentService.Configs;
 @model HE.InvestmentLoans.Contract.CompanyStructure.CompanyStructureViewModel
@@ -22,7 +23,7 @@
             <gds-error-form-group asp-for="OrganisationMoreInformation">
                 <legend>
                     <gds-label-wrapper>
-                        <gds-label size="@ControlSize.L" for="ExistingCompany">
+                        <gds-label size="@ControlSize.L" for="OrganisationMoreInformation">
                             Provide more information about your organisation
                         </gds-label>
                     </gds-label-wrapper>
@@ -55,22 +56,24 @@
                                 </div>
                             </div>
                             <label class="govuk-label" for="File">
-                                uploaded @Model.OrganisationMoreInformationFiles[i].Modified.ToString("HH:mm dd/MM/yy")
+                            uploaded @DateHelper.DisplayAsUkFormatDateTime(Model.OrganisationMoreInformationFiles[i].Modified)
                                 by @(Model.OrganisationMoreInformationFiles[i].FileMetadata?.Creator ?? Model.OrganisationMoreInformationFiles[i].Editor)
                             </label>
+                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].Editor)
+                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].FolderPath)
+                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].Metadata)
+                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].Modified)
                         </div>
                     }
 
                     <p class="govuk-error-message">
                         <span class="govuk-visually-hidden">Error:</span>
-                        @if (hasError)
-                        {
-                            @fileInputError
-                        }
-                        else
-                        {
-                            <span id="client-error-message"/>
-                        }
+                        <span id="error-messages">
+                            @if (hasError)
+                            {
+                                @fileInputError
+                            }
+                        </span>
                     </p>
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="File">

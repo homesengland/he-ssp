@@ -15,4 +15,14 @@ public static class TaskListExtensions
         dateTime = DateTime.Parse(dateTimeAsString, CultureInfo.GetCultureInfo("en-GB"));
         return taskListPage;
     }
+
+    public static IHtmlDocument ExtractSubmittedOnDateFromTaskListPage(this IHtmlDocument taskListPage, out DateTime dateTime)
+    {
+        var submittedOnLabel = taskListPage.GetElementById("submitted-on-label");
+        submittedOnLabel.Should().NotBeNull("Submitted on data should be visible");
+
+        var dateTimeAsString = submittedOnLabel!.TextContent.Replace("Submitted on ", string.Empty).Trim();
+        dateTime = DateTime.Parse(dateTimeAsString, CultureInfo.GetCultureInfo("en-GB"));
+        return taskListPage;
+    }
 }

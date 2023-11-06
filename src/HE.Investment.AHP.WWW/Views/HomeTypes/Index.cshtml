@@ -1,8 +1,42 @@
-@{
-    ViewData["Title"] = "Home types";
-}
-<h1>@ViewData["Title"]</h1>
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investments.Common.Gds
+@model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeModelBase;
 
-<gds-div-grid-column-two-thirds>
-    <p>TODO: Home types start page.</p>
-</gds-div-grid-column-two-thirds>
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+}
+
+<div class="govuk-grid-column-full">
+    <gds-back-link href="@Url.Action("Index","Home")" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+    <gds-div-hint>@Model.ApplicationName</gds-div-hint>
+    <gds-h1 size="ControlSize.L">
+        Home types
+    </gds-h1>
+
+    <gds-p>
+        In this section, you’ll need to provide information about the homes on this application. This includes:
+    </gds-p>
+    <gds-ul>
+        <gds-li>the number of homes</gds-li>
+        <gds-li>building information</gds-li>
+        <gds-li>the floor area </gds-li>
+        <gds-li>Nationally Described Space Standards</gds-li>
+        <gds-li>the design and client group information for specialist housing</gds-li>
+        <gds-li>Rent or Shared Ownership details, depending on the tenure of your application</gds-li>
+        <gds-li>Modern Methods of Construction (MMC)</gds-li>
+    </gds-ul>
+
+    <gds-p class="govuk-!-margin-top-8">
+        Where you have homes on your application that are identical, you are able to record those as one home type.
+    </gds-p>
+    <gds-p>
+        If there are any differences in the homes, you’ll need to create a new home type.
+    </gds-p>
+    <gds-p>
+        Once you have created one home type, you will be able to duplicate this and amend any necessary details to create another.
+    </gds-p>
+
+    <a href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "List", applicationId })">
+        <gds-button type="button" class="govuk-!-margin-top-8">Continue</gds-button>
+    </a>
+</div>

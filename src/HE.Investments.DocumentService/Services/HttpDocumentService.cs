@@ -104,9 +104,29 @@ public class HttpDocumentService : IHttpDocumentService
         return JsonSerializer.Deserialize<FileData>(responseContent, _jsonSerializerOptions) ?? throw new DocumentServiceException($"The document service request result is invalid");
     }
 
+    public async Task CreateFoldersAsync(string listTitle, List<string> folderPaths)
+    {
+        var queryParams = $"listTitle={listTitle}";
+        var uri = new UriBuilder($"{_config.Url}{"/SharepointFiles/CreateFolders"}?{queryParams}");
+
+        using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString())
+        {
+            Content = new StringContent(JsonSerializer.Serialize(folderPaths), Encoding.UTF8, "application/json")
+        };
+
+        var response = await SendAsync(request);
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new DocumentServiceException($"There was a problem with the document service connection");
+        }
+    }
+
     private async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
     {
         using var client = _httpClient.CreateClient("HE.Investments.DocumentService");
+        client.Timeout = TimeSpan.FromMinutes(3);
 
         return await client.SendAsync(request);
     }

@@ -1,6 +1,6 @@
 @using HE.InvestmentLoans.Contract.Application.Queries;
-@using HE.InvestmentLoans.Common.Extensions
 @using HE.InvestmentLoans.WWW.Routing
+@using HE.Investments.Common.Gds
 @model GetDashboardDataQueryResponse
 @{
     ViewData["Title"] = "Home Page";
@@ -71,10 +71,8 @@
         </gds-h3>
         <p class="govuk-body govuk-!-margin-bottom-3">You can start a new application here. This will not impact any of your previous applications.</p>
 
-        <a href="/application" id="start-application-link">
-            <gds-button-start type="button">
-                Start new application
-            </gds-button-start>
-        </a>
+        <link-button action-url="/application" id="start-application-link">
+            Start new application
+        </link-button>
     </div>
 </gds-column>

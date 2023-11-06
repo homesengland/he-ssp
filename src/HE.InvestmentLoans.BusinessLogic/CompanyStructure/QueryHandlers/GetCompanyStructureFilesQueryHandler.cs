@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Mappers;
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Constants;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Models.File;
@@ -35,8 +33,8 @@ public class GetCompanyStructureFilesQueryHandler : IRequestHandler<GetCompanySt
 
         var folderPaths = new List<string>
         {
-            $"{path}/more-information-about-organization/external",
-            $"{path}/more-information-about-organization/internal",
+            $"{path}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
+            $"{path}{CompanyStructureConstants.MoreInformationAboutOrganizationInternal}",
         };
 
         var result = await _documentService.GetTableRowsAsync(new FileTableFilter()

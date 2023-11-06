@@ -100,6 +100,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 
     [HttpPost("more-information-about-organization")]
     [WorkflowState(CompanyStructureState.ExistingCompany)]
+    [DisableRequestSizeLimit]
     public async Task<IActionResult> MoreInformationAboutOrganizationPost(Guid id, CompanyStructureViewModel viewModel, [FromForm(Name = "File")] List<IFormFile> formFiles, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
@@ -150,7 +151,9 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     [WorkflowState(CompanyStructureState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(Guid id, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureFieldsSet.GetAllFields), cancellationToken);
+        var loanApplicationId = LoanApplicationId.From(id);
+        var response = await _mediator.Send(new GetCompanyStructureQuery(loanApplicationId, CompanyStructureFieldsSet.GetAllFields), cancellationToken);
+        response.ViewModel.OrganisationMoreInformationFiles = (await _mediator.Send(new GetCompanyStructureFilesQuery(loanApplicationId), cancellationToken)).Items;
         return View("CheckAnswers", response.ViewModel);
     }
 
@@ -175,7 +178,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
         return await Back(currentPage, new { Id = id });
     }
 
-    protected override async Task<IStateRouting<CompanyStructureState>> Routing(CompanyStructureState currentState)
+    protected override async Task<IStateRouting<CompanyStructureState>> Routing(CompanyStructureState currentState, object routeData = null)
     {
         var id = Request.RouteValues.FirstOrDefault(x => x.Key == "id").Value as string;
         var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id!), CompanyStructureFieldsSet.GetAllFields));

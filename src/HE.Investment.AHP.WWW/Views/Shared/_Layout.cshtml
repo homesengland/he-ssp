@@ -1,5 +1,4 @@
 @using HE.Investment.AHP.WWW.Config
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @inject IAhpAppConfig AhpAppConfig
 
 @{
@@ -22,6 +21,10 @@
 
 @section CookieBanner{
     <partial name="_CookieBanner" />
+}
+
+@section BeforeContent{
+    <partial name="~/Partials/_Breadcrumbs.cshtml" />
 }
 
 <gds-div-grid-row>

@@ -152,8 +152,10 @@ namespace DataverseModel
 			public const string invln_interestshortfallmarginedsecurityk_Base = "invln_interestshortfallmarginedsecurityk_base";
 			public const string invln_InterestShortfallValuek = "invln_interestshortfallvaluek";
 			public const string invln_interestshortfallvaluek_Base = "invln_interestshortfallvaluek_base";
+			public const string invln_invln_isp_invln_conditions_ispid = "invln_invln_isp_invln_conditions_ispid";
 			public const string invln_invln_isp_Loanapplication_invln_loanappli = "invln_invln_isp_Loanapplication_invln_loanappli";
 			public const string invln_invln_isp_TMName_contact = "invln_invln_isp_TMName_contact";
+			public const string invln_invln_projectspecificcondition_ISP_invln_ = "invln_invln_projectspecificcondition_ISP_invln_";
 			public const string invln_isp_Name_contact = "invln_isp_Name_contact";
 			public const string invln_ISPId = "invln_ispid";
 			public const string Id = "invln_ispid";
@@ -188,8 +190,15 @@ namespace DataverseModel
 			public const string invln_monitoringnonrechargedfees_Base = "invln_monitoringnonrechargedfees_base";
 			public const string invln_MonitoringRechargedFees = "invln_monitoringrechargedfees";
 			public const string invln_monitoringrechargedfees_Base = "invln_monitoringrechargedfees_base";
+			public const string invln_Months = "invln_months";
 			public const string invln_Monthsk = "invln_monthsk";
 			public const string invln_monthsk_Base = "invln_monthsk_base";
+			public const string invln_Monthskk = "invln_monthskk";
+			public const string invln_monthskk_Base = "invln_monthskk_base";
+			public const string invln_Monthskkk = "invln_monthskkk";
+			public const string invln_monthskkk_Base = "invln_monthskkk_base";
+			public const string invln_Monthspercent = "invln_monthspercent";
+			public const string invln_Monthspercentage = "invln_monthspercentage";
 			public const string invln_Name = "invln_name";
 			public const string invln_NewHomesbyScaleandTypeMeasure = "invln_newhomesbyscaleandtypemeasure";
 			public const string invln_NoUnitsDirectlyFundedbyInvestment = "invln_nounitsdirectlyfundedbyinvestment";
@@ -246,6 +255,7 @@ namespace DataverseModel
 			public const string invln_SalesProfessionalk = "invln_salesprofessionalk";
 			public const string invln_salesprofessionalk_Base = "invln_salesprofessionalk_base";
 			public const string invln_SalesProfessionalpercent = "invln_salesprofessionalpercent";
+			public const string invln_securities = "invln_securities";
 			public const string invln_Security = "invln_security";
 			public const string invln_SecurityCover = "invln_securitycover";
 			public const string invln_SendforApproval = "invln_sendforapproval";
@@ -2500,6 +2510,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_months")]
+		public System.Nullable<double> invln_Months
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("invln_months");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Months");
+				this.SetAttributeValue("invln_months", value);
+				this.OnPropertyChanged("invln_Months");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_monthsk")]
 		public Microsoft.Xrm.Sdk.Money invln_Monthsk
 		{
@@ -2527,6 +2554,100 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_monthsk_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_monthskk")]
+		public Microsoft.Xrm.Sdk.Money invln_Monthskk
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_monthskk");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Monthskk");
+				this.SetAttributeValue("invln_monthskk", value);
+				this.OnPropertyChanged("invln_Monthskk");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the 6 Months (£kk) in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_monthskk_base")]
+		public Microsoft.Xrm.Sdk.Money invln_monthskk_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_monthskk_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_monthskkk")]
+		public Microsoft.Xrm.Sdk.Money invln_Monthskkk
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_monthskkk");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Monthskkk");
+				this.SetAttributeValue("invln_monthskkk", value);
+				this.OnPropertyChanged("invln_Monthskkk");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the 12 Months (£kkk) in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_monthskkk_base")]
+		public Microsoft.Xrm.Sdk.Money invln_monthskkk_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_monthskkk_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_monthspercent")]
+		public System.Nullable<double> invln_Monthspercent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("invln_monthspercent");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Monthspercent");
+				this.SetAttributeValue("invln_monthspercent", value);
+				this.OnPropertyChanged("invln_Monthspercent");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_monthspercentage")]
+		public System.Nullable<double> invln_Monthspercentage
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("invln_monthspercentage");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Monthspercentage");
+				this.SetAttributeValue("invln_monthspercentage", value);
+				this.OnPropertyChanged("invln_Monthspercentage");
 			}
 		}
 		
@@ -3417,6 +3538,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_SalesProfessionalpercent");
 				this.SetAttributeValue("invln_salesprofessionalpercent", value);
 				this.OnPropertyChanged("invln_SalesProfessionalpercent");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securities")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValueCollection invln_securities
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValueCollection>("invln_securities");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_securities");
+				this.SetAttributeValue("invln_securities", value);
+				this.OnPropertyChanged("invln_securities");
 			}
 		}
 		
@@ -4667,6 +4805,46 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_isp_invln_conditions_ispid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_isp_invln_conditions_ispid")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Conditions> invln_invln_isp_invln_conditions_ispid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Conditions>("invln_invln_isp_invln_conditions_ispid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_isp_invln_conditions_ispid");
+				this.SetRelatedEntities<DataverseModel.invln_Conditions>("invln_invln_isp_invln_conditions_ispid", null, value);
+				this.OnPropertyChanged("invln_invln_isp_invln_conditions_ispid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_projectspecificcondition_ISP_invln_
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_projectspecificcondition_ISP_invln_")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ProjectSpecificCondition> invln_invln_projectspecificcondition_ISP_invln_
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ProjectSpecificCondition>("invln_invln_projectspecificcondition_ISP_invln_", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_projectspecificcondition_ISP_invln_");
+				this.SetRelatedEntities<DataverseModel.invln_ProjectSpecificCondition>("invln_invln_projectspecificcondition_ISP_invln_", null, value);
+				this.OnPropertyChanged("invln_invln_projectspecificcondition_ISP_invln_");
 			}
 		}
 		

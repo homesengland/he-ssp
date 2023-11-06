@@ -34,6 +34,7 @@ public class IntegrationUserData
             TelephoneNumber = TelephoneNumber.New(userConfig.TelephoneNumber);
             LoanApplicationIdInDraftState = userConfig.LoanApplicationIdInDraftState;
             ProjectInDraftStateId = userConfig.ProjectIdInDraftState;
+            SubmittedLoanApplicationId = userConfig.SubmittedLoanApplicationId;
 
             IsDeveloperProvidedUserData = true;
 
@@ -66,6 +67,10 @@ public class IntegrationUserData
 
     public string LoanApplicationIdInDraftState { get; private set; }
 
+    public string LoanApplicationName { get; private set; }
+
+    public string SubmittedLoanApplicationId { get; private set; }
+
     public string ProjectInDraftStateId { get; private set; }
 
     public bool IsDeveloperProvidedUserData { get; }
@@ -89,6 +94,24 @@ public class IntegrationUserData
         }
 
         LoanApplicationIdInDraftState = loanApplicationId;
+    }
+
+    public void SetLoanApplicationName()
+    {
+        if (LoanApplicationName.IsNotProvided())
+        {
+            LoanApplicationName = $"Application-{Guid.NewGuid()}";
+        }
+    }
+
+    public void SetSubmittedLoanApplicationId(string loanApplicationId)
+    {
+        if (SubmittedLoanApplicationId.IsProvided() && IsDeveloperProvidedUserData)
+        {
+            return;
+        }
+
+        SubmittedLoanApplicationId = loanApplicationId;
     }
 
     public void SetProjectId(string projectId)

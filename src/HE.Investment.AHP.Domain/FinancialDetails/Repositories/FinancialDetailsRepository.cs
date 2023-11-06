@@ -3,13 +3,15 @@ using System.Text.Json;
 using HE.Investment.AHP.BusinessLogic.FinancialDetails.Entities;
 using HE.Investment.AHP.BusinessLogic.FinancialDetails.Repositories;
 using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+using HE.Investment.AHP.Domain.FinancialDetails.Entities;
+using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
 using Microsoft.AspNetCore.Http;
 
-namespace HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
+namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 
 public class FinancialDetailsRepository : IFinancialDetailsRepository
 {
@@ -30,6 +32,6 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
 
     public async Task SaveAsync(FinancialDetailsEntity financialDetailsEntity, CancellationToken cancellationToken)
     {
-        await Task.Run(() => _httpContextAccessor.HttpContext?.Response.Cookies.Append(financialDetailsEntity.Id.ToString(), JsonSerializer.Serialize(financialDetailsEntity)), cancellationToken);
+        await Task.Run(() => _httpContextAccessor.HttpContext?.Response.Cookies.Append(financialDetailsEntity.FinancialDetailsId.ToString(), JsonSerializer.Serialize(financialDetailsEntity)), cancellationToken);
     }
 }

@@ -1,0 +1,101 @@
+@using HE.Investment.AHP.WWW.Routing
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.InvestmentLoans.Common.Extensions
+@using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.Gds
+@model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeListModel;
+
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+
+    ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
+        .New()
+        .WithSites()
+        .WithSchemes()
+        .WithApplication(applicationId, Model.ApplicationName)
+        .Build();
+}
+
+<div class="govuk-grid-column-full govuk-!-margin-top-6">
+    <gds-div-hint class="govuk-!-margin-top-1">@Model.ApplicationName</gds-div-hint>
+    <gds-h1 size="ControlSize.L">
+        Home types
+    </gds-h1>
+
+    <gds-p class="govuk-!-width-three-quarters">
+        Add the home types for this application. You can duplicate and edit a home type.
+    </gds-p>
+
+    @if (Model.HomeTypes.Any())
+    {
+        <table class="govuk-table govuk-!-margin-bottom-0">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Home type name</th>
+                <th scope="col" class="govuk-table__header">Number of homes</th>
+                <th scope="col" class="govuk-table__header">Type of housing</th>
+                <th scope="col" class="govuk-table__header"/>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            @foreach (var homeType in Model.HomeTypes)
+            {
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">
+                        <gds-link class="govuk-link--no-visited-state"
+                           href="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId, id = homeType.HomeTypeId })">
+                            @(homeType.HomeTypeName ?? "-")
+                        </gds-link>
+                    </td>
+                    <td class="govuk-table__cell">
+                        @homeType.NumberOfHomes
+                    </td>
+                    <td class="govuk-table__cell">
+                        @(homeType.HousingType == HousingType.Undefined ? string.Empty : homeType.HousingType.GetDescription())
+                    </td>
+                    <td class="govuk-table__cell govuk-!-text-align-right">
+                        <gds-link class="govuk-link--no-visited-state"
+                           href="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "Duplicate", applicationId, id = homeType.HomeTypeId })">
+                            Duplicate
+                        </gds-link>
+                        <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4"
+                           href="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "Remove", applicationId, id = homeType.HomeTypeId })">
+                            Remove
+                        </gds-link>
+                    </td>
+                </tr>
+            }
+
+            <tr>
+                <td class="govuk-!-padding-top-6">
+                    <a href="@Url.Action("Index", "Home")">
+                        <gds-button type="button">Save and continue</gds-button>
+                    </a>
+                </td>
+                <td class="govuk-!-padding-top-6" colspan="3">
+                    <a href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId })">
+                        <gds-button class="govuk-button--secondary" type="button">Add another home type</gds-button>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <gds-p>
+            Your home type details will appear here once added.
+        </gds-p>
+
+        <gds-link href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId })">
+            <gds-button type="button">Add a home type</gds-button>
+        </gds-link>
+    }
+
+    <br/>
+    <gds-link class="govuk-link--no-visited-state"
+              href="@Url.Action("Index", "Home")">
+        Save and return to application
+    </gds-link>
+</div>

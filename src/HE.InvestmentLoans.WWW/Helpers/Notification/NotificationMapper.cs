@@ -11,13 +11,18 @@ public static class NotificationMapper
         {
             NotificationBodyType.WithdrawApplication => NotificationBody.ApplicationWithdrawnWithName,
             NotificationBodyType.DeleteProject => NotificationBody.ProjectRemoved,
+            NotificationBodyType.FileRemove => NotificationBody.FileSuccesfullyRemoved,
             NotificationBodyType.FilesUpload => NotificationBody.FilesSuccesfullyUploaded,
+            NotificationBodyType.ChangeOrganisationDetailsRequest => NotificationBody.ChangeOrganisationDetailsRequested,
             _ => string.Empty,
         };
 
-        foreach (var value in valuesToDisplay)
+        if (valuesToDisplay != null)
         {
-            text = text.Replace($"<{value.Key}>", value.Value);
+            foreach (var value in valuesToDisplay)
+            {
+                text = text.Replace($"<{value.Key}>", value.Value);
+            }
         }
 
         return text;
@@ -32,9 +37,12 @@ public static class NotificationMapper
             _ => string.Empty,
         };
 
-        foreach (var value in valuesToDisplay)
+        if (valuesToDisplay != null)
         {
-            text = text.Replace($"<{value.Key}>", value.Value);
+            foreach (var value in valuesToDisplay)
+            {
+                text = text.Replace($"<{value.Key}>", value.Value);
+            }
         }
 
         return text;
