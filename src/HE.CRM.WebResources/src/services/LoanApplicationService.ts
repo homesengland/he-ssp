@@ -85,7 +85,7 @@ export class LoanApplicationService {
       title: "Change status"
     };
     Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(() => {
-      this.common.refreshForm(false)
+      this.common.refresh(false)
     })
   }
 
