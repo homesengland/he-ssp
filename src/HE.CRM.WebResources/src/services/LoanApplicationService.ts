@@ -82,7 +82,7 @@ export class LoanApplicationService {
       position: 1,
       width: { value: 900, unit: "px" },
       height: { value: 600, unit: "px"},
-      title: "Change status"
+      title: "Change Status"
     };
     Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(() => {
       this.common.refresh(false)
