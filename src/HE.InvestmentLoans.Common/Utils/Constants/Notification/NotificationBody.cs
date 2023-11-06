@@ -13,4 +13,6 @@ public static class NotificationBody
     public const string FileSuccesfullyRemoved = "<Name> successfully removed";
 
     public const string ChangeOrganisationDetailsRequested = "Your request to change your organisation details has been sent for review.";
+
+    public const string ApplicationResubmitted = "Your application has now been submitted.";
 }
