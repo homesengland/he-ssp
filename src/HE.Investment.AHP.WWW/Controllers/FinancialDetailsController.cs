@@ -73,9 +73,9 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("{financialDetailsId}/land-value")]
     [WorkflowState(FinancialDetailsWorkflowState.LandValue)]
-    public async Task<IActionResult> LandValue(Guid id, FinancialDetailsModel model)
+    public async Task<IActionResult> LandValue(Guid applicationId, Guid financialDetailsId, FinancialDetailsModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideLandOwnershipAndValueCommand(FinancialDetailsId.From(id), model.IsSchemaOnPublicLand, model.LandValue));
+        var result = await _mediator.Send(new ProvideLandOwnershipAndValueCommand(FinancialDetailsId.From(financialDetailsId), model.IsSchemaOnPublicLand, model.LandValue), cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -84,13 +84,13 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             return View("LandValue", model);
         }
 
-        return View("OtherSchemeCost", id);
+        return await Continue(new { applicationId, financialDetailsId });
     }
 
     [HttpGet("{financialDetailsId}/back")]
-    public Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, Guid id)
+    public Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, Guid applicationId, Guid financialDetailsId)
     {
-        return Back(currentPage, new { id });
+        return Back(currentPage, new { applicationId, financialDetailsId });
     }
 
     protected override async Task<IStateRouting<FinancialDetailsWorkflowState>> Routing(FinancialDetailsWorkflowState currentState, object routeData = null)

@@ -1,4 +1,5 @@
 @using HE.Investment.AHP.Contract.FinancialDetails.Models;
+@using HE.Investment.AHP.Domain.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 @using HE.Investments.Common.Gds;
 @model FinancialDetailsModel
@@ -9,7 +10,7 @@
     <gds-div-grid-column-two-thirds>
         <form asp-controller="FinancialDetails" asp-action="LandStatus" asp-route-financialDetailsId="@Model.FinancialDetailsId" asp-method="post" novalidate>
             <div id="backButton" role="navigation">
-                <gds-back-link href="@Url.Action("Start", "FinancialDetails", new { Model.ApplicationId, financialDetailsId = Model.FinancialDetailsId })" text="Back" class="govuk-!-margin-bottom-8">
+                <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.LandStatus, applicationId = Model.ApplicationId, financialDetailsId = Model.FinancialDetailsId })" text="Back" class="govuk-!-margin-bottom-8">
                 </gds-back-link>
             </div>
             <span class="govuk-caption-m">
