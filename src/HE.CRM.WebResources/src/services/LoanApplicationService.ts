@@ -70,17 +70,23 @@ export class LoanApplicationService {
   }
 
   public openCustomPage() {
+    var recordId = this.common.trimBraces(this.common.getCurrentEntityId())
     var pageInput : any = {
       pageType: "custom",
       name: "invln_changeloanapplicationstatus_2a09b",
+      recordLogicalName: "invln_loanapplication",
+      recordId: recordId,
     };
     var navigationOptions : any = {
       target: 2,
       position: 1,
-      width: { value: 700, unit: "px" },
+      width: { value: 900, unit: "px" },
+      height: { value: 600, unit: "px"},
       title: "Change status"
     };
-    Xrm.Navigation.navigateTo(pageInput, navigationOptions)
+    Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(() => {
+      this.common.refreshForm(false)
+    })
   }
 
 }
