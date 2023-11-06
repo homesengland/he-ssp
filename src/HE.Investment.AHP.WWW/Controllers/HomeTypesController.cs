@@ -1,5 +1,6 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
@@ -200,6 +201,29 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> HomesForOlderPeople([FromRoute] string applicationId, string homeTypeId, HomesForOlderPeopleModel model, CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(new SaveOlderPeopleHousingTypeCommand(applicationId, homeTypeId, model.HousingType), model, cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.HappiDesignPrinciples)]
+    [HttpGet("{homeTypeId}/HappiDesignPrinciples")]
+    public async Task<IActionResult> HappiDesignPrinciples([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var designPlans = await _mediator.Send(new GetDesignPlansQuery(applicationId, homeTypeId), cancellationToken);
+        return View(new HappiDesignPrinciplesModel(application.Name, designPlans.HomeTypeName) { DesignPrinciples = designPlans.DesignPrinciples, });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.HappiDesignPrinciples)]
+    [HttpPost("{homeTypeId}/HappiDesignPrinciples")]
+    public async Task<IActionResult> HappiDesignPrinciples(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        HappiDesignPrinciplesModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveHappiDesignPrinciplesCommand(applicationId, homeTypeId, model.DesignPrinciples?.ToList() ?? new List<HappiDesignPrincipleType>()),
+            model,
+            cancellationToken);
     }
 
     protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object routeData = null)
