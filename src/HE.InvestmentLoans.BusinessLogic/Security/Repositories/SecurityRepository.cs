@@ -5,7 +5,6 @@ using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
-using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
@@ -92,13 +91,5 @@ internal class SecurityRepository : ISecurityRepository
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
-
-        var request = new invln_changeloanapplicationexternalstatusRequest
-        {
-            invln_loanapplicationid = entity.LoanApplicationId.ToString(),
-            invln_statusexternal = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Draft),
-        };
-
-        await _serviceClient.ExecuteAsync(request, cancellationToken);
     }
 }

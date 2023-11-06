@@ -15,6 +15,7 @@ public static class NotificationMapper
             NotificationBodyType.FilesUpload => NotificationBody.FilesSuccesfullyUploaded,
             NotificationBodyType.ChangeOrganisationDetailsRequest => NotificationBody.ChangeOrganisationDetailsRequested,
             NotificationBodyType.ApplicationResubmitted => NotificationBody.ApplicationResubmitted,
+            NotificationBodyType.SectionCompletedAgain => NotificationBody.SectionCompletedAgain,
             _ => string.Empty,
         };
 
@@ -54,6 +55,7 @@ public static class NotificationMapper
         var text = bodyType switch
         {
             NotificationBodyType.ApplicationResubmitted => NotificationDescription.ApplicationResubmitted,
+            NotificationBodyType.SectionCompletedAgain => NotificationDescription.SectionCompletedAgain,
             _ => string.Empty,
         };
 

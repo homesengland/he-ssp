@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.InvestmentLoans.BusinessLogic.User;
@@ -7,10 +8,14 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
+
 internal class ProvideGrantFundingStatusCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideGrantFundingStatusCommand, OperationResult>
 {
-    public ProvideGrantFundingStatusCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger)
-        : base(repository, loanUserContext, logger)
+    public ProvideGrantFundingStatusCommandHandler(IApplicationProjectsRepository applicationProjectsRepository,
+        ILoanApplicationRepository loanApplicationRepository,
+        ILoanUserContext loanUserContext,
+        ILogger<ProjectCommandHandlerBase> logger)
+        : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext, logger)
     {
     }
 

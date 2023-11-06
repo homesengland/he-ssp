@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Enums;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
@@ -8,10 +9,15 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
+
 public class ProvidePlanningPermissionStatusCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvidePlanningPermissionStatusCommand, OperationResult>
 {
-    public ProvidePlanningPermissionStatusCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger)
-        : base(repository, loanUserContext, logger)
+    public ProvidePlanningPermissionStatusCommandHandler(
+        IApplicationProjectsRepository applicationProjectsRepository,
+        ILoanApplicationRepository loanApplicationRepository,
+        ILoanUserContext loanUserContext,
+        ILogger<ProjectCommandHandlerBase> logger)
+        : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext, logger)
     {
     }
 

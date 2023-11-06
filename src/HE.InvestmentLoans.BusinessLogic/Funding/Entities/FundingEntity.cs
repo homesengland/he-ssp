@@ -4,9 +4,10 @@ using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Funding.ValueObjects;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.BusinessLogic.Funding.Entities;
-public class FundingEntity
+public class FundingEntity : DomainEntity
 {
     public FundingEntity(
         LoanApplicationId loanApplicationId,

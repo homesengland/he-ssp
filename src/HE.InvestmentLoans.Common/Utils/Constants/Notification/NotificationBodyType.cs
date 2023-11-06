@@ -7,4 +7,5 @@ public enum NotificationBodyType
     FileRemove,
     ChangeOrganisationDetailsRequest,
     ApplicationResubmitted,
+    SectionCompletedAgain,
 }

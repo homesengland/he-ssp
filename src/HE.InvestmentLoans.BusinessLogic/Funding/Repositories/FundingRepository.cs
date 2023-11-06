@@ -6,7 +6,6 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
@@ -17,12 +16,9 @@ public class FundingRepository : IFundingRepository
 {
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    private readonly IAppConfig _appConfig;
-
-    public FundingRepository(IOrganizationServiceAsync2 serviceClient, IAppConfig appConfig)
+    public FundingRepository(IOrganizationServiceAsync2 serviceClient)
     {
         _serviceClient = serviceClient;
-        _appConfig = appConfig;
     }
 
     public async Task<FundingEntity> GetAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, FundingFieldsSet fundingFieldsSet, CancellationToken cancellationToken)
