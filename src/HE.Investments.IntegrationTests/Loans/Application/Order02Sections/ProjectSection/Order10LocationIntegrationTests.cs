@@ -30,19 +30,19 @@ public class Order10LocationIntegrationTests : IntegrationTest
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(1)]
-    public async Task Order01_ShouldRedirectToOwnership_WhenNoLocationTypeWasSelected()
+    public async Task Order01_ShouldRedirectToLocalAuthoritySearch_WhenNoLocationTypeWasSelected()
     {
         // given
         var locationPage = await TestClient.NavigateTo(ProjectPagesUrls.Location(_applicationLoanId, _projectId));
         var continueButton = locationPage.GetGdsSubmitButtonById("continue-button");
 
         // when
-        var ownershipPage = await TestClient.SubmitButton(continueButton, (nameof(ProjectViewModel.LocationOption), string.Empty));
+        var localAuthoritySearchPage = await TestClient.SubmitButton(continueButton, (nameof(ProjectViewModel.LocationOption), string.Empty));
 
         // then
-        ownershipPage
-            .UrlEndWith(ProjectPagesUrls.OwnershipSuffix)
-            .HasTitle(ProjectPageTitles.Ownership);
+        localAuthoritySearchPage
+            .UrlEndWith(ProjectPagesUrls.LocalAuthoritySearchSuffix)
+            .HasTitle(ProjectPageTitles.LocalAuthority);
 
         SetSharedData(SharedKeys.CurrentPageKey, locationPage);
     }
@@ -133,22 +133,22 @@ public class Order10LocationIntegrationTests : IntegrationTest
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(6)]
-    public async Task Order06_RedirectToOwnershipPage_WhenCoordinatesWasSelected()
+    public async Task Order06_RedirectTolocalAuthoritySearchPage_WhenCoordinatesWasSelected()
     {
         // given
         var locationPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Location(_applicationLoanId, _projectId)));
         var continueButton = locationPage.GetGdsSubmitButtonById("continue-button");
 
         // when
-        var ownershipPage = await TestClient.SubmitButton(
+        var localAuthoritySearchPage = await TestClient.SubmitButton(
             continueButton,
             (nameof(ProjectViewModel.LocationOption), ProjectFormOption.Coordinates),
             (nameof(ProjectViewModel.LocationCoordinates), TextTestData.TextThatNotExceedsLongInputLimit));
 
         // then
-        ownershipPage
-            .UrlEndWith(ProjectPagesUrls.OwnershipSuffix)
-            .HasTitle(ProjectPageTitles.Ownership);
+        localAuthoritySearchPage
+            .UrlEndWith(ProjectPagesUrls.LocalAuthoritySearchSuffix)
+            .HasTitle(ProjectPageTitles.LocalAuthority);
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]
@@ -167,21 +167,21 @@ public class Order10LocationIntegrationTests : IntegrationTest
 
     [Fact(Skip = LoansConfig.SkipTest)]
     [Order(8)]
-    public async Task Order08_RedirectToOwnershipPage_WhenTitleNumberWasSelected()
+    public async Task Order08_RedirectTolocalAuthoritySearchPage_WhenTitleNumberWasSelected()
     {
         // given
         var locationPage = await GetCurrentPage(() => TestClient.NavigateTo(ProjectPagesUrls.Location(_applicationLoanId, _projectId)));
         var continueButton = locationPage.GetGdsSubmitButtonById("continue-button");
 
         // when
-        var ownershipPage = await TestClient.SubmitButton(
+        var localAuthoritySearchPage = await TestClient.SubmitButton(
             continueButton,
             (nameof(ProjectViewModel.LocationOption), ProjectFormOption.LandRegistryTitleNumber),
             (nameof(ProjectViewModel.LocationLandRegistry), TextTestData.TextThatNotExceedsLongInputLimit));
 
         // then
-        ownershipPage
-            .UrlEndWith(ProjectPagesUrls.OwnershipSuffix)
-            .HasTitle(ProjectPageTitles.Ownership);
+        localAuthoritySearchPage
+            .UrlEndWith(ProjectPagesUrls.LocalAuthoritySearchSuffix)
+            .HasTitle(ProjectPageTitles.LocalAuthority);
     }
 }

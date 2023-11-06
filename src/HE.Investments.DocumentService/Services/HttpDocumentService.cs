@@ -126,6 +126,7 @@ public class HttpDocumentService : IHttpDocumentService
     private async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
     {
         using var client = _httpClient.CreateClient("HE.Investments.DocumentService");
+        client.Timeout = TimeSpan.FromMinutes(3);
 
         return await client.SendAsync(request);
     }

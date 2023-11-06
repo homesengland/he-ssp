@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using DataverseModel;
 using HE.CRM.Common.Repositories.Interfaces;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using System.Linq;
+using HE.CRM.Plugins.Services.GovNotifyEmail;
 
 namespace HE.CRM.Plugins.Services.Accounts
 {
@@ -13,8 +15,13 @@ namespace HE.CRM.Plugins.Services.Accounts
 
         private readonly IAccountRepository _accountRepository;
         private readonly IContactRepository _contactRepository;
+        private readonly IContactWebroleRepository _contactWebroleRepository;
+        private readonly IWebRoleRepository _webRoleRepository;
+
+        private readonly IGovNotifyEmailService _govNotifyEmailService;
 
         private readonly string _youRequested = "You requested";
+        private readonly string _adminRoleName = "Account administrator";
 
         #endregion
 
@@ -24,6 +31,10 @@ namespace HE.CRM.Plugins.Services.Accounts
         {
             _accountRepository = CrmRepositoriesFactory.Get<IAccountRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
+            _contactWebroleRepository = CrmRepositoriesFactory.Get<IContactWebroleRepository>();
+            _webRoleRepository = CrmRepositoriesFactory.Get<IWebRoleRepository>();
+
+            _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
         }
 
         #endregion
@@ -37,7 +48,7 @@ namespace HE.CRM.Plugins.Services.Accounts
 
         public string GetOrganisationChangeDetails(string accountId)
         {
-            if(Guid.TryParse(accountId, out Guid accountGuid))
+            if (Guid.TryParse(accountId, out Guid accountGuid))
             {
                 var account = _accountRepository.GetById(accountGuid);
                 return _youRequested;
@@ -99,6 +110,43 @@ namespace HE.CRM.Plugins.Services.Accounts
             {
                 target.invln_PreviousCRR = preImage.invln_CurrentCRR;
                 target.invln_DateofCRRassessment = DateTime.Now;
+            }
+        }
+
+        public void SendEmailOnRatingChange(Account target, Account preImage)
+        {
+            if (target.invln_rating != preImage.invln_rating && target.invln_rating.Value != (int)invln_Rating.Notyetrated)
+            {
+                TracingService.Trace($"account {target.Id}");
+                var adminRole = _webRoleRepository.GetRoleByName(_adminRoleName);
+                var adminContactWebroles = _contactWebroleRepository.GetAdminContactWebrolesForOrganisation(target.Id, adminRole.Id);
+                var accountToPass = new Account()
+                {
+                    Id = target.Id,
+                    OwnerId = target.OwnerId ?? preImage.OwnerId,
+                };
+                var subject = "Your account status has changed";
+                if (adminContactWebroles != null && adminContactWebroles.Count > 0)
+                {
+                    TracingService.Trace("Send to admins");
+                    foreach (var adminWebrole in adminContactWebroles)
+                    {
+                        var contact = _contactRepository.GetById(adminWebrole.invln_Contactid.Id);
+                        _govNotifyEmailService.SendNotifications_EXTERNAL_KYC_STATUS_CHANGE(contact, subject, accountToPass);
+                    }
+                }
+                else
+                {
+                    var contacts = _contactRepository.GetContactsForOrganisation(target.Id);
+                    if (contacts != null && contacts.Count > 0)
+                    {
+                        TracingService.Trace("Send to users");
+                        foreach (var contact in contacts)
+                        {
+                            _govNotifyEmailService.SendNotifications_EXTERNAL_KYC_STATUS_CHANGE(contact, subject, accountToPass);
+                        }
+                    }
+                }
             }
         }
 

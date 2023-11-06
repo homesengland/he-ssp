@@ -3,5 +3,6 @@ namespace HE.Investment.AHP.Domain.Scheme.Workflows;
 public enum SchemeWorkflowState
 {
     Funding = 1,
-    Partner,
+    Affordability,
+    SalesRisk,
 }

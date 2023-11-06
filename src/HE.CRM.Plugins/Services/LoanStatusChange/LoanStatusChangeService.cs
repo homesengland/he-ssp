@@ -100,10 +100,15 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
                 case (int)invln_InternalStatus.CashflowRequested:
                     statusLabel = "Cashflow requested";
                     pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
+                    if (loanStatusChange.invln_changesource?.Value == (int)invln_ChangesourceSet.Internal)
+                    {
+                        _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_ACTION_REQUIRED(loanStatusChange, loanApplication, "complete and upload your cashflow for");
+                    }
                     break;
                 case (int)invln_InternalStatus.CashflowUnderReview:
                     statusLabel = "Cashflow under review";
-                    pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
+                    pastFormStatus = "has been changed"; //TODO: to update
+                    _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_STATUS_INFORMATION(loanStatusChange, loanApplication);
                     break;
                 case (int)invln_InternalStatus.OnHold:
                     statusLabel = "On hold";
@@ -112,6 +117,7 @@ namespace HE.CRM.Plugins.Services.LoanStatusChange
                 case (int)invln_InternalStatus.ReferredBacktoApplicant:
                     statusLabel = "Reffered back to applicant";
                     pastFormStatus = "has been changed to " + statusLabel; //TODO: to update
+                    _govNotifyEmailService.SendNotifications_EXTERNAL_APPLICATION_ACTION_REQUIRED(loanStatusChange, loanApplication, "update");
                     break;
                 case (int)invln_InternalStatus.UnderReview:
                     statusLabel = "Under review";

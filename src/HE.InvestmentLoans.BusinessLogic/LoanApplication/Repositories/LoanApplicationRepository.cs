@@ -101,6 +101,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             FundingPurposeMapper.Map(loanApplicationDto.fundingReason),
             loanApplicationDto.createdOn,
             loanApplicationDto.LastModificationOn,
+            loanApplicationDto.dateSubmitted,
             loanApplicationDto.lastModificationByName,
             new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.CompanyStructureAndExperienceCompletionStatus)),
             new LoanApplicationSection(SectionStatusMapper.Map(loanApplicationDto.SecurityDetailsCompletionStatus)),

@@ -53,4 +53,21 @@
     <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Include="Views\Organisation\ConfirmYourSelection.cshtml" />
+    <AdditionalFiles Include="Views\Organisation\CreateOrganisation.cshtml" />
+    <AdditionalFiles Include="Views\Organisation\NoMatchFound.cshtml" />
+    <AdditionalFiles Include="Views\Organisation\SearchOrganization.cshtml" />
+    <AdditionalFiles Include="Views\Organisation\SearchOrganizationResult.cshtml" />
+    <AdditionalFiles Include="Views\UserOrganisation\ChangeOrganisationDetails.cshtml" />
+    <AdditionalFiles Include="Views\UserOrganisation\OrganizationDetails.cshtml" />
+    <AdditionalFiles Include="Views\UserOrganisation\UserOrganisation.cshtml" />
+    <AdditionalFiles Include="Views\UserOrganisation\_ApplicationsCard.cshtml" />
+    <AdditionalFiles Include="Views\UserOrganisation\_ProgrammesToApply.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

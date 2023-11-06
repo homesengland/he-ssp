@@ -160,14 +160,15 @@ public class Order01StartApplicationIntegrationTests : IntegrationTest
 
         // when
         var continueButton = applicationNamePage.GetGdsSubmitButtonById("continue-button");
+        UserData.SetLoanApplicationName();
         var taskListPage = await TestClient.SubmitButton(
             continueButton,
-            new Dictionary<string, string> { { "LoanApplicationName", $"Application-{Guid.NewGuid()}" }, });
+            new Dictionary<string, string> { { "LoanApplicationName", UserData.LoanApplicationName }, });
 
         // then
         taskListPage
             .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
-            .HasTitle("Development loan application")
+            .HasTitle(UserData.LoanApplicationName)
             .ExtractLastSavedDateFromTaskListPage(out var dateTime);
 
         dateTime.Should().BeCloseTo(DateTime.UtcNow.ConvertUtcToUkLocalTime(), TimeSpan.FromMinutes(2));

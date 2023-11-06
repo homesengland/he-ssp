@@ -73,7 +73,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
         // then
         taskList
             .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
-            .HasTitle("Development loan application");
+            .HasTitle(UserData.LoanApplicationName);
 
         taskList.ProjectExistsAtTaskList(_projectId!).Should().BeTrue();
     }
@@ -93,7 +93,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
         // then
         taskList
             .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
-            .HasTitle("Development loan application");
+            .HasTitle(UserData.LoanApplicationName);
 
         taskList.ProjectExistsAtTaskList(_projectId!).Should().BeTrue();
     }
@@ -113,7 +113,7 @@ public class Order99DeleteProjectIntegrationTests : IntegrationTest
         // then
         taskList
             .UrlEndWith(ApplicationPagesUrls.TaskListSuffix)
-            .HasTitle("Development loan application");
+            .HasTitle(UserData.LoanApplicationName);
 
         taskList.ProjectExistsAtTaskList(_projectId!).Should().BeFalse();
 

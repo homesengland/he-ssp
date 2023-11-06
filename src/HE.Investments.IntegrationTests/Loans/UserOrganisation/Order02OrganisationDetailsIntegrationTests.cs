@@ -5,13 +5,13 @@ using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
-namespace HE.InvestmentLoans.IntegrationTests.Loans.Organisation;
+namespace HE.InvestmentLoans.IntegrationTests.Loans.UserOrganisation;
 
-[Order(4)]
+[Order(3)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order01OrganisationDetailsIntegrationTests : IntegrationTest
+public class Order02OrganisationDetailsIntegrationTests : IntegrationTest
 {
-    public Order01OrganisationDetailsIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order02OrganisationDetailsIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
     }

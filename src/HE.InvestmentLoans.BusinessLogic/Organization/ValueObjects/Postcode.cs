@@ -13,6 +13,11 @@ public class Postcode : ValueObject
 
     public string Value { get; private set; }
 
+    public override string ToString()
+    {
+        return Value;
+    }
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Value;
