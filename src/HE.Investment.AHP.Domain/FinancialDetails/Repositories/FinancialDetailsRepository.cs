@@ -1,12 +1,11 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
-using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
 
-namespace HE.Investment.AHP.Domain.HomeTypes.Repositories;
+namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 
 public class FinancialDetailsRepository : IFinancialDetailsRepository
 {
