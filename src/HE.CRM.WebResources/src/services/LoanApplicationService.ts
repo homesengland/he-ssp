@@ -14,7 +14,6 @@ export class LoanApplicationService {
 
   public setFieldsVisibilityBasedOnSecurities() {
     var securities :any = this.common.getAttributeValue('invln_securities')
-    debugger;
     if (securities != null) {
       if (securities.includes(Securities.other)) {
         this.common.hideControl('invln_customsecurity', false)
@@ -68,6 +67,20 @@ export class LoanApplicationService {
       this.common.hideControl('invln_rateofinterest', true)
       this.common.hideControl('invln_specialpurposevehicleprovided', true)
     }
+  }
+
+  public openCustomPage() {
+    var pageInput : any = {
+      pageType: "custom",
+      name: "invln_changeloanapplicationstatus_2a09b",
+    };
+    var navigationOptions : any = {
+      target: 2,
+      position: 1,
+      width: { value: 700, unit: "px" },
+      title: "Change status"
+    };
+    Xrm.Navigation.navigateTo(pageInput, navigationOptions)
   }
 
 }
