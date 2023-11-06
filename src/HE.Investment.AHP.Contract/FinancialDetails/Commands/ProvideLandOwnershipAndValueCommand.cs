@@ -3,4 +3,4 @@ using HE.InvestmentLoans.Common.Validation;
 using MediatR;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails.Commands;
-public record ProvideLandOwnershipCommand(FinancialDetailsId FinancialDetailsId, string LandOwnership) : IRequest<OperationResult>;
+public record ProvideLandOwnershipAndValueCommand(FinancialDetailsId FinancialDetailsId, string LandOwnership, string LandValue) : IRequest<OperationResult>;

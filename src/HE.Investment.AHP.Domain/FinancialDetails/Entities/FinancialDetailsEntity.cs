@@ -7,15 +7,12 @@ namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
 
 public class FinancialDetailsEntity
 {
-    public FinancialDetailsEntity()
+    public FinancialDetailsEntity(ApplicationID applicationId, string applicationName, FinancialDetailsId? financialDetailsId, bool isPurchasePriceKnown)
     {
-        FinancialDetailsId = new FinancialDetailsId(Guid.NewGuid());
-    }
-
-    public FinancialDetailsEntity(bool isPurchasePriceKnown)
-    {
-        FinancialDetailsId = new FinancialDetailsId(Guid.NewGuid());
+        ApplicationId = applicationId;
+        ApplicationName = applicationName;
         IsPurchasePriceKnown = isPurchasePriceKnown;
+        FinancialDetailsId = FinancialDetailsId.From(financialDetailsId?.Value ?? Guid.NewGuid());
     }
 
     [JsonConstructor]
@@ -31,6 +28,10 @@ public class FinancialDetailsEntity
         LandOwnership = landOwnership;
     }
 
+    public ApplicationID ApplicationId { get; private set; }
+
+    public string ApplicationName { get; private set; }
+
     public FinancialDetailsId FinancialDetailsId { get; private set; }
 
     public PurchasePrice? PurchasePrice { get; private set; }
@@ -39,13 +40,16 @@ public class FinancialDetailsEntity
 
     public LandOwnership? LandOwnership { get; private set; }
 
+    public LandValue? LandValue { get; private set; }
+
     public void ProvidePurchasePrice(PurchasePrice price)
     {
         PurchasePrice = price;
     }
 
-    public void ProvideLandOwnership(LandOwnership landOwnership)
+    public void ProvideLandOwnershipAndValue(LandOwnership landOwnership, LandValue landValue)
     {
         LandOwnership = landOwnership;
+        LandValue = landValue;
     }
 }

@@ -2,17 +2,19 @@ using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using HE.Investment.AHP.Contract.FinancialDetails.Models;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
-using HE.Investment.AHP.Domain.FinancialDetails.Entities;
-using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+using HE.Investment.AHP.Domain.FinancialDetails;
+using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Validation;
-using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Common.WWW.Extensions;
+using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
 [Route("financial-details")]
-public class FinancialDetailsController : Controller
+public class FinancialDetailsController : WorkflowController<FinancialDetailsWorkflowState>
 {
     private readonly IMediator _mediator;
 
@@ -22,33 +24,32 @@ public class FinancialDetailsController : Controller
     }
 
     [HttpGet("start")]
-    public IActionResult Start(Guid financialSchemeId, Guid financialDetailsId)
+    [WorkflowState(FinancialDetailsWorkflowState.Index)]
+    public IActionResult Start(Guid applicationId)
     {
-        return View("Index", financialSchemeId);
+        return View("Index", applicationId);
     }
 
     [HttpPost("start")]
-    public async Task<IActionResult> StartPost(Guid financialSchemeId, [FromQuery] Guid? financialDetailsId, CancellationToken cancellationToken)
+    [WorkflowState(FinancialDetailsWorkflowState.Index)]
+    public async Task<IActionResult> StartPost([FromQuery] Guid applicationId, CancellationToken cancellationToken)
     {
-        if (financialDetailsId.HasValue)
-        {
-            return RedirectToAction(nameof(LandStatus), new { financialDetailsId = financialDetailsId.Value });
-        }
+        var result = await _mediator.Send(new StartFinancialDetailsCommand(applicationId), cancellationToken);
 
-        var result = await _mediator.Send(new StartFinancialDetailsCommand(financialSchemeId), cancellationToken);
-
-        return RedirectToAction(nameof(LandStatus), new { financialDetailsId = result.ReturnedData.FinancialDetailsId });
+        return await Continue(new { applicationId, financialDetailsId = result.ReturnedData.FinancialDetailsId.ToString() });
     }
 
     [HttpGet("{financialDetailsId}/land-status")]
-    public async Task<IActionResult> LandStatus(Guid financialDetailsId)
+    [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
+    public async Task<IActionResult> LandStatus(Guid applicationId, Guid financialDetailsId)
     {
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(FinancialDetailsId.From(financialDetailsId)));
         return View(financialDetails);
     }
 
     [HttpPost("{financialDetailsId}/land-status")]
-    public async Task<IActionResult> LandStatus(Guid financialDetailsId, FinancialDetailsViewModel model, CancellationToken cancellationToken)
+    [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
+    public async Task<IActionResult> LandStatus(Guid applicationId, Guid financialDetailsId, FinancialDetailsModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new ProvidePurchasePriceCommand(FinancialDetailsId.From(financialDetailsId), model.PurchasePrice), cancellationToken);
 
@@ -59,20 +60,22 @@ public class FinancialDetailsController : Controller
             return View("LandStatus", model);
         }
 
-        return RedirectToAction(nameof(LandValue), new { FinancialDetailsId = financialDetailsId });
+        return await Continue(new { applicationId, financialDetailsId });
     }
 
     [HttpGet("{financialDetailsId}/land-value")]
-    public async Task<IActionResult> LandValue(Guid financialDetailsId)
+    [WorkflowState(FinancialDetailsWorkflowState.LandValue)]
+    public async Task<IActionResult> LandValue(Guid applicationId, Guid financialDetailsId)
     {
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(FinancialDetailsId.From(financialDetailsId)));
         return View(financialDetails);
     }
 
     [HttpPost("{financialDetailsId}/land-value")]
-    public async Task<IActionResult> LandValue(Guid id, FinancialDetailsViewModel model)
+    [WorkflowState(FinancialDetailsWorkflowState.LandValue)]
+    public async Task<IActionResult> LandValue(Guid id, FinancialDetailsModel model)
     {
-        var result = await _mediator.Send(new ProvideLandOwnershipCommand(FinancialDetailsId.From(id), model.IsSchemaOnPublicLand));
+        var result = await _mediator.Send(new ProvideLandOwnershipAndValueCommand(FinancialDetailsId.From(id), model.IsSchemaOnPublicLand, model.LandValue));
 
         if (result.HasValidationErrors)
         {
@@ -82,5 +85,22 @@ public class FinancialDetailsController : Controller
         }
 
         return View("OtherSchemeCost", id);
+    }
+
+    [HttpGet("{financialDetailsId}/back")]
+    public Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, Guid id)
+    {
+        return Back(currentPage, new { id });
+    }
+
+    protected override async Task<IStateRouting<FinancialDetailsWorkflowState>> Routing(FinancialDetailsWorkflowState currentState, object routeData = null)
+    {
+        var financialDetailsId = await Task.Run(() => Request.GetRouteValue("financialDetailsId") ?? routeData?.GetPropertyValue<string>("financialDetailsId"));
+        if (string.IsNullOrEmpty(financialDetailsId))
+        {
+            return new FinancialDetailsWorkflow();
+        }
+
+        return new FinancialDetailsWorkflow(currentState);
     }
 }

@@ -1,17 +1,18 @@
-@using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts
-@model HE.Investment.AHP.Contract.FinancialDetails.Models.FinancialDetailsViewModel
+@using HE.Investment.AHP.Contract.FinancialDetails.Models;
+@using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
+@model FinancialDetailsModel
 @{
     ViewData["Title"] = "Land value";
 }
 <div id="mainContainer" role="main">
     <gds-div-grid-column-two-thirds>
-        <form asp-controller="FinancialDetails" asp-action="LandValue" asp-route-financialDetailsId="@Model.FinancialDetailsId.Value" asp-method="post" novalidate>
+        <form asp-controller="FinancialDetails" asp-action="LandValue" asp-route-financialDetailsId="@Model.FinancialDetailsId" asp-method="post" novalidate>
             <div id="backButton" role="navigation">
-                <gds-back-link href="@Url.Action("LandStatus", "FinancialDetails", new { @Model.FinancialSchemaName })" text="Back" class="govuk-!-margin-bottom-8">
+                <gds-back-link href="@Url.Action("LandStatus", "FinancialDetails", new { @Model.ApplicationId, financialDetailsId = Model.FinancialDetailsId })" text="Back" class="govuk-!-margin-bottom-8">
                 </gds-back-link>
             </div>
             <span class="govuk-caption-m">
-                @Model.FinancialSchemaName - Financial details
+                @Model.ApplicationName - Financial details
             </span>
             <gds-field-set role="group">
                 <gds-div-form-group>
@@ -40,7 +41,8 @@
                     </gds-field-set>
                 </gds-div-form-group>
 
-                @Html.HiddenFor(c => c.FinancialDetailsId.Value)
+                @Html.HiddenFor(c => c.ApplicationId)
+                @Html.HiddenFor(c => c.FinancialDetailsId)
 
                 <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                     Save and continue
