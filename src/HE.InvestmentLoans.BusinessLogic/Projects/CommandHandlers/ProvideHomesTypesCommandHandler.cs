@@ -12,7 +12,8 @@ namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
 
 public class ProvideHomesTypesCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideHomesTypesCommand, OperationResult>
 {
-    public ProvideHomesTypesCommandHandler(IApplicationProjectsRepository applicationProjectsRepository,
+    public ProvideHomesTypesCommandHandler(
+        IApplicationProjectsRepository applicationProjectsRepository,
         ILoanApplicationRepository loanApplicationRepository,
         ILoanUserContext loanUserContext,
         ILogger<ProjectCommandHandlerBase> logger)

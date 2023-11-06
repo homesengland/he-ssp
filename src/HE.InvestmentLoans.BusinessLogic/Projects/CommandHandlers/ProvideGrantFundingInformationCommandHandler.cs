@@ -23,7 +23,8 @@ public class ProvideGrantFundingInformationCommandHandler : ProjectCommandHandle
     public async Task<OperationResult> Handle(ProvideGrantFundingInformationCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            project => project.ProvideGrantFundingInformation(PublicSectorGrantFunding.FromString(request.ProviderName,
+            project => project.ProvideGrantFundingInformation(PublicSectorGrantFunding.FromString(
+                request.ProviderName,
                 request.Amount,
                 request.Name,
                 request.Purpose)),

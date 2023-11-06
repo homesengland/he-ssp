@@ -11,7 +11,8 @@ namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
 
 internal class ProvideGrantFundingStatusCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideGrantFundingStatusCommand, OperationResult>
 {
-    public ProvideGrantFundingStatusCommandHandler(IApplicationProjectsRepository applicationProjectsRepository,
+    public ProvideGrantFundingStatusCommandHandler(
+        IApplicationProjectsRepository applicationProjectsRepository,
         ILoanApplicationRepository loanApplicationRepository,
         ILoanUserContext loanUserContext,
         ILogger<ProjectCommandHandlerBase> logger)

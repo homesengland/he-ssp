@@ -162,7 +162,8 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
 
         var request = new invln_changeloanapplicationexternalstatusRequest
         {
-            invln_loanapplicationid = loanApplicationId.ToString(), invln_statusexternal = crmSubmitStatus,
+            invln_loanapplicationid = loanApplicationId.ToString(),
+            invln_statusexternal = crmSubmitStatus,
         };
 
         await _serviceClient.ExecuteAsync(request, cancellationToken);
