@@ -45,7 +45,7 @@ public class CheckAnswersFundingSectionCommandHandler : IRequestHandler<CheckAns
 
             if (funding.Status == SectionStatus.Completed)
             {
-                funding.Publish(new LoanApplicationSectionHasBeenCompletedAgainEvent());
+                funding.Publish(new LoanApplicationSectionHasBeenCompletedAgainEvent(request.LoanApplicationId));
                 await _loanApplicationRepository.DispatchEvents(funding, cancellationToken);
             }
         }
