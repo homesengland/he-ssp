@@ -24,7 +24,6 @@ public class AffordabilityEvidence : ValueObject
 
         Evidence = Validator
             .For(evidence, "AffordabilityEvidence", operationResult)
-            .IsProvided()
             .IsLongInput();
 
         return operationResult;

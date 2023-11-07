@@ -33,37 +33,33 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return View("Index", application.Name);
     }
 
-    [HttpGet("{schemeId}/Back")]
-    public Task<IActionResult> Back([FromRoute] string applicationId, [FromRoute] string schemeId, SchemeWorkflowState currentPage)
+    [HttpGet("back")]
+    public Task<IActionResult> Back([FromRoute] string applicationId, SchemeWorkflowState currentPage)
     {
-        return Back(currentPage, new { applicationId, schemeId });
+        return Back(currentPage, new { applicationId });
     }
 
     [WorkflowState(SchemeWorkflowState.Funding)]
     [HttpGet("funding")]
-    [HttpGet("{schemeId}/funding")]
-    public async Task<IActionResult> Funding([FromRoute] string applicationId, string schemeId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Funding([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
-        if (string.IsNullOrWhiteSpace(schemeId))
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+
+        if (scheme == null)
         {
             return View("Funding", CreateModel(applicationId, application.Name, null));
         }
-
-        var scheme = await _mediator.Send(new GetSchemeQuery(schemeId), cancellationToken);
 
         return View("Funding", CreateModel(applicationId, application.Name, scheme));
     }
 
     [WorkflowState(SchemeWorkflowState.Funding)]
     [HttpPost("funding")]
-    [HttpPost("{schemeId}/funding")]
     public async Task<IActionResult> Funding(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            string.IsNullOrWhiteSpace(model.SchemeId)
-                ? new AddSchemeWithFundingCommand(model.ApplicationId, model.RequiredFunding, model.HousesToDeliver)
-                : new ChangeSchemeFundingCommand(model.SchemeId, model.RequiredFunding, model.HousesToDeliver),
+            new ChangeSchemeFundingCommand(model.ApplicationId, model.RequiredFunding, model.HousesToDeliver),
             model.ApplicationId,
             nameof(Funding),
             model,
@@ -71,21 +67,21 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     }
 
     [WorkflowState(SchemeWorkflowState.Affordability)]
-    [HttpGet("{schemeId}/affordability")]
-    public async Task<IActionResult> Affordability([FromRoute] string applicationId, string schemeId, CancellationToken cancellationToken)
+    [HttpGet("affordability")]
+    public async Task<IActionResult> Affordability([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
-        var scheme = await _mediator.Send(new GetSchemeQuery(schemeId), cancellationToken);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
         return View("Affordability", CreateModel(applicationId, application.Name, scheme));
     }
 
     [WorkflowState(SchemeWorkflowState.Affordability)]
-    [HttpPost("{schemeId}/affordability")]
+    [HttpPost("affordability")]
     public async Task<IActionResult> Affordability(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            new ChangeSchemeAffordabilityCommand(model.SchemeId, model.AffordabilityEvidence),
+            new ChangeSchemeAffordabilityCommand(model.ApplicationId, model.AffordabilityEvidence),
             model.ApplicationId,
             nameof(Affordability),
             model,
@@ -93,21 +89,21 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     }
 
     [WorkflowState(SchemeWorkflowState.SalesRisk)]
-    [HttpGet("{schemeId}/sales-risk")]
-    public async Task<IActionResult> SalesRisk([FromRoute] string applicationId, string schemeId, CancellationToken cancellationToken)
+    [HttpGet("sales-risk")]
+    public async Task<IActionResult> SalesRisk([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
-        var scheme = await _mediator.Send(new GetSchemeQuery(schemeId), cancellationToken);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
         return View("SalesRisk", CreateModel(applicationId, application.Name, scheme));
     }
 
     [WorkflowState(SchemeWorkflowState.SalesRisk)]
-    [HttpPost("{schemeId}/sales-risk")]
+    [HttpPost("sales-risk")]
     public async Task<IActionResult> SalesRisk(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            new ChangeSchemeSalesRiskCommand(model.SchemeId, model.SalesRisk),
+            new ChangeSchemeSalesRiskCommand(model.ApplicationId, model.SalesRisk),
             model.ApplicationId,
             nameof(SalesRisk),
             model,
@@ -115,21 +111,21 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     }
 
     [WorkflowState(SchemeWorkflowState.HousingNeeds)]
-    [HttpGet("{schemeId}/housing-needs")]
-    public async Task<IActionResult> HousingNeeds([FromRoute] string applicationId, string schemeId, CancellationToken cancellationToken)
+    [HttpGet("housing-needs")]
+    public async Task<IActionResult> HousingNeeds([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
-        var scheme = await _mediator.Send(new GetSchemeQuery(schemeId), cancellationToken);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
         return View("HousingNeeds", CreateModel(applicationId, application.Name, scheme));
     }
 
     [WorkflowState(SchemeWorkflowState.HousingNeeds)]
-    [HttpPost("{schemeId}/housing-needs")]
+    [HttpPost("housing-needs")]
     public async Task<IActionResult> HousingNeeds(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            new ChangeSchemeHousingNeedsCommand(model.SchemeId, model.TypeAndTenureJustification, model.SchemeAndProposalJustification),
+            new ChangeSchemeHousingNeedsCommand(model.ApplicationId, model.TypeAndTenureJustification, model.SchemeAndProposalJustification),
             model.ApplicationId,
             nameof(HousingNeeds),
             model,
@@ -146,7 +142,6 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return new SchemeViewModel(
             applicationId,
             applicationName,
-            scheme?.SchemeId,
             scheme?.RequiredFunding.ToString(),
             scheme?.HousesToDeliver.ToString(),
             scheme?.AffordabilityEvidence,
@@ -156,7 +151,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     }
 
     private async Task<IActionResult> ExecuteCommand(
-        IRequest<OperationResult<SchemeId>> command,
+        IRequest<OperationResult> command,
         string applicationId,
         string viewName,
         object model,
@@ -170,6 +165,6 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             return View(viewName, model);
         }
 
-        return await Continue(new { applicationId, schemeId = result.ReturnedData.Value });
+        return await Continue(new { applicationId });
     }
 }

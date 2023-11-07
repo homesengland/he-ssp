@@ -6,17 +6,17 @@
 }
 
 <div class="govuk-grid-column-three-quarters">
-    <vc:workflow-back-button action="@SchemeWorkflowState.SalesRisk.ToString()" param-name="schemeId"/>
+    <vc:workflow-back-button action="@SchemeWorkflowState.SalesRisk.ToString()" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Scheme" asp-action="SalesRisk" asp-method="post" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         <gds-field-set role="group">
             <vc:form-field-title title="Tell us your assessment of the sales risk and how you will mitigate this"/>
             <gds-error-form-group asp-for="SalesRisk">
-                <gds-text-area asp-for="SalesRisk" rows="5"></gds-text-area>
-                <gds-p>
+                <gds-text-area asp-for="SalesRisk" rows="5" class="govuk-!-margin-bottom-2"></gds-text-area>
+                <gds-div-hint>
                     You can enter up to 1500 characters
-                </gds-p>
+                </gds-div-hint>
             </gds-error-form-group>
         </gds-field-set>
         <vc:form-button/>
