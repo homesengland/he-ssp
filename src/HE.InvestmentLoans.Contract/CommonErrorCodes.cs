@@ -15,4 +15,6 @@ public static class CommonErrorCodes
     public const string ContactIsNotLinkedWithRequestedOrganization = nameof(ContactIsNotLinkedWithRequestedOrganization);
 
     public const string LoanApplicationCannotBeWithdrawn = nameof(LoanApplicationCannotBeWithdrawn);
+
+    public const string IncorrectOrganisationId = nameof(IncorrectOrganisationId);
 }

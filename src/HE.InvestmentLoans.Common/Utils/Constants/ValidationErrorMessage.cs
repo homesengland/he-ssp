@@ -81,6 +81,8 @@ public static class ValidationErrorMessage
 
     public const string ProjectNameIsEmpty = "Project name cannot be empty";
 
+    public const string LocalAuthorityNameIsEmpty = "Enter the name of the local authority";
+
     public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
 
     public static string PoundInput(string name) => new($"{name} must be entered as a number, in pounds and pence");
@@ -94,4 +96,6 @@ public static class ValidationErrorMessage
     public static string MustBeNumber(string displayName, int minValue, int maxValue) => $"{displayName} must be a number containing no more than {maxValue.ToString(CultureInfo.InvariantCulture).Length} digits ({minValue} - {maxValue})";
 
     public static string StringLengthExceeded(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
+
+    public static string ExclusiveOptionSelected(string displayName, string optionName) => $"{optionName.TitleCaseFirstLetterInString()} {displayName} option is exclusive and cannot be selected with any other option.";
 }

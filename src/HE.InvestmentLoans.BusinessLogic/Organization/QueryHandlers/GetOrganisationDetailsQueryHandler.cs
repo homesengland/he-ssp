@@ -28,7 +28,7 @@ public class GetOrganisationDetailsQueryHandler : IRequestHandler<GetOrganisatio
             basicInformation.Address.PostalCode,
         };
 
-        var organisationDataChengeRequestState = await _organizationRepository.GetOrganisationChangeRequestDetails(await _loanUserContext.GetSelectedAccount(), cancellationToken);
+        var organisationDataChangeRequestState = await _organizationRepository.GetOrganisationChangeRequestDetails(await _loanUserContext.GetSelectedAccount(), cancellationToken);
 
         return new GetOrganisationDetailsQueryResponse(
             new OrganisationDetailsViewModel(
@@ -36,6 +36,6 @@ public class GetOrganisationDetailsQueryHandler : IRequestHandler<GetOrganisatio
                 basicInformation.ContactInformation.PhoneNUmber,
                 address,
                 basicInformation.CompanyRegistrationNumber,
-                organisationDataChengeRequestState));
+                organisationDataChangeRequestState));
     }
 }

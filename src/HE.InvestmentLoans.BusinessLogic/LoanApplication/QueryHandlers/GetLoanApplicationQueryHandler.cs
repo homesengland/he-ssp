@@ -29,6 +29,7 @@ public class GetLoanApplicationQueryHandler : IRequestHandler<GetLoanApplication
     public async Task<GetLoanApplicationQueryResponse> Handle(GetLoanApplicationQuery request, CancellationToken cancellationToken)
     {
         var companyStructureResponse = await _mediator.Send(new GetCompanyStructureQuery(request.Id, CompanyStructureFieldsSet.GetAllFields), cancellationToken);
+        companyStructureResponse.ViewModel.OrganisationMoreInformationFiles = (await _mediator.Send(new GetCompanyStructureFilesQuery(request.Id), cancellationToken)).Items;
         var securityResponse = await _mediator.Send(new GetSecurity(request.Id, SecurityFieldsSet.GetAllFields), cancellationToken);
         var fundingResponse = await _mediator.Send(new GetFundingQuery(request.Id, FundingFieldsSet.GetAllFields), cancellationToken);
 
@@ -46,6 +47,7 @@ public class GetLoanApplicationQueryHandler : IRequestHandler<GetLoanApplication
             Security = securityResponse.ViewModel,
             ReferenceNumber = loanApplication.ReferenceNumber,
             Projects = projects.Projects.Select(project => ProjectMapper.MapToViewModel(project, loanApplication.Id)),
+            WasSubmittedPreviously = loanApplication.WasSubmitted(),
         };
 
         return new GetLoanApplicationQueryResponse(viewModel);

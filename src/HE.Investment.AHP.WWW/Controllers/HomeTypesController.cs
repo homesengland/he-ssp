@@ -1,5 +1,6 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
@@ -112,9 +113,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new HomeInformationModel(application.Name)
+        return View(new HomeInformationModel(application.Name, homeInformation.HomeTypeName)
         {
-            HomeTypeName = homeInformation.HomeTypeName,
             NumberOfHomes = homeInformation.NumberOfHomes?.ToString(CultureInfo.InvariantCulture),
             NumberOfBedrooms = homeInformation.NumberOfBedrooms?.ToString(CultureInfo.InvariantCulture),
             MaximumOccupancy = homeInformation.MaximumOccupancy?.ToString(CultureInfo.InvariantCulture),
@@ -139,17 +139,91 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     }
 
     [WorkflowState(HomeTypesWorkflowState.HomesForDisabledPeople)]
-    [HttpGet("{homeTypeId}/HomesForDisabled")]
-    public IActionResult HomesForDisabledPeople(string homeTypeId)
+    [HttpGet("{homeTypeId}/HomesForDisabledPeople")]
+    public async Task<IActionResult> HomesForDisabledPeople([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        return View();
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var disabledPeopleHomeType = await _mediator.Send(new GetDisabledPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
+        return View(new HomesForDisabledPeopleModel(application.Name, disabledPeopleHomeType.HomeTypeName)
+        {
+            HousingType = disabledPeopleHomeType.HousingType,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.HomesForDisabledPeople)]
+    [HttpPost("{homeTypeId}/HomesForDisabledPeople")]
+    public async Task<IActionResult> HomesForDisabledPeople(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        HomesForDisabledPeopleModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(new SaveDisabledPeopleHousingTypeCommand(applicationId, homeTypeId, model.HousingType), model, cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.DisabledPeopleClientGroup)]
+    [HttpGet("{homeTypeId}/DisabledPeopleClientGroup")]
+    public async Task<IActionResult> DisabledPeopleClientGroup([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var disabledPeopleHomeType = await _mediator.Send(new GetDisabledPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
+        return View(new DisabledPeopleClientGroupModel(application.Name, disabledPeopleHomeType.HomeTypeName)
+        {
+            DisabledPeopleClientGroup = disabledPeopleHomeType.ClientGroupType,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.DisabledPeopleClientGroup)]
+    [HttpPost("{homeTypeId}/DisabledPeopleClientGroup")]
+    public async Task<IActionResult> DisabledPeopleClientGroup(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        DisabledPeopleClientGroupModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveDisabledPeopleClientGroupTypeCommand(applicationId, homeTypeId, model.DisabledPeopleClientGroup),
+            model,
+            cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.HomesForOlderPeople)]
-    [HttpGet("{homeTypeId}/HomesForOlder")]
-    public IActionResult HomesForOlderPeople(string homeTypeId)
+    [HttpGet("{homeTypeId}/HomesForOlderPeople")]
+    public async Task<IActionResult> HomesForOlderPeople([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
-        return View();
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var olderPeopleHomeType = await _mediator.Send(new GetOlderPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
+        return View(new HomesForOlderPeopleModel(application.Name, olderPeopleHomeType.HomeTypeName) { HousingType = olderPeopleHomeType.HousingType, });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.HomesForOlderPeople)]
+    [HttpPost("{homeTypeId}/HomesForOlderPeople")]
+    public async Task<IActionResult> HomesForOlderPeople([FromRoute] string applicationId, string homeTypeId, HomesForOlderPeopleModel model, CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(new SaveOlderPeopleHousingTypeCommand(applicationId, homeTypeId, model.HousingType), model, cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.HappiDesignPrinciples)]
+    [HttpGet("{homeTypeId}/HappiDesignPrinciples")]
+    public async Task<IActionResult> HappiDesignPrinciples([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var designPlans = await _mediator.Send(new GetDesignPlansQuery(applicationId, homeTypeId), cancellationToken);
+        return View(new HappiDesignPrinciplesModel(application.Name, designPlans.HomeTypeName) { DesignPrinciples = designPlans.DesignPrinciples, });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.HappiDesignPrinciples)]
+    [HttpPost("{homeTypeId}/HappiDesignPrinciples")]
+    public async Task<IActionResult> HappiDesignPrinciples(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        HappiDesignPrinciplesModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveHappiDesignPrinciplesCommand(applicationId, homeTypeId, model.DesignPrinciples?.ToList() ?? new List<HappiDesignPrincipleType>()),
+            model,
+            cancellationToken);
     }
 
     protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object routeData = null)
@@ -179,7 +253,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View(model);
+            return View("HomeTypeDetails", model);
         }
 
         return await Continue(new { applicationId, homeTypeId = result.ReturnedData!.Value });

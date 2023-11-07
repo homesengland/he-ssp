@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.UserOrganisation.Commands;
 using HE.InvestmentLoans.Contract.UserOrganisation.Queries;
@@ -5,6 +6,7 @@ using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Models.UserOrganisation;
 using HE.InvestmentLoans.WWW.Utils;
+using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -61,8 +63,12 @@ public class UserOrganisationController : BaseController
     public async Task<IActionResult> ChangeOrganisationDetails()
     {
         var organisationResult = await _mediator.Send(new GetOrganisationDetailsQuery());
+        if (organisationResult.OrganisationDetailsViewModel.ChangeRequestState == OrganisationChangeRequestState.NoPendingRequest)
+        {
+            return View(organisationResult.OrganisationDetailsViewModel);
+        }
 
-        return View(organisationResult.OrganisationDetailsViewModel);
+        return View("OrganizationDetails", organisationResult.OrganisationDetailsViewModel);
     }
 
     [HttpPost("request-details-change")]

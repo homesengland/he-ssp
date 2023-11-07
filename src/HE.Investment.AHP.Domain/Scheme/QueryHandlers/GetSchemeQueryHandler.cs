@@ -17,6 +17,13 @@ public class GetSchemeQueryHandler : IRequestHandler<GetSchemeQuery, Contract.Sc
     {
         var entity = await _repository.GetById(new(request.SchemeId), cancellationToken);
 
-        return new Contract.Scheme.Scheme(entity.Id.Value, entity.Funding.RequiredFunding, entity.Funding.HousesToDeliver);
+        return new Contract.Scheme.Scheme(
+            entity.Id.Value,
+            entity.Funding.RequiredFunding,
+            entity.Funding.HousesToDeliver,
+            entity.AffordabilityEvidence?.Evidence,
+            entity.SalesRisk?.Value,
+            entity.HousingNeeds?.TypeAndTenureJustification,
+            entity.HousingNeeds?.SchemeAndProposalJustification);
     }
 }

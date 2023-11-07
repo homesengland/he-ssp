@@ -1,0 +1,40 @@
+@using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investments.Common.Gds
+@model HE.Investment.AHP.WWW.Models.HomeTypes.DisabledPeopleClientGroupModel;
+
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+}
+
+<div class="govuk-grid-column-full">
+    <form asp-controller="HomeTypes" asp-action="DisabledPeopleClientGroup" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","HomeTypes", new { applicationId, homeTypeId, currentPage = HomeTypesWorkflowState.DisabledPeopleClientGroup})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+
+        <gds-div-hint>@Model.Header</gds-div-hint>
+        <gds-h1 size="ControlSize.L">
+            What client group are the homes for?
+        </gds-h1>
+        <gds-legend class="govuk-!-margin-bottom-6">
+            If the homes will be housing people from different groups, select the priority client group. You can also create another home type for each group and enter them separately.
+        </gds-legend>
+
+        <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
+            <gds-custom-radio
+                asp-for="DisabledPeopleClientGroup"
+                value="@Model.DisabledPeopleClientGroup"
+                radio-items="HomeTypesFormOptions.DisabledPeopleClientGroupTypes"
+                class="govuk-!-margin-bottom-6">
+            </gds-custom-radio>
+
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                Save and continue
+            </button>
+
+            <br />
+            <gds-link>Save and return to application</gds-link>
+        </gds-div-grid-column-two-thirds>
+    </form>
+</div>

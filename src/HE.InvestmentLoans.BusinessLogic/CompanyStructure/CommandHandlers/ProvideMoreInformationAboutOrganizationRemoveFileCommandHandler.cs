@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 using HE.InvestmentLoans.Common.Utils.Constants.Notification;
@@ -20,13 +21,14 @@ public class ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler : C
     private readonly INotificationService _notificationService;
 
     public ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler(
-                ICompanyStructureRepository repository,
+                ICompanyStructureRepository companyStructureRepository,
+                ILoanApplicationRepository loanApplicationRepository,
                 ILoanUserContext loanUserContext,
                 ILogger<CompanyStructureBaseCommandHandler> logger,
                 IHttpDocumentService documentService,
                 IDocumentServiceConfig config,
                 INotificationService notificationService)
-        : base(repository, loanUserContext, logger)
+        : base(companyStructureRepository, loanApplicationRepository, loanUserContext, logger)
     {
         _documentService = documentService;
         _config = config;

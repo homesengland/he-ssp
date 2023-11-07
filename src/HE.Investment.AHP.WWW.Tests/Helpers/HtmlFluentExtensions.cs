@@ -22,21 +22,34 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasInput(this IHtmlDocument htmlDocument, string fieldName, string? text = null)
+    public static IHtmlDocument HasInput(this IHtmlDocument htmlDocument, string fieldName, string? label = null, string? value = null)
     {
         var inputs = htmlDocument.GetElementsByName(fieldName);
         inputs.Length.Should().Be(1, $"Only one element input with name {fieldName} should exist");
 
-        if (!string.IsNullOrEmpty(text))
+        if (!string.IsNullOrEmpty(label))
         {
-            var labels = htmlDocument.GetLastChildByTagAndText("label", text);
-            labels.Count.Should().Be(1, $"Only one element input with label with innerText {text} should exist");
+            var labels = htmlDocument.GetLastChildByTagAndText("label", label);
+            labels.Count.Should().Be(1, $"Only one element input with label with innerText {label} should exist");
+        }
+
+        if (!string.IsNullOrEmpty(value))
+        {
+            inputs.First().InnerHtml.Should().Contain(value);
         }
 
         return htmlDocument;
     }
 
     public static IHtmlDocument HasRadio(this IHtmlDocument htmlDocument, string fieldName, IList<string> options)
+    {
+        var inputs = htmlDocument.GetElementsByName(fieldName);
+        inputs.Length.Should().Be(options.Count, $"{options.Count} inputs with name {fieldName} should exist");
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasCheckboxes(this IHtmlDocument htmlDocument, string fieldName, IList<string> options)
     {
         var inputs = htmlDocument.GetElementsByName(fieldName);
         inputs.Length.Should().Be(options.Count, $"{options.Count} inputs with name {fieldName} should exist");
@@ -78,6 +91,23 @@ public static class HtmlFluentExtensions
             .Where(d => d.Children.Any(c => c.TextContent.Contains(text) && c.ClassName == "govuk-details__text"));
 
         details.Should().NotBeNull($"Only one element with class 'govuk-details' should exist");
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasPageHeader(this IHtmlDocument htmlDocument, string caption, string header)
+    {
+        htmlDocument
+            .HasElementWithText("span", caption)
+            .HasElementWithText("h1", header);
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasFormFieldTitle(this IHtmlDocument htmlDocument, string title)
+    {
+        htmlDocument
+            .HasElementWithText("h2", title);
 
         return htmlDocument;
     }

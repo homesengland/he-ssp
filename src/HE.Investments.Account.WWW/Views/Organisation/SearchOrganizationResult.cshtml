@@ -1,0 +1,47 @@
+@using HE.InvestmentLoans.Common.Extensions;
+@using HE.Investments.Account.WWW.Views.Organisation
+@model HE.InvestmentLoans.Contract.Organization.OrganizationViewModel;
+@{
+    ViewData["Title"] = "Organization Select";
+
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganization", "Organisation")">Back</gds-back-link>
+
+        <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
+            @OrganizationPageTitles.SelectYourOrganisation
+        </gds-h1>
+
+        <gds-ul non-bullet-list>
+            @foreach (var organization in Model.Organizations)
+            {
+                <li>
+                <gds-link href="@Url.Action("ConfirmOrganization", "Organisation", new { organizationNumberOrId = organization.OrganisationId ?? organization.CompaniesHouseNumber })" id=@($"company-link-{organization.CompaniesHouseNumber ?? organization.OrganisationId}")><b>@organization.Name</b></gds-link><br />
+                    @if (organization.Street.IsProvided())
+                    {
+                        <span class="govuk-body">@organization.Street</span><br />
+                    }
+                    @if (organization.Street.IsProvided())
+                    {
+                        <span class="govuk-body">@organization.City</span><br />
+                    }
+                    @if (organization.Street.IsProvided())
+                    {
+                        <span class="govuk-body">@organization.PostalCode</span><br/>
+                    }
+                    <p class="govuk-body govuk-!-margin-bottom-6">Companies house number: @organization.CompaniesHouseNumber</p>
+                </li>
+            }
+        </gds-ul>
+
+        <gds-p class ="govuk-!-margin-bottom-9">
+            <gds-link  href="@Url.Action("CreateOrganisation", "Organisation")">
+                The organisation is not listed above, enter details manually
+            </gds-link>
+        </gds-p>
+
+        <gds-pagination base-url="/organization/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.ItemsPerPage" total-items="@Model.TotalOrganizations"></gds-pagination>
+
+
+</gds-div-grid-column-two-thirds>

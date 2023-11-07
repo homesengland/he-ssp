@@ -1,25 +1,22 @@
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.Shared.Components.FormHeader
+@using HE.Investment.AHP.WWW.Views.Shared.Components.FormFieldTitle
+@using HE.Investment.AHP.WWW.Views.Shared.Components.FormButton
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 @{
-    ViewData["Title"] = "Funding details";
+    var title = "Funding details";
+    ViewData["Title"] = title;
+    var applicationId = this.GetApplicationIdFromRoute();
 }
 <div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.Action("Index", "Scheme")" text="Back" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.Action("Index", "Scheme", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <span class="govuk-caption-l">
-        @Model.ApplicationName
-    </span>
     <form asp-controller="Scheme" asp-action="Funding" asp-method="post" novalidate>
+        <vc:form-header caption="@Model.ApplicationName" title="@title"/>
+        @Html.HiddenFor(m => Model.ApplicationName)
         <gds-field-set role="group">
-            <gds-legend size="ControlSize.L">
-                <gds-fieldset-heading>
-                    Funding details
-                </gds-fieldset-heading>
-            </gds-legend>
-
-            <gds-legend>
-                <gds-h2 class="govuk-!-margin-bottom-0">Enter how much AHP CME 21-26 funding you require on this scheme</gds-h2>
-            </gds-legend>
+            <vc:form-field-title title="Enter how much AHP CME 21-26 funding you require on this scheme"/>
             <gds-input-wrapper class="govuk-!-margin-bottom-6">
                 <gds-input asp-prefixtext="GdsInputPrefixText.Pounds"
                            class="govuk-input--width-3"
@@ -29,9 +26,7 @@
                            type="text"/>
             </gds-input-wrapper>
 
-            <gds-legend>
-                <gds-h2 class="govuk-!-margin-bottom-0">Enter how many homes you intend to deliver</gds-h2>
-            </gds-legend>
+            <vc:form-field-title title="Enter how many homes you intend to deliver"/>
             <gds-input-wrapper class="govuk-!-margin-bottom-6">
                 <gds-input
                     class="govuk-input--width-2"
@@ -43,8 +38,6 @@
 
         </gds-field-set>
 
-        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="save-and-continue-button">
-            Save and continue
-        </button>
+        <vc:form-button/>
     </form>
 </div>

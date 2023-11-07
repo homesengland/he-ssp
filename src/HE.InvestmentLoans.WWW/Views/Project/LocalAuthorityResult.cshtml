@@ -1,0 +1,40 @@
+@using HE.InvestmentLoans.Common.Extensions;
+@using HE.InvestmentLoans.WWW.Views.Organization
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Divs
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Headings
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Links
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Lists
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Pagination
+@using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
+@using HE.Investments.Common.Gds
+@model HE.InvestmentLoans.Contract.Projects.ViewModels.LocalAuthoritiesViewModel;
+@{
+    ViewData["Title"] = "Organization Select";
+
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthoritySearch", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId })">Back</gds-back-link>
+
+        <gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-6">
+            @ProjectPageTitles.LocalAuthorityResult
+        </gds-h1>
+
+        <gds-ul non-bullet-list>
+            @foreach (var item in Model.Items)
+            {
+                <li>
+                    <gds-p><gds-link href="@Url.Action("LocalAuthorityConfirm", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, localAuthorityId = item.Id})" id=@($"local-authority-link-{item.Id}")><b>@item.Name</b></gds-link></gds-p>
+                </li>
+            }
+        </gds-ul>
+
+        <gds-p class ="govuk-!-margin-bottom-9">
+            If your local authority is not listed above, your <gds-link href="@Url.Action("Ownership", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId})">Transaction Manager can add this for you later.</gds-link>
+        </gds-p>
+
+        @Html.HiddenFor(c => c.ProjectId)
+        @Html.HiddenFor(c => c.ApplicationId)
+
+        <gds-pagination base-url="@Url.Action("LocalAuthorityResult", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, localAuthorityId = Model.LocalAuthorityId, phrase = Model.Phrase })" page="@Model.Page" items-per-page="@Model.PageSize" total-items="@Model.TotalItems"></gds-pagination>
+</gds-div-grid-column-two-thirds>

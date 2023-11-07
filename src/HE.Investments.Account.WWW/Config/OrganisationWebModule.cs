@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Infrastructure;
+using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.CRM.Extensions;
 using HE.Investments.Account.Domain.Config;
@@ -25,6 +26,7 @@ public static class OrganisationWebModule
     private static void AddConfiguration(IServiceCollection services)
     {
         services.AddSingleton<IOrganisationAppConfig, OrganisationAppConfig>(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration").Get<OrganisationAppConfig>());
+        services.AddSingleton<IDataverseConfig, DataverseConfig>(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:Dataverse").Get<DataverseConfig>());
     }
 
     private static void AddMiddlewares(IServiceCollection services)

@@ -1,6 +1,9 @@
 @using HE.Investment.AHP.WWW.Routing
-@using HE.Investment.AHP.WWW.Models.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
+@using HE.InvestmentLoans.Common.Extensions
+@using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.Gds
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeListModel;
 
 @{
@@ -49,7 +52,7 @@
                         @homeType.NumberOfHomes
                     </td>
                     <td class="govuk-table__cell">
-                        @HomeTypesFormOptions.GetHousingTypeDescription(homeType.HousingType)
+                        @(homeType.HousingType == HousingType.Undefined ? string.Empty : homeType.HousingType.GetDescription())
                     </td>
                     <td class="govuk-table__cell govuk-!-text-align-right">
                         <gds-link class="govuk-link--no-visited-state"

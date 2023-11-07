@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using HE.Investments.Common.Events;
+using HE.Investments.Common.Infrastructure.Events;
 
 namespace HE.Investments.Common.Domain;
 

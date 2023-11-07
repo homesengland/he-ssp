@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Extensions;
@@ -10,8 +11,12 @@ using Microsoft.Extensions.Logging;
 namespace HE.InvestmentLoans.BusinessLogic.Security.CommandHandler;
 internal class ProvideCompanyDebentureHandler : SecurityBaseCommandHandler, IRequestHandler<ProvideCompanyDebenture, OperationResult>
 {
-    public ProvideCompanyDebentureHandler(ISecurityRepository securityRepository, ILoanUserContext loanUserContext, ILogger<SecurityBaseCommandHandler> logger)
-        : base(securityRepository, loanUserContext, logger)
+    public ProvideCompanyDebentureHandler(
+        ISecurityRepository securityRepository,
+        ILoanApplicationRepository loanApplicationRepository,
+        ILoanUserContext loanUserContext,
+        ILogger<SecurityBaseCommandHandler> logger)
+        : base(securityRepository, loanApplicationRepository, loanUserContext, logger)
     {
     }
 

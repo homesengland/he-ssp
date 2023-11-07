@@ -4,9 +4,11 @@ using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
 using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Common.Utils.Constants.Notification;
 using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.UserOrganisation.Commands;
@@ -18,17 +20,24 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
 {
     private readonly ILoanUserContext _loanUserContext;
     private readonly IOrganizationRepository _repository;
+    private readonly INotificationService _notificationService;
 
-    public ChangeOrganisationDetailsCommandHandler(ILoanUserContext loanUserContext, IOrganizationRepository repository)
+    public ChangeOrganisationDetailsCommandHandler(
+        ILoanUserContext loanUserContext,
+        IOrganizationRepository repository,
+        INotificationService notificationService)
     {
         _loanUserContext = loanUserContext;
         _repository = repository;
+        _notificationService = notificationService;
     }
 
     public async Task<OperationResult> Handle(ChangeOrganisationDetailsCommand request, CancellationToken cancellationToken)
     {
         try
         {
+            var userAccount = await _loanUserContext.GetSelectedAccount();
+
             if (!await _loanUserContext.IsLinkedWithOrganization())
             {
                 throw new DomainException(
@@ -58,7 +67,9 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
 
             var organisation = new OrganisationEntity(name, address, phoneNumber);
 
-            await _repository.Update(organisation, cancellationToken);
+            await _repository.Update(organisation, userAccount, cancellationToken);
+
+            await _notificationService.NotifySuccess(NotificationBodyType.ChangeOrganisationDetailsRequest, null);
 
             return OperationResult.Success();
         }

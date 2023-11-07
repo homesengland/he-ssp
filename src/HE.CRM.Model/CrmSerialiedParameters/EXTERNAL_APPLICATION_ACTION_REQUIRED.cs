@@ -19,5 +19,6 @@ namespace HE.CRM.Model.CrmSerialiedParameters
         // Additional
         public string username { get; set; }
         public string applicationId { get; set; }
+        public string actionRequired { get; set; }
     }
 }

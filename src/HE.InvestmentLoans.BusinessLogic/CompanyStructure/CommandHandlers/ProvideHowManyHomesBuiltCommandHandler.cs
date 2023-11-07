@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
@@ -12,8 +13,8 @@ public class ProvideHowManyHomesBuiltCommandHandler :
     CompanyStructureBaseCommandHandler,
     IRequestHandler<ProvideHowManyHomesBuiltCommand, OperationResult>
 {
-    public ProvideHowManyHomesBuiltCommandHandler(ICompanyStructureRepository repository, ILoanUserContext loanUserContext, ILogger<CompanyStructureBaseCommandHandler> logger)
-        : base(repository, loanUserContext, logger)
+    public ProvideHowManyHomesBuiltCommandHandler(ICompanyStructureRepository companyStructureRepository, ILoanApplicationRepository loanApplicationRepository, ILoanUserContext loanUserContext, ILogger<CompanyStructureBaseCommandHandler> logger)
+        : base(companyStructureRepository, loanApplicationRepository, loanUserContext, logger)
     {
     }
 

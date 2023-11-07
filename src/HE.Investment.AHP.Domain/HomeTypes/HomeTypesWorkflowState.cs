@@ -9,5 +9,7 @@ public enum HomeTypesWorkflowState
     HomeTypeDetails,
     HomeInformation,
     HomesForDisabledPeople,
+    DisabledPeopleClientGroup,
     HomesForOlderPeople,
+    HappiDesignPrinciples,
 }

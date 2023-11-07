@@ -8,7 +8,6 @@ public static class ApplicationStatusDivision
     {
         yield return ApplicationStatus.CashflowRequested;
         yield return ApplicationStatus.CashflowUnderReview;
-        yield return ApplicationStatus.ReferredBackToApplicant;
         yield return ApplicationStatus.UnderReview;
         yield return ApplicationStatus.SentForApproval;
         yield return ApplicationStatus.ApprovedSubjectToDueDiligence;

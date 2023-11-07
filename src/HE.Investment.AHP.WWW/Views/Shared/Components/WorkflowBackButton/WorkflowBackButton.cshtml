@@ -1,0 +1,20 @@
+@model (string Action, string ParamName)
+
+@{
+    var routeData = ViewContext.RouteData.Values
+        .Where(v => v.Key != "action" && v.Key != Model.ParamName)
+        .ToDictionary(k => k.Key, v => v.Value.ToString());
+
+    if (routeData.Any())
+    {
+        var id = ViewContext.RouteData.Values[Model.ParamName]!.ToString();
+        routeData.Add("currentPage", Model.Action);
+        routeData.Add("action", "Back");
+        routeData.Add("id", id);
+    }
+}
+
+@if (routeData.Any())
+{
+    <gds-back-link href="@Url.RouteUrl("subSection", routeData)" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+}

@@ -1,0 +1,64 @@
+@using HE.InvestmentLoans.Common.Extensions
+@using HE.InvestmentLoans.Contract.Organization.ValueObjects
+@using HE.Investments.Account.WWW.Views.Organisation
+@using HE.Investments.Common.WWW.Models
+@model HE.Investments.Common.WWW.Models.ConfirmModel<OrganizationBasicDetails>
+@{
+    ViewData["Title"] = "Organization Select";
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("SearchOrganization", "Organisation")">Back</gds-back-link>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
+        @OrganizationPageTitles.ConfirmYourSelection
+    </gds-h1>
+
+    <gds-ul non-bullet-list>
+        <li>
+            <span class="govuk-body">
+                <strong>@Model.ViewModel.Name</strong>
+            </span>
+            <br/>
+            @if (Model.ViewModel.Street.IsProvided())
+            {
+                <span class="govuk-body">@Model.ViewModel.Street</span>
+                <br/>
+            }
+            @if (Model.ViewModel.Street.IsProvided())
+            {
+                <span class="govuk-body">@Model.ViewModel.City</span>
+                <br/>
+            }
+            @if (Model.ViewModel.Street.IsProvided())
+            {
+                <span class="govuk-body">@Model.ViewModel.PostalCode</span>
+                <br/>
+            }
+            <p class="govuk-body govuk-!-margin-bottom-6">Companies house number: @Model.ViewModel.CompaniesHouseNumber</p>
+        </li>
+    </gds-ul>
+    <form asp-controller="Organisation" asp-action="ConfirmOrganizationPost" asp-route-organizationNumberOrId=@(Model.ViewModel.OrganisationId ?? Model.ViewModel.CompaniesHouseNumber) asp-method="post" novalidate>
+        <gds-div-form-group>
+            <gds-field-set>
+                <gds-legend class="govuk-fieldset__legend--m">
+                    Is this the correct organisation?
+                </gds-legend>
+
+                <gds-div-form-group invalid="radioInvalid">
+                    <gds-radio
+                        govuk-formgroup-asp-for="Response"
+                        asp-selectlistitems="FormOptions.YesNo"
+                        asp-isexcludeheader>
+                    </gds-radio>
+                </gds-div-form-group>
+            </gds-field-set>
+        </gds-div-form-group>
+
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="continue-button">
+            Continue
+        </button>
+    </form>
+</gds-div-grid-column-two-thirds>

@@ -1,4 +1,7 @@
 @using HE.InvestmentLoans.Contract.CompanyStructure
+@using HE.InvestmentLoans.WWW.Views.CompanyStructureV2.Consts
+@using HE.Investments.Common.Gds
+@using HE.InvestmentLoans.Contract.Application.Helper
 @model HE.InvestmentLoans.Contract.CompanyStructure.CompanyStructureViewModel
 
 <gds-div-grid-column-two-thirds>
@@ -9,10 +12,10 @@
         <partial name="_ErrorSummaryPartial" model="null" />
 
         <gds-h1 size="ControlSize.L">
-            Check your answers
+            @(ApplicationStatusDivision.GetAllStatusesAfterSubmit().Contains(Model.LoanApplicationStatus) ? @CompanyStructurePageTitles.ReadOnlyAnswers : @CompanyStructurePageTitles.CheckAnswers)
         </gds-h1>
 
-        <partial name="Sections/_WithdrawnInformation" model="Model"/>
+        <partial name="Sections/_ReadOnlyAdditionalInformation" model="Model"/>
 
         <gds-h1 size="ControlSize.M">
             Company structure and experience

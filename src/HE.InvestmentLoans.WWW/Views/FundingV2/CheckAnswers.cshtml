@@ -1,5 +1,7 @@
 @model HE.InvestmentLoans.Contract.Funding.FundingViewModel
 @using HE.InvestmentLoans.Contract.Funding.Enums;
+@using HE.Investments.Common.Gds
+@using HE.InvestmentLoans.Contract.Application.Helper
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="FundingV2" asp-action="CheckAnswersPost" asp-route-id="@Model.LoanApplicationId" asp-method="post" novalidate>
@@ -9,10 +11,10 @@
         <partial name="_ErrorSummaryPartial" model="null"/>
 
         <gds-h1 size="ControlSize.L">
-            @FundingPageTitles.CheckAnswers
+            @(ApplicationStatusDivision.GetAllStatusesAfterSubmit().Contains(Model.LoanApplicationStatus) ? @FundingPageTitles.ReadOnlyAnswers : @FundingPageTitles.CheckAnswers)
         </gds-h1>
 
-        <partial name="Sections/_WithdrawnInformation" model="Model"/>
+        <partial name="Sections/_ReadOnlyAdditionalInformation" model="Model"/>
 
         @await Html.PartialAsync("_FundingAnswers", Model)
 

@@ -1,0 +1,14 @@
+@using HE.InvestmentLoans.Contract.Application.Enums
+@model HE.InvestmentLoans.Contract.ViewModels.ICompletedSectionViewModel
+
+ @if (Model.IsReadOnly() && Model.GetApplicationStatus() == ApplicationStatus.Withdrawn)
+{
+    <gds-div-inset-text>
+        Your application has been withdrawn, contact your Transaction Manager if you need to discuss a change
+    </gds-div-inset-text>
+} else if (Model.IsReadOnly())
+{
+    <gds-div-inset-text>
+        Your application is now locked, contact Homes England if you need to discuss a change.
+    </gds-div-inset-text>
+}

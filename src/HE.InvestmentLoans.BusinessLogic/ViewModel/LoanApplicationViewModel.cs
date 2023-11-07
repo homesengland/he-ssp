@@ -41,6 +41,8 @@ public class LoanApplicationViewModel
 
     public string? WithdrawReason { get; set; }
 
+    public bool WasSubmittedPreviously { get; set; }
+
     public void SetTimestamp(DateTime? timestamp)
     {
         Timestamp = timestamp;

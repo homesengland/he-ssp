@@ -1,3 +1,5 @@
+using HE.Investments.Common.WWW.Models;
+
 namespace HE.InvestmentLoans.WWW.Models.UserOrganisation;
 
 public record UserOrganisationModel(

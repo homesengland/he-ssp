@@ -1,4 +1,5 @@
 @using HE.InvestmentLoans.Contract.Security;
+@using HE.InvestmentLoans.Contract.Application.Helper
 @model HE.InvestmentLoans.Contract.Security.SecurityViewModel;
 
 <gds-div-grid-column-two-thirds>
@@ -9,10 +10,10 @@
         <partial name="_ErrorSummaryPartial" model="null"/>
 
         <gds-h1 class="govuk-heading-xl">
-            Check your answers
+            @(ApplicationStatusDivision.GetAllStatusesAfterSubmit().Contains(Model.LoanApplicationStatus) ? @SecurityPageTitles.ReadOnlyAnswers : @SecurityPageTitles.CheckAnswers)
         </gds-h1>
 
-        <partial name="Sections/_WithdrawnInformation" model="Model"/>
+        <partial name="Sections/_ReadOnlyAdditionalInformation" model="Model"/>
 
         @await Html.PartialAsync("_SecurityAnswers", Model)
 

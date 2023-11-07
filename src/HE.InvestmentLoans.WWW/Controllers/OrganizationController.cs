@@ -3,9 +3,10 @@ using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Organization.Commands;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
-using HE.InvestmentLoans.WWW.Models.Organisation;
+using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Utils;
 using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
@@ -105,7 +106,7 @@ public class OrganizationController : BaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> CreateOrganisation(CreateOrganisationModel viewModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateOrganisation(OrganisationDetailsViewModel viewModel, CancellationToken cancellationToken)
     {
         var command = new CreateAndLinkOrganisationCommand(
             viewModel.Name,

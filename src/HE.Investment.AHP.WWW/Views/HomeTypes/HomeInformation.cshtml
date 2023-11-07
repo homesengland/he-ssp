@@ -1,5 +1,6 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
+@using HE.Investments.Common.Gds
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeInformationModel;
 
 @{
@@ -13,7 +14,7 @@
 
         @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
 
-        <gds-div-hint>@Model.HomeInformationHeader</gds-div-hint>
+        <gds-div-hint>@Model.Header</gds-div-hint>
         <gds-h1 size="ControlSize.L">
             Home information
         </gds-h1>
