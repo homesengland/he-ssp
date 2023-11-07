@@ -4,11 +4,12 @@ using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.InvestmentLoans.Common.Validation;
 using MediatR;
+using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 
-public abstract class UpdateSchemeCommandHandler<TCommand> : IRequestHandler<TCommand, OperationResult<SchemeId?>>
-    where TCommand : IUpdateSchemeCommand, IRequest<OperationResult<SchemeId?>>
+public abstract class UpdateSchemeCommandHandler<TCommand> : IRequestHandler<TCommand, OperationResult>
+    where TCommand : IUpdateSchemeCommand, IRequest<OperationResult>
 {
     private readonly ISchemeRepository _repository;
 
@@ -17,15 +18,16 @@ public abstract class UpdateSchemeCommandHandler<TCommand> : IRequestHandler<TCo
         _repository = repository;
     }
 
-    public async Task<OperationResult<SchemeId?>> Handle(TCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(TCommand request, CancellationToken cancellationToken)
     {
-        var scheme = await _repository.GetById(new SchemeId(request.SchemeId), cancellationToken);
+        var applicationId = new ApplicationId(request.ApplicationId);
+        var scheme = await _repository.GetById(applicationId, cancellationToken);
 
-        Update(scheme, request);
+        Update(scheme!, request);
 
-        await _repository.Save(scheme, cancellationToken);
+        await _repository.Save(applicationId, scheme!, cancellationToken);
 
-        return new OperationResult<SchemeId?>(scheme.Id);
+        return new OperationResult<ApplicationId?>(applicationId);
     }
 
     protected abstract void Update(SchemeEntity scheme, TCommand request);

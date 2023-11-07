@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Scheme.Commands;
 
-public record ChangeSchemeFundingCommand(string SchemeId, string? RequiredFunding, string? HousesToDeliver) : IRequest<OperationResult<SchemeId?>>, IUpdateSchemeCommand;
+public record ChangeSchemeFundingCommand(string ApplicationId, string? RequiredFunding, string? HousesToDeliver) : IRequest<OperationResult>, IUpdateSchemeCommand;

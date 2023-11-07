@@ -6,7 +6,7 @@ namespace HE.Investment.AHP.WWW.Views.Shared.Components.WorkflowBackButton;
 
 public class WorkflowBackButton : ViewComponent
 {
-    public IViewComponentResult Invoke(string action, string paramName)
+    public IViewComponentResult Invoke(string action, string paramName = null)
     {
         return View("WorkflowBackButton", (action, paramName));
     }

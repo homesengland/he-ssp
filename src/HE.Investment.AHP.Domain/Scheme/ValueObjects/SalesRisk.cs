@@ -24,7 +24,6 @@ public class SalesRisk : ValueObject
 
         Value = Validator
             .For(evidence, nameof(SalesRisk), operationResult)
-            .IsProvided()
             .IsLongInput();
 
         return operationResult;

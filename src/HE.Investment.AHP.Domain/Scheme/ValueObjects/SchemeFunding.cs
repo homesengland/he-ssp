@@ -1,6 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.Organization;
+using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Validation;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Errors;
 
 namespace HE.Investment.AHP.Domain.Scheme.ValueObjects;
 
@@ -28,14 +30,14 @@ public class SchemeFunding : ValueObject
         RequiredFunding = NumericValidator
             .For(requiredFundingGbp, nameof(RequiredFunding), operationResult)
             .IsProvided("Enter the total of funding you are requesting")
-            .IsWholeNumber("The total funding you require must be a number")
-            .IsBetween(errorMessage: "The total funding you require must be 11 digits or less");
+            .IsWholeNumber(ValidationErrorMessages.MustBeNumber("total funding you require"))
+            .IsBetween(errorMessage: ValidationErrorMessages.InvalidLength("total funding you require", 11));
 
         HousesToDeliver = NumericValidator
             .For(housesToDeliver, nameof(HousesToDeliver), operationResult)
             .IsProvided("The number of homes this scheme will deliver must be a whole number above 0")
-            .IsWholeNumber("The number of homes this scheme will deliver must be a number")
-            .IsBetween(1, 999999, "The number of homes this scheme will deliver must be 6 digits or less");
+            .IsWholeNumber(ValidationErrorMessages.MustBeNumber("number of homes this scheme will deliver"))
+            .IsBetween(errorMessage: ValidationErrorMessages.InvalidLength("number of homes this scheme will deliver", 6));
 
         return operationResult;
     }

@@ -8,7 +8,6 @@ public static class TestSchemeViewModel
         new(
             "A1",
             "App Name",
-            "S1",
             "345.45",
             "100",
             "test affordability evidence",
