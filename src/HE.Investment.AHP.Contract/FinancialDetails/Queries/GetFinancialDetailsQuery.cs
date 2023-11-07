@@ -10,4 +10,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails.Queries;
 
-public record GetFinancialDetailsQuery(FinancialDetailsId FinancialDetailsId) : IRequest<FinancialDetailsViewModel>;
+public record GetFinancialDetailsQuery(FinancialDetailsId FinancialDetailsId) : IRequest<FinancialDetailsModel>;

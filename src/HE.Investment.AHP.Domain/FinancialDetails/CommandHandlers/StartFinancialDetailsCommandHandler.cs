@@ -19,9 +19,11 @@ public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandle
 
     public async Task<OperationResult<StartFinancialDetailsCommandResult>> Handle(StartFinancialDetailsCommand request, CancellationToken cancellationToken)
     {
-        // temporary mock, this value needs to be taken from some repo
+        // temporary mock, this values needs to be taken from some repo
         var isPurchasePriceKnown = true;
-        var financialDetails = new FinancialDetailsEntity(isPurchasePriceKnown);
+        var applicationName = "Some application";
+
+        var financialDetails = new FinancialDetailsEntity(ApplicationID.From(request.ApplicationId), applicationName, null, isPurchasePriceKnown);
 
         await _financialDetailsRepository.SaveAsync(financialDetails, cancellationToken);
 
