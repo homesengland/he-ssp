@@ -9,6 +9,7 @@
     <Import_RootNamespace>HE.CRM.Common</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)dtomapping\AhpApplicationMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ContactDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\LoanApplicationDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\SiteDetailsDtoMapper.cs" />
@@ -16,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\Entities\EntityExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\AccountRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\AhpApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\ConditionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\ContactRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\ContactWebroleRepository.cs" />
@@ -35,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\WebRoleRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IAccountRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\TraceHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IAhpApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IConditionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IContactRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IContactWebroleRepository.cs" />

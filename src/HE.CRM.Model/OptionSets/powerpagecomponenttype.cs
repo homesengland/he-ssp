@@ -84,6 +84,9 @@ namespace DataverseModel
 		TablePermission = 18,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UXComponent = 34,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		WebFile = 3,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

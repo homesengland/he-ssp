@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deleteloanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deletesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_generaterichtextdocument.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getfilelocationforapplicationloan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
@@ -33,6 +34,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendgovnotifyemail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinternalcrmnotification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinvestmentloansdatatocrm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setahpapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesingleloanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesinglesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updateuserprofile.cs" />
@@ -66,6 +68,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portalpermissionlevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ProjectSpecificCondition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_scheme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_SiteDetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_StandardCondition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Webrole.cs" />
@@ -133,7 +136,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\InitialCommunication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Addressverificationtype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ApprovalStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AssessedforBHL.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_BaseRate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_brownfieldgreenfield.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Buildingtype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ChangesourceSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Clientgroup.cs" />
@@ -156,17 +161,21 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_IDverificationtype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Impact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_InternalStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Landstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Messagetype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Milestone.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_MMCCategories.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_MMCcategory1subcategories.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_MMCcategory2subcategories.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_MMCuse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_NationalDesignGuideelements.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_NewBuildActivityType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Newstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Permission.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_PlanningPermissionStatusSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Planningstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_portal.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Procurementmechanisms.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Programme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Publicsectorfunding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Rating.cs" />
@@ -176,6 +185,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ReportFrequency.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Revenuefunding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Revenuefundingsources.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_reviewerapproverset.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Role.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Satisfactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_SatisfiedBy.cs" />
@@ -183,11 +193,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Securities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_SecurityCover.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_SecurityType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_sitePlanningstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Source.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Sourceofincome.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_StatusReviewApprovalSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_StrategicAssessmentBanding.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Tenure.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_TenureChoice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Travellerpitchsitetype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Typeofhomes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Typeofhousing.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_typeofhousingfordisabledvulnerable.cs" />
@@ -196,6 +209,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Valuationsource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Wheelchairstandard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_WhichNDSSstandardshavebeenmet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Workstenderingstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\IsInherited.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\knowledgearticle_ExpirationState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Lead_SalesStage.cs" />

@@ -21,6 +21,9 @@ namespace DataverseModel
 		Borrower = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HomesEngland = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		MonitoringSurveyor = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
