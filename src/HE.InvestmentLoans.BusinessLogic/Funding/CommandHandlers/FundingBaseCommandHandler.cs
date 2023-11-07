@@ -40,7 +40,7 @@ public class FundingBaseCommandHandler
 
             if (funding.LoanApplicationStatus != ApplicationStatus.Draft)
             {
-                funding.Publish(new LoanApplicationIsInDraftStatusEvent(loanApplicationId));
+                funding.Publish(new LoanApplicationChangeToDraftStatusEvent(loanApplicationId));
                 await _loanApplicationRepository.DispatchEvents(funding, cancellationToken);
             }
         }

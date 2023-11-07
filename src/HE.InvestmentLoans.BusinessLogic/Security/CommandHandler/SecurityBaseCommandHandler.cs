@@ -39,7 +39,7 @@ public class SecurityBaseCommandHandler
 
             if (security.LoanApplicationStatus != ApplicationStatus.Draft)
             {
-                security.Publish(new LoanApplicationIsInDraftStatusEvent(loanApplicationId));
+                security.Publish(new LoanApplicationChangeToDraftStatusEvent(loanApplicationId));
                 await _loanApplicationRepository.DispatchEvents(security, cancellationToken);
             }
         }

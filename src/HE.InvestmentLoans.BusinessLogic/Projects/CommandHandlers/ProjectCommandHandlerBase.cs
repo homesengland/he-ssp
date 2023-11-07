@@ -51,7 +51,7 @@ public class ProjectCommandHandlerBase
 
             if (project.LoanApplicationStatus != ApplicationStatus.Draft)
             {
-                project.Publish(new LoanApplicationIsInDraftStatusEvent(loanApplicationId));
+                project.Publish(new LoanApplicationChangeToDraftStatusEvent(loanApplicationId));
                 await _loanApplicationRepository.DispatchEvents(project, cancellationToken);
             }
         }

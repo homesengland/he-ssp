@@ -48,7 +48,7 @@ public class CompanyStructureBaseCommandHandler
 
             if (companyStructure.LoanApplicationStatus != ApplicationStatus.Draft)
             {
-                companyStructure.Publish(new LoanApplicationIsInDraftStatusEvent(loanApplicationId));
+                companyStructure.Publish(new LoanApplicationChangeToDraftStatusEvent(loanApplicationId));
                 await _loanApplicationRepository.DispatchEvents(companyStructure, cancellationToken);
             }
         }
