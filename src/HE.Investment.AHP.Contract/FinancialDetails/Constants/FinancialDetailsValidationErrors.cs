@@ -5,7 +5,7 @@ public static class FinancialDetailsValidationErrors
 
     public const string InvalidPurchasePrice = "Please provide valid purchase price";
 
-    public const string NoLandOwnershipProvided = "Plese provide information about land ownership";
+    public const string NoLandOwnershipProvided = "Please provide information about land ownership";
 
     public const string NoLandValue = "Land value is required";
 
