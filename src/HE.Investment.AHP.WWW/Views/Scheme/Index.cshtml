@@ -4,20 +4,18 @@
     ViewData["Title"] = "Scheme details";
     var applicationId = this.GetApplicationIdFromRoute();
 }
-<div class="govuk-grid-column-three-quarters">
-    <gds-back-link href="@Url.Action("Index", "Home")" text="Back" class="govuk-!-margin-bottom-8">
+<div class="govuk-grid-column-full">
+    <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     <vc:form-header caption="@Model" title="Scheme details"/>
      <div class="govuk-!-padding-bottom-8">
-            <gds-p class="govuk-!-margin-bottom-0">In this section, you’ll need to provide information about your schemes. This includes</gds-p>
+            <gds-p>In this section, you’ll need to provide information about your schemes. This includes</gds-p>
             <gds-ul class="govuk-!-padding-left-6" asp-lists=@(new[] { "funding you require on a scheme", "local housing needs", "discussions you’ve had with local stakeholders" })>
             </gds-ul>
             <gds-p>The funding required should be the minimum you need to deliver the homes, taking into account the costs and financial contributions.</gds-p>
             <gds-p>Funding decisions are made on each application separately. Although we will look at the deliverability of proposals across a whole development, each application must be able to stand alone.</gds-p>
         </div>
     <a href="@Url.RouteUrl("section", new { controller = "Scheme", action = "Funding", applicationId })">
-        <gds-button-start type="button">
-            Start now
-        </gds-button-start>
+        <gds-button type="button" >Continue</gds-button>
     </a>
 </div>
