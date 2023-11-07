@@ -56,7 +56,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
     public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvidePurchasePriceCommand(ApplicationId.From(applicationId), model.PurchasePrice), cancellationToken);
+        var result = await _mediator.Send(new ProvidePurchasePriceCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsPurchasePriceKnown ?? false), cancellationToken);
 
         if (result.HasValidationErrors)
         {

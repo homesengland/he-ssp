@@ -7,20 +7,22 @@ using HE.Investments.Common.Domain;
 namespace HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
 public class PurchasePrice : ValueObject
 {
-    public PurchasePrice(string value)
+    public PurchasePrice(string value, bool isPurchasePriceKnown)
     {
-        if (value.IsNotProvided())
+        if (!int.TryParse(value, out var price))
         {
-            OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.PurchasePrice, FinancialDetailsValidationErrors.NoPurchasePrice)
-                .CheckErrors();
-        }
-
-        if (!int.TryParse(value, out var price) || price <= 0)
-        {
-            OperationResult.New()
+            if (isPurchasePriceKnown)
+            {
+                OperationResult.New()
                 .AddValidationError(FinancialDetailsValidationFieldNames.PurchasePrice, FinancialDetailsValidationErrors.InvalidPurchasePrice)
                 .CheckErrors();
+            }
+            else
+            {
+                OperationResult.New()
+                .AddValidationError(FinancialDetailsValidationFieldNames.PurchasePrice, FinancialDetailsValidationErrors.InvalidExpectedPurchasePrice)
+                .CheckErrors();
+            }
         }
 
         Value = price;
