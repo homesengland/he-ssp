@@ -1,4 +1,3 @@
-using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.Investments.Account.Contract.Organisation.Queries;
 
 namespace HE.InvestmentLoans.WWW.Models;

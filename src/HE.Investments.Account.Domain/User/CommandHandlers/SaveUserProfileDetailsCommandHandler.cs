@@ -1,9 +1,11 @@
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Validation;
 using HE.Investments.Account.Domain.User.Commands;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Domain.User.ValueObjects;
+using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

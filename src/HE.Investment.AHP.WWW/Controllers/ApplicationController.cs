@@ -5,7 +5,7 @@ using HE.Investment.AHP.Domain.Application.Workflows;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Views.Application;
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Components;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;

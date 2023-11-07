@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

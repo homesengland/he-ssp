@@ -8,6 +8,7 @@ using HE.InvestmentLoans.Common.Utils.Constants.ViewName;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
+using HE.Investments.Common.Messages;
 using Xunit;
 using Xunit.Extensions.Ordering;
 

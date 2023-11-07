@@ -1,8 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Extensions;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
+using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

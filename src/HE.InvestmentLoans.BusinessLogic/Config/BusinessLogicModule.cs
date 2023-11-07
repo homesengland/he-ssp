@@ -1,15 +1,18 @@
+extern alias Org;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Funding.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Utils;
 using Microsoft.Extensions.DependencyInjection;
+using Org::HE.Investments.Organisation.CrmRepository;
+using ContactRepository = HE.InvestmentLoans.BusinessLogic.Organization.Repositories.ContactRepository;
+using IContactRepository = HE.InvestmentLoans.BusinessLogic.Organization.Repositories.IContactRepository;
 
 namespace HE.InvestmentLoans.BusinessLogic.Config;
 

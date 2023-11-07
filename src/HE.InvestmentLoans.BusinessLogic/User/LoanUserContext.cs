@@ -1,8 +1,7 @@
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Contract.User.ValueObjects;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 
 namespace HE.InvestmentLoans.BusinessLogic.User;

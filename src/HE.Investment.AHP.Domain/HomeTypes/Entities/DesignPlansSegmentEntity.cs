@@ -1,8 +1,9 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Validation;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
+using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 

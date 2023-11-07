@@ -1,7 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.WWW.Controllers;
+using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

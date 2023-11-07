@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
-using HE.InvestmentLoans.Contract.User.ValueObjects;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 

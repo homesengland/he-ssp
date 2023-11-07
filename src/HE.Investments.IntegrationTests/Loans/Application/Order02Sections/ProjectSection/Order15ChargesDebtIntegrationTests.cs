@@ -12,6 +12,7 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.InvestmentLoans.WWW.Views.Project.Consts;
+using HE.Investments.Common.Messages;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Resources;
 using Xunit;
 using Xunit.Extensions.Ordering;

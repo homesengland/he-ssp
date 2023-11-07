@@ -5,12 +5,9 @@ using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.WWW.Config;
 using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Middlewares;
-using HE.Investments.Common.WWW;
 using HE.Investments.Common.WWW.Infrastructure.Cache;
 using HE.Investments.Common.WWW.Partials;
 using HE.Investments.DocumentService.Extensions;
-using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.FeatureManagement;
 
 #pragma warning disable CA1852

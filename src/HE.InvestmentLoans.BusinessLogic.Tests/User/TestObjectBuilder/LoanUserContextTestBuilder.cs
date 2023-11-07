@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 

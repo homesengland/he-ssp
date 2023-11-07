@@ -1,10 +1,10 @@
 extern alias Org;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Entities;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.Organisation.Services;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
@@ -12,13 +12,10 @@ namespace HE.Investments.Account.Domain.Organisation.Repositories;
 
 public class OrganizationRepository : IOrganizationRepository
 {
-    private readonly IOrganizationServiceAsync2 _serviceClient;
-
     private readonly IOrganizationService _organizationService;
 
-    public OrganizationRepository(IOrganizationServiceAsync2 serviceClient, IOrganizationService organizationService)
+    public OrganizationRepository(IOrganizationService organizationService)
     {
-        _serviceClient = serviceClient;
         _organizationService = organizationService;
     }
 
@@ -52,14 +49,13 @@ public class OrganizationRepository : IOrganizationRepository
         {
             return OrganisationChangeRequestState.NoPendingRequest;
         }
-        else if (response.contactExternalId == userAccount.UserGlobalId.ToString())
+
+        if (response.contactExternalId == userAccount.UserGlobalId.ToString())
         {
             return OrganisationChangeRequestState.PendingRequestByYou;
         }
-        else
-        {
-            return OrganisationChangeRequestState.PendingRequestByOthers;
-        }
+
+        return OrganisationChangeRequestState.PendingRequestByOthers;
     }
 
     public async Task<Guid> CreateOrganisation(OrganisationEntity organisation)
@@ -79,7 +75,7 @@ public class OrganizationRepository : IOrganizationRepository
         return await Task.FromResult(id);
     }
 
-    public async Task Update(OrganisationEntity organisation, UserAccount userAccount, CancellationToken cancellationToken)
+    public async Task Save(OrganisationEntity organisation, UserAccount userAccount, CancellationToken cancellationToken)
     {
         await _organizationService.CreateOrganisationChangeRequest(
             new OrganizationDetailsDto

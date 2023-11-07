@@ -1,10 +1,10 @@
 using HE.InvestmentLoans.BusinessLogic.Funding.Entities;
 using HE.InvestmentLoans.BusinessLogic.Funding.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Validators;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Funding.CommandHandlers;

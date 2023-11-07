@@ -4,7 +4,7 @@ using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

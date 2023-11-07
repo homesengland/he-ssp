@@ -1,3 +1,8 @@
+using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Contract.User.ValueObjects;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Validators;
+
 namespace HE.Investments.Account.Shared.User;
 
 public class UserDetails

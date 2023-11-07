@@ -2,13 +2,13 @@ using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.Projects;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.Funding;
 using HE.InvestmentLoans.Contract.Security;
+using HE.Investments.Account.Shared.User;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 

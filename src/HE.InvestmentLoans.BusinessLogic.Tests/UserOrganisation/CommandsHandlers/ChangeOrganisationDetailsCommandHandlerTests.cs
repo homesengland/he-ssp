@@ -1,11 +1,10 @@
 extern alias Org;
-
-using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
-using HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.BusinessLogic.UserOrganisation.CommandHandlers;
 using HE.InvestmentLoans.Contract.UserOrganisation.Commands;
+using HE.Investments.Account.Domain.Organisation.Entities;
+using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
+using HE.Investments.Account.Domain.UserOrganisation.CommandHandlers;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;
@@ -46,6 +45,6 @@ public class ChangeOrganisationDetailsCommandHandlerTests : TestBase<ChangeOrgan
 
         // then
         result.IsValid.Should().BeTrue();
-        organisationRepository.Verify(c => c.Update(It.IsAny<OrganisationEntity>(), It.IsAny<UserAccount>(), CancellationToken.None));
+        organisationRepository.Verify(c => c.Save(It.IsAny<OrganisationEntity>(), It.IsAny<UserAccount>(), CancellationToken.None));
     }
 }

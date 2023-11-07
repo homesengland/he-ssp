@@ -1,8 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.Security;
 using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 

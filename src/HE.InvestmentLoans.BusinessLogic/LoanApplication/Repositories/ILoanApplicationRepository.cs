@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;

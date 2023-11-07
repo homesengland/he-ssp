@@ -1,6 +1,7 @@
-using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
+using HE.Investments.Account.Domain.Organisation.ValueObjects;
 
-namespace HE.InvestmentLoans.BusinessLogic.Organization.Entities;
+namespace HE.Investments.Account.Domain.Organisation.Entities;
+
 public class OrganisationEntity
 {
     public OrganisationEntity(OrganisationName name, OrganisationAddress address)

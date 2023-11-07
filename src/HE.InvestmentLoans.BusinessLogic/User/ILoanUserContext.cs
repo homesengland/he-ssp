@@ -1,5 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.Contract.User.ValueObjects;
+using HE.Investments.Account.Shared.User;
 
 namespace HE.InvestmentLoans.BusinessLogic.User;
 

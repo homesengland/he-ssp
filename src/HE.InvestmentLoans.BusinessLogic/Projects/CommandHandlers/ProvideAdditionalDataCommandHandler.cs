@@ -6,10 +6,11 @@ using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Common;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
+using HE.Investments.Common.Messages;
+using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
