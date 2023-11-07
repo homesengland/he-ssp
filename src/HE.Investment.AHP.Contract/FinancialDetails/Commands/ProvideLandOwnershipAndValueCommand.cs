@@ -1,6 +1,7 @@
-﻿using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
 using HE.InvestmentLoans.Common.Validation;
 using MediatR;
+using ApplicationId = HE.Investment.AHP.Contract.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails.Commands;
-public record ProvideLandOwnershipAndValueCommand(FinancialDetailsId FinancialDetailsId, string LandOwnership, string LandValue) : IRequest<OperationResult>;
+public record ProvideLandOwnershipAndValueCommand(ApplicationId ApplicationId, string LandOwnership, string LandValue) : IRequest<OperationResult>;

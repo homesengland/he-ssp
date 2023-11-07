@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
+using ApplicationId = HE.Investment.AHP.Contract.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 
@@ -11,15 +12,15 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
 {
     private static readonly IDictionary<Guid, FinancialDetailsEntity> FinancialDetails = new ConcurrentDictionary<Guid, FinancialDetailsEntity>();
 
-    public Task<FinancialDetailsEntity> GetById(FinancialDetailsId financialDetailsId, CancellationToken cancellationToken)
+    public Task<FinancialDetailsEntity> GetById(ApplicationId applicationId, CancellationToken cancellationToken)
     {
-        var financialDetails = Get(financialDetailsId.Value);
+        var financialDetails = Get(applicationId.Value);
         if (financialDetails != null)
         {
             return Task.FromResult(financialDetails);
         }
 
-        throw new NotFoundException(nameof(FinancialDetailsEntity), financialDetailsId);
+        throw new NotFoundException(nameof(FinancialDetailsEntity), applicationId);
     }
 
     public Task SaveAsync(FinancialDetailsEntity financialDetailsEntity, CancellationToken cancellationToken)
@@ -39,15 +40,15 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
 
     private void Save(FinancialDetailsEntity financialDetailsEntity)
     {
-        if (FinancialDetails.TryGetValue(financialDetailsEntity.FinancialDetailsId.Value, out var financialDetails))
+        if (FinancialDetails.TryGetValue(financialDetailsEntity.ApplicationId.Value, out var financialDetails))
         {
             var existingFinancialDetails = financialDetails;
             if (existingFinancialDetails != null)
             {
-                FinancialDetails.Remove(financialDetails.FinancialDetailsId.Value);
+                FinancialDetails.Remove(financialDetails.ApplicationId.Value);
             }
         }
 
-        FinancialDetails.Add(financialDetailsEntity.FinancialDetailsId.Value, financialDetailsEntity);
+        FinancialDetails.Add(financialDetailsEntity.ApplicationId.Value, financialDetailsEntity);
     }
 }
