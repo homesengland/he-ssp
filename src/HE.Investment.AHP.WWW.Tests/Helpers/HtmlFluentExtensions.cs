@@ -95,6 +95,23 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasPageHeader(this IHtmlDocument htmlDocument, string caption, string header)
+    {
+        htmlDocument
+            .HasElementWithText("span", caption)
+            .HasElementWithText("h1", header);
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasFormFieldTitle(this IHtmlDocument htmlDocument, string title)
+    {
+        htmlDocument
+            .HasElementWithText("h2", title);
+
+        return htmlDocument;
+    }
+
     private static void AssertErrorMessage(string fieldName, string? text, bool exist, IList<IElement> filtered)
     {
         if (exist)
