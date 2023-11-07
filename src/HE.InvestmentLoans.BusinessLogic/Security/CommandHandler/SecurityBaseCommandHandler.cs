@@ -1,23 +1,29 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
+using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Events;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Security.CommandHandler;
 public class SecurityBaseCommandHandler
 {
-    private readonly ISecurityRepository _repository;
+    private readonly ISecurityRepository _securityRepository;
+
+    private readonly ILoanApplicationRepository _loanApplicationRepository;
 
     private readonly ILoanUserContext _loanUserContext;
 
     private readonly ILogger<SecurityBaseCommandHandler> _logger;
 
-    public SecurityBaseCommandHandler(ISecurityRepository repository, ILoanUserContext loanUserContext, ILogger<SecurityBaseCommandHandler> logger)
+    public SecurityBaseCommandHandler(ISecurityRepository securityRepository, ILoanApplicationRepository loanApplicationRepository, ILoanUserContext loanUserContext, ILogger<SecurityBaseCommandHandler> logger)
     {
-        _repository = repository;
+        _securityRepository = securityRepository;
+        _loanApplicationRepository = loanApplicationRepository;
         _loanUserContext = loanUserContext;
         _logger = logger;
     }
@@ -25,11 +31,17 @@ public class SecurityBaseCommandHandler
     protected async Task<OperationResult> Perform(Action<SecurityEntity> action, LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
     {
         var userAccount = await _loanUserContext.GetSelectedAccount();
-        var security = await _repository.GetAsync(loanApplicationId, userAccount, SecurityFieldsSet.GetAllFields, cancellationToken);
+        var security = await _securityRepository.GetAsync(loanApplicationId, userAccount, SecurityFieldsSet.GetAllFields, cancellationToken);
 
         try
         {
             action(security);
+
+            if (security.LoanApplicationStatus != ApplicationStatus.Draft)
+            {
+                security.Publish(new LoanApplicationChangeToDraftStatusEvent(loanApplicationId));
+                await _loanApplicationRepository.DispatchEvents(security, cancellationToken);
+            }
         }
         catch (DomainValidationException domainValidationException)
         {
@@ -37,7 +49,7 @@ public class SecurityBaseCommandHandler
             return domainValidationException.OperationResult;
         }
 
-        await _repository.SaveAsync(security, userAccount, cancellationToken);
+        await _securityRepository.SaveAsync(security, userAccount, cancellationToken);
         return OperationResult.Success();
     }
 }

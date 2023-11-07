@@ -7,10 +7,11 @@ using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 
-public class Project
+public class Project : DomainEntity
 {
     public Project()
     {

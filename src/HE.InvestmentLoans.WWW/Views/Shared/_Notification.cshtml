@@ -5,11 +5,13 @@
     var (isNotificationInCache, notificationModel) = NotificationService.Pop();
     var description = "";
     var linkDescription = "";
+    var body = "";
 
     if (notificationModel != null)
     {
         description = NotificationMapper.MapBodyTypeToDescription(notificationModel.NotificationBodyType, notificationModel.ValuesToDisplay);
         linkDescription = NotificationMapper.MapBodyTypeToLinkDescription(notificationModel.NotificationBodyType, notificationModel.ValuesToDisplay);
+        body = NotificationMapper.MapToBody(notificationModel.NotificationBodyType, notificationModel.ValuesToDisplay);
     }
 }
 
@@ -31,7 +33,11 @@
                     <br />
                     <a href="">@linkDescription</a>
                 }
-        </h3>
+            </h3>
+            @if (!string.IsNullOrEmpty(body))
+            {
+                <p class="govuk-body">@body</p>
+            }
     </div>
 </div>
 }

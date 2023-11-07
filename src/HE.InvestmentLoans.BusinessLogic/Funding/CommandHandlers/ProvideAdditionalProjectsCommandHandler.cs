@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.Funding.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
@@ -11,8 +12,12 @@ namespace HE.InvestmentLoans.BusinessLogic.Funding.CommandHandlers;
 
 public class ProvideAdditionalProjectsCommandHandler : FundingBaseCommandHandler, IRequestHandler<ProvideAdditionalProjectsCommand, OperationResult>
 {
-    public ProvideAdditionalProjectsCommandHandler(IFundingRepository repository, ILoanUserContext loanUserContext, ILogger<FundingBaseCommandHandler> logger)
-        : base(repository, loanUserContext, logger)
+    public ProvideAdditionalProjectsCommandHandler(
+        IFundingRepository fundingRepository,
+        ILoanApplicationRepository loanApplicationRepository,
+        ILoanUserContext loanUserContext,
+        ILogger<FundingBaseCommandHandler> logger)
+        : base(fundingRepository, loanApplicationRepository, loanUserContext, logger)
     {
     }
 
@@ -21,7 +26,9 @@ public class ProvideAdditionalProjectsCommandHandler : FundingBaseCommandHandler
         return await Perform(
             x =>
             {
-                var additionalProjects = request.IsThereAnyAdditionalProject.IsProvided() ? AdditionalProjects.FromString(request.IsThereAnyAdditionalProject!) : null;
+                var additionalProjects = request.IsThereAnyAdditionalProject.IsProvided()
+                    ? AdditionalProjects.FromString(request.IsThereAnyAdditionalProject!)
+                    : null;
 
                 x.ProvideAdditionalProjects(additionalProjects);
             },

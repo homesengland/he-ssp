@@ -1,6 +1,7 @@
 using System.Text.Json;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Constants;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 using HE.InvestmentLoans.Common.Extensions;
@@ -28,22 +29,23 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
 
     private readonly ILoanUserContext _loanUserContext;
 
-    private readonly ICompanyStructureRepository _repository;
+    private readonly ICompanyStructureRepository _companyStructureRepository;
 
     public ProvideMoreInformationAboutOrganizationCommandHandler(
-                ICompanyStructureRepository repository,
+                ICompanyStructureRepository companyStructureRepository,
+                ILoanApplicationRepository loanApplicationRepository,
                 ILoanUserContext loanUserContext,
                 IDocumentServiceConfig config,
                 ILogger<CompanyStructureBaseCommandHandler> logger,
                 IHttpDocumentService documentService,
                 INotificationService notificationService)
-        : base(repository, loanUserContext, logger)
+        : base(companyStructureRepository, loanApplicationRepository, loanUserContext, logger)
     {
         _config = config;
         _documentService = documentService;
         _notificationService = notificationService;
         _loanUserContext = loanUserContext;
-        _repository = repository;
+        _companyStructureRepository = companyStructureRepository;
     }
 
     public async Task<OperationResult> Handle(ProvideMoreInformationAboutOrganizationCommand request, CancellationToken cancellationToken)
@@ -73,7 +75,7 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                     await _documentService.UploadAsync(new FileUploadModel()
                     {
                         ListTitle = _config.ListTitle,
-                        FolderPath = $"{await _repository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken)}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
+                        FolderPath = $"{await _companyStructureRepository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken)}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
                         File = file,
                         Metadata = JsonSerializer.Serialize(new FileMetadata
                         {
