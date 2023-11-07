@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestData;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.Investments.Account.Contract.Organisation.Queries;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestObjectBuilder;
 public class OrganizationBasicInformationTestBuilder

@@ -3,7 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
-using HE.InvestmentLoans.Contract.UserOrganisation.Queries;
+using HE.Investments.Account.Contract.Organisation.Queries;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.UserOrganisation.QueryHandlers;

@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.BusinessLogic.User.Entities;
+namespace HE.Investments.Account.Domain.Organisation.Entities;
 
 public record UserAccountRole(string Role)
 {

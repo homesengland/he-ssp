@@ -1,18 +1,19 @@
 extern alias Org;
-
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Organisation.CompaniesHouse.Contract;
+using HE.Investments.Organisation.Services;
 using MediatR;
-using Org.HE.Investments.Organisation.CompaniesHouse.Contract;
-using Org.HE.Investments.Organisation.Services;
 
-namespace HE.InvestmentLoans.BusinessLogic.Organization.QueryHandlers;
-internal class SearchOrganizationsQueryHandler : IRequestHandler<SearchOrganizationsQuery, SearchOrganisationsQueryResponse>
+namespace HE.Investments.Account.Domain.Organisation.QueryHandlers;
+
+internal class SearchOrganisationsQueryHandler : IRequestHandler<SearchOrganizationsQuery, SearchOrganisationsQueryResponse>
 {
     private readonly IOrganisationSearchService _searchService;
 
-    public SearchOrganizationsQueryHandler(IOrganisationSearchService searchService)
+    public SearchOrganisationsQueryHandler(IOrganisationSearchService searchService)
     {
         _searchService = searchService;
     }
@@ -26,7 +27,7 @@ internal class SearchOrganizationsQueryHandler : IRequestHandler<SearchOrganizat
             throw new ExternalServiceException();
         }
 
-        var viewmodel = new OrganizationViewModel
+        var viewmodel = new OrganisationSearchModel
         {
             Organizations = companyHousesResult.Items
             .Select(c => new OrganizationBasicDetails(c.Name, c.Street, c.City, c.PostalCode, c.CompanyNumber, c.OrganisationId)),

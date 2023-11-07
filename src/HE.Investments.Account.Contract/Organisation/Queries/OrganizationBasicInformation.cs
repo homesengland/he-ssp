@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.Contract.Organization.ValueObjects;
+namespace HE.Investments.Account.Contract.Organisation.Queries;
 
 public record OrganizationBasicInformation(string RegisteredCompanyName, string CompanyRegistrationNumber, Address Address, ContactInformation ContactInformation);
 

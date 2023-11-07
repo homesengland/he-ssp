@@ -1,14 +1,15 @@
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 
-namespace HE.InvestmentLoans.Contract.Organization;
-public class OrganizationViewModel
+namespace HE.Investments.Account.Contract.Organisation.Queries;
+
+public class OrganisationSearchModel
 {
-    public OrganizationViewModel()
+    public OrganisationSearchModel()
     {
         Organizations = new List<OrganizationBasicDetails>();
     }
 
-    public OrganizationViewModel(IEnumerable<OrganizationBasicDetails> organizations)
+    public OrganisationSearchModel(IEnumerable<OrganizationBasicDetails> organizations)
     {
         Organizations = organizations.ToList();
     }

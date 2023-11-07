@@ -1,8 +1,4 @@
-using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Validation;
-using HE.InvestmentLoans.Contract.User.ValueObjects;
-
-namespace HE.InvestmentLoans.BusinessLogic.User.Entities;
+namespace HE.Investments.Account.Shared.User;
 
 public class UserDetails
 {

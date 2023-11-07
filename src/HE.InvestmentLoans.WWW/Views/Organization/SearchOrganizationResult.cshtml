@@ -7,10 +7,9 @@
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Pagination
 @using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Paragraphs
 @using HE.Investments.Common.Gds
-@model HE.InvestmentLoans.Contract.Organization.OrganizationViewModel;
+@model HE.Investments.Account.Contract.Organisation.Queries.OrganisationSearchModel;
 @{
     ViewData["Title"] = "Organization Select";
-
 }
 
 <gds-div-grid-column-two-thirds>
@@ -49,6 +48,5 @@
         </gds-p>
 
         <gds-pagination base-url="/organization/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.ItemsPerPage" total-items="@Model.TotalOrganizations"></gds-pagination>
-
 
 </gds-div-grid-column-two-thirds>

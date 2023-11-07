@@ -1,6 +1,7 @@
 using MediatR;
 
-namespace HE.InvestmentLoans.Contract.Organization;
+namespace HE.Investments.Account.Contract.Organisation.Queries;
+
 public record SearchOrganizationsQuery(string SearchPhrase, int Page, int PageSize) : IRequest<SearchOrganisationsQueryResponse>;
 
-public record SearchOrganisationsQueryResponse(OrganizationViewModel Result);
+public record SearchOrganisationsQueryResponse(OrganisationSearchModel Result);

@@ -1,14 +1,14 @@
 extern alias Org;
-
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
-using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Account.Domain.Organisation.Entities;
+using HE.Investments.Organisation.Services;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using Org::HE.Investments.Organisation.Services;
 
-namespace HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
+namespace HE.Investments.Account.Domain.Organisation.Repositories;
 
 public class OrganizationRepository : IOrganizationRepository
 {
@@ -64,7 +64,7 @@ public class OrganizationRepository : IOrganizationRepository
 
     public async Task<Guid> CreateOrganisation(OrganisationEntity organisation)
     {
-        var id = _organizationService.CreateOrganization(new Org.HE.Common.IntegrationModel.PortalIntegrationModel.OrganizationDetailsDto
+        var id = _organizationService.CreateOrganization(new OrganizationDetailsDto
         {
             registeredCompanyName = organisation.Name.ToString(),
             addressLine1 = organisation.Address.AddressLine1,
@@ -82,7 +82,7 @@ public class OrganizationRepository : IOrganizationRepository
     public async Task Update(OrganisationEntity organisation, UserAccount userAccount, CancellationToken cancellationToken)
     {
         await _organizationService.CreateOrganisationChangeRequest(
-            new Org.HE.Common.IntegrationModel.PortalIntegrationModel.OrganizationDetailsDto
+            new OrganizationDetailsDto
             {
                 organisationId = userAccount.AccountId.ToString(),
                 registeredCompanyName = organisation.Name.ToString(),

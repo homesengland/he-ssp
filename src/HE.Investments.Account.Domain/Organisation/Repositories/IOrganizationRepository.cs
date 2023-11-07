@@ -1,9 +1,9 @@
 using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Utils.Enums;
-using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Account.Domain.Organisation.Entities;
 
-namespace HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
+namespace HE.Investments.Account.Domain.Organisation.Repositories;
 
 public interface IOrganizationRepository
 {

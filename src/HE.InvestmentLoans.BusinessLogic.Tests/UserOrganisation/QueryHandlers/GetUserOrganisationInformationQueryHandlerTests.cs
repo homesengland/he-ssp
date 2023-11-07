@@ -5,7 +5,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.UserOrganisation.QueryHandlers;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.InvestmentLoans.Contract.UserOrganisation.Queries;
+using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;

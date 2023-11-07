@@ -1,9 +1,8 @@
-using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Contract.Organization;
+using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Account.Domain.Organisation.Repositories;
 using MediatR;
 
-namespace HE.InvestmentLoans.BusinessLogic.Organization.QueryHandlers;
+namespace HE.Investments.Account.Domain.Organisation.QueryHandlers;
 
 public class GetOrganizationBasicInformationQueryHandler : IRequestHandler<GetOrganizationBasicInformationQuery, GetOrganizationBasicInformationQueryResponse>
 {

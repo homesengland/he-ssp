@@ -1,6 +1,5 @@
-using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using MediatR;
 
-namespace HE.InvestmentLoans.Contract.Organization;
+namespace HE.Investments.Account.Contract.Organisation.Queries;
 
 public record GetOrganizationQuery(string CompanyHouseNumberOrOrganisationId) : IRequest<OrganizationBasicDetails>;

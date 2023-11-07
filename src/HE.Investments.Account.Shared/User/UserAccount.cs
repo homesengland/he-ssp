@@ -1,6 +1,6 @@
-using HE.InvestmentLoans.Contract.User.ValueObjects;
+using HE.Investments.Account.Domain.Organisation.Entities;
 
-namespace HE.InvestmentLoans.BusinessLogic.User.Entities;
+namespace HE.Investments.Account.Shared.User;
 
 public record UserAccount(
     UserGlobalId UserGlobalId,

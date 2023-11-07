@@ -3,6 +3,7 @@ extern alias Org;
 using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 

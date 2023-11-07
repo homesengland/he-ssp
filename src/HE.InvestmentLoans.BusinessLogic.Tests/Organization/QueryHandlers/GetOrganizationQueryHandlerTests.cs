@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Contract.Organization;
+using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
