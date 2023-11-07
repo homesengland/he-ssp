@@ -1,5 +1,9 @@
-@model string
+@using HE.Investments.Common.Gds
+@model (string Title, string FieldName)
 
 <gds-legend>
-    <gds-h2 class="govuk-!-margin-bottom-0">@Model</gds-h2>
+    <gds-label size="@ControlSize.M" for="@Model.FieldName">
+        @Model.Title
+    </gds-label>
 </gds-legend>
+

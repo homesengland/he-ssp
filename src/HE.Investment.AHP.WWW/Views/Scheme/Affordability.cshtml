@@ -11,7 +11,9 @@
     <form asp-controller="Scheme" asp-action="Affordability" asp-method="post" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         <gds-field-set role="group">
-            <vc:form-field-title title="Tell us about any evidence and analysis you have that the homes will be affordable to the target market"/>
+            <vc:form-field-title
+                field-name="AffordabilityEvidence"
+                title="Tell us about any evidence and analysis you have that the homes will be affordable to the target market"/>
             <gds-error-form-group asp-for="AffordabilityEvidence">
                 <gds-text-area asp-for="AffordabilityEvidence" rows="5" class="govuk-!-margin-bottom-2"></gds-text-area>
                 <gds-div-hint>

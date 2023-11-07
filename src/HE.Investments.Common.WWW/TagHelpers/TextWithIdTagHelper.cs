@@ -1,7 +1,7 @@
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace HE.Investments.Common.WWW.Components;
+namespace HE.Investments.Common.WWW.TagHelpers;
 
 public class TextWithIdTagHelper : TagHelper
 {

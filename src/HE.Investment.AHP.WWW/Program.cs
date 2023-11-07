@@ -10,9 +10,9 @@ builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddHttpClient();
-builder.Services.AddWebModule();
+builder.Services.AddWebModule(builder);
 builder.Services.AddFeatureManagement();
-builder.Services.AddCommonPartialsViews();
+builder.Services.AddCommonBuildingBlocks();
 var mvcBuilder = builder.Services
     .AddControllersWithViews(options =>
         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()))

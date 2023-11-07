@@ -3,7 +3,7 @@ using System.Text;
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace HE.Investments.Common.WWW.Components;
+namespace HE.Investments.Common.WWW.TagHelpers;
 
 public class LinkButtonTagHelper : TagHelper
 {

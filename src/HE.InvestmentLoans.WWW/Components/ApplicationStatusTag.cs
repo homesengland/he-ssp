@@ -7,7 +7,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Gds;
 using HE.Investments.Common.WWW.Components;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using TextWithIdTagHelper = HE.Investments.Common.WWW.Components.TextWithIdTagHelper;
+using TextWithIdTagHelper = HE.Investments.Common.WWW.TagHelpers.TextWithIdTagHelper;
 
 namespace HE.InvestmentLoans.WWW.Components;
 

@@ -6,8 +6,8 @@ namespace HE.Investment.AHP.WWW.Views.Shared.Components.FormFieldTitle;
 
 public class FormFieldTitle : ViewComponent
 {
-    public IViewComponentResult Invoke(string title)
+    public IViewComponentResult Invoke(string title, string fieldName = null)
     {
-        return View("FormFieldTitle", title);
+        return View("FormFieldTitle", (title, fieldName));
     }
 }
