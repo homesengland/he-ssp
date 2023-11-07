@@ -47,7 +47,7 @@ public class IsReadOnlyTests : TestBase<LoanApplicationEntity>
     [InlineData(ApplicationStatus.ReferredBackToApplicant)]
     public void ShouldReturnFalse_WhenLoanApplicationStatusIsNotReadOnly(ApplicationStatus status)
     {
-// given
+        // given
         var userAccount = LoanUserContextTestBuilder
             .New()
             .Register(this)
