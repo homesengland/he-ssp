@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User;
@@ -9,10 +10,15 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
+
 public class ProvideLocationCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideLocationCommand, OperationResult>
 {
-    public ProvideLocationCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger)
-        : base(repository, loanUserContext, logger)
+    public ProvideLocationCommandHandler(
+        IApplicationProjectsRepository applicationProjectsRepository,
+        ILoanApplicationRepository loanApplicationRepository,
+        ILoanUserContext loanUserContext,
+        ILogger<ProjectCommandHandlerBase> logger)
+        : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext, logger)
     {
     }
 
@@ -35,7 +41,8 @@ public class ProvideLocationCommandHandler : ProjectCommandHandlerBase, IRequest
                         project.ProvideLandRegistryNumber(new LandRegistryTitleNumber(request.LandregistryTitleNumber));
                         break;
                     default:
-                        throw new NotImplementedException($"Provided type of location: {request.TypeOfLocation} is incorrect. Available types: {ProjectFormOption.Coordinates}, {ProjectFormOption.LandRegistryTitleNumber}");
+                        throw new NotImplementedException(
+                            $"Provided type of location: {request.TypeOfLocation} is incorrect. Available types: {ProjectFormOption.Coordinates}, {ProjectFormOption.LandRegistryTitleNumber}");
                 }
             },
             request.LoanApplicationId,

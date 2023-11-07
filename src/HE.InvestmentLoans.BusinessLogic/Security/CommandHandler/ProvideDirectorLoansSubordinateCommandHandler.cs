@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Extensions;
@@ -8,10 +9,16 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Security.CommandHandler;
-internal class ProvideDirectorLoansSubordinateCommandHandler : SecurityBaseCommandHandler, IRequestHandler<ProvideDirectorLoansSubordinateCommand, OperationResult>
+
+internal class ProvideDirectorLoansSubordinateCommandHandler : SecurityBaseCommandHandler,
+    IRequestHandler<ProvideDirectorLoansSubordinateCommand, OperationResult>
 {
-    public ProvideDirectorLoansSubordinateCommandHandler(ISecurityRepository repository, ILoanUserContext loanUserContext, ILogger<SecurityBaseCommandHandler> logger)
-        : base(repository, loanUserContext, logger)
+    public ProvideDirectorLoansSubordinateCommandHandler(
+        ISecurityRepository securityRepository,
+        ILoanApplicationRepository loanApplicationRepository,
+        ILoanUserContext loanUserContext,
+        ILogger<SecurityBaseCommandHandler> logger)
+        : base(securityRepository, loanApplicationRepository, loanUserContext, logger)
     {
     }
 
@@ -20,7 +27,9 @@ internal class ProvideDirectorLoansSubordinateCommandHandler : SecurityBaseComma
         return await Perform(
             security =>
             {
-                var directorLoansSubordinate = request.CanBeSubordinated.IsProvided() ? DirectorLoansSubordinate.FromString(request.CanBeSubordinated, request.ReasonWhyCannotBeSubordinated) : null;
+                var directorLoansSubordinate = request.CanBeSubordinated.IsProvided()
+                    ? DirectorLoansSubordinate.FromString(request.CanBeSubordinated, request.ReasonWhyCannotBeSubordinated)
+                    : null;
 
                 security.ProvideDirectorLoansSubordinate(directorLoansSubordinate!);
             },

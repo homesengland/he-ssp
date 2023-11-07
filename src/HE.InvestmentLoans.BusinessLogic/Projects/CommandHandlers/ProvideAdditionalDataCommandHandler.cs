@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
@@ -14,12 +15,18 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
+
 public class ProvideAdditionalDataCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideAdditionalDetailsCommand, OperationResult>
 {
     private readonly IDateTimeProvider _timeProvider;
 
-    public ProvideAdditionalDataCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger, IDateTimeProvider timeProvider)
-        : base(repository, loanUserContext, logger)
+    public ProvideAdditionalDataCommandHandler(
+        IApplicationProjectsRepository applicationProjectsRepository,
+        ILoanApplicationRepository loanApplicationRepository,
+        ILoanUserContext loanUserContext,
+        ILogger<ProjectCommandHandlerBase> logger,
+        IDateTimeProvider timeProvider)
+        : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext, logger)
     {
         _timeProvider = timeProvider;
     }
@@ -31,13 +38,20 @@ public class ProvideAdditionalDataCommandHandler : ProjectCommandHandlerBase, IR
             {
                 var aggregatedResults = OperationResult.New();
 
-                var purchaseDate = aggregatedResults.CatchResult(() => PurchaseDate.FromString(request.PurchaseYear, request.PurchaseMonth, request.PurchaseDay, _timeProvider.Now));
+                var purchaseDate = aggregatedResults.CatchResult(() =>
+                    PurchaseDate.FromString(request.PurchaseYear, request.PurchaseMonth, request.PurchaseDay, _timeProvider.Now));
 
                 var cost = aggregatedResults.CatchResult(() => Pounds.FromString(request.Cost));
-                aggregatedResults.OverrideError(GenericValidationError.InvalidPoundsValue, nameof(ProjectViewModel.Cost), ValidationErrorMessage.IncorrectProjectCost);
+                aggregatedResults.OverrideError(
+                    GenericValidationError.InvalidPoundsValue,
+                    nameof(ProjectViewModel.Cost),
+                    ValidationErrorMessage.IncorrectProjectCost);
 
                 var currentValue = aggregatedResults.CatchResult(() => Pounds.FromString(request.CurrentValue));
-                aggregatedResults.OverrideError(GenericValidationError.InvalidPoundsValue, nameof(ProjectViewModel.Value), ValidationErrorMessage.IncorrectProjectValue);
+                aggregatedResults.OverrideError(
+                    GenericValidationError.InvalidPoundsValue,
+                    nameof(ProjectViewModel.Value),
+                    ValidationErrorMessage.IncorrectProjectValue);
 
                 var sourceOfValuation = SourceOfValuationMapper.FromString(request.SourceOfValuation);
 

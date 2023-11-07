@@ -5,4 +5,6 @@ public record Scheme(
     decimal? RequiredFunding,
     int? HousesToDeliver,
     string? AffordabilityEvidence,
-    string? SalesRisk);
+    string? SalesRisk,
+    string? TypeAndTenureJustification,
+    string? SchemeAndProposalJustification);

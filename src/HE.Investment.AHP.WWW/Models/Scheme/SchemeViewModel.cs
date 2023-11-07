@@ -4,7 +4,9 @@ public record SchemeViewModel(
     string ApplicationId,
     string ApplicationName,
     string SchemeId,
-    decimal? RequiredFunding,
-    int? HousesToDeliver,
+    string RequiredFunding,
+    string HousesToDeliver,
     string AffordabilityEvidence,
-    string SalesRisk);
+    string SalesRisk,
+    string TypeAndTenureJustification,
+    string SchemeAndProposalJustification);

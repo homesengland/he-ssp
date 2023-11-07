@@ -49,6 +49,14 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasCheckboxes(this IHtmlDocument htmlDocument, string fieldName, IList<string> options)
+    {
+        var inputs = htmlDocument.GetElementsByName(fieldName);
+        inputs.Length.Should().Be(options.Count, $"{options.Count} inputs with name {fieldName} should exist");
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument IsEmpty(this IHtmlDocument htmlDocument)
     {
         var body = htmlDocument.GetElementsByTagName("body").FirstOrDefault();
@@ -83,6 +91,23 @@ public static class HtmlFluentExtensions
             .Where(d => d.Children.Any(c => c.TextContent.Contains(text) && c.ClassName == "govuk-details__text"));
 
         details.Should().NotBeNull($"Only one element with class 'govuk-details' should exist");
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasPageHeader(this IHtmlDocument htmlDocument, string caption, string header)
+    {
+        htmlDocument
+            .HasElementWithText("span", caption)
+            .HasElementWithText("h1", header);
+
+        return htmlDocument;
+    }
+
+    public static IHtmlDocument HasFormFieldTitle(this IHtmlDocument htmlDocument, string title)
+    {
+        htmlDocument
+            .HasElementWithText("h2", title);
 
         return htmlDocument;
     }

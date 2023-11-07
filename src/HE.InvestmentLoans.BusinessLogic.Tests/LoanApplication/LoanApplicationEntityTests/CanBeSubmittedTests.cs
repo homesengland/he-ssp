@@ -1,14 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
-using HE.InvestmentLoans.Contract.Application.Enums;
-using Microsoft.Xrm.Sdk.Metadata;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.LoanApplicationEntityTests;

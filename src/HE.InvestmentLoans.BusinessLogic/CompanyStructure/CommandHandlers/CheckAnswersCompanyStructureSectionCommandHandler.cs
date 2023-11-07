@@ -1,6 +1,11 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
+using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Common.Validation;
+using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Events;
 using HE.InvestmentLoans.Contract.Application.Extensions;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using MediatR;
@@ -8,23 +13,49 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 
-public class CheckAnswersCompanyStructureSectionCommandHandler : CompanyStructureBaseCommandHandler, IRequestHandler<CheckAnswersCompanyStructureSectionCommand, OperationResult>
+public class CheckAnswersCompanyStructureSectionCommandHandler : IRequestHandler<CheckAnswersCompanyStructureSectionCommand, OperationResult>
 {
-    public CheckAnswersCompanyStructureSectionCommandHandler(ICompanyStructureRepository repository, ILoanUserContext loanUserContext, ILogger<CompanyStructureBaseCommandHandler> logger)
-        : base(repository, loanUserContext, logger)
+    private readonly ICompanyStructureRepository _companyStructureRepository;
+
+    private readonly ILoanApplicationRepository _loanApplicationRepository;
+
+    private readonly ILoanUserContext _loanUserContext;
+
+    private readonly ILogger<CompanyStructureBaseCommandHandler> _logger;
+
+    public CheckAnswersCompanyStructureSectionCommandHandler(
+        ICompanyStructureRepository companyStructureRepository,
+        ILoanApplicationRepository loanApplicationRepository,
+        ILoanUserContext loanUserContext,
+        ILogger<CompanyStructureBaseCommandHandler> logger)
     {
+        _companyStructureRepository = companyStructureRepository;
+        _loanApplicationRepository = loanApplicationRepository;
+        _loanUserContext = loanUserContext;
+        _logger = logger;
     }
 
     public async Task<OperationResult> Handle(CheckAnswersCompanyStructureSectionCommand request, CancellationToken cancellationToken)
     {
-        return await Perform(
-            companyStructure =>
-            {
-                companyStructure.CheckAnswers(request.YesNoAnswer.ToYesNoAnswer());
+        var userAccount = await _loanUserContext.GetSelectedAccount();
+        var companyStructure = await _companyStructureRepository.GetAsync(request.LoanApplicationId, userAccount, CompanyStructureFieldsSet.GetAllFields, cancellationToken);
 
-                return Task.CompletedTask;
-            },
-            request.LoanApplicationId,
-            cancellationToken);
+        try
+        {
+            companyStructure.CheckAnswers(request.YesNoAnswer.ToYesNoAnswer());
+            if (companyStructure.Status == SectionStatus.Completed)
+            {
+                companyStructure.Publish(new LoanApplicationSectionHasBeenCompletedAgainEvent());
+                await _loanApplicationRepository.DispatchEvents(companyStructure, cancellationToken);
+            }
+        }
+        catch (DomainValidationException domainValidationException)
+        {
+            _logger.LogWarning(domainValidationException, "Validation error(s) occured: {Message}", domainValidationException.Message);
+            return domainValidationException.OperationResult;
+        }
+
+        await _companyStructureRepository.SaveAsync(companyStructure, userAccount, cancellationToken);
+        return OperationResult.Success();
     }
 }

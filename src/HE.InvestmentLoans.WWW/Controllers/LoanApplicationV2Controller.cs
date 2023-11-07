@@ -178,6 +178,15 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
         return await Continue(new { Id = id });
     }
 
+    [HttpPost("{id}/resubmit")]
+    [WorkflowState(LoanApplicationWorkflow.State.ResubmitApplication)]
+    public async Task<IActionResult> Resubmit(Guid id)
+    {
+        await _mediator.Send(new SubmitLoanApplicationCommand(LoanApplicationId.From(id)));
+
+        return await Continue(new { Id = id });
+    }
+
     [HttpGet("{id}/submitted")]
     [WorkflowState(LoanApplicationWorkflow.State.ApplicationSubmitted)]
     public async Task<IActionResult> ApplicationSubmitted(Guid id)

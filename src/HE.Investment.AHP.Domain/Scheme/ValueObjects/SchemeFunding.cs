@@ -6,12 +6,12 @@ namespace HE.Investment.AHP.Domain.Scheme.ValueObjects;
 
 public class SchemeFunding : ValueObject
 {
-    public SchemeFunding(decimal? requiredFunding, int? housesToDeliver)
+    public SchemeFunding(string? requiredFunding, string? housesToDeliver)
     {
         Build(requiredFunding, housesToDeliver).CheckErrors();
     }
 
-    public decimal RequiredFunding { get; private set; }
+    public long RequiredFunding { get; private set; }
 
     public int HousesToDeliver { get; private set; }
 
@@ -21,21 +21,21 @@ public class SchemeFunding : ValueObject
         yield return HousesToDeliver;
     }
 
-    private OperationResult Build(decimal? requiredFunding, int? housesToDeliver)
+    private OperationResult Build(string? requiredFundingGbp, string? housesToDeliver)
     {
         var operationResult = OperationResult.New();
 
         RequiredFunding = NumericValidator
-            .For(requiredFunding, nameof(RequiredFunding), operationResult)
-            .IsProvided()
-            .IsNotDefault()
-            .IsPositive();
+            .For(requiredFundingGbp, nameof(RequiredFunding), operationResult)
+            .IsProvided("Enter the total of funding you are requesting")
+            .IsWholeNumber("The total funding you require must be a number")
+            .IsBetween(errorMessage: "The total funding you require must be 11 digits or less");
 
         HousesToDeliver = NumericValidator
             .For(housesToDeliver, nameof(HousesToDeliver), operationResult)
-            .IsProvided()
-            .IsNotDefault()
-            .IsPositive();
+            .IsProvided("The number of homes this scheme will deliver must be a whole number above 0")
+            .IsWholeNumber("The number of homes this scheme will deliver must be a number")
+            .IsBetween(1, 999999, "The number of homes this scheme will deliver must be 6 digits or less");
 
         return operationResult;
     }
