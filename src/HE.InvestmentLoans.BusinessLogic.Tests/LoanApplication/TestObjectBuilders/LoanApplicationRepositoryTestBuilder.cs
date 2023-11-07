@@ -10,12 +10,12 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestObjectBuild
 public class LoanApplicationRepositoryTestBuilder
 {
     private readonly Mock<ILoanApplicationRepository> _mock;
-    private readonly Mock<ICanSubmitLoanApplication> _iCanSubmitmock;
+    private readonly Mock<ICanSubmitLoanApplication> _iCanSubmitMock;
 
     private LoanApplicationRepositoryTestBuilder()
     {
         _mock = new Mock<ILoanApplicationRepository>();
-        _iCanSubmitmock = new Mock<ICanSubmitLoanApplication>();
+        _iCanSubmitMock = new Mock<ICanSubmitLoanApplication>();
     }
 
     public static LoanApplicationRepositoryTestBuilder New() => new();
@@ -47,7 +47,7 @@ public class LoanApplicationRepositoryTestBuilder
 
     public ICanSubmitLoanApplication BuildICanSubmit()
     {
-        return _iCanSubmitmock.Object;
+        return _iCanSubmitMock.Object;
     }
 
     public Mock<ILoanApplicationRepository> BuildMockAndRegister(IRegisterDependency registerDependency)
@@ -61,6 +61,6 @@ public class LoanApplicationRepositoryTestBuilder
     {
         var mockedObject = BuildICanSubmit();
         registerDependency.RegisterDependency(mockedObject);
-        return _iCanSubmitmock;
+        return _iCanSubmitMock;
     }
 }
