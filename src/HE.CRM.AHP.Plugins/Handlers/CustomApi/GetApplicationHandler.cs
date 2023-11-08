@@ -11,6 +11,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
 
         private string applicationId => ExecutionData.GetInputParameter<string>(invln_getahpapplicationRequest.Fields.invln_applicationid);
         private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getahpapplicationRequest.Fields.invln_appfieldstoretrieve);
+        private string contactId => ExecutionData.GetInputParameter<string>(invln_getahpapplicationRequest.Fields.invln_userid);
+        private string organisationId => ExecutionData.GetInputParameter<string>(invln_getahpapplicationRequest.Fields.invln_organisationid);
 
         #endregion
 
@@ -23,7 +25,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
         public override void DoWork()
         {
             TracingService.Trace("method");
-            var application = CrmServicesFactory.Get<IApplicationService>().GetApplication(applicationId, fieldsToRetrieve);
+            var application = CrmServicesFactory.Get<IApplicationService>().GetApplication(applicationId, organisationId, contactId, fieldsToRetrieve);
             if (application != null)
             {
                 var serializedApplication = JsonSerializer.Serialize(application);

@@ -29,7 +29,7 @@ namespace HE.CRM.Common.DtoMapping
                 name = application.invln_schemename,
                 tenure = application.invln_Tenure?.Value,
             };
-            if(application.Id != null)
+            if (application.Id != null)
             {
                 applicationDtoToReturn.id = application.Id.ToString();
             }

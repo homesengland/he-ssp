@@ -18,7 +18,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _applicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
         }
 
-        public AhpApplicationDto GetApplication(string applicationId, string fieldsToRetrieve = null)
+        public AhpApplicationDto GetApplication(string applicationId, string organisationId, string contactId, string fieldsToRetrieve = null)
         {
             if (Guid.TryParse(applicationId, out var applicationGuid))
             {
@@ -30,7 +30,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             return null;
         }
 
-        public Guid SetApplication(string applicationSerialized, string fieldsToUpdate = null)
+        public Guid SetApplication(string applicationSerialized, string organisationId, string contactId, string fieldsToUpdate = null)
         {
             var application = JsonSerializer.Deserialize<AhpApplicationDto>(applicationSerialized);
             var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application);

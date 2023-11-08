@@ -88,6 +88,8 @@ namespace HE.Xrm.ServiceClientExample
             var req2 = new invln_getahpapplicationRequest() //get loan applications related to account and contact with given data
             {
                 invln_applicationid = application.id,
+                invln_userid = "ss",
+                invln_organisationid = "",
                 invln_appfieldstoretrieve = fieldsToUpdate,
             };
             var resp2 = (invln_getahpapplicationResponse)serviceClient.Execute(req2);

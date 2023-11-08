@@ -20,11 +20,51 @@ namespace DataverseModel
 		
 		public static class Fields
 		{
+			public const string invln_organisationid = "invln_organisationid";
+			public const string invln_userid = "invln_userid";
 			public const string invln_application = "invln_application";
 			public const string invln_fieldstoupdate = "invln_fieldstoupdate";
 		}
 		
 		public const string ActionLogicalName = "invln_setahpapplication";
+		
+		public string invln_organisationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationid"))
+				{
+					return ((string)(this.Parameters["invln_organisationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationid"] = value;
+			}
+		}
+		
+		public string invln_userid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_userid"))
+				{
+					return ((string)(this.Parameters["invln_userid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_userid"] = value;
+			}
+		}
 		
 		public string invln_application
 		{
@@ -67,6 +107,8 @@ namespace DataverseModel
 		public invln_setahpapplicationRequest()
 		{
 			this.RequestName = "invln_setahpapplication";
+			this.invln_organisationid = default(string);
+			this.invln_userid = default(string);
 			this.invln_application = default(string);
 		}
 	}
