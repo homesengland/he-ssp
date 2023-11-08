@@ -1,8 +1,8 @@
-@using HE.Investment.AHP.Contract.FinancialDetails.Models;
 @using HE.Investment.AHP.Domain.FinancialDetails;
+@using HE.Investment.AHP.WWW.Models.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 @using HE.Investments.Common.Gds;
-@model FinancialDetailsModel
+@model FinancialDetailsLandValueModel
 @{
     ViewData["Title"] = "Land value";
 }
@@ -30,20 +30,21 @@
                     </gds-field-set>
                     <gds-field-set class="govuk-!-margin-bottom-6" role="group">
                         <legend>
-                            <gds-label for="@Model.LandValue" size="ControlSize.S">
+                            <gds-label for="LandValue" size="ControlSize.S">
                                 Is your scheme on public land
                             </gds-label>
                         </legend>
                         <gds-div-hint>
                             Public land is land owned by the government.
                         </gds-div-hint>
-                        <gds-radio-yes-no asp-for="@Model.IsSchemaOnPublicLand" class="govuk-!-margin-bottom-6"></gds-radio-yes-no>
-                        <gds-input govuk-formgroup-asp-for="@Model.IsSchemaOnPublicLand" type="text" asp-excludelabel
-                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.LandValue />
+                        <gds-radio-yes-no asp-for="@Model.IsOnPublicLand" class="govuk-!-margin-bottom-6"></gds-radio-yes-no>
+                        <gds-input govuk-formgroup-asp-for="@Model.LandValue" type="text" asp-excludelabel
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model.LandValue />
                     </gds-field-set>
                 </gds-div-form-group>
 
                 @Html.HiddenFor(c => c.ApplicationId)
+                @Html.HiddenFor(c => c.ApplicationName)
 
                 <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                     Save and continue

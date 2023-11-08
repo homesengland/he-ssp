@@ -1,10 +1,10 @@
 using Dawn;
-using HE.Investment.AHP.Contract.FinancialDetails.Constants;
+using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
 using HE.Investments.Common.Domain;
 
-namespace HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 public class PurchasePrice : ValueObject
 {
     public PurchasePrice(string value, bool isPurchasePriceKnown)

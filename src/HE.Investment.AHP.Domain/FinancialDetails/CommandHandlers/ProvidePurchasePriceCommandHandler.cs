@@ -1,6 +1,6 @@
-using HE.Investment.AHP.Contract.FinancialDetails.Commands;
-using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
+using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Validation;
 using MediatR;
@@ -24,7 +24,7 @@ public class ProvidePurchasePriceCommandHandler : FinancialDetailsCommandHandler
                     return;
                 }
 
-                financialDetails.ProvidePurchasePrice(new PurchasePrice(request.PurchasePrice, request.isPurchasePriceKnown));
+                financialDetails.ProvidePurchasePrice(new PurchasePrice(request.PurchasePrice, request.IsPurchasePriceKnown));
             },
             request.ApplicationId,
             cancellationToken);

@@ -1,7 +1,7 @@
 using Dawn;
 using HE.Investments.Common.Domain;
 
-namespace HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 public class ApplicationId : ValueObject
 {
     public ApplicationId(Guid value)

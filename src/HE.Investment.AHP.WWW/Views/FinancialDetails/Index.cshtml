@@ -1,18 +1,18 @@
+@using HE.Investment.AHP.WWW.Models.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
-@using HE.Investment.AHP.WWW.Models.Application;
-@model ApplicationBasicModel
+@model FinancialDetailsBaseModel
 @{
     ViewData["Title"] = "Financial details";
 }
 <div id="mainContainer" role="main">
     <gds-div-grid-column-two-thirds>
-        <form asp-controller="FinancialDetails" asp-action="Start" asp-route-applicationId="@Model.Id" asp-route-applicationName="@Model.Name" asp-method="post" novalidate>
+        <form asp-controller="FinancialDetails" asp-action="Start" asp-route-applicationId="@Model.ApplicationId" asp-route-applicationName="@Model.ApplicationName" asp-method="post" novalidate>
             <div id="backButton" role="navigation">
                 <gds-back-link href="@Url.Action("Index", "Home")" text="Back" class="govuk-!-margin-bottom-8">
                 </gds-back-link>
             </div>
             <span class="govuk-caption-m">
-                @Model.Name - Financial details
+                @Model.ApplicationName - Financial details
             </span>
             <gds-h1 class="govuk-heading-xl">
                 @FinancialDetailsPageTitles.StartPage
