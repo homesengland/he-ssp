@@ -8,6 +8,7 @@ using System.Linq;
 using Microsoft.Xrm.Sdk;
 using System.Diagnostics;
 using Microsoft.Xrm.Sdk.Client;
+using Microsoft.Crm.Sdk.Messages;
 
 namespace HE.CRM.Common.Repositories.Implementations
 {
@@ -98,6 +99,14 @@ namespace HE.CRM.Common.Repositories.Implementations
             using (var ctx = new OrganizationServiceContext(service))
             {
                 return (invln_sendgovnotifyemailResponse)ctx.Execute(request);
+            }
+        }
+
+        public AssignResponse ExecuteAssignRequest(AssignRequest request)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return (AssignResponse)ctx.Execute(request);
             }
         }
 
