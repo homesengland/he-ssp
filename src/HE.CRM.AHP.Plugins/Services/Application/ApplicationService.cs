@@ -27,9 +27,9 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var application = JsonSerializer.Deserialize<AhpApplicationDto>(applicationSerialized);
             var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application);
             invln_scheme applicationToUpdateOrCreate;
-            var fields = fieldsToUpdate.Split(',');
-            if (fields.Length > 0)
+            if (!string.IsNullOrEmpty(fieldsToUpdate))
             {
+                var fields = fieldsToUpdate?.Split(',');
                 applicationToUpdateOrCreate = new invln_scheme();
                 foreach (var field in fields)
                 {
@@ -48,6 +48,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             }
             else
             {
+                applicationToUpdateOrCreate.Id = new Guid(application.id);
                 _applicationRepository.Update(applicationToUpdateOrCreate);
                 return applicationToUpdateOrCreate.Id;
             }

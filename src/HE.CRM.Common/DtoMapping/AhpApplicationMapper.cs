@@ -26,10 +26,13 @@ namespace HE.CRM.Common.DtoMapping
         {
             var applicationDtoToReturn = new AhpApplicationDto()
             {
-                id = application.Id?.ToString(),
                 name = application.invln_schemename,
                 tenure = application.invln_Tenure?.Value,
             };
+            if(application.Id != null)
+            {
+                applicationDtoToReturn.id = application.Id.ToString();
+            }
             return applicationDtoToReturn;
         }
 

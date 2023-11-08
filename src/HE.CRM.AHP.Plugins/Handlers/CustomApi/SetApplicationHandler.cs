@@ -21,6 +21,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
 
         public override void DoWork()
         {
+            TracingService.Trace("method");
             CrmServicesFactory.Get<IApplicationService>().SetApplication(application, fieldsToUpdate);
         }
 
