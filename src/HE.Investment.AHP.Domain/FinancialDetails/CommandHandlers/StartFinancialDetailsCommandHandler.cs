@@ -12,7 +12,6 @@ using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Validation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
 using ApplicationId = HE.Investment.AHP.Contract.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
