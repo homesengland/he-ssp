@@ -45,7 +45,7 @@ public class CheckSecurityAnswersCommandHandler : IRequestHandler<ConfirmSecurit
 
             if (security.Status == SectionStatus.Completed)
             {
-                security.Publish(new LoanApplicationSectionHasBeenCompletedAgainEvent());
+                security.Publish(new LoanApplicationSectionHasBeenCompletedAgainEvent(request.Id));
                 await _loanApplicationRepository.DispatchEvents(security, cancellationToken);
             }
         }

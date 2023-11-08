@@ -45,7 +45,7 @@ public class CheckAnswersCompanyStructureSectionCommandHandler : IRequestHandler
             companyStructure.CheckAnswers(request.YesNoAnswer.ToYesNoAnswer());
             if (companyStructure.Status == SectionStatus.Completed)
             {
-                companyStructure.Publish(new LoanApplicationSectionHasBeenCompletedAgainEvent());
+                companyStructure.Publish(new LoanApplicationSectionHasBeenCompletedAgainEvent(request.LoanApplicationId));
                 await _loanApplicationRepository.DispatchEvents(companyStructure, cancellationToken);
             }
         }

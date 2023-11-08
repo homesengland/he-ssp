@@ -46,7 +46,7 @@ public class CheckProjectAnswersCommandHandler : IRequestHandler<CheckProjectAns
 
             if (project.Status == SectionStatus.Completed)
             {
-                project.Publish(new LoanApplicationSectionHasBeenCompletedAgainEvent());
+                project.Publish(new LoanApplicationSectionHasBeenCompletedAgainEvent(request.LoanApplicationId));
                 await _loanApplicationRepository.DispatchEvents(project, cancellationToken);
             }
         }
