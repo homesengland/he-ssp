@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using DataverseModel;
@@ -17,12 +18,19 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _applicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
         }
 
-        public AhpApplicationDto GetApplication(string applicationId)
+        public AhpApplicationDto GetApplication(string applicationId, string fieldsToRetrieve = null)
         {
-            throw new NotImplementedException();
+            if (Guid.TryParse(applicationId, out var applicationGuid))
+            {
+                var application = !string.IsNullOrEmpty(fieldsToRetrieve)
+                    ? _applicationRepository.GetById(applicationGuid, new string[] { fieldsToRetrieve })
+                    : _applicationRepository.GetById(applicationGuid);
+                return AhpApplicationMapper.MapRegularEntityToDto(application);
+            }
+            return null;
         }
 
-        public Guid SetApplication(string applicationSerialized, string fieldsToUpdate)
+        public Guid SetApplication(string applicationSerialized, string fieldsToUpdate = null)
         {
             var application = JsonSerializer.Deserialize<AhpApplicationDto>(applicationSerialized);
             var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application);

@@ -7,7 +7,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 {
     public interface IApplicationService : ICrmService
     {
-        Guid SetApplication(string applicationSerialized, string fieldsToUpdate);
-        AhpApplicationDto GetApplication(string applicationId);
+        Guid SetApplication(string applicationSerialized, string fieldsToUpdate = null);
+        AhpApplicationDto GetApplication(string applicationId, string fieldsToRetrieve = null);
     }
 }

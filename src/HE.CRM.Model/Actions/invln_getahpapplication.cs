@@ -21,7 +21,7 @@ namespace DataverseModel
 		public static class Fields
 		{
 			public const string invln_applicationid = "invln_applicationid";
-			public const string invln_applicationfieldstoretrieve = "invln_applicationfieldstoretrieve";
+			public const string invln_appfieldstoretrieve = "invln_appfieldstoretrieve";
 		}
 		
 		public const string ActionLogicalName = "invln_getahpapplication";
@@ -45,13 +45,13 @@ namespace DataverseModel
 			}
 		}
 		
-		public string invln_applicationfieldstoretrieve
+		public string invln_appfieldstoretrieve
 		{
 			get
 			{
-				if (this.Parameters.Contains("invln_applicationfieldstoretrieve"))
+				if (this.Parameters.Contains("invln_appfieldstoretrieve"))
 				{
-					return ((string)(this.Parameters["invln_applicationfieldstoretrieve"]));
+					return ((string)(this.Parameters["invln_appfieldstoretrieve"]));
 				}
 				else
 				{
@@ -60,7 +60,7 @@ namespace DataverseModel
 			}
 			set
 			{
-				this.Parameters["invln_applicationfieldstoretrieve"] = value;
+				this.Parameters["invln_appfieldstoretrieve"] = value;
 			}
 		}
 		
@@ -68,7 +68,6 @@ namespace DataverseModel
 		{
 			this.RequestName = "invln_getahpapplication";
 			this.invln_applicationid = default(string);
-			this.invln_applicationfieldstoretrieve = default(string);
 		}
 	}
 	
