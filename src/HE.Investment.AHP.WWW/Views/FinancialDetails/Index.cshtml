@@ -5,7 +5,7 @@
     ViewData["Title"] = "Financial details";
 }
 <div id="mainContainer" role="main">
-    <gds-div-grid-column-two-thirds>
+    <gds-div-grid-column-full>
         <form asp-controller="FinancialDetails" asp-action="Start" asp-route-applicationId="@Model.ApplicationId" asp-route-applicationName="@Model.ApplicationName" asp-method="post" novalidate>
             <div id="backButton" role="navigation">
                 <gds-back-link href="@Url.Action("Index", "Home")" text="Back" class="govuk-!-margin-bottom-8">
@@ -38,5 +38,5 @@
 
 
         </form>
-    </gds-div-grid-column-two-thirds>
+    </gds-div-grid-column-full>
 </div>
