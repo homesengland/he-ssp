@@ -4,7 +4,7 @@
     ViewData["Title"] = "Application name";
 }
 <div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.Action("Index", "Application", new { schemeId = Model?.Id })" text="Back" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.Action("Index", "Application")" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Application" asp-action="Name" asp-method="post" novalidate>

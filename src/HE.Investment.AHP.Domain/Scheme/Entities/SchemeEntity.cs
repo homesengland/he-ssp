@@ -4,13 +4,10 @@ namespace HE.Investment.AHP.Domain.Scheme.Entities;
 
 public class SchemeEntity
 {
-    public SchemeEntity(SchemeId id, SchemeFunding funding)
+    public SchemeEntity(SchemeFunding funding)
     {
-        Id = id;
         Funding = funding;
     }
-
-    public SchemeId Id { get; }
 
     public SchemeFunding Funding { get; private set; }
 

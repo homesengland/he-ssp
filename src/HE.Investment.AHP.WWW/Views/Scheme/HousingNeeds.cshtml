@@ -6,7 +6,7 @@
 }
 
 <div class="govuk-grid-column-three-quarters">
-    <vc:workflow-back-button action="@SchemeWorkflowState.HousingNeeds.ToString()" param-name="schemeId"/>
+    <vc:workflow-back-button action="@SchemeWorkflowState.HousingNeeds.ToString()" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Scheme" asp-action="SalesRisk" asp-method="post" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>

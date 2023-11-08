@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Scheme.Commands;
 
-public record ChangeSchemeAffordabilityCommand(string SchemeId, string AffordabilityEvidence) : IRequest<OperationResult<SchemeId?>>, IUpdateSchemeCommand;
+public record ChangeSchemeAffordabilityCommand(string ApplicationId, string AffordabilityEvidence) : IRequest<OperationResult>, IUpdateSchemeCommand;

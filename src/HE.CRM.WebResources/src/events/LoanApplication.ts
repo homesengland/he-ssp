@@ -18,6 +18,11 @@ export class LoanApplication {
     eventLogic.loanApplicationService.setFieldsVisibilityBasedOnAssessedAsSppi();
   }
 
+  public static onChangeLoanApplicationStatusButtonClick(eCtx) {
+    const eventLogic = new LoanApplication(eCtx)
+    eventLogic.loanApplicationService.openCustomPage();
+  }
+
   public static onSecuritiesChange(eCtx) {
     const eventLogic = new LoanApplication(eCtx)
     eventLogic.loanApplicationService.setFieldsVisibilityBasedOnSecurities()

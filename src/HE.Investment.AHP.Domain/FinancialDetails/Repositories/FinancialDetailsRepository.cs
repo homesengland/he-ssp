@@ -1,32 +1,53 @@
-using System.Text.Json;
+using System.Collections.Concurrent;
 using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
-using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
-using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
+using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Utils;
-using Microsoft.AspNetCore.Http;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 
 public class FinancialDetailsRepository : IFinancialDetailsRepository
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private static readonly IDictionary<Guid, FinancialDetailsEntity> FinancialDetails = new ConcurrentDictionary<Guid, FinancialDetailsEntity>();
 
-    public FinancialDetailsRepository(IHttpContextAccessor httpContextAccessor, IDateTimeProvider dateTime)
+    public Task<FinancialDetailsEntity> GetById(FinancialDetailsId financialDetailsId, CancellationToken cancellationToken)
     {
-        _httpContextAccessor = httpContextAccessor;
+        var financialDetails = Get(financialDetailsId.Value);
+        if (financialDetails != null)
+        {
+            return Task.FromResult(financialDetails);
+        }
+
+        throw new NotFoundException(nameof(FinancialDetailsEntity), financialDetailsId);
     }
 
-    public async Task<FinancialDetailsEntity> GetById(FinancialDetailsId financialDetailsId, CancellationToken cancellationToken)
+    public Task SaveAsync(FinancialDetailsEntity financialDetailsEntity, CancellationToken cancellationToken)
     {
-        var dataFromCookies = await Task.Run(() => _httpContextAccessor.HttpContext?.Request.Cookies[financialDetailsId.Value.ToString()]);
-        var result = JsonSerializer.Deserialize<FinancialDetailsEntity>(dataFromCookies ?? string.Empty) ?? throw new NotFoundException($"Financial details entity with id{financialDetailsId.Value} was not found.");
-        return result;
+        return Task.Run(() => Save(financialDetailsEntity), cancellationToken);
     }
 
-    public async Task SaveAsync(FinancialDetailsEntity financialDetailsEntity, CancellationToken cancellationToken)
+    private FinancialDetailsEntity? Get(Guid financialDetailsId)
     {
-        await Task.Run(() => _httpContextAccessor.HttpContext?.Response.Cookies.Append(financialDetailsEntity.FinancialDetailsId.ToString(), JsonSerializer.Serialize(financialDetailsEntity)), cancellationToken);
+        if (FinancialDetails.TryGetValue(financialDetailsId, out var financialDetails))
+        {
+            return financialDetails;
+        }
+
+        return null;
+    }
+
+    private void Save(FinancialDetailsEntity financialDetailsEntity)
+    {
+        if (FinancialDetails.TryGetValue(financialDetailsEntity.FinancialDetailsId.Value, out var financialDetails))
+        {
+            var existingFinancialDetails = financialDetails;
+            if (existingFinancialDetails != null)
+            {
+                FinancialDetails.Remove(financialDetails.FinancialDetailsId.Value);
+            }
+        }
+
+        FinancialDetails.Add(financialDetailsEntity.FinancialDetailsId.Value, financialDetailsEntity);
     }
 }

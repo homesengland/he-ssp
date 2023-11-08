@@ -2,14 +2,12 @@ using System.Globalization;
 using HE.Investment.AHP.Contract.FinancialDetails.Models;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
-using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Contract.Projects.Queries;
-using HE.InvestmentLoans.Contract.Projects.ViewModels;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using MediatR;
+using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.QueryHandlers;
-public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetailsQuery, FinancialDetailsViewModel>
+public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetailsQuery, FinancialDetailsModel>
 {
     private readonly IFinancialDetailsRepository _financialDetailsRepository;
 
@@ -18,16 +16,19 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
         _financialDetailsRepository = fianncialDetailsRepository;
     }
 
-    public async Task<FinancialDetailsViewModel> Handle(GetFinancialDetailsQuery request, CancellationToken cancellationToken)
+    public async Task<FinancialDetailsModel> Handle(GetFinancialDetailsQuery request, CancellationToken cancellationToken)
     {
         var financialDetails = await _financialDetailsRepository.GetById(request.FinancialDetailsId, cancellationToken);
 
-        var schemeName = "Sample schema"; // TODO: implement getting schema name
-
-        return new FinancialDetailsViewModel(
-            financialDetails.FinancialDetailsId,
-            schemeName,
-            financialDetails.IsPurchasePriceKnown,
-            financialDetails.PurchasePrice?.Value.ToString(CultureInfo.InvariantCulture));
+        return new FinancialDetailsModel()
+        {
+            ApplicationId = financialDetails.ApplicationId.Value,
+            ApplicationName = financialDetails.ApplicationName,
+            FinancialDetailsId = financialDetails.FinancialDetailsId.Value,
+            IsPurchasePriceKnown = financialDetails.IsPurchasePriceKnown,
+            PurchasePrice = financialDetails.PurchasePrice?.Value.ToString(CultureInfo.InvariantCulture),
+            IsSchemaOnPublicLand = (financialDetails.LandOwnership?.Value ?? false) ? CommonResponse.Yes : CommonResponse.No,
+            LandValue = financialDetails.LandValue?.Value.ToString(CultureInfo.InvariantCulture),
+        };
     }
 }
