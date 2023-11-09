@@ -1,11 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Validation;
 
 namespace HE.InvestmentLoans.BusinessLogic.Organization;
 
 public class EnumValidator<TEnum>
-    where TEnum : struct
+    where TEnum : struct, Enum
 {
     private readonly TEnum _value;
 
@@ -25,14 +26,14 @@ public class EnumValidator<TEnum>
     public static implicit operator TEnum(EnumValidator<TEnum> v) => v._value;
 
     [SuppressMessage("Design", "CA1000:Do not declare static members on generic types", Justification = "Accepted here")]
-    public static EnumValidator<TEnum> For(string? input, string fieldName, OperationResult? operationResult = null)
+    public static EnumValidator<TEnum> Required(TEnum input, string fieldName, OperationResult? operationResult = null)
     {
         var result = operationResult ?? OperationResult.New();
-        if (!Enum.TryParse<TEnum>(input, true, out var @enum))
+        if (Convert.ToInt32(input, CultureInfo.InvariantCulture) == 0)
         {
             result.AddValidationError(fieldName, ValidationErrorMessage.InvalidValue);
         }
 
-        return new EnumValidator<TEnum>(@enum, fieldName, result);
+        return new EnumValidator<TEnum>(input, fieldName, result);
     }
 }
