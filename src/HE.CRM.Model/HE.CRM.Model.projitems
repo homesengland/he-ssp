@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getfilelocationforapplicationloan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getmultipleahpapplications.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganisationchangedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getorganizationdetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleloanapplicationforaccountandcontact.cs" />
