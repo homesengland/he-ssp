@@ -2,8 +2,10 @@ using System.Globalization;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
+using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Routing;
@@ -224,6 +226,62 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             new SaveHappiDesignPrinciplesCommand(applicationId, homeTypeId, model.DesignPrinciples?.ToList() ?? new List<HappiDesignPrincipleType>()),
             model,
             cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
+    [HttpGet("{homeTypeId}/DesignPlans")]
+    public async Task<IActionResult> DesignPlans([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var designPlans = await _mediator.Send(new GetDesignPlansQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new DesignPlansModel(application.Name, designPlans.HomeTypeName)
+        {
+            MoreInformation = designPlans.MoreInformation,
+            UploadedFiles = designPlans.UploadedFiles.Select(x => new UploadedFileModel(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved)).ToList(),
+        });
+    }
+
+    [DisableRequestSizeLimit]
+    [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
+    [HttpPost("{homeTypeId}/DesignPlans")]
+    public async Task<IActionResult> DesignPlans(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        DesignPlansModel model,
+        [FromForm(Name = "File")] List<IFormFile> files,
+        CancellationToken cancellationToken)
+    {
+        var filesToUpload = files.Select(x => new FileToUpload(x.FileName, x.Length, x.OpenReadStream())).ToList();
+
+        try
+        {
+            return await SaveHomeTypeSegment(new SaveDesignPlansCommand(applicationId, homeTypeId, model.MoreInformation, filesToUpload), model, cancellationToken);
+        }
+        finally
+        {
+            foreach (var file in filesToUpload)
+            {
+                await file.Content.DisposeAsync();
+            }
+        }
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
+    [HttpGet("{homeTypeId}/RemoveDesignPlansFile")]
+    public async Task<IActionResult> RemoveDesignPlansFile(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        [FromQuery] string fileId,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new RemoveDesignPlansFileCommand(applicationId, homeTypeId, fileId), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            throw new DomainValidationException(result);
+        }
+
+        return RedirectToAction("DesignPlans", new { applicationId, homeTypeId });
     }
 
     protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object routeData = null)

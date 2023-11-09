@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace HE.InvestmentLoans.Common.Utils.Constants;
+
 public static class GenericValidationError
 {
     public const string NoDate = "Provide date";
@@ -16,4 +11,21 @@ public static class GenericValidationError
     public const string TextTooLong = "Text exceeds limit";
 
     public const string NoValueProvided = "Value is not provided";
+
+    public static string InvalidFileType(string fileName, IEnumerable<string> allowedExtensions) => $"The selected file {fileName} must be a {FileExtensions(allowedExtensions)}";
+
+    public static string FileTooBig(string fileName, int maxSizeInMb) => $"The selected file {fileName} must be smaller than {maxSizeInMb}MB";
+
+    public static string FileCountLimit(int numberOfFiles) => $"You can only select up to {numberOfFiles} files";
+
+    private static string FileExtensions(IEnumerable<string> extensions)
+    {
+        var upperExtensions = extensions.Select(x => x.ToUpperInvariant()).ToArray();
+        return upperExtensions.Length switch
+        {
+            0 => throw new InvalidOperationException("Cannot generate Validation Error message because there are no file Extensions."),
+            1 => upperExtensions[0],
+            _ => $"{string.Join(", ", upperExtensions[..^1])} or {upperExtensions[^1]}",
+        };
+    }
 }

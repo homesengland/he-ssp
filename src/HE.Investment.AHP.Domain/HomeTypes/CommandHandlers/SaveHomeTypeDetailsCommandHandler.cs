@@ -23,7 +23,8 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
 
     public async Task<OperationResult<HomeTypeId?>> Handle(SaveHomeTypeDetailsCommand request, CancellationToken cancellationToken)
     {
-        var homeTypes = await _repository.GetByApplicationId(request.ApplicationId, HomeTypeSegmentTypes.All, cancellationToken);
+        var applicationId = new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId);
+        var homeTypes = await _repository.GetByApplicationId(applicationId, HomeTypeSegmentTypes.All, cancellationToken);
         var homeType = homeTypes.GetOrCreateNewHomeType(request.HomeTypeId.IsProvided() ? new HomeTypeId(request.HomeTypeId!) : null);
 
         var validationErrors = PerformWithValidation(
@@ -34,7 +35,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
             return new OperationResult<HomeTypeId?>(validationErrors, null);
         }
 
-        await _repository.Save(request.ApplicationId, homeType, HomeTypeSegmentTypes.All, cancellationToken);
+        await _repository.Save(applicationId, homeType, HomeTypeSegmentTypes.All, cancellationToken);
 
         return new OperationResult<HomeTypeId?>(homeType.Id!);
     }
