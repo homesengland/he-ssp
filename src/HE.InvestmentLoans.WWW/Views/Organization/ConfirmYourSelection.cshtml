@@ -1,10 +1,11 @@
 @using HE.InvestmentLoans.Common.Extensions
-@using HE.InvestmentLoans.Contract.Organization.ValueObjects
 @using HE.InvestmentLoans.WWW.Views.Organization
+@using HE.Investments.Account.Contract.Organisation.Queries
+@using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Models
-@model HE.Investments.Common.WWW.Models.ConfirmModel<OrganizationBasicDetails>
+@model HE.Investments.Common.WWW.Models.ConfirmModel<HE.Investments.Account.Contract.Organisation.Queries.OrganizationBasicDetails>
 @inject ModelExpressionProvider ModelProvider
 @{
     ViewData["Title"] = "Organization Select";

@@ -1,7 +1,7 @@
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.UserOrganisation.Commands;
-using HE.InvestmentLoans.Contract.UserOrganisation.Queries;
+using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.WWW.Controllers.Consts;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Common.WWW.Controllers;

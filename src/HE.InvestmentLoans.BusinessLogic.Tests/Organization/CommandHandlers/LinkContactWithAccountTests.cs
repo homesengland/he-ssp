@@ -1,13 +1,13 @@
 extern alias Org;
 
 using HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
-using HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Tests.Extensions.FluentAssertionsExtensions;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Org.HE.Common.IntegrationModel.PortalIntegrationModel;

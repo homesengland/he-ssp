@@ -1,11 +1,9 @@
-using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Queries;
-using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.User;
 using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.Contract.User.Queries;
+using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

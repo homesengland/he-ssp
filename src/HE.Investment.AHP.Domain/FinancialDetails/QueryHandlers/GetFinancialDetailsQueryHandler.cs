@@ -4,7 +4,6 @@ using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using MediatR;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.QueryHandlers;
 public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetailsQuery, FinancialDetailsModel>

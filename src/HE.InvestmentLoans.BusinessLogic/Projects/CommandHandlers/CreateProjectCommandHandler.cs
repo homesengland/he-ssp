@@ -1,8 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.Common.Validators;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;

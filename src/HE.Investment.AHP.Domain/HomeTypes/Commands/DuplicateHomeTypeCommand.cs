@@ -1,5 +1,5 @@
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Validators;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Commands;

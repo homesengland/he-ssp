@@ -1,7 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.EventHandlers;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestObjectBuilders;
-using HE.InvestmentLoans.Common.Utils.Constants.Notification;
 using HE.InvestmentLoans.Contract.Application.Events;
+using HE.Investments.Common.Services.Notifications;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;

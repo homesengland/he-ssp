@@ -1,5 +1,4 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Organisation.Services;
 public interface IOrganizationService
