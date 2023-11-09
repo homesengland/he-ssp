@@ -1,6 +1,4 @@
-using HE.InvestmentLoans.Common.Utils.Enums;
-
-namespace HE.InvestmentLoans.Common.Utils.Constants.Notification;
+namespace HE.Investments.Common.Services.Notifications;
 
 public static class NotificationBodyLink
 {

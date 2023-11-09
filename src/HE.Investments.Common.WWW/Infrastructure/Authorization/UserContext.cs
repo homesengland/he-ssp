@@ -1,8 +1,9 @@
 using System.Security.Claims;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.Investments.Common.User;
 using Microsoft.AspNetCore.Http;
 
-namespace HE.InvestmentLoans.Common.Authorization;
+namespace HE.Investments.Common.WWW.Infrastructure.Authorization;
 
 public class UserContext : IUserContext
 {

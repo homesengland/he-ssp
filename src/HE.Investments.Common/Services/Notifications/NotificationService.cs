@@ -1,11 +1,8 @@
-using HE.InvestmentLoans.Common.Authorization;
-using HE.InvestmentLoans.Common.Contract.Models;
-using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
-using HE.InvestmentLoans.Common.Utils.Constants.Notification;
-using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
+using HE.Investments.Common.User;
 
-namespace HE.InvestmentLoans.Common.Contract.Services;
+namespace HE.Investments.Common.Services.Notifications;
+
 public class NotificationService : INotificationService
 {
     private readonly ICacheService _cacheService;

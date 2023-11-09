@@ -1,9 +1,8 @@
 using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.Investments.Account.Domain.Organisation;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
 
-namespace HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
+namespace HE.Investments.Account.Domain.Organisation.ValueObjects;
 
 public class Postcode : ValueObject
 {

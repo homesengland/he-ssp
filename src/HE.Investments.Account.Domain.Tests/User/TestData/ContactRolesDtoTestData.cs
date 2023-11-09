@@ -1,9 +1,10 @@
 extern alias Org;
 
 using HE.InvestmentLoans.Common.Tests.TestData;
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
+using ContactRoleDto = Org::HE.Common.IntegrationModel.PortalIntegrationModel.ContactRoleDto;
+using ContactRolesDto = Org::HE.Common.IntegrationModel.PortalIntegrationModel.ContactRolesDto;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
+namespace HE.Investments.Account.Domain.Tests.User.TestData;
 
 public static class ContactRolesDtoTestData
 {

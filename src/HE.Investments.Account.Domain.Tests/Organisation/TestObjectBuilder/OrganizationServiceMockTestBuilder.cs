@@ -1,6 +1,5 @@
 extern alias Org;
 
-using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Tests.Organisation.TestData;
 using HE.Investments.Account.Domain.Tests.User.TestData;
@@ -8,6 +7,7 @@ using HE.Investments.Account.Shared.User;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Org::HE.Investments.Organisation.Services;
+using OrganizationDetailsDto = Org::HE.Common.IntegrationModel.PortalIntegrationModel.OrganizationDetailsDto;
 
 namespace HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 
@@ -48,7 +48,7 @@ public class OrganizationServiceMockTestBuilder
         _mock.Setup(x => x.GetOrganizationDetails(
                 UserAccountFromMock.AccountId.ToString()!,
                 UserAccountFromMock.UserGlobalId.ToString()))
-            .ReturnsAsync(organizationDetailsDto);
+            .ReturnsAsync(OrganizationDetailsDtoMock);
 
         return this;
     }

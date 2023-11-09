@@ -1,11 +1,11 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
+using HE.Investments.Common.User;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;

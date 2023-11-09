@@ -1,4 +1,3 @@
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 

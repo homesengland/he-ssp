@@ -1,4 +1,3 @@
-extern alias Org;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
@@ -6,7 +5,6 @@ using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Organisation.Services;
-using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Account.Domain.Organisation.Repositories;
 

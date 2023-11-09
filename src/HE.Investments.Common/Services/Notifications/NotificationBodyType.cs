@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.Common.Utils.Constants.Notification;
+namespace HE.Investments.Common.Services.Notifications;
 public enum NotificationBodyType
 {
     WithdrawApplication,

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Organisation.Config;
+
 public static class ServiceCollectionExtensions
 {
     public static void AddOrganizationsModule(this IServiceCollection serviceCollections)

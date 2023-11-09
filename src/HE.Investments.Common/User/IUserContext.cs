@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.Common.Authorization;
+namespace HE.Investments.Common.User;
 
 public interface IUserContext
 {

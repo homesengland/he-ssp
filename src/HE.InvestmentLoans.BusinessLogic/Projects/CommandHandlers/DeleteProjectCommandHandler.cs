@@ -1,10 +1,9 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
-using HE.InvestmentLoans.Common.Utils.Constants.Notification;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Validators;
 using MediatR;
 

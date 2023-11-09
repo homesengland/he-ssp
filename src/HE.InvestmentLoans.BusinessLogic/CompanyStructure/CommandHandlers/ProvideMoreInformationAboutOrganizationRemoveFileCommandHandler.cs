@@ -1,9 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
-using HE.InvestmentLoans.Common.Utils.Constants.Notification;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
+using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Validators;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Services;

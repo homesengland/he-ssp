@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.Common.Utils.Enums;
+namespace HE.Investments.Common.Services.Notifications;
 
 public enum NotificationServiceKeys
 {

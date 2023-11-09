@@ -1,5 +1,4 @@
 using HE.InvestmentLoans.Common.Tests.TestData;
-using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Shared.User;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;

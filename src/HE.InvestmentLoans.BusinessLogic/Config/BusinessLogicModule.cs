@@ -9,6 +9,7 @@ using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.InvestmentLoans.Common.Utils;
+using HE.Investments.Account.Domain.Config;
 using Microsoft.Extensions.DependencyInjection;
 using Org::HE.Investments.Organisation.CrmRepository;
 using ContactRepository = HE.InvestmentLoans.BusinessLogic.Organization.Repositories.ContactRepository;
@@ -20,6 +21,7 @@ public static class BusinessLogicModule
 {
     public static void AddBusinessLogic(this IServiceCollection services)
     {
+        services.AddAccountModule();
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining<LoanApplicationRepository>();
 

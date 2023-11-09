@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.Contract.Organization;
 using HE.Investments.Account.Domain.Organisation.Repositories;
+using HE.Investments.Account.Domain.User;
 using MediatR;
 
 namespace HE.Investments.Account.Domain.Organisation.QueryHandlers;
@@ -8,9 +9,9 @@ public class GetOrganisationDetailsQueryHandler : IRequestHandler<GetOrganisatio
 {
     private readonly IOrganizationRepository _organizationRepository;
 
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
 
-    public GetOrganisationDetailsQueryHandler(IOrganizationRepository organizationRepository, ILoanUserContext loanUserContext)
+    public GetOrganisationDetailsQueryHandler(IOrganizationRepository organizationRepository, IAccountUserContext loanUserContext)
     {
         _organizationRepository = organizationRepository;
         _loanUserContext = loanUserContext;

@@ -1,7 +1,4 @@
-extern alias Org;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Contract.Organization;
-using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
 using HE.Investments.Organisation.Services;

@@ -1,6 +1,7 @@
 extern alias Org;
 
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
+using HE.Investments.Account.Domain.Tests.User.TestData;
 using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;

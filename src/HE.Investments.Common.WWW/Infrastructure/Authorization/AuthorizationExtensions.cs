@@ -1,10 +1,11 @@
 using He.Identity.Auth0;
 using He.Identity.Mvc;
+using HE.Investments.Common.User;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HE.InvestmentLoans.Common.Authorization;
+namespace HE.Investments.Common.WWW.Infrastructure.Authorization;
 
 public static class AuthorizationExtensions
 {

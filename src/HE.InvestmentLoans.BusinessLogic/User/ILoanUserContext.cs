@@ -10,8 +10,6 @@ public interface ILoanUserContext
 
     public Task<Guid?> GetSelectedAccountId();
 
-    Task<IList<UserAccount>> GetAllAccounts();
-
     Task<UserAccount> GetSelectedAccount();
 
     Task<UserDetails> GetUserDetails();

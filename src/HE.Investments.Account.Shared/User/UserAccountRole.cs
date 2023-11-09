@@ -1,4 +1,4 @@
-namespace HE.Investments.Account.Domain.Organisation.Entities;
+namespace HE.Investments.Account.Shared.User;
 
 public record UserAccountRole(string Role)
 {

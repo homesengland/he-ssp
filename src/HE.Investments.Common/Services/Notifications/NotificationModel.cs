@@ -1,7 +1,4 @@
-using HE.InvestmentLoans.Common.Utils.Constants.Notification;
-using HE.InvestmentLoans.Common.Utils.Enums;
-
-namespace HE.InvestmentLoans.Common.Contract.Models;
+namespace HE.Investments.Common.Services.Notifications;
 
 public record NotificationModel(string Title, NotificationType Type, NotificationBodyType NotificationBodyType,
     IDictionary<NotificationServiceKeys, string>? ValuesToDisplay);

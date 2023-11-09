@@ -1,6 +1,6 @@
-using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.Common.Utils.Constants;
+using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Common.Exceptions;
 using Xunit;
 

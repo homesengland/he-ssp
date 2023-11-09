@@ -1,8 +1,7 @@
 extern alias Org;
+using ContactDto = Org::HE.Common.IntegrationModel.PortalIntegrationModel.ContactDto;
 
-using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
-
-namespace HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
+namespace HE.Investments.Account.Domain.Tests.User.TestData;
 
 public static class ContactDtoTestData
 {

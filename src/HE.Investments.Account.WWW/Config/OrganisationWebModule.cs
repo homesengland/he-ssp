@@ -1,4 +1,3 @@
-using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Infrastructure;
 using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Utils;
@@ -6,6 +5,7 @@ using HE.InvestmentLoans.CRM.Extensions;
 using HE.Investments.Account.Domain.Config;
 using HE.Investments.Account.Domain.User.QueryHandlers;
 using HE.Investments.Account.WWW.Middlewares;
+using HE.Investments.Common.WWW.Infrastructure.Authorization;
 
 namespace HE.Investments.Account.WWW.Config;
 

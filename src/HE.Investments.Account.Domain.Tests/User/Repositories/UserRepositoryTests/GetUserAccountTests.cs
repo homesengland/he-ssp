@@ -1,12 +1,12 @@
-using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
-using HE.InvestmentLoans.BusinessLogic.User.Repositories;
+using FluentAssertions;
+using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.User.UserRepositoryTests;
+namespace HE.Investments.Account.Domain.Tests.User.Repositories.UserRepositoryTests;
 
-public class GetUserAccountTests : TestBase<LoanUserRepository>
+public class GetUserAccountTests : TestBase<UserRepository>
 {
     [Fact]
     public async Task ShouldReturnUserAccounts_WhenUserGlobalIdAndEmailAreCorrect()

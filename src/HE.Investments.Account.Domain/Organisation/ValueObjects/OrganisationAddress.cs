@@ -1,4 +1,3 @@
-using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;

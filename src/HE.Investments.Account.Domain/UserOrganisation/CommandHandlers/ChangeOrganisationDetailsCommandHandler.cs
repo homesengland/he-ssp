@@ -1,14 +1,14 @@
-extern alias Org;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
-using HE.InvestmentLoans.Common.Utils.Constants.Notification;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.UserOrganisation.Commands;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.Organisation.ValueObjects;
+using HE.Investments.Account.Domain.User;
 using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Validators;
 using MediatR;
 
@@ -16,16 +16,16 @@ namespace HE.Investments.Account.Domain.UserOrganisation.CommandHandlers;
 
 public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrganisationDetailsCommand, OperationResult>
 {
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _accountUserContext;
     private readonly IOrganizationRepository _repository;
     private readonly INotificationService _notificationService;
 
     public ChangeOrganisationDetailsCommandHandler(
-        ILoanUserContext loanUserContext,
+        IAccountUserContext accountUserContext,
         IOrganizationRepository repository,
         INotificationService notificationService)
     {
-        _loanUserContext = loanUserContext;
+        _accountUserContext = accountUserContext;
         _repository = repository;
         _notificationService = notificationService;
     }
@@ -34,12 +34,12 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
     {
         try
         {
-            var userAccount = await _loanUserContext.GetSelectedAccount();
+            var userAccount = await _accountUserContext.GetSelectedAccount();
 
-            if (!await _loanUserContext.IsLinkedWithOrganization())
+            if (!await _accountUserContext.IsLinkedWithOrganization())
             {
                 throw new DomainException(
-                    $"User with id {_loanUserContext.UserGlobalId} is not linked with organization: {request.Name}",
+                    $"User with id {_accountUserContext.UserGlobalId} is not linked with organization: {request.Name}",
                     CommonErrorCodes.ContactIsNotLinkedWithRequestedOrganization);
             }
 

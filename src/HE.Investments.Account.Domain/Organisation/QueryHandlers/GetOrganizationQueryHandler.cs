@@ -1,12 +1,10 @@
-extern alias Org;
-
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Organisation.Services;
 using MediatR;
 
-namespace HE.InvestmentLoans.BusinessLogic.Organization.QueryHandlers;
+namespace HE.Investments.Account.Domain.Organisation.QueryHandlers;
 
 public class GetOrganizationQueryHandler : IRequestHandler<GetOrganizationQuery, OrganizationBasicDetails>
 {

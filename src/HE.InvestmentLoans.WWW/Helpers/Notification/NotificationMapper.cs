@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.Common.Utils.Constants.Notification;
 using HE.InvestmentLoans.Common.Utils.Enums;
+using HE.Investments.Common.Services.Notifications;
 
 namespace HE.InvestmentLoans.WWW.Helpers.Notification;
 

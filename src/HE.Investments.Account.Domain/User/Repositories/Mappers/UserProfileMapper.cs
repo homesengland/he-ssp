@@ -1,5 +1,4 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Account.Domain.User.Entities;
 using HE.Investments.Account.Domain.User.ValueObjects;
 using HE.Investments.Common.Extensions;
