@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
@@ -78,7 +79,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> NewHomeTypeDetails([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
-        return View("HomeTypeDetails", new HomeTypeDetailsModel(application.Name));
+        return View("HomeTypeDetails", new HomeTypeDetailsModel(application.Name) { HousingType = GetDefaultHousingType(application.Tenure) });
     }
 
     [WorkflowState(HomeTypesWorkflowState.NewHomeTypeDetails)]
@@ -297,6 +298,16 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
         var homeTypes = await _mediator.Send(new GetHomeTypeQuery(applicationId, homeTypeId));
         return new HomeTypesWorkflow(currentState, homeTypes);
+    }
+
+    private static HousingType GetDefaultHousingType(Tenure applicationTenure)
+    {
+        return applicationTenure switch
+        {
+            Tenure.OlderPersonsSharedOwnership => HousingType.HomesForOlderPeople,
+            Tenure.HomeOwnershipLongTermDisabilities => HousingType.HomesForDisabledAndVulnerablePeople,
+            _ => HousingType.Undefined,
+        };
     }
 
     private async Task<IActionResult> SaveHomeTypeDetails(

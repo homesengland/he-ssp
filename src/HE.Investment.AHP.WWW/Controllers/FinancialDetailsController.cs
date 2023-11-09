@@ -1,4 +1,5 @@
 using System.Threading;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using HE.Investment.AHP.Contract.FinancialDetails.Models;
@@ -32,7 +33,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         // temporarly mocked
         // var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()), cancellationToken);
         // return View("Index", new { applicationId, applicationName = application.Name });
-        return View("Index", new ApplicationBasicModel(applicationId.ToString(), "Some application", string.Empty));
+        return View("Index", new ApplicationBasicModel(applicationId.ToString(), "Some application", Tenure.Undefined));
     }
 
     [HttpPost("start")]

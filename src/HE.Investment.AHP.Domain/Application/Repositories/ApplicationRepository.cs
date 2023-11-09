@@ -11,7 +11,7 @@ public class ApplicationRepository : InMemoryRepository<ApplicationEntity>, IApp
     public ApplicationRepository()
     {
         var id = Guid.NewGuid().ToString();
-        _ = Save(new ApplicationEntity(new ApplicationId(id), new ApplicationName("App1"), new ApplicationTenure("SocialRent")), CancellationToken.None);
+        _ = Save(new ApplicationEntity(new ApplicationId(id), new ApplicationName("App1"), new ApplicationTenure(Tenure.SocialRent)), CancellationToken.None);
     }
 
     public async Task<ApplicationEntity> GetById(ApplicationId id, CancellationToken cancellationToken)
