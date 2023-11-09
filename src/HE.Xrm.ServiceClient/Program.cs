@@ -85,13 +85,10 @@ namespace HE.Xrm.ServiceClientExample
             };
             var fieldsToUpdate = $"{nameof(invln_scheme.invln_Tenure).ToLower()}";
             var app = JsonSerializer.Serialize(application);
-            var req2 = new invln_getmultipleahpapplicationsRequest() //get loan applications related to account and contact with given data
+            var req2 = new invln_searchlocalauthorityRequest() //get loan applications related to account and contact with given data
             {
-                inlvn_userid = "ss",
-                invln_organisationid = "ss",
-                //invln_appfieldstoretrieve = fieldsToUpdate,
             };
-            var resp2 = (invln_getmultipleahpapplicationsResponse)serviceClient.Execute(req2);
+            var resp2 = (invln_searchlocalauthorityResponse)serviceClient.Execute(req2);
             Console.WriteLine("A web service connection was not established.");
         }
 
