@@ -609,11 +609,18 @@ namespace HE.CRM.Plugins.Services.LoanApplication
             var tmTeam = _teamRepositoryAdmin.GetTeamByName("TM Team");
             if (tmTeam != null)
             {
-                this._loanApplicationRepositoryAdmin.Update(new invln_Loanapplication()
+                var assignRequest = new AssignRequest()
                 {
-                    Id = target.Id,
-                    OwnerId = tmTeam.ToEntityReference()
-                });
+                    Assignee = new EntityReference
+                    {
+                        LogicalName = tmTeam.LogicalName, //User or Team logical name
+                        Id = tmTeam.Id // User Id or Team Id
+                    },
+
+                    Target = new EntityReference(invln_Loanapplication.EntityLogicalName, target.Id)
+                };
+
+                this._loanApplicationRepositoryAdmin.ExecuteAssignRequest(assignRequest);
             }
         }
 
