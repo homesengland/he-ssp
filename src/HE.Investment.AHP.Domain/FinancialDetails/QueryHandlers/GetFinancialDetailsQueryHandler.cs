@@ -18,13 +18,12 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
 
     public async Task<FinancialDetailsModel> Handle(GetFinancialDetailsQuery request, CancellationToken cancellationToken)
     {
-        var financialDetails = await _financialDetailsRepository.GetById(request.FinancialDetailsId, cancellationToken);
+        var financialDetails = await _financialDetailsRepository.GetById(request.ApplicationId, cancellationToken);
 
         return new FinancialDetailsModel()
         {
             ApplicationId = financialDetails.ApplicationId.Value,
             ApplicationName = financialDetails.ApplicationName,
-            FinancialDetailsId = financialDetails.FinancialDetailsId.Value,
             IsPurchasePriceKnown = financialDetails.IsPurchasePriceKnown,
             PurchasePrice = financialDetails.PurchasePrice?.Value.ToString(CultureInfo.InvariantCulture),
             IsSchemaOnPublicLand = (financialDetails.LandOwnership?.Value ?? false) ? CommonResponse.Yes : CommonResponse.No,

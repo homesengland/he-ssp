@@ -2,37 +2,33 @@ using System.Text.Json.Serialization;
 using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using ApplicationId = HE.Investment.AHP.Contract.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
 
 public class FinancialDetailsEntity
 {
-    public FinancialDetailsEntity(ApplicationID applicationId, string applicationName, FinancialDetailsId? financialDetailsId, bool isPurchasePriceKnown)
+    public FinancialDetailsEntity(ApplicationId applicationId, string applicationName, bool isPurchasePriceKnown)
     {
         ApplicationId = applicationId;
         ApplicationName = applicationName;
         IsPurchasePriceKnown = isPurchasePriceKnown;
-        FinancialDetailsId = FinancialDetailsId.From(financialDetailsId?.Value ?? Guid.NewGuid());
     }
 
     [JsonConstructor]
     public FinancialDetailsEntity(
-        FinancialDetailsId financialDetailsId,
         bool isPurchasePriceKnown,
         PurchasePrice? purchasePrice,
         LandOwnership? landOwnership)
     {
-        FinancialDetailsId = financialDetailsId;
         IsPurchasePriceKnown = isPurchasePriceKnown;
         PurchasePrice = purchasePrice;
         LandOwnership = landOwnership;
     }
 
-    public ApplicationID ApplicationId { get; private set; }
+    public ApplicationId ApplicationId { get; private set; }
 
     public string ApplicationName { get; private set; }
-
-    public FinancialDetailsId FinancialDetailsId { get; private set; }
 
     public PurchasePrice? PurchasePrice { get; private set; }
 

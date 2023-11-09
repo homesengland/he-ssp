@@ -16,8 +16,6 @@ public class FinancialDetailsModel
 
     public string? ApplicationName { get; set; }
 
-    public Guid FinancialDetailsId { get; set; }
-
     public bool? IsPurchasePriceKnown { get; set; }
 
     public string? PurchasePrice { get; set; }

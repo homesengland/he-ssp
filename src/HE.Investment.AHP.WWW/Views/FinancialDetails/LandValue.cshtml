@@ -8,9 +8,9 @@
 }
 <div id="mainContainer" role="main">
     <gds-div-grid-column-two-thirds>
-        <form asp-controller="FinancialDetails" asp-action="LandValue" asp-route-financialDetailsId="@Model.FinancialDetailsId" asp-method="post" novalidate>
+        <form asp-controller="FinancialDetails" asp-action="LandValue" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
             <div id="backButton" role="navigation">
-                <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.LandValue, applicationId = @Model.ApplicationId, financialDetailsId = Model.FinancialDetailsId })" text="Back" class="govuk-!-margin-bottom-8">
+                <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.LandValue, applicationId = @Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
                 </gds-back-link>
             </div>
             <span class="govuk-caption-m">
@@ -44,7 +44,6 @@
                 </gds-div-form-group>
 
                 @Html.HiddenFor(c => c.ApplicationId)
-                @Html.HiddenFor(c => c.FinancialDetailsId)
 
                 <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                     Save and continue
