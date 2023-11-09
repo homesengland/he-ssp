@@ -1,4 +1,5 @@
 extern alias Org;
+
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
