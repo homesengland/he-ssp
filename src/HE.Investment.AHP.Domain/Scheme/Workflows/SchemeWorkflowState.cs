@@ -6,4 +6,5 @@ public enum SchemeWorkflowState
     Affordability,
     SalesRisk,
     HousingNeeds,
+    StakeholderDiscussions,
 }

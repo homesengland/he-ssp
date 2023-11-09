@@ -36,7 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Components\HelpPanel\HelpPanel.cshtml" />
+    <EmbeddedResource Include="_ViewImports.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Partials\Errors\_ErrorSummaryPartial.cshtml" />
     <EmbeddedResource Include="Partials\Cookies\_AdditionalCookies.cshtml" />
     <EmbeddedResource Include="Partials\Cookies\_Cookies.cshtml" />
@@ -45,7 +48,18 @@
     <EmbeddedResource Include="Partials\_Breadcrumbs.cshtml" />
     <EmbeddedResource Include="Partials\TaskList\_TaskList.cshtml" />
     <EmbeddedResource Include="Partials\_ViewImports.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Templates\CookieBannerTemplate.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Components\HelpPanel\HelpPanel.cshtml" />
+    <EmbeddedResource Include="Components\FormButton\FormButton.cshtml" />
+    <EmbeddedResource Include="Components\FormFieldTitle\FormFieldTitle.cshtml" />
+    <EmbeddedResource Include="Components\FormHeader\FormHeader.cshtml" />
+    <EmbeddedResource Include="Components\WorkflowBackButton\WorkflowBackButton.cshtml" />
   </ItemGroup>
 
 </Project>
