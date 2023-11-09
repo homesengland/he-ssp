@@ -1,4 +1,5 @@
 extern alias Org;
+
 using ContactDto = Org::HE.Common.IntegrationModel.PortalIntegrationModel.ContactDto;
 
 namespace HE.Investments.Account.Domain.Tests.User.TestData;

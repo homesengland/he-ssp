@@ -1,6 +1,6 @@
 extern alias Org;
 
-using HE.Common.IntegrationModel.PortalIntegrationModel;
+using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 
 namespace HE.Investments.Account.Domain.Tests.Organisation.TestData;
 

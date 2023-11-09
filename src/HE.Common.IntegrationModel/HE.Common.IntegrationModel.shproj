@@ -4,6 +4,7 @@
     <ProjectGuid>f4cf4046-1578-49f6-9ab9-e2acd2765ecf</ProjectGuid>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <Nullable>enable</Nullable>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <EnableNETAnalyzers>false</EnableNETAnalyzers>
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
   </PropertyGroup>
