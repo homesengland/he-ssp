@@ -14,7 +14,7 @@ public interface ILoanUserContext
 
     Task<UserDetails> GetUserDetails();
 
-    public void RefreshUserData();
+    public Task RefreshUserData();
 
     public Task<bool> IsProfileCompleted();
 

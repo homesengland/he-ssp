@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Contract.UserOrganisation.Commands;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.Account.Domain.UserOrganisation.CommandHandlers;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.TestsUtils.TestFramework;
@@ -17,7 +18,7 @@ public class ChangeOrganisationDetailsCommandHandlerTests : TestBase<ChangeOrgan
     public async Task ReturnSuccessOperationResult_WhenAllOrganisationDetailsAreProvidedCorrectly()
     {
         // given
-        LoanUserContextTestBuilder
+        AccountUserContextTestBuilder
             .New()
             .IsLinkedWithOrganization()
             .Register(this);

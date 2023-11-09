@@ -30,7 +30,12 @@ public class AccountUserContext : IAccountUserContext
 
     public async Task RefreshUserData()
     {
-        await LoadUserAccounts();
+        _accounts = await _userRepository.GetUserAccounts(
+                UserGlobalId.From(_userContext.UserGlobalId),
+                _userContext.Email)!;
+
+        _selectedAccount = _accounts.MinBy(x => x.AccountId);
+        await _cacheService.SetValueAsync($"{nameof(UserAccount)}-{_userContext.UserGlobalId}", _accounts);
     }
 
     public async Task<UserAccount> GetSelectedAccount()
@@ -53,7 +58,7 @@ public class AccountUserContext : IAccountUserContext
         return _selectedAccount is not null;
     }
 
-    private async Task LoadUserAccounts()
+    public async Task LoadUserAccounts()
     {
         _accounts = (await _cacheService.GetValueAsync(
             $"{nameof(UserAccount)}-{_userContext.UserGlobalId}",

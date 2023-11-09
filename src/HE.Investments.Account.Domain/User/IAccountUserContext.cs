@@ -12,5 +12,7 @@ public interface IAccountUserContext
 
     Task<UserAccount> GetSelectedAccount();
 
+    Task LoadUserAccounts();
+
     Task<bool> IsLinkedWithOrganization();
 }

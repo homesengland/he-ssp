@@ -49,8 +49,9 @@ public class LoanUserContext : ILoanUserContext
         return _details!;
     }
 
-    public async void RefreshUserData()
+    public async Task RefreshUserData()
     {
+        await _accountUserContext.RefreshUserData();
         await RefreshUserDetails();
     }
 
@@ -71,6 +72,8 @@ public class LoanUserContext : ILoanUserContext
 
     private async Task RefreshUserDetails()
     {
+        await _accountUserContext.RefreshUserData();
+
         _details = await _loanUserRepository.GetUserDetails(UserGlobalId)
                    ?? throw new NotFoundException(nameof(UserDetails), UserGlobalId.ToString());
         _cacheService.SetValue($"{nameof(UserDetails)}-{UserGlobalId}", _details);
@@ -78,6 +81,7 @@ public class LoanUserContext : ILoanUserContext
 
     private async Task LoadUserData()
     {
+        await _accountUserContext.LoadUserAccounts();
         await LoadUserDetails();
     }
 
