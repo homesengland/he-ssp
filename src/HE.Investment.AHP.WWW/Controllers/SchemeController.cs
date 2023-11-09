@@ -2,7 +2,6 @@ using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Scheme.Commands;
-using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investment.AHP.Domain.Scheme.Workflows;
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.InvestmentLoans.Common.Routing;
@@ -132,6 +131,28 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(SchemeWorkflowState.StakeholderDiscussions)]
+    [HttpGet("stakeholder-discussions")]
+    public async Task<IActionResult> StakeholderDiscussions([FromRoute] string applicationId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+
+        return View("StakeholderDiscussions", CreateModel(applicationId, application.Name, scheme));
+    }
+
+    [WorkflowState(SchemeWorkflowState.StakeholderDiscussions)]
+    [HttpPost("stakeholder-discussions")]
+    public async Task<IActionResult> StakeholderDiscussions(SchemeViewModel model, CancellationToken cancellationToken)
+    {
+        return await ExecuteCommand(
+            new ChangeSchemeStakeholderDiscussionsCommand(model.ApplicationId, model.StakeholderDiscussionsReport),
+            model.ApplicationId,
+            nameof(StakeholderDiscussions),
+            model,
+            cancellationToken);
+    }
+
     protected override async Task<IStateRouting<SchemeWorkflowState>> Routing(SchemeWorkflowState currentState, object routeData = null)
     {
         return await Task.FromResult(new SchemeWorkflow(currentState));
@@ -147,7 +168,8 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             scheme?.AffordabilityEvidence,
             scheme?.SalesRisk,
             scheme?.TypeAndTenureJustification,
-            scheme?.SchemeAndProposalJustification);
+            scheme?.SchemeAndProposalJustification,
+            scheme?.StakeholderDiscussionsReport);
     }
 
     private async Task<IActionResult> ExecuteCommand(

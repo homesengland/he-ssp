@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-#pragma warning disable CA1716
-namespace HE.Investment.AHP.WWW.Views.Shared.Components.FormButton;
-#pragma warning restore CA1716
+namespace HE.Investments.Common.WWW.Components.FormButton;
 
 public class FormButton : ViewComponent
 {
