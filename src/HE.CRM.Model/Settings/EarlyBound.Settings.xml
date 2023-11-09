@@ -17,6 +17,7 @@ invln_getahpapplication|
 invln_getcontactrole|
 invln_getfilelocationforapplicationloan|
 invln_getloanapplicationsforaccountandcontact|
+invln_getmultipleahpapplications|
 invln_getorganisationchangedetails|
 invln_getorganizationdetails|
 invln_getsingleloanapplicationforaccountandcontact|

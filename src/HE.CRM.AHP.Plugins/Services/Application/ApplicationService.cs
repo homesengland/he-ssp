@@ -18,16 +18,34 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _applicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
         }
 
-        public AhpApplicationDto GetApplication(string applicationId, string organisationId, string contactId, string fieldsToRetrieve = null)
+        public List<AhpApplicationDto> GetApplication(string organisationId, string contactId, string fieldsToRetrieve = null, string applicationId = null)
         {
-            if (Guid.TryParse(applicationId, out var applicationGuid))
+            var listOfApplications = new List<AhpApplicationDto>();
+            if (applicationId != null && Guid.TryParse(applicationId, out var applicationGuid))
             {
                 var application = !string.IsNullOrEmpty(fieldsToRetrieve)
                     ? _applicationRepository.GetById(applicationGuid, new string[] { fieldsToRetrieve })
                     : _applicationRepository.GetById(applicationGuid);
-                return AhpApplicationMapper.MapRegularEntityToDto(application);
+                listOfApplications.Add(AhpApplicationMapper.MapRegularEntityToDto(application));
             }
-            return null;
+            else
+            {
+                string attributes = null;
+                if (!string.IsNullOrEmpty(fieldsToRetrieve))
+                {
+                    attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+                }
+                var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactId, attributes);
+                if (applications.Any())
+                {
+                    foreach (var application in applications)
+                    {
+                        listOfApplications.Add(AhpApplicationMapper.MapRegularEntityToDto(application));
+                    }
+                }
+
+            }
+            return listOfApplications;
         }
 
         public Guid SetApplication(string applicationSerialized, string organisationId, string contactId, string fieldsToUpdate = null)
@@ -61,5 +79,20 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 return applicationToUpdateOrCreate.Id;
             }
         }
+
+        private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
+        {
+            var fields = fieldsToRetrieve.Split(',');
+            var generatedAttribuesFetchXml = "";
+            if (fields.Length > 0)
+            {
+                foreach (var field in fields)
+                {
+                    generatedAttribuesFetchXml += $"<attribute name=\"{field}\" />";
+                }
+            }
+            return generatedAttribuesFetchXml;
+        }
+
     }
 }
