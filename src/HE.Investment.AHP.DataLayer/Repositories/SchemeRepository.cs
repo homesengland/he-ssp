@@ -1,8 +1,9 @@
-using HE.Investment.AHP.Domain.Mock;
+using HE.Investment.AHP.DataLayer.Mock;
 using HE.Investment.AHP.Domain.Scheme.Entities;
+using HE.Investment.AHP.Domain.Scheme.Repositories;
 using DomainApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
-namespace HE.Investment.AHP.Domain.Scheme.Repositories;
+namespace HE.Investment.AHP.DataLayer.Repositories;
 
 public class SchemeRepository : InMemoryRepository<SchemeEntity>, ISchemeRepository
 {

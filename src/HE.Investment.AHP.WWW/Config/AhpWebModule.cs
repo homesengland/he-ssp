@@ -1,3 +1,4 @@
+using HE.Investment.AHP.DataLayer.Config;
 using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
 using HE.InvestmentLoans.Common.Infrastructure;
@@ -15,5 +16,6 @@ public static class AhpWebModule
         service.Configure<ContactInfoOptions>(builder.Configuration.GetSection("AppConfiguration:ContactInfo"));
 
         service.AddDomainModule();
+        service.AddDataLayerModule();
     }
 }

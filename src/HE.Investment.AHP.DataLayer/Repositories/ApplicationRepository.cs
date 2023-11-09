@@ -1,19 +1,20 @@
+using HE.Investment.AHP.DataLayer.Mock;
 using HE.Investment.AHP.Domain.Application.Entities;
+using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
-using HE.Investment.AHP.Domain.Mock;
-using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
+using DomainApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
-namespace HE.Investment.AHP.Domain.Application.Repositories;
+namespace HE.Investment.AHP.DataLayer.Repositories;
 
 public class ApplicationRepository : InMemoryRepository<ApplicationEntity>, IApplicationRepository
 {
     public ApplicationRepository()
     {
         var id = Guid.NewGuid().ToString();
-        _ = Save(new ApplicationEntity(new ApplicationId(id), new ApplicationName("App1"), new ApplicationTenure("SocialRent")), CancellationToken.None);
+        _ = Save(new ApplicationEntity(new DomainApplicationId(id), new ApplicationName("App1"), new ApplicationTenure("SocialRent")), CancellationToken.None);
     }
 
-    public async Task<ApplicationEntity> GetById(ApplicationId id, CancellationToken cancellationToken)
+    public async Task<ApplicationEntity> GetById(DomainApplicationId id, CancellationToken cancellationToken)
     {
         return await GetById(id.Value, cancellationToken);
     }

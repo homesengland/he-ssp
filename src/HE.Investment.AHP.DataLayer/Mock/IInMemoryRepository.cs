@@ -1,4 +1,4 @@
-namespace HE.Investment.AHP.Domain.Mock;
+namespace HE.Investment.AHP.DataLayer.Mock;
 
 public interface IInMemoryRepository<TEntity>
 {

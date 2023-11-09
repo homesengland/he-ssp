@@ -1,10 +1,6 @@
-using HE.Investment.AHP.Domain.Application;
-using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.InvestmentLoans.Common.Utils;
-using HE.Investments.Organisation.Config;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,8 +15,6 @@ public static class DomainModule
 
         AddHomeTypes(services);
         AddFinancialDetails(services);
-        AddApplication(services);
-        AddScheme(services);
     }
 
     private static void AddHomeTypes(IServiceCollection services)
@@ -32,15 +26,5 @@ public static class DomainModule
     private static void AddFinancialDetails(IServiceCollection services)
     {
         services.AddScoped<IFinancialDetailsRepository, FinancialDetailsRepository>();
-    }
-
-    private static void AddApplication(IServiceCollection services)
-    {
-        services.AddSingleton<IApplicationRepository, ApplicationRepository>();
-    }
-
-    private static void AddScheme(IServiceCollection services)
-    {
-        services.AddSingleton<ISchemeRepository, SchemeRepository>();
     }
 }

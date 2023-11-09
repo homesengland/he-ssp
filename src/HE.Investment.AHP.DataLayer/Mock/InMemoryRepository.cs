@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
 using HE.InvestmentLoans.Common.Exceptions;
 
-namespace HE.Investment.AHP.Domain.Mock;
+namespace HE.Investment.AHP.DataLayer.Mock;
 
 public abstract class InMemoryRepository<TEntity> : IInMemoryRepository<TEntity>
 {
