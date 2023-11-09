@@ -11,20 +11,24 @@
     <form asp-controller="Scheme" asp-action="SalesRisk" asp-method="post" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         <gds-field-set role="group">
-            <vc:form-field-title title="Tell us how this type and tenure of home meets the identified priorities for the local housing market"/>
+            <vc:form-field-title
+                field-name="TypeAndTenureJustification"
+                title="Tell us how this type and tenure of home meets the identified priorities for the local housing market"/>
             <gds-error-form-group asp-for="TypeAndTenureJustification">
-                <gds-text-area asp-for="TypeAndTenureJustification" rows="5"></gds-text-area>
-                <gds-p>
+                <gds-text-area asp-for="TypeAndTenureJustification" rows="5" class="govuk-!-margin-bottom-2"></gds-text-area>
+                <gds-div-hint>
                     You can enter up to 1500 characters
-                </gds-p>
+                </gds-div-hint>
             </gds-error-form-group>
 
-            <vc:form-field-title title="Tell us how this scheme and proposal contributes to a locally identified housing need"/>
+            <vc:form-field-title
+                field-name="SchemeAndProposalJustification"
+                title="Tell us how this scheme and proposal contributes to a locally identified housing need"/>
             <gds-error-form-group asp-for="SchemeAndProposalJustification">
-                <gds-text-area asp-for="SchemeAndProposalJustification" rows="5"></gds-text-area>
-                <gds-p>
+                <gds-text-area asp-for="SchemeAndProposalJustification" rows="5" class="govuk-!-margin-bottom-2"></gds-text-area>
+                <gds-div-hint>
                     You can enter up to 1500 characters
-                </gds-p>
+                </gds-div-hint>
             </gds-error-form-group>
         </gds-field-set>
         <vc:form-button/>

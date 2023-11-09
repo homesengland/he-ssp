@@ -27,12 +27,10 @@ public class HousingNeeds : ValueObject
 
         TypeAndTenureJustification = Validator
             .For(typeAndTenureJustification, nameof(TypeAndTenureJustification), operationResult)
-            .IsProvided()
             .IsLongInput();
 
         SchemeAndProposalJustification = Validator
             .For(schemeAndProposalJustification, nameof(SchemeAndProposalJustification), operationResult)
-            .IsProvided()
             .IsLongInput();
 
         return operationResult;

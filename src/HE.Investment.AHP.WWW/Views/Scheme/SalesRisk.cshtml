@@ -11,7 +11,9 @@
     <form asp-controller="Scheme" asp-action="SalesRisk" asp-method="post" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         <gds-field-set role="group">
-            <vc:form-field-title title="Tell us your assessment of the sales risk and how you will mitigate this"/>
+            <vc:form-field-title
+                field-name="SalesRisk"
+                title="Tell us your assessment of the sales risk and how you will mitigate this"/>
             <gds-error-form-group asp-for="SalesRisk">
                 <gds-text-area asp-for="SalesRisk" rows="5" class="govuk-!-margin-bottom-2"></gds-text-area>
                 <gds-div-hint>

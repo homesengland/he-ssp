@@ -34,14 +34,15 @@
                         <span class="govuk-visually-hidden">Error:</span>@tenureError
                     </span>
                 }
-
-                <gds-custom-radio
-                    asp-for="Tenure"
-                    value="@Model.Tenure"
-                    radio-items="Tenures.AvailableTenures"
-                    radio-hints="@hints"
-                    class="govuk-!-margin-bottom-8">
-                </gds-custom-radio>
+                <gds-legend>
+                    <gds-custom-radio
+                        asp-for="Tenure"
+                        value="@Model.Tenure"
+                        radio-items="Tenures.AvailableTenures"
+                        radio-hints="@hints"
+                        class="govuk-!-margin-bottom-8">
+                    </gds-custom-radio>
+                </gds-legend>
             </gds-div-form-group>
         </gds-field-set>
 

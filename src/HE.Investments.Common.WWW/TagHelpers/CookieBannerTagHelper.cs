@@ -3,7 +3,7 @@ using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace HE.Investments.Common.WWW.Components;
+namespace HE.Investments.Common.WWW.TagHelpers;
 
 public class CookieBannerTagHelper : TagHelper
 {

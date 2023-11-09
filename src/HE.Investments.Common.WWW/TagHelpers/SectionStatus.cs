@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace HE.Investments.Common.WWW.Components;
+namespace HE.Investments.Common.WWW.TagHelpers;
 
 public enum SectionStatus
 {
