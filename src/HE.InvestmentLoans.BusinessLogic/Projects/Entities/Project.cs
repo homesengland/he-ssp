@@ -5,13 +5,13 @@ using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 
-public class Project
+public class Project : DomainEntity
 {
     public Project()
     {

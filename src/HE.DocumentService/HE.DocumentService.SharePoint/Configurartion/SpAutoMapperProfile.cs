@@ -22,8 +22,5 @@ public class SpAutoMapperProfile : Profile
         .ForMember(dst => dst.Editor, opt => opt.MapFrom(s => s["Editor"]))
         .ForMember(dst => dst.Modified, opt => opt.MapFrom(s => s["Modified"]))
         .ForMember(dst => dst.Metadata, opt => opt.MapFrom(s => s["_ModerationComments"]));
-
-        CreateMap<FileUploadModel<IFormFile>, FileUploadModel<FileData>>()
-        .ForMember(dst => dst.File, opt => opt.MapFrom(s => new FileData(s.File)));
     }
 }

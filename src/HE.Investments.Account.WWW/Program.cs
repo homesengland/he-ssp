@@ -16,7 +16,7 @@ builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
-builder.Services.AddCommonPartialsViews();
+builder.Services.AddCommonBuildingBlocks();
 builder.Services.AddCache(appConfig.Cache, appConfig.AppName!);
 var mvcBuilder = builder.Services.AddControllersWithViews();
 builder.AddIdentityProviderConfiguration(mvcBuilder);

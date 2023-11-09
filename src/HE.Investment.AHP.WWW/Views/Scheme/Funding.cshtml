@@ -1,21 +1,24 @@
 @using HE.Investment.AHP.WWW.Extensions
-@using HE.Investment.AHP.WWW.Views.Shared.Components.FormHeader
-@using HE.Investment.AHP.WWW.Views.Shared.Components.FormFieldTitle
-@using HE.Investment.AHP.WWW.Views.Shared.Components.FormButton
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.FormFieldTitle
+@using HE.Investments.Common.WWW.Components.FormHeader
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 @{
     var title = "Funding details";
     ViewData["Title"] = title;
     var applicationId = this.GetApplicationIdFromRoute();
 }
-<div class="govuk-grid-column-three-quarters">
+<div class="govuk-grid-column-full">
     <gds-back-link href="@Url.Action("Index", "Scheme", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Scheme" asp-action="Funding" asp-method="post" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
+        @Html.HiddenFor(m => Model.ApplicationName)
         <gds-field-set role="group">
-            <vc:form-field-title title="Enter how much AHP CME 21-26 funding you require on this scheme"/>
+            <vc:form-field-title
+                field-name="RequiredFunding"
+                title="Enter how much AHP CME 21-26 funding you require on this scheme"/>
             <gds-input-wrapper class="govuk-!-margin-bottom-6">
                 <gds-input asp-prefixtext="GdsInputPrefixText.Pounds"
                            class="govuk-input--width-3"
@@ -25,14 +28,16 @@
                            type="text"/>
             </gds-input-wrapper>
 
-            <vc:form-field-title title="Enter how many homes you intend to deliver"/>
+            <vc:form-field-title
+                field-name="HousesToDeliver"
+                title="Enter how many homes you intend to deliver"/>
             <gds-input-wrapper class="govuk-!-margin-bottom-6">
                 <gds-input
                     class="govuk-input--width-2"
                     govuk-formgroup-asp-for="HousesToDeliver"
                     value="@Model.HousesToDeliver"
                     asp-excludelabel
-                    type="number"/>
+                    type="text"/>
             </gds-input-wrapper>
 
         </gds-field-set>

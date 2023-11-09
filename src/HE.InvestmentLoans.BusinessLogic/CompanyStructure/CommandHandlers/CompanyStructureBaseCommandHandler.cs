@@ -1,6 +1,9 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Utils.Enums;
+using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.InvestmentLoans.Contract.Application.Events;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
@@ -10,27 +13,44 @@ namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 
 public class CompanyStructureBaseCommandHandler
 {
-    private readonly ICompanyStructureRepository _repository;
+    private readonly ICompanyStructureRepository _companyStructureRepository;
+
+    private readonly ILoanApplicationRepository _loanApplicationRepository;
 
     private readonly ILoanUserContext _loanUserContext;
 
     private readonly ILogger<CompanyStructureBaseCommandHandler> _logger;
 
-    public CompanyStructureBaseCommandHandler(ICompanyStructureRepository repository, ILoanUserContext loanUserContext, ILogger<CompanyStructureBaseCommandHandler> logger)
+    public CompanyStructureBaseCommandHandler(
+        ICompanyStructureRepository companyStructureRepository,
+        ILoanApplicationRepository loanApplicationRepository,
+        ILoanUserContext loanUserContext,
+        ILogger<CompanyStructureBaseCommandHandler> logger)
     {
-        _repository = repository;
+        _companyStructureRepository = companyStructureRepository;
+        _loanApplicationRepository = loanApplicationRepository;
         _loanUserContext = loanUserContext;
         _logger = logger;
     }
 
-    protected async Task<OperationResult> Perform(Func<CompanyStructureEntity, Task> action, LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
+    protected async Task<OperationResult> Perform(
+        Func<CompanyStructureEntity, Task> action,
+        LoanApplicationId loanApplicationId,
+        CancellationToken cancellationToken)
     {
         var userAccount = await _loanUserContext.GetSelectedAccount();
-        var companyStructure = await _repository.GetAsync(loanApplicationId, userAccount, CompanyStructureFieldsSet.GetAllFields, cancellationToken);
+        var companyStructure =
+            await _companyStructureRepository.GetAsync(loanApplicationId, userAccount, CompanyStructureFieldsSet.GetAllFields, cancellationToken);
 
         try
         {
             await action(companyStructure);
+
+            if (companyStructure.LoanApplicationStatus != ApplicationStatus.Draft)
+            {
+                companyStructure.Publish(new LoanApplicationChangeToDraftStatusEvent(loanApplicationId));
+                await _loanApplicationRepository.DispatchEvents(companyStructure, cancellationToken);
+            }
         }
         catch (DomainValidationException domainValidationException)
         {
@@ -38,7 +58,7 @@ public class CompanyStructureBaseCommandHandler
             return domainValidationException.OperationResult;
         }
 
-        await _repository.SaveAsync(companyStructure, userAccount, cancellationToken);
+        await _companyStructureRepository.SaveAsync(companyStructure, userAccount, cancellationToken);
         return OperationResult.Success();
     }
 }

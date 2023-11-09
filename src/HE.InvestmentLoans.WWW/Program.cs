@@ -39,7 +39,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 builder.Services.AddDocumentServiceModule();
-builder.Services.AddCommonPartialsViews();
+builder.Services.AddCommonBuildingBlocks();
 
 var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<ExceptionFilter>());
 builder.AddIdentityProviderConfiguration(mvcBuilder);

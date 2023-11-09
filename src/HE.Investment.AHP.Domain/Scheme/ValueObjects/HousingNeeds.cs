@@ -1,4 +1,3 @@
-using HE.InvestmentLoans.BusinessLogic.Organization;
 using HE.Investments.Account.Domain.Organisation;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
@@ -28,12 +27,10 @@ public class HousingNeeds : ValueObject
 
         TypeAndTenureJustification = Validator
             .For(typeAndTenureJustification, nameof(TypeAndTenureJustification), operationResult)
-            .IsProvided()
             .IsLongInput();
 
         SchemeAndProposalJustification = Validator
             .For(schemeAndProposalJustification, nameof(SchemeAndProposalJustification), operationResult)
-            .IsProvided()
             .IsLongInput();
 
         return operationResult;

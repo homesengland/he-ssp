@@ -1,6 +1,4 @@
 using System.Globalization;
-using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;

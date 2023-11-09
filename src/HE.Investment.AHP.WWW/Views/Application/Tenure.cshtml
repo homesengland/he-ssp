@@ -1,6 +1,7 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Application
-@using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.FormHeader
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationBasicModel
 
 @{
@@ -18,7 +19,7 @@
     var (isTenureInvalid, tenureError) = ViewData.ModelState.GetErrors(nameof(ApplicationBasicModel.Tenure));
 }
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("Name", "Application", new { schemeId = Model.Id })" text="Back" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.Action("Name", "Application")" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Application" asp-action="Tenure" asp-method="post" novalidate>
@@ -34,14 +35,15 @@
                         <span class="govuk-visually-hidden">Error:</span>@tenureError
                     </span>
                 }
-
-                <gds-custom-radio
-                    asp-for="Tenure"
-                    value="@Model.Tenure"
-                    radio-items="Tenures.AvailableTenures"
-                    radio-hints="@hints"
-                    class="govuk-!-margin-bottom-8">
-                </gds-custom-radio>
+                <gds-legend>
+                    <gds-custom-radio
+                        asp-for="Tenure"
+                        value="@Model.Tenure"
+                        radio-items="Tenures.AvailableTenures"
+                        radio-hints="@hints"
+                        class="govuk-!-margin-bottom-8">
+                    </gds-custom-radio>
+                </gds-legend>
             </gds-div-form-group>
         </gds-field-set>
 

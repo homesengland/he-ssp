@@ -1,5 +1,4 @@
 using HE.Investment.AHP.Domain.Application.Entities;
-using HE.InvestmentLoans.BusinessLogic.Organization;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
 

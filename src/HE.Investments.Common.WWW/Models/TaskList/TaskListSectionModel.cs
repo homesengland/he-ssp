@@ -1,4 +1,4 @@
-using HE.Investments.Common.WWW.Components;
+using HE.Investments.Common.WWW.TagHelpers;
 
 namespace HE.Investments.Common.WWW.Models.TaskList;
 

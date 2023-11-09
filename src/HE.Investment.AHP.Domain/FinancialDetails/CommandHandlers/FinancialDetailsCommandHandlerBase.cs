@@ -1,10 +1,9 @@
-using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using Microsoft.Extensions.Logging;
+using ApplicationId = HE.Investment.AHP.Contract.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
 public class FinancialDetailsCommandHandlerBase
@@ -19,9 +18,9 @@ public class FinancialDetailsCommandHandlerBase
         _logger = logger;
     }
 
-    public async Task<OperationResult> Perform(Action<FinancialDetailsEntity> action, FinancialDetailsId financialDetailsId, CancellationToken cancellationToken)
+    public async Task<OperationResult> Perform(Action<FinancialDetailsEntity> action, ApplicationId applicationId, CancellationToken cancellationToken)
     {
-        var financialDetails = await _repository.GetById(financialDetailsId, cancellationToken);
+        var financialDetails = await _repository.GetById(applicationId, cancellationToken);
 
         try
         {

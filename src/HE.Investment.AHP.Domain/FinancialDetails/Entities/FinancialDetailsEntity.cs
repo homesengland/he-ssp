@@ -1,40 +1,49 @@
 using System.Text.Json.Serialization;
 using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+using ApplicationId = HE.Investment.AHP.Contract.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
 
 public class FinancialDetailsEntity
 {
-    public FinancialDetailsEntity()
+    public FinancialDetailsEntity(ApplicationId applicationId, string applicationName, bool isPurchasePriceKnown)
     {
-        FinancialDetailsId = new FinancialDetailsId(Guid.NewGuid());
-    }
-
-    public FinancialDetailsEntity(bool isPurchasePriceKnown)
-    {
-        FinancialDetailsId = new FinancialDetailsId(Guid.NewGuid());
+        ApplicationId = applicationId;
+        ApplicationName = applicationName;
         IsPurchasePriceKnown = isPurchasePriceKnown;
     }
 
     [JsonConstructor]
     public FinancialDetailsEntity(
-        FinancialDetailsId financialDetailsId,
         bool isPurchasePriceKnown,
-        PurchasePrice purchasePrice)
+        PurchasePrice? purchasePrice,
+        LandOwnership? landOwnership)
     {
-        FinancialDetailsId = financialDetailsId;
         IsPurchasePriceKnown = isPurchasePriceKnown;
         PurchasePrice = purchasePrice;
+        LandOwnership = landOwnership;
     }
 
-    public FinancialDetailsId FinancialDetailsId { get; private set; }
+    public ApplicationId ApplicationId { get; private set; }
 
-    public PurchasePrice PurchasePrice { get; private set; }
+    public string ApplicationName { get; private set; }
 
-    public bool IsPurchasePriceKnown { get; private set; }
+    public PurchasePrice? PurchasePrice { get; private set; }
+
+    public bool? IsPurchasePriceKnown { get; private set; }
+
+    public LandOwnership? LandOwnership { get; private set; }
+
+    public LandValue? LandValue { get; private set; }
 
     public void ProvidePurchasePrice(PurchasePrice price)
     {
         PurchasePrice = price;
+    }
+
+    public void ProvideLandOwnershipAndValue(LandOwnership landOwnership, LandValue landValue)
+    {
+        LandOwnership = landOwnership;
+        LandValue = landValue;
     }
 }

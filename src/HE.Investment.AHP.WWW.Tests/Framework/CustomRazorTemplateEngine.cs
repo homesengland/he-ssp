@@ -1,8 +1,6 @@
-using HE.Investments.Common.WWW;
+using HE.Investments.Common.WWW.Partials;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 
 namespace HE.Investment.AHP.WWW.Tests.Framework;
 
@@ -39,12 +37,7 @@ public static class CustomRazorTemplateEngine
             _services.AddTransient<CustomRazorViewToStringRenderer>();
             _services.AddTransient<CustomRazorTemplateEngineRenderer>();
 
-            var assembly = typeof(AssemblyMarkup).Assembly;
-            _services.AddControllersWithViews()
-                .AddApplicationPart(assembly)
-                .AddRazorRuntimeCompilation();
-            _services.Configure<MvcRazorRuntimeCompilationOptions>(
-                options => options.FileProviders.Add(new EmbeddedFileProvider(assembly)));
+            _services.AddCommonBuildingBlocks();
         }
 
         return _services.BuildServiceProvider().GetRequiredService<CustomRazorTemplateEngineRenderer>();

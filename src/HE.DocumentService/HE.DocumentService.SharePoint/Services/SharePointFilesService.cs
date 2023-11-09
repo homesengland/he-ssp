@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using HE.DocumentService.SharePoint.Configurartion;
 using HE.DocumentService.SharePoint.Constants;
@@ -13,12 +7,7 @@ using HE.DocumentService.SharePoint.Interfaces;
 using HE.DocumentService.SharePoint.Models.File;
 using HE.DocumentService.SharePoint.Models.Table;
 using Microsoft.AspNetCore.Http;
-using Microsoft.BusinessData.MetadataModel;
-using Microsoft.Graph;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.News.DataModel;
-using Portable.Xaml.Markup;
-using File = Microsoft.SharePoint.Client.File;
 
 namespace HE.DocumentService.SharePoint.Services;
 
@@ -102,16 +91,16 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
         await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
     }
 
-    public async Task UploadFile(FileUploadModel<IFormFile> item) => await UploadFile(_mapper.Map<FileUploadModel<FileData>>(item));
-
-    public async Task UploadFile(FileUploadModel<FileData> item)
+    public async Task UploadFile(FileUploadModel item)
     {
-        if (item.File.Data.Length == 0)
+        using var fileContent = item.File.OpenReadStream();
+
+        if (fileContent.Length == 0)
         {
             throw new SharepointException("The file is 0 bytes. Something went wrong, contact your system administrator.");
         }
 
-        if (item.File.Data.Length > _spConfig.FileMaxSize)
+        if (fileContent.Length > _spConfig.FileMaxSize)
         {
             throw new SharepointException($"Max file size is {Math.Round((double)_spConfig.FileMaxSize / 1024 / 1024, 2)}MB");
         }
@@ -122,7 +111,7 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
 
             var file = folder.Files.Add(new FileCreationInformation
             {
-                ContentStream = new MemoryStream(item.File.Data),
+                ContentStream = fileContent,
                 Url = item.File.Name,
                 Overwrite = item.Overwrite ?? false
             });

@@ -21,5 +21,7 @@ public interface ILoanApplicationRepository
 
     Task WithdrawDraft(LoanApplicationId loanApplicationId, WithdrawReason withdrawReason, CancellationToken cancellationToken);
 
+    Task MoveToDraft(LoanApplicationId loanApplicationId, CancellationToken cancellationToken);
+
     Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken);
 }

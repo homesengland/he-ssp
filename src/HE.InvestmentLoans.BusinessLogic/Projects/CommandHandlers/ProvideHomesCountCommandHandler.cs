@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User;
@@ -7,10 +8,15 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
+
 public class ProvideHomesCountCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideHomesCountCommand, OperationResult>
 {
-    public ProvideHomesCountCommandHandler(IApplicationProjectsRepository repository, ILoanUserContext loanUserContext, ILogger<ProjectCommandHandlerBase> logger)
-        : base(repository, loanUserContext, logger)
+    public ProvideHomesCountCommandHandler(
+        IApplicationProjectsRepository applicationProjectsRepository,
+        ILoanApplicationRepository loanApplicationRepository,
+        ILoanUserContext loanUserContext,
+        ILogger<ProjectCommandHandlerBase> logger)
+        : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext, logger)
     {
     }
 

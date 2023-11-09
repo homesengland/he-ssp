@@ -37,18 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    var test = new OrganizationDetailsDto()
-                    {
-                        registeredCompanyName = "test program",
-                        organisationPhoneNumber = "543234324",
-                        addressLine1 = "line111111",
-                        addressLine2 = "line 2222222",
-                        city = "lomza",
-                        county = "conttttyyy",
-                        postalcode = "12-123",
-                        organisationId = "0461e384-494e-ee11-be6f-002248c65419",
-                    };
-                    _ = CreateOrganisationChangeRequest(test, serviceClient);
+                    TestLoan(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -88,14 +77,18 @@ namespace HE.Xrm.ServiceClientExample
 
         private static void TestLoan(ServiceClient serviceClient)
         {
-            var req2 = new invln_getsinglesitedetailsRequest() //get loan applications related to account and contact with given data
+            var application = new AhpApplicationDto()
             {
-                invln_sitedetailsid = "90f75d09-7e5b-ee11-8def-002248c65419",
-                invln_fieldstoretrieve = $"{nameof(invln_SiteDetails.invln_Name).ToLower()},{nameof(invln_SiteDetails.invln_Numberofhomes).ToLower()}",
-                invln_accountid = "429d11ab-15fe-ed11-8f6c-002248c653e1",
-                invln_externalcontactid = "auth0|64a26f0d878561f7f4179859"
+                name = "test custfffffffffffffffffasad",
+                tenure = (int)invln_Tenure.OPSO,
+                id = "0e49b28a-757d-ee11-8179-002248004a06",
             };
-            var resp2 = (invln_getsinglesitedetailsResponse)serviceClient.Execute(req2);
+            var fieldsToUpdate = $"{nameof(invln_scheme.invln_Tenure).ToLower()}";
+            var app = JsonSerializer.Serialize(application);
+            var req2 = new invln_searchlocalauthorityRequest() //get loan applications related to account and contact with given data
+            {
+            };
+            var resp2 = (invln_searchlocalauthorityResponse)serviceClient.Execute(req2);
             Console.WriteLine("A web service connection was not established.");
         }
 

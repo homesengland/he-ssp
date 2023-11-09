@@ -1,4 +1,3 @@
-using HE.InvestmentLoans.BusinessLogic.Organization;
 using HE.Investments.Account.Domain.Organisation;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
@@ -25,7 +24,6 @@ public class SalesRisk : ValueObject
 
         Value = Validator
             .For(evidence, nameof(SalesRisk), operationResult)
-            .IsProvided()
             .IsLongInput();
 
         return operationResult;

@@ -6,4 +6,6 @@ public enum NotificationBodyType
     FilesUpload,
     FileRemove,
     ChangeOrganisationDetailsRequest,
+    ApplicationResubmitted,
+    SectionCompletedAgain,
 }

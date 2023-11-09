@@ -2,7 +2,6 @@ using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using MediatR;

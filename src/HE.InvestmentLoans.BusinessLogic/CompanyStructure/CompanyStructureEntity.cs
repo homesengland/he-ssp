@@ -2,12 +2,13 @@ using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure;
 
-public class CompanyStructureEntity
+public class CompanyStructureEntity : DomainEntity
 {
     public CompanyStructureEntity(
         LoanApplicationId loanApplicationId,

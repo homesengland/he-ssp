@@ -4,10 +4,12 @@
 
 @{
     var loanApllicationWorkflow = new LoanApplicationWorkflow(Model);
+
+    var submitAction = Model.WasSubmittedPreviously ? "Resubmit" : "Submit";
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="LoanApplicationV2" asp-action="Submit" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
+    <form asp-controller="LoanApplicationV2" asp-action="@submitAction" asp-route-id="@Model.ID" asp-route-ending="CheckAnswers" asp-method="post" novalidate>
         <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.CheckApplication, ApplicationId = Model.ID})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
 
         <gds-h1 size="ControlSize.Xl">

@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.Funding.Repositories;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Funding.Commands;
 using HE.InvestmentLoans.Contract.Funding.ValueObjects;
@@ -11,8 +12,8 @@ namespace HE.InvestmentLoans.BusinessLogic.Funding.CommandHandlers;
 
 public class ProvideRepaymentSystemCommandHandler : FundingBaseCommandHandler, IRequestHandler<ProvideRepaymentSystemCommand, OperationResult>
 {
-    public ProvideRepaymentSystemCommandHandler(IFundingRepository repository, ILoanUserContext loanUserContext, ILogger<FundingBaseCommandHandler> logger)
-        : base(repository, loanUserContext, logger)
+    public ProvideRepaymentSystemCommandHandler(IFundingRepository fundingRepository, ILoanApplicationRepository loanApplicationRepository, ILoanUserContext loanUserContext, ILogger<FundingBaseCommandHandler> logger)
+        : base(fundingRepository, loanApplicationRepository, loanUserContext, logger)
     {
     }
 

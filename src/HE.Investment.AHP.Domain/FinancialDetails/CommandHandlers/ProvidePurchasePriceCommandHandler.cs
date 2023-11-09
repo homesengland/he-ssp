@@ -17,7 +17,7 @@ public class ProvidePurchasePriceCommandHandler : FinancialDetailsCommandHandler
     {
         return await Perform(
             financialDetails => financialDetails.ProvidePurchasePrice(new PurchasePrice(request.PurchasePrice)),
-            request.FinancialDetailsId,
+            request.ApplicationId,
             cancellationToken);
     }
 }

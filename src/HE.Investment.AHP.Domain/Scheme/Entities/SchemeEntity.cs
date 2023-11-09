@@ -4,13 +4,10 @@ namespace HE.Investment.AHP.Domain.Scheme.Entities;
 
 public class SchemeEntity
 {
-    public SchemeEntity(SchemeId id, SchemeFunding funding)
+    public SchemeEntity(SchemeFunding funding)
     {
-        Id = id;
         Funding = funding;
     }
-
-    public SchemeId Id { get; }
 
     public SchemeFunding Funding { get; private set; }
 
@@ -19,6 +16,8 @@ public class SchemeEntity
     public SalesRisk? SalesRisk { get; private set; }
 
     public HousingNeeds? HousingNeeds { get; private set; }
+
+    public StakeholderDiscussions? StakeholderDiscussions { get; private set; }
 
     public void ChangeFunding(SchemeFunding funding)
     {
@@ -38,5 +37,10 @@ public class SchemeEntity
     public void ChangeHousingNeeds(HousingNeeds housingNeeds)
     {
         HousingNeeds = housingNeeds;
+    }
+
+    public void ChangeStakeholderDiscussions(StakeholderDiscussions stakeholderDiscussions)
+    {
+        StakeholderDiscussions = stakeholderDiscussions;
     }
 }

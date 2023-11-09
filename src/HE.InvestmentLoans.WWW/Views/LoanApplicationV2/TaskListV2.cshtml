@@ -10,33 +10,31 @@
 
 <gds-div-grid-column-two-thirds>
     @await Html.PartialAsync("_Notification")
-</gds-div-grid-column-two-thirds>
 
-<span class="govuk-caption-m govuk-!-margin-left-3">
-    @Model.OrganisationName
-</span>
+    <span class="govuk-caption-m govuk-!-margin-left-3">
+        @Model.OrganisationName
+    </span>
 
-<gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-1 govuk-grid-column-full">
-    @Model.ApplicationName.Value
-</gds-h1>
+    <gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-1 govuk-grid-column-full">
+        @Model.ApplicationName.Value
+    </gds-h1>
 
-@if (Model.Status is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
-{
-    <gds-div-hint class="govuk-grid-column-full govuk-!-margin-bottom-2" id="last-saved-label">
-        Last saved on @DateHelper.DisplayAsUkFormatDateTime(Model.LastSavedOn) @(!string.IsNullOrEmpty(Model.LastModifiedBy) ? $"by {Model.LastModifiedBy}" : string.Empty)
-    </gds-div-hint>
-}
-else
-{
-    <gds-div-hint class="govuk-grid-column-full govuk-!-margin-bottom-2" id="submitted-on-label">
-        Submitted on @DateHelper.DisplayAsUkFormatDateTime(Model.SubmittedOn)
-    </gds-div-hint>
-}
-<div>
-    <application-status-tag application-status="@Model.Status" additional-classes="govuk-!-static-margin-left-3"></application-status-tag>
-</div>
+    @if (Model.Status is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
+    {
+        <gds-div-hint class="govuk-grid-column-full govuk-!-margin-bottom-2" id="last-saved-label">
+            Last saved on @DateHelper.DisplayAsUkFormatDateTime(Model.LastSavedOn) @(!string.IsNullOrEmpty(Model.LastModifiedBy) ? $"by {Model.LastModifiedBy}" : string.Empty)
+        </gds-div-hint>
+    }
+    else
+    {
+        <gds-div-hint class="govuk-grid-column-full govuk-!-margin-bottom-2" id="submitted-on-label">
+            Submitted on @DateHelper.DisplayAsUkFormatDateTime(Model.SubmittedOn)
+        </gds-div-hint>
+    }
+    <div>
+        <application-status-tag application-status="@Model.Status" additional-classes="govuk-!-static-margin-left-3"></application-status-tag>
+    </div>
 
-<gds-div-grid-column-two-thirds>
     <ul class="app-task-list">
         <li>
             <h2 class="app-task-list__section">

@@ -1,7 +1,6 @@
 extern alias Org;
 
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.Investments.Account.Shared.User;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Org::HE.Investments.Organisation.Services;

@@ -1,4 +1,3 @@
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using Microsoft.Extensions.Logging;

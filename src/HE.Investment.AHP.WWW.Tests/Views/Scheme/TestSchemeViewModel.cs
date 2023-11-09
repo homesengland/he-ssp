@@ -8,11 +8,11 @@ public static class TestSchemeViewModel
         new(
             "A1",
             "App Name",
-            "S1",
-            345.45m,
-            100,
+            "345.45",
+            "100",
             "test affordability evidence",
             "some sales risk",
             "type and tenure justification",
-            "scheme and proposal justification");
+            "scheme and proposal justification",
+            "stakeholders accepted everything");
 }

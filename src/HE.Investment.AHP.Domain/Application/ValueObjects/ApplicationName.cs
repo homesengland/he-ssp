@@ -1,4 +1,3 @@
-using HE.InvestmentLoans.BusinessLogic.Organization;
 using HE.Investments.Account.Domain.Organisation;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;

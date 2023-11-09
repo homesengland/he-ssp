@@ -13,9 +13,7 @@ public interface ISharePointFilesService
 {
     Task<TableResult<FileTableRow>> GetTableRows(FileTableFilter filter);
 
-    Task UploadFile(FileUploadModel<IFormFile> item);
-
-    Task UploadFile(FileUploadModel<FileData> item);
+    Task UploadFile(FileUploadModel item);
 
     Task<FileData> DownloadFile(string listAlias, string folderPath, string fileName);
 
