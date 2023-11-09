@@ -60,6 +60,9 @@ namespace DataverseModel
 			public const string invln_account_invln_organisationchangerequest_organisationid = "invln_account_invln_organisationchangerequest_organisationid";
 			public const string invln_addressline1 = "invln_addressline1";
 			public const string invln_addressline2 = "invln_addressline2";
+			public const string invln_contact_invln_organisationchangerequest_contactid = "invln_contact_invln_organisationchangerequest_contactid";
+			public const string invln_contactid = "invln_contactid";
+			public const string invln_contactidName = "invln_contactidname";
 			public const string invln_county = "invln_county";
 			public const string invln_name = "invln_name";
 			public const string invln_organisationchangerequestId = "invln_organisationchangerequestid";
@@ -237,6 +240,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_addressline2");
 				this.SetAttributeValue("invln_addressline2", value);
 				this.OnPropertyChanged("invln_addressline2");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_contactid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_contactid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_contactid");
+				this.SetAttributeValue("invln_contactid", value);
+				this.OnPropertyChanged("invln_contactid");
 			}
 		}
 		
@@ -648,6 +668,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_account_invln_organisationchangerequest_organisationid");
 				this.SetRelatedEntity<DataverseModel.Account>("invln_account_invln_organisationchangerequest_organisationid", null, value);
 				this.OnPropertyChanged("invln_account_invln_organisationchangerequest_organisationid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_contact_invln_organisationchangerequest_contactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_organisationchangerequest_contactid")]
+		public DataverseModel.Contact invln_contact_invln_organisationchangerequest_contactid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Contact>("invln_contact_invln_organisationchangerequest_contactid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_organisationchangerequest_contactid");
+				this.SetRelatedEntity<DataverseModel.Contact>("invln_contact_invln_organisationchangerequest_contactid", null, value);
+				this.OnPropertyChanged("invln_contact_invln_organisationchangerequest_contactid");
 			}
 		}
 		

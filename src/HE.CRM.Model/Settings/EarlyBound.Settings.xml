@@ -13,6 +13,7 @@ invln_checkifloanapplicationwithgivennameexists|
 invln_deleteloanapplication|
 invln_deletesitedetails|
 invln_generaterichtextdocument|
+invln_getahpapplication|
 invln_getcontactrole|
 invln_getfilelocationforapplicationloan|
 invln_getloanapplicationsforaccountandcontact|
@@ -27,6 +28,7 @@ invln_savetemporaryportaldata|
 invln_sendgovnotifyemail|
 invln_sendinternalcrmnotification|
 invln_sendinvestmentloansdatatocrm|
+invln_setahpapplication|
 invln_updatesingleloanapplication|
 invln_updatesinglesitedetails|
 invln_updateuserprofile|
@@ -66,6 +68,7 @@ invln_organisationchangerequest|
 invln_portal|
 invln_portalpermissionlevel|
 invln_projectspecificcondition|
+invln_scheme|
 invln_sitedetails|
 invln_standardcondition|
 invln_webrole|

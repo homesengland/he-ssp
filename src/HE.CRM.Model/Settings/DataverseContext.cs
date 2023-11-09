@@ -228,6 +228,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_scheme"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_scheme> invln_schemeSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_scheme>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_SiteDetails"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_SiteDetails> invln_SiteDetailsSet
