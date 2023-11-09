@@ -44,7 +44,7 @@
 
     for (let i = 0; i < uploadControl.files.length; i++) {
       if (uploadControl.files[i].size > maxFileSize) {
-        const errorMessage = `The selected file ${uploadControl.files[0].name} must be smaller than ${maxFileSizeInMegabytes}MB`;
+        const errorMessage = `The selected file must be smaller than ${maxFileSizeInMegabytes}MB`;
 
         continueButton.disabled = true;
         addInputFieldError(errorMessage);

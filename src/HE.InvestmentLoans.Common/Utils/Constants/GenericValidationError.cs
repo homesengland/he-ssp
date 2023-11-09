@@ -14,7 +14,7 @@ public static class GenericValidationError
 
     public static string InvalidFileType(string fileName, IEnumerable<string> allowedExtensions) => $"The selected file {fileName} must be a {FileExtensions(allowedExtensions)}";
 
-    public static string FileTooBig(string fileName, int maxSizeInMb) => $"The selected file {fileName} must be smaller than {maxSizeInMb}MB";
+    public static string FileTooBig(int maxSizeInMb) => $"The selected file must be smaller than {maxSizeInMb}MB";
 
     public static string FileCountLimit(int numberOfFiles) => $"You can only select up to {numberOfFiles} files";
 
