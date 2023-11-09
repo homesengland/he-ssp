@@ -10,7 +10,7 @@
 
 [assembly: Microsoft.Xrm.Sdk.Client.ProxyTypesAssemblyAttribute()]
 
-namespace HE.Investment.AHP.CRM.Model
+namespace HE.Investments.CRM.Common.Model
 {
 	
 	
@@ -9753,14 +9753,14 @@ namespace HE.Investment.AHP.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_tenure")]
-		public System.Nullable<HE.Investment.AHP.CRM.Model.invln_tenure> invln_Tenure
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_tenure> invln_Tenure
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_tenure");
 				if ((optionSet != null))
 				{
-					return ((HE.Investment.AHP.CRM.Model.invln_tenure)(System.Enum.ToObject(typeof(HE.Investment.AHP.CRM.Model.invln_tenure), optionSet.Value)));
+					return ((HE.Investments.CRM.Common.Model.invln_tenure)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_tenure), optionSet.Value)));
 				}
 				else
 				{
@@ -9972,14 +9972,14 @@ namespace HE.Investment.AHP.CRM.Model
 		/// Status of the AHP Application
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
-		public System.Nullable<HE.Investment.AHP.CRM.Model.invln_schemeState> statecode
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_schemeState> statecode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
 				if ((optionSet != null))
 				{
-					return ((HE.Investment.AHP.CRM.Model.invln_schemeState)(System.Enum.ToObject(typeof(HE.Investment.AHP.CRM.Model.invln_schemeState), optionSet.Value)));
+					return ((HE.Investments.CRM.Common.Model.invln_schemeState)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_schemeState), optionSet.Value)));
 				}
 				else
 				{
@@ -10005,14 +10005,14 @@ namespace HE.Investment.AHP.CRM.Model
 		/// Reason for the status of the AHP Application
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
-		public System.Nullable<HE.Investment.AHP.CRM.Model.invln_scheme_statuscode> statuscode
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_scheme_statuscode> statuscode
 		{
 			get
 			{
 				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
 				if ((optionSet != null))
 				{
-					return ((HE.Investment.AHP.CRM.Model.invln_scheme_statuscode)(System.Enum.ToObject(typeof(HE.Investment.AHP.CRM.Model.invln_scheme_statuscode), optionSet.Value)));
+					return ((HE.Investments.CRM.Common.Model.invln_scheme_statuscode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_scheme_statuscode), optionSet.Value)));
 				}
 				else
 				{
@@ -10117,13 +10117,13 @@ namespace HE.Investment.AHP.CRM.Model
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="HE.Investment.AHP.CRM.Model.invln_scheme"/> entities.
+		/// Gets a binding to the set of all <see cref="HE.Investments.CRM.Common.Model.invln_scheme"/> entities.
 		/// </summary>
-		public System.Linq.IQueryable<HE.Investment.AHP.CRM.Model.invln_scheme> invln_schemeSet
+		public System.Linq.IQueryable<HE.Investments.CRM.Common.Model.invln_scheme> invln_schemeSet
 		{
 			get
 			{
-				return this.CreateQuery<HE.Investment.AHP.CRM.Model.invln_scheme>();
+				return this.CreateQuery<HE.Investments.CRM.Common.Model.invln_scheme>();
 			}
 		}
 	}
