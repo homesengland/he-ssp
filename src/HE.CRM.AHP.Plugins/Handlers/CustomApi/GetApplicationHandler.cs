@@ -25,7 +25,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
         public override void DoWork()
         {
             TracingService.Trace("method");
-            var application = CrmServicesFactory.Get<IApplicationService>().GetApplication(applicationId, organisationId, contactId, fieldsToRetrieve);
+            var application = CrmServicesFactory.Get<IApplicationService>().GetApplication(organisationId, contactId, fieldsToRetrieve, applicationId);
             if (application != null)
             {
                 var serializedApplication = JsonSerializer.Serialize(application);
