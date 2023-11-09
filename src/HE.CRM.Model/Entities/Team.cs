@@ -122,6 +122,7 @@ namespace DataverseModel
 			public const string team_invln_isp = "team_invln_isp";
 			public const string team_invln_loanapplication = "team_invln_loanapplication";
 			public const string team_invln_loanstatuschange = "team_invln_loanstatuschange";
+			public const string team_invln_localauthority = "team_invln_localauthority";
 			public const string team_invln_notificationsetting = "team_invln_notificationsetting";
 			public const string team_invln_organisationchangerequest = "team_invln_organisationchangerequest";
 			public const string team_invln_portal = "team_invln_portal";
@@ -1056,6 +1057,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("team_invln_loanstatuschange");
 				this.SetRelatedEntities<DataverseModel.invln_Loanstatuschange>("team_invln_loanstatuschange", null, value);
 				this.OnPropertyChanged("team_invln_loanstatuschange");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_localauthority
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_localauthority")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_localauthority> team_invln_localauthority
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_localauthority>("team_invln_localauthority", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_localauthority");
+				this.SetRelatedEntities<DataverseModel.invln_localauthority>("team_invln_localauthority", null, value);
+				this.OnPropertyChanged("team_invln_localauthority");
 			}
 		}
 		
