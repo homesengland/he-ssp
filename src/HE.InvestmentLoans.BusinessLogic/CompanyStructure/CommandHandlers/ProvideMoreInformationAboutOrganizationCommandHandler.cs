@@ -14,6 +14,7 @@ using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Models.File;
 using HE.Investments.DocumentService.Services;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
@@ -76,7 +77,7 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                     {
                         ListTitle = _config.ListTitle,
                         FolderPath = $"{await _companyStructureRepository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken)}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
-                        File = file,
+                        File = formFile,
                         Metadata = JsonSerializer.Serialize(new FileMetadata
                         {
                             Creator = $"{userDetails.FirstName} {userDetails.LastName}",

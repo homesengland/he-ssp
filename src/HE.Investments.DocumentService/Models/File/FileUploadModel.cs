@@ -18,7 +18,7 @@ public class FileUploadModel
     public string FolderPath { get; set; }
 
     [Required]
-    public FileData File { get; set; }
+    public IFormFile File { get; set; }
 
     [Required]
     public string Metadata { get; set; }
