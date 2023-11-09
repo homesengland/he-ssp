@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace HE.DocumentService.SharePoint.Models.File;
 
-public class FileUploadModel<T>
+public class FileUploadModel
 {
     [Required]
     public string ListTitle { get; set; }
@@ -17,7 +17,7 @@ public class FileUploadModel<T>
     public string FolderPath { get; set; }
 
     [Required]
-    public T File { get; set; }
+    public IFormFile File { get; set; }
 
     [Required]
     public string Metadata { get; set; }

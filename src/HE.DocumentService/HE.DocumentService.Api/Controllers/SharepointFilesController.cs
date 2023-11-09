@@ -1,9 +1,21 @@
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Net;
+using System.Text;
 using HE.DocumentService.SharePoint.Interfaces;
 using HE.DocumentService.SharePoint.Models.File;
 using HE.DocumentService.SharePoint.Models.Table;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Net.Http.Headers;
 using Microsoft.Office.SharePoint.Tools;
+using Microsoft.SharePoint.News.DataModel;
+using Newtonsoft.Json;
+using PnP.Framework.Modernization.Entities;
 
 namespace HE.DocumentService.Api.Controllers;
 [ApiController]
@@ -24,15 +36,9 @@ public class SharepointFilesController : CustomControllerBase
         return rows;
     }
 
-    [HttpPost("UploadAsForm")]
-    public async Task Upload([FromForm] FileUploadModel<IFormFile> item)
-    {
-        await Service<ISharePointFilesService>().UploadFile(item);
-    }
-
     [HttpPost("Upload")]
     [DisableRequestSizeLimit]
-    public async Task Upload(FileUploadModel<FileData> item)
+    public async Task Upload([FromForm] FileUploadModel item)
     {
         await Service<ISharePointFilesService>().UploadFile(item);
     }
