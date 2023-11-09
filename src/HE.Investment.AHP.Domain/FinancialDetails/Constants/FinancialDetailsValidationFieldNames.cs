@@ -1,6 +1,6 @@
-using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 
-namespace HE.Investment.AHP.Contract.FinancialDetails.Constants;
+namespace HE.Investment.AHP.Domain.FinancialDetails.Constants;
 public static class FinancialDetailsValidationFieldNames
 {
     public const string PurchasePrice = nameof(PurchasePrice);
