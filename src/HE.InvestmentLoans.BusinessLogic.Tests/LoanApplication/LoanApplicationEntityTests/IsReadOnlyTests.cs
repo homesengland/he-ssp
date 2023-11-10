@@ -2,6 +2,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
@@ -27,7 +28,7 @@ public class IsReadOnlyTests : TestBase<LoanApplicationEntity>
     public void ShouldReturnTrue_WhenLoanApplicationStatusIsReadOnly(ApplicationStatus status)
     {
         // given
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;
@@ -48,7 +49,7 @@ public class IsReadOnlyTests : TestBase<LoanApplicationEntity>
     public void ShouldReturnFalse_WhenLoanApplicationStatusIsNotReadOnly(ApplicationStatus status)
     {
         // given
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;

@@ -8,6 +8,7 @@ using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Org.HE.Common.IntegrationModel.PortalIntegrationModel;
@@ -33,7 +34,7 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
     public async Task FailWhenAccountIsAlreadyLinkedWithOrganization()
     {
         // given
-        LoanUserContextTestBuilder
+        AccountUserContextTestBuilder
             .New()
             .IsLinkedWithOrganization()
             .Register(this);
@@ -50,7 +51,7 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
     public async Task FailWhenSearchServiceRequestWasUnsuccessful()
     {
         // given
-        LoanUserContextTestBuilder
+        AccountUserContextTestBuilder
             .New()
             .IsNotLinkedWithOrganization()
             .Register(this);
@@ -69,7 +70,7 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
     public async Task FailWhenOrganizationCannotBeFound()
     {
         // given
-        LoanUserContextTestBuilder
+        AccountUserContextTestBuilder
             .New()
             .IsNotLinkedWithOrganization()
             .Register(this);
@@ -88,7 +89,7 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
     public async Task CreateOrganizationInCrm_WhenLinkedOrganizationDoesntExistInCrm()
     {
         // given
-        LoanUserContextTestBuilder
+        AccountUserContextTestBuilder
             .New()
             .IsNotLinkedWithOrganization()
             .Register(this);
@@ -114,7 +115,7 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
     public async Task DoNotCreateOrganizationInCrm_WhenLinkedOrganizationExistsInCrm()
     {
         // given
-        LoanUserContextTestBuilder
+        AccountUserContextTestBuilder
             .New()
             .IsNotLinkedWithOrganization()
             .Register(this);

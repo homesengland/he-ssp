@@ -1,8 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using MediatR;
@@ -12,7 +12,7 @@ namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 
 public class ProvideCompanyPurposeCommandHandler : CompanyStructureBaseCommandHandler, IRequestHandler<ProvideCompanyPurposeCommand, OperationResult>
 {
-    public ProvideCompanyPurposeCommandHandler(ICompanyStructureRepository companyStructureRepository, ILoanApplicationRepository loanApplicationRepository, ILoanUserContext loanUserContext, ILogger<CompanyStructureBaseCommandHandler> logger)
+    public ProvideCompanyPurposeCommandHandler(ICompanyStructureRepository companyStructureRepository, ILoanApplicationRepository loanApplicationRepository, IAccountUserContext loanUserContext, ILogger<CompanyStructureBaseCommandHandler> logger)
         : base(companyStructureRepository, loanApplicationRepository, loanUserContext, logger)
     {
     }

@@ -1,18 +1,18 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Account.Shared;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 
 public class GetSubmitLoanApplicationQueryHandler : IRequestHandler<GetSubmitLoanApplicationQuery, GetSubmitLoanApplicationQueryResponse>
 {
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
     private readonly ILoanApplicationRepository _loanApplicationRepository;
 
     public GetSubmitLoanApplicationQueryHandler(
-        ILoanUserContext loanUserContext,
+        IAccountUserContext loanUserContext,
         ILoanApplicationRepository loanApplicationRepository)
     {
         _loanUserContext = loanUserContext;

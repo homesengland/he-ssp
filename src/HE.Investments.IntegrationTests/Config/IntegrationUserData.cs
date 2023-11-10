@@ -1,6 +1,7 @@
 using System.Globalization;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
+using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Extensions;
 
 namespace HE.InvestmentLoans.IntegrationTests.Config;
@@ -17,8 +18,8 @@ public class IntegrationUserData
             return;
         }
 
-        FirstName = FirstName.FromString("Integration")!;
-        LastName = LastName.FromString($"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}")!;
+        FirstName = new FirstName("Integration")!;
+        LastName = new LastName($"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}")!;
     }
 
     public IntegrationUserData(UserConfig userConfig)
@@ -27,12 +28,12 @@ public class IntegrationUserData
         {
             UserGlobalId = userConfig.UserGlobalId;
             Email = userConfig.Email;
-            FirstName = FirstName.FromString(userConfig.FirstName)!;
-            LastName = LastName.FromString(userConfig.LastName)!;
+            FirstName = new FirstName(userConfig.FirstName)!;
+            LastName = new LastName(userConfig.LastName)!;
             OrganizationName = userConfig.OrganizationName;
             OrganizationRegistrationNumber = userConfig.OrganizationRegistrationNumber;
             OrganizationAddress = userConfig.OrganizationAddress;
-            TelephoneNumber = TelephoneNumber.New(userConfig.TelephoneNumber);
+            TelephoneNumber = new TelephoneNumber(userConfig.TelephoneNumber);
             LoanApplicationIdInDraftState = userConfig.LoanApplicationIdInDraftState;
             ProjectInDraftStateId = userConfig.ProjectIdInDraftState;
             SubmittedLoanApplicationId = userConfig.SubmittedLoanApplicationId;
@@ -42,8 +43,8 @@ public class IntegrationUserData
             return;
         }
 
-        FirstName = FirstName.FromString("Integration")!;
-        LastName = LastName.FromString($"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}")!;
+        FirstName = new FirstName("Integration")!;
+        LastName = new LastName($"Test-{DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)}")!;
     }
 
     public string UserGlobalId { get; private set; }
@@ -64,7 +65,7 @@ public class IntegrationUserData
 
     public string ContactName => $"{FirstName} {LastName}";
 
-    public TelephoneNumber TelephoneNumber { get; private set; } = TelephoneNumber.New("01427 611 833");
+    public TelephoneNumber TelephoneNumber { get; private set; } = new("01427 611 833");
 
     public string LoanApplicationIdInDraftState { get; private set; }
 
@@ -134,10 +135,10 @@ public class IntegrationUserData
 
         UserGlobalId = "auth0|64a3bdb420d21a3fc5193e4d";
         Email = "luci_001@pwc.com";
-        FirstName = FirstName.New("John");
-        LastName = LastName.New("Doe");
-        JobTitle = JobTitle.New("Developer");
-        TelephoneNumber = TelephoneNumber.New("Carq pozdrawia");
+        FirstName = new FirstName("John");
+        LastName = new LastName("Doe");
+        JobTitle = new JobTitle("Developer");
+        TelephoneNumber = new TelephoneNumber("Carq pozdrawia");
         OrganizationName = "DO_NOT_DELETE_DEFAULT_ACCOUNT";
         OrganizationRegistrationNumber = "Not provided";
         OrganizationAddress = "12 Wharf Street";

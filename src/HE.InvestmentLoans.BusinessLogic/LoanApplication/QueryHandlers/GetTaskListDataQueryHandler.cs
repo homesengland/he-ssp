@@ -1,7 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Queries;
+using HE.Investments.Account.Shared;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
@@ -10,9 +10,9 @@ public class GetTaskListDataQueryHandler : IRequestHandler<GetTaskListDataQuery,
 {
     private readonly ILoanApplicationRepository _applicationRepository;
 
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
 
-    public GetTaskListDataQueryHandler(ILoanApplicationRepository applicationRepository, ILoanUserContext loanUserContext)
+    public GetTaskListDataQueryHandler(ILoanApplicationRepository applicationRepository, IAccountUserContext loanUserContext)
     {
         _applicationRepository = applicationRepository;
         _loanUserContext = loanUserContext;

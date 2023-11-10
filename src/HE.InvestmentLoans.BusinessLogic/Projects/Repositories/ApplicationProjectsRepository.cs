@@ -10,6 +10,7 @@ using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.PowerPlatform.Dataverse.Client;
 

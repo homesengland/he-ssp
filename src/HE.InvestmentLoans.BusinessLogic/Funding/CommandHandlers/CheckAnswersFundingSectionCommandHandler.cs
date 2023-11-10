@@ -1,11 +1,11 @@
 using HE.InvestmentLoans.BusinessLogic.Funding.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Events;
 using HE.InvestmentLoans.Contract.Application.Extensions;
 using HE.InvestmentLoans.Contract.Funding.Commands;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using MediatR;
@@ -18,14 +18,14 @@ public class CheckAnswersFundingSectionCommandHandler : IRequestHandler<CheckAns
 
     private readonly ILoanApplicationRepository _loanApplicationRepository;
 
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
 
     private readonly ILogger<FundingBaseCommandHandler> _logger;
 
     public CheckAnswersFundingSectionCommandHandler(
         IFundingRepository fundingRepository,
         ILoanApplicationRepository loanApplicationRepository,
-        ILoanUserContext loanUserContext,
+        IAccountUserContext loanUserContext,
         ILogger<FundingBaseCommandHandler> logger)
     {
         _fundingRepository = fundingRepository;

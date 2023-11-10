@@ -5,6 +5,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Funding.Commands;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
@@ -16,7 +17,7 @@ public class ProvidePlanningPermissionStatusCommandHandlerTests : TestBase<Provi
 
     public ProvidePlanningPermissionStatusCommandHandlerTests()
     {
-        LoanUserContextTestBuilder.New().Register(this);
+        AccountUserContextTestBuilder.New().Register(this);
     }
 
     [Theory]

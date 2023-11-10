@@ -1,8 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.Funding.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Funding.Commands;
 using HE.InvestmentLoans.Contract.Funding.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using MediatR;
@@ -15,7 +15,7 @@ public class ProvideAdditionalProjectsCommandHandler : FundingBaseCommandHandler
     public ProvideAdditionalProjectsCommandHandler(
         IFundingRepository fundingRepository,
         ILoanApplicationRepository loanApplicationRepository,
-        ILoanUserContext loanUserContext,
+        IAccountUserContext loanUserContext,
         ILogger<FundingBaseCommandHandler> logger)
         : base(fundingRepository, loanApplicationRepository, loanUserContext, logger)
     {

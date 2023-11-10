@@ -1,6 +1,8 @@
 using HE.Investments.Account.Domain.Tests.User.TestData;
 using HE.Investments.Account.Domain.User;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 
@@ -10,13 +12,15 @@ public class AccountUserContextTestBuilder
 {
     private readonly Mock<IAccountUserContext> _mock;
 
-    private AccountUserContextTestBuilder(UserAccount? userAccount, UserDetails? userDetails = null)
+    private AccountUserContextTestBuilder(UserAccount? userAccount)
     {
         _mock = new Mock<IAccountUserContext>();
         ReturnUserAccount(userAccount ?? UserAccountTestData.UserAccountOne);
     }
 
     public UserAccount UserAccountFromMock { get; private set; }
+
+    public UserProfileDetails ProfileDetailsFromMock { get; private set; }
 
     public static AccountUserContextTestBuilder New(UserAccount? userAccount = null) => new(userAccount);
 
@@ -53,6 +57,14 @@ public class AccountUserContextTestBuilder
     {
         var mockedObject = Build();
         registerDependency.RegisterDependency(mockedObject);
+        return this;
+    }
+
+    public AccountUserContextTestBuilder ReturnProfileDetails(UserProfileDetails profileDetails)
+    {
+        ProfileDetailsFromMock = profileDetails;
+        _mock.Setup(x => x.GetProfileDetails()).ReturnsAsync(profileDetails);
+
         return this;
     }
 }

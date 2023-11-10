@@ -6,6 +6,7 @@ using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Security.Commands;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
@@ -16,7 +17,7 @@ public class CheckSecurityAnswersCommandHandlerTests : TestBase<CheckSecurityAns
 
     public CheckSecurityAnswersCommandHandlerTests()
     {
-        LoanUserContextTestBuilder
+        AccountUserContextTestBuilder
             .New()
             .Register(this);
     }

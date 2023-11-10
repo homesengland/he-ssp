@@ -5,6 +5,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Funding.Queries;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
@@ -22,7 +23,7 @@ public class GetFundingQueryHandlerTests : TestBase<GetFundingQueryHandler>
             .WithAllDataProvided()
             .Build();
 
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;

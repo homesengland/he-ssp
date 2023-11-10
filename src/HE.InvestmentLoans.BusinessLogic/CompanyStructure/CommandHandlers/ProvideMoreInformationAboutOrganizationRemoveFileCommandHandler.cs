@@ -1,7 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Validators;
 using HE.Investments.DocumentService.Configs;
@@ -21,7 +21,7 @@ public class ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler : C
     public ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler(
                 ICompanyStructureRepository companyStructureRepository,
                 ILoanApplicationRepository loanApplicationRepository,
-                ILoanUserContext loanUserContext,
+                IAccountUserContext loanUserContext,
                 ILogger<CompanyStructureBaseCommandHandler> logger,
                 IHttpDocumentService documentService,
                 IDocumentServiceConfig config,
