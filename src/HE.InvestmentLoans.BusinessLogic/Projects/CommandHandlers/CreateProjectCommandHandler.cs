@@ -1,7 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Validators;
 using MediatR;
 
@@ -10,9 +10,9 @@ namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
 public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, OperationResult<ProjectId>>
 {
     private readonly IApplicationProjectsRepository _applicationProjectsRepository;
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
 
-    public CreateProjectCommandHandler(IApplicationProjectsRepository applicationProjectsRepository, ILoanUserContext loanUserContext)
+    public CreateProjectCommandHandler(IApplicationProjectsRepository applicationProjectsRepository, IAccountUserContext loanUserContext)
     {
         _applicationProjectsRepository = applicationProjectsRepository;
         _loanUserContext = loanUserContext;

@@ -63,6 +63,7 @@ namespace DataverseModel
 			public const string Id = "invln_localauthorityid";
 			public const string invln_localauthorityname = "invln_localauthorityname";
 			public const string invln_onscode = "invln_onscode";
+			public const string invln_Region = "invln_region";
 			public const string lk_invln_localauthority_createdby = "lk_invln_localauthority_createdby";
 			public const string lk_invln_localauthority_createdonbehalfby = "lk_invln_localauthority_createdonbehalfby";
 			public const string lk_invln_localauthority_modifiedby = "lk_invln_localauthority_modifiedby";
@@ -273,6 +274,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_onscode");
 				this.SetAttributeValue("invln_onscode", value);
 				this.OnPropertyChanged("invln_onscode");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_region")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Region
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_region");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Region");
+				this.SetAttributeValue("invln_region", value);
+				this.OnPropertyChanged("invln_Region");
 			}
 		}
 		

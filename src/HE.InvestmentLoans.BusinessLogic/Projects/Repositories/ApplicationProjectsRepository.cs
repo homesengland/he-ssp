@@ -217,7 +217,8 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILo
 
         var req = new invln_createsinglesitedetailRequest
         {
-            invln_sitedetails = CrmResponseSerializer.Serialize(siteDetails), invln_loanapplicationid = loanApplicationId.Value.ToString(),
+            invln_sitedetails = CrmResponseSerializer.Serialize(siteDetails),
+            invln_loanapplicationid = loanApplicationId.Value.ToString(),
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);

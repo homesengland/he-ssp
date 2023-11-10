@@ -2,9 +2,10 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.Queries;
-using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
+using HE.Investments.Account.Contract.User.Commands;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.User;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
@@ -17,10 +18,10 @@ namespace HE.InvestmentLoans.WWW.Controllers;
 public class HomeController : Controller
 {
     private readonly IMediator _mediator;
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
     private readonly IUserContext _userContext;
 
-    public HomeController(IMediator mediator, IUserContext userContext, ILoanUserContext loanUserContext)
+    public HomeController(IMediator mediator, IUserContext userContext, IAccountUserContext loanUserContext)
     {
         _mediator = mediator;
         _userContext = userContext;

@@ -5,15 +5,16 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
@@ -135,7 +136,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
                     x.lastModificationByName)).ToList();
     }
 
-    public async Task Save(LoanApplicationEntity loanApplication, UserDetails userDetails, CancellationToken cancellationToken)
+    public async Task Save(LoanApplicationEntity loanApplication, UserProfileDetails userDetails, CancellationToken cancellationToken)
     {
         var loanApplicationDto = new LoanApplicationDto()
         {

@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.WWW.Controllers;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ public class AuthorizeWithoutLinkedOrganiztionOnly : AuthorizeAttribute, IAsyncA
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
-        var loanUserContext = context.HttpContext.RequestServices.GetRequiredService<ILoanUserContext>();
+        var loanUserContext = context.HttpContext.RequestServices.GetRequiredService<IAccountUserContext>();
 
         if (await loanUserContext.IsLinkedWithOrganization())
         {

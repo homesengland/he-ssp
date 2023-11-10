@@ -4,6 +4,7 @@ using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Enums;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Funding.Commands;
 using HE.InvestmentLoans.Contract.Projects;
@@ -39,9 +40,9 @@ public class ProjectController : WorkflowController<ProjectState>
     {
         if (projectId != Guid.Empty)
         {
-            var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.ProjectName));
+            var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.GetStatus));
 
-            if (result.IsReadOnly())
+            if (result.IsReadOnly() || result.Status == SectionStatus.Completed)
             {
                 return RedirectToAction("CheckAnswers", new { Id = id, ProjectId = projectId });
             }

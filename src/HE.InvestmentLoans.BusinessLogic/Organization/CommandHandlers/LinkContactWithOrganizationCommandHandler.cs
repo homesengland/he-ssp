@@ -1,10 +1,9 @@
 extern alias Org;
 
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Organization;
+using HE.Investments.Account.Shared;
 using MediatR;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Org.HE.Investments.Organisation.Contract;
@@ -14,13 +13,13 @@ namespace HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
 
 public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkContactWithOrganizationCommand>
 {
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
     private readonly IOrganizationService _organizationService;
     private readonly IOrganisationSearchService _organisationSearchService;
     private readonly IOrganizationServiceAsync2 _organizationServiceAsync;
     private readonly IContactService _contactService;
 
-    public LinkContactWithOrganizationCommandHandler(ILoanUserContext loanUserContext, IOrganizationService organizationService, IOrganisationSearchService organisationSearchService, IOrganizationServiceAsync2 organizationServiceAsync, IContactService contactService)
+    public LinkContactWithOrganizationCommandHandler(IAccountUserContext loanUserContext, IOrganizationService organizationService, IOrganisationSearchService organisationSearchService, IOrganizationServiceAsync2 organizationServiceAsync, IContactService contactService)
     {
         _loanUserContext = loanUserContext;
         _organizationService = organizationService;
@@ -60,7 +59,6 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
         }
 
         await _contactService.LinkContactWithOrganization(_organizationServiceAsync, _loanUserContext.UserGlobalId.ToString(), request.Number.ToString()!, PortalConstants.LoansPortalType);
-
-        await _loanUserContext.RefreshUserData();
+        await _loanUserContext.RefreshAccounts();
     }
 }

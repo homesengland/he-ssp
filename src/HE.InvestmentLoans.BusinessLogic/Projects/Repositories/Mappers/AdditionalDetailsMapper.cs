@@ -2,7 +2,6 @@ using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Common;
 using HE.Investments.Common.Extensions;
 

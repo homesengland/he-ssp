@@ -1,16 +1,16 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
+using HE.Investments.Account.Shared;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.QueryHandlers;
 public class GetProjectQueryHandler : IRequestHandler<GetProjectQuery, ProjectViewModel>
 {
     private readonly IApplicationProjectsRepository _applicationProjectsRepository;
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
 
-    public GetProjectQueryHandler(IApplicationProjectsRepository applicationProjectsRepository, ILoanUserContext loanUserContext)
+    public GetProjectQueryHandler(IApplicationProjectsRepository applicationProjectsRepository, IAccountUserContext loanUserContext)
     {
         _applicationProjectsRepository = applicationProjectsRepository;
         _loanUserContext = loanUserContext;

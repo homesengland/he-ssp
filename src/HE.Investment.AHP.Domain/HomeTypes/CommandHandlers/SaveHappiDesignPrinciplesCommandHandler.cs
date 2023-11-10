@@ -16,7 +16,6 @@ public class SaveHappiDesignPrinciplesCommandHandler : SaveHomeTypeSegmentComman
 
     protected override IEnumerable<Action<SaveHappiDesignPrinciplesCommand, IHomeTypeEntity>> SaveActions => new[]
     {
-        (SaveHappiDesignPrinciplesCommand request, IHomeTypeEntity homeType) =>
-            homeType.DesignPlans.ChangeDesignPrinciples(request.DesignPrinciples),
+        (SaveHappiDesignPrinciplesCommand request, IHomeTypeEntity homeType) => homeType.DesignPlans.ChangeDesignPrinciples(request.DesignPrinciples),
     };
 }

@@ -2,7 +2,7 @@ using HE.Investment.AHP.Domain.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
-using HE.Investment.AHP.Domain.Common;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 
@@ -15,6 +15,6 @@ public class UpdateApplicationTenureCommandHandler : UpdateApplicationCommandHan
 
     protected override void Update(UpdateApplicationTenureCommand request, ApplicationEntity application)
     {
-        application.ChangeTenure(new ApplicationTenure(EnumMapper.MapByName<Contract.Application.Tenure, Tenure>(request.Tenure)));
+        application.ChangeTenure(new ApplicationTenure(request.Tenure));
     }
 }

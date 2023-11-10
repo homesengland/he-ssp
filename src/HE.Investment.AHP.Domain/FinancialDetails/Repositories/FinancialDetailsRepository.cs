@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
-using ApplicationId = HE.Investment.AHP.Contract.FinancialDetails.ValueObjects.ApplicationId;
+using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 

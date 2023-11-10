@@ -4,6 +4,7 @@ using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Extensions;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 

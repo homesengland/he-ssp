@@ -1,11 +1,11 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Enums;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 
@@ -169,7 +169,7 @@ public class Project : DomainEntity
 
         if (planningReferenceNumber.IsProvided() && PlanningReferenceNumber.IsProvided())
         {
-            if (planningReferenceNumber!.Exists && planningReferenceNumber.Value.IsNotProvided() && PlanningReferenceNumber!.Exists)
+            if (planningReferenceNumber!.Exists && ObjectExtensions.IsNotProvided(planningReferenceNumber.Value) && PlanningReferenceNumber!.Exists)
             {
                 PlanningReferenceNumber = new PlanningReferenceNumber(planningReferenceNumber.Exists, PlanningReferenceNumber.Value);
             }
@@ -340,7 +340,7 @@ public class Project : DomainEntity
     private bool CanBeCompleted()
     {
         return StartDate.IsProvided() &&
-            PlanningReferenceNumber.IsProvided() && (!PlanningReferenceNumber!.Exists || (PlanningReferenceNumber.Value.IsProvided() && PlanningPermissionStatus.IsProvided())) &&
+            PlanningReferenceNumber.IsProvided() && (!PlanningReferenceNumber!.Exists || (ObjectExtensions.IsProvided(PlanningReferenceNumber.Value) && PlanningPermissionStatus.IsProvided())) &&
             HomesCount.IsProvided() &&
             HomesTypes.IsProvided() && HomesTypes!.HomesTypesValue.Any() &&
             ProjectType.IsProvided() &&

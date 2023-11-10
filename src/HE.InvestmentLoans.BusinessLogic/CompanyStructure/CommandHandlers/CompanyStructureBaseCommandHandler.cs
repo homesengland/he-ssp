@@ -1,10 +1,10 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Events;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using Microsoft.Extensions.Logging;
@@ -17,14 +17,14 @@ public class CompanyStructureBaseCommandHandler
 
     private readonly ILoanApplicationRepository _loanApplicationRepository;
 
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
 
     private readonly ILogger<CompanyStructureBaseCommandHandler> _logger;
 
     public CompanyStructureBaseCommandHandler(
         ICompanyStructureRepository companyStructureRepository,
         ILoanApplicationRepository loanApplicationRepository,
-        ILoanUserContext loanUserContext,
+        IAccountUserContext loanUserContext,
         ILogger<CompanyStructureBaseCommandHandler> logger)
     {
         _companyStructureRepository = companyStructureRepository;

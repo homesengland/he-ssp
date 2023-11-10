@@ -2,6 +2,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User.QueryHandlers;
 using HE.InvestmentLoans.Contract.User.Queries;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
@@ -12,17 +13,17 @@ public class GetUserAccountQueryHandlerTests : TestBase<GetUserAccountQueryHandl
     public async Task ShouldReturnUserAccount()
     {
         // given
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;
 
         var userDetails = UserDetailsTestData.UserDetailsOne;
 
-        LoanUserContextTestBuilder
+        AccountUserContextTestBuilder
             .New()
             .ReturnUserAccount(userAccount)
-            .ReturnUserDetails(userDetails)
+            .ReturnProfileDetails(userDetails)
             .Register(this);
 
         // when

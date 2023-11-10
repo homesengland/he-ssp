@@ -16,7 +16,6 @@ public class SaveOlderPeopleHousingTypeCommandHandler : SaveHomeTypeSegmentComma
 
     protected override IEnumerable<Action<SaveOlderPeopleHousingTypeCommand, IHomeTypeEntity>> SaveActions => new[]
     {
-        (SaveOlderPeopleHousingTypeCommand request, IHomeTypeEntity homeType) =>
-            homeType.OlderPeopleHomeTypeDetails.ChangeHousingType(request.HousingType),
+        (SaveOlderPeopleHousingTypeCommand request, IHomeTypeEntity homeType) => homeType.OlderPeopleHomeTypeDetails.ChangeHousingType(request.HousingType),
     };
 }

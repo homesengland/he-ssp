@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
@@ -15,7 +16,7 @@ public class CreateProjectCommandHandlerTests : TestBase<CreateProjectCommandHan
     {
         _command = new CreateProjectCommand(LoanApplicationIdTestData.LoanApplicationIdOne);
 
-        LoanUserContextTestBuilder.New().Register(this);
+        AccountUserContextTestBuilder.New().Register(this);
     }
 
     [Fact]

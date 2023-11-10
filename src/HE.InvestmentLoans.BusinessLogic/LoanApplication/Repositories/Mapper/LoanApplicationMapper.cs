@@ -9,6 +9,8 @@ using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.Funding;
 using HE.InvestmentLoans.Contract.Security;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.Entities;
+using Microsoft.Crm.Sdk.Messages;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 
@@ -33,16 +35,16 @@ public static class LoanApplicationMapper
         return model;
     }
 
-    public static UserAccountDto MapToUserAccountDto(UserAccount userAccount, UserDetails userDetails)
+    public static UserAccountDto MapToUserAccountDto(UserAccount userAccount, UserProfileDetails userProfileDetails)
     {
         return new UserAccountDto
         {
             AccountId = (Guid)userAccount.AccountId!,
             ContactEmail = userAccount.UserEmail,
             ContactExternalId = userAccount.UserGlobalId.ToString(),
-            ContactFirstName = userDetails.FirstName?.ToString(),
-            ContactLastName = userDetails.LastName?.ToString(),
-            ContactTelephoneNumber = userDetails.TelephoneNumber?.ToString(),
+            ContactFirstName = userProfileDetails.FirstName?.ToString(),
+            ContactLastName = userProfileDetails.LastName?.ToString(),
+            ContactTelephoneNumber = userProfileDetails.TelephoneNumber?.ToString(),
         };
     }
 
