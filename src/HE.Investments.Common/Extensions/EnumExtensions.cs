@@ -40,4 +40,10 @@ public static class EnumExtensions
     {
         return ((TEnum[])Enum.GetValues(typeof(TEnum))).Where(x => Convert.ToInt32(x, CultureInfo.InvariantCulture) != 0);
     }
+
+    public static TEnum MapTo<TEnum>(this Enum? value)
+        where TEnum : struct, Enum
+    {
+        return Enum.Parse<TEnum>(value?.ToString() ?? "Undefined");
+    }
 }

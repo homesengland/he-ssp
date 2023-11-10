@@ -1,6 +1,8 @@
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investments.Common.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
@@ -17,6 +19,6 @@ public class SaveDisabledPeopleHousingTypeCommandHandler : SaveHomeTypeSegmentCo
     protected override IEnumerable<Action<SaveDisabledPeopleHousingTypeCommand, IHomeTypeEntity>> SaveActions => new[]
     {
         (SaveDisabledPeopleHousingTypeCommand request, IHomeTypeEntity homeType) =>
-            homeType.DisabledPeopleHomeTypeDetails.ChangeHousingType(request.HousingType),
+            homeType.DisabledPeopleHomeTypeDetails.ChangeHousingType(request.HousingType.MapTo<DisabledPeopleHousingType>()),
     };
 }

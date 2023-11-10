@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Extensions;
@@ -29,7 +30,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
 
         var validationErrors = PerformWithValidation(
             () => homeTypes.ChangeName(homeType, request.HomeTypeName),
-            () => homeType.ChangeHousingType(request.HousingType));
+            () => homeType.ChangeHousingType(request.HousingType.MapTo<HousingType>()));
         if (validationErrors.Any())
         {
             return new OperationResult<HomeTypeId?>(validationErrors, null);

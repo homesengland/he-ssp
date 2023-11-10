@@ -1,8 +1,10 @@
 using HE.Investment.AHP.Contract.HomeTypes;
+using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common.Extensions;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
@@ -26,7 +28,7 @@ internal sealed class GetDisabledPeopleHomeTypeDetailsQueryHandler : IRequestHan
 
         return new DisabledPeopleHomeTypeDetails(
             homeType.Name?.Value,
-            homeType.DisabledPeopleHomeTypeDetails.HousingType,
-            homeType.DisabledPeopleHomeTypeDetails.ClientGroupType);
+            homeType.DisabledPeopleHomeTypeDetails.HousingType.MapTo<DisabledPeopleHousingType>(),
+            homeType.DisabledPeopleHomeTypeDetails.ClientGroupType.MapTo<DisabledPeopleClientGroupType>());
     }
 }
