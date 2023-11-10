@@ -1,7 +1,5 @@
 using System.Text.Json.Serialization;
 using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
-using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Contract.Application.Enums;
 using ApplicationId = HE.Investment.AHP.Contract.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;

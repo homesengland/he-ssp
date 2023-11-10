@@ -93,6 +93,7 @@ namespace HE.Xrm.ServiceClientExample
                 //invln_appfieldstoretrieve = fieldsToUpdate,
             };
             var resp2 = (invln_getahpapplicationResponse)serviceClient.Execute(req2);
+
             Console.WriteLine("A web service connection was not established.");
         }
 

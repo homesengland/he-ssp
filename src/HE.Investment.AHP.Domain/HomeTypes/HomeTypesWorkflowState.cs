@@ -12,4 +12,5 @@ public enum HomeTypesWorkflowState
     DisabledPeopleClientGroup,
     HomesForOlderPeople,
     HappiDesignPrinciples,
+    DesignPlans,
 }

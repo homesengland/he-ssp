@@ -1,0 +1,102 @@
+@using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Common.WWW.Helpers
+@model HE.Investment.AHP.WWW.Models.HomeTypes.DesignPlansModel;
+
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+
+    var (hasFileError, fileErrorMessage) = ViewData.ModelState.GetErrors("File");
+}
+
+@Html.Hidden("MaxFileSizeInMegabytes", 20)
+
+<div class="govuk-grid-column-full">
+    <form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" novalidate>
+        <gds-back-link href="@Url.Action("Back", "HomeTypes", new { applicationId, homeTypeId, currentPage = HomeTypesWorkflowState.DesignPlans })" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+
+        @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+        <gds-div-hint>@Model.Header</gds-div-hint>
+        <gds-legend class="govuk-!-margin-bottom-0">
+            <gds-h1 size="ControlSize.L">
+                Upload your design plans
+            </gds-h1>
+        </gds-legend>
+
+        <gds-div-hint>Upload all relevant files.</gds-div-hint>
+
+        <div id="file-input-form-group" class="govuk-form-group @(hasFileError ? "govuk-form-group--error" : string.Empty)">
+            <label class="govuk-label" for="File">
+                Upload a file (JPG, PNG, PDF, DOCX)
+            </label>
+            @if (hasFileError)
+            {
+                <span id="File-error"
+                      class="govuk-error-message field-validation-error"
+                      data-valmsg-for="File"
+                      data-valmsg-replace="true">
+                    <span class="govuk-visually-hidden">Error:</span>@fileErrorMessage
+                </span>
+            }
+            <input class="govuk-file-upload" id="File" name="File" type="file" multiple>
+        </div>
+
+        @if (Model.UploadedFiles.Any())
+        {
+            <table class="govuk-table">
+                <tbody class="govuk-table__body">
+                @for (var i = 0; i < Model.UploadedFiles.Count; i++)
+                {
+                    var index = i;
+                    @Html.HiddenFor(x => Model.UploadedFiles[index].FileId)
+                    @Html.HiddenFor(x => Model.UploadedFiles[index].FileName)
+                    @Html.HiddenFor(x => Model.UploadedFiles[index].UploadedBy)
+                    @Html.HiddenFor(x => Model.UploadedFiles[index].UploadedOn)
+                    @Html.HiddenFor(x => Model.UploadedFiles[index].CanBeRemoved)
+
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell govuk-!-font-weight-bold">
+                            @Model.UploadedFiles[i].FileName
+                        </td>
+                        <td class="govuk-table__cell">
+                            uploaded @DateHelper.DisplayAsUkFormatDateTime(Model.UploadedFiles[i].UploadedOn) by @Model.UploadedFiles[i].UploadedBy
+                        </td>
+                        <td class="govuk-table__cell govuk-!-text-align-right">
+                            @if (Model.UploadedFiles[i].CanBeRemoved)
+                            {
+                                <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4"
+                                          href="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "RemoveDesignPlansFile", applicationId, id = homeTypeId, fileId = Model.UploadedFiles[i].FileId })">
+                                    Remove
+                                </gds-link>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+
+        <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0 govuk-!-margin-top-8">
+            <legend>
+                <gds-label for="MoreInformation" size="ControlSize.M">
+                    Tell us more about your design plans (optional)
+                </gds-label>
+            </legend>
+            <gds-div-hint>Tell us any important information about the plans, or any additional information not included.</gds-div-hint>
+            <gds-text-area asp-for="MoreInformation"
+                           rows="7"></gds-text-area>
+            <gds-div-hint>You can enter up to 1500 characters</gds-div-hint>
+
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                Save and continue
+            </button>
+            <br/>
+
+            <vc:return-to-application-link application-id="@applicationId"/>
+        </gds-div-grid-column-two-thirds>
+    </form>
+</div>

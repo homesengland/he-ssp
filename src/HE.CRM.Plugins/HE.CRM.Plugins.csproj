@@ -140,6 +140,7 @@
     <Compile Include="Handlers\CustomApi\GetSingleInvestmentLoanForAccountAndContactHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetSingleSiteDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\ReturnUserProfileHandler.cs" />
+    <Compile Include="Handlers\CustomApi\SearchLocalAuthorityHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendInvestmentsLoanDataToCrmHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleLoanApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateSingleSiteDetailsHandler.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Plugins\CustomApi\GetSingleInvestmentLoanForAccountAndContactPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleSiteDetailsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\ReturnUserProfilePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\SearchLocalAuthorityPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SendInvestmentsLoanDataToCrmPlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateSingleLoanApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateSingleSiteDetailsPlugin.cs" />
@@ -266,6 +268,8 @@
     <Compile Include="Services\LoanApplication\LoanApplicationService.cs" />
     <Compile Include="Services\LoanStatusChange\ILoanStatusChangeService.cs" />
     <Compile Include="Services\LoanStatusChange\LoanStatusChangeService.cs" />
+    <Compile Include="Services\LocalAuthority\ILocalAuthorityService.cs" />
+    <Compile Include="Services\LocalAuthority\LocalAuthorityService.cs" />
     <Compile Include="Services\RichTextService\IRichTextService.cs" />
     <Compile Include="Services\RichTextService\RichTextService.cs" />
     <Compile Include="Services\SiteDetails\ISiteDetailsService.cs" />

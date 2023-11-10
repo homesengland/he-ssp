@@ -3,10 +3,11 @@ using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Organization.Commands;
 using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Common.Messages;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Utils;
-using HE.Investments.Organisation.CompaniesHouse;
 using HE.Investments.Organisation.CompaniesHouse.Contract;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,10 @@ namespace HE.Investments.Account.WWW.Controllers;
 public class OrganisationController : Controller
 {
     private readonly IMediator _mediator;
-    private readonly ICompaniesHouseApi _companiesHouseApi;
 
-    public OrganisationController(IMediator mediator, ICompaniesHouseApi companiesHouseApi)
+    public OrganisationController(IMediator mediator)
     {
         _mediator = mediator;
-        _companiesHouseApi = companiesHouseApi;
     }
 
     [HttpGet("search")]
@@ -32,9 +31,9 @@ public class OrganisationController : Controller
     }
 
     [HttpPost("search")]
-    public IActionResult SearchOrganization(OrganizationViewModel organization)
+    public IActionResult SearchOrganization(OrganisationSearchModel organisation)
     {
-        return RedirectToAction(nameof(SearchOrganizationResult), new { searchPhrase = organization.Name });
+        return RedirectToAction(nameof(SearchOrganizationResult), new { searchPhrase = organisation.Name });
     }
 
     [HttpGet("search/result")]
@@ -81,18 +80,6 @@ public class OrganisationController : Controller
     public IActionResult NoMatchFound()
     {
         return View();
-    }
-
-    [HttpGet("dev/search")]
-    public async Task<CompaniesHouseSearchResult> SearchOrganizationDemo(string companyName, CancellationToken cancellationToken = default)
-    {
-        return await _companiesHouseApi.Search(companyName, null, cancellationToken);
-    }
-
-    [HttpGet("dev/search-by-company-name")]
-    public async Task<CompaniesHouseGetByCompanyNumberResult> SearchOrganizationCompanyDemo(string companyNumber, CancellationToken cancellationToken = default)
-    {
-        return await _companiesHouseApi.GetByCompanyNumber(companyNumber, cancellationToken);
     }
 
     [HttpGet("create")]

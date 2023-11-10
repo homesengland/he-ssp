@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ContactDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ContactRolesDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\LoanApplicationDto.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\LocalAuthorityDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\OrganizationDetailsDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\SiteDetailsDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\UserAccountDto.cs" />

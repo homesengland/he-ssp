@@ -1,8 +1,8 @@
-using HE.InvestmentLoans.Common.Authorization;
 using HE.Investments.Account.Contract.User;
 using HE.Investments.Account.Contract.User.Queries;
 using HE.Investments.Account.Domain.User.Repositories;
-using HE.Investments.Account.Domain.User.ValueObjects;
+using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.User;
 using MediatR;
 
 namespace HE.Investments.Account.Domain.User.QueryHandlers;

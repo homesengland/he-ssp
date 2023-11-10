@@ -31,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_linkcontactwithorganization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_returnuserprofile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_savetemporaryportaldata.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_searchlocalauthority.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_searchorganizationbynameandcompanyhousename.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendgovnotifyemail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinternalcrmnotification.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ISP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanstatuschange.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_localauthority.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_notificationsetting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_organisationchangerequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_portal.cs" />

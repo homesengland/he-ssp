@@ -1,9 +1,7 @@
-using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 using HE.InvestmentLoans.Common.Models.App;
-using HE.InvestmentLoans.Common.Utils.Constants.Notification;
-using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.Events;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Common.Services.Notifications;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.EventHandlers;
 

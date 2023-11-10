@@ -30,6 +30,6 @@ public class ContactRepository : IContactRepository
             organisationId,
             portalType);
 
-        _loanUserContext.RefreshUserData();
+        await _loanUserContext.RefreshUserData();
     }
 }

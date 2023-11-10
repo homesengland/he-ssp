@@ -9,6 +9,7 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.InvestmentLoans.WWW.Views.FundingV2.Consts;
+using HE.Investments.Common.Extensions;
 using Xunit;
 using Xunit.Extensions.Ordering;
 using CommonResponse = HE.InvestmentLoans.Common.Utils.Constants.FormOption.CommonResponse;

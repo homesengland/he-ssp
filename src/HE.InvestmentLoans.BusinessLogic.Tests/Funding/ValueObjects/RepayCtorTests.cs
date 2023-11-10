@@ -1,6 +1,6 @@
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Funding.ValueObjects;
+using HE.Investments.Common.Exceptions;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Funding.ValueObjects;

@@ -1,6 +1,7 @@
 extern alias Org;
 
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
+using HE.Investments.Account.Domain.Tests.User.TestData;
 using HE.Investments.TestsUtils.TestFramework;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Moq;

@@ -1,9 +1,9 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
-using HE.InvestmentLoans.Contract.UserOrganisation.Queries;
+using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Account.Domain.Organisation.Repositories;
+using HE.Investments.Account.Shared.User;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.UserOrganisation.QueryHandlers;

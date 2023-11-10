@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.Common.Validators;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;

@@ -1,15 +1,17 @@
 extern alias Org;
 
-using HE.InvestmentLoans.BusinessLogic.Organization.Entities;
-using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
-using HE.InvestmentLoans.BusinessLogic.Organization.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Organization.Commands;
+using HE.Investments.Account.Domain.Organisation.Entities;
+using HE.Investments.Account.Domain.Organisation.Repositories;
+using HE.Investments.Account.Domain.Organisation.ValueObjects;
+using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Validators;
 using MediatR;
+using IContactRepository = HE.InvestmentLoans.BusinessLogic.Organization.Repositories.IContactRepository;
 
 namespace HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
 

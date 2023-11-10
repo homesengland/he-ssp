@@ -1,12 +1,10 @@
-using HE.InvestmentLoans.BusinessLogic.Organization;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
-using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
+using HE.Investments.Common.Validators;
 using MediatR;
-using Microsoft.Xrm.Sdk;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.QueryHandlers;
 public class SearchLocalAuthoritiesQueryHandler : IRequestHandler<SearchLocalAuthoritiesQuery, OperationResult<LocalAuthoritiesViewModel>>

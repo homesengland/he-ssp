@@ -1,7 +1,10 @@
 using System.Collections.Concurrent;
+using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
+using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Repositories;
 
@@ -9,26 +12,37 @@ public class HomeTypeRepository : IHomeTypeRepository
 {
     private static readonly IDictionary<string, IList<HomeTypeEntity>> HomeTypes = new ConcurrentDictionary<string, IList<HomeTypeEntity>>();
 
-    public Task<HomeTypesEntity> GetByApplicationId(
-        string applicationId,
+    private readonly IApplicationRepository _applicationRepository;
+
+    private readonly IDesignFileService _designFileService;
+
+    public HomeTypeRepository(IApplicationRepository applicationRepository, IDesignFileService designFileService)
+    {
+        _applicationRepository = applicationRepository;
+        _designFileService = designFileService;
+    }
+
+    public async Task<HomeTypesEntity> GetByApplicationId(
+        ApplicationId applicationId,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken)
     {
-        if (!HomeTypes.TryGetValue(applicationId, out var homeTypes))
+        var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, cancellationToken);
+        if (!HomeTypes.TryGetValue(applicationId.Value, out var homeTypes))
         {
-            return Task.FromResult(new HomeTypesEntity(Enumerable.Empty<HomeTypeEntity>()));
+            return new HomeTypesEntity(application, Enumerable.Empty<HomeTypeEntity>());
         }
 
-        return Task.FromResult(new HomeTypesEntity(homeTypes));
+        return new HomeTypesEntity(application, homeTypes);
     }
 
     public Task<IHomeTypeEntity> GetById(
-        string applicationId,
+        ApplicationId applicationId,
         HomeTypeId homeTypeId,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken)
     {
-        var homeType = Get(applicationId, homeTypeId);
+        var homeType = Get(applicationId.Value, homeTypeId);
         if (homeType != null)
         {
             return Task.FromResult<IHomeTypeEntity>(homeType);
@@ -37,8 +51,8 @@ public class HomeTypeRepository : IHomeTypeRepository
         throw new NotFoundException(nameof(HomeTypeEntity), homeTypeId);
     }
 
-    public Task<IHomeTypeEntity> Save(
-        string applicationId,
+    public async Task<IHomeTypeEntity> Save(
+        ApplicationId applicationId,
         IHomeTypeEntity homeType,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken)
@@ -50,15 +64,26 @@ public class HomeTypeRepository : IHomeTypeRepository
         }
 
         // TODO: update fields in CRM depending on SegmentTypes
-        Save(applicationId, entity);
-        return Task.FromResult(homeType);
+        Save(applicationId.Value, entity);
+
+        if (segments.Contains(HomeTypeSegmentType.DesignPlans))
+        {
+            await homeType.DesignPlans.SaveFileChanges(homeType, _designFileService, cancellationToken);
+        }
+
+        return homeType;
     }
 
     private HomeTypeEntity? Get(string applicationId, HomeTypeId homeTypeId)
     {
         if (HomeTypes.TryGetValue(applicationId, out var homeTypes))
         {
-            return homeTypes.FirstOrDefault(x => x.Id == homeTypeId);
+            var homeType = homeTypes.FirstOrDefault(x => x.Id == homeTypeId);
+
+            // TODO: this is temporary change while entities are stored in memory
+            // remove DiscardFileChanges function after integration with CRM
+            homeType?.DesignPlans.DiscardFileChanges();
+            return homeType;
         }
 
         return null;

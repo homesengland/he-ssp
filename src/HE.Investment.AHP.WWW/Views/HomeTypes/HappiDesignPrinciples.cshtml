@@ -19,10 +19,8 @@
         <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
 
             <gds-field-set class="govuk-!-margin-bottom-6">
-                <gds-legend>
-                    <gds-h1 size="ControlSize.L">
-                        Which Housing our Ageing Population Panel for Innovation (HAPPI) design principles do the homes meet?
-                    </gds-h1>
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>Which Housing our Ageing Population Panel for Innovation (HAPPI) design principles do the homes meet?</gds-fieldset-heading>
                 </gds-legend>
 
                 <gds-details-summary label="What are the HAPPI design principles?">
@@ -34,13 +32,15 @@
                 <gds-checkbox class="exclusive-checkbox-group"
                               govuk-formgroup-asp-for="@Model.DesignPrinciples"
                               asp-selectlistitems="HomeTypesFormOptions.HappiDesignPrinciplesExceptNone"
-                              asp-for="@Model.DesignPrinciples">
+                              asp-for="@Model.DesignPrinciples"
+                              asp-excludelabel="true">
                 </gds-checkbox>
                 <p>Or</p>
                 <gds-checkbox class="exclusive-checkbox-group--exclusive-option"
-                              govuk-formgroup-asp-for="@Model.DesignPrinciples"
+                              govuk-formgroup-asp-for="@Model.OtherPrinciples"
                               asp-selectlistitems="HomeTypesFormOptions.HappiDesignPrinciplesOnlyNone"
-                              asp-for="@Model.DesignPrinciples">
+                              asp-for="@Model.OtherPrinciples"
+                              asp-excludelabel="true">
                 </gds-checkbox>
 
             </gds-field-set>
@@ -50,7 +50,7 @@
             </button>
             <br/>
 
-            <gds-link>Save and return to application</gds-link>
+            <vc:return-to-application-link application-id="@applicationId"/>
         </gds-div-grid-column-two-thirds>
     </form>
 </div>
