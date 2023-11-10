@@ -1,6 +1,6 @@
 using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.Projects.Enums;
-using HE.InvestmentLoans.Common.Extensions;
+using HE.Investments.Common.Extensions;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 internal static class SourceOfValuationMapper

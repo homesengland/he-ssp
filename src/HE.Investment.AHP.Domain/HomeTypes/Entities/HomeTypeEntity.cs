@@ -1,5 +1,6 @@
 using System.Reflection;
 using HE.Investment.AHP.Contract.HomeTypes;
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Extensions;
@@ -11,14 +12,18 @@ public class HomeTypeEntity : IHomeTypeEntity
     private readonly IDictionary<HomeTypeSegmentType, IHomeTypeSegmentEntity> _segments;
 
     public HomeTypeEntity(
+        ApplicationBasicInfo application,
         string? name = null,
         HousingType housingType = HousingType.Undefined,
         params IHomeTypeSegmentEntity[] segments)
     {
+        Application = application;
         ChangeName(name);
         ChangeHousingType(housingType);
         _segments = segments.ToDictionary(x => GetSegmentType(x.GetType()), x => x);
     }
+
+    public ApplicationBasicInfo Application { get; }
 
     public HomeTypeId? Id { get; set; }
 
@@ -46,13 +51,13 @@ public class HomeTypeEntity : IHomeTypeEntity
         if (HousingType == HousingType.HomesForOlderPeople && newHousingType != HousingType.HomesForOlderPeople)
         {
             UpdateSegment(new OlderPeopleHomeTypeDetailsSegmentEntity());
-            UpdateSegment(GetOptionalSegment<DesignPlansSegmentEntity>() ?? new DesignPlansSegmentEntity());
+            UpdateSegment(GetOptionalSegment<DesignPlansSegmentEntity>() ?? new DesignPlansSegmentEntity(Application));
         }
 
         if (HousingType == HousingType.HomesForDisabledAndVulnerablePeople && newHousingType != HousingType.HomesForDisabledAndVulnerablePeople)
         {
             UpdateSegment(new DisabledPeopleHomeTypeDetailsSegmentEntity());
-            UpdateSegment(GetOptionalSegment<DesignPlansSegmentEntity>() ?? new DesignPlansSegmentEntity());
+            UpdateSegment(GetOptionalSegment<DesignPlansSegmentEntity>() ?? new DesignPlansSegmentEntity(Application));
         }
 
         HousingType = newHousingType;
@@ -60,7 +65,7 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public HomeTypeEntity Duplicate(HomeTypeName newName)
     {
-        return new HomeTypeEntity(newName.Value, HousingType, _segments.Select(x => x.Value.Duplicate()).ToArray());
+        return new HomeTypeEntity(Application, newName.Value, HousingType, _segments.Select(x => x.Value.Duplicate()).ToArray());
     }
 
     public bool IsCompleted()

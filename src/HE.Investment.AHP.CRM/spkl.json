@@ -1,0 +1,15 @@
+{
+  "earlyboundtypes": [
+    {
+      "entities": "invln_scheme",
+      "actions": "invln_getahpapplication,invln_getmultipleahpapplications,invln_setahpapplication",
+      "generateOptionsetEnums": "true",
+      "generateStateEnums": "true",
+      "generateGlobalOptionsets": true,
+      "filename": "Model\\XrmSvc.cs",
+      "classNamespace": "HE.Investments.CRM.Common.Model",
+      "serviceContextName": "XrmSvc",
+      "oneTypePerFile": false
+    }
+  ]
+}

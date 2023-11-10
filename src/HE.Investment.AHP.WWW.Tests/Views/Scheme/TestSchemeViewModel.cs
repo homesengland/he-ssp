@@ -13,5 +13,6 @@ public static class TestSchemeViewModel
             "test affordability evidence",
             "some sales risk",
             "type and tenure justification",
-            "scheme and proposal justification");
+            "scheme and proposal justification",
+            "stakeholders accepted everything");
 }

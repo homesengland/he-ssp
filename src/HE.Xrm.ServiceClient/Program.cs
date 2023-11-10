@@ -87,12 +87,13 @@ namespace HE.Xrm.ServiceClientExample
             var app = JsonSerializer.Serialize(application);
             var req2 = new invln_getahpapplicationRequest() //get loan applications related to account and contact with given data
             {
-                invln_applicationid = application.id,
-                invln_userid = "ss",
-                invln_organisationid = "",
-                invln_appfieldstoretrieve = fieldsToUpdate,
+                invln_userid = "1",
+                invln_organisationid = "1",
+                invln_applicationid = "54501650-d77e-ee11-8179-002248004f63"
+                //invln_appfieldstoretrieve = fieldsToUpdate,
             };
             var resp2 = (invln_getahpapplicationResponse)serviceClient.Execute(req2);
+
             Console.WriteLine("A web service connection was not established.");
         }
 

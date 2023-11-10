@@ -4,7 +4,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;

@@ -1,10 +1,10 @@
 using AngleSharp;
 using AngleSharp.Html.Dom;
-using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
+using HE.Investments.Common.Services.Notifications;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Razor.Templating.Core;
-using NotificationModel = HE.InvestmentLoans.Common.Contract.Models.NotificationModel;
+using NotificationModel = HE.Investments.Common.Services.Notifications.NotificationModel;
 
 namespace HE.InvestmentLoans.WWW.Tests.Views;
 

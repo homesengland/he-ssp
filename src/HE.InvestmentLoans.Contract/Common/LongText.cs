@@ -1,26 +1,31 @@
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
-using HE.InvestmentLoans.Common.Validation;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Validators;
 
 namespace HE.InvestmentLoans.Contract.Common;
 
 public class LongText : ValueObject
 {
-    public LongText(string value)
+    public LongText(
+        string value,
+        string fieldName = nameof(LongText),
+        string noValueProvidedErrorMessage = GenericValidationError.NoValueProvided,
+        string textTooLongErrorMessage = GenericValidationError.TextTooLong)
     {
         if (value.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError(nameof(LongText), GenericValidationError.NoValueProvided)
+                .AddValidationError(fieldName, noValueProvidedErrorMessage)
                 .CheckErrors();
         }
 
         if (value!.Length > MaximumInputLength.LongInput)
         {
             OperationResult.New()
-                .AddValidationError(nameof(LongText), GenericValidationError.TextTooLong)
+                .AddValidationError(fieldName, textTooLongErrorMessage)
                 .CheckErrors();
         }
 

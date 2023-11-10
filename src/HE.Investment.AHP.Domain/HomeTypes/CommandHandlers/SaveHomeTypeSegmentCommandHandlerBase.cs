@@ -2,7 +2,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -25,8 +25,9 @@ public abstract class SaveHomeTypeSegmentCommandHandlerBase<TCommand> : HomeType
 
     public async Task<OperationResult> Handle(TCommand request, CancellationToken cancellationToken)
     {
+        var applicationId = new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId);
         var homeType = await _homeTypeRepository.GetById(
-            request.ApplicationId,
+            applicationId,
             new HomeTypeId(request.HomeTypeId),
             SegmentTypes,
             cancellationToken);
@@ -37,7 +38,7 @@ public abstract class SaveHomeTypeSegmentCommandHandlerBase<TCommand> : HomeType
             return new OperationResult(errors);
         }
 
-        await _homeTypeRepository.Save(request.ApplicationId, homeType, SegmentTypes, cancellationToken);
+        await _homeTypeRepository.Save(applicationId, homeType, SegmentTypes, cancellationToken);
         return OperationResult.Success();
     }
 }

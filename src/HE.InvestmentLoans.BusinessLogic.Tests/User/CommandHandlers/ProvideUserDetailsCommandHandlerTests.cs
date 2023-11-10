@@ -1,8 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.User.CommandHandlers;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;

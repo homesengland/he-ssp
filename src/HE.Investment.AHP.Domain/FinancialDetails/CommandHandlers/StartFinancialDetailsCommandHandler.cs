@@ -2,7 +2,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;

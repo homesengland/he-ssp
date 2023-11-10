@@ -15,11 +15,11 @@
 
         <gds-div-hint>@Model.Header</gds-div-hint>
         <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
-            <gds-h1 size="ControlSize.L">
-                What type of homes will you be providing for older people?
-            </gds-h1>
-
             <gds-field-set>
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>What type of homes will you be providing for older people?</gds-fieldset-heading>
+                </gds-legend>
+
                 <gds-custom-radio
                     asp-for="HousingType"
                     value="@Model.HousingType"
@@ -32,7 +32,7 @@
                 </button>
             </gds-field-set>
 
-            <gds-link>Save and return to application</gds-link>
+            <vc:return-to-application-link application-id="@applicationId"/>
         </gds-div-grid-column-two-thirds>
     </form>
 </div>

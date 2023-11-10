@@ -1,5 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.Investments.Account.Shared.User;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 public class UserDetailsEntityTestBuilder

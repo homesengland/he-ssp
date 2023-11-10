@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 
@@ -28,7 +28,6 @@ public class LoanUserContextTestBuilder
         UserAccountFromMock = userAccount;
         _mock.Setup(x => x.GetSelectedAccount()).ReturnsAsync(userAccount);
         _mock.Setup(x => x.GetSelectedAccountId()).ReturnsAsync(userAccount.AccountId);
-        _mock.Setup(x => x.GetAllAccounts()).ReturnsAsync(new List<UserAccount> { userAccount });
         _mock.Setup(x => x.UserGlobalId).Returns(userAccount.UserGlobalId);
         _mock.Setup(x => x.Email).Returns(userAccount.UserEmail);
 

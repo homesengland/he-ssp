@@ -90,6 +90,7 @@ namespace DataverseModel
 			public const string invln_grantsfromsocialservices_Base = "invln_grantsfromsocialservices_base";
 			public const string invln_grantsfromthelottery = "invln_grantsfromthelottery";
 			public const string invln_grantsfromthelottery_Base = "invln_grantsfromthelottery_base";
+			public const string invln_invln_scheme_localauthoritylookup_invln_l = "invln_invln_scheme_localauthoritylookup_invln_l";
 			public const string invln_localauthoritylookup = "invln_localauthoritylookup";
 			public const string invln_localauthoritylookupName = "invln_localauthoritylookupname";
 			public const string invln_meetinglocalhousingneed = "invln_meetinglocalhousingneed";
@@ -1366,6 +1367,27 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_invln_scheme_localauthoritylookup_invln_l
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthoritylookup")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_scheme_localauthoritylookup_invln_l")]
+		public DataverseModel.invln_localauthority invln_invln_scheme_localauthoritylookup_invln_l
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_localauthority>("invln_invln_scheme_localauthoritylookup_invln_l", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_scheme_localauthoritylookup_invln_l");
+				this.SetRelatedEntity<DataverseModel.invln_localauthority>("invln_invln_scheme_localauthoritylookup_invln_l", null, value);
+				this.OnPropertyChanged("invln_invln_scheme_localauthoritylookup_invln_l");
 			}
 		}
 		

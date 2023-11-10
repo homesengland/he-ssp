@@ -1,7 +1,9 @@
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
@@ -9,8 +11,11 @@ public class HomeTypesEntity
 {
     private readonly IList<HomeTypeEntity> _homeTypes;
 
-    public HomeTypesEntity(IEnumerable<HomeTypeEntity> homeTypes)
+    private readonly ApplicationBasicInfo _application;
+
+    public HomeTypesEntity(ApplicationBasicInfo application, IEnumerable<HomeTypeEntity> homeTypes)
     {
+        _application = application;
         _homeTypes = homeTypes.ToList();
     }
 
@@ -25,12 +30,13 @@ public class HomeTypesEntity
 
         // TODO: remove creating segments when integration with CRM is introduced
         var homeType = new HomeTypeEntity(
+            _application,
             segments: new IHomeTypeSegmentEntity[]
             {
                 new HomeInformationSegmentEntity(),
                 new DisabledPeopleHomeTypeDetailsSegmentEntity(),
                 new OlderPeopleHomeTypeDetailsSegmentEntity(),
-                new DesignPlansSegmentEntity(),
+                new DesignPlansSegmentEntity(_application),
             });
         _homeTypes.Add(homeType);
 

@@ -19,7 +19,7 @@ internal sealed class GetHomeInformationQueryHandler : IRequestHandler<GetHomeIn
     public async Task<HomeInformation> Handle(GetHomeInformationQuery request, CancellationToken cancellationToken)
     {
         var homeType = await _repository.GetById(
-            request.ApplicationId,
+            new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId),
             new HomeTypeId(request.HomeTypeId),
             new[] { HomeTypeSegmentType.HomeInformation },
             cancellationToken);

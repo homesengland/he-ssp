@@ -7,6 +7,7 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Auth;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Exceptions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Helpers;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Helpers.DataPackages;
+using HE.Investments.Common.Extensions;
 using Microsoft.CodeAnalysis.Operations;
 
 namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;

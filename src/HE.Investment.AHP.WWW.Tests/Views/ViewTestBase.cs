@@ -2,11 +2,11 @@ using AngleSharp;
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Tests.Framework;
 using HE.Investment.AHP.WWW.Tests.Helpers;
-using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
+using HE.Investments.Common.Services.Notifications;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using NotificationModel = HE.InvestmentLoans.Common.Contract.Models.NotificationModel;
+using NotificationModel = HE.Investments.Common.Services.Notifications.NotificationModel;
 
 namespace HE.Investment.AHP.WWW.Tests.Views;
 

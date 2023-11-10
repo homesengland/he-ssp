@@ -173,6 +173,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_localauthority"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_localauthority> invln_localauthoritySet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_localauthority>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_notificationsetting"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_notificationsetting> invln_notificationsettingSet

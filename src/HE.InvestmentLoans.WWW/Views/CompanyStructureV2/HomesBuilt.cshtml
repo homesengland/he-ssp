@@ -3,7 +3,7 @@
 @model HE.InvestmentLoans.Contract.CompanyStructure.CompanyStructureViewModel
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="CompanyStructureV2" asp-action="HowManyHomesBuiltPost" asp-route-id="@Model.LoanApplicationId" asp-method="post" novalidate>
+    <form asp-controller="CompanyStructureV2" asp-action="HowManyHomesBuiltPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <gds-back-link href="@Url.Action("Back", "CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.HomesBuilt })" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
         @await Html.PartialAsync("_Notification")
