@@ -3,13 +3,13 @@ using HE.Investments.Common.Services.Notifications;
 
 namespace HE.InvestmentLoans.WWW.Notifications;
 
-public class ApplicationWithdrawSuccessfullyNotificationMapper : INotificationDisplayMapper
+public class ApplicationWithdrawSuccessfullyDisplayNotificationFactory : IDisplayNotificationFactory
 {
     public Type HandledNotificationType => typeof(ApplicationWithdrawSuccessfullyNotification);
 
-    public NotificationToDisplay Map(Notification notification)
+    public DisplayNotification Create(Notification notification)
     {
-        return NotificationToDisplay.Success(
+        return DisplayNotification.Success(
             notification.TemplateText($"<{ApplicationWithdrawSuccessfullyNotification.ApplicationNameParameterName}> project has been withdrawn."),
             notification.TemplateText(
                 $"Contact <{ApplicationWithdrawSuccessfullyNotification.FundingSupportEmailParameterName}> if you think there's a problem."));

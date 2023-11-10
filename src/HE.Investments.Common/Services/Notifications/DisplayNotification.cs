@@ -1,6 +1,6 @@
 namespace HE.Investments.Common.Services.Notifications;
 
-public record NotificationToDisplay(
+public record DisplayNotification(
     string Title,
     NotificationType NotificationType,
     string Description,
@@ -8,13 +8,13 @@ public record NotificationToDisplay(
     string? LinkDescriptionUrl = null,
     string? Body = null)
 {
-    public static NotificationToDisplay Success(
+    public static DisplayNotification Success(
         string description,
         string? linkDescription = null,
         string? linkDescriptionUrl = null,
         string? body = null)
     {
-        return new NotificationToDisplay(
+        return new DisplayNotification(
             NotificationType.Success.ToString(),
             NotificationType.Success,
             description,

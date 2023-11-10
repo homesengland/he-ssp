@@ -1,8 +1,8 @@
 namespace HE.Investments.Common.Services.Notifications;
 
-public interface INotificationDisplayMapper
+public interface IDisplayNotificationFactory
 {
     Type HandledNotificationType { get; }
 
-    NotificationToDisplay Map(Notification notification);
+    DisplayNotification Create(Notification notification);
 }

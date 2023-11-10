@@ -8,14 +8,14 @@ public static class CommonModule
 {
     public static void AddNotifications(
         this IServiceCollection serviceCollections,
-        Assembly notificationMappersAssembly)
+        Assembly displayNotificationFactoriesAssembly)
     {
         serviceCollections.AddScoped<INotificationService, NotificationService>();
 
-        foreach (var mapperType in notificationMappersAssembly.GetTypes()
-                     .Where(x => typeof(INotificationDisplayMapper).IsAssignableFrom(x) && x.IsClass && !x.IsGenericType))
+        foreach (var factoryType in displayNotificationFactoriesAssembly.GetTypes()
+                     .Where(x => typeof(IDisplayNotificationFactory).IsAssignableFrom(x) && x.IsClass && !x.IsGenericType))
         {
-            serviceCollections.AddScoped(typeof(INotificationDisplayMapper), mapperType);
+            serviceCollections.AddScoped(typeof(IDisplayNotificationFactory), factoryType);
         }
     }
 }

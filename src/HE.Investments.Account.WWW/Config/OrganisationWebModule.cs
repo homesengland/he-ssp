@@ -23,7 +23,7 @@ public static class OrganisationWebModule
         services.AddCrmConnection();
         services.AddAccountModule();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUserProfileInformationQueryHandler).Assembly));
-        services.AddNotifications(typeof(ChangeOrganisationDetailsRequestedNotificationMapper).Assembly);
+        services.AddNotifications(typeof(ChangeOrganisationDetailsRequestedDisplayNotificationFactory).Assembly);
     }
 
     private static void AddConfiguration(IServiceCollection services)
