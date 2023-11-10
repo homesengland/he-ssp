@@ -622,6 +622,7 @@ namespace DataverseModel
 			public const string invln_contact_invln_loanapplication_contactid = "invln_contact_invln_loanapplication_contactid";
 			public const string invln_contact_invln_loanstatuschange_changedbycontactid = "invln_contact_invln_loanstatuschange_changedbycontactid";
 			public const string invln_contact_invln_organisationchangerequest_contactid = "invln_contact_invln_organisationchangerequest_contactid";
+			public const string invln_contact_invln_scheme_contactid = "invln_contact_invln_scheme_contactid";
 			public const string invln_externalid = "invln_externalid";
 			public const string invln_invln_isp_TMName_contact = "invln_invln_isp_TMName_contact";
 			public const string invln_isp_Name_contact = "invln_isp_Name_contact";
@@ -5652,6 +5653,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_contact_invln_organisationchangerequest_contactid");
 				this.SetRelatedEntities<DataverseModel.invln_organisationchangerequest>("invln_contact_invln_organisationchangerequest_contactid", null, value);
 				this.OnPropertyChanged("invln_contact_invln_organisationchangerequest_contactid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_contact_invln_scheme_contactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_scheme_contactid")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_scheme> invln_contact_invln_scheme_contactid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_scheme>("invln_contact_invln_scheme_contactid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_scheme_contactid");
+				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_contact_invln_scheme_contactid", null, value);
+				this.OnPropertyChanged("invln_contact_invln_scheme_contactid");
 			}
 		}
 		

@@ -16,12 +16,21 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
-        public List<invln_scheme> GetApplicationsForOrganisationAndContact(string organisationId, string contactId, string attributes)
+        public List<invln_scheme> GetApplicationsForOrganisationAndContact(string organisationId, string contactId, string attributes, string additionalRecordFilters)
         {
             var fetchXml = @"<fetch>
                               <entity name=""invln_scheme"">"
                                 + attributes +
-                              @"</entity>
+                              @"<filter>
+                                  <condition attribute=""invln_organisationid"" operator=""eq"" value=""" + organisationId + @""" />"
+                                    + additionalRecordFilters +
+                                @"</filter>
+                                    <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">
+                                          <filter>
+                                            <condition attribute=""invln_externalid"" operator=""eq"" value=""" + contactId + @""" />
+                                          </filter>
+                                        </link-entity>
+                                </entity>
                             </fetch>";
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));
             return result.Entities.Select(x => x.ToEntity<invln_scheme>()).ToList();

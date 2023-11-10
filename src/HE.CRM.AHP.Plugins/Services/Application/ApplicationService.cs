@@ -13,37 +13,33 @@ namespace HE.CRM.AHP.Plugins.Services.Application
     public class ApplicationService : CrmService, IApplicationService
     {
         private readonly IAhpApplicationRepository _applicationRepository;
+        private readonly IContactRepository _contactRepository;
         public ApplicationService(CrmServiceArgs args) : base(args)
         {
             _applicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
+            _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
         }
 
         public List<AhpApplicationDto> GetApplication(string organisationId, string contactId, string fieldsToRetrieve = null, string applicationId = null)
         {
             var listOfApplications = new List<AhpApplicationDto>();
-            if (applicationId != null && Guid.TryParse(applicationId, out var applicationGuid))
+            var additionalFilters = string.Empty;
+            if (!string.IsNullOrEmpty(applicationId))
             {
-                var application = !string.IsNullOrEmpty(fieldsToRetrieve)
-                    ? _applicationRepository.GetById(applicationGuid, new string[] { fieldsToRetrieve })
-                    : _applicationRepository.GetById(applicationGuid);
-                listOfApplications.Add(AhpApplicationMapper.MapRegularEntityToDto(application));
+                additionalFilters = $"<condition attribute=\"invln_schemeid\" operator=\"eq\" value=\"{applicationId}\" />";
             }
-            else
+            string attributes = null;
+            if (!string.IsNullOrEmpty(fieldsToRetrieve))
             {
-                string attributes = null;
-                if (!string.IsNullOrEmpty(fieldsToRetrieve))
+                attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+            }
+            var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactId, attributes, additionalFilters);
+            if (applications.Any())
+            {
+                foreach (var application in applications)
                 {
-                    attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+                    listOfApplications.Add(AhpApplicationMapper.MapRegularEntityToDto(application));
                 }
-                var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactId, attributes);
-                if (applications.Any())
-                {
-                    foreach (var application in applications)
-                    {
-                        listOfApplications.Add(AhpApplicationMapper.MapRegularEntityToDto(application));
-                    }
-                }
-
             }
             return listOfApplications;
         }
@@ -51,7 +47,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         public Guid SetApplication(string applicationSerialized, string organisationId, string contactId, string fieldsToUpdate = null)
         {
             var application = JsonSerializer.Deserialize<AhpApplicationDto>(applicationSerialized);
-            var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application);
+            var contact = _contactRepository.GetContactViaExternalId(contactId);
+            var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application, contact.Id.ToString(), organisationId);
             invln_scheme applicationToUpdateOrCreate;
             if (!string.IsNullOrEmpty(fieldsToUpdate))
             {
