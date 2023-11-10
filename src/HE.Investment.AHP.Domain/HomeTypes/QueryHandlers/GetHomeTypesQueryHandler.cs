@@ -25,12 +25,12 @@ internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQue
         return homeTypes.HomeTypes.Select(Map).OrderBy(x => x.Name).ToList();
     }
 
-    private static HomeTypeDetails Map(IHomeTypeEntity entity)
+    private static HomeTypeDetails Map(IHomeTypeEntity homeType)
     {
         return new HomeTypeDetails(
-            entity.Id!.Value,
-            entity.Name?.Value,
-            entity.HomeInformation.NumberOfHomes?.Value,
-            entity.HousingType);
+            homeType.Id!.Value,
+            homeType.Name?.Value,
+            homeType.HomeInformation.NumberOfHomes?.Value,
+            homeType.HousingType);
     }
 }

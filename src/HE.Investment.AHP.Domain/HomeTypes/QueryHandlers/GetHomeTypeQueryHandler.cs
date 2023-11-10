@@ -21,12 +21,11 @@ internal sealed class GetHomeTypeQueryHandler : IRequestHandler<GetHomeTypeQuery
         var homeType = await _repository.GetById(
             new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId),
             new HomeTypeId(request.HomeTypeId),
-            HomeTypeSegmentTypes.All,
+            HomeTypeSegmentTypes.None,
             cancellationToken);
 
         return new HomeType
         {
-            // TODO: map all segments when available
             HomeTypeId = request.HomeTypeId,
             HomeTypeName = homeType.Name?.Value,
             HousingType = homeType.HousingType,

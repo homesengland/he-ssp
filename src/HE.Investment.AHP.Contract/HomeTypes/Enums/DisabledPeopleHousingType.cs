@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace HE.Investment.AHP.Contract.HomeTypes;
+namespace HE.Investment.AHP.Contract.HomeTypes.Enums;
 
 public enum DisabledPeopleHousingType
 {
