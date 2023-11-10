@@ -697,6 +697,24 @@ namespace HE.InvestmentLoans.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_region
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		South = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Midlands = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		London = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		North = 858110003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_changesourceset
 	{
 		
@@ -8835,24 +8853,6 @@ namespace HE.InvestmentLoans.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Hidden = 100000002,
-	}
-	
-	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
-	public enum invln_region
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		South = 858110000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Midlands = 858110001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		London = 858110002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		North = 858110003,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
