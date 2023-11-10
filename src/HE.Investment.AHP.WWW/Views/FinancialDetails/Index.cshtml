@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Financial details";
 }
-<div id="mainContainer" role="main">
+<div id=mainContainer role=main>
     <gds-div-grid-column-full>
         <form asp-controller="FinancialDetails" asp-action="Start" asp-route-applicationId="@Model.ApplicationId" asp-route-applicationName="@Model.ApplicationName" asp-method="post" novalidate>
             <div id="backButton" role="navigation">
