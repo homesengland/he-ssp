@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.EventHandlers;
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Notifications;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestObjectBuilders;
 using HE.InvestmentLoans.Contract.Application.Events;
 using HE.Investments.Common.Services.Notifications;
@@ -16,16 +17,10 @@ public class LoanApplicationHasBeenResubmittedEventHandlerTests : TestBase<LoanA
         // given
         var notificationServiceMock = NotificationServiceMockTestBuilder.New().BuildMockAndRegister(this);
 
-        var applicationResubmittedBodyType = NotificationBodyType.ApplicationResubmitted;
-
         // when
         await TestCandidate.Handle(new LoanApplicationHasBeenResubmittedEvent(), CancellationToken.None);
 
         // then
-        notificationServiceMock
-            .Verify(
-                x =>
-                    x.NotifySuccess(applicationResubmittedBodyType, null),
-                Times.Once);
+        notificationServiceMock.Verify(x => x.Publish(It.IsAny<LoanApplicationHasBeenResubmittedNotification>()), Times.Once);
     }
 }

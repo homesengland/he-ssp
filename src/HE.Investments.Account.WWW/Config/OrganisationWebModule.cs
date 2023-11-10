@@ -5,6 +5,8 @@ using HE.InvestmentLoans.CRM.Extensions;
 using HE.Investments.Account.Domain.Config;
 using HE.Investments.Account.Domain.User.QueryHandlers;
 using HE.Investments.Account.WWW.Middlewares;
+using HE.Investments.Account.WWW.Notifications;
+using HE.Investments.Common.Config;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 
 namespace HE.Investments.Account.WWW.Config;
@@ -21,6 +23,7 @@ public static class OrganisationWebModule
         services.AddCrmConnection();
         services.AddAccountModule();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUserProfileInformationQueryHandler).Assembly));
+        services.AddNotifications(typeof(ChangeOrganisationDetailsRequestedNotificationMapper).Assembly);
     }
 
     private static void AddConfiguration(IServiceCollection services)

@@ -8,10 +8,7 @@
         <gds-back-link href="@Url.Action("Index", "UserOrganisation", new { })" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
-        @*
-            TODO: Move notification to common
-            @await Html.PartialAsync("_Notification")
-        *@
+        <partial name="~/Partials/_Notification.cshtml" />
 
         <gds-h1 class="govuk-heading-xl govuk-!-margin-bottom-9">
             Manage @Model.Name details

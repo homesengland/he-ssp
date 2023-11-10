@@ -135,7 +135,7 @@ public class Order03RequestOrganisationDetailsChangeIntegrationTests : Integrati
         detailsChangePage
             .UrlEndWith(UserOrganisationPagesUrls.UserOrganisationDetails)
             .HasTitle($"Manage {UserData.OrganizationName} details")
-            .HasSuccessNotificationBanner(NotificationBody.ChangeOrganisationDetailsRequested)
+            .HasSuccessNotificationBanner("Your request to change your organisation details has been sent for review.")
             .HasInsetText(OrganisationDetailsView.PendingRequestByYou);
     }
 }

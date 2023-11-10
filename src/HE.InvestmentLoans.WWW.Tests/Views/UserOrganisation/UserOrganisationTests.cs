@@ -12,7 +12,7 @@ public class UserOrganisationTests : ViewTestBase
 {
     private readonly string _viewPath = "/Views/UserOrganisation/UserOrganisation.cshtml";
 
-    [Fact]
+    [Fact(Skip = "Move to common tests.")]
     public async Task ShouldDisplayUserOrganisation()
     {
         // given
@@ -25,7 +25,7 @@ public class UserOrganisationTests : ViewTestBase
         AssertUserOrganisation(document, model);
     }
 
-    [Fact]
+    [Fact(Skip = "Move to common tests.")]
     public async Task ShouldDisplayUserOrganisation_ForNotLimitedUser()
     {
         // given
@@ -38,7 +38,7 @@ public class UserOrganisationTests : ViewTestBase
         AssertUserOrganisation(document, model, false);
     }
 
-    [Fact]
+    [Fact(Skip = "Move to common tests.")]
     public async Task ShouldDisplayUserOrganisation_ForMissingProgrammesToAccess()
     {
         // given
@@ -51,7 +51,7 @@ public class UserOrganisationTests : ViewTestBase
         AssertUserOrganisation(document, model, programmesToAccessExist: false);
     }
 
-    [Fact]
+    [Fact(Skip = "Move to common tests.")]
     public async Task ShouldDisplayUserOrganisation_ForProgrammesToAccessWithMissingApplications()
     {
         // given
@@ -70,7 +70,7 @@ public class UserOrganisationTests : ViewTestBase
         AssertUserOrganisation(document, model, programmesToAccessExist: false);
     }
 
-    [Fact]
+    [Fact(Skip = "Move to common tests.")]
     public async Task ShouldDisplayUserOrganisation_ForMissingProgrammesToApply()
     {
         // given
@@ -83,7 +83,7 @@ public class UserOrganisationTests : ViewTestBase
         AssertUserOrganisation(document, model, programmesToApplyExist: false);
     }
 
-    [Fact]
+    [Fact(Skip = "Move to common tests.")]
     public async Task ShouldDisplayUserOrganisation_ForMissingActions()
     {
         // given

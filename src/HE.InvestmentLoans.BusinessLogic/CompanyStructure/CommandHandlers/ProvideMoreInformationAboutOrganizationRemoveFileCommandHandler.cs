@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Notifications;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
@@ -43,12 +44,7 @@ public class ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler : C
                     request.FolderPath,
                     request.FileName);
 
-                var valuesToDisplay = new Dictionary<NotificationServiceKeys, string>
-                    {
-                        { NotificationServiceKeys.Name, request.FileName },
-                    };
-
-                await _notificationService.NotifySuccess(NotificationBodyType.FileRemove, valuesToDisplay);
+                await _notificationService.Publish(new FileRemovedSuccessfullyNotification(request.FileName));
             },
             request.LoanApplicationId,
             cancellationToken);

@@ -2,7 +2,7 @@ namespace HE.Investments.Common.Services.Notifications;
 
 public interface INotificationService
 {
-    public Task NotifySuccess(NotificationBodyType notificationBodyType, IDictionary<NotificationServiceKeys, string>? valuesToDisplay = null);
+    public NotificationToDisplay? Pop();
 
-    public Tuple<bool, NotificationModel?> Pop();
+    public Task Publish(Notification notification);
 }

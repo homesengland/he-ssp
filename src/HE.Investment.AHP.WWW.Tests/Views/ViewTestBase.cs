@@ -6,7 +6,6 @@ using HE.Investments.Common.Services.Notifications;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using NotificationModel = HE.Investments.Common.Services.Notifications.NotificationModel;
 
 namespace HE.Investment.AHP.WWW.Tests.Views;
 
@@ -21,10 +20,6 @@ public abstract class ViewTestBase
         where TModel : class
     {
         var notificationServiceMock = new Mock<INotificationService>();
-        notificationServiceMock
-            .Setup(s => s.Pop())
-            .Returns(Tuple.Create(false, (NotificationModel)null!)!);
-
         var services = new ServiceCollection();
         services.AddTransient<INotificationService>(_ => notificationServiceMock.Object);
         mockDependencies?.Invoke(services);
