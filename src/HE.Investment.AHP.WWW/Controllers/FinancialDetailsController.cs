@@ -1,12 +1,11 @@
-using System.Threading;
-using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using HE.Investment.AHP.Contract.FinancialDetails.Models;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
@@ -32,7 +31,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         // temporarly mocked
         // var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()), cancellationToken);
         // return View("Index", new { applicationId, applicationName = application.Name });
-        return View("Index", new ApplicationBasicModel(applicationId.ToString(), "Some application", string.Empty));
+        return View("Index", new ApplicationBasicModel(applicationId.ToString(), "Some application", Tenure.Undefined));
     }
 
     [HttpPost("start")]

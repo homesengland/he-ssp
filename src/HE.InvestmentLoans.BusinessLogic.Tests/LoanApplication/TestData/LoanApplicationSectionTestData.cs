@@ -2,7 +2,6 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.Contract.Application.Enums;
-using HE.InvestmentLoans.Contract.Application.Queries;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestData;
 internal static class LoanApplicationSectionTestData

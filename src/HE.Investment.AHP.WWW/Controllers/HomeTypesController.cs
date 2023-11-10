@@ -1,13 +1,17 @@
 using System.Globalization;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
+using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
@@ -76,7 +80,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> NewHomeTypeDetails([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
-        return View("HomeTypeDetails", new HomeTypeDetailsModel(application.Name));
+        return View("HomeTypeDetails", new HomeTypeDetailsModel(application.Name) { HousingType = GetDefaultHousingType(application.Tenure) });
     }
 
     [WorkflowState(HomeTypesWorkflowState.NewHomeTypeDetails)]
@@ -209,7 +213,11 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var designPlans = await _mediator.Send(new GetDesignPlansQuery(applicationId, homeTypeId), cancellationToken);
-        return View(new HappiDesignPrinciplesModel(application.Name, designPlans.HomeTypeName) { DesignPrinciples = designPlans.DesignPrinciples, });
+        return View(new HappiDesignPrinciplesModel(application.Name, designPlans.HomeTypeName)
+        {
+            DesignPrinciples = designPlans.DesignPrinciples.ToList(),
+            OtherPrinciples = designPlans.DesignPrinciples.ToList(),
+        });
     }
 
     [WorkflowState(HomeTypesWorkflowState.HappiDesignPrinciples)]
@@ -220,10 +228,69 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         HappiDesignPrinciplesModel model,
         CancellationToken cancellationToken)
     {
+        var designPrinciples = model.DesignPrinciples ?? Array.Empty<HappiDesignPrincipleType>();
+        var otherDesignPrinciples = model.OtherPrinciples ?? Array.Empty<HappiDesignPrincipleType>();
+
         return await SaveHomeTypeSegment(
-            new SaveHappiDesignPrinciplesCommand(applicationId, homeTypeId, model.DesignPrinciples?.ToList() ?? new List<HappiDesignPrincipleType>()),
+            new SaveHappiDesignPrinciplesCommand(applicationId, homeTypeId, designPrinciples.Concat(otherDesignPrinciples).ToList()),
             model,
             cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
+    [HttpGet("{homeTypeId}/DesignPlans")]
+    public async Task<IActionResult> DesignPlans([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var designPlans = await _mediator.Send(new GetDesignPlansQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new DesignPlansModel(application.Name, designPlans.HomeTypeName)
+        {
+            MoreInformation = designPlans.MoreInformation,
+            UploadedFiles = designPlans.UploadedFiles.Select(x => new UploadedFileModel(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved)).ToList(),
+        });
+    }
+
+    [DisableRequestSizeLimit]
+    [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
+    [HttpPost("{homeTypeId}/DesignPlans")]
+    public async Task<IActionResult> DesignPlans(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        DesignPlansModel model,
+        [FromForm(Name = "File")] List<IFormFile> files,
+        CancellationToken cancellationToken)
+    {
+        var filesToUpload = files.Select(x => new FileToUpload(x.FileName, x.Length, x.OpenReadStream())).ToList();
+
+        try
+        {
+            return await SaveHomeTypeSegment(new SaveDesignPlansCommand(applicationId, homeTypeId, model.MoreInformation, filesToUpload), model, cancellationToken);
+        }
+        finally
+        {
+            foreach (var file in filesToUpload)
+            {
+                await file.Content.DisposeAsync();
+            }
+        }
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
+    [HttpGet("{homeTypeId}/RemoveDesignPlansFile")]
+    public async Task<IActionResult> RemoveDesignPlansFile(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        [FromQuery] string fileId,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new RemoveDesignPlansFileCommand(applicationId, homeTypeId, fileId), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            throw new DomainValidationException(result);
+        }
+
+        return RedirectToAction("DesignPlans", new { applicationId, homeTypeId });
     }
 
     protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object routeData = null)
@@ -239,6 +306,16 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
         var homeTypes = await _mediator.Send(new GetHomeTypeQuery(applicationId, homeTypeId));
         return new HomeTypesWorkflow(currentState, homeTypes);
+    }
+
+    private static HousingType GetDefaultHousingType(Tenure applicationTenure)
+    {
+        return applicationTenure switch
+        {
+            Tenure.OlderPersonsSharedOwnership => HousingType.HomesForOlderPeople,
+            Tenure.HomeOwnershipLongTermDisabilities => HousingType.HomesForDisabledAndVulnerablePeople,
+            _ => HousingType.Undefined,
+        };
     }
 
     private async Task<IActionResult> SaveHomeTypeDetails(

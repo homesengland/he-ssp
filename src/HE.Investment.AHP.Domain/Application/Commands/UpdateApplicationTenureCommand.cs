@@ -1,8 +1,8 @@
-using HE.Investment.AHP.Domain.Application.ValueObjects;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investment.AHP.Contract.Application;
+using HE.Investments.Common.Validators;
 using MediatR;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Application.Commands;
 
-public record UpdateApplicationTenureCommand(string Id, string Tenure) : IRequest<OperationResult<ApplicationId?>>, IUpdateApplicationCommand;
+public record UpdateApplicationTenureCommand(string Id, Tenure Tenure) : IRequest<OperationResult<ApplicationId?>>, IUpdateApplicationCommand;

@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\EnvironmentVariableRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\GovNotifyEmailRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\GlobalRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\LocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\ProjectSpecificConditionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\SharepointDocumentLocationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\LoanApplicationRepository.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IGlobalRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ILoanApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ILoanStatusChangeRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ILocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\INotificationSettingRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\interfaces\IPortalPermissionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IProjectSpecificConditionsRepository.cs" />

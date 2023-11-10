@@ -1,23 +1,24 @@
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Repositories;
 
 public interface IHomeTypeRepository
 {
     Task<HomeTypesEntity> GetByApplicationId(
-        string applicationId,
+        ApplicationId applicationId,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken);
 
     Task<IHomeTypeEntity> GetById(
-        string applicationId,
+        ApplicationId applicationId,
         HomeTypeId homeTypeId,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken);
 
     Task<IHomeTypeEntity> Save(
-        string applicationId,
+        ApplicationId applicationId,
         IHomeTypeEntity homeType,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken);

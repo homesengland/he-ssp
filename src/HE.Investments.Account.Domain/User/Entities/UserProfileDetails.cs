@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Validation;
 using HE.Investments.Account.Domain.User.ValueObjects;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Validators;
 
 namespace HE.Investments.Account.Domain.User.Entities;
 

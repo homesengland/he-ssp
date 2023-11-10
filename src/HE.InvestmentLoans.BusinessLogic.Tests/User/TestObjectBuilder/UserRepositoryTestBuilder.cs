@@ -1,12 +1,12 @@
 extern alias Org;
 
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.BusinessLogic.User.Repositories;
-using HE.InvestmentLoans.Contract.User.ValueObjects;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
+
 public class UserRepositoryTestBuilder
 {
     private readonly Mock<ILoanUserRepository> _mock;

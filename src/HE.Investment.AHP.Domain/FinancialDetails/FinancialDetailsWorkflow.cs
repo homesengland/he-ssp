@@ -1,5 +1,3 @@
-using HE.Investment.AHP.Contract.FinancialDetails.Models;
-using HE.Investment.AHP.Contract.HomeTypes;
 using HE.InvestmentLoans.Common.Routing;
 using Stateless;
 

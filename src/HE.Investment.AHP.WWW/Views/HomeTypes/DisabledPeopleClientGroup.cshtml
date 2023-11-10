@@ -17,24 +17,26 @@
         <gds-h1 size="ControlSize.L">
             What client group are the homes for?
         </gds-h1>
-        <gds-legend class="govuk-!-margin-bottom-6">
-            If the homes will be housing people from different groups, select the priority client group. You can also create another home type for each group and enter them separately.
-        </gds-legend>
+        <gds-field-set>
+            <gds-legend class="govuk-!-margin-bottom-6">
+                If the homes will be housing people from different groups, select the priority client group. You can also create another home type for each group and enter them separately.
+            </gds-legend>
 
-        <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
-            <gds-custom-radio
-                asp-for="DisabledPeopleClientGroup"
-                value="@Model.DisabledPeopleClientGroup"
-                radio-items="HomeTypesFormOptions.DisabledPeopleClientGroupTypes"
-                class="govuk-!-margin-bottom-6">
-            </gds-custom-radio>
+            <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
+                <gds-custom-radio
+                    asp-for="DisabledPeopleClientGroup"
+                    value="@Model.DisabledPeopleClientGroup"
+                    radio-items="HomeTypesFormOptions.DisabledPeopleClientGroupTypes"
+                    class="govuk-!-margin-bottom-6">
+                </gds-custom-radio>
 
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
-                Save and continue
-            </button>
 
-            <br />
-            <gds-link>Save and return to application</gds-link>
-        </gds-div-grid-column-two-thirds>
+                <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                    Save and continue
+                </button>
+            </gds-div-grid-column-two-thirds>
+        </gds-field-set>
+
+        <vc:return-to-application-link application-id="@applicationId"/>
     </form>
 </div>

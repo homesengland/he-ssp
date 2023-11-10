@@ -9,6 +9,7 @@ using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.InvestmentLoans.WWW.Extensions;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Views.Project.Consts;
+using HE.Investments.Common.Messages;
 using Xunit;
 using Xunit.Extensions.Ordering;
 

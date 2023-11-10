@@ -1,3 +1,4 @@
+using System.Diagnostics.Metrics;
 using HE.InvestmentLoans.BusinessLogic.Projects;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
@@ -12,6 +13,8 @@ using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.WWW.Attributes;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
@@ -38,9 +41,9 @@ public class ProjectController : WorkflowController<ProjectState>
     {
         if (projectId != Guid.Empty)
         {
-            var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.GetStatus));
+            var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.ProjectName));
 
-            if (result.IsReadOnly() || result.Status == SectionStatus.Completed)
+            if (result.IsReadOnly())
             {
                 return RedirectToAction("CheckAnswers", new { Id = id, ProjectId = projectId });
             }

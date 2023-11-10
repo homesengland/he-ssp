@@ -1,4 +1,4 @@
-using HE.Investments.Account.Domain.User.ValueObjects;
+using HE.Investments.Account.Shared.User;
 
 namespace HE.Investments.Account.Domain.User;
 
@@ -8,5 +8,11 @@ public interface IAccountUserContext
 
     public string Email { get; }
 
-    public void RefreshUserData();
+    public Task RefreshUserData();
+
+    Task<UserAccount> GetSelectedAccount();
+
+    Task LoadUserAccounts();
+
+    Task<bool> IsLinkedWithOrganization();
 }

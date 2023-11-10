@@ -1,5 +1,4 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
-using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using Xunit;

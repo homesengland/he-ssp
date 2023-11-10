@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Validators;
 using MediatR;
 
 namespace HE.InvestmentLoans.Contract.Organization.Commands;

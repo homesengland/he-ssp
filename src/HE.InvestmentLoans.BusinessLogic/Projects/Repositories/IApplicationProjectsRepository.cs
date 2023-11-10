@@ -1,7 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Account.Shared.User;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 

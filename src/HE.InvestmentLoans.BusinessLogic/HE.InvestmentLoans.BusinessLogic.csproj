@@ -45,6 +45,9 @@
     <ProjectReference Include="..\HE.InvestmentLoans.Common.Contract\HE.InvestmentLoans.Common.Contract.csproj" />
     <ProjectReference Include="..\HE.InvestmentLoans.Contract\HE.InvestmentLoans.Contract.csproj" />
     <ProjectReference Include="..\HE.InvestmentLoans.CRM\HE.InvestmentLoans.CRM.csproj" />
+    <ProjectReference Include="..\HE.Investments.Account.Contract\HE.Investments.Account.Contract.csproj" />
+    <ProjectReference Include="..\HE.Investments.Account.Domain\HE.Investments.Account.Domain.csproj" />
+    <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj" />
     <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj" />
     <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj">
       <Aliases>Org</Aliases>
@@ -55,6 +58,10 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>HE.InvestmentLoans.BusinessLogic.Tests</_Parameter1>
     </AssemblyAttribute>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="UserOrganisation\CommandHandlers\" />
   </ItemGroup>
   <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
 
