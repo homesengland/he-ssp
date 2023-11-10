@@ -1,10 +1,9 @@
 using HE.InvestmentLoans.Common.Extensions;
-using HE.Investments.Account.Domain.User.ValueObjects;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 
-namespace HE.Investments.Account.Domain.User.Entities;
+namespace HE.Investments.Account.Shared.User.Entities;
 
 public class UserProfileDetails
 {

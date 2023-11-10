@@ -3,7 +3,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 
-namespace HE.Investments.Account.Domain.User.ValueObjects;
+namespace HE.Investments.Account.Shared.User.ValueObjects;
 
 public abstract class RequiredStringValueObject : ValueObject
 {

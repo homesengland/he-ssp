@@ -5,13 +5,13 @@ using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace HE.InvestmentLoans.BusinessLogic.User.CommandHandlers;
+namespace HE.Investments.Account.Domain.User.CommandHandlers;
 
 public class ProvideAcceptHeTermsAndConditionsCommandHandler : IRequestHandler<ProvideAcceptHeTermsAndConditionsCommand, OperationResult>
 {
-    private readonly ILogger<ProvideUserDetailsCommandHandler> _logger;
+    private readonly ILogger<ProvideAcceptHeTermsAndConditionsCommandHandler> _logger;
 
-    public ProvideAcceptHeTermsAndConditionsCommandHandler(ILogger<ProvideUserDetailsCommandHandler> logger)
+    public ProvideAcceptHeTermsAndConditionsCommandHandler(ILogger<ProvideAcceptHeTermsAndConditionsCommandHandler> logger)
     {
         _logger = logger;
     }

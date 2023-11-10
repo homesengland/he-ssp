@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.Common.Utils.Constants;
+namespace HE.Investments.Account.Shared;
 
 public static class PortalConstants
 {

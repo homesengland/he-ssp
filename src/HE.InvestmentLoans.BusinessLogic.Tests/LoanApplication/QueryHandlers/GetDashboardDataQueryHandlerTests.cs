@@ -4,6 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Contract.Application.Queries;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 using Task = System.Threading.Tasks.Task;
@@ -16,7 +17,7 @@ public class GetDashboardDataQueryHandlerTests : TestBase<GetDashboardDataQueryH
     public async Task ShouldReturnOrderedApplicationLoans()
     {
         // given
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;
@@ -46,7 +47,7 @@ public class GetDashboardDataQueryHandlerTests : TestBase<GetDashboardDataQueryH
     public async Task ShouldReturnEmptyList_WhenNoLoanApplications()
     {
         // given
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;

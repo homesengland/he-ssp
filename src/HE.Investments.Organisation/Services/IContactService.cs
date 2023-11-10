@@ -2,6 +2,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Organisation.Services;
+
 public interface IContactService
 {
     Task<ContactDto?> RetrieveUserProfile(IOrganizationServiceAsync2 service, string contactExternalId);

@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
+using HE.Investments.Common.Extensions;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Security.TestObjectBuilder;
 

@@ -5,8 +5,11 @@ using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.TestsUtils.TestFramework;
+using Microsoft.Crm.Sdk.Messages;
 using Moq;
 using Xunit;
 
@@ -18,7 +21,7 @@ public class StartApplicationCommandHandlerTests : TestBase<StartApplicationComm
     public async Task ShouldReturnFailedResult_WhenApplicationNameIsInvalid()
     {
         // given
-        LoanUserContextTestBuilder
+        AccountUserContextTestBuilder
             .New()
             .Register(this);
 
@@ -36,7 +39,7 @@ public class StartApplicationCommandHandlerTests : TestBase<StartApplicationComm
     {
         // given
         var applicationName = new LoanApplicationName("My application");
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;
@@ -59,7 +62,7 @@ public class StartApplicationCommandHandlerTests : TestBase<StartApplicationComm
     {
         // given
         var applicationName = new LoanApplicationName("My application");
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;
@@ -69,7 +72,7 @@ public class StartApplicationCommandHandlerTests : TestBase<StartApplicationComm
             .ReturnsAsync(false);
         repository.Setup(x => x.Save(
                 It.Is<LoanApplicationEntity>(y => y.Name == applicationName && y.UserAccount == userAccount),
-                It.IsAny<UserDetails>(),
+                It.IsAny<UserProfileDetails>(),
                 It.IsAny<CancellationToken>()))
             .Callback<LoanApplicationEntity, UserDetails, CancellationToken>((x, _, _) => x.SetId(LoanApplicationIdTestData.LoanApplicationIdOne));
 

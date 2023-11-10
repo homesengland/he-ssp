@@ -22,11 +22,6 @@ public class UserController : Controller
         _mediator = mediator;
     }
 
-    public async Task<GetUserAccountResponse> Index()
-    {
-        return await _mediator.Send(new GetUserAccountQuery());
-    }
-
     [Route("dashboard")]
     public async Task<GetDashboardDataQueryResponse> Dashboard()
     {

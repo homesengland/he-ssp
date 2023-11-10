@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
@@ -8,7 +9,7 @@ public class LandValue : ValueObject
 {
     public LandValue(string value)
     {
-        if (value.IsNotProvided())
+        if (ObjectExtensions.IsNotProvided(value))
         {
             OperationResult.New()
                 .AddValidationError(FinancialDetailsValidationFieldNames.LandValue, FinancialDetailsValidationErrors.NoLandValue)

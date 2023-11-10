@@ -1,5 +1,5 @@
 extern alias Org;
-
+using FluentAssertions;
 using HE.InvestmentLoans.Contract.UserOrganisation.Commands;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
@@ -10,7 +10,7 @@ using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.UserOrganisation.CommandsHandlers;
+namespace HE.Investments.Account.Domain.Tests.UserOrganisation.CommandHandlers;
 
 public class ChangeOrganisationDetailsCommandHandlerTests : TestBase<ChangeOrganisationDetailsCommandHandler>
 {

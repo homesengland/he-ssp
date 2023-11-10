@@ -1,9 +1,9 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Enums;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Funding.Commands;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -15,7 +15,7 @@ public class ProvidePlanningPermissionStatusCommandHandler : ProjectCommandHandl
     public ProvidePlanningPermissionStatusCommandHandler(
         IApplicationProjectsRepository applicationProjectsRepository,
         ILoanApplicationRepository loanApplicationRepository,
-        ILoanUserContext loanUserContext,
+        IAccountUserContext loanUserContext,
         ILogger<ProjectCommandHandlerBase> logger)
         : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext, logger)
     {

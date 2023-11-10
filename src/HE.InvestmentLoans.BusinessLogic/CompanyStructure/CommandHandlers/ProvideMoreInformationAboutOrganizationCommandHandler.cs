@@ -2,9 +2,9 @@ using System.Text.Json;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Constants;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Validators;
@@ -25,14 +25,14 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
 
     private readonly INotificationService _notificationService;
 
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
 
     private readonly ICompanyStructureRepository _companyStructureRepository;
 
     public ProvideMoreInformationAboutOrganizationCommandHandler(
                 ICompanyStructureRepository companyStructureRepository,
                 ILoanApplicationRepository loanApplicationRepository,
-                ILoanUserContext loanUserContext,
+                IAccountUserContext loanUserContext,
                 IDocumentServiceConfig config,
                 ILogger<CompanyStructureBaseCommandHandler> logger,
                 IHttpDocumentService documentService,
@@ -63,7 +63,7 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                 companyStructure.ProvideFilesWithMoreInformation(new OrganisationMoreInformationFiles(filesCount));
 
                 var filesUploaded = string.Empty;
-                var userDetails = await _loanUserContext.GetUserDetails();
+                var userDetails = await _loanUserContext.GetProfileDetails();
 
                 foreach (var formFile in request.FormFiles)
                 {

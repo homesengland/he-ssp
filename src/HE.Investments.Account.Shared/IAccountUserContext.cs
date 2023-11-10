@@ -1,6 +1,7 @@
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.Entities;
 
-namespace HE.Investments.Account.Domain.User;
+namespace HE.Investments.Account.Shared;
 
 public interface IAccountUserContext
 {
@@ -8,11 +9,13 @@ public interface IAccountUserContext
 
     public string Email { get; }
 
-    public Task RefreshUserData();
-
     Task<UserAccount> GetSelectedAccount();
 
-    Task LoadUserAccounts();
+    Task<UserProfileDetails> GetProfileDetails();
+
+    public Task RefreshProfileDetails();
+
+    public Task<bool> IsProfileCompleted();
 
     Task<bool> IsLinkedWithOrganization();
 }

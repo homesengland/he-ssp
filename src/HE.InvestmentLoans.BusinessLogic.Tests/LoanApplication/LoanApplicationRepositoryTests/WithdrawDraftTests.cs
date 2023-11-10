@@ -7,6 +7,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.CRM.Model;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;
@@ -21,7 +22,7 @@ public class WithdrawDraftTests : TestBase<LoanApplicationRepository>
         // given
         var loanApplicationId = LoanApplicationIdTestData.LoanApplicationIdOne;
 
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;

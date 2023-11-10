@@ -2,6 +2,7 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
@@ -13,7 +14,7 @@ public class CheckIfCanBeSubmittedTests : TestBase<LoanApplicationEntity>
     public void ShouldThrowDomainException_WhenLoanApplicationHasDraftStatusAndItIsNotReadyForSubmit()
     {
         // given
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;
@@ -31,7 +32,7 @@ public class CheckIfCanBeSubmittedTests : TestBase<LoanApplicationEntity>
     public void ShouldThrowDomainException_WhenLoanApplicationIsAlreadySubmitted()
     {
         // given
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;
@@ -49,7 +50,7 @@ public class CheckIfCanBeSubmittedTests : TestBase<LoanApplicationEntity>
     public void ShouldNotThrowDomainException_WhenLoanApplicationCanBeSubmitted()
     {
         // given
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;

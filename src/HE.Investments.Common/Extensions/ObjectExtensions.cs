@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.Common.Extensions;
+namespace HE.Investments.Common.Extensions;
 
 public static class ObjectExtensions
 {

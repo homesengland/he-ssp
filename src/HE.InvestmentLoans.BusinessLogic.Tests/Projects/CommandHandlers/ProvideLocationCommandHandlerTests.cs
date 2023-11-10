@@ -8,6 +8,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.Common.Messages;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
@@ -21,7 +22,7 @@ public class ProvideLocationCommandHandlerTests : TestBase<ProvideLocationComman
 
     public ProvideLocationCommandHandlerTests()
     {
-        LoanUserContextTestBuilder.New().Register(this);
+        AccountUserContextTestBuilder.New().Register(this);
     }
 
     [Fact]

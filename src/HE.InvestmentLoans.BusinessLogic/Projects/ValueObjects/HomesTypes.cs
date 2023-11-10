@@ -1,5 +1,4 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Consts;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;

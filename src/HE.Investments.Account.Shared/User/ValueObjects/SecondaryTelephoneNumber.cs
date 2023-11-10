@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 
-namespace HE.Investments.Account.Domain.User.ValueObjects;
+namespace HE.Investments.Account.Shared.User.ValueObjects;
 
 public class SecondaryTelephoneNumber : RequiredStringValueObject
 {

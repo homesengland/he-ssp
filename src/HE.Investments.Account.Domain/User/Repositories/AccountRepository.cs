@@ -1,21 +1,21 @@
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.Investments.Account.Domain.User.Entities;
 using HE.Investments.Account.Domain.User.Repositories.Mappers;
 using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Organisation.Services;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Account.Domain.User.Repositories;
 
-public class UserRepository : IUserRepository
+public class AccountRepository : IUserRepository, IAccountRepository
 {
     private readonly IContactService _contactService;
 
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    public UserRepository(IContactService contactService, IOrganizationServiceAsync2 serviceClient)
+    public AccountRepository(IContactService contactService, IOrganizationServiceAsync2 serviceClient)
     {
         _contactService = contactService;
         _serviceClient = serviceClient;
@@ -41,7 +41,7 @@ public class UserRepository : IUserRepository
                 x.Select(x => new UserAccountRole(x.webRoleName)))).ToList();
     }
 
-    public async Task<UserProfileDetails> GetUserProfileInformation(UserGlobalId userGlobalId)
+    public async Task<UserProfileDetails> GetProfileDetails(UserGlobalId userGlobalId)
     {
         var contactDto = await _contactService.RetrieveUserProfile(_serviceClient, userGlobalId.ToString())
                          ?? throw new NotFoundException(nameof(UserProfileDetails), userGlobalId.ToString());

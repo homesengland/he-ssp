@@ -8,6 +8,6 @@ public record GetUserOrganisationInformationQuery() : IRequest<GetUserOrganisati
 
 public record GetUserOrganisationInformationQueryResponse(
     OrganizationBasicInformation OrganizationBasicInformation,
-    FirstName UserFirstName,
+    string UserFirstName,
     bool IsLimitedUser,
     IList<UserLoanApplication> LoanApplications);

@@ -4,6 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
@@ -13,7 +14,7 @@ public class ProvideLandOwnershipCommandHandlerTests : TestBase<ProvideLandOwner
 {
     public ProvideLandOwnershipCommandHandlerTests()
     {
-        LoanUserContextTestBuilder.New().Register(this);
+        AccountUserContextTestBuilder.New().Register(this);
     }
 
     [Fact]

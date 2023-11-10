@@ -6,6 +6,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.Common.Messages;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
@@ -18,7 +19,7 @@ public class ProvideHomesTypesCommandHandlerTests : TestBase<ProvideHomesTypesCo
 
     public ProvideHomesTypesCommandHandlerTests()
     {
-        LoanUserContextTestBuilder.New().Register(this);
+        AccountUserContextTestBuilder.New().Register(this);
     }
 
     [Fact]
