@@ -15,6 +15,6 @@ public class UpdateApplicationTenureCommandHandler : UpdateApplicationCommandHan
 
     protected override void Update(UpdateApplicationTenureCommand request, ApplicationEntity application)
     {
-        application.ChangeTenure(new ApplicationTenure(request.Tenure.MapTo<Tenure>()));
+        application.ChangeTenure(new ApplicationTenure(request.Tenure));
     }
 }

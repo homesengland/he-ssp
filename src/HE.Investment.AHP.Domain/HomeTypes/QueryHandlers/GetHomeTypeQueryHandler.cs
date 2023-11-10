@@ -1,10 +1,8 @@
 using HE.Investment.AHP.Contract.HomeTypes;
-using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using HE.Investments.Common.Extensions;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
@@ -30,7 +28,7 @@ internal sealed class GetHomeTypeQueryHandler : IRequestHandler<GetHomeTypeQuery
         {
             HomeTypeId = request.HomeTypeId,
             HomeTypeName = homeType.Name?.Value,
-            HousingType = homeType.HousingType.MapTo<HousingType>(),
+            HousingType = homeType.HousingType,
         };
     }
 }

@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investments.Common.Extensions;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.QueryHandlers;
@@ -21,7 +20,7 @@ public class GetApplicationsQueryHandler : IRequestHandler<GetApplicationsQuery,
         return schemes.Select(s => new Contract.Application.Application(
                 s.Id.Value,
                 s.Name.Name,
-                s.Tenure?.Value.MapTo<Contract.Application.Tenure>() ?? default))
+                s.Tenure?.Value ?? default))
             .ToList();
     }
 }

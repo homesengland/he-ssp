@@ -1,5 +1,5 @@
+using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
-using HE.Investment.AHP.Domain.HomeTypes.Enums;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 

@@ -1,10 +1,8 @@
 using HE.Investment.AHP.Contract.HomeTypes;
-using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using HE.Investments.Common.Extensions;
 using MediatR;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
@@ -31,7 +29,7 @@ public class GetDesignPlansQueryHandler : IRequestHandler<GetDesignPlansQuery, D
 
         return new DesignPlans(
             homeType.Name?.Value,
-            designPlans.DesignPrinciples.Select(x => x.MapTo<HappiDesignPrincipleType>()).ToList(),
+            designPlans.DesignPrinciples.ToList(),
             designPlans.MoreInformation?.Value,
             designPlans.UploadedFiles.Select(x => MapDesignFile(x, designPlans.CanRemoveDesignFiles)).OrderBy(x => x.UploadedOn).ToList());
     }

@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investments.Common.Extensions;
 using MediatR;
 using ContractApplication = HE.Investment.AHP.Contract.Application.Application;
 
@@ -22,6 +21,6 @@ public class GetApplicationQueryHandler : IRequestHandler<GetApplicationQuery, C
         return new ContractApplication(
             application.Id.Value,
             application.Name.Name,
-            application.Tenure?.Value.MapTo<Contract.Application.Tenure>() ?? default);
+            application.Tenure?.Value ?? default);
     }
 }
