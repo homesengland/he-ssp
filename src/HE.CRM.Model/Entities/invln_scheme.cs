@@ -58,11 +58,15 @@ namespace DataverseModel
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string ExchangeRate = "exchangerate";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_account_invln_scheme_organisationid = "invln_account_invln_scheme_organisationid";
 			public const string invln_actualacquisitioncost = "invln_actualacquisitioncost";
 			public const string invln_actualacquisitioncost_Base = "invln_actualacquisitioncost_base";
 			public const string invln_affordabilityevidence = "invln_affordabilityevidence";
 			public const string invln_borrowingagainstrentalincome = "invln_borrowingagainstrentalincome";
 			public const string invln_borrowingagainstrentalincome_Base = "invln_borrowingagainstrentalincome_base";
+			public const string invln_contact_invln_scheme_contactid = "invln_contact_invln_scheme_contactid";
+			public const string invln_contactid = "invln_contactid";
+			public const string invln_contactidName = "invln_contactidname";
 			public const string invln_currentlandvalue = "invln_currentlandvalue";
 			public const string invln_currentlandvalue_Base = "invln_currentlandvalue_base";
 			public const string invln_discussionswithlocalstakeholders = "invln_discussionswithlocalstakeholders";
@@ -97,6 +101,8 @@ namespace DataverseModel
 			public const string invln_meetinglocalpriorities = "invln_meetinglocalpriorities";
 			public const string invln_oncosts = "invln_oncosts";
 			public const string invln_oncosts_Base = "invln_oncosts_base";
+			public const string invln_organisationid = "invln_organisationid";
+			public const string invln_organisationidName = "invln_organisationidname";
 			public const string invln_ownresources = "invln_ownresources";
 			public const string invln_ownresources_Base = "invln_ownresources_base";
 			public const string invln_pplicationid = "invln_pplicationid";
@@ -342,6 +348,23 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_borrowingagainstrentalincome_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_contactid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_contactid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_contactid");
+				this.SetAttributeValue("invln_contactid", value);
+				this.OnPropertyChanged("invln_contactid");
 			}
 		}
 		
@@ -830,6 +853,23 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_oncosts_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_organisationid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_organisationid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_organisationid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_organisationid");
+				this.SetAttributeValue("invln_organisationid", value);
+				this.OnPropertyChanged("invln_organisationid");
 			}
 		}
 		
@@ -1367,6 +1407,48 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_account_invln_scheme_organisationid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_organisationid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_account_invln_scheme_organisationid")]
+		public DataverseModel.Account invln_account_invln_scheme_organisationid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Account>("invln_account_invln_scheme_organisationid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_account_invln_scheme_organisationid");
+				this.SetRelatedEntity<DataverseModel.Account>("invln_account_invln_scheme_organisationid", null, value);
+				this.OnPropertyChanged("invln_account_invln_scheme_organisationid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_contact_invln_scheme_contactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_scheme_contactid")]
+		public DataverseModel.Contact invln_contact_invln_scheme_contactid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Contact>("invln_contact_invln_scheme_contactid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_scheme_contactid");
+				this.SetRelatedEntity<DataverseModel.Contact>("invln_contact_invln_scheme_contactid", null, value);
+				this.OnPropertyChanged("invln_contact_invln_scheme_contactid");
 			}
 		}
 		

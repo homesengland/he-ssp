@@ -8,7 +8,7 @@ namespace HE.CRM.Common.DtoMapping
 {
     public class AhpApplicationMapper
     {
-        public static invln_scheme MapDtoToRegularEntity(AhpApplicationDto applicationDto)
+        public static invln_scheme MapDtoToRegularEntity(AhpApplicationDto applicationDto, string contactId, string organisationId)
         {
             var applicationToReturn = new invln_scheme()
             {
@@ -18,6 +18,14 @@ namespace HE.CRM.Common.DtoMapping
             if (applicationDto.id != null && Guid.TryParse(applicationDto.id, out var applicationId))
             {
                 applicationToReturn.Id = applicationId;
+            }
+            if (Guid.TryParse(contactId, out var contactGuid))
+            { 
+                applicationToReturn.invln_contactid = new EntityReference(Contact.EntityLogicalName, contactGuid);
+            }
+            if (Guid.TryParse(organisationId, out var organisationGuid))
+            {
+                applicationToReturn.invln_organisationid = new EntityReference(Account.EntityLogicalName, organisationGuid);
             }
             return applicationToReturn;
         }
@@ -32,6 +40,14 @@ namespace HE.CRM.Common.DtoMapping
             if (application.Id != null)
             {
                 applicationDtoToReturn.id = application.Id.ToString();
+            }
+            if (application.invln_organisationid != null)
+            {
+                applicationDtoToReturn.organisationId = application.invln_organisationid.ToString();
+            }
+            if (application.invln_contactid != null)
+            {
+                applicationDtoToReturn.contactId = application.invln_contactid.ToString();
             }
             return applicationDtoToReturn;
         }

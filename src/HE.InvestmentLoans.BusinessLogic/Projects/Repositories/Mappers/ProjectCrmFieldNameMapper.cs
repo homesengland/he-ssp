@@ -51,6 +51,7 @@ public static class ProjectCrmFieldNameMapper
             ProjectFieldsSet.PlanningReferenceNumber => PlanningReferenceNumber,
             ProjectFieldsSet.PlanningReferenceNumberExists => HaveAPlanningReferenceNumber,
             ProjectFieldsSet.AffordableHomes => AffordableHomes,
+            ProjectFieldsSet.GetStatus => ProjectStatus,
             ProjectFieldsSet.GetAllFields => string.Join(
                 ",",
                 Name,

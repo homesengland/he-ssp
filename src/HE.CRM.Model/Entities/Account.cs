@@ -686,6 +686,7 @@ namespace DataverseModel
 			public const string IndustryCode = "industrycode";
 			public const string invln_account_invln_contactwebrole_Accountid = "invln_account_invln_contactwebrole_Accountid";
 			public const string invln_account_invln_organisationchangerequest_organisationid = "invln_account_invln_organisationchangerequest_organisationid";
+			public const string invln_account_invln_scheme_organisationid = "invln_account_invln_scheme_organisationid";
 			public const string invln_addressverificationtype = "invln_addressverificationtype";
 			public const string invln_CreditRatingAgency = "invln_creditratingagency";
 			public const string invln_CurrentCRR = "invln_currentcrr";
@@ -4846,6 +4847,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_account_invln_organisationchangerequest_organisationid");
 				this.SetRelatedEntities<DataverseModel.invln_organisationchangerequest>("invln_account_invln_organisationchangerequest_organisationid", null, value);
 				this.OnPropertyChanged("invln_account_invln_organisationchangerequest_organisationid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_account_invln_scheme_organisationid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_account_invln_scheme_organisationid")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_scheme> invln_account_invln_scheme_organisationid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_scheme>("invln_account_invln_scheme_organisationid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_account_invln_scheme_organisationid");
+				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_account_invln_scheme_organisationid", null, value);
+				this.OnPropertyChanged("invln_account_invln_scheme_organisationid");
 			}
 		}
 		

@@ -1,7 +1,7 @@
-namespace HE.Investment.AHP.Contract.FinancialDetails.Models;
-public class FinancialDetailsModel
+namespace HE.Investment.AHP.Contract.FinancialDetails;
+public class FinancialDetails
 {
-    public FinancialDetailsModel()
+    public FinancialDetails()
     {
     }
 

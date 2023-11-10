@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
-using ApplicationId = HE.Investment.AHP.Contract.FinancialDetails.ValueObjects.ApplicationId;
+using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 
