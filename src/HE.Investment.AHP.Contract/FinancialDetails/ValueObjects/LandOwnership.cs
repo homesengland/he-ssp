@@ -9,7 +9,7 @@ public class LandOwnership : ValueObject
 {
     public LandOwnership(string value)
     {
-        if (ObjectExtensions.IsNotProvided(value))
+        if (value.IsNotProvided())
         {
             OperationResult.New()
                 .AddValidationError(FinancialDetailsValidationFieldNames.LandOwnership, FinancialDetailsValidationErrors.NoLandOwnershipProvided)
