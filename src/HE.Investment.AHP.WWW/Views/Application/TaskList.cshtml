@@ -1,6 +1,12 @@
-@using HE.Investments.Common.WWW.Components
 @using HE.Investment.AHP.WWW.Routing
+@using HE.Investment.AHP.WWW.Config
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.HelpPanel
+@using HE.Investments.Common.WWW.TagHelpers
+@using Microsoft.Extensions.Options
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationModel
+@inject IOptions<ContactInfoOptions> Options
+
 @{
     ViewData["Title"] = "Application details";
     var totalSectionsCount = Model.Sections.Count;
@@ -13,19 +19,14 @@
         .Build();
 }
 <div class="govuk-grid-column-full govuk-!-padding-top-8">
-    <span class="govuk-caption-l">
-        @Model.SiteName
-    </span>
-    <gds-h1 class="govuk-heading-xl">
-        @Model.Name
-    </gds-h1>
+    <vc:form-header caption="@Model.SiteName" title="@Model.Name"/>
 
     @if (incompleteSectionsCount > 0)
     {
-        <gds-h3 class="govuk-heading-s">
+        <gds-h2 class="govuk-heading-s">
             Application incomplete
             <gds-p>You have completed @completeSectionsCount of @totalSectionsCount sections.</gds-p>
-        </gds-h3>
+        </gds-h2>
     }
 </div>
 <gds-div-grid-column-two-thirds>
@@ -38,9 +39,8 @@
         </gds-div-inset-text>
     }
 
-    <link-button action-url="@Url.Action("Index", "Application")" is-secondary="true" >Return to applications</link-button>
+    <link-button action-url="@Url.Action("Index", "Application")" is-secondary="true">Return to applications</link-button>
 </gds-div-grid-column-two-thirds>
 <div class="govuk-grid-column-one-third">
-    @await Html.PartialAsync("_Help.cshtml")
+    <vc:help-panel email-address="@Options.Value.Email" phone-number="@Options.Value.Phone"/>
 </div>
-

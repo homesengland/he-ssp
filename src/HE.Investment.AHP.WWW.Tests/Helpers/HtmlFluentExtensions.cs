@@ -104,10 +104,10 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
-    public static IHtmlDocument HasFormFieldTitle(this IHtmlDocument htmlDocument, string title)
+    public static IHtmlDocument HasFormFieldLabel(this IHtmlDocument htmlDocument, string title)
     {
         htmlDocument
-            .HasElementWithText("h2", title);
+            .HasElementWithText("label", title);
 
         return htmlDocument;
     }

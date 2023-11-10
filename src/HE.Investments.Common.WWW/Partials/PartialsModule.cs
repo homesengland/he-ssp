@@ -6,11 +6,15 @@ namespace HE.Investments.Common.WWW.Partials;
 
 public static class PartialsModule
 {
-    public static IServiceCollection AddCommonPartialsViews(this IServiceCollection services)
+    public static IServiceCollection AddCommonBuildingBlocks(this IServiceCollection services)
     {
         var assembly = typeof(AssemblyMarkup).Assembly;
         services.AddControllersWithViews()
             .AddApplicationPart(assembly)
+            .AddRazorOptions(options =>
+            {
+                options.ViewLocationFormats.Add("/{0}.cshtml");
+            })
             .AddRazorRuntimeCompilation();
 
         services.Configure<MvcRazorRuntimeCompilationOptions>(

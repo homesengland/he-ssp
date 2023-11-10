@@ -1,5 +1,5 @@
-@using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
 @using HE.InvestmentLoans.WWW.Helpers.Notification;
+@using HE.Investments.Common.Services.Notifications
 @inject INotificationService NotificationService
 @{
     var (isNotificationInCache, notificationModel) = NotificationService.Pop();

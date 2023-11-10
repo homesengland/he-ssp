@@ -17,6 +17,8 @@ public class SchemeEntity
 
     public HousingNeeds? HousingNeeds { get; private set; }
 
+    public StakeholderDiscussions? StakeholderDiscussions { get; private set; }
+
     public void ChangeFunding(SchemeFunding funding)
     {
         Funding = funding;
@@ -35,5 +37,10 @@ public class SchemeEntity
     public void ChangeHousingNeeds(HousingNeeds housingNeeds)
     {
         HousingNeeds = housingNeeds;
+    }
+
+    public void ChangeStakeholderDiscussions(StakeholderDiscussions stakeholderDiscussions)
+    {
+        StakeholderDiscussions = stakeholderDiscussions;
     }
 }

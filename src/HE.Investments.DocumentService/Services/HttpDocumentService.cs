@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -9,6 +13,7 @@ using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Exceptions;
 using HE.Investments.DocumentService.Models.File;
 using HE.Investments.DocumentService.Models.Table;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.DocumentService.Services;
@@ -58,13 +63,28 @@ public class HttpDocumentService : IHttpDocumentService
     {
         var uri = new UriBuilder($"{_config.Url}{"/SharepointFiles/Upload"}");
 
+        using var listTitleStringContent = new StringContent(item.ListTitle);
+        using var folderPathStringContent = new StringContent(item.FolderPath);
+        using var metadataStringContent = new StringContent(item.Metadata);
+        using var overwriteStringContent = new StringContent(item.Overwrite.HasValue ? item.Overwrite.Value.ToString() : string.Empty);
+
+        using var multipartContent = new MultipartFormDataContent
+        {
+            { listTitleStringContent, "ListTitle" },
+            { folderPathStringContent, "FolderPath" },
+            { metadataStringContent, "Metadata" },
+            { overwriteStringContent, "Overwrite" }
+        };
+
+        using var fileContent = new StreamContent(item.File.OpenReadStream());
+        multipartContent.Add(fileContent, "File", item.File.Name);
+
         using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString())
         {
-            Content = new StringContent(JsonSerializer.Serialize(item), Encoding.UTF8, "application/json")
+            Content = multipartContent
         };
 
         var response = await SendAsync(request);
-        var responseContent = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
         {

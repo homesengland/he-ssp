@@ -1,7 +1,7 @@
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Validation;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.Common.ValueObjects;
 

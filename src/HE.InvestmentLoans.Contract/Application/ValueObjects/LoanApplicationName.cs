@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Common;
+using HE.Investments.Common.Messages;
 
 namespace HE.InvestmentLoans.Contract.Application.ValueObjects;
 

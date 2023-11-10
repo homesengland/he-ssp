@@ -1,10 +1,10 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

@@ -3,7 +3,7 @@ using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Validators;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;

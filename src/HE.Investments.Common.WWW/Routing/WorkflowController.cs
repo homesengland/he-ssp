@@ -1,6 +1,7 @@
 using System.Reflection;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;

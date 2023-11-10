@@ -1,8 +1,9 @@
 using Dawn;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
-using HE.InvestmentLoans.Common.Validation;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Messages;
+using HE.Investments.Common.Validators;
 
 namespace HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 

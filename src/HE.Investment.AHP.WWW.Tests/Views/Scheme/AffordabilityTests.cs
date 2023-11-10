@@ -42,7 +42,7 @@ public class AffordabilityTests : ViewTestBase
         document
             .HasElementWithText("span", Model.ApplicationName)
             .HasElementWithText("h1", "Affordability of Shared Ownership")
-            .HasElementWithText("h2", "Tell us about any evidence and analysis you have that the homes will be affordable to the target market")
+            .HasElementWithText("label", "Tell us about any evidence and analysis you have that the homes will be affordable to the target market")
             .HasInput("AffordabilityEvidence", value: Model.AffordabilityEvidence)
             .HasElementWithText("button", "Save and continue");
     }

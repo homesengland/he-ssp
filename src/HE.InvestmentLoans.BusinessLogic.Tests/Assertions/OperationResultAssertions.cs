@@ -1,6 +1,5 @@
 using FluentAssertions.Collections;
-using HE.InvestmentLoans.Common.Validation;
-using Xunit.Sdk;
+using HE.Investments.Common.Validators;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 public static class OperationResultAssertions

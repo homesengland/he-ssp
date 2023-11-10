@@ -4,6 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Common.Extensions;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 

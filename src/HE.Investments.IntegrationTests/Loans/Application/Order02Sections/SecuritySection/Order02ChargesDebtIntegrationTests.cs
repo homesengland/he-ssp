@@ -7,6 +7,7 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.InvestmentLoans.WWW.Views.Security.Consts;
+using HE.Investments.Common.Messages;
 using Xunit;
 using Xunit.Extensions.Ordering;
 using FormOptions = HE.InvestmentLoans.Common.Utils.Constants.FormOption;

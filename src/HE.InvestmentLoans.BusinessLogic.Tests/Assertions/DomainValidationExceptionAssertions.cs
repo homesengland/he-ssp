@@ -1,6 +1,5 @@
 using FluentAssertions.Specialized;
-using HE.InvestmentLoans.Common.Exceptions;
-using Xunit.Sdk;
+using HE.Investments.Common.Exceptions;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 

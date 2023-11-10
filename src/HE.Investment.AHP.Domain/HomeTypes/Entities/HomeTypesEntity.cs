@@ -2,7 +2,8 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 

@@ -1,7 +1,7 @@
-using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
+using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

@@ -1,7 +1,7 @@
 @using HE.Investment.AHP.WWW.Extensions
-@using HE.Investment.AHP.WWW.Views.Shared.Components.FormHeader
-@using HE.Investment.AHP.WWW.Views.Shared.Components.FormFieldTitle
-@using HE.Investment.AHP.WWW.Views.Shared.Components.FormButton
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.FormFieldTitle
+@using HE.Investments.Common.WWW.Components.FormHeader
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 @{
     var title = "Funding details";
@@ -16,7 +16,9 @@
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
         <gds-field-set role="group">
-            <vc:form-field-title title="Enter how much AHP CME 21-26 funding you require on this scheme"/>
+            <vc:form-field-title
+                field-name="RequiredFunding"
+                title="Enter how much AHP CME 21-26 funding you require on this scheme"/>
             <gds-input-wrapper class="govuk-!-margin-bottom-6">
                 <gds-input asp-prefixtext="GdsInputPrefixText.Pounds"
                            class="govuk-input--width-3"
@@ -26,7 +28,9 @@
                            type="text"/>
             </gds-input-wrapper>
 
-            <vc:form-field-title title="Enter how many homes you intend to deliver"/>
+            <vc:form-field-title
+                field-name="HousesToDeliver"
+                title="Enter how many homes you intend to deliver"/>
             <gds-input-wrapper class="govuk-!-margin-bottom-6">
                 <gds-input
                     class="govuk-input--width-2"
