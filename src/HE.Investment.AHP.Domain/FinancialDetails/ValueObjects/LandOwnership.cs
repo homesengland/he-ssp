@@ -1,9 +1,9 @@
-﻿using HE.Investment.AHP.Contract.FinancialDetails.Constants;
+using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
 
-namespace HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 public class LandOwnership : ValueObject
 {
     public LandOwnership(string value)
@@ -15,20 +15,10 @@ public class LandOwnership : ValueObject
                 .CheckErrors();
         }
 
-        try
-        {
-            var mappedValue = value.MapToNonNullableBool();
-            Value = mappedValue;
-        }
-        catch (ArgumentException)
-        {
-            OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.LandOwnership, FinancialDetailsValidationErrors.NoLandOwnershipProvided)
-                .CheckErrors();
-        }
+        Value = value;
     }
 
-    public bool Value { get; }
+    public string Value { get; }
 
     protected override IEnumerable<object> GetAtomicValues()
     {

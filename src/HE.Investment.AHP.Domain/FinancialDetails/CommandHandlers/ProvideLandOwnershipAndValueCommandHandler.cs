@@ -1,6 +1,6 @@
-using HE.Investment.AHP.Contract.FinancialDetails.Commands;
-using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
+using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
