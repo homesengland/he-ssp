@@ -697,6 +697,24 @@ namespace HE.Investments.CRM.Common.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_region
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		South = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Midlands = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		London = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		North = 858110003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_changesourceset
 	{
 		
@@ -8839,6 +8857,12161 @@ namespace HE.Investments.CRM.Common.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_accountcategorycode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PreferredCustomer = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Standard = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_accountclassificationcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_accountratingcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_address1_addresstypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BillTo = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ShipTo = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Primary = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Other = 4,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_address1_freighttermscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FOB = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NoCharge = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_address1_shippingmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Airborne = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DHL = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FedEx = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UPS = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PostalMail = 5,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FullLoad = 6,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WillCall = 7,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_address2_addresstypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_address2_freighttermscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_address2_shippingmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_businesstypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_customersizecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_customertypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Competitor = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Consultant = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Customer = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Investor = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Partner = 5,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Influencer = 6,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Press = 7,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Prospect = 8,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Reseller = 9,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Supplier = 10,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Vendor = 11,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Other = 12,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum he_account_he_latier
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Tier1 = 134370001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Tier2 = 134370002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Tier3 = 134370003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum he_account_he_partnertype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ALMOArmsLengthManagementOrganisation = 134370011,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CharitableOrganisation = 134370010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Consultant = 134370002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FinancialInstitution = 134370001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		GovernmentPolicyMaker = 134370008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HousingAssociation = 134370000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Landowner = 134370003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LocalAuthority = 134370007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PrivateContractor = 134370009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PrivateSectorHousebuilder = 134370004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Other = 134370012,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_industrycode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Accounting = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AgricultureandNonpetrolNaturalResourceExtraction = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BroadcastingPrintingandPublishing = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Brokers = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BuildingSupplyRetail = 5,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BusinessServices = 6,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Consulting = 7,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ConsumerServices = 8,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DesignDirectionandCreativeManagement = 9,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DistributorsDispatchersandProcessors = 10,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DoctorsOfficesandClinics = 11,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DurableManufacturing = 12,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		EatingandDrinkingPlaces = 13,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		EntertainmentRetail = 14,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		EquipmentRentalandLeasing = 15,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Financial = 16,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FoodandTobaccoProcessing = 17,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InboundCapitalIntensiveProcessing = 18,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InboundRepairandServices = 19,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Insurance = 20,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LegalServices = 21,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NonDurableMerchandiseRetail = 22,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OutboundConsumerService = 23,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PetrochemicalExtractionandDistribution = 24,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ServiceRetail = 25,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SIGAffiliations = 26,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SocialServices = 27,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SpecialOutboundTradeContractors = 28,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SpecialtyRealty = 29,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Transportation = 30,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UtilityCreationandDistribution = 31,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		VehicleRetail = 32,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Wholesale = 33,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_ownershipcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Public = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Private = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Subsidiary = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Other = 4,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_paymenttermscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Net30 = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Number_210Net30 = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Net45 = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Net60 = 4,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_preferredappointmentdaycode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Sunday = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Monday = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Tuesday = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Wednesday = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Thursday = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Friday = 5,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Saturday = 6,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_preferredappointmenttimecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Morning = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Afternoon = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Evening = 3,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_preferredcontactmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Any = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Email = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Phone = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Fax = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Mail = 5,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_shippingmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum AccountState
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_statuscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum account_territorycode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	/// <summary>
+	/// Business that represents a customer or potential customer. The company that is billed in business transactions.
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("account")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class Account : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		public Account() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "account";
+		
+		public const string EntityLogicalCollectionName = "accounts";
+		
+		public const string EntitySetName = "accounts";
+		
+		public const int EntityTypeCode = 1;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// Select a category to indicate whether the customer account is standard or preferred.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountcategorycode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_accountcategorycode> AccountCategoryCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("accountcategorycode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_accountcategorycode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_accountcategorycode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("AccountCategoryCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("accountcategorycode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("accountcategorycode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("AccountCategoryCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select a classification code to indicate the potential value of the customer account based on the projected return on investment, cooperation level, sales cycle length or other criteria.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountclassificationcode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_accountclassificationcode> AccountClassificationCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("accountclassificationcode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_accountclassificationcode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_accountclassificationcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("AccountClassificationCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("accountclassificationcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("accountclassificationcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("AccountClassificationCode");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountid")]
+		public System.Nullable<System.Guid> AccountId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("accountid");
+			}
+			set
+			{
+				this.OnPropertyChanging("AccountId");
+				this.SetAttributeValue("accountid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("AccountId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountid")]
+		public override System.Guid Id
+		{
+			get
+			{
+				return base.Id;
+			}
+			set
+			{
+				this.AccountId = value;
+			}
+		}
+		
+		/// <summary>
+		/// Type an ID number or code for the account to quickly search and identify the account in system views.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountnumber")]
+		public string AccountNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("accountnumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("AccountNumber");
+				this.SetAttributeValue("accountnumber", value);
+				this.OnPropertyChanged("AccountNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Select a rating to indicate the value of the customer account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountratingcode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_accountratingcode> AccountRatingCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("accountratingcode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_accountratingcode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_accountratingcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("AccountRatingCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("accountratingcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("accountratingcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("AccountRatingCode");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for address 1.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_addressid")]
+		public System.Nullable<System.Guid> Address1_AddressId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("address1_addressid");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_AddressId");
+				this.SetAttributeValue("address1_addressid", value);
+				this.OnPropertyChanged("Address1_AddressId");
+			}
+		}
+		
+		/// <summary>
+		/// Select the primary address type.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_addresstypecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_address1_addresstypecode> Address1_AddressTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_addresstypecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_address1_addresstypecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_address1_addresstypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_AddressTypeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address1_addresstypecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address1_addresstypecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address1_AddressTypeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the city for the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_city")]
+		public string Address1_City
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_city");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_City");
+				this.SetAttributeValue("address1_city", value);
+				this.OnPropertyChanged("Address1_City");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the complete primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_composite")]
+		public string Address1_Composite
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_composite");
+			}
+		}
+		
+		/// <summary>
+		/// Type the country or region for the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_country")]
+		public string Address1_Country
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_country");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Country");
+				this.SetAttributeValue("address1_country", value);
+				this.OnPropertyChanged("Address1_Country");
+			}
+		}
+		
+		/// <summary>
+		/// Type the county for the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_county")]
+		public string Address1_County
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_county");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_County");
+				this.SetAttributeValue("address1_county", value);
+				this.OnPropertyChanged("Address1_County");
+			}
+		}
+		
+		/// <summary>
+		/// Type the fax number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_fax")]
+		public string Address1_Fax
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_fax");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Fax");
+				this.SetAttributeValue("address1_fax", value);
+				this.OnPropertyChanged("Address1_Fax");
+			}
+		}
+		
+		/// <summary>
+		/// Select the freight terms for the primary address to make sure shipping orders are processed correctly.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_freighttermscode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_address1_freighttermscode> Address1_FreightTermsCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_freighttermscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_address1_freighttermscode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_address1_freighttermscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_FreightTermsCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address1_freighttermscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address1_freighttermscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address1_FreightTermsCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the latitude value for the primary address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_latitude")]
+		public System.Nullable<double> Address1_Latitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address1_latitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Latitude");
+				this.SetAttributeValue("address1_latitude", value);
+				this.OnPropertyChanged("Address1_Latitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type the first line of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_line1")]
+		public string Address1_Line1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_line1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Line1");
+				this.SetAttributeValue("address1_line1", value);
+				this.OnPropertyChanged("Address1_Line1");
+			}
+		}
+		
+		/// <summary>
+		/// Type the second line of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_line2")]
+		public string Address1_Line2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_line2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Line2");
+				this.SetAttributeValue("address1_line2", value);
+				this.OnPropertyChanged("Address1_Line2");
+			}
+		}
+		
+		/// <summary>
+		/// Type the third line of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_line3")]
+		public string Address1_Line3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_line3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Line3");
+				this.SetAttributeValue("address1_line3", value);
+				this.OnPropertyChanged("Address1_Line3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the longitude value for the primary address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_longitude")]
+		public System.Nullable<double> Address1_Longitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address1_longitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Longitude");
+				this.SetAttributeValue("address1_longitude", value);
+				this.OnPropertyChanged("Address1_Longitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type a descriptive name for the primary address, such as Corporate Headquarters.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_name")]
+		public string Address1_Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_name");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Name");
+				this.SetAttributeValue("address1_name", value);
+				this.OnPropertyChanged("Address1_Name");
+			}
+		}
+		
+		/// <summary>
+		/// Type the ZIP Code or postal code for the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_postalcode")]
+		public string Address1_PostalCode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_postalcode");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_PostalCode");
+				this.SetAttributeValue("address1_postalcode", value);
+				this.OnPropertyChanged("Address1_PostalCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the post office box number of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_postofficebox")]
+		public string Address1_PostOfficeBox
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_postofficebox");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_PostOfficeBox");
+				this.SetAttributeValue("address1_postofficebox", value);
+				this.OnPropertyChanged("Address1_PostOfficeBox");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the main contact at the account's primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_primarycontactname")]
+		public string Address1_PrimaryContactName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_primarycontactname");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_PrimaryContactName");
+				this.SetAttributeValue("address1_primarycontactname", value);
+				this.OnPropertyChanged("Address1_PrimaryContactName");
+			}
+		}
+		
+		/// <summary>
+		/// Select a shipping method for deliveries sent to this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_shippingmethodcode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_address1_shippingmethodcode> Address1_ShippingMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_shippingmethodcode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_address1_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_address1_shippingmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_ShippingMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address1_shippingmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address1_shippingmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address1_ShippingMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the state or province of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_stateorprovince")]
+		public string Address1_StateOrProvince
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_stateorprovince");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_StateOrProvince");
+				this.SetAttributeValue("address1_stateorprovince", value);
+				this.OnPropertyChanged("Address1_StateOrProvince");
+			}
+		}
+		
+		/// <summary>
+		/// Type the main phone number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_telephone1")]
+		public string Address1_Telephone1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_telephone1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Telephone1");
+				this.SetAttributeValue("address1_telephone1", value);
+				this.OnPropertyChanged("Address1_Telephone1");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second phone number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_telephone2")]
+		public string Address1_Telephone2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_telephone2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Telephone2");
+				this.SetAttributeValue("address1_telephone2", value);
+				this.OnPropertyChanged("Address1_Telephone2");
+			}
+		}
+		
+		/// <summary>
+		/// Type a third phone number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_telephone3")]
+		public string Address1_Telephone3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_telephone3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Telephone3");
+				this.SetAttributeValue("address1_telephone3", value);
+				this.OnPropertyChanged("Address1_Telephone3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the UPS zone of the primary address to make sure shipping charges are calculated correctly and deliveries are made promptly, if shipped by UPS.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_upszone")]
+		public string Address1_UPSZone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_upszone");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_UPSZone");
+				this.SetAttributeValue("address1_upszone", value);
+				this.OnPropertyChanged("Address1_UPSZone");
+			}
+		}
+		
+		/// <summary>
+		/// Select the time zone, or UTC offset, for this address so that other people can reference it when they contact someone at this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_utcoffset")]
+		public System.Nullable<int> Address1_UTCOffset
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("address1_utcoffset");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_UTCOffset");
+				this.SetAttributeValue("address1_utcoffset", value);
+				this.OnPropertyChanged("Address1_UTCOffset");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for address 2.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_addressid")]
+		public System.Nullable<System.Guid> Address2_AddressId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("address2_addressid");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_AddressId");
+				this.SetAttributeValue("address2_addressid", value);
+				this.OnPropertyChanged("Address2_AddressId");
+			}
+		}
+		
+		/// <summary>
+		/// Select the secondary address type.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_addresstypecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_address2_addresstypecode> Address2_AddressTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_addresstypecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_address2_addresstypecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_address2_addresstypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_AddressTypeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address2_addresstypecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address2_addresstypecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address2_AddressTypeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the city for the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_city")]
+		public string Address2_City
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_city");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_City");
+				this.SetAttributeValue("address2_city", value);
+				this.OnPropertyChanged("Address2_City");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the complete secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_composite")]
+		public string Address2_Composite
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_composite");
+			}
+		}
+		
+		/// <summary>
+		/// Type the country or region for the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_country")]
+		public string Address2_Country
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_country");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Country");
+				this.SetAttributeValue("address2_country", value);
+				this.OnPropertyChanged("Address2_Country");
+			}
+		}
+		
+		/// <summary>
+		/// Type the county for the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_county")]
+		public string Address2_County
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_county");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_County");
+				this.SetAttributeValue("address2_county", value);
+				this.OnPropertyChanged("Address2_County");
+			}
+		}
+		
+		/// <summary>
+		/// Type the fax number associated with the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_fax")]
+		public string Address2_Fax
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_fax");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Fax");
+				this.SetAttributeValue("address2_fax", value);
+				this.OnPropertyChanged("Address2_Fax");
+			}
+		}
+		
+		/// <summary>
+		/// Select the freight terms for the secondary address to make sure shipping orders are processed correctly.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_freighttermscode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_address2_freighttermscode> Address2_FreightTermsCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_freighttermscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_address2_freighttermscode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_address2_freighttermscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_FreightTermsCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address2_freighttermscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address2_freighttermscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address2_FreightTermsCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the latitude value for the secondary address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_latitude")]
+		public System.Nullable<double> Address2_Latitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address2_latitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Latitude");
+				this.SetAttributeValue("address2_latitude", value);
+				this.OnPropertyChanged("Address2_Latitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type the first line of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_line1")]
+		public string Address2_Line1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_line1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Line1");
+				this.SetAttributeValue("address2_line1", value);
+				this.OnPropertyChanged("Address2_Line1");
+			}
+		}
+		
+		/// <summary>
+		/// Type the second line of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_line2")]
+		public string Address2_Line2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_line2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Line2");
+				this.SetAttributeValue("address2_line2", value);
+				this.OnPropertyChanged("Address2_Line2");
+			}
+		}
+		
+		/// <summary>
+		/// Type the third line of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_line3")]
+		public string Address2_Line3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_line3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Line3");
+				this.SetAttributeValue("address2_line3", value);
+				this.OnPropertyChanged("Address2_Line3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the longitude value for the secondary address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_longitude")]
+		public System.Nullable<double> Address2_Longitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address2_longitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Longitude");
+				this.SetAttributeValue("address2_longitude", value);
+				this.OnPropertyChanged("Address2_Longitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type a descriptive name for the secondary address, such as Corporate Headquarters.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_name")]
+		public string Address2_Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_name");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Name");
+				this.SetAttributeValue("address2_name", value);
+				this.OnPropertyChanged("Address2_Name");
+			}
+		}
+		
+		/// <summary>
+		/// Type the ZIP Code or postal code for the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_postalcode")]
+		public string Address2_PostalCode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_postalcode");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_PostalCode");
+				this.SetAttributeValue("address2_postalcode", value);
+				this.OnPropertyChanged("Address2_PostalCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the post office box number of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_postofficebox")]
+		public string Address2_PostOfficeBox
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_postofficebox");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_PostOfficeBox");
+				this.SetAttributeValue("address2_postofficebox", value);
+				this.OnPropertyChanged("Address2_PostOfficeBox");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the main contact at the account's secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_primarycontactname")]
+		public string Address2_PrimaryContactName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_primarycontactname");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_PrimaryContactName");
+				this.SetAttributeValue("address2_primarycontactname", value);
+				this.OnPropertyChanged("Address2_PrimaryContactName");
+			}
+		}
+		
+		/// <summary>
+		/// Select a shipping method for deliveries sent to this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_shippingmethodcode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_address2_shippingmethodcode> Address2_ShippingMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_shippingmethodcode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_address2_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_address2_shippingmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_ShippingMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address2_shippingmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address2_shippingmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address2_ShippingMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the state or province of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_stateorprovince")]
+		public string Address2_StateOrProvince
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_stateorprovince");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_StateOrProvince");
+				this.SetAttributeValue("address2_stateorprovince", value);
+				this.OnPropertyChanged("Address2_StateOrProvince");
+			}
+		}
+		
+		/// <summary>
+		/// Type the main phone number associated with the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_telephone1")]
+		public string Address2_Telephone1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_telephone1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Telephone1");
+				this.SetAttributeValue("address2_telephone1", value);
+				this.OnPropertyChanged("Address2_Telephone1");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second phone number associated with the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_telephone2")]
+		public string Address2_Telephone2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_telephone2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Telephone2");
+				this.SetAttributeValue("address2_telephone2", value);
+				this.OnPropertyChanged("Address2_Telephone2");
+			}
+		}
+		
+		/// <summary>
+		/// Type a third phone number associated with the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_telephone3")]
+		public string Address2_Telephone3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_telephone3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Telephone3");
+				this.SetAttributeValue("address2_telephone3", value);
+				this.OnPropertyChanged("Address2_Telephone3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the UPS zone of the secondary address to make sure shipping charges are calculated correctly and deliveries are made promptly, if shipped by UPS.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_upszone")]
+		public string Address2_UPSZone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_upszone");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_UPSZone");
+				this.SetAttributeValue("address2_upszone", value);
+				this.OnPropertyChanged("Address2_UPSZone");
+			}
+		}
+		
+		/// <summary>
+		/// Select the time zone, or UTC offset, for this address so that other people can reference it when they contact someone at this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_utcoffset")]
+		public System.Nullable<int> Address2_UTCOffset
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("address2_utcoffset");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_UTCOffset");
+				this.SetAttributeValue("address2_utcoffset", value);
+				this.OnPropertyChanged("Address2_UTCOffset");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_createdbyipaddress")]
+		public string Adx_CreatedByIPAddress
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_createdbyipaddress");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_CreatedByIPAddress");
+				this.SetAttributeValue("adx_createdbyipaddress", value);
+				this.OnPropertyChanged("Adx_CreatedByIPAddress");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_createdbyusername")]
+		public string Adx_CreatedByUsername
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_createdbyusername");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_CreatedByUsername");
+				this.SetAttributeValue("adx_createdbyusername", value);
+				this.OnPropertyChanged("Adx_CreatedByUsername");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_modifiedbyipaddress")]
+		public string Adx_ModifiedByIPAddress
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_modifiedbyipaddress");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_ModifiedByIPAddress");
+				this.SetAttributeValue("adx_modifiedbyipaddress", value);
+				this.OnPropertyChanged("Adx_ModifiedByIPAddress");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_modifiedbyusername")]
+		public string Adx_ModifiedByUsername
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_modifiedbyusername");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_ModifiedByUsername");
+				this.SetAttributeValue("adx_modifiedbyusername", value);
+				this.OnPropertyChanged("Adx_ModifiedByUsername");
+			}
+		}
+		
+		/// <summary>
+		/// For system use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging30")]
+		public Microsoft.Xrm.Sdk.Money Aging30
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging30");
+			}
+		}
+		
+		/// <summary>
+		/// The base currency equivalent of the aging 30 field.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging30_base")]
+		public Microsoft.Xrm.Sdk.Money Aging30_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging30_base");
+			}
+		}
+		
+		/// <summary>
+		/// For system use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging60")]
+		public Microsoft.Xrm.Sdk.Money Aging60
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging60");
+			}
+		}
+		
+		/// <summary>
+		/// The base currency equivalent of the aging 60 field.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging60_base")]
+		public Microsoft.Xrm.Sdk.Money Aging60_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging60_base");
+			}
+		}
+		
+		/// <summary>
+		/// For system use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging90")]
+		public Microsoft.Xrm.Sdk.Money Aging90
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging90");
+			}
+		}
+		
+		/// <summary>
+		/// The base currency equivalent of the aging 90 field.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging90_base")]
+		public Microsoft.Xrm.Sdk.Money Aging90_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging90_base");
+			}
+		}
+		
+		/// <summary>
+		/// Select the legal designation or other business type of the account for contracts or reporting purposes.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("businesstypecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_businesstypecode> BusinessTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("businesstypecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_businesstypecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_businesstypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("BusinessTypeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("businesstypecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("businesstypecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("BusinessTypeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the external party who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdbyexternalparty")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedByExternalParty
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdbyexternalparty");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date and time when the record was created. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who created the record on behalf of another user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Type the credit limit of the account. This is a useful reference when you address invoice and accounting issues with the customer.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("creditlimit")]
+		public Microsoft.Xrm.Sdk.Money CreditLimit
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("creditlimit");
+			}
+			set
+			{
+				this.OnPropertyChanging("CreditLimit");
+				this.SetAttributeValue("creditlimit", value);
+				this.OnPropertyChanged("CreditLimit");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the credit limit converted to the system's default base currency for reporting purposes.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("creditlimit_base")]
+		public Microsoft.Xrm.Sdk.Money CreditLimit_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("creditlimit_base");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the credit for the account is on hold. This is a useful reference while addressing the invoice and accounting issues with the customer.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("creditonhold")]
+		public System.Nullable<bool> CreditOnHold
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("creditonhold");
+			}
+			set
+			{
+				this.OnPropertyChanging("CreditOnHold");
+				this.SetAttributeValue("creditonhold", value);
+				this.OnPropertyChanged("CreditOnHold");
+			}
+		}
+		
+		/// <summary>
+		/// Select the size category or range of the account for segmentation and reporting purposes.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customersizecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_customersizecode> CustomerSizeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("customersizecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_customersizecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_customersizecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("CustomerSizeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("customersizecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("customersizecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("CustomerSizeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the category that best describes the relationship between the account and your organization.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customertypecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_customertypecode> CustomerTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("customertypecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_customertypecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_customertypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("CustomerTypeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("customertypecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("customertypecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("CustomerTypeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the default price list associated with the account to make sure the correct product prices for this customer are applied in sales opportunities, quotes, and orders.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defaultpricelevelid")]
+		public Microsoft.Xrm.Sdk.EntityReference DefaultPriceLevelId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defaultpricelevelid");
+			}
+			set
+			{
+				this.OnPropertyChanging("DefaultPriceLevelId");
+				this.SetAttributeValue("defaultpricelevelid", value);
+				this.OnPropertyChanged("DefaultPriceLevelId");
+			}
+		}
+		
+		/// <summary>
+		/// Type additional information to describe the account, such as an excerpt from the company's website.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("description")]
+		public string Description
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("description");
+			}
+			set
+			{
+				this.OnPropertyChanging("Description");
+				this.SetAttributeValue("description", value);
+				this.OnPropertyChanged("Description");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the account allows bulk email sent through campaigns. If Do Not Allow is selected, the account can be added to marketing lists, but is excluded from email.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotbulkemail")]
+		public System.Nullable<bool> DoNotBulkEMail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotbulkemail");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotBulkEMail");
+				this.SetAttributeValue("donotbulkemail", value);
+				this.OnPropertyChanged("DoNotBulkEMail");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the account allows bulk postal mail sent through marketing campaigns or quick campaigns. If Do Not Allow is selected, the account can be added to marketing lists, but will be excluded from the postal mail.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotbulkpostalmail")]
+		public System.Nullable<bool> DoNotBulkPostalMail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotbulkpostalmail");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotBulkPostalMail");
+				this.SetAttributeValue("donotbulkpostalmail", value);
+				this.OnPropertyChanged("DoNotBulkPostalMail");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the account allows direct email sent from Microsoft Dynamics 365.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotemail")]
+		public System.Nullable<bool> DoNotEMail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotemail");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotEMail");
+				this.SetAttributeValue("donotemail", value);
+				this.OnPropertyChanged("DoNotEMail");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the account allows faxes. If Do Not Allow is selected, the account will be excluded from fax activities distributed in marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotfax")]
+		public System.Nullable<bool> DoNotFax
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotfax");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotFax");
+				this.SetAttributeValue("donotfax", value);
+				this.OnPropertyChanged("DoNotFax");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the account allows phone calls. If Do Not Allow is selected, the account will be excluded from phone call activities distributed in marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotphone")]
+		public System.Nullable<bool> DoNotPhone
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotphone");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotPhone");
+				this.SetAttributeValue("donotphone", value);
+				this.OnPropertyChanged("DoNotPhone");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the account allows direct mail. If Do Not Allow is selected, the account will be excluded from letter activities distributed in marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotpostalmail")]
+		public System.Nullable<bool> DoNotPostalMail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotpostalmail");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotPostalMail");
+				this.SetAttributeValue("donotpostalmail", value);
+				this.OnPropertyChanged("DoNotPostalMail");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the account accepts marketing materials, such as brochures or catalogs.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotsendmm")]
+		public System.Nullable<bool> DoNotSendMM
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotsendmm");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotSendMM");
+				this.SetAttributeValue("donotsendmm", value);
+				this.OnPropertyChanged("DoNotSendMM");
+			}
+		}
+		
+		/// <summary>
+		/// Type the primary email address for the account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailaddress1")]
+		public string EMailAddress1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("emailaddress1");
+			}
+			set
+			{
+				this.OnPropertyChanging("EMailAddress1");
+				this.SetAttributeValue("emailaddress1", value);
+				this.OnPropertyChanged("EMailAddress1");
+			}
+		}
+		
+		/// <summary>
+		/// Type the secondary email address for the account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailaddress2")]
+		public string EMailAddress2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("emailaddress2");
+			}
+			set
+			{
+				this.OnPropertyChanging("EMailAddress2");
+				this.SetAttributeValue("emailaddress2", value);
+				this.OnPropertyChanged("EMailAddress2");
+			}
+		}
+		
+		/// <summary>
+		/// Type an alternate email address for the account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailaddress3")]
+		public string EMailAddress3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("emailaddress3");
+			}
+			set
+			{
+				this.OnPropertyChanging("EMailAddress3");
+				this.SetAttributeValue("emailaddress3", value);
+				this.OnPropertyChanged("EMailAddress3");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the default image for the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage")]
+		public byte[] EntityImage
+		{
+			get
+			{
+				return this.GetAttributeValue<byte[]>("entityimage");
+			}
+			set
+			{
+				this.OnPropertyChanging("EntityImage");
+				this.SetAttributeValue("entityimage", value);
+				this.OnPropertyChanged("EntityImage");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage_timestamp")]
+		public System.Nullable<long> EntityImage_Timestamp
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("entityimage_timestamp");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage_url")]
+		public string EntityImage_URL
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("entityimage_url");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimageid")]
+		public System.Nullable<System.Guid> EntityImageId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("entityimageid");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the conversion rate of the record's currency. The exchange rate is used to convert all money fields in the record from the local currency to the system's default currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("exchangerate")]
+		public System.Nullable<decimal> ExchangeRate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("exchangerate");
+			}
+			set
+			{
+				this.OnPropertyChanging("ExchangeRate");
+				this.SetAttributeValue("exchangerate", value);
+				this.OnPropertyChanged("ExchangeRate");
+			}
+		}
+		
+		/// <summary>
+		/// Type the fax number for the account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("fax")]
+		public string Fax
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("fax");
+			}
+			set
+			{
+				this.OnPropertyChanging("Fax");
+				this.SetAttributeValue("fax", value);
+				this.OnPropertyChanged("Fax");
+			}
+		}
+		
+		/// <summary>
+		/// Information about whether to allow following email activity like opens, attachment views and link clicks for emails sent to the account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("followemail")]
+		public System.Nullable<bool> FollowEmail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("followemail");
+			}
+			set
+			{
+				this.OnPropertyChanging("FollowEmail");
+				this.SetAttributeValue("followemail", value);
+				this.OnPropertyChanged("FollowEmail");
+			}
+		}
+		
+		/// <summary>
+		/// Type the URL for the account's FTP site to enable users to access data and share documents.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ftpsiteurl")]
+		public string FtpSiteURL
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("ftpsiteurl");
+			}
+			set
+			{
+				this.OnPropertyChanging("FtpSiteURL");
+				this.SetAttributeValue("ftpsiteurl", value);
+				this.OnPropertyChanged("FtpSiteURL");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_automaticsearch")]
+		public System.Nullable<bool> he_automaticsearch
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("he_automaticsearch");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_automaticsearch");
+				this.SetAttributeValue("he_automaticsearch", value);
+				this.OnPropertyChanged("he_automaticsearch");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_chapi_companyprofileurl")]
+		public string he_Chapi_CompanyProfileUrl
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_chapi_companyprofileurl");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_Chapi_CompanyProfileUrl");
+				this.SetAttributeValue("he_chapi_companyprofileurl", value);
+				this.OnPropertyChanged("he_Chapi_CompanyProfileUrl");
+			}
+		}
+		
+		/// <summary>
+		/// Company Status imported form Companies House API
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_chapi_companystatus")]
+		public Microsoft.Xrm.Sdk.EntityReference he_Chapi_CompanyStatus
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("he_chapi_companystatus");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_Chapi_CompanyStatus");
+				this.SetAttributeValue("he_chapi_companystatus", value);
+				this.OnPropertyChanged("he_Chapi_CompanyStatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_chapi_companytype")]
+		public Microsoft.Xrm.Sdk.EntityReference he_Chapi_CompanyType
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("he_chapi_companytype");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_Chapi_CompanyType");
+				this.SetAttributeValue("he_chapi_companytype", value);
+				this.OnPropertyChanged("he_Chapi_CompanyType");
+			}
+		}
+		
+		/// <summary>
+		/// Companies House Number
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_companieshousenumber")]
+		public string he_CompaniesHouseNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_companieshousenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_CompaniesHouseNumber");
+				this.SetAttributeValue("he_companieshousenumber", value);
+				this.OnPropertyChanged("he_CompaniesHouseNumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_companysearch")]
+		public string he_companysearch
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_companysearch");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_companysearch");
+				this.SetAttributeValue("he_companysearch", value);
+				this.OnPropertyChanged("he_companysearch");
+			}
+		}
+		
+		/// <summary>
+		/// Keeps information about record author - for case the record created from Partner Service
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_created")]
+		public string he_Created
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_created");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_Created");
+				this.SetAttributeValue("he_created", value);
+				this.OnPropertyChanged("he_Created");
+			}
+		}
+		
+		/// <summary>
+		/// Single Pipeline Esri ID
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_esriid")]
+		public string he_EsriID
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_esriid");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_EsriID");
+				this.SetAttributeValue("he_esriid", value);
+				this.OnPropertyChanged("he_EsriID");
+			}
+		}
+		
+		/// <summary>
+		/// Homes England Central Government Organisation Code
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_homesenglandcentralgovernmentorganisationcode")]
+		public string he_HomesEnglandCentralGovernmentOrganisationCode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_homesenglandcentralgovernmentorganisationcode");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_HomesEnglandCentralGovernmentOrganisationCode");
+				this.SetAttributeValue("he_homesenglandcentralgovernmentorganisationcode", value);
+				this.OnPropertyChanged("he_HomesEnglandCentralGovernmentOrganisationCode");
+			}
+		}
+		
+		/// <summary>
+		/// Homes England Combined Authority Code
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_homesenglandcombinedauthoritycode")]
+		public string he_HomesEnglandCombinedAuthorityCode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_homesenglandcombinedauthoritycode");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_HomesEnglandCombinedAuthorityCode");
+				this.SetAttributeValue("he_homesenglandcombinedauthoritycode", value);
+				this.OnPropertyChanged("he_HomesEnglandCombinedAuthorityCode");
+			}
+		}
+		
+		/// <summary>
+		/// Unique ID without the Prefix
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_id")]
+		public string he_ID
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_id");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_ID");
+				this.SetAttributeValue("he_id", value);
+				this.OnPropertyChanged("he_ID");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_isverified")]
+		public System.Nullable<bool> he_IsVerified
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("he_isverified");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_IsVerified");
+				this.SetAttributeValue("he_isverified", value);
+				this.OnPropertyChanged("he_IsVerified");
+			}
+		}
+		
+		/// <summary>
+		/// Whether the partner is Key Account or not
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_keyaccount")]
+		public System.Nullable<bool> he_KeyAccount
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("he_keyaccount");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_KeyAccount");
+				this.SetAttributeValue("he_keyaccount", value);
+				this.OnPropertyChanged("he_KeyAccount");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_keyaccountmanager")]
+		public Microsoft.Xrm.Sdk.EntityReference he_keyaccountmanager
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("he_keyaccountmanager");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_keyaccountmanager");
+				this.SetAttributeValue("he_keyaccountmanager", value);
+				this.OnPropertyChanged("he_keyaccountmanager");
+			}
+		}
+		
+		/// <summary>
+		/// Local authority classification field. Is synchronized from SharePoint site
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_latier")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.he_account_he_latier> he_LATier
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_latier");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.he_account_he_latier)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.he_account_he_latier), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("he_LATier");
+				if ((value == null))
+				{
+					this.SetAttributeValue("he_latier", null);
+				}
+				else
+				{
+					this.SetAttributeValue("he_latier", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("he_LATier");
+			}
+		}
+		
+		/// <summary>
+		/// ONS (Office for National Statistics) GSS (Government Statistical Service) Local Authority Code
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_localauthoritycode")]
+		public string he_LocalAuthorityCode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_localauthoritycode");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_LocalAuthorityCode");
+				this.SetAttributeValue("he_localauthoritycode", value);
+				this.OnPropertyChanged("he_LocalAuthorityCode");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_partner_sector")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.he_sector> he_Partner_Sector
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_partner_sector");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.he_sector)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.he_sector), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("he_Partner_Sector");
+				if ((value == null))
+				{
+					this.SetAttributeValue("he_partner_sector", null);
+				}
+				else
+				{
+					this.SetAttributeValue("he_partner_sector", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("he_Partner_Sector");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_partnertype")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.he_account_he_partnertype> he_PartnerType
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_partnertype");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.he_account_he_partnertype)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.he_account_he_partnertype), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("he_PartnerType");
+				if ((value == null))
+				{
+					this.SetAttributeValue("he_partnertype", null);
+				}
+				else
+				{
+					this.SetAttributeValue("he_partnertype", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("he_PartnerType");
+			}
+		}
+		
+		/// <summary>
+		/// ID containing unique prefix
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_prefixid")]
+		public string he_prefixid
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_prefixid");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_prefixid");
+				this.SetAttributeValue("he_prefixid", value);
+				this.OnPropertyChanged("he_prefixid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_primaryoperatingregionchoice")]
+		public object he_primaryoperatingregionchoice
+		{
+			get
+			{
+				return this.GetAttributeValue<object>("he_primaryoperatingregionchoice");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_primaryoperatingregionchoice");
+				this.SetAttributeValue("he_primaryoperatingregionchoice", value);
+				this.OnPropertyChanged("he_primaryoperatingregionchoice");
+			}
+		}
+		
+		/// <summary>
+		/// HE User who owns the relationship with Partner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_relationshipowner")]
+		public Microsoft.Xrm.Sdk.EntityReference he_RelationshipOwner
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("he_relationshipowner");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_RelationshipOwner");
+				this.SetAttributeValue("he_relationshipowner", value);
+				this.OnPropertyChanged("he_RelationshipOwner");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_sectortextforpowerbi")]
+		public string he_SectorTextforPowerBI
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_sectortextforpowerbi");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_SectorTextforPowerBI");
+				this.SetAttributeValue("he_sectortextforpowerbi", value);
+				this.OnPropertyChanged("he_SectorTextforPowerBI");
+			}
+		}
+		
+		/// <summary>
+		/// "A developer building fewer than 2,000 homes per year"
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_smeindicatorchoice")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.he_smeindicator> he_smeindicatorchoice
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_smeindicatorchoice");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.he_smeindicator)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.he_smeindicator), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("he_smeindicatorchoice");
+				if ((value == null))
+				{
+					this.SetAttributeValue("he_smeindicatorchoice", null);
+				}
+				else
+				{
+					this.SetAttributeValue("he_smeindicatorchoice", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("he_smeindicatorchoice");
+			}
+		}
+		
+		/// <summary>
+		/// Social Housing Provider Registration Number
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_socialhousingproviderregistrationnumber")]
+		public string he_SocialHousingProviderRegistrationNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_socialhousingproviderregistrationnumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_SocialHousingProviderRegistrationNumber");
+				this.SetAttributeValue("he_socialhousingproviderregistrationnumber", value);
+				this.OnPropertyChanged("he_SocialHousingProviderRegistrationNumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_specifypartnertype")]
+		public string he_specifypartnertype
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_specifypartnertype");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_specifypartnertype");
+				this.SetAttributeValue("he_specifypartnertype", value);
+				this.OnPropertyChanged("he_specifypartnertype");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_tempdataid")]
+		public System.Nullable<int> he_tempdataid
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("he_tempdataid");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_tempdataid");
+				this.SetAttributeValue("he_tempdataid", value);
+				this.OnPropertyChanged("he_tempdataid");
+			}
+		}
+		
+		/// <summary>
+		/// This will be the top partner in the partner hierarchy.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_ultimateparent")]
+		public Microsoft.Xrm.Sdk.EntityReference he_UltimateParent
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("he_ultimateparent");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_UltimateParent");
+				this.SetAttributeValue("he_ultimateparent", value);
+				this.OnPropertyChanged("he_UltimateParent");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the data import or data migration that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Select the account's primary industry for use in marketing segmentation and demographic analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("industrycode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_industrycode> IndustryCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("industrycode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_industrycode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_industrycode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("IndustryCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("industrycode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("industrycode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("IndustryCode");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_addressverificationtype")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_addressverificationtype> invln_addressverificationtype
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_addressverificationtype");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_addressverificationtype)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_addressverificationtype), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_addressverificationtype");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_addressverificationtype", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_addressverificationtype", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_addressverificationtype");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_creditratingagency")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_creditratingagency> invln_CreditRatingAgency
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_creditratingagency");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_creditratingagency)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_creditratingagency), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_CreditRatingAgency");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_creditratingagency", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_creditratingagency", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_CreditRatingAgency");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_currentcrr")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_crrstatus> invln_CurrentCRR
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_currentcrr");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_crrstatus)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_crrstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_CurrentCRR");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_currentcrr", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_currentcrr", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_CurrentCRR");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_dateapproved")]
+		public System.Nullable<System.DateTime> invln_dateapproved
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_dateapproved");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_dateapproved");
+				this.SetAttributeValue("invln_dateapproved", value);
+				this.OnPropertyChanged("invln_dateapproved");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datedueforrenewal")]
+		public System.Nullable<System.DateTime> invln_datedueforrenewal
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datedueforrenewal");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_datedueforrenewal");
+				this.SetAttributeValue("invln_datedueforrenewal", value);
+				this.OnPropertyChanged("invln_datedueforrenewal");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_dateofcrrassessment")]
+		public System.Nullable<System.DateTime> invln_DateofCRRassessment
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_dateofcrrassessment");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_DateofCRRassessment");
+				this.SetAttributeValue("invln_dateofcrrassessment", value);
+				this.OnPropertyChanged("invln_DateofCRRassessment");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalcreditrating")]
+		public System.Nullable<bool> invln_externalcreditrating
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_externalcreditrating");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_externalcreditrating");
+				this.SetAttributeValue("invln_externalcreditrating", value);
+				this.OnPropertyChanged("invln_externalcreditrating");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_idverificationtype")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_idverificationtype> invln_idverificationtype
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_idverificationtype");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_idverificationtype)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_idverificationtype), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_idverificationtype");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_idverificationtype", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_idverificationtype", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_idverificationtype");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_originalcrr")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_crrstatus> invln_OriginalCRR
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_originalcrr");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_crrstatus)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_crrstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_OriginalCRR");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_originalcrr", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_originalcrr", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_OriginalCRR");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_othercreditratingagency")]
+		public string invln_OtherCreditRatingAgency
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_othercreditratingagency");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_OtherCreditRatingAgency");
+				this.SetAttributeValue("invln_othercreditratingagency", value);
+				this.OnPropertyChanged("invln_OtherCreditRatingAgency");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_pepincluded")]
+		public System.Nullable<bool> invln_pepincluded
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_pepincluded");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_pepincluded");
+				this.SetAttributeValue("invln_pepincluded", value);
+				this.OnPropertyChanged("invln_pepincluded");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_previouscrr")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_crrstatus> invln_PreviousCRR
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_previouscrr");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_crrstatus)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_crrstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_PreviousCRR");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_previouscrr", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_previouscrr", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_PreviousCRR");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_rating")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_rating> invln_rating
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_rating");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_rating)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_rating), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_rating");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_rating", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_rating", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_rating");
+			}
+		}
+		
+		/// <summary>
+		/// Contains the date and time stamp of the last on hold time.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("lastonholdtime")]
+		public System.Nullable<System.DateTime> LastOnHoldTime
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("lastonholdtime");
+			}
+			set
+			{
+				this.OnPropertyChanging("LastOnHoldTime");
+				this.SetAttributeValue("lastonholdtime", value);
+				this.OnPropertyChanged("LastOnHoldTime");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date when the account was last included in a marketing campaign or quick campaign.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("lastusedincampaign")]
+		public System.Nullable<System.DateTime> LastUsedInCampaign
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("lastusedincampaign");
+			}
+			set
+			{
+				this.OnPropertyChanging("LastUsedInCampaign");
+				this.SetAttributeValue("lastusedincampaign", value);
+				this.OnPropertyChanged("LastUsedInCampaign");
+			}
+		}
+		
+		/// <summary>
+		/// Type the market capitalization of the account to identify the company's equity, used as an indicator in financial performance analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("marketcap")]
+		public Microsoft.Xrm.Sdk.Money MarketCap
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("marketcap");
+			}
+			set
+			{
+				this.OnPropertyChanging("MarketCap");
+				this.SetAttributeValue("marketcap", value);
+				this.OnPropertyChanged("MarketCap");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the market capitalization converted to the system's default base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("marketcap_base")]
+		public Microsoft.Xrm.Sdk.Money MarketCap_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("marketcap_base");
+			}
+		}
+		
+		/// <summary>
+		/// Whether is only for marketing
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("marketingonly")]
+		public System.Nullable<bool> MarketingOnly
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("marketingonly");
+			}
+			set
+			{
+				this.OnPropertyChanging("MarketingOnly");
+				this.SetAttributeValue("marketingonly", value);
+				this.OnPropertyChanged("MarketingOnly");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the master account that the account was merged with.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
+		public Microsoft.Xrm.Sdk.EntityReference MasterId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("masterid");
+			}
+		}
+		
+		/// <summary>
+		/// Shows whether the account has been merged with another account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("merged")]
+		public System.Nullable<bool> Merged
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("merged");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who last updated the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the external party who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedbyexternalparty")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedByExternalParty
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedbyexternalparty");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date and time when the record was last updated. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who created the record on behalf of another user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for Account associated with Account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
+		public Microsoft.Xrm.Sdk.EntityReference msa_managingpartnerid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("msa_managingpartnerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("msa_managingpartnerid");
+				this.SetAttributeValue("msa_managingpartnerid", value);
+				this.OnPropertyChanged("msa_managingpartnerid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_accountkpiid")]
+		public Microsoft.Xrm.Sdk.EntityReference msdyn_accountkpiid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("msdyn_accountkpiid");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_accountkpiid");
+				this.SetAttributeValue("msdyn_accountkpiid", value);
+				this.OnPropertyChanged("msdyn_accountkpiid");
+			}
+		}
+		
+		/// <summary>
+		/// Describes whether account is opted out or not
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_gdproptout")]
+		public System.Nullable<bool> msdyn_gdproptout
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("msdyn_gdproptout");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_gdproptout");
+				this.SetAttributeValue("msdyn_gdproptout", value);
+				this.OnPropertyChanged("msdyn_gdproptout");
+			}
+		}
+		
+		/// <summary>
+		/// Sales Acceleration Insights ID
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_salesaccelerationinsightid")]
+		public Microsoft.Xrm.Sdk.EntityReference msdyn_salesaccelerationinsightid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("msdyn_salesaccelerationinsightid");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_salesaccelerationinsightid");
+				this.SetAttributeValue("msdyn_salesaccelerationinsightid", value);
+				this.OnPropertyChanged("msdyn_salesaccelerationinsightid");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for Segment associated with account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_segmentid")]
+		public Microsoft.Xrm.Sdk.EntityReference msdyn_segmentid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("msdyn_segmentid");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_segmentid");
+				this.SetAttributeValue("msdyn_segmentid", value);
+				this.OnPropertyChanged("msdyn_segmentid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msft_datastate")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.msft_datastate> msft_DataState
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msft_datastate");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.msft_datastate)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.msft_datastate), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Type the company or business name.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("name")]
+		public string Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("name");
+			}
+			set
+			{
+				this.OnPropertyChanging("Name");
+				this.SetAttributeValue("name", value);
+				this.OnPropertyChanged("Name");
+			}
+		}
+		
+		/// <summary>
+		/// Type the number of employees that work at the account for use in marketing segmentation and demographic analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("numberofemployees")]
+		public System.Nullable<int> NumberOfEmployees
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("numberofemployees");
+			}
+			set
+			{
+				this.OnPropertyChanging("NumberOfEmployees");
+				this.SetAttributeValue("numberofemployees", value);
+				this.OnPropertyChanged("NumberOfEmployees");
+			}
+		}
+		
+		/// <summary>
+		/// Shows how long, in minutes, that the record was on hold.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("onholdtime")]
+		public System.Nullable<int> OnHoldTime
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("onholdtime");
+			}
+		}
+		
+		/// <summary>
+		/// Number of open opportunities against an account and its child accounts.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("opendeals")]
+		public System.Nullable<int> OpenDeals
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("opendeals");
+			}
+		}
+		
+		/// <summary>
+		/// Last Updated time of rollup field Open Deals.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("opendeals_date")]
+		public System.Nullable<System.DateTime> OpenDeals_Date
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("opendeals_date");
+			}
+		}
+		
+		/// <summary>
+		/// State of rollup field Open Deals.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("opendeals_state")]
+		public System.Nullable<int> OpenDeals_State
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("opendeals_state");
+			}
+		}
+		
+		/// <summary>
+		/// Sum of open revenue against an account and its child accounts.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("openrevenue")]
+		public Microsoft.Xrm.Sdk.Money OpenRevenue
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("openrevenue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Open Revenue in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("openrevenue_base")]
+		public Microsoft.Xrm.Sdk.Money OpenRevenue_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("openrevenue_base");
+			}
+		}
+		
+		/// <summary>
+		/// Last Updated time of rollup field Open Revenue.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("openrevenue_date")]
+		public System.Nullable<System.DateTime> OpenRevenue_Date
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("openrevenue_date");
+			}
+		}
+		
+		/// <summary>
+		/// State of rollup field Open Revenue.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("openrevenue_state")]
+		public System.Nullable<int> OpenRevenue_State
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("openrevenue_state");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the lead that the account was created from if the account was created by converting a lead in Microsoft Dynamics 365. This is used to relate the account to data on the originating lead for use in reporting and analytics.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("originatingleadid")]
+		public Microsoft.Xrm.Sdk.EntityReference OriginatingLeadId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("originatingleadid");
+			}
+			set
+			{
+				this.OnPropertyChanging("OriginatingLeadId");
+				this.SetAttributeValue("originatingleadid", value);
+				this.OnPropertyChanged("OriginatingLeadId");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time that the record was migrated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+		public System.Nullable<System.DateTime> OverriddenCreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+			}
+			set
+			{
+				this.OnPropertyChanging("OverriddenCreatedOn");
+				this.SetAttributeValue("overriddencreatedon", value);
+				this.OnPropertyChanged("OverriddenCreatedOn");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the user or team who is assigned to manage the record. This field is updated every time the record is assigned to a different user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
+		public Microsoft.Xrm.Sdk.EntityReference OwnerId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("ownerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwnerId");
+				this.SetAttributeValue("ownerid", value);
+				this.OnPropertyChanged("OwnerId");
+			}
+		}
+		
+		/// <summary>
+		/// Select the account's ownership structure, such as public or private.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownershipcode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_ownershipcode> OwnershipCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("ownershipcode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_ownershipcode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_ownershipcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("OwnershipCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("ownershipcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("ownershipcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("OwnershipCode");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the business unit that the record owner belongs to.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningBusinessUnit
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwningBusinessUnit");
+				this.SetAttributeValue("owningbusinessunit", value);
+				this.OnPropertyChanged("OwningBusinessUnit");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the team who owns the account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningTeam
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who owns the account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningUser
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
+			}
+		}
+		
+		/// <summary>
+		/// Choose parent partner associated with this partner to show partner hierarchy.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentaccountid")]
+		public Microsoft.Xrm.Sdk.EntityReference ParentAccountId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("parentaccountid");
+			}
+			set
+			{
+				this.OnPropertyChanging("ParentAccountId");
+				this.SetAttributeValue("parentaccountid", value);
+				this.OnPropertyChanged("ParentAccountId");
+			}
+		}
+		
+		/// <summary>
+		/// For system use only. Legacy Microsoft Dynamics CRM 3.0 workflow data.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("participatesinworkflow")]
+		public System.Nullable<bool> ParticipatesInWorkflow
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("participatesinworkflow");
+			}
+			set
+			{
+				this.OnPropertyChanging("ParticipatesInWorkflow");
+				this.SetAttributeValue("participatesinworkflow", value);
+				this.OnPropertyChanged("ParticipatesInWorkflow");
+			}
+		}
+		
+		/// <summary>
+		/// Select the payment terms to indicate when the customer needs to pay the total amount.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("paymenttermscode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_paymenttermscode> PaymentTermsCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("paymenttermscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_paymenttermscode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_paymenttermscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("PaymentTermsCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("paymenttermscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("paymenttermscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("PaymentTermsCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the preferred day of the week for service appointments.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredappointmentdaycode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_preferredappointmentdaycode> PreferredAppointmentDayCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredappointmentdaycode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_preferredappointmentdaycode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_preferredappointmentdaycode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredAppointmentDayCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("preferredappointmentdaycode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("preferredappointmentdaycode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("PreferredAppointmentDayCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the preferred time of day for service appointments.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredappointmenttimecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_preferredappointmenttimecode> PreferredAppointmentTimeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredappointmenttimecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_preferredappointmenttimecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_preferredappointmenttimecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredAppointmentTimeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("preferredappointmenttimecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("preferredappointmenttimecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("PreferredAppointmentTimeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the preferred method of contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredcontactmethodcode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_preferredcontactmethodcode> PreferredContactMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredcontactmethodcode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_preferredcontactmethodcode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_preferredcontactmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredContactMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("preferredcontactmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("preferredcontactmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("PreferredContactMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the account's preferred service facility or equipment to make sure services are scheduled correctly for the customer.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredequipmentid")]
+		public Microsoft.Xrm.Sdk.EntityReference PreferredEquipmentId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("preferredequipmentid");
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredEquipmentId");
+				this.SetAttributeValue("preferredequipmentid", value);
+				this.OnPropertyChanged("PreferredEquipmentId");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the account's preferred service for reference when you schedule service activities.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredserviceid")]
+		public Microsoft.Xrm.Sdk.EntityReference PreferredServiceId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("preferredserviceid");
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredServiceId");
+				this.SetAttributeValue("preferredserviceid", value);
+				this.OnPropertyChanged("PreferredServiceId");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the preferred service representative for reference when you schedule service activities for the account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredsystemuserid")]
+		public Microsoft.Xrm.Sdk.EntityReference PreferredSystemUserId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("preferredsystemuserid");
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredSystemUserId");
+				this.SetAttributeValue("preferredsystemuserid", value);
+				this.OnPropertyChanged("PreferredSystemUserId");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the primary contact for the account to provide quick access to contact details.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("primarycontactid")]
+		public Microsoft.Xrm.Sdk.EntityReference PrimaryContactId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("primarycontactid");
+			}
+			set
+			{
+				this.OnPropertyChanging("PrimaryContactId");
+				this.SetAttributeValue("primarycontactid", value);
+				this.OnPropertyChanged("PrimaryContactId");
+			}
+		}
+		
+		/// <summary>
+		/// Primary Satori ID for Account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("primarysatoriid")]
+		public string PrimarySatoriId
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("primarysatoriid");
+			}
+			set
+			{
+				this.OnPropertyChanging("PrimarySatoriId");
+				this.SetAttributeValue("primarysatoriid", value);
+				this.OnPropertyChanged("PrimarySatoriId");
+			}
+		}
+		
+		/// <summary>
+		/// Primary Twitter ID for Account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("primarytwitterid")]
+		public string PrimaryTwitterId
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("primarytwitterid");
+			}
+			set
+			{
+				this.OnPropertyChanging("PrimaryTwitterId");
+				this.SetAttributeValue("primarytwitterid", value);
+				this.OnPropertyChanged("PrimaryTwitterId");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the ID of the process.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("processid")]
+		public System.Nullable<System.Guid> ProcessId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("processid");
+			}
+			set
+			{
+				this.OnPropertyChanging("ProcessId");
+				this.SetAttributeValue("processid", value);
+				this.OnPropertyChanged("ProcessId");
+			}
+		}
+		
+		/// <summary>
+		/// Type the annual revenue for the account, used as an indicator in financial performance analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("revenue")]
+		public Microsoft.Xrm.Sdk.Money Revenue
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("revenue");
+			}
+			set
+			{
+				this.OnPropertyChanging("Revenue");
+				this.SetAttributeValue("revenue", value);
+				this.OnPropertyChanged("Revenue");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the annual revenue converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("revenue_base")]
+		public Microsoft.Xrm.Sdk.Money Revenue_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("revenue_base");
+			}
+		}
+		
+		/// <summary>
+		/// Type the number of shares available to the public for the account. This number is used as an indicator in financial performance analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("sharesoutstanding")]
+		public System.Nullable<int> SharesOutstanding
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("sharesoutstanding");
+			}
+			set
+			{
+				this.OnPropertyChanging("SharesOutstanding");
+				this.SetAttributeValue("sharesoutstanding", value);
+				this.OnPropertyChanged("SharesOutstanding");
+			}
+		}
+		
+		/// <summary>
+		/// Select a shipping method for deliveries sent to the account's address to designate the preferred carrier or other delivery option.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("shippingmethodcode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_shippingmethodcode> ShippingMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("shippingmethodcode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_shippingmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("ShippingMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("shippingmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("shippingmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("ShippingMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the Standard Industrial Classification (SIC) code that indicates the account's primary industry of business, for use in marketing segmentation and demographic analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("sic")]
+		public string SIC
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("sic");
+			}
+			set
+			{
+				this.OnPropertyChanging("SIC");
+				this.SetAttributeValue("sic", value);
+				this.OnPropertyChanged("SIC");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the service level agreement (SLA) that you want to apply to the Account record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("slaid")]
+		public Microsoft.Xrm.Sdk.EntityReference SLAId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("slaid");
+			}
+			set
+			{
+				this.OnPropertyChanging("SLAId");
+				this.SetAttributeValue("slaid", value);
+				this.OnPropertyChanged("SLAId");
+			}
+		}
+		
+		/// <summary>
+		/// Last SLA that was applied to this case. This field is for internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("slainvokedid")]
+		public Microsoft.Xrm.Sdk.EntityReference SLAInvokedId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("slainvokedid");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the ID of the stage.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("stageid")]
+		public System.Nullable<System.Guid> StageId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("stageid");
+			}
+			set
+			{
+				this.OnPropertyChanging("StageId");
+				this.SetAttributeValue("stageid", value);
+				this.OnPropertyChanged("StageId");
+			}
+		}
+		
+		/// <summary>
+		/// Shows whether the account is active or inactive. Inactive accounts are read-only and can't be edited unless they are reactivated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.AccountState> StateCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.AccountState)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.AccountState), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("StateCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StateCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the account's status.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_statuscode> StatusCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_statuscode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_statuscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("StatusCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statuscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statuscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StatusCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the stock exchange at which the account is listed to track their stock and financial performance of the company.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("stockexchange")]
+		public string StockExchange
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("stockexchange");
+			}
+			set
+			{
+				this.OnPropertyChanging("StockExchange");
+				this.SetAttributeValue("stockexchange", value);
+				this.OnPropertyChanged("StockExchange");
+			}
+		}
+		
+		/// <summary>
+		/// Number of users or conversations followed the record
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("teamsfollowed")]
+		public System.Nullable<int> TeamsFollowed
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("teamsfollowed");
+			}
+			set
+			{
+				this.OnPropertyChanging("TeamsFollowed");
+				this.SetAttributeValue("teamsfollowed", value);
+				this.OnPropertyChanged("TeamsFollowed");
+			}
+		}
+		
+		/// <summary>
+		/// Type the main phone number for this account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("telephone1")]
+		public string Telephone1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("telephone1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Telephone1");
+				this.SetAttributeValue("telephone1", value);
+				this.OnPropertyChanged("Telephone1");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second phone number for this account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("telephone2")]
+		public string Telephone2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("telephone2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Telephone2");
+				this.SetAttributeValue("telephone2", value);
+				this.OnPropertyChanged("Telephone2");
+			}
+		}
+		
+		/// <summary>
+		/// Type a third phone number for this account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("telephone3")]
+		public string Telephone3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("telephone3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Telephone3");
+				this.SetAttributeValue("telephone3", value);
+				this.OnPropertyChanged("Telephone3");
+			}
+		}
+		
+		/// <summary>
+		/// Select a region or territory for the account for use in segmentation and analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("territorycode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.account_territorycode> TerritoryCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("territorycode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.account_territorycode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.account_territorycode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("TerritoryCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("territorycode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("territorycode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("TerritoryCode");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the sales region or territory for the account to make sure the account is assigned to the correct representative and for use in segmentation and analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("territoryid")]
+		public Microsoft.Xrm.Sdk.EntityReference TerritoryId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("territoryid");
+			}
+			set
+			{
+				this.OnPropertyChanging("TerritoryId");
+				this.SetAttributeValue("territoryid", value);
+				this.OnPropertyChanged("TerritoryId");
+			}
+		}
+		
+		/// <summary>
+		/// Type the stock exchange symbol for the account to track financial performance of the company. You can click the code entered in this field to access the latest trading information from MSN Money.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("tickersymbol")]
+		public string TickerSymbol
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("tickersymbol");
+			}
+			set
+			{
+				this.OnPropertyChanging("TickerSymbol");
+				this.SetAttributeValue("tickersymbol", value);
+				this.OnPropertyChanged("TickerSymbol");
+			}
+		}
+		
+		/// <summary>
+		/// Total time spent for emails (read and write) and meetings by me in relation to account record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timespentbymeonemailandmeetings")]
+		public string TimeSpentByMeOnEmailAndMeetings
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("timespentbymeonemailandmeetings");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timezoneruleversionnumber")]
+		public System.Nullable<int> TimeZoneRuleVersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("timezoneruleversionnumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("TimeZoneRuleVersionNumber");
+				this.SetAttributeValue("timezoneruleversionnumber", value);
+				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the local currency for the record to make sure budgets are reported in the correct currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		public Microsoft.Xrm.Sdk.EntityReference TransactionCurrencyId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("transactioncurrencyid");
+			}
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrencyId");
+				this.SetAttributeValue("transactioncurrencyid", value);
+				this.OnPropertyChanged("TransactionCurrencyId");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("traversedpath")]
+		public string TraversedPath
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("traversedpath");
+			}
+			set
+			{
+				this.OnPropertyChanging("TraversedPath");
+				this.SetAttributeValue("traversedpath", value);
+				this.OnPropertyChanged("TraversedPath");
+			}
+		}
+		
+		/// <summary>
+		/// Time zone code that was in use when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("utcconversiontimezonecode")]
+		public System.Nullable<int> UTCConversionTimeZoneCode
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("utcconversiontimezonecode");
+			}
+			set
+			{
+				this.OnPropertyChanging("UTCConversionTimeZoneCode");
+				this.SetAttributeValue("utcconversiontimezonecode", value);
+				this.OnPropertyChanged("UTCConversionTimeZoneCode");
+			}
+		}
+		
+		/// <summary>
+		/// Version number of the account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// Type the account's website URL to get quick details about the company profile.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("websiteurl")]
+		public string WebSiteURL
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("websiteurl");
+			}
+			set
+			{
+				this.OnPropertyChanging("WebSiteURL");
+				this.SetAttributeValue("websiteurl", value);
+				this.OnPropertyChanged("WebSiteURL");
+			}
+		}
+		
+		/// <summary>
+		/// Type the phonetic spelling of the company name, if specified in Japanese, to make sure the name is pronounced correctly in phone calls and other communications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("yominame")]
+		public string YomiName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("yominame");
+			}
+			set
+			{
+				this.OnPropertyChanging("YomiName");
+				this.SetAttributeValue("yominame", value);
+				this.OnPropertyChanged("YomiName");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N account_master_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.Account> Referencedaccount_master_account
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.Account>("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedaccount_master_account");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.Account>("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedaccount_master_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N account_parent_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.Account> Referencedaccount_parent_account
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedaccount_parent_account");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedaccount_parent_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_customer_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_accounts")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.Contact> contact_customer_accounts
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.Contact>("contact_customer_accounts", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("contact_customer_accounts");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.Contact>("contact_customer_accounts", null, value);
+				this.OnPropertyChanged("contact_customer_accounts");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N he_account_account_UltimateParent
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.Account> Referencedhe_account_account_UltimateParent
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedhe_account_account_UltimateParent");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedhe_account_account_UltimateParent");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_account_invln_scheme_organisationid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_account_invln_scheme_organisationid")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.invln_scheme> invln_account_invln_scheme_organisationid
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.invln_scheme>("invln_account_invln_scheme_organisationid", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_account_invln_scheme_organisationid");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.invln_scheme>("invln_account_invln_scheme_organisationid", null, value);
+				this.OnPropertyChanged("invln_account_invln_scheme_organisationid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_loanapplication_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_account")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.invln_Loanapplication> invln_loanapplication_account
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.invln_Loanapplication>("invln_loanapplication_account", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_account");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.invln_Loanapplication>("invln_loanapplication_account", null, value);
+				this.OnPropertyChanged("invln_loanapplication_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N msa_account_managingpartner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.Account> Referencedmsa_account_managingpartner
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedmsa_account_managingpartner");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedmsa_account_managingpartner");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N msa_contact_managingpartner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_contact_managingpartner")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.Contact> msa_contact_managingpartner
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.Contact>("msa_contact_managingpartner", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("msa_contact_managingpartner");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.Contact>("msa_contact_managingpartner", null, value);
+				this.OnPropertyChanged("msa_contact_managingpartner");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 account_master_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public HE.Investments.CRM.Common.Model.Account Referencingaccount_master_account
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("account_master_account", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 account_parent_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentaccountid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public HE.Investments.CRM.Common.Model.Account Referencingaccount_parent_account
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencingaccount_parent_account");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("account_parent_account", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingaccount_parent_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 account_primary_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("primarycontactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_primary_contact")]
+		public HE.Investments.CRM.Common.Model.Contact account_primary_contact
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Contact>("account_primary_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("account_primary_contact");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.Contact>("account_primary_contact", null, value);
+				this.OnPropertyChanged("account_primary_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 he_account_account_UltimateParent
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_ultimateparent")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public HE.Investments.CRM.Common.Model.Account Referencinghe_account_account_UltimateParent
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencinghe_account_account_UltimateParent");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("he_account_account_UltimateParent", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencinghe_account_account_UltimateParent");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 msa_account_managingpartner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public HE.Investments.CRM.Common.Model.Account Referencingmsa_account_managingpartner
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencingmsa_account_managingpartner");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("msa_account_managingpartner", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingmsa_account_managingpartner");
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_accountrolecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DecisionMaker = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Employee = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Influencer = 3,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_address1_addresstypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		BillTo = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ShipTo = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Primary = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Other = 4,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_address1_freighttermscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FOB = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NoCharge = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_address1_shippingmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Airborne = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DHL = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FedEx = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UPS = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PostalMail = 5,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FullLoad = 6,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		WillCall = 7,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_address2_addresstypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_address2_freighttermscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_address2_shippingmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_address3_addresstypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_address3_freighttermscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_address3_shippingmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_customersizecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_customertypecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_educationcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_familystatuscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Single = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Married = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Divorced = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Widowed = 4,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_gendercode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Male = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Female = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_haschildrencode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_leadsourcecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_msdyn_decisioninfluencetag
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Decisionmaker = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Influencer = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Blocker = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Unknown = 3,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_msdyn_orgchangestatus
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NoFeedback = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotatCompany = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Ignore = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_paymenttermscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Net30 = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Number_210Net30 = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Net45 = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Net60 = 4,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_preferredappointmentdaycode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Sunday = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Monday = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Tuesday = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Wednesday = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Thursday = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Friday = 5,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Saturday = 6,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_preferredappointmenttimecode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Morning = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Afternoon = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Evening = 3,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_preferredcontactmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Any = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Email = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Phone = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Fax = 4,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Mail = 5,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_shippingmethodcode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum ContactState
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_statuscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 2,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum contact_territorycode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		DefaultValue = 1,
+	}
+	
+	/// <summary>
+	/// Person with whom a business unit has a relationship, such as customer, supplier, and colleague.
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("contact")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class Contact : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		public Contact() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "contact";
+		
+		public const string EntityLogicalCollectionName = "contacts";
+		
+		public const string EntitySetName = "contacts";
+		
+		public const int EntityTypeCode = 2;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the account with which the contact is associated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountid")]
+		public Microsoft.Xrm.Sdk.EntityReference AccountId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("accountid");
+			}
+		}
+		
+		/// <summary>
+		/// Select the contact's role within the company or sales process, such as decision maker, employee, or influencer.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("accountrolecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_accountrolecode> AccountRoleCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("accountrolecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_accountrolecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_accountrolecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("AccountRoleCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("accountrolecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("accountrolecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("AccountRoleCode");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for address 1.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_addressid")]
+		public System.Nullable<System.Guid> Address1_AddressId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("address1_addressid");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_AddressId");
+				this.SetAttributeValue("address1_addressid", value);
+				this.OnPropertyChanged("Address1_AddressId");
+			}
+		}
+		
+		/// <summary>
+		/// Select the primary address type.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_addresstypecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_address1_addresstypecode> Address1_AddressTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_addresstypecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_address1_addresstypecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_address1_addresstypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_AddressTypeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address1_addresstypecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address1_addresstypecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address1_AddressTypeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the city for the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_city")]
+		public string Address1_City
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_city");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_City");
+				this.SetAttributeValue("address1_city", value);
+				this.OnPropertyChanged("Address1_City");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the complete primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_composite")]
+		public string Address1_Composite
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_composite");
+			}
+		}
+		
+		/// <summary>
+		/// Type the country or region for the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_country")]
+		public string Address1_Country
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_country");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Country");
+				this.SetAttributeValue("address1_country", value);
+				this.OnPropertyChanged("Address1_Country");
+			}
+		}
+		
+		/// <summary>
+		/// Type the county for the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_county")]
+		public string Address1_County
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_county");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_County");
+				this.SetAttributeValue("address1_county", value);
+				this.OnPropertyChanged("Address1_County");
+			}
+		}
+		
+		/// <summary>
+		/// Type the fax number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_fax")]
+		public string Address1_Fax
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_fax");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Fax");
+				this.SetAttributeValue("address1_fax", value);
+				this.OnPropertyChanged("Address1_Fax");
+			}
+		}
+		
+		/// <summary>
+		/// Select the freight terms for the primary address to make sure shipping orders are processed correctly.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_freighttermscode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_address1_freighttermscode> Address1_FreightTermsCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_freighttermscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_address1_freighttermscode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_address1_freighttermscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_FreightTermsCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address1_freighttermscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address1_freighttermscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address1_FreightTermsCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the latitude value for the primary address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_latitude")]
+		public System.Nullable<double> Address1_Latitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address1_latitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Latitude");
+				this.SetAttributeValue("address1_latitude", value);
+				this.OnPropertyChanged("Address1_Latitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type the first line of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_line1")]
+		public string Address1_Line1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_line1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Line1");
+				this.SetAttributeValue("address1_line1", value);
+				this.OnPropertyChanged("Address1_Line1");
+			}
+		}
+		
+		/// <summary>
+		/// Type the second line of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_line2")]
+		public string Address1_Line2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_line2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Line2");
+				this.SetAttributeValue("address1_line2", value);
+				this.OnPropertyChanged("Address1_Line2");
+			}
+		}
+		
+		/// <summary>
+		/// Type the third line of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_line3")]
+		public string Address1_Line3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_line3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Line3");
+				this.SetAttributeValue("address1_line3", value);
+				this.OnPropertyChanged("Address1_Line3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the longitude value for the primary address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_longitude")]
+		public System.Nullable<double> Address1_Longitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address1_longitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Longitude");
+				this.SetAttributeValue("address1_longitude", value);
+				this.OnPropertyChanged("Address1_Longitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type a descriptive name for the primary address, such as Corporate Headquarters.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_name")]
+		public string Address1_Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_name");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Name");
+				this.SetAttributeValue("address1_name", value);
+				this.OnPropertyChanged("Address1_Name");
+			}
+		}
+		
+		/// <summary>
+		/// Type the ZIP Code or postal code for the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_postalcode")]
+		public string Address1_PostalCode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_postalcode");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_PostalCode");
+				this.SetAttributeValue("address1_postalcode", value);
+				this.OnPropertyChanged("Address1_PostalCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the post office box number of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_postofficebox")]
+		public string Address1_PostOfficeBox
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_postofficebox");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_PostOfficeBox");
+				this.SetAttributeValue("address1_postofficebox", value);
+				this.OnPropertyChanged("Address1_PostOfficeBox");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the main contact at the account's primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_primarycontactname")]
+		public string Address1_PrimaryContactName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_primarycontactname");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_PrimaryContactName");
+				this.SetAttributeValue("address1_primarycontactname", value);
+				this.OnPropertyChanged("Address1_PrimaryContactName");
+			}
+		}
+		
+		/// <summary>
+		/// Select a shipping method for deliveries sent to this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_shippingmethodcode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_address1_shippingmethodcode> Address1_ShippingMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address1_shippingmethodcode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_address1_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_address1_shippingmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_ShippingMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address1_shippingmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address1_shippingmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address1_ShippingMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the state or province of the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_stateorprovince")]
+		public string Address1_StateOrProvince
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_stateorprovince");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_StateOrProvince");
+				this.SetAttributeValue("address1_stateorprovince", value);
+				this.OnPropertyChanged("Address1_StateOrProvince");
+			}
+		}
+		
+		/// <summary>
+		/// Type the main phone number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_telephone1")]
+		public string Address1_Telephone1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_telephone1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Telephone1");
+				this.SetAttributeValue("address1_telephone1", value);
+				this.OnPropertyChanged("Address1_Telephone1");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second phone number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_telephone2")]
+		public string Address1_Telephone2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_telephone2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Telephone2");
+				this.SetAttributeValue("address1_telephone2", value);
+				this.OnPropertyChanged("Address1_Telephone2");
+			}
+		}
+		
+		/// <summary>
+		/// Type a third phone number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_telephone3")]
+		public string Address1_Telephone3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_telephone3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_Telephone3");
+				this.SetAttributeValue("address1_telephone3", value);
+				this.OnPropertyChanged("Address1_Telephone3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the UPS zone of the primary address to make sure shipping charges are calculated correctly and deliveries are made promptly, if shipped by UPS.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_upszone")]
+		public string Address1_UPSZone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address1_upszone");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_UPSZone");
+				this.SetAttributeValue("address1_upszone", value);
+				this.OnPropertyChanged("Address1_UPSZone");
+			}
+		}
+		
+		/// <summary>
+		/// Select the time zone, or UTC offset, for this address so that other people can reference it when they contact someone at this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address1_utcoffset")]
+		public System.Nullable<int> Address1_UTCOffset
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("address1_utcoffset");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address1_UTCOffset");
+				this.SetAttributeValue("address1_utcoffset", value);
+				this.OnPropertyChanged("Address1_UTCOffset");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for address 2.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_addressid")]
+		public System.Nullable<System.Guid> Address2_AddressId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("address2_addressid");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_AddressId");
+				this.SetAttributeValue("address2_addressid", value);
+				this.OnPropertyChanged("Address2_AddressId");
+			}
+		}
+		
+		/// <summary>
+		/// Select the secondary address type.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_addresstypecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_address2_addresstypecode> Address2_AddressTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_addresstypecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_address2_addresstypecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_address2_addresstypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_AddressTypeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address2_addresstypecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address2_addresstypecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address2_AddressTypeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the city for the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_city")]
+		public string Address2_City
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_city");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_City");
+				this.SetAttributeValue("address2_city", value);
+				this.OnPropertyChanged("Address2_City");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the complete secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_composite")]
+		public string Address2_Composite
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_composite");
+			}
+		}
+		
+		/// <summary>
+		/// Type the country or region for the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_country")]
+		public string Address2_Country
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_country");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Country");
+				this.SetAttributeValue("address2_country", value);
+				this.OnPropertyChanged("Address2_Country");
+			}
+		}
+		
+		/// <summary>
+		/// Type the county for the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_county")]
+		public string Address2_County
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_county");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_County");
+				this.SetAttributeValue("address2_county", value);
+				this.OnPropertyChanged("Address2_County");
+			}
+		}
+		
+		/// <summary>
+		/// Type the fax number associated with the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_fax")]
+		public string Address2_Fax
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_fax");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Fax");
+				this.SetAttributeValue("address2_fax", value);
+				this.OnPropertyChanged("Address2_Fax");
+			}
+		}
+		
+		/// <summary>
+		/// Select the freight terms for the secondary address to make sure shipping orders are processed correctly.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_freighttermscode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_address2_freighttermscode> Address2_FreightTermsCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_freighttermscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_address2_freighttermscode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_address2_freighttermscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_FreightTermsCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address2_freighttermscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address2_freighttermscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address2_FreightTermsCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the latitude value for the secondary address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_latitude")]
+		public System.Nullable<double> Address2_Latitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address2_latitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Latitude");
+				this.SetAttributeValue("address2_latitude", value);
+				this.OnPropertyChanged("Address2_Latitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type the first line of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_line1")]
+		public string Address2_Line1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_line1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Line1");
+				this.SetAttributeValue("address2_line1", value);
+				this.OnPropertyChanged("Address2_Line1");
+			}
+		}
+		
+		/// <summary>
+		/// Type the second line of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_line2")]
+		public string Address2_Line2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_line2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Line2");
+				this.SetAttributeValue("address2_line2", value);
+				this.OnPropertyChanged("Address2_Line2");
+			}
+		}
+		
+		/// <summary>
+		/// Type the third line of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_line3")]
+		public string Address2_Line3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_line3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Line3");
+				this.SetAttributeValue("address2_line3", value);
+				this.OnPropertyChanged("Address2_Line3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the longitude value for the secondary address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_longitude")]
+		public System.Nullable<double> Address2_Longitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address2_longitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Longitude");
+				this.SetAttributeValue("address2_longitude", value);
+				this.OnPropertyChanged("Address2_Longitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type a descriptive name for the secondary address, such as Corporate Headquarters.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_name")]
+		public string Address2_Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_name");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Name");
+				this.SetAttributeValue("address2_name", value);
+				this.OnPropertyChanged("Address2_Name");
+			}
+		}
+		
+		/// <summary>
+		/// Type the ZIP Code or postal code for the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_postalcode")]
+		public string Address2_PostalCode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_postalcode");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_PostalCode");
+				this.SetAttributeValue("address2_postalcode", value);
+				this.OnPropertyChanged("Address2_PostalCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the post office box number of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_postofficebox")]
+		public string Address2_PostOfficeBox
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_postofficebox");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_PostOfficeBox");
+				this.SetAttributeValue("address2_postofficebox", value);
+				this.OnPropertyChanged("Address2_PostOfficeBox");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the main contact at the account's secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_primarycontactname")]
+		public string Address2_PrimaryContactName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_primarycontactname");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_PrimaryContactName");
+				this.SetAttributeValue("address2_primarycontactname", value);
+				this.OnPropertyChanged("Address2_PrimaryContactName");
+			}
+		}
+		
+		/// <summary>
+		/// Select a shipping method for deliveries sent to this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_shippingmethodcode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_address2_shippingmethodcode> Address2_ShippingMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address2_shippingmethodcode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_address2_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_address2_shippingmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_ShippingMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address2_shippingmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address2_shippingmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address2_ShippingMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the state or province of the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_stateorprovince")]
+		public string Address2_StateOrProvince
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_stateorprovince");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_StateOrProvince");
+				this.SetAttributeValue("address2_stateorprovince", value);
+				this.OnPropertyChanged("Address2_StateOrProvince");
+			}
+		}
+		
+		/// <summary>
+		/// Type the main phone number associated with the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_telephone1")]
+		public string Address2_Telephone1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_telephone1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Telephone1");
+				this.SetAttributeValue("address2_telephone1", value);
+				this.OnPropertyChanged("Address2_Telephone1");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second phone number associated with the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_telephone2")]
+		public string Address2_Telephone2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_telephone2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Telephone2");
+				this.SetAttributeValue("address2_telephone2", value);
+				this.OnPropertyChanged("Address2_Telephone2");
+			}
+		}
+		
+		/// <summary>
+		/// Type a third phone number associated with the secondary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_telephone3")]
+		public string Address2_Telephone3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_telephone3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_Telephone3");
+				this.SetAttributeValue("address2_telephone3", value);
+				this.OnPropertyChanged("Address2_Telephone3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the UPS zone of the secondary address to make sure shipping charges are calculated correctly and deliveries are made promptly, if shipped by UPS.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_upszone")]
+		public string Address2_UPSZone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address2_upszone");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_UPSZone");
+				this.SetAttributeValue("address2_upszone", value);
+				this.OnPropertyChanged("Address2_UPSZone");
+			}
+		}
+		
+		/// <summary>
+		/// Select the time zone, or UTC offset, for this address so that other people can reference it when they contact someone at this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address2_utcoffset")]
+		public System.Nullable<int> Address2_UTCOffset
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("address2_utcoffset");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address2_UTCOffset");
+				this.SetAttributeValue("address2_utcoffset", value);
+				this.OnPropertyChanged("Address2_UTCOffset");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for address 3.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_addressid")]
+		public System.Nullable<System.Guid> Address3_AddressId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("address3_addressid");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_AddressId");
+				this.SetAttributeValue("address3_addressid", value);
+				this.OnPropertyChanged("Address3_AddressId");
+			}
+		}
+		
+		/// <summary>
+		/// Select the third address type.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_addresstypecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_address3_addresstypecode> Address3_AddressTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address3_addresstypecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_address3_addresstypecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_address3_addresstypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_AddressTypeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address3_addresstypecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address3_addresstypecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address3_AddressTypeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the city for the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_city")]
+		public string Address3_City
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_city");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_City");
+				this.SetAttributeValue("address3_city", value);
+				this.OnPropertyChanged("Address3_City");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the complete third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_composite")]
+		public string Address3_Composite
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_composite");
+			}
+		}
+		
+		/// <summary>
+		/// the country or region for the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_country")]
+		public string Address3_Country
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_country");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Country");
+				this.SetAttributeValue("address3_country", value);
+				this.OnPropertyChanged("Address3_Country");
+			}
+		}
+		
+		/// <summary>
+		/// Type the county for the third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_county")]
+		public string Address3_County
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_county");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_County");
+				this.SetAttributeValue("address3_county", value);
+				this.OnPropertyChanged("Address3_County");
+			}
+		}
+		
+		/// <summary>
+		/// Type the fax number associated with the third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_fax")]
+		public string Address3_Fax
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_fax");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Fax");
+				this.SetAttributeValue("address3_fax", value);
+				this.OnPropertyChanged("Address3_Fax");
+			}
+		}
+		
+		/// <summary>
+		/// Select the freight terms for the third address to make sure shipping orders are processed correctly.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_freighttermscode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_address3_freighttermscode> Address3_FreightTermsCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address3_freighttermscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_address3_freighttermscode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_address3_freighttermscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_FreightTermsCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address3_freighttermscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address3_freighttermscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address3_FreightTermsCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the latitude value for the third address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_latitude")]
+		public System.Nullable<double> Address3_Latitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address3_latitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Latitude");
+				this.SetAttributeValue("address3_latitude", value);
+				this.OnPropertyChanged("Address3_Latitude");
+			}
+		}
+		
+		/// <summary>
+		/// the first line of the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_line1")]
+		public string Address3_Line1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_line1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Line1");
+				this.SetAttributeValue("address3_line1", value);
+				this.OnPropertyChanged("Address3_Line1");
+			}
+		}
+		
+		/// <summary>
+		/// the second line of the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_line2")]
+		public string Address3_Line2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_line2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Line2");
+				this.SetAttributeValue("address3_line2", value);
+				this.OnPropertyChanged("Address3_Line2");
+			}
+		}
+		
+		/// <summary>
+		/// the third line of the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_line3")]
+		public string Address3_Line3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_line3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Line3");
+				this.SetAttributeValue("address3_line3", value);
+				this.OnPropertyChanged("Address3_Line3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the longitude value for the third address for use in mapping and other applications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_longitude")]
+		public System.Nullable<double> Address3_Longitude
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<double>>("address3_longitude");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Longitude");
+				this.SetAttributeValue("address3_longitude", value);
+				this.OnPropertyChanged("Address3_Longitude");
+			}
+		}
+		
+		/// <summary>
+		/// Type a descriptive name for the third address, such as Corporate Headquarters.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_name")]
+		public string Address3_Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_name");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Name");
+				this.SetAttributeValue("address3_name", value);
+				this.OnPropertyChanged("Address3_Name");
+			}
+		}
+		
+		/// <summary>
+		/// the ZIP Code or postal code for the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_postalcode")]
+		public string Address3_PostalCode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_postalcode");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_PostalCode");
+				this.SetAttributeValue("address3_postalcode", value);
+				this.OnPropertyChanged("Address3_PostalCode");
+			}
+		}
+		
+		/// <summary>
+		/// the post office box number of the 3rd address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_postofficebox")]
+		public string Address3_PostOfficeBox
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_postofficebox");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_PostOfficeBox");
+				this.SetAttributeValue("address3_postofficebox", value);
+				this.OnPropertyChanged("Address3_PostOfficeBox");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the main contact at the account's third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_primarycontactname")]
+		public string Address3_PrimaryContactName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_primarycontactname");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_PrimaryContactName");
+				this.SetAttributeValue("address3_primarycontactname", value);
+				this.OnPropertyChanged("Address3_PrimaryContactName");
+			}
+		}
+		
+		/// <summary>
+		/// Select a shipping method for deliveries sent to this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_shippingmethodcode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_address3_shippingmethodcode> Address3_ShippingMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("address3_shippingmethodcode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_address3_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_address3_shippingmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_ShippingMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("address3_shippingmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("address3_shippingmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("Address3_ShippingMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// the state or province of the third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_stateorprovince")]
+		public string Address3_StateOrProvince
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_stateorprovince");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_StateOrProvince");
+				this.SetAttributeValue("address3_stateorprovince", value);
+				this.OnPropertyChanged("Address3_StateOrProvince");
+			}
+		}
+		
+		/// <summary>
+		/// Type the main phone number associated with the third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_telephone1")]
+		public string Address3_Telephone1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_telephone1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Telephone1");
+				this.SetAttributeValue("address3_telephone1", value);
+				this.OnPropertyChanged("Address3_Telephone1");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second phone number associated with the third address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_telephone2")]
+		public string Address3_Telephone2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_telephone2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Telephone2");
+				this.SetAttributeValue("address3_telephone2", value);
+				this.OnPropertyChanged("Address3_Telephone2");
+			}
+		}
+		
+		/// <summary>
+		/// Type a third phone number associated with the primary address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_telephone3")]
+		public string Address3_Telephone3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_telephone3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_Telephone3");
+				this.SetAttributeValue("address3_telephone3", value);
+				this.OnPropertyChanged("Address3_Telephone3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the UPS zone of the third address to make sure shipping charges are calculated correctly and deliveries are made promptly, if shipped by UPS.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_upszone")]
+		public string Address3_UPSZone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("address3_upszone");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_UPSZone");
+				this.SetAttributeValue("address3_upszone", value);
+				this.OnPropertyChanged("Address3_UPSZone");
+			}
+		}
+		
+		/// <summary>
+		/// Select the time zone, or UTC offset, for this address so that other people can reference it when they contact someone at this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("address3_utcoffset")]
+		public System.Nullable<int> Address3_UTCOffset
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("address3_utcoffset");
+			}
+			set
+			{
+				this.OnPropertyChanging("Address3_UTCOffset");
+				this.SetAttributeValue("address3_utcoffset", value);
+				this.OnPropertyChanged("Address3_UTCOffset");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_confirmremovepassword")]
+		public System.Nullable<bool> adx_ConfirmRemovePassword
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_confirmremovepassword");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_ConfirmRemovePassword");
+				this.SetAttributeValue("adx_confirmremovepassword", value);
+				this.OnPropertyChanged("adx_ConfirmRemovePassword");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_createdbyipaddress")]
+		public string Adx_CreatedByIPAddress
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_createdbyipaddress");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_CreatedByIPAddress");
+				this.SetAttributeValue("adx_createdbyipaddress", value);
+				this.OnPropertyChanged("Adx_CreatedByIPAddress");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_createdbyusername")]
+		public string Adx_CreatedByUsername
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_createdbyusername");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_CreatedByUsername");
+				this.SetAttributeValue("adx_createdbyusername", value);
+				this.OnPropertyChanged("Adx_CreatedByUsername");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the current count of failed password attempts for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_accessfailedcount")]
+		public System.Nullable<int> adx_identity_accessfailedcount
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("adx_identity_accessfailedcount");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_accessfailedcount");
+				this.SetAttributeValue("adx_identity_accessfailedcount", value);
+				this.OnPropertyChanged("adx_identity_accessfailedcount");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if the email is confirmed by the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_emailaddress1confirmed")]
+		public System.Nullable<bool> adx_identity_emailaddress1confirmed
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_emailaddress1confirmed");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_emailaddress1confirmed");
+				this.SetAttributeValue("adx_identity_emailaddress1confirmed", value);
+				this.OnPropertyChanged("adx_identity_emailaddress1confirmed");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates the last date and time the user successfully signed in to a portal.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_lastsuccessfullogin")]
+		public System.Nullable<System.DateTime> adx_identity_lastsuccessfullogin
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_identity_lastsuccessfullogin");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_lastsuccessfullogin");
+				this.SetAttributeValue("adx_identity_lastsuccessfullogin", value);
+				this.OnPropertyChanged("adx_identity_lastsuccessfullogin");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates that the contact can no longer sign in to the portal using the local account.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_locallogindisabled")]
+		public System.Nullable<bool> adx_identity_locallogindisabled
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_locallogindisabled");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_locallogindisabled");
+				this.SetAttributeValue("adx_identity_locallogindisabled", value);
+				this.OnPropertyChanged("adx_identity_locallogindisabled");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if this contact will track failed access attempts and become locked after too many failed attempts. To prevent the contact from becoming locked, you can disable this setting.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_lockoutenabled")]
+		public System.Nullable<bool> adx_identity_lockoutenabled
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_lockoutenabled");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_lockoutenabled");
+				this.SetAttributeValue("adx_identity_lockoutenabled", value);
+				this.OnPropertyChanged("adx_identity_lockoutenabled");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the moment in time when the locked contact becomes unlocked again.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_lockoutenddate")]
+		public System.Nullable<System.DateTime> adx_identity_lockoutenddate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_identity_lockoutenddate");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_lockoutenddate");
+				this.SetAttributeValue("adx_identity_lockoutenddate", value);
+				this.OnPropertyChanged("adx_identity_lockoutenddate");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if web authentication is enabled for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_logonenabled")]
+		public System.Nullable<bool> adx_identity_logonenabled
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_logonenabled");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_logonenabled");
+				this.SetAttributeValue("adx_identity_logonenabled", value);
+				this.OnPropertyChanged("adx_identity_logonenabled");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if the phone number is confirmed by the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_mobilephoneconfirmed")]
+		public System.Nullable<bool> adx_identity_mobilephoneconfirmed
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_mobilephoneconfirmed");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_mobilephoneconfirmed");
+				this.SetAttributeValue("adx_identity_mobilephoneconfirmed", value);
+				this.OnPropertyChanged("adx_identity_mobilephoneconfirmed");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_newpassword")]
+		public string adx_identity_newpassword
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_identity_newpassword");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_newpassword");
+				this.SetAttributeValue("adx_identity_newpassword", value);
+				this.OnPropertyChanged("adx_identity_newpassword");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_passwordhash")]
+		public string adx_identity_passwordhash
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_identity_passwordhash");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_passwordhash");
+				this.SetAttributeValue("adx_identity_passwordhash", value);
+				this.OnPropertyChanged("adx_identity_passwordhash");
+			}
+		}
+		
+		/// <summary>
+		/// A token used to manage the web authentication session.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_securitystamp")]
+		public string adx_identity_securitystamp
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_identity_securitystamp");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_securitystamp");
+				this.SetAttributeValue("adx_identity_securitystamp", value);
+				this.OnPropertyChanged("adx_identity_securitystamp");
+			}
+		}
+		
+		/// <summary>
+		/// Determines if two-factor authentication is enabled for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_twofactorenabled")]
+		public System.Nullable<bool> adx_identity_twofactorenabled
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_identity_twofactorenabled");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_twofactorenabled");
+				this.SetAttributeValue("adx_identity_twofactorenabled", value);
+				this.OnPropertyChanged("adx_identity_twofactorenabled");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the user identity for local web authentication.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_identity_username")]
+		public string adx_identity_username
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_identity_username");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_identity_username");
+				this.SetAttributeValue("adx_identity_username", value);
+				this.OnPropertyChanged("adx_identity_username");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_modifiedbyipaddress")]
+		public string Adx_ModifiedByIPAddress
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_modifiedbyipaddress");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_ModifiedByIPAddress");
+				this.SetAttributeValue("adx_modifiedbyipaddress", value);
+				this.OnPropertyChanged("Adx_ModifiedByIPAddress");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_modifiedbyusername")]
+		public string Adx_ModifiedByUsername
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_modifiedbyusername");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_ModifiedByUsername");
+				this.SetAttributeValue("adx_modifiedbyusername", value);
+				this.OnPropertyChanged("Adx_ModifiedByUsername");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_organizationname")]
+		public string Adx_OrganizationName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_organizationname");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_OrganizationName");
+				this.SetAttributeValue("adx_organizationname", value);
+				this.OnPropertyChanged("Adx_OrganizationName");
+			}
+		}
+		
+		/// <summary>
+		/// User’s preferred portal LCID
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_preferredlcid")]
+		public System.Nullable<int> adx_preferredlcid
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("adx_preferredlcid");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_preferredlcid");
+				this.SetAttributeValue("adx_preferredlcid", value);
+				this.OnPropertyChanged("adx_preferredlcid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilealert")]
+		public System.Nullable<bool> adx_profilealert
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_profilealert");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_profilealert");
+				this.SetAttributeValue("adx_profilealert", value);
+				this.OnPropertyChanged("adx_profilealert");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilealertdate")]
+		public System.Nullable<System.DateTime> adx_profilealertdate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_profilealertdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_profilealertdate");
+				this.SetAttributeValue("adx_profilealertdate", value);
+				this.OnPropertyChanged("adx_profilealertdate");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilealertinstructions")]
+		public string adx_profilealertinstructions
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_profilealertinstructions");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_profilealertinstructions");
+				this.SetAttributeValue("adx_profilealertinstructions", value);
+				this.OnPropertyChanged("adx_profilealertinstructions");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profileisanonymous")]
+		public System.Nullable<bool> Adx_ProfileIsAnonymous
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("adx_profileisanonymous");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_ProfileIsAnonymous");
+				this.SetAttributeValue("adx_profileisanonymous", value);
+				this.OnPropertyChanged("Adx_ProfileIsAnonymous");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilelastactivity")]
+		public System.Nullable<System.DateTime> Adx_ProfileLastActivity
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_profilelastactivity");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_ProfileLastActivity");
+				this.SetAttributeValue("adx_profilelastactivity", value);
+				this.OnPropertyChanged("Adx_ProfileLastActivity");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_profilemodifiedon")]
+		public System.Nullable<System.DateTime> adx_profilemodifiedon
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("adx_profilemodifiedon");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_profilemodifiedon");
+				this.SetAttributeValue("adx_profilemodifiedon", value);
+				this.OnPropertyChanged("adx_profilemodifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_publicprofilecopy")]
+		public string adx_PublicProfileCopy
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("adx_publicprofilecopy");
+			}
+			set
+			{
+				this.OnPropertyChanging("adx_PublicProfileCopy");
+				this.SetAttributeValue("adx_publicprofilecopy", value);
+				this.OnPropertyChanged("adx_PublicProfileCopy");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("adx_timezone")]
+		public System.Nullable<int> Adx_TimeZone
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("adx_timezone");
+			}
+			set
+			{
+				this.OnPropertyChanging("Adx_TimeZone");
+				this.SetAttributeValue("adx_timezone", value);
+				this.OnPropertyChanged("Adx_TimeZone");
+			}
+		}
+		
+		/// <summary>
+		/// For system use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging30")]
+		public Microsoft.Xrm.Sdk.Money Aging30
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging30");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the Aging 30 field converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging30_base")]
+		public Microsoft.Xrm.Sdk.Money Aging30_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging30_base");
+			}
+		}
+		
+		/// <summary>
+		/// For system use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging60")]
+		public Microsoft.Xrm.Sdk.Money Aging60
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging60");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the Aging 60 field converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging60_base")]
+		public Microsoft.Xrm.Sdk.Money Aging60_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging60_base");
+			}
+		}
+		
+		/// <summary>
+		/// For system use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging90")]
+		public Microsoft.Xrm.Sdk.Money Aging90
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging90");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the Aging 90 field converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("aging90_base")]
+		public Microsoft.Xrm.Sdk.Money Aging90_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("aging90_base");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the date of the contact's wedding or service anniversary for use in customer gift programs or other communications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("anniversary")]
+		public System.Nullable<System.DateTime> Anniversary
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("anniversary");
+			}
+			set
+			{
+				this.OnPropertyChanging("Anniversary");
+				this.SetAttributeValue("anniversary", value);
+				this.OnPropertyChanged("Anniversary");
+			}
+		}
+		
+		/// <summary>
+		/// Type the contact's annual income for use in profiling and financial analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("annualincome")]
+		public Microsoft.Xrm.Sdk.Money AnnualIncome
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("annualincome");
+			}
+			set
+			{
+				this.OnPropertyChanging("AnnualIncome");
+				this.SetAttributeValue("annualincome", value);
+				this.OnPropertyChanged("AnnualIncome");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the Annual Income field converted to the system's default base currency. The calculations use the exchange rate specified in the Currencies area.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("annualincome_base")]
+		public Microsoft.Xrm.Sdk.Money AnnualIncome_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("annualincome_base");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the contact's assistant.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("assistantname")]
+		public string AssistantName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("assistantname");
+			}
+			set
+			{
+				this.OnPropertyChanging("AssistantName");
+				this.SetAttributeValue("assistantname", value);
+				this.OnPropertyChanged("AssistantName");
+			}
+		}
+		
+		/// <summary>
+		/// Type the phone number for the contact's assistant.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("assistantphone")]
+		public string AssistantPhone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("assistantphone");
+			}
+			set
+			{
+				this.OnPropertyChanging("AssistantPhone");
+				this.SetAttributeValue("assistantphone", value);
+				this.OnPropertyChanged("AssistantPhone");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the contact's birthday for use in customer gift programs or other communications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("birthdate")]
+		public System.Nullable<System.DateTime> BirthDate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("birthdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("BirthDate");
+				this.SetAttributeValue("birthdate", value);
+				this.OnPropertyChanged("BirthDate");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second business phone number for this contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("business2")]
+		public string Business2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("business2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Business2");
+				this.SetAttributeValue("business2", value);
+				this.OnPropertyChanged("Business2");
+			}
+		}
+		
+		/// <summary>
+		/// Stores Image of the Business Card
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("businesscard")]
+		public string BusinessCard
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("businesscard");
+			}
+			set
+			{
+				this.OnPropertyChanging("BusinessCard");
+				this.SetAttributeValue("businesscard", value);
+				this.OnPropertyChanged("BusinessCard");
+			}
+		}
+		
+		/// <summary>
+		/// Stores Business Card Control Properties.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("businesscardattributes")]
+		public string BusinessCardAttributes
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("businesscardattributes");
+			}
+			set
+			{
+				this.OnPropertyChanging("BusinessCardAttributes");
+				this.SetAttributeValue("businesscardattributes", value);
+				this.OnPropertyChanged("BusinessCardAttributes");
+			}
+		}
+		
+		/// <summary>
+		/// Type a callback phone number for this contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("callback")]
+		public string Callback
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("callback");
+			}
+			set
+			{
+				this.OnPropertyChanging("Callback");
+				this.SetAttributeValue("callback", value);
+				this.OnPropertyChanged("Callback");
+			}
+		}
+		
+		/// <summary>
+		/// Type the names of the contact's children for reference in communications and client programs.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("childrensnames")]
+		public string ChildrensNames
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("childrensnames");
+			}
+			set
+			{
+				this.OnPropertyChanging("ChildrensNames");
+				this.SetAttributeValue("childrensnames", value);
+				this.OnPropertyChanged("ChildrensNames");
+			}
+		}
+		
+		/// <summary>
+		/// Type the company phone of the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("company")]
+		public string Company
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("company");
+			}
+			set
+			{
+				this.OnPropertyChanging("Company");
+				this.SetAttributeValue("company", value);
+				this.OnPropertyChanged("Company");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("contactid")]
+		public System.Nullable<System.Guid> ContactId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("contactid");
+			}
+			set
+			{
+				this.OnPropertyChanging("ContactId");
+				this.SetAttributeValue("contactid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("ContactId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("contactid")]
+		public override System.Guid Id
+		{
+			get
+			{
+				return base.Id;
+			}
+			set
+			{
+				this.ContactId = value;
+			}
+		}
+		
+		/// <summary>
+		/// Shows who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the external party who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdbyexternalparty")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedByExternalParty
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdbyexternalparty");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date and time when the record was created. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who created the record on behalf of another user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Type the credit limit of the contact for reference when you address invoice and accounting issues with the customer.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("creditlimit")]
+		public Microsoft.Xrm.Sdk.Money CreditLimit
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("creditlimit");
+			}
+			set
+			{
+				this.OnPropertyChanging("CreditLimit");
+				this.SetAttributeValue("creditlimit", value);
+				this.OnPropertyChanged("CreditLimit");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the Credit Limit field converted to the system's default base currency for reporting purposes. The calculations use the exchange rate specified in the Currencies area.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("creditlimit_base")]
+		public Microsoft.Xrm.Sdk.Money CreditLimit_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("creditlimit_base");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact is on a credit hold, for reference when addressing invoice and accounting issues.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("creditonhold")]
+		public System.Nullable<bool> CreditOnHold
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("creditonhold");
+			}
+			set
+			{
+				this.OnPropertyChanging("CreditOnHold");
+				this.SetAttributeValue("creditonhold", value);
+				this.OnPropertyChanged("CreditOnHold");
+			}
+		}
+		
+		/// <summary>
+		/// Select the size of the contact's company for segmentation and reporting purposes.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customersizecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_customersizecode> CustomerSizeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("customersizecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_customersizecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_customersizecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("CustomerSizeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("customersizecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("customersizecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("CustomerSizeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the category that best describes the relationship between the contact and your organization.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("customertypecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_customertypecode> CustomerTypeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("customertypecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_customertypecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_customertypecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("CustomerTypeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("customertypecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("customertypecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("CustomerTypeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the default price list associated with the contact to make sure the correct product prices for this customer are applied in sales opportunities, quotes, and orders.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("defaultpricelevelid")]
+		public Microsoft.Xrm.Sdk.EntityReference DefaultPriceLevelId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("defaultpricelevelid");
+			}
+			set
+			{
+				this.OnPropertyChanging("DefaultPriceLevelId");
+				this.SetAttributeValue("defaultpricelevelid", value);
+				this.OnPropertyChanged("DefaultPriceLevelId");
+			}
+		}
+		
+		/// <summary>
+		/// Type the department or business unit where the contact works in the parent company or business.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("department")]
+		public string Department
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("department");
+			}
+			set
+			{
+				this.OnPropertyChanging("Department");
+				this.SetAttributeValue("department", value);
+				this.OnPropertyChanged("Department");
+			}
+		}
+		
+		/// <summary>
+		/// Type additional information to describe the contact, such as an excerpt from the company's website.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("description")]
+		public string Description
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("description");
+			}
+			set
+			{
+				this.OnPropertyChanging("Description");
+				this.SetAttributeValue("description", value);
+				this.OnPropertyChanged("Description");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact accepts bulk email sent through marketing campaigns or quick campaigns. If Do Not Allow is selected, the contact can be added to marketing lists, but will be excluded from the email.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotbulkemail")]
+		public System.Nullable<bool> DoNotBulkEMail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotbulkemail");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotBulkEMail");
+				this.SetAttributeValue("donotbulkemail", value);
+				this.OnPropertyChanged("DoNotBulkEMail");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact accepts bulk postal mail sent through marketing campaigns or quick campaigns. If Do Not Allow is selected, the contact can be added to marketing lists, but will be excluded from the letters.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotbulkpostalmail")]
+		public System.Nullable<bool> DoNotBulkPostalMail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotbulkpostalmail");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotBulkPostalMail");
+				this.SetAttributeValue("donotbulkpostalmail", value);
+				this.OnPropertyChanged("DoNotBulkPostalMail");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact allows direct email sent from Microsoft Dynamics 365. If Do Not Allow is selected, Microsoft Dynamics 365 will not send the email.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotemail")]
+		public System.Nullable<bool> DoNotEMail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotemail");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotEMail");
+				this.SetAttributeValue("donotemail", value);
+				this.OnPropertyChanged("DoNotEMail");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact allows faxes. If Do Not Allow is selected, the contact will be excluded from any fax activities distributed in marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotfax")]
+		public System.Nullable<bool> DoNotFax
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotfax");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotFax");
+				this.SetAttributeValue("donotfax", value);
+				this.OnPropertyChanged("DoNotFax");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact accepts phone calls. If Do Not Allow is selected, the contact will be excluded from any phone call activities distributed in marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotphone")]
+		public System.Nullable<bool> DoNotPhone
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotphone");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotPhone");
+				this.SetAttributeValue("donotphone", value);
+				this.OnPropertyChanged("DoNotPhone");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact allows direct mail. If Do Not Allow is selected, the contact will be excluded from letter activities distributed in marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotpostalmail")]
+		public System.Nullable<bool> DoNotPostalMail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotpostalmail");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotPostalMail");
+				this.SetAttributeValue("donotpostalmail", value);
+				this.OnPropertyChanged("DoNotPostalMail");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact accepts marketing materials, such as brochures or catalogs. Contacts that opt out can be excluded from marketing initiatives.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("donotsendmm")]
+		public System.Nullable<bool> DoNotSendMM
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("donotsendmm");
+			}
+			set
+			{
+				this.OnPropertyChanging("DoNotSendMM");
+				this.SetAttributeValue("donotsendmm", value);
+				this.OnPropertyChanged("DoNotSendMM");
+			}
+		}
+		
+		/// <summary>
+		/// Select the contact's highest level of education for use in segmentation and analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("educationcode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_educationcode> EducationCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("educationcode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_educationcode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_educationcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("EducationCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("educationcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("educationcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("EducationCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the primary email address for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailaddress1")]
+		public string EMailAddress1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("emailaddress1");
+			}
+			set
+			{
+				this.OnPropertyChanging("EMailAddress1");
+				this.SetAttributeValue("emailaddress1", value);
+				this.OnPropertyChanged("EMailAddress1");
+			}
+		}
+		
+		/// <summary>
+		/// Type the secondary email address for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailaddress2")]
+		public string EMailAddress2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("emailaddress2");
+			}
+			set
+			{
+				this.OnPropertyChanging("EMailAddress2");
+				this.SetAttributeValue("emailaddress2", value);
+				this.OnPropertyChanged("EMailAddress2");
+			}
+		}
+		
+		/// <summary>
+		/// Type an alternate email address for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailaddress3")]
+		public string EMailAddress3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("emailaddress3");
+			}
+			set
+			{
+				this.OnPropertyChanging("EMailAddress3");
+				this.SetAttributeValue("emailaddress3", value);
+				this.OnPropertyChanged("EMailAddress3");
+			}
+		}
+		
+		/// <summary>
+		/// Type the employee ID or number for the contact for reference in orders, service cases, or other communications with the contact's organization.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("employeeid")]
+		public string EmployeeId
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("employeeid");
+			}
+			set
+			{
+				this.OnPropertyChanging("EmployeeId");
+				this.SetAttributeValue("employeeid", value);
+				this.OnPropertyChanged("EmployeeId");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the default image for the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage")]
+		public byte[] EntityImage
+		{
+			get
+			{
+				return this.GetAttributeValue<byte[]>("entityimage");
+			}
+			set
+			{
+				this.OnPropertyChanging("EntityImage");
+				this.SetAttributeValue("entityimage", value);
+				this.OnPropertyChanged("EntityImage");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage_timestamp")]
+		public System.Nullable<long> EntityImage_Timestamp
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("entityimage_timestamp");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimage_url")]
+		public string EntityImage_URL
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("entityimage_url");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("entityimageid")]
+		public System.Nullable<System.Guid> EntityImageId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("entityimageid");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the conversion rate of the record's currency. The exchange rate is used to convert all money fields in the record from the local currency to the system's default currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("exchangerate")]
+		public System.Nullable<decimal> ExchangeRate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("exchangerate");
+			}
+		}
+		
+		/// <summary>
+		/// Identifier for an external user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("externaluseridentifier")]
+		public string ExternalUserIdentifier
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("externaluseridentifier");
+			}
+			set
+			{
+				this.OnPropertyChanging("ExternalUserIdentifier");
+				this.SetAttributeValue("externaluseridentifier", value);
+				this.OnPropertyChanged("ExternalUserIdentifier");
+			}
+		}
+		
+		/// <summary>
+		/// Select the marital status of the contact for reference in follow-up phone calls and other communications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("familystatuscode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_familystatuscode> FamilyStatusCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("familystatuscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_familystatuscode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_familystatuscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("FamilyStatusCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("familystatuscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("familystatuscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("FamilyStatusCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the fax number for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("fax")]
+		public string Fax
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("fax");
+			}
+			set
+			{
+				this.OnPropertyChanging("Fax");
+				this.SetAttributeValue("fax", value);
+				this.OnPropertyChanged("Fax");
+			}
+		}
+		
+		/// <summary>
+		/// Type the contact's first name to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("firstname")]
+		public string FirstName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("firstname");
+			}
+			set
+			{
+				this.OnPropertyChanging("FirstName");
+				this.SetAttributeValue("firstname", value);
+				this.OnPropertyChanged("FirstName");
+			}
+		}
+		
+		/// <summary>
+		/// Information about whether to allow following email activity like opens, attachment views and link clicks for emails sent to the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("followemail")]
+		public System.Nullable<bool> FollowEmail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("followemail");
+			}
+			set
+			{
+				this.OnPropertyChanging("FollowEmail");
+				this.SetAttributeValue("followemail", value);
+				this.OnPropertyChanged("FollowEmail");
+			}
+		}
+		
+		/// <summary>
+		/// Type the URL for the contact's FTP site to enable users to access data and share documents.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ftpsiteurl")]
+		public string FtpSiteUrl
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("ftpsiteurl");
+			}
+			set
+			{
+				this.OnPropertyChanging("FtpSiteUrl");
+				this.SetAttributeValue("ftpsiteurl", value);
+				this.OnPropertyChanged("FtpSiteUrl");
+			}
+		}
+		
+		/// <summary>
+		/// Combines and shows the contact's first and last names so that the full name can be displayed in views and reports.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("fullname")]
+		public string FullName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("fullname");
+			}
+		}
+		
+		/// <summary>
+		/// Select the contact's gender to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("gendercode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_gendercode> GenderCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("gendercode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_gendercode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_gendercode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("GenderCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("gendercode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("gendercode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("GenderCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the passport number or other government ID for the contact for use in documents or reports.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("governmentid")]
+		public string GovernmentId
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("governmentid");
+			}
+			set
+			{
+				this.OnPropertyChanging("GovernmentId");
+				this.SetAttributeValue("governmentid", value);
+				this.OnPropertyChanged("GovernmentId");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact has any children for reference in follow-up phone calls and other communications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("haschildrencode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_haschildrencode> HasChildrenCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("haschildrencode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_haschildrencode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_haschildrencode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("HasChildrenCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("haschildrencode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("haschildrencode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("HasChildrenCode");
+			}
+		}
+		
+		/// <summary>
+		/// Keeps information about record author - for case the record created from Partner Service
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_created")]
+		public string he_Created
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_created");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_Created");
+				this.SetAttributeValue("he_created", value);
+				this.OnPropertyChanged("he_Created");
+			}
+		}
+		
+		/// <summary>
+		/// ID without the prefix for Contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_id")]
+		public string he_ID
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_id");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_ID");
+				this.SetAttributeValue("he_id", value);
+				this.OnPropertyChanged("he_ID");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_isverified")]
+		public System.Nullable<bool> he_IsVerified
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("he_isverified");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_IsVerified");
+				this.SetAttributeValue("he_isverified", value);
+				this.OnPropertyChanged("he_IsVerified");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_marketingsend")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.he_marketingsend> he_marketingsend
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("he_marketingsend");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.he_marketingsend)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.he_marketingsend), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("he_marketingsend");
+				if ((value == null))
+				{
+					this.SetAttributeValue("he_marketingsend", null);
+				}
+				else
+				{
+					this.SetAttributeValue("he_marketingsend", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("he_marketingsend");
+			}
+		}
+		
+		/// <summary>
+		/// ID that contains the unique prefix for Contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("he_prefixid")]
+		public string he_PrefixID
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("he_prefixid");
+			}
+			set
+			{
+				this.OnPropertyChanging("he_PrefixID");
+				this.SetAttributeValue("he_prefixid", value);
+				this.OnPropertyChanged("he_PrefixID");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second home phone number for this contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("home2")]
+		public string Home2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("home2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Home2");
+				this.SetAttributeValue("home2", value);
+				this.OnPropertyChanged("Home2");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the data import or data migration that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalid")]
+		public string invln_externalid
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_externalid");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_externalid");
+				this.SetAttributeValue("invln_externalid", value);
+				this.OnPropertyChanged("invln_externalid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_pep")]
+		public System.Nullable<bool> invln_PEP
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_pep");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_PEP");
+				this.SetAttributeValue("invln_pep", value);
+				this.OnPropertyChanged("invln_PEP");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_role")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_role> invln_role
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_role");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_role)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_role), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_role");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_role", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_role", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_role");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_termsandconditionsaccepted")]
+		public System.Nullable<bool> invln_termsandconditionsaccepted
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_termsandconditionsaccepted");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_termsandconditionsaccepted");
+				this.SetAttributeValue("invln_termsandconditionsaccepted", value);
+				this.OnPropertyChanged("invln_termsandconditionsaccepted");
+			}
+		}
+		
+		/// <summary>
+		/// Select whether the contact exists in a separate accounting or other system, such as Microsoft Dynamics GP or another ERP database, for use in integration processes.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isbackofficecustomer")]
+		public System.Nullable<bool> IsBackofficeCustomer
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("isbackofficecustomer");
+			}
+			set
+			{
+				this.OnPropertyChanging("IsBackofficeCustomer");
+				this.SetAttributeValue("isbackofficecustomer", value);
+				this.OnPropertyChanged("IsBackofficeCustomer");
+			}
+		}
+		
+		/// <summary>
+		/// Type the job title of the contact to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("jobtitle")]
+		public string JobTitle
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("jobtitle");
+			}
+			set
+			{
+				this.OnPropertyChanging("JobTitle");
+				this.SetAttributeValue("jobtitle", value);
+				this.OnPropertyChanged("JobTitle");
+			}
+		}
+		
+		/// <summary>
+		/// Type the contact's last name to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("lastname")]
+		public string LastName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("lastname");
+			}
+			set
+			{
+				this.OnPropertyChanging("LastName");
+				this.SetAttributeValue("lastname", value);
+				this.OnPropertyChanged("LastName");
+			}
+		}
+		
+		/// <summary>
+		/// Contains the date and time stamp of the last on hold time.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("lastonholdtime")]
+		public System.Nullable<System.DateTime> LastOnHoldTime
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("lastonholdtime");
+			}
+			set
+			{
+				this.OnPropertyChanging("LastOnHoldTime");
+				this.SetAttributeValue("lastonholdtime", value);
+				this.OnPropertyChanged("LastOnHoldTime");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date when the contact was last included in a marketing campaign or quick campaign.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("lastusedincampaign")]
+		public System.Nullable<System.DateTime> LastUsedInCampaign
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("lastusedincampaign");
+			}
+			set
+			{
+				this.OnPropertyChanging("LastUsedInCampaign");
+				this.SetAttributeValue("lastusedincampaign", value);
+				this.OnPropertyChanged("LastUsedInCampaign");
+			}
+		}
+		
+		/// <summary>
+		/// Select the primary marketing source that directed the contact to your organization.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("leadsourcecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_leadsourcecode> LeadSourceCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("leadsourcecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_leadsourcecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_leadsourcecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("LeadSourceCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("leadsourcecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("leadsourcecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("LeadSourceCode");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the contact's manager for use in escalating issues or other follow-up communications with the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("managername")]
+		public string ManagerName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("managername");
+			}
+			set
+			{
+				this.OnPropertyChanging("ManagerName");
+				this.SetAttributeValue("managername", value);
+				this.OnPropertyChanged("ManagerName");
+			}
+		}
+		
+		/// <summary>
+		/// Type the phone number for the contact's manager.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("managerphone")]
+		public string ManagerPhone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("managerphone");
+			}
+			set
+			{
+				this.OnPropertyChanging("ManagerPhone");
+				this.SetAttributeValue("managerphone", value);
+				this.OnPropertyChanged("ManagerPhone");
+			}
+		}
+		
+		/// <summary>
+		/// Whether is only for marketing
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("marketingonly")]
+		public System.Nullable<bool> MarketingOnly
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("marketingonly");
+			}
+			set
+			{
+				this.OnPropertyChanging("MarketingOnly");
+				this.SetAttributeValue("marketingonly", value);
+				this.OnPropertyChanged("MarketingOnly");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the master contact for merge.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
+		public Microsoft.Xrm.Sdk.EntityReference MasterId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("masterid");
+			}
+		}
+		
+		/// <summary>
+		/// Shows whether the account has been merged with a master contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("merged")]
+		public System.Nullable<bool> Merged
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("merged");
+			}
+		}
+		
+		/// <summary>
+		/// Type the contact's middle name or initial to make sure the contact is addressed correctly.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("middlename")]
+		public string MiddleName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("middlename");
+			}
+			set
+			{
+				this.OnPropertyChanging("MiddleName");
+				this.SetAttributeValue("middlename", value);
+				this.OnPropertyChanged("MiddleName");
+			}
+		}
+		
+		/// <summary>
+		/// Type the mobile phone number for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("mobilephone")]
+		public string MobilePhone
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("mobilephone");
+			}
+			set
+			{
+				this.OnPropertyChanging("MobilePhone");
+				this.SetAttributeValue("mobilephone", value);
+				this.OnPropertyChanged("MobilePhone");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who last updated the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the external party who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedbyexternalparty")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedByExternalParty
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedbyexternalparty");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the date and time when the record was last updated. The date and time are displayed in the time zone selected in Microsoft Dynamics 365 options.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Shows who last updated the record on behalf of another user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for Account associated with Contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
+		public Microsoft.Xrm.Sdk.EntityReference msa_managingpartnerid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("msa_managingpartnerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("msa_managingpartnerid");
+				this.SetAttributeValue("msa_managingpartnerid", value);
+				this.OnPropertyChanged("msa_managingpartnerid");
+			}
+		}
+		
+		/// <summary>
+		/// Maps to contact KPI records
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_contactkpiid")]
+		public Microsoft.Xrm.Sdk.EntityReference msdyn_contactkpiid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("msdyn_contactkpiid");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_contactkpiid");
+				this.SetAttributeValue("msdyn_contactkpiid", value);
+				this.OnPropertyChanged("msdyn_contactkpiid");
+			}
+		}
+		
+		/// <summary>
+		/// Indicate buying influence using labels
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_decisioninfluencetag")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_msdyn_decisioninfluencetag> msdyn_decisioninfluencetag
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msdyn_decisioninfluencetag");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_msdyn_decisioninfluencetag)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_msdyn_decisioninfluencetag), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_decisioninfluencetag");
+				if ((value == null))
+				{
+					this.SetAttributeValue("msdyn_decisioninfluencetag", null);
+				}
+				else
+				{
+					this.SetAttributeValue("msdyn_decisioninfluencetag", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("msdyn_decisioninfluencetag");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates that the contact has opted out of web tracking.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_disablewebtracking")]
+		public System.Nullable<bool> msdyn_disablewebtracking
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("msdyn_disablewebtracking");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_disablewebtracking");
+				this.SetAttributeValue("msdyn_disablewebtracking", value);
+				this.OnPropertyChanged("msdyn_disablewebtracking");
+			}
+		}
+		
+		/// <summary>
+		/// Describes whether contact is opted out or not
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_gdproptout")]
+		public System.Nullable<bool> msdyn_gdproptout
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("msdyn_gdproptout");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_gdproptout");
+				this.SetAttributeValue("msdyn_gdproptout", value);
+				this.OnPropertyChanged("msdyn_gdproptout");
+			}
+		}
+		
+		/// <summary>
+		/// Describes if the contact is an assistant in org chart
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_isassistantinorgchart")]
+		public System.Nullable<bool> msdyn_isassistantinorgchart
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("msdyn_isassistantinorgchart");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_isassistantinorgchart");
+				this.SetAttributeValue("msdyn_isassistantinorgchart", value);
+				this.OnPropertyChanged("msdyn_isassistantinorgchart");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates that the contact is considered a minor in their jurisdiction.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_isminor")]
+		public System.Nullable<bool> msdyn_isminor
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("msdyn_isminor");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_isminor");
+				this.SetAttributeValue("msdyn_isminor", value);
+				this.OnPropertyChanged("msdyn_isminor");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates that the contact is considered a minor in their jurisdiction and has parental consent.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_isminorwithparentalconsent")]
+		public System.Nullable<bool> msdyn_isminorwithparentalconsent
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("msdyn_isminorwithparentalconsent");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_isminorwithparentalconsent");
+				this.SetAttributeValue("msdyn_isminorwithparentalconsent", value);
+				this.OnPropertyChanged("msdyn_isminorwithparentalconsent");
+			}
+		}
+		
+		/// <summary>
+		/// Whether or not the contact belongs to the associated account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_orgchangestatus")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_msdyn_orgchangestatus> msdyn_orgchangestatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msdyn_orgchangestatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_msdyn_orgchangestatus)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_msdyn_orgchangestatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_orgchangestatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("msdyn_orgchangestatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("msdyn_orgchangestatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("msdyn_orgchangestatus");
+			}
+		}
+		
+		/// <summary>
+		/// Indicates the date and time that the person agreed to the portal terms and conditions.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_portaltermsagreementdate")]
+		public System.Nullable<System.DateTime> msdyn_portaltermsagreementdate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("msdyn_portaltermsagreementdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_portaltermsagreementdate");
+				this.SetAttributeValue("msdyn_portaltermsagreementdate", value);
+				this.OnPropertyChanged("msdyn_portaltermsagreementdate");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for Segment associated with contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_segmentid")]
+		public Microsoft.Xrm.Sdk.EntityReference msdyn_segmentid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("msdyn_segmentid");
+			}
+			set
+			{
+				this.OnPropertyChanging("msdyn_segmentid");
+				this.SetAttributeValue("msdyn_segmentid", value);
+				this.OnPropertyChanged("msdyn_segmentid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msft_datastate")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.msft_datastate> msft_DataState
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msft_datastate");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.msft_datastate)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.msft_datastate), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+		
+		/// <summary>
+		/// User’s preferred portal language
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("mspp_userpreferredlcid")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.powerpagelanguages> mspp_userpreferredlcid
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("mspp_userpreferredlcid");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.powerpagelanguages)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.powerpagelanguages), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("mspp_userpreferredlcid");
+				if ((value == null))
+				{
+					this.SetAttributeValue("mspp_userpreferredlcid", null);
+				}
+				else
+				{
+					this.SetAttributeValue("mspp_userpreferredlcid", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("mspp_userpreferredlcid");
+			}
+		}
+		
+		/// <summary>
+		/// Type the contact's nickname.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("nickname")]
+		public string NickName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("nickname");
+			}
+			set
+			{
+				this.OnPropertyChanging("NickName");
+				this.SetAttributeValue("nickname", value);
+				this.OnPropertyChanged("NickName");
+			}
+		}
+		
+		/// <summary>
+		/// Type the number of children the contact has for reference in follow-up phone calls and other communications.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("numberofchildren")]
+		public System.Nullable<int> NumberOfChildren
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("numberofchildren");
+			}
+			set
+			{
+				this.OnPropertyChanging("NumberOfChildren");
+				this.SetAttributeValue("numberofchildren", value);
+				this.OnPropertyChanged("NumberOfChildren");
+			}
+		}
+		
+		/// <summary>
+		/// Shows how long, in minutes, that the record was on hold.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("onholdtime")]
+		public System.Nullable<int> OnHoldTime
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("onholdtime");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the lead that the contact was created if the contact was created by converting a lead in Microsoft Dynamics 365. This is used to relate the contact to the data on the originating lead for use in reporting and analytics.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("originatingleadid")]
+		public Microsoft.Xrm.Sdk.EntityReference OriginatingLeadId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("originatingleadid");
+			}
+			set
+			{
+				this.OnPropertyChanging("OriginatingLeadId");
+				this.SetAttributeValue("originatingleadid", value);
+				this.OnPropertyChanged("OriginatingLeadId");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time that the record was migrated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+		public System.Nullable<System.DateTime> OverriddenCreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+			}
+			set
+			{
+				this.OnPropertyChanging("OverriddenCreatedOn");
+				this.SetAttributeValue("overriddencreatedon", value);
+				this.OnPropertyChanged("OverriddenCreatedOn");
+			}
+		}
+		
+		/// <summary>
+		/// Enter the user or team who is assigned to manage the record. This field is updated every time the record is assigned to a different user.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
+		public Microsoft.Xrm.Sdk.EntityReference OwnerId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("ownerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwnerId");
+				this.SetAttributeValue("ownerid", value);
+				this.OnPropertyChanged("OwnerId");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the business unit that owns the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningBusinessUnit
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwningBusinessUnit");
+				this.SetAttributeValue("owningbusinessunit", value);
+				this.OnPropertyChanged("OwningBusinessUnit");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the team who owns the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningTeam
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who owns the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningUser
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
+			}
+		}
+		
+		/// <summary>
+		/// Type the pager number for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("pager")]
+		public string Pager
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("pager");
+			}
+			set
+			{
+				this.OnPropertyChanging("Pager");
+				this.SetAttributeValue("pager", value);
+				this.OnPropertyChanged("Pager");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parent_contactid")]
+		public Microsoft.Xrm.Sdk.EntityReference parent_contactid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("parent_contactid");
+			}
+			set
+			{
+				this.OnPropertyChanging("parent_contactid");
+				this.SetAttributeValue("parent_contactid", value);
+				this.OnPropertyChanged("parent_contactid");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the parent contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcontactid")]
+		public Microsoft.Xrm.Sdk.EntityReference ParentContactId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("parentcontactid");
+			}
+		}
+		
+		/// <summary>
+		/// Select the parent account or parent contact for the contact to provide a quick link to additional details, such as financial information, activities, and opportunities.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
+		public Microsoft.Xrm.Sdk.EntityReference ParentCustomerId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("parentcustomerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("ParentCustomerId");
+				this.SetAttributeValue("parentcustomerid", value);
+				this.OnPropertyChanged("ParentCustomerId");
+			}
+		}
+		
+		/// <summary>
+		/// Shows whether the contact participates in workflow rules.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("participatesinworkflow")]
+		public System.Nullable<bool> ParticipatesInWorkflow
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("participatesinworkflow");
+			}
+			set
+			{
+				this.OnPropertyChanging("ParticipatesInWorkflow");
+				this.SetAttributeValue("participatesinworkflow", value);
+				this.OnPropertyChanged("ParticipatesInWorkflow");
+			}
+		}
+		
+		/// <summary>
+		/// Select the payment terms to indicate when the customer needs to pay the total amount.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("paymenttermscode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_paymenttermscode> PaymentTermsCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("paymenttermscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_paymenttermscode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_paymenttermscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("PaymentTermsCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("paymenttermscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("paymenttermscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("PaymentTermsCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the preferred day of the week for service appointments.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredappointmentdaycode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_preferredappointmentdaycode> PreferredAppointmentDayCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredappointmentdaycode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_preferredappointmentdaycode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_preferredappointmentdaycode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredAppointmentDayCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("preferredappointmentdaycode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("preferredappointmentdaycode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("PreferredAppointmentDayCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the preferred time of day for service appointments.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredappointmenttimecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_preferredappointmenttimecode> PreferredAppointmentTimeCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredappointmenttimecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_preferredappointmenttimecode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_preferredappointmenttimecode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredAppointmentTimeCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("preferredappointmenttimecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("preferredappointmenttimecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("PreferredAppointmentTimeCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the preferred method of contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredcontactmethodcode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_preferredcontactmethodcode> PreferredContactMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("preferredcontactmethodcode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_preferredcontactmethodcode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_preferredcontactmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredContactMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("preferredcontactmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("preferredcontactmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("PreferredContactMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the contact's preferred service facility or equipment to make sure services are scheduled correctly for the customer.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredequipmentid")]
+		public Microsoft.Xrm.Sdk.EntityReference PreferredEquipmentId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("preferredequipmentid");
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredEquipmentId");
+				this.SetAttributeValue("preferredequipmentid", value);
+				this.OnPropertyChanged("PreferredEquipmentId");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the contact's preferred service to make sure services are scheduled correctly for the customer.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredserviceid")]
+		public Microsoft.Xrm.Sdk.EntityReference PreferredServiceId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("preferredserviceid");
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredServiceId");
+				this.SetAttributeValue("preferredserviceid", value);
+				this.OnPropertyChanged("PreferredServiceId");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the regular or preferred customer service representative for reference when scheduling service activities for the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("preferredsystemuserid")]
+		public Microsoft.Xrm.Sdk.EntityReference PreferredSystemUserId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("preferredsystemuserid");
+			}
+			set
+			{
+				this.OnPropertyChanging("PreferredSystemUserId");
+				this.SetAttributeValue("preferredsystemuserid", value);
+				this.OnPropertyChanged("PreferredSystemUserId");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the ID of the process.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("processid")]
+		public System.Nullable<System.Guid> ProcessId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("processid");
+			}
+			set
+			{
+				this.OnPropertyChanging("ProcessId");
+				this.SetAttributeValue("processid", value);
+				this.OnPropertyChanged("ProcessId");
+			}
+		}
+		
+		/// <summary>
+		/// Type the salutation of the contact to make sure the contact is addressed correctly in sales calls, email messages, and marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("salutation")]
+		public string Salutation
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("salutation");
+			}
+			set
+			{
+				this.OnPropertyChanging("Salutation");
+				this.SetAttributeValue("salutation", value);
+				this.OnPropertyChanged("Salutation");
+			}
+		}
+		
+		/// <summary>
+		/// Select a shipping method for deliveries sent to this address.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("shippingmethodcode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_shippingmethodcode> ShippingMethodCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("shippingmethodcode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_shippingmethodcode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_shippingmethodcode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("ShippingMethodCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("shippingmethodcode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("shippingmethodcode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("ShippingMethodCode");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the service level agreement (SLA) that you want to apply to the Contact record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("slaid")]
+		public Microsoft.Xrm.Sdk.EntityReference SLAId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("slaid");
+			}
+			set
+			{
+				this.OnPropertyChanging("SLAId");
+				this.SetAttributeValue("slaid", value);
+				this.OnPropertyChanged("SLAId");
+			}
+		}
+		
+		/// <summary>
+		/// Last SLA that was applied to this case. This field is for internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("slainvokedid")]
+		public Microsoft.Xrm.Sdk.EntityReference SLAInvokedId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("slainvokedid");
+			}
+		}
+		
+		/// <summary>
+		/// Type the name of the contact's spouse or partner for reference during calls, events, or other communications with the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("spousesname")]
+		public string SpousesName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("spousesname");
+			}
+			set
+			{
+				this.OnPropertyChanging("SpousesName");
+				this.SetAttributeValue("spousesname", value);
+				this.OnPropertyChanged("SpousesName");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the ID of the stage.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("stageid")]
+		public System.Nullable<System.Guid> StageId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("stageid");
+			}
+			set
+			{
+				this.OnPropertyChanging("StageId");
+				this.SetAttributeValue("stageid", value);
+				this.OnPropertyChanged("StageId");
+			}
+		}
+		
+		/// <summary>
+		/// Shows whether the contact is active or inactive. Inactive contacts are read-only and can't be edited unless they are reactivated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.ContactState> StateCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.ContactState)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.ContactState), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("StateCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StateCode");
+			}
+		}
+		
+		/// <summary>
+		/// Select the contact's status.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_statuscode> StatusCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_statuscode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_statuscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("StatusCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statuscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statuscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("StatusCode");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("subscriptionid")]
+		public System.Nullable<System.Guid> SubscriptionId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("subscriptionid");
+			}
+			set
+			{
+				this.OnPropertyChanging("SubscriptionId");
+				this.SetAttributeValue("subscriptionid", value);
+				this.OnPropertyChanged("SubscriptionId");
+			}
+		}
+		
+		/// <summary>
+		/// Type the suffix used in the contact's name, such as Jr. or Sr. to make sure the contact is addressed correctly in sales calls, email, and marketing campaigns.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("suffix")]
+		public string Suffix
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("suffix");
+			}
+			set
+			{
+				this.OnPropertyChanging("Suffix");
+				this.SetAttributeValue("suffix", value);
+				this.OnPropertyChanged("Suffix");
+			}
+		}
+		
+		/// <summary>
+		/// Number of users or conversations followed the record
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("teamsfollowed")]
+		public System.Nullable<int> TeamsFollowed
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("teamsfollowed");
+			}
+			set
+			{
+				this.OnPropertyChanging("TeamsFollowed");
+				this.SetAttributeValue("teamsfollowed", value);
+				this.OnPropertyChanged("TeamsFollowed");
+			}
+		}
+		
+		/// <summary>
+		/// Type the main phone number for this contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("telephone1")]
+		public string Telephone1
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("telephone1");
+			}
+			set
+			{
+				this.OnPropertyChanging("Telephone1");
+				this.SetAttributeValue("telephone1", value);
+				this.OnPropertyChanged("Telephone1");
+			}
+		}
+		
+		/// <summary>
+		/// Type a second phone number for this contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("telephone2")]
+		public string Telephone2
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("telephone2");
+			}
+			set
+			{
+				this.OnPropertyChanging("Telephone2");
+				this.SetAttributeValue("telephone2", value);
+				this.OnPropertyChanged("Telephone2");
+			}
+		}
+		
+		/// <summary>
+		/// Type a third phone number for this contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("telephone3")]
+		public string Telephone3
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("telephone3");
+			}
+			set
+			{
+				this.OnPropertyChanging("Telephone3");
+				this.SetAttributeValue("telephone3", value);
+				this.OnPropertyChanged("Telephone3");
+			}
+		}
+		
+		/// <summary>
+		/// Select a region or territory for the contact for use in segmentation and analysis.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("territorycode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.contact_territorycode> TerritoryCode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("territorycode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.contact_territorycode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.contact_territorycode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("TerritoryCode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("territorycode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("territorycode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("TerritoryCode");
+			}
+		}
+		
+		/// <summary>
+		/// Total time spent for emails (read and write) and meetings by me in relation to the contact record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timespentbymeonemailandmeetings")]
+		public string TimeSpentByMeOnEmailAndMeetings
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("timespentbymeonemailandmeetings");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timezoneruleversionnumber")]
+		public System.Nullable<int> TimeZoneRuleVersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("timezoneruleversionnumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("TimeZoneRuleVersionNumber");
+				this.SetAttributeValue("timezoneruleversionnumber", value);
+				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Choose the local currency for the record to make sure budgets are reported in the correct currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		public Microsoft.Xrm.Sdk.EntityReference TransactionCurrencyId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("transactioncurrencyid");
+			}
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrencyId");
+				this.SetAttributeValue("transactioncurrencyid", value);
+				this.OnPropertyChanged("TransactionCurrencyId");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("traversedpath")]
+		public string TraversedPath
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("traversedpath");
+			}
+			set
+			{
+				this.OnPropertyChanging("TraversedPath");
+				this.SetAttributeValue("traversedpath", value);
+				this.OnPropertyChanged("TraversedPath");
+			}
+		}
+		
+		/// <summary>
+		/// Time zone code that was in use when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("utcconversiontimezonecode")]
+		public System.Nullable<int> UTCConversionTimeZoneCode
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("utcconversiontimezonecode");
+			}
+			set
+			{
+				this.OnPropertyChanging("UTCConversionTimeZoneCode");
+				this.SetAttributeValue("utcconversiontimezonecode", value);
+				this.OnPropertyChanged("UTCConversionTimeZoneCode");
+			}
+		}
+		
+		/// <summary>
+		/// Version number of the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// Type the contact's professional or personal website or blog URL.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("websiteurl")]
+		public string WebSiteUrl
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("websiteurl");
+			}
+			set
+			{
+				this.OnPropertyChanging("WebSiteUrl");
+				this.SetAttributeValue("websiteurl", value);
+				this.OnPropertyChanged("WebSiteUrl");
+			}
+		}
+		
+		/// <summary>
+		/// Type the phonetic spelling of the contact's first name, if the name is specified in Japanese, to make sure the name is pronounced correctly in phone calls with the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("yomifirstname")]
+		public string YomiFirstName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("yomifirstname");
+			}
+			set
+			{
+				this.OnPropertyChanging("YomiFirstName");
+				this.SetAttributeValue("yomifirstname", value);
+				this.OnPropertyChanged("YomiFirstName");
+			}
+		}
+		
+		/// <summary>
+		/// Shows the combined Yomi first and last names of the contact so that the full phonetic name can be displayed in views and reports.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("yomifullname")]
+		public string YomiFullName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("yomifullname");
+			}
+		}
+		
+		/// <summary>
+		/// Type the phonetic spelling of the contact's last name, if the name is specified in Japanese, to make sure the name is pronounced correctly in phone calls with the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("yomilastname")]
+		public string YomiLastName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("yomilastname");
+			}
+			set
+			{
+				this.OnPropertyChanging("YomiLastName");
+				this.SetAttributeValue("yomilastname", value);
+				this.OnPropertyChanged("YomiLastName");
+			}
+		}
+		
+		/// <summary>
+		/// Type the phonetic spelling of the contact's middle name, if the name is specified in Japanese, to make sure the name is pronounced correctly in phone calls with the contact.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("yomimiddlename")]
+		public string YomiMiddleName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("yomimiddlename");
+			}
+			set
+			{
+				this.OnPropertyChanging("YomiMiddleName");
+				this.SetAttributeValue("yomimiddlename", value);
+				this.OnPropertyChanged("YomiMiddleName");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N account_primary_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_primary_contact")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.Account> account_primary_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.Account>("account_primary_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("account_primary_contact");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.Account>("account_primary_contact", null, value);
+				this.OnPropertyChanged("account_primary_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_customer_contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.Contact> Referencedcontact_customer_contacts
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedcontact_customer_contacts");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedcontact_customer_contacts");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_master_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.Contact> Referencedcontact_master_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedcontact_master_contact");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedcontact_master_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_parent_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.Contact> Referencedcontact_parent_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencedcontact_parent_contact");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedcontact_parent_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_contact_invln_loanapplication_contactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_loanapplication_contactid")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.invln_Loanapplication> invln_contact_invln_loanapplication_contactid
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.invln_Loanapplication>("invln_contact_invln_loanapplication_contactid", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_loanapplication_contactid");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.invln_Loanapplication>("invln_contact_invln_loanapplication_contactid", null, value);
+				this.OnPropertyChanged("invln_contact_invln_loanapplication_contactid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_contact_invln_scheme_contactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_scheme_contactid")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.invln_scheme> invln_contact_invln_scheme_contactid
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.invln_scheme>("invln_contact_invln_scheme_contactid", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_scheme_contactid");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.invln_scheme>("invln_contact_invln_scheme_contactid", null, value);
+				this.OnPropertyChanged("invln_contact_invln_scheme_contactid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_loanapplication_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_contact")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.invln_Loanapplication> invln_loanapplication_contact
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.invln_Loanapplication>("invln_loanapplication_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_contact");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.invln_Loanapplication>("invln_loanapplication_contact", null, value);
+				this.OnPropertyChanged("invln_loanapplication_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:N invln_contact_invln_loanapplication
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_loanapplication")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.invln_Loanapplication> invln_contact_invln_loanapplication
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.invln_Loanapplication>("invln_contact_invln_loanapplication", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_loanapplication");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.invln_Loanapplication>("invln_contact_invln_loanapplication", null, value);
+				this.OnPropertyChanged("invln_contact_invln_loanapplication");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_customer_accounts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_accounts")]
+		public HE.Investments.CRM.Common.Model.Account contact_customer_accounts
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("contact_customer_accounts", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("contact_customer_accounts");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("contact_customer_accounts", null, value);
+				this.OnPropertyChanged("contact_customer_accounts");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_customer_contacts
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentcustomerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public HE.Investments.CRM.Common.Model.Contact Referencingcontact_customer_contacts
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencingcontact_customer_contacts");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingcontact_customer_contacts");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_master_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("masterid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public HE.Investments.CRM.Common.Model.Contact Referencingcontact_master_contact
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Contact>("contact_master_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 contact_parent_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parent_contactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public HE.Investments.CRM.Common.Model.Contact Referencingcontact_parent_contact
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			set
+			{
+				this.OnPropertyChanging("Referencingcontact_parent_contact");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.Contact>("contact_parent_contact", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingcontact_parent_contact");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 msa_contact_managingpartner
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msa_managingpartnerid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("msa_contact_managingpartner")]
+		public HE.Investments.CRM.Common.Model.Account msa_contact_managingpartner
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("msa_contact_managingpartner", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("msa_contact_managingpartner");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("msa_contact_managingpartner", null, value);
+				this.OnPropertyChanged("msa_contact_managingpartner");
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_LoanapplicationState
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_loanapplication_statuscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Draft = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationSubmitted = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationUnderReview = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HoldRequested = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CashflowRequested = 858110007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CashflowUnderReview = 858110008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OnHold = 858110006,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ReferredBacktoApplicant = 858110009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReview = 858110010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SentforApproval = 858110011,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotApproved = 858110012,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedSubjecttoDueDiligence = 858110013,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationDeclined = 858110014,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InDueDiligence = 858110015,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SentforPreCompleteApproval = 858110016,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedSubjectToContract = 858110017,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AwaitingCPSatisfaction = 858110018,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		CPsSatisfied = 858110019,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		LoanAvailable = 858110020,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		FeeIndemnitySigned = 858110022,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Withdrawn = 858110021,
+	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_loanapplication")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_Loanapplication : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		public invln_Loanapplication() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "invln_loanapplication";
+		
+		public const string EntityLogicalCollectionName = "invln_loanapplications";
+		
+		public const string EntitySetName = "invln_loanapplications";
+		
+		public const int EntityTypeCode = 10603;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Exchange rate for the currency associated with the entity with respect to the base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("exchangerate")]
+		public System.Nullable<decimal> ExchangeRate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("exchangerate");
+			}
+		}
+		
+		/// <summary>
+		/// Sequence number of the import that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_account")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Account
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_account");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Account");
+				this.SetAttributeValue("invln_account", value);
+				this.OnPropertyChanged("invln_Account");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_additionalprojects")]
+		public System.Nullable<bool> invln_Additionalprojects
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_additionalprojects");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Additionalprojects");
+				this.SetAttributeValue("invln_additionalprojects", value);
+				this.OnPropertyChanged("invln_Additionalprojects");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_additionalreturns")]
+		public System.Nullable<bool> invln_Additionalreturns
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_additionalreturns");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Additionalreturns");
+				this.SetAttributeValue("invln_additionalreturns", value);
+				this.OnPropertyChanged("invln_Additionalreturns");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_applicationname")]
+		public string invln_applicationname
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_applicationname");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_applicationname");
+				this.SetAttributeValue("invln_applicationname", value);
+				this.OnPropertyChanged("invln_applicationname");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_assessedassppi")]
+		public System.Nullable<bool> invln_AssessedasSPPI
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_assessedassppi");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_AssessedasSPPI");
+				this.SetAttributeValue("invln_assessedassppi", value);
+				this.OnPropertyChanged("invln_AssessedasSPPI");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_commerciallysensitive")]
+		public System.Nullable<bool> invln_CommerciallySensitive
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_commerciallysensitive");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_CommerciallySensitive");
+				this.SetAttributeValue("invln_commerciallysensitive", value);
+				this.OnPropertyChanged("invln_CommerciallySensitive");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_companyexperience")]
+		public System.Nullable<int> invln_CompanyExperience
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_companyexperience");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_CompanyExperience");
+				this.SetAttributeValue("invln_companyexperience", value);
+				this.OnPropertyChanged("invln_CompanyExperience");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_companypurpose")]
+		public System.Nullable<bool> invln_CompanyPurpose
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_companypurpose");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_CompanyPurpose");
+				this.SetAttributeValue("invln_companypurpose", value);
+				this.OnPropertyChanged("invln_CompanyPurpose");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_companystructureandexperiencecompletionst")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus> invln_companystructureandexperiencecompletionst
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_companystructureandexperiencecompletionst");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_companystructureandexperiencecompletionst");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_companystructureandexperiencecompletionst", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_companystructureandexperiencecompletionst", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_companystructureandexperiencecompletionst");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_companystructureinformation")]
+		public string invln_Companystructureinformation
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_companystructureinformation");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Companystructureinformation");
+				this.SetAttributeValue("invln_companystructureinformation", value);
+				this.OnPropertyChanged("invln_Companystructureinformation");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_confirmationdirectorloanscanbesubordinated")]
+		public System.Nullable<bool> invln_Confirmationdirectorloanscanbesubordinated
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_confirmationdirectorloanscanbesubordinated");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Confirmationdirectorloanscanbesubordinated");
+				this.SetAttributeValue("invln_confirmationdirectorloanscanbesubordinated", value);
+				this.OnPropertyChanged("invln_Confirmationdirectorloanscanbesubordinated");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contact")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Contact
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_contact");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Contact");
+				this.SetAttributeValue("invln_contact", value);
+				this.OnPropertyChanged("invln_Contact");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_costguarantee")]
+		public System.Nullable<bool> invln_CostGuarantee
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_costguarantee");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_CostGuarantee");
+				this.SetAttributeValue("invln_costguarantee", value);
+				this.OnPropertyChanged("invln_CostGuarantee");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_customsecurity")]
+		public string invln_CustomSecurity
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_customsecurity");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_CustomSecurity");
+				this.SetAttributeValue("invln_customsecurity", value);
+				this.OnPropertyChanged("invln_CustomSecurity");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_dateapproved")]
+		public System.Nullable<System.DateTime> invln_Dateapproved
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_dateapproved");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Dateapproved");
+				this.SetAttributeValue("invln_dateapproved", value);
+				this.OnPropertyChanged("invln_Dateapproved");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_datesubmitted")]
+		public System.Nullable<System.DateTime> invln_Datesubmitted
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_datesubmitted");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Datesubmitted");
+				this.SetAttributeValue("invln_datesubmitted", value);
+				this.OnPropertyChanged("invln_Datesubmitted");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_debentureholder")]
+		public string invln_DebentureHolder
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_debentureholder");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_DebentureHolder");
+				this.SetAttributeValue("invln_debentureholder", value);
+				this.OnPropertyChanged("invln_DebentureHolder");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_developmenttype")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_developmenttype> invln_Developmenttype
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_developmenttype");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_developmenttype)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_developmenttype), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Developmenttype");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_developmenttype", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_developmenttype", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_Developmenttype");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_directorloans")]
+		public System.Nullable<bool> invln_Directorloans
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_directorloans");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Directorloans");
+				this.SetAttributeValue("invln_directorloans", value);
+				this.OnPropertyChanged("invln_Directorloans");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_existingcompany")]
+		public System.Nullable<bool> invln_ExistingCompany
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_existingcompany");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_ExistingCompany");
+				this.SetAttributeValue("invln_existingcompany", value);
+				this.OnPropertyChanged("invln_ExistingCompany");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalstatus")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_externalstatus> invln_ExternalStatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_externalstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_externalstatus)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_externalstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_ExternalStatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_externalstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_externalstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_ExternalStatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_finalconclusion")]
+		public string invln_FinalConclusion
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_finalconclusion");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_FinalConclusion");
+				this.SetAttributeValue("invln_finalconclusion", value);
+				this.OnPropertyChanged("invln_FinalConclusion");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundingdetailscompletionstatus")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus> invln_fundingdetailscompletionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_fundingdetailscompletionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_fundingdetailscompletionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_fundingdetailscompletionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_fundingdetailscompletionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_fundingdetailscompletionstatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundingreason")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_fundingreason> invln_FundingReason
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_fundingreason");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_fundingreason)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_fundingreason), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_FundingReason");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_fundingreason", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_fundingreason", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_FundingReason");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_interestguarantee")]
+		public System.Nullable<bool> invln_InterestGuarantee
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_interestguarantee");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_InterestGuarantee");
+				this.SetAttributeValue("invln_interestguarantee", value);
+				this.OnPropertyChanged("invln_InterestGuarantee");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_investedbyborrower")]
+		public System.Nullable<bool> invln_InvestedbyBorrower
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_investedbyborrower");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_InvestedbyBorrower");
+				this.SetAttributeValue("invln_investedbyborrower", value);
+				this.OnPropertyChanged("invln_InvestedbyBorrower");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastchangebyid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_lastchangebyid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_lastchangebyid");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_lastchangebyid");
+				this.SetAttributeValue("invln_lastchangebyid", value);
+				this.OnPropertyChanged("invln_lastchangebyid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastmmodificationdate")]
+		public System.Nullable<System.DateTime> invln_lastmmodificationdate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_lastmmodificationdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_lastmmodificationdate");
+				this.SetAttributeValue("invln_lastmmodificationdate", value);
+				this.OnPropertyChanged("invln_lastmmodificationdate");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanamountrequested")]
+		public Microsoft.Xrm.Sdk.Money invln_Loanamountrequested
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_loanamountrequested");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Loanamountrequested");
+				this.SetAttributeValue("invln_loanamountrequested", value);
+				this.OnPropertyChanged("invln_Loanamountrequested");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Loan amount requested in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanamountrequested_base")]
+		public Microsoft.Xrm.Sdk.Money invln_loanamountrequested_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_loanamountrequested_base");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for entity instances
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanapplicationid")]
+		public System.Nullable<System.Guid> invln_LoanapplicationId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("invln_loanapplicationid");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_LoanapplicationId");
+				this.SetAttributeValue("invln_loanapplicationid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("invln_LoanapplicationId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanapplicationid")]
+		public override System.Guid Id
+		{
+			get
+			{
+				return base.Id;
+			}
+			set
+			{
+				this.invln_LoanapplicationId = value;
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanid")]
+		public string invln_loanid
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_loanid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanportaldata")]
+		public string invln_loanportaldata
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_loanportaldata");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanportaldata");
+				this.SetAttributeValue("invln_loanportaldata", value);
+				this.OnPropertyChanged("invln_loanportaldata");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanportaldataid")]
+		public string invln_loanportaldataid
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_loanportaldataid");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanportaldataid");
+				this.SetAttributeValue("invln_loanportaldataid", value);
+				this.OnPropertyChanged("invln_loanportaldataid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ltgdv")]
+		public System.Nullable<bool> invln_LTGDV
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_ltgdv");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_LTGDV");
+				this.SetAttributeValue("invln_ltgdv", value);
+				this.OnPropertyChanged("invln_LTGDV");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_name")]
+		public string invln_Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_name");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Name");
+				this.SetAttributeValue("invln_name", value);
+				this.OnPropertyChanged("invln_Name");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_numberofhomes")]
+		public string invln_numberofhomes
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_numberofhomes");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_numberofhomes");
+				this.SetAttributeValue("invln_numberofhomes", value);
+				this.OnPropertyChanged("invln_numberofhomes");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_numberofsites")]
+		public System.Nullable<int> invln_NumberofSites
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_numberofsites");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_NumberofSites");
+				this.SetAttributeValue("invln_numberofsites", value);
+				this.OnPropertyChanged("invln_NumberofSites");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_outstandinglegalchargesordebt")]
+		public System.Nullable<bool> invln_Outstandinglegalchargesordebt
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_outstandinglegalchargesordebt");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Outstandinglegalchargesordebt");
+				this.SetAttributeValue("invln_outstandinglegalchargesordebt", value);
+				this.OnPropertyChanged("invln_Outstandinglegalchargesordebt");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_planningpermissionstatus")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_planningpermissionstatusset> invln_planningpermissionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_planningpermissionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_planningpermissionstatusset)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_planningpermissionstatusset), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_planningpermissionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_planningpermissionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_planningpermissionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_planningpermissionstatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_privatesectorapproach")]
+		public System.Nullable<bool> invln_Privatesectorapproach
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_privatesectorapproach");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Privatesectorapproach");
+				this.SetAttributeValue("invln_privatesectorapproach", value);
+				this.OnPropertyChanged("invln_Privatesectorapproach");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_privatesectorapproachinformation")]
+		public string invln_Privatesectorapproachinformation
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_privatesectorapproachinformation");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Privatesectorapproachinformation");
+				this.SetAttributeValue("invln_privatesectorapproachinformation", value);
+				this.OnPropertyChanged("invln_Privatesectorapproachinformation");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_projectabnormalcosts")]
+		public System.Nullable<bool> invln_Projectabnormalcosts
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_projectabnormalcosts");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Projectabnormalcosts");
+				this.SetAttributeValue("invln_projectabnormalcosts", value);
+				this.OnPropertyChanged("invln_Projectabnormalcosts");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_projectabnormalcostsinformation")]
+		public string invln_Projectabnormalcostsinformation
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_projectabnormalcostsinformation");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Projectabnormalcostsinformation");
+				this.SetAttributeValue("invln_projectabnormalcostsinformation", value);
+				this.OnPropertyChanged("invln_Projectabnormalcostsinformation");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_projectedprofitmargin")]
+		public System.Nullable<bool> invln_Projectedprofitmargin
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_projectedprofitmargin");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Projectedprofitmargin");
+				this.SetAttributeValue("invln_projectedprofitmargin", value);
+				this.OnPropertyChanged("invln_Projectedprofitmargin");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_projectestimatedtotalcost")]
+		public Microsoft.Xrm.Sdk.Money invln_Projectestimatedtotalcost
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_projectestimatedtotalcost");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Projectestimatedtotalcost");
+				this.SetAttributeValue("invln_projectestimatedtotalcost", value);
+				this.OnPropertyChanged("invln_Projectestimatedtotalcost");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Project estimated total cost in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_projectestimatedtotalcost_base")]
+		public Microsoft.Xrm.Sdk.Money invln_projectestimatedtotalcost_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_projectestimatedtotalcost_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_projectgdv")]
+		public Microsoft.Xrm.Sdk.Money invln_ProjectGDV
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_projectgdv");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_ProjectGDV");
+				this.SetAttributeValue("invln_projectgdv", value);
+				this.OnPropertyChanged("invln_ProjectGDV");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Project GDV in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_projectgdv_base")]
+		public Microsoft.Xrm.Sdk.Money invln_projectgdv_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_projectgdv_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_projectname")]
+		public string invln_ProjectName
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_projectname");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_ProjectName");
+				this.SetAttributeValue("invln_projectname", value);
+				this.OnPropertyChanged("invln_ProjectName");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_rateofinterest")]
+		public System.Nullable<bool> invln_rateofinterest
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_rateofinterest");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_rateofinterest");
+				this.SetAttributeValue("invln_rateofinterest", value);
+				this.OnPropertyChanged("invln_rateofinterest");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_reasonfordirectorloannotsubordinated")]
+		public string invln_Reasonfordirectorloannotsubordinated
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_reasonfordirectorloannotsubordinated");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Reasonfordirectorloannotsubordinated");
+				this.SetAttributeValue("invln_reasonfordirectorloannotsubordinated", value);
+				this.OnPropertyChanged("invln_Reasonfordirectorloannotsubordinated");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_refinancerepayment")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_refinancerepayment> invln_Refinancerepayment
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_refinancerepayment");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_refinancerepayment)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_refinancerepayment), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Refinancerepayment");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_refinancerepayment", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_refinancerepayment", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_Refinancerepayment");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_refinancerepaymentdetails")]
+		public string invln_Refinancerepaymentdetails
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_refinancerepaymentdetails");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Refinancerepaymentdetails");
+				this.SetAttributeValue("invln_refinancerepaymentdetails", value);
+				this.OnPropertyChanged("invln_Refinancerepaymentdetails");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_region")]
+		public string invln_Region
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_region");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Region");
+				this.SetAttributeValue("invln_region", value);
+				this.OnPropertyChanged("invln_Region");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securities")]
+		public object invln_Securities
+		{
+			get
+			{
+				return this.GetAttributeValue<object>("invln_securities");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Securities");
+				this.SetAttributeValue("invln_securities", value);
+				this.OnPropertyChanged("invln_Securities");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitydetails")]
+		public string invln_SecurityDetails
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_securitydetails");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_SecurityDetails");
+				this.SetAttributeValue("invln_securitydetails", value);
+				this.OnPropertyChanged("invln_SecurityDetails");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitydetailscompletionstatus")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus> invln_securitydetailscompletionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_securitydetailscompletionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_securitydetailscompletionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_securitydetailscompletionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_securitydetailscompletionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_securitydetailscompletionstatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitymsv")]
+		public Microsoft.Xrm.Sdk.Money invln_SecurityMSV
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_securitymsv");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_SecurityMSV");
+				this.SetAttributeValue("invln_securitymsv", value);
+				this.OnPropertyChanged("invln_SecurityMSV");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Security MSV in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitymsv_base")]
+		public Microsoft.Xrm.Sdk.Money invln_securitymsv_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_securitymsv_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securitytype")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_securitytype> invln_SecurityType
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_securitytype");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_securitytype)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_securitytype), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_SecurityType");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_securitytype", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_securitytype", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_SecurityType");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securityvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_SecurityValue
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_securityvalue");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_SecurityValue");
+				this.SetAttributeValue("invln_securityvalue", value);
+				this.OnPropertyChanged("invln_SecurityValue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Security Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_securityvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_securityvalue_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_securityvalue_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sitedetailscompletionstatus")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus> invln_sitedetailscompletionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_sitedetailscompletionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetailscompletionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_sitedetailscompletionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_sitedetailscompletionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_sitedetailscompletionstatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_source")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_source> invln_source
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_source");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_source)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_source), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_source");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_source", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_source", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_source");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_specialpurposevehicleprovided")]
+		public System.Nullable<bool> invln_specialpurposevehicleprovided
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_specialpurposevehicleprovided");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_specialpurposevehicleprovided");
+				this.SetAttributeValue("invln_specialpurposevehicleprovided", value);
+				this.OnPropertyChanged("invln_specialpurposevehicleprovided");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_startdate")]
+		public System.Nullable<System.DateTime> invln_startdate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_startdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_startdate");
+				this.SetAttributeValue("invln_startdate", value);
+				this.OnPropertyChanged("invln_startdate");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_statuschangereason")]
+		public string invln_statuschangereason
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_statuschangereason");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_statuschangereason");
+				this.SetAttributeValue("invln_statuschangereason", value);
+				this.OnPropertyChanged("invln_statuschangereason");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_warranty")]
+		public System.Nullable<bool> invln_Warranty
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_warranty");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Warranty");
+				this.SetAttributeValue("invln_warranty", value);
+				this.OnPropertyChanged("invln_Warranty");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the record was modified.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time that the record was migrated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+		public System.Nullable<System.DateTime> OverriddenCreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+			}
+			set
+			{
+				this.OnPropertyChanging("OverriddenCreatedOn");
+				this.SetAttributeValue("overriddencreatedon", value);
+				this.OnPropertyChanged("OverriddenCreatedOn");
+			}
+		}
+		
+		/// <summary>
+		/// Owner Id
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
+		public Microsoft.Xrm.Sdk.EntityReference OwnerId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("ownerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwnerId");
+				this.SetAttributeValue("ownerid", value);
+				this.OnPropertyChanged("OwnerId");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the business unit that owns the record
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningBusinessUnit
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwningBusinessUnit");
+				this.SetAttributeValue("owningbusinessunit", value);
+				this.OnPropertyChanged("OwningBusinessUnit");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the team that owns the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningTeam
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the user that owns the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningUser
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
+			}
+		}
+		
+		/// <summary>
+		/// Contains the id of the process associated with the entity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("processid")]
+		public System.Nullable<System.Guid> processid
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("processid");
+			}
+			set
+			{
+				this.OnPropertyChanging("processid");
+				this.SetAttributeValue("processid", value);
+				this.OnPropertyChanged("processid");
+			}
+		}
+		
+		/// <summary>
+		/// Contains the id of the stage where the entity is located.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("stageid")]
+		public System.Nullable<System.Guid> stageid
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("stageid");
+			}
+			set
+			{
+				this.OnPropertyChanging("stageid");
+				this.SetAttributeValue("stageid", value);
+				this.OnPropertyChanged("stageid");
+			}
+		}
+		
+		/// <summary>
+		/// Status of the Loan application
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_LoanapplicationState> statecode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_LoanapplicationState)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_LoanapplicationState), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("statecode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("statecode");
+			}
+		}
+		
+		/// <summary>
+		/// Reason for the status of the Loan application
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_loanapplication_statuscode> statuscode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_loanapplication_statuscode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_loanapplication_statuscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("statuscode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statuscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statuscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("statuscode");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timezoneruleversionnumber")]
+		public System.Nullable<int> TimeZoneRuleVersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("timezoneruleversionnumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("TimeZoneRuleVersionNumber");
+				this.SetAttributeValue("timezoneruleversionnumber", value);
+				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the currency associated with the entity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		public Microsoft.Xrm.Sdk.EntityReference TransactionCurrencyId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("transactioncurrencyid");
+			}
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrencyId");
+				this.SetAttributeValue("transactioncurrencyid", value);
+				this.OnPropertyChanged("TransactionCurrencyId");
+			}
+		}
+		
+		/// <summary>
+		/// A comma separated list of string values representing the unique identifiers of stages in a Business Process Flow Instance in the order that they occur.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("traversedpath")]
+		public string traversedpath
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("traversedpath");
+			}
+			set
+			{
+				this.OnPropertyChanging("traversedpath");
+				this.SetAttributeValue("traversedpath", value);
+				this.OnPropertyChanged("traversedpath");
+			}
+		}
+		
+		/// <summary>
+		/// Time zone code that was in use when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("utcconversiontimezonecode")]
+		public System.Nullable<int> UTCConversionTimeZoneCode
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("utcconversiontimezonecode");
+			}
+			set
+			{
+				this.OnPropertyChanging("UTCConversionTimeZoneCode");
+				this.SetAttributeValue("utcconversiontimezonecode", value);
+				this.OnPropertyChanged("UTCConversionTimeZoneCode");
+			}
+		}
+		
+		/// <summary>
+		/// Version Number
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sitedetails_Loanapplication
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_Loanapplication")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.invln_SiteDetails> invln_sitedetails_Loanapplication
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.invln_SiteDetails>("invln_sitedetails_Loanapplication", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetails_Loanapplication");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.invln_SiteDetails>("invln_sitedetails_Loanapplication", null, value);
+				this.OnPropertyChanged("invln_sitedetails_Loanapplication");
+			}
+		}
+		
+		/// <summary>
+		/// N:N invln_contact_invln_loanapplication
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_loanapplication")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.CRM.Common.Model.Contact> invln_contact_invln_loanapplication
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.CRM.Common.Model.Contact>("invln_contact_invln_loanapplication", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_loanapplication");
+				this.SetRelatedEntities<HE.Investments.CRM.Common.Model.Contact>("invln_contact_invln_loanapplication", null, value);
+				this.OnPropertyChanged("invln_contact_invln_loanapplication");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_contact_invln_loanapplication_contactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastchangebyid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_loanapplication_contactid")]
+		public HE.Investments.CRM.Common.Model.Contact invln_contact_invln_loanapplication_contactid
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Contact>("invln_contact_invln_loanapplication_contactid", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_loanapplication_contactid");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.Contact>("invln_contact_invln_loanapplication_contactid", null, value);
+				this.OnPropertyChanged("invln_contact_invln_loanapplication_contactid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_loanapplication_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_account")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_account")]
+		public HE.Investments.CRM.Common.Model.Account invln_loanapplication_account
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("invln_loanapplication_account", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_account");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("invln_loanapplication_account", null, value);
+				this.OnPropertyChanged("invln_loanapplication_account");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_loanapplication_contact
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contact")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_contact")]
+		public HE.Investments.CRM.Common.Model.Contact invln_loanapplication_contact
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Contact>("invln_loanapplication_contact", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_loanapplication_contact");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.Contact>("invln_loanapplication_contact", null, value);
+				this.OnPropertyChanged("invln_loanapplication_contact");
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_schemeState
 	{
 		
@@ -9047,6 +21220,24 @@ namespace HE.Investments.CRM.Common.Model
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_borrowingagainstrentalincome_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_contactid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_contactid");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_contactid");
+				this.SetAttributeValue("invln_contactid", value);
+				this.OnPropertyChanged("invln_contactid");
 			}
 		}
 		
@@ -9539,6 +21730,24 @@ namespace HE.Investments.CRM.Common.Model
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_oncosts_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_organisationid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_organisationid
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_organisationid");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_organisationid");
+				this.SetAttributeValue("invln_organisationid", value);
+				this.OnPropertyChanged("invln_organisationid");
 			}
 		}
 		
@@ -10099,6 +22308,1387 @@ namespace HE.Investments.CRM.Common.Model
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
 			}
 		}
+		
+		/// <summary>
+		/// N:1 invln_account_invln_scheme_organisationid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_organisationid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_account_invln_scheme_organisationid")]
+		public HE.Investments.CRM.Common.Model.Account invln_account_invln_scheme_organisationid
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("invln_account_invln_scheme_organisationid", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_account_invln_scheme_organisationid");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.Account>("invln_account_invln_scheme_organisationid", null, value);
+				this.OnPropertyChanged("invln_account_invln_scheme_organisationid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_contact_invln_scheme_contactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_contactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_scheme_contactid")]
+		public HE.Investments.CRM.Common.Model.Contact invln_contact_invln_scheme_contactid
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.Contact>("invln_contact_invln_scheme_contactid", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_scheme_contactid");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.Contact>("invln_contact_invln_scheme_contactid", null, value);
+				this.OnPropertyChanged("invln_contact_invln_scheme_contactid");
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_SiteDetailsState
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_sitedetails_statuscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 2,
+	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_sitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_SiteDetails : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		public invln_SiteDetails() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "invln_sitedetails";
+		
+		public const string EntityLogicalCollectionName = "invln_sitedetailses";
+		
+		public const string EntitySetName = "invln_sitedetailses";
+		
+		public const int EntityTypeCode = 10694;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Exchange rate for the currency associated with the entity with respect to the base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("exchangerate")]
+		public System.Nullable<decimal> ExchangeRate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("exchangerate");
+			}
+		}
+		
+		/// <summary>
+		/// Sequence number of the import that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_address")]
+		public string invln_Address
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_address");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Address");
+				this.SetAttributeValue("invln_address", value);
+				this.OnPropertyChanged("invln_Address");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_affordablehousing")]
+		public System.Nullable<bool> invln_Affordablehousing
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_affordablehousing");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Affordablehousing");
+				this.SetAttributeValue("invln_affordablehousing", value);
+				this.OnPropertyChanged("invln_Affordablehousing");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_completiondate")]
+		public System.Nullable<System.DateTime> invln_Completiondate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_completiondate");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Completiondate");
+				this.SetAttributeValue("invln_completiondate", value);
+				this.OnPropertyChanged("invln_Completiondate");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_completionstatus")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus> invln_completionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_completionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_sectioncompletionstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_completionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_completionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_completionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_completionstatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_conductedby")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Conductedby
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_conductedby");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Conductedby");
+				this.SetAttributeValue("invln_conductedby", value);
+				this.OnPropertyChanged("invln_Conductedby");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_currentvalue")]
+		public Microsoft.Xrm.Sdk.Money invln_currentvalue
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_currentvalue");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_currentvalue");
+				this.SetAttributeValue("invln_currentvalue", value);
+				this.OnPropertyChanged("invln_currentvalue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the current value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_currentvalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_currentvalue_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_currentvalue_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_dateofpurchase")]
+		public System.Nullable<System.DateTime> invln_Dateofpurchase
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_dateofpurchase");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Dateofpurchase");
+				this.SetAttributeValue("invln_dateofpurchase", value);
+				this.OnPropertyChanged("invln_Dateofpurchase");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_existinglegalcharges")]
+		public System.Nullable<bool> invln_Existinglegalcharges
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_existinglegalcharges");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Existinglegalcharges");
+				this.SetAttributeValue("invln_existinglegalcharges", value);
+				this.OnPropertyChanged("invln_Existinglegalcharges");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_existinglegalchargesinformation")]
+		public string invln_Existinglegalchargesinformation
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_existinglegalchargesinformation");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Existinglegalchargesinformation");
+				this.SetAttributeValue("invln_existinglegalchargesinformation", value);
+				this.OnPropertyChanged("invln_Existinglegalchargesinformation");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_haveaplanningreferencenumber")]
+		public System.Nullable<bool> invln_Haveaplanningreferencenumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_haveaplanningreferencenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Haveaplanningreferencenumber");
+				this.SetAttributeValue("invln_haveaplanningreferencenumber", value);
+				this.OnPropertyChanged("invln_Haveaplanningreferencenumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_howmuch")]
+		public Microsoft.Xrm.Sdk.Money invln_HowMuch
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_howmuch");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_HowMuch");
+				this.SetAttributeValue("invln_howmuch", value);
+				this.OnPropertyChanged("invln_HowMuch");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the How Much in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_howmuch_base")]
+		public Microsoft.Xrm.Sdk.Money invln_howmuch_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_howmuch_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_landregistrytitlenumber")]
+		public string invln_Landregistrytitlenumber
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_landregistrytitlenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Landregistrytitlenumber");
+				this.SetAttributeValue("invln_landregistrytitlenumber", value);
+				this.OnPropertyChanged("invln_Landregistrytitlenumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanapplication")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Loanapplication
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_loanapplication");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Loanapplication");
+				this.SetAttributeValue("invln_loanapplication", value);
+				this.OnPropertyChanged("invln_Loanapplication");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthority")]
+		public string invln_localauthority
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_localauthority");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_localauthority");
+				this.SetAttributeValue("invln_localauthority", value);
+				this.OnPropertyChanged("invln_localauthority");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mspresent")]
+		public System.Nullable<bool> invln_MSPresent
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_mspresent");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_MSPresent");
+				this.SetAttributeValue("invln_mspresent", value);
+				this.OnPropertyChanged("invln_MSPresent");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_name")]
+		public string invln_Name
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_name");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Name");
+				this.SetAttributeValue("invln_name", value);
+				this.OnPropertyChanged("invln_Name");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_nameofgrantfund")]
+		public string invln_Nameofgrantfund
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_nameofgrantfund");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Nameofgrantfund");
+				this.SetAttributeValue("invln_nameofgrantfund", value);
+				this.OnPropertyChanged("invln_Nameofgrantfund");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_numberofhomes")]
+		public System.Nullable<int> invln_Numberofhomes
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_numberofhomes");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Numberofhomes");
+				this.SetAttributeValue("invln_numberofhomes", value);
+				this.OnPropertyChanged("invln_Numberofhomes");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_othertypeofhomes")]
+		public string invln_OtherTypeofhomes
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_othertypeofhomes");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_OtherTypeofhomes");
+				this.SetAttributeValue("invln_othertypeofhomes", value);
+				this.OnPropertyChanged("invln_OtherTypeofhomes");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_planningpermissionstatus")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_planningpermissionstatusset> invln_planningpermissionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_planningpermissionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_planningpermissionstatusset)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_planningpermissionstatusset), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_planningpermissionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_planningpermissionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_planningpermissionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_planningpermissionstatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_planningreferencenumber")]
+		public string invln_Planningreferencenumber
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_planningreferencenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Planningreferencenumber");
+				this.SetAttributeValue("invln_planningreferencenumber", value);
+				this.OnPropertyChanged("invln_Planningreferencenumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_planningstatus")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_planningstatus> invln_Planningstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_planningstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_planningstatus)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_planningstatus), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Planningstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_planningstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_planningstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_Planningstatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_postcode")]
+		public string invln_Postcode
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_postcode");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Postcode");
+				this.SetAttributeValue("invln_postcode", value);
+				this.OnPropertyChanged("invln_Postcode");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_programme")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_programme> invln_Programme
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_programme");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_programme)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_programme), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Programme");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_programme", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_programme", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_Programme");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_projecthasstartdate")]
+		public System.Nullable<bool> invln_projecthasstartdate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_projecthasstartdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_projecthasstartdate");
+				this.SetAttributeValue("invln_projecthasstartdate", value);
+				this.OnPropertyChanged("invln_projecthasstartdate");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_publicsectorfunding")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_publicsectorfunding> invln_Publicsectorfunding
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_publicsectorfunding");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_publicsectorfunding)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_publicsectorfunding), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Publicsectorfunding");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_publicsectorfunding", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_publicsectorfunding", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_Publicsectorfunding");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_reason")]
+		public string invln_Reason
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_reason");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Reason");
+				this.SetAttributeValue("invln_reason", value);
+				this.OnPropertyChanged("invln_Reason");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_region")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_Region
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_region");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Region");
+				this.SetAttributeValue("invln_region", value);
+				this.OnPropertyChanged("invln_Region");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sitecoordinates")]
+		public string invln_Sitecoordinates
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_sitecoordinates");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Sitecoordinates");
+				this.SetAttributeValue("invln_sitecoordinates", value);
+				this.OnPropertyChanged("invln_Sitecoordinates");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sitecost")]
+		public Microsoft.Xrm.Sdk.Money invln_Sitecost
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_sitecost");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Sitecost");
+				this.SetAttributeValue("invln_sitecost", value);
+				this.OnPropertyChanged("invln_Sitecost");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Site cost in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sitecost_base")]
+		public Microsoft.Xrm.Sdk.Money invln_sitecost_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_sitecost_base");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for entity instances
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sitedetailsid")]
+		public System.Nullable<System.Guid> invln_SiteDetailsId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("invln_sitedetailsid");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_SiteDetailsId");
+				this.SetAttributeValue("invln_sitedetailsid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("invln_SiteDetailsId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sitedetailsid")]
+		public override System.Guid Id
+		{
+			get
+			{
+				return base.Id;
+			}
+			set
+			{
+				this.invln_SiteDetailsId = value;
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_sitename")]
+		public string invln_Sitename
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_sitename");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Sitename");
+				this.SetAttributeValue("invln_sitename", value);
+				this.OnPropertyChanged("invln_Sitename");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_siteownership")]
+		public System.Nullable<bool> invln_Siteownership
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_siteownership");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Siteownership");
+				this.SetAttributeValue("invln_siteownership", value);
+				this.OnPropertyChanged("invln_Siteownership");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_startdate")]
+		public System.Nullable<System.DateTime> invln_startdate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_startdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_startdate");
+				this.SetAttributeValue("invln_startdate", value);
+				this.OnPropertyChanged("invln_startdate");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalbuildperiod")]
+		public string invln_Totalbuildperiod
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_totalbuildperiod");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Totalbuildperiod");
+				this.SetAttributeValue("invln_totalbuildperiod", value);
+				this.OnPropertyChanged("invln_Totalbuildperiod");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totaldevelopmentcost")]
+		public Microsoft.Xrm.Sdk.Money invln_TotalDevelopmentCost
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totaldevelopmentcost");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_TotalDevelopmentCost");
+				this.SetAttributeValue("invln_totaldevelopmentcost", value);
+				this.OnPropertyChanged("invln_TotalDevelopmentCost");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Total Development Cost in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totaldevelopmentcost_base")]
+		public Microsoft.Xrm.Sdk.Money invln_totaldevelopmentcost_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totaldevelopmentcost_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalgdv")]
+		public Microsoft.Xrm.Sdk.Money invln_TotalGDV
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalgdv");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_TotalGDV");
+				this.SetAttributeValue("invln_totalgdv", value);
+				this.OnPropertyChanged("invln_TotalGDV");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Total GDV in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalgdv_base")]
+		public Microsoft.Xrm.Sdk.Money invln_totalgdv_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalgdv_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_typeofhomes")]
+		public object invln_Typeofhomes
+		{
+			get
+			{
+				return this.GetAttributeValue<object>("invln_typeofhomes");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Typeofhomes");
+				this.SetAttributeValue("invln_typeofhomes", value);
+				this.OnPropertyChanged("invln_Typeofhomes");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_typeofsite")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_typeofsite> invln_TypeofSite
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_typeofsite");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_typeofsite)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_typeofsite), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_TypeofSite");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_typeofsite", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_typeofsite", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_TypeofSite");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_valuationsource")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_valuationsource> invln_Valuationsource
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_valuationsource");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_valuationsource)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_valuationsource), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Valuationsource");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_valuationsource", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_valuationsource", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_Valuationsource");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_visitdate")]
+		public System.Nullable<System.DateTime> invln_Visitdate
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_visitdate");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Visitdate");
+				this.SetAttributeValue("invln_visitdate", value);
+				this.OnPropertyChanged("invln_Visitdate");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_whoprovided")]
+		public string invln_Whoprovided
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_whoprovided");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Whoprovided");
+				this.SetAttributeValue("invln_whoprovided", value);
+				this.OnPropertyChanged("invln_Whoprovided");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the record was modified.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time that the record was migrated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+		public System.Nullable<System.DateTime> OverriddenCreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+			}
+			set
+			{
+				this.OnPropertyChanging("OverriddenCreatedOn");
+				this.SetAttributeValue("overriddencreatedon", value);
+				this.OnPropertyChanged("OverriddenCreatedOn");
+			}
+		}
+		
+		/// <summary>
+		/// Owner Id
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
+		public Microsoft.Xrm.Sdk.EntityReference OwnerId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("ownerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwnerId");
+				this.SetAttributeValue("ownerid", value);
+				this.OnPropertyChanged("OwnerId");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the business unit that owns the record
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningBusinessUnit
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwningBusinessUnit");
+				this.SetAttributeValue("owningbusinessunit", value);
+				this.OnPropertyChanged("OwningBusinessUnit");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the team that owns the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningTeam
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the user that owns the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningUser
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
+			}
+		}
+		
+		/// <summary>
+		/// Status of the Site Details
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_SiteDetailsState> statecode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_SiteDetailsState)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_SiteDetailsState), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("statecode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("statecode");
+			}
+		}
+		
+		/// <summary>
+		/// Reason for the status of the Site Details
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public System.Nullable<HE.Investments.CRM.Common.Model.invln_sitedetails_statuscode> statuscode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.CRM.Common.Model.invln_sitedetails_statuscode)(System.Enum.ToObject(typeof(HE.Investments.CRM.Common.Model.invln_sitedetails_statuscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("statuscode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statuscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statuscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("statuscode");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timezoneruleversionnumber")]
+		public System.Nullable<int> TimeZoneRuleVersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("timezoneruleversionnumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("TimeZoneRuleVersionNumber");
+				this.SetAttributeValue("timezoneruleversionnumber", value);
+				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the currency associated with the entity.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
+		public Microsoft.Xrm.Sdk.EntityReference TransactionCurrencyId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("transactioncurrencyid");
+			}
+			set
+			{
+				this.OnPropertyChanging("TransactionCurrencyId");
+				this.SetAttributeValue("transactioncurrencyid", value);
+				this.OnPropertyChanged("TransactionCurrencyId");
+			}
+		}
+		
+		/// <summary>
+		/// Time zone code that was in use when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("utcconversiontimezonecode")]
+		public System.Nullable<int> UTCConversionTimeZoneCode
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("utcconversiontimezonecode");
+			}
+			set
+			{
+				this.OnPropertyChanging("UTCConversionTimeZoneCode");
+				this.SetAttributeValue("utcconversiontimezonecode", value);
+				this.OnPropertyChanged("UTCConversionTimeZoneCode");
+			}
+		}
+		
+		/// <summary>
+		/// Version Number
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sitedetails_Loanapplication
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanapplication")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_Loanapplication")]
+		public HE.Investments.CRM.Common.Model.invln_Loanapplication invln_sitedetails_Loanapplication
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.CRM.Common.Model.invln_Loanapplication>("invln_sitedetails_Loanapplication", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetails_Loanapplication");
+				this.SetRelatedEntity<HE.Investments.CRM.Common.Model.invln_Loanapplication>("invln_sitedetails_Loanapplication", null, value);
+				this.OnPropertyChanged("invln_sitedetails_Loanapplication");
+			}
+		}
 	}
 	
 	/// <summary>
@@ -10117,6 +23707,39 @@ namespace HE.Investments.CRM.Common.Model
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="HE.Investments.CRM.Common.Model.Account"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<HE.Investments.CRM.Common.Model.Account> AccountSet
+		{
+			get
+			{
+				return this.CreateQuery<HE.Investments.CRM.Common.Model.Account>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="HE.Investments.CRM.Common.Model.Contact"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<HE.Investments.CRM.Common.Model.Contact> ContactSet
+		{
+			get
+			{
+				return this.CreateQuery<HE.Investments.CRM.Common.Model.Contact>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="HE.Investments.CRM.Common.Model.invln_Loanapplication"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<HE.Investments.CRM.Common.Model.invln_Loanapplication> invln_LoanapplicationSet
+		{
+			get
+			{
+				return this.CreateQuery<HE.Investments.CRM.Common.Model.invln_Loanapplication>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="HE.Investments.CRM.Common.Model.invln_scheme"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<HE.Investments.CRM.Common.Model.invln_scheme> invln_schemeSet
@@ -10124,6 +23747,17 @@ namespace HE.Investments.CRM.Common.Model
 			get
 			{
 				return this.CreateQuery<HE.Investments.CRM.Common.Model.invln_scheme>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="HE.Investments.CRM.Common.Model.invln_SiteDetails"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<HE.Investments.CRM.Common.Model.invln_SiteDetails> invln_SiteDetailsSet
+		{
+			get
+			{
+				return this.CreateQuery<HE.Investments.CRM.Common.Model.invln_SiteDetails>();
 			}
 		}
 	}
@@ -10450,6 +24084,1516 @@ namespace HE.Investments.CRM.Common.Model
 				if (this.Results.Contains("invln_applicationid"))
 				{
 					return ((string)(this.Results["invln_applicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_sendinvestmentloansdatatocrm")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_sendinvestmentloansdatatocrmRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_entityfieldsparameters
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_entityfieldsparameters"))
+				{
+					return ((string)(this.Parameters["invln_entityfieldsparameters"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_entityfieldsparameters"] = value;
+			}
+		}
+		
+		public string invln_contactexternalid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactexternalid"))
+				{
+					return ((string)(this.Parameters["invln_contactexternalid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactexternalid"] = value;
+			}
+		}
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public invln_sendinvestmentloansdatatocrmRequest()
+		{
+			this.RequestName = "invln_sendinvestmentloansdatatocrm";
+			this.invln_entityfieldsparameters = default(string);
+			this.invln_contactexternalid = default(string);
+			this.invln_accountid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_sendinvestmentloansdatatocrm")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_sendinvestmentloansdatatocrmResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_sendinvestmentloansdatatocrmResponse()
+		{
+		}
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Results.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Results["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getcontactrole")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getcontactroleRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_contactemail
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactemail"))
+				{
+					return ((string)(this.Parameters["invln_contactemail"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactemail"] = value;
+			}
+		}
+		
+		public string invln_portaltype
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_portaltype"))
+				{
+					return ((string)(this.Parameters["invln_portaltype"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_portaltype"] = value;
+			}
+		}
+		
+		public string invln_contactexternalid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactexternalid"))
+				{
+					return ((string)(this.Parameters["invln_contactexternalid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactexternalid"] = value;
+			}
+		}
+		
+		public invln_getcontactroleRequest()
+		{
+			this.RequestName = "invln_getcontactrole";
+			this.invln_contactemail = default(string);
+			this.invln_portaltype = default(string);
+			this.invln_contactexternalid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getcontactrole")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getcontactroleResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getcontactroleResponse()
+		{
+		}
+		
+		public string invln_portalroles
+		{
+			get
+			{
+				if (this.Results.Contains("invln_portalroles"))
+				{
+					return ((string)(this.Results["invln_portalroles"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_changeloanapplicationexternalstatus")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_changeloanapplicationexternalstatusRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_changereason
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_changereason"))
+				{
+					return ((string)(this.Parameters["invln_changereason"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_changereason"] = value;
+			}
+		}
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public int invln_statusexternal
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_statusexternal"))
+				{
+					return ((int)(this.Parameters["invln_statusexternal"]));
+				}
+				else
+				{
+					return default(int);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_statusexternal"] = value;
+			}
+		}
+		
+		public invln_changeloanapplicationexternalstatusRequest()
+		{
+			this.RequestName = "invln_changeloanapplicationexternalstatus";
+			this.invln_loanapplicationid = default(string);
+			this.invln_statusexternal = default(int);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_changeloanapplicationexternalstatus")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_changeloanapplicationexternalstatusResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_changeloanapplicationexternalstatusResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_generaterichtextdocument")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_generaterichtextdocumentRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_richtext
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_richtext"))
+				{
+					return ((string)(this.Parameters["invln_richtext"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_richtext"] = value;
+			}
+		}
+		
+		public string invln_entityname
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_entityname"))
+				{
+					return ((string)(this.Parameters["invln_entityname"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_entityname"] = value;
+			}
+		}
+		
+		public string invln_entityid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_entityid"))
+				{
+					return ((string)(this.Parameters["invln_entityid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_entityid"] = value;
+			}
+		}
+		
+		public invln_generaterichtextdocumentRequest()
+		{
+			this.RequestName = "invln_generaterichtextdocument";
+			this.invln_richtext = default(string);
+			this.invln_entityname = default(string);
+			this.invln_entityid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_generaterichtextdocument")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_generaterichtextdocumentResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_generaterichtextdocumentResponse()
+		{
+		}
+		
+		public string invln_generatedrichtext
+		{
+			get
+			{
+				if (this.Results.Contains("invln_generatedrichtext"))
+				{
+					return ((string)(this.Results["invln_generatedrichtext"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getloanapplicationsforaccountandcontact")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getloanapplicationsforaccountandcontactRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public string invln_externalcontactid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_externalcontactid"))
+				{
+					return ((string)(this.Parameters["invln_externalcontactid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_externalcontactid"] = value;
+			}
+		}
+		
+		public invln_getloanapplicationsforaccountandcontactRequest()
+		{
+			this.RequestName = "invln_getloanapplicationsforaccountandcontact";
+			this.invln_accountid = default(string);
+			this.invln_externalcontactid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getloanapplicationsforaccountandcontact")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getloanapplicationsforaccountandcontactResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getloanapplicationsforaccountandcontactResponse()
+		{
+		}
+		
+		public string invln_loanapplications
+		{
+			get
+			{
+				if (this.Results.Contains("invln_loanapplications"))
+				{
+					return ((string)(this.Results["invln_loanapplications"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getsingleloanapplicationforaccountandcontact")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsingleloanapplicationforaccountandcontactRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_fieldstoretrieve
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoretrieve"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoretrieve"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoretrieve"] = value;
+			}
+		}
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public string invln_externalcontactid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_externalcontactid"))
+				{
+					return ((string)(this.Parameters["invln_externalcontactid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_externalcontactid"] = value;
+			}
+		}
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public invln_getsingleloanapplicationforaccountandcontactRequest()
+		{
+			this.RequestName = "invln_getsingleloanapplicationforaccountandcontact";
+			this.invln_accountid = default(string);
+			this.invln_externalcontactid = default(string);
+			this.invln_loanapplicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getsingleloanapplicationforaccountandcontact")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsingleloanapplicationforaccountandcontactResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getsingleloanapplicationforaccountandcontactResponse()
+		{
+		}
+		
+		public string invln_loanapplication
+		{
+			get
+			{
+				if (this.Results.Contains("invln_loanapplication"))
+				{
+					return ((string)(this.Results["invln_loanapplication"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_deleteloanapplication")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_deleteloanapplicationRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public invln_deleteloanapplicationRequest()
+		{
+			this.RequestName = "invln_deleteloanapplication";
+			this.invln_loanapplicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_deleteloanapplication")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_deleteloanapplicationResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_deleteloanapplicationResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_deletesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_deletesitedetailsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_sitedetailsid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_sitedetailsid"))
+				{
+					return ((string)(this.Parameters["invln_sitedetailsid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_sitedetailsid"] = value;
+			}
+		}
+		
+		public invln_deletesitedetailsRequest()
+		{
+			this.RequestName = "invln_deletesitedetails";
+			this.invln_sitedetailsid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_deletesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_deletesitedetailsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_deletesitedetailsResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_updatesingleloanapplication")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_updatesingleloanapplicationRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public string invln_loanapplication
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplication"))
+				{
+					return ((string)(this.Parameters["invln_loanapplication"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplication"] = value;
+			}
+		}
+		
+		public string invln_fieldstoupdate
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoupdate"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoupdate"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoupdate"] = value;
+			}
+		}
+		
+		public string invln_contactexternalid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactexternalid"))
+				{
+					return ((string)(this.Parameters["invln_contactexternalid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactexternalid"] = value;
+			}
+		}
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public invln_updatesingleloanapplicationRequest()
+		{
+			this.RequestName = "invln_updatesingleloanapplication";
+			this.invln_loanapplicationid = default(string);
+			this.invln_loanapplication = default(string);
+			this.invln_contactexternalid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_updatesingleloanapplication")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_updatesingleloanapplicationResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_updatesingleloanapplicationResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_updatesinglesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_updatesinglesitedetailsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_sitedetailsid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_sitedetailsid"))
+				{
+					return ((string)(this.Parameters["invln_sitedetailsid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_sitedetailsid"] = value;
+			}
+		}
+		
+		public string invln_sitedetail
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_sitedetail"))
+				{
+					return ((string)(this.Parameters["invln_sitedetail"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_sitedetail"] = value;
+			}
+		}
+		
+		public string invln_fieldstoupdate
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoupdate"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoupdate"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoupdate"] = value;
+			}
+		}
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public invln_updatesinglesitedetailsRequest()
+		{
+			this.RequestName = "invln_updatesinglesitedetails";
+			this.invln_sitedetailsid = default(string);
+			this.invln_sitedetail = default(string);
+			this.invln_loanapplicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_updatesinglesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_updatesinglesitedetailsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_updatesinglesitedetailsResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getorganizationdetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getorganizationdetailsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_contactexternalid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactexternalid"))
+				{
+					return ((string)(this.Parameters["invln_contactexternalid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactexternalid"] = value;
+			}
+		}
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public invln_getorganizationdetailsRequest()
+		{
+			this.RequestName = "invln_getorganizationdetails";
+			this.invln_contactexternalid = default(string);
+			this.invln_accountid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getorganizationdetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getorganizationdetailsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getorganizationdetailsResponse()
+		{
+		}
+		
+		public string invln_organizationdetails
+		{
+			get
+			{
+				if (this.Results.Contains("invln_organizationdetails"))
+				{
+					return ((string)(this.Results["invln_organizationdetails"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_returnuserprofile")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_returnuserprofileRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_contactexternalid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactexternalid"))
+				{
+					return ((string)(this.Parameters["invln_contactexternalid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactexternalid"] = value;
+			}
+		}
+		
+		public invln_returnuserprofileRequest()
+		{
+			this.RequestName = "invln_returnuserprofile";
+			this.invln_contactexternalid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_returnuserprofile")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_returnuserprofileResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_returnuserprofileResponse()
+		{
+		}
+		
+		public string invln_userprofile
+		{
+			get
+			{
+				if (this.Results.Contains("invln_userprofile"))
+				{
+					return ((string)(this.Results["invln_userprofile"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_updateuserprofile")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_updateuserprofileRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_contactexternalid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contactexternalid"))
+				{
+					return ((string)(this.Parameters["invln_contactexternalid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contactexternalid"] = value;
+			}
+		}
+		
+		public string invln_contact
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_contact"))
+				{
+					return ((string)(this.Parameters["invln_contact"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_contact"] = value;
+			}
+		}
+		
+		public invln_updateuserprofileRequest()
+		{
+			this.RequestName = "invln_updateuserprofile";
+			this.invln_contactexternalid = default(string);
+			this.invln_contact = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_updateuserprofile")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_updateuserprofileResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_updateuserprofileResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_createsinglesitedetail")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_createsinglesitedetailRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_sitedetails
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_sitedetails"))
+				{
+					return ((string)(this.Parameters["invln_sitedetails"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_sitedetails"] = value;
+			}
+		}
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public invln_createsinglesitedetailRequest()
+		{
+			this.RequestName = "invln_createsinglesitedetail";
+			this.invln_sitedetails = default(string);
+			this.invln_loanapplicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_createsinglesitedetail")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_createsinglesitedetailResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_createsinglesitedetailResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getfilelocationforapplicationloan")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getfilelocationforapplicationloanRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_loanapplicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanapplicationid"))
+				{
+					return ((string)(this.Parameters["invln_loanapplicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanapplicationid"] = value;
+			}
+		}
+		
+		public invln_getfilelocationforapplicationloanRequest()
+		{
+			this.RequestName = "invln_getfilelocationforapplicationloan";
+			this.invln_loanapplicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getfilelocationforapplicationloan")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getfilelocationforapplicationloanResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getfilelocationforapplicationloanResponse()
+		{
+		}
+		
+		public string invln_filelocation
+		{
+			get
+			{
+				if (this.Results.Contains("invln_filelocation"))
+				{
+					return ((string)(this.Results["invln_filelocation"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getorganisationchangedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getorganisationchangedetailsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public invln_getorganisationchangedetailsRequest()
+		{
+			this.RequestName = "invln_getorganisationchangedetails";
+			this.invln_accountid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getorganisationchangedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getorganisationchangedetailsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getorganisationchangedetailsResponse()
+		{
+		}
+		
+		public string invln_whorequested
+		{
+			get
+			{
+				if (this.Results.Contains("invln_whorequested"))
+				{
+					return ((string)(this.Results["invln_whorequested"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_checkifloanapplicationwithgivennameexists")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_checkifloanapplicationwithgivennameexistsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_loanname
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_loanname"))
+				{
+					return ((string)(this.Parameters["invln_loanname"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_loanname"] = value;
+			}
+		}
+		
+		public string invln_organisationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationid"))
+				{
+					return ((string)(this.Parameters["invln_organisationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationid"] = value;
+			}
+		}
+		
+		public invln_checkifloanapplicationwithgivennameexistsRequest()
+		{
+			this.RequestName = "invln_checkifloanapplicationwithgivennameexists";
+			this.invln_loanname = default(string);
+			this.invln_organisationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_checkifloanapplicationwithgivennameexists")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_checkifloanapplicationwithgivennameexistsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_checkifloanapplicationwithgivennameexistsResponse()
+		{
+		}
+		
+		public bool invln_loanexists
+		{
+			get
+			{
+				if (this.Results.Contains("invln_loanexists"))
+				{
+					return ((bool)(this.Results["invln_loanexists"]));
+				}
+				else
+				{
+					return default(bool);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getsinglesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsinglesitedetailsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_sitedetailsid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_sitedetailsid"))
+				{
+					return ((string)(this.Parameters["invln_sitedetailsid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_sitedetailsid"] = value;
+			}
+		}
+		
+		public string invln_fieldstoretrieve
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoretrieve"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoretrieve"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoretrieve"] = value;
+			}
+		}
+		
+		public string invln_externalcontactid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_externalcontactid"))
+				{
+					return ((string)(this.Parameters["invln_externalcontactid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_externalcontactid"] = value;
+			}
+		}
+		
+		public string invln_accountid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_accountid"))
+				{
+					return ((string)(this.Parameters["invln_accountid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_accountid"] = value;
+			}
+		}
+		
+		public invln_getsinglesitedetailsRequest()
+		{
+			this.RequestName = "invln_getsinglesitedetails";
+			this.invln_sitedetailsid = default(string);
+			this.invln_externalcontactid = default(string);
+			this.invln_accountid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getsinglesitedetails")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsinglesitedetailsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getsinglesitedetailsResponse()
+		{
+		}
+		
+		public string invln_sitedetail
+		{
+			get
+			{
+				if (this.Results.Contains("invln_sitedetail"))
+				{
+					return ((string)(this.Results["invln_sitedetail"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_searchlocalauthority")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_searchlocalauthorityRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public invln_searchlocalauthorityRequest()
+		{
+			this.RequestName = "invln_searchlocalauthority";
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_searchlocalauthority")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_searchlocalauthorityResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_searchlocalauthorityResponse()
+		{
+		}
+		
+		public string invln_localauthorities
+		{
+			get
+			{
+				if (this.Results.Contains("invln_localauthorities"))
+				{
+					return ((string)(this.Results["invln_localauthorities"]));
 				}
 				else
 				{
