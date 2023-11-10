@@ -31,7 +31,7 @@ public static class BusinessLogicModule
         services.AddScoped<ILoanUserRepository, LoanUserRepository>();
         services.AddScoped<ILoanUserContext, LoanUserContext>();
         services.AddScoped<IApplicationProjectsRepository, ApplicationProjectsRepository>();
-        services.AddScoped<ILocalAuthorityRepository, LocalAuthorityMockedRepository>();
+        services.AddScoped<ILocalAuthorityRepository, ApplicationProjectsRepository>();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 
         services.AddOrganizationSubmodule();
