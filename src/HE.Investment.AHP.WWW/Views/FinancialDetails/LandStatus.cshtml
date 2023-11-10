@@ -1,16 +1,16 @@
-@using HE.Investment.AHP.Contract.FinancialDetails.Models;
 @using HE.Investment.AHP.Domain.FinancialDetails;
+@using HE.Investment.AHP.WWW.Models.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 @using HE.Investments.Common.Gds;
-@model FinancialDetailsModel
+@model FinancialDetailsLandStatusModel
 @{
     ViewData["Title"] = "Land status";
 }
 <div id="mainContainer" role="main">
-    <gds-div-grid-column-two-thirds>
-        <form asp-controller="FinancialDetails" asp-action="LandStatus" asp-route-financialDetailsId="@Model.FinancialDetailsId" asp-method="post" novalidate>
+    <gds-div-grid-column-full>
+        <form asp-controller="FinancialDetails" asp-action="LandStatus" asp-route-applicationId="Model.ApplicationId" asp-method="post" novalidate>
             <div id="backButton" role="navigation">
-                <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.LandStatus, applicationId = Model.ApplicationId, financialDetailsId = Model.FinancialDetailsId })" text="Back" class="govuk-!-margin-bottom-8">
+                <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.LandStatus, applicationId = Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
                 </gds-back-link>
             </div>
             <span class="govuk-caption-m">
@@ -26,7 +26,7 @@
                     <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=false>
                         <gds-p>
                             You told us during the site section of your application that your land status was:<br />
-                            @if (Model.IsPurchasePriceKnown ?? false)
+                            @if (Model.IsPurchasePriceKnown)
                             {
                                 <strong>Unconditional acquisition of freehold or long leasehold interest has occurred.</strong>
                             }
@@ -43,7 +43,7 @@
                     </gds-field-set>
                     <gds-field-set class="govuk-!-margin-bottom-6" role="group">
                         <legend>
-                            @if (Model.IsPurchasePriceKnown ?? false)
+                            @if (Model.IsPurchasePriceKnown)
                             {
                                 <gds-label for="@Model.PurchasePrice" size="ControlSize.S">
                                     Enter the purchase price of the land
@@ -66,7 +66,6 @@
                 </gds-div-form-group>
 
                 @Html.HiddenFor(model => model.ApplicationId)
-                @Html.HiddenFor(model => model.FinancialDetailsId)
                 @Html.HiddenFor(model => model.IsPurchasePriceKnown)
                 @Html.HiddenFor(model => model.ApplicationName)
 
@@ -76,11 +75,11 @@
 
             </gds-field-set>
             <gds-p>
-                <gds-link href="#">
+                <gds-link href="@Url.Action( "LandStatus","FinancialDetails", @Model)">
                     Save and return to application
                 </gds-link>
             </gds-p>
 
         </form>
-    </gds-div-grid-column-two-thirds>
+    </gds-div-grid-column-full>
 </div>

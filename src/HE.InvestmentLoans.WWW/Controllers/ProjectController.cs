@@ -1,19 +1,18 @@
-using System.Diagnostics.Metrics;
 using HE.InvestmentLoans.BusinessLogic.Projects;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Enums;
-using HE.InvestmentLoans.Common.Validation;
+using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Funding.Commands;
-using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.WWW.Attributes;
-using HE.InvestmentLoans.WWW.Models;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWW.Utils;
@@ -40,9 +39,9 @@ public class ProjectController : WorkflowController<ProjectState>
     {
         if (projectId != Guid.Empty)
         {
-            var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.ProjectName));
+            var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.GetStatus));
 
-            if (result.IsReadOnly())
+            if (result.IsReadOnly() || result.Status == SectionStatus.Completed)
             {
                 return RedirectToAction("CheckAnswers", new { Id = id, ProjectId = projectId });
             }

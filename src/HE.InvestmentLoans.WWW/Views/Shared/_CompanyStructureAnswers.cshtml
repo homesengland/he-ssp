@@ -7,7 +7,7 @@
            {
                { "Title", "Company established for this development" },
                { "Value", Model.Purpose },
-               { "Link", Url.Action("Purpose", "CompanyStructureV2", new { id, state = "Purpose" }) },
+               { "Link", Url.Action("Purpose", "CompanyStructureV2", new { id, state = "Purpose", redirect = "CheckAnswers" }) },
                { "IsEditable", Model.IsEditable() }
            })
     @{
@@ -19,7 +19,7 @@
         {
             { "Title", "Additional information" },
             { "Value", Model.OrganisationMoreInformation },
-            { "Link", Url.Action("MoreInformationAboutOrganization", "CompanyStructureV2", new { id, state = "ExistingCompany" }) },
+            { "Link", Url.Action("MoreInformationAboutOrganization", "CompanyStructureV2", new { id, state = "ExistingCompany", redirect = "CheckAnswers" }) },
             { "IsEditable", Model.IsEditable() },
             { "Files", files }
         })
@@ -29,7 +29,7 @@
            {
                { "Title", "Homes in the last three years" },
                { "Value", Model.HomesBuilt },
-               { "Link", Url.Action("HowManyHomesBuilt", "CompanyStructureV2", new { id, state = "HomesBuilt" }) },
+               { "Link", Url.Action("HowManyHomesBuilt", "CompanyStructureV2", new { id, state = "HomesBuilt", redirect = "CheckAnswers" }) },
                { "IsEditable", Model.IsEditable() }
            })
 </gds-summary-list>

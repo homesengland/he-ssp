@@ -42,7 +42,7 @@ public class SalesRiskTests : ViewTestBase
         document
             .HasElementWithText("span", Model.ApplicationName)
             .HasElementWithText("h1", "Sales risk of Shared Ownership")
-            .HasElementWithText("h2", "Tell us your assessment of the sales risk and how you will mitigate this")
+            .HasElementWithText("label", "Tell us your assessment of the sales risk and how you will mitigate this")
             .HasInput("SalesRisk", value: Model.SalesRisk)
             .HasElementWithText("button", "Save and continue");
     }

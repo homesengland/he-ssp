@@ -5,4 +5,6 @@ public enum SchemeWorkflowState
     Funding = 1,
     Affordability,
     SalesRisk,
+    HousingNeeds,
+    StakeholderDiscussions,
 }

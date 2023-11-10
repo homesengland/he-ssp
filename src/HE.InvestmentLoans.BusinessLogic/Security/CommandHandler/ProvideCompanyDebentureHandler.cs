@@ -1,17 +1,22 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Security.Commands;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.Security.CommandHandler;
 internal class ProvideCompanyDebentureHandler : SecurityBaseCommandHandler, IRequestHandler<ProvideCompanyDebenture, OperationResult>
 {
-    public ProvideCompanyDebentureHandler(ISecurityRepository securityRepository, ILoanUserContext loanUserContext, ILogger<SecurityBaseCommandHandler> logger)
-        : base(securityRepository, loanUserContext, logger)
+    public ProvideCompanyDebentureHandler(
+        ISecurityRepository securityRepository,
+        ILoanApplicationRepository loanApplicationRepository,
+        ILoanUserContext loanUserContext,
+        ILogger<SecurityBaseCommandHandler> logger)
+        : base(securityRepository, loanApplicationRepository, loanUserContext, logger)
     {
     }
 

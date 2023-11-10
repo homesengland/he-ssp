@@ -1,6 +1,6 @@
 using HE.Investment.AHP.WWW.Config;
-using HE.InvestmentLoans.Common.Authorization;
 using HE.InvestmentLoans.Common.Infrastructure.Middlewares;
+using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Partials;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
@@ -10,11 +10,16 @@ builder.Configuration.AddEnvironmentVariables();
 
 builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddHttpClient();
-builder.Services.AddWebModule();
+builder.Services.AddWebModule(builder);
 builder.Services.AddFeatureManagement();
-builder.Services.AddCommonPartialsViews();
-var mvcBuilder = builder.Services.AddControllersWithViews(options =>
-    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
+builder.Services.AddCommonBuildingBlocks();
+var mvcBuilder = builder.Services
+    .AddControllersWithViews(options =>
+        options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()))
+    .AddMvcOptions(options =>
+        options.Filters.Add(
+            new ResponseCacheAttribute { NoStore = true, Location = ResponseCacheLocation.None }));
+
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 
 var app = builder.Build();

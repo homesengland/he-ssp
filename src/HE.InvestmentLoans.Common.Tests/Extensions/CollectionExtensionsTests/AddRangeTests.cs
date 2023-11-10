@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using FluentAssertions;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.Investments.Common.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HE.InvestmentLoans.Common.Tests.Extensions.CollectionExtensionsTests;

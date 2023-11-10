@@ -1,8 +1,9 @@
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Validation;
 using HE.Investments.Account.Contract.User;
 using HE.Investments.Account.Contract.User.Queries;
 using HE.Investments.Account.Domain.User.Commands;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

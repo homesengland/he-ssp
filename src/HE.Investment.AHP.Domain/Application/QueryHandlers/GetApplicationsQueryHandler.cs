@@ -17,6 +17,10 @@ public class GetApplicationsQueryHandler : IRequestHandler<GetApplicationsQuery,
     {
         var schemes = await _repository.GetAll(cancellationToken);
 
-        return schemes.Select(s => new Contract.Application.Application(s.Id.Value, s.Name.Name, s.Tenure?.ToString())).ToList();
+        return schemes.Select(s => new Contract.Application.Application(
+                s.Id.Value,
+                s.Name.Name,
+                s.Tenure?.Value ?? default))
+            .ToList();
     }
 }

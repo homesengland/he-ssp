@@ -3,19 +3,19 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.Funding.Enums;
-using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Security;
 using HE.InvestmentLoans.Contract.User.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
+using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -172,6 +172,15 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     [HttpPost("{id}/submit")]
     [WorkflowState(LoanApplicationWorkflow.State.CheckApplication)]
     public async Task<IActionResult> Submit(Guid id)
+    {
+        await _mediator.Send(new SubmitLoanApplicationCommand(LoanApplicationId.From(id)));
+
+        return await Continue(new { Id = id });
+    }
+
+    [HttpPost("{id}/resubmit")]
+    [WorkflowState(LoanApplicationWorkflow.State.ResubmitApplication)]
+    public async Task<IActionResult> Resubmit(Guid id)
     {
         await _mediator.Send(new SubmitLoanApplicationCommand(LoanApplicationId.From(id)));
 

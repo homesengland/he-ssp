@@ -1,8 +1,8 @@
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Security;
+using HE.Investments.Common.Extensions;
 using Stateless;
 
 namespace HE.InvestmentLoans.BusinessLogic.Security;

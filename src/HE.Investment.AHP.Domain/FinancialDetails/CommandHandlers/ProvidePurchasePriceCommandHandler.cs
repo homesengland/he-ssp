@@ -1,7 +1,8 @@
-using HE.Investment.AHP.Contract.FinancialDetails.Commands;
-using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using HE.InvestmentLoans.Common.Extensions;
+using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -16,8 +17,16 @@ public class ProvidePurchasePriceCommandHandler : FinancialDetailsCommandHandler
     public async Task<OperationResult> Handle(ProvidePurchasePriceCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            financialDetails => financialDetails.ProvidePurchasePrice(new PurchasePrice(request.PurchasePrice)),
-            request.FinancialDetailsId,
+            financialDetails =>
+            {
+                if (request.PurchasePrice.IsNotProvided())
+                {
+                    return;
+                }
+
+                financialDetails.ProvidePurchasePrice(new PurchasePrice(request.PurchasePrice, request.IsPurchasePriceKnown));
+            },
+            request.ApplicationId,
             cancellationToken);
     }
 }

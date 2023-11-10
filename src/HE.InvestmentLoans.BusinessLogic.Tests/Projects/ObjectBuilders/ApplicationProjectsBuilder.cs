@@ -1,7 +1,5 @@
-using System.Security.Policy;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
-using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;

@@ -67,6 +67,7 @@ namespace DataverseModel
 			public const string invln_AggregateLimitProposed = "invln_aggregatelimitproposed";
 			public const string invln_ApprovalDescription = "invln_approvaldescription";
 			public const string invln_ApprovalLevel = "invln_approvallevel";
+			public const string invln_approvalstatictext = "invln_approvalstatictext";
 			public const string invln_ApprovalStatus = "invln_approvalstatus";
 			public const string invln_ArrangementFee = "invln_arrangementfee";
 			public const string invln_BaseRate = "invln_baserate";
@@ -615,6 +616,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_ApprovalLevel");
 				this.SetAttributeValue("invln_approvallevel", value);
 				this.OnPropertyChanged("invln_ApprovalLevel");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_approvalstatictext")]
+		public string invln_approvalstatictext
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_approvalstatictext");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_approvalstatictext");
+				this.SetAttributeValue("invln_approvalstatictext", value);
+				this.OnPropertyChanged("invln_approvalstatictext");
 			}
 		}
 		

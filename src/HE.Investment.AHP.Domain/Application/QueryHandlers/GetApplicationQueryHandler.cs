@@ -18,6 +18,9 @@ public class GetApplicationQueryHandler : IRequestHandler<GetApplicationQuery, C
     {
         var application = await _repository.GetById(new(request.ApplicationId), cancellationToken);
 
-        return new ContractApplication(application.Id.Value, application.Name.Name, application.Tenure?.Value.ToString());
+        return new ContractApplication(
+            application.Id.Value,
+            application.Name.Name,
+            application.Tenure?.Value ?? default);
     }
 }

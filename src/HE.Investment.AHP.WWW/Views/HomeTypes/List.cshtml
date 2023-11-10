@@ -1,7 +1,7 @@
 @using HE.Investment.AHP.WWW.Routing
 @using HE.Investment.AHP.WWW.Extensions
-@using HE.InvestmentLoans.Common.Extensions
 @using HE.Investment.AHP.Contract.HomeTypes
+@using HE.Investment.AHP.Contract.HomeTypes.Enums
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Gds
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeListModel;
@@ -35,7 +35,7 @@
                 <th scope="col" class="govuk-table__header">Home type name</th>
                 <th scope="col" class="govuk-table__header">Number of homes</th>
                 <th scope="col" class="govuk-table__header">Type of housing</th>
-                <th scope="col" class="govuk-table__header"/>
+                <td scope="col" class="govuk-table__header"/>
             </tr>
             </thead>
             <tbody class="govuk-table__body">
@@ -94,8 +94,5 @@
     }
 
     <br/>
-    <gds-link class="govuk-link--no-visited-state"
-              href="@Url.Action("Index", "Home")">
-        Save and return to application
-    </gds-link>
+    <vc:return-to-application-link application-id="@applicationId"/>
 </div>

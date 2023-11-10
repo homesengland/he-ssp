@@ -11,6 +11,7 @@ using Org.HE.Investments.Organisation.Contract;
 using Org.HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
+
 public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkContactWithOrganizationCommand>
 {
     private readonly ILoanUserContext _loanUserContext;
@@ -60,6 +61,6 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
 
         await _contactService.LinkContactWithOrganization(_organizationServiceAsync, _loanUserContext.UserGlobalId.ToString(), request.Number.ToString()!, PortalConstants.LoansPortalType);
 
-        _loanUserContext.RefreshUserData();
+        await _loanUserContext.RefreshUserData();
     }
 }

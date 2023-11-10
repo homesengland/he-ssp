@@ -1,5 +1,6 @@
 using System.Reflection;
-using HE.Investment.AHP.Contract.HomeTypes;
+using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Extensions;
@@ -11,14 +12,18 @@ public class HomeTypeEntity : IHomeTypeEntity
     private readonly IDictionary<HomeTypeSegmentType, IHomeTypeSegmentEntity> _segments;
 
     public HomeTypeEntity(
+        ApplicationBasicInfo application,
         string? name = null,
         HousingType housingType = HousingType.Undefined,
         params IHomeTypeSegmentEntity[] segments)
     {
+        Application = application;
         ChangeName(name);
         ChangeHousingType(housingType);
         _segments = segments.ToDictionary(x => GetSegmentType(x.GetType()), x => x);
     }
+
+    public ApplicationBasicInfo Application { get; }
 
     public HomeTypeId? Id { get; set; }
 
@@ -26,11 +31,13 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public HousingType HousingType { get; private set; }
 
-    public HomeInformationSegmentEntity HomeInformation => GetSegment<HomeInformationSegmentEntity>();
+    public HomeInformationSegmentEntity HomeInformation => GetRequiredSegment<HomeInformationSegmentEntity>();
 
-    public DisabledPeopleHomeTypeDetailsSegmentEntity DisabledPeopleHomeTypeDetails => GetSegment<DisabledPeopleHomeTypeDetailsSegmentEntity>();
+    public DisabledPeopleHomeTypeDetailsSegmentEntity DisabledPeopleHomeTypeDetails => GetRequiredSegment<DisabledPeopleHomeTypeDetailsSegmentEntity>();
 
-    public OlderPeopleHomeTypeDetailsSegmentEntity OlderPeopleHomeTypeDetails => GetSegment<OlderPeopleHomeTypeDetailsSegmentEntity>();
+    public OlderPeopleHomeTypeDetailsSegmentEntity OlderPeopleHomeTypeDetails => GetRequiredSegment<OlderPeopleHomeTypeDetailsSegmentEntity>();
+
+    public DesignPlansSegmentEntity DesignPlans => GetRequiredSegment<DesignPlansSegmentEntity>();
 
     public bool IsNew => Id.IsNotProvided();
 
@@ -44,11 +51,13 @@ public class HomeTypeEntity : IHomeTypeEntity
         if (HousingType == HousingType.HomesForOlderPeople && newHousingType != HousingType.HomesForOlderPeople)
         {
             UpdateSegment(new OlderPeopleHomeTypeDetailsSegmentEntity());
+            UpdateSegment(GetOptionalSegment<DesignPlansSegmentEntity>() ?? new DesignPlansSegmentEntity(Application));
         }
 
         if (HousingType == HousingType.HomesForDisabledAndVulnerablePeople && newHousingType != HousingType.HomesForDisabledAndVulnerablePeople)
         {
             UpdateSegment(new DisabledPeopleHomeTypeDetailsSegmentEntity());
+            UpdateSegment(GetOptionalSegment<DesignPlansSegmentEntity>() ?? new DesignPlansSegmentEntity(Application));
         }
 
         HousingType = newHousingType;
@@ -56,7 +65,7 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public HomeTypeEntity Duplicate(HomeTypeName newName)
     {
-        return new HomeTypeEntity(newName.Value, HousingType, _segments.Select(x => x.Value).ToArray());
+        return new HomeTypeEntity(Application, newName.Value, HousingType, _segments.Select(x => x.Value.Duplicate()).ToArray());
     }
 
     public bool IsCompleted()
@@ -75,16 +84,21 @@ public class HomeTypeEntity : IHomeTypeEntity
         return segmentTypeAttribute.SegmentType;
     }
 
-    private TSegment GetSegment<TSegment>()
+    private TSegment GetRequiredSegment<TSegment>()
         where TSegment : IHomeTypeSegmentEntity
     {
-        return (TSegment)_segments[GetSegmentType(typeof(TSegment))];
+        return GetOptionalSegment<TSegment>() ?? throw new InvalidOperationException($"Cannot get {typeof(TSegment).Name} segment because it does not exist.");
+    }
+
+    private TSegment? GetOptionalSegment<TSegment>()
+        where TSegment : IHomeTypeSegmentEntity
+    {
+        return _segments.TryGetValue(GetSegmentType(typeof(TSegment)), out var segment) ? (TSegment)segment : default;
     }
 
     private void UpdateSegment<TSegment>(TSegment segment)
         where TSegment : IHomeTypeSegmentEntity
     {
-        var segmentType = GetSegmentType(typeof(TSegment));
-        _segments[segmentType] = segment;
+        _segments[GetSegmentType(typeof(TSegment))] = segment;
     }
 }

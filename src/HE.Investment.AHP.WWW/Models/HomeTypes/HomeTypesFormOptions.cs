@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.HomeTypes;
+using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investments.Common.WWW.Helpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -13,4 +14,9 @@ public static class HomeTypesFormOptions
     public static IEnumerable<SelectListItem> DisabledPeopleClientGroupTypes => SelectListHelper.FromEnum<DisabledPeopleClientGroupType>();
 
     public static IEnumerable<SelectListItem> OlderPeopleHousingTypes => SelectListHelper.FromEnum<OlderPeopleHousingType>();
+
+    public static IEnumerable<SelectListItem> HappiDesignPrinciplesExceptNone => SelectListHelper.FromEnum<HappiDesignPrincipleType>()
+        .Where(x => x.Value != HappiDesignPrincipleType.NoneOfThese.ToString());
+
+    public static IEnumerable<SelectListItem> HappiDesignPrinciplesOnlyNone => new[] { SelectListHelper.FromEnum(HappiDesignPrincipleType.NoneOfThese) };
 }

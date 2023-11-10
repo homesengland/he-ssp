@@ -1,7 +1,8 @@
-﻿using HE.Investment.AHP.Contract.FinancialDetails.Commands;
-using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
+using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using HE.InvestmentLoans.Common.Extensions;
+using HE.Investments.Common.Validators;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -16,8 +17,19 @@ public class ProvideLandOwnershipAndValueCommandHandler : FinancialDetailsComman
     public async Task<OperationResult> Handle(ProvideLandOwnershipAndValueCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            financialDetails => financialDetails.ProvideLandOwnershipAndValue(new LandOwnership(request.LandOwnership), new LandValue(request.LandValue)),
-            request.FinancialDetailsId,
+            financialDetails =>
+            {
+                if (request.LandOwnership.IsProvided())
+                {
+                    financialDetails.ProvideLandOwnership(new LandOwnership(request.LandOwnership));
+                }
+
+                if (request.LandValue.IsProvided())
+                {
+                    financialDetails.ProvideLandValue(new LandValue(request.LandValue));
+                }
+            },
+            request.ApplicationId,
             cancellationToken);
     }
 }

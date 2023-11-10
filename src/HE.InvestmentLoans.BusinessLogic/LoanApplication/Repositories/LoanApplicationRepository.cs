@@ -3,7 +3,6 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
@@ -11,7 +10,9 @@ using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Infrastructure.Events;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
@@ -82,7 +83,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
                        ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
 
         var loanApplicationDto = CrmResponseSerializer.Deserialize<IList<LoanApplicationDto>>(response.invln_loanapplication)?.FirstOrDefault()
-                        ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
+                                 ?? throw new NotFoundException(nameof(LoanApplicationEntity), id.ToString());
 
         var externalStatus = ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus);
 
@@ -125,13 +126,13 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
                                   ?? throw new NotFoundException("Applications list", userAccount.ToString());
 
         return loanApplicationDtos.Select(x =>
-            new UserLoanApplication(
-                LoanApplicationId.From(x.loanApplicationId),
-                LoanApplicationName.CreateOrDefault(x.ApplicationName),
-                ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
-                x.createdOn,
-                x.LastModificationOn,
-                x.lastModificationByName)).ToList();
+                new UserLoanApplication(
+                    LoanApplicationId.From(x.loanApplicationId),
+                    LoanApplicationName.CreateOrDefault(x.ApplicationName),
+                    ApplicationStatusMapper.MapToPortalStatus(x.loanApplicationExternalStatus),
+                    x.createdOn,
+                    x.LastModificationOn,
+                    x.lastModificationByName)).ToList();
     }
 
     public async Task Save(LoanApplicationEntity loanApplication, UserDetails userDetails, CancellationToken cancellationToken)
@@ -192,6 +193,19 @@ public class LoanApplicationRepository : ILoanApplicationRepository, ICanSubmitL
             invln_loanapplicationid = loanApplicationId.ToString(),
             invln_statusexternal = crmRemoveStatus,
             invln_changereason = withdrawReason.ToString(),
+        };
+
+        await _serviceClient.ExecuteAsync(request, cancellationToken);
+    }
+
+    public async Task MoveToDraft(LoanApplicationId loanApplicationId, CancellationToken cancellationToken)
+    {
+        var crmDraftStatus = ApplicationStatusMapper.MapToCrmStatus(ApplicationStatus.Draft);
+
+        var request = new invln_changeloanapplicationexternalstatusRequest
+        {
+            invln_loanapplicationid = loanApplicationId.ToString(),
+            invln_statusexternal = crmDraftStatus,
         };
 
         await _serviceClient.ExecuteAsync(request, cancellationToken);

@@ -1,5 +1,3 @@
-using HE.Investment.AHP.Contract.FinancialDetails.Models;
-using HE.Investment.AHP.Contract.HomeTypes;
 using HE.InvestmentLoans.Common.Routing;
 using Stateless;
 
@@ -41,16 +39,16 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
             .Permit(Trigger.Back, FinancialDetailsWorkflowState.Index);
 
         _machine.Configure(FinancialDetailsWorkflowState.LandValue)
-            .Permit(Trigger.Continue, FinancialDetailsWorkflowState.OtherSchemeCost)
+            .Permit(Trigger.Continue, FinancialDetailsWorkflowState.OtherApplicationCosts)
             .Permit(Trigger.Back, FinancialDetailsWorkflowState.LandStatus);
 
-        _machine.Configure(FinancialDetailsWorkflowState.OtherSchemeCost)
+        _machine.Configure(FinancialDetailsWorkflowState.OtherApplicationCosts)
            .Permit(Trigger.Continue, FinancialDetailsWorkflowState.ExpectedContributions)
            .Permit(Trigger.Back, FinancialDetailsWorkflowState.LandValue);
 
         _machine.Configure(FinancialDetailsWorkflowState.ExpectedContributions)
            .Permit(Trigger.Continue, FinancialDetailsWorkflowState.Grants)
-           .Permit(Trigger.Back, FinancialDetailsWorkflowState.OtherSchemeCost);
+           .Permit(Trigger.Back, FinancialDetailsWorkflowState.OtherApplicationCosts);
 
         _machine.Configure(FinancialDetailsWorkflowState.Grants)
            .Permit(Trigger.Continue, FinancialDetailsWorkflowState.CheckFinancialDetails)

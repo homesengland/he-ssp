@@ -1,11 +1,11 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
-using HE.InvestmentLoans.BusinessLogic.Tests.Organization.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.BusinessLogic.UserOrganisation.QueryHandlers;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.InvestmentLoans.Contract.UserOrganisation.Queries;
+using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Account.Domain.Organisation.Repositories;
+using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;

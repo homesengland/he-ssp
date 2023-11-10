@@ -19,4 +19,5 @@ public enum ProjectFieldsSet
     AffordableHomes,
     GetAllFields,
     SaveAllFields,
+    GetStatus,
 }

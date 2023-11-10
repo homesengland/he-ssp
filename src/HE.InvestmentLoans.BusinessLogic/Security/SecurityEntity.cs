@@ -1,13 +1,14 @@
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
+using HE.Investments.Common.Domain;
+using HE.Investments.Common.Messages;
+using HE.Investments.Common.Validators;
 
 namespace HE.InvestmentLoans.BusinessLogic.Security;
 
-public class SecurityEntity
+public class SecurityEntity : DomainEntity
 {
     public SecurityEntity(
         LoanApplicationId applicationId,

@@ -3,6 +3,7 @@ using FluentAssertions;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Common;
+using HE.Investments.Common.Exceptions;
 using Xunit;
 
 namespace HE.InvestmentLoans.Contract.Tests.Common;

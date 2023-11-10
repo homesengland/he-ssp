@@ -1,4 +1,5 @@
 @using HE.InvestmentLoans.Contract.Projects;
+@using HE.InvestmentLoans.Contract.Application.Helper
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.ProjectViewModel;
 
 <gds-div-grid-column-two-thirds>
@@ -10,7 +11,7 @@
         <partial name="_ErrorSummaryPartial" model="null" />
 
         <gds-h1 class="govuk-heading-xl">
-            @(Model.IsReadOnly() ? @ProjectPageTitles.ReadOnlyAnswers : @ProjectPageTitles.CheckAnswers)
+            @(ApplicationStatusDivision.GetAllStatusesAfterSubmit().Contains(Model.LoanApplicationStatus) ? @ProjectPageTitles.ReadOnlyAnswers : @ProjectPageTitles.CheckAnswers)
         </gds-h1>
 
         <partial name="Sections/_ReadOnlyAdditionalInformation" model="Model"/>

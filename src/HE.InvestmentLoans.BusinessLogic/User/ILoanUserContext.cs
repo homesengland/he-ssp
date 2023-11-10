@@ -1,5 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
-using HE.InvestmentLoans.Contract.User.ValueObjects;
+using HE.Investments.Account.Shared.User;
 
 namespace HE.InvestmentLoans.BusinessLogic.User;
 
@@ -11,13 +10,11 @@ public interface ILoanUserContext
 
     public Task<Guid?> GetSelectedAccountId();
 
-    Task<IList<UserAccount>> GetAllAccounts();
-
     Task<UserAccount> GetSelectedAccount();
 
     Task<UserDetails> GetUserDetails();
 
-    public void RefreshUserData();
+    public Task RefreshUserData();
 
     public Task<bool> IsProfileCompleted();
 
