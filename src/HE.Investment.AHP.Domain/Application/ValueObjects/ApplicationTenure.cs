@@ -6,7 +6,7 @@ namespace HE.Investment.AHP.Domain.Application.ValueObjects;
 
 public class ApplicationTenure : ValueObject
 {
-    public ApplicationTenure(string value)
+    public ApplicationTenure(Tenure value)
     {
         Build(value).CheckErrors();
     }
@@ -18,11 +18,11 @@ public class ApplicationTenure : ValueObject
         yield return Value;
     }
 
-    private OperationResult Build(string value)
+    private OperationResult Build(Tenure value)
     {
         var operationResult = OperationResult.New();
 
-        Value = EnumValidator<Tenure>.For(value, nameof(Tenure), operationResult);
+        Value = EnumValidator<Tenure>.Required(value, nameof(Tenure), operationResult);
 
         return operationResult;
     }
