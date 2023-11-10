@@ -15,4 +15,6 @@ public class HappiDesignPrinciplesModel : ProvidedHomeTypeModelBase
     }
 
     public IList<HappiDesignPrincipleType> DesignPrinciples { get; set; }
+
+    public IList<HappiDesignPrincipleType> OtherPrinciples { get; set; }
 }

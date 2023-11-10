@@ -35,8 +35,8 @@ public class HappiDesignPrinciplesTests : HomeTypesTestBase
                     "SharedFacilitiesAndHubs",
                     "SpaceAndFlexibility",
                     "StorageForBelongingsAndBicycles",
-                    "NoneOfThese",
                 })
+            .HasCheckboxes("OtherPrinciples", new[] { "NoneOfThese", })
             .HasElementWithText("button", "Save and continue");
     }
 }
