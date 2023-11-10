@@ -1,4 +1,5 @@
 extern alias Org;
+
 using FluentAssertions;
 using HE.InvestmentLoans.Contract.UserOrganisation.Commands;
 using HE.Investments.Account.Domain.Organisation.Entities;
