@@ -3,13 +3,13 @@ using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
-using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Common;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
+using HE.Investments.Account.Shared;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using MediatR;
@@ -24,7 +24,7 @@ public class ProvideAdditionalDataCommandHandler : ProjectCommandHandlerBase, IR
     public ProvideAdditionalDataCommandHandler(
         IApplicationProjectsRepository applicationProjectsRepository,
         ILoanApplicationRepository loanApplicationRepository,
-        ILoanUserContext loanUserContext,
+        IAccountUserContext loanUserContext,
         ILogger<ProjectCommandHandlerBase> logger,
         IDateTimeProvider timeProvider)
         : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext, logger)

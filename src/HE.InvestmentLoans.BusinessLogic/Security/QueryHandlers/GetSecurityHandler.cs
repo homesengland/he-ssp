@@ -1,17 +1,17 @@
 using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Security;
 using HE.InvestmentLoans.Contract.Security.Queries;
+using HE.Investments.Account.Shared;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.Security.QueryHandlers;
 internal class GetSecurityHandler : IRequestHandler<GetSecurity, GetSecurityResponse>
 {
     private readonly ISecurityRepository _securityRepository;
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
 
-    public GetSecurityHandler(ISecurityRepository securityRepository, ILoanUserContext loanUserContext)
+    public GetSecurityHandler(ISecurityRepository securityRepository, IAccountUserContext loanUserContext)
     {
         _securityRepository = securityRepository;
         _loanUserContext = loanUserContext;

@@ -1,8 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using MediatR;
@@ -13,12 +13,12 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.CommandHandlers;
 public class WithdrawLoanApplicationCommandHandler : IRequestHandler<WithdrawLoanApplicationCommand, OperationResult>
 {
     private readonly ILoanApplicationRepository _loanApplicationRepository;
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
     private readonly ILogger<CompanyStructureBaseCommandHandler> _logger;
 
     public WithdrawLoanApplicationCommandHandler(
         ILoanApplicationRepository loanApplicationRepository,
-        ILoanUserContext loanUserContext,
+        IAccountUserContext loanUserContext,
         ILogger<CompanyStructureBaseCommandHandler> logger)
     {
         _loanApplicationRepository = loanApplicationRepository;

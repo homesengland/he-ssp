@@ -5,6 +5,7 @@ using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
+using HE.Investments.Common.Extensions;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects;
 internal class ProjectMapper

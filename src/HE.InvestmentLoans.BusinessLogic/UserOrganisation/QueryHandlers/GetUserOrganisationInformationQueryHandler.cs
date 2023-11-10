@@ -1,8 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.BusinessLogic.User.Repositories;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Repositories;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
 using MediatR;
 
@@ -10,28 +9,25 @@ namespace HE.InvestmentLoans.BusinessLogic.UserOrganisation.QueryHandlers;
 
 public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUserOrganisationInformationQuery, GetUserOrganisationInformationQueryResponse>
 {
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
     private readonly ILoanApplicationRepository _loanApplicationRepository;
     private readonly IOrganizationRepository _organizationRepository;
-    private readonly ILoanUserRepository _loanUserRepository;
 
     public GetUserOrganisationInformationQueryHandler(
         IOrganizationRepository organizationRepository,
-        ILoanUserRepository loanUserRepository,
-        ILoanUserContext loanUserContext,
+        IAccountUserContext loanUserContext,
         ILoanApplicationRepository loanApplicationRepository)
     {
         _loanUserContext = loanUserContext;
         _loanApplicationRepository = loanApplicationRepository;
         _organizationRepository = organizationRepository;
-        _loanUserRepository = loanUserRepository;
     }
 
     public async Task<GetUserOrganisationInformationQueryResponse> Handle(GetUserOrganisationInformationQuery request, CancellationToken cancellationToken)
     {
         var account = await _loanUserContext.GetSelectedAccount();
         var organisationDetails = await _organizationRepository.GetBasicInformation(account, cancellationToken);
-        var userDetails = await _loanUserRepository.GetUserDetails(_loanUserContext.UserGlobalId);
+        var userDetails = await _loanUserContext.GetProfileDetails();
 
         var userLoanApplications = (await _loanApplicationRepository
                 .LoadAllLoanApplications(account, cancellationToken))
@@ -40,7 +36,7 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
 
         return new GetUserOrganisationInformationQueryResponse(
             organisationDetails,
-            userDetails.FirstName!,
+            userDetails.FirstName?.Value ?? string.Empty,
             account.Roles.All(r => r.Role == UserAccountRole.LimitedUser),
             userLoanApplications.ToList());
     }

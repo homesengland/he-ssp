@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Contract.Application.Events;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;
@@ -17,7 +18,7 @@ public class LoanApplicationChangeToDraftStatusEventHandlerTests : TestBase<Loan
         // given
         var loanApplicationId = LoanApplicationIdTestData.LoanApplicationIdOne;
 
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;

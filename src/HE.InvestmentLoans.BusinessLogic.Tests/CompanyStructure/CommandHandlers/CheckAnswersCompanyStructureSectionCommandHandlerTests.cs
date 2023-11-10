@@ -4,6 +4,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
@@ -24,7 +25,7 @@ public class CheckAnswersCompanyStructureSectionCommandHandlerTests : TestBase<C
             .WithMoreInformation()
             .Build();
 
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;

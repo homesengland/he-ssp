@@ -1,13 +1,14 @@
 using HE.InvestmentLoans.Contract.User.Queries;
+using HE.Investments.Account.Shared;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.User.QueryHandlers;
 
 public class GetUserAccountQueryHandler : IRequestHandler<GetUserAccountQuery, GetUserAccountResponse>
 {
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
 
-    public GetUserAccountQueryHandler(ILoanUserContext loanUserContext)
+    public GetUserAccountQueryHandler(IAccountUserContext loanUserContext)
     {
         _loanUserContext = loanUserContext;
     }
@@ -15,15 +16,15 @@ public class GetUserAccountQueryHandler : IRequestHandler<GetUserAccountQuery, G
     public async Task<GetUserAccountResponse> Handle(GetUserAccountQuery request, CancellationToken cancellationToken)
     {
         var selectedAccount = await _loanUserContext.GetSelectedAccount();
-        var userDetails = await _loanUserContext.GetUserDetails();
+        var profileDetails = await _loanUserContext.GetProfileDetails();
 
         return new GetUserAccountResponse(
                             selectedAccount.UserEmail,
                             _loanUserContext.UserGlobalId.ToString(),
-                            await _loanUserContext.GetSelectedAccountId(),
+                            (await _loanUserContext.GetSelectedAccount()).AccountId,
                             Array.Empty<Guid>(),
-                            userDetails.FirstName?.ToString(),
-                            userDetails.LastName?.ToString(),
-                            userDetails.TelephoneNumber?.ToString());
+                            profileDetails.FirstName?.ToString(),
+                            profileDetails.LastName?.ToString(),
+                            profileDetails.TelephoneNumber?.ToString());
     }
 }

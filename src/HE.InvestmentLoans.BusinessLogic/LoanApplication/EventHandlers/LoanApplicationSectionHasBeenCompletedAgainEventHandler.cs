@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Application.Events;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Services.Notifications;
 
@@ -10,12 +10,12 @@ public class LoanApplicationSectionHasBeenCompletedAgainEventHandler : IEventHan
 {
     private readonly INotificationService _notificationService;
     private readonly ILoanApplicationRepository _loanApplicationRepository;
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
 
     public LoanApplicationSectionHasBeenCompletedAgainEventHandler(
         INotificationService notificationService,
         ILoanApplicationRepository loanApplicationRepository,
-        ILoanUserContext loanUserContext)
+        IAccountUserContext loanUserContext)
     {
         _notificationService = notificationService;
         _loanApplicationRepository = loanApplicationRepository;

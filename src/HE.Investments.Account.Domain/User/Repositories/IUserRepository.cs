@@ -1,13 +1,11 @@
-using HE.Investments.Account.Domain.User.Entities;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Account.Shared.User.Entities;
 
 namespace HE.Investments.Account.Domain.User.Repositories;
 
 public interface IUserRepository
 {
-    Task<IList<UserAccount>> GetUserAccounts(UserGlobalId userGlobalId, string userEmail);
-
-    Task<UserProfileDetails> GetUserProfileInformation(UserGlobalId userGlobalId);
+    Task<UserProfileDetails> GetProfileDetails(UserGlobalId userGlobalId);
 
     Task SaveAsync(UserProfileDetails userProfileDetails, UserGlobalId userGlobalId, CancellationToken cancellationToken);
 }
