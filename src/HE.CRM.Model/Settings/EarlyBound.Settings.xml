@@ -26,6 +26,7 @@ invln_gettemporaryportaldata|
 invln_linkcontactwithorganization|
 invln_returnuserprofile|
 invln_savetemporaryportaldata|
+invln_searchlocalauthority|
 invln_sendgovnotifyemail|
 invln_sendinternalcrmnotification|
 invln_sendinvestmentloansdatatocrm|
@@ -64,6 +65,7 @@ invln_govnotifyemail|
 invln_isp|
 invln_loanapplication|
 invln_loanstatuschange|
+invln_localauthority|
 invln_notificationsetting|
 invln_organisationchangerequest|
 invln_portal|

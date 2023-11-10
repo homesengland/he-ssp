@@ -1,13 +1,11 @@
-using System.Threading;
 using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.FinancialDetails.Commands;
 using HE.Investment.AHP.Contract.FinancialDetails.Models;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.InvestmentLoans.Common.Routing;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;

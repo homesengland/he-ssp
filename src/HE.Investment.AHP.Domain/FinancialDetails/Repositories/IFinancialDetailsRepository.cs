@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using ApplicationId = HE.Investment.AHP.Contract.FinancialDetails.ValueObjects.ApplicationId;
 

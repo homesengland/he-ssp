@@ -1,11 +1,9 @@
 using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestData;
-using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
-using HE.Investments.DocumentService.Models.File;
-using Microsoft.AspNetCore.Http;
+using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Messages;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.ValueObjects;

@@ -3,12 +3,12 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.Funding.Entities;
 using HE.InvestmentLoans.BusinessLogic.Funding.Mappers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
-using HE.InvestmentLoans.BusinessLogic.User.Entities;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.CRM.Model;
+using HE.Investments.Account.Shared.User;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.Funding.Repositories;

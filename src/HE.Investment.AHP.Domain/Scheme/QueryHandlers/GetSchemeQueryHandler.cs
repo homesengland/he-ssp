@@ -26,7 +26,8 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
                 entity.AffordabilityEvidence?.Evidence,
                 entity.SalesRisk?.Value,
                 entity.HousingNeeds?.TypeAndTenureJustification,
-                entity.HousingNeeds?.SchemeAndProposalJustification);
+                entity.HousingNeeds?.SchemeAndProposalJustification,
+                entity.StakeholderDiscussions?.Report);
         }
         catch (NotFoundException)
         {

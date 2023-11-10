@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
+using HE.Investments.Common.Services.Notifications;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 

@@ -1,8 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
-using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Messages;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.ValueObjects;

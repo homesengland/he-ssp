@@ -6,4 +6,5 @@ public record Scheme(
     string? AffordabilityEvidence,
     string? SalesRisk,
     string? TypeAndTenureJustification,
-    string? SchemeAndProposalJustification);
+    string? SchemeAndProposalJustification,
+    string? StakeholderDiscussionsReport);

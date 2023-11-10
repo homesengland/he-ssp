@@ -3,13 +3,11 @@ using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Constants;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.User;
-using HE.InvestmentLoans.Common.Contract.Services.Interfaces;
-using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Utils.Constants.Notification;
-using HE.InvestmentLoans.Common.Utils.Enums;
-using HE.InvestmentLoans.Common.Validation;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Services.Notifications;
+using HE.Investments.Common.Validators;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Models.File;
 using HE.Investments.DocumentService.Services;
@@ -76,7 +74,7 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                     {
                         ListTitle = _config.ListTitle,
                         FolderPath = $"{await _companyStructureRepository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken)}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
-                        File = file,
+                        File = formFile,
                         Metadata = JsonSerializer.Serialize(new FileMetadata
                         {
                             Creator = $"{userDetails.FirstName} {userDetails.LastName}",

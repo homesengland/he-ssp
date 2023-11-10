@@ -8,9 +8,9 @@ using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Tests.TestData;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.Common.Messages;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 

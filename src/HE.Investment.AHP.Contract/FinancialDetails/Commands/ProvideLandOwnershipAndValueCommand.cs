@@ -1,5 +1,4 @@
-using HE.Investment.AHP.Contract.FinancialDetails.ValueObjects;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Validators;
 using MediatR;
 using ApplicationId = HE.Investment.AHP.Contract.FinancialDetails.ValueObjects.ApplicationId;
 

@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
-using HE.InvestmentLoans.CRM.Model;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 internal sealed class SiteDetailsDtoTestBuilder

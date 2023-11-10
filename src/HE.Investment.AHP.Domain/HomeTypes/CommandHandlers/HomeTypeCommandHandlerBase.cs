@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Validation;
+using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Validators;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
