@@ -210,7 +210,11 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var designPlans = await _mediator.Send(new GetDesignPlansQuery(applicationId, homeTypeId), cancellationToken);
-        return View(new HappiDesignPrinciplesModel(application.Name, designPlans.HomeTypeName) { DesignPrinciples = designPlans.DesignPrinciples, });
+        return View(new HappiDesignPrinciplesModel(application.Name, designPlans.HomeTypeName)
+        {
+            DesignPrinciples = designPlans.DesignPrinciples.ToList(),
+            OtherPrinciples = designPlans.DesignPrinciples.ToList(),
+        });
     }
 
     [WorkflowState(HomeTypesWorkflowState.HappiDesignPrinciples)]
@@ -221,8 +225,11 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         HappiDesignPrinciplesModel model,
         CancellationToken cancellationToken)
     {
+        var designPrinciples = model.DesignPrinciples ?? Array.Empty<HappiDesignPrincipleType>();
+        var otherDesignPrinciples = model.OtherPrinciples ?? Array.Empty<HappiDesignPrincipleType>();
+
         return await SaveHomeTypeSegment(
-            new SaveHappiDesignPrinciplesCommand(applicationId, homeTypeId, model.DesignPrinciples?.ToList() ?? new List<HappiDesignPrincipleType>()),
+            new SaveHappiDesignPrinciplesCommand(applicationId, homeTypeId, designPrinciples.Concat(otherDesignPrinciples).ToList()),
             model,
             cancellationToken);
     }
