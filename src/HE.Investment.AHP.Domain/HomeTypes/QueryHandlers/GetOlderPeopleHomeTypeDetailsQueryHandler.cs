@@ -19,7 +19,7 @@ internal sealed class GetOlderPeopleHomeTypeDetailsQueryHandler : IRequestHandle
     public async Task<OlderPeopleHomeTypeDetails> Handle(GetOlderPeopleHomeTypeDetailsQuery request, CancellationToken cancellationToken)
     {
         var homeType = await _repository.GetById(
-            request.ApplicationId,
+            new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId),
             new HomeTypeId(request.HomeTypeId),
             new[] { HomeTypeSegmentType.OlderPeople },
             cancellationToken);
