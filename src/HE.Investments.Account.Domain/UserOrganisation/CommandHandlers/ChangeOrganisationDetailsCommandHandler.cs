@@ -19,16 +19,18 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
 {
     private readonly IAccountUserContext _accountUserContext;
     private readonly IOrganizationRepository _repository;
-    private readonly INotificationService _notificationService;
 
+    // private readonly INotificationService _notificationService;
     public ChangeOrganisationDetailsCommandHandler(
         IAccountUserContext accountUserContext,
-        IOrganizationRepository repository,
-        INotificationService notificationService)
+        IOrganizationRepository repository)
+
+    // INotificationService notificationService)
     {
         _accountUserContext = accountUserContext;
         _repository = repository;
-        _notificationService = notificationService;
+
+        // _notificationService = notificationService;
     }
 
     public async Task<OperationResult> Handle(ChangeOrganisationDetailsCommand request, CancellationToken cancellationToken)
@@ -68,8 +70,7 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
 
             await _repository.Save(organisation, userAccount, cancellationToken);
 
-            await _notificationService.NotifySuccess(NotificationBodyType.ChangeOrganisationDetailsRequest, null);
-
+            // await _notificationService.NotifySuccess(NotificationBodyType.ChangeOrganisationDetailsRequest, null);
             return OperationResult.Success();
         }
         catch (DomainValidationException domainValidationException)

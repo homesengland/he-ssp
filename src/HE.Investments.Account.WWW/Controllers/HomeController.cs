@@ -8,7 +8,7 @@ public class HomeController : Controller
     [HttpGet("/")]
     public IActionResult Index()
     {
-        return View();
+        return RedirectToAction("Index", "UserOrganisation");
     }
 
     [HttpGet("error")]

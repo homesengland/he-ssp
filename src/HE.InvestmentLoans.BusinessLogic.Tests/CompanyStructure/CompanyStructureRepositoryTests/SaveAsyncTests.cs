@@ -2,7 +2,7 @@ using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
-using HE.InvestmentLoans.CRM.Model;
+using HE.Investments.Common.CRM.Model;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;

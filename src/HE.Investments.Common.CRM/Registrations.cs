@@ -1,19 +1,17 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.PowerPlatform.Dataverse.Client;
-using HE.InvestmentLoans.Common.Models.App;
-using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Threading.Tasks;
 using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Utils;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.PowerPlatform.Dataverse.Client;
 
-namespace HE.InvestmentLoans.CRM.Extensions;
+namespace HE.Investments.Common.CRM;
 
-public static class CrmServiceExtension
+public static class Registrations
 {
-    public static void AddCrmConnection(this IServiceCollection services)
+        public static void AddCrmConnection(this IServiceCollection services)
     {
         services.AddScoped<IOrganizationServiceAsync2>(serviceProvider =>
         {

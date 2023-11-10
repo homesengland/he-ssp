@@ -1,5 +1,5 @@
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.InvestmentLoans.CRM.Model;
+using HE.Investments.Common.CRM.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Moq;
 

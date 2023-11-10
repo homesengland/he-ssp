@@ -1,5 +1,5 @@
 using HE.InvestmentLoans.Common.Utils.Enums;
-using HE.InvestmentLoans.CRM.Model;
+using HE.Investments.Common.CRM.Model;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
 
