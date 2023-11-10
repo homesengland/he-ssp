@@ -54,10 +54,10 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 
     [HttpPost("purpose")]
     [WorkflowState(CompanyStructureState.Purpose)]
-    public async Task<IActionResult> PurposePost(Guid id, CompanyStructureViewModel viewModel)
+    public async Task<IActionResult> PurposePost(Guid id, CompanyStructureViewModel viewModel, [FromQuery] string redirect)
     {
         await _mediator.Send(new ProvideCompanyPurposeCommand(LoanApplicationId.From(id), viewModel.Purpose));
-        return await Continue(new { Id = id });
+        return await Continue(redirect, new { Id = id });
     }
 
     [HttpGet("more-information-about-organization")]
@@ -101,7 +101,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     [HttpPost("more-information-about-organization")]
     [WorkflowState(CompanyStructureState.ExistingCompany)]
     [DisableRequestSizeLimit]
-    public async Task<IActionResult> MoreInformationAboutOrganizationPost(Guid id, CompanyStructureViewModel viewModel, [FromForm(Name = "File")] List<IFormFile> formFiles, CancellationToken cancellationToken)
+    public async Task<IActionResult> MoreInformationAboutOrganizationPost(Guid id, CompanyStructureViewModel viewModel, [FromQuery] string redirect, [FromForm(Name = "File")] List<IFormFile> formFiles, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new ProvideMoreInformationAboutOrganizationCommand(
@@ -117,7 +117,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
             return View("MoreInformationAboutOrganization", viewModel);
         }
 
-        return await Continue(new { Id = id });
+        return await Continue(redirect, new { Id = id });
     }
 
     [HttpGet("how-many-homes-built")]
@@ -130,7 +130,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 
     [HttpPost("how-many-homes-built")]
     [WorkflowState(CompanyStructureState.HomesBuilt)]
-    public async Task<IActionResult> HowManyHomesBuiltPost(Guid id, CompanyStructureViewModel viewModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> HowManyHomesBuiltPost(Guid id, CompanyStructureViewModel viewModel, [FromQuery] string redirect, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
             new ProvideHowManyHomesBuiltCommand(
@@ -144,7 +144,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
             return View("HomesBuilt", viewModel);
         }
 
-        return await Continue(new { Id = id });
+        return await Continue(redirect, new { Id = id });
     }
 
     [HttpGet("check-answers")]
@@ -159,7 +159,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 
     [HttpPost("check-answers")]
     [WorkflowState(CompanyStructureState.CheckAnswers)]
-    public async Task<IActionResult> CheckAnswersPost(Guid id, CompanyStructureViewModel viewModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> CheckAnswersPost(Guid id, CompanyStructureViewModel viewModel, [FromQuery] string redirect, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new CheckAnswersCompanyStructureSectionCommand(LoanApplicationId.From(id), viewModel.CheckAnswers), cancellationToken);
         if (result.HasValidationErrors)
@@ -169,7 +169,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
             return View("CheckAnswers", response.ViewModel);
         }
 
-        return await Continue(new { Id = id });
+        return await Continue(redirect, new { Id = id });
     }
 
     [HttpGet("back")]

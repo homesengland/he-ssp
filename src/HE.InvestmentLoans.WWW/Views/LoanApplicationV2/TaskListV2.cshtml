@@ -36,6 +36,8 @@
         <application-status-tag application-status="@Model.Status" additional-classes="govuk-!-static-margin-left-3"></application-status-tag>
     </div>
 
+    @await Html.PartialAsync("Partials/_ApplicationUpdateInformation", Model.Status)
+
     <ul class="app-task-list">
         <li>
             <h2 class="app-task-list__section">
