@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
+using HE.Investments.Account.Contract.User.Commands;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using MediatR;

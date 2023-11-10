@@ -5,17 +5,19 @@ namespace HE.Investments.Account.Shared;
 
 public interface IAccountUserContext
 {
-    public UserGlobalId UserGlobalId { get; }
+    UserGlobalId UserGlobalId { get; }
 
-    public string Email { get; }
+    string Email { get; }
 
     Task<UserAccount> GetSelectedAccount();
 
     Task<UserProfileDetails> GetProfileDetails();
 
-    public Task RefreshProfileDetails();
+    Task RefreshProfileDetails();
 
-    public Task<bool> IsProfileCompleted();
+    Task RefreshAccounts();
+
+    Task<bool> IsProfileCompleted();
 
     Task<bool> IsLinkedWithOrganization();
 }

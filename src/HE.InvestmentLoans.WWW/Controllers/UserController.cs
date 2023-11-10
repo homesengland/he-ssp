@@ -1,8 +1,10 @@
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.Contract.User;
-using HE.InvestmentLoans.Contract.User.Commands;
 using HE.InvestmentLoans.Contract.User.Queries;
 using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Account.Contract.User;
+using HE.Investments.Account.Contract.User.Queries;
+using HE.Investments.Account.Domain.User.Commands;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
@@ -37,21 +39,21 @@ public class UserController : Controller
     [HttpGet("profile-details")]
     public async Task<IActionResult> ProfileDetails()
     {
-        var response = await _mediator.Send(new GetUserDetailsQuery());
+        var response = await _mediator.Send(new GetUserProfileDetailsQuery());
 
-        return View(response.ViewModel);
+        return View(response);
     }
 
     [HttpPost("profile-details")]
-    public async Task<IActionResult> ProfileDetails(UserDetailsViewModel viewModel, string callback, CancellationToken cancellationToken)
+    public async Task<IActionResult> ProfileDetails(UserProfileDetailsModel viewModel, string callback, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new ProvideUserDetailsCommand(
-                viewModel.FirstName,
-                viewModel.LastName,
-                viewModel.JobTitle,
-                viewModel.TelephoneNumber,
-                viewModel.SecondaryTelephoneNumber),
+            new SaveUserProfileDetailsCommand(
+                viewModel.FirstName ?? string.Empty,
+                viewModel.LastName ?? string.Empty,
+                viewModel.JobTitle ?? string.Empty,
+                viewModel.TelephoneNumber ?? string.Empty,
+                viewModel.SecondaryTelephoneNumber ?? string.Empty),
             cancellationToken);
 
         if (result.HasValidationErrors)

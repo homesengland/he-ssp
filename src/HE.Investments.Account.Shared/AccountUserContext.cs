@@ -32,7 +32,7 @@ public class AccountUserContext : IAccountUserContext
 
     public string Email => _userContext.Email;
 
-    public async Task RefreshAccountData()
+    public async Task RefreshAccounts()
     {
         _accounts = await _accountRepository.GetUserAccounts(
             UserGlobalId.From(_userContext.UserGlobalId),
@@ -103,6 +103,7 @@ public class AccountUserContext : IAccountUserContext
 
     private async Task LoadProfileDetails()
     {
+        await LoadUserAccounts();
         _userProfile = await _cacheService.GetValueAsync(
                            $"{nameof(UserProfileDetails)}-{UserGlobalId}",
                            async () => await _accountRepository.GetProfileDetails(UserGlobalId))

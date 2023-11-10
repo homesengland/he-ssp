@@ -74,7 +74,7 @@ public class StartApplicationCommandHandlerTests : TestBase<StartApplicationComm
                 It.Is<LoanApplicationEntity>(y => y.Name == applicationName && y.UserAccount == userAccount),
                 It.IsAny<UserProfileDetails>(),
                 It.IsAny<CancellationToken>()))
-            .Callback<LoanApplicationEntity, UserDetails, CancellationToken>((x, _, _) => x.SetId(LoanApplicationIdTestData.LoanApplicationIdOne));
+            .Callback<LoanApplicationEntity, UserProfileDetails, CancellationToken>((x, _, _) => x.SetId(LoanApplicationIdTestData.LoanApplicationIdOne));
 
         // when
         var result = await TestCandidate.Handle(new StartApplicationCommand(applicationName.Value), CancellationToken.None);
