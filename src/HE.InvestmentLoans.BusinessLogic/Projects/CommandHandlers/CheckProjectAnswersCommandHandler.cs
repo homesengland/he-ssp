@@ -1,13 +1,13 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Events;
 using HE.InvestmentLoans.Contract.Application.Extensions;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using MediatR;
@@ -20,14 +20,14 @@ public class CheckProjectAnswersCommandHandler : IRequestHandler<CheckProjectAns
 
     private readonly ILoanApplicationRepository _loanApplicationRepository;
 
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
 
     private readonly ILogger<ProjectCommandHandlerBase> _logger;
 
     public CheckProjectAnswersCommandHandler(
         IApplicationProjectsRepository applicationProjectsRepository,
         ILoanApplicationRepository loanApplicationRepository,
-        ILoanUserContext loanUserContext,
+        IAccountUserContext loanUserContext,
         ILogger<ProjectCommandHandlerBase> logger)
     {
         _applicationProjectsRepository = applicationProjectsRepository;

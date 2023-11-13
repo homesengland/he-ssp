@@ -1,11 +1,11 @@
 using HE.InvestmentLoans.BusinessLogic.Funding.Entities;
 using HE.InvestmentLoans.BusinessLogic.Funding.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Events;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using Microsoft.Extensions.Logging;
@@ -17,11 +17,11 @@ public class FundingBaseCommandHandler
 
     private readonly ILoanApplicationRepository _loanApplicationRepository;
 
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
 
     private readonly ILogger<FundingBaseCommandHandler> _logger;
 
-    public FundingBaseCommandHandler(IFundingRepository fundingRepository, ILoanApplicationRepository loanApplicationRepository, ILoanUserContext loanUserContext, ILogger<FundingBaseCommandHandler> logger)
+    public FundingBaseCommandHandler(IFundingRepository fundingRepository, ILoanApplicationRepository loanApplicationRepository, IAccountUserContext loanUserContext, ILogger<FundingBaseCommandHandler> logger)
     {
         _fundingRepository = fundingRepository;
         _loanApplicationRepository = loanApplicationRepository;

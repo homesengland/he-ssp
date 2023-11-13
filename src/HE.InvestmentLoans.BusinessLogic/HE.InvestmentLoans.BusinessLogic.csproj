@@ -61,7 +61,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="UserOrganisation\CommandHandlers\" />
+    <Folder Include="User\CommandHandlers\" />
   </ItemGroup>
   <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
 

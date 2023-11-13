@@ -6,7 +6,7 @@ using Xunit;
 
 namespace HE.Investments.Account.Domain.Tests.User.Repositories.UserRepositoryTests;
 
-public class GetUserAccountTests : TestBase<UserRepository>
+public class GetUserAccountTests : TestBase<AccountRepository>
 {
     [Fact]
     public async Task ShouldReturnUserAccounts_WhenUserGlobalIdAndEmailAreCorrect()

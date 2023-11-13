@@ -1,12 +1,12 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
 using HE.InvestmentLoans.Contract.Funding.Queries;
 using HE.InvestmentLoans.Contract.Security.Queries;
+using HE.Investments.Account.Shared;
 using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
@@ -14,11 +14,11 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 public class GetLoanApplicationQueryHandler : IRequestHandler<GetLoanApplicationQuery, GetLoanApplicationQueryResponse>
 {
     private readonly ILoanApplicationRepository _loanApplicationRepository;
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
     private readonly IMediator _mediator;
     private readonly IApplicationProjectsRepository _applicationProjectsRepository;
 
-    public GetLoanApplicationQueryHandler(ILoanApplicationRepository loanApplicationRepository, ILoanUserContext loanUserContext, IMediator mediator, IApplicationProjectsRepository applicationProjectsRepository)
+    public GetLoanApplicationQueryHandler(ILoanApplicationRepository loanApplicationRepository, IAccountUserContext loanUserContext, IMediator mediator, IApplicationProjectsRepository applicationProjectsRepository)
     {
         _loanApplicationRepository = loanApplicationRepository;
         _loanUserContext = loanUserContext;

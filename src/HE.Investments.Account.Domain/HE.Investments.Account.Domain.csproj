@@ -34,4 +34,9 @@
     <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="User\Entities\" />
+    <Folder Include="User\ValueObjects\" />
+  </ItemGroup>
+
 </Project>

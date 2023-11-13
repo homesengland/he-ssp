@@ -21,7 +21,7 @@ public class GetUserProfileInformationQueryHandler : IRequestHandler<GetUserProf
 
     public async Task<UserProfileDetailsModel> Handle(GetUserProfileDetailsQuery request, CancellationToken cancellationToken)
     {
-        var userProfileInformation = await _userRepository.GetUserProfileInformation(UserGlobalId.From(_userContext.UserGlobalId));
+        var userProfileInformation = await _userRepository.GetProfileDetails(UserGlobalId.From(_userContext.UserGlobalId));
 
         return new UserProfileDetailsModel
         {

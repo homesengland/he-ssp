@@ -4,9 +4,9 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using HE.Investments.DocumentService.Configs;
@@ -18,7 +18,7 @@ namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.CommandHandlers;
 
 public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCommand, OperationResult<LoanApplicationId?>>
 {
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
     private readonly ILoanApplicationRepository _applicationRepository;
     private readonly IApplicationProjectsRepository _applicationProjectsRepository;
     private readonly ILogger<StartApplicationCommandHandler> _logger;
@@ -27,7 +27,7 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
     private readonly ICompanyStructureRepository _companyStructureRepository;
 
     public StartApplicationCommandHandler(
-        ILoanUserContext loanUserContext,
+        IAccountUserContext loanUserContext,
         ILoanApplicationRepository applicationRepository,
         ILogger<StartApplicationCommandHandler> logger,
         IApplicationProjectsRepository applicationProjectsRepository,
@@ -60,7 +60,7 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
                     null);
             }
 
-            await _applicationRepository.Save(newLoanApplication, await _loanUserContext.GetUserDetails(), cancellationToken);
+            await _applicationRepository.Save(newLoanApplication, await _loanUserContext.GetProfileDetails(), cancellationToken);
 
             var applicationProjects = new ApplicationProjects(newLoanApplication.Id);
             await _applicationProjectsRepository.SaveAllAsync(applicationProjects, userAccount, cancellationToken);

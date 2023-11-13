@@ -32,7 +32,7 @@ public class UserOrganisationController : BaseController
             "UserOrganisation",
             new UserOrganisationModel(
                 userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName,
-                userOrganisationResult.UserFirstName.Value,
+                userOrganisationResult.UserFirstName,
                 userOrganisationResult.IsLimitedUser,
                 new List<ProgrammeToAccessModel>
                 {

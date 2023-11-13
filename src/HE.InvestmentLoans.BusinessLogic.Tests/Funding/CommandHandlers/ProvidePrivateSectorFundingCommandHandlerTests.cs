@@ -5,6 +5,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Funding.Commands;
+using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;
@@ -22,7 +23,7 @@ public class ProvidePrivateSectorFundingCommandHandlerTests : TestBase<ProvidePr
             .New()
             .Build();
 
-        var userAccount = LoanUserContextTestBuilder
+        var userAccount = AccountUserContextTestBuilder
             .New()
             .Register(this)
             .UserAccountFromMock;

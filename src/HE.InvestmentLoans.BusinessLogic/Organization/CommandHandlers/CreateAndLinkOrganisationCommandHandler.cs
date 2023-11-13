@@ -1,13 +1,12 @@
 extern alias Org;
 
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Organization.Commands;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.Organisation.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using MediatR;
@@ -17,12 +16,12 @@ namespace HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
 
 public class CreateAndLinkOrganisationCommandHandler : IRequestHandler<CreateAndLinkOrganisationCommand, OperationResult>
 {
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
     private readonly IOrganizationRepository _repository;
     private readonly IContactRepository _contactRepository;
 
     public CreateAndLinkOrganisationCommandHandler(
-        ILoanUserContext loanUserContext,
+        IAccountUserContext loanUserContext,
         IOrganizationRepository repository,
         IContactRepository contactRepository)
     {

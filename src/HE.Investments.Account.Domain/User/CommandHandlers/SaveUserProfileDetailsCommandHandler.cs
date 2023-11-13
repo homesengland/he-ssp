@@ -1,5 +1,6 @@
 using HE.Investments.Account.Domain.User.Commands;
 using HE.Investments.Account.Domain.User.Repositories;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.User;
@@ -13,21 +14,20 @@ public class SaveUserProfileDetailsCommandHandler : IRequestHandler<SaveUserProf
 {
     private readonly IUserRepository _userRepository;
 
-    private readonly IUserContext _userContext;
+    private readonly IAccountUserContext _accountContext;
 
     private readonly ILogger<SaveUserProfileDetailsCommandHandler> _logger;
 
-    public SaveUserProfileDetailsCommandHandler(IUserRepository userRepository, IUserContext userContext, ILogger<SaveUserProfileDetailsCommandHandler> logger)
+    public SaveUserProfileDetailsCommandHandler(IUserRepository userRepository, IAccountUserContext accountContext, ILogger<SaveUserProfileDetailsCommandHandler> logger)
     {
         _userRepository = userRepository;
         _logger = logger;
-        _userContext = userContext;
+        _accountContext = accountContext;
     }
 
     public async Task<OperationResult> Handle(SaveUserProfileDetailsCommand request, CancellationToken cancellationToken)
     {
-        var userGlobalId = UserGlobalId.From(_userContext.UserGlobalId);
-        var userDetails = await _userRepository.GetUserProfileInformation(userGlobalId);
+        var userDetails = await _userRepository.GetProfileDetails(_accountContext.UserGlobalId);
 
         try
         {
@@ -37,7 +37,7 @@ public class SaveUserProfileDetailsCommandHandler : IRequestHandler<SaveUserProf
                 request.JobTitle,
                 request.TelephoneNumber,
                 request.SecondaryTelephoneNumber,
-                _userContext.Email);
+                _accountContext.Email);
         }
         catch (DomainValidationException domainValidationException)
         {
@@ -45,7 +45,8 @@ public class SaveUserProfileDetailsCommandHandler : IRequestHandler<SaveUserProf
             return domainValidationException.OperationResult;
         }
 
-        await _userRepository.SaveAsync(userDetails, userGlobalId, cancellationToken);
+        await _userRepository.SaveAsync(userDetails, _accountContext.UserGlobalId, cancellationToken);
+        await _accountContext.RefreshProfileDetails();
 
         return OperationResult.Success();
     }

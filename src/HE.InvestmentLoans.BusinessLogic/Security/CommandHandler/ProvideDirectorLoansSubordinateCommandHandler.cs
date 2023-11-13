@@ -1,8 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Security.Commands;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using MediatR;
@@ -16,7 +16,7 @@ internal class ProvideDirectorLoansSubordinateCommandHandler : SecurityBaseComma
     public ProvideDirectorLoansSubordinateCommandHandler(
         ISecurityRepository securityRepository,
         ILoanApplicationRepository loanApplicationRepository,
-        ILoanUserContext loanUserContext,
+        IAccountUserContext loanUserContext,
         ILogger<SecurityBaseCommandHandler> logger)
         : base(securityRepository, loanApplicationRepository, loanUserContext, logger)
     {

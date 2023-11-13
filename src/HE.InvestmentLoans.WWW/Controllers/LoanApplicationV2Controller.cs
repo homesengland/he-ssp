@@ -15,6 +15,7 @@ using HE.InvestmentLoans.Contract.User.Queries;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
 using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;

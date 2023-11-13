@@ -1,8 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Notifications;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Contract.Projects.Commands;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Validators;
 using MediatR;
@@ -12,12 +12,12 @@ namespace HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
 public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand, OperationResult>
 {
     private readonly IApplicationProjectsRepository _applicationProjectsRepository;
-    private readonly ILoanUserContext _loanUserContext;
+    private readonly IAccountUserContext _loanUserContext;
     private readonly INotificationService _notificationService;
 
     public DeleteProjectCommandHandler(
         IApplicationProjectsRepository applicationProjectsRepository,
-        ILoanUserContext loanUserContext,
+        IAccountUserContext loanUserContext,
         INotificationService notificationService)
     {
         _applicationProjectsRepository = applicationProjectsRepository;

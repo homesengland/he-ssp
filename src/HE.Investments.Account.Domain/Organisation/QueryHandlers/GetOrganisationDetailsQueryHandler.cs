@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.Contract.Organization;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.User;
+using HE.Investments.Account.Shared;
 using MediatR;
 
 namespace HE.Investments.Account.Domain.Organisation.QueryHandlers;
