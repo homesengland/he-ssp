@@ -4,15 +4,15 @@
 @using HE.Investments.Common.WWW.Extensions
 @model HE.InvestmentLoans.Contract.Projects.ViewModels.LocalAuthoritiesViewModel;
 @{
-    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(LocalAuthoritiesViewModel.Phrase));
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(LocalAuthoritiesViewModel.Phrase));
 }
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="Project" asp-action="LocalAuthoritySearch" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-method="post" novalidate>
 
-        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.ProvideLocalAuthority})" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Back", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.ProvideLocalAuthority })" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
-        <partial name="_ErrorSummaryPartial" model="null" />
+        <partial name="_ErrorSummaryPartial" model="null"/>
 
         <gds-h1 size="ControlSize.L">
             @ProjectPageTitles.LocalAuthority
@@ -23,23 +23,26 @@
         </gds-p>
 
         <gds-field-set>
-            <gds-h1 size="@ControlSize.M" class="govuk-!-margin-top-9">
-                What is your local authority?
-            </gds-h1>
+            <gds-div-form-group invalid="inputInvalid">
+                <gds-h1 size="@ControlSize.M" class="govuk-!-margin-top-9">
+                    What is your local authority?
+                </gds-h1>
 
-            <gds-div-hint class="govuk-!-margin-top-6 govuk-!-margin-bottom-6">
-                Enter all or part of your authority name.
-            </gds-div-hint>
+                <gds-div-hint class="govuk-!-margin-top-6 govuk-!-margin-bottom-6">
+                    Enter all or part of your local authority name.
+                </gds-div-hint>
 
-            <gds-input asp-hiddenlabeltext="Name"
-                       govuk-formgroup-asp-for="Phrase"
-                       type="text" />
+                <gds-input asp-hiddenlabeltext="Phrase"
+                           govuk-formgroup-asp-for="Phrase"
+                           type="text"/>
+            </gds-div-form-group>
 
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="search-organization-button">
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" id="search-local-authority-button">
                 Search
             </button>
             @Html.HiddenFor(c => c.ProjectId)
             @Html.HiddenFor(c => c.ApplicationId)
+
         </gds-field-set>
 
     </form>

@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.Projects;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -376,22 +377,25 @@ public class ProjectController : WorkflowController<ProjectState>
     }
 
     [HttpPost("{projectId}/local-authority/search")]
-    public IActionResult LocalAuthoritySearch(Guid id, Guid projectId, LocalAuthoritiesViewModel organization)
+    public async Task<IActionResult> LocalAuthoritySearch(Guid id, Guid projectId, LocalAuthoritiesViewModel viewModel, CancellationToken cancellationToken)
     {
-        return RedirectToAction(nameof(LocalAuthorityResult), new { id, projectId, phrase = organization.Phrase });
-    }
-
-    [HttpGet("{projectId}/local-authority/search/result")]
-    public async Task<IActionResult> LocalAuthorityResult(Guid id, Guid projectId, [FromQuery] string phrase, CancellationToken token, [FromQuery] int page = 0)
-    {
-        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, page - 1, 10), token);
+        var result = await _mediator.Send(
+            new ProvideLocalAuthoritySearchPhraseCommand(viewModel.Phrase), cancellationToken);
 
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
 
-            return View(nameof(LocalAuthoritySearch));
+            return View("LocalAuthoritySearch", viewModel);
         }
+
+        return RedirectToAction(nameof(LocalAuthorityResult), new { id, projectId, phrase = viewModel.Phrase });
+    }
+
+    [HttpGet("{projectId}/local-authority/search/result")]
+    public async Task<IActionResult> LocalAuthorityResult(Guid id, Guid projectId, string phrase, CancellationToken token, [FromQuery] int page = 0)
+    {
+        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, page - 1, DefaultPagination.PageSize), token);
 
         if (result.ReturnedData.TotalItems == 0)
         {
