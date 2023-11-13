@@ -140,6 +140,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_HomeType"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_HomeType> invln_HomeTypeSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_HomeType>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_ISP"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_ISP> invln_ISPSet

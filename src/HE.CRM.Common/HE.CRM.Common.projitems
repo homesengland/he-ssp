@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\AhpApplicationMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\ContactDtoMapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)dtomapping\HomeTypeMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\LoanApplicationDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)dtomapping\SiteDetailsDtoMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\DateTimeExtensions.cs" />
@@ -24,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\EnvironmentVariableRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\GovNotifyEmailRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\GlobalRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\HomeTypeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\LocalAuthorityRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\ProjectSpecificConditionRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\SharepointDocumentLocationRepository.cs" />
@@ -45,6 +47,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\interfaces\IEnvironmentVariableRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IGovNotifyEmailRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IGlobalRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\IHomeTypeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ILoanApplicationRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ILoanStatusChangeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ILocalAuthorityRepository.cs" />
