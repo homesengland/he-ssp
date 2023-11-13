@@ -27,7 +27,7 @@ public static class BusinessLogicModule
         services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
         services.AddScoped<ICanSubmitLoanApplication, LoanApplicationRepository>();
         services.AddScoped<IApplicationProjectsRepository, ApplicationProjectsRepository>();
-        services.AddScoped<ILocalAuthorityRepository, LocalAuthorityMockedRepository>();
+        services.AddScoped<ILocalAuthorityRepository, ApplicationProjectsRepository>();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 
         services.AddOrganizationSubmodule();

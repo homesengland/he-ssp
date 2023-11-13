@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace HE.InvestmentLoans.Contract.Projects.ViewModels;
 public class LocalAuthoritiesViewModel
 {
-    public IList<LocalAuthorityViewModel> Items { get; set; }
+    public IList<LocalAuthorityViewModel>? Items { get; set; }
 
-    public string Phrase { get; set; }
+    public string? Phrase { get; set; }
 
     public int Page { get; set; }
 
@@ -21,5 +15,5 @@ public class LocalAuthoritiesViewModel
 
     public Guid ProjectId { get; set; }
 
-    public string LocalAuthorityId { get; set; }
+    public string? LocalAuthorityId { get; set; }
 }
