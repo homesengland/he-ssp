@@ -1,9 +1,9 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.UserOrganisation;
-using HE.Investments.Account.Domain.Utils;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.CRM.Model;
+using HE.Investments.Common.CRM.Services;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.Repositories;
 
