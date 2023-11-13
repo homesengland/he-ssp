@@ -23,10 +23,10 @@ public class SearchTests : TestBase<ApplicationProjectsRepository>
         RegisterDependency(cacheServiceMock);
 
         // when
-        var result = await TestCandidate.Search(phrase, 1, 10, CancellationToken.None);
+        var (_, totalItems) = await TestCandidate.Search(phrase, 1, 10, CancellationToken.None);
 
         // then
-        result.TotalItems.Should().BeGreaterThan(0);
+        totalItems.Should().BeGreaterThan(0);
     }
 
     [Fact]
@@ -44,9 +44,9 @@ public class SearchTests : TestBase<ApplicationProjectsRepository>
         RegisterDependency(cacheServiceMock);
 
         // when
-        var result = await TestCandidate.Search(phrase, 1, 10, CancellationToken.None);
+        var (_, totalItems) = await TestCandidate.Search(phrase, 1, 10, CancellationToken.None);
 
         // then
-        result.TotalItems.Should().Be(0);
+        totalItems.Should().Be(0);
     }
 }

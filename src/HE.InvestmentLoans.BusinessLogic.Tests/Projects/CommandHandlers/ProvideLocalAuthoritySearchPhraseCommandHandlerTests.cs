@@ -21,7 +21,7 @@ public class ProvideLocalAuthoritySearchPhraseCommandHandlerTests : TestBase<Pro
 
         // then
         action.IsValid.Should().BeFalse();
-        action.Errors.Count().Should().BeGreaterThan(0);
+        action.Errors.Count.Should().BeGreaterThan(0);
     }
 
     [Fact]
@@ -37,6 +37,6 @@ public class ProvideLocalAuthoritySearchPhraseCommandHandlerTests : TestBase<Pro
 
         // then
         action.IsValid.Should().BeTrue();
-        action.Errors.Count().Should().Be(0);
+        action.Errors.Count.Should().Be(0);
     }
 }
