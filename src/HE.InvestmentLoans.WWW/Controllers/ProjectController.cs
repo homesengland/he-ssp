@@ -395,7 +395,7 @@ public class ProjectController : WorkflowController<ProjectState>
     [HttpGet("{projectId}/local-authority/search/result")]
     public async Task<IActionResult> LocalAuthorityResult(Guid id, Guid projectId, string phrase, CancellationToken token, [FromQuery] int page = 0)
     {
-        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(LoanApplicationId.From(id), phrase, page - 1, DefaultPagination.PageSize), token);
+        var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, page - 1, DefaultPagination.PageSize), token);
 
         if (result.ReturnedData.TotalItems == 0)
         {

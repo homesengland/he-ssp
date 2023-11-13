@@ -18,7 +18,7 @@ public class SearchLocalAuthoritiesQueryHandler : IRequestHandler<SearchLocalAut
     public async Task<OperationResult<LocalAuthoritiesViewModel>> Handle(SearchLocalAuthoritiesQuery request, CancellationToken cancellationToken)
     {
         var (itemsFound, totalItems) =
-            await _localAuthorityRepository.Search(request.LoanApplicationId, request.Phrase, request.StartPage, request.PageSize, cancellationToken);
+            await _localAuthorityRepository.Search(request.Phrase, request.StartPage, request.PageSize, cancellationToken);
 
         var result = new LocalAuthoritiesViewModel
         {

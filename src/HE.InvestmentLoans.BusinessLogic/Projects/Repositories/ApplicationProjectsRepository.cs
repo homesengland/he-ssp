@@ -117,29 +117,12 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILo
         throw new NotImplementedException();
     }
 
-    public async Task<(IList<LocalAuthority> Items, int TotalItems)> Search(
-        LoanApplicationId loanApplicationId,
-        string phrase,
-        int startPage,
-        int pageSize,
-        CancellationToken cancellationToken)
+    public async Task<(IList<LocalAuthority> Items, int TotalItems)> Search(string phrase, int startPage, int pageSize, CancellationToken cancellationToken)
     {
-        var key = $"local-authorities-{loanApplicationId}";
-        var localAuthorities = _cacheService.GetValue<IList<LocalAuthority>?>(key);
-
-        if (localAuthorities == null)
-        {
-            var req = new invln_searchlocalauthorityRequest();
-            var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_searchlocalauthorityResponse
-                           ?? throw new NotFoundException(nameof(LocalAuthority));
-
-            var localAuthoritiesDto = CrmResponseSerializer.Deserialize<IList<LocalAuthorityDto>>(response.invln_localauthorities)
-                                      ?? throw new NotFoundException(nameof(LocalAuthority));
-
-            localAuthorities = LocalAuthorityMapper.MapToLocalAuthorityList(localAuthoritiesDto);
-
-            _cacheService.SetValue<IList<LocalAuthority>?>(key, localAuthorities);
-        }
+        var localAuthorities = await _cacheService.GetValueAsync(
+                                   "local-authorities",
+                                   async () => await GetLocalAuthorities(cancellationToken))
+                               ?? throw new NotFoundException(nameof(LocalAuthority));
 
         if (!string.IsNullOrEmpty(phrase))
         {
@@ -218,10 +201,21 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILo
 
         var req = new invln_createsinglesitedetailRequest
         {
-            invln_sitedetails = CrmResponseSerializer.Serialize(siteDetails),
-            invln_loanapplicationid = loanApplicationId.Value.ToString(),
+            invln_sitedetails = CrmResponseSerializer.Serialize(siteDetails), invln_loanapplicationid = loanApplicationId.Value.ToString(),
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
+    }
+
+    private async Task<IList<LocalAuthority>> GetLocalAuthorities(CancellationToken cancellationToken)
+    {
+        var req = new invln_searchlocalauthorityRequest();
+        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_searchlocalauthorityResponse
+                       ?? throw new NotFoundException(nameof(LocalAuthority));
+
+        var localAuthoritiesDto = CrmResponseSerializer.Deserialize<IList<LocalAuthorityDto>>(response.invln_localauthorities)
+                                  ?? throw new NotFoundException(nameof(LocalAuthority));
+
+        return LocalAuthorityMapper.MapToLocalAuthorityList(localAuthoritiesDto);
     }
 }
