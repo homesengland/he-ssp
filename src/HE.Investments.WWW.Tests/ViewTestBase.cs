@@ -1,7 +1,6 @@
 using AngleSharp;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Services.Notifications;
-using HE.Investments.Common.WWW.Partials;
 using HE.Investments.WWW.Tests.Framework;
 using HE.Investments.WWW.Tests.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -17,17 +16,16 @@ public abstract class ViewTestBase
         TModel? model = null,
         Dictionary<string, object>? viewBagOrViewData = null,
         ModelStateDictionary? modelStateDictionary = null,
-        Action<ServiceCollection>? mockDependencies = null)
+        Action<IServiceCollection>? mockDependencies = null)
         where TModel : class
     {
-        var notificationServiceMock = new Mock<INotificationService>();
-        var services = new ServiceCollection();
-        services.AddTransient<INotificationService>(_ => notificationServiceMock.Object);
-        mockDependencies?.Invoke(services);
+        CustomRazorTemplateEngine.RegisterDependencies = services =>
+        {
+            services.AddTransient<INotificationService>(_ => new Mock<INotificationService>().Object);
+            mockDependencies?.Invoke(services);
+        };
 
-        var renderer = new CustomRazorTemplateEngine(services);
-
-        var html = await renderer.RenderPartialAsync(viewPath, model, viewBagOrViewData, modelStateDictionary);
+        var html = await CustomRazorTemplateEngine.RenderPartialAsync(viewPath, model, viewBagOrViewData, modelStateDictionary);
 
         var document = await BrowsingContext.New().OpenAsync(r => r.Content(html), CancellationToken.None);
         return document as IHtmlDocument ?? throw new InvalidOperationException();
