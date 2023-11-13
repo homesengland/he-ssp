@@ -10,5 +10,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
     {
         Guid SetApplication(string applicationSerialized, string organisationId, string contactId, string fieldsToUpdate = null);
         List<AhpApplicationDto> GetApplication(string organisationId, string contactId, string fieldsToRetrieve = null, string applicationId = null);
+        bool CheckIfApplicationExists(string serializedApplication);
     }
 }

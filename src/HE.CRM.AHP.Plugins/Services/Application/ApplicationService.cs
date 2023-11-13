@@ -20,6 +20,12 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
         }
 
+        public bool CheckIfApplicationExists(string serializedApplication)
+        {
+            var applicationDto = JsonSerializer.Deserialize<AhpApplicationDto>(serializedApplication);
+            return _applicationRepository.ApplicationWithGivenNameExists(applicationDto.name);
+        }
+
         public List<AhpApplicationDto> GetApplication(string organisationId, string contactId, string fieldsToRetrieve = null, string applicationId = null)
         {
             var listOfApplications = new List<AhpApplicationDto>();

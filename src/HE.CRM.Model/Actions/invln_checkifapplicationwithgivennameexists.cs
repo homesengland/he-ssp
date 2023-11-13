@@ -56,10 +56,30 @@ namespace DataverseModel
 	public partial class invln_checkifapplicationwithgivennameexistsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
 	{
 		
+		public static class Fields
+		{
+			public const string invln_applicationexists = "invln_applicationexists";
+		}
+		
 		public const string ActionLogicalName = "invln_checkifapplicationwithgivennameexists";
 		
 		public invln_checkifapplicationwithgivennameexistsResponse()
 		{
+		}
+		
+		public string invln_applicationexists
+		{
+			get
+			{
+				if (this.Results.Contains("invln_applicationexists"))
+				{
+					return ((string)(this.Results["invln_applicationexists"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
 		}
 	}
 }

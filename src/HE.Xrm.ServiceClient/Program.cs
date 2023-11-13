@@ -79,17 +79,17 @@ namespace HE.Xrm.ServiceClientExample
         {
             var application = new AhpApplicationDto()
             {
-                name = "testcreate",
+                name = "test custfffffffffffffffffasad",
                 tenure = (int)invln_Tenure.OPSO,
                 //id = "0e49b28a-757d-ee11-8179-002248004a06",
             };
             var fieldsToUpdate = $"{nameof(invln_scheme.invln_Tenure).ToLower()}";
             var app = JsonSerializer.Serialize(application);
-            var req2 = new invln_gettypeofhomeslistRequest() //get loan applications related to account and contact with given data
+            var req2 = new invln_checkifapplicationwithgivennameexistsRequest() //get loan applications related to account and contact with given data
             {
-                invln_applicationid = "a5b507b3-c27f-ee11-8179-0022480068",
+                invln_application = app,
             };
-            var resp2 = (invln_gettypeofhomeslistResponse)serviceClient.Execute(req2);
+            var resp2 = (invln_checkifapplicationwithgivennameexistsResponse)serviceClient.Execute(req2);
 
             Console.WriteLine("A web service connection was not established.");
         }
