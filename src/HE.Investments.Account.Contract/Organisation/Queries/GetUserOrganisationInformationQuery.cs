@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.User.ValueObjects;
+using HE.Investments.Account.Contract.UserOrganisation;
 using MediatR;
 
 namespace HE.Investments.Account.Contract.Organisation.Queries;
@@ -8,6 +9,7 @@ public record GetUserOrganisationInformationQuery() : IRequest<GetUserOrganisati
 
 public record GetUserOrganisationInformationQueryResponse(
     OrganizationBasicInformation OrganizationBasicInformation,
-    string UserFirstName,
+    string? UserFirstName,
     bool IsLimitedUser,
-    IList<UserLoanApplication> LoanApplications);
+    IList<Programme> ProgrammesToAccess,
+    IList<ProgrammeType> ProgrammesTypesToApply);

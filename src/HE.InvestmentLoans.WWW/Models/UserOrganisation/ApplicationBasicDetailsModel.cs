@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.WWW.Models.UserOrganisation;
 
