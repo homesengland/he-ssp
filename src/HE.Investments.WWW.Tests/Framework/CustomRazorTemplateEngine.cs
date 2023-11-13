@@ -4,42 +4,42 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.Investments.WWW.Tests.Framework;
 
-public static class CustomRazorTemplateEngine
+public class CustomRazorTemplateEngine
 {
-    private static readonly Lazy<CustomRazorTemplateEngineRenderer> Instance = new(CreateInstance, true);
-    private static IServiceCollection? _services;
+    private readonly CustomRazorTemplateEngineRenderer _renderer;
 
-    public static async Task<string> RenderAsync(
+    public CustomRazorTemplateEngine(IServiceCollection? services = null)
+    {
+        _renderer = CreateInstance(services ?? new ServiceCollection());
+    }
+
+    public async Task<string> RenderAsync(
         string viewName,
         object? viewModel = null,
         Dictionary<string, object>? viewBagOrViewData = null,
         ModelStateDictionary? modelStateDictionary = null)
     {
-        return await Instance.Value.RenderAsync(viewName, viewModel, viewBagOrViewData, modelStateDictionary).ConfigureAwait(false);
+        return await _renderer.RenderAsync(viewName, viewModel, viewBagOrViewData, modelStateDictionary).ConfigureAwait(false);
     }
 
-    public static async Task<string> RenderPartialAsync(
+    public async Task<string> RenderPartialAsync(
         string viewName,
         object? viewModel = null,
         Dictionary<string, object>? viewBagOrViewData = null,
         ModelStateDictionary? modelStateDictionary = null)
     {
-        return await Instance.Value.RenderPartialAsync(viewName, viewModel, viewBagOrViewData, modelStateDictionary).ConfigureAwait(false);
+        return await _renderer.RenderPartialAsync(viewName, viewModel, viewBagOrViewData, modelStateDictionary).ConfigureAwait(false);
     }
 
-    private static CustomRazorTemplateEngineRenderer CreateInstance()
+    private CustomRazorTemplateEngineRenderer CreateInstance(IServiceCollection services)
     {
-        if (_services is null)
-        {
-            _services = new ServiceCollection();
-            _services.AddRazorTemplating();
+        services.AddRazorTemplating();
 
-            _services.AddTransient<CustomRazorViewToStringRenderer>();
-            _services.AddTransient<CustomRazorTemplateEngineRenderer>();
+        services.AddTransient<CustomRazorViewToStringRenderer>();
+        services.AddTransient<CustomRazorTemplateEngineRenderer>();
 
-            _services.AddCommonBuildingBlocks();
-        }
+        services.AddCommonBuildingBlocks();
 
-        return _services.BuildServiceProvider().GetRequiredService<CustomRazorTemplateEngineRenderer>();
+        return services.BuildServiceProvider().GetRequiredService<CustomRazorTemplateEngineRenderer>();
     }
 }
