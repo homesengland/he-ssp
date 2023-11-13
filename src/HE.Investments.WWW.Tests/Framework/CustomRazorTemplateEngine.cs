@@ -9,6 +9,8 @@ public static class CustomRazorTemplateEngine
     private static readonly Lazy<CustomRazorTemplateEngineRenderer> Instance = new(CreateInstance, true);
     private static IServiceCollection? _services;
 
+    public static Action<IServiceCollection>? RegisterDependencies { get; set; }
+
     public static async Task<string> RenderAsync(
         string viewName,
         object? viewModel = null,
@@ -39,6 +41,8 @@ public static class CustomRazorTemplateEngine
 
             _services.AddCommonBuildingBlocks();
         }
+
+        RegisterDependencies?.Invoke(_services);
 
         return _services.BuildServiceProvider().GetRequiredService<CustomRazorTemplateEngineRenderer>();
     }

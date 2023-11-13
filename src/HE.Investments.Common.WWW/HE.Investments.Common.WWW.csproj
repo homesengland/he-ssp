@@ -48,6 +48,7 @@
     <EmbeddedResource Include="Partials\_Breadcrumbs.cshtml" />
     <EmbeddedResource Include="Partials\TaskList\_TaskList.cshtml" />
     <EmbeddedResource Include="Partials\_ViewImports.cshtml" />
+    <EmbeddedResource Include="Partials\_Notification.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

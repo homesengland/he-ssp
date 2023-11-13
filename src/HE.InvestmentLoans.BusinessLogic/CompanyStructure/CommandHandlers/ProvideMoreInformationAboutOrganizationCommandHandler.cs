@@ -1,5 +1,6 @@
 using System.Text.Json;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Constants;
+using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Notifications;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
@@ -87,12 +88,7 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
 
                 if (!string.IsNullOrEmpty(filesUploaded))
                 {
-                    var valuesToDisplay = new Dictionary<NotificationServiceKeys, string>
-                    {
-                        { NotificationServiceKeys.Name, filesUploaded[..^2] },
-                    };
-
-                    await _notificationService.NotifySuccess(NotificationBodyType.FilesUpload, valuesToDisplay);
+                    await _notificationService.Publish(new FilesUploadedSuccessfullyNotification(filesUploaded[..^2]));
                 }
             },
             request.LoanApplicationId,

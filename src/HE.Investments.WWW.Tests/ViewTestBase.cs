@@ -6,7 +6,6 @@ using HE.Investments.WWW.Tests.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
-using NotificationModel = HE.Investments.Common.Services.Notifications.NotificationModel;
 
 namespace HE.Investments.WWW.Tests;
 
@@ -17,18 +16,14 @@ public abstract class ViewTestBase
         TModel? model = null,
         Dictionary<string, object>? viewBagOrViewData = null,
         ModelStateDictionary? modelStateDictionary = null,
-        Action<ServiceCollection>? mockDependencies = null)
+        Action<IServiceCollection>? mockDependencies = null)
         where TModel : class
     {
-        var notificationServiceMock = new Mock<INotificationService>();
-        notificationServiceMock
-            .Setup(s => s.Pop())
-            .Returns(Tuple.Create(false, (NotificationModel)null!)!);
-
-        var services = new ServiceCollection();
-        services.AddTransient<INotificationService>(_ => notificationServiceMock.Object);
-        mockDependencies?.Invoke(services);
-        services.AddRazorTemplating();
+        CustomRazorTemplateEngine.RegisterDependencies = services =>
+        {
+            services.AddTransient<INotificationService>(_ => new Mock<INotificationService>().Object);
+            mockDependencies?.Invoke(services);
+        };
 
         var html = await CustomRazorTemplateEngine.RenderPartialAsync(viewPath, model, viewBagOrViewData, modelStateDictionary);
 

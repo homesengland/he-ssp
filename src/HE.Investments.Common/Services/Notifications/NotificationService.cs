@@ -5,37 +5,46 @@ namespace HE.Investments.Common.Services.Notifications;
 
 public class NotificationService : INotificationService
 {
-    private readonly ICacheService _cacheService;
-    private readonly IUserContext _userContext;
+    private readonly IDictionary<string, IDisplayNotificationFactory> _displayNotificationFactories;
 
-    public NotificationService(ICacheService cacheService, IUserContext userContext)
+    private readonly ICacheService _cacheService;
+
+    private readonly string _userNotificationKey;
+
+    public NotificationService(
+        ICacheService cacheService,
+        IUserContext userContext,
+        IEnumerable<IDisplayNotificationFactory> displayNotificationFactories)
     {
         _cacheService = cacheService;
-        _userContext = userContext;
+        _userNotificationKey = $"notification-{userContext.UserGlobalId}";
+        _displayNotificationFactories = displayNotificationFactories.ToDictionary(x => x.HandledNotificationType.Name, x => x);
     }
 
-    private string UserGlobalId => _userContext.UserGlobalId;
-
-    public Tuple<bool, NotificationModel?> Pop()
+    public DisplayNotification? Pop()
     {
-        var key = $"{NotificationServiceCacheKey.Notification}-{UserGlobalId}";
-        var isInCache = false;
-        var valueFromCache = _cacheService.GetValue<NotificationModel?>(key);
-
-        if (valueFromCache != null)
+        var notification = _cacheService.GetValue<Notification>(_userNotificationKey);
+        if (notification != null)
         {
-            isInCache = true;
-            _cacheService.SetValue<NotificationModel?>(key, null);
+            _cacheService.SetValue<Notification?>(_userNotificationKey, null);
+            return Map(notification);
         }
 
-        return Tuple.Create(isInCache, valueFromCache);
+        return null;
     }
 
-    public async Task NotifySuccess(NotificationBodyType notificationBodyType, IDictionary<NotificationServiceKeys, string>? valuesToDisplay = null)
+    public async Task Publish(Notification notification)
     {
-        var key = $"{NotificationServiceCacheKey.Notification}-{UserGlobalId}";
-        var notificationModel = new NotificationModel(NotificationTitle.Success, NotificationType.Success, notificationBodyType, valuesToDisplay);
+        await _cacheService.SetValueAsync(_userNotificationKey, notification);
+    }
 
-        await _cacheService.SetValueAsync(key, notificationModel);
+    private DisplayNotification Map(Notification notification)
+    {
+        if (_displayNotificationFactories.TryGetValue(notification.NotificationType, out var displayNotificationFactory))
+        {
+            return displayNotificationFactory.Create(notification);
+        }
+
+        throw new ArgumentOutOfRangeException(nameof(notification.NotificationType), "Unsupported notification type");
     }
 }
