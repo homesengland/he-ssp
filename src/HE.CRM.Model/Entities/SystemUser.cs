@@ -492,6 +492,10 @@ namespace DataverseModel
 			public const string lk_invln_emailtemplate_createdonbehalfby = "lk_invln_emailtemplate_createdonbehalfby";
 			public const string lk_invln_emailtemplate_modifiedby = "lk_invln_emailtemplate_modifiedby";
 			public const string lk_invln_emailtemplate_modifiedonbehalfby = "lk_invln_emailtemplate_modifiedonbehalfby";
+			public const string lk_invln_hometype_createdby = "lk_invln_hometype_createdby";
+			public const string lk_invln_hometype_createdonbehalfby = "lk_invln_hometype_createdonbehalfby";
+			public const string lk_invln_hometype_modifiedby = "lk_invln_hometype_modifiedby";
+			public const string lk_invln_hometype_modifiedonbehalfby = "lk_invln_hometype_modifiedonbehalfby";
 			public const string lk_invln_isp_createdby = "lk_invln_isp_createdby";
 			public const string lk_invln_isp_createdonbehalfby = "lk_invln_isp_createdonbehalfby";
 			public const string lk_invln_isp_modifiedby = "lk_invln_isp_modifiedby";
@@ -634,6 +638,7 @@ namespace DataverseModel
 			public const string user_invln_contract = "user_invln_contract";
 			public const string user_invln_emailnotification = "user_invln_emailnotification";
 			public const string user_invln_emailtemplate = "user_invln_emailtemplate";
+			public const string user_invln_hometype = "user_invln_hometype";
 			public const string user_invln_isp = "user_invln_isp";
 			public const string user_invln_loanapplication = "user_invln_loanapplication";
 			public const string user_invln_loanstatuschange = "user_invln_loanstatuschange";
@@ -4386,6 +4391,86 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N lk_invln_hometype_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_hometype_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_HomeType> lk_invln_hometype_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_HomeType>("lk_invln_hometype_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_hometype_createdby");
+				this.SetRelatedEntities<DataverseModel.invln_HomeType>("lk_invln_hometype_createdby", null, value);
+				this.OnPropertyChanged("lk_invln_hometype_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_hometype_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_hometype_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_HomeType> lk_invln_hometype_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_HomeType>("lk_invln_hometype_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_hometype_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_HomeType>("lk_invln_hometype_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_hometype_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_hometype_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_hometype_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_HomeType> lk_invln_hometype_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_HomeType>("lk_invln_hometype_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_hometype_modifiedby");
+				this.SetRelatedEntities<DataverseModel.invln_HomeType>("lk_invln_hometype_modifiedby", null, value);
+				this.OnPropertyChanged("lk_invln_hometype_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_invln_hometype_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_hometype_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_HomeType> lk_invln_hometype_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_HomeType>("lk_invln_hometype_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_invln_hometype_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.invln_HomeType>("lk_invln_hometype_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_invln_hometype_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N lk_invln_isp_createdby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_invln_isp_createdby")]
@@ -5882,6 +5967,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("user_invln_emailtemplate");
 				this.SetRelatedEntities<DataverseModel.invln_EmailTemplate>("user_invln_emailtemplate", null, value);
 				this.OnPropertyChanged("user_invln_emailtemplate");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N user_invln_hometype
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_invln_hometype")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_HomeType> user_invln_hometype
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_HomeType>("user_invln_hometype", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_invln_hometype");
+				this.SetRelatedEntities<DataverseModel.invln_HomeType>("user_invln_hometype", null, value);
+				this.OnPropertyChanged("user_invln_hometype");
 			}
 		}
 		

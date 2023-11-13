@@ -94,6 +94,7 @@ namespace DataverseModel
 			public const string invln_grantsfromsocialservices_Base = "invln_grantsfromsocialservices_base";
 			public const string invln_grantsfromthelottery = "invln_grantsfromthelottery";
 			public const string invln_grantsfromthelottery_Base = "invln_grantsfromthelottery_base";
+			public const string invln_invln_hometype_application_invln_scheme = "invln_invln_hometype_application_invln_scheme";
 			public const string invln_invln_scheme_localauthoritylookup_invln_l = "invln_invln_scheme_localauthoritylookup_invln_l";
 			public const string invln_localauthoritylookup = "invln_localauthoritylookup";
 			public const string invln_localauthoritylookupName = "invln_localauthoritylookupname";
@@ -1407,6 +1408,26 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_hometype_application_invln_scheme
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_hometype_application_invln_scheme")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_HomeType> invln_invln_hometype_application_invln_scheme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_HomeType>("invln_invln_hometype_application_invln_scheme", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_hometype_application_invln_scheme");
+				this.SetRelatedEntities<DataverseModel.invln_HomeType>("invln_invln_hometype_application_invln_scheme", null, value);
+				this.OnPropertyChanged("invln_invln_hometype_application_invln_scheme");
 			}
 		}
 		
