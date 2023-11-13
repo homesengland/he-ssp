@@ -23,6 +23,7 @@ invln_getorganizationdetails|
 invln_getsingleloanapplicationforaccountandcontact|
 invln_getsinglesitedetails|
 invln_gettemporaryportaldata|
+invln_gettypeofhomeslist|
 invln_linkcontactwithorganization|
 invln_returnuserprofile|
 invln_savetemporaryportaldata|
@@ -62,6 +63,7 @@ invln_contract|
 invln_emailnotification|
 invln_emailtemplate|
 invln_govnotifyemail|
+invln_hometype|
 invln_isp|
 invln_loanapplication|
 invln_loanstatuschange|

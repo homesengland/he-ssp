@@ -97,6 +97,7 @@
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Handlers\CustomApi\GetApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetMultipleApplicationsHandler.cs" />
+    <Compile Include="Handlers\CustomApi\GetTypeOfHomesListHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetApplicationHandler.cs" />
     <Compile Include="HE.Base\Common\AssemblyTypesCache.cs" />
     <Compile Include="HE.Base\Common\Constants\EntityCommonFieldsNames.cs" />
@@ -160,10 +161,13 @@
     <Compile Include="HE.Base\Services\ICrmServicesFactory.cs" />
     <Compile Include="Plugins\CustomApi\GetApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleApplicationsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\GetTypeOfHomesListPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetApplicationPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Application\ApplicationService.cs" />
     <Compile Include="Services\Application\IApplicationService.cs" />
+    <Compile Include="Services\HomeType\HomeTypeService.cs" />
+    <Compile Include="Services\HomeType\IHomeTypeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
