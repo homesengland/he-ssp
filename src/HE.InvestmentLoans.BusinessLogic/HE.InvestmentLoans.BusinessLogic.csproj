@@ -44,7 +44,6 @@
   <ItemGroup>
     <ProjectReference Include="..\HE.InvestmentLoans.Common.Contract\HE.InvestmentLoans.Common.Contract.csproj" />
     <ProjectReference Include="..\HE.InvestmentLoans.Contract\HE.InvestmentLoans.Contract.csproj" />
-    <ProjectReference Include="..\HE.InvestmentLoans.CRM\HE.InvestmentLoans.CRM.csproj" />
     <ProjectReference Include="..\HE.Investments.Account.Contract\HE.Investments.Account.Contract.csproj" />
     <ProjectReference Include="..\HE.Investments.Account.Domain\HE.Investments.Account.Domain.csproj" />
     <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj" />
@@ -59,7 +58,7 @@
       <_Parameter1>HE.InvestmentLoans.BusinessLogic.Tests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-  
+
   <ItemGroup>
     <Folder Include="User\CommandHandlers\" />
   </ItemGroup>

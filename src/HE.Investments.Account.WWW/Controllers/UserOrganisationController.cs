@@ -7,10 +7,12 @@ using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
+[Authorize]
 [Route("user-organisation")]
 public class UserOrganisationController : Controller
 {
@@ -31,15 +33,13 @@ public class UserOrganisationController : Controller
                 userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName,
                 userOrganisationResult.UserFirstName,
                 userOrganisationResult.IsLimitedUser,
-                new List<ProgrammeToAccessModel>
-                {
-                    new(
-                        ProgrammesConsts.LoansProgramme,
-                        userOrganisationResult.LoanApplications.Select(a =>
-                                new ApplicationBasicDetailsModel(a.Id.Value, a.ApplicationName.Value, a.Status))
-                            .ToList()),
-                },
-                new List<ProgrammeModel> { ProgrammesConsts.LoansProgramme },
+                userOrganisationResult.ProgrammesToAccess.Select(p => new ProgrammeToAccessModel(
+                        ProgrammesConsts.GetByType(p.Type),
+                        p.Applications.Select(a =>
+                                new ApplicationBasicDetailsModel(a.Id, a.ApplicationName, a.Status))
+                            .ToList()))
+                    .ToList(),
+                userOrganisationResult.ProgrammesTypesToApply.Select(t => ProgrammesConsts.GetByType(t)).ToList(),
                 new List<Common.WWW.Models.ActionModel>
                 {
                     new($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation"),

@@ -1,8 +1,7 @@
 using AngleSharp.Html.Dom;
-using HE.InvestmentLoans.Contract.Application.Enums;
-using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Models.UserOrganisation;
 using HE.InvestmentLoans.WWW.Tests.Helpers;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.WWW.Models;
 using Xunit;
 

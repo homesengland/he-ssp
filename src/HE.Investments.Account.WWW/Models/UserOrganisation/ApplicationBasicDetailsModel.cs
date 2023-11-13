@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.Investments.Common.Domain;
 
 namespace HE.Investments.Account.WWW.Models.UserOrganisation;
 
-public record ApplicationBasicDetailsModel(Guid Id, string ApplicationName, ApplicationStatus Status);
+public record ApplicationBasicDetailsModel(string Id, string ApplicationName, ApplicationStatus Status);

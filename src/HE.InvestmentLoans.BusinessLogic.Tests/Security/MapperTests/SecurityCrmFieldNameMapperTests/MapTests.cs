@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.Security.Mappers;
 using HE.InvestmentLoans.Common.Utils.Enums;
-using HE.InvestmentLoans.CRM.Model;
+using HE.Investments.Common.CRM.Model;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Security.MapperTests.SecurityCrmFieldNameMapperTests;

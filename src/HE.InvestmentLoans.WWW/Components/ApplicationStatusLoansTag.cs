@@ -11,9 +11,9 @@ using TextWithIdTagHelper = HE.Investments.Common.WWW.TagHelpers.TextWithIdTagHe
 
 namespace HE.InvestmentLoans.WWW.Components;
 
-public class ApplicationStatusTag : TextWithIdTagHelper
+public class ApplicationStatusLoansTag : TextWithIdTagHelper
 {
-    public ApplicationStatusTag()
+    public ApplicationStatusLoansTag()
         : base(HtmlConstants.Strong, string.Empty)
     {
     }
