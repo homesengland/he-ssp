@@ -160,6 +160,7 @@
     <Compile Include="HE.Base\Services\CrmServicesFactory.cs" />
     <Compile Include="HE.Base\Services\ICrmService.cs" />
     <Compile Include="HE.Base\Services\ICrmServicesFactory.cs" />
+    <Compile Include="Plugins\AhpApplication\CheckIfApplicationWithNewNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\CheckIfApplicationWithGivenNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleApplicationsPlugin.cs" />
