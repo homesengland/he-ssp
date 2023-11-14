@@ -77,19 +77,46 @@ namespace HE.Xrm.ServiceClientExample
 
         private static void TestLoan(ServiceClient serviceClient)
         {
-            var application = new AhpApplicationDto()
+            var applicationDtoToReturn = new AhpApplicationDto()
             {
-                name = "test custfffffffffffffffffasad",
-                tenure = (int)invln_Tenure.OPSO,
-                //id = "0e49b28a-757d-ee11-8179-002248004a06",
+                name = "custom api test",
+                tenure = (int)invln_Tenure.Renttobuy,
+                schemeInformationSectionCompletionStatus = (int)invln_AHPSectioncompletionstatusSet.InProgress,
+                homeTypesSectionCompletionStatus = (int)invln_AHPSectioncompletionstatusSet.InProgress,
+                financialDetailsSectionCompletionStatus = (int)invln_AHPSectioncompletionstatusSet.InProgress,
+                deliveryPhasesSectionCompletionStatus = (int)invln_AHPSectioncompletionstatusSet.InProgress,
+                borrowingAgainstRentalIncomeFromThisScheme = 122,
+                fundingFromOpenMarketHomesOnThisScheme = 7777,
+                fundingFromOpenMarketHomesNotOnThisScheme = 6969,
+                //fundingGeneratedFromOtherSources = application.?.Value,
+                recycledCapitalGrantFund = 2137,
+                //transferValue = application.?.Value,
+                //totalInitialSalesIncome = application.?.Value,
+                //otherCapitalSources = application.?.Value,
+                id = "49ab97e2-f882-ee11-8179-002248004f63",
             };
-            var fieldsToUpdate = $"{nameof(invln_scheme.invln_Tenure).ToLower()}";
-            var app = JsonSerializer.Serialize(application);
-            var req2 = new invln_checkifapplicationwithgivennameexistsRequest() //get loan applications related to account and contact with given data
+            var fieldsToUpdate = $"{nameof(invln_scheme.invln_schemename).ToLower()},{nameof(invln_scheme.invln_Tenure).ToLower()}," +
+                $"{nameof(invln_scheme.invln_schemeinformationsectioncompletionstatus).ToLower()},{nameof(invln_scheme.invln_deliveryphasessectioncompletionstatus).ToLower()}," +
+                $"{nameof(invln_scheme.invln_financialdetailssectioncompletionstatus).ToLower()},{nameof(invln_scheme.invln_hometypessectioncompletionstatus).ToLower()}," +
+                $"{nameof(invln_scheme.invln_borrowingagainstrentalincome).ToLower()},{nameof(invln_scheme.invln_fundingfromopenmarkethomesonthisscheme).ToLower()}," +
+                $"{nameof(invln_scheme.invln_fundingfromopenmarkethomesnotonthisscheme).ToLower()},{nameof(invln_scheme.invln_recycledcapitalgrantfund).ToLower()}";
+            var app = JsonSerializer.Serialize(applicationDtoToReturn);
+            var req2 = new invln_setahpapplicationRequest() //get loan applications related to account and contact with given data
             {
                 invln_application = app,
+                invln_organisationid = "db0da27f-bcfb-ed11-8f6d-002248c653e1",
+                invln_userid = "auth0|6548d4ef9e1110e85f1fef57",
+                invln_fieldstoupdate = fieldsToUpdate,
             };
-            var resp2 = (invln_checkifapplicationwithgivennameexistsResponse)serviceClient.Execute(req2);
+            var resp2 = (invln_setahpapplicationResponse)serviceClient.Execute(req2);
+            var req3 = new invln_getahpapplicationRequest() //get loan applications related to account and contact with given data
+            {
+                invln_appfieldstoretrieve = fieldsToUpdate,
+                invln_applicationid = "49ab97e2-f882-ee11-8179-002248004f63",
+                invln_organisationid = "db0da27f-bcfb-ed11-8f6d-002248c653e1",
+                invln_userid = "auth0|6548d4ef9e1110e85f1fef57",
+            };
+            var resp3 = (invln_getahpapplicationResponse)serviceClient.Execute(req3);
 
             Console.WriteLine("A web service connection was not established.");
         }

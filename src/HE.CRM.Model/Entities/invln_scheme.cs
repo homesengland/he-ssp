@@ -69,9 +69,11 @@ namespace DataverseModel
 			public const string invln_contactidName = "invln_contactidname";
 			public const string invln_currentlandvalue = "invln_currentlandvalue";
 			public const string invln_currentlandvalue_Base = "invln_currentlandvalue_base";
+			public const string invln_deliveryphasessectioncompletionstatus = "invln_deliveryphasessectioncompletionstatus";
 			public const string invln_discussionswithlocalstakeholders = "invln_discussionswithlocalstakeholders";
 			public const string invln_expectedacquisitioncost = "invln_expectedacquisitioncost";
 			public const string invln_expectedacquisitioncost_Base = "invln_expectedacquisitioncost_base";
+			public const string invln_financialdetailssectioncompletionstatus = "invln_financialdetailssectioncompletionstatus";
 			public const string invln_fundingfromopenmarkethomesnotonthisscheme = "invln_fundingfromopenmarkethomesnotonthisscheme";
 			public const string invln_fundingfromopenmarkethomesnotonthisscheme_Base = "invln_fundingfromopenmarkethomesnotonthisscheme_base";
 			public const string invln_fundingfromopenmarkethomesonthisscheme = "invln_fundingfromopenmarkethomesonthisscheme";
@@ -94,6 +96,7 @@ namespace DataverseModel
 			public const string invln_grantsfromsocialservices_Base = "invln_grantsfromsocialservices_base";
 			public const string invln_grantsfromthelottery = "invln_grantsfromthelottery";
 			public const string invln_grantsfromthelottery_Base = "invln_grantsfromthelottery_base";
+			public const string invln_hometypessectioncompletionstatus = "invln_hometypessectioncompletionstatus";
 			public const string invln_invln_hometype_application_invln_scheme = "invln_invln_hometype_application_invln_scheme";
 			public const string invln_invln_scheme_localauthoritylookup_invln_l = "invln_invln_scheme_localauthoritylookup_invln_l";
 			public const string invln_localauthoritylookup = "invln_localauthoritylookup";
@@ -114,6 +117,7 @@ namespace DataverseModel
 			public const string invln_recycledcapitalgrantfund_Base = "invln_recycledcapitalgrantfund_base";
 			public const string invln_schemeId = "invln_schemeid";
 			public const string Id = "invln_schemeid";
+			public const string invln_schemeinformationsectioncompletionstatus = "invln_schemeinformationsectioncompletionstatus";
 			public const string invln_schemename = "invln_schemename";
 			public const string invln_sharedownershipsalesrisk = "invln_sharedownershipsalesrisk";
 			public const string invln_Site = "invln_site";
@@ -399,6 +403,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_deliveryphasessectioncompletionstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_deliveryphasessectioncompletionstatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_deliveryphasessectioncompletionstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_deliveryphasessectioncompletionstatus");
+				this.SetAttributeValue("invln_deliveryphasessectioncompletionstatus", value);
+				this.OnPropertyChanged("invln_deliveryphasessectioncompletionstatus");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_discussionswithlocalstakeholders")]
 		public string invln_discussionswithlocalstakeholders
 		{
@@ -443,6 +464,23 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedacquisitioncost_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_financialdetailssectioncompletionstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_financialdetailssectioncompletionstatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_financialdetailssectioncompletionstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_financialdetailssectioncompletionstatus");
+				this.SetAttributeValue("invln_financialdetailssectioncompletionstatus", value);
+				this.OnPropertyChanged("invln_financialdetailssectioncompletionstatus");
 			}
 		}
 		
@@ -776,6 +814,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_hometypessectioncompletionstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_hometypessectioncompletionstatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_hometypessectioncompletionstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_hometypessectioncompletionstatus");
+				this.SetAttributeValue("invln_hometypessectioncompletionstatus", value);
+				this.OnPropertyChanged("invln_hometypessectioncompletionstatus");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthoritylookup")]
 		public Microsoft.Xrm.Sdk.EntityReference invln_localauthoritylookup
 		{
@@ -1025,6 +1080,23 @@ namespace DataverseModel
 			set
 			{
 				this.invln_schemeId = value;
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_schemeinformationsectioncompletionstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_schemeinformationsectioncompletionstatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_schemeinformationsectioncompletionstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_schemeinformationsectioncompletionstatus");
+				this.SetAttributeValue("invln_schemeinformationsectioncompletionstatus", value);
+				this.OnPropertyChanged("invln_schemeinformationsectioncompletionstatus");
 			}
 		}
 		

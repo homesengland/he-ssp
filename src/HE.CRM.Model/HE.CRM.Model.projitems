@@ -141,6 +141,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Incident_CaseOriginCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\InitialCommunication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Addressverificationtype.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AHPSectioncompletionstatusSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ApprovalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AssessedforBHL.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_BaseRate.cs" />

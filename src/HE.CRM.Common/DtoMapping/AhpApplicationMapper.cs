@@ -14,6 +14,18 @@ namespace HE.CRM.Common.DtoMapping
             {
                 invln_schemename = applicationDto.name,
                 invln_Tenure = MapNullableIntToOptionSetValue(applicationDto.tenure),
+                invln_schemeinformationsectioncompletionstatus = MapNullableIntToOptionSetValue(applicationDto.schemeInformationSectionCompletionStatus),
+                invln_hometypessectioncompletionstatus = MapNullableIntToOptionSetValue(applicationDto.homeTypesSectionCompletionStatus),
+                invln_financialdetailssectioncompletionstatus = MapNullableIntToOptionSetValue(applicationDto.financialDetailsSectionCompletionStatus),
+                invln_deliveryphasessectioncompletionstatus = MapNullableIntToOptionSetValue(applicationDto.deliveryPhasesSectionCompletionStatus),
+                invln_borrowingagainstrentalincome = MapNullableDecimalToMoney(applicationDto.borrowingAgainstRentalIncomeFromThisScheme),
+                invln_fundingfromopenmarkethomesonthisscheme = MapNullableDecimalToMoney(applicationDto.fundingFromOpenMarketHomesOnThisScheme),
+                invln_fundingfromopenmarkethomesnotonthisscheme = MapNullableDecimalToMoney(applicationDto.fundingFromOpenMarketHomesNotOnThisScheme),
+                //invln_funding = MapNullableDecimalToMoney(applicationDto.fundingGeneratedFromOtherSources),
+                invln_recycledcapitalgrantfund = MapNullableDecimalToMoney(applicationDto.recycledCapitalGrantFund),
+                //invln_transfer = MapNullableDecimalToMoney(applicationDto.transferValue),
+                //invln_totalinitial = MapNullableDecimalToMoney(applicationDto.totalInitialSalesIncome),
+                //invln_other = MapNullableDecimalToMoney(applicationDto.otherCapitalSources),
             };
             if (applicationDto.id != null && Guid.TryParse(applicationDto.id, out var applicationId))
             {
@@ -36,6 +48,18 @@ namespace HE.CRM.Common.DtoMapping
             {
                 name = application.invln_schemename,
                 tenure = application.invln_Tenure?.Value,
+                schemeInformationSectionCompletionStatus = application.invln_schemeinformationsectioncompletionstatus?.Value,
+                homeTypesSectionCompletionStatus = application.invln_hometypessectioncompletionstatus?.Value,
+                financialDetailsSectionCompletionStatus = application.invln_financialdetailssectioncompletionstatus?.Value,
+                deliveryPhasesSectionCompletionStatus = application.invln_deliveryphasessectioncompletionstatus?.Value,
+                borrowingAgainstRentalIncomeFromThisScheme = application.invln_borrowingagainstrentalincome?.Value,
+                fundingFromOpenMarketHomesOnThisScheme = application.invln_fundingfromopenmarkethomesonthisscheme?.Value,
+                fundingFromOpenMarketHomesNotOnThisScheme = application.invln_fundingfromopenmarkethomesnotonthisscheme?.Value,
+                //fundingGeneratedFromOtherSources = application.?.Value,
+                recycledCapitalGrantFund = application.invln_recycledcapitalgrantfund?.Value,
+                //transferValue = application.?.Value,
+                //totalInitialSalesIncome = application.?.Value,
+                //otherCapitalSources = application.?.Value,
             };
             if (application.Id != null)
             {
@@ -57,6 +81,15 @@ namespace HE.CRM.Common.DtoMapping
             if (valueToMap.HasValue)
             {
                 return new OptionSetValue(valueToMap.Value);
+            }
+            return null;
+        }
+
+        private static Money MapNullableDecimalToMoney(decimal? valueToMap)
+        {
+            if (valueToMap.HasValue)
+            {
+                return new Money(valueToMap.Value);
             }
             return null;
         }
