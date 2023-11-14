@@ -19,9 +19,16 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
 
     public async Task<OperationResult<ApplicationId?>> Handle(CreateApplicationCommand request, CancellationToken cancellationToken)
     {
-        var application = new ApplicationEntity(new ApplicationId(Guid.NewGuid().ToString()), new ApplicationName(request.Name));
+        var name = new ApplicationName(request.Name);
+        if (await _repository.IsExist(name, cancellationToken))
+        {
+            return new OperationResult<ApplicationId?>(
+                new[] { new ErrorItem("Name", "There is already an application with this name. Enter a different name") },
+                null);
+        }
 
-        await _repository.Save(application, cancellationToken);
+        var applicationToCreate = ApplicationEntity.New(name);
+        var application = await _repository.Save(applicationToCreate, cancellationToken);
 
         return new OperationResult<ApplicationId?>(application.Id);
     }

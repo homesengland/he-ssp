@@ -351,3 +351,4 @@ MigrationBackup/
 /src/HE.DocumentService/HE.DocumentService.Api/appsettings.Development.json
 src/.idea/
 /src/HE.Investment.AHP.WWW/appsettings.Development.json
+src/HE.DocumentService/.idea/

@@ -1,47 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-
 namespace HE.Investments.DocumentService.Models.File;
 
-public class FileData
+public sealed class FileData : IDisposable
 {
-    public string Name { get; set; }
-
-    public byte[] Data { get; set; }
-
-    /// <summary>
-    /// Extension of the file Name
-    /// </summary>
-    public string Ext => Path.GetExtension(Name ?? "").Replace(".", "");
-
-    public FileData()
-    {
-    }
-
-    public FileData(string name, Stream data)
+    public FileData(string name, Stream content)
     {
         Name = name;
-
-        using var ms = new MemoryStream();
-        data.CopyTo(ms);
-        Data = ms.ToArray();
+        Content = content;
     }
 
-    public FileData(string name, byte[] data)
-    {
-        Name = name;
-        Data = data;
-    }
+    public string Name { get; }
 
-    public FileData(IFormFile file)
+    public Stream Content { get; }
+
+    public void Dispose()
     {
-        using var ms = new MemoryStream();
-        file.CopyTo(ms);
-        Data = ms.ToArray();
-        Name = file.FileName;
+        Content.Dispose();
     }
 }

@@ -9,13 +9,6 @@ public class LandOwnership : ValueObject
 {
     public LandOwnership(string value)
     {
-        if (value.IsNotProvided())
-        {
-            OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.LandOwnership, FinancialDetailsValidationErrors.NoLandOwnershipProvided)
-                .CheckErrors();
-        }
-
         Value = value;
     }
 

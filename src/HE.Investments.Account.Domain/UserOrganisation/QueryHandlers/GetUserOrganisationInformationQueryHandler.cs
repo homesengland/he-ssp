@@ -45,6 +45,6 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
             userDetails.FirstName?.Value,
             account.Roles.All(r => r.Role == UserAccountRole.LimitedUser),
             userProgrammes,
-            new List<ProgrammeType> { ProgrammeType.Loans });
+            new List<ProgrammeType> { ProgrammeType.Loans, ProgrammeType.Ahp });
     }
 }

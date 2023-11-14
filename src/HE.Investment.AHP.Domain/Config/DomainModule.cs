@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.InvestmentLoans.Common.Utils;
+using HE.Investments.Account.Shared.Config;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +14,7 @@ public static class DomainModule
 {
     public static void AddDomainModule(this IServiceCollection services)
     {
+        services.AddAccountSharedModule();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
 
@@ -24,8 +26,7 @@ public static class DomainModule
 
     private static void AddHomeTypes(IServiceCollection services)
     {
-        // TODO: change repository to scoped after introducing integration with CRM
-        services.AddSingleton<IHomeTypeRepository, HomeTypeRepository>();
+        services.AddScoped<IHomeTypeRepository, HomeTypeRepository>();
 
         // TODO: change service do scoped after introducing integration with IHttpDocumentService
         services.AddSingleton<IDesignFileService, DesignFileService>();
@@ -38,7 +39,7 @@ public static class DomainModule
 
     private static void AddApplication(IServiceCollection services)
     {
-        services.AddSingleton<IApplicationRepository, ApplicationRepository>();
+        services.AddScoped<IApplicationRepository, ApplicationRepository>();
     }
 
     private static void AddScheme(IServiceCollection services)

@@ -86,11 +86,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Account.Shar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Account.Domain.Tests", "HE.Investments.Account.Domain.Tests\HE.Investments.Account.Domain.Tests.csproj", "{420FD403-FC55-4BE7-8953-E551C4F090DB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C902EA45-A7E8-4873-A4D6-6CA89C368751}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Account.WWW.Tests", "HE.Investments.Account.WWW.Tests\HE.Investments.Account.WWW.Tests.csproj", "{8E74001A-9AC8-4E8B-A385-5773B0612A5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.WWW.Tests", "HE.Investments.WWW.Tests\HE.Investments.WWW.Tests.csproj", "{8E74001A-9AC8-4E8B-A385-5773B0612A5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Common.CRM", "HE.Investments.Common.CRM\HE.Investments.Common.CRM.csproj", "{33E006B9-6053-4A1C-BB7B-908D832BB23D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Common.CRM", "HE.Investments.Common.CRM\HE.Investments.Common.CRM.csproj", "{33E006B9-6053-4A1C-BB7B-908D832BB23D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Common.Tests.WWW", "HE.Investments.Common.Tests.WWW\HE.Investments.Common.Tests.WWW.csproj", "{8619E600-0788-40E7-8901-6DF2C29E88A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -364,6 +364,14 @@ Global
 		{33E006B9-6053-4A1C-BB7B-908D832BB23D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{33E006B9-6053-4A1C-BB7B-908D832BB23D}.Release|x64.ActiveCfg = Release|Any CPU
 		{33E006B9-6053-4A1C-BB7B-908D832BB23D}.Release|x64.Build.0 = Release|Any CPU
+		{8619E600-0788-40E7-8901-6DF2C29E88A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8619E600-0788-40E7-8901-6DF2C29E88A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8619E600-0788-40E7-8901-6DF2C29E88A8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8619E600-0788-40E7-8901-6DF2C29E88A8}.Debug|x64.Build.0 = Debug|Any CPU
+		{8619E600-0788-40E7-8901-6DF2C29E88A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8619E600-0788-40E7-8901-6DF2C29E88A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8619E600-0788-40E7-8901-6DF2C29E88A8}.Release|x64.ActiveCfg = Release|Any CPU
+		{8619E600-0788-40E7-8901-6DF2C29E88A8}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -403,8 +411,9 @@ Global
 		{A719513A-72C3-4DA8-B16C-8AF395FCEE16} = {33FF4735-A715-4469-B315-AC227F30391E}
 		{089C982E-4940-41B8-9D2A-634F28A61B55} = {8DC0AE85-B2F6-41AF-8CA4-8743C47BA3EF}
 		{420FD403-FC55-4BE7-8953-E551C4F090DB} = {8DC0AE85-B2F6-41AF-8CA4-8743C47BA3EF}
-		{8E74001A-9AC8-4E8B-A385-5773B0612A5B} = {C902EA45-A7E8-4873-A4D6-6CA89C368751}
 		{33E006B9-6053-4A1C-BB7B-908D832BB23D} = {49D82160-DF00-41AA-A4F1-C6A32CF38179}
+		{8619E600-0788-40E7-8901-6DF2C29E88A8} = {49D82160-DF00-41AA-A4F1-C6A32CF38179}
+		{8E74001A-9AC8-4E8B-A385-5773B0612A5B} = {8DC0AE85-B2F6-41AF-8CA4-8743C47BA3EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44D30F0B-F008-4D12-95FB-E893E3AFB749}
@@ -419,6 +428,7 @@ Global
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{a719513a-72c3-4da8-b16c-8af395fcee16}*SharedItemsImports = 4
 		HE.CRM.Common\HE.CRM.Common.projitems*{a719513a-72c3-4da8-b16c-8af395fcee16}*SharedItemsImports = 4
 		HE.CRM.Model\HE.CRM.Model.projitems*{a719513a-72c3-4da8-b16c-8af395fcee16}*SharedItemsImports = 4
+		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{b6e1af99-263c-4e52-a766-5fb02f6276dd}*SharedItemsImports = 5
 		HE.CRM.Common\HE.CRM.Common.projitems*{c57c0cf7-dc36-45cd-bfaa-c0f9b632aecb}*SharedItemsImports = 13
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{d06ea4dc-76cf-4ceb-98a0-d89e88020c8d}*SharedItemsImports = 5
 		HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems*{f4cf4046-1578-49f6-9ab9-e2acd2765ecf}*SharedItemsImports = 13

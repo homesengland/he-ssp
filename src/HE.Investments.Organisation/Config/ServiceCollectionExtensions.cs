@@ -20,7 +20,7 @@ public static class ServiceCollectionExtensions
             x.GetRequiredService<IConfiguration>().GetRequiredSection("AppConfiguration:CompaniesHouse").Get<CompaniesHouseConfig>());
     }
 
-    private static void AddOrganisationCrmModule(IServiceCollection serviceCollections)
+    public static void AddOrganisationCrmModule(this IServiceCollection serviceCollections)
     {
         if (serviceCollections.All(s => s.ServiceType != typeof(IOrganizationServiceAsync2)))
         {

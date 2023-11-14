@@ -37,7 +37,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.Index)]
     public async Task<IActionResult> StartPost(Guid applicationId, string applicationName, CancellationToken cancellationToken)
     {
-        _ = await _mediator.Send(new StartFinancialDetailsCommand(applicationId, applicationName), cancellationToken);
+        _ = await _mediator.Send(new StartFinancialDetailsCommand(ApplicationId.From(applicationId), applicationName), cancellationToken);
 
         return await Continue(new { applicationId });
     }
@@ -93,6 +93,34 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             ModelState.AddValidationErrors(result);
 
             return View("LandValue", model);
+        }
+
+        return await Continue(new { applicationId });
+    }
+
+    [HttpGet("other-application-costs")]
+    [WorkflowState(FinancialDetailsWorkflowState.OtherApplicationCosts)]
+    public async Task<IActionResult> OtherApplicationCosts(Guid applicationId)
+    {
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
+        return View(new FinancialDetailsOtherApplicationCostsModel(
+            applicationId,
+            financialDetails.ApplicationName,
+            financialDetails.ExpectedWorkCost,
+            financialDetails.ExpectedOnCost));
+    }
+
+    [HttpPost("other-application-costs")]
+    [WorkflowState(FinancialDetailsWorkflowState.OtherApplicationCosts)]
+    public async Task<IActionResult> OtherApplicationCosts(Guid applicationId, FinancialDetailsOtherApplicationCostsModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new ProvideOtherApplicationCostsCommand(ApplicationId.From(applicationId), model.ExpectedWorksCosts, model.ExpectedOnCosts), cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("OtherApplicationCosts", model);
         }
 
         return await Continue(new { applicationId });

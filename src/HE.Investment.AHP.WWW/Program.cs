@@ -1,18 +1,25 @@
 using HE.Investment.AHP.WWW.Config;
 using HE.InvestmentLoans.Common.Infrastructure.Middlewares;
+using HE.InvestmentLoans.Common.Models.App;
+using HE.Investments.Common.CRM;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
+using HE.Investments.Common.WWW.Infrastructure.Cache;
 using HE.Investments.Common.WWW.Partials;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
+var appConfig = builder.Configuration.GetSection("AppConfiguration").Get<AppConfig>();
 
+builder.Services.AddCache(appConfig.Cache, appConfig.AppName!);
 builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddHttpClient();
-builder.Services.AddWebModule(builder);
+builder.Services.AddCrmConnection();
+builder.Services.AddWebModule(builder.Configuration);
 builder.Services.AddFeatureManagement();
 builder.Services.AddCommonBuildingBlocks();
+
 var mvcBuilder = builder.Services
     .AddControllersWithViews(options =>
         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()))

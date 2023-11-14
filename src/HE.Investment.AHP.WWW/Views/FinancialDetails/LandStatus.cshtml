@@ -13,6 +13,7 @@
                 <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.LandStatus, applicationId = Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
                 </gds-back-link>
             </div>
+            @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
             <span class="govuk-caption-m">
                 @Model.ApplicationName - Financial details
             </span>
@@ -75,9 +76,7 @@
 
             </gds-field-set>
             <gds-p>
-                <gds-link href="#">
-                    Save and return to application
-                </gds-link>
+                <vc:return-to-application-link application-id="@Model.ApplicationId" />
             </gds-p>
 
         </form>

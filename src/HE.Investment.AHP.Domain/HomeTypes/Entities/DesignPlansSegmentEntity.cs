@@ -85,11 +85,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
 
     public void MarkFileToRemove(FileId fileId)
     {
-        var fileToRemove = _uploadedFiles.FirstOrDefault(x => x.Id == fileId);
-        if (fileToRemove == null)
-        {
-            throw new NotFoundException(nameof(DesignPlanFileEntity), fileId);
-        }
+        var fileToRemove = _uploadedFiles.FirstOrDefault(x => x.Id == fileId) ?? throw new NotFoundException(nameof(DesignPlanFileEntity), fileId);
 
         if (_application.Status == ApplicationStatus.Submitted)
         {

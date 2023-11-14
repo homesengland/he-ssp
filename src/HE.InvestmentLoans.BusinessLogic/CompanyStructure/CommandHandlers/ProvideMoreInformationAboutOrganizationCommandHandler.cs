@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Constants;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Notifications;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
+using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 using HE.Investments.Account.Shared;
@@ -13,6 +14,7 @@ using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Models.File;
 using HE.Investments.DocumentService.Services;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.CommandHandlers;
@@ -63,35 +65,42 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                 var filesCount = request.OrganisationMoreInformationFiles?.Count + request.FormFiles.Count;
                 companyStructure.ProvideFilesWithMoreInformation(new OrganisationMoreInformationFiles(filesCount));
 
-                var filesUploaded = string.Empty;
-                var userDetails = await _loanUserContext.GetProfileDetails();
-
-                foreach (var formFile in request.FormFiles)
-                {
-                    var file = new FileData(formFile);
-                    companyStructure.ProvideFileWithMoreInformation(new OrganisationMoreInformationFile(file.Name, file.Data, _config.MaxFileSizeInMegabytes));
-
-                    await _documentService.UploadAsync(new FileUploadModel()
-                    {
-                        ListTitle = _config.ListTitle,
-                        FolderPath = $"{await _companyStructureRepository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken)}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
-                        File = formFile,
-                        Metadata = JsonSerializer.Serialize(new FileMetadata
-                        {
-                            Creator = $"{userDetails.FirstName} {userDetails.LastName}",
-                        }),
-                        Overwrite = true,
-                    });
-
-                    filesUploaded += $"{file.Name}, ";
-                }
-
-                if (!string.IsNullOrEmpty(filesUploaded))
-                {
-                    await _notificationService.Publish(new FilesUploadedSuccessfullyNotification(filesUploaded[..^2]));
-                }
+                await UploadFiles(request.LoanApplicationId, companyStructure, request.FormFiles, cancellationToken);
             },
             request.LoanApplicationId,
             cancellationToken);
+    }
+
+    private async Task UploadFiles(
+        LoanApplicationId loanApplicationId,
+        CompanyStructureEntity companyStructure,
+        IEnumerable<IFormFile> files,
+        CancellationToken cancellationToken)
+    {
+        var filesUploaded = string.Empty;
+        var userDetails = await _loanUserContext.GetProfileDetails();
+        var folderPath = $"{await _companyStructureRepository.GetFilesLocationAsync(loanApplicationId, cancellationToken)}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}";
+        var fileMetadata = JsonSerializer.Serialize(new FileMetadata { Creator = $"{userDetails.FirstName} {userDetails.LastName}" });
+
+        foreach (var file in files)
+        {
+            companyStructure.ProvideFileWithMoreInformation(new OrganisationMoreInformationFile(file.FileName, file.Length, _config.MaxFileSizeInMegabytes));
+
+            await _documentService.UploadAsync(new FileUploadModel
+            {
+                ListTitle = _config.ListTitle,
+                FolderPath = folderPath,
+                File = file,
+                Metadata = fileMetadata,
+                Overwrite = true,
+            });
+
+            filesUploaded += $"{file.FileName}, ";
+        }
+
+        if (!string.IsNullOrEmpty(filesUploaded))
+        {
+            await _notificationService.Publish(new FilesUploadedSuccessfullyNotification(filesUploaded[..^2]));
+        }
     }
 }

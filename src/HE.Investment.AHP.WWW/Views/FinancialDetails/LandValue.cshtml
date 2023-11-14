@@ -13,6 +13,7 @@
                 <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.LandValue, applicationId = @Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
                 </gds-back-link>
             </div>
+            @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
             <span class="govuk-caption-m">
                 @Model.ApplicationName - Financial details
             </span>
@@ -30,7 +31,7 @@
                     </gds-field-set>
                     <gds-field-set class="govuk-!-margin-bottom-6" role="group">
                         <legend>
-                            <gds-label for="LandValue" size="ControlSize.S">
+                            <gds-label for="@Model.IsOnPublicLand" size="ControlSize.S">
                                 Is your scheme on public land
                             </gds-label>
                         </legend>
@@ -38,8 +39,15 @@
                             Public land is land owned by the government.
                         </gds-div-hint>
                         <gds-radio-yes-no asp-for="@Model.IsOnPublicLand" class="govuk-!-margin-bottom-6"></gds-radio-yes-no>
+                    </gds-field-set>
+                    <gds-field-set class="govuk-!-margin-bottom-6" role="group">
+                        <legend>
+                            <gds-label for="@Model.LandValue" size="ControlSize.S">
+                                Enter the current value of the land
+                            </gds-label>
+                        </legend>
                         <gds-input govuk-formgroup-asp-for="@Model.LandValue" type="text" asp-excludelabel
-                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model.LandValue />
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.LandValue />
                     </gds-field-set>
                 </gds-div-form-group>
 
