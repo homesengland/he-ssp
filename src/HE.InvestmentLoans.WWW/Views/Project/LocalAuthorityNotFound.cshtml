@@ -18,14 +18,14 @@
 
     <gds-p>
         If you think you have entered the wrong details, you can
-        <gds-link href="@Url.Action("LocalAuthoritySearch", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, redirect })">
+        <gds-link href="@Url.Action("LocalAuthoritySearch", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, redirect })" id="local-authority-search-link">
             try again using a different name.
         </gds-link>
     </gds-p>
 
     <gds-p>
         If your local authority is not listed above, your
-        <gds-link href="@Url.Action("LocalAuthorityReset", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, redirect })">
+        <gds-link href="@Url.Action("LocalAuthorityReset", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, redirect })" id="assign-empty-local-authority-link">
             Transaction Manager can add this for you later.
         </gds-link>
     </gds-p>

@@ -1,8 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using He.AspNetCore.Mvc.Gds.Components.Constants;
-using HE.InvestmentLoans.BusinessLogic.Projects.Enums;
 using HE.InvestmentLoans.Common.Tests.TestData;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
@@ -16,13 +13,13 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.Application.Order02Sections.
 
 [Order(2)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order12AdditionalDetailsIntegrationTests : IntegrationTest
+public class Order13AdditionalDetailsIntegrationTests : IntegrationTest
 {
     private readonly string _projectId;
 
     private readonly string _applicationLoanId;
 
-    public Order12AdditionalDetailsIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order13AdditionalDetailsIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;

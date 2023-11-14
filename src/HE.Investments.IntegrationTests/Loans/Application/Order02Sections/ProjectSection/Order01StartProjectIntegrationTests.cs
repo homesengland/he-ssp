@@ -1,7 +1,5 @@
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Extensions;

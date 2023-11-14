@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HE.InvestmentLoans.Common.Tests.TestData;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -13,7 +7,6 @@ using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
 using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
 using HE.InvestmentLoans.WWW.Views.Project.Consts;
 using HE.Investments.Common.Messages;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Resources;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
@@ -21,13 +14,13 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.Application.Order02Sections.
 
 [Order(2)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order15ChargesDebtIntegrationTests : IntegrationTest
+public class Order16ChargesDebtIntegrationTests : IntegrationTest
 {
     private readonly string _projectId;
 
     private readonly string _applicationLoanId;
 
-    public Order15ChargesDebtIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order16ChargesDebtIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
