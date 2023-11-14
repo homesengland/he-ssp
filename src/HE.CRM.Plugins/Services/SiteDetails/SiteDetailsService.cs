@@ -15,6 +15,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
 
         private readonly ISiteDetailsRepository siteDetailsRepository;
         private readonly ILoanApplicationRepository _loanApplicationRepository;
+        private readonly ILocalAuthorityRepository _localAuthorityRepository;
 
         #endregion
 
@@ -24,6 +25,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
         {
             siteDetailsRepository = CrmRepositoriesFactory.Get<ISiteDetailsRepository>();
             _loanApplicationRepository = CrmRepositoriesFactory.Get<ILoanApplicationRepository>();
+            _localAuthorityRepository = CrmRepositoriesFactory.Get<ILocalAuthorityRepository>();
         }
 
         #endregion
@@ -31,10 +33,15 @@ namespace HE.CRM.Plugins.Services.SiteDetails
         #region Public Methods
         public void UpdateSiteDetails(string siteDetailsId, string siteDetail, string fieldsToUpdate, string loanApplicationId)
         {
-            if(Guid.TryParse(siteDetailsId, out Guid detailsId))
+            if (Guid.TryParse(siteDetailsId, out Guid detailsId))
             {
                 var deserilizedSiteDetail = JsonSerializer.Deserialize<SiteDetailsDto>(siteDetail);
-                var siteDetailsMapped = SiteDetailsDtoMapper.MapSiteDetailsDtoToRegularEntity(deserilizedSiteDetail, loanApplicationId);
+                invln_localauthority localAuthority = null;
+                if (deserilizedSiteDetail.localAuthority != null && !string.IsNullOrEmpty(deserilizedSiteDetail.localAuthority.onsCode))
+                {
+                    localAuthority = _localAuthorityRepository.GetLocalAuthorityWithGivenOnsCode(deserilizedSiteDetail.localAuthority.onsCode);
+                }
+                var siteDetailsMapped = SiteDetailsDtoMapper.MapSiteDetailsDtoToRegularEntity(deserilizedSiteDetail, loanApplicationId, localAuthority);
                 invln_SiteDetails siteDetailToUpdate = new invln_SiteDetails();
                 if (string.IsNullOrEmpty(fieldsToUpdate))
                 {
@@ -43,7 +50,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 else
                 {
                     var fields = fieldsToUpdate.Split(',');
-                    if(fields.Length > 0)
+                    if (fields.Length > 0)
                     {
                         foreach (var field in fields)
                         {
@@ -80,7 +87,12 @@ namespace HE.CRM.Plugins.Services.SiteDetails
         public void CreateSiteDetail(string siteDetail, string loanApplicationId)
         {
             var deserilizedSiteDetail = JsonSerializer.Deserialize<SiteDetailsDto>(siteDetail);
-            var siteDetailsToCreate = SiteDetailsDtoMapper.MapSiteDetailsDtoToRegularEntity(deserilizedSiteDetail, loanApplicationId);
+            invln_localauthority localAuthority = null;
+            if (deserilizedSiteDetail.localAuthority != null && !string.IsNullOrEmpty(deserilizedSiteDetail.localAuthority.onsCode))
+            {
+                localAuthority = _localAuthorityRepository.GetLocalAuthorityWithGivenOnsCode(deserilizedSiteDetail.localAuthority.onsCode);
+            }
+            var siteDetailsToCreate = SiteDetailsDtoMapper.MapSiteDetailsDtoToRegularEntity(deserilizedSiteDetail, loanApplicationId, localAuthority);
             siteDetailsRepository.Create(siteDetailsToCreate);
 
             SetLastModificationDateOnRelatedLoanApplication(siteDetailsToCreate);
@@ -116,7 +128,12 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 }
                 if (retrievedSiteDetail != null)
                 {
-                    var siteDetailsDto = SiteDetailsDtoMapper.MapSiteDetailsToDto(retrievedSiteDetail);
+                    invln_localauthority localAuthority = null;
+                    if (retrievedSiteDetail.invln_Region != null)
+                    {
+                        localAuthority = _localAuthorityRepository.GetById(retrievedSiteDetail.invln_Region.Id);
+                    }
+                    var siteDetailsDto = SiteDetailsDtoMapper.MapSiteDetailsToDto(retrievedSiteDetail, localAuthority);
                     var relatedLoan = _loanApplicationRepository.GetLoanApplicationRelatedToSiteDetails(siteDetailsGuid);
                     if (relatedLoan != null)
                     {

@@ -9,7 +9,7 @@ namespace HE.CRM.Common.DtoMapping
     public class SiteDetailsDtoMapper
     {
         public SiteDetailsDtoMapper() { }
-        public static invln_SiteDetails MapSiteDetailsDtoToRegularEntity(SiteDetailsDto siteDetail, string loanApplicationGuid)
+        public static invln_SiteDetails MapSiteDetailsDtoToRegularEntity(SiteDetailsDto siteDetail, string loanApplicationGuid, invln_localauthority localAuthority = null)
         {
             var siteDetailToReturn = new invln_SiteDetails()
             {
@@ -49,14 +49,14 @@ namespace HE.CRM.Common.DtoMapping
             {
                 siteDetailToReturn.Id = detailId;
             }
-            if (siteDetail.localAuthority != null && Guid.TryParse(siteDetail.localAuthority.id, out var localAuthorityGuid))
+            if (localAuthority != null)
             {
-                siteDetailToReturn.invln_Region = new EntityReference(invln_localauthority.EntityLogicalName, localAuthorityGuid);
+                siteDetailToReturn.invln_Region = new EntityReference(localAuthority.LogicalName, localAuthority.Id);
             }
             return siteDetailToReturn;
         }
 
-        public static SiteDetailsDto MapSiteDetailsToDto(invln_SiteDetails siteDetails)
+        public static SiteDetailsDto MapSiteDetailsToDto(invln_SiteDetails siteDetails, invln_localauthority localAuthority = null)
         {
             var siteDetailToReturn = new SiteDetailsDto()
             {
@@ -89,12 +89,12 @@ namespace HE.CRM.Common.DtoMapping
                 completionStatus = siteDetails.invln_completionstatus?.Value,
                 projectHasStartDate = siteDetails.invln_projecthasstartdate,
             };
-            if (siteDetails.invln_Region != null)
+            if (localAuthority != null)
             {
                 siteDetailToReturn.localAuthority = new LocalAuthorityDto()
                 {
-                    id = siteDetails.invln_Region.Id.ToString(),
-                    name = siteDetails.invln_Region.Name.ToString(),
+                    name = localAuthority.invln_localauthorityname.ToString(),
+                    onsCode = localAuthority.invln_onscode,
                 };
             }
             return siteDetailToReturn;
