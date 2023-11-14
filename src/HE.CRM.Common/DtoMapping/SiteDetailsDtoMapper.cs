@@ -93,7 +93,6 @@ namespace HE.CRM.Common.DtoMapping
             {
                 siteDetailToReturn.localAuthority = new LocalAuthorityDto()
                 {
-                    id = localAuthority.Id.ToString(),
                     name = localAuthority.invln_localauthorityname.ToString(),
                     onsCode = localAuthority.invln_onscode,
                 };
