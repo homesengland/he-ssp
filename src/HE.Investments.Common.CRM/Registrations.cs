@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Common.Utils;
+using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -37,6 +38,7 @@ public static class Registrations
                 new Uri(config.BaseUri!),
                 uri => Task.FromResult(cachedAuthToken));
         });
+        services.AddScoped<ICrmService, CrmService>();
     }
 
     private static bool IsTokenExpired(JwtSecurityToken token, IDateTimeProvider dateTimeProvider)
