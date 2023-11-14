@@ -364,7 +364,8 @@ public class Project : DomainEntity
             LandOwnership.IsProvided() && (!LandOwnership!.ApplicantHasFullOwnership || AdditionalDetails.IsProvided()) &&
             GrantFundingStatus.IsProvided() && (GrantFundingStatus != PublicSectorGrantFundingStatus.Received || PublicSectorGrantFunding.IsProvided()) &&
             ChargesDebt.IsProvided() &&
-            AffordableHomes.IsProvided();
+            AffordableHomes.IsProvided() &&
+            LocalAuthority is not null && LocalAuthority.Id.IsProvided() && LocalAuthority.Name.IsProvided();
     }
 
     private void CompleteSection()

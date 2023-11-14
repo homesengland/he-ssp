@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract.Projects.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 internal sealed class ProjectTestBuilder
@@ -49,6 +50,8 @@ internal sealed class ProjectTestBuilder
         _project.ProvideAffordableHomes(new AffordableHomes(CommonResponse.Yes));
 
         _project.ProvideChargesDebt(new ChargesDebt(false, null));
+
+        _project.ProvideLocalAuthority(LocalAuthorityTestData.LocalAuthorityOne);
 
         return this;
     }

@@ -2,8 +2,10 @@ using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.InvestmentLoans.Contract.Projects.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
+
 internal static class ProjectTestData
 {
     public static Project ProjectReadyToBeCompleted()
@@ -42,6 +44,8 @@ internal static class ProjectTestData
 
         project.ProvideChargesDebt(new ChargesDebt(false, null));
 
+        project.ProvideLocalAuthority(LocalAuthority.New("1", "Liverpool"));
+
         return project;
     }
 
@@ -70,6 +74,8 @@ internal static class ProjectTestData
         project.ProvideAffordableHomes(new AffordableHomes(CommonResponse.Yes));
 
         project.ProvideChargesDebt(new ChargesDebt(false, null));
+
+        project.ProvideLocalAuthority(LocalAuthority.New("1", "Liverpool"));
 
         return project;
     }

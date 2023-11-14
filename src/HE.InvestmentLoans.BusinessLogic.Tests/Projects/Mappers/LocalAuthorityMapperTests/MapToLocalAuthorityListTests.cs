@@ -12,7 +12,7 @@ public class MapToLocalAuthorityListTests
         // given
         var localAuthoritiesDto = LocalAuthorityDtoTestData.LocalAuthoritiesDtoList;
 
-        // given && when
+        // when
         var result = LocalAuthorityMapper.MapToLocalAuthorityList(localAuthoritiesDto);
 
         // then
