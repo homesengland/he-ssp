@@ -14,15 +14,6 @@
     <LangVersion>10</LangVersion>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <NoWarn>SA1118</NoWarn>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'!='DEBUG'">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-
-
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
       <PrivateAssets>all</PrivateAssets>
@@ -49,8 +40,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investment.AHP.WWW\HE.Investment.AHP.WWW.csproj" />
-    <ProjectReference Include="..\HE.Investments.Common.Tests.WWW\HE.Investments.Common.Tests.WWW.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
   </ItemGroup>
 
 </Project>
