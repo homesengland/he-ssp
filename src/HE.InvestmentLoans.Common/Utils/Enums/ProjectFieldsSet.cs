@@ -12,6 +12,7 @@ public enum ProjectFieldsSet
     ManyHomes,
     TypeOfProject,
     TypeOfHomes,
+    LocalAuthority,
     Ownership,
     PlanningPermissionStatus,
     PlanningReferenceNumber,

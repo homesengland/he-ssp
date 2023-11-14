@@ -1,6 +1,6 @@
 extern alias Org;
 
-using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+using HE.InvestmentLoans.Contract.Projects.ValueObjects;
 using LocalAuthorityDto = HE.Common.IntegrationModel.PortalIntegrationModel.LocalAuthorityDto;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;

@@ -1,16 +1,16 @@
 using HE.Investments.Common.Domain;
 
-namespace HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+namespace HE.InvestmentLoans.Contract.Projects.ValueObjects;
 
 public class LocalAuthority : ValueObject
 {
     public LocalAuthority(string id, string name)
     {
-        Id = id;
+        Id = LocalAuthorityId.From(id);
         Name = name;
     }
 
-    public string Id { get; }
+    public LocalAuthorityId Id { get; }
 
     public string Name { get; }
 

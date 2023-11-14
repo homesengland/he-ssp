@@ -15,7 +15,7 @@ public class ConfirmLocalAuthorityCommandHandler : IRequestHandler<ConfirmLocalA
 
     public async Task<OperationResult> Handle(ConfirmLocalAuthorityCommand request, CancellationToken cancellationToken)
     {
-        await _localAuthorityRepository.AssignLocalAuthority(request.LoanApplicationId, request.ProjectId, request.LocalAuthorityId, cancellationToken);
+        await _localAuthorityRepository.AssignLocalAuthority(request.LoanApplicationId, request.ProjectId, request.LocalAuthority, cancellationToken);
 
         return OperationResult.Success();
     }

@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+using HE.InvestmentLoans.Contract.Projects.ValueObjects;
 using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;

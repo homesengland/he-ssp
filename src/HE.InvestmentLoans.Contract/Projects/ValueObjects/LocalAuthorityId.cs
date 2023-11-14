@@ -1,7 +1,7 @@
 using Dawn;
 using HE.Investments.Common.Domain;
 
-namespace HE.InvestmentLoans.Contract.Application.ValueObjects;
+namespace HE.InvestmentLoans.Contract.Projects.ValueObjects;
 public class LocalAuthorityId : ValueObject
 {
     public LocalAuthorityId(string value)
@@ -15,7 +15,7 @@ public class LocalAuthorityId : ValueObject
 
     public override string ToString()
     {
-        return Value.ToString();
+        return Value;
     }
 
     protected override IEnumerable<object> GetAtomicValues()

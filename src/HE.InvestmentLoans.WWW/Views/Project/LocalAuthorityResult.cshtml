@@ -16,7 +16,7 @@
             @foreach (var item in Model.Items)
             {
                 <li>
-                    <gds-p><gds-link href="@Url.Action("LocalAuthorityConfirm", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, localAuthorityId = item.Id})" id=@($"local-authority-link-{item.Id}")><b>@item.Name</b></gds-link></gds-p>
+                    <gds-p><gds-link href="@Url.Action("LocalAuthorityConfirm", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, localAuthorityId = item.Id, localAuthorityName = item.Name})" id=@($"local-authority-link-{item.Id}")><b>@item.Name</b></gds-link></gds-p>
                 </li>
             }
         </gds-ul>

@@ -1,5 +1,4 @@
 using HE.InvestmentLoans.BusinessLogic.Projects;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
@@ -10,6 +9,7 @@ using HE.InvestmentLoans.Contract.Funding.Commands;
 using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.Queries;
+using HE.InvestmentLoans.Contract.Projects.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.Investments.Common.Extensions;
@@ -369,18 +369,15 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.ProvideLocalAuthority)]
     public IActionResult LocalAuthoritySearch(Guid id, Guid projectId)
     {
-        return View(new LocalAuthoritiesViewModel
-        {
-            ApplicationId = id,
-            ProjectId = projectId,
-        });
+        return View(new LocalAuthoritiesViewModel { ApplicationId = id, ProjectId = projectId, });
     }
 
     [HttpPost("{projectId}/local-authority/search")]
     public async Task<IActionResult> LocalAuthoritySearch(Guid id, Guid projectId, LocalAuthoritiesViewModel viewModel, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new ProvideLocalAuthoritySearchPhraseCommand(viewModel.Phrase), cancellationToken);
+            new ProvideLocalAuthoritySearchPhraseCommand(viewModel.Phrase),
+            cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -414,33 +411,32 @@ public class ProjectController : WorkflowController<ProjectState>
     [HttpGet("{projectId}/local-authority/not-found")]
     public IActionResult LocalAuthorityNotFound(Guid id, Guid projectId)
     {
-        return View(new LocalAuthoritiesViewModel
-        {
-            ApplicationId = id,
-            ProjectId = projectId,
-        });
+        return View(new LocalAuthoritiesViewModel { ApplicationId = id, ProjectId = projectId, });
     }
 
     [HttpGet("{projectId}/local-authority/{localAuthorityId}/confirm")]
     public IActionResult LocalAuthorityConfirm(Guid id, Guid projectId, string localAuthorityId)
     {
-        var viewModel = new LocalAuthoritiesViewModel
-        {
-            ApplicationId = id,
-            ProjectId = projectId,
-            LocalAuthorityId = localAuthorityId,
-        };
+        var viewModel = new LocalAuthoritiesViewModel { ApplicationId = id, ProjectId = projectId, LocalAuthorityId = localAuthorityId, };
 
         return View(new ConfirmModel<LocalAuthoritiesViewModel>(viewModel));
     }
 
     [HttpPost("{projectId}/local-authority/{localAuthorityId}/confirm")]
     [WorkflowState(ProjectState.ProvideLocalAuthority)]
-    public async Task<IActionResult> LocalAuthorityConfirm(Guid id, Guid projectId, string localAuthorityId, ConfirmModel<LocalAuthoritiesViewModel> model, CancellationToken token)
+    public async Task<IActionResult> LocalAuthorityConfirm(
+        Guid id,
+        Guid projectId,
+        string localAuthorityId,
+        string localAuthorityName,
+        ConfirmModel<LocalAuthoritiesViewModel> model,
+        CancellationToken token)
     {
         if (model.Response == CommonResponse.Yes)
         {
-            await _mediator.Send(new ConfirmLocalAuthorityCommand(LoanApplicationId.From(id), ProjectId.From(projectId), LocalAuthorityId.From(localAuthorityId)), token);
+            await _mediator.Send(
+                new ConfirmLocalAuthorityCommand(LoanApplicationId.From(id), ProjectId.From(projectId), LocalAuthority.New(localAuthorityId, localAuthorityName)),
+                token);
 
             return await Continue(new { id, projectId });
         }

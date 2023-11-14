@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+using HE.InvestmentLoans.Contract.Projects.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 internal sealed class LocalAuthorityTestData
