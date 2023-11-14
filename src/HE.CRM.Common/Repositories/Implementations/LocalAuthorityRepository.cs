@@ -22,6 +22,15 @@ namespace HE.CRM.Common.Repositories.Implementations
                 return ctx.CreateQuery<invln_localauthority>().ToList();
             }
         }
+
+        public invln_localauthority GetLocalAuthorityWithGivenOnsCode(string onsCode)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<invln_localauthority>()
+                    .Where(x => x.invln_onscode == onsCode).FirstOrDefault();
+            }
+        }
         #endregion
     }
 }

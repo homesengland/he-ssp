@@ -87,18 +87,19 @@ namespace HE.Xrm.ServiceClientExample
             {
                 localAuthority = new LocalAuthorityDto()
                 {
-                    id = "b240964f-047f-ee11-8179-0022480041cf",
+                    onsCode = "E07000234",
                 },
             };
             var fieldsToUpdate = $"{nameof(invln_SiteDetails.invln_Region).ToLower()}";
             var app = JsonSerializer.Serialize(siteDetail);
-            var req2 = new invln_getsinglesitedetailsRequest() //get loan applications related to account and contact with given data
+            var req2 = new invln_updatesinglesitedetailsRequest() //get loan applications related to account and contact with given data
             {
-                invln_accountid = "b6f56f99-b44b-ee11-be6f-002248c65419",
-                invln_externalcontactid = "itests|24b9d8b8-9723-49a1-80d6-2d10918e1ba5",
                 invln_sitedetailsid = "1b8c422c-c682-ee11-8179-002248004f63",
+                invln_loanapplicationid = "c8ad01c2-f068-ee11-9ae6-002248004a06",
+                invln_fieldstoupdate = fieldsToUpdate,
+                invln_sitedetail = app,
             };
-            var resp = (invln_getsinglesitedetailsResponse)serviceClient.Execute(req2);
+            serviceClient.Execute(req2);
 
             Console.WriteLine("A web service connection was not established.");
         }
