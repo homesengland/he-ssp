@@ -3,7 +3,7 @@ using HE.InvestmentLoans.Common.Exceptions;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 
-namespace HE.Investments.Account.Domain.Utils;
+namespace HE.Investments.Common.CRM.Services;
 
 public class CrmService : ICrmService
 {
@@ -18,11 +18,20 @@ public class CrmService : ICrmService
         where TRequest : OrganizationRequest
         where TResponse : OrganizationResponse
     {
-        // TODO exception
         var response = await _serviceClient.ExecuteAsync(request, cancellationToken) as TResponse
-                       ?? throw new NotFoundException("a");
+                       ?? throw new NotFoundException($"Cannot find {nameof(TDto)} resource for {nameof(TRequest)} request");
 
         return CrmResponseSerializer.Deserialize<TDto>(getResponse(response))
-               ?? throw new NotFoundException("b");
+               ?? throw new NotFoundException($"Cannot find {nameof(TDto)} resource for {nameof(TRequest)} request");
+    }
+
+    public async Task<string> ExecuteAsync<TRequest, TResponse>(TRequest request, Func<TResponse, string> getResponse, CancellationToken cancellationToken)
+        where TRequest : OrganizationRequest
+        where TResponse : OrganizationResponse
+    {
+        var response = await _serviceClient.ExecuteAsync(request, cancellationToken) as TResponse
+                       ?? throw new NotFoundException($"Cannot find resource for {nameof(TRequest)} request");
+
+        return getResponse(response);
     }
 }
