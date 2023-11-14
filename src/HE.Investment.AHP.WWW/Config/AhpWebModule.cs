@@ -1,19 +1,30 @@
 using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
 using HE.InvestmentLoans.Common.Infrastructure;
+using HE.InvestmentLoans.Common.Models.App;
+using HE.Investments.Common.WWW.Infrastructure.Authorization;
+using HE.Investments.Organisation.Config;
 
 namespace HE.Investment.AHP.WWW.Config;
 
 public static class AhpWebModule
 {
-    public static void AddWebModule(this IServiceCollection service, WebApplicationBuilder builder)
+    public static void AddWebModule(this IServiceCollection service, IConfiguration configuration)
     {
+        service.AddOrganisationCrmModule();
         service.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(SaveHomeTypeDetailsCommandHandler).Assembly));
         service.AddScoped<NonceModel>();
-        service.AddSingleton<IAhpAppConfig, AhpAppConfig>(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration").Get<AhpAppConfig>());
 
-        service.Configure<ContactInfoOptions>(builder.Configuration.GetSection("AppConfiguration:ContactInfo"));
-
+        AddConfiguration(service, configuration);
+        service.AddHttpUserContext();
         service.AddDomainModule();
+    }
+
+    private static void AddConfiguration(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddSingleton<IAhpAppConfig, AhpAppConfig>(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration").Get<AhpAppConfig>());
+        services.Configure<ContactInfoOptions>(configuration.GetSection("AppConfiguration:ContactInfo"));
+        services.AddSingleton<IDataverseConfig, DataverseConfig>(x =>
+            x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:Dataverse").Get<DataverseConfig>());
     }
 }

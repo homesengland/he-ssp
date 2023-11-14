@@ -1,4 +1,5 @@
 using System.Net.Http.Headers;
+using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.Investments.Organisation.CompaniesHouse;
@@ -11,7 +12,8 @@ public static class AddCompaniesHouseHttpClientExtensions
         {
             var companiesHouseConfig = provider.GetRequiredService<ICompaniesHouseConfig>();
             client.BaseAddress = companiesHouseConfig.CompaniesHouseBaseUrl;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", companiesHouseConfig.ApiKey);
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes(companiesHouseConfig.ApiKey)));
         });
     }
 }
