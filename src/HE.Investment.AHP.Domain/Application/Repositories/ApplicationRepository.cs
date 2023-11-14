@@ -46,6 +46,26 @@ public class ApplicationRepository : IApplicationRepository
         return CreateEntity(response.First());
     }
 
+    public async Task<bool> IsExist(ApplicationName applicationName, CancellationToken cancellationToken)
+    {
+        var dto = new AhpApplicationDto
+        {
+            name = applicationName.Name,
+        };
+
+        var request = new invln_checkifapplicationwithgivennameexistsRequest
+        {
+            invln_application = CrmResponseSerializer.Serialize(dto),
+        };
+
+        var response = await _service.ExecuteAsync<invln_checkifapplicationwithgivennameexistsRequest, invln_checkifapplicationwithgivennameexistsResponse>(
+            request,
+            r => r.invln_applicationexists,
+            cancellationToken);
+
+        return bool.TryParse(response, out var result) && result;
+    }
+
     public async Task<ApplicationBasicInfo> GetApplicationBasicInfo(ApplicationId id, CancellationToken cancellationToken)
     {
         var application = await GetById(id, cancellationToken);
@@ -69,29 +89,33 @@ public class ApplicationRepository : IApplicationRepository
         return applications.Select(CreateEntity).ToList();
     }
 
-    public async Task<ApplicationEntity> Create(ApplicationName applicationName, CancellationToken cancellationToken)
-    {
-        var dto = new AhpApplicationDto
-        {
-            name = applicationName.Name,
-        };
-
-        // TODO: unique validation
-        var id = await CreateOrUpdate(dto, cancellationToken);
-
-        return await GetById(new ApplicationId(id), cancellationToken);
-    }
-
     public async Task<ApplicationEntity> Save(ApplicationEntity application, CancellationToken cancellationToken)
     {
+        var account = await _accountUserContext.GetSelectedAccount();
         var dto = new AhpApplicationDto
         {
-            id = application.Id.ToString(),
+            id = application.Id.IsEmpty() ? null : application.Id.Value,
             name = application.Name.Name,
             tenure = ApplicationTenureMapper.ToDto(application.Tenure),
+            organisationId = account.AccountId.ToString(),
         };
 
-        await CreateOrUpdate(dto, cancellationToken);
+        var request = new invln_setahpapplicationRequest
+        {
+            invln_userid = account.UserGlobalId.ToString(),
+            invln_organisationid = account.AccountId.ToString(),
+            invln_application = CrmResponseSerializer.Serialize(dto),
+        };
+
+        var id = await _service.ExecuteAsync<invln_setahpapplicationRequest, invln_setahpapplicationResponse>(
+            request,
+            r => r.invln_applicationid,
+            cancellationToken);
+
+        if (application.Id.IsEmpty())
+        {
+            application.SetId(new ApplicationId(id));
+        }
 
         return application;
     }
@@ -102,21 +126,5 @@ public class ApplicationRepository : IApplicationRepository
             new ApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
             ApplicationTenureMapper.ToDomain(application.tenure));
-    }
-
-    private async Task<string> CreateOrUpdate(AhpApplicationDto dto, CancellationToken cancellationToken)
-    {
-        var account = await _accountUserContext.GetSelectedAccount();
-        var request = new invln_setahpapplicationRequest
-        {
-            invln_userid = account.UserGlobalId.ToString(),
-            invln_organisationid = account.AccountId.ToString(),
-            invln_application = CrmResponseSerializer.Serialize(dto),
-        };
-
-        return await _service.ExecuteAsync<invln_setahpapplicationRequest, invln_setahpapplicationResponse>(
-            request,
-            r => r.invln_applicationid,
-            cancellationToken);
     }
 }

@@ -46,6 +46,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\HE.InvestmentLoans.WWW\HE.InvestmentLoans.WWW.csproj" />
+      <ProjectReference Include="..\HE.Investments.Common.Tests.WWW\HE.Investments.Common.Tests.WWW.csproj" />
     </ItemGroup>
 
 

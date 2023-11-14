@@ -95,7 +95,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
     {
         var response = await _mediator.Send(new GetCompanyStructureFileQuery(id, folderPath, fileName), cancellationToken);
 
-        return File(response.Data, "application/octet-stream", response.Name);
+        return File(response.Content, "application/octet-stream", response.Name);
     }
 
     [HttpPost("more-information-about-organization")]

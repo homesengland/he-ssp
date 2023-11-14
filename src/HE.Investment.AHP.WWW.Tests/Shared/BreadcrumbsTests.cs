@@ -1,5 +1,5 @@
-using HE.Investment.AHP.WWW.Tests.Helpers;
-using HE.Investment.AHP.WWW.Tests.Views;
+using HE.Investments.Common.Tests.WWW;
+using HE.Investments.Common.Tests.WWW.Helpers;
 using HE.Investments.Common.WWW.Routing;
 
 #pragma warning disable CA1716

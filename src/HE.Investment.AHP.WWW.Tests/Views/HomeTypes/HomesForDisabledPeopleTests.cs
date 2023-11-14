@@ -1,5 +1,5 @@
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investment.AHP.WWW.Tests.Helpers;
+using HE.Investments.Common.Tests.WWW.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 

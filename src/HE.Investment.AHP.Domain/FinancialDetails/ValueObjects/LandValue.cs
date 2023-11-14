@@ -1,4 +1,3 @@
-using Dawn;
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common.Domain;
@@ -10,21 +9,14 @@ public class LandValue : ValueObject
 {
     public LandValue(string value)
     {
-        if (ObjectExtensions.IsNotProvided(value))
+        if (!int.TryParse(value, out var valueInt) || valueInt <= 0)
         {
             OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.LandValue, FinancialDetailsValidationErrors.NoLandValue)
-                .CheckErrors();
+            .AddValidationError(FinancialDetailsValidationFieldNames.LandValue, FinancialDetailsValidationErrors.InvalidLandValue)
+            .CheckErrors();
         }
 
-        if (!int.TryParse(value, out var price) || price <= 0)
-        {
-            OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.LandValue, FinancialDetailsValidationErrors.InvalidLandValue)
-                .CheckErrors();
-        }
-
-        Value = price;
+        Value = valueInt;
     }
 
     public int Value { get; }

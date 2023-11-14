@@ -25602,4 +25602,120 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_gettypeofhomeslist")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_gettypeofhomeslistRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_applicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_applicationid"))
+				{
+					return ((string)(this.Parameters["invln_applicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_applicationid"] = value;
+			}
+		}
+		
+		public invln_gettypeofhomeslistRequest()
+		{
+			this.RequestName = "invln_gettypeofhomeslist";
+			this.invln_applicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_gettypeofhomeslist")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_gettypeofhomeslistResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_gettypeofhomeslistResponse()
+		{
+		}
+		
+		public string invln_hometypeslist
+		{
+			get
+			{
+				if (this.Results.Contains("invln_hometypeslist"))
+				{
+					return ((string)(this.Results["invln_hometypeslist"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_checkifapplicationwithgivennameexists")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_checkifapplicationwithgivennameexistsRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_application
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_application"))
+				{
+					return ((string)(this.Parameters["invln_application"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_application"] = value;
+			}
+		}
+		
+		public invln_checkifapplicationwithgivennameexistsRequest()
+		{
+			this.RequestName = "invln_checkifapplicationwithgivennameexists";
+			this.invln_application = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_checkifapplicationwithgivennameexists")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_checkifapplicationwithgivennameexistsResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_checkifapplicationwithgivennameexistsResponse()
+		{
+		}
+		
+		public string invln_applicationexists
+		{
+			get
+			{
+				if (this.Results.Contains("invln_applicationexists"))
+				{
+					return ((string)(this.Results["invln_applicationexists"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
 }

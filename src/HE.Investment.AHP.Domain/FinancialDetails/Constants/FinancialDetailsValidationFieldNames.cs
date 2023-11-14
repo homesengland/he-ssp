@@ -8,4 +8,8 @@ public static class FinancialDetailsValidationFieldNames
     public const string LandOwnership = nameof(LandOwnership);
 
     public const string LandValue = nameof(LandValue);
+
+    public const string ExpectedWorksCosts = nameof(ExpectedWorksCosts);
+
+    public const string ExpectedOnCosts = nameof(ExpectedOnCosts);
 }

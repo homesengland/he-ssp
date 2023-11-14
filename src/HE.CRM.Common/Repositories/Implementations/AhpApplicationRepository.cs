@@ -16,6 +16,15 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
+        public bool ApplicationWithGivenNameExists(string name)
+        {
+            using(var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<invln_scheme>()
+                    .Where(x => x.invln_schemename == name).AsEnumerable().Any();
+            }
+        }
+
         public List<invln_scheme> GetApplicationsForOrganisationAndContact(string organisationId, string contactId, string attributes, string additionalRecordFilters)
         {
             var fetchXml = @"<fetch>

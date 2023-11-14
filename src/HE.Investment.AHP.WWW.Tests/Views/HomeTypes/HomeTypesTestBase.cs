@@ -1,5 +1,6 @@
 using AngleSharp.Html.Dom;
-using HE.Investment.AHP.WWW.Tests.Helpers;
+using HE.Investments.Common.Tests.WWW;
+using HE.Investments.Common.Tests.WWW.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
