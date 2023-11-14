@@ -1,6 +1,7 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Scheme;
-using HE.Investment.AHP.WWW.Tests.Helpers;
+using HE.Investments.WWW.Tests;
+using HE.Investments.WWW.Tests.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;

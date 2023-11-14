@@ -1,6 +1,6 @@
-using HE.Investment.AHP.WWW.Tests.Helpers;
-using HE.Investment.AHP.WWW.Tests.Views;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.WWW.Tests;
+using HE.Investments.WWW.Tests.Helpers;
 
 #pragma warning disable CA1716
 namespace HE.Investment.AHP.WWW.Tests.Shared;
