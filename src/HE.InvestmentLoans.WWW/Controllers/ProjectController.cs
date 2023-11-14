@@ -682,9 +682,9 @@ public class ProjectController : WorkflowController<ProjectState>
     }
 
     [HttpGet("{projectId}/back")]
-    public Task<IActionResult> Back(ProjectState currentPage, Guid id, Guid projectId)
+    public Task<IActionResult> Back(ProjectState currentPage, Guid id, Guid projectId, string localAuthorityId, string localAuthorityName)
     {
-        return Back(currentPage, new { id, projectId });
+        return Back(currentPage, new { id, projectId, localAuthorityId, localAuthorityName });
     }
 
     protected override async Task<IStateRouting<ProjectState>> Routing(ProjectState currentState, object routeData = null)

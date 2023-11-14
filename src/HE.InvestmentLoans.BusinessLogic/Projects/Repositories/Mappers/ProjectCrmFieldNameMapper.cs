@@ -48,7 +48,7 @@ public static class ProjectCrmFieldNameMapper
             ProjectFieldsSet.TypeOfProject => TypeOfProject,
             ProjectFieldsSet.TypeOfHomes => string.Join(",", TypeOfHomes, TypeOfHomesOther),
             ProjectFieldsSet.LocalAuthority => LocalAuthority,
-            ProjectFieldsSet.Ownership => SiteOwnership,
+            ProjectFieldsSet.Ownership => string.Join(",", SiteOwnership, LocalAuthority),
             ProjectFieldsSet.PlanningPermissionStatus => PlanningPermissionStatus,
             ProjectFieldsSet.PlanningReferenceNumber => PlanningReferenceNumber,
             ProjectFieldsSet.PlanningReferenceNumberExists => HaveAPlanningReferenceNumber,

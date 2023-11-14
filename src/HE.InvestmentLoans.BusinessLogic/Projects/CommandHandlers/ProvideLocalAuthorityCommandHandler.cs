@@ -30,8 +30,10 @@ public class ProvideLocalAuthorityCommandHandler : ProjectCommandHandlerBase, IR
                 {
                     project.ProvideLocalAuthority(null);
                 }
-
-                project.ProvideLocalAuthority(LocalAuthority.New(request.LocalAuthorityId, request.LocalAuthorityName));
+                else
+                {
+                    project.ProvideLocalAuthority(LocalAuthority.New(request.LocalAuthorityId!, request.LocalAuthorityName!));
+                }
             },
             request.LoanApplicationId,
             request.ProjectId,
