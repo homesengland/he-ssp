@@ -50,12 +50,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HE.Investment.AHP.WWW\HE.Investment.AHP.WWW.csproj" />
-
-
-
+    <ProjectReference Include="..\HE.Investments.Common.Tests.WWW\HE.Investments.Common.Tests.WWW.csproj" />
   </ItemGroup>
-
-
-
 
 </Project>

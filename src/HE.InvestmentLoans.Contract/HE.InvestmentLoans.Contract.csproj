@@ -42,7 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UserOrganisation\Queries\" />
     <Folder Include="User\Commands\" />
   </ItemGroup>
 

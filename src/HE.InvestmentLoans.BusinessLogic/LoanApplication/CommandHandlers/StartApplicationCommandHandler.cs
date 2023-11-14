@@ -1,5 +1,3 @@
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Constants;
-using HE.InvestmentLoans.BusinessLogic.CompanyStructure.Repositories;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
@@ -9,8 +7,6 @@ using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
-using HE.Investments.DocumentService.Configs;
-using HE.Investments.DocumentService.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -22,26 +18,17 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
     private readonly ILoanApplicationRepository _applicationRepository;
     private readonly IApplicationProjectsRepository _applicationProjectsRepository;
     private readonly ILogger<StartApplicationCommandHandler> _logger;
-    private readonly IDocumentServiceConfig _documentServiceConfig;
-    private readonly IHttpDocumentService _documentService;
-    private readonly ICompanyStructureRepository _companyStructureRepository;
 
     public StartApplicationCommandHandler(
         IAccountUserContext loanUserContext,
         ILoanApplicationRepository applicationRepository,
         ILogger<StartApplicationCommandHandler> logger,
-        IApplicationProjectsRepository applicationProjectsRepository,
-        IDocumentServiceConfig documentServiceConfig,
-        IHttpDocumentService documentService,
-        ICompanyStructureRepository companyStructureRepository)
+        IApplicationProjectsRepository applicationProjectsRepository)
     {
         _loanUserContext = loanUserContext;
         _applicationRepository = applicationRepository;
         _logger = logger;
         _applicationProjectsRepository = applicationProjectsRepository;
-        _documentServiceConfig = documentServiceConfig;
-        _documentService = documentService;
-        _companyStructureRepository = companyStructureRepository;
     }
 
     public async Task<OperationResult<LoanApplicationId?>> Handle(StartApplicationCommand request, CancellationToken cancellationToken)
@@ -65,12 +52,7 @@ public class StartApplicationCommandHandler : IRequestHandler<StartApplicationCo
             var applicationProjects = new ApplicationProjects(newLoanApplication.Id);
             await _applicationProjectsRepository.SaveAllAsync(applicationProjects, userAccount, cancellationToken);
 
-            var filesLocation = await _companyStructureRepository.GetFilesLocationAsync(newLoanApplication.Id, cancellationToken);
-            await _documentService.CreateFoldersAsync(_documentServiceConfig.ListTitle, new List<string>
-            {
-                $"{filesLocation}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
-                $"{filesLocation}{CompanyStructureConstants.MoreInformationAboutOrganizationInternal}",
-            });
+            await _applicationRepository.DispatchEvents(newLoanApplication, cancellationToken);
 
             return OperationResult.Success<LoanApplicationId?>(newLoanApplication.Id);
         }

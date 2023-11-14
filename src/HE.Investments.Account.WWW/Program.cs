@@ -2,7 +2,7 @@ using HE.InvestmentLoans.Common.Infrastructure.Middlewares;
 using HE.InvestmentLoans.Common.Models.App;
 using HE.Investments.Account.WWW.Config;
 using HE.Investments.Account.WWW.Middlewares;
-using HE.Investments.Common.Infrastructure.Cache.Config;
+using HE.Investments.Common.CRM;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.Cache;
 using HE.Investments.Common.WWW.Partials;
@@ -18,6 +18,8 @@ builder.Services.AddWebModule();
 builder.Services.AddFeatureManagement();
 builder.Services.AddCommonBuildingBlocks();
 builder.Services.AddCache(appConfig.Cache, appConfig.AppName!);
+builder.Services.AddCrmConnection();
+
 var mvcBuilder = builder.Services.AddControllersWithViews();
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 

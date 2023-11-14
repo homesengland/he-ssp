@@ -1,5 +1,7 @@
+using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
+using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
@@ -13,6 +15,7 @@ namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 internal sealed class ApplicationProjectsRepositoryBuilder : IDependencyTestBuilder<IApplicationProjectsRepository>
 {
     private readonly Mock<IApplicationProjectsRepository> _mock;
+    private readonly Mock<ILocalAuthorityRepository> _localAuthorityMock;
 
     private LoanApplicationId _applicationId;
     private ProjectId _projectId;
@@ -20,6 +23,7 @@ internal sealed class ApplicationProjectsRepositoryBuilder : IDependencyTestBuil
     public ApplicationProjectsRepositoryBuilder()
     {
         _mock = new Mock<IApplicationProjectsRepository>();
+        _localAuthorityMock = new Mock<ILocalAuthorityRepository>();
     }
 
     public static ApplicationProjectsRepositoryBuilder New() => new();
@@ -75,8 +79,32 @@ internal sealed class ApplicationProjectsRepositoryBuilder : IDependencyTestBuil
         return this;
     }
 
+    public ApplicationProjectsRepositoryBuilder ReturnsLocalAuthorities(string phrase, IList<LocalAuthority> localAuthorities)
+    {
+        var localAuthoritiesToReturn = localAuthorities
+            .Where(x => x.Name.ToLower(CultureInfo.InvariantCulture).Contains(phrase.ToLower(CultureInfo.InvariantCulture)))
+            .ToList();
+        _localAuthorityMock
+            .Setup(m => m.Search(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync((localAuthoritiesToReturn, localAuthoritiesToReturn.Count));
+
+        return this;
+    }
+
     public IApplicationProjectsRepository Build()
     {
         return _mock.Object;
+    }
+
+    public ILocalAuthorityRepository BuildLocalAuthority()
+    {
+        return _localAuthorityMock.Object;
+    }
+
+    public Mock<ILocalAuthorityRepository> BuildLocalAuthorityMockAndRegister(IRegisterDependency registerDependency)
+    {
+        var mockedObject = BuildLocalAuthority();
+        registerDependency.RegisterDependency(mockedObject);
+        return _localAuthorityMock;
     }
 }

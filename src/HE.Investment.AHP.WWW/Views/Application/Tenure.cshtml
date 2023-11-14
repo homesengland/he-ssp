@@ -19,7 +19,7 @@
     var (isTenureInvalid, tenureError) = ViewData.ModelState.GetErrors(nameof(ApplicationBasicModel.Tenure));
 }
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("Name", "Application")" text="Back" class="govuk-!-margin-bottom-8">
+    <gds-back-link href="@Url.Action("Name", "Application", new { applicationId = Model.Id  })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Application" asp-action="Tenure" asp-method="post" novalidate>

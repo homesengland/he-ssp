@@ -15,7 +15,7 @@
 
 <gds-column width="ColumnWidth.Full">
     <div class="govuk-!-margin-top-4">
-        @await Html.PartialAsync("_Notification")
+        <partial name="~/Partials/_Notification.cshtml" />
     </div>
 
     <gds-h1 class="govuk-!-margin-top-6" size="ControlSize.L">
@@ -54,7 +54,7 @@
                     </td>
 
                     <td class="govuk-table__cell">
-                        <application-status-tag application-status="@application.Status"></application-status-tag>
+                        <application-status-loans-tag application-status="@application.Status"></application-status-loans-tag>
                     </td>
 
                     <td class="govuk-table__cell">@DateHelper.DisplayAsUkFormatDateTime(application.LastModificationDate) @(!string.IsNullOrEmpty(application.LastModifiedBy) ? $"by {application.LastModifiedBy}" : string.Empty)</td>

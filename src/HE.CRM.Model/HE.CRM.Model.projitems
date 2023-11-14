@@ -13,6 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_changeloanapplicationexternalstatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifapplicationwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifloanapplicationwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createsinglesitedetail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deleteloanapplication.cs" />
@@ -28,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsingleloanapplicationforaccountandcontact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettemporaryportaldata.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettypeofhomeslist.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_linkcontactwithorganization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_returnuserprofile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_savetemporaryportaldata.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Emailnotification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_EmailTemplate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_govnotifyemail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_HomeType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_ISP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Loanstatuschange.cs" />

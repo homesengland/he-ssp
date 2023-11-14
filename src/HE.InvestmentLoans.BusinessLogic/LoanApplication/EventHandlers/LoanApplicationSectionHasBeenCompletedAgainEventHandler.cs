@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Notifications;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.Contract.Application.Events;
 using HE.Investments.Account.Shared;
@@ -29,7 +30,7 @@ public class LoanApplicationSectionHasBeenCompletedAgainEventHandler : IEventHan
 
         if (loanApplication.WasSubmitted())
         {
-            await _notificationService.NotifySuccess(NotificationBodyType.SectionCompletedAgain);
+            await _notificationService.Publish(new SectionCompletedAgainNotification());
         }
     }
 }

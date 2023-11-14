@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.Application.Entities;
+using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
@@ -11,6 +12,8 @@ public interface IApplicationRepository
     Task<ApplicationBasicInfo> GetApplicationBasicInfo(ApplicationId id, CancellationToken cancellationToken);
 
     Task<IList<ApplicationEntity>> GetAll(CancellationToken cancellationToken);
+
+    Task<ApplicationEntity> Create(ApplicationName applicationName, CancellationToken cancellationToken);
 
     Task<ApplicationEntity> Save(ApplicationEntity application, CancellationToken cancellationToken);
 }

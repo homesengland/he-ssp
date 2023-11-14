@@ -2,13 +2,14 @@
 @using HE.InvestmentLoans.Common.Utils.Constants.ViewName
 @model HE.InvestmentLoans.Contract.Organization.OrganisationDetailsViewModel
 
+@* TODO: remove HE.InvestmentLoans.WWW.Notifications.ChangeOrganisationDetailsRequestedNotificationMapper class when removing this view! *@
 <gds-div-grid-column-full>
     <form asp-controller="UserOrganisation" asp-action="Details" asp-method="post" novalidate>
 
         <gds-back-link href="@Url.Action("Index", "UserOrganisation", new { })" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
-        @await Html.PartialAsync("_Notification")
+        <partial name="~/Partials/_Notification.cshtml" />
 
         <gds-h1 class="govuk-heading-xl govuk-!-margin-bottom-9">
             Manage @Model.Name details

@@ -1,0 +1,15 @@
+{
+  "earlyboundtypes": [
+    {
+      "entities": "invln_scheme,account,contact,invln_loanapplication,invln_sitedetails",
+      "actions": "invln_getahpapplication,invln_getmultipleahpapplications,invln_setahpapplication,invln_sendinvestmentloansdatatocrm,invln_getcontactrole,invln_changeloanapplicationexternalstatus,invln_generaterichtextdocument,invln_getloanapplicationsforaccountandcontact,invln_getsingleloanapplicationforaccountandcontact,invln_organizationdetails,invln_deleteloanapplication,invln_deletesitedetails,invln_updatesingleloanapplication,invln_updatesinglesitedetails,invln_getorganizationdetails,invln_returnuserprofile,invln_updateuserprofile,invln_createsinglesitedetail,invln_getfilelocationforapplicationloan,invln_getorganisationchangedetails,invln_checkifloanapplicationwithgivennameexists,invln_getsinglesitedetails,invln_searchlocalauthority,invln_gettypeofhomeslist,invln_checkifapplicationwithgivennameexists",
+      "generateOptionsetEnums": "true",
+      "generateStateEnums": "true",
+      "generateGlobalOptionsets": true,
+      "filename": "Model\\XrmSvc.cs",
+      "classNamespace": "HE.Investments.Common.CRM.Model",
+      "serviceContextName": "XrmSvc",
+      "oneTypePerFile": false
+    }
+  ]
+}

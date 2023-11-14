@@ -11,7 +11,7 @@ function validateFileSize() {
   }
 
   if (uploadControl.files.length > 0 && uploadControl.files[0].size > maxFileSize) {
-    errorMessageControl.innerText = `The selected file must be smaller than or equal to ${maxFileSizeInMegabytes}MB`;
+    errorMessageControl.innerText = `The selected file must be smaller than ${maxFileSizeInMegabytes}MB`;
     errorForm.classList.add("govuk-form-group--error");
     continueButton.disabled = true;
   }

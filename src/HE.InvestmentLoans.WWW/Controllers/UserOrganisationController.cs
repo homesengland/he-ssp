@@ -5,6 +5,7 @@ using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models.UserOrganisation;
 using HE.InvestmentLoans.WWW.Utils;
 using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
@@ -28,6 +29,10 @@ public class UserOrganisationController : BaseController
     public async Task<IActionResult> Index()
     {
         var userOrganisationResult = await _mediator.Send(new GetUserOrganisationInformationQuery());
+        var userApplications = userOrganisationResult.ProgrammesToAccess
+            .FirstOrDefault(p => p.Type == ProgrammeType.Loans)
+            ?.Applications ?? new List<UserApplication>();
+
         return View(
             "UserOrganisation",
             new UserOrganisationModel(
@@ -38,14 +43,17 @@ public class UserOrganisationController : BaseController
                 {
                     new(
                         ProgrammesConsts.LoansProgramme,
-                        userOrganisationResult.LoanApplications.Select(a =>
-                                new ApplicationBasicDetailsModel(a.Id.Value, a.ApplicationName.Value, a.Status))
+                        userApplications.Select(a =>
+                                new ApplicationBasicDetailsModel(Guid.Parse(a.Id), a.ApplicationName, a.Status))
                             .ToList()),
                 },
                 new List<ProgrammeModel> { ProgrammesConsts.LoansProgramme },
                 new List<ActionModel>
                 {
-                    new ActionModel($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation"),
+                    new ActionModel(
+                        $"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details",
+                        "Details",
+                        "UserOrganisation"),
                     new ActionModel($"Manage your account", string.Empty, "Dashboard"),
                 }));
     }

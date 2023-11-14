@@ -1,22 +1,25 @@
+using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
+using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.InvestmentLoans.CRM.Model;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Infrastructure.Cache.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 
-public class ApplicationProjectsRepository : IApplicationProjectsRepository
+public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILocalAuthorityRepository
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -24,11 +27,18 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
 
     private readonly IOrganizationServiceAsync2 _serviceClient;
 
-    public ApplicationProjectsRepository(IHttpContextAccessor httpContextAccessor, IDateTimeProvider dateTime, IOrganizationServiceAsync2 serviceClient)
+    private readonly ICacheService _cacheService;
+
+    public ApplicationProjectsRepository(
+        IHttpContextAccessor httpContextAccessor,
+        IDateTimeProvider dateTime,
+        IOrganizationServiceAsync2 serviceClient,
+        ICacheService cacheService)
     {
         _httpContextAccessor = httpContextAccessor;
         _timeProvider = dateTime;
         _serviceClient = serviceClient;
+        _cacheService = cacheService;
     }
 
     public async Task<ApplicationProjects> GetAllAsync(LoanApplicationId loanApplicationId, UserAccount userAccount, CancellationToken cancellationToken)
@@ -57,7 +67,11 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         }
     }
 
-    public async Task<Project> GetByIdAsync(ProjectId projectId, UserAccount userAccount, ProjectFieldsSet projectFieldsSet, CancellationToken cancellationToken)
+    public async Task<Project> GetByIdAsync(
+        ProjectId projectId,
+        UserAccount userAccount,
+        ProjectFieldsSet projectFieldsSet,
+        CancellationToken cancellationToken)
     {
         var fieldsToRetrieve = ProjectCrmFieldNameMapper.Map(projectFieldsSet);
 
@@ -73,7 +87,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
                        ?? throw new NotFoundException(nameof(Project), projectId.ToString());
 
         var siteDetailsDto = CrmResponseSerializer.Deserialize<SiteDetailsDto>(response.invln_sitedetail)
-                                 ?? throw new NotFoundException(nameof(Project), projectId.ToString());
+                             ?? throw new NotFoundException(nameof(Project), projectId.ToString());
 
         return ProjectEntityMapper.Map(siteDetailsDto, _timeProvider.Now);
     }
@@ -92,6 +106,39 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         {
             await UpdateProject(loanApplicationId, projectToSave, cancellationToken);
         }
+    }
+
+    public Task AssignLocalAuthority(
+        LoanApplicationId loanApplicationId,
+        ProjectId projectId,
+        LocalAuthorityId localAuthorityId,
+        CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<(IList<LocalAuthority> Items, int TotalItems)> Search(string phrase, int startPage, int pageSize, CancellationToken cancellationToken)
+    {
+        var localAuthorities = await _cacheService.GetValueAsync(
+                                   "local-authorities",
+                                   async () => await GetLocalAuthorities(cancellationToken))
+                               ?? throw new NotFoundException(nameof(LocalAuthority));
+
+        if (!string.IsNullOrEmpty(phrase))
+        {
+            localAuthorities = localAuthorities
+                .Where(c => c.Name.ToLower(CultureInfo.InvariantCulture).Contains(phrase.ToLower(CultureInfo.InvariantCulture)))
+                .ToList();
+        }
+
+        var totalItems = localAuthorities.Count;
+
+        var itemsAtPage = localAuthorities
+            .OrderBy(c => c.Name)
+            .Skip(startPage * pageSize)
+            .Take(pageSize);
+
+        return (itemsAtPage.ToList(), totalItems);
     }
 
     private async Task DeleteProject(Project projectToDelete, CancellationToken cancellationToken)
@@ -159,5 +206,17 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository
         };
 
         await _serviceClient.ExecuteAsync(req, cancellationToken);
+    }
+
+    private async Task<IList<LocalAuthority>> GetLocalAuthorities(CancellationToken cancellationToken)
+    {
+        var req = new invln_searchlocalauthorityRequest();
+        var response = await _serviceClient.ExecuteAsync(req, cancellationToken) as invln_searchlocalauthorityResponse
+                       ?? throw new NotFoundException(nameof(LocalAuthority));
+
+        var localAuthoritiesDto = CrmResponseSerializer.Deserialize<IList<LocalAuthorityDto>>(response.invln_localauthorities)
+                                  ?? throw new NotFoundException(nameof(LocalAuthority));
+
+        return LocalAuthorityMapper.MapToLocalAuthorityList(localAuthoritiesDto);
     }
 }

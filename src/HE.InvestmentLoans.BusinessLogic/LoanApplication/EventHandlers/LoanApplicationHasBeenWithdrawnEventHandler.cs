@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Notifications;
 using HE.InvestmentLoans.Common.Models.App;
 using HE.InvestmentLoans.Contract.Application.Events;
 using HE.Investments.Common.Infrastructure.Events;
@@ -19,12 +20,8 @@ public class LoanApplicationHasBeenWithdrawnEventHandler : IEventHandler<LoanApp
 
     public async Task Handle(LoanApplicationHasBeenWithdrawnEvent domainEvent, CancellationToken cancellationToken)
     {
-        var valuesToDisplay = new Dictionary<NotificationServiceKeys, string>
-        {
-            { NotificationServiceKeys.Name, domainEvent.ApplicationName.Value },
-            { NotificationServiceKeys.Email, _appConfig.FundingSupportEmail ?? "funding support" },
-        };
-
-        await _notificationService.NotifySuccess(NotificationBodyType.WithdrawApplication, valuesToDisplay);
+        await _notificationService.Publish(new ApplicationWithdrawSuccessfullyNotification(
+            domainEvent.ApplicationName.Value,
+            _appConfig.FundingSupportEmail ?? "funding support"));
     }
 }

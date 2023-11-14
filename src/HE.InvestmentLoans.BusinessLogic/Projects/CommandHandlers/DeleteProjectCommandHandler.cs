@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.Projects.Notifications;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
@@ -32,14 +33,9 @@ public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand,
             await _applicationProjectsRepository.GetAllAsync(request.LoanApplicationId, userAccount, cancellationToken);
 
         var deletedProject = applicationProjects.Remove(request.ProjectId);
-        var valuesToDisplay = new Dictionary<NotificationServiceKeys, string>
-        {
-            { NotificationServiceKeys.Name, deletedProject.Name?.Value ?? ProjectName.Default.Value },
-        };
-
-        await _notificationService.NotifySuccess(NotificationBodyType.DeleteProject, valuesToDisplay);
 
         await _applicationProjectsRepository.SaveAsync(request.LoanApplicationId, deletedProject, cancellationToken);
+        await _notificationService.Publish(new ProjectDeletedSuccessfullyNotification(deletedProject.Name?.Value ?? ProjectName.Default.Value));
 
         return OperationResult.Success();
     }

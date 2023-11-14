@@ -6,7 +6,7 @@ using HE.InvestmentLoans.Contract.UserOrganisation.Commands;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.Organisation.ValueObjects;
-using HE.Investments.Account.Domain.User;
+using HE.Investments.Account.Domain.UserOrganisation.Notifications;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Services.Notifications;
@@ -68,7 +68,7 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
 
             await _repository.Save(organisation, userAccount, cancellationToken);
 
-            await _notificationService.NotifySuccess(NotificationBodyType.ChangeOrganisationDetailsRequest, null);
+            await _notificationService.Publish(new ChangeOrganisationDetailsRequestedNotification());
 
             return OperationResult.Success();
         }

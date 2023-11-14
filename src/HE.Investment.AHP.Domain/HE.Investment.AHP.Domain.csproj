@@ -23,16 +23,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.1.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Stateless" Version="5.13.0" />
+    <PackageReference Include="MediatR" Version="12.1.1"/>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+    <PackageReference Include="Stateless" Version="5.13.0"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj" />
-    <ProjectReference Include="..\HE.InvestmentLoans.Common\HE.InvestmentLoans.Common.csproj" />
-    <ProjectReference Include="..\HE.InvestmentLoans.BusinessLogic\HE.InvestmentLoans.BusinessLogic.csproj" />
-    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj" />
+    <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Account.Domain\HE.Investments.Account.Domain.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Common.CRM\HE.Investments.Common.CRM.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj">
+      <Aliases>Org</Aliases>
+    </ProjectReference>
   </ItemGroup>
+
+  <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared"/>
 
 </Project>

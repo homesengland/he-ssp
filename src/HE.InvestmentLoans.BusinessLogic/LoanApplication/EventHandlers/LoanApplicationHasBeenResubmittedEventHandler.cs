@@ -1,3 +1,4 @@
+using HE.InvestmentLoans.BusinessLogic.LoanApplication.Notifications;
 using HE.InvestmentLoans.Contract.Application.Events;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Services.Notifications;
@@ -15,6 +16,6 @@ public class LoanApplicationHasBeenResubmittedEventHandler : IEventHandler<LoanA
 
     public async Task Handle(LoanApplicationHasBeenResubmittedEvent domainEvent, CancellationToken cancellationToken)
     {
-        await _notificationService.NotifySuccess(NotificationBodyType.ApplicationResubmitted);
+        await _notificationService.Publish(new LoanApplicationHasBeenResubmittedNotification());
     }
 }

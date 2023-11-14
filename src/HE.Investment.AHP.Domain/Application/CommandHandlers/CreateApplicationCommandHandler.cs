@@ -19,9 +19,7 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
 
     public async Task<OperationResult<ApplicationId?>> Handle(CreateApplicationCommand request, CancellationToken cancellationToken)
     {
-        var application = new ApplicationEntity(new ApplicationId(Guid.NewGuid().ToString()), new ApplicationName(request.Name));
-
-        await _repository.Save(application, cancellationToken);
+        var application = await _repository.Create(new ApplicationName(request.Name), cancellationToken);
 
         return new OperationResult<ApplicationId?>(application.Id);
     }

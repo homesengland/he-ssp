@@ -8,6 +8,7 @@ using HE.InvestmentLoans.Contract.Application.Helper;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Domain;
+using ApplicationStatus = HE.InvestmentLoans.Contract.Application.Enums.ApplicationStatus;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 
@@ -83,6 +84,7 @@ public class LoanApplicationEntity : DomainEntity
         }
 
         Id = newId;
+        Publish(new LoanApplicationHasBeenStartedEvent(Id.Value));
     }
 
     public bool IsReadOnly()

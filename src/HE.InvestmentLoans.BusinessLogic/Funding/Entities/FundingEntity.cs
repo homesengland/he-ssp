@@ -5,6 +5,7 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
+using ApplicationStatus = HE.InvestmentLoans.Contract.Application.Enums.ApplicationStatus;
 
 namespace HE.InvestmentLoans.BusinessLogic.Funding.Entities;
 public class FundingEntity : DomainEntity

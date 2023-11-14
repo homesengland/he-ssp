@@ -6,7 +6,6 @@ using HE.DocumentService.SharePoint.Extensions;
 using HE.DocumentService.SharePoint.Interfaces;
 using HE.DocumentService.SharePoint.Models.File;
 using HE.DocumentService.SharePoint.Models.Table;
-using Microsoft.AspNetCore.Http;
 using Microsoft.SharePoint.Client;
 
 namespace HE.DocumentService.SharePoint.Services;
@@ -73,14 +72,14 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
         return new TableResult<FileTableRow>(rows, pagingInfo: listItems.ListItemCollectionPosition?.PagingInfo);
     }
 
-    public async Task<FileData> DownloadFile(string listAlias, string folderPath, string fileName)
+    public async Task<Stream> DownloadFileStream(string listAlias, string folderPath, string fileName)
     {
         var folder = _spContext.Web.GetFolderByServerRelativeUrl(GetFolderPath(listAlias, folderPath));
-        var file = folder.GetFile(fileName);
+        var file = await folder.GetFileAsync(fileName);
         var fileInfo = file.OpenBinaryStream();
         await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
 
-        return new FileData(fileName, fileInfo.Value);
+        return fileInfo.Value;
     }
 
     public async Task RemoveFile(string listAlias, string folderPath, string fileName)
@@ -112,7 +111,7 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
             var file = folder.Files.Add(new FileCreationInformation
             {
                 ContentStream = fileContent,
-                Url = item.File.Name,
+                Url = item.File.FileName,
                 Overwrite = item.Overwrite ?? false
             });
 

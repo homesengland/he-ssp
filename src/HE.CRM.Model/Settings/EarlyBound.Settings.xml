@@ -9,6 +9,7 @@
   <ExtensionConfig>
     <ActionPrefixesWhitelist />
     <ActionsWhitelist>invln_changeloanapplicationexternalstatus|
+invln_checkifapplicationwithgivennameexists|
 invln_checkifloanapplicationwithgivennameexists|
 invln_deleteloanapplication|
 invln_deletesitedetails|
@@ -23,6 +24,7 @@ invln_getorganizationdetails|
 invln_getsingleloanapplicationforaccountandcontact|
 invln_getsinglesitedetails|
 invln_gettemporaryportaldata|
+invln_gettypeofhomeslist|
 invln_linkcontactwithorganization|
 invln_returnuserprofile|
 invln_savetemporaryportaldata|
@@ -62,6 +64,7 @@ invln_contract|
 invln_emailnotification|
 invln_emailtemplate|
 invln_govnotifyemail|
+invln_hometype|
 invln_isp|
 invln_loanapplication|
 invln_loanstatuschange|

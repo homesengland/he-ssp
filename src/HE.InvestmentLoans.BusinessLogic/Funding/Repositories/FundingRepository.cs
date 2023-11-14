@@ -7,8 +7,8 @@ using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.InvestmentLoans.CRM.Model;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.CRM.Model;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.InvestmentLoans.BusinessLogic.Funding.Repositories;

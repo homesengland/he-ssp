@@ -1,7 +1,6 @@
 @model HE.InvestmentLoans.Contract.Application.Queries.GetTaskListDataQueryResponse
 @using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 @using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
-@using HE.InvestmentLoans.Common.Extensions
 @using HE.InvestmentLoans.Contract.Application.Enums
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Gds
@@ -10,7 +9,7 @@
 <gds-back-link href="@Url.Action("Back", "LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.Id })" text="Back to application dashboard" class="govuk-!-margin-bottom-8 govuk-grid-column-full"></gds-back-link>
 
 <gds-div-grid-column-two-thirds>
-    @await Html.PartialAsync("_Notification")
+    <partial name="~/Partials/_Notification.cshtml" />
 
     <span class="govuk-caption-m govuk-!-margin-left-3">
         @Model.OrganisationName
@@ -33,7 +32,7 @@
         </gds-div-hint>
     }
     <div>
-        <application-status-tag application-status="@Model.Status" additional-classes="govuk-!-static-margin-left-3"></application-status-tag>
+        <application-status-loans-tag application-status="@Model.Status" additional-classes="govuk-!-static-margin-left-3"></application-status-loans-tag>
     </div>
 
     @await Html.PartialAsync("Partials/_ApplicationUpdateInformation", Model.Status)
