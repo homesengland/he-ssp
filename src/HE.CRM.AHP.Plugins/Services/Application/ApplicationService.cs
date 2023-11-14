@@ -7,6 +7,7 @@ using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
+using Microsoft.Xrm.Sdk;
 
 namespace HE.CRM.AHP.Plugins.Services.Application
 {
@@ -24,6 +25,14 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         {
             var applicationDto = JsonSerializer.Deserialize<AhpApplicationDto>(serializedApplication);
             return _applicationRepository.ApplicationWithGivenNameExists(applicationDto.name);
+        }
+
+        public void CheckIfApplicationWithNewNameExists(invln_scheme target)
+        {
+            if (_applicationRepository.ApplicationWithGivenNameExists(target.invln_schemename))
+            {
+                throw new InvalidPluginExecutionException("Application with new name already exists.");
+            }
         }
 
         public List<AhpApplicationDto> GetApplication(string organisationId, string contactId, string fieldsToRetrieve = null, string applicationId = null)
