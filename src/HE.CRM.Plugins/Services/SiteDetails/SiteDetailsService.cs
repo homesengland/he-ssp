@@ -45,9 +45,16 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                     var fields = fieldsToUpdate.Split(',');
                     if(fields.Length > 0)
                     {
-                        foreach(var field in fields)
+                        foreach (var field in fields)
                         {
-                            siteDetailToUpdate[field] = siteDetailsMapped[field];
+                            if (field == nameof(invln_SiteDetails.invln_Region).ToLower())
+                            {
+                                siteDetailToUpdate.invln_Region = siteDetailsMapped.invln_Region;
+                            }
+                            else
+                            {
+                                siteDetailToUpdate[field] = siteDetailsMapped[field];
+                            }
                         }
                     }
                 }
@@ -95,7 +102,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
 
         public string GetSingleSiteDetail(string siteDetailsId, string accountId, string contactExternalId, string fieldsToRetrieve = null)
         {
-            if(Guid.TryParse(siteDetailsId, out Guid siteDetailsGuid))
+            if (Guid.TryParse(siteDetailsId, out Guid siteDetailsGuid))
             {
                 invln_SiteDetails retrievedSiteDetail;
                 if (!string.IsNullOrEmpty(fieldsToRetrieve))
@@ -107,7 +114,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 {
                     retrievedSiteDetail = siteDetailsRepository.GetById(siteDetailsGuid);
                 }
-                if(retrievedSiteDetail != null)
+                if (retrievedSiteDetail != null)
                 {
                     var siteDetailsDto = SiteDetailsDtoMapper.MapSiteDetailsToDto(retrievedSiteDetail);
                     var relatedLoan = _loanApplicationRepository.GetLoanApplicationRelatedToSiteDetails(siteDetailsGuid);

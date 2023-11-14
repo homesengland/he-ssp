@@ -40,7 +40,6 @@ namespace HE.CRM.Common.DtoMapping
                 invln_Affordablehousing = siteDetail.affordableHousing,
                 invln_completionstatus = MapNullableIntToOptionSetValue(siteDetail.completionStatus),
                 invln_projecthasstartdate = siteDetail.projectHasStartDate,
-                invln_localauthority = siteDetail.localAuthority,
             };
             if (Guid.TryParse(loanApplicationGuid, out Guid applicationId))
             {
@@ -49,6 +48,10 @@ namespace HE.CRM.Common.DtoMapping
             if (Guid.TryParse(siteDetail.siteDetailsId, out Guid detailId))
             {
                 siteDetailToReturn.Id = detailId;
+            }
+            if (siteDetail.localAuthority != null && Guid.TryParse(siteDetail.localAuthority.id, out var localAuthorityGuid))
+            {
+                siteDetailToReturn.invln_Region = new EntityReference(invln_localauthority.EntityLogicalName, localAuthorityGuid);
             }
             return siteDetailToReturn;
         }
@@ -85,8 +88,15 @@ namespace HE.CRM.Common.DtoMapping
                 affordableHousing = siteDetails.invln_Affordablehousing,
                 completionStatus = siteDetails.invln_completionstatus?.Value,
                 projectHasStartDate = siteDetails.invln_projecthasstartdate,
-                localAuthority = siteDetails.invln_localauthority,
             };
+            if (siteDetails.invln_Region != null)
+            {
+                siteDetailToReturn.localAuthority = new LocalAuthorityDto()
+                {
+                    id = siteDetails.invln_Region.Id.ToString(),
+                    name = siteDetails.invln_Region.Name.ToString(),
+                };
+            }
             return siteDetailToReturn;
         }
 
