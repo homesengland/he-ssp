@@ -1,4 +1,4 @@
-using Dawn;
+﻿using Dawn;
 using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;

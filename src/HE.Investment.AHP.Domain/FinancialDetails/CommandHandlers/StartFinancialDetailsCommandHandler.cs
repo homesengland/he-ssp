@@ -25,11 +25,11 @@ public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandle
         FinancialDetailsEntity financialDetails;
         try
         {
-            financialDetails = await _financialDetailsRepository.GetById(ApplicationId.From(request.ApplicationId), cancellationToken);
+            financialDetails = await _financialDetailsRepository.GetById(request.ApplicationId, cancellationToken);
         }
         catch (NotFoundException)
         {
-            financialDetails = new FinancialDetailsEntity(ApplicationId.From(request.ApplicationId), request.ApplicationName, isPurchasePriceKnown);
+            financialDetails = new FinancialDetailsEntity(request.ApplicationId, request.ApplicationName, isPurchasePriceKnown);
             await _financialDetailsRepository.SaveAsync(financialDetails, cancellationToken);
         }
 

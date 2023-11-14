@@ -1,22 +1,23 @@
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-public class LandValue : ValueObject
+public class ExpectedOnCosts : ValueObject
 {
-    public LandValue(string value)
+    public ExpectedOnCosts(string value)
     {
-        if (!int.TryParse(value, out var valueInt) || valueInt <= 0)
+        if (!int.TryParse(value, out var onCostInt) || onCostInt < 0 || onCostInt > 999999999)
         {
             OperationResult.New()
-            .AddValidationError(FinancialDetailsValidationFieldNames.LandValue, FinancialDetailsValidationErrors.InvalidLandValue)
+            .AddValidationError(FinancialDetailsValidationFieldNames.ExpectedOnCosts, FinancialDetailsValidationErrors.InvalidExpectedOnCosts)
             .CheckErrors();
         }
-
-        Value = valueInt;
+        else
+        {
+            Value = onCostInt;
+        }
     }
 
     public int Value { get; }

@@ -15,15 +15,18 @@ public class FinancialDetailsEntity
         IsPurchasePriceKnown = isPurchasePriceKnown;
     }
 
-    [JsonConstructor]
     public FinancialDetailsEntity(
         bool isPurchasePriceKnown,
         PurchasePrice? purchasePrice,
-        LandOwnership? landOwnership)
+        LandOwnership? landOwnership,
+        ExpectedWorksCosts? expectedWorksCosts,
+        ExpectedOnCosts? expectedOnCosts)
     {
         IsPurchasePriceKnown = isPurchasePriceKnown;
         PurchasePrice = purchasePrice;
         LandOwnership = landOwnership;
+        ExpectedWorksCosts = expectedWorksCosts;
+        ExpectedOnCosts = expectedOnCosts;
     }
 
     public ApplicationId ApplicationId { get; private set; }
@@ -38,14 +41,32 @@ public class FinancialDetailsEntity
 
     public LandValue? LandValue { get; private set; }
 
+    public ExpectedWorksCosts? ExpectedWorksCosts { get; private set; }
+
+    public ExpectedOnCosts? ExpectedOnCosts { get; private set; }
+
     public void ProvidePurchasePrice(PurchasePrice price)
     {
         PurchasePrice = price;
     }
 
-    public void ProvideLandOwnershipAndValue(LandOwnership landOwnership, LandValue landValue)
+    public void ProvideLandOwnership(LandOwnership landOwnership)
     {
         LandOwnership = landOwnership;
+    }
+
+    public void ProvideLandValue(LandValue landValue)
+    {
         LandValue = landValue;
+    }
+
+    public void ProvideExpectedWorksCosts(ExpectedWorksCosts expectedWorksCosts)
+    {
+        ExpectedWorksCosts = expectedWorksCosts;
+    }
+
+    public void ProvideExpectedOnCosts(ExpectedOnCosts expectedOnCosts)
+    {
+        ExpectedOnCosts = expectedOnCosts;
     }
 }
