@@ -84,6 +84,7 @@ public class LoanApplicationEntity : DomainEntity
         }
 
         Id = newId;
+        Publish(new LoanApplicationHasBeenStartedEvent(Id.Value));
     }
 
     public bool IsReadOnly()
