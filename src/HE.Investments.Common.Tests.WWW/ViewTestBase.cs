@@ -1,13 +1,13 @@
 using AngleSharp;
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.Services.Notifications;
-using HE.Investments.WWW.Tests.Framework;
-using HE.Investments.WWW.Tests.Helpers;
+using HE.Investments.Common.Tests.WWW.Framework;
+using HE.Investments.Common.Tests.WWW.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 
-namespace HE.Investments.WWW.Tests;
+namespace HE.Investments.Common.Tests.WWW;
 
 public abstract class ViewTestBase
 {

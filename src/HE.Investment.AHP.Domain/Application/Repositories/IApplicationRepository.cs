@@ -9,11 +9,11 @@ public interface IApplicationRepository
 {
     Task<ApplicationEntity> GetById(ApplicationId id, CancellationToken cancellationToken);
 
+    Task<bool> IsExist(ApplicationName applicationName, CancellationToken cancellationToken);
+
     Task<ApplicationBasicInfo> GetApplicationBasicInfo(ApplicationId id, CancellationToken cancellationToken);
 
     Task<IList<ApplicationEntity>> GetAll(CancellationToken cancellationToken);
-
-    Task<ApplicationEntity> Create(ApplicationName applicationName, CancellationToken cancellationToken);
 
     Task<ApplicationEntity> Save(ApplicationEntity application, CancellationToken cancellationToken);
 }

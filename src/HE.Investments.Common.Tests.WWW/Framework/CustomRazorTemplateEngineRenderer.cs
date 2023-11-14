@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.DependencyInjection;
 using Razor.Templating.Core;
 
-namespace HE.Investments.WWW.Tests.Framework;
+namespace HE.Investments.Common.Tests.WWW.Framework;
 
 internal sealed class CustomRazorTemplateEngineRenderer : IRazorTemplateEngine
 {

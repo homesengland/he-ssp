@@ -2,7 +2,7 @@ using HE.Investments.Common.WWW.Partials;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HE.Investments.WWW.Tests.Framework;
+namespace HE.Investments.Common.Tests.WWW.Framework;
 
 public static class CustomRazorTemplateEngine
 {
