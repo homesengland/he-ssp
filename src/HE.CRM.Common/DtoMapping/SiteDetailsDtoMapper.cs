@@ -9,7 +9,7 @@ namespace HE.CRM.Common.DtoMapping
     public class SiteDetailsDtoMapper
     {
         public SiteDetailsDtoMapper() { }
-        public static invln_SiteDetails MapSiteDetailsDtoToRegularEntity(SiteDetailsDto siteDetail, string loanApplicationGuid)
+        public static invln_SiteDetails MapSiteDetailsDtoToRegularEntity(SiteDetailsDto siteDetail, string loanApplicationGuid, invln_localauthority localAuthority = null)
         {
             var siteDetailToReturn = new invln_SiteDetails()
             {
@@ -40,7 +40,6 @@ namespace HE.CRM.Common.DtoMapping
                 invln_Affordablehousing = siteDetail.affordableHousing,
                 invln_completionstatus = MapNullableIntToOptionSetValue(siteDetail.completionStatus),
                 invln_projecthasstartdate = siteDetail.projectHasStartDate,
-                invln_localauthority = siteDetail.localAuthority,
             };
             if (Guid.TryParse(loanApplicationGuid, out Guid applicationId))
             {
@@ -50,10 +49,14 @@ namespace HE.CRM.Common.DtoMapping
             {
                 siteDetailToReturn.Id = detailId;
             }
+            if (localAuthority != null)
+            {
+                siteDetailToReturn.invln_Region = new EntityReference(localAuthority.LogicalName, localAuthority.Id);
+            }
             return siteDetailToReturn;
         }
 
-        public static SiteDetailsDto MapSiteDetailsToDto(invln_SiteDetails siteDetails)
+        public static SiteDetailsDto MapSiteDetailsToDto(invln_SiteDetails siteDetails, invln_localauthority localAuthority = null)
         {
             var siteDetailToReturn = new SiteDetailsDto()
             {
@@ -85,8 +88,15 @@ namespace HE.CRM.Common.DtoMapping
                 affordableHousing = siteDetails.invln_Affordablehousing,
                 completionStatus = siteDetails.invln_completionstatus?.Value,
                 projectHasStartDate = siteDetails.invln_projecthasstartdate,
-                localAuthority = siteDetails.invln_localauthority,
             };
+            if (localAuthority != null)
+            {
+                siteDetailToReturn.localAuthority = new LocalAuthorityDto()
+                {
+                    name = localAuthority.invln_localauthorityname.ToString(),
+                    onsCode = localAuthority.invln_onscode,
+                };
+            }
             return siteDetailToReturn;
         }
 
