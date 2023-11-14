@@ -16,7 +16,7 @@ public class MapToLocalAuthorityListTests
         var result = LocalAuthorityMapper.MapToLocalAuthorityList(localAuthoritiesDto);
 
         // then
-        result.First().Id.Should().Be(localAuthoritiesDto.First().onsCode);
+        result.First().Id.ToString().Should().Be(localAuthoritiesDto.First().onsCode);
         result.First().Name.Should().Be(localAuthoritiesDto.First().name);
         result.Last().Name.Should().Be(localAuthoritiesDto.Last().name);
         result.Last().Name.Should().Be(localAuthoritiesDto.Last().name);
