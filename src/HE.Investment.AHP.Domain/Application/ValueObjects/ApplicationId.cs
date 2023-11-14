@@ -12,10 +12,14 @@ public class ApplicationId : ValueObject
 
     public string Value { get; }
 
+    public static ApplicationId Empty() => new(Guid.Empty.ToString());
+
     public override string ToString()
     {
         return Value;
     }
+
+    public bool IsEmpty() => Value.Equals(Guid.Empty.ToString(), StringComparison.Ordinal);
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

@@ -1,9 +1,9 @@
 using AngleSharp.Html.Dom;
 using HE.Investment.AHP.WWW.Models.Application;
+using HE.Investments.Common.Tests.WWW;
+using HE.Investments.Common.Tests.WWW.Helpers;
 using HE.Investments.Common.WWW.Models.TaskList;
 using HE.Investments.Common.WWW.TagHelpers;
-using HE.Investments.WWW.Tests;
-using HE.Investments.WWW.Tests.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 

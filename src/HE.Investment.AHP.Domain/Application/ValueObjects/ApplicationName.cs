@@ -24,7 +24,7 @@ public class ApplicationName : ValueObject
 
         Name = Validator
             .For(name, nameof(Name), operationResult)
-            .IsProvided()
+            .IsProvided("Enter application name")
             .IsShortInput();
 
         return operationResult;

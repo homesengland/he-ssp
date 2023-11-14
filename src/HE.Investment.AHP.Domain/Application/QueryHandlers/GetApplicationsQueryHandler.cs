@@ -15,9 +15,9 @@ public class GetApplicationsQueryHandler : IRequestHandler<GetApplicationsQuery,
 
     public async Task<IList<Contract.Application.Application>> Handle(GetApplicationsQuery request, CancellationToken cancellationToken)
     {
-        var schemes = await _repository.GetAll(cancellationToken);
+        var applications = await _repository.GetAll(cancellationToken);
 
-        return schemes.Select(s => new Contract.Application.Application(
+        return applications.Select(s => new Contract.Application.Application(
                 s.Id.Value,
                 s.Name.Name,
                 s.Tenure?.Value ?? default))
