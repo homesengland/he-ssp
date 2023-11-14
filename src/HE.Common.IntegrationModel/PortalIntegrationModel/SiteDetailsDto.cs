@@ -68,6 +68,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         public int? loanApplicationStatus { get; set; }
 
-        public string localAuthority { get; set; }
+        public LocalAuthorityDto localAuthority { get; set; }
     }
 }
