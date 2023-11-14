@@ -26,7 +26,9 @@ namespace HE.CRM.AHP.Plugins.Plugins.CustomApi
       "HE.CRM.Plugins.Plugins.AhpApplication.CheckIfApplicationWithNewNameExistsPlugin: Update of AHP Application",
       1,
       IsolationModeEnum.Sandbox,
-      Id = "631d2ec4-506f-4714-bd95-821e4940eef5")]
+      Id = "631d2ec4-506f-4714-bd95-821e4940eef5",
+        Image1Name = "PreImage", Image1Attributes = "",
+        Image1Type = ImageTypeEnum.PreImage)]
     public class CheckIfApplicationWithNewNameExistsPlugin : PluginBase<DataverseContext>, IPlugin
     {
         #region Constructors

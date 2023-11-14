@@ -27,9 +27,9 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             return _applicationRepository.ApplicationWithGivenNameExists(applicationDto.name);
         }
 
-        public void CheckIfApplicationWithNewNameExists(invln_scheme target)
+        public void CheckIfApplicationWithNewNameExists(invln_scheme target, invln_scheme preImage)
         {
-            if (_applicationRepository.ApplicationWithGivenNameExists(target.invln_schemename))
+            if ((preImage == null || (preImage != null && preImage.invln_schemename != target.invln_schemename)) && _applicationRepository.ApplicationWithGivenNameExists(target.invln_schemename))
             {
                 throw new InvalidPluginExecutionException("Application with new name already exists.");
             }
