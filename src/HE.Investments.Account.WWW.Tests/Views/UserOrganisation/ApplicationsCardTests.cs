@@ -1,9 +1,11 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Common.Domain;
+using HE.Investments.WWW.Tests;
 using HE.Investments.WWW.Tests.Helpers;
+using Xunit;
 
-namespace HE.Investments.WWW.Tests.Account.Views.UserOrganisation;
+namespace HE.Investments.Account.WWW.Tests.Views.UserOrganisation;
 
 public class ApplicationsCardTests : ViewTestBase
 {
