@@ -5,4 +5,8 @@ using MediatR;
 
 namespace HE.InvestmentLoans.Contract.Projects.Commands;
 
-public record ConfirmLocalAuthorityCommand(LoanApplicationId LoanApplicationId, ProjectId ProjectId, LocalAuthority LocalAuthority) : IRequest<OperationResult>;
+public record ProvideLocalAuthorityCommand(
+    LoanApplicationId LoanApplicationId,
+    ProjectId ProjectId,
+    LocalAuthorityId? LocalAuthorityId,
+    string? LocalAuthorityName) : IRequest<OperationResult>;

@@ -34,6 +34,7 @@ internal class ProjectEntityMapper
             siteDetailsDto.existingLegalCharges.IsProvided() ? new ChargesDebt(siteDetailsDto.existingLegalCharges ?? false, siteDetailsDto.existingLegalChargesInformation) : null,
             siteDetailsDto.affordableHousing.IsProvided() ? new AffordableHomes(siteDetailsDto.affordableHousing.MapToCommonResponse()) : null,
             ApplicationStatusMapper.MapToPortalStatus(siteDetailsDto.loanApplicationStatus),
-            PlanningPermissionStatusMapper.Map(siteDetailsDto.planningPermissionStatus));
+            PlanningPermissionStatusMapper.Map(siteDetailsDto.planningPermissionStatus),
+            LocalAuthorityMapper.MapToLocalAuthority(siteDetailsDto.localAuthority));
     }
 }

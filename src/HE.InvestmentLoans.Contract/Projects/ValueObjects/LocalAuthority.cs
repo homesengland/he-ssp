@@ -4,9 +4,9 @@ namespace HE.InvestmentLoans.Contract.Projects.ValueObjects;
 
 public class LocalAuthority : ValueObject
 {
-    public LocalAuthority(string id, string name)
+    public LocalAuthority(LocalAuthorityId id, string name)
     {
-        Id = LocalAuthorityId.From(id);
+        Id = id;
         Name = name;
     }
 
@@ -14,7 +14,9 @@ public class LocalAuthority : ValueObject
 
     public string Name { get; }
 
-    public static LocalAuthority New(string id, string name) => new(id, name);
+    public static LocalAuthority New(string id, string name) => new(LocalAuthorityId.From(id), name);
+
+    public static LocalAuthority New(LocalAuthorityId id, string name) => new(id, name);
 
     public override string ToString()
     {

@@ -1,4 +1,5 @@
 namespace HE.InvestmentLoans.WWW.Views.Project.Consts;
+
 public static class ProjectFieldNames
 {
     public const string Name = "Project name";
@@ -32,4 +33,6 @@ public static class ProjectFieldNames
     public const string ChargesDebt = "Legal charges";
 
     public const string AffordableHomes = "Affordable homes";
+
+    public const string LocalAuthority = "Local authority";
 }

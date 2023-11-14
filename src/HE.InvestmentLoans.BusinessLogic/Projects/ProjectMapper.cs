@@ -46,7 +46,8 @@ internal class ProjectMapper
             GrantFundingName = project.PublicSectorGrantFunding?.GrantOrFundName?.Value,
             GrantFundingPurpose = project.PublicSectorGrantFunding?.Purpose?.Value,
             LoanApplicationStatus = project.LoanApplicationStatus,
-
+            LocalAuthorityId = project.LocalAuthority?.Id.ToString(),
+            LocalAuthorityName = project.LocalAuthority?.Name,
             HasEstimatedStartDate = project.StartDate?.Exists.MapToCommonResponse(),
 
             EstimatedStartDay = startDate.HasValue ? startDate.Value.Day.ToString(CultureInfo.InvariantCulture) : null,
