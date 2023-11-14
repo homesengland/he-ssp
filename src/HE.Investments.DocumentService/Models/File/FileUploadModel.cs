@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HE.Investments.DocumentService.Models.File;
 using Microsoft.AspNetCore.Http;
 
 namespace HE.Investments.DocumentService.Models.File;

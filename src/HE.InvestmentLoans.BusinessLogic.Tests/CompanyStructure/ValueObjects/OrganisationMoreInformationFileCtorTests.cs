@@ -1,6 +1,5 @@
 using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
-using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestData;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Messages;
@@ -19,8 +18,11 @@ public class OrganisationMoreInformationFileCtorTests
     [InlineData("document.rtf")]
     public void ShouldOrganisationMoreInformationFile(string fileName)
     {
-        // given & when
-        var organisationMoreInformationFile = new OrganisationMoreInformationFile(fileName, ByteArrayTestData.ByteArray1Kb, 1);
+        // given
+        const long fileSize = 1024; // 1 kB
+
+        // when
+        var organisationMoreInformationFile = new OrganisationMoreInformationFile(fileName, fileSize, 1);
 
         // then
         organisationMoreInformationFile.FileName.Should().Be(fileName);
@@ -29,8 +31,11 @@ public class OrganisationMoreInformationFileCtorTests
     [Fact]
     public void ShouldThrowDomainValidationException_WhenFileSizeIsToBig()
     {
-        // given & when
-        var action = () => new OrganisationMoreInformationFile("validFileName.doc", ByteArrayTestData.ByteArray1MbAnd1Kb, 1);
+        // given
+        const long fileSize = (1024L * 1024L) + 1024L; // 1.1MB
+
+        // when
+        var action = () => new OrganisationMoreInformationFile("validFileName.doc", fileSize, 1);
 
         // then
         action
@@ -42,8 +47,11 @@ public class OrganisationMoreInformationFileCtorTests
     [Fact]
     public void ShouldThrowDomainValidationExceptionWithTwoError_WhenFileSizeIsToBigAndFileNameIsIncorrect()
     {
-        // given & when
-        var action = () => new OrganisationMoreInformationFile("validFileName.xxx", ByteArrayTestData.ByteArray1MbAnd1Kb, 1);
+        // given
+        const long fileSize = (1024L * 1024L) + 1024L; // 1.1MB
+
+        // when
+        var action = () => new OrganisationMoreInformationFile("validFileName.xxx", fileSize, 1);
 
         // then
         action

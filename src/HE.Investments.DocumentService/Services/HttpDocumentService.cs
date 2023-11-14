@@ -1,19 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Exceptions;
 using HE.Investments.DocumentService.Models.File;
 using HE.Investments.DocumentService.Models.Table;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.DocumentService.Services;
@@ -24,19 +14,19 @@ public class HttpDocumentService : IHttpDocumentService
 
     private readonly IDocumentServiceConfig _config;
 
+    private readonly ILogger<HttpDocumentService> _logger;
+
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
         MaxDepth = 64,
-        PropertyNameCaseInsensitive = true
+        PropertyNameCaseInsensitive = true,
     };
 
-    public HttpDocumentService(
-        IHttpClientFactory httpClient,
-        IDocumentServiceConfig config
-        )
+    public HttpDocumentService(IHttpClientFactory httpClient, IDocumentServiceConfig config, ILogger<HttpDocumentService> logger)
     {
         _httpClient = httpClient;
         _config = config;
+        _logger = logger;
     }
 
     public async Task<TableResult<FileTableRow>> GetTableRowsAsync(FileTableFilter filter)
@@ -44,19 +34,10 @@ public class HttpDocumentService : IHttpDocumentService
         var uri = new UriBuilder($"{_config.Url}{"/SharepointFiles/GetTableRows"}");
         using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString())
         {
-            Content = new StringContent(JsonSerializer.Serialize(filter), Encoding.UTF8, "application/json")
+            Content = new StringContent(JsonSerializer.Serialize(filter), Encoding.UTF8, "application/json"),
         };
 
-        var response = await SendAsync(request);
-
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new DocumentServiceException($"There was a problem with the document service connection");
-        }
-
-        var responseContent = await response.Content.ReadAsStringAsync();
-
-        return JsonSerializer.Deserialize<TableResult<FileTableRow>>(responseContent, _jsonSerializerOptions) ?? throw new DocumentServiceException($"The document service request result is invalid");
+        return await SendAsync<TableResult<FileTableRow>>(request);
     }
 
     public async Task UploadAsync(FileUploadModel item)
@@ -73,23 +54,17 @@ public class HttpDocumentService : IHttpDocumentService
             { listTitleStringContent, "ListTitle" },
             { folderPathStringContent, "FolderPath" },
             { metadataStringContent, "Metadata" },
-            { overwriteStringContent, "Overwrite" }
+            { overwriteStringContent, "Overwrite" },
         };
 
         using var fileContent = new StreamContent(item.File.OpenReadStream());
-        multipartContent.Add(fileContent, "File", item.File.Name);
+        multipartContent.Add(fileContent, "File", item.File.FileName);
 
         using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString())
         {
-            Content = multipartContent
+            Content = multipartContent,
         };
-
-        var response = await SendAsync(request);
-
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new DocumentServiceException($"There was a problem with the document service connection");
-        }
+        using var response = await SendAsync(request);
     }
 
     public async Task DeleteAsync(string listAlias, string folderPath, string fileName)
@@ -97,14 +72,7 @@ public class HttpDocumentService : IHttpDocumentService
         var queryParams = $"listAlias={listAlias}&folderPath={folderPath}&fileName={fileName}";
         var uri = new UriBuilder($"{_config.Url}{"/SharepointFiles/Delete"}?{queryParams}");
         using var request = new HttpRequestMessage(HttpMethod.Delete, uri.ToString());
-
-        var response = await SendAsync(request);
-        var responseContent = await response.Content.ReadAsStringAsync();
-
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new DocumentServiceException($"There was a problem with the document service connection");
-        }
+        using var response = await SendAsync(request);
     }
 
     public async Task<FileData> DownloadAsync(string listAlias, string folderPath, string fileName)
@@ -112,16 +80,14 @@ public class HttpDocumentService : IHttpDocumentService
         var queryParams = $"listAlias={listAlias}&folderPath={folderPath}&fileName={fileName}";
         var uri = new UriBuilder($"{_config.Url}{"/SharepointFiles/Download"}?{queryParams}");
         using var request = new HttpRequestMessage(HttpMethod.Get, uri.ToString());
+        using var response = await SendAsync(request);
 
-        var response = await SendAsync(request);
+        var fileStream = await response.Content.ReadAsStreamAsync();
+        var memoryStream = new MemoryStream();
+        await fileStream.CopyToAsync(memoryStream);
+        memoryStream.Position = 0;
 
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new DocumentServiceException($"There was a problem with the document service connection");
-        }
-
-        var responseContent = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<FileData>(responseContent, _jsonSerializerOptions) ?? throw new DocumentServiceException($"The document service request result is invalid");
+        return new FileData(fileName, memoryStream);
     }
 
     public async Task CreateFoldersAsync(string listTitle, List<string> folderPaths)
@@ -131,15 +97,30 @@ public class HttpDocumentService : IHttpDocumentService
 
         using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString())
         {
-            Content = new StringContent(JsonSerializer.Serialize(folderPaths), Encoding.UTF8, "application/json")
+            Content = new StringContent(JsonSerializer.Serialize(folderPaths), Encoding.UTF8, "application/json"),
         };
+        using var response = await SendAsync(request);
+    }
 
-        var response = await SendAsync(request);
+    private async Task<TResponse> SendAsync<TResponse>(HttpRequestMessage request)
+    {
+        using var response = await SendAsync(request);
         var responseContent = await response.Content.ReadAsStringAsync();
-
-        if (!response.IsSuccessStatusCode)
+        try
         {
-            throw new DocumentServiceException($"There was a problem with the document service connection");
+            var serializedResponse = JsonSerializer.Deserialize<TResponse>(responseContent, _jsonSerializerOptions);
+            if (serializedResponse != null)
+            {
+                return serializedResponse;
+            }
+
+            _logger.LogError("Document Service response for {Method} {Url} is null.", request.Method, request.RequestUri);
+            throw new DocumentServiceSerializationException(responseContent);
+        }
+        catch (JsonException ex)
+        {
+            _logger.LogError(ex, "Document Service response for {Method} {Url} cannot be deserialized.", request.Method, request.RequestUri);
+            throw new DocumentServiceSerializationException(responseContent, ex);
         }
     }
 
@@ -148,6 +129,20 @@ public class HttpDocumentService : IHttpDocumentService
         using var client = _httpClient.CreateClient("HE.Investments.DocumentService");
         client.Timeout = TimeSpan.FromMinutes(3);
 
-        return await client.SendAsync(request);
+        var response = await client.SendAsync(request);
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            _logger.LogError(
+                "Document Service returned {StatusCode} for {Method} {Url} with content \"{Content}\".",
+                response.StatusCode,
+                request.Method,
+                request.RequestUri,
+                errorContent);
+
+            throw new DocumentServiceCommunicationException(request.Method, request.RequestUri, response.StatusCode, errorContent);
+        }
+
+        return response;
     }
 }
