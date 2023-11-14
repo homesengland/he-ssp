@@ -12,10 +12,10 @@ public class LandOwnership : ValueObject
         Value = value;
     }
 
-    public string? Value { get; }
+    public string Value { get; }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
-        yield return Value ?? null!;
+        yield return Value;
     }
 }
