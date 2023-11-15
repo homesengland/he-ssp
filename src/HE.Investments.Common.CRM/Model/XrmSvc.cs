@@ -715,6 +715,21 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_ahpsectioncompletionstatusset
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Notstarted = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Completed = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InProgress = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_changesourceset
 	{
 		
@@ -21274,6 +21289,39 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_deliveryphasessectioncompletionstatus")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset> invln_deliveryphasessectioncompletionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_deliveryphasessectioncompletionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_deliveryphasessectioncompletionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_deliveryphasessectioncompletionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_deliveryphasessectioncompletionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_deliveryphasessectioncompletionstatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_discussionswithlocalstakeholders")]
 		public string invln_discussionswithlocalstakeholders
 		{
@@ -21316,6 +21364,39 @@ namespace HE.Investments.Common.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedacquisitioncost_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_financialdetailssectioncompletionstatus")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset> invln_financialdetailssectioncompletionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_financialdetailssectioncompletionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_financialdetailssectioncompletionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_financialdetailssectioncompletionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_financialdetailssectioncompletionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_financialdetailssectioncompletionstatus");
 			}
 		}
 		
@@ -21652,6 +21733,39 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_hometypessectioncompletionstatus")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset> invln_hometypessectioncompletionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_hometypessectioncompletionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_hometypessectioncompletionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_hometypessectioncompletionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_hometypessectioncompletionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_hometypessectioncompletionstatus");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthoritylookup")]
 		public Microsoft.Xrm.Sdk.EntityReference invln_localauthoritylookup
 		{
@@ -21901,6 +22015,39 @@ namespace HE.Investments.Common.CRM.Model
 			set
 			{
 				this.invln_schemeId = value;
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_schemeinformationsectioncompletionstatus")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset> invln_schemeinformationsectioncompletionstatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_schemeinformationsectioncompletionstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_schemeinformationsectioncompletionstatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_schemeinformationsectioncompletionstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_schemeinformationsectioncompletionstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_schemeinformationsectioncompletionstatus");
 			}
 		}
 		
