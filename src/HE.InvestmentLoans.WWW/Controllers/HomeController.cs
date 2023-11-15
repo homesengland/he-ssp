@@ -2,10 +2,10 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.Queries;
-using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models;
 using HE.Investments.Account.Contract.User.Commands;
 using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.User;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
@@ -40,7 +40,7 @@ public class HomeController : Controller
             return RedirectToAction(nameof(UserController.ProfileDetails), new ControllerName(nameof(UserController)).WithoutPrefix());
         }
 
-        if (!await _loanUserContext.IsLinkedWithOrganization())
+        if (!await _loanUserContext.IsLinkedWithOrganisation())
         {
             return RedirectToAction(nameof(OrganizationController.SearchOrganization), new ControllerName(nameof(OrganizationController)).WithoutPrefix());
         }

@@ -1,11 +1,11 @@
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Organization;
 using HE.InvestmentLoans.Contract.UserOrganisation.Commands;
-using HE.InvestmentLoans.WWW.Attributes;
 using HE.InvestmentLoans.WWW.Models.UserOrganisation;
 using HE.InvestmentLoans.WWW.Utils;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation;
+using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;

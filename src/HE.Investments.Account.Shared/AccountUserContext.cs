@@ -28,6 +28,8 @@ public class AccountUserContext : IAccountUserContext
         _userContext = userContext;
     }
 
+    public bool IsLogged => _userContext.IsAuthenticated;
+
     public UserGlobalId UserGlobalId => UserGlobalId.From(_userContext.UserGlobalId);
 
     public string Email => _userContext.Email;
@@ -62,7 +64,7 @@ public class AccountUserContext : IAccountUserContext
         return _userProfile!.IsCompleted();
     }
 
-    public async Task<bool> IsLinkedWithOrganization()
+    public async Task<bool> IsLinkedWithOrganisation()
     {
         if (_selectedAccount is null)
         {
