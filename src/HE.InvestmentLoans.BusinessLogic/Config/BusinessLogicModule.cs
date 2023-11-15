@@ -10,9 +10,6 @@ using HE.InvestmentLoans.BusinessLogic.Security.Repositories;
 using HE.InvestmentLoans.Common.Utils;
 using HE.Investments.Account.Domain.Config;
 using Microsoft.Extensions.DependencyInjection;
-using Org::HE.Investments.Organisation.CrmRepository;
-using ContactRepository = HE.Investments.Account.Domain.Organisation.Repositories.ContactRepository;
-using IContactRepository = HE.Investments.Account.Domain.Organisation.Repositories.IContactRepository;
 
 namespace HE.InvestmentLoans.BusinessLogic.Config;
 
@@ -30,16 +27,9 @@ public static class BusinessLogicModule
         services.AddScoped<ILocalAuthorityRepository, ApplicationProjectsRepository>();
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
 
-        services.AddOrganizationSubmodule();
         services.AddSecuritySubmodule();
         services.AddCompanyStructureSubmodule();
         services.AddFundingSubmodule();
-    }
-
-    private static void AddOrganizationSubmodule(this IServiceCollection services)
-    {
-        services.AddScoped<IOrganizationRepository, OrganizationRepository>();
-        services.AddScoped<IContactRepository, ContactRepository>();
     }
 
     private static void AddSecuritySubmodule(this IServiceCollection services)

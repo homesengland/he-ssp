@@ -1,19 +1,18 @@
-using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
+using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.WWW.Controllers.Consts;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
-[Authorize]
 [Route("user-organisation")]
+[AuthorizeWithCompletedProfile]
 public class UserOrganisationController : Controller
 {
     private readonly IMediator _mediator;

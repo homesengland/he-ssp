@@ -3,6 +3,7 @@ using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Account.WWW.Controllers;
 
 [Route("organisation")]
+[AuthorizeWithoutLinkedOrganisationOnly]
 public class OrganisationController : Controller
 {
     private readonly IMediator _mediator;
