@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Application;
 using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.Application.ValueObjects;

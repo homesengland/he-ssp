@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.Investments.Common.Domain;
 using Xunit;
 using static HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData.PlanningPermissionStatusTestData;
 using static HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData.PlanningReferenceNumberTestData;

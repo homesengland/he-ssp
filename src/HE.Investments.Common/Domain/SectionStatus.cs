@@ -1,13 +1,17 @@
 using System.ComponentModel;
 
-namespace HE.Investment.AHP.Contract.Application;
+namespace HE.Investments.Common.Domain;
 
 public enum SectionStatus
 {
-    Undefined = 0,
+    Undefined,
     [Description("Not Started")]
     NotStarted,
     [Description("In Progress")]
     InProgress,
     Completed,
+    Submitted,
+    [Description("Not Submitted")]
+    NotSubmitted,
+    Withdrawn,
 }

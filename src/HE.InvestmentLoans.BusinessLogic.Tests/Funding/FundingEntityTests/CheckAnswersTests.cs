@@ -2,6 +2,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.Funding.TestObjectBuilders;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Messages;
 using Xunit;

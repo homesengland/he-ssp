@@ -1,5 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.ValueObjects;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.Investments.Common.Domain;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.LoanApplication.ValueObjects;

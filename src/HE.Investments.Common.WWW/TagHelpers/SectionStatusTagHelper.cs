@@ -1,18 +1,15 @@
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
-using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Abstraction;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Gds;
-using HE.Investments.Common.WWW.Components;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using TextWithIdTagHelper = HE.Investments.Common.WWW.TagHelpers.TextWithIdTagHelper;
 
-namespace HE.InvestmentLoans.WWW.Components;
+namespace HE.Investments.Common.WWW.TagHelpers;
 
-public class SectionStatusTag : TextWithIdTagHelper
+public class SectionStatusTagHelper : TextWithIdTagHelper
 {
-    public SectionStatusTag()
+    public SectionStatusTagHelper()
         : base(HtmlConstants.Strong, string.Empty)
     {
     }

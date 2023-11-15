@@ -1,7 +1,8 @@
 using HE.InvestmentLoans.BusinessLogic.Funding.Entities;
 using HE.InvestmentLoans.BusinessLogic.Tests.Funding.TestData;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
-using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.Investments.Common.Domain;
+using ApplicationStatus = HE.InvestmentLoans.Contract.Application.Enums.ApplicationStatus;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Funding.TestObjectBuilders;
 

@@ -3,6 +3,7 @@ using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using Stateless;
 

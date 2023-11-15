@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Gds;
 using HE.Investments.Common.WWW.Models.TaskList;
@@ -65,19 +66,7 @@ public static class ApplicationSections
             description,
             action,
             actionUrl,
-            section.SectionStatus.GetDescription(),
-            GetColorBaseOnStatus(section.SectionStatus),
+            section.SectionStatus,
             isAvailable);
-    }
-
-    private static TagColour GetColorBaseOnStatus(SectionStatus? status)
-    {
-        return status switch
-        {
-            SectionStatus.NotStarted => TagColour.Grey,
-            SectionStatus.InProgress => TagColour.Blue,
-            SectionStatus.Completed => TagColour.Green,
-            _ => TagColour.Grey,
-        };
     }
 }

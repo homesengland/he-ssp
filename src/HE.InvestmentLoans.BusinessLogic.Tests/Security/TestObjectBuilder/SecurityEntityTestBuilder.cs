@@ -2,7 +2,9 @@ using HE.InvestmentLoans.BusinessLogic.Security;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
+using ApplicationStatus = HE.InvestmentLoans.Contract.Application.Enums.ApplicationStatus;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Security.TestObjectBuilder;
 
