@@ -3,11 +3,9 @@ using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Workflows;
 using HE.Investment.AHP.WWW.Models.Application;
-using HE.Investment.AHP.WWW.Views.Application;
 using HE.InvestmentLoans.Common.Routing;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
-using HE.Investments.Common.WWW.TagHelpers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +16,7 @@ namespace HE.Investment.AHP.WWW.Controllers;
 [Route("application")]
 public class ApplicationController : WorkflowController<ApplicationWorkflowState>
 {
+    private readonly string _siteName = "Test Site";
     private readonly IMediator _mediator;
 
     public ApplicationController(IMediator mediator)
@@ -30,7 +29,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         var applications = await _mediator.Send(new GetApplicationsQuery(), cancellationToken);
 
-        return View("Index", new ApplicationsModel("Test Site", applications.Select(CreateModel).ToList()));
+        return View("Index", new ApplicationsModel(_siteName, applications.Select(CreateModel).ToList()));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
@@ -94,13 +93,8 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     public async Task<IActionResult> TaskList(string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
-        var sections = ApplicationSections.CreateSections(
-            SectionStatus.NotStarted,
-            SectionStatus.Completed,
-            SectionStatus.Withdrawn,
-            SectionStatus.CannotStartYet);
 
-        var model = new ApplicationModel("Test Site", application.Name, sections);
+        var model = new ApplicationModel(_siteName, application.Name, application.Sections);
 
         return View("TaskList", model);
     }

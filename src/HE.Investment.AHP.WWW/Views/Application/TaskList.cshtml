@@ -2,16 +2,17 @@
 @using HE.Investment.AHP.WWW.Config
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.HelpPanel
-@using HE.Investments.Common.WWW.TagHelpers
 @using Microsoft.Extensions.Options
+@using HE.Investment.AHP.Contract.Application
+@using HE.Investment.AHP.WWW.Views.Application
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationModel
 @inject IOptions<ContactInfoOptions> Options
 
 @{
     ViewData["Title"] = "Application details";
     var totalSectionsCount = Model.Sections.Count;
-    var incompleteSectionsCount = Model.Sections.Count(s => s.Status == SectionStatus.NotStarted || s.Status == SectionStatus.InProgress);
-    var completeSectionsCount = Model.Sections.Count(s => s.Status == SectionStatus.Completed);
+    var incompleteSectionsCount = Model.Sections.Count(s => s.SectionStatus == SectionStatus.NotStarted || s.SectionStatus == SectionStatus.InProgress);
+    var completeSectionsCount = Model.Sections.Count(s => s.SectionStatus == SectionStatus.Completed);
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
         .New()
         .WithSites()
@@ -30,7 +31,7 @@
     }
 </div>
 <gds-div-grid-column-two-thirds>
-    @await Html.PartialAsync("~/Partials/TaskList/_TaskList.cshtml", @Model.Sections)
+    @await Html.PartialAsync("~/Partials/TaskList/_TaskList.cshtml", ApplicationSections.CreateSections(Model.Sections))
 
     @if (incompleteSectionsCount > 0)
     {
