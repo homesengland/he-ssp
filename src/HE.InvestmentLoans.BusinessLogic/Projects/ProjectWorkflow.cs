@@ -55,7 +55,7 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             return ProjectState.CheckAnswers;
         }
 
-        if (targetState != ProjectState.Name || _model.Status == SectionStatus.NotStarted)
+        if (targetState == ProjectState.Index && (_model.Status == SectionStatus.NotStarted || _model.Status == SectionStatus.Undefined))
         {
             return targetState;
         }

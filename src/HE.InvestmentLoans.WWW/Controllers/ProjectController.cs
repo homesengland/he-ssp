@@ -34,7 +34,8 @@ public class ProjectController : WorkflowController<ProjectState>
         _mediator = mediator;
     }
 
-    [HttpGet("start")]
+    [HttpGet("{projectId}/start", Name = "StartExistingProject")]
+    [HttpGet("start", Name = "StartNewProject")]
     [WorkflowState(ProjectState.Index)]
     public async Task<IActionResult> StartProject(Guid id, Guid projectId)
     {
@@ -42,7 +43,7 @@ public class ProjectController : WorkflowController<ProjectState>
         {
             var result = await _mediator.Send(new GetProjectQuery(LoanApplicationId.From(id), ProjectId.From(projectId), ProjectFieldsSet.GetStatus));
 
-            if (result.IsReadOnly() || result.Status == SectionStatus.Completed)
+            if (result.IsReadOnly())
             {
                 return RedirectToAction("CheckAnswers", new { Id = id, ProjectId = projectId });
             }
@@ -51,7 +52,8 @@ public class ProjectController : WorkflowController<ProjectState>
         return View("Index", LoanApplicationId.From(id));
     }
 
-    [HttpPost("start")]
+    [HttpPost("{projectId}/start", Name = "StartExistingProject")]
+    [HttpPost("start", Name = "StartNewProject")]
     [WorkflowState(ProjectState.Index)]
     public async Task<IActionResult> StartProjectPost(Guid id, [FromQuery] Guid? existingProjectId)
     {
