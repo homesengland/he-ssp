@@ -7,6 +7,9 @@ using HE.DocumentService.SharePoint.Interfaces;
 using HE.DocumentService.SharePoint.Models.File;
 using HE.DocumentService.SharePoint.Models.Table;
 using Microsoft.SharePoint.Client;
+using System;
+using System.Buffers;
+using File = Microsoft.SharePoint.Client.File;
 
 namespace HE.DocumentService.SharePoint.Services;
 
@@ -130,6 +133,20 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
         }
     }
 
+    public async Task UploadFile(string name, Stream stream)
+    {
+        var folder = _sharePointFolderService.CreateFolderIfNotExist("Loan Application", "0000136/external/more-information-about-organization");
+        using var contentStream = new MemoryStream();
+        var uploadFile = folder.Files.Add(new FileCreationInformation { ContentStream = contentStream, Url = name, Overwrite = true });
+
+        // var fileFields = file.ListItemAllFields;
+        //
+        // fileFields["_ModerationComments"] = item.Metadata;
+        // fileFields.Update();
+        // await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
+        await UploadFileSlicePerSlice(uploadFile, _spContext, stream, 10);
+    }
+
     public void CreateFolders(string listTitle, List<string> folderPaths)
     {
         folderPaths.ForEach(folderPath => _sharePointFolderService.CreateFolderIfNotExist(listTitle, folderPath));
@@ -150,5 +167,80 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
                                     "));
 
         return folderPaths.Count > 1 ? $"<Or>{result}</Or>" : result;
+    }
+
+    public async Task UploadFileSlicePerSlice(
+        File uploadFile,
+        ClientContext ctx,
+        Stream stream,
+        int fileChunkSizeInMb = 10)
+    {
+        var uploadId = Guid.NewGuid();
+        var blockSize = fileChunkSizeInMb * 1024 * 1024;
+
+        // Get the information about the folder that will hold the file.
+        var buffer = new byte[blockSize];
+        var lastBuffer = new byte[0];
+        long fileOffset = 0;
+        int bytesRead;
+        var first = true;
+        var last = false;
+
+        // Read data from file system in blocks.
+        while ((bytesRead = await Read(stream, buffer, blockSize)) > 0)
+        {
+            // You've reached the end of the file.
+            if (bytesRead < buffer.Length)
+            {
+                last = true;
+                // Copy to a new buffer that has the correct size.
+                lastBuffer = new byte[bytesRead];
+                Array.Copy(buffer, 0, lastBuffer, 0, bytesRead);
+            }
+
+            if (first)
+            {
+                using var firstStream = new MemoryStream(buffer);
+
+                var bytesUploaded = uploadFile.StartUpload(uploadId, firstStream);
+                await ctx.ExecuteQueryAsync();
+                fileOffset = bytesUploaded.Value;
+
+                first = false;
+            }
+            else
+            {
+                if (last)
+                {
+                    using var lastStream = new MemoryStream(lastBuffer);
+
+                    uploadFile.FinishUpload(uploadId, fileOffset, lastStream);
+                    await ctx.ExecuteQueryAsync();
+
+                    return;
+                }
+
+                using var middleStream = new MemoryStream(buffer);
+
+                var bytesUploaded = uploadFile.ContinueUpload(uploadId, fileOffset, middleStream);
+                await ctx.ExecuteQueryAsync();
+
+                fileOffset = bytesUploaded.Value;
+            }
+        }
+    }
+
+    private static async Task<int> Read(Stream br, byte[] buffer, int bufferSize)
+    {
+        var bytesRead = await br.ReadAsync(buffer, 0, buffer.Length);
+        var totalRead = bytesRead;
+
+        while (bytesRead > 0 && totalRead < bufferSize)
+        {
+            bytesRead = await br.ReadAsync(buffer, bytesRead, buffer.Length - totalRead);
+            totalRead += bytesRead;
+        }
+
+        return totalRead;
     }
 }

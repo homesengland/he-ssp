@@ -9,6 +9,8 @@ public interface ISharePointFilesService
 
     Task UploadFile(FileUploadModel item);
 
+    Task UploadFile(string name, Stream stream);
+
     Task<Stream> DownloadFileStream(string listAlias, string folderPath, string fileName);
 
     Task RemoveFile(string listAlias, string folderPath, string fileName);

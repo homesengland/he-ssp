@@ -11,8 +11,12 @@ public class FileUploadModel
     [Required]
     public string FolderPath { get; set; }
 
-    [Required]
-    public IFormFile File { get; set; }
+    // TODO: remove
+    public IFormFile? File { get; set; }
+
+    public Stream FileStream { get; set; }
+
+    public string FileName { get; set; }
 
     [Required]
     public string Metadata { get; set; }

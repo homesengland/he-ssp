@@ -42,7 +42,7 @@ public class HttpDocumentService : IHttpDocumentService
 
     public async Task UploadAsync(FileUploadModel item)
     {
-        var uri = new UriBuilder($"{_config.Url}{"/SharepointFiles/Upload"}");
+        var uri = new UriBuilder($"{_config.Url}{"/SharepointFiles/UploadFile"}");
 
         using var listTitleStringContent = new StringContent(item.ListTitle);
         using var folderPathStringContent = new StringContent(item.FolderPath);
@@ -57,13 +57,21 @@ public class HttpDocumentService : IHttpDocumentService
             { overwriteStringContent, "Overwrite" },
         };
 
-        using var fileContent = new StreamContent(item.File.OpenReadStream());
-        multipartContent.Add(fileContent, "File", item.File.FileName);
+        if (item.File != null)
+        {
+            using var fileContent1 = new StreamContent(item.File.OpenReadStream());
+            multipartContent.Add(fileContent1, "File", item.File.FileName);
+        }
+
+        // item.FileStream.Position = 0;
+        using var fileContent = new StreamContent(item.FileStream);
+        multipartContent.Add(fileContent, "File", item.FileName);
 
         using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString())
         {
             Content = multipartContent,
         };
+
         using var response = await SendAsync(request);
     }
 

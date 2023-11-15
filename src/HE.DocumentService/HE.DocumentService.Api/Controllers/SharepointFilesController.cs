@@ -22,6 +22,21 @@ public class SharepointFilesController : ControllerBase
         return await _sharepointFileService.GetTableRows(filter);
     }
 
+    [HttpPost("UploadFile")]
+    [RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
+    [DisableRequestSizeLimit]
+    [DisableFormValueModelBinding]
+    public async Task UploadFile()
+    {
+        var largeFile = new LargeFileReader().Read(HttpContext.Request);
+
+        await foreach (var lf in largeFile)
+        {
+
+            await _sharepointFileService.UploadFile(lf.Name, lf.Content);
+        }
+    }
+
     [HttpPost("Upload")]
     [DisableRequestSizeLimit]
     public async Task Upload([FromForm] FileUploadModel item)

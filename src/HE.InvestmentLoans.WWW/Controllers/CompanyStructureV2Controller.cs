@@ -5,6 +5,7 @@ using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
+using HE.InvestmentLoans.WWW.Attributes;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
@@ -100,21 +101,22 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
 
     [HttpPost("more-information-about-organization")]
     [WorkflowState(CompanyStructureState.ExistingCompany)]
+    [RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
     [DisableRequestSizeLimit]
-    public async Task<IActionResult> MoreInformationAboutOrganizationPost(Guid id, CompanyStructureViewModel viewModel, [FromQuery] string redirect, [FromForm(Name = "File")] List<IFormFile> formFiles, CancellationToken cancellationToken)
+    [DisableFormValueModelBinding]
+    public async Task<IActionResult> MoreInformationAboutOrganizationPost(
+        Guid id,
+        [FromQuery] string redirect,
+        CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(
-            new ProvideMoreInformationAboutOrganizationCommand(
-                LoanApplicationId.From(id),
-                viewModel.OrganisationMoreInformation,
-                viewModel.OrganisationMoreInformationFiles,
-                formFiles),
-            cancellationToken);
+        var reader = new LargeFileReader();
+        var files = reader.Read(HttpContext.Request);
 
+        var result = await _mediator.Send(new ProvideMoreInformationAboutOrganizationCommand2(LoanApplicationId.From(id), "test", files), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View("MoreInformationAboutOrganization", viewModel);
+            return View("MoreInformationAboutOrganization", null); // TODO: viewModel
         }
 
         return await Continue(redirect, new { Id = id });
