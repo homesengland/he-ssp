@@ -37,7 +37,7 @@ public class ChangeOrganisationDetailsCommandHandler : IRequestHandler<ChangeOrg
         {
             var userAccount = await _accountUserContext.GetSelectedAccount();
 
-            if (!await _accountUserContext.IsLinkedWithOrganization())
+            if (!await _accountUserContext.IsLinkedWithOrganisation())
             {
                 throw new DomainException(
                     $"User with id {_accountUserContext.UserGlobalId} is not linked with organization: {request.Name}",

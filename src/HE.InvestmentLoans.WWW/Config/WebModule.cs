@@ -4,6 +4,8 @@ using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Infrastructure;
 using HE.InvestmentLoans.WWW.Models;
 using HE.InvestmentLoans.WWW.Notifications;
+using HE.InvestmentLoans.WWW.Routing;
+using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Infrastructure.Events;
@@ -26,5 +28,6 @@ public static class WebModule
         serviceCollections.AddOrganizationsModule();
         serviceCollections.AddEventInfrastructure();
         serviceCollections.AddHttpUserContext();
+        serviceCollections.AddScoped<IAccountRoutes, LoansAccountRoutes>();
     }
 }

@@ -36,14 +36,14 @@ public class AccountUserContextTestBuilder
 
     public AccountUserContextTestBuilder IsNotLinkedWithOrganization()
     {
-        _mock.Setup(x => x.IsLinkedWithOrganization()).ReturnsAsync(false);
+        _mock.Setup(x => x.IsLinkedWithOrganisation()).ReturnsAsync(false);
 
         return this;
     }
 
     public AccountUserContextTestBuilder IsLinkedWithOrganization()
     {
-        _mock.Setup(x => x.IsLinkedWithOrganization()).ReturnsAsync(true);
+        _mock.Setup(x => x.IsLinkedWithOrganisation()).ReturnsAsync(true);
 
         return this;
     }

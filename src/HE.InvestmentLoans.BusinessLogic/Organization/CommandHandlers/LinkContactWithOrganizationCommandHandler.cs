@@ -30,7 +30,7 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
 
     public async Task Handle(LinkContactWithOrganizationCommand request, CancellationToken cancellationToken)
     {
-        if (await _loanUserContext.IsLinkedWithOrganization())
+        if (await _loanUserContext.IsLinkedWithOrganisation())
         {
             throw new DomainException(
                 $"Cannot link organization id: {request.Number} to loan user account id: {_loanUserContext.UserGlobalId}, because it is already linked to other organization",

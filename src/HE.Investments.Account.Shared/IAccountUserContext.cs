@@ -5,6 +5,8 @@ namespace HE.Investments.Account.Shared;
 
 public interface IAccountUserContext
 {
+    bool IsLogged { get; }
+
     UserGlobalId UserGlobalId { get; }
 
     string Email { get; }
@@ -19,5 +21,5 @@ public interface IAccountUserContext
 
     Task<bool> IsProfileCompleted();
 
-    Task<bool> IsLinkedWithOrganization();
+    Task<bool> IsLinkedWithOrganisation();
 }

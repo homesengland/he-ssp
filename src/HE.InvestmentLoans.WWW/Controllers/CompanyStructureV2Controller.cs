@@ -5,7 +5,7 @@ using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
-using HE.InvestmentLoans.WWW.Attributes;
+using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
