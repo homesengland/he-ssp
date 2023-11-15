@@ -33,6 +33,7 @@ invln_sendgovnotifyemail|
 invln_sendinternalcrmnotification|
 invln_sendinvestmentloansdatatocrm|
 invln_setahpapplication|
+invln_sethometype|
 invln_updatesingleloanapplication|
 invln_updatesinglesitedetails|
 invln_updateuserprofile|

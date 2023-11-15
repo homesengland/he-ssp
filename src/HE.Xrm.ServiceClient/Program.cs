@@ -37,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestLoan(serviceClient);
+                    TestHomeType(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -51,28 +51,24 @@ namespace HE.Xrm.ServiceClientExample
             Console.ReadLine();
         }
 
-        private static Guid CreateOrganisationChangeRequest(OrganizationDetailsDto organizationDetails, ServiceClient serviceClient)
+        private static void TestHomeType(ServiceClient serviceClient)
         {
-            var organisationChangeRequestToCreate = MapOrganizationDtoToOrganizationChangeRequestEntity(organizationDetails);
-            return serviceClient.Create(organisationChangeRequestToCreate);
-        }
-        private static Entity MapOrganizationDtoToOrganizationChangeRequestEntity(OrganizationDetailsDto organizationDetailsDto)
-        {
-            var organisationChangeRequestEntity = new Entity("invln_organisationchangerequest")
+            var fieldsToUpdate = $"{nameof(invln_HomeType.invln_hometypename).ToLower()},{nameof(invln_HomeType.invln_typeofhousing).ToLower()}";
+            var home = new HomeTypeDto()
             {
-                Attributes = new AttributeCollection()
-            {
-                { "invln_registeredcompanyname", organizationDetailsDto.registeredCompanyName },
-                { "invln_organisationphonenumber", organizationDetailsDto.organisationPhoneNumber },
-                { "invln_addressline1", organizationDetailsDto.addressLine1 },
-                { "invln_addressline2", organizationDetailsDto.addressLine2 },
-                { "invln_townorcity", organizationDetailsDto.city },
-                { "invln_county", organizationDetailsDto.county },
-                { "invln_postcode", organizationDetailsDto.postalcode },
-                { "invln_organisationid", new EntityReference("account", new Guid(organizationDetailsDto.organisationId)) },
-            },
+                id = "74b58fbf-a283-ee11-8179-002248004f63",
+                numberOfHomes = 2222,
+                applicationId = "a5b507b3-c27f-ee11-8179-002248004268",
+                homeTypeName = "test cusa",
+                housingType = (int)invln_Typeofhousing.Housingfordisabledandvulnerablepeople,
             };
-            return organisationChangeRequestEntity;
+            var serialized = JsonSerializer.Serialize(home);
+            var req2 = new invln_sethometypeRequest() //get loan applications related to account and contact with given data
+            {
+                invln_hometype = serialized,
+                invln_fieldstoset = fieldsToUpdate,
+            };
+            serviceClient.Execute(req2);
         }
 
         private static void TestLoan(ServiceClient serviceClient)

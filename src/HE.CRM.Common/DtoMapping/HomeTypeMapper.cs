@@ -19,6 +19,11 @@ namespace HE.CRM.Common.DtoMapping
             {
                 homeTypeDto.id = homeType.Id.ToString();
             }
+
+            if (homeType.invln_application?.Id != null)
+            {
+                homeTypeDto.applicationId = homeType.invln_application.Id.ToString();
+            }
             return homeTypeDto;
         }
 
@@ -34,6 +39,12 @@ namespace HE.CRM.Common.DtoMapping
             {
                 homeType.Id = new Guid(homeTypeDto.id);
             }
+
+            if (Guid.TryParse(homeTypeDto.applicationId, out var applicationGuid))
+            {
+                homeType.invln_application = new EntityReference(invln_scheme.EntityLogicalName, applicationGuid);
+            }
+
             return homeType;
         }
 

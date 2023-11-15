@@ -7,5 +7,6 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string homeTypeName { get; set; }
         public int? numberOfHomes { get; set; }
         public int? housingType { get; set; }
+        public string applicationId { get; set; }
     }
 }
