@@ -2,7 +2,7 @@
   pointer-events: none;
 }
 
-#local-authority-pagination {
+.local-authority-pagination {
   float: right;
 }
 
