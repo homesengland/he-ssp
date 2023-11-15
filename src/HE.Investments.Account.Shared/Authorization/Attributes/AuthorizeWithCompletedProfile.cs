@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace HE.Investments.Account.Shared.Authorization.Attributes;
 
 [AttributeUsage(AttributeTargets.All)]
-public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFilter, IOrderedFilter
+public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFilter
 {
     private readonly IEnumerable<string> _allowedFor;
 
@@ -24,8 +24,6 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
             _allowedFor = allowedFor!;
         }
     }
-
-    public int Order => 0;
 
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {

@@ -20,6 +20,5 @@ public static class AccountModule
         services.AddScoped<IAccountUserContext, AccountUserContext>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
         services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
-
     }
 }
