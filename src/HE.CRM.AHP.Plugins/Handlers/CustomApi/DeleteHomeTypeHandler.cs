@@ -5,13 +5,11 @@ using HE.CRM.AHP.Plugins.Services.HomeType;
 
 namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
 {
-    public class GetSingleHomeTypeHandler : CrmActionHandlerBase<invln_getsinglehometypeRequest, DataverseContext>
+    public class DeleteHomeTypeHandler : CrmActionHandlerBase<invln_deletehometypeRequest, DataverseContext>
     {
         #region Fields
 
-        private string homeTypeId => ExecutionData.GetInputParameter<string>(invln_getsinglehometypeRequest.Fields.invln_hometypeid);
-        private string applicationId => ExecutionData.GetInputParameter<string>(invln_getsinglehometypeRequest.Fields.invln_applicationid);
-        private string fieldsToRetrieve => ExecutionData.GetInputParameter<string>(invln_getsinglehometypeRequest.Fields.invln_fieldstoretrieve);
+        private string homeTypeId => ExecutionData.GetInputParameter<string>(invln_deletehometypeRequest.Fields.invln_hometypeid);
 
         #endregion
 
@@ -24,7 +22,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
         public override void DoWork()
         {
             TracingService.Trace("method");
-            var homeTypeDto = CrmServicesFactory.Get<IHomeTypeService>().GetHomeType(homeTypeId, applicationId, fieldsToRetrieve);
+            var homeTypeDto = CrmServicesFactory.Get<IHomeTypeService>().DeleteHomeType(homeTypeId);
             if (homeTypeDto != null)
             {
                 var homeTypesSerialized = JsonSerializer.Serialize(homeTypeDto);

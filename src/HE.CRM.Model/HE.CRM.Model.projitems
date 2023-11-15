@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifapplicationwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifloanapplicationwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_createsinglesitedetail.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deletehometype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deleteloanapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deletesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_generaterichtextdocument.cs" />

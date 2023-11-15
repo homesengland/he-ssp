@@ -120,6 +120,7 @@
     "invln_changeloanapplicationexternalstatus*",
     "invln_checkifapplicationwithgivennameexists*",
     "invln_checkifloanapplicationwithgivennameexists*",
+    "invln_deletehometype*",
     "invln_deleteloanapplication*",
     "invln_deletesitedetails*",
     "invln_generaterichtextdocument*",

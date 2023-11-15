@@ -22,6 +22,7 @@ namespace DataverseModel
 		{
 			public const string invln_hometypeid = "invln_hometypeid";
 			public const string invln_fieldstoretrieve = "invln_fieldstoretrieve";
+			public const string invln_applicationid = "invln_applicationid";
 		}
 		
 		public const string ActionLogicalName = "invln_getsinglehometype";
@@ -64,10 +65,30 @@ namespace DataverseModel
 			}
 		}
 		
+		public string invln_applicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_applicationid"))
+				{
+					return ((string)(this.Parameters["invln_applicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_applicationid"] = value;
+			}
+		}
+		
 		public invln_getsinglehometypeRequest()
 		{
 			this.RequestName = "invln_getsinglehometype";
 			this.invln_hometypeid = default(string);
+			this.invln_applicationid = default(string);
 		}
 	}
 	

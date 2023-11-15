@@ -97,6 +97,7 @@
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
     <Compile Include="Handlers\CustomApi\CheckIfApplicationWithGivenNameExistsHandler.cs" />
+    <Compile Include="Handlers\CustomApi\DeleteHomeTypeHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetMultipleApplicationsHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetSingleHomeTypeHandler.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="HE.Base\Services\ICrmServicesFactory.cs" />
     <Compile Include="Plugins\AhpApplication\CheckIfApplicationWithNewNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\CheckIfApplicationWithGivenNameExistsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\DeleteHomeTypePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleApplicationsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleHomeTypePlugin.cs" />

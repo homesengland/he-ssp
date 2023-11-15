@@ -19,6 +19,14 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             _homeTypeRepository = CrmRepositoriesFactory.Get<IHomeTypeRepository>();
         }
 
+        public void DeleteHomeType(string homeTypeId)
+        {
+            if (Guid.TryParse(homeTypeId, out var homeTypeGuid))
+            {
+                _homeTypeRepository.Delete(new invln_HomeType() { Id = homeTypeGuid });
+            }
+        }
+
         public List<HomeTypeDto> GetApplicaitonHomeTypes(string applicationId)
         {
             var listOfHomeTypesDto = new List<HomeTypeDto>();
@@ -36,17 +44,18 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             return listOfHomeTypesDto;
         }
 
-        public HomeTypeDto GetHomeType(string homeTypeId, string fieldsToRetrieve = null)
+        public HomeTypeDto GetHomeType(string homeTypeId, string applicationId, string fieldsToRetrieve = null)
         {
             HomeTypeDto homeTypeDto = null;
-            if(Guid.TryParse(homeTypeId, out var homeTypeGuid))
+            string attributes = null;
+            if (!string.IsNullOrEmpty(fieldsToRetrieve))
             {
-                var homeType = string.IsNullOrEmpty(fieldsToRetrieve) ?
-                    _homeTypeRepository.GetById(homeTypeGuid) :
-                    _homeTypeRepository.GetById(homeTypeGuid, fieldsToRetrieve.Split(','));
-
+                attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+            }
+            var homeType = _homeTypeRepository.GetHomeTypeByIdAndApplicationId(homeTypeId, applicationId, attributes);
+            if (homeType != null)
+            {
                 homeTypeDto = HomeTypeMapper.MapRegularEntityToDto(homeType);
-
             }
             return homeTypeDto;
         }
@@ -80,6 +89,20 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
                 homeTypeToUpdateOrCreate.Id = new Guid(homeTypeDto.id);
                 _homeTypeRepository.Update(homeTypeToUpdateOrCreate);
             }
+        }
+
+        private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
+        {
+            var fields = fieldsToRetrieve.Split(',');
+            var generatedAttribuesFetchXml = "";
+            if (fields.Length > 0)
+            {
+                foreach (var field in fields)
+                {
+                    generatedAttribuesFetchXml += $"<attribute name=\"{field}\" />";
+                }
+            }
+            return generatedAttribuesFetchXml;
         }
     }
 }
