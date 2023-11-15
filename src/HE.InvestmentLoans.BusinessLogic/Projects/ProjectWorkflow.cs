@@ -55,7 +55,7 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             return ProjectState.CheckAnswers;
         }
 
-        if (targetState == ProjectState.Index && (_model.Status == SectionStatus.NotStarted || _model.Status == SectionStatus.Undefined))
+        if (targetState != ProjectState.Index || _model.Status == SectionStatus.NotStarted || _model.Status == SectionStatus.Undefined)
         {
             return targetState;
         }
@@ -111,7 +111,7 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             .Permit(Trigger.Change, ProjectState.CheckAnswers);
 
         _machine.Configure(ProjectState.PlanningRef)
-            .PermitIf(Trigger.Continue, ProjectState.PlanningRefEnter, () => _model.PlanningReferenceNumberExists == CommonResponse.Yes)
+            .PermitIf(Trigger.Continue, ProjectState.PlanningRefEnter, () => _model.PlanningReferenceNumberExists != CommonResponse.No)
             .PermitIf(Trigger.Continue, ProjectState.Location, () => _model.PlanningReferenceNumberExists == CommonResponse.No)
             .Permit(Trigger.Back, ProjectState.Type);
 
