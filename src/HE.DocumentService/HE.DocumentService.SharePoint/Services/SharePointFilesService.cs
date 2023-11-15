@@ -7,8 +7,6 @@ using HE.DocumentService.SharePoint.Interfaces;
 using HE.DocumentService.SharePoint.Models.File;
 using HE.DocumentService.SharePoint.Models.Table;
 using Microsoft.SharePoint.Client;
-using System;
-using System.Buffers;
 using File = Microsoft.SharePoint.Client.File;
 
 namespace HE.DocumentService.SharePoint.Services;
@@ -144,7 +142,7 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
         // fileFields["_ModerationComments"] = item.Metadata;
         // fileFields.Update();
         // await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
-        await UploadFileSlicePerSlice(uploadFile, _spContext, stream, 10);
+        await UploadFileSlicePerSlice(uploadFile, _spContext, stream);
     }
 
     public void CreateFolders(string listTitle, List<string> folderPaths)
@@ -180,7 +178,7 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
 
         // Get the information about the folder that will hold the file.
         var buffer = new byte[blockSize];
-        var lastBuffer = new byte[0];
+        var lastBuffer = Array.Empty<byte>();
         long fileOffset = 0;
         int bytesRead;
         var first = true;
@@ -232,6 +230,7 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
 
     private static async Task<int> Read(Stream br, byte[] buffer, int bufferSize)
     {
+#pragma warning disable CA1835
         var bytesRead = await br.ReadAsync(buffer, 0, buffer.Length);
         var totalRead = bytesRead;
 
@@ -241,6 +240,7 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
             totalRead += bytesRead;
         }
 
+#pragma warning restore CA1835
         return totalRead;
     }
 }
