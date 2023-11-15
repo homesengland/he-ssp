@@ -10,5 +10,6 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
     {
         List<HomeTypeDto> GetApplicaitonHomeTypes(string applicationId);
         void SetHomeType(string homeType, string fieldsToSet = null);
+        HomeTypeDto GetHomeType(string homeTypeId, string fieldsToRetrieve = null);
     }
 }

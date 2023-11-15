@@ -63,12 +63,13 @@ namespace HE.Xrm.ServiceClientExample
                 housingType = (int)invln_Typeofhousing.Housingfordisabledandvulnerablepeople,
             };
             var serialized = JsonSerializer.Serialize(home);
-            var req2 = new invln_sethometypeRequest() //get loan applications related to account and contact with given data
+            var req2 = new invln_getsinglehometypeRequest() //get loan applications related to account and contact with given data
             {
-                invln_hometype = serialized,
-                invln_fieldstoset = fieldsToUpdate,
+                invln_hometypeid = home.id,
+                invln_fieldstoretrieve = fieldsToUpdate
             };
-            serviceClient.Execute(req2);
+            var test = (invln_getsinglehometypeResponse)serviceClient.Execute(req2);
+            Console.WriteLine("A web service connection was not established.");
         }
 
         private static void TestLoan(ServiceClient serviceClient)

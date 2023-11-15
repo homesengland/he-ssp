@@ -7,6 +7,7 @@ using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
+using Microsoft.Crm.Sdk.Messages;
 
 namespace HE.CRM.AHP.Plugins.Services.HomeType
 {
@@ -33,6 +34,21 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
                 }
             }
             return listOfHomeTypesDto;
+        }
+
+        public HomeTypeDto GetHomeType(string homeTypeId, string fieldsToRetrieve = null)
+        {
+            HomeTypeDto homeTypeDto = null;
+            if(Guid.TryParse(homeTypeId, out var homeTypeGuid))
+            {
+                var homeType = string.IsNullOrEmpty(fieldsToRetrieve) ?
+                    _homeTypeRepository.GetById(homeTypeGuid) :
+                    _homeTypeRepository.GetById(homeTypeGuid, fieldsToRetrieve.Split(','));
+
+                homeTypeDto = HomeTypeMapper.MapRegularEntityToDto(homeType);
+
+            }
+            return homeTypeDto;
         }
 
         public void SetHomeType(string homeType, string fieldsToSet = null)

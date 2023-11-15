@@ -99,6 +99,7 @@
     <Compile Include="Handlers\CustomApi\CheckIfApplicationWithGivenNameExistsHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetMultipleApplicationsHandler.cs" />
+    <Compile Include="Handlers\CustomApi\GetSingleHomeTypeHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetTypeOfHomesListHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetHomeTypeHandler.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Plugins\CustomApi\CheckIfApplicationWithGivenNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleApplicationsPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\GetSingleHomeTypePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetTypeOfHomesListPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetHomeTypePlugin.cs" />

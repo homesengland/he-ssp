@@ -130,6 +130,7 @@
     "invln_getmultipleahpapplications*",
     "invln_getorganisationchangedetails*",
     "invln_getorganizationdetails*",
+    "invln_getsinglehometype*",
     "invln_getsingleloanapplicationforaccountandcontact*",
     "invln_getsinglesitedetails*",
     "invln_gettemporaryportaldata*",
