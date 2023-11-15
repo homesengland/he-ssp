@@ -1,7 +1,6 @@
 using FluentValidation;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.Enums;
@@ -11,9 +10,9 @@ using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.Funding.Enums;
 using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Security;
-using HE.InvestmentLoans.Contract.User.Queries;
 using HE.InvestmentLoans.WWW.Models;
 using HE.Investments.Account.Contract.Organisation.Queries;
+using HE.Investments.Account.Contract.User.Queries;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -69,7 +68,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     public async Task<IActionResult> CheckYourDetails(CancellationToken cancellationToken)
     {
         var organizationBasicInformationResponse = await _mediator.Send(new GetOrganizationBasicInformationQuery(), cancellationToken);
-        var userDetails = await _mediator.Send(new GetUserAccountQuery(), cancellationToken);
+        var userDetails = await _mediator.Send(new GetUserProfileDetailsQuery(), cancellationToken);
         return View(
             "CheckYourDetails",
             new CheckYourDetailsModel

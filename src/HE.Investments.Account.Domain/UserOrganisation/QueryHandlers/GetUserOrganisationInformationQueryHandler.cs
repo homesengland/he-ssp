@@ -1,5 +1,4 @@
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
-using HE.InvestmentLoans.Contract.User.ValueObjects;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Domain.Organisation.Repositories;

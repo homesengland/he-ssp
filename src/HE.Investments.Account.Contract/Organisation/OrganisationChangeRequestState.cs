@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.Common.Utils.Enums;
+namespace HE.Investments.Account.Contract.Organisation;
 
 public enum OrganisationChangeRequestState
 {

@@ -1,6 +1,4 @@
-using HE.InvestmentLoans.Common.Utils.Enums;
-
-namespace HE.InvestmentLoans.Contract.Organization;
+namespace HE.Investments.Account.Contract.Organisation;
 
 public class OrganisationDetailsViewModel
 {

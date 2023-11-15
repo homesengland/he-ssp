@@ -58,10 +58,6 @@
       <_Parameter1>HE.InvestmentLoans.BusinessLogic.Tests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="User\CommandHandlers\" />
-  </ItemGroup>
   <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
 
 </Project>

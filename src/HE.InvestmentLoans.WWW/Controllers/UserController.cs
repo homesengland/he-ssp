@@ -1,6 +1,4 @@
 using HE.InvestmentLoans.Contract.Application.Queries;
-using HE.InvestmentLoans.Contract.User;
-using HE.InvestmentLoans.Contract.User.Queries;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.User;
 using HE.Investments.Account.Contract.User.Queries;

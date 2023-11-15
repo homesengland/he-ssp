@@ -28,6 +28,7 @@ public class GetUserProfileInformationQueryHandler : IRequestHandler<GetUserProf
             FirstName = userProfileInformation.FirstName?.ToString(),
             LastName = userProfileInformation.LastName?.ToString(),
             JobTitle = userProfileInformation.JobTitle?.ToString(),
+            Email = userProfileInformation.Email,
             TelephoneNumber = userProfileInformation.TelephoneNumber?.ToString(),
             SecondaryTelephoneNumber = userProfileInformation.SecondaryTelephoneNumber?.ToString(),
         };

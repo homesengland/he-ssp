@@ -2,7 +2,6 @@ using HE.InvestmentLoans.BusinessLogic.Projects.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
-using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Tests.ObjectBuilders;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;

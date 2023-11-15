@@ -1,23 +1,22 @@
 extern alias Org;
 
-using HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
-using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
+using FluentAssertions;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Tests.Extensions.FluentAssertionsExtensions;
 using HE.InvestmentLoans.Contract;
-using HE.InvestmentLoans.Contract.Organization;
-using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.Investments.Account.Contract.Organisation.Commands;
+using HE.Investments.Account.Domain.Organisation.CommandHandlers;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
-using Org.HE.Common.IntegrationModel.PortalIntegrationModel;
-using Org.HE.Investments.Organisation.Contract;
-using Org.HE.Investments.Organisation.Services;
 using Xunit;
 using static FluentAssertions.FluentActions;
+using IContactService = Org::HE.Investments.Organisation.Services.IContactService;
+using OrganisationSearchItem = Org::HE.Investments.Organisation.Contract.OrganisationSearchItem;
+using OrganizationDetailsDto = Org::HE.Common.IntegrationModel.PortalIntegrationModel.OrganizationDetailsDto;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.Organization.CommandHandlers;
+namespace HE.Investments.Account.Domain.Tests.Organisation.CommandHandlers;
 
 public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationCommandHandler>
 {
@@ -25,7 +24,7 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
 
     public LinkContactWithAccountTests()
     {
-        _command = new LinkContactWithOrganizationCommand(new CompaniesHouseNumber("12345"));
+        _command = new LinkContactWithOrganizationCommand("12345");
 
         RegisterDependency(new Mock<IContactService>());
     }

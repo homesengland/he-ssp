@@ -2,14 +2,11 @@ using HE.InvestmentLoans.BusinessLogic.LoanApplication.CommandHandlers;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Entities;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
-using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Contract.Application.Commands;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.TestsUtils.TestFramework;
-using Microsoft.Crm.Sdk.Messages;
 using Moq;
 using Xunit;
 

@@ -1,8 +1,7 @@
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
-using HE.InvestmentLoans.Contract.Organization;
-using HE.InvestmentLoans.Contract.Organization.Commands;
-using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.Investments.Account.Contract.Organisation;
+using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Messages;
@@ -74,7 +73,7 @@ public class OrganizationController : BaseController
 
         if (model.Response == CommonResponse.Yes)
         {
-            await _mediator.Send(new LinkContactWithOrganizationCommand(new CompaniesHouseNumber(organizationNumberOrId)));
+            await _mediator.Send(new LinkContactWithOrganizationCommand(organizationNumberOrId));
             return RedirectToAction(nameof(HomeController.Dashboard), new ControllerName(nameof(HomeController)).WithoutPrefix());
         }
 

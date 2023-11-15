@@ -1,6 +1,5 @@
 using HE.InvestmentLoans.BusinessLogic.Security;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
 using HE.Investments.Common.Extensions;

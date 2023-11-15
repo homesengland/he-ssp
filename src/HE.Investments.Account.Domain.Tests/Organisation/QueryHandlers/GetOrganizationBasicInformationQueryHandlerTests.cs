@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
+using FluentAssertions;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.QueryHandlers;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
@@ -6,7 +6,8 @@ using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
-namespace HE.InvestmentLoans.BusinessLogic.Tests.Organization.QueryHandlers;
+namespace HE.Investments.Account.Domain.Tests.Organisation.QueryHandlers;
+
 public class GetOrganizationBasicInformationQueryHandlerTests : TestBase<GetOrganizationBasicInformationQueryHandler>
 {
     [Fact]

@@ -1,5 +1,5 @@
 using AngleSharp.Html.Dom;
-using HE.InvestmentLoans.Contract.Organization;
+using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Common.Tests.WWW;
 using HE.Investments.Common.Tests.WWW.Helpers;
 using Xunit;

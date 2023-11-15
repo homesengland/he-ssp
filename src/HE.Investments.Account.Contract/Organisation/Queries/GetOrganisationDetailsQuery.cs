@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace HE.InvestmentLoans.Contract.Organization;
+namespace HE.Investments.Account.Contract.Organisation.Queries;
 
 public record GetOrganisationDetailsQuery() : IRequest<GetOrganisationDetailsQueryResponse>;
 

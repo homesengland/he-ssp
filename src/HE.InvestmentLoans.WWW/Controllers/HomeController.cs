@@ -1,5 +1,4 @@
 using HE.InvestmentLoans.BusinessLogic.LoanApplication;
-using HE.InvestmentLoans.BusinessLogic.User;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.Queries;
 using HE.InvestmentLoans.WWW.Models;

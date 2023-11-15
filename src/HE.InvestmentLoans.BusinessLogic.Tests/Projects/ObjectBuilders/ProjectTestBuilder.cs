@@ -3,7 +3,6 @@ using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
 using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
-using HE.InvestmentLoans.Contract.Projects.ValueObjects;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.ObjectBuilders;
 internal sealed class ProjectTestBuilder

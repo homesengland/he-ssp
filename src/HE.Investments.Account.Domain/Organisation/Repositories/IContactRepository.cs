@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
+namespace HE.Investments.Account.Domain.Organisation.Repositories;
 
 public interface IContactRepository
 {

@@ -61,7 +61,6 @@
   <ItemGroup>
     <Folder Include="Funding\MapperTests\FundingViewModelMapperTests\" />
     <Folder Include="Projects\Entities\PublicSectorGrantFundingTests\" />
-    <Folder Include="User\CommandHandlers\" />
   </ItemGroup>
 
 </Project>

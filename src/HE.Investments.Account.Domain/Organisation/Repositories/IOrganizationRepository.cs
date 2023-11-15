@@ -1,4 +1,5 @@
 using HE.InvestmentLoans.Common.Utils.Enums;
+using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Shared.User;

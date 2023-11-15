@@ -1,6 +1,5 @@
 using System.Globalization;
 using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Contract.User.ValueObjects;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Extensions;
 

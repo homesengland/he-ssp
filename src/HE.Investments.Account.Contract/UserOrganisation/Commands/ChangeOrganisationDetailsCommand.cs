@@ -1,7 +1,7 @@
 using HE.Investments.Common.Validators;
 using MediatR;
 
-namespace HE.InvestmentLoans.Contract.UserOrganisation.Commands;
+namespace HE.Investments.Account.Contract.UserOrganisation.Commands;
 
 public record ChangeOrganisationDetailsCommand(
     string? Name,

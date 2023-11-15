@@ -1,10 +1,8 @@
-extern alias Org;
-
 using HE.Investments.Account.Shared;
+using HE.Investments.Organisation.Services;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using Org::HE.Investments.Organisation.Services;
 
-namespace HE.InvestmentLoans.BusinessLogic.Organization.Repositories;
+namespace HE.Investments.Account.Domain.Organisation.Repositories;
 
 public class ContactRepository : IContactRepository
 {

@@ -1,6 +1,5 @@
 extern alias Org;
 
-using HE.InvestmentLoans.BusinessLogic.Tests.User.TestData;
 using HE.Investments.Account.Domain.Tests.User.TestData;
 using HE.Investments.TestsUtils.TestFramework;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -9,6 +8,7 @@ using Org::HE.Common.IntegrationModel.PortalIntegrationModel;
 using Org::HE.Investments.Organisation.Services;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
+
 public class ContactServiceMockTestBuilder
 {
     private readonly Mock<IContactService> _mock;

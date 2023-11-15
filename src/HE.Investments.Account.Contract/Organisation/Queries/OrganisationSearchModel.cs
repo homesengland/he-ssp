@@ -1,5 +1,3 @@
-using HE.InvestmentLoans.Contract.Organization.ValueObjects;
-
 namespace HE.Investments.Account.Contract.Organisation.Queries;
 
 public class OrganisationSearchModel
