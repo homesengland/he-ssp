@@ -16,4 +16,6 @@ public class LocalAuthoritiesViewModel
     public Guid ProjectId { get; set; }
 
     public string? LocalAuthorityId { get; set; }
+
+    public string? LocalAuthorityName { get; set; }
 }

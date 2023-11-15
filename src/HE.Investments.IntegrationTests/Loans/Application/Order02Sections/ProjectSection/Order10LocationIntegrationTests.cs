@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using HE.InvestmentLoans.Common.Tests.TestData;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;

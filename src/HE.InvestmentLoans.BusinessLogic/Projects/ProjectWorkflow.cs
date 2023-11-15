@@ -71,6 +71,7 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             { PlanningReferenceNumberExists: CommonResponse.Yes, PlanningReferenceNumber: var x } when x.IsNotProvided() => ProjectState.PlanningRefEnter,
             { PlanningReferenceNumberExists: CommonResponse.No, LocationOption: var x } when x.IsNotProvided() => ProjectState.Location,
             { Ownership: var x } when x.IsNotProvided() => ProjectState.Ownership,
+            { LocalAuthorityName: var x } when x.IsNotProvided() => ProjectState.ProvideLocalAuthority,
             { Ownership: CommonResponse.Yes, Source: var x } when x.IsNotProvided() => ProjectState.Additional,
             { Ownership: CommonResponse.No, GrantFundingStatus: var x } when x.IsNotProvided() => ProjectState.GrantFunding,
             { GrantFundingStatus: CommonResponse.Yes, GrantFundingName: var x } when x.IsNotProvided() => ProjectState.GrantFundingMore,
@@ -128,13 +129,26 @@ public class ProjectWorkflow : IStateRouting<ProjectState>
             .PermitIf(Trigger.Back, ProjectState.PlanningRef, () => _model.PlanningReferenceNumberExists != CommonResponse.Yes);
 
         _machine.Configure(ProjectState.ProvideLocalAuthority)
-            .Permit(Trigger.Continue, ProjectState.Ownership)
+            .Permit(Trigger.Continue, ProjectState.LocalAuthorityResult)
             .Permit(Trigger.Back, ProjectState.Location);
+
+        _machine.Configure(ProjectState.LocalAuthorityResult)
+            .Permit(Trigger.Continue, ProjectState.LocalAuthorityConfirm)
+            .Permit(Trigger.Back, ProjectState.ProvideLocalAuthority);
+
+        _machine.Configure(ProjectState.LocalAuthorityConfirm)
+            .Permit(Trigger.Continue, ProjectState.Ownership)
+            .Permit(Trigger.Back, ProjectState.ProvideLocalAuthority);
+
+        _machine.Configure(ProjectState.LocalAuthorityReset)
+            .Permit(Trigger.Continue, ProjectState.Ownership)
+            .Permit(Trigger.Back, ProjectState.ProvideLocalAuthority);
 
         _machine.Configure(ProjectState.Ownership)
             .PermitIf(Trigger.Continue, ProjectState.Additional, () => _model.Ownership == CommonResponse.Yes)
             .PermitIf(Trigger.Continue, ProjectState.GrantFunding, () => _model.Ownership != CommonResponse.Yes)
-            .Permit(Trigger.Back, ProjectState.Location);
+            .PermitIf(Trigger.Back, ProjectState.LocalAuthorityConfirm, () => _model.LocalAuthorityName.IsProvided())
+            .PermitIf(Trigger.Back, ProjectState.ProvideLocalAuthority, () => _model.LocalAuthorityName.IsNotProvided());
 
         _machine.Configure(ProjectState.Additional)
             .Permit(Trigger.Continue, ProjectState.GrantFunding)

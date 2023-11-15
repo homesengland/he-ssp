@@ -12,6 +12,7 @@ public static class ProjectCrmFieldNameMapper
     private static readonly string PlanningReferenceNumber = $"{nameof(invln_SiteDetails.invln_Planningreferencenumber).ToLowerInvariant()}";
     private static readonly string SiteCoordinates = $"{nameof(invln_SiteDetails.invln_Sitecoordinates).ToLowerInvariant()}";
     private static readonly string LandRegistryTitleNumber = $"{nameof(invln_SiteDetails.invln_Landregistrytitlenumber).ToLowerInvariant()}";
+    private static readonly string LocalAuthority = $"{nameof(invln_SiteDetails.invln_Region).ToLowerInvariant()}";
     private static readonly string SiteOwnership = $"{nameof(invln_SiteDetails.invln_Siteownership).ToLowerInvariant()}";
     private static readonly string NumberOfHomes = $"{nameof(invln_SiteDetails.invln_Numberofhomes).ToLowerInvariant()}";
     private static readonly string TypeOfProject = $"{nameof(invln_SiteDetails.invln_TypeofSite).ToLowerInvariant()}";
@@ -46,7 +47,8 @@ public static class ProjectCrmFieldNameMapper
             ProjectFieldsSet.ManyHomes => NumberOfHomes,
             ProjectFieldsSet.TypeOfProject => TypeOfProject,
             ProjectFieldsSet.TypeOfHomes => string.Join(",", TypeOfHomes, TypeOfHomesOther),
-            ProjectFieldsSet.Ownership => SiteOwnership,
+            ProjectFieldsSet.LocalAuthority => LocalAuthority,
+            ProjectFieldsSet.Ownership => string.Join(",", SiteOwnership, LocalAuthority),
             ProjectFieldsSet.PlanningPermissionStatus => PlanningPermissionStatus,
             ProjectFieldsSet.PlanningReferenceNumber => PlanningReferenceNumber,
             ProjectFieldsSet.PlanningReferenceNumberExists => HaveAPlanningReferenceNumber,
@@ -61,6 +63,7 @@ public static class ProjectCrmFieldNameMapper
                 PlanningReferenceNumber,
                 SiteCoordinates,
                 LandRegistryTitleNumber,
+                LocalAuthority,
                 SiteOwnership,
                 NumberOfHomes,
                 TypeOfProject,
@@ -89,6 +92,7 @@ public static class ProjectCrmFieldNameMapper
                 PlanningReferenceNumber,
                 SiteCoordinates,
                 LandRegistryTitleNumber,
+                LocalAuthority,
                 SiteOwnership,
                 NumberOfHomes,
                 TypeOfProject,

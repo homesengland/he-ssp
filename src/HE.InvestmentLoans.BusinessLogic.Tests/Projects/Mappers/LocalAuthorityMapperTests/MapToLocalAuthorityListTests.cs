@@ -12,11 +12,11 @@ public class MapToLocalAuthorityListTests
         // given
         var localAuthoritiesDto = LocalAuthorityDtoTestData.LocalAuthoritiesDtoList;
 
-        // given && when
+        // when
         var result = LocalAuthorityMapper.MapToLocalAuthorityList(localAuthoritiesDto);
 
         // then
-        result.First().Id.Should().Be(localAuthoritiesDto.First().onsCode);
+        result.First().Id.ToString().Should().Be(localAuthoritiesDto.First().onsCode);
         result.First().Name.Should().Be(localAuthoritiesDto.First().name);
         result.Last().Name.Should().Be(localAuthoritiesDto.Last().name);
         result.Last().Name.Should().Be(localAuthoritiesDto.Last().name);

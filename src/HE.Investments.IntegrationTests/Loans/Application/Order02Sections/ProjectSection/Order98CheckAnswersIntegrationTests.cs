@@ -48,6 +48,7 @@ public class Order98CheckAnswersIntegrationTests : IntegrationTest
         projectSummary[ProjectFieldNames.ProjectType].Should().Contain("Greenfield");
         projectSummary[ProjectFieldNames.PlanningReferenceNumberExists].Should().Be(CommonResponse.Yes);
         projectSummary[ProjectFieldNames.PlanningReferenceNumber].Should().Be(TextTestData.TextThatNotExceedsShortInputLimit);
+        projectSummary[ProjectFieldNames.LocalAuthority].Should().Be(UserData.LocalAuthorityName);
 
         var statusDisplay = TemporaryFormOptions.PermissionStatus.GetSummaryLabel(ProjectFormOption.PlanningPermissionStatusOptions.NotSubmitted);
         projectSummary[ProjectFieldNames.PlanningPermissionStatus].Should().Be(statusDisplay);

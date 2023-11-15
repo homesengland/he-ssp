@@ -32,6 +32,12 @@ internal sealed class ProjectPagesUrls
 
     public const string LocalAuthoritySearchSuffix = "/local-authority/search";
 
+    public const string LocalAuthorityNotFoundSuffix = "/local-authority/not-found";
+
+    public const string LocalAuthoritySearchResultSuffix = "/local-authority/search/result";
+
+    public const string LocalAuthorityConfirmSuffix = "/confirm";
+
     public const string AdditionalDetailsSuffix = "/additional-details";
 
     public const string GrantFundingExistsSuffix = "/grant-funding-exists";
@@ -99,6 +105,11 @@ internal sealed class ProjectPagesUrls
     public static string Ownership(string applicationId, string projectId)
     {
         return $"application/{applicationId}/project/{projectId}{OwnershipSuffix}";
+    }
+
+    public static string LocalAuthoritySearch(string applicationId, string projectId)
+    {
+        return $"application/{applicationId}/project/{projectId}{LocalAuthoritySearchSuffix}";
     }
 
     public static string AdditionalDetails(string applicationId, string projectId)

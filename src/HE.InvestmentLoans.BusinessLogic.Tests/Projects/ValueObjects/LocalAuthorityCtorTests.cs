@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+using HE.InvestmentLoans.Contract.Projects.ValueObjects;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.ValueObjects;
@@ -16,7 +16,7 @@ public class LocalAuthorityCtorTests
         var result = LocalAuthority.New(id, name);
 
         // then
-        result.Id.Should().Be(id);
+        result.Id.ToString().Should().Be(id);
         result.Name.Should().Be(name);
     }
 }

@@ -4,6 +4,7 @@ using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.InvestmentLoans.Contract.Projects.ValueObjects;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
@@ -40,7 +41,8 @@ public class Project : DomainEntity
         ChargesDebt? chargesDebt,
         AffordableHomes? affordableHomes,
         ApplicationStatus loanApplicationStatus,
-        PlanningPermissionStatus? planningPermissionStatus)
+        PlanningPermissionStatus? planningPermissionStatus,
+        LocalAuthority? localAuthority)
     {
         IsNewlyCreated = false;
 
@@ -64,6 +66,7 @@ public class Project : DomainEntity
         IsNewlyCreated = false;
         LoanApplicationStatus = loanApplicationStatus;
         PlanningPermissionStatus = planningPermissionStatus;
+        LocalAuthority = localAuthority;
     }
 
     public ProjectId Id { get; private set; }
@@ -99,6 +102,8 @@ public class Project : DomainEntity
     public ChargesDebt? ChargesDebt { get; private set; }
 
     public AffordableHomes? AffordableHomes { get; private set; }
+
+    public LocalAuthority? LocalAuthority { get; private set; }
 
     public SectionStatus Status { get; private set; }
 
@@ -281,6 +286,16 @@ public class Project : DomainEntity
         AffordableHomes = affordableHomes;
     }
 
+    public void ProvideLocalAuthority(LocalAuthority? localAuthority)
+    {
+        if (LocalAuthority != localAuthority)
+        {
+            UncompleteSection();
+        }
+
+        LocalAuthority = localAuthority;
+    }
+
     internal void ProvideGrantFundingStatus(PublicSectorGrantFundingStatus? grantFundingStatus)
     {
         if (GrantFundingStatus != grantFundingStatus)
@@ -349,7 +364,8 @@ public class Project : DomainEntity
             LandOwnership.IsProvided() && (!LandOwnership!.ApplicantHasFullOwnership || AdditionalDetails.IsProvided()) &&
             GrantFundingStatus.IsProvided() && (GrantFundingStatus != PublicSectorGrantFundingStatus.Received || PublicSectorGrantFunding.IsProvided()) &&
             ChargesDebt.IsProvided() &&
-            AffordableHomes.IsProvided();
+            AffordableHomes.IsProvided() &&
+            LocalAuthority is not null && LocalAuthority.Id.IsProvided() && LocalAuthority.Name.IsProvided();
     }
 
     private void CompleteSection()

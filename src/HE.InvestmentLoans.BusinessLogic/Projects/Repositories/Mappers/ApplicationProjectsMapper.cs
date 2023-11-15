@@ -37,7 +37,8 @@ internal class ApplicationProjectsMapper
                          projectFromCrm.existingLegalCharges.IsProvided() ? new ChargesDebt(projectFromCrm.existingLegalCharges ?? false, projectFromCrm.existingLegalChargesInformation) : null,
                          projectFromCrm.affordableHousing.IsProvided() ? new AffordableHomes(projectFromCrm.affordableHousing.MapToCommonResponse()) : null,
                          ApplicationStatusMapper.MapToPortalStatus(loanApplicationDto.loanApplicationExternalStatus),
-                         PlanningPermissionStatusMapper.Map(projectFromCrm.planningPermissionStatus));
+                         PlanningPermissionStatusMapper.Map(projectFromCrm.planningPermissionStatus),
+                         LocalAuthorityMapper.MapToLocalAuthority(projectFromCrm.localAuthority));
             });
 
         return new ApplicationProjects(loanApplicationId, projectsFromCrm);

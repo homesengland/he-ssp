@@ -148,6 +148,15 @@
     }
 
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+               {
+                   { "Title", ProjectFieldNames.LocalAuthority },
+                   { "Value", Model?.LocalAuthorityName },
+                   { "Link", Url.Action("LocalAuthoritySearch", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
+                   { "LinkId", "local-authority" },
+                   { "IsEditable", Model?.IsEditable() }
+               })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
            {
                { "Title", ProjectFieldNames.LandOwnership },
                { "Value", Model?.Ownership },

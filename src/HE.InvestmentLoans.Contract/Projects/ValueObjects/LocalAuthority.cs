@@ -1,20 +1,22 @@
 using HE.Investments.Common.Domain;
 
-namespace HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
+namespace HE.InvestmentLoans.Contract.Projects.ValueObjects;
 
 public class LocalAuthority : ValueObject
 {
-    public LocalAuthority(string id, string name)
+    public LocalAuthority(LocalAuthorityId id, string name)
     {
         Id = id;
         Name = name;
     }
 
-    public string Id { get; }
+    public LocalAuthorityId Id { get; }
 
     public string Name { get; }
 
-    public static LocalAuthority New(string id, string name) => new(id, name);
+    public static LocalAuthority New(string id, string name) => new(LocalAuthorityId.From(id), name);
+
+    public static LocalAuthority New(LocalAuthorityId id, string name) => new(id, name);
 
     public override string ToString()
     {

@@ -57,6 +57,10 @@ public class IntegrationUserData
 
     public string OrganizationAddress { get; private set; } = "Heathers, Brushes Lane";
 
+    public string LocalAuthorityId { get; private set; } = "E08000012";
+
+    public string LocalAuthorityName { get; private set; } = "Liverpool";
+
     public FirstName FirstName { get; private set; }
 
     public LastName LastName { get; private set; }

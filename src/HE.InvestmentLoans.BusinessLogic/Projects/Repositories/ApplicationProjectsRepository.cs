@@ -3,13 +3,13 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Projects.Repositories.Mappers;
-using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Utils;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
+using HE.InvestmentLoans.Contract.Projects.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Extensions;
@@ -108,15 +108,6 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILo
         }
     }
 
-    public Task AssignLocalAuthority(
-        LoanApplicationId loanApplicationId,
-        ProjectId projectId,
-        LocalAuthorityId localAuthorityId,
-        CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<(IList<LocalAuthority> Items, int TotalItems)> Search(string phrase, int startPage, int pageSize, CancellationToken cancellationToken)
     {
         var localAuthorities = await _cacheService.GetValueAsync(
@@ -158,6 +149,7 @@ public class ApplicationProjectsRepository : IApplicationProjectsRepository, ILo
             planningReferenceNumber = projectToSave.PlanningReferenceNumber?.Value,
             siteCoordinates = projectToSave.Coordinates?.Value,
             landRegistryTitleNumber = projectToSave.LandRegistryTitleNumber?.Value,
+            localAuthority = LocalAuthorityMapper.MapToLocalAuthorityDto(projectToSave.LocalAuthority),
             siteOwnership = projectToSave.LandOwnership?.ApplicantHasFullOwnership,
             dateOfPurchase = projectToSave.AdditionalDetails?.PurchaseDate.AsDateTime(),
             siteCost = projectToSave.AdditionalDetails?.Cost.ToString(),

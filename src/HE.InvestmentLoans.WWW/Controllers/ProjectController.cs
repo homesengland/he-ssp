@@ -1,5 +1,4 @@
 using HE.InvestmentLoans.BusinessLogic.Projects;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
@@ -10,6 +9,7 @@ using HE.InvestmentLoans.Contract.Funding.Commands;
 using HE.InvestmentLoans.Contract.Projects;
 using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.Queries;
+using HE.InvestmentLoans.Contract.Projects.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.WWW.Attributes;
 using HE.Investments.Common.Extensions;
@@ -369,18 +369,16 @@ public class ProjectController : WorkflowController<ProjectState>
     [WorkflowState(ProjectState.ProvideLocalAuthority)]
     public IActionResult LocalAuthoritySearch(Guid id, Guid projectId)
     {
-        return View(new LocalAuthoritiesViewModel
-        {
-            ApplicationId = id,
-            ProjectId = projectId,
-        });
+        return View(new LocalAuthoritiesViewModel { ApplicationId = id, ProjectId = projectId, });
     }
 
     [HttpPost("{projectId}/local-authority/search")]
-    public async Task<IActionResult> LocalAuthoritySearch(Guid id, Guid projectId, LocalAuthoritiesViewModel viewModel, CancellationToken cancellationToken)
+    [WorkflowState(ProjectState.ProvideLocalAuthority)]
+    public async Task<IActionResult> LocalAuthoritySearch(Guid id, Guid projectId, LocalAuthoritiesViewModel viewModel, [FromQuery] string redirect, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new ProvideLocalAuthoritySearchPhraseCommand(viewModel.Phrase), cancellationToken);
+            new ProvideLocalAuthoritySearchPhraseCommand(viewModel.Phrase),
+            cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -389,17 +387,18 @@ public class ProjectController : WorkflowController<ProjectState>
             return View("LocalAuthoritySearch", viewModel);
         }
 
-        return RedirectToAction(nameof(LocalAuthorityResult), new { id, projectId, phrase = viewModel.Phrase });
+        return await Continue(new { id, projectId, phrase = viewModel.Phrase, redirect });
     }
 
     [HttpGet("{projectId}/local-authority/search/result")]
-    public async Task<IActionResult> LocalAuthorityResult(Guid id, Guid projectId, string phrase, CancellationToken token, [FromQuery] int page = 0)
+    [WorkflowState(ProjectState.LocalAuthorityResult)]
+    public async Task<IActionResult> LocalAuthorityResult(Guid id, Guid projectId, string phrase, [FromQuery] string redirect, CancellationToken token, [FromQuery] int page = 0)
     {
         var result = await _mediator.Send(new SearchLocalAuthoritiesQuery(phrase, page - 1, DefaultPagination.PageSize), token);
 
         if (result.ReturnedData.TotalItems == 0)
         {
-            return RedirectToAction(nameof(LocalAuthorityNotFound), new { id, projectId });
+            return RedirectToAction(nameof(LocalAuthorityNotFound), new { id, projectId, redirect });
         }
 
         var viewModel = result.ReturnedData;
@@ -414,38 +413,57 @@ public class ProjectController : WorkflowController<ProjectState>
     [HttpGet("{projectId}/local-authority/not-found")]
     public IActionResult LocalAuthorityNotFound(Guid id, Guid projectId)
     {
-        return View(new LocalAuthoritiesViewModel
-        {
-            ApplicationId = id,
-            ProjectId = projectId,
-        });
+        return View(new LocalAuthoritiesViewModel { ApplicationId = id, ProjectId = projectId, });
     }
 
-    [HttpGet("{projectId}/local-authority/{localAuthorityId}/confirm")]
-    public IActionResult LocalAuthorityConfirm(Guid id, Guid projectId, string localAuthorityId)
+    [HttpGet("{projectId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm")]
+    [WorkflowState(ProjectState.LocalAuthorityConfirm)]
+    public IActionResult LocalAuthorityConfirm(Guid id, Guid projectId, string localAuthorityId, string localAuthorityName, string phrase)
     {
         var viewModel = new LocalAuthoritiesViewModel
         {
             ApplicationId = id,
             ProjectId = projectId,
             LocalAuthorityId = localAuthorityId,
+            LocalAuthorityName = localAuthorityName,
+            Phrase = phrase,
         };
 
         return View(new ConfirmModel<LocalAuthoritiesViewModel>(viewModel));
     }
 
-    [HttpPost("{projectId}/local-authority/{localAuthorityId}/confirm")]
-    [WorkflowState(ProjectState.ProvideLocalAuthority)]
-    public async Task<IActionResult> LocalAuthorityConfirm(Guid id, Guid projectId, string localAuthorityId, ConfirmModel<LocalAuthoritiesViewModel> model, CancellationToken token)
+    [HttpPost("{projectId}/local-authority/{localAuthorityId}/{localAuthorityName}/confirm")]
+    [WorkflowState(ProjectState.LocalAuthorityConfirm)]
+    public async Task<IActionResult> LocalAuthorityConfirm(
+        Guid id,
+        Guid projectId,
+        string localAuthorityId,
+        string localAuthorityName,
+        ConfirmModel<LocalAuthoritiesViewModel> model,
+        [FromQuery] string redirect,
+        CancellationToken token)
     {
         if (model.Response == CommonResponse.Yes)
         {
-            await _mediator.Send(new ConfirmLocalAuthorityCommand(LoanApplicationId.From(id), ProjectId.From(projectId), LocalAuthorityId.From(localAuthorityId)), token);
+            await _mediator.Send(
+                new ProvideLocalAuthorityCommand(LoanApplicationId.From(id), ProjectId.From(projectId), LocalAuthorityId.From(localAuthorityId), localAuthorityName),
+                token);
 
-            return await Continue(new { id, projectId });
+            return await Continue(redirect, new { id, projectId });
         }
 
-        return RedirectToAction(nameof(LocalAuthoritySearch), new { id, projectId });
+        return RedirectToAction(nameof(LocalAuthoritySearch), new { id, projectId, redirect });
+    }
+
+    [HttpGet("{projectId}/local-authority/reset")]
+    [WorkflowState(ProjectState.LocalAuthorityReset)]
+    public async Task<IActionResult> LocalAuthorityReset(Guid id, Guid projectId, [FromQuery] string redirect, CancellationToken token)
+    {
+        await _mediator.Send(
+            new ProvideLocalAuthorityCommand(LoanApplicationId.From(id), ProjectId.From(projectId), null, null),
+            token);
+
+        return await Continue(redirect, new { id, projectId });
     }
 
     [HttpGet("{projectId}/ownership")]
@@ -664,9 +682,9 @@ public class ProjectController : WorkflowController<ProjectState>
     }
 
     [HttpGet("{projectId}/back")]
-    public Task<IActionResult> Back(ProjectState currentPage, Guid id, Guid projectId)
+    public Task<IActionResult> Back(ProjectState currentPage, Guid id, Guid projectId, string localAuthorityId, string localAuthorityName)
     {
-        return Back(currentPage, new { id, projectId });
+        return Back(currentPage, new { id, projectId, localAuthorityId, localAuthorityName });
     }
 
     protected override async Task<IStateRouting<ProjectState>> Routing(ProjectState currentState, object routeData = null)

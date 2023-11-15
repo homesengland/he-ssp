@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
@@ -17,13 +12,13 @@ namespace HE.InvestmentLoans.IntegrationTests.Loans.Application.Order02Sections.
 
 [Order(2)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
-public class Order13GrantFundingExistsIntegrationTests : IntegrationTest
+public class Order14GrantFundingExistsIntegrationTests : IntegrationTest
 {
     private readonly string _projectId;
 
     private readonly string _applicationLoanId;
 
-    public Order13GrantFundingExistsIntegrationTests(IntegrationTestFixture<Program> fixture)
+    public Order14GrantFundingExistsIntegrationTests(IntegrationTestFixture<Program> fixture)
         : base(fixture)
     {
         _applicationLoanId = UserData.LoanApplicationIdInDraftState;
