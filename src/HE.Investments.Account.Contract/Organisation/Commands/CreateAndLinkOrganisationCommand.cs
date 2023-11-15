@@ -1,7 +1,7 @@
 using HE.Investments.Common.Validators;
 using MediatR;
 
-namespace HE.InvestmentLoans.Contract.Organization.Commands;
+namespace HE.Investments.Account.Contract.Organisation.Commands;
 
 public record CreateAndLinkOrganisationCommand(
     string? Name,

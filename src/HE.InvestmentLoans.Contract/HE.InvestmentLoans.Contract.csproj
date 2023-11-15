@@ -42,7 +42,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="User\Commands\" />
+    <Folder Include="Organization\" />
+    <Folder Include="Organization\Commands\" />
   </ItemGroup>
 
 </Project>

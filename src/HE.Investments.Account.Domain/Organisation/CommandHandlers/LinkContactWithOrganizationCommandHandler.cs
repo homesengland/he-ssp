@@ -1,15 +1,14 @@
-extern alias Org;
-
+using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract;
-using HE.InvestmentLoans.Contract.Organization;
+using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Shared;
+using HE.Investments.Organisation.Contract;
+using HE.Investments.Organisation.Services;
 using MediatR;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using Org.HE.Investments.Organisation.Contract;
-using Org.HE.Investments.Organisation.Services;
 
-namespace HE.InvestmentLoans.BusinessLogic.Organization.CommandHandlers;
+namespace HE.Investments.Account.Domain.Organisation.CommandHandlers;
 
 public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkContactWithOrganizationCommand>
 {
@@ -33,32 +32,32 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
         if (await _loanUserContext.IsLinkedWithOrganisation())
         {
             throw new DomainException(
-                $"Cannot link organization id: {request.Number} to loan user account id: {_loanUserContext.UserGlobalId}, because it is already linked to other organization",
+                $"Cannot link organization id: {request.CompaniesHouseNumber} to loan user account id: {_loanUserContext.UserGlobalId}, because it is already linked to other organization",
                 CommonErrorCodes.ContactAlreadyLinkedWithOrganization);
         }
 
-        var result = await _organisationSearchService.GetByOrganisation(request.Number.ToString(), cancellationToken);
+        var result = await _organisationSearchService.GetByOrganisation(request.CompaniesHouseNumber, cancellationToken);
 
         if (!result.IsSuccessfull())
         {
             throw new ExternalServiceException();
         }
 
-        var organization = result.Item ?? throw new NotFoundException(nameof(OrganisationSearchItem), request.Number);
+        var organization = result.Item ?? throw new NotFoundException(nameof(OrganisationSearchItem), request.CompaniesHouseNumber);
 
         if (!organization.ExistsInCrm)
         {
-            _organizationService.CreateOrganization(new Org.HE.Common.IntegrationModel.PortalIntegrationModel.OrganizationDetailsDto
+            _organizationService.CreateOrganization(new OrganizationDetailsDto
             {
                 registeredCompanyName = organization.Name,
                 addressLine1 = organization.Street,
                 city = organization.City,
-                companyRegistrationNumber = request.Number.ToString(),
+                companyRegistrationNumber = request.CompaniesHouseNumber,
                 postalcode = organization.PostalCode,
             });
         }
 
-        await _contactService.LinkContactWithOrganization(_organizationServiceAsync, _loanUserContext.UserGlobalId.ToString(), request.Number.ToString()!, PortalConstants.LoansPortalType);
+        await _contactService.LinkContactWithOrganization(_organizationServiceAsync, _loanUserContext.UserGlobalId.ToString(), request.CompaniesHouseNumber, PortalConstants.LoansPortalType);
         await _loanUserContext.RefreshAccounts();
     }
 }

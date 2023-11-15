@@ -1,14 +1,12 @@
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
-using HE.InvestmentLoans.Contract.Organization;
-using HE.InvestmentLoans.Contract.Organization.Commands;
-using HE.InvestmentLoans.Contract.Organization.ValueObjects;
+using HE.Investments.Account.Contract.Organisation;
+using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Utils;
-using HE.Investments.Organisation.CompaniesHouse.Contract;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -69,7 +67,7 @@ public class OrganisationController : Controller
 
         if (model.Response == CommonResponse.Yes)
         {
-            await _mediator.Send(new LinkContactWithOrganizationCommand(new CompaniesHouseNumber(organizationNumberOrId)));
+            await _mediator.Send(new LinkContactWithOrganizationCommand(organizationNumberOrId));
             return RedirectToAction(null);
         }
 

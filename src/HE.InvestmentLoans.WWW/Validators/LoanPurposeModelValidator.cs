@@ -1,5 +1,4 @@
 using FluentValidation;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.WWW.Models;
 using HE.Investments.Common.Messages;
 

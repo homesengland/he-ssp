@@ -1,4 +1,5 @@
-using HE.InvestmentLoans.Contract.Organization;
+using HE.Investments.Account.Contract.Organisation;
+using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.User;
 using HE.Investments.Account.Shared;

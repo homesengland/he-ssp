@@ -8,6 +8,8 @@ public class UserProfileDetailsModel
 
     public string? JobTitle { get; set; }
 
+    public string? Email { get; set; }
+
     public string? TelephoneNumber { get; set; }
 
     public string? SecondaryTelephoneNumber { get; set; }

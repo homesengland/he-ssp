@@ -11,8 +11,8 @@ using HE.InvestmentLoans.Common.Utils;
 using HE.Investments.Account.Domain.Config;
 using Microsoft.Extensions.DependencyInjection;
 using Org::HE.Investments.Organisation.CrmRepository;
-using ContactRepository = HE.InvestmentLoans.BusinessLogic.Organization.Repositories.ContactRepository;
-using IContactRepository = HE.InvestmentLoans.BusinessLogic.Organization.Repositories.IContactRepository;
+using ContactRepository = HE.Investments.Account.Domain.Organisation.Repositories.ContactRepository;
+using IContactRepository = HE.Investments.Account.Domain.Organisation.Repositories.IContactRepository;
 
 namespace HE.InvestmentLoans.BusinessLogic.Config;
 

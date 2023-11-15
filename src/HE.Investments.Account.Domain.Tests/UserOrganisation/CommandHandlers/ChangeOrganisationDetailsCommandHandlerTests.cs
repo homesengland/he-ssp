@@ -1,7 +1,7 @@
 extern alias Org;
 
 using FluentAssertions;
-using HE.InvestmentLoans.Contract.UserOrganisation.Commands;
+using HE.Investments.Account.Contract.UserOrganisation.Commands;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;

@@ -1,7 +1,9 @@
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.InvestmentLoans.Contract;
 using HE.Investments.Common.Domain;
 
-namespace HE.InvestmentLoans.Contract.Organization.ValueObjects;
+namespace HE.Investments.Account.Domain.Organisation.ValueObjects;
+
 public class CompaniesHouseNumber : ValueObject
 {
     private readonly string _value;

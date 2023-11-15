@@ -2,7 +2,6 @@ using System.Globalization;
 using HE.InvestmentLoans.BusinessLogic.CompanyStructure.QueryHandlers;
 using HE.InvestmentLoans.BusinessLogic.Tests.CompanyStructure.TestObjectBuilders;
 using HE.InvestmentLoans.BusinessLogic.Tests.TestData;
-using HE.InvestmentLoans.BusinessLogic.Tests.User.TestObjectBuilder;
 using HE.InvestmentLoans.Common.Utils.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure.Queries;
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;

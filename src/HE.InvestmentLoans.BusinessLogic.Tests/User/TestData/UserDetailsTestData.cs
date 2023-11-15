@@ -1,5 +1,3 @@
-using HE.InvestmentLoans.Contract.User.ValueObjects;
-using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Account.Shared.User.ValueObjects;
 
