@@ -56,17 +56,20 @@ namespace HE.Xrm.ServiceClientExample
             var fieldsToUpdate = $"{nameof(invln_HomeType.invln_hometypename).ToLower()},{nameof(invln_HomeType.invln_typeofhousing).ToLower()}";
             var home = new HomeTypeDto()
             {
-                id = "74b58fbf-a283-ee11-8179-002248004f63",
-                numberOfHomes = 2222,
+                //id = "74b58fbf-a283-ee11-8179-002248004f63",
+                numberOfHomes = 222,
                 applicationId = "a5b507b3-c27f-ee11-8179-002248004268",
                 homeTypeName = "test cusa",
                 housingType = (int)invln_Typeofhousing.Housingfordisabledandvulnerablepeople,
+                housingTypeForOlderPeople = (int)invln_typeofolderpeopleshousing.Housingforolderpeoplewithallspecialdesignfeatures,
+                housingTypeForVulnerable = (int)invln_typeofhousingfordisabledvulnerable.Designatedhousingfordisabledandvulnerablepeoplewithaccesstosupport,
+                clientGroup = (int)invln_Clientgroup.DPeoplewithdrugproblems,
+                designPrinciples = new List<int?>() { (int)invln_HAPPIprinciples.DEnergyefficiencyandsustainabledesign, (int)invln_HAPPIprinciples.GPositiveuseofcirculationspace },
             };
             var serialized = JsonSerializer.Serialize(home);
-            var req2 = new invln_deletehometypeRequest() //get loan applications related to account and contact with given data
+            var req2 = new invln_sethometypeRequest() //get loan applications related to account and contact with given data
             {
-                invln_hometypeid = home.id,
-                invln_userid = "auth0|6548d4ef9e1110e85f1fef57",
+                invln_hometype = serialized,
             };
             serviceClient.Execute(req2);
             Console.WriteLine("A web service connection was not established.");
@@ -91,12 +94,24 @@ namespace HE.Xrm.ServiceClientExample
                 //totalInitialSalesIncome = application.?.Value,
                 //otherCapitalSources = application.?.Value,
                 id = "49ab97e2-f882-ee11-8179-002248004f63",
+                fundingRequested = 3333,
+                noOfHomes = 123,
+                affordabilityEvidence = "12312321",
+                discussionsWithLocalStakeholders = "ddasdasddsad",
+                meetingLocalHousingNeed = "housing need",
+                meetingLocalProrities = "2123dsadsa",
+                reducingEnvironmentalImpact = "yes",
+                sharedOwnershipSalesRisk = "ssssss"
             };
             var fieldsToUpdate = $"{nameof(invln_scheme.invln_schemename).ToLower()},{nameof(invln_scheme.invln_Tenure).ToLower()}," +
                 $"{nameof(invln_scheme.invln_schemeinformationsectioncompletionstatus).ToLower()},{nameof(invln_scheme.invln_deliveryphasessectioncompletionstatus).ToLower()}," +
                 $"{nameof(invln_scheme.invln_financialdetailssectioncompletionstatus).ToLower()},{nameof(invln_scheme.invln_hometypessectioncompletionstatus).ToLower()}," +
                 $"{nameof(invln_scheme.invln_borrowingagainstrentalincome).ToLower()},{nameof(invln_scheme.invln_fundingfromopenmarkethomesonthisscheme).ToLower()}," +
-                $"{nameof(invln_scheme.invln_fundingfromopenmarkethomesnotonthisscheme).ToLower()},{nameof(invln_scheme.invln_recycledcapitalgrantfund).ToLower()}";
+                $"{nameof(invln_scheme.invln_fundingfromopenmarkethomesnotonthisscheme).ToLower()},{nameof(invln_scheme.invln_recycledcapitalgrantfund).ToLower()}," +
+                $"{nameof(invln_scheme.invln_borrowingagainstrentalincome).ToLower()},{nameof(invln_scheme.invln_fundingfromopenmarkethomesonthisscheme).ToLower()}," +
+                $"{nameof(invln_scheme.invln_fundingrequired).ToLower()},{nameof(invln_scheme.invln_noofhomes).ToLower()}," +
+                $"{nameof(invln_scheme.invln_discussionswithlocalstakeholders).ToLower()},{nameof(invln_scheme.invln_meetinglocalhousingneed).ToLower()}," +
+                $"{nameof(invln_scheme.invln_meetinglocalpriorities).ToLower()},{nameof(invln_scheme.invln_reducingenvironmentalimpact).ToLower()}";
             var app = JsonSerializer.Serialize(applicationDtoToReturn);
             var req2 = new invln_setahpapplicationRequest() //get loan applications related to account and contact with given data
             {

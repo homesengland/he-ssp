@@ -181,6 +181,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_NationalDesignGuideelements.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_NewBuildActivityType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Newstatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_OlderpeoplehousingtypeSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Permission.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_PlanningPermissionStatusSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Planningstatus.cs" />
