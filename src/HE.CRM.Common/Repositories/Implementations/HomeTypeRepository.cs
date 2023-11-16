@@ -17,6 +17,19 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
+        public bool CheckIfGivenHomeTypeIsAssignedToGivenUser(Guid homeTypeId, string userId)
+        {
+            using (DataverseContext ctx = new DataverseContext(service))
+            {
+                return (from ht in ctx.invln_HomeTypeSet
+                        join app in ctx.invln_schemeSet on ht.invln_application.Id equals app.invln_schemeId
+                        join cnt in ctx.ContactSet on app.invln_contactid.Id equals cnt.ContactId
+                        where ht.invln_HomeTypeId == homeTypeId && cnt.invln_externalid == userId
+                        select ht).ToList().Any();
+
+            }
+        }
+
         public invln_HomeType GetHomeTypeByIdAndApplicationId(string homeTypeId, string applicationId, string attributes = null)
         {
             var fetchXml = @"<fetch>

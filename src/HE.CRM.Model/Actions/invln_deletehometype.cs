@@ -20,10 +20,30 @@ namespace DataverseModel
 		
 		public static class Fields
 		{
+			public const string invln_userid = "invln_userid";
 			public const string invln_hometypeid = "invln_hometypeid";
 		}
 		
 		public const string ActionLogicalName = "invln_deletehometype";
+		
+		public string invln_userid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_userid"))
+				{
+					return ((string)(this.Parameters["invln_userid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_userid"] = value;
+			}
+		}
 		
 		public string invln_hometypeid
 		{
@@ -47,6 +67,7 @@ namespace DataverseModel
 		public invln_deletehometypeRequest()
 		{
 			this.RequestName = "invln_deletehometype";
+			this.invln_userid = default(string);
 			this.invln_hometypeid = default(string);
 		}
 	}

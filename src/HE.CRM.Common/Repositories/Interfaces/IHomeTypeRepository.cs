@@ -10,5 +10,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
     {
         List<invln_HomeType> GetHomeTypesRelatedToApplication(Guid applicationId);
         invln_HomeType GetHomeTypeByIdAndApplicationId(string homeTypeId, string applicationId, string attributes = null);
+        bool CheckIfGivenHomeTypeIsAssignedToGivenUser(Guid homeTypeId, string userId);
     }
 }

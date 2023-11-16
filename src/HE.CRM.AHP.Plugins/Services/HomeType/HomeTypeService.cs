@@ -19,11 +19,14 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             _homeTypeRepository = CrmRepositoriesFactory.Get<IHomeTypeRepository>();
         }
 
-        public void DeleteHomeType(string homeTypeId)
+        public void DeleteHomeType(string homeTypeId, string userId)
         {
             if (Guid.TryParse(homeTypeId, out var homeTypeGuid))
             {
-                _homeTypeRepository.Delete(new invln_HomeType() { Id = homeTypeGuid });
+                if (_homeTypeRepository.CheckIfGivenHomeTypeIsAssignedToGivenUser(homeTypeGuid, userId))
+                {
+                    _homeTypeRepository.Delete(new invln_HomeType() { Id = homeTypeGuid });
+                }
             }
         }
 
