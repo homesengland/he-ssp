@@ -103,6 +103,7 @@ namespace DataverseModel
 			public const string invln_localauthoritylookupName = "invln_localauthoritylookupname";
 			public const string invln_meetinglocalhousingneed = "invln_meetinglocalhousingneed";
 			public const string invln_meetinglocalpriorities = "invln_meetinglocalpriorities";
+			public const string invln_noofhomes = "invln_noofhomes";
 			public const string invln_oncosts = "invln_oncosts";
 			public const string invln_oncosts_Base = "invln_oncosts_base";
 			public const string invln_organisationid = "invln_organisationid";
@@ -115,6 +116,7 @@ namespace DataverseModel
 			public const string invln_publicland = "invln_publicland";
 			public const string invln_recycledcapitalgrantfund = "invln_recycledcapitalgrantfund";
 			public const string invln_recycledcapitalgrantfund_Base = "invln_recycledcapitalgrantfund_base";
+			public const string invln_reducingenvironmentalimpact = "invln_reducingenvironmentalimpact";
 			public const string invln_schemeId = "invln_schemeid";
 			public const string Id = "invln_schemeid";
 			public const string invln_schemeinformationsectioncompletionstatus = "invln_schemeinformationsectioncompletionstatus";
@@ -882,6 +884,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_noofhomes")]
+		public System.Nullable<int> invln_noofhomes
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_noofhomes");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_noofhomes");
+				this.SetAttributeValue("invln_noofhomes", value);
+				this.OnPropertyChanged("invln_noofhomes");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_oncosts")]
 		public Microsoft.Xrm.Sdk.Money invln_oncosts
 		{
@@ -1037,6 +1056,23 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_recycledcapitalgrantfund_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_reducingenvironmentalimpact")]
+		public string invln_reducingenvironmentalimpact
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_reducingenvironmentalimpact");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_reducingenvironmentalimpact");
+				this.SetAttributeValue("invln_reducingenvironmentalimpact", value);
+				this.OnPropertyChanged("invln_reducingenvironmentalimpact");
 			}
 		}
 		
