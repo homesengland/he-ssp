@@ -64,28 +64,31 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var application = JsonSerializer.Deserialize<AhpApplicationDto>(applicationSerialized);
             var contact = _contactRepository.GetContactViaExternalId(contactId);
             var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application, contact.Id.ToString(), organisationId);
-            invln_scheme applicationToUpdateOrCreate;
-            if (!string.IsNullOrEmpty(fieldsToUpdate))
-            {
-                var fields = fieldsToUpdate?.Split(',');
-                applicationToUpdateOrCreate = new invln_scheme();
-                foreach (var field in fields)
-                {
-                    TracingService.Trace($"field name {field}");
-                    applicationToUpdateOrCreate[field] = applicationMapped[field];
-                }
-            }
-            else
-            {
-                applicationToUpdateOrCreate = applicationMapped;
-            }
-
             if (string.IsNullOrEmpty(application.id))
             {
-                return _applicationRepository.Create(applicationToUpdateOrCreate);
+                return _applicationRepository.Create(applicationMapped);
             }
             else
             {
+                invln_scheme applicationToUpdateOrCreate;
+                if (!string.IsNullOrEmpty(fieldsToUpdate))
+                {
+                    var fields = fieldsToUpdate?.Split(',');
+                    applicationToUpdateOrCreate = new invln_scheme();
+                    foreach (var field in fields)
+                    {
+                        TracingService.Trace($"field name {field}");
+                        if (applicationMapped.Contains(field))
+                        {
+                            TracingService.Trace($"contains");
+                            applicationToUpdateOrCreate[field] = applicationMapped[field];
+                        }
+                    }
+                }
+                else
+                {
+                    applicationToUpdateOrCreate = applicationMapped;
+                }
                 applicationToUpdateOrCreate.Id = new Guid(application.id);
                 _applicationRepository.Update(applicationToUpdateOrCreate);
                 return applicationToUpdateOrCreate.Id;
