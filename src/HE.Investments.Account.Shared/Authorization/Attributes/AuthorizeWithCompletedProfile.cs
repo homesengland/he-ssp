@@ -32,7 +32,7 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
 
         if (accountUserContext.IsLogged is false)
         {
-            context.Result = accountRoutes.NotLoggedUser();
+            context.Result = accountRoutes.LandingPageForNotLoggedUser();
             return;
         }
 

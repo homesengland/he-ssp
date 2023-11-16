@@ -8,7 +8,7 @@ public interface IAccountRoutes
 
     IActionResult NotLinkedOrganisation();
 
-    IActionResult NotLoggedUser();
+    IActionResult LandingPageForNotLoggedUser();
 
     IActionResult LandingPageForLoggedUser();
 }

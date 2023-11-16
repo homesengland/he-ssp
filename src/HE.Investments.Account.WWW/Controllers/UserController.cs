@@ -1,6 +1,7 @@
 using HE.Investments.Account.Contract.User;
 using HE.Investments.Account.Contract.User.Queries;
 using HE.Investments.Account.Domain.User.Commands;
+using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Utils;
@@ -11,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HE.Investments.Account.WWW.Controllers;
 
 [Authorize]
-[Route("user")]
+[Route(UserAccountEndpoints.Controller)]
 public class UserController : Controller
 {
     private readonly IMediator _mediator;
@@ -21,14 +22,14 @@ public class UserController : Controller
         _mediator = mediator;
     }
 
-    [HttpGet("profile-details")]
+    [HttpGet(UserAccountEndpoints.ProfileDetailsSuffix)]
     public async Task<IActionResult> GetProfileDetails()
     {
         var viewModel = await _mediator.Send(new GetUserProfileDetailsQuery());
         return View("ProfileDetails", viewModel);
     }
 
-    [HttpPost("profile-details")]
+    [HttpPost(UserAccountEndpoints.ProfileDetailsSuffix)]
     public async Task<IActionResult> SaveProfileDetails(
         UserProfileDetailsModel viewModel,
         string callback,

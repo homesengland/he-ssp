@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.InvestmentLoans.Common.Routing;
+using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
@@ -13,6 +14,7 @@ using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.App
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
+[AuthorizeWithCompletedProfile]
 [Route("{applicationId}/financial-details")]
 public class FinancialDetailsController : WorkflowController<FinancialDetailsWorkflowState>
 {
