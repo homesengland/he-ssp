@@ -17,7 +17,7 @@ public class DisabledPeopleClientGroupTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("div", "My application - My homes")
+            .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("h1", "What client group are the homes for?")
             .HasRadio(
                 "DisabledPeopleClientGroup",

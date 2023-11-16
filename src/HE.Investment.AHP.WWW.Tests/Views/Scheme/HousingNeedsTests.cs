@@ -44,9 +44,9 @@ public class HousingNeedsTests : ViewTestBase
     {
         document
             .HasPageHeader(Model.ApplicationName, "Local housing needs")
-            .HasFormFieldLabel("Tell us how this type and tenure of home meets the identified priorities for the local housing market")
+            .HasFormFieldLabel("Tell us how this type and tenure of home meets the identified priorities for the local housing market", "h2")
             .HasInput("TypeAndTenureJustification", value: Model.TypeAndTenureJustification)
-            .HasFormFieldLabel("Tell us how this scheme and proposal contributes to a locally identified housing need")
+            .HasFormFieldLabel("Tell us how this scheme and proposal contributes to a locally identified housing need", "h2")
             .HasInput("SchemeAndProposalJustification", value: Model.SchemeAndProposalJustification)
             .HasElementWithText("button", "Save and continue");
     }

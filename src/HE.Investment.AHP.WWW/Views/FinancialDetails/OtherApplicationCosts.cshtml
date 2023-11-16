@@ -14,51 +14,49 @@
     var errorsList = new string[] { expectedWorksCostsErrors, expectedWorksOnErrors };
 }
 <div id="mainContainer" role="main">
-    <gds-div-grid-column-full>
+    <div class="govuk-grid-column-full">
         <form asp-controller="FinancialDetails" asp-action="OtherApplicationCosts" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
             <div id="backButton" role="navigation">
                 <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.OtherApplicationCosts, applicationId = @Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
                 </gds-back-link>
             </div>
             @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-            <span class="govuk-caption-m">
-                @Model.ApplicationName - Financial details
-            </span>
             <gds-field-set role="group">
                 <gds-div-form-group>
-                    <gds-legend size="ControlSize.L">
-                        <gds-fieldset-heading>
-                            @FinancialDetailsPageTitles.OtherApplicationCosts
-                        </gds-fieldset-heading>
-                    </gds-legend>
-                    <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=false>
-                        <gds-div-hint>
+                    <vc:form-header title="@FinancialDetailsPageTitles.OtherApplicationCosts" caption="@Model.ApplicationName - Financial details"/>
+                    <gds-field-set  role="group" invalid=false>
+                        <he-div-hint class="govuk-!-margin-bottom-6">
                             For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
-                        </gds-div-hint>
+                        </he-div-hint>
                     </gds-field-set>
                     <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=@expectedWorksCostsInvalid>
-                        <legend>
-                            <gds-label for="@Model.ExpectedWorksCosts" size="ControlSize.S">
+                        <gds-legend>
+                            <gds-h2 for="@Model.ExpectedWorksCosts">
                                 Enter your expected works costs
-                            </gds-label>
-                        </legend>
-                        
-                        <gds-input govuk-formgroup-asp-for="@Model.ExpectedWorksCosts" type="text" asp-excludelabel
-                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.ExpectedWorksCosts />
+                            </gds-h2>
+                        </gds-legend>
+
+                        <gds-input govuk-formgroup-asp-for="@Model.ExpectedWorksCosts" type="text"
+                                   asp-hiddenlabeltext="Enter your expected works costs"
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.ExpectedWorksCosts/>
                     </gds-field-set>
                     <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=@expectedOnCostsInvalid>
-                        <legend>
-                            <gds-label for="@Model.ExpectedOnCosts" size="ControlSize.S">
+                        <gds-legend>
+                            <gds-h2 for="@Model.ExpectedOnCosts">
                                 Enter your expected on costs
-                            </gds-label>
-                        </legend>
+                            </gds-h2>
+                        </gds-legend>
 
-                        <gds-input govuk-formgroup-asp-for="@Model.ExpectedOnCosts" type="text" asp-excludelabel
-                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.ExpectedOnCosts />
+                        <gds-input govuk-formgroup-asp-for="@Model.ExpectedOnCosts" type="text"
+                                   asp-hiddenlabeltext="Enter your expected on costs"
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.ExpectedOnCosts/>
                     </gds-field-set>
-                    <gds-details-summary label="What are works and on costs?">
-                        <a href="https://www.gov.uk/government/publications/grant-agreement-examples-for-the-affordable-homes-programme-2021-to-2026">More information</a>
-                    </gds-details-summary>
+                    <gds-details>
+                        <gds-summary-details>What are works and on costs?</gds-summary-details>
+                        <gds-div-details-text>
+                            <a href="https://www.gov.uk/government/publications/grant-agreement-examples-for-the-affordable-homes-programme-2021-to-2026">More information</a>
+                        </gds-div-details-text>
+                    </gds-details>
                 </gds-div-form-group>
 
                 @Html.HiddenFor(c => c.ApplicationId)
@@ -76,5 +74,5 @@
             </gds-p>
 
         </form>
-    </gds-div-grid-column-full>
+    </div>
 </div>

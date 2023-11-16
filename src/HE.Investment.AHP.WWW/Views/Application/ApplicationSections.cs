@@ -32,7 +32,7 @@ public static class ApplicationSections
                     "Financial details",
                     "Complete information about your finances, scheme costs and expected contributions.",
                     "Enter financial details",
-                    "#"),
+                    "financial-details/start"),
                 AddSection(
                     SectionType.DeliveryPhases,
                     sections,

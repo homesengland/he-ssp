@@ -1,7 +1,6 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
-@using HE.Investments.Common.Gds
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomesForOlderPeopleModel;
 
 @{
@@ -11,21 +10,22 @@
 
 <div class="govuk-grid-column-full">
     <form asp-controller="HomeTypes" asp-action="HomesForOlderPeople" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","HomeTypes", new { applicationId, homeTypeId, currentPage = HomeTypesWorkflowState.HomesForOlderPeople})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.HomesForOlderPeople"
+                                  application-id="@applicationId"
+                                  home-type-id="@homeTypeId"
+                                  caption="@Model.Header" />
 
-        <gds-div-hint>@Model.Header</gds-div-hint>
         <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
             <gds-field-set>
-                <gds-legend size="ControlSize.L">
-                    <gds-fieldset-heading>What type of homes will you be providing for older people?</gds-fieldset-heading>
+                <gds-legend>
+                     <gds-h1 class="govuk-!-margin-bottom-0">What type of homes will you be providing for older people?</gds-h1>
                 </gds-legend>
 
-                <gds-custom-radio
-                    asp-for="HousingType"
-                    value="@Model.HousingType"
-                    radio-items="HomeTypesFormOptions.OlderPeopleHousingTypes"
-                    class="govuk-!-margin-bottom-8">
-                </gds-custom-radio>
+                <gds-radio govuk-formgroup-asp-for="HousingType"
+                           asp-hiddenlabeltext="What type of homes will you be providing for older people?"
+                           value="@Model.HousingType"
+                           asp-selectlistitems="@HomeTypesFormOptions.OlderPeopleHousingTypes">
+                </gds-radio>
 
                 <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
                     Save and continue
