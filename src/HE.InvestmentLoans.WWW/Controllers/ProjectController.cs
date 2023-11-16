@@ -3,7 +3,6 @@ using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Common.Utils.Enums;
-using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.ValueObjects;
 using HE.InvestmentLoans.Contract.Funding.Commands;
 using HE.InvestmentLoans.Contract.Projects;
@@ -11,8 +10,8 @@ using HE.InvestmentLoans.Contract.Projects.Commands;
 using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
+using HE.InvestmentLoans.WWW.Models;
 using HE.Investments.Account.Shared.Authorization.Attributes;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Models;
@@ -50,17 +49,17 @@ public class ProjectController : WorkflowController<ProjectState>
             }
         }
 
-        return View("Index", LoanApplicationId.From(id));
+        return View("Index", new ProjectStartModel { LoanApplicationId = id, ProjectId = projectId });
     }
 
     [HttpPost("{projectId}/start", Name = "StartExistingProject")]
     [HttpPost("start", Name = "StartNewProject")]
     [WorkflowState(ProjectState.Index)]
-    public async Task<IActionResult> StartProjectPost(Guid id, [FromQuery] Guid? existingProjectId)
+    public async Task<IActionResult> StartProjectPost(Guid id, Guid? projectId)
     {
-        if (existingProjectId.IsProvided())
+        if (projectId != Guid.Empty)
         {
-            return RedirectToAction(nameof(ProjectName), new { id, projectId = existingProjectId });
+            return RedirectToAction(nameof(ProjectName), new { id, projectId });
         }
 
         var result = await _mediator.Send(new CreateProjectCommand(LoanApplicationId.From(id)));
