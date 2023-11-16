@@ -7,8 +7,10 @@ using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common;
 using HE.Investments.Common.User;
 using MediatR;
+using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.QueryHandlers;
 
@@ -18,15 +20,18 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
     private readonly IProgrammeRepository _programmeRepository;
     private readonly IOrganizationRepository _organizationRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IFeatureManager _featureManager;
 
     public GetUserOrganisationInformationQueryHandler(
         IOrganizationRepository organizationRepository,
         IUserRepository userRepository,
         IAccountUserContext accountUserContext,
-        IProgrammeRepository programmeRepository)
+        IProgrammeRepository programmeRepository,
+        IFeatureManager featureManager)
     {
         _accountUserContext = accountUserContext;
         _programmeRepository = programmeRepository;
+        _featureManager = featureManager;
         _organizationRepository = organizationRepository;
         _userRepository = userRepository;
     }
@@ -37,13 +42,21 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
         var organisationDetails = await _organizationRepository.GetBasicInformation(account, cancellationToken);
         var userDetails = await _userRepository.GetProfileDetails(_accountUserContext.UserGlobalId);
 
-        var userProgrammes = await _programmeRepository.GetAllProgrammes(account, cancellationToken);
+        if (await _featureManager.IsEnabledAsync(FeatureFlags.OrganisationDashboardAhpProgram, account.AccountId.ToString()) is false)
+        {
+            return new GetUserOrganisationInformationQueryResponse(
+                organisationDetails,
+                userDetails.FirstName?.Value,
+                account.Roles.All(r => r.Role == UserAccountRole.LimitedUser),
+                await _programmeRepository.GetLoanProgrammes(account, cancellationToken),
+                new List<ProgrammeType> { ProgrammeType.Loans });
+        }
 
         return new GetUserOrganisationInformationQueryResponse(
             organisationDetails,
             userDetails.FirstName?.Value,
             account.Roles.All(r => r.Role == UserAccountRole.LimitedUser),
-            userProgrammes,
+            await _programmeRepository.GetAllProgrammes(account, cancellationToken),
             new List<ProgrammeType> { ProgrammeType.Loans, ProgrammeType.Ahp });
     }
 }
