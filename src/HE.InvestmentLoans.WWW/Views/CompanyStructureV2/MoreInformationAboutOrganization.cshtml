@@ -21,7 +21,7 @@
 
         @Html.HiddenFor(x => x.LoanApplicationId)
         <gds-field-set>
-            <HeErrorFormGroup asp-for="OrganisationMoreInformation">
+            <gds-error-form-group asp-for="OrganisationMoreInformation">
                 <legend>
                     <gds-label-wrapper>
                         <gds-label size="@ControlSize.L" for="OrganisationMoreInformation">
@@ -35,8 +35,8 @@
                 <gds-text-area
                     asp-for="OrganisationMoreInformation"
                     rows="5"></gds-text-area>
-            </HeErrorFormGroup>
-            <HeErrorFormGroup asp-for="OrganisationMoreInformationFile" id="file-error-form">
+            </gds-error-form-group>
+            <gds-error-form-group asp-for="OrganisationMoreInformationFile" id="file-error-form">
                 <gds-div-hint>
                     You can also upload any relevant files such as company structure charts.
                 </gds-div-hint>
@@ -82,7 +82,7 @@
                     </label>
                     <input class="govuk-file-upload" id="File" name="File" type="file" multiple>
                 </div>
-            </HeErrorFormGroup>
+            </gds-error-form-group>
             <button class="govuk-button" id="continue-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
                 Continue
             </button>

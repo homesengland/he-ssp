@@ -14,7 +14,7 @@
         <partial name="_ErrorSummaryPartial" model="null" />
 
         <gds-field-set>
-            <HeErrorFormGroup asp-for="WithdrawReason">
+            <gds-error-form-group asp-for="WithdrawReason">
                 <legend>
                     <gds-label-wrapper>
                         <gds-label size="@ControlSize.L" for="WithdrawReason">
@@ -27,7 +27,7 @@
                 </gds-p>
                 <gds-text-area asp-for="WithdrawReason"
                                rows="5"></gds-text-area>
-            </HeErrorFormGroup>
+            </gds-error-form-group>
             <gds-p>
                 You can enter up to 1500 characters
             </gds-p>
