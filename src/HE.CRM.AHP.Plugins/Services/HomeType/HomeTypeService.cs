@@ -67,32 +67,31 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
         {
             var homeTypeDto = JsonSerializer.Deserialize<HomeTypeDto>(homeType);
             var homeTypeMapped = HomeTypeMapper.MapDtoToRegularEntity(homeTypeDto);
-            invln_HomeType homeTypeToUpdateOrCreate;
-            if (!string.IsNullOrEmpty(fieldsToSet))
-            {
-                var fields = fieldsToSet.Split(',');
-                homeTypeToUpdateOrCreate = new invln_HomeType();
-                foreach (var field in fields)
-                {
-                    TracingService.Trace($"field name {field}");
-                    if (homeTypeMapped.Contains(field))
-                    {
-                        TracingService.Trace($"contains");
-                        homeTypeToUpdateOrCreate[field] = homeTypeMapped[field];
-                    }
-                }
-            }
-            else
-            {
-                homeTypeToUpdateOrCreate = homeTypeMapped;
-            }
-
             if (string.IsNullOrEmpty(homeTypeDto.id))
             {
-                _ = _homeTypeRepository.Create(homeTypeToUpdateOrCreate);
+                _ = _homeTypeRepository.Create(homeTypeMapped);
             }
             else
             {
+                invln_HomeType homeTypeToUpdateOrCreate;
+                if (!string.IsNullOrEmpty(fieldsToSet))
+                {
+                    var fields = fieldsToSet.Split(',');
+                    homeTypeToUpdateOrCreate = new invln_HomeType();
+                    foreach (var field in fields)
+                    {
+                        TracingService.Trace($"field name {field}");
+                        if (homeTypeMapped.Contains(field))
+                        {
+                            TracingService.Trace($"contains");
+                            homeTypeToUpdateOrCreate[field] = homeTypeMapped[field];
+                        }
+                    }
+                }
+                else
+                {
+                    homeTypeToUpdateOrCreate = homeTypeMapped;
+                }
                 homeTypeToUpdateOrCreate.Id = new Guid(homeTypeDto.id);
                 _homeTypeRepository.Update(homeTypeToUpdateOrCreate);
             }
