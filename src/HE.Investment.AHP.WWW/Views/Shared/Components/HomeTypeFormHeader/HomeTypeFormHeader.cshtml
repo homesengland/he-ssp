@@ -1,0 +1,12 @@
+@model (string Title, string Caption, string ApplicationId, string HomeTypeId, HE.Investment.AHP.Domain.HomeTypes.HomeTypesWorkflowState CurrentPage)
+@{
+    object redirectParameters = Model.HomeTypeId == null
+        ? new { applicationId = Model.ApplicationId, currentPage = Model.CurrentPage }
+        : new { applicationId = Model.ApplicationId, homeTypeId = Model.HomeTypeId, currentPage = Model.CurrentPage };
+}
+
+<gds-back-link href="@Url.Action("Back", "HomeTypes", redirectParameters)" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+
+@await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+<vc:form-header title="@Model.Title" caption="@Model.Caption"/>

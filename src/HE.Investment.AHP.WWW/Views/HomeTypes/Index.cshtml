@@ -1,5 +1,4 @@
 @using HE.Investment.AHP.WWW.Extensions
-@using HE.Investments.Common.Gds
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeModelBase;
 
 @{
@@ -8,23 +7,20 @@
 
 <div class="govuk-grid-column-full">
     <gds-back-link href="@Url.Action("Index","Home")" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
-    <gds-div-hint>@Model.ApplicationName</gds-div-hint>
-    <gds-h1 size="ControlSize.L">
-        Home types
-    </gds-h1>
+    <vc:form-header title="Home types" caption="@Model.ApplicationName" />
 
     <gds-p>
         In this section, you’ll need to provide information about the homes on this application. This includes:
     </gds-p>
-    <gds-ul>
-        <gds-li>the number of homes</gds-li>
-        <gds-li>building information</gds-li>
-        <gds-li>the floor area </gds-li>
-        <gds-li>Nationally Described Space Standards</gds-li>
-        <gds-li>the design and client group information for specialist housing</gds-li>
-        <gds-li>Rent or Shared Ownership details, depending on the tenure of your application</gds-li>
-        <gds-li>Modern Methods of Construction (MMC)</gds-li>
-    </gds-ul>
+    <ul class="govuk-list govuk-list govuk-list--bullet">
+        <li>the number of homes</li>
+        <li>building information</li>
+        <li>the floor area </li>
+        <li>Nationally Described Space Standards</li>
+        <li>the design and client group information for specialist housing</li>
+        <li>Rent or Shared Ownership details, depending on the tenure of your application</li>
+        <li>Modern Methods of Construction (MMC)</li>
+    </ul>
 
     <gds-p class="govuk-!-margin-top-8">
         Where you have homes on your application that are identical, you are able to record those as one home type.

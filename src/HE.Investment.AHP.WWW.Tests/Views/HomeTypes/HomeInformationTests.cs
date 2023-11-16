@@ -49,7 +49,7 @@ public class HomeInformationTests : HomeTypesTestBase
     private static void AssertView(IHtmlDocument document)
     {
         document
-            .HasElementWithText("div", "My application - My homes")
+            .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("h1", "Home information")
             .HasElementWithText("h2", "Enter the number of homes you are delivering")
             .HasInput("NumberOfHomes")

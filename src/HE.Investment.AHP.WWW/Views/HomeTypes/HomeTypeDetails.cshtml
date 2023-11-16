@@ -1,7 +1,9 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.HomeTypes
-@using HE.Investments.Common.Gds
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using tes = He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios;
+
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeDetailsModel;
 
 @{
@@ -12,16 +14,12 @@
 
 <div class="govuk-grid-column-full">
     <form asp-controller="HomeTypes" asp-action="@action" asp-method="post" novalidate>
-        <gds-back-link href="@Url.Action("Back","HomeTypes", new { applicationId, currentPage = HomeTypesWorkflowState.HomeTypeDetails})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+        <vc:home-type-form-header title="Home type details"
+                                  current-page="@HomeTypesWorkflowState.HomeTypeDetails"
+                                  application-id="@applicationId"
+                                  caption="@Model.ApplicationName"/>
 
-        @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-
-        <gds-div-hint>@Model.ApplicationName</gds-div-hint>
-        <gds-h1 size="ControlSize.L">
-            Home type details
-        </gds-h1>
-
-        <gds-div-hint class="govuk-!-margin-bottom-6">Create a home type for each identical type of property. If there are any differences, create a new home type.</gds-div-hint>
+        <div class="govuk-caption-m govuk-!-margin-bottom-6">Create a home type for each identical type of property. If there are any differences, create a new home type.</div>
 
         <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
             <gds-field-set>
@@ -39,12 +37,13 @@
                 <gds-legend>
                     <gds-h2 class="govuk-!-margin-bottom-0">What type of homes are you delivering?</gds-h2>
                 </gds-legend>
-                <gds-custom-radio
-                    asp-for="HousingType"
-                    value="@Model.HousingType"
-                    radio-items="HomeTypesFormOptions.HousingTypes"
-                    class="govuk-!-margin-bottom-8">
-                </gds-custom-radio>
+
+                <gds-radio govuk-formgroup-asp-for="HousingType"
+                           asp-hiddenlabeltext="What type of homes are you delivering?"
+                           value="@Model.HousingType"
+                           asp-selectlistitems="@HomeTypesFormOptions.HousingTypes"
+                           class="govuk-!-margin-bottom-8">
+                </gds-radio>
 
                 <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
                     Save and continue

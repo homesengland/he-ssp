@@ -11,6 +11,7 @@
     <ActionsWhitelist>invln_changeloanapplicationexternalstatus|
 invln_checkifapplicationwithgivennameexists|
 invln_checkifloanapplicationwithgivennameexists|
+invln_deletehometype|
 invln_deleteloanapplication|
 invln_deletesitedetails|
 invln_generaterichtextdocument|
@@ -21,6 +22,7 @@ invln_getloanapplicationsforaccountandcontact|
 invln_getmultipleahpapplications|
 invln_getorganisationchangedetails|
 invln_getorganizationdetails|
+invln_getsinglehometype|
 invln_getsingleloanapplicationforaccountandcontact|
 invln_getsinglesitedetails|
 invln_gettemporaryportaldata|
@@ -33,6 +35,7 @@ invln_sendgovnotifyemail|
 invln_sendinternalcrmnotification|
 invln_sendinvestmentloansdatatocrm|
 invln_setahpapplication|
+invln_sethometype|
 invln_updatesingleloanapplication|
 invln_updatesinglesitedetails|
 invln_updateuserprofile|
