@@ -1,19 +1,19 @@
-using HE.Investment.AHP.Domain.FinancialDetails.Constants;
+﻿using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-public class LandValue : ValueObject
+public class RCGFContribution : ValueObject
 {
-    public LandValue(string value)
+    public RCGFContribution(string value)
     {
         var (isValid, valueInt) = AmountValidator.Validate(value);
         if (!isValid || !valueInt.HasValue)
         {
             OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.LandValue, FinancialDetailsValidationErrors.InvalidLandValue)
+                .AddValidationError(FinancialDetailsValidationFieldNames.RCGFContribution, FinancialDetailsValidationErrors.GenericAmountValidationError)
                 .CheckErrors();
         }
         else

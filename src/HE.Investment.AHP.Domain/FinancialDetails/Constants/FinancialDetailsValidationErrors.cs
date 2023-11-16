@@ -14,4 +14,6 @@ public static class FinancialDetailsValidationErrors
     public const string InvalidExpectedWorksCosts = "The expected works costs must be a whole number, like 300";
 
     public const string InvalidExpectedOnCosts = "The expected on costs must be a whole number, like 300";
+
+    public const string GenericAmountValidationError = "The amount must be a whole number, like 300";
 }

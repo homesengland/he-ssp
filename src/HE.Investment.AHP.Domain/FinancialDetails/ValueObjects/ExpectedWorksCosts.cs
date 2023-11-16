@@ -1,4 +1,4 @@
-﻿using HE.Investment.AHP.Domain.FinancialDetails.Constants;
+using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
@@ -8,7 +8,8 @@ public class ExpectedWorksCosts : ValueObject
 {
     public ExpectedWorksCosts(string value)
     {
-        if (!int.TryParse(value, out var onCostInt) || onCostInt < 0 || onCostInt > 999999999)
+        var (isValid, intValue) = AmountValidator.Validate(value);
+        if (!isValid || !intValue.HasValue)
         {
             OperationResult.New()
             .AddValidationError(FinancialDetailsValidationFieldNames.ExpectedWorksCosts, FinancialDetailsValidationErrors.InvalidExpectedWorksCosts)
@@ -16,7 +17,7 @@ public class ExpectedWorksCosts : ValueObject
         }
         else
         {
-            Value = onCostInt;
+            Value = intValue.Value;
         }
     }
 

@@ -45,6 +45,22 @@ public class FinancialDetailsEntity
 
     public ExpectedOnCosts? ExpectedOnCosts { get; private set; }
 
+    public RentalIncomeBorrowing? RentalIncomeBorrowing { get; private set; }
+
+    public SalesOfHomesOnThisScheme? SalesOfHomesOnThisScheme { get; private set; }
+
+    public SalesOfHomesOnOtherSchemes? SalesOfHomesOnOtherSchemes { get; private set; }
+
+    public OwnResources? OwnResources { get; private set; }
+
+    public RCGFContribution? RCGFContribution { get; private set; }
+
+    public OtherCapitalSources? OtherCapitalSources { get; private set; }
+
+    public SharedOwnershipSales? SharedOwnershipSales { get; private set; }
+
+    public HomesTransferValue? HomesTransferValue { get; private set; }
+
     public void ProvidePurchasePrice(PurchasePrice price)
     {
         PurchasePrice = price;
@@ -68,5 +84,45 @@ public class FinancialDetailsEntity
     public void ProvideExpectedOnCosts(ExpectedOnCosts expectedOnCosts)
     {
         ExpectedOnCosts = expectedOnCosts;
+    }
+
+    public void ProvideRentalIncomeBorrowing(RentalIncomeBorrowing rentalIncomeBorrowing)
+    {
+        RentalIncomeBorrowing = rentalIncomeBorrowing;
+    }
+
+    public void ProvideSalesOfHomesOnThisScheme(SalesOfHomesOnThisScheme salesOfHomesOnThisScheme)
+    {
+        SalesOfHomesOnThisScheme = salesOfHomesOnThisScheme;
+    }
+
+    public void ProvideSalesOfHomesOnOtherSchemes(SalesOfHomesOnOtherSchemes salesOfHomesOnOtherSchemes)
+    {
+        SalesOfHomesOnOtherSchemes = salesOfHomesOnOtherSchemes;
+    }
+
+    public void ProvideOwnResources(OwnResources ownResources)
+    {
+        OwnResources = ownResources;
+    }
+
+    public void ProvideRCGFContribution(RCGFContribution rCGFContribution)
+    {
+        RCGFContribution = rCGFContribution;
+    }
+
+    public void ProvideOtherCapitalSources(OtherCapitalSources otherCapitalSources)
+    {
+        OtherCapitalSources = otherCapitalSources;
+    }
+
+    public void ProvideSharesOwnershipSales(SharedOwnershipSales sharedOwnershipSales)
+    {
+        SharedOwnershipSales = sharedOwnershipSales;
+    }
+
+    public void ProvideHomesTransferValue(HomesTransferValue homesTransferValue)
+    {
+        HomesTransferValue = homesTransferValue;
     }
 }

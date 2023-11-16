@@ -8,7 +8,8 @@ public class ExpectedOnCosts : ValueObject
 {
     public ExpectedOnCosts(string value)
     {
-        if (!int.TryParse(value, out var onCostInt) || onCostInt < 0 || onCostInt > 999999999)
+        var (isValid, intValue) = AmountValidator.Validate(value);
+        if (!isValid || !intValue.HasValue)
         {
             OperationResult.New()
             .AddValidationError(FinancialDetailsValidationFieldNames.ExpectedOnCosts, FinancialDetailsValidationErrors.InvalidExpectedOnCosts)
@@ -16,7 +17,7 @@ public class ExpectedOnCosts : ValueObject
         }
         else
         {
-            Value = onCostInt;
+            Value = intValue.Value;
         }
     }
 

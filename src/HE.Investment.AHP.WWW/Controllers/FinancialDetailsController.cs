@@ -126,6 +126,53 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return await Continue(new { applicationId });
     }
 
+    [HttpGet("contributions")]
+    [WorkflowState(FinancialDetailsWorkflowState.ExpectedContributions)]
+    public async Task<IActionResult> Contributions(Guid applicationId)
+    {
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
+        return View(new FinancialDetailsContributionsModel(
+            applicationId,
+            financialDetails.ApplicationName,
+            financialDetails.RentalIncomeContribution,
+            financialDetails.SubsidyFromSaleOnThisScheme,
+            financialDetails.SubsidyFromSaleOnOtherSchemes,
+            financialDetails.OwnResourcesContribution,
+            financialDetails.RecycledCapitalGarntFundContribution,
+            financialDetails.OtherCapitalContributions,
+            financialDetails.InitialSalesReceiptContribution,
+            financialDetails.TransferValueOfHomes,
+            true, // temporarly mocked - shared ownership
+            true)); // temporarly mocked - unregistered body account type
+    }
+
+    [HttpPost("contributions")]
+    [WorkflowState(FinancialDetailsWorkflowState.ExpectedContributions)]
+    public async Task<IActionResult> Contributions(Guid applicationId, FinancialDetailsContributionsModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new ProvideContributionsCommand(
+            ApplicationId.From(applicationId),
+            model.RentalIncomeBorrowing,
+            model.SaleOfHomesOnThisScheme,
+            model.SaleOfHomesOnOtherSchemes,
+            model.OwnResources,
+            model.RCGFContribution,
+            model.OtherCapitalSources,
+            model.InitialSalesOfSharedHomes,
+            model.HomesTransferValue),
+            cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("Contributions", model);
+        }
+
+        return await Continue(new { applicationId });
+    }
+
     [HttpGet("back")]
     public Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, Guid applicationId)
     {
