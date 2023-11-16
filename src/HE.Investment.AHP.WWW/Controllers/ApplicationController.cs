@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Workflows;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.InvestmentLoans.Common.Routing;
+using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
@@ -12,8 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[Authorize]
 [Route("application")]
+[AuthorizeWithCompletedProfile]
 public class ApplicationController : WorkflowController<ApplicationWorkflowState>
 {
     private readonly string _siteName = "Test Site";

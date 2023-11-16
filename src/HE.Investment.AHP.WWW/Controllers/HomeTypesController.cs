@@ -11,6 +11,7 @@ using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Routing;
+using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
@@ -21,7 +22,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[Authorize]
+[AuthorizeWithCompletedProfile]
 [Route("Application/{applicationId}/HomeTypes")]
 public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 {

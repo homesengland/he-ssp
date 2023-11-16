@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Workflows;
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.InvestmentLoans.Common.Routing;
+using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
@@ -13,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[Authorize]
+[AuthorizeWithCompletedProfile]
 [Route("application/{applicationId}/scheme")]
 public class SchemeController : WorkflowController<SchemeWorkflowState>
 {

@@ -4,6 +4,7 @@ using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Models;
@@ -13,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
-[Route("organisation")]
+[Route(OrganisationAccountEndpoints.Controller)]
 [AuthorizeWithoutLinkedOrganisationOnly]
 public class OrganisationController : Controller
 {
@@ -24,13 +25,13 @@ public class OrganisationController : Controller
         _mediator = mediator;
     }
 
-    [HttpGet("search")]
+    [HttpGet(OrganisationAccountEndpoints.SearchOrganizationSuffix)]
     public IActionResult SearchOrganization()
     {
         return View();
     }
 
-    [HttpPost("search")]
+    [HttpPost(OrganisationAccountEndpoints.SearchOrganizationSuffix)]
     public IActionResult SearchOrganization(OrganisationSearchModel organisation)
     {
         return RedirectToAction(nameof(SearchOrganizationResult), new { searchPhrase = organisation.Name });
