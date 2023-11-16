@@ -1,4 +1,4 @@
-﻿using HE.Investment.AHP.Domain.FinancialDetails.Commands;
+using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.InvestmentLoans.Common.Extensions;
@@ -22,55 +22,26 @@ public class ProvideContributionsCommandHandler : FinancialDetailsCommandHandler
             {
                 var aggregatedResults = OperationResult.New();
 
-                if (request.RentalIncomeBorrowing.IsProvided())
-                {
-                    var rentalIncomeBorrowing = aggregatedResults.CatchResult(() => new RentalIncomeBorrowing(request.RentalIncomeBorrowing));
-                    financialDetails.ProvideRentalIncomeBorrowing(rentalIncomeBorrowing);
-                }
-
-                if (request.SalesOfHomesOnThisScheme.IsProvided())
-                {
-                    var salesOnThisScheme = aggregatedResults.CatchResult(() => new SalesOfHomesOnThisScheme(request.SalesOfHomesOnThisScheme));
-                    financialDetails.ProvideSalesOfHomesOnThisScheme(salesOnThisScheme);
-                }
-
-                if (request.SalesOfHomesOnOtherSchemes.IsProvided())
-                {
-                    var salesOnOtherSchemes = aggregatedResults.CatchResult(() => new SalesOfHomesOnOtherSchemes(request.SalesOfHomesOnOtherSchemes));
-                    financialDetails.ProvideSalesOfHomesOnOtherSchemes(salesOnOtherSchemes);
-                }
-
-                if (request.OwnResources.IsProvided())
-                {
-                    var ownResources = aggregatedResults.CatchResult(() => new OwnResources(request.OwnResources));
-                    financialDetails.ProvideOwnResources(ownResources);
-                }
-
-                if (request.RCGFContribution.IsProvided())
-                {
-                    var rCGFContribution = aggregatedResults.CatchResult(() => new RCGFContribution(request.RCGFContribution));
-                    financialDetails.ProvideRCGFContribution(rCGFContribution);
-                }
-
-                if (request.OtherCapitalSources.IsProvided())
-                {
-                    var otherCapitalSources = aggregatedResults.CatchResult(() => new OtherCapitalSources(request.OtherCapitalSources));
-                    financialDetails.ProvideOtherCapitalSources(otherCapitalSources);
-                }
-
-                if (request.SharedOwnershipSales.IsProvided())
-                {
-                    var sharedOwnershipSales = aggregatedResults.CatchResult(() => new SharedOwnershipSales(request.SharedOwnershipSales));
-                    financialDetails.ProvideSharesOwnershipSales(sharedOwnershipSales);
-                }
-
-                if (request.HomesTransferValue.IsProvided())
-                {
-                    var homesTransferValue = aggregatedResults.CatchResult(() => new HomesTransferValue(request.HomesTransferValue));
-                    financialDetails.ProvideHomesTransferValue(homesTransferValue);
-                }
+                var rentalIncomeBorrowing = request.RentalIncomeBorrowing.IsProvided() ? aggregatedResults.CatchResult(() => new RentalIncomeBorrowing(request.RentalIncomeBorrowing)) : null;
+                var salesOfHomesOnThisScheme = request.SalesOfHomesOnThisScheme.IsProvided() ? aggregatedResults.CatchResult(() => new SalesOfHomesOnThisScheme(request.SalesOfHomesOnThisScheme)) : null;
+                var salesOfHomesOnOtherSchemes = request.SalesOfHomesOnOtherSchemes.IsProvided() ? aggregatedResults.CatchResult(() => new SalesOfHomesOnOtherSchemes(request.SalesOfHomesOnOtherSchemes)) : null;
+                var ownResources = request.OwnResources.IsProvided() ? aggregatedResults.CatchResult(() => new OwnResources(request.OwnResources)) : null;
+                var rCGFContribution = request.RCGFContribution.IsProvided() ? aggregatedResults.CatchResult(() => new RCGFContribution(request.RCGFContribution)) : null;
+                var otherCapitalSources = request.OtherCapitalSources.IsProvided() ? aggregatedResults.CatchResult(() => new OtherCapitalSources(request.OtherCapitalSources)) : null;
+                var sharedOwnershipSales = request.SharedOwnershipSales.IsProvided() ? aggregatedResults.CatchResult(() => new SharedOwnershipSales(request.SharedOwnershipSales)) : null;
+                var homesTransferValue = request.HomesTransferValue.IsProvided() ? aggregatedResults.CatchResult(() => new HomesTransferValue(request.HomesTransferValue)) : null;
 
                 aggregatedResults.CheckErrors();
+
+                financialDetails.ProvideContributions(
+                    rentalIncomeBorrowing,
+                    salesOfHomesOnThisScheme,
+                    salesOfHomesOnOtherSchemes,
+                    ownResources,
+                    rCGFContribution,
+                    otherCapitalSources,
+                    sharedOwnershipSales,
+                    homesTransferValue);
             },
             request.ApplicationId,
             cancellationToken);

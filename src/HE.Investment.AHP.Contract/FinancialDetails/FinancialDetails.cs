@@ -33,7 +33,7 @@ public class FinancialDetails
 
     public string? OtherCapitalContributions { get; set; }
 
-    public string? InitialSalesReceiptContribution { get; set; }
+    public string? SharedOwnershipSalesContribution { get; set; }
 
     public string? TransferValueOfHomes { get; set; }
 

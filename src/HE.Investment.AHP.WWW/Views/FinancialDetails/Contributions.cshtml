@@ -7,7 +7,7 @@
 @model FinancialDetailsContributionsModel;
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.ExpectedContributions;
-    
+
     var (rentalIncomeInvalid, rentalIncomeErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.RentalIncomeBorrowing);
     var (saleOfHomesOnThisSchemeInvalid, saleOfHomesOnThisSchemeErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.SalesOfHomesOnThisScheme);
     var (saleOfHomesOnOtherSchemeInvalid, saleOfHomesOnOtherSchemeErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.SalesOfHomesOnOtherSchemes);
@@ -137,6 +137,16 @@
                                        asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.HomesTransferValue />
                         </gds-field-set>
                     }
+                    <gds-field-set class="govuk-!-margin-bottom-6" role="group">
+                        <legend>
+                            <gds-label for="@Model.HomesTransferValue" size="ControlSize.S">
+                                Total expected contributions to the scheme
+                                <span>£@Model.TotalContributions</span>
+                            </gds-label>
+                        </legend>
+
+
+                    </gds-field-set>
                 </gds-div-form-group>
 
                 @Html.HiddenFor(c => c.ApplicationId)

@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.WWW.Models.FinancialDetails;
 public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
@@ -58,4 +61,22 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
     public bool IsSharedOwnership { get; set; }
 
     public bool IsUnregisteredBodyAccount { get; set; }
+
+    public string TotalContributions
+    {
+        get
+        {
+            decimal result = 0;
+            result += RentalIncomeBorrowing.TryParseNullableDecimal() ?? 0;
+            result += SaleOfHomesOnThisScheme.TryParseNullableDecimal() ?? 0;
+            result += SaleOfHomesOnOtherSchemes.TryParseNullableDecimal() ?? 0;
+            result += OwnResources.TryParseNullableDecimal() ?? 0;
+            result += RCGFContribution.TryParseNullableDecimal() ?? 0;
+            result += OtherCapitalSources.TryParseNullableDecimal() ?? 0;
+            result += InitialSalesOfSharedHomes.TryParseNullableDecimal() ?? 0;
+            result += HomesTransferValue.TryParseNullableDecimal() ?? 0;
+
+            return result.ToString(CultureInfo.InvariantCulture);
+        }
+    }
 }

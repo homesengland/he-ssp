@@ -76,53 +76,29 @@ public class FinancialDetailsEntity
         LandValue = landValue;
     }
 
-    public void ProvideExpectedWorksCosts(ExpectedWorksCosts expectedWorksCosts)
+    public void ProvideExpectedCosts(ExpectedWorksCosts? expectedWorksCosts, ExpectedOnCosts? expectedOnCosts)
     {
         ExpectedWorksCosts = expectedWorksCosts;
-    }
-
-    public void ProvideExpectedOnCosts(ExpectedOnCosts expectedOnCosts)
-    {
         ExpectedOnCosts = expectedOnCosts;
     }
 
-    public void ProvideRentalIncomeBorrowing(RentalIncomeBorrowing rentalIncomeBorrowing)
+    public void ProvideContributions(
+        RentalIncomeBorrowing? rentalIncomeBorrowing,
+        SalesOfHomesOnThisScheme? salesOfHomesOnThisScheme,
+        SalesOfHomesOnOtherSchemes? salesOfHomesOnOtherSchemes,
+        OwnResources? ownResources,
+        RCGFContribution? rCGFContribution,
+        OtherCapitalSources? otherCapitalSources,
+        SharedOwnershipSales? sharedOwnershipSales,
+        HomesTransferValue? homesTransferValue)
     {
         RentalIncomeBorrowing = rentalIncomeBorrowing;
-    }
-
-    public void ProvideSalesOfHomesOnThisScheme(SalesOfHomesOnThisScheme salesOfHomesOnThisScheme)
-    {
         SalesOfHomesOnThisScheme = salesOfHomesOnThisScheme;
-    }
-
-    public void ProvideSalesOfHomesOnOtherSchemes(SalesOfHomesOnOtherSchemes salesOfHomesOnOtherSchemes)
-    {
         SalesOfHomesOnOtherSchemes = salesOfHomesOnOtherSchemes;
-    }
-
-    public void ProvideOwnResources(OwnResources ownResources)
-    {
         OwnResources = ownResources;
-    }
-
-    public void ProvideRCGFContribution(RCGFContribution rCGFContribution)
-    {
         RCGFContribution = rCGFContribution;
-    }
-
-    public void ProvideOtherCapitalSources(OtherCapitalSources otherCapitalSources)
-    {
         OtherCapitalSources = otherCapitalSources;
-    }
-
-    public void ProvideSharesOwnershipSales(SharedOwnershipSales sharedOwnershipSales)
-    {
         SharedOwnershipSales = sharedOwnershipSales;
-    }
-
-    public void ProvideHomesTransferValue(HomesTransferValue homesTransferValue)
-    {
         HomesTransferValue = homesTransferValue;
     }
 }

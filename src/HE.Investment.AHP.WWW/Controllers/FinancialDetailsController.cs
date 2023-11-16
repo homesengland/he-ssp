@@ -1,7 +1,8 @@
+using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails;
 using HE.Investment.AHP.Domain.FinancialDetails.Commands;
-using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.InvestmentLoans.Common.Routing;
 using HE.Investments.Common.Validators;
@@ -130,6 +131,13 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.ExpectedContributions)]
     public async Task<IActionResult> Contributions(Guid applicationId)
     {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()));
+
+        var isSharedOwnership = application.Tenure
+            is Tenure.SharedOwnership
+            or Tenure.HomeOwnershipLongTermDisabilities
+            or Tenure.OlderPersonsSharedOwnership;
+
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
         return View(new FinancialDetailsContributionsModel(
             applicationId,
@@ -140,9 +148,9 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             financialDetails.OwnResourcesContribution,
             financialDetails.RecycledCapitalGarntFundContribution,
             financialDetails.OtherCapitalContributions,
-            financialDetails.InitialSalesReceiptContribution,
+            financialDetails.SharedOwnershipSalesContribution,
             financialDetails.TransferValueOfHomes,
-            true, // temporarly mocked - shared ownership
+            isSharedOwnership,
             true)); // temporarly mocked - unregistered body account type
     }
 
