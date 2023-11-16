@@ -3,6 +3,7 @@ using HE.InvestmentLoans.BusinessLogic.Projects.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Common;
+using HE.Investments.Common.Domain;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.Entities.ProjectTests;

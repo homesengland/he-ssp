@@ -2,6 +2,7 @@ using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure;
 using HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
+using HE.Investments.Common.Domain;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure.Mappers;
 

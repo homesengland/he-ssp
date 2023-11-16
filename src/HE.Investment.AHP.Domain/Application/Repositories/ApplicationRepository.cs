@@ -48,15 +48,9 @@ public class ApplicationRepository : IApplicationRepository
 
     public async Task<bool> IsExist(ApplicationName applicationName, CancellationToken cancellationToken)
     {
-        var dto = new AhpApplicationDto
-        {
-            name = applicationName.Name,
-        };
+        var dto = new AhpApplicationDto { name = applicationName.Name, };
 
-        var request = new invln_checkifapplicationwithgivennameexistsRequest
-        {
-            invln_application = CrmResponseSerializer.Serialize(dto),
-        };
+        var request = new invln_checkifapplicationwithgivennameexistsRequest { invln_application = CrmResponseSerializer.Serialize(dto), };
 
         var response = await _service.ExecuteAsync<invln_checkifapplicationwithgivennameexistsRequest, invln_checkifapplicationwithgivennameexistsResponse>(
             request,
@@ -81,10 +75,11 @@ public class ApplicationRepository : IApplicationRepository
             invln_organisationid = account.AccountId.ToString(),
         };
 
-        var applications = await _service.ExecuteAsync<invln_getmultipleahpapplicationsRequest, invln_getmultipleahpapplicationsResponse, IList<AhpApplicationDto>>(
-            request,
-            r => r.invln_ahpapplications,
-            cancellationToken);
+        var applications =
+            await _service.ExecuteAsync<invln_getmultipleahpapplicationsRequest, invln_getmultipleahpapplicationsResponse, IList<AhpApplicationDto>>(
+                request,
+                r => r.invln_ahpapplications,
+                cancellationToken);
 
         return applications.Select(CreateEntity).ToList();
     }
@@ -125,6 +120,11 @@ public class ApplicationRepository : IApplicationRepository
         return new ApplicationEntity(
             new ApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
-            ApplicationTenureMapper.ToDomain(application.tenure));
+            ApplicationTenureMapper.ToDomain(application.tenure),
+            new ApplicationSections(
+                SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus),
+                SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus),
+                SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus),
+                SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus)));
     }
 }

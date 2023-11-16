@@ -12,6 +12,7 @@ using HE.InvestmentLoans.Contract.Projects.Queries;
 using HE.InvestmentLoans.Contract.Projects.ValueObjects;
 using HE.InvestmentLoans.Contract.Projects.ViewModels;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Models;

@@ -1,3 +1,7 @@
 namespace HE.Investment.AHP.Contract.Application;
 
-public record Application(string Id, string Name, Tenure Tenure);
+public record Application(
+    string Id,
+    string Name,
+    Tenure Tenure,
+    IList<ApplicationSection> Sections);

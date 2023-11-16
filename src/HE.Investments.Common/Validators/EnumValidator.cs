@@ -25,12 +25,12 @@ public class EnumValidator<TEnum>
     public static implicit operator TEnum(EnumValidator<TEnum> v) => v._value;
 
     [SuppressMessage("Design", "CA1000:Do not declare static members on generic types", Justification = "Accepted here")]
-    public static EnumValidator<TEnum> Required(TEnum input, string fieldName, OperationResult? operationResult = null)
+    public static EnumValidator<TEnum> Required(TEnum input, string fieldName, string? errorMessage = null, OperationResult? operationResult = null)
     {
         var result = operationResult ?? OperationResult.New();
         if (Convert.ToInt32(input, CultureInfo.InvariantCulture) == 0)
         {
-            result.AddValidationError(fieldName, ValidationErrorMessage.InvalidValue);
+            result.AddValidationError(fieldName, errorMessage ?? ValidationErrorMessage.InvalidValue);
         }
 
         return new EnumValidator<TEnum>(input, fieldName, result);

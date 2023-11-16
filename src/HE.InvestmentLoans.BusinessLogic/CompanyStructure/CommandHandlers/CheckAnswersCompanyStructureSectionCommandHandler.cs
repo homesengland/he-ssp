@@ -6,6 +6,7 @@ using HE.InvestmentLoans.Contract.Application.Events;
 using HE.InvestmentLoans.Contract.Application.Extensions;
 using HE.InvestmentLoans.Contract.CompanyStructure.Commands;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using MediatR;

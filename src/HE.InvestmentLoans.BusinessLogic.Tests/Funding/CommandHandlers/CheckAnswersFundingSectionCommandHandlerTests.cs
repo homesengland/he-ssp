@@ -5,6 +5,7 @@ using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Funding.Commands;
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
+using HE.Investments.Common.Domain;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 

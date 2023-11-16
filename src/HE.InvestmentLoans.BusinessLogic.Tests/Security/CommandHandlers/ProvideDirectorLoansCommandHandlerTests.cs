@@ -6,6 +6,7 @@ using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Security.Commands;
 using HE.InvestmentLoans.Contract.Security.ValueObjects;
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
