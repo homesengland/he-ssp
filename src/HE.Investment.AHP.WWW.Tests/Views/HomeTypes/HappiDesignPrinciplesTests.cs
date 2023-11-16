@@ -17,9 +17,9 @@ public class HappiDesignPrinciplesTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("div", "My application - My homes")
+            .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("h1", "Which Housing our Ageing Population Panel for Innovation (HAPPI) design principles do the homes meet?")
-            .HasElementWithText("span", "What are the HAPPI design principles?")
+            .HasElementWithText("summary", "What are the HAPPI design principles?")
             .HasElementWithText("a", "View the HAPPI principles for more information.")
             .HasCheckboxes(
                 "DesignPrinciples",

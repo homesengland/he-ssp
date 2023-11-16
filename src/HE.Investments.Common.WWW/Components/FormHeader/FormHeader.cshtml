@@ -6,6 +6,10 @@
         @Model.Caption
     </span>
 }
-<gds-h1 class="govuk-heading-xl">
-    @Model.Title
-</gds-h1>
+
+@if (!string.IsNullOrEmpty(Model.Title))
+{
+    <gds-h1 class="govuk-heading-xl">
+        @Model.Title
+    </gds-h1>
+}

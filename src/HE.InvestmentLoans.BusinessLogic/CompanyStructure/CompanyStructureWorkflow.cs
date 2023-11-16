@@ -1,6 +1,7 @@
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.CompanyStructure;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using Stateless;
 

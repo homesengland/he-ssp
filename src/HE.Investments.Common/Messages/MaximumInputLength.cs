@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+namespace HE.Investments.Common.Messages;
 
 public static class MaximumInputLength
 {

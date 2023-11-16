@@ -1,5 +1,6 @@
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Gds;
 using Microsoft.AspNetCore.Razor.TagHelpers;

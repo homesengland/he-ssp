@@ -40,7 +40,7 @@ public class HomeTypeDetailsTests : HomeTypesTestBase
     private static void AssertView(IHtmlDocument document)
     {
         document
-            .HasElementWithText("div", Model.ApplicationName)
+            .HasElementWithText("span", Model.ApplicationName)
             .HasElementWithText("h1", "Home type details")
             .HasElementWithText("h2", "Home type name")
             .HasInput("HomeTypeName")

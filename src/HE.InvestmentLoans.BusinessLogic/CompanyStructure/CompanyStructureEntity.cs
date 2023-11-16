@@ -6,6 +6,7 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using ApplicationStatus = HE.InvestmentLoans.Contract.Application.Enums.ApplicationStatus;
+using SectionStatus = HE.Investments.Common.Domain.SectionStatus;
 
 namespace HE.InvestmentLoans.BusinessLogic.CompanyStructure;
 

@@ -41,9 +41,5 @@
     <ProjectReference Include="..\HE.Investments.DocumentService\HE.Investments.DocumentService.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Organization\" />
-    <Folder Include="Organization\Commands\" />
-  </ItemGroup>
 
 </Project>

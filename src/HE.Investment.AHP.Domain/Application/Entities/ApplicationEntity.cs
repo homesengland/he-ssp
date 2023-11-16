@@ -7,11 +7,16 @@ namespace HE.Investment.AHP.Domain.Application.Entities;
 
 public class ApplicationEntity
 {
-    public ApplicationEntity(ApplicationId id, ApplicationName name, ApplicationTenure? tenure = null)
+    public ApplicationEntity(
+        ApplicationId id,
+        ApplicationName name,
+        ApplicationTenure? tenure,
+        ApplicationSections sections)
     {
         Id = id;
         Name = name;
         Tenure = tenure;
+        Sections = sections;
     }
 
     public ApplicationId Id { get; private set; }
@@ -20,7 +25,9 @@ public class ApplicationEntity
 
     public ApplicationTenure? Tenure { get; private set; }
 
-    public static ApplicationEntity New(ApplicationName name) => new(ApplicationId.Empty(), name);
+    public ApplicationSections Sections { get; private set; }
+
+    public static ApplicationEntity New(ApplicationName name) => new(ApplicationId.Empty(), name, null, new ApplicationSections());
 
     public void SetId(ApplicationId newId)
     {

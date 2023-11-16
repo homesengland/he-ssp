@@ -1,6 +1,6 @@
 using HE.InvestmentLoans.BusinessLogic.Projects.Entities;
 using HE.InvestmentLoans.BusinessLogic.Tests.Projects.TestData;
-using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.Investments.Common.Domain;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Projects.Entities.ProjectTests;

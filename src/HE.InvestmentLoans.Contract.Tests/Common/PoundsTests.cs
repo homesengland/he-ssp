@@ -4,6 +4,7 @@ using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.InvestmentLoans.Contract.Common;
 using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Messages;
 using Xunit;
 
 namespace HE.InvestmentLoans.Contract.Tests.Common;

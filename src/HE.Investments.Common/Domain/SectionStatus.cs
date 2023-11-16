@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace HE.Investments.Common.WWW.TagHelpers;
+namespace HE.Investments.Common.Domain;
 
 public enum SectionStatus
 {
@@ -14,6 +14,4 @@ public enum SectionStatus
     [Description("Not Submitted")]
     NotSubmitted,
     Withdrawn,
-    [Description("Cannot Start Yet")]
-    CannotStartYet,
 }

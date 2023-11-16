@@ -1,9 +1,9 @@
 using AngleSharp.Html.Dom;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.WWW.Models.Application;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Tests.WWW;
 using HE.Investments.Common.Tests.WWW.Helpers;
-using HE.Investments.Common.WWW.Models.TaskList;
-using HE.Investments.Common.WWW.TagHelpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Application;
 
@@ -15,7 +15,7 @@ public class TaskListTests : ViewTestBase
     public async Task ShouldDisplayView_WhenSectionsAreMissing()
     {
         // given
-        var model = new ApplicationModel("some site", "application xyz", new List<TaskListSectionModel>());
+        var model = new ApplicationModel("some site", "application xyz", new List<ApplicationSection>());
 
         // when
         var document = await Render(_viewPath, model);
@@ -31,11 +31,11 @@ public class TaskListTests : ViewTestBase
         var model = new ApplicationModel(
             "some site",
             "application xyz",
-            new List<TaskListSectionModel>
+            new List<ApplicationSection>
             {
-                new("S1", "D1", "A1", "AC1", SectionStatus.NotStarted),
-                new("S2", "D2", "A2", "AC2", SectionStatus.Completed),
-                new("S3", "D3", "A3", "AC3", SectionStatus.InProgress),
+                new(SectionType.Scheme, SectionStatus.NotStarted),
+                new(SectionType.HomeTypes, SectionStatus.Completed),
+                new(SectionType.FinancialDetails, SectionStatus.InProgress),
             });
 
         // when
@@ -52,11 +52,10 @@ public class TaskListTests : ViewTestBase
         var model = new ApplicationModel(
             "some site",
             "application xyz",
-            new List<TaskListSectionModel>
+            new List<ApplicationSection>
             {
-                new("S1", "D1", "A1", "AC1", SectionStatus.Withdrawn),
-                new("S2", "D2", "A2", "AC2", SectionStatus.Completed),
-                new("S3", "D3", "A3", "AC3", SectionStatus.Submitted),
+                new(SectionType.Scheme, SectionStatus.Completed),
+                new(SectionType.FinancialDetails, SectionStatus.Completed),
             });
 
         // when

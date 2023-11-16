@@ -1,9 +1,7 @@
 @using HE.Investment.AHP.WWW.Routing
 @using HE.Investment.AHP.WWW.Extensions
-@using HE.Investment.AHP.Contract.HomeTypes
 @using HE.Investment.AHP.Contract.HomeTypes.Enums
 @using HE.Investments.Common.Extensions
-@using HE.Investments.Common.Gds
 @model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeListModel;
 
 @{
@@ -18,10 +16,8 @@
 }
 
 <div class="govuk-grid-column-full govuk-!-margin-top-6">
-    <gds-div-hint class="govuk-!-margin-top-1">@Model.ApplicationName</gds-div-hint>
-    <gds-h1 size="ControlSize.L">
-        Home types
-    </gds-h1>
+    <span class="govuk-caption-l govuk-!-margin-top-1">@Model.ApplicationName</span>
+    <gds-h1>Home types</gds-h1>
 
     <gds-p class="govuk-!-width-three-quarters">
         Add the home types for this application. You can duplicate and edit a home type.
@@ -35,7 +31,7 @@
                 <th scope="col" class="govuk-table__header">Home type name</th>
                 <th scope="col" class="govuk-table__header">Number of homes</th>
                 <th scope="col" class="govuk-table__header">Type of housing</th>
-                <td scope="col" class="govuk-table__header"/>
+                <td class="govuk-table__header"/>
             </tr>
             </thead>
             <tbody class="govuk-table__body">

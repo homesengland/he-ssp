@@ -42,7 +42,7 @@ public class StakeholderDiscussionsTests : ViewTestBase
     {
         document
             .HasPageHeader(Model.ApplicationName, "Local stakeholder discussions")
-            .HasFormFieldLabel("Tell us about discussions you have had with local stakeholders")
+            .HasFormFieldLabel("Tell us about discussions you have had with local stakeholders", "h2")
             .HasInput("StakeholderDiscussionsReport", value: Model.StakeholderDiscussionsReport)
             .HasElementWithText("button", "Save and continue");
     }

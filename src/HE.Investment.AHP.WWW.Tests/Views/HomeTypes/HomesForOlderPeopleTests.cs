@@ -17,7 +17,7 @@ public class HomesForOlderPeopleTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("div", "My application - My homes")
+            .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("h1", "What type of homes will you be providing for older people?")
             .HasRadio(
                 "HousingType",

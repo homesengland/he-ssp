@@ -1,5 +1,7 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investments.Common.Domain;
 using MediatR;
 using ContractApplication = HE.Investment.AHP.Contract.Application.Application;
 
@@ -21,6 +23,13 @@ public class GetApplicationQueryHandler : IRequestHandler<GetApplicationQuery, C
         return new ContractApplication(
             application.Id.Value,
             application.Name.Name,
-            application.Tenure?.Value ?? default);
+            application.Tenure?.Value ?? default,
+            new List<ApplicationSection>
+            {
+                new(SectionType.Scheme, application.Sections.SchemeStatus),
+                new(SectionType.HomeTypes, application.Sections.HomeTypesStatus),
+                new(SectionType.FinancialDetails, application.Sections.FinancialDetailsStatus),
+                new(SectionType.DeliveryPhases, application.Sections.DeliveryPhasesStatus),
+            });
     }
 }

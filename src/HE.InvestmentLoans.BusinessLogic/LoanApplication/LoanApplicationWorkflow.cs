@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using HE.InvestmentLoans.BusinessLogic.ViewModel;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Contract.Application.Enums;
+using HE.Investments.Common.Domain;
 using Stateless;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication;

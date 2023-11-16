@@ -14,7 +14,7 @@ using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.App
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[Route("{applicationId}/financial-details")]
+[Route("application/{applicationId}/financial-details")]
 public class FinancialDetailsController : WorkflowController<FinancialDetailsWorkflowState>
 {
     private readonly IMediator _mediator;

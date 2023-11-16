@@ -1,6 +1,7 @@
-using HE.InvestmentLoans.Contract.Application.Enums;
 using HE.InvestmentLoans.Contract.Application.Helper;
 using HE.InvestmentLoans.Contract.ViewModels;
+using HE.Investments.Common.Domain;
+using ApplicationStatus = HE.InvestmentLoans.Contract.Application.Enums.ApplicationStatus;
 
 namespace HE.InvestmentLoans.Contract.Projects.ViewModels;
 

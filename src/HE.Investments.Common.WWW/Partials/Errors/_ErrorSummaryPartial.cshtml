@@ -5,16 +5,21 @@
 
 @if (!ViewData.ModelState.IsValid)
 {
-    <gds-error-summary id="validation-summary"
-                       aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
-        <gds-error-summary-title id="error-summary-title">
+    <div id="validation-summary"
+         class="govuk-error-summary"
+         aria-labelledby="error-summary-title"
+         role="alert"
+         tabindex="-1"
+         data-module="govuk-error-summary">
+        <h2 id="error-summary-title" class="govuk-error-summary__title">
             There is a problem
-        </gds-error-summary-title>
+        </h2>
 
-        <gds-error-summary-body>
-
-            <gds-error-summary-message id="validation-error-list" data-valmsg-summary="true">
-                <gds-error-summary-list>
+        <div class="govuk-error-summary__body">
+            <div id="validation-error-list"
+                 data-valmsg-summary="true"
+                 class="govuk-error-message">
+                <ul class="govuk-list govuk-error-summary__list">
                     @{
                         if (validationErrors != null)
                         {
@@ -42,8 +47,8 @@
                             }
                         }
                     }
-                </gds-error-summary-list>
-            </gds-error-summary-message>
-        </gds-error-summary-body>
-    </gds-error-summary>
+                </ul>
+            </div>
+        </div>
+    </div>
 }

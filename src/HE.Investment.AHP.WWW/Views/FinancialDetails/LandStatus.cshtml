@@ -7,26 +7,19 @@
     ViewData["Title"] = "Land status";
 }
 <div id="mainContainer" role="main">
-    <gds-div-grid-column-full>
+    <div class="govuk-grid-column-full">
         <form asp-controller="FinancialDetails" asp-action="LandStatus" asp-route-applicationId="Model.ApplicationId" asp-method="post" novalidate>
             <div id="backButton" role="navigation">
                 <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.LandStatus, applicationId = Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
                 </gds-back-link>
             </div>
             @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-            <span class="govuk-caption-m">
-                @Model.ApplicationName - Financial details
-            </span>
             <gds-field-set role="group">
                 <gds-div-form-group>
-                    <gds-legend size="ControlSize.L">
-                        <gds-fieldset-heading>
-                            @FinancialDetailsPageTitles.LandStatusPage
-                        </gds-fieldset-heading>
-                    </gds-legend>
+                    <vc:form-header title="@FinancialDetailsPageTitles.LandStatusPage" caption="@Model.ApplicationName - Financial details"/>
                     <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=false>
                         <gds-p>
-                            You told us during the site section of your application that your land status was:<br />
+                            You told us during the site section of your application that your land status was:<br/>
                             @if (Model.IsPurchasePriceKnown)
                             {
                                 <strong>Unconditional acquisition of freehold or long leasehold interest has occurred.</strong>
@@ -38,31 +31,32 @@
                                 </strong>
                             }
                         </gds-p>
-                        <gds-div-hint>
+                        <he-div-hint>
                             If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.
-                        </gds-div-hint>
+                        </he-div-hint>
                     </gds-field-set>
                     <gds-field-set class="govuk-!-margin-bottom-6" role="group">
-                        <legend>
+                        <gds-legend>
                             @if (Model.IsPurchasePriceKnown)
                             {
-                                <gds-label for="@Model.PurchasePrice" size="ControlSize.S">
+                                <gds-h2 for="@Model.PurchasePrice">
                                     Enter the purchase price of the land
-                                </gds-label>
+                                </gds-h2>
                             }
                             else
                             {
-                                <gds-label for="@Model.PurchasePrice" size="ControlSize.S">
+                                <gds-h2 for="@Model.PurchasePrice">
                                     Enter the expected purchase price of the land
-                                </gds-label>
+                                </gds-h2>
                             }
-                        </legend>
-                        <gds-div-hint>
+                        </gds-legend>
+                        <he-div-hint>
                             The purchase price must be backed by a valuation report from a qualified independent valuer, valid at the date of exchange of purchase contracts.
-                        </gds-div-hint>
+                        </he-div-hint>
 
-                        <gds-input govuk-formgroup-asp-for="PurchasePrice" type="text" asp-excludelabel
-                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model.PurchasePrice />
+                        <gds-input govuk-formgroup-asp-for="PurchasePrice" type="text"
+                                   asp-hiddenlabeltext="@(Model.IsPurchasePriceKnown ? "Enter the purchase price of the land" : "Enter the expected purchase price of the land")"
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model.PurchasePrice/>
                     </gds-field-set>
                 </gds-div-form-group>
 
@@ -76,9 +70,9 @@
 
             </gds-field-set>
             <gds-p>
-                <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" />
+                <PageHeader application-id="@Model.ApplicationId.ToString()" />
             </gds-p>
 
         </form>
-    </gds-div-grid-column-full>
+    </div>
 </div>

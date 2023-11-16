@@ -16,7 +16,7 @@ public class OrganisationSearchModel
 
     public string SelectedOrganization { get; set; }
 
-    public IEnumerable<OrganizationBasicDetails> Organizations { get; set; }
+    public IList<OrganizationBasicDetails> Organizations { get; set; }
 
     public int TotalOrganizations { get; set; }
 

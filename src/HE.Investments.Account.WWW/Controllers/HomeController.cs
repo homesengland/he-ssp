@@ -1,8 +1,10 @@
+using HE.Investments.Account.Shared.Authorization.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
 [Route("home")]
+[AuthorizeWithCompletedProfile]
 public class HomeController : Controller
 {
     [HttpGet("/")]

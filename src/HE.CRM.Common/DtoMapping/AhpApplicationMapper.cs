@@ -26,6 +26,16 @@ namespace HE.CRM.Common.DtoMapping
                 //invln_transfer = MapNullableDecimalToMoney(applicationDto.transferValue),
                 //invln_totalinitial = MapNullableDecimalToMoney(applicationDto.totalInitialSalesIncome),
                 //invln_other = MapNullableDecimalToMoney(applicationDto.otherCapitalSources),
+                invln_fundingrequired = MapNullableDecimalToMoney(applicationDto.fundingRequested),
+                invln_noofhomes = applicationDto.noOfHomes,
+                invln_affordabilityevidence = applicationDto.affordabilityEvidence,
+                invln_discussionswithlocalstakeholders = applicationDto.discussionsWithLocalStakeholders,
+                invln_meetinglocalhousingneed = applicationDto.meetingLocalHousingNeed,
+                invln_meetinglocalpriorities = applicationDto.meetingLocalProrities,
+                invln_reducingenvironmentalimpact = applicationDto.reducingEnvironmentalImpact,
+                invln_sharedownershipsalesrisk = applicationDto.sharedOwnershipSalesRisk
+
+
             };
             if (applicationDto.id != null && Guid.TryParse(applicationDto.id, out var applicationId))
             {
@@ -60,6 +70,14 @@ namespace HE.CRM.Common.DtoMapping
                 //transferValue = application.?.Value,
                 //totalInitialSalesIncome = application.?.Value,
                 //otherCapitalSources = application.?.Value,
+                fundingRequested = application.invln_fundingrequired?.Value,
+                noOfHomes = application.invln_noofhomes,
+                affordabilityEvidence = application.invln_affordabilityevidence,
+                discussionsWithLocalStakeholders = application.invln_discussionswithlocalstakeholders,
+                meetingLocalHousingNeed = application.invln_meetinglocalhousingneed,
+                meetingLocalProrities = application.invln_meetinglocalpriorities,
+                reducingEnvironmentalImpact = application.invln_reducingenvironmentalimpact,
+                sharedOwnershipSalesRisk = application.invln_sharedownershipsalesrisk,
             };
             if (application.Id != null)
             {
