@@ -33,6 +33,9 @@
     <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj"/>
     <ProjectReference Include="..\HE.Investments.Common.CRM\HE.Investments.Common.CRM.csproj"/>
     <ProjectReference Include="..\HE.Investments.Common\HE.Investments.Common.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Organisation\HE.Investments.Organisation.csproj">
+      <Aliases>Org</Aliases>
+    </ProjectReference>
   </ItemGroup>
 
   <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared"/>
