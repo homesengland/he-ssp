@@ -72,7 +72,11 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 foreach (var field in fields)
                 {
                     TracingService.Trace($"field name {field}");
-                    applicationToUpdateOrCreate[field] = applicationMapped[field];
+                    if (applicationMapped.Contains(field))
+                    {
+                        TracingService.Trace($"contains");
+                        applicationToUpdateOrCreate[field] = applicationMapped[field];
+                    }
                 }
             }
             else

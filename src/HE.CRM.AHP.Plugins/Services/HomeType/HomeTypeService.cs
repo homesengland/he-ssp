@@ -75,7 +75,11 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
                 foreach (var field in fields)
                 {
                     TracingService.Trace($"field name {field}");
-                    homeTypeToUpdateOrCreate[field] = homeTypeMapped[field];
+                    if (homeTypeMapped.Contains(field))
+                    {
+                        TracingService.Trace($"contains");
+                        homeTypeToUpdateOrCreate[field] = homeTypeMapped[field];
+                    }
                 }
             }
             else

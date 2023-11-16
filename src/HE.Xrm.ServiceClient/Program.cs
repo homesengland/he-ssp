@@ -37,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestHomeType(serviceClient);
+                    TestLoan(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -103,7 +103,7 @@ namespace HE.Xrm.ServiceClientExample
                 reducingEnvironmentalImpact = "yes",
                 sharedOwnershipSalesRisk = "ssssss"
             };
-            var fieldsToUpdate = $"{nameof(invln_scheme.invln_schemename).ToLower()},{nameof(invln_scheme.invln_Tenure).ToLower()}," +
+            var fieldsToUpdate = $"{nameof(invln_scheme.invln_totalhomes).ToLower()},{nameof(invln_scheme.invln_Tenure).ToLower()}," +
                 $"{nameof(invln_scheme.invln_schemeinformationsectioncompletionstatus).ToLower()},{nameof(invln_scheme.invln_deliveryphasessectioncompletionstatus).ToLower()}," +
                 $"{nameof(invln_scheme.invln_financialdetailssectioncompletionstatus).ToLower()},{nameof(invln_scheme.invln_hometypessectioncompletionstatus).ToLower()}," +
                 $"{nameof(invln_scheme.invln_borrowingagainstrentalincome).ToLower()},{nameof(invln_scheme.invln_fundingfromopenmarkethomesonthisscheme).ToLower()}," +
@@ -111,7 +111,8 @@ namespace HE.Xrm.ServiceClientExample
                 $"{nameof(invln_scheme.invln_borrowingagainstrentalincome).ToLower()},{nameof(invln_scheme.invln_fundingfromopenmarkethomesonthisscheme).ToLower()}," +
                 $"{nameof(invln_scheme.invln_fundingrequired).ToLower()},{nameof(invln_scheme.invln_noofhomes).ToLower()}," +
                 $"{nameof(invln_scheme.invln_discussionswithlocalstakeholders).ToLower()},{nameof(invln_scheme.invln_meetinglocalhousingneed).ToLower()}," +
-                $"{nameof(invln_scheme.invln_meetinglocalpriorities).ToLower()},{nameof(invln_scheme.invln_reducingenvironmentalimpact).ToLower()}";
+                $"{nameof(invln_scheme.invln_meetinglocalpriorities).ToLower()},{nameof(invln_scheme.invln_reducingenvironmentalimpact).ToLower()}," +
+                $"{nameof(invln_scheme.invln_sharedownershipsalesrisk).ToLower()}";
             var app = JsonSerializer.Serialize(applicationDtoToReturn);
             var req2 = new invln_setahpapplicationRequest() //get loan applications related to account and contact with given data
             {
