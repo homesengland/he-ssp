@@ -1,4 +1,4 @@
-﻿using HE.Investment.AHP.Domain.FinancialDetails.Constants;
+using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -9,17 +9,16 @@ public class SalesOfHomesOnOtherSchemes : ValueObject
 {
     public SalesOfHomesOnOtherSchemes(string value)
     {
-        var (isValid, valueInt) = AmountValidator.Validate(value);
-        if (!isValid || !valueInt.HasValue)
-        {
-            OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.SalesOfHomesOnOtherSchemes, FinancialDetailsValidationErrors.GenericAmountValidationError)
-                .CheckErrors();
-        }
-        else
-        {
-            Value = valueInt.Value;
-        }
+        var operationResult = OperationResult.New();
+
+        var intValue = NumericValidator
+            .For(value, FinancialDetailsValidationFieldNames.SalesOfHomesOnOtherSchemes, operationResult)
+            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
+            .IsBetween(1, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError);
+
+        operationResult.CheckErrors();
+
+        Value = intValue;
     }
 
     public int Value { get; }

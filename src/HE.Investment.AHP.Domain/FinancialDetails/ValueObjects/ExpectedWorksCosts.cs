@@ -8,17 +8,16 @@ public class ExpectedWorksCosts : ValueObject
 {
     public ExpectedWorksCosts(string value)
     {
-        var (isValid, intValue) = AmountValidator.Validate(value);
-        if (!isValid || !intValue.HasValue)
-        {
-            OperationResult.New()
-            .AddValidationError(FinancialDetailsValidationFieldNames.ExpectedWorksCosts, FinancialDetailsValidationErrors.InvalidExpectedWorksCosts)
-            .CheckErrors();
-        }
-        else
-        {
-            Value = intValue.Value;
-        }
+        var operationResult = OperationResult.New();
+
+        var intValue = NumericValidator
+            .For(value, FinancialDetailsValidationFieldNames.ExpectedWorksCosts, operationResult)
+            .IsWholeNumber(FinancialDetailsValidationErrors.InvalidExpectedWorksCosts)
+            .IsBetween(1, 999999999, FinancialDetailsValidationErrors.InvalidExpectedWorksCosts);
+
+        operationResult.CheckErrors();
+
+        Value = intValue;
     }
 
     public int Value { get; }

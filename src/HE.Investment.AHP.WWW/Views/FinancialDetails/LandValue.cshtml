@@ -6,57 +6,55 @@
 @{
     ViewData["Title"] = "Land value";
 }
-<div id="mainContainer" role="main">
-    <div class="govuk-grid-column-full">
-        <form asp-controller="FinancialDetails" asp-action="LandValue" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
-            <div id="backButton" role="navigation">
-                <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.LandValue, applicationId = @Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
-                </gds-back-link>
-            </div>
-            @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-            <gds-field-set role="group">
-                <gds-div-form-group>
-                    <vc:form-header title="@FinancialDetailsPageTitles.LandValuePage" caption="@Model.ApplicationName - Financial details"/>
-                    <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=false>
-                        <he-div-hint>
-                            If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.
-                        </he-div-hint>
-                    </gds-field-set>
-                    <gds-field-set class="govuk-!-margin-bottom-6" role="group">
-                        <gds-legend>
-                            <gds-h2 for="@Model.IsOnPublicLand">
-                                Is your scheme on public land
-                            </gds-h2>
-                        </gds-legend>
-                        <he-div-hint>
-                            Public land is land owned by the government.
-                        </he-div-hint>
-                        <gds-radio-yes-no asp-for="@Model.IsOnPublicLand" class="govuk-!-margin-bottom-6"></gds-radio-yes-no>
-                    </gds-field-set>
-                    <gds-field-set class="govuk-!-margin-bottom-6" role="group">
-                        <gds-legend>
-                            <gds-h2 for="@Model.LandValue">
-                                Enter the current value of the land
-                            </gds-h2>
-                        </gds-legend>
-                        <gds-input govuk-formgroup-asp-for="@Model.LandValue" type="text"
-                                   asp-hiddenlabeltext="Enter the current value of the land"
-                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.LandValue/>
-                    </gds-field-set>
-                </gds-div-form-group>
+<div class="govuk-grid-column-full">
+    <form asp-controller="FinancialDetails" asp-action="LandValue" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
+        <div id="backButton" role="navigation">
+            <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.LandValue, applicationId = @Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
+            </gds-back-link>
+        </div>
+        @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+        <gds-field-set role="group">
+            <gds-div-form-group>
+                <vc:form-header title="@FinancialDetailsPageTitles.LandValuePage" caption="@Model.ApplicationName - Financial details" />
+                <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=false>
+                    <he-div-hint>
+                        If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.
+                    </he-div-hint>
+                </gds-field-set>
+                <gds-field-set class="govuk-!-margin-bottom-6" role="group">
+                    <gds-legend>
+                        <gds-h2 for="@Model.IsOnPublicLand">
+                            Is your scheme on public land
+                        </gds-h2>
+                    </gds-legend>
+                    <he-div-hint>
+                        Public land is land owned by the government.
+                    </he-div-hint>
+                    <gds-radio-yes-no asp-for="@Model.IsOnPublicLand" class="govuk-!-margin-bottom-6"></gds-radio-yes-no>
+                </gds-field-set>
+                <gds-field-set class="govuk-!-margin-bottom-6" role="group">
+                    <gds-legend>
+                        <gds-h2 for="@Model.LandValue">
+                            Enter the current value of the land
+                        </gds-h2>
+                    </gds-legend>
+                    <gds-input govuk-formgroup-asp-for="@Model.LandValue" type="text"
+                               asp-hiddenlabeltext="Enter the current value of the land"
+                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.LandValue />
+                </gds-field-set>
+            </gds-div-form-group>
 
-                @Html.HiddenFor(c => c.ApplicationId)
-                @Html.HiddenFor(c => c.ApplicationName)
+            @Html.HiddenFor(c => c.ApplicationId)
+            @Html.HiddenFor(c => c.ApplicationName)
 
-                <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
-                    Save and continue
-                </button>
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Save and continue
+            </button>
 
-            </gds-field-set>
-            <gds-p>
-                <vc:return-to-application-link application-id="@Model.ApplicationId" />
-            </gds-p>
+        </gds-field-set>
+        <gds-p>
+            <vc:return-to-application-link application-id="@Model.ApplicationId" />
+        </gds-p>
 
-        </form>
-    </div>
+    </form>
 </div>

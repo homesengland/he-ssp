@@ -9,17 +9,16 @@ public class RentalIncomeBorrowing : ValueObject
 {
     public RentalIncomeBorrowing(string value)
     {
-        var (isValid, valueInt) = AmountValidator.Validate(value);
-        if (!isValid || !valueInt.HasValue)
-        {
-            OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.RentalIncomeBorrowing, FinancialDetailsValidationErrors.GenericAmountValidationError)
-                .CheckErrors();
-        }
-        else
-        {
-            Value = valueInt.Value;
-        }
+        var operationResult = OperationResult.New();
+
+        var intValue = NumericValidator
+            .For(value, FinancialDetailsValidationFieldNames.RentalIncomeBorrowing, operationResult)
+            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
+            .IsBetween(1, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError);
+
+        operationResult.CheckErrors();
+
+        Value = intValue;
     }
 
     public int Value { get; }

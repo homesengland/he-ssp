@@ -9,17 +9,16 @@ public class LandValue : ValueObject
 {
     public LandValue(string value)
     {
-        var (isValid, valueInt) = AmountValidator.Validate(value);
-        if (!isValid || !valueInt.HasValue)
-        {
-            OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.LandValue, FinancialDetailsValidationErrors.InvalidLandValue)
-                .CheckErrors();
-        }
-        else
-        {
-            Value = valueInt.Value;
-        }
+        var operationResult = OperationResult.New();
+
+        var intValue = NumericValidator
+            .For(value, FinancialDetailsValidationFieldNames.LandValue, operationResult)
+            .IsWholeNumber(FinancialDetailsValidationErrors.InvalidLandValue)
+            .IsBetween(1, 999999999, FinancialDetailsValidationErrors.InvalidLandValue);
+
+        operationResult.CheckErrors();
+
+        Value = intValue;
     }
 
     public int Value { get; }

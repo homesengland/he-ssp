@@ -7,23 +7,33 @@ public class PurchasePrice : ValueObject
 {
     public PurchasePrice(string value, bool isPurchasePriceKnown)
     {
-        if (!int.TryParse(value, out var price))
+        int intValue;
+        if (isPurchasePriceKnown)
         {
-            if (isPurchasePriceKnown)
-            {
-                OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.PurchasePrice, FinancialDetailsValidationErrors.InvalidPurchasePrice)
-                .CheckErrors();
-            }
-            else
-            {
-                OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.PurchasePrice, FinancialDetailsValidationErrors.InvalidExpectedPurchasePrice)
-                .CheckErrors();
-            }
-        }
+            var operationResult = OperationResult.New();
 
-        Value = price;
+            intValue = NumericValidator
+                .For(value, FinancialDetailsValidationFieldNames.PurchasePrice, operationResult)
+                .IsWholeNumber(FinancialDetailsValidationErrors.InvalidPurchasePrice)
+                .IsBetween(1, 999999999, FinancialDetailsValidationErrors.InvalidPurchasePrice);
+
+            operationResult.CheckErrors();
+
+            Value = intValue;
+        }
+        else
+        {
+            var operationResult = OperationResult.New();
+
+            intValue = NumericValidator
+                .For(value, FinancialDetailsValidationFieldNames.PurchasePrice, operationResult)
+                .IsWholeNumber(FinancialDetailsValidationErrors.InvalidExpectedPurchasePrice)
+                .IsBetween(1, 999999999, FinancialDetailsValidationErrors.InvalidExpectedPurchasePrice);
+
+            operationResult.CheckErrors();
+
+            Value = intValue;
+        }
     }
 
     public int Value { get; }
