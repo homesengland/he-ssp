@@ -8872,6 +8872,24 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_olderpeoplehousingtypeset
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Designatedsupportedhousing = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Housingforolderpeoplewithaccesstosupportasrequired = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Housingforolderpeoplewithsomespecialdesignfeatures = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Housingforolderpeoplewithallspecialdesignfeatures = 858110003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_accountcategorycode
 	{
 		
@@ -19046,6 +19064,1361 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_HomeTypeState
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 1,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_hometype_statuscode
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Active = 1,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Inactive = 2,
+	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_hometype")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_HomeType : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		public invln_HomeType() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "invln_hometype";
+		
+		public const string EntityLogicalCollectionName = "invln_hometypes";
+		
+		public const string EntitySetName = "invln_hometypes";
+		
+		public const int EntityTypeCode = 11112;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+		public System.Nullable<System.DateTime> CreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who created the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Sequence number of the import that created this record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+		public System.Nullable<int> ImportSequenceNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("ImportSequenceNumber");
+				this.SetAttributeValue("importsequencenumber", value);
+				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_application")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_application
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_application");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_application");
+				this.SetAttributeValue("invln_application", value);
+				this.OnPropertyChanged("invln_application");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_buildingtype")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_buildingtype> invln_buildingtype
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_buildingtype");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_buildingtype)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_buildingtype), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_buildingtype");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_buildingtype", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_buildingtype", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_buildingtype");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_clientgroup")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_clientgroup> invln_clientgroup
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_clientgroup");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_clientgroup)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_clientgroup), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_clientgroup");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_clientgroup", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_clientgroup", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_clientgroup");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_custombuild")]
+		public System.Nullable<bool> invln_custombuild
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_custombuild");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_custombuild");
+				this.SetAttributeValue("invln_custombuild", value);
+				this.OnPropertyChanged("invln_custombuild");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_designplancomments")]
+		public string invln_designplancomments
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_designplancomments");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_designplancomments");
+				this.SetAttributeValue("invln_designplancomments", value);
+				this.OnPropertyChanged("invln_designplancomments");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_doallhomesmeetndss")]
+		public System.Nullable<bool> invln_doallhomesmeetNDSS
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_doallhomesmeetndss");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_doallhomesmeetNDSS");
+				this.SetAttributeValue("invln_doallhomesmeetndss", value);
+				this.OnPropertyChanged("invln_doallhomesmeetNDSS");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_doallunitsmeetndss")]
+		public System.Nullable<bool> invln_doallunitsmeetndss
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_doallunitsmeetndss");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_doallunitsmeetndss");
+				this.SetAttributeValue("invln_doallunitsmeetndss", value);
+				this.OnPropertyChanged("invln_doallunitsmeetndss");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_facilities")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_facilities> invln_facilities
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_facilities");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_facilities)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_facilities), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_facilities");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_facilities", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_facilities", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_facilities");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_floorarea")]
+		public System.Nullable<decimal> invln_floorarea
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_floorarea");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_floorarea");
+				this.SetAttributeValue("invln_floorarea", value);
+				this.OnPropertyChanged("invln_floorarea");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_happiprinciples")]
+		public object invln_happiprinciples
+		{
+			get
+			{
+				return this.GetAttributeValue<object>("invln_happiprinciples");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_happiprinciples");
+				this.SetAttributeValue("invln_happiprinciples", value);
+				this.OnPropertyChanged("invln_happiprinciples");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_homesdesignedforuseofparticular")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_homesdesignedforuseofparticulargrou> invln_homesdesignedforuseofparticular
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_homesdesignedforuseofparticular");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_homesdesignedforuseofparticulargrou)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_homesdesignedforuseofparticulargrou), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_homesdesignedforuseofparticular");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_homesdesignedforuseofparticular", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_homesdesignedforuseofparticular", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_homesdesignedforuseofparticular");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_homesdesignedforuseofparticulargroup")]
+		public System.Nullable<bool> invln_homesdesignedforuseofparticulargroup
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_homesdesignedforuseofparticulargroup");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_homesdesignedforuseofparticulargroup");
+				this.SetAttributeValue("invln_homesdesignedforuseofparticulargroup", value);
+				this.OnPropertyChanged("invln_homesdesignedforuseofparticulargroup");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_homesusedformoveonaccommodation")]
+		public System.Nullable<bool> invln_homesusedformoveonaccommodation
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_homesusedformoveonaccommodation");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_homesusedformoveonaccommodation");
+				this.SetAttributeValue("invln_homesusedformoveonaccommodation", value);
+				this.OnPropertyChanged("invln_homesusedformoveonaccommodation");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_homesusedforshortstay")]
+		public System.Nullable<bool> invln_homesusedforshortstay
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_homesusedforshortstay");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_homesusedforshortstay");
+				this.SetAttributeValue("invln_homesusedforshortstay", value);
+				this.OnPropertyChanged("invln_homesusedforshortstay");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for entity instances
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_hometypeid")]
+		public System.Nullable<System.Guid> invln_HomeTypeId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("invln_hometypeid");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_HomeTypeId");
+				this.SetAttributeValue("invln_hometypeid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("invln_HomeTypeId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_hometypeid")]
+		public override System.Guid Id
+		{
+			get
+			{
+				return base.Id;
+			}
+			set
+			{
+				this.invln_HomeTypeId = value;
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_hometypename")]
+		public string invln_hometypename
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_hometypename");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_hometypename");
+				this.SetAttributeValue("invln_hometypename", value);
+				this.OnPropertyChanged("invln_hometypename");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_initialsale")]
+		public System.Nullable<int> invln_initialsale
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_initialsale");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_initialsale");
+				this.SetAttributeValue("invln_initialsale", value);
+				this.OnPropertyChanged("invln_initialsale");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localcommissioningbodiesconsulted")]
+		public System.Nullable<bool> invln_localcommissioningbodiesconsulted
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_localcommissioningbodiesconsulted");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_localcommissioningbodiesconsulted");
+				this.SetAttributeValue("invln_localcommissioningbodiesconsulted", value);
+				this.OnPropertyChanged("invln_localcommissioningbodiesconsulted");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_marketrent")]
+		public System.Nullable<decimal> invln_marketrent
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_marketrent");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_marketrent");
+				this.SetAttributeValue("invln_marketrent", value);
+				this.OnPropertyChanged("invln_marketrent");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_marketvalue")]
+		public System.Nullable<int> invln_marketvalue
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_marketvalue");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_marketvalue");
+				this.SetAttributeValue("invln_marketvalue", value);
+				this.OnPropertyChanged("invln_marketvalue");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_maxoccupancy")]
+		public System.Nullable<int> invln_maxoccupancy
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_maxoccupancy");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_maxoccupancy");
+				this.SetAttributeValue("invln_maxoccupancy", value);
+				this.OnPropertyChanged("invln_maxoccupancy");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_meetingtheneedsoftheclientgroup")]
+		public string invln_meetingtheneedsoftheclientgroup
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_meetingtheneedsoftheclientgroup");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_meetingtheneedsoftheclientgroup");
+				this.SetAttributeValue("invln_meetingtheneedsoftheclientgroup", value);
+				this.OnPropertyChanged("invln_meetingtheneedsoftheclientgroup");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_meetingwheelchairstandards")]
+		public System.Nullable<bool> invln_meetingwheelchairstandards
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_meetingwheelchairstandards");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_meetingwheelchairstandards");
+				this.SetAttributeValue("invln_meetingwheelchairstandards", value);
+				this.OnPropertyChanged("invln_meetingwheelchairstandards");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mmccategories")]
+		public object invln_mmccategories
+		{
+			get
+			{
+				return this.GetAttributeValue<object>("invln_mmccategories");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_mmccategories");
+				this.SetAttributeValue("invln_mmccategories", value);
+				this.OnPropertyChanged("invln_mmccategories");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mmccategory1manufacturer")]
+		public string invln_mmccategory1manufacturer
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_mmccategory1manufacturer");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_mmccategory1manufacturer");
+				this.SetAttributeValue("invln_mmccategory1manufacturer", value);
+				this.OnPropertyChanged("invln_mmccategory1manufacturer");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mmccategory1subcategories")]
+		public object invln_mmccategory1subcategories
+		{
+			get
+			{
+				return this.GetAttributeValue<object>("invln_mmccategory1subcategories");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_mmccategory1subcategories");
+				this.SetAttributeValue("invln_mmccategory1subcategories", value);
+				this.OnPropertyChanged("invln_mmccategory1subcategories");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mmccategory2manufacturer")]
+		public string invln_mmccategory2manufacturer
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_mmccategory2manufacturer");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_mmccategory2manufacturer");
+				this.SetAttributeValue("invln_mmccategory2manufacturer", value);
+				this.OnPropertyChanged("invln_mmccategory2manufacturer");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mmccategory2subcategories")]
+		public object invln_mmccategory2subcategories
+		{
+			get
+			{
+				return this.GetAttributeValue<object>("invln_mmccategory2subcategories");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_mmccategory2subcategories");
+				this.SetAttributeValue("invln_mmccategory2subcategories", value);
+				this.OnPropertyChanged("invln_mmccategory2subcategories");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_moveonarrangementsforshortstayhomes")]
+		public string invln_moveonarrangementsforshortstayhomes
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_moveonarrangementsforshortstayhomes");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_moveonarrangementsforshortstayhomes");
+				this.SetAttributeValue("invln_moveonarrangementsforshortstayhomes", value);
+				this.OnPropertyChanged("invln_moveonarrangementsforshortstayhomes");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_numberofbedrooms")]
+		public System.Nullable<int> invln_numberofbedrooms
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_numberofbedrooms");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_numberofbedrooms");
+				this.SetAttributeValue("invln_numberofbedrooms", value);
+				this.OnPropertyChanged("invln_numberofbedrooms");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_numberofhomeshometype")]
+		public System.Nullable<int> invln_numberofhomeshometype
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_numberofhomeshometype");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_numberofhomeshometype");
+				this.SetAttributeValue("invln_numberofhomeshometype", value);
+				this.OnPropertyChanged("invln_numberofhomeshometype");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_numberofstoreys")]
+		public System.Nullable<int> invln_numberofstoreys
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_numberofstoreys");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_numberofstoreys");
+				this.SetAttributeValue("invln_numberofstoreys", value);
+				this.OnPropertyChanged("invln_numberofstoreys");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_prospectiverent")]
+		public System.Nullable<decimal> invln_prospectiverent
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_prospectiverent");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_prospectiverent");
+				this.SetAttributeValue("invln_prospectiverent", value);
+				this.OnPropertyChanged("invln_prospectiverent");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_reasonsforrtsoexemption")]
+		public string invln_reasonsforrtsoexemption
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_reasonsforrtsoexemption");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_reasonsforrtsoexemption");
+				this.SetAttributeValue("invln_reasonsforrtsoexemption", value);
+				this.OnPropertyChanged("invln_reasonsforrtsoexemption");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_revenuefunding")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_revenuefunding> invln_revenuefunding
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_revenuefunding");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_revenuefunding)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_revenuefunding), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_revenuefunding");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_revenuefunding", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_revenuefunding", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_revenuefunding");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_revenuefundingsources")]
+		public object invln_revenuefundingsources
+		{
+			get
+			{
+				return this.GetAttributeValue<object>("invln_revenuefundingsources");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_revenuefundingsources");
+				this.SetAttributeValue("invln_revenuefundingsources", value);
+				this.OnPropertyChanged("invln_revenuefundingsources");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_roomareas")]
+		public System.Nullable<bool> invln_roomareas
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_roomareas");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_roomareas");
+				this.SetAttributeValue("invln_roomareas", value);
+				this.OnPropertyChanged("invln_roomareas");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_roomwidths")]
+		public System.Nullable<bool> invln_roomwidths
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_roomwidths");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_roomwidths");
+				this.SetAttributeValue("invln_roomwidths", value);
+				this.OnPropertyChanged("invln_roomwidths");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_rtsoexempt")]
+		public System.Nullable<bool> invln_rtsoexempt
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_rtsoexempt");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_rtsoexempt");
+				this.SetAttributeValue("invln_rtsoexempt", value);
+				this.OnPropertyChanged("invln_rtsoexempt");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_storagespace")]
+		public System.Nullable<bool> invln_storagespace
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_storagespace");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_storagespace");
+				this.SetAttributeValue("invln_storagespace", value);
+				this.OnPropertyChanged("invln_storagespace");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_supportedhousingexitplan")]
+		public string invln_supportedhousingexitplan
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_supportedhousingexitplan");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_supportedhousingexitplan");
+				this.SetAttributeValue("invln_supportedhousingexitplan", value);
+				this.OnPropertyChanged("invln_supportedhousingexitplan");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_typeofhousing")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_typeofhousing> invln_typeofhousing
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_typeofhousing");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_typeofhousing)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_typeofhousing), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_typeofhousing");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_typeofhousing", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_typeofhousing", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_typeofhousing");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_typeofhousingfordisabledvulnerablepeople")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_typeofhousingfordisabledvulnerable> invln_typeofhousingfordisabledvulnerablepeople
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_typeofhousingfordisabledvulnerablepeople");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_typeofhousingfordisabledvulnerable)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_typeofhousingfordisabledvulnerable), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_typeofhousingfordisabledvulnerablepeople");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_typeofhousingfordisabledvulnerablepeople", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_typeofhousingfordisabledvulnerablepeople", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_typeofhousingfordisabledvulnerablepeople");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_typeofolderpeopleshousing")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_typeofolderpeopleshousing> invln_typeofolderpeopleshousing
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_typeofolderpeopleshousing");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_typeofolderpeopleshousing)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_typeofolderpeopleshousing), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_typeofolderpeopleshousing");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_typeofolderpeopleshousing", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_typeofolderpeopleshousing", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_typeofolderpeopleshousing");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_wheelchairstandard")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_wheelchairstandard> invln_wheelchairstandard
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_wheelchairstandard");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_wheelchairstandard)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_wheelchairstandard), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_wheelchairstandard");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_wheelchairstandard", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_wheelchairstandard", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_wheelchairstandard");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_whichndssstandardshavebeenmet")]
+		public object invln_whichndssstandardshavebeenmet
+		{
+			get
+			{
+				return this.GetAttributeValue<object>("invln_whichndssstandardshavebeenmet");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_whichndssstandardshavebeenmet");
+				this.SetAttributeValue("invln_whichndssstandardshavebeenmet", value);
+				this.OnPropertyChanged("invln_whichndssstandardshavebeenmet");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the record was modified.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+		public System.Nullable<System.DateTime> ModifiedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the delegate user who modified the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time that the record was migrated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+		public System.Nullable<System.DateTime> OverriddenCreatedOn
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+			}
+			set
+			{
+				this.OnPropertyChanging("OverriddenCreatedOn");
+				this.SetAttributeValue("overriddencreatedon", value);
+				this.OnPropertyChanged("OverriddenCreatedOn");
+			}
+		}
+		
+		/// <summary>
+		/// Owner Id
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
+		public Microsoft.Xrm.Sdk.EntityReference OwnerId
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("ownerid");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwnerId");
+				this.SetAttributeValue("ownerid", value);
+				this.OnPropertyChanged("OwnerId");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the business unit that owns the record
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningBusinessUnit
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningbusinessunit");
+			}
+			set
+			{
+				this.OnPropertyChanging("OwningBusinessUnit");
+				this.SetAttributeValue("owningbusinessunit", value);
+				this.OnPropertyChanged("OwningBusinessUnit");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the team that owns the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningTeam
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owningteam");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier for the user that owns the record.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		public Microsoft.Xrm.Sdk.EntityReference OwningUser
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
+			}
+		}
+		
+		/// <summary>
+		/// Status of the Home Type
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_HomeTypeState> statecode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_HomeTypeState)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_HomeTypeState), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("statecode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statecode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("statecode");
+			}
+		}
+		
+		/// <summary>
+		/// Reason for the status of the Home Type
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_hometype_statuscode> statuscode
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_hometype_statuscode)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_hometype_statuscode), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("statuscode");
+				if ((value == null))
+				{
+					this.SetAttributeValue("statuscode", null);
+				}
+				else
+				{
+					this.SetAttributeValue("statuscode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("statuscode");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timezoneruleversionnumber")]
+		public System.Nullable<int> TimeZoneRuleVersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("timezoneruleversionnumber");
+			}
+			set
+			{
+				this.OnPropertyChanging("TimeZoneRuleVersionNumber");
+				this.SetAttributeValue("timezoneruleversionnumber", value);
+				this.OnPropertyChanged("TimeZoneRuleVersionNumber");
+			}
+		}
+		
+		/// <summary>
+		/// Time zone code that was in use when the record was created.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("utcconversiontimezonecode")]
+		public System.Nullable<int> UTCConversionTimeZoneCode
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("utcconversiontimezonecode");
+			}
+			set
+			{
+				this.OnPropertyChanging("UTCConversionTimeZoneCode");
+				this.SetAttributeValue("utcconversiontimezonecode", value);
+				this.OnPropertyChanged("UTCConversionTimeZoneCode");
+			}
+		}
+		
+		/// <summary>
+		/// Version Number
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_invln_hometype_application_invln_scheme
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_application")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_hometype_application_invln_scheme")]
+		public HE.Investments.Common.CRM.Model.invln_scheme invln_invln_hometype_application_invln_scheme
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.invln_scheme>("invln_invln_hometype_application_invln_scheme", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_invln_hometype_application_invln_scheme");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.invln_scheme>("invln_invln_hometype_application_invln_scheme", null, value);
+				this.OnPropertyChanged("invln_invln_hometype_application_invln_scheme");
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_LoanapplicationState
 	{
 		
@@ -21820,6 +23193,24 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_noofhomes")]
+		public System.Nullable<int> invln_noofhomes
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_noofhomes");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_noofhomes");
+				this.SetAttributeValue("invln_noofhomes", value);
+				this.OnPropertyChanged("invln_noofhomes");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_oncosts")]
 		public Microsoft.Xrm.Sdk.Money invln_oncosts
 		{
@@ -21976,6 +23367,24 @@ namespace HE.Investments.Common.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_recycledcapitalgrantfund_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_reducingenvironmentalimpact")]
+		public string invln_reducingenvironmentalimpact
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_reducingenvironmentalimpact");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_reducingenvironmentalimpact");
+				this.SetAttributeValue("invln_reducingenvironmentalimpact", value);
+				this.OnPropertyChanged("invln_reducingenvironmentalimpact");
 			}
 		}
 		
@@ -22453,6 +23862,24 @@ namespace HE.Investments.Common.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_hometype_application_invln_scheme
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_hometype_application_invln_scheme")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_HomeType> invln_invln_hometype_application_invln_scheme
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_HomeType>("invln_invln_hometype_application_invln_scheme", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_invln_hometype_application_invln_scheme");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_HomeType>("invln_invln_hometype_application_invln_scheme", null, value);
+				this.OnPropertyChanged("invln_invln_hometype_application_invln_scheme");
 			}
 		}
 		
@@ -23872,6 +25299,17 @@ namespace HE.Investments.Common.CRM.Model
 			get
 			{
 				return this.CreateQuery<HE.Investments.Common.CRM.Model.Contact>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="HE.Investments.Common.CRM.Model.invln_HomeType"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<HE.Investments.Common.CRM.Model.invln_HomeType> invln_HomeTypeSet
+		{
+			get
+			{
+				return this.CreateQuery<HE.Investments.Common.CRM.Model.invln_HomeType>();
 			}
 		}
 		
@@ -25863,6 +27301,228 @@ namespace HE.Investments.Common.CRM.Model
 					return default(string);
 				}
 			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_sethometype")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_sethometypeRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_hometype
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_hometype"))
+				{
+					return ((string)(this.Parameters["invln_hometype"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_hometype"] = value;
+			}
+		}
+		
+		public string invln_fieldstoset
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoset"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoset"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoset"] = value;
+			}
+		}
+		
+		public invln_sethometypeRequest()
+		{
+			this.RequestName = "invln_sethometype";
+			this.invln_hometype = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_sethometype")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_sethometypeResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_sethometypeResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getsinglehometype")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsinglehometypeRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_hometypeid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_hometypeid"))
+				{
+					return ((string)(this.Parameters["invln_hometypeid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_hometypeid"] = value;
+			}
+		}
+		
+		public string invln_fieldstoretrieve
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoretrieve"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoretrieve"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoretrieve"] = value;
+			}
+		}
+		
+		public string invln_applicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_applicationid"))
+				{
+					return ((string)(this.Parameters["invln_applicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_applicationid"] = value;
+			}
+		}
+		
+		public invln_getsinglehometypeRequest()
+		{
+			this.RequestName = "invln_getsinglehometype";
+			this.invln_hometypeid = default(string);
+			this.invln_applicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getsinglehometype")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getsinglehometypeResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getsinglehometypeResponse()
+		{
+		}
+		
+		public string invln_hometype
+		{
+			get
+			{
+				if (this.Results.Contains("invln_hometype"))
+				{
+					return ((string)(this.Results["invln_hometype"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_deletehometype")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_deletehometypeRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_userid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_userid"))
+				{
+					return ((string)(this.Parameters["invln_userid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_userid"] = value;
+			}
+		}
+		
+		public string invln_hometypeid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_hometypeid"))
+				{
+					return ((string)(this.Parameters["invln_hometypeid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_hometypeid"] = value;
+			}
+		}
+		
+		public invln_deletehometypeRequest()
+		{
+			this.RequestName = "invln_deletehometype";
+			this.invln_userid = default(string);
+			this.invln_hometypeid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_deletehometype")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_deletehometypeResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_deletehometypeResponse()
+		{
 		}
 	}
 }
