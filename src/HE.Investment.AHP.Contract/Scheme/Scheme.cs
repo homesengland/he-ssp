@@ -1,6 +1,8 @@
 namespace HE.Investment.AHP.Contract.Scheme;
 
 public record Scheme(
+    string ApplicationId,
+    string ApplicationName,
     decimal? RequiredFunding,
     int? HousesToDeliver,
     string? AffordabilityEvidence,

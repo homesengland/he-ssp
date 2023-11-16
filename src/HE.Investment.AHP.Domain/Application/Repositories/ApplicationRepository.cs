@@ -3,61 +3,33 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
-using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
-using HE.InvestmentLoans.Common.Exceptions;
+using HE.Investment.AHP.Domain.Data;
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.CRM.Model;
-using HE.Investments.Common.CRM.Services;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
 
 public class ApplicationRepository : IApplicationRepository
 {
-    private readonly ICrmService _service;
+    private readonly IApplicationCrmContext _applicationCrmContext;
     private readonly IAccountUserContext _accountUserContext;
 
-    public ApplicationRepository(ICrmService service, IAccountUserContext accountUserContext)
+    public ApplicationRepository(IApplicationCrmContext applicationCrmContext, IAccountUserContext accountUserContext)
     {
-        _service = service;
+        _applicationCrmContext = applicationCrmContext;
         _accountUserContext = accountUserContext;
     }
 
     public async Task<ApplicationEntity> GetById(ApplicationId id, CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
-        var request = new invln_getahpapplicationRequest()
-        {
-            invln_userid = account.UserGlobalId.ToString(),
-            invln_organisationid = account.AccountId.ToString(),
-            invln_applicationid = id.Value,
-        };
+        var application = await _applicationCrmContext.GetById(id.Value, CrmFields.ApplicationToRead, cancellationToken);
 
-        var response = await _service.ExecuteAsync<invln_getahpapplicationRequest, invln_getahpapplicationResponse, IList<AhpApplicationDto>>(
-            request,
-            r => r.invln_retrievedapplicationfields,
-            cancellationToken);
-
-        if (!response.Any())
-        {
-            throw new NotFoundException("AhpApplication", id.Value);
-        }
-
-        return CreateEntity(response.First());
+        return CreateEntity(application);
     }
 
     public async Task<bool> IsExist(ApplicationName applicationName, CancellationToken cancellationToken)
     {
-        var dto = new AhpApplicationDto { name = applicationName.Name, };
-
-        var request = new invln_checkifapplicationwithgivennameexistsRequest { invln_application = CrmResponseSerializer.Serialize(dto), };
-
-        var response = await _service.ExecuteAsync<invln_checkifapplicationwithgivennameexistsRequest, invln_checkifapplicationwithgivennameexistsResponse>(
-            request,
-            r => r.invln_applicationexists,
-            cancellationToken);
-
-        return bool.TryParse(response, out var result) && result;
+        return await _applicationCrmContext.IsExist(applicationName.Name, cancellationToken);
     }
 
     public async Task<ApplicationBasicInfo> GetApplicationBasicInfo(ApplicationId id, CancellationToken cancellationToken)
@@ -68,18 +40,7 @@ public class ApplicationRepository : IApplicationRepository
 
     public async Task<IList<ApplicationEntity>> GetAll(CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
-        var request = new invln_getmultipleahpapplicationsRequest
-        {
-            inlvn_userid = account.UserGlobalId.ToString(),
-            invln_organisationid = account.AccountId.ToString(),
-        };
-
-        var applications =
-            await _service.ExecuteAsync<invln_getmultipleahpapplicationsRequest, invln_getmultipleahpapplicationsResponse, IList<AhpApplicationDto>>(
-                request,
-                r => r.invln_ahpapplications,
-                cancellationToken);
+        var applications = await _applicationCrmContext.GetAll(CrmFields.ApplicationToRead, cancellationToken);
 
         return applications.Select(CreateEntity).ToList();
     }
@@ -95,18 +56,7 @@ public class ApplicationRepository : IApplicationRepository
             organisationId = account.AccountId.ToString(),
         };
 
-        var request = new invln_setahpapplicationRequest
-        {
-            invln_userid = account.UserGlobalId.ToString(),
-            invln_organisationid = account.AccountId.ToString(),
-            invln_application = CrmResponseSerializer.Serialize(dto),
-        };
-
-        var id = await _service.ExecuteAsync<invln_setahpapplicationRequest, invln_setahpapplicationResponse>(
-            request,
-            r => r.invln_applicationid,
-            cancellationToken);
-
+        var id = await _applicationCrmContext.Save(dto, CrmFields.ApplicationToUpdate, cancellationToken);
         if (application.Id.IsEmpty())
         {
             application.SetId(new ApplicationId(id));
