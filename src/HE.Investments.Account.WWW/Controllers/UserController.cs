@@ -1,9 +1,9 @@
-using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Account.Contract.User;
 using HE.Investments.Account.Contract.User.Queries;
 using HE.Investments.Account.Domain.User.Commands;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -52,7 +52,9 @@ public class UserController : Controller
 
         if (callback.IsNotProvided())
         {
-            return RedirectToAction("GetProfileDetails");
+            return RedirectToAction(
+                nameof(OrganisationController.SearchOrganization),
+                new ControllerName(nameof(OrganisationController)).WithoutPrefix());
         }
 
         return Redirect(callback);

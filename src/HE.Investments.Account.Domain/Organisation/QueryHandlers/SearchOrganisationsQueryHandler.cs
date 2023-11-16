@@ -27,7 +27,7 @@ internal class SearchOrganisationsQueryHandler : IRequestHandler<SearchOrganizat
         var viewmodel = new OrganisationSearchModel
         {
             Organizations = companyHousesResult.Items
-            .Select(c => new OrganizationBasicDetails(c.Name, c.Street, c.City, c.PostalCode, c.CompanyNumber, c.OrganisationId)),
+            .Select(c => new OrganizationBasicDetails(c.Name, c.Street, c.City, c.PostalCode, c.CompanyNumber, c.OrganisationId)).ToList(),
             Name = request.SearchPhrase,
             TotalOrganizations = companyHousesResult.TotalItems,
             Page = request.Page,

@@ -2,6 +2,7 @@ using HE.InvestmentLoans.BusinessLogic.Tests.Assertions;
 using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Messages;
 using Xunit;
 
 namespace HE.InvestmentLoans.BusinessLogic.Tests.Organization.ValueObjects;

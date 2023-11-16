@@ -1,8 +1,7 @@
 using System.Globalization;
 using HE.Investments.Common.Messages;
-using HE.Investments.Common.Validators;
 
-namespace HE.Investments.Account.Domain.Organisation;
+namespace HE.Investments.Common.Validators;
 
 public class NumericValidator
 {
