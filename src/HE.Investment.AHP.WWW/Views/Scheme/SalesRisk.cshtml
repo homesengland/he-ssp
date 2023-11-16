@@ -19,12 +19,12 @@
             <vc:form-field-title
                 field-name="SalesRisk"
                 title="Tell us your assessment of the sales risk and how you will mitigate this"/>
-            <gds-error-form-group asp-for="SalesRisk">
-                <gds-text-area asp-for="SalesRisk" rows="5" class="govuk-!-margin-bottom-2"></gds-text-area>
-                <gds-div-hint>
+            <HeErrorFormGroup asp-for="SalesRisk">
+                <he-text-area asp-for="SalesRisk" rows="5" class="govuk-!-margin-bottom-2"></he-text-area>
+                <he-div-hint>
                     You can enter up to 1500 characters
-                </gds-div-hint>
-            </gds-error-form-group>
+                </he-div-hint>
+            </HeErrorFormGroup>
         </gds-field-set>
         <vc:form-button/>
     </form>

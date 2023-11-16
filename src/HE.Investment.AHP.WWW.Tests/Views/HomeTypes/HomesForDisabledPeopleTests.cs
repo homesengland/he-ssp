@@ -17,7 +17,7 @@ public class HomesForDisabledPeopleTests : HomeTypesTestBase
 
         // then
         document
-            .HasElementWithText("div", "My application - My homes")
+            .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("h1", "What type of homes will you be providing for disabled and vulnerable people?")
             .HasRadio("HousingType", new[] { "DesignatedHomes", "DesignatedSupportedHomes", "PurposeDesignedHomes", "PurposeDesignedSupportedHomes", })
             .HasElementWithText("button", "Save and continue");

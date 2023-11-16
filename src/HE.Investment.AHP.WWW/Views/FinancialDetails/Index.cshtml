@@ -5,27 +5,22 @@
     ViewData["Title"] = "Financial details";
 }
 <div id=mainContainer role=main>
-    <gds-div-grid-column-full>
+    <div class="govuk-grid-column-three-quarters">
         <form asp-controller="FinancialDetails" asp-action="Start" asp-route-applicationId="@Model.ApplicationId" asp-route-applicationName="@Model.ApplicationName" asp-method="post" novalidate>
             <div id="backButton" role="navigation">
                 <gds-back-link href="@Url.Action("Index", "Home")" text="Back" class="govuk-!-margin-bottom-8">
                 </gds-back-link>
             </div>
-            <span class="govuk-caption-m">
-                @Model.ApplicationName - Financial details
-            </span>
-            <gds-h1 class="govuk-heading-xl">
-                @FinancialDetailsPageTitles.StartPage
-            </gds-h1>
+            <vc:form-header title="@FinancialDetailsPageTitles.StartPage" caption="@Model.ApplicationName - Financial details"/>
 
             <div class="govuk-!-padding-bottom-8">
                 <gds-p>In this section you'll need to provide financial information related to your application. This includes:</gds-p>
-                <gds-ul>
-                    <gds-li>land value and acquisition cost</gds-li>
-                    <gds-li>other scheme cost</gds-li>
-                    <gds-li>borrowing and other contributions</gds-li>
-                    <gds-li>grants received from other public bodies</gds-li>
-                </gds-ul>
+                <ul class="govuk-list govuk-list govuk-list--bullet">
+                    <li>land value and acquisition cost</li>
+                    <li>other scheme cost</li>
+                    <li>borrowing and other contributions</li>
+                    <li>grants received from other public bodies</li>
+                </ul>
                 <gds-p>For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.</gds-p>
                 <gds-p>If your application concerns existing properties, rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.</gds-p>
             </div>
@@ -38,5 +33,5 @@
 
 
         </form>
-    </gds-div-grid-column-full>
+    </div>
 </div>

@@ -45,7 +45,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\He.AspNetCore.Mvc.Gds.Components\He.AspNetCore.Mvc.Gds.Components.csproj" />
     <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj" />
     <ProjectReference Include="..\HE.Investment.AHP.Domain\HE.Investment.AHP.Domain.csproj" />
     <ProjectReference Include="..\HE.Investment.AHP.Domain\HE.Investment.AHP.Domain.csproj" />

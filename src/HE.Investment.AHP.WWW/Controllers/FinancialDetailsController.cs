@@ -1,7 +1,6 @@
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails;
 using HE.Investment.AHP.Domain.FinancialDetails.Commands;
-using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.InvestmentLoans.Common.Routing;
 using HE.Investments.Common.Validators;
@@ -13,7 +12,7 @@ using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.App
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[Route("{applicationId}/financial-details")]
+[Route("application/{applicationId}/financial-details")]
 public class FinancialDetailsController : WorkflowController<FinancialDetailsWorkflowState>
 {
     private readonly IMediator _mediator;

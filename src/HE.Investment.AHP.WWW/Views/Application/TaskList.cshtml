@@ -32,7 +32,7 @@
         </gds-h2>
     }
 </div>
-<gds-div-grid-column-two-thirds>
+<div class="govuk-grid-column-two-thirds">
     @await Html.PartialAsync("~/Partials/TaskList/_TaskList.cshtml", ApplicationSections.CreateSections(Model.Sections))
 
     @if (incompleteSectionsCount > 0)
@@ -43,7 +43,7 @@
     }
 
     <link-button action-url="@Url.Action("Index", "Application")" is-secondary="true">Return to applications</link-button>
-</gds-div-grid-column-two-thirds>
+</div>
 <div class="govuk-grid-column-one-third">
     <vc:help-panel email-address="@Options.Value.Email" phone-number="@Options.Value.Phone"/>
 </div>
