@@ -1,10 +1,12 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Common.Domain;
+using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.Repositories;
 
@@ -23,6 +25,14 @@ public class ProgrammeRepository : IProgrammeRepository
         {
             new(ProgrammeType.Loans, await GetLoansApplications(userAccount, cancellationToken)),
             new(ProgrammeType.Ahp, await GetAhpApplications(userAccount, cancellationToken)),
+        };
+    }
+
+    public async Task<IList<Programme>> GetLoanProgrammes(UserAccount userAccount, CancellationToken cancellationToken)
+    {
+        return new List<Programme>
+        {
+            new(ProgrammeType.Loans, await GetLoansApplications(userAccount, cancellationToken)),
         };
     }
 
