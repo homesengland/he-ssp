@@ -164,6 +164,7 @@ public class CompanyStructureV2Controller : WorkflowController<CompanyStructureS
         var result = await _mediator.Send(new CheckAnswersCompanyStructureSectionCommand(LoanApplicationId.From(id), viewModel.CheckAnswers), cancellationToken);
         if (result.HasValidationErrors)
         {
+            ModelState.Clear();
             ModelState.AddValidationErrors(result);
             var response = await _mediator.Send(new GetCompanyStructureQuery(LoanApplicationId.From(id), CompanyStructureFieldsSet.GetAllFields), cancellationToken);
             return View("CheckAnswers", response.ViewModel);

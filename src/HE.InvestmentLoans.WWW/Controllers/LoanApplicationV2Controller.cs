@@ -164,7 +164,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     [WorkflowState(LoanApplicationWorkflow.State.CheckApplication)]
     public async Task<IActionResult> CheckApplication(Guid id)
     {
-        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id)));
+        var response = await _mediator.Send(new GetLoanApplicationQuery(LoanApplicationId.From(id), true));
 
         return View("CheckApplication", response.LoanApplication);
     }
