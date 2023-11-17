@@ -31,11 +31,7 @@ public class GetCompanyStructureFilesQueryHandler : IRequestHandler<GetCompanySt
     {
         var path = await _repository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken);
 
-        var folderPaths = new List<string>
-        {
-            $"{path}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
-            $"{path}{CompanyStructureConstants.MoreInformationAboutOrganizationInternal}",
-        };
+        var folderPaths = new List<string> { $"{path}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}" };
 
         var result = await _documentService.GetTableRowsAsync(new FileTableFilter()
         {
