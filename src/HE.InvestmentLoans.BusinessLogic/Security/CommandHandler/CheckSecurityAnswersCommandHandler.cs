@@ -49,6 +49,11 @@ public class CheckSecurityAnswersCommandHandler : IRequestHandler<ConfirmSecurit
                 security.Publish(new LoanApplicationSectionHasBeenCompletedAgainEvent(request.Id));
                 await _loanApplicationRepository.DispatchEvents(security, cancellationToken);
             }
+            else
+            {
+                security.Publish(new LoanApplicationChangeToDraftStatusEvent(security.LoanApplicationId));
+                await _loanApplicationRepository.DispatchEvents(security, cancellationToken);
+            }
         }
         catch (DomainValidationException domainValidationException)
         {

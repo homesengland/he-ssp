@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.Domain.Scheme.Repositories;
 
 public interface ISchemeRepository
 {
-    Task<SchemeEntity?> GetById(DomainApplicationId id, CancellationToken cancellationToken);
+    Task<SchemeEntity> GetByApplicationId(DomainApplicationId id, CancellationToken cancellationToken);
 
-    Task<SchemeEntity> Save(DomainApplicationId id, SchemeEntity entity, CancellationToken cancellationToken);
+    Task<SchemeEntity> Save(SchemeEntity entity, CancellationToken cancellationToken);
 }
