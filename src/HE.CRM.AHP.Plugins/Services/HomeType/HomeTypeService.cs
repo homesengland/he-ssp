@@ -63,13 +63,13 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             return homeTypeDto;
         }
 
-        public void SetHomeType(string homeType, string fieldsToSet = null)
+        public Guid SetHomeType(string homeType, string fieldsToSet = null)
         {
             var homeTypeDto = JsonSerializer.Deserialize<HomeTypeDto>(homeType);
             var homeTypeMapped = HomeTypeMapper.MapDtoToRegularEntity(homeTypeDto);
             if (string.IsNullOrEmpty(homeTypeDto.id))
             {
-                _ = _homeTypeRepository.Create(homeTypeMapped);
+                return _homeTypeRepository.Create(homeTypeMapped);
             }
             else
             {
@@ -94,6 +94,7 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
                 }
                 homeTypeToUpdateOrCreate.Id = new Guid(homeTypeDto.id);
                 _homeTypeRepository.Update(homeTypeToUpdateOrCreate);
+                return homeTypeToUpdateOrCreate.Id;
             }
         }
 
