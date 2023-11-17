@@ -73,6 +73,10 @@ namespace DataverseModel
 			public const string invln_discussionswithlocalstakeholders = "invln_discussionswithlocalstakeholders";
 			public const string invln_expectedacquisitioncost = "invln_expectedacquisitioncost";
 			public const string invln_expectedacquisitioncost_Base = "invln_expectedacquisitioncost_base";
+			public const string invln_expectedoncosts = "invln_expectedoncosts";
+			public const string invln_expectedoncosts_Base = "invln_expectedoncosts_base";
+			public const string invln_expectedonworks = "invln_expectedonworks";
+			public const string invln_expectedonworks_Base = "invln_expectedonworks_base";
 			public const string invln_financialdetailssectioncompletionstatus = "invln_financialdetailssectioncompletionstatus";
 			public const string invln_fundingfromopenmarkethomesnotonthisscheme = "invln_fundingfromopenmarkethomesnotonthisscheme";
 			public const string invln_fundingfromopenmarkethomesnotonthisscheme_Base = "invln_fundingfromopenmarkethomesnotonthisscheme_base";
@@ -474,6 +478,66 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedacquisitioncost_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedoncosts")]
+		public Microsoft.Xrm.Sdk.Money invln_expectedoncosts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedoncosts");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_expectedoncosts");
+				this.SetAttributeValue("invln_expectedoncosts", value);
+				this.OnPropertyChanged("invln_expectedoncosts");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Expected on Costs in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedoncosts_base")]
+		public Microsoft.Xrm.Sdk.Money invln_expectedoncosts_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedoncosts_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedonworks")]
+		public Microsoft.Xrm.Sdk.Money invln_expectedonworks
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedonworks");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_expectedonworks");
+				this.SetAttributeValue("invln_expectedonworks", value);
+				this.OnPropertyChanged("invln_expectedonworks");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Expected on Works in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedonworks_base")]
+		public Microsoft.Xrm.Sdk.Money invln_expectedonworks_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedonworks_base");
 			}
 		}
 		

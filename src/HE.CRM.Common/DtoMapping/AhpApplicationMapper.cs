@@ -33,8 +33,11 @@ namespace HE.CRM.Common.DtoMapping
                 invln_meetinglocalhousingneed = applicationDto.meetingLocalHousingNeed,
                 invln_meetinglocalpriorities = applicationDto.meetingLocalProrities,
                 invln_reducingenvironmentalimpact = applicationDto.reducingEnvironmentalImpact,
-                invln_sharedownershipsalesrisk = applicationDto.sharedOwnershipSalesRisk
-
+                invln_sharedownershipsalesrisk = applicationDto.sharedOwnershipSalesRisk,
+                invln_publicland = applicationDto.isPublicLand,
+                invln_currentlandvalue = MapNullableDecimalToMoney(applicationDto.currentLandValue),
+                invln_expectedoncosts = MapNullableDecimalToMoney(applicationDto.expectedOnCosts),
+                invln_expectedonworks = MapNullableDecimalToMoney(applicationDto.expectedOnWorks),
 
             };
             if (applicationDto.id != null && Guid.TryParse(applicationDto.id, out var applicationId))
@@ -78,6 +81,10 @@ namespace HE.CRM.Common.DtoMapping
                 meetingLocalProrities = application.invln_meetinglocalpriorities,
                 reducingEnvironmentalImpact = application.invln_reducingenvironmentalimpact,
                 sharedOwnershipSalesRisk = application.invln_sharedownershipsalesrisk,
+                isPublicLand = application.invln_publicland,
+                currentLandValue = application.invln_currentlandvalue?.Value,
+                expectedOnCosts = application.invln_expectedoncosts?.Value,
+                expectedOnWorks = application.invln_expectedonworks?.Value,
             };
             if (application.Id != null)
             {
