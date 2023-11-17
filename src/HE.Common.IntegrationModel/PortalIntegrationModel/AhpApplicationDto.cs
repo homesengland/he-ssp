@@ -21,6 +21,10 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public decimal? transferValue { get; set; }
         public decimal? totalInitialSalesIncome { get; set; }
         public decimal? otherCapitalSources { get; set; }
+        public bool? isPublicLand { get; set; }
+        public decimal? currentLandValue { get; set; }
+        public decimal? expectedOnCosts { get; set; }
+        public decimal? expectedOnWorks { get; set; }
 
         //schema
         public decimal? fundingRequested { get; set; }

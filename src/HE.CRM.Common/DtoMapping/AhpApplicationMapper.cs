@@ -21,11 +21,11 @@ namespace HE.CRM.Common.DtoMapping
                 invln_borrowingagainstrentalincome = MapNullableDecimalToMoney(applicationDto.borrowingAgainstRentalIncomeFromThisScheme),
                 invln_fundingfromopenmarkethomesonthisscheme = MapNullableDecimalToMoney(applicationDto.fundingFromOpenMarketHomesOnThisScheme),
                 invln_fundingfromopenmarkethomesnotonthisscheme = MapNullableDecimalToMoney(applicationDto.fundingFromOpenMarketHomesNotOnThisScheme),
-                //invln_funding = MapNullableDecimalToMoney(applicationDto.fundingGeneratedFromOtherSources),
+                invln_fundinggeneratedfromothersources = MapNullableDecimalToMoney(applicationDto.fundingGeneratedFromOtherSources),
                 invln_recycledcapitalgrantfund = MapNullableDecimalToMoney(applicationDto.recycledCapitalGrantFund),
-                //invln_transfer = MapNullableDecimalToMoney(applicationDto.transferValue),
-                //invln_totalinitial = MapNullableDecimalToMoney(applicationDto.totalInitialSalesIncome),
-                //invln_other = MapNullableDecimalToMoney(applicationDto.otherCapitalSources),
+                invln_transfervalue = MapNullableDecimalToMoney(applicationDto.transferValue),
+                invln_totalinitialsalesincome = MapNullableDecimalToMoney(applicationDto.totalInitialSalesIncome),
+                invln_othercapitalsources = MapNullableDecimalToMoney(applicationDto.otherCapitalSources),
                 invln_fundingrequired = MapNullableDecimalToMoney(applicationDto.fundingRequested),
                 invln_noofhomes = applicationDto.noOfHomes,
                 invln_affordabilityevidence = applicationDto.affordabilityEvidence,
@@ -33,8 +33,11 @@ namespace HE.CRM.Common.DtoMapping
                 invln_meetinglocalhousingneed = applicationDto.meetingLocalHousingNeed,
                 invln_meetinglocalpriorities = applicationDto.meetingLocalProrities,
                 invln_reducingenvironmentalimpact = applicationDto.reducingEnvironmentalImpact,
-                invln_sharedownershipsalesrisk = applicationDto.sharedOwnershipSalesRisk
-
+                invln_sharedownershipsalesrisk = applicationDto.sharedOwnershipSalesRisk,
+                invln_publicland = applicationDto.isPublicLand,
+                invln_currentlandvalue = MapNullableDecimalToMoney(applicationDto.currentLandValue),
+                invln_expectedoncosts = MapNullableDecimalToMoney(applicationDto.expectedOnCosts),
+                invln_expectedonworks = MapNullableDecimalToMoney(applicationDto.expectedOnWorks),
 
             };
             if (applicationDto.id != null && Guid.TryParse(applicationDto.id, out var applicationId))
@@ -65,11 +68,11 @@ namespace HE.CRM.Common.DtoMapping
                 borrowingAgainstRentalIncomeFromThisScheme = application.invln_borrowingagainstrentalincome?.Value,
                 fundingFromOpenMarketHomesOnThisScheme = application.invln_fundingfromopenmarkethomesonthisscheme?.Value,
                 fundingFromOpenMarketHomesNotOnThisScheme = application.invln_fundingfromopenmarkethomesnotonthisscheme?.Value,
-                //fundingGeneratedFromOtherSources = application.?.Value,
+                fundingGeneratedFromOtherSources = application.invln_fundinggeneratedfromothersources?.Value,
                 recycledCapitalGrantFund = application.invln_recycledcapitalgrantfund?.Value,
-                //transferValue = application.?.Value,
-                //totalInitialSalesIncome = application.?.Value,
-                //otherCapitalSources = application.?.Value,
+                transferValue = application.invln_transfervalue?.Value,
+                totalInitialSalesIncome = application.invln_totalinitialsalesincome?.Value,
+                otherCapitalSources = application.invln_othercapitalsources?.Value,
                 fundingRequested = application.invln_fundingrequired?.Value,
                 noOfHomes = application.invln_noofhomes,
                 affordabilityEvidence = application.invln_affordabilityevidence,
@@ -78,6 +81,10 @@ namespace HE.CRM.Common.DtoMapping
                 meetingLocalProrities = application.invln_meetinglocalpriorities,
                 reducingEnvironmentalImpact = application.invln_reducingenvironmentalimpact,
                 sharedOwnershipSalesRisk = application.invln_sharedownershipsalesrisk,
+                isPublicLand = application.invln_publicland,
+                currentLandValue = application.invln_currentlandvalue?.Value,
+                expectedOnCosts = application.invln_expectedoncosts?.Value,
+                expectedOnWorks = application.invln_expectedonworks?.Value,
             };
             if (application.Id != null)
             {
