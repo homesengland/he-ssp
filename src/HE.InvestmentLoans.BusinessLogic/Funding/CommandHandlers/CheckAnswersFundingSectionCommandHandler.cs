@@ -49,6 +49,11 @@ public class CheckAnswersFundingSectionCommandHandler : IRequestHandler<CheckAns
                 funding.Publish(new LoanApplicationSectionHasBeenCompletedAgainEvent(request.LoanApplicationId));
                 await _loanApplicationRepository.DispatchEvents(funding, cancellationToken);
             }
+            else
+            {
+                funding.Publish(new LoanApplicationChangeToDraftStatusEvent(funding.LoanApplicationId));
+                await _loanApplicationRepository.DispatchEvents(funding, cancellationToken);
+            }
         }
         catch (DomainValidationException domainValidationException)
         {
