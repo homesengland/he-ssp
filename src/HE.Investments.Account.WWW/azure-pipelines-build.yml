@@ -7,18 +7,21 @@ trigger:
   batch: true
   branches:
     include:
-      - main
+    - main
   paths:
     exclude:
-      - src/HE.DocumentService/*
+    - src/HE.DocumentService/*
+    - src/HE.Investment.AHP*
 
 pr:
   branches:
     include:
-      - main
+    - main
   paths:
     exclude:
-      - src/HE.DocumentService/*
+    - src/HE.DocumentService/*
+    - src/HE.Investment.AHP*
+    
 
 pool: "vmss-ado-chs-nonprod-001"
 
@@ -34,4 +37,4 @@ resources:
     ref: 'master'
 
 stages:
-- template: azure-pipelines-ahp-www-build.yml@he-invst-deployment
+- template: azure-pipelines-account-www-build.yml@he-invst-deployment

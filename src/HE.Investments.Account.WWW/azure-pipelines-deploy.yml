@@ -4,21 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-  batch: true
-  branches:
-    include:
-      - main
-  paths:
-    exclude:
-      - src/HE.DocumentService/*
-
-pr:
-  branches:
-    include:
-      - main
-  paths:
-    exclude:
-      - src/HE.DocumentService/*
+- none
 
 pool: "vmss-ado-chs-nonprod-001"
 
@@ -34,4 +20,4 @@ resources:
     ref: 'master'
 
 stages:
-- template: azure-pipelines-ahp-www-build.yml@he-invst-deployment
+- template: azure-pipelines-account-www-deploy.yml@he-invst-deployment
