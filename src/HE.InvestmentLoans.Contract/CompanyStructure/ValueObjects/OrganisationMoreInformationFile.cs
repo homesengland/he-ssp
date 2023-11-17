@@ -8,7 +8,7 @@ namespace HE.InvestmentLoans.Contract.CompanyStructure.ValueObjects;
 
 public class OrganisationMoreInformationFile : ValueObject
 {
-    private readonly string[] _allowedExtensions =
+    public static readonly string[] AllowedExtensions =
     {
         AllowedFileExtension.PDF,
         AllowedFileExtension.DOC,
@@ -21,7 +21,7 @@ public class OrganisationMoreInformationFile : ValueObject
     public OrganisationMoreInformationFile(string fileName, long fileSize, int maxFileSizeInMb)
     {
         var operationResult = OperationResult.New();
-        if (!_allowedExtensions.Contains(Path.GetExtension(fileName).ToLowerInvariant()))
+        if (!AllowedExtensions.Contains(Path.GetExtension(fileName).ToLowerInvariant()))
         {
             operationResult.AddValidationError(nameof(OrganisationMoreInformationFile), ValidationErrorMessage.FileIncorrectFormat);
         }

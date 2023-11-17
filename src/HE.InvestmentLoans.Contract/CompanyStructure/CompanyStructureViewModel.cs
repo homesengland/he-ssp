@@ -35,6 +35,8 @@ public class CompanyStructureViewModel : ICompletedSectionViewModel
 
     public IList<FileTableRow>? OrganisationMoreInformationFiles { get; set; }
 
+    public IList<string> AllowedFileExtensions { get; set; }
+
     public bool IsCompleted()
     {
         return State == SectionStatus.Completed;
