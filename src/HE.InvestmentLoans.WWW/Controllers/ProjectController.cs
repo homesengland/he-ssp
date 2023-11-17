@@ -55,7 +55,7 @@ public class ProjectController : WorkflowController<ProjectState>
     [HttpPost("{projectId}/start", Name = "StartExistingProject")]
     [HttpPost("start", Name = "StartNewProject")]
     [WorkflowState(ProjectState.Index)]
-    public async Task<IActionResult> StartProjectPost(Guid id, Guid? projectId)
+    public async Task<IActionResult> StartProjectPost(Guid id, Guid projectId)
     {
         if (projectId != Guid.Empty)
         {
