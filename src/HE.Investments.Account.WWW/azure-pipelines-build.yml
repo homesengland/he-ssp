@@ -3,15 +3,26 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-  branches:
-    include:
-    - main
-    - feature*/*
-  paths:
-    exclude:
-    - src/HE.DocumentService/*
-    - src/HE.Investment.AHP*
+on:
+  push:
+    batch: true
+    branches:
+      include:
+      - main
+    paths:
+      exclude:
+      - src/HE.DocumentService/*
+      - src/HE.Investment.AHP*
+
+  pull_request:
+    branches:
+      include:
+      - main
+    paths:
+      exclude:
+      - src/HE.DocumentService/*
+      - src/HE.Investment.AHP*
+    
 
 pool: "vmss-ado-chs-nonprod-001"
 
