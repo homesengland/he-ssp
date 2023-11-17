@@ -1303,6 +1303,24 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_olderpeoplehousingtypeset
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Designatedsupportedhousing = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Housingforolderpeoplewithaccesstosupportasrequired = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Housingforolderpeoplewithsomespecialdesignfeatures = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Housingforolderpeoplewithallspecialdesignfeatures = 858110003,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_securitycover
 	{
 		
@@ -8868,24 +8886,6 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Hidden = 100000002,
-	}
-	
-	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
-	public enum invln_olderpeoplehousingtypeset
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Designatedsupportedhousing = 858110000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Housingforolderpeoplewithaccesstosupportasrequired = 858110001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Housingforolderpeoplewithsomespecialdesignfeatures = 858110002,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Housingforolderpeoplewithallspecialdesignfeatures = 858110003,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -22836,6 +22836,36 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundinggeneratedfromothersources")]
+		public Microsoft.Xrm.Sdk.Money invln_fundinggeneratedfromothersources
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_fundinggeneratedfromothersources");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_fundinggeneratedfromothersources");
+				this.SetAttributeValue("invln_fundinggeneratedfromothersources", value);
+				this.OnPropertyChanged("invln_fundinggeneratedfromothersources");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Funding Generated From Other Sources in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundinggeneratedfromothersources_base")]
+		public Microsoft.Xrm.Sdk.Money invln_fundinggeneratedfromothersources_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_fundinggeneratedfromothersources_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundingrequired")]
 		public Microsoft.Xrm.Sdk.Money invln_fundingrequired
 		{
@@ -23259,6 +23289,36 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_othercapitalsources")]
+		public Microsoft.Xrm.Sdk.Money invln_othercapitalsources
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_othercapitalsources");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_othercapitalsources");
+				this.SetAttributeValue("invln_othercapitalsources", value);
+				this.OnPropertyChanged("invln_othercapitalsources");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Other Capital Sources in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_othercapitalsources_base")]
+		public Microsoft.Xrm.Sdk.Money invln_othercapitalsources_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_othercapitalsources_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ownresources")]
 		public Microsoft.Xrm.Sdk.Money invln_ownresources
 		{
@@ -23586,6 +23646,66 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_totalhomes");
 				this.SetAttributeValue("invln_totalhomes", value);
 				this.OnPropertyChanged("invln_totalhomes");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalinitialsalesincome")]
+		public Microsoft.Xrm.Sdk.Money invln_totalinitialsalesincome
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalinitialsalesincome");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_totalinitialsalesincome");
+				this.SetAttributeValue("invln_totalinitialsalesincome", value);
+				this.OnPropertyChanged("invln_totalinitialsalesincome");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Total Initial Sales Income in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalinitialsalesincome_base")]
+		public Microsoft.Xrm.Sdk.Money invln_totalinitialsalesincome_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalinitialsalesincome_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_transfervalue")]
+		public Microsoft.Xrm.Sdk.Money invln_transfervalue
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_transfervalue");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_transfervalue");
+				this.SetAttributeValue("invln_transfervalue", value);
+				this.OnPropertyChanged("invln_transfervalue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Transfer Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_transfervalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_transfervalue_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_transfervalue_base");
 			}
 		}
 		

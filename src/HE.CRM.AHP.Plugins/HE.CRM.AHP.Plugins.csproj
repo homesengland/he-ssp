@@ -216,6 +216,9 @@
     <Content Include="bin\coretools\System.Diagnostics.DiagnosticSource.dll" />
     <Content Include="bin\coretools\System.ValueTuple.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared" />
   <Import Project="..\HE.CRM.Common\HE.CRM.Common.projitems" Label="Shared" />
   <Import Project="..\HE.CRM.Model\HE.CRM.Model.projitems" Label="Shared" />
