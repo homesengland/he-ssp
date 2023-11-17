@@ -18,8 +18,4 @@ public static class CommonModule
             serviceCollections.AddScoped(typeof(IDisplayNotificationFactory), factoryType);
         }
     }
-
-    public static void TestMethod()
-    {
-    }
 }
