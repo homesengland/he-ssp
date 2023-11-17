@@ -20,11 +20,11 @@ public abstract class UpdateSchemeCommandHandler<TCommand> : IRequestHandler<TCo
     public async Task<OperationResult> Handle(TCommand request, CancellationToken cancellationToken)
     {
         var applicationId = new ApplicationId(request.ApplicationId);
-        var scheme = await _repository.GetById(applicationId, cancellationToken);
+        var scheme = await _repository.GetByApplicationId(applicationId, cancellationToken);
 
-        Update(scheme!, request);
+        Update(scheme, request);
 
-        await _repository.Save(applicationId, scheme!, cancellationToken);
+        await _repository.Save(scheme, cancellationToken);
 
         return new OperationResult<ApplicationId?>(applicationId);
     }

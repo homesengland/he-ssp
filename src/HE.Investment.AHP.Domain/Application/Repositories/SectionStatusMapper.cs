@@ -23,11 +23,21 @@ public static class SectionStatusMapper
         }
 
         var contract = (invln_ahpsectioncompletionstatusset)value;
-        if (SectionStatuses.TryGetKeyByValue(contract, out var status))
+        if (!SectionStatuses.TryGetKeyByValue(contract, out var status))
         {
             throw new ArgumentException($"Not supported Section Status value {value}");
         }
 
         return status;
+    }
+
+    public static int ToDto(SectionStatus value)
+    {
+        if (!SectionStatuses.TryGetValue(value, out var status))
+        {
+            throw new ArgumentException($"Not supported Section Status value {value}");
+        }
+
+        return (int)status;
     }
 }
