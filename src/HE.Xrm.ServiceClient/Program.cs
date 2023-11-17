@@ -37,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestLoan(serviceClient);
+                    TestHomeType(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -53,25 +53,25 @@ namespace HE.Xrm.ServiceClientExample
 
         private static void TestHomeType(ServiceClient serviceClient)
         {
-            var fieldsToUpdate = $"{nameof(invln_HomeType.invln_hometypename).ToLower()},{nameof(invln_HomeType.invln_typeofhousing).ToLower()}";
-            var home = new HomeTypeDto()
+            //var fieldsToUpdate = $"{nameof(invln_HomeType.invln_hometypename).ToLower()},{nameof(invln_HomeType.invln_typeofhousing).ToLower()}";
+            //var home = new HomeTypeDto()
+            //{
+            //    //id = "74b58fbf-a283-ee11-8179-002248004f63",
+            //    numberOfHomes = 222,
+            //    applicationId = "a5b507b3-c27f-ee11-8179-002248004268",
+            //    homeTypeName = "test cusa",
+            //    housingType = (int)invln_Typeofhousing.Housingfordisabledandvulnerablepeople,
+            //    housingTypeForOlderPeople = (int)invln_typeofolderpeopleshousing.Housingforolderpeoplewithallspecialdesignfeatures,
+            //    housingTypeForVulnerable = (int)invln_typeofhousingfordisabledvulnerable.Designatedhousingfordisabledandvulnerablepeoplewithaccesstosupport,
+            //    clientGroup = (int)invln_Clientgroup.DPeoplewithdrugproblems,
+            //    designPrinciples = new List<int?>() { (int)invln_HAPPIprinciples.DEnergyefficiencyandsustainabledesign, (int)invln_HAPPIprinciples.GPositiveuseofcirculationspace },
+            //};
+            //var serialized = JsonSerializer.Serialize(home);
+            var req2 = new invln_gettypeofhomeslistRequest() //get loan applications related to account and contact with given data
             {
-                //id = "74b58fbf-a283-ee11-8179-002248004f63",
-                numberOfHomes = 222,
-                applicationId = "a5b507b3-c27f-ee11-8179-002248004268",
-                homeTypeName = "test cusa",
-                housingType = (int)invln_Typeofhousing.Housingfordisabledandvulnerablepeople,
-                housingTypeForOlderPeople = (int)invln_typeofolderpeopleshousing.Housingforolderpeoplewithallspecialdesignfeatures,
-                housingTypeForVulnerable = (int)invln_typeofhousingfordisabledvulnerable.Designatedhousingfordisabledandvulnerablepeoplewithaccesstosupport,
-                clientGroup = (int)invln_Clientgroup.DPeoplewithdrugproblems,
-                designPrinciples = new List<int?>() { (int)invln_HAPPIprinciples.DEnergyefficiencyandsustainabledesign, (int)invln_HAPPIprinciples.GPositiveuseofcirculationspace },
+                invln_applicationid = "e2e94e07-e582-ee11-8179-0022480043c2"
             };
-            var serialized = JsonSerializer.Serialize(home);
-            var req2 = new invln_sethometypeRequest() //get loan applications related to account and contact with given data
-            {
-                invln_hometype = serialized,
-            };
-            serviceClient.Execute(req2);
+            var test = (invln_gettypeofhomeslistResponse)serviceClient.Execute(req2);
             Console.WriteLine("A web service connection was not established.");
         }
 
