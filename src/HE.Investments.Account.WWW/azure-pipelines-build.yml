@@ -4,24 +4,23 @@
 # https://aka.ms/yaml
 
 trigger:
-  push:
-    batch: true
-    branches:
-      include:
-      - main
-    paths:
-      exclude:
-      - src/HE.DocumentService/*
-      - src/HE.Investment.AHP*
+  batch: true
+  branches:
+    include:
+    - main
+  paths:
+    exclude:
+    - src/HE.DocumentService/*
+    - src/HE.Investment.AHP*
 
-  pull_request:
-    branches:
-      include:
-      - main
-    paths:
-      exclude:
-      - src/HE.DocumentService/*
-      - src/HE.Investment.AHP*
+pr:
+  branches:
+    include:
+    - main
+  paths:
+    exclude:
+    - src/HE.DocumentService/*
+    - src/HE.Investment.AHP*
     
 
 pool: "vmss-ado-chs-nonprod-001"
