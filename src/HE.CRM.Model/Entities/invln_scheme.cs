@@ -73,11 +73,17 @@ namespace DataverseModel
 			public const string invln_discussionswithlocalstakeholders = "invln_discussionswithlocalstakeholders";
 			public const string invln_expectedacquisitioncost = "invln_expectedacquisitioncost";
 			public const string invln_expectedacquisitioncost_Base = "invln_expectedacquisitioncost_base";
+			public const string invln_expectedoncosts = "invln_expectedoncosts";
+			public const string invln_expectedoncosts_Base = "invln_expectedoncosts_base";
+			public const string invln_expectedonworks = "invln_expectedonworks";
+			public const string invln_expectedonworks_Base = "invln_expectedonworks_base";
 			public const string invln_financialdetailssectioncompletionstatus = "invln_financialdetailssectioncompletionstatus";
 			public const string invln_fundingfromopenmarkethomesnotonthisscheme = "invln_fundingfromopenmarkethomesnotonthisscheme";
 			public const string invln_fundingfromopenmarkethomesnotonthisscheme_Base = "invln_fundingfromopenmarkethomesnotonthisscheme_base";
 			public const string invln_fundingfromopenmarkethomesonthisscheme = "invln_fundingfromopenmarkethomesonthisscheme";
 			public const string invln_fundingfromopenmarkethomesonthisscheme_Base = "invln_fundingfromopenmarkethomesonthisscheme_base";
+			public const string invln_fundinggeneratedfromothersources = "invln_fundinggeneratedfromothersources";
+			public const string invln_fundinggeneratedfromothersources_Base = "invln_fundinggeneratedfromothersources_base";
 			public const string invln_fundingrequired = "invln_fundingrequired";
 			public const string invln_fundingrequired_Base = "invln_fundingrequired_base";
 			public const string invln_grantsfromcountycouncil = "invln_grantsfromcountycouncil";
@@ -108,6 +114,8 @@ namespace DataverseModel
 			public const string invln_oncosts_Base = "invln_oncosts_base";
 			public const string invln_organisationid = "invln_organisationid";
 			public const string invln_organisationidName = "invln_organisationidname";
+			public const string invln_othercapitalsources = "invln_othercapitalsources";
+			public const string invln_othercapitalsources_Base = "invln_othercapitalsources_base";
 			public const string invln_ownresources = "invln_ownresources";
 			public const string invln_ownresources_Base = "invln_ownresources_base";
 			public const string invln_pplicationid = "invln_pplicationid";
@@ -128,6 +136,10 @@ namespace DataverseModel
 			public const string invln_Totalgrantsfromotherpublicbodies = "invln_totalgrantsfromotherpublicbodies";
 			public const string invln_totalgrantsfromotherpublicbodies_Base = "invln_totalgrantsfromotherpublicbodies_base";
 			public const string invln_totalhomes = "invln_totalhomes";
+			public const string invln_totalinitialsalesincome = "invln_totalinitialsalesincome";
+			public const string invln_totalinitialsalesincome_Base = "invln_totalinitialsalesincome_base";
+			public const string invln_transfervalue = "invln_transfervalue";
+			public const string invln_transfervalue_Base = "invln_transfervalue_base";
 			public const string invln_workscosts = "invln_workscosts";
 			public const string invln_workscosts_Base = "invln_workscosts_base";
 			public const string lk_invln_scheme_createdby = "lk_invln_scheme_createdby";
@@ -469,6 +481,66 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedoncosts")]
+		public Microsoft.Xrm.Sdk.Money invln_expectedoncosts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedoncosts");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_expectedoncosts");
+				this.SetAttributeValue("invln_expectedoncosts", value);
+				this.OnPropertyChanged("invln_expectedoncosts");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Expected on Costs in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedoncosts_base")]
+		public Microsoft.Xrm.Sdk.Money invln_expectedoncosts_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedoncosts_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedonworks")]
+		public Microsoft.Xrm.Sdk.Money invln_expectedonworks
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedonworks");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_expectedonworks");
+				this.SetAttributeValue("invln_expectedonworks", value);
+				this.OnPropertyChanged("invln_expectedonworks");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Expected on Works in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedonworks_base")]
+		public Microsoft.Xrm.Sdk.Money invln_expectedonworks_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedonworks_base");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_financialdetailssectioncompletionstatus")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_financialdetailssectioncompletionstatus
 		{
@@ -543,6 +615,36 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_fundingfromopenmarkethomesonthisscheme_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundinggeneratedfromothersources")]
+		public Microsoft.Xrm.Sdk.Money invln_fundinggeneratedfromothersources
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_fundinggeneratedfromothersources");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_fundinggeneratedfromothersources");
+				this.SetAttributeValue("invln_fundinggeneratedfromothersources", value);
+				this.OnPropertyChanged("invln_fundinggeneratedfromothersources");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Funding Generated From Other Sources in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_fundinggeneratedfromothersources_base")]
+		public Microsoft.Xrm.Sdk.Money invln_fundinggeneratedfromothersources_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_fundinggeneratedfromothersources_base");
 			}
 		}
 		
@@ -948,6 +1050,36 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_othercapitalsources")]
+		public Microsoft.Xrm.Sdk.Money invln_othercapitalsources
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_othercapitalsources");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_othercapitalsources");
+				this.SetAttributeValue("invln_othercapitalsources", value);
+				this.OnPropertyChanged("invln_othercapitalsources");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Other Capital Sources in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_othercapitalsources_base")]
+		public Microsoft.Xrm.Sdk.Money invln_othercapitalsources_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_othercapitalsources_base");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ownresources")]
 		public Microsoft.Xrm.Sdk.Money invln_ownresources
 		{
@@ -1241,6 +1373,66 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_totalhomes");
 				this.SetAttributeValue("invln_totalhomes", value);
 				this.OnPropertyChanged("invln_totalhomes");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalinitialsalesincome")]
+		public Microsoft.Xrm.Sdk.Money invln_totalinitialsalesincome
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalinitialsalesincome");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_totalinitialsalesincome");
+				this.SetAttributeValue("invln_totalinitialsalesincome", value);
+				this.OnPropertyChanged("invln_totalinitialsalesincome");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Total Initial Sales Income in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalinitialsalesincome_base")]
+		public Microsoft.Xrm.Sdk.Money invln_totalinitialsalesincome_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_totalinitialsalesincome_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_transfervalue")]
+		public Microsoft.Xrm.Sdk.Money invln_transfervalue
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_transfervalue");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_transfervalue");
+				this.SetAttributeValue("invln_transfervalue", value);
+				this.OnPropertyChanged("invln_transfervalue");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Transfer Value in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_transfervalue_base")]
+		public Microsoft.Xrm.Sdk.Money invln_transfervalue_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_transfervalue_base");
 			}
 		}
 		
