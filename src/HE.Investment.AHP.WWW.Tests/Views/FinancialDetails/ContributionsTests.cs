@@ -67,9 +67,9 @@ public class ContributionsTests : ViewTestBase
     private static void AssertView(IHtmlDocument document, string? errorMessage = null)
     {
         document
-            .HasElementWithText("gds-fieldset-heading", "Your expected contributions to the scheme")
-            .HasElementWithText("label", "Enter how much you will contribute from cross subsidy from the sale of open market homes on this scheme")
-            .HasElementWithText("label", "Enter the transfer value of the homes on this scheme")
+            .HasElementWithText("h1", "Your expected contributions to the scheme")
+            .HasElementWithText("h2", "Enter how much you will contribute from borrowing against rental income for this scheme")
+            .HasElementWithText("span", "Total expected contributions to the scheme")
             .HasElementWithText("button", "Save and continue")
             .HasSummaryErrorMessage(nameof(FinancialDetailsValidationFieldNames.RentalIncomeBorrowing), errorMessage, !string.IsNullOrEmpty(errorMessage))
             .HasErrorMessage(nameof(FinancialDetailsValidationFieldNames.RentalIncomeBorrowing), errorMessage, !string.IsNullOrEmpty(errorMessage));

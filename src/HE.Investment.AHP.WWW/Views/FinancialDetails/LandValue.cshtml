@@ -1,4 +1,5 @@
 @using HE.Investment.AHP.Domain.FinancialDetails;
+@using HE.Investment.AHP.WWW.Models.Common;
 @using HE.Investment.AHP.WWW.Models.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 @using HE.Investments.Common.Gds;
@@ -6,55 +7,51 @@
 @{
     ViewData["Title"] = "Land value";
 }
-<div class="govuk-grid-column-full">
+<div id="mainContainer" class="govuk-grid-three-quarters" role="main">
     <form asp-controller="FinancialDetails" asp-action="LandValue" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
-        <div id="backButton" role="navigation">
-            <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.LandValue, applicationId = @Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
-            </gds-back-link>
+        <vc:financial-details-form-header title="@FinancialDetailsPageTitles.LandValuePage"
+                                          current-page="@FinancialDetailsWorkflowState.LandValue"
+                                          application-id="@Model.ApplicationId"
+                                          caption="@Model.ApplicationName - Financial details" />
+        <div class="govuk-body-m govuk-!-margin-bottom-6">
+            If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.
         </div>
-        @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-        <gds-field-set role="group">
-            <gds-div-form-group>
-                <vc:form-header title="@FinancialDetailsPageTitles.LandValuePage" caption="@Model.ApplicationName - Financial details" />
-                <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=false>
-                    <he-div-hint>
-                        If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.
-                    </he-div-hint>
-                </gds-field-set>
-                <gds-field-set class="govuk-!-margin-bottom-6" role="group">
-                    <gds-legend>
-                        <gds-h2 for="@Model.IsOnPublicLand">
-                            Is your scheme on public land
-                        </gds-h2>
-                    </gds-legend>
-                    <he-div-hint>
-                        Public land is land owned by the government.
-                    </he-div-hint>
-                    <gds-radio-yes-no asp-for="@Model.IsOnPublicLand" class="govuk-!-margin-bottom-6"></gds-radio-yes-no>
-                </gds-field-set>
-                <gds-field-set class="govuk-!-margin-bottom-6" role="group">
-                    <gds-legend>
-                        <gds-h2 for="@Model.LandValue">
-                            Enter the current value of the land
-                        </gds-h2>
-                    </gds-legend>
-                    <gds-input govuk-formgroup-asp-for="@Model.LandValue" type="text"
-                               asp-hiddenlabeltext="Enter the current value of the land"
-                               asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.LandValue />
-                </gds-field-set>
-            </gds-div-form-group>
 
-            @Html.HiddenFor(c => c.ApplicationId)
-            @Html.HiddenFor(c => c.ApplicationName)
+        <gds-field-set>
+            <gds-legend class="govuk-!-margin-bottom-0">
+                <gds-h2 class="govuk-!-margin-bottom-1">
+                    Is your scheme on public land
+                </gds-h2>
+            </gds-legend>
+            <he-div-hint>
+                Public land is land owned by the government.
+            </he-div-hint>
+            <gds-radio govuk-formgroup-asp-for="@Model.IsOnPublicLand"
+                       asp-hiddenlabeltext="What type of homes will you be providing for disabled and vulnerable people?"
+                       value="@Model.IsOnPublicLand"
+                       asp-selectlistitems="@CommonFormOptions.YesNo">
+            </gds-radio>
+
+            <gds-legend class="govuk-!-margin-bottom-0">
+                <gds-h2 class="govuk-!-margin-bottom-0">
+                    Enter the current value of the land
+                </gds-h2>
+            </gds-legend>
+            <gds-input asp-hiddenlabeltext="LandValue"
+                       class="govuk-input--width-5"
+                       asp-labelclass="govuk-label"
+                       govuk-formgroup-asp-for="LandValue"
+                       name="LandValue"
+                       asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                       value=@Model.LandValue />
 
             <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Save and continue
             </button>
 
+            @Html.HiddenFor(c => c.ApplicationId)
+            @Html.HiddenFor(c => c.ApplicationName)
         </gds-field-set>
-        <gds-p>
-            <vc:return-to-application-link application-id="@Model.ApplicationId" />
-        </gds-p>
-
+        <vc:return-to-application-link application-id="@Model.ApplicationId" />
     </form>
 </div>
