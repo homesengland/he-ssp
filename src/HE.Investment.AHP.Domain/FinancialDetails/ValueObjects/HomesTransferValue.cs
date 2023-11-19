@@ -9,7 +9,6 @@ public class HomesTransferValue : ValueObject
 {
     public HomesTransferValue(string value)
     {
-
         var operationResult = OperationResult.New();
 
         var intValue = NumericValidator
