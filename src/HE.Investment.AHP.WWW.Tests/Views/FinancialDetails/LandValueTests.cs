@@ -16,6 +16,7 @@ public class LandValueTests : ViewTestBase
     public async Task ShouldDisplayView()
     {
         var model = new FinancialDetailsLandValueModel(Guid.NewGuid(), "TestApp", string.Empty, string.Empty);
+
         // given & when
         var document = await Render(_viewPath, model);
 

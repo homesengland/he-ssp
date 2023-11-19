@@ -15,39 +15,39 @@ public class FinancialDetails
 
     public string? IsSchemaOnPublicLand { get; set; }
 
-    public string? LandValue { get; set; }
+    public decimal? LandValue { get; set; }
 
-    public string? ExpectedWorkCost { get; set; }
+    public decimal? ExpectedWorkCost { get; set; }
 
-    public string? ExpectedOnCost { get; set; }
+    public decimal? ExpectedOnCost { get; set; }
 
-    public string? RentalIncomeContribution { get; set; }
+    public decimal? RentalIncomeContribution { get; set; }
 
-    public string? SubsidyFromSaleOnThisScheme { get; set; }
+    public decimal? SubsidyFromSaleOnThisScheme { get; set; }
 
-    public string? SubsidyFromSaleOnOtherSchemes { get; set; }
+    public decimal? SubsidyFromSaleOnOtherSchemes { get; set; }
 
-    public string? OwnResourcesContribution { get; set; }
+    public decimal? OwnResourcesContribution { get; set; }
 
-    public string? RecycledCapitalGarntFundContribution { get; set; }
+    public decimal? RecycledCapitalGarntFundContribution { get; set; }
 
-    public string? OtherCapitalContributions { get; set; }
+    public decimal? OtherCapitalContributions { get; set; }
 
-    public string? SharedOwnershipSalesContribution { get; set; }
+    public decimal? SharedOwnershipSalesContribution { get; set; }
 
-    public string? TransferValueOfHomes { get; set; }
+    public decimal? TransferValueOfHomes { get; set; }
 
-    public string? CountyCouncilGrants { get; set; }
+    public decimal? CountyCouncilGrants { get; set; }
 
-    public string? DHSCExtraCareGrants { get; set; }
+    public decimal? DHSCExtraCareGrants { get; set; }
 
-    public string? LocalAuthorityGrants { get; set; }
+    public decimal? LocalAuthorityGrants { get; set; }
 
-    public string? SocialServicesGrants { get; set; }
+    public decimal? SocialServicesGrants { get; set; }
 
-    public string? HealthRelatedGarnts { get; set; }
+    public decimal? HealthRelatedGrants { get; set; }
 
-    public string? LotteryFunding { get; set; }
+    public decimal? LotteryFunding { get; set; }
 
-    public string? OtherPublicGrants { get; set; }
+    public decimal? OtherPublicGrants { get; set; }
 }

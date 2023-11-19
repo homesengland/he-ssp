@@ -81,7 +81,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsLandValueModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.LandValue,
+            financialDetails.LandValue.ToString(),
             financialDetails.IsSchemaOnPublicLand));
     }
 
@@ -109,8 +109,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsOtherApplicationCostsModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.ExpectedWorkCost,
-            financialDetails.ExpectedOnCost));
+            financialDetails.ExpectedWorkCost.ToString(),
+            financialDetails.ExpectedOnCost.ToString()));
     }
 
     [HttpPost("other-application-costs")]
@@ -144,14 +144,14 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsContributionsModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.RentalIncomeContribution,
-            financialDetails.SubsidyFromSaleOnThisScheme,
-            financialDetails.SubsidyFromSaleOnOtherSchemes,
-            financialDetails.OwnResourcesContribution,
-            financialDetails.RecycledCapitalGarntFundContribution,
-            financialDetails.OtherCapitalContributions,
-            financialDetails.SharedOwnershipSalesContribution,
-            financialDetails.TransferValueOfHomes,
+            financialDetails.RentalIncomeContribution.ToString(),
+            financialDetails.SubsidyFromSaleOnThisScheme.ToString(),
+            financialDetails.SubsidyFromSaleOnOtherSchemes.ToString(),
+            financialDetails.OwnResourcesContribution.ToString(),
+            financialDetails.RecycledCapitalGarntFundContribution.ToString(),
+            financialDetails.OtherCapitalContributions.ToString(),
+            financialDetails.SharedOwnershipSalesContribution.ToString(),
+            financialDetails.TransferValueOfHomes.ToString(),
             isSharedOwnership,
             true)); // temporarly mocked - unregistered body account type
     }
