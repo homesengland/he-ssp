@@ -19,7 +19,7 @@ namespace HE.CRM.Common.DtoMapping
                 housingTypeForOlderPeople = homeType.invln_typeofolderpeopleshousing?.Value,
                 housingTypeForVulnerable = homeType.invln_typeofhousingfordisabledvulnerablepeople?.Value,
                 clientGroup = homeType.invln_clientgroup?.Value,
-                designPrinciples = new List<int?>(),
+                designPrinciples = new List<int>(),
             };
             if (homeType.Id != null)
             {
@@ -31,11 +31,11 @@ namespace HE.CRM.Common.DtoMapping
                 homeTypeDto.applicationId = homeType.invln_application.Id.ToString();
             }
 
-            if (homeType.invln_happiprinciples.Any())
+            if (homeType.invln_happiprinciples != null && homeType.invln_happiprinciples.Any())
             {
-                foreach(var principle in homeType.invln_happiprinciples)
+                foreach (var principle in homeType.invln_happiprinciples)
                 {
-                    homeTypeDto.designPrinciples.Add(principle?.Value);
+                    homeTypeDto.designPrinciples.Add(principle.Value);
                 }
             }
             return homeTypeDto;
@@ -62,11 +62,11 @@ namespace HE.CRM.Common.DtoMapping
             {
                 homeType.invln_application = new EntityReference(invln_scheme.EntityLogicalName, applicationGuid);
             }
-            if (homeTypeDto.designPrinciples.Any())
+            if (homeTypeDto.designPrinciples != null && homeTypeDto.designPrinciples.Any())
             {
-                foreach(var principle in homeTypeDto.designPrinciples)
+                foreach (var principle in homeTypeDto.designPrinciples)
                 {
-                    homeType.invln_happiprinciples.Add(new OptionSetValue(principle.Value));
+                    homeType.invln_happiprinciples.Add(new OptionSetValue(principle));
                 }
             }
 

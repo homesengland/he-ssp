@@ -23,7 +23,8 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
         public override void DoWork()
         {
             TracingService.Trace("method");
-            CrmServicesFactory.Get<IHomeTypeService>().SetHomeType(homeType, fieldsToSet);
+            var createdRecordGuid = CrmServicesFactory.Get<IHomeTypeService>().SetHomeType(homeType, fieldsToSet);
+            ExecutionData.SetOutputParameter(invln_sethometypeResponse.Fields.invln_hometypeid, createdRecordGuid.ToString());
         }
 
         #endregion

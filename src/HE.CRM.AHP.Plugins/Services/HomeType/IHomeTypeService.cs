@@ -9,7 +9,7 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
     public interface IHomeTypeService : ICrmService
     {
         List<HomeTypeDto> GetApplicaitonHomeTypes(string applicationId);
-        void SetHomeType(string homeType, string fieldsToSet = null);
+        Guid SetHomeType(string homeType, string fieldsToSet = null);
         HomeTypeDto GetHomeType(string homeTypeId, string applicationId, string fieldsToRetrieve = null);
         void DeleteHomeType(string homeTypeId, string userId);
     }

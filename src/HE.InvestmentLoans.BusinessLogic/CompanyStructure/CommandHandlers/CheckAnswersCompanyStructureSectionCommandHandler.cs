@@ -49,6 +49,11 @@ public class CheckAnswersCompanyStructureSectionCommandHandler : IRequestHandler
                 companyStructure.Publish(new LoanApplicationSectionHasBeenCompletedAgainEvent(request.LoanApplicationId));
                 await _loanApplicationRepository.DispatchEvents(companyStructure, cancellationToken);
             }
+            else
+            {
+                companyStructure.Publish(new LoanApplicationChangeToDraftStatusEvent(companyStructure.LoanApplicationId));
+                await _loanApplicationRepository.DispatchEvents(companyStructure, cancellationToken);
+            }
         }
         catch (DomainValidationException domainValidationException)
         {

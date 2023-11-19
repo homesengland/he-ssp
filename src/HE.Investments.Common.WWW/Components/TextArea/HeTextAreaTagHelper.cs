@@ -62,7 +62,7 @@ public class HeTextAreaTagHelper : InputTagHelper
 
                 TagConstruct.ConstructGeneric(output, HtmlConstants.Rows, Rows);
 
-                output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output, (string)For.Model));
+                output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output, (string)For.Model).Trim());
             }
             else
             {
@@ -71,7 +71,7 @@ public class HeTextAreaTagHelper : InputTagHelper
                 TagConstruct.ConstructClass(output, TextAreaClassName);
                 TagConstruct.ConstructGeneric(output, HtmlConstants.Rows, Rows);
 
-                output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output, Text));
+                output.Content.SetHtmlContent(TagConstruct.ConstructSetHtml(output, Text).Trim());
             }
         }
     }

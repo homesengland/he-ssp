@@ -2,6 +2,7 @@ using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.WWW.Controllers.Consts;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Common.WWW.Controllers;
@@ -11,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
-[Route("user-organisation")]
+[Route(UserOrganisationAccountEndpoints.Controller)]
 [AuthorizeWithCompletedProfile]
 public class UserOrganisationController : Controller
 {
@@ -22,7 +23,7 @@ public class UserOrganisationController : Controller
         _mediator = mediator;
     }
 
-    [HttpGet("")]
+    [HttpGet(UserOrganisationAccountEndpoints.DashboardSuffix)]
     public async Task<IActionResult> Index()
     {
         var userOrganisationResult = await _mediator.Send(new GetUserOrganisationInformationQuery());

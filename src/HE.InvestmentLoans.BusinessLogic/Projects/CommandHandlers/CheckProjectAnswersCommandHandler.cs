@@ -51,6 +51,11 @@ public class CheckProjectAnswersCommandHandler : IRequestHandler<CheckProjectAns
                 project.Publish(new LoanApplicationSectionHasBeenCompletedAgainEvent(request.LoanApplicationId));
                 await _loanApplicationRepository.DispatchEvents(project, cancellationToken);
             }
+            else
+            {
+                project.Publish(new LoanApplicationChangeToDraftStatusEvent(request.LoanApplicationId));
+                await _loanApplicationRepository.DispatchEvents(project, cancellationToken);
+            }
         }
         catch (DomainValidationException domainValidationException)
         {

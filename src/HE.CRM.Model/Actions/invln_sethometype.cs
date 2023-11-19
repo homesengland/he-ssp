@@ -76,10 +76,30 @@ namespace DataverseModel
 	public partial class invln_sethometypeResponse : Microsoft.Xrm.Sdk.OrganizationResponse
 	{
 		
+		public static class Fields
+		{
+			public const string invln_hometypeid = "invln_hometypeid";
+		}
+		
 		public const string ActionLogicalName = "invln_sethometype";
 		
 		public invln_sethometypeResponse()
 		{
+		}
+		
+		public string invln_hometypeid
+		{
+			get
+			{
+				if (this.Results.Contains("invln_hometypeid"))
+				{
+					return ((string)(this.Results["invln_hometypeid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
 		}
 	}
 }

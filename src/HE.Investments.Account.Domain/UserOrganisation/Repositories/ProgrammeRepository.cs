@@ -53,7 +53,7 @@ public class ProgrammeRepository : IProgrammeRepository
 
         return loanApplications.Select(a => new UserApplication(
                 a.loanApplicationId,
-                a.name,
+                a.ApplicationName,
                 ApplicationStatusMapper.MapToPortalStatus(a.loanApplicationExternalStatus)))
             .ToList();
     }

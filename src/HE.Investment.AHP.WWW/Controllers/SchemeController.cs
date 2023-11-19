@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Workflows;
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.InvestmentLoans.Common.Routing;
+using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
@@ -13,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
-[Authorize]
+[AuthorizeWithCompletedProfile]
 [Route("application/{applicationId}/scheme")]
 public class SchemeController : WorkflowController<SchemeWorkflowState>
 {
@@ -42,15 +43,14 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("funding")]
     public async Task<IActionResult> Funding([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
         if (scheme == null)
         {
-            return View("Funding", CreateModel(applicationId, application.Name, null));
+            return View("Funding", CreateModel(applicationId));
         }
 
-        return View("Funding", CreateModel(applicationId, application.Name, scheme));
+        return View("Funding", CreateModel(applicationId, scheme.ApplicationName, scheme));
     }
 
     [WorkflowState(SchemeWorkflowState.Funding)]
@@ -69,10 +69,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("affordability")]
     public async Task<IActionResult> Affordability([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
-        return View("Affordability", CreateModel(applicationId, application.Name, scheme));
+        return View("Affordability", CreateModel(applicationId, scheme.ApplicationName, scheme));
     }
 
     [WorkflowState(SchemeWorkflowState.Affordability)]
@@ -91,10 +90,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("sales-risk")]
     public async Task<IActionResult> SalesRisk([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
-        return View("SalesRisk", CreateModel(applicationId, application.Name, scheme));
+        return View("SalesRisk", CreateModel(applicationId, scheme.ApplicationName, scheme));
     }
 
     [WorkflowState(SchemeWorkflowState.SalesRisk)]
@@ -113,10 +111,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("housing-needs")]
     public async Task<IActionResult> HousingNeeds([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
-        return View("HousingNeeds", CreateModel(applicationId, application.Name, scheme));
+        return View("HousingNeeds", CreateModel(applicationId, scheme.ApplicationName, scheme));
     }
 
     [WorkflowState(SchemeWorkflowState.HousingNeeds)]
@@ -135,10 +132,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("stakeholder-discussions")]
     public async Task<IActionResult> StakeholderDiscussions([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
-        return View("StakeholderDiscussions", CreateModel(applicationId, application.Name, scheme));
+        return View("StakeholderDiscussions", CreateModel(applicationId, scheme.ApplicationName, scheme));
     }
 
     [WorkflowState(SchemeWorkflowState.StakeholderDiscussions)]
@@ -158,7 +154,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return await Task.FromResult(new SchemeWorkflow(currentState));
     }
 
-    private SchemeViewModel CreateModel(string applicationId, string applicationName, Scheme scheme)
+    private SchemeViewModel CreateModel(string applicationId, string applicationName = null, Scheme scheme = null)
     {
         return new SchemeViewModel(
             applicationId,

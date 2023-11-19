@@ -4,6 +4,6 @@ using MediatR;
 
 namespace HE.InvestmentLoans.BusinessLogic.LoanApplication.QueryHandlers;
 
-public record GetLoanApplicationQuery(LoanApplicationId Id) : IRequest<GetLoanApplicationQueryResponse>;
+public record GetLoanApplicationQuery(LoanApplicationId Id, bool LoadFiles = false) : IRequest<GetLoanApplicationQueryResponse>;
 
 public record GetLoanApplicationQueryResponse(LoanApplicationViewModel LoanApplication);

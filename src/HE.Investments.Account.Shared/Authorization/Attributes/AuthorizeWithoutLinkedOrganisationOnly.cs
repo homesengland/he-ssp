@@ -16,7 +16,7 @@ public class AuthorizeWithoutLinkedOrganisationOnly : AuthorizeAttribute, IAsync
 
         if (accountUserContext.IsLogged is false)
         {
-            context.Result = accountRoutes.NotLoggedUser();
+            context.Result = accountRoutes.LandingPageForNotLoggedUser();
         }
 
         if (await accountUserContext.IsLinkedWithOrganisation() is false)

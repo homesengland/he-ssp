@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
@@ -14,9 +15,11 @@ public static class DomainModule
 {
     public static void AddDomainModule(this IServiceCollection services)
     {
-        services.AddAccountSharedModule();
+        services.AddAccountSharedModule(true);
         services.AddScoped<IDateTimeProvider, DateTimeProvider>();
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
+
+        services.AddScoped<IApplicationCrmContext, ApplicationCrmContext>();
 
         AddHomeTypes(services);
         AddFinancialDetails(services);
@@ -44,6 +47,6 @@ public static class DomainModule
 
     private static void AddScheme(IServiceCollection services)
     {
-        services.AddSingleton<ISchemeRepository, SchemeRepository>();
+        services.AddScoped<ISchemeRepository, SchemeRepository>();
     }
 }

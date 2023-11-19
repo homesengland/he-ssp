@@ -4,13 +4,21 @@
 # https://aka.ms/yaml
 
 trigger:
+  batch: true
   branches:
     include:
-    - main
-    - feature*/*
+      - main
   paths:
     exclude:
-    - src/HE.DocumentService/*
+      - src/HE.DocumentService/*
+
+pr:
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - src/HE.DocumentService/*
 
 pool: "vmss-ado-chs-nonprod-001"
 

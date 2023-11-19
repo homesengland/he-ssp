@@ -12,7 +12,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? housingTypeForOlderPeople { get; set; }
         public int? housingTypeForVulnerable { get; set; }
         public int? clientGroup { get; set; }
-        public List<int?> designPrinciples { get; set; }
+        public List<int> designPrinciples { get; set; }
         public string applicationId { get; set; }
     }
 }

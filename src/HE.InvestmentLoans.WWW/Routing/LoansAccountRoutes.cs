@@ -23,7 +23,7 @@ public class LoansAccountRoutes : IAccountRoutes
             null);
     }
 
-    public IActionResult NotLoggedUser()
+    public IActionResult LandingPageForNotLoggedUser()
     {
         return new RedirectToActionResult(
             nameof(GuidanceController.WhatTheHomeBuildingFundIs),
