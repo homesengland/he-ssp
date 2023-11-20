@@ -20,6 +20,14 @@ namespace HE.CRM.Common.DtoMapping
                 housingTypeForVulnerable = homeType.invln_typeofhousingfordisabledvulnerablepeople?.Value,
                 clientGroup = homeType.invln_clientgroup?.Value,
                 designPrinciples = new List<int>(),
+                localComissioningBodies = homeType.invln_localcommissioningbodiesconsulted,
+                shortStayAccommodation = homeType.invln_homesusedforshortstay,
+                revenueFunding = homeType.invln_revenuefunding?.Value,
+                moveOnArrangementsForNoRevenueFunding = homeType.invln_moveonarrangementsfornorevenuefunding,
+                fundingSources = new List<int>(),
+                moveOnArrangementsForRevenueFunding = homeType.invln_Moveonarrangementsforrevenuefunding,
+                exitPlan = homeType.invln_supportedhousingexitplan,
+                typologyLocationAndDesign = homeType.invln_typologylocationanddesing,
             };
             if (homeType.Id != null)
             {
@@ -29,6 +37,14 @@ namespace HE.CRM.Common.DtoMapping
             if (homeType.invln_application?.Id != null)
             {
                 homeTypeDto.applicationId = homeType.invln_application.Id.ToString();
+            }
+
+            if (homeType.invln_revenuefundingsources != null && homeType.invln_revenuefundingsources.Any())
+            {
+                foreach (var revenueFundingSource in homeType.invln_revenuefundingsources)
+                {
+                    homeTypeDto.fundingSources.Add(revenueFundingSource.Value);
+                }
             }
 
             if (homeType.invln_happiprinciples != null && homeType.invln_happiprinciples.Any())
@@ -52,6 +68,14 @@ namespace HE.CRM.Common.DtoMapping
                 invln_typeofhousingfordisabledvulnerablepeople = MapNullableIntToOptionSetValue(homeTypeDto.housingTypeForVulnerable),
                 invln_clientgroup = MapNullableIntToOptionSetValue(homeTypeDto.clientGroup),
                 invln_happiprinciples = new OptionSetValueCollection(),
+                invln_localcommissioningbodiesconsulted = homeTypeDto.localComissioningBodies,
+                invln_homesusedforshortstay = homeTypeDto.shortStayAccommodation,
+                invln_revenuefunding = MapNullableIntToOptionSetValue(homeTypeDto.revenueFunding),
+                invln_moveonarrangementsfornorevenuefunding = homeTypeDto.moveOnArrangementsForNoRevenueFunding,
+                invln_revenuefundingsources = new OptionSetValueCollection(),
+                invln_Moveonarrangementsforrevenuefunding = homeTypeDto.moveOnArrangementsForRevenueFunding,
+                invln_supportedhousingexitplan = homeTypeDto.exitPlan,
+                invln_typologylocationanddesing = homeTypeDto.typologyLocationAndDesign,
             };
             if (homeTypeDto.id != null)
             {
@@ -62,6 +86,15 @@ namespace HE.CRM.Common.DtoMapping
             {
                 homeType.invln_application = new EntityReference(invln_scheme.EntityLogicalName, applicationGuid);
             }
+
+            if (homeTypeDto.fundingSources != null && homeTypeDto.fundingSources.Any())
+            {
+                foreach (var fundingSource in homeTypeDto.fundingSources)
+                {
+                    homeType.invln_revenuefundingsources.Add(new OptionSetValue(fundingSource));
+                }
+            }
+
             if (homeTypeDto.designPrinciples != null && homeTypeDto.designPrinciples.Any())
             {
                 foreach (var principle in homeTypeDto.designPrinciples)

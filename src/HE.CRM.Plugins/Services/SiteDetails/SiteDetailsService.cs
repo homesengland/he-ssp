@@ -131,7 +131,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                     invln_localauthority localAuthority = null;
                     if (retrievedSiteDetail.invln_Region != null)
                     {
-                        localAuthority = _localAuthorityRepository.GetById(retrievedSiteDetail.invln_Region.Id);
+                        localAuthority = _localAuthorityRepository.GetById(retrievedSiteDetail.invln_LocalAuthority.Id);
                     }
                     var siteDetailsDto = SiteDetailsDtoMapper.MapSiteDetailsToDto(retrievedSiteDetail, localAuthority);
                     var relatedLoan = _loanApplicationRepository.GetLoanApplicationRelatedToSiteDetails(siteDetailsGuid);

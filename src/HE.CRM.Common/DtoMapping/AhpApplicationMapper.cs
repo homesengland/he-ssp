@@ -38,7 +38,8 @@ namespace HE.CRM.Common.DtoMapping
                 invln_currentlandvalue = MapNullableDecimalToMoney(applicationDto.currentLandValue),
                 invln_expectedoncosts = MapNullableDecimalToMoney(applicationDto.expectedOnCosts),
                 invln_expectedonworks = MapNullableDecimalToMoney(applicationDto.expectedOnWorks),
-
+                invln_expectedacquisitioncost = MapNullableDecimalToMoney(applicationDto.expectedAcquisitionCost),
+                invln_actualacquisitioncost = MapNullableDecimalToMoney(applicationDto.actualAcquisitionCost),
             };
             if (applicationDto.id != null && Guid.TryParse(applicationDto.id, out var applicationId))
             {
@@ -85,6 +86,8 @@ namespace HE.CRM.Common.DtoMapping
                 currentLandValue = application.invln_currentlandvalue?.Value,
                 expectedOnCosts = application.invln_expectedoncosts?.Value,
                 expectedOnWorks = application.invln_expectedonworks?.Value,
+                expectedAcquisitionCost = application.invln_expectedacquisitioncost?.Value,
+                actualAcquisitionCost = application.invln_actualacquisitioncost?.Value,
             };
             if (application.Id != null)
             {
