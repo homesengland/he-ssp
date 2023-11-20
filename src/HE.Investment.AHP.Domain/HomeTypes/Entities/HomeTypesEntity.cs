@@ -1,16 +1,18 @@
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 public class HomeTypesEntity
 {
     private readonly IList<HomeTypeEntity> _homeTypes;
+
+    private readonly IList<HomeTypeEntity> _toRemove = new List<HomeTypeEntity>();
 
     private readonly ApplicationBasicInfo _application;
 
@@ -20,7 +22,11 @@ public class HomeTypesEntity
         _homeTypes = homeTypes.ToList();
     }
 
+    public ApplicationId ApplicationId => _application.Id;
+
     public IEnumerable<IHomeTypeEntity> HomeTypes => _homeTypes;
+
+    public IEnumerable<IHomeTypeEntity> ToRemove => _toRemove;
 
     public IHomeTypeEntity GetOrCreateNewHomeType(HomeTypeId? homeTypeId = null)
     {
@@ -29,19 +35,26 @@ public class HomeTypesEntity
             return GetEntityById(homeTypeId!);
         }
 
-        // TODO: remove creating segments when integration with CRM is introduced
-        var homeType = new HomeTypeEntity(
-            _application,
-            segments: new IHomeTypeSegmentEntity[]
-            {
-                new HomeInformationSegmentEntity(),
-                new DisabledPeopleHomeTypeDetailsSegmentEntity(),
-                new OlderPeopleHomeTypeDetailsSegmentEntity(),
-                new DesignPlansSegmentEntity(_application),
-            });
+        var homeType = new HomeTypeEntity(_application);
         _homeTypes.Add(homeType);
 
         return homeType;
+    }
+
+    public void Remove(HomeTypeId homeTypeId)
+    {
+        var homeType = GetEntityById(homeTypeId);
+        if (homeType.IsUsedInDeliveryPhase)
+        {
+            throw new DomainValidationException(
+                new OperationResult().AddValidationErrors(new List<ErrorItem>
+                {
+                    new(nameof(HomeTypeEntity), "Home Type cannot be removed because it is used in Delivery Phase"),
+                }));
+        }
+
+        _toRemove.Add(homeType);
+        _homeTypes.Remove(homeType);
     }
 
     public void ChangeName(IHomeTypeEntity homeTypeEntity, string? name)

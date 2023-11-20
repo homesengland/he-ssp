@@ -18,7 +18,13 @@ public class EventDispatcher : IEventDispatcher
 
         foreach (var domainEvent in domainEventsToPublish)
         {
-            await _mediator.Publish(domainEvent, cancellationToken);
+            await Publish(domainEvent, cancellationToken);
         }
+    }
+
+    public async Task Publish<TEvent>(TEvent domainEvent, CancellationToken cancellationToken)
+        where TEvent : DomainEvent
+    {
+        await _mediator.Publish(domainEvent, cancellationToken);
     }
 }

@@ -1,25 +1,39 @@
-using System.Collections.Concurrent;
+using HE.Investment.AHP.Contract.HomeTypes.Events;
 using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investment.AHP.Domain.HomeTypes.Crm;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.Investments.Common.Infrastructure.Events;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Repositories;
 
 public class HomeTypeRepository : IHomeTypeRepository
 {
-    private static readonly IDictionary<string, IList<HomeTypeEntity>> HomeTypes = new ConcurrentDictionary<string, IList<HomeTypeEntity>>();
-
     private readonly IApplicationRepository _applicationRepository;
 
     private readonly IDesignFileService _designFileService;
 
-    public HomeTypeRepository(IApplicationRepository applicationRepository, IDesignFileService designFileService)
+    private readonly IHomeTypeCrmContext _homeTypeCrmContext;
+
+    private readonly IHomeTypeCrmMapper _homeTypeCrmMapper;
+
+    private readonly IEventDispatcher _eventDispatcher;
+
+    public HomeTypeRepository(
+        IApplicationRepository applicationRepository,
+        IDesignFileService designFileService,
+        IHomeTypeCrmContext homeTypeCrmContext,
+        IHomeTypeCrmMapper homeTypeCrmMapper,
+        IEventDispatcher eventDispatcher)
     {
         _applicationRepository = applicationRepository;
         _designFileService = designFileService;
+        _homeTypeCrmContext = homeTypeCrmContext;
+        _homeTypeCrmMapper = homeTypeCrmMapper;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<HomeTypesEntity> GetByApplicationId(
@@ -28,43 +42,43 @@ public class HomeTypeRepository : IHomeTypeRepository
         CancellationToken cancellationToken)
     {
         var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, cancellationToken);
-        if (!HomeTypes.TryGetValue(applicationId.Value, out var homeTypes))
-        {
-            return new HomeTypesEntity(application, Enumerable.Empty<HomeTypeEntity>());
-        }
+        var homeTypes = await _homeTypeCrmContext.GetAll(applicationId.Value, _homeTypeCrmMapper.GetCrmFields(segments), cancellationToken);
 
-        return new HomeTypesEntity(application, homeTypes);
+        return new HomeTypesEntity(application, homeTypes.Select(x => _homeTypeCrmMapper.MapToDomain(application, x, segments)));
     }
 
-    public Task<IHomeTypeEntity> GetById(
+    public async Task<IHomeTypeEntity> GetById(
         ApplicationId applicationId,
         HomeTypeId homeTypeId,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken)
     {
-        var homeType = Get(applicationId.Value, homeTypeId);
+        var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, cancellationToken);
+        var homeType = await _homeTypeCrmContext.GetById(applicationId.Value, homeTypeId.Value, _homeTypeCrmMapper.GetCrmFields(segments), cancellationToken);
         if (homeType != null)
         {
-            return Task.FromResult<IHomeTypeEntity>(homeType);
+            return _homeTypeCrmMapper.MapToDomain(application, homeType, segments);
         }
 
         throw new NotFoundException(nameof(HomeTypeEntity), homeTypeId);
     }
 
     public async Task<IHomeTypeEntity> Save(
-        ApplicationId applicationId,
         IHomeTypeEntity homeType,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken)
     {
         var entity = (HomeTypeEntity)homeType;
+        var homeTypeId = await _homeTypeCrmContext.Save(
+            _homeTypeCrmMapper.MapToDto(entity, segments),
+            _homeTypeCrmMapper.SaveCrmFields(entity, segments),
+            cancellationToken);
+
         if (entity.IsNew)
         {
-            entity.Id = new HomeTypeId(Guid.NewGuid().ToString("D"));
+            entity.Id = new HomeTypeId(homeTypeId);
+            await _eventDispatcher.Publish(new HomeTypeHasBeenCreatedEvent(entity.Name?.Value), cancellationToken);
         }
-
-        // TODO: update fields in CRM depending on SegmentTypes
-        Save(applicationId.Value, entity);
 
         if (segments.Contains(HomeTypeSegmentType.DesignPlans))
         {
@@ -74,36 +88,11 @@ public class HomeTypeRepository : IHomeTypeRepository
         return homeType;
     }
 
-    private HomeTypeEntity? Get(string applicationId, HomeTypeId homeTypeId)
+    public async Task Save(HomeTypesEntity homeTypes, CancellationToken cancellationToken)
     {
-        if (HomeTypes.TryGetValue(applicationId, out var homeTypes))
+        foreach (var homeTypeToRemove in homeTypes.ToRemove)
         {
-            var homeType = homeTypes.FirstOrDefault(x => x.Id == homeTypeId);
-
-            // TODO: this is temporary change while entities are stored in memory
-            // remove DiscardFileChanges function after integration with CRM
-            homeType?.DesignPlans.DiscardFileChanges();
-            return homeType;
-        }
-
-        return null;
-    }
-
-    private void Save(string applicationId, HomeTypeEntity entity)
-    {
-        if (HomeTypes.TryGetValue(applicationId, out var homeTypes))
-        {
-            var existingHomeType = homeTypes.FirstOrDefault(x => x.Id == entity.Id);
-            if (existingHomeType != null)
-            {
-                homeTypes.Remove(existingHomeType);
-            }
-
-            homeTypes.Add(entity);
-        }
-        else
-        {
-            HomeTypes.Add(applicationId, new List<HomeTypeEntity> { entity });
+            await _homeTypeCrmContext.Remove(homeTypes.ApplicationId.Value, homeTypeToRemove.Id!.Value, cancellationToken);
         }
     }
 }

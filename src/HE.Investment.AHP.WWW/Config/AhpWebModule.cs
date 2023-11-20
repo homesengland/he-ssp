@@ -1,7 +1,10 @@
 using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
+using HE.Investment.AHP.WWW.Notifications;
 using HE.InvestmentLoans.Common.Infrastructure;
 using HE.InvestmentLoans.Common.Models.App;
+using HE.Investments.Common.Config;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Organisation.Config;
 
@@ -18,6 +21,8 @@ public static class AhpWebModule
         AddConfiguration(service, configuration);
         service.AddHttpUserContext();
         service.AddDomainModule();
+        service.AddEventInfrastructure();
+        service.AddNotifications(typeof(HomeTypeHasBeenCreatedDisplayNotificationFactory).Assembly);
     }
 
     private static void AddConfiguration(IServiceCollection services, IConfiguration configuration)

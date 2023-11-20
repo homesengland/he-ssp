@@ -18,8 +18,9 @@ public interface IHomeTypeRepository
         CancellationToken cancellationToken);
 
     Task<IHomeTypeEntity> Save(
-        ApplicationId applicationId,
         IHomeTypeEntity homeType,
         IReadOnlyCollection<HomeTypeSegmentType> segments,
         CancellationToken cancellationToken);
+
+    Task Save(HomeTypesEntity homeTypes, CancellationToken cancellationToken);
 }

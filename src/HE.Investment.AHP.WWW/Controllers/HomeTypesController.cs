@@ -77,6 +77,20 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return View("RemoveHomeTypeConfirmation", new RemoveHomeTypeModel(application.Name, homeTypeDetails.Name));
     }
 
+    [WorkflowState(HomeTypesWorkflowState.RemoveHomeType)]
+    [HttpPost("{homeTypeId}/Remove")]
+    public async Task<IActionResult> Remove([FromRoute] string applicationId, string homeTypeId, RemoveHomeTypeModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new RemoveHomeTypeCommand(applicationId, homeTypeId), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("RemoveHomeTypeConfirmation", model);
+        }
+
+        return RedirectToAction("List", new { applicationId });
+    }
+
     [WorkflowState(HomeTypesWorkflowState.NewHomeTypeDetails)]
     [HttpGet("HomeTypeDetails")]
     public async Task<IActionResult> NewHomeTypeDetails([FromRoute] string applicationId, CancellationToken cancellationToken)
