@@ -19773,6 +19773,42 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_moveonarrangementsfornorevenuefunding")]
+		public string invln_moveonarrangementsfornorevenuefunding
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_moveonarrangementsfornorevenuefunding");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_moveonarrangementsfornorevenuefunding");
+				this.SetAttributeValue("invln_moveonarrangementsfornorevenuefunding", value);
+				this.OnPropertyChanged("invln_moveonarrangementsfornorevenuefunding");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_moveonarrangementsforrevenuefunding")]
+		public string invln_Moveonarrangementsforrevenuefunding
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_moveonarrangementsforrevenuefunding");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Moveonarrangementsforrevenuefunding");
+				this.SetAttributeValue("invln_moveonarrangementsforrevenuefunding", value);
+				this.OnPropertyChanged("invln_Moveonarrangementsforrevenuefunding");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_moveonarrangementsforshortstayhomes")]
 		public string invln_moveonarrangementsforshortstayhomes
 		{
@@ -20115,6 +20151,24 @@ namespace HE.Investments.Common.CRM.Model
 					this.SetAttributeValue("invln_typeofolderpeopleshousing", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
 				}
 				this.OnPropertyChanged("invln_typeofolderpeopleshousing");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_typologylocationanddesing")]
+		public string invln_typologylocationanddesing
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_typologylocationanddesing");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_typologylocationanddesing");
+				this.SetAttributeValue("invln_typologylocationanddesing", value);
+				this.OnPropertyChanged("invln_typologylocationanddesing");
 			}
 		}
 		
