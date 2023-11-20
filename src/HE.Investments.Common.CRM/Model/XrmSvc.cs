@@ -22743,6 +22743,66 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedoncosts")]
+		public Microsoft.Xrm.Sdk.Money invln_expectedoncosts
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedoncosts");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_expectedoncosts");
+				this.SetAttributeValue("invln_expectedoncosts", value);
+				this.OnPropertyChanged("invln_expectedoncosts");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Expected on Costs in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedoncosts_base")]
+		public Microsoft.Xrm.Sdk.Money invln_expectedoncosts_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedoncosts_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedonworks")]
+		public Microsoft.Xrm.Sdk.Money invln_expectedonworks
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedonworks");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_expectedonworks");
+				this.SetAttributeValue("invln_expectedonworks", value);
+				this.OnPropertyChanged("invln_expectedonworks");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Expected on Works in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedonworks_base")]
+		public Microsoft.Xrm.Sdk.Money invln_expectedonworks_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedonworks_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_financialdetailssectioncompletionstatus")]
 		public System.Nullable<HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset> invln_financialdetailssectioncompletionstatus
 		{
@@ -23604,6 +23664,48 @@ namespace HE.Investments.Common.CRM.Model
 					this.SetAttributeValue("invln_tenure", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
 				}
 				this.OnPropertyChanged("invln_Tenure");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_testcalculatedone")]
+		public System.Nullable<decimal> invln_testcalculatedone
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_testcalculatedone");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_testcalculatedthree")]
+		public System.Nullable<decimal> invln_testcalculatedthree
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_testcalculatedthree");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_testcalculatedtwo")]
+		public System.Nullable<decimal> invln_Testcalculatedtwo
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_testcalculatedtwo");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_Testcalculatedtwo");
+				this.SetAttributeValue("invln_testcalculatedtwo", value);
+				this.OnPropertyChanged("invln_Testcalculatedtwo");
 			}
 		}
 		
@@ -27483,6 +27585,21 @@ namespace HE.Investments.Common.CRM.Model
 		
 		public invln_sethometypeResponse()
 		{
+		}
+		
+		public string invln_hometypeid
+		{
+			get
+			{
+				if (this.Results.Contains("invln_hometypeid"))
+				{
+					return ((string)(this.Results["invln_hometypeid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
 		}
 	}
 	
