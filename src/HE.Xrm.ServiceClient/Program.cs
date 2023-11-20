@@ -56,7 +56,7 @@ namespace HE.Xrm.ServiceClientExample
             var fieldsToUpdate = $"{nameof(invln_HomeType.invln_hometypename).ToLower()},{nameof(invln_HomeType.invln_typeofhousing).ToLower()}";
             var home = new HomeTypeDto()
             {
-                id = "50dcef7e-4f85-ee11-8179-0022480041cf",
+                id = "84d1e48a-9b87-ee11-be36-002248004a06",
                 numberOfHomes = 222,
                 applicationId = "a5b507b3-c27f-ee11-8179-002248004268",
                 homeTypeName = "test wwwwwwwW",
@@ -71,8 +71,18 @@ namespace HE.Xrm.ServiceClientExample
             {
                 invln_hometype = serialized,
                 invln_fieldstoset = "invln_hometypename, invln_typeofhousing",
+                invln_organisationid = "e07c44ca-9657-ee11-be6f-002248c65419",
+                invln_userid = "itests|24b9d8b8-9723-49a1-80d6-2d10918e1ba5",
+                invln_applicationid = "0e49b28a-757d-ee11-8179-002248004a06",
             };
-            var test = (invln_sethometypeResponse)serviceClient.Execute(req2);
+            var req3 = new invln_deletehometypeRequest()
+            {
+                invln_applicationid = "0e49b28a-757d-ee11-8179-002248004a06",
+                invln_hometypeid = "84d1e48a-9b87-ee11-be36-002248004a06",
+                invln_organisationid = "e07c44ca-9657-ee11-be6f-002248c65419",
+                invln_userid = "itests|24b9d8b8-9723-49a1-80d6-2d10918e1ba5",
+            };
+            serviceClient.Execute(req3);
             Console.WriteLine("A web service connection was not established.");
         }
 

@@ -51,7 +51,7 @@ namespace HE.CRM.Common.DtoMapping
             }
             if (localAuthority != null)
             {
-                siteDetailToReturn.invln_Region = new EntityReference(localAuthority.LogicalName, localAuthority.Id);
+                siteDetailToReturn.invln_LocalAuthority = new EntityReference(localAuthority.LogicalName, localAuthority.Id);
             }
             return siteDetailToReturn;
         }

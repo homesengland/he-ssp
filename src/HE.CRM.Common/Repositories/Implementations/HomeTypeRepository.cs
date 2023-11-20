@@ -17,20 +17,21 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
-        public bool CheckIfGivenHomeTypeIsAssignedToGivenUser(Guid homeTypeId, string userId)
+        public bool CheckIfGivenHomeTypeIsAssignedToGivenUserAndOrganisationAndApplication(Guid homeTypeId, string userId, Guid organisationId, Guid applicationId)
         {
             using (DataverseContext ctx = new DataverseContext(service))
             {
                 return (from ht in ctx.invln_HomeTypeSet
                         join app in ctx.invln_schemeSet on ht.invln_application.Id equals app.invln_schemeId
                         join cnt in ctx.ContactSet on app.invln_contactid.Id equals cnt.ContactId
-                        where ht.invln_HomeTypeId == homeTypeId && cnt.invln_externalid == userId
+                        where ht.invln_HomeTypeId == homeTypeId && cnt.invln_externalid == userId && app.invln_organisationid.Id == organisationId
+                        && app.invln_schemeId == applicationId
                         select ht).ToList().Any();
 
             }
         }
 
-        public invln_HomeType GetHomeTypeByIdAndApplicationId(string homeTypeId, string applicationId, string attributes = null)
+        public invln_HomeType GetHomeTypeForUserAndOrganisationByIdAndApplicationId(string homeTypeId, string applicationId, string userId, string organisationId, string attributes = null)
         {
             var fetchXml = @"<fetch>
                   <entity name=""invln_hometype"">"
@@ -39,19 +40,44 @@ namespace HE.CRM.Common.Repositories.Implementations
                       <condition attribute=""invln_hometypeid"" operator=""eq"" value=""" + homeTypeId + @""" />
                       <condition attribute=""invln_application"" operator=""eq"" value=""" + applicationId + @""" />
                     </filter>
+                    <link-entity name=""invln_scheme"" from=""invln_schemeid"" to=""invln_application"">
+                             <filter>
+                            <condition attribute=""invln_organisationid"" operator=""eq"" value=""" + organisationId + @""" />
+                          </filter>
+                          <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">
+                            <filter>
+                              <condition attribute=""invln_externalid"" operator=""eq"" value=""" + userId + @""" />
+                            </filter>
+                          </link-entity>
+                        </link-entity>
                   </entity>
                 </fetch>";
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));
             return result.Entities.Select(x => x.ToEntity<invln_HomeType>()).AsEnumerable().FirstOrDefault();
         }
 
-        public List<invln_HomeType> GetHomeTypesRelatedToApplication(Guid applicationId)
+        public List<invln_HomeType> GetHomeTypesForUserAndOrganisationRelatedToApplication(string applicationId, string userId, string organisationId, string attributes = null)
         {
-            using (var ctx = new OrganizationServiceContext(service))
-            {
-                return ctx.CreateQuery<invln_HomeType>()
-                     .Where(x => x.invln_application.Id == applicationId).ToList();
-            }
+            var fetchXml = @"<fetch>
+                  <entity name=""invln_hometype"">"
+                    + attributes +
+                    @"<filter>
+                      <condition attribute=""invln_application"" operator=""eq"" value=""" + applicationId + @""" />
+                    </filter>
+                    <link-entity name=""invln_scheme"" from=""invln_schemeid"" to=""invln_application"">
+                          <filter>
+                            <condition attribute=""invln_organisationid"" operator=""eq"" value=""" + organisationId + @""" />
+                          </filter>
+                          <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">
+                            <filter>
+                              <condition attribute=""invln_externalid"" operator=""eq"" value=""" + userId + @""" />
+                            </filter>
+                          </link-entity>
+                        </link-entity>
+                  </entity>
+                </fetch>";
+            EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));
+            return result.Entities.Select(x => x.ToEntity<invln_HomeType>()).ToList();
         }
     }
 }

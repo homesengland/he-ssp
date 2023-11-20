@@ -14,40 +14,45 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
     public class HomeTypeService : CrmService, IHomeTypeService
     {
         private readonly IHomeTypeRepository _homeTypeRepository;
+        private readonly IAhpApplicationRepository _ahpApplicationRepository;
         public HomeTypeService(CrmServiceArgs args) : base(args)
         {
             _homeTypeRepository = CrmRepositoriesFactory.Get<IHomeTypeRepository>();
+            _ahpApplicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
         }
 
-        public void DeleteHomeType(string homeTypeId, string userId)
+        public void DeleteHomeType(string homeTypeId, string userId, string organisationId, string applicationId)
         {
-            if (Guid.TryParse(homeTypeId, out var homeTypeGuid))
+            if (Guid.TryParse(homeTypeId, out var homeTypeGuid) && Guid.TryParse(organisationId, out var organisationGuid) &&
+                Guid.TryParse(applicationId, out var applicationGuid))
             {
-                if (_homeTypeRepository.CheckIfGivenHomeTypeIsAssignedToGivenUser(homeTypeGuid, userId))
+                if (_homeTypeRepository.CheckIfGivenHomeTypeIsAssignedToGivenUserAndOrganisationAndApplication(homeTypeGuid, userId, organisationGuid, applicationGuid))
                 {
                     _homeTypeRepository.Delete(new invln_HomeType() { Id = homeTypeGuid });
                 }
             }
         }
 
-        public List<HomeTypeDto> GetApplicaitonHomeTypes(string applicationId)
+        public List<HomeTypeDto> GetApplicaitonHomeTypes(string applicationId, string userId, string organisationId, string fieldsToRetrieve = null)
         {
             var listOfHomeTypesDto = new List<HomeTypeDto>();
-            if (Guid.TryParse(applicationId, out var applicationGuid))
+            string attributes = null;
+            if (!string.IsNullOrEmpty(fieldsToRetrieve))
             {
-                var homeTypes = _homeTypeRepository.GetHomeTypesRelatedToApplication(applicationGuid);
-                if (homeTypes.Any())
+                attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
+            }
+            var homeTypes = _homeTypeRepository.GetHomeTypesForUserAndOrganisationRelatedToApplication(applicationId, userId, organisationId, attributes);
+            if (homeTypes.Any())
+            {
+                foreach (var homeType in homeTypes)
                 {
-                    foreach (var homeType in homeTypes)
-                    {
-                        listOfHomeTypesDto.Add(HomeTypeMapper.MapRegularEntityToDto(homeType));
-                    }
+                    listOfHomeTypesDto.Add(HomeTypeMapper.MapRegularEntityToDto(homeType));
                 }
             }
             return listOfHomeTypesDto;
         }
 
-        public HomeTypeDto GetHomeType(string homeTypeId, string applicationId, string fieldsToRetrieve = null)
+        public HomeTypeDto GetHomeType(string homeTypeId, string applicationId, string userId, string organisationId, string fieldsToRetrieve = null)
         {
             HomeTypeDto homeTypeDto = null;
             string attributes = null;
@@ -55,7 +60,7 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             {
                 attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
             }
-            var homeType = _homeTypeRepository.GetHomeTypeByIdAndApplicationId(homeTypeId, applicationId, attributes);
+            var homeType = _homeTypeRepository.GetHomeTypeForUserAndOrganisationByIdAndApplicationId(homeTypeId, applicationId, userId, organisationId, attributes);
             if (homeType != null)
             {
                 homeTypeDto = HomeTypeMapper.MapRegularEntityToDto(homeType);
@@ -63,39 +68,45 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             return homeTypeDto;
         }
 
-        public Guid SetHomeType(string homeType, string fieldsToSet = null)
+        public Guid SetHomeType(string homeType, string userId, string organisationId, string applicationId, string fieldsToSet = null)
         {
-            var homeTypeDto = JsonSerializer.Deserialize<HomeTypeDto>(homeType);
-            var homeTypeMapped = HomeTypeMapper.MapDtoToRegularEntity(homeTypeDto);
-            if (string.IsNullOrEmpty(homeTypeDto.id))
+            if (Guid.TryParse(applicationId, out var applicationGuid) && Guid.TryParse(organisationId, out var organisationGuid))
             {
-                return _homeTypeRepository.Create(homeTypeMapped);
-            }
-            else
-            {
-                invln_HomeType homeTypeToUpdateOrCreate;
-                if (!string.IsNullOrEmpty(fieldsToSet))
+                var homeTypeDto = JsonSerializer.Deserialize<HomeTypeDto>(homeType);
+                var homeTypeMapped = HomeTypeMapper.MapDtoToRegularEntity(homeTypeDto, applicationId);
+                if (string.IsNullOrEmpty(homeTypeDto.id) &&
+                    _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisationAndContract(applicationGuid, organisationGuid, userId))
                 {
-                    var fields = fieldsToSet.Split(',');
-                    homeTypeToUpdateOrCreate = new invln_HomeType();
-                    foreach (var field in fields)
+                    return _homeTypeRepository.Create(homeTypeMapped);
+                }
+                else if (Guid.TryParse(homeTypeDto.id, out var homeTypeGuid) &&
+                    _homeTypeRepository.CheckIfGivenHomeTypeIsAssignedToGivenUserAndOrganisationAndApplication(homeTypeGuid, userId, organisationGuid, applicationGuid))
+                {
+                    invln_HomeType homeTypeToUpdateOrCreate;
+                    if (!string.IsNullOrEmpty(fieldsToSet))
                     {
-                        TracingService.Trace($"field name {field}");
-                        if (homeTypeMapped.Contains(field))
+                        var fields = fieldsToSet.Split(',');
+                        homeTypeToUpdateOrCreate = new invln_HomeType();
+                        foreach (var field in fields)
                         {
-                            TracingService.Trace($"contains");
-                            homeTypeToUpdateOrCreate[field] = homeTypeMapped[field];
+                            TracingService.Trace($"field name {field}");
+                            if (homeTypeMapped.Contains(field))
+                            {
+                                TracingService.Trace($"contains");
+                                homeTypeToUpdateOrCreate[field] = homeTypeMapped[field];
+                            }
                         }
                     }
+                    else
+                    {
+                        homeTypeToUpdateOrCreate = homeTypeMapped;
+                    }
+                    homeTypeToUpdateOrCreate.Id = homeTypeGuid;
+                    _homeTypeRepository.Update(homeTypeToUpdateOrCreate);
+                    return homeTypeToUpdateOrCreate.Id;
                 }
-                else
-                {
-                    homeTypeToUpdateOrCreate = homeTypeMapped;
-                }
-                homeTypeToUpdateOrCreate.Id = new Guid(homeTypeDto.id);
-                _homeTypeRepository.Update(homeTypeToUpdateOrCreate);
-                return homeTypeToUpdateOrCreate.Id;
             }
+            return Guid.Empty;
         }
 
         private string GenerateFetchXmlAttributes(string fieldsToRetrieve)

@@ -72,11 +72,11 @@ namespace DataverseModel
 			public const string invln_Haveaplanningreferencenumber = "invln_haveaplanningreferencenumber";
 			public const string invln_HowMuch = "invln_howmuch";
 			public const string invln_howmuch_Base = "invln_howmuch_base";
-			public const string invln_invln_sitedetails_Region_invln_localautho = "invln_invln_sitedetails_Region_invln_localautho";
 			public const string invln_Landregistrytitlenumber = "invln_landregistrytitlenumber";
 			public const string invln_Loanapplication = "invln_loanapplication";
 			public const string invln_LoanapplicationName = "invln_loanapplicationname";
-			public const string invln_localauthority = "invln_localauthority";
+			public const string invln_LocalAuthority = "invln_localauthority";
+			public const string invln_LocalAuthorityName = "invln_localauthorityname";
 			public const string invln_MSPresent = "invln_mspresent";
 			public const string invln_Name = "invln_name";
 			public const string invln_Nameofgrantfund = "invln_nameofgrantfund";
@@ -91,12 +91,12 @@ namespace DataverseModel
 			public const string invln_Publicsectorfunding = "invln_publicsectorfunding";
 			public const string invln_Reason = "invln_reason";
 			public const string invln_Region = "invln_region";
-			public const string invln_RegionName = "invln_regionname";
 			public const string invln_Sitecoordinates = "invln_sitecoordinates";
 			public const string invln_Sitecost = "invln_sitecost";
 			public const string invln_sitecost_Base = "invln_sitecost_base";
 			public const string invln_sitedetails_invln_govnotifyemails = "invln_sitedetails_invln_govnotifyemails";
 			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
+			public const string invln_sitedetails_LocalAuthority_invln_localaut = "invln_sitedetails_LocalAuthority_invln_localaut";
 			public const string invln_sitedetails_systemuser = "invln_sitedetails_systemuser";
 			public const string invln_SiteDetailsId = "invln_sitedetailsid";
 			public const string Id = "invln_sitedetailsid";
@@ -512,19 +512,19 @@ namespace DataverseModel
 		}
 		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthority")]
-		public string invln_localauthority
+		public Microsoft.Xrm.Sdk.EntityReference invln_LocalAuthority
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<string>("invln_localauthority");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_localauthority");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_localauthority");
+				this.OnPropertyChanging("invln_LocalAuthority");
 				this.SetAttributeValue("invln_localauthority", value);
-				this.OnPropertyChanged("invln_localauthority");
+				this.OnPropertyChanged("invln_LocalAuthority");
 			}
 		}
 		
@@ -750,12 +750,12 @@ namespace DataverseModel
 		}
 		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_region")]
-		public Microsoft.Xrm.Sdk.EntityReference invln_Region
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Region
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_region");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_region");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
@@ -1335,27 +1335,6 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// N:1 invln_invln_sitedetails_Region_invln_localautho
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_region")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_sitedetails_Region_invln_localautho")]
-		public DataverseModel.invln_localauthority invln_invln_sitedetails_Region_invln_localautho
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.invln_localauthority>("invln_invln_sitedetails_Region_invln_localautho", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_invln_sitedetails_Region_invln_localautho");
-				this.SetRelatedEntity<DataverseModel.invln_localauthority>("invln_invln_sitedetails_Region_invln_localautho", null, value);
-				this.OnPropertyChanged("invln_invln_sitedetails_Region_invln_localautho");
-			}
-		}
-		
-		/// <summary>
 		/// N:1 invln_sitedetails_Loanapplication
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_loanapplication")]
@@ -1373,6 +1352,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_sitedetails_Loanapplication");
 				this.SetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_sitedetails_Loanapplication", null, value);
 				this.OnPropertyChanged("invln_sitedetails_Loanapplication");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_sitedetails_LocalAuthority_invln_localaut
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthority")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_LocalAuthority_invln_localaut")]
+		public DataverseModel.invln_localauthority invln_sitedetails_LocalAuthority_invln_localaut
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_localauthority>("invln_sitedetails_LocalAuthority_invln_localaut", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetails_LocalAuthority_invln_localaut");
+				this.SetRelatedEntity<DataverseModel.invln_localauthority>("invln_sitedetails_LocalAuthority_invln_localaut", null, value);
+				this.OnPropertyChanged("invln_sitedetails_LocalAuthority_invln_localaut");
 			}
 		}
 		

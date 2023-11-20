@@ -11,19 +11,21 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
 
         private string homeTypeId => ExecutionData.GetInputParameter<string>(invln_deletehometypeRequest.Fields.invln_hometypeid);
         private string userId => ExecutionData.GetInputParameter<string>(invln_deletehometypeRequest.Fields.invln_userid);
+        private string organisationId => ExecutionData.GetInputParameter<string>(invln_deletehometypeRequest.Fields.invln_organisationid);
+        private string applicationId => ExecutionData.GetInputParameter<string>(invln_deletehometypeRequest.Fields.invln_applicationid);
 
         #endregion
 
         #region Base Methods Overrides
         public override bool CanWork()
         {
-            return homeTypeId != null && userId != null;
+            return homeTypeId != null && userId != null && organisationId != null && applicationId != null;
         }
 
         public override void DoWork()
         {
             TracingService.Trace("method");
-            CrmServicesFactory.Get<IHomeTypeService>().DeleteHomeType(homeTypeId, userId);
+            CrmServicesFactory.Get<IHomeTypeService>().DeleteHomeType(homeTypeId, userId, organisationId, applicationId);
         }
     }
 

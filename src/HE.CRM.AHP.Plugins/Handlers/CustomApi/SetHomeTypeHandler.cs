@@ -10,6 +10,9 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
         #region Fields
 
         private string homeType => ExecutionData.GetInputParameter<string>(invln_sethometypeRequest.Fields.invln_hometype);
+        private string userId => ExecutionData.GetInputParameter<string>(invln_sethometypeRequest.Fields.invln_userid);
+        private string organisationId => ExecutionData.GetInputParameter<string>(invln_sethometypeRequest.Fields.invln_organisationid);
+        private string applicationId => ExecutionData.GetInputParameter<string>(invln_sethometypeRequest.Fields.invln_applicationid);
         private string fieldsToSet => ExecutionData.GetInputParameter<string>(invln_sethometypeRequest.Fields.invln_fieldstoset);
 
         #endregion
@@ -17,13 +20,13 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
         #region Base Methods Overrides
         public override bool CanWork()
         {
-            return homeType != null;
+            return homeType != null && userId != null && organisationId != null && applicationId != null;
         }
 
         public override void DoWork()
         {
             TracingService.Trace("method");
-            var createdRecordGuid = CrmServicesFactory.Get<IHomeTypeService>().SetHomeType(homeType, fieldsToSet);
+            var createdRecordGuid = CrmServicesFactory.Get<IHomeTypeService>().SetHomeType(homeType, userId, organisationId, applicationId, fieldsToSet);
             ExecutionData.SetOutputParameter(invln_sethometypeResponse.Fields.invln_hometypeid, createdRecordGuid.ToString());
         }
 
