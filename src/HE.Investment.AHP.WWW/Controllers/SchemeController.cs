@@ -7,9 +7,9 @@ using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.InvestmentLoans.Common.Routing;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
@@ -137,6 +137,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return View("StakeholderDiscussions", CreateModel(applicationId, scheme.ApplicationName, scheme));
     }
 
+    [DisableRequestSizeLimit]
     [WorkflowState(SchemeWorkflowState.StakeholderDiscussions)]
     [HttpPost("stakeholder-discussions")]
     public async Task<IActionResult> StakeholderDiscussions(SchemeViewModel model, CancellationToken cancellationToken)
@@ -165,7 +166,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             scheme?.SalesRisk,
             scheme?.TypeAndTenureJustification,
             scheme?.SchemeAndProposalJustification,
-            scheme?.StakeholderDiscussionsReport);
+            scheme?.StakeholderDiscussionsReport,
+            new List<FileModel>(),
+            new List<IFormFile>());
     }
 
     private async Task<IActionResult> ExecuteCommand(

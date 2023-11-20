@@ -1,4 +1,6 @@
 using HE.Investment.AHP.WWW.Models.Scheme;
+using HE.Investments.Common.WWW.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;
 
@@ -14,5 +16,7 @@ public static class TestSchemeViewModel
             "some sales risk",
             "type and tenure justification",
             "scheme and proposal justification",
-            "stakeholders accepted everything");
+            "stakeholders accepted everything",
+            new List<FileModel>(),
+            new List<IFormFile>());
 }

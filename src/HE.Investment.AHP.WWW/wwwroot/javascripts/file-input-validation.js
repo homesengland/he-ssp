@@ -4,19 +4,21 @@
 // For more details about usage look at HomeTypes/DesignPlans.cshtml file.
 //
 // Requirements:
-// - file input with Id 'File'
+// - file input '.govuk-file-upload[type="file"]'
 // - file input should be placed inside 'div' with Id 'file-input-form-group'
 // - file input error message is placed in 'span' with Id 'File-error'
 // - on the top of the page there is placed '_ErrorSummaryPartial.cshtml' partial view
-// - page has submit button with Id 'continue-button'
+// - page has submit button '.govuk-button[type="submit"]'
 // - maximum size of the file is in value of element with Id 'MaxFileSizeInMegabytes'
 (() => {
-  const uploadControlId = 'File';
+  const fileInputSelector = `.govuk-file-upload[type="file"]`;
   const fileInputFormGroupId = 'file-input-form-group';
   const validationSummaryId = 'validation-summary';
   const validationSummaryListId = 'validation-error-list';
-  const continueButtonId = 'continue-button';
+  const continueButtonSelector = `.govuk-button[type="submit"]`;
   const maxFileSizeId = 'MaxFileSizeInMegabytes';
+
+  const uploadControlId = document.querySelectorAll(fileInputSelector)[0].id;
 
   const inputFieldError = (message) => `<span id="${uploadControlId}-error" class="govuk-error-message field-validation-error" data-valmsg-for="${uploadControlId}" data-valmsg-replace="true"><span class="govuk-visually-hidden">Error:</span>${message}</span>`;
   const emptyErrorSummary = () =>
@@ -35,8 +37,8 @@
   const fileInputChanged = () => {
     const maxFileSizeInMegabytes = document.getElementById(maxFileSizeId).value;
     const maxFileSize = maxFileSizeInMegabytes * 1024 * 1024;
-    const uploadControl = document.getElementById(uploadControlId);
-    const continueButton = document.getElementById(continueButtonId);
+    const uploadControl = document.querySelectorAll(fileInputSelector)[0];
+    const continueButton = document.querySelectorAll(continueButtonSelector)[0];
 
     continueButton.disabled = false;
     clearInputFieldError();
@@ -56,7 +58,7 @@
   const addInputFieldError = (message) => {
     const formGroup = document.getElementById(fileInputFormGroupId);
 
-    document.getElementById(uploadControlId).insertAdjacentHTML('beforebegin', inputFieldError(message));
+    document.querySelectorAll(fileInputSelector)[0].insertAdjacentHTML('beforebegin', inputFieldError(message));
     formGroup.classList.add('govuk-form-group--error');
   }
 
@@ -105,7 +107,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function() {
-    const fileInput = document.getElementById(uploadControlId);
+    const fileInput = document.querySelectorAll(fileInputSelector)[0];
     if (fileInput !== null) {
      fileInput.addEventListener("change", fileInputChanged);
     }
