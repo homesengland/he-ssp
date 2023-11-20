@@ -26,7 +26,17 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
             IsPurchasePriceKnown = financialDetails.IsPurchasePriceKnown,
             PurchasePrice = financialDetails.PurchasePrice?.Value.ToString(CultureInfo.InvariantCulture),
             IsSchemaOnPublicLand = financialDetails.LandOwnership?.Value,
-            LandValue = financialDetails.LandValue?.Value.ToString(CultureInfo.InvariantCulture),
+            LandValue = financialDetails.LandValue?.Value,
+            ExpectedWorkCost = financialDetails.ExpectedWorksCosts?.Value,
+            ExpectedOnCost = financialDetails.ExpectedOnCosts?.Value,
+            RentalIncomeContribution = financialDetails.RentalIncomeBorrowing?.Value,
+            SubsidyFromSaleOnThisScheme = financialDetails.SalesOfHomesOnThisScheme?.Value,
+            SubsidyFromSaleOnOtherSchemes = financialDetails.SalesOfHomesOnOtherSchemes?.Value,
+            OwnResourcesContribution = financialDetails.OwnResources?.Value,
+            RecycledCapitalGarntFundContribution = financialDetails.RCGFContribution?.Value,
+            OtherCapitalContributions = financialDetails.OtherCapitalSources?.Value,
+            SharedOwnershipSalesContribution = financialDetails.SharedOwnershipSales?.Value,
+            TransferValueOfHomes = financialDetails.HomesTransferValue?.Value,
         };
     }
 }

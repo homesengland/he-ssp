@@ -3,18 +3,19 @@ using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using Newtonsoft.Json.Linq;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-public class LandValue : ValueObject
+public class SharedOwnershipSales : ValueObject
 {
-    public LandValue(string value)
+    public SharedOwnershipSales(string value)
     {
         var operationResult = OperationResult.New();
 
         var intValue = NumericValidator
-            .For(value, FinancialDetailsValidationFieldNames.LandValue, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.InvalidLandValue)
-            .IsBetween(1, 999999999, FinancialDetailsValidationErrors.InvalidLandValue);
+            .For(value, FinancialDetailsValidationFieldNames.SharedOwnershipSales, operationResult)
+            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
+            .IsBetween(1, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError);
 
         operationResult.CheckErrors();
 

@@ -22,19 +22,12 @@ public class ProvideOtherApplicationCostsCommandHandler : FinancialDetailsComman
             {
                 var aggregatedResults = OperationResult.New();
 
-                if (request.ExpectedWorksCosts.IsProvided())
-                {
-                    var expectedWorksCost = aggregatedResults.CatchResult(() => new ExpectedWorksCosts(request.ExpectedWorksCosts));
-                    financialDetails.ProvideExpectedWorksCosts(expectedWorksCost);
-                }
-
-                if (request.ExpectedOnCosts.IsProvided())
-                {
-                    var expectedOnCosts = aggregatedResults.CatchResult(() => new ExpectedOnCosts(request.ExpectedOnCosts));
-                    financialDetails.ProvideExpectedOnCosts(expectedOnCosts);
-                }
+                var expectedWorksCost = request.ExpectedWorksCosts.IsProvided() ? aggregatedResults.CatchResult(() => new ExpectedWorksCosts(request.ExpectedWorksCosts)) : null;
+                var expectedOnCosts = request.ExpectedOnCosts.IsProvided() ? aggregatedResults.CatchResult(() => new ExpectedOnCosts(request.ExpectedOnCosts)) : null;
 
                 aggregatedResults.CheckErrors();
+
+                financialDetails.ProvideExpectedCosts(expectedWorksCost, expectedOnCosts);
             },
             request.ApplicationId,
             cancellationToken);

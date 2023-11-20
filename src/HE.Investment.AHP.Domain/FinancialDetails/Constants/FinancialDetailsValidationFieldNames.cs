@@ -12,4 +12,20 @@ public static class FinancialDetailsValidationFieldNames
     public const string ExpectedWorksCosts = nameof(ExpectedWorksCosts);
 
     public const string ExpectedOnCosts = nameof(ExpectedOnCosts);
+
+    public const string RentalIncomeBorrowing = nameof(RentalIncomeBorrowing);
+
+    public const string SalesOfHomesOnThisScheme = nameof(SalesOfHomesOnThisScheme);
+
+    public const string SalesOfHomesOnOtherSchemes = nameof(SalesOfHomesOnOtherSchemes);
+
+    public const string OwnResources = nameof(OwnResources);
+
+    public const string RCGFContribution = nameof(RCGFContribution);
+
+    public const string OtherCapitalSources = nameof(OtherCapitalSources);
+
+    public const string SharedOwnershipSales = nameof(SharedOwnershipSales);
+
+    public const string HomesTransferValue = nameof(HomesTransferValue);
 }

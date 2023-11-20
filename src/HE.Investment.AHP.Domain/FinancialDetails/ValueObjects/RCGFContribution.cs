@@ -5,16 +5,16 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-public class LandValue : ValueObject
+public class RCGFContribution : ValueObject
 {
-    public LandValue(string value)
+    public RCGFContribution(string value)
     {
         var operationResult = OperationResult.New();
 
         var intValue = NumericValidator
-            .For(value, FinancialDetailsValidationFieldNames.LandValue, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.InvalidLandValue)
-            .IsBetween(1, 999999999, FinancialDetailsValidationErrors.InvalidLandValue);
+            .For(value, FinancialDetailsValidationFieldNames.RCGFContribution, operationResult)
+            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
+            .IsBetween(1, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError);
 
         operationResult.CheckErrors();
 

@@ -1,0 +1,154 @@
+@using HE.Investment.AHP.Domain.FinancialDetails.Constants;
+@using HE.Investment.AHP.WWW.Models.FinancialDetails;
+@using HE.Investment.AHP.Domain.FinancialDetails;
+@using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
+@using HE.Investments.Common.Gds;
+@using HE.Investments.Common.WWW.Extensions;
+@model FinancialDetailsContributionsModel;
+@{
+    ViewData["Title"] = FinancialDetailsPageTitles.ExpectedContributions;
+
+    var (rentalIncomeInvalid, rentalIncomeErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.RentalIncomeBorrowing);
+    var (salesOfHomesOnThisSchemeInvalid, salesOfHomesOnThisSchemeErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.SalesOfHomesOnThisScheme);
+    var (salesOfHomesOnOtherSchemeInvalid, salesOfHomesOnOtherSchemeErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.SalesOfHomesOnOtherSchemes);
+    var (ownResourcesInvalid, ownResourcesErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.OwnResources);
+    var (RCGFInvalid, RCGFErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.RCGFContribution);
+    var (otherCapitalSourcesInvalid, otherCapitalSourcesErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.OtherCapitalSources);
+    var (sharedOwnersipSalesInvalid, sharedOwnershipSalesErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.SharedOwnershipSales);
+    var (transferValueInvalid, transferValueErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.HomesTransferValue);
+
+    var errorsList = new string[] {
+        rentalIncomeErrors,
+        salesOfHomesOnThisSchemeErrors,
+        salesOfHomesOnOtherSchemeErrors,
+        ownResourcesErrors,
+        RCGFErrors,
+        otherCapitalSourcesErrors,
+        sharedOwnershipSalesErrors,
+        transferValueErrors
+    };
+}
+<div id="mainContainer" class="govuk-grid-three-quarters" role="main">
+    <gds-div-grid-column-full>
+        <form asp-controller="FinancialDetails" asp-action="Contributions" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
+            <vc:financial-details-form-header title="@FinancialDetailsPageTitles.ExpectedContributions"
+                                              current-page="@FinancialDetailsWorkflowState.ExpectedContributions"
+                                              application-id="@Model.ApplicationId"
+                                              caption="@Model.ApplicationName - Financial details" />
+
+            <div class="govuk-caption-m govuk-!-margin-bottom-6">
+                For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
+                You can add any grants you receive from other public bodies in the next section.
+            </div>
+
+            <gds-field-set>
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you will contribute from borrowing against rental income for this scheme</gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="RentalIncomeBorrowing"
+                           class="govuk-input--width-7"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="RentalIncomeBorrowing"
+                           name="RentalIncomeBorrowing"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.RentalIncomeBorrowing />
+
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you will contribute from cross subsidy from the sale of open market homes on this scheme</gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="SalesOfHomesOnThisScheme"
+                           class="govuk-input--width-7"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="SaleOfHomesOnThisScheme"
+                           name="SalesOfHomesOnThisScheme"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.SaleOfHomesOnThisScheme />
+
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you will contribute from cross subsidy from the sale of open market homes on other schemes</gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="SalesOfHomesOnOtherSchemes"
+                           class="govuk-input--width-7"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="SaleOfHomesOnOtherSchemes"
+                           name="SalesOfHomesOnOtherSchemes"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.SaleOfHomesOnOtherSchemes />
+
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you intend to contribute from your own resources</gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="OwnResources"
+                           class="govuk-input--width-7"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="OwnResources"
+                           name="OwnResources"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.OwnResources />
+
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you intend to contribute from Recycled Capital Grand Fund</gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="RCGFContribution"
+                           class="govuk-input--width-7"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="RCGFContribution"
+                           name="RCGFContribution"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.RCGFContribution />
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you will contribute from other capital sources (not including grants from other public bodies)</gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="OtherCapitalSources"
+                           class="govuk-input--width-7"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="OtherCapitalSources"
+                           name="OtherCapitalSources"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.OtherCapitalSources />
+                @if (Model.IsSharedOwnership)
+                {
+                    <gds-legend class="govuk-!-margin-bottom-0">
+                        <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you will contribute from initial sales receipts from shared ownership homes</gds-h2>
+                    </gds-legend>
+                    <gds-input asp-hiddenlabeltext="InitialSalesOfSharedHomes"
+                               class="govuk-input--width-7"
+                               asp-labelclass="govuk-label"
+                               govuk-formgroup-asp-for="InitialSalesOfSharedHomes"
+                               name="InitailSaleOfSharedHomes"
+                               asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                               value=@Model.InitialSalesOfSharedHomes />
+                }
+                @if (Model.IsUnregisteredBodyAccount)
+                {
+                    <gds-legend class="govuk-!-margin-bottom-0">
+                        <gds-h2 class="govuk-!-margin-bottom-0">Enter the transfer value of the homes on this scheme</gds-h2>
+                    </gds-legend>
+                    <gds-input asp-hiddenlabeltext="HomeTransferValue"
+                               class="govuk-input--width-7"
+                               asp-labelclass="govuk-label"
+                               govuk-formgroup-asp-for="HomesTransferValue"
+                               name="HomeTransferValue"
+                               asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                               value=@Model.HomesTransferValue />
+                }
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <span class="govuk-heading-m">Total expected contributions to the scheme</span>
+                    </div>
+                    <div class="govuk-grid-column-one-third">
+                        <span class="govuk-heading-m">£@Model.TotalContributions</span>
+                    </div>
+                </div>
+
+                <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                    Save and continue
+                </button>
+
+                @Html.HiddenFor(c => c.ApplicationId)
+                @Html.HiddenFor(c => c.ApplicationName)
+            </gds-field-set>
+            <vc:return-to-application-link application-id="@Model.ApplicationId" />
+        </form>
+    </gds-div-grid-column-full>
+</div>

@@ -1,3 +1,5 @@
+using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails;
 using HE.Investment.AHP.Domain.FinancialDetails.Commands;
@@ -79,7 +81,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsLandValueModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.LandValue,
+            financialDetails.LandValue.ToString(),
             financialDetails.IsSchemaOnPublicLand));
     }
 
@@ -107,8 +109,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsOtherApplicationCostsModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.ExpectedWorkCost,
-            financialDetails.ExpectedOnCost));
+            financialDetails.ExpectedWorkCost.ToString(),
+            financialDetails.ExpectedOnCost.ToString()));
     }
 
     [HttpPost("other-application-costs")]
@@ -122,6 +124,60 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             ModelState.AddValidationErrors(result);
 
             return View("OtherApplicationCosts", model);
+        }
+
+        return await Continue(new { applicationId });
+    }
+
+    [HttpGet("contributions")]
+    [WorkflowState(FinancialDetailsWorkflowState.ExpectedContributions)]
+    public async Task<IActionResult> Contributions(Guid applicationId)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()));
+
+        var isSharedOwnership = application.Tenure
+            is Tenure.SharedOwnership
+            or Tenure.HomeOwnershipLongTermDisabilities
+            or Tenure.OlderPersonsSharedOwnership;
+
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
+        return View(new FinancialDetailsContributionsModel(
+            applicationId,
+            financialDetails.ApplicationName,
+            financialDetails.RentalIncomeContribution.ToString(),
+            financialDetails.SubsidyFromSaleOnThisScheme.ToString(),
+            financialDetails.SubsidyFromSaleOnOtherSchemes.ToString(),
+            financialDetails.OwnResourcesContribution.ToString(),
+            financialDetails.RecycledCapitalGarntFundContribution.ToString(),
+            financialDetails.OtherCapitalContributions.ToString(),
+            financialDetails.SharedOwnershipSalesContribution.ToString(),
+            financialDetails.TransferValueOfHomes.ToString(),
+            isSharedOwnership,
+            true)); // temporarly mocked - unregistered body account type
+    }
+
+    [HttpPost("contributions")]
+    [WorkflowState(FinancialDetailsWorkflowState.ExpectedContributions)]
+    public async Task<IActionResult> Contributions(Guid applicationId, FinancialDetailsContributionsModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new ProvideContributionsCommand(
+            ApplicationId.From(applicationId),
+            model.RentalIncomeBorrowing,
+            model.SaleOfHomesOnThisScheme,
+            model.SaleOfHomesOnOtherSchemes,
+            model.OwnResources,
+            model.RCGFContribution,
+            model.OtherCapitalSources,
+            model.InitialSalesOfSharedHomes,
+            model.HomesTransferValue),
+            cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("Contributions", model);
         }
 
         return await Continue(new { applicationId });

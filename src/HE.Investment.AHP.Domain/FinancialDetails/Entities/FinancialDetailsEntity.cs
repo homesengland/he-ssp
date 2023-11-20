@@ -45,6 +45,22 @@ public class FinancialDetailsEntity
 
     public ExpectedOnCosts? ExpectedOnCosts { get; private set; }
 
+    public RentalIncomeBorrowing? RentalIncomeBorrowing { get; private set; }
+
+    public SalesOfHomesOnThisScheme? SalesOfHomesOnThisScheme { get; private set; }
+
+    public SalesOfHomesOnOtherSchemes? SalesOfHomesOnOtherSchemes { get; private set; }
+
+    public OwnResources? OwnResources { get; private set; }
+
+    public RCGFContribution? RCGFContribution { get; private set; }
+
+    public OtherCapitalSources? OtherCapitalSources { get; private set; }
+
+    public SharedOwnershipSales? SharedOwnershipSales { get; private set; }
+
+    public HomesTransferValue? HomesTransferValue { get; private set; }
+
     public void ProvidePurchasePrice(PurchasePrice price)
     {
         PurchasePrice = price;
@@ -60,13 +76,29 @@ public class FinancialDetailsEntity
         LandValue = landValue;
     }
 
-    public void ProvideExpectedWorksCosts(ExpectedWorksCosts expectedWorksCosts)
+    public void ProvideExpectedCosts(ExpectedWorksCosts? expectedWorksCosts, ExpectedOnCosts? expectedOnCosts)
     {
         ExpectedWorksCosts = expectedWorksCosts;
+        ExpectedOnCosts = expectedOnCosts;
     }
 
-    public void ProvideExpectedOnCosts(ExpectedOnCosts expectedOnCosts)
+    public void ProvideContributions(
+        RentalIncomeBorrowing? rentalIncomeBorrowing,
+        SalesOfHomesOnThisScheme? salesOfHomesOnThisScheme,
+        SalesOfHomesOnOtherSchemes? salesOfHomesOnOtherSchemes,
+        OwnResources? ownResources,
+        RCGFContribution? rCGFContribution,
+        OtherCapitalSources? otherCapitalSources,
+        SharedOwnershipSales? sharedOwnershipSales,
+        HomesTransferValue? homesTransferValue)
     {
-        ExpectedOnCosts = expectedOnCosts;
+        RentalIncomeBorrowing = rentalIncomeBorrowing;
+        SalesOfHomesOnThisScheme = salesOfHomesOnThisScheme;
+        SalesOfHomesOnOtherSchemes = salesOfHomesOnOtherSchemes;
+        OwnResources = ownResources;
+        RCGFContribution = rCGFContribution;
+        OtherCapitalSources = otherCapitalSources;
+        SharedOwnershipSales = sharedOwnershipSales;
+        HomesTransferValue = homesTransferValue;
     }
 }
