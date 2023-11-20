@@ -152,6 +152,7 @@ namespace DataverseModel
 			public const string invln_invln_emailnotification_Regarding_invln_l = "invln_invln_emailnotification_Regarding_invln_l";
 			public const string invln_invln_isp_Loanapplication_invln_loanappli = "invln_invln_isp_Loanapplication_invln_loanappli";
 			public const string invln_invln_loanapplication_invln_contract_Loanapplication = "invln_invln_loanapplication_invln_contract_Loanapplication";
+			public const string invln_invln_vft_Loanapplication_invln_loanappli = "invln_invln_vft_Loanapplication_invln_loanappli";
 			public const string invln_lastchangebyid = "invln_lastchangebyid";
 			public const string invln_lastchangebyidName = "invln_lastchangebyidname";
 			public const string invln_lastmmodificationdate = "invln_lastmmodificationdate";
@@ -1912,6 +1913,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_loanapplication_invln_contract_Loanapplication");
 				this.SetRelatedEntities<DataverseModel.invln_contract>("invln_invln_loanapplication_invln_contract_Loanapplication", null, value);
 				this.OnPropertyChanged("invln_invln_loanapplication_invln_contract_Loanapplication");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_vft_Loanapplication_invln_loanappli
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_vft_Loanapplication_invln_loanappli")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_VfT> invln_invln_vft_Loanapplication_invln_loanappli
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_VfT>("invln_invln_vft_Loanapplication_invln_loanappli", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_vft_Loanapplication_invln_loanappli");
+				this.SetRelatedEntities<DataverseModel.invln_VfT>("invln_invln_vft_Loanapplication_invln_loanappli", null, value);
+				this.OnPropertyChanged("invln_invln_vft_Loanapplication_invln_loanappli");
 			}
 		}
 		

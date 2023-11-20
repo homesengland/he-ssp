@@ -157,6 +157,7 @@ namespace DataverseModel
 			public const string invln_invln_isp_Loanapplication_invln_loanappli = "invln_invln_isp_Loanapplication_invln_loanappli";
 			public const string invln_invln_isp_TMName_contact = "invln_invln_isp_TMName_contact";
 			public const string invln_invln_projectspecificcondition_ISP_invln_ = "invln_invln_projectspecificcondition_ISP_invln_";
+			public const string invln_isp_invln_reviewapproval_ispid = "invln_isp_invln_reviewapproval_ispid";
 			public const string invln_isp_Name_contact = "invln_isp_Name_contact";
 			public const string invln_ISPId = "invln_ispid";
 			public const string Id = "invln_ispid";
@@ -4863,6 +4864,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_projectspecificcondition_ISP_invln_");
 				this.SetRelatedEntities<DataverseModel.invln_ProjectSpecificCondition>("invln_invln_projectspecificcondition_ISP_invln_", null, value);
 				this.OnPropertyChanged("invln_invln_projectspecificcondition_ISP_invln_");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_isp_invln_reviewapproval_ispid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_isp_invln_reviewapproval_ispid")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_reviewapproval> invln_isp_invln_reviewapproval_ispid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_reviewapproval>("invln_isp_invln_reviewapproval_ispid", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_isp_invln_reviewapproval_ispid");
+				this.SetRelatedEntities<DataverseModel.invln_reviewapproval>("invln_isp_invln_reviewapproval_ispid", null, value);
+				this.OnPropertyChanged("invln_isp_invln_reviewapproval_ispid");
 			}
 		}
 		

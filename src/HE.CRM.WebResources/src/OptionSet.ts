@@ -27,3 +27,12 @@ export enum Securities {
   interestShortfall = 858110008,
   other = 858110009,
 }
+
+
+export enum StatusReviewApproval {
+  Pending = 858110000,
+  Reviewed = 858110001,
+  Sent_Back = 858110002,
+  Approved = 858110003,
+  Rejected = 858110004,
+}

@@ -250,6 +250,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_reviewapproval"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_reviewapproval> invln_reviewapprovalSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_reviewapproval>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_scheme"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_scheme> invln_schemeSet
@@ -279,6 +290,17 @@ namespace DataverseModel
 			get
 			{
 				return this.CreateQuery<DataverseModel.invln_StandardCondition>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_VfT"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_VfT> invln_VfTSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_VfT>();
 			}
 		}
 		
