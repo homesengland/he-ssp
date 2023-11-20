@@ -58,12 +58,12 @@ namespace DataverseModel
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_invln_scheme_localauthoritylookup_invln_l = "invln_invln_scheme_localauthoritylookup_invln_l";
-			public const string invln_invln_sitedetails_Region_invln_localautho = "invln_invln_sitedetails_Region_invln_localautho";
 			public const string invln_localauthorityId = "invln_localauthorityid";
 			public const string Id = "invln_localauthorityid";
 			public const string invln_localauthorityname = "invln_localauthorityname";
 			public const string invln_onscode = "invln_onscode";
 			public const string invln_Region = "invln_region";
+			public const string invln_sitedetails_LocalAuthority_invln_localaut = "invln_sitedetails_LocalAuthority_invln_localaut";
 			public const string lk_invln_localauthority_createdby = "lk_invln_localauthority_createdby";
 			public const string lk_invln_localauthority_createdonbehalfby = "lk_invln_localauthority_createdonbehalfby";
 			public const string lk_invln_localauthority_modifiedby = "lk_invln_localauthority_modifiedby";
@@ -540,22 +540,22 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// 1:N invln_invln_sitedetails_Region_invln_localautho
+		/// 1:N invln_sitedetails_LocalAuthority_invln_localaut
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_sitedetails_Region_invln_localautho")]
-		public System.Collections.Generic.IEnumerable<DataverseModel.invln_SiteDetails> invln_invln_sitedetails_Region_invln_localautho
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_LocalAuthority_invln_localaut")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_SiteDetails> invln_sitedetails_LocalAuthority_invln_localaut
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntities<DataverseModel.invln_SiteDetails>("invln_invln_sitedetails_Region_invln_localautho", null);
+				return this.GetRelatedEntities<DataverseModel.invln_SiteDetails>("invln_sitedetails_LocalAuthority_invln_localaut", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_invln_sitedetails_Region_invln_localautho");
-				this.SetRelatedEntities<DataverseModel.invln_SiteDetails>("invln_invln_sitedetails_Region_invln_localautho", null, value);
-				this.OnPropertyChanged("invln_invln_sitedetails_Region_invln_localautho");
+				this.OnPropertyChanging("invln_sitedetails_LocalAuthority_invln_localaut");
+				this.SetRelatedEntities<DataverseModel.invln_SiteDetails>("invln_sitedetails_LocalAuthority_invln_localaut", null, value);
+				this.OnPropertyChanged("invln_sitedetails_LocalAuthority_invln_localaut");
 			}
 		}
 		

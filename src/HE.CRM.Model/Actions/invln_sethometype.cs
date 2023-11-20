@@ -20,11 +20,33 @@ namespace DataverseModel
 		
 		public static class Fields
 		{
+			public const string invln_applicationid = "invln_applicationid";
 			public const string invln_hometype = "invln_hometype";
 			public const string invln_fieldstoset = "invln_fieldstoset";
+			public const string invln_userid = "invln_userid";
+			public const string invln_organisationid = "invln_organisationid";
 		}
 		
 		public const string ActionLogicalName = "invln_sethometype";
+		
+		public string invln_applicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_applicationid"))
+				{
+					return ((string)(this.Parameters["invln_applicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_applicationid"] = value;
+			}
+		}
 		
 		public string invln_hometype
 		{
@@ -64,10 +86,51 @@ namespace DataverseModel
 			}
 		}
 		
+		public string invln_userid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_userid"))
+				{
+					return ((string)(this.Parameters["invln_userid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_userid"] = value;
+			}
+		}
+		
+		public string invln_organisationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationid"))
+				{
+					return ((string)(this.Parameters["invln_organisationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationid"] = value;
+			}
+		}
+		
 		public invln_sethometypeRequest()
 		{
 			this.RequestName = "invln_sethometype";
+			this.invln_applicationid = default(string);
 			this.invln_hometype = default(string);
+			this.invln_userid = default(string);
+			this.invln_organisationid = default(string);
 		}
 	}
 	

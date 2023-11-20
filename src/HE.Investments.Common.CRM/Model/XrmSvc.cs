@@ -24556,17 +24556,17 @@ namespace HE.Investments.Common.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthority")]
-		public string invln_localauthority
+		public Microsoft.Xrm.Sdk.EntityReference invln_LocalAuthority
 		{
 			get
 			{
-				return this.GetAttributeValue<string>("invln_localauthority");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_localauthority");
 			}
 			set
 			{
-				this.OnPropertyChanging("invln_localauthority");
+				this.OnPropertyChanging("invln_LocalAuthority");
 				this.SetAttributeValue("invln_localauthority", value);
-				this.OnPropertyChanged("invln_localauthority");
+				this.OnPropertyChanged("invln_LocalAuthority");
 			}
 		}
 		
@@ -24868,16 +24868,31 @@ namespace HE.Investments.Common.CRM.Model
 		/// 
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_region")]
-		public Microsoft.Xrm.Sdk.EntityReference invln_Region
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_region> invln_Region
 		{
 			get
 			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_region");
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_region");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_region)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_region), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
 			}
 			set
 			{
 				this.OnPropertyChanging("invln_Region");
-				this.SetAttributeValue("invln_region", value);
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_region", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_region", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
 				this.OnPropertyChanged("invln_Region");
 			}
 		}
@@ -27435,10 +27450,69 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		public string invln_fieldstoretrieve
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_fieldstoretrieve"))
+				{
+					return ((string)(this.Parameters["invln_fieldstoretrieve"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_fieldstoretrieve"] = value;
+			}
+		}
+		
+		public string invln_organisationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationid"))
+				{
+					return ((string)(this.Parameters["invln_organisationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationid"] = value;
+			}
+		}
+		
+		public string invln_userid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_userid"))
+				{
+					return ((string)(this.Parameters["invln_userid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_userid"] = value;
+			}
+		}
+		
 		public invln_gettypeofhomeslistRequest()
 		{
 			this.RequestName = "invln_gettypeofhomeslist";
 			this.invln_applicationid = default(string);
+			this.invln_organisationid = default(string);
+			this.invln_userid = default(string);
 		}
 	}
 	
@@ -27532,6 +27606,25 @@ namespace HE.Investments.Common.CRM.Model
 	public partial class invln_sethometypeRequest : Microsoft.Xrm.Sdk.OrganizationRequest
 	{
 		
+		public string invln_applicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_applicationid"))
+				{
+					return ((string)(this.Parameters["invln_applicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_applicationid"] = value;
+			}
+		}
+		
 		public string invln_hometype
 		{
 			get
@@ -27570,10 +27663,51 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		public string invln_userid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_userid"))
+				{
+					return ((string)(this.Parameters["invln_userid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_userid"] = value;
+			}
+		}
+		
+		public string invln_organisationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationid"))
+				{
+					return ((string)(this.Parameters["invln_organisationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationid"] = value;
+			}
+		}
+		
 		public invln_sethometypeRequest()
 		{
 			this.RequestName = "invln_sethometype";
+			this.invln_applicationid = default(string);
 			this.invln_hometype = default(string);
+			this.invln_userid = default(string);
+			this.invln_organisationid = default(string);
 		}
 	}
 	
@@ -27666,11 +27800,51 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		public string invln_userid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_userid"))
+				{
+					return ((string)(this.Parameters["invln_userid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_userid"] = value;
+			}
+		}
+		
+		public string invln_organisationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationid"))
+				{
+					return ((string)(this.Parameters["invln_organisationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationid"] = value;
+			}
+		}
+		
 		public invln_getsinglehometypeRequest()
 		{
 			this.RequestName = "invln_getsinglehometype";
 			this.invln_hometypeid = default(string);
 			this.invln_applicationid = default(string);
+			this.invln_userid = default(string);
+			this.invln_organisationid = default(string);
 		}
 	}
 	
@@ -27744,11 +27918,51 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		public string invln_applicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_applicationid"))
+				{
+					return ((string)(this.Parameters["invln_applicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_applicationid"] = value;
+			}
+		}
+		
+		public string invln_organisationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationid"))
+				{
+					return ((string)(this.Parameters["invln_organisationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationid"] = value;
+			}
+		}
+		
 		public invln_deletehometypeRequest()
 		{
 			this.RequestName = "invln_deletehometype";
 			this.invln_userid = default(string);
 			this.invln_hometypeid = default(string);
+			this.invln_applicationid = default(string);
+			this.invln_organisationid = default(string);
 		}
 	}
 	

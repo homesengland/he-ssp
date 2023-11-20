@@ -41,7 +41,7 @@ namespace HE.CRM.Common.DtoMapping
             return homeTypeDto;
         }
 
-        public static invln_HomeType MapDtoToRegularEntity(HomeTypeDto homeTypeDto)
+        public static invln_HomeType MapDtoToRegularEntity(HomeTypeDto homeTypeDto, string applicationId = null)
         {
             var homeType = new invln_HomeType()
             {
@@ -58,7 +58,7 @@ namespace HE.CRM.Common.DtoMapping
                 homeType.Id = new Guid(homeTypeDto.id);
             }
 
-            if (Guid.TryParse(homeTypeDto.applicationId, out var applicationGuid))
+            if (Guid.TryParse(applicationId ?? homeTypeDto.applicationId, out var applicationGuid))
             {
                 homeType.invln_application = new EntityReference(invln_scheme.EntityLogicalName, applicationGuid);
             }
