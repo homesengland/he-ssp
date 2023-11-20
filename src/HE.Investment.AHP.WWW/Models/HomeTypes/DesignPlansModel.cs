@@ -1,4 +1,4 @@
-using HE.Investment.AHP.WWW.Models.Common;
+using HE.Investments.Common.WWW.Models;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
@@ -7,7 +7,7 @@ public class DesignPlansModel : ProvidedHomeTypeModelBase
     public DesignPlansModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
-        UploadedFiles = new List<UploadedFileModel>();
+        UploadedFiles = new List<FileModel>();
     }
 
     public DesignPlansModel()
@@ -15,7 +15,7 @@ public class DesignPlansModel : ProvidedHomeTypeModelBase
     {
     }
 
-    public IList<UploadedFileModel> UploadedFiles { get; set; }
+    public IList<FileModel> UploadedFiles { get; set; }
 
     public string MoreInformation { get; set; }
 }

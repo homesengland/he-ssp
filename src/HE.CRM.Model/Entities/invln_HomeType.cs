@@ -88,6 +88,8 @@ namespace DataverseModel
 			public const string invln_mmccategory1subcategories = "invln_mmccategory1subcategories";
 			public const string invln_mmccategory2manufacturer = "invln_mmccategory2manufacturer";
 			public const string invln_mmccategory2subcategories = "invln_mmccategory2subcategories";
+			public const string invln_moveonarrangementsfornorevenuefunding = "invln_moveonarrangementsfornorevenuefunding";
+			public const string invln_Moveonarrangementsforrevenuefunding = "invln_moveonarrangementsforrevenuefunding";
 			public const string invln_moveonarrangementsforshortstayhomes = "invln_moveonarrangementsforshortstayhomes";
 			public const string invln_numberofbedrooms = "invln_numberofbedrooms";
 			public const string invln_numberofhomeshometype = "invln_numberofhomeshometype";
@@ -104,6 +106,7 @@ namespace DataverseModel
 			public const string invln_typeofhousing = "invln_typeofhousing";
 			public const string invln_typeofhousingfordisabledvulnerablepeople = "invln_typeofhousingfordisabledvulnerablepeople";
 			public const string invln_typeofolderpeopleshousing = "invln_typeofolderpeopleshousing";
+			public const string invln_typologylocationanddesing = "invln_typologylocationanddesing";
 			public const string invln_wheelchairstandard = "invln_wheelchairstandard";
 			public const string invln_whichndssstandardshavebeenmet = "invln_whichndssstandardshavebeenmet";
 			public const string lk_invln_hometype_createdby = "lk_invln_hometype_createdby";
@@ -744,6 +747,40 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_moveonarrangementsfornorevenuefunding")]
+		public string invln_moveonarrangementsfornorevenuefunding
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_moveonarrangementsfornorevenuefunding");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_moveonarrangementsfornorevenuefunding");
+				this.SetAttributeValue("invln_moveonarrangementsfornorevenuefunding", value);
+				this.OnPropertyChanged("invln_moveonarrangementsfornorevenuefunding");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_moveonarrangementsforrevenuefunding")]
+		public string invln_Moveonarrangementsforrevenuefunding
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_moveonarrangementsforrevenuefunding");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Moveonarrangementsforrevenuefunding");
+				this.SetAttributeValue("invln_moveonarrangementsforrevenuefunding", value);
+				this.OnPropertyChanged("invln_Moveonarrangementsforrevenuefunding");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_moveonarrangementsforshortstayhomes")]
 		public string invln_moveonarrangementsforshortstayhomes
 		{
@@ -1013,6 +1050,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_typeofolderpeopleshousing");
 				this.SetAttributeValue("invln_typeofolderpeopleshousing", value);
 				this.OnPropertyChanged("invln_typeofolderpeopleshousing");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_typologylocationanddesing")]
+		public string invln_typologylocationanddesing
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_typologylocationanddesing");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_typologylocationanddesing");
+				this.SetAttributeValue("invln_typologylocationanddesing", value);
+				this.OnPropertyChanged("invln_typologylocationanddesing");
 			}
 		}
 		

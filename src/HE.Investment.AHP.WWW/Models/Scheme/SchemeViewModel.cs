@@ -1,3 +1,5 @@
+using HE.Investments.Common.WWW.Models;
+
 namespace HE.Investment.AHP.WWW.Models.Scheme;
 
 public record SchemeViewModel(
@@ -9,4 +11,6 @@ public record SchemeViewModel(
     string SalesRisk,
     string TypeAndTenureJustification,
     string SchemeAndProposalJustification,
-    string StakeholderDiscussionsReport);
+    string StakeholderDiscussionsReport,
+    IList<FileModel> UploadedStakeholderDiscussionFiles,
+    IList<IFormFile> NewStakeholderDiscussionFiles);

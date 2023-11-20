@@ -25,6 +25,8 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public decimal? currentLandValue { get; set; }
         public decimal? expectedOnCosts { get; set; }
         public decimal? expectedOnWorks { get; set; }
+        public decimal? actualAcquisitionCost { get; set; }
+        public decimal? expectedAcquisitionCost { get; set; }
 
         //schema
         public decimal? fundingRequested { get; set; }
