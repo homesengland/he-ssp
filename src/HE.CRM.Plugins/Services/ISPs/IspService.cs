@@ -113,10 +113,10 @@ namespace HE.CRM.Plugins.Services.ISPs
         {
             if (preImage.invln_SendforApproval != true && target.invln_SendforApproval == true)
             {
-                var desReviews = _reviewApprovalRepository.GetReviewApprovalsForIsp(invln_reviewerapproverset.DESReview);
+                var desReviews = _reviewApprovalRepository.GetReviewApprovalsForIsp(target.ToEntityReference(), invln_reviewerapproverset.DESReview);
                 var desReviewsNumber = desReviews.Count() > 0 ? (desReviews.Count() + 1).ToString() : "";
 
-                var hofReviews = _reviewApprovalRepository.GetReviewApprovalsForIsp(invln_reviewerapproverset.HoFReview);
+                var hofReviews = _reviewApprovalRepository.GetReviewApprovalsForIsp(target.ToEntityReference(), invln_reviewerapproverset.HoFReview);
                 var hofReviewsNumber = hofReviews.Count() > 0 ? (hofReviews.Count() + 1).ToString() : "";
 
                 var desTeam = _teamRepositoryAdmin.GetTeamByName("DES Team");
