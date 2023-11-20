@@ -1,0 +1,24 @@
+@model (string fieldName, int? maxFileSizeInMb, string description, bool hasFileError, string fileErrorMessage)
+
+<he-div-hint>@Model.description</he-div-hint>
+<div id="file-input-form-group" class="govuk-form-group @(Model.hasFileError ? "govuk-form-group--error" : string.Empty)">
+    <label class="govuk-label" for="@Model.fieldName">
+        Upload a file (JPG, PNG, PDF, DOCX)
+        @if (Model.maxFileSizeInMb.HasValue)
+        {
+            <br/>
+            <span>Maximum file size @Model.maxFileSizeInMb MB</span>
+            @Html.Hidden("MaxFileSizeInMegabytes", Model.maxFileSizeInMb)
+        }
+    </label>
+    @if (Model.hasFileError)
+    {
+        <span id="File-error"
+              class="govuk-error-message field-validation-error"
+              data-valmsg-for="@Model.fieldName"
+              data-valmsg-replace="true">
+            <span class="govuk-visually-hidden">Error:</span>@Model.fileErrorMessage
+        </span>
+    }
+    <input class="govuk-file-upload" id="@Model.fieldName" name="@Model.fieldName" type="file" multiple>
+</div>

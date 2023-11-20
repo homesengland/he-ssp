@@ -1,6 +1,7 @@
 using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.Investments.Common.Tests.WWW.Helpers;
+using HE.Investments.Common.WWW.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -12,7 +13,7 @@ public class DesignPlansTests : HomeTypesTestBase
     private static readonly DesignPlansModel Model = new("My application", "My homes")
     {
         MoreInformation = "Some details about my Design Plans",
-        UploadedFiles = new[] { new UploadedFileModel("file-1", "My File", new DateTime(2022, 10, 11), "Test User", true) },
+        UploadedFiles = new[] { new FileModel("file-1", "My File", new DateTime(2022, 10, 11), "Test User", true, "#") },
     };
 
     [Fact]
