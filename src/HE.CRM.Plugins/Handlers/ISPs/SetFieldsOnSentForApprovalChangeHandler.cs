@@ -10,6 +10,7 @@ namespace HE.CRM.Plugins.Handlers.ISPs
         #region Fields
 
         private invln_ISP target => ExecutionData.Target;
+        private invln_ISP preImage => ExecutionData.PreImage;
 
         #endregion
         #region Base Methods Overrides
@@ -21,6 +22,7 @@ namespace HE.CRM.Plugins.Handlers.ISPs
         public override void DoWork()
         {
             CrmServicesFactory.Get<IIspService>().SetFieldsOnSentForApprovalChange(target);
+            CrmServicesFactory.Get<IIspService>().CreateDesAndHofRecords(preImage, target);
         }
 
         #endregion

@@ -26,7 +26,10 @@ namespace HE.CRM.Plugins.Plugins.ISPs
        "HE.CRM.Plugins.Plugins.Isps.SetFieldsOnSentForApprovalChangePlugin: Update of Isp",
        1,
        IsolationModeEnum.Sandbox,
-       Id = "4b90f53b-ee13-4a50-abff-271ea8c12a92")]
+       Id = "4b90f53b-ee13-4a50-abff-271ea8c12a92",
+       Image1Name = "PreImage",
+       Image1Attributes = "invln_sendforapproval",
+       Image1Type = ImageTypeEnum.PreImage)]
     public class SetFieldsOnSentForApprovalChangePlugin : PluginBase<DataverseContext>, IPlugin
     {
         #region Constructors

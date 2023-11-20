@@ -129,9 +129,11 @@ namespace DataverseModel
 			public const string team_invln_portal = "team_invln_portal";
 			public const string team_invln_portalpermissionlevel = "team_invln_portalpermissionlevel";
 			public const string team_invln_projectspecificcondition = "team_invln_projectspecificcondition";
+			public const string team_invln_reviewapproval = "team_invln_reviewapproval";
 			public const string team_invln_scheme = "team_invln_scheme";
 			public const string team_invln_sitedetails = "team_invln_sitedetails";
 			public const string team_invln_standardcondition = "team_invln_standardcondition";
+			public const string team_invln_vft = "team_invln_vft";
 			public const string team_sharepointdocumentlocation = "team_sharepointdocumentlocation";
 			public const string TeamId = "teamid";
 			public const string Id = "teamid";
@@ -1202,6 +1204,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N team_invln_reviewapproval
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_reviewapproval")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_reviewapproval> team_invln_reviewapproval
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_reviewapproval>("team_invln_reviewapproval", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_reviewapproval");
+				this.SetRelatedEntities<DataverseModel.invln_reviewapproval>("team_invln_reviewapproval", null, value);
+				this.OnPropertyChanged("team_invln_reviewapproval");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N team_invln_scheme
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_scheme")]
@@ -1258,6 +1280,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("team_invln_standardcondition");
 				this.SetRelatedEntities<DataverseModel.invln_StandardCondition>("team_invln_standardcondition", null, value);
 				this.OnPropertyChanged("team_invln_standardcondition");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_vft
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_vft")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_VfT> team_invln_vft
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_VfT>("team_invln_vft", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_vft");
+				this.SetRelatedEntities<DataverseModel.invln_VfT>("team_invln_vft", null, value);
+				this.OnPropertyChanged("team_invln_vft");
 			}
 		}
 		

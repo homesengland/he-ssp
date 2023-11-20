@@ -4,6 +4,7 @@ import { VfT } from './events/VfT'
 import { Precomplete } from './events/Precomplete'
 import { Condition } from './events/Condition'
 import { LoanApplication } from './events/LoanApplication'
+import { ReviewApproval } from './events/ReviewApproval'
 
 export function initialize() {
   console.log('Initialize main library')
@@ -15,3 +16,4 @@ exports.VfT = VfT
 exports.Precomplete = Precomplete
 exports.Condition = Condition
 exports.LoanApplication = LoanApplication
+exports.ReviewApproval = ReviewApproval

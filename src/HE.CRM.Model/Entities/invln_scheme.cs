@@ -133,6 +133,9 @@ namespace DataverseModel
 			public const string invln_Site = "invln_site";
 			public const string invln_SiteName = "invln_sitename";
 			public const string invln_Tenure = "invln_tenure";
+			public const string invln_testcalculatedone = "invln_testcalculatedone";
+			public const string invln_testcalculatedthree = "invln_testcalculatedthree";
+			public const string invln_Testcalculatedtwo = "invln_testcalculatedtwo";
 			public const string invln_Totalgrantsfromotherpublicbodies = "invln_totalgrantsfromotherpublicbodies";
 			public const string invln_totalgrantsfromotherpublicbodies_Base = "invln_totalgrantsfromotherpublicbodies_base";
 			public const string invln_totalhomes = "invln_totalhomes";
@@ -1333,6 +1336,43 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Tenure");
 				this.SetAttributeValue("invln_tenure", value);
 				this.OnPropertyChanged("invln_Tenure");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_testcalculatedone")]
+		public System.Nullable<decimal> invln_testcalculatedone
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_testcalculatedone");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_testcalculatedthree")]
+		public System.Nullable<decimal> invln_testcalculatedthree
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_testcalculatedthree");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_testcalculatedtwo")]
+		public System.Nullable<decimal> invln_Testcalculatedtwo
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_testcalculatedtwo");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_Testcalculatedtwo");
+				this.SetAttributeValue("invln_testcalculatedtwo", value);
+				this.OnPropertyChanged("invln_Testcalculatedtwo");
 			}
 		}
 		

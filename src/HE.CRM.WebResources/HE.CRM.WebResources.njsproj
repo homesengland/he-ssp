@@ -53,6 +53,9 @@
     <TypeScriptCompile Include="src\events\Isp.ts" />
     <TypeScriptCompile Include="src\events\LoanApplication.ts" />
     <TypeScriptCompile Include="src\events\Precomplete.ts" />
+    <TypeScriptCompile Include="src\events\ReviewApproval.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\events\VfT.ts" />
     <TypeScriptCompile Include="src\Main.ts" />
     <TypeScriptCompile Include="src\OptionSet.ts" />
@@ -61,6 +64,9 @@
     <TypeScriptCompile Include="src\services\IspService.ts" />
     <TypeScriptCompile Include="src\services\LoanApplicationService.ts" />
     <TypeScriptCompile Include="src\services\PrecompleteService.ts" />
+    <TypeScriptCompile Include="src\services\ReviewApprovalService.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\services\VfTService.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
