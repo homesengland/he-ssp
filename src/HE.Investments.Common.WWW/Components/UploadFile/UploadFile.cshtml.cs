@@ -3,15 +3,14 @@ using HE.Investments.Common.WWW.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-#pragma warning disable CA1716
 namespace HE.Investments.Common.WWW.Components.UploadFile;
-#pragma warning restore CA1716
 
 public class UploadFile : ViewComponent
 {
-    public IViewComponentResult Invoke(string fieldName, string description, int? maxFileSizeInMb = null)
+    public IViewComponentResult Invoke(string fieldName, string description, bool isMultiple = false, bool isHidden = false, int? maxFileSizeInMb = null, string? title = null)
     {
         var (hasFileError, fileErrorMessage) = ViewData.ModelState.GetErrors(fieldName);
-        return View("UploadFile", (fieldName, maxFileSizeInMb, description, hasFileError, fileErrorMessage));
+        var multiple = isMultiple ? "multiple" : string.Empty;
+        return View("UploadFile", (title, fieldName, maxFileSizeInMb, description, multiple, isHidden, hasFileError, fileErrorMessage));
     }
 }

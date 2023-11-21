@@ -1,3 +1,5 @@
+using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
+
 namespace HE.Investment.AHP.Contract.Scheme;
 
 public record Scheme(
@@ -9,4 +11,5 @@ public record Scheme(
     string? SalesRisk,
     string? TypeAndTenureJustification,
     string? SchemeAndProposalJustification,
-    string? StakeholderDiscussionsReport);
+    string? StakeholderDiscussionsReport,
+    IList<UploadedFile> StakeholderDiscussionsFiles);

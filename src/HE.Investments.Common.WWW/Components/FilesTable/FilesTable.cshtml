@@ -6,6 +6,7 @@
   @if (Model.files.Any())
   {
       <table class="govuk-table">
+          <thead class="govuk-!-display-none"><tr><th>files</th></tr></thead>
           <tbody class="govuk-table__body">
           @for (var i = 0; i < Model.files.Count; i++)
           {
