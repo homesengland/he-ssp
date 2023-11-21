@@ -38,7 +38,7 @@ public abstract class SaveHomeTypeSegmentCommandHandlerBase<TCommand> : HomeType
             return new OperationResult(errors);
         }
 
-        await _homeTypeRepository.Save(applicationId, homeType, SegmentTypes, cancellationToken);
+        await _homeTypeRepository.Save(homeType, SegmentTypes, cancellationToken);
         return OperationResult.Success();
     }
 }

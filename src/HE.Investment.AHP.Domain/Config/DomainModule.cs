@@ -1,6 +1,9 @@
+using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
+using HE.Investment.AHP.Domain.HomeTypes.Crm;
+using HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
@@ -30,6 +33,12 @@ public static class DomainModule
     private static void AddHomeTypes(IServiceCollection services)
     {
         services.AddScoped<IHomeTypeRepository, HomeTypeRepository>();
+        services.AddScoped<IHomeTypeCrmContext, HomeTypeCrmContext>();
+        services.AddSingleton<IHomeTypeCrmMapper, HomeTypeCrmMapper>();
+        services.AddSingleton<IHomeTypeCrmSegmentMapper, HomeInformationCrmSegmentMapper>();
+        services.AddSingleton<IHomeTypeCrmSegmentMapper, DisabledAndVulnerablePeopleCrmSegmentMapper>();
+        services.AddSingleton<IHomeTypeCrmSegmentMapper, OlderPeopleCrmSegmentMapper>();
+        services.AddSingleton<IHomeTypeCrmSegmentMapper, DesignPlansCrmSegmentMapper>();
 
         // TODO: change service do scoped after introducing integration with IHttpDocumentService
         services.AddSingleton<IDesignFileService, DesignFileService>();

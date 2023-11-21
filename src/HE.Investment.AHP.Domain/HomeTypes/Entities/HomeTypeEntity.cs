@@ -3,7 +3,6 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
@@ -14,11 +13,13 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public HomeTypeEntity(
         ApplicationBasicInfo application,
+        HomeTypeId? id = null,
         string? name = null,
         HousingType housingType = HousingType.Undefined,
         params IHomeTypeSegmentEntity[] segments)
     {
         Application = application;
+        Id = id;
         ChangeName(name);
         ChangeHousingType(housingType);
         _segments = segments.ToDictionary(x => GetSegmentType(x.GetType()), x => x);
@@ -41,6 +42,9 @@ public class HomeTypeEntity : IHomeTypeEntity
     public DesignPlansSegmentEntity DesignPlans => GetRequiredSegment<DesignPlansSegmentEntity>();
 
     public bool IsNew => Id.IsNotProvided();
+
+    // TODO: set this value when implementing Delivery Phases
+    public bool IsUsedInDeliveryPhase => false;
 
     public void ChangeName(string? name)
     {
@@ -66,12 +70,17 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public HomeTypeEntity Duplicate(HomeTypeName newName)
     {
-        return new HomeTypeEntity(Application, newName.Value, HousingType, _segments.Select(x => x.Value.Duplicate()).ToArray());
+        return new HomeTypeEntity(Application, null, newName.Value, HousingType, _segments.Select(x => x.Value.Duplicate()).ToArray());
     }
 
     public bool IsCompleted()
     {
         return Name.IsProvided() && _segments.All(x => x.Value.IsCompleted());
+    }
+
+    public bool HasSegment(HomeTypeSegmentType segmentType)
+    {
+        return _segments.ContainsKey(segmentType);
     }
 
     private static HomeTypeSegmentType GetSegmentType(Type segmentType)

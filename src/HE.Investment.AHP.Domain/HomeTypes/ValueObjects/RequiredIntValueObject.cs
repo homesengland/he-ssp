@@ -39,6 +39,23 @@ public abstract class RequiredIntValueObject : ValueObject
         Value = parsedValue;
     }
 
+    protected RequiredIntValueObject(
+        int value,
+        string fieldName,
+        string displayName,
+        int minValue = int.MinValue,
+        int maxValue = int.MaxValue)
+    {
+        if (value < minValue || value > maxValue)
+        {
+            OperationResult.New()
+                .AddValidationError(fieldName, ValidationErrorMessage.MustBeNumber(displayName, minValue, maxValue))
+                .CheckErrors();
+        }
+
+        Value = value;
+    }
+
     public int Value { get; }
 
     public override string ToString()

@@ -8,12 +8,22 @@
 }
 
 <div class="govuk-grid-column-three-quarters">
-    <vc:home-type-form-header title="Remove @Model.HomeTypeName Home type"
-                              current-page="@HomeTypesWorkflowState.RemoveHomeType"
-                              application-id="@applicationId"
-                              home-type-id="@homeTypeId"
-                              caption="@Model.ApplicationName"/>
-    <gds-p>
-        Do you really want to remove this Home Type?
-    </gds-p>
+    <form asp-controller="HomeTypes" asp-action="Remove" asp-method="post" novalidate>
+        <vc:home-type-form-header title="Remove @Model.HomeTypeName Home type"
+                                  current-page="@HomeTypesWorkflowState.RemoveHomeType"
+                                  application-id="@applicationId"
+                                  home-type-id="@homeTypeId"
+                                  caption="@Model.ApplicationName"/>
+        <gds-p>
+            Do you really want to remove this Home Type?
+        </gds-p>
+
+        <button class="govuk-button govuk-button--warning" data-module="govuk-button" name="action" type="submit">
+            Yes
+        </button>
+    </form>
+
+    <a href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "List", applicationId })">
+        <button class="govuk-button govuk-button--secondary">No</button>
+    </a>
 </div>

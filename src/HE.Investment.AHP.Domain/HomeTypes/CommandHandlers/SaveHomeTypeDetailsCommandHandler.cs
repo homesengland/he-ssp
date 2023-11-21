@@ -35,7 +35,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
             return new OperationResult<HomeTypeId?>(validationErrors, null);
         }
 
-        await _repository.Save(applicationId, homeType, HomeTypeSegmentTypes.All, cancellationToken);
+        await _repository.Save(homeType, HomeTypeSegmentTypes.All, cancellationToken);
 
         return new OperationResult<HomeTypeId?>(homeType.Id!);
     }
