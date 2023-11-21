@@ -274,6 +274,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_AutoCreateInvoices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_autoupdatebookingtraveltype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_BasePresenceStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_BgJobStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_BgJobWorkItemType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_BillingMethod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_BillingStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_BillingType.cs" />
@@ -344,6 +346,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_InspectionStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_IntegrationJobStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_IntegrationType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_IntentSources.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_InventoryJournalType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_InventoryTransactionType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\msdyn_InvoiceRunStatus.cs" />
