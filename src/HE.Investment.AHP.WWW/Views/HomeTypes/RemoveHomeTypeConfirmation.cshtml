@@ -13,17 +13,17 @@
                                   current-page="@HomeTypesWorkflowState.RemoveHomeType"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
-                                  caption="@Model.ApplicationName"/>
+                                  caption="@Model.Header"/>
         <gds-p>
-            Do you really want to remove this Home Type?
+            Are you sure you want to remove this Home Type?
         </gds-p>
 
         <button class="govuk-button govuk-button--warning" data-module="govuk-button" name="action" type="submit">
-            Yes
+            Remove Home Type
         </button>
     </form>
 
     <a href="@Url.RouteUrl("section", new { controller = "HomeTypes", action = "List", applicationId })">
-        <button class="govuk-button govuk-button--secondary">No</button>
+        Go back to Home Types
     </a>
 </div>
