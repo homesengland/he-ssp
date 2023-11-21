@@ -28,6 +28,9 @@ namespace HE.CRM.Common.DtoMapping
                 moveOnArrangementsForRevenueFunding = homeType.invln_Moveonarrangementsforrevenuefunding,
                 exitPlan = homeType.invln_supportedhousingexitplan,
                 typologyLocationAndDesign = homeType.invln_typologylocationanddesing,
+                numberOfBedrooms = homeType.invln_numberofbedrooms,
+                maxOccupancy = homeType.invln_maxoccupancy,
+                numberOfStoreys = homeType.invln_numberofstoreys,
             };
             if (homeType.Id != null)
             {
@@ -76,6 +79,9 @@ namespace HE.CRM.Common.DtoMapping
                 invln_Moveonarrangementsforrevenuefunding = homeTypeDto.moveOnArrangementsForRevenueFunding,
                 invln_supportedhousingexitplan = homeTypeDto.exitPlan,
                 invln_typologylocationanddesing = homeTypeDto.typologyLocationAndDesign,
+                invln_numberofbedrooms = homeTypeDto.numberOfBedrooms,
+                invln_maxoccupancy = homeTypeDto.maxOccupancy,
+                invln_numberofstoreys = homeTypeDto.numberOfStoreys,
             };
             if (homeTypeDto.id != null)
             {
