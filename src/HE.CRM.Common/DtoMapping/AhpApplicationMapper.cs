@@ -40,6 +40,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_expectedonworks = MapNullableDecimalToMoney(applicationDto.expectedOnWorks),
                 invln_expectedacquisitioncost = MapNullableDecimalToMoney(applicationDto.expectedAcquisitionCost),
                 invln_actualacquisitioncost = MapNullableDecimalToMoney(applicationDto.actualAcquisitionCost),
+                invln_ownresources = MapNullableDecimalToMoney(applicationDto.ownResources),
             };
             if (applicationDto.id != null && Guid.TryParse(applicationDto.id, out var applicationId))
             {
@@ -88,6 +89,7 @@ namespace HE.CRM.Common.DtoMapping
                 expectedOnWorks = application.invln_expectedonworks?.Value,
                 expectedAcquisitionCost = application.invln_expectedacquisitioncost?.Value,
                 actualAcquisitionCost = application.invln_actualacquisitioncost?.Value,
+                ownResources = application.invln_ownresources?.Value,
             };
             if (application.Id != null)
             {

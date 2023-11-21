@@ -5017,6 +5017,33 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum msdyn_bgjobstatus
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		notstarted = 100000000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		inprogress = 100000001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		succeeded = 100000002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		failed = 100000003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		cancelled = 100000004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		succeededandacknowledged = 100000005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		failedandacknowledged = 100000006,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum msdyn_ocrichobjecttype
 	{
 		
@@ -5686,6 +5713,18 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum msdyn_bgjobworkitemtype
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Workstream = 100000000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Agentstream = 100000001,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum qooi_pricingerrorcode
 	{
 		
@@ -5835,6 +5874,27 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Number_30D = 4,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum msdyn_intentsources
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		PVA = 100000000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		EmailAssist = 100000001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AnswerAssist = 100000002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UR = 100000003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		AgentAssist = 100000004,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -23766,6 +23826,42 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_testrollupfield")]
+		public System.Nullable<decimal> invln_TestRollupfield
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_testrollupfield");
+			}
+		}
+		
+		/// <summary>
+		/// Last Updated time of rollup field Test Rollup field.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_testrollupfield_date")]
+		public System.Nullable<System.DateTime> invln_TestRollupfield_Date
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_testrollupfield_date");
+			}
+		}
+		
+		/// <summary>
+		/// State of rollup field Test Rollup field.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_testrollupfield_state")]
+		public System.Nullable<int> invln_TestRollupfield_State
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_testrollupfield_state");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_totalgrantsfromotherpublicbodies")]
 		public Microsoft.Xrm.Sdk.Money invln_Totalgrantsfromotherpublicbodies
 		{
@@ -24609,18 +24705,18 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthority")]
-		public Microsoft.Xrm.Sdk.EntityReference invln_LocalAuthority
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthorityid")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_LocalAuthorityID
 		{
 			get
 			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_localauthority");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_localauthorityid");
 			}
 			set
 			{
-				this.OnPropertyChanging("invln_LocalAuthority");
-				this.SetAttributeValue("invln_localauthority", value);
-				this.OnPropertyChanged("invln_LocalAuthority");
+				this.OnPropertyChanging("invln_LocalAuthorityID");
+				this.SetAttributeValue("invln_localauthorityid", value);
+				this.OnPropertyChanged("invln_LocalAuthorityID");
 			}
 		}
 		

@@ -22,5 +22,8 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string moveOnArrangementsForRevenueFunding { get; set; }
         public string exitPlan { get; set; }
         public string typologyLocationAndDesign { get; set; }
+        public int? numberOfBedrooms { get; set; }
+        public int? maxOccupancy { get; set; }
+        public int? numberOfStoreys { get; set; }
     }
 }

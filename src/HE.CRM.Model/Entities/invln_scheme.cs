@@ -136,6 +136,9 @@ namespace DataverseModel
 			public const string invln_testcalculatedone = "invln_testcalculatedone";
 			public const string invln_testcalculatedthree = "invln_testcalculatedthree";
 			public const string invln_Testcalculatedtwo = "invln_testcalculatedtwo";
+			public const string invln_TestRollupfield = "invln_testrollupfield";
+			public const string invln_TestRollupfield_Date = "invln_testrollupfield_date";
+			public const string invln_TestRollupfield_State = "invln_testrollupfield_state";
 			public const string invln_Totalgrantsfromotherpublicbodies = "invln_totalgrantsfromotherpublicbodies";
 			public const string invln_totalgrantsfromotherpublicbodies_Base = "invln_totalgrantsfromotherpublicbodies_base";
 			public const string invln_totalhomes = "invln_totalhomes";
@@ -1373,6 +1376,42 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Testcalculatedtwo");
 				this.SetAttributeValue("invln_testcalculatedtwo", value);
 				this.OnPropertyChanged("invln_Testcalculatedtwo");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_testrollupfield")]
+		public System.Nullable<decimal> invln_TestRollupfield
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_testrollupfield");
+			}
+		}
+		
+		/// <summary>
+		/// Last Updated time of rollup field Test Rollup field.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_testrollupfield_date")]
+		public System.Nullable<System.DateTime> invln_TestRollupfield_Date
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_testrollupfield_date");
+			}
+		}
+		
+		/// <summary>
+		/// State of rollup field Test Rollup field.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_testrollupfield_state")]
+		public System.Nullable<int> invln_TestRollupfield_State
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<int>>("invln_testrollupfield_state");
 			}
 		}
 		
