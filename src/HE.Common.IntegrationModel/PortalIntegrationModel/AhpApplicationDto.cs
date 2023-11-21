@@ -27,6 +27,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public decimal? expectedOnWorks { get; set; }
         public decimal? actualAcquisitionCost { get; set; }
         public decimal? expectedAcquisitionCost { get; set; }
+        public decimal? ownResources { get; set; }
 
         //schema
         public decimal? fundingRequested { get; set; }
