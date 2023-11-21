@@ -54,9 +54,9 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                     {
                         foreach (var field in fields)
                         {
-                            if (field == nameof(invln_SiteDetails.invln_Region).ToLower())
+                            if (field == nameof(invln_SiteDetails.invln_LocalAuthorityRegion).ToLower())
                             {
-                                siteDetailToUpdate.invln_Region = siteDetailsMapped.invln_Region;
+                                siteDetailToUpdate.invln_LocalAuthorityRegion = siteDetailsMapped.invln_LocalAuthorityRegion;
                             }
                             else
                             {
@@ -129,7 +129,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 if (retrievedSiteDetail != null)
                 {
                     invln_localauthority localAuthority = null;
-                    if (retrievedSiteDetail.invln_Region != null)
+                    if (retrievedSiteDetail.invln_LocalAuthorityRegion != null)
                     {
                         localAuthority = _localAuthorityRepository.GetById(retrievedSiteDetail.invln_LocalAuthorityID.Id);
                     }
@@ -151,11 +151,11 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 (preImage == null || preImage.invln_LocalAuthorityID == null || (preImage.invln_LocalAuthorityID != null && preImage.invln_LocalAuthorityID.Id != target.invln_LocalAuthorityID.Id)))
             {
                 var localAuthority = _localAuthorityRepository.GetById(target.invln_LocalAuthorityID.Id, new string[] {nameof(invln_localauthority.invln_Region).ToLower()});
-                target.invln_Region = localAuthority.invln_Region;
+                target.invln_LocalAuthorityRegion = localAuthority.invln_Region;
             }
             else if (target.invln_LocalAuthorityID == null)
             {
-                target.invln_Region = null;
+                target.invln_LocalAuthorityRegion = null;
             }
         }
 
