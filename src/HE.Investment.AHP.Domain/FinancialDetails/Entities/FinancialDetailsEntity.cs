@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json.Serialization;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.InvestmentLoans.Common.Extensions;
@@ -8,34 +9,55 @@ namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
 
 public class FinancialDetailsEntity
 {
-    public FinancialDetailsEntity(ApplicationId applicationId, string applicationName, bool isPurchasePriceKnown)
+    public FinancialDetailsEntity(ApplicationId applicationId, string applicationName)
     {
         ApplicationId = applicationId;
         ApplicationName = applicationName;
-        IsPurchasePriceKnown = isPurchasePriceKnown;
     }
 
     public FinancialDetailsEntity(
-        bool isPurchasePriceKnown,
-        PurchasePrice? purchasePrice,
+        ApplicationId applicationId,
+        string applicationName,
+        ActualPurchasePrice? actualPurchasePrice,
+        ExpectedPurchasePrice? expectedPurchasePrice,
         LandOwnership? landOwnership,
+        LandValue? landValue,
         ExpectedWorksCosts? expectedWorksCosts,
-        ExpectedOnCosts? expectedOnCosts)
+        ExpectedOnCosts? expectedOnCosts,
+        RentalIncomeBorrowing? rentalIncomeBorrowing,
+        SalesOfHomesOnThisScheme? salesOfHomesOnThisScheme,
+        SalesOfHomesOnOtherSchemes? salesOfHomesOnOtherSchemes,
+        OwnResources? ownResources,
+        RCGFContribution? rCGFContribution,
+        OtherCapitalSources? otherCapitalSources,
+        SharedOwnershipSales? sharedOwnershipSales,
+        HomesTransferValue? homesTransferValue)
     {
-        IsPurchasePriceKnown = isPurchasePriceKnown;
-        PurchasePrice = purchasePrice;
+        ApplicationId = applicationId;
+        ApplicationName = applicationName;
+        ActualPurchasePrice = actualPurchasePrice;
+        ExpectedPurchasePrice = expectedPurchasePrice;
         LandOwnership = landOwnership;
+        LandValue = landValue;
         ExpectedWorksCosts = expectedWorksCosts;
         ExpectedOnCosts = expectedOnCosts;
+        RentalIncomeBorrowing = rentalIncomeBorrowing;
+        SalesOfHomesOnThisScheme = salesOfHomesOnThisScheme;
+        SalesOfHomesOnOtherSchemes = salesOfHomesOnOtherSchemes;
+        OwnResources = ownResources;
+        RCGFContribution = rCGFContribution;
+        OtherCapitalSources = otherCapitalSources;
+        SharedOwnershipSales = sharedOwnershipSales;
+        HomesTransferValue = homesTransferValue;
     }
 
     public ApplicationId ApplicationId { get; private set; }
 
     public string ApplicationName { get; private set; }
 
-    public PurchasePrice? PurchasePrice { get; private set; }
+    public ActualPurchasePrice? ActualPurchasePrice { get; private set; }
 
-    public bool? IsPurchasePriceKnown { get; private set; }
+    public ExpectedPurchasePrice? ExpectedPurchasePrice { get; private set; }
 
     public LandOwnership? LandOwnership { get; private set; }
 
@@ -61,9 +83,10 @@ public class FinancialDetailsEntity
 
     public HomesTransferValue? HomesTransferValue { get; private set; }
 
-    public void ProvidePurchasePrice(PurchasePrice price)
+    public void ProvidePurchasePrice(ActualPurchasePrice? actualPurchasePrice, ExpectedPurchasePrice? expectedPurchasePrice)
     {
-        PurchasePrice = price;
+        ActualPurchasePrice = actualPurchasePrice;
+        ExpectedPurchasePrice = expectedPurchasePrice;
     }
 
     public void ProvideLandOwnership(LandOwnership landOwnership)

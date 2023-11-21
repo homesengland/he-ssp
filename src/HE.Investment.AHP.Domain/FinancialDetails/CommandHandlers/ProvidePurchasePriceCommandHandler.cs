@@ -20,12 +20,19 @@ public class ProvidePurchasePriceCommandHandler : FinancialDetailsCommandHandler
         return await Perform(
             financialDetails =>
             {
-                if (request.PurchasePrice.IsNotProvided())
+                ActualPurchasePrice? actualPurchasePrice = null;
+                ExpectedPurchasePrice? expectedPurchasePrice = null;
+                if (request.ActualPurchasePrice.IsProvided())
                 {
-                    return;
+                    actualPurchasePrice = ActualPurchasePrice.From(request.ActualPurchasePrice);
                 }
 
-                financialDetails.ProvidePurchasePrice(new PurchasePrice(request.PurchasePrice, request.IsPurchasePriceKnown));
+                if (request.ExpectedPurchasePrice.IsProvided())
+                {
+                    expectedPurchasePrice = ExpectedPurchasePrice.From(request.ExpectedPurchasePrice);
+                }
+
+                financialDetails.ProvidePurchasePrice(actualPurchasePrice, expectedPurchasePrice);
             },
             request.ApplicationId,
             cancellationToken);

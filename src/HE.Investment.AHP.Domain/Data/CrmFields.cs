@@ -30,4 +30,25 @@ public static class CrmFields
 
     public static readonly IList<string> SchemeToRead = SchemeToUpdate
         .Append(new List<string> { nameof(invln_scheme.invln_schemename) });
+
+    public static readonly IList<string> FinancialDetailsToUpdate = new List<string>
+    {
+        nameof(invln_scheme.invln_actualacquisitioncost),
+        nameof(invln_scheme.invln_expectedacquisitioncost),
+        nameof(invln_scheme.invln_publicland),
+        nameof(invln_scheme.invln_currentlandvalue),
+        nameof(invln_scheme.invln_oncosts),
+        nameof(invln_scheme.invln_workscosts),
+        nameof(invln_scheme.invln_borrowingagainstrentalincome),
+        nameof(invln_scheme.invln_fundingfromopenmarkethomesonthisscheme),
+        nameof(invln_scheme.invln_fundingfromopenmarkethomesnotonthisscheme),
+        nameof(invln_scheme.invln_ownresources),
+        nameof(invln_scheme.invln_recycledcapitalgrantfund),
+        nameof(invln_scheme.invln_totalinitialsalesincome),
+        nameof(invln_scheme.invln_othercapitalsources),
+        nameof(invln_scheme.invln_transfervalue),
+    };
+
+    public static readonly IList<string> FinancialDetailsToRead = FinancialDetailsToUpdate
+        .Append(new List<string> { nameof(invln_scheme.invln_schemename) });
 }

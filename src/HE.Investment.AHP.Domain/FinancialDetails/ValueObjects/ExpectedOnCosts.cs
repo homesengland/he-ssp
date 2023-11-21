@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
@@ -21,7 +21,17 @@ public class ExpectedOnCosts : ValueObject
         Value = intValue;
     }
 
-    public int Value { get; }
+    public decimal Value { get; }
+
+    public static ExpectedOnCosts? From(decimal? value)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+
+        return new ExpectedOnCosts(value.ToWholeNumberString() ?? string.Empty);
+    }
 
     protected override IEnumerable<object> GetAtomicValues()
     {

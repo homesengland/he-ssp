@@ -32,7 +32,7 @@ public class FinancialDetailsCommandHandlerBase
             return domainValidationException.OperationResult;
         }
 
-        await _repository.SaveAsync(financialDetails, cancellationToken);
+        await _repository.Save(financialDetails, cancellationToken);
         return OperationResult.Success();
     }
 }

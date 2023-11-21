@@ -23,6 +23,16 @@ public class OwnResources : ValueObject
 
     public int Value { get; }
 
+    public static OwnResources? From(decimal? value)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+
+        return new OwnResources(value.ToWholeNumberString() ?? string.Empty);
+    }
+
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;

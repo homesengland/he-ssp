@@ -1,5 +1,5 @@
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
-using HE.InvestmentLoans.Common.Extensions;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -9,10 +9,10 @@ public class LandOwnership : ValueObject
 {
     public LandOwnership(string value)
     {
-        Value = value;
+        Value = value == CommonResponse.Yes;
     }
 
-    public string Value { get; }
+    public bool Value { get; }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
