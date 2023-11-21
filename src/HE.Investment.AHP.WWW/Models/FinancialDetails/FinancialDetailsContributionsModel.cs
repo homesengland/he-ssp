@@ -38,7 +38,7 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
         OtherCapitalSources = otherCapitalSources;
         InitialSalesOfSharedHomes = initialSalesOfSharedHomes;
         HomesTransferValue = homesTransferValue;
-        IsSharedOwnership = isSharedOwnership; 
+        IsSharedOwnership = isSharedOwnership;
         IsUnregisteredBodyAccount = isUnregisteredBodyAccount;
     }
 
