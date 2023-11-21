@@ -24,10 +24,16 @@ export class Isp {
     eventLogic.ispService.setFieldsRequirementBasedOnSendOnApproval()
   }
 
+  public static onTabChange(eCtx) {
+    const eventLogic = new Isp(eCtx)
+    eventLogic.ispService.showNotificationOnApprovalTab()
+  }
+
   public registerEvents() {
     if (this.common.getAttribute('invln_sendforapproval')) {
       this.common.getAttribute('invln_sendforapproval').removeOnChange(Isp.onSendOnApprovalChange)
       this.common.getAttribute('invln_sendforapproval').addOnChange(Isp.onSendOnApprovalChange)
+      this.common.getTab('Approval').addTabStateChange(Isp.onTabChange)
     }
   }
 }

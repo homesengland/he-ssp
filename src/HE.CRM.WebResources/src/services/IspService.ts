@@ -14,8 +14,8 @@ export class IspService {
   private static projectFundamentalsValue: string = "Please provide an overview of the project's fundamentals, including commentary on: Project costs, assessment of contractor & professional team, type of build contracts, planning details, any CIL/S.106/S.278 requirements. Also highlight any key delivery risks and any extraneous due diligence or conditions of support."
   private static overviewValue: string = "Please detail the proposed facility structure, including commentary on: project funding structure, Homes England facility structure (incl. facility term, repayment, any non-standard proposals), facility documentation type. Please also comment on: repayment and exit strategy, other debt/interests, security. Also use this text box to justify any policy exceptions and detail any non-standard assumptions for land value."
   private static monitoringAndControlsValue: string = "*The Borrower is required to submit a monitoring and progress report on a periodic basis to Homes England and Monitoring Surveyor providing, but not limited to, the following information: milestone progress (including delays and proposed mitigation steps), disposal information, costs forecasting and a cashflow.\n" +
-  "*Unaudited accounts must be provided within 180 days of the end of each financial year and a compliance certificate (confirming compliance with, inter alia, the financial covenants) and accounts on a periodic basis.\n"+
-  "*Homes England will receive progress reports from the monitoring surveyor on a periodic basis and the monitoring surveyor will verify the costs to be funded and all claims for funding (including recycled receipts requests).\n"
+    "*Unaudited accounts must be provided within 180 days of the end of each financial year and a compliance certificate (confirming compliance with, inter alia, the financial covenants) and accounts on a periodic basis.\n" +
+    "*Homes England will receive progress reports from the monitoring surveyor on a periodic basis and the monitoring surveyor will verify the costs to be funded and all claims for funding (including recycled receipts requests).\n"
   private static financialAnalysisValue: string = "Please provide a financial summary for the Borrower / contractor."
   private static staticAnalysisValue: string = "Please provide rationale for the proposed CRR."
   private static underSensitivityAnalisysValue: string = "Please provide commentary on sensitivity analyses conducted and highlight any likely stressed scenarios."
@@ -25,9 +25,28 @@ export class IspService {
   private static deliverabilityValue: string = "Deliverability considers how projects perform against commercial, financial and management arrangements with a focus on achievement of outputs delivered."
   private static recommendationValue: string = "Please summarise your recommendation to the Approver."
   private static standardConditionsToBeWaivedValue: string = "Please highlight any Standard Conditions that do not apply to this proposal and the rationale for those exclusion(s)."
+  private static lessThan10MInformationValue: string = "You will not be able to send this ISP for approval until the DES and HoF reviews have taken place. It is policy that the following review / approve this ISP: Risk, CRO Delegated Authority";
+  private static moreThan10MLessThan50InformationValue: string = "You will not be able to send this ISP for approval until the DES and HoF reviews have taken place. It is policy that the following review / approve this ISP: Risk, CRO, IPE";
 
   constructor(eCtx) {
     this.common = new CommonLib(eCtx)
+  }
+
+  public showNotificationOnApprovalTab() {
+    var displayState = this.common.getTab('Approval').getDisplayState();
+    if (displayState == "expanded") {
+      var ispValue = this.common.getAttributeValue("invln_loanprincipal");
+      if (ispValue != null && ispValue <= 10000000) {
+        this.common.setFormNotification(IspService.lessThan10MInformationValue, XrmEnum.FormNotificationLevel.Info, "lessThan10MInformation");
+      }
+      else if (ispValue != null && ispValue <= 50000000) {
+        this.common.setFormNotification(IspService.moreThan10MLessThan50InformationValue, XrmEnum.FormNotificationLevel.Info, "moreThan10MLessThan50Information");
+      }
+    }
+    else {
+      this.common.clearFormNotification("lessThan10MInformation");
+      this.common.clearFormNotification("moreThan10MLessThan50Information");
+    }
   }
 
   public setFieldsAvailabilityOnLoad() {
@@ -56,7 +75,7 @@ export class IspService {
     if (loanApplication != null) {
       Xrm.WebApi.retrieveRecord('invln_loanapplication', loanApplication.id).then(result => {
         if (result != null && result.invln_securities != null) {
-          var securitiesArray : string[] = result.invln_securities.split(",");
+          var securitiesArray: string[] = result.invln_securities.split(",");
           securitiesArray.forEach(element => {
             debugger;
             switch (element) {
