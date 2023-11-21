@@ -77,6 +77,7 @@ namespace DataverseModel
 			public const string invln_LoanapplicationName = "invln_loanapplicationname";
 			public const string invln_LocalAuthorityID = "invln_localauthorityid";
 			public const string invln_LocalAuthorityIDName = "invln_localauthorityidname";
+			public const string invln_LocalAuthorityRegion = "invln_localauthorityregion";
 			public const string invln_MSPresent = "invln_mspresent";
 			public const string invln_Name = "invln_name";
 			public const string invln_Nameofgrantfund = "invln_nameofgrantfund";
@@ -90,7 +91,6 @@ namespace DataverseModel
 			public const string invln_projecthasstartdate = "invln_projecthasstartdate";
 			public const string invln_Publicsectorfunding = "invln_publicsectorfunding";
 			public const string invln_Reason = "invln_reason";
-			public const string invln_Region = "invln_region";
 			public const string invln_Sitecoordinates = "invln_sitecoordinates";
 			public const string invln_Sitecost = "invln_sitecost";
 			public const string invln_sitecost_Base = "invln_sitecost_base";
@@ -528,6 +528,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthorityregion")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_LocalAuthorityRegion
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_localauthorityregion");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_LocalAuthorityRegion");
+				this.SetAttributeValue("invln_localauthorityregion", value);
+				this.OnPropertyChanged("invln_LocalAuthorityRegion");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mspresent")]
 		public System.Nullable<bool> invln_MSPresent
 		{
@@ -746,23 +763,6 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Reason");
 				this.SetAttributeValue("invln_reason", value);
 				this.OnPropertyChanged("invln_Reason");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_region")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Region
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_region");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_Region");
-				this.SetAttributeValue("invln_region", value);
-				this.OnPropertyChanged("invln_Region");
 			}
 		}
 		

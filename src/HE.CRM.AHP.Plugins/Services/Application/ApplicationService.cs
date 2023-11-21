@@ -51,9 +51,19 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactId, attributes, additionalFilters);
             if (applications.Any())
             {
+                var contact = _contactRepository.GetContactViaExternalId(contactId);
                 foreach (var application in applications)
                 {
-                    listOfApplications.Add(AhpApplicationMapper.MapRegularEntityToDto(application));
+                    var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application);
+                    if(application.invln_lastexternalmodificationby != null)
+                    {
+                        applicationDto.lastExternalModificationBy = new ContactDto()
+                        {
+                            firstName = contact.FirstName,
+                            lastName = contact.LastName,
+                        };
+                    }
+                    listOfApplications.Add(applicationDto);
                 }
             }
             return listOfApplications;
@@ -64,6 +74,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var application = JsonSerializer.Deserialize<AhpApplicationDto>(applicationSerialized);
             var contact = _contactRepository.GetContactViaExternalId(contactId);
             var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application, contact.Id.ToString(), organisationId);
+            applicationMapped.invln_lastexternalmodificationon = DateTime.UtcNow;
+            applicationMapped.invln_lastexternalmodificationby = contact.ToEntityReference();
             if (string.IsNullOrEmpty(application.id))
             {
                 return _applicationRepository.Create(applicationMapped);

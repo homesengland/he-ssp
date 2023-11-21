@@ -90,6 +90,7 @@ namespace HE.CRM.Common.DtoMapping
                 expectedAcquisitionCost = application.invln_expectedacquisitioncost?.Value,
                 actualAcquisitionCost = application.invln_actualacquisitioncost?.Value,
                 ownResources = application.invln_ownresources?.Value,
+                lastExternalModificationOn = application.invln_lastexternalmodificationon,
             };
             if (application.Id != null)
             {
