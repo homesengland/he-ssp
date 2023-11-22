@@ -74,10 +74,10 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var application = JsonSerializer.Deserialize<AhpApplicationDto>(applicationSerialized);
             var contact = _contactRepository.GetContactViaExternalId(contactId);
             var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application, contact.Id.ToString(), organisationId);
-            applicationMapped.invln_lastexternalmodificationon = DateTime.UtcNow;
-            applicationMapped.invln_lastexternalmodificationby = contact.ToEntityReference();
             if (string.IsNullOrEmpty(application.id))
             {
+                applicationMapped.invln_lastexternalmodificationon = DateTime.UtcNow;
+                applicationMapped.invln_lastexternalmodificationby = contact.ToEntityReference();
                 return _applicationRepository.Create(applicationMapped);
             }
             else
@@ -102,6 +102,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     applicationToUpdateOrCreate = applicationMapped;
                 }
                 applicationToUpdateOrCreate.Id = new Guid(application.id);
+                applicationToUpdateOrCreate.invln_lastexternalmodificationon = DateTime.UtcNow;
+                applicationToUpdateOrCreate.invln_lastexternalmodificationby = contact.ToEntityReference();
                 _applicationRepository.Update(applicationToUpdateOrCreate);
                 return applicationToUpdateOrCreate.Id;
             }
