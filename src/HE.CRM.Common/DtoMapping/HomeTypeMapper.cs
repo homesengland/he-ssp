@@ -31,6 +31,7 @@ namespace HE.CRM.Common.DtoMapping
                 numberOfBedrooms = homeType.invln_numberofbedrooms,
                 maxOccupancy = homeType.invln_maxoccupancy,
                 numberOfStoreys = homeType.invln_numberofstoreys,
+                createdOn = homeType.CreatedOn,
             };
             if (homeType.Id != null)
             {

@@ -54,9 +54,10 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                     {
                         foreach (var field in fields)
                         {
-                            if (field == nameof(invln_SiteDetails.invln_LocalAuthorityRegion).ToLower())
+                            TracingService.Trace($"field {field}");
+                            if (field.ToLower() == nameof(invln_SiteDetails.invln_LocalAuthorityID).ToLower())
                             {
-                                siteDetailToUpdate.invln_LocalAuthorityRegion = siteDetailsMapped.invln_LocalAuthorityRegion;
+                                siteDetailToUpdate.invln_LocalAuthorityID = siteDetailsMapped.invln_LocalAuthorityID;
                             }
                             else
                             {
@@ -129,7 +130,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 if (retrievedSiteDetail != null)
                 {
                     invln_localauthority localAuthority = null;
-                    if (retrievedSiteDetail.invln_LocalAuthorityRegion != null)
+                    if (retrievedSiteDetail.invln_LocalAuthorityID != null)
                     {
                         localAuthority = _localAuthorityRepository.GetById(retrievedSiteDetail.invln_LocalAuthorityID.Id);
                     }

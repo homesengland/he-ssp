@@ -1,3 +1,5 @@
+using System;
+
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
     public class AhpApplicationDto
@@ -42,5 +44,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         //other
         public string contactId { get; set; }
         public string organisationId { get; set; }
+        public DateTime? lastExternalModificationOn { get; set; }
+        public ContactDto lastExternalModificationBy { get; set; }
     }
 }

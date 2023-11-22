@@ -15,10 +15,12 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
     {
         private readonly IHomeTypeRepository _homeTypeRepository;
         private readonly IAhpApplicationRepository _ahpApplicationRepository;
+        private readonly IContactRepository _contactRepository;
         public HomeTypeService(CrmServiceArgs args) : base(args)
         {
             _homeTypeRepository = CrmRepositoriesFactory.Get<IHomeTypeRepository>();
             _ahpApplicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
+            _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
         }
 
         public void DeleteHomeType(string homeTypeId, string userId, string organisationId, string applicationId)
@@ -28,7 +30,9 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             {
                 if (_homeTypeRepository.CheckIfGivenHomeTypeIsAssignedToGivenUserAndOrganisationAndApplication(homeTypeGuid, userId, organisationGuid, applicationGuid))
                 {
+                    var contact = _contactRepository.GetContactViaExternalId(userId);
                     _homeTypeRepository.Delete(new invln_HomeType() { Id = homeTypeGuid });
+                    UpdateApplicationModificationFields(applicationGuid, contact.Id);
                 }
             }
         }
@@ -74,9 +78,11 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             {
                 var homeTypeDto = JsonSerializer.Deserialize<HomeTypeDto>(homeType);
                 var homeTypeMapped = HomeTypeMapper.MapDtoToRegularEntity(homeTypeDto, applicationId);
+                var contact = _contactRepository.GetContactViaExternalId(userId);
                 if (string.IsNullOrEmpty(homeTypeDto.id) &&
                     _ahpApplicationRepository.ApplicationWithGivenIdExistsForOrganisationAndContract(applicationGuid, organisationGuid, userId))
                 {
+                    UpdateApplicationModificationFields(applicationGuid, contact.Id);
                     return _homeTypeRepository.Create(homeTypeMapped);
                 }
                 else if (Guid.TryParse(homeTypeDto.id, out var homeTypeGuid) &&
@@ -103,10 +109,22 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
                     }
                     homeTypeToUpdateOrCreate.Id = homeTypeGuid;
                     _homeTypeRepository.Update(homeTypeToUpdateOrCreate);
+                    UpdateApplicationModificationFields(applicationGuid, contact.Id);
                     return homeTypeToUpdateOrCreate.Id;
                 }
             }
             return Guid.Empty;
+        }
+
+        private void UpdateApplicationModificationFields(Guid applicationId, Guid contactId)
+        {
+            var applicationToUpdate = new invln_scheme()
+            {
+                Id = applicationId,
+                invln_lastexternalmodificationon = DateTime.UtcNow,
+                invln_lastexternalmodificationby = new Microsoft.Xrm.Sdk.EntityReference(Contact.EntityLogicalName, contactId),
+            };
+            _ahpApplicationRepository.Update(applicationToUpdate);
         }
 
         private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
