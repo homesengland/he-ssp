@@ -22,5 +22,7 @@ public interface IHomeTypeEntity
 
     DesignPlansSegmentEntity DesignPlans { get; }
 
+    SupportedHousingInformationEntity SupportedHousingInformation { get; }
+
     void ChangeHousingType(HousingType newHousingType);
 }

@@ -308,6 +308,40 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         return RedirectToAction("DesignPlans", new { applicationId, homeTypeId });
     }
 
+    [WorkflowState(HomeTypesWorkflowState.SupportedHousingInformation)]
+    [HttpGet("{homeTypeId}/SupportedHousingInformation")]
+    public async Task<IActionResult> SupportedHousingInformation([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var supportedHousingInformation = await _mediator.Send(new GetSupportedHousingInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new SupportedHousingInformationModel(application.Name, supportedHousingInformation.HomeTypeName)
+        {
+            LocalCommissioningBodiesConsulted = supportedHousingInformation.LocalCommissioningBodiesConsulted,
+            ShortStayAccommodation = supportedHousingInformation.ShortStayAccommodation,
+            RevenueFundingType = supportedHousingInformation.RevenueFundingType,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.SupportedHousingInformation)]
+    [HttpPost("{homeTypeId}/SupportedHousingInformation")]
+    public async Task<IActionResult> SupportedHousingInformation(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        SupportedHousingInformationModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveSupportedHousingInformationCommand(
+                applicationId,
+                homeTypeId,
+                model.LocalCommissioningBodiesConsulted,
+                model.ShortStayAccommodation,
+                model.RevenueFundingType),
+            model,
+            cancellationToken);
+    }
+
     protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object routeData = null)
     {
         var applicationId = Request.GetRouteValue("applicationId")

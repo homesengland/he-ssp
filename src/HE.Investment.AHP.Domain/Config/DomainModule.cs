@@ -39,6 +39,7 @@ public static class DomainModule
         services.AddSingleton<IHomeTypeCrmSegmentMapper, DisabledAndVulnerablePeopleCrmSegmentMapper>();
         services.AddSingleton<IHomeTypeCrmSegmentMapper, OlderPeopleCrmSegmentMapper>();
         services.AddSingleton<IHomeTypeCrmSegmentMapper, DesignPlansCrmSegmentMapper>();
+        services.AddSingleton<IHomeTypeCrmSegmentMapper, SupportedHousingInformationSegmentMapper>();
 
         // TODO: change service do scoped after introducing integration with IHttpDocumentService
         services.AddSingleton<IDesignFileService, DesignFileService>();

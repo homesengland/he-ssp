@@ -20,8 +20,6 @@ public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandle
 
     public async Task<OperationResult> Handle(StartFinancialDetailsCommand request, CancellationToken cancellationToken)
     {
-        // temporary mock, this values needs to be taken from some repo
-        var isPurchasePriceKnown = true;
         FinancialDetailsEntity financialDetails;
         try
         {
@@ -29,8 +27,8 @@ public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandle
         }
         catch (NotFoundException)
         {
-            financialDetails = new FinancialDetailsEntity(request.ApplicationId, request.ApplicationName, isPurchasePriceKnown);
-            await _financialDetailsRepository.SaveAsync(financialDetails, cancellationToken);
+            financialDetails = new FinancialDetailsEntity(request.ApplicationId, request.ApplicationName);
+            await _financialDetailsRepository.Save(financialDetails, cancellationToken);
         }
 
         return OperationResult.Success();

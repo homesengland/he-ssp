@@ -41,6 +41,8 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public DesignPlansSegmentEntity DesignPlans => GetRequiredSegment<DesignPlansSegmentEntity>();
 
+    public SupportedHousingInformationEntity SupportedHousingInformation => GetRequiredSegment<SupportedHousingInformationEntity>();
+
     public bool IsNew => Id.IsNotProvided();
 
     // TODO: set this value when implementing Delivery Phases
@@ -57,12 +59,14 @@ public class HomeTypeEntity : IHomeTypeEntity
         {
             UpdateSegment(new OlderPeopleHomeTypeDetailsSegmentEntity());
             UpdateSegment(GetOptionalSegment<DesignPlansSegmentEntity>() ?? new DesignPlansSegmentEntity(Application));
+            UpdateSegment(GetOptionalSegment<SupportedHousingInformationEntity>() ?? new SupportedHousingInformationEntity());
         }
 
         if (HousingType == HousingType.HomesForDisabledAndVulnerablePeople && newHousingType != HousingType.HomesForDisabledAndVulnerablePeople)
         {
             UpdateSegment(new DisabledPeopleHomeTypeDetailsSegmentEntity());
             UpdateSegment(GetOptionalSegment<DesignPlansSegmentEntity>() ?? new DesignPlansSegmentEntity(Application));
+            UpdateSegment(GetOptionalSegment<SupportedHousingInformationEntity>() ?? new SupportedHousingInformationEntity());
         }
 
         HousingType = newHousingType;

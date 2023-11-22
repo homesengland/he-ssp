@@ -13,4 +13,5 @@ public enum HomeTypesWorkflowState
     HomesForOlderPeople,
     HappiDesignPrinciples,
     DesignPlans,
+    SupportedHousingInformation,
 }

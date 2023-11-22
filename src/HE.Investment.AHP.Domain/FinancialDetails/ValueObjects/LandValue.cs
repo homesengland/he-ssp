@@ -1,5 +1,4 @@
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -22,6 +21,18 @@ public class LandValue : ValueObject
     }
 
     public int Value { get; }
+
+    public static LandValue? From(decimal? value)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+        else
+        {
+            return new LandValue(value.ToWholeNumberString() ?? string.Empty);
+        }
+    }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
