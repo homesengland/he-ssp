@@ -41,13 +41,22 @@ namespace HE.CRM.Common.DtoMapping
                 invln_expectedacquisitioncost = MapNullableDecimalToMoney(applicationDto.expectedAcquisitionCost),
                 invln_actualacquisitioncost = MapNullableDecimalToMoney(applicationDto.actualAcquisitionCost),
                 invln_ownresources = MapNullableDecimalToMoney(applicationDto.ownResources),
+                //home Information
+                invln_grantsfromcountycouncil = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromCountyCouncil),
+                invln_grantsfromdhscextracare = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromDhscExtraCareFunding),
+                invln_grantsfromlocalauthority1 = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromLocalAuthority1),
+                invln_grantsfromlocalauthority2 = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromLocalAuthority2),
+                invln_grantsfromsocialservices = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromSocialServices),
+                invln_grantsfromdhscnhsorotherhealth = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromDepartmentOfHealth),
+                invln_grantsfromthelottery = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromLotteryFunding),
+                invln_grantsfromotherpublicbodies = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromOtherPublicBodies),
             };
             if (applicationDto.id != null && Guid.TryParse(applicationDto.id, out var applicationId))
             {
                 applicationToReturn.Id = applicationId;
             }
             if (Guid.TryParse(contactId, out var contactGuid))
-            { 
+            {
                 applicationToReturn.invln_contactid = new EntityReference(Contact.EntityLogicalName, contactGuid);
             }
             if (Guid.TryParse(organisationId, out var organisationGuid))
@@ -90,6 +99,14 @@ namespace HE.CRM.Common.DtoMapping
                 expectedAcquisitionCost = application.invln_expectedacquisitioncost?.Value,
                 actualAcquisitionCost = application.invln_actualacquisitioncost?.Value,
                 ownResources = application.invln_ownresources?.Value,
+                howMuchReceivedFromCountyCouncil = application.invln_grantsfromcountycouncil?.Value,
+                howMuchReceivedFromDhscExtraCareFunding = application.invln_grantsfromdhscextracare?.Value,
+                howMuchReceivedFromLocalAuthority1 = application.invln_grantsfromlocalauthority1?.Value,
+                howMuchReceivedFromLocalAuthority2 = application.invln_grantsfromlocalauthority2?.Value,
+                howMuchReceivedFromSocialServices = application.invln_grantsfromsocialservices?.Value,
+                howMuchReceivedFromDepartmentOfHealth = application.invln_grantsfromdhscnhsorotherhealth?.Value,
+                howMuchReceivedFromLotteryFunding = application.invln_grantsfromthelottery?.Value,
+                howMuchReceivedFromOtherPublicBodies = application.invln_grantsfromotherpublicbodies?.Value,
             };
             if (application.Id != null)
             {

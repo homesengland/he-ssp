@@ -31,6 +31,17 @@ namespace HE.CRM.Common.DtoMapping
                 numberOfBedrooms = homeType.invln_numberofbedrooms,
                 maxOccupancy = homeType.invln_maxoccupancy,
                 numberOfStoreys = homeType.invln_numberofstoreys,
+                buildingType = homeType.invln_buildingtype?.Value,
+                sharedFacilities = homeType.invln_facilities?.Value,
+                isMoveOnAccommodation = homeType.invln_homesusedformoveonaccommodation,
+                needsOfParticularGroup = homeType.invln_homesdesignedforuseofparticulargroup,
+                homesDesignedForUseOfParticularGroup = homeType.invln_homesdesignedforuseofparticular?.Value,
+                areHomesCustomBuild = homeType.invln_custombuild,
+                //accessibilityCategory = homeType.invln_accessibilitycategory
+                marketValue = homeType.invln_marketvalue,
+                marketRent = homeType.invln_marketrent,
+                prospectiveRent = homeType.invln_prospectiverent,
+                isWheelchairStandard = homeType.invln_wheelchairstandard?.Value
             };
             if (homeType.Id != null)
             {
@@ -82,6 +93,16 @@ namespace HE.CRM.Common.DtoMapping
                 invln_numberofbedrooms = homeTypeDto.numberOfBedrooms,
                 invln_maxoccupancy = homeTypeDto.maxOccupancy,
                 invln_numberofstoreys = homeTypeDto.numberOfStoreys,
+                invln_buildingtype = MapNullableIntToOptionSetValue(homeTypeDto.buildingType),
+                invln_facilities = MapNullableIntToOptionSetValue(homeTypeDto.sharedFacilities),
+                invln_homesusedformoveonaccommodation = homeTypeDto.isMoveOnAccommodation,
+                invln_homesdesignedforuseofparticulargroup = homeTypeDto.needsOfParticularGroup,
+                invln_homesdesignedforuseofparticular = MapNullableIntToOptionSetValue(homeTypeDto.homesDesignedForUseOfParticularGroup),
+                invln_custombuild = homeTypeDto.areHomesCustomBuild,
+                //invln_accessibilitycategory = homeTypeDto.accessibilityCategory,
+                invln_marketvalue = homeTypeDto.marketValue,
+                invln_marketrent = homeTypeDto.marketRent,
+                invln_prospectiverent = homeTypeDto.prospectiveRent,
             };
             if (homeTypeDto.id != null)
             {

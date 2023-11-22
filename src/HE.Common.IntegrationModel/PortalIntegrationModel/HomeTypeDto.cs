@@ -18,12 +18,24 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public bool? shortStayAccommodation { get; set; }
         public int? revenueFunding { get; set; }
         public string moveOnArrangementsForNoRevenueFunding { get; set; }
-        public List<int> fundingSources { get; set;}
+        public List<int> fundingSources { get; set; }
         public string moveOnArrangementsForRevenueFunding { get; set; }
         public string exitPlan { get; set; }
         public string typologyLocationAndDesign { get; set; }
         public int? numberOfBedrooms { get; set; }
         public int? maxOccupancy { get; set; }
         public int? numberOfStoreys { get; set; }
+        public int? buildingType { get; set; }
+        public int? sharedFacilities { get; set; }
+        public bool? isMoveOnAccommodation { get; set; }
+        public bool? needsOfParticularGroup { get; set; }
+        public int? homesDesignedForUseOfParticularGroup { get; set; }
+        public bool? areHomesCustomBuild { get; set; }
+        public int? accessibilityCategory { get; set; }
+        public int? marketValue { get; set; }
+        public decimal? marketRent { get; set; }
+        public decimal? prospectiveRent { get; set; }
+        public int? isWheelchairStandard { get; set; }
+
     }
 }
