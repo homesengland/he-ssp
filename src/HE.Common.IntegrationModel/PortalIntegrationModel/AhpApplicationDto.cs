@@ -30,6 +30,15 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public decimal? actualAcquisitionCost { get; set; }
         public decimal? expectedAcquisitionCost { get; set; }
         public decimal? ownResources { get; set; }
+        public decimal? howMuchReceivedFromCountyCouncil { get; set; }
+        public decimal? howMuchReceivedFromDhscExtraCareFunding { get; set; }
+        public decimal? howMuchReceivedFromLocalAuthority1 { get; set; }
+        public decimal? howMuchReceivedFromLocalAuthority2 { get; set; }
+        public decimal? howMuchReceivedFromSocialServices { get; set; }
+        public decimal? howMuchReceivedFromDepartmentOfHealth { get; set; }
+        public decimal? howMuchReceivedFromLotteryFunding { get; set; }
+        public decimal? howMuchReceivedFromOtherPublicBodies { get; set; }
+
 
         //schema
         public decimal? fundingRequested { get; set; }

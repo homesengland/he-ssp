@@ -30,13 +30,16 @@ namespace DataverseModel
 		DepartmentforEducation = 858110015,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		DrugsActionTeamHousingDepartment = 858110002,
+		DrugsActionTeam = 858110002,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		HealthandWellbeingBoard = 858110006,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		HomeOffice = 858110010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HousingDepartment = 858110019,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		LocalAreaAgreements = 858110016,

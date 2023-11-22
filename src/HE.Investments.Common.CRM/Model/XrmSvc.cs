@@ -19656,6 +19656,24 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_iswheelchairstandardmet")]
+		public System.Nullable<bool> invln_iswheelchairstandardmet
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_iswheelchairstandardmet");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_iswheelchairstandardmet");
+				this.SetAttributeValue("invln_iswheelchairstandardmet", value);
+				this.OnPropertyChanged("invln_iswheelchairstandardmet");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localcommissioningbodiesconsulted")]
 		public System.Nullable<bool> invln_localcommissioningbodiesconsulted
 		{
