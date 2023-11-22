@@ -1,7 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investments.Common.CRM.Model;
 
@@ -24,8 +24,8 @@ public class SupportedHousingInformationSegmentMapper : HomeTypeCrmSegmentMapper
     public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto)
     {
         return new SupportedHousingInformationEntity(
-            MapLocalCommissioningBodiesConsulted(dto.localComissioningBodies),
-            MapShortStayAccommodation(dto.shortStayAccommodation),
+            YesNoTypeMapper.Map(dto.localComissioningBodies),
+            YesNoTypeMapper.Map(dto.shortStayAccommodation),
             MapRevenueFunding(dto.revenueFunding));
     }
 
@@ -33,49 +33,9 @@ public class SupportedHousingInformationSegmentMapper : HomeTypeCrmSegmentMapper
 
     protected override void MapToDto(HomeTypeDto dto, SupportedHousingInformationEntity segment)
     {
-        dto.localComissioningBodies = MapLocalCommissioningBodiesConsulted(segment.LocalCommissioningBodiesConsulted);
-        dto.shortStayAccommodation = MapShortStayAccommodation(segment.ShortStayAccommodation);
+        dto.localComissioningBodies = YesNoTypeMapper.Map(segment.LocalCommissioningBodiesConsulted);
+        dto.shortStayAccommodation = YesNoTypeMapper.Map(segment.ShortStayAccommodation);
         dto.revenueFunding = MapRevenueFunding(segment.RevenueFundingType);
-    }
-
-    private static bool? MapLocalCommissioningBodiesConsulted(YesNoType? value)
-    {
-        return value switch
-        {
-            YesNoType.Yes => true,
-            YesNoType.No => false,
-            _ => null,
-        };
-    }
-
-    private static YesNoType MapLocalCommissioningBodiesConsulted(bool? value)
-    {
-        return value switch
-        {
-            true => YesNoType.Yes,
-            false => YesNoType.No,
-            _ => YesNoType.Undefined,
-        };
-    }
-
-    private static bool? MapShortStayAccommodation(YesNoType? value)
-    {
-        return value switch
-        {
-            YesNoType.Yes => true,
-            YesNoType.No => false,
-            _ => null,
-        };
-    }
-
-    private static YesNoType MapShortStayAccommodation(bool? value)
-    {
-        return value switch
-        {
-            true => YesNoType.Yes,
-            false => YesNoType.No,
-            _ => YesNoType.Undefined,
-        };
     }
 
     private static int? MapRevenueFunding(RevenueFundingType? value)
