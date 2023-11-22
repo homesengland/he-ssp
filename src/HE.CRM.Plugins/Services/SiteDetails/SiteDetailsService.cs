@@ -54,9 +54,10 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                     {
                         foreach (var field in fields)
                         {
-                            if (field == nameof(invln_SiteDetails.invln_LocalAuthorityRegion).ToLower())
+                            TracingService.Trace($"field {field}");
+                            if (field == nameof(invln_SiteDetails.invln_LocalAuthorityID).ToLower())
                             {
-                                siteDetailToUpdate.invln_LocalAuthorityRegion = siteDetailsMapped.invln_LocalAuthorityRegion;
+                                siteDetailToUpdate.invln_LocalAuthorityID = siteDetailsMapped.invln_LocalAuthorityID;
                             }
                             else
                             {
