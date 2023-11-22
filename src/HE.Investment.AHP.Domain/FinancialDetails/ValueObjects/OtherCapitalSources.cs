@@ -23,6 +23,16 @@ public class OtherCapitalSources : ValueObject
 
     public int Value { get; }
 
+    public static OtherCapitalSources? From(decimal? value)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+
+        return new OtherCapitalSources(value.ToWholeNumberString() ?? string.Empty);
+    }
+
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;

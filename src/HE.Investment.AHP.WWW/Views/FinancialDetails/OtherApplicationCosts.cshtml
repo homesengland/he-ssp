@@ -23,8 +23,8 @@
             @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
             <gds-field-set role="group">
                 <gds-div-form-group>
-                    <vc:form-header title="@FinancialDetailsPageTitles.OtherApplicationCosts" caption="@Model.ApplicationName - Financial details"/>
-                    <gds-field-set  role="group" invalid=false>
+                    <vc:form-header title="@FinancialDetailsPageTitles.OtherApplicationCosts" caption="@Model.ApplicationName - Financial details" />
+                    <gds-field-set role="group" invalid=false>
                         <he-div-hint class="govuk-!-margin-bottom-6">
                             For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
                         </he-div-hint>
@@ -38,7 +38,7 @@
 
                         <gds-input govuk-formgroup-asp-for="@Model.ExpectedWorksCosts" type="text"
                                    asp-hiddenlabeltext="Enter your expected works costs"
-                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.ExpectedWorksCosts/>
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.ExpectedWorksCosts />
                     </gds-field-set>
                     <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=@expectedOnCostsInvalid>
                         <gds-legend>
@@ -49,12 +49,15 @@
 
                         <gds-input govuk-formgroup-asp-for="@Model.ExpectedOnCosts" type="text"
                                    asp-hiddenlabeltext="Enter your expected on costs"
-                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.ExpectedOnCosts/>
+                                   asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.ExpectedOnCosts />
                     </gds-field-set>
                     <gds-details>
                         <gds-summary-details>What are works and on costs?</gds-summary-details>
                         <gds-div-details-text>
-                            <a href="https://www.gov.uk/government/publications/grant-agreement-examples-for-the-affordable-homes-programme-2021-to-2026">More information</a>
+                            Details of eligable work and on costs can be found in the
+                            <a href="https://www.gov.uk/government/publications/grant-agreement-examples-for-the-affordable-homes-programme-2021-to-2026" target="_blank">
+                                published examples of the 21-26 AHP grant agreement (opens in a new tab)
+                            </a>
                         </gds-div-details-text>
                     </gds-details>
                 </gds-div-form-group>

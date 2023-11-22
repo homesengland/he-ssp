@@ -9,11 +9,11 @@ public class FinancialDetails
 
     public string? ApplicationName { get; set; }
 
-    public bool? IsPurchasePriceKnown { get; set; }
+    public decimal? ActualPurchasePrice { get; set; }
 
-    public string? PurchasePrice { get; set; }
+    public decimal? ExpectedPurchasePrice { get; set; }
 
-    public string? IsSchemaOnPublicLand { get; set; }
+    public bool? IsSchemaOnPublicLand { get; set; }
 
     public decimal? LandValue { get; set; }
 

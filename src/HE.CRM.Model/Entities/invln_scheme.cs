@@ -65,6 +65,7 @@ namespace DataverseModel
 			public const string invln_borrowingagainstrentalincome = "invln_borrowingagainstrentalincome";
 			public const string invln_borrowingagainstrentalincome_Base = "invln_borrowingagainstrentalincome_base";
 			public const string invln_contact_invln_scheme_contactid = "invln_contact_invln_scheme_contactid";
+			public const string invln_contact_invln_scheme_lastexternalmodificationby = "invln_contact_invln_scheme_lastexternalmodificationby";
 			public const string invln_contactid = "invln_contactid";
 			public const string invln_contactidName = "invln_contactidname";
 			public const string invln_currentlandvalue = "invln_currentlandvalue";
@@ -105,6 +106,9 @@ namespace DataverseModel
 			public const string invln_hometypessectioncompletionstatus = "invln_hometypessectioncompletionstatus";
 			public const string invln_invln_hometype_application_invln_scheme = "invln_invln_hometype_application_invln_scheme";
 			public const string invln_invln_scheme_localauthoritylookup_invln_l = "invln_invln_scheme_localauthoritylookup_invln_l";
+			public const string invln_lastexternalmodificationby = "invln_lastexternalmodificationby";
+			public const string invln_lastexternalmodificationbyName = "invln_lastexternalmodificationbyname";
+			public const string invln_lastexternalmodificationon = "invln_lastexternalmodificationon";
 			public const string invln_localauthoritylookup = "invln_localauthoritylookup";
 			public const string invln_localauthoritylookupName = "invln_localauthoritylookupname";
 			public const string invln_meetinglocalhousingneed = "invln_meetinglocalhousingneed";
@@ -938,6 +942,40 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_hometypessectioncompletionstatus");
 				this.SetAttributeValue("invln_hometypessectioncompletionstatus", value);
 				this.OnPropertyChanged("invln_hometypessectioncompletionstatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastexternalmodificationby")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_lastexternalmodificationby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_lastexternalmodificationby");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_lastexternalmodificationby");
+				this.SetAttributeValue("invln_lastexternalmodificationby", value);
+				this.OnPropertyChanged("invln_lastexternalmodificationby");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastexternalmodificationon")]
+		public System.Nullable<System.DateTime> invln_lastexternalmodificationon
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_lastexternalmodificationon");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_lastexternalmodificationon");
+				this.SetAttributeValue("invln_lastexternalmodificationon", value);
+				this.OnPropertyChanged("invln_lastexternalmodificationon");
 			}
 		}
 		
@@ -1849,6 +1887,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_contact_invln_scheme_contactid");
 				this.SetRelatedEntity<DataverseModel.Contact>("invln_contact_invln_scheme_contactid", null, value);
 				this.OnPropertyChanged("invln_contact_invln_scheme_contactid");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_contact_invln_scheme_lastexternalmodificationby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastexternalmodificationby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_scheme_lastexternalmodificationby")]
+		public DataverseModel.Contact invln_contact_invln_scheme_lastexternalmodificationby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Contact>("invln_contact_invln_scheme_lastexternalmodificationby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_scheme_lastexternalmodificationby");
+				this.SetRelatedEntity<DataverseModel.Contact>("invln_contact_invln_scheme_lastexternalmodificationby", null, value);
+				this.OnPropertyChanged("invln_contact_invln_scheme_lastexternalmodificationby");
 			}
 		}
 		

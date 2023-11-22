@@ -46,8 +46,8 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
 
     public bool IsCompleted()
     {
-        return LocalCommissioningBodiesConsulted.IsProvided()
-               && ShortStayAccommodation.IsProvided()
+        return LocalCommissioningBodiesConsulted != YesNoType.Undefined
+               && ShortStayAccommodation != YesNoType.Undefined
                && RevenueFundingType != RevenueFundingType.Undefined;
     }
 }

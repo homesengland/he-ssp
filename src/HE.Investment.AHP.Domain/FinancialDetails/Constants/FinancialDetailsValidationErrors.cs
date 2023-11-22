@@ -1,7 +1,7 @@
 namespace HE.Investment.AHP.Domain.FinancialDetails.Constants;
 public static class FinancialDetailsValidationErrors
 {
-    public const string InvalidPurchasePrice = "The purchase price of the land must be a number";
+    public const string InvalidActualPurchasePrice = "The purchase price of the land must be a number";
 
     public const string InvalidExpectedPurchasePrice = "The expected purchase price of the land must be a number";
 

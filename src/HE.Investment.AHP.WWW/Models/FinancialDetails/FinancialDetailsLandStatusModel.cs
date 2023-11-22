@@ -12,14 +12,17 @@ public class FinancialDetailsLandStatusModel : FinancialDetailsBaseModel
     {
     }
 
-    public FinancialDetailsLandStatusModel(Guid applicationId, string applicationName, string purchasePrice, bool isPurchasePriceKnown)
+    public FinancialDetailsLandStatusModel(Guid applicationId, string applicationName, string actualPurchasePrice, string expectedPurchasePrice, bool isPurchasePriceKnown)
         : base(applicationId, applicationName)
     {
-        PurchasePrice = purchasePrice;
+        ActualPurchasePrice = actualPurchasePrice;
+        ExpectedPurchasePrice = expectedPurchasePrice;
         IsPurchasePriceKnown = isPurchasePriceKnown;
     }
 
-    public string PurchasePrice { get; set; }
+    public string ActualPurchasePrice { get; set; }
+
+    public string ExpectedPurchasePrice { get; set; }
 
     public bool IsPurchasePriceKnown { get; set; }
 }

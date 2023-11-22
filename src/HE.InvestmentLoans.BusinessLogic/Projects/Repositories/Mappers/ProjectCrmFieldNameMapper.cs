@@ -12,7 +12,7 @@ public static class ProjectCrmFieldNameMapper
     private static readonly string PlanningReferenceNumber = $"{nameof(invln_SiteDetails.invln_Planningreferencenumber).ToLowerInvariant()}";
     private static readonly string SiteCoordinates = $"{nameof(invln_SiteDetails.invln_Sitecoordinates).ToLowerInvariant()}";
     private static readonly string LandRegistryTitleNumber = $"{nameof(invln_SiteDetails.invln_Landregistrytitlenumber).ToLowerInvariant()}";
-    private static readonly string LocalAuthority = $"{nameof(invln_SiteDetails.invln_Region).ToLowerInvariant()}";
+    private static readonly string LocalAuthority = $"{nameof(invln_SiteDetails.invln_LocalAuthorityID).ToLowerInvariant()}";
     private static readonly string SiteOwnership = $"{nameof(invln_SiteDetails.invln_Siteownership).ToLowerInvariant()}";
     private static readonly string NumberOfHomes = $"{nameof(invln_SiteDetails.invln_Numberofhomes).ToLowerInvariant()}";
     private static readonly string TypeOfProject = $"{nameof(invln_SiteDetails.invln_TypeofSite).ToLowerInvariant()}";

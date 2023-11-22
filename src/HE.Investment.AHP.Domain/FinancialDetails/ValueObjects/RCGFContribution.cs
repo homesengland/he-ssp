@@ -23,6 +23,16 @@ public class RCGFContribution : ValueObject
 
     public int Value { get; }
 
+    public static RCGFContribution? From(decimal? value)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+
+        return new RCGFContribution(value.ToWholeNumberString() ?? string.Empty);
+    }
+
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;

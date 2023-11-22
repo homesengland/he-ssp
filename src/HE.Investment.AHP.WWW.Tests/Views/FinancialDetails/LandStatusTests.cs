@@ -15,7 +15,7 @@ public class LandStatusTests : ViewTestBase
     [Fact]
     public async Task ShouldDisplayView()
     {
-        var model = new FinancialDetailsLandStatusModel(Guid.NewGuid(), "TestApp", string.Empty, true);
+        var model = new FinancialDetailsLandStatusModel(Guid.NewGuid(), "TestApp", string.Empty, string.Empty, true);
 
         // given & when
         var document = await Render(_viewPath, model);
@@ -28,10 +28,10 @@ public class LandStatusTests : ViewTestBase
     public async Task ShouldDisplayView_ForInvalid()
     {
         // given
-        var model = new FinancialDetailsLandStatusModel(Guid.NewGuid(), "TestApp", "56000", true);
+        var model = new FinancialDetailsLandStatusModel(Guid.NewGuid(), "TestApp", "56000", string.Empty, true);
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
-        modelState.AddModelError(nameof(FinancialDetailsLandStatusModel.PurchasePrice), errorMessage);
+        modelState.AddModelError(nameof(FinancialDetailsLandStatusModel.ActualPurchasePrice), errorMessage);
 
         // when
         var document = await Render(_viewPath, model, modelStateDictionary: modelState);
@@ -47,7 +47,7 @@ public class LandStatusTests : ViewTestBase
             .HasElementWithText("h2", "Enter the purchase price of the land")
             .HasElementWithText("div", "The purchase price must be backed by a valuation report from a qualified independent valuer, valid at the date of exchange of purchase contracts.")
             .HasElementWithText("button", "Save and continue")
-            .HasSummaryErrorMessage(nameof(FinancialDetailsValidationFieldNames.PurchasePrice), errorMessage, !string.IsNullOrEmpty(errorMessage))
-            .HasErrorMessage(nameof(FinancialDetailsValidationFieldNames.PurchasePrice), errorMessage, !string.IsNullOrEmpty(errorMessage));
+            .HasSummaryErrorMessage(nameof(FinancialDetailsValidationFieldNames.ActualPurchasePrice), errorMessage, !string.IsNullOrEmpty(errorMessage))
+            .HasErrorMessage(nameof(FinancialDetailsValidationFieldNames.ActualPurchasePrice), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }
 }
