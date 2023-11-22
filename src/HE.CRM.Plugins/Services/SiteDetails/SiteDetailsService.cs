@@ -146,6 +146,20 @@ namespace HE.CRM.Plugins.Services.SiteDetails
             return null;
         }
 
+        public void FulfillRegionOnLocalAuthorityChange(invln_SiteDetails target, invln_SiteDetails preImage)
+        {
+            if (target.invln_LocalAuthorityID != null &&
+                (preImage == null || preImage.invln_LocalAuthorityID == null || (preImage.invln_LocalAuthorityID != null && preImage.invln_LocalAuthorityID.Id != target.invln_LocalAuthorityID.Id)))
+            {
+                var localAuthority = _localAuthorityRepository.GetById(target.invln_LocalAuthorityID.Id, new string[] {nameof(invln_localauthority.invln_Region).ToLower()});
+                target.invln_LocalAuthorityRegion = localAuthority.invln_Region;
+            }
+            else if (target.invln_LocalAuthorityID == null)
+            {
+                target.invln_LocalAuthorityRegion = null;
+            }
+        }
+
         private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
         {
             var fields = fieldsToRetrieve.Split(',');

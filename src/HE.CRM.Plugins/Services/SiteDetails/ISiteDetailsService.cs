@@ -10,5 +10,6 @@ namespace HE.CRM.Plugins.Services.SiteDetails
         void CreateSiteDetail(string siteDetail, string loanApplicationId);
         string GetSingleSiteDetail(string siteDetailsId, string accountId, string contactExternalId, string fieldsToRetrieve = null);
         void SetLastModificationDateOnRelatedLoanApplication(invln_SiteDetails siteDetails);
+        void FulfillRegionOnLocalAuthorityChange(invln_SiteDetails target, invln_SiteDetails preImage);
     }
 }
