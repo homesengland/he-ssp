@@ -1,13 +1,18 @@
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
-using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.SupportedHousingInformation)]
 public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
 {
+    private YesNoType _localCommissioningBodiesConsulted;
+
+    private YesNoType _shortStayAccommodation;
+
+    private RevenueFundingType _revenueFundingType;
+
     public SupportedHousingInformationEntity(
         YesNoType localCommissioningBodiesConsulted = YesNoType.Undefined,
         YesNoType shortStayAccommodation = YesNoType.Undefined,
@@ -18,11 +23,49 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
         RevenueFundingType = revenueFundingType;
     }
 
-    public YesNoType LocalCommissioningBodiesConsulted { get; private set; }
+    public bool IsModified { get; private set; }
 
-    public YesNoType ShortStayAccommodation { get; private set; }
+    public YesNoType LocalCommissioningBodiesConsulted
+    {
+        get => _localCommissioningBodiesConsulted;
+        private set
+        {
+            if (_localCommissioningBodiesConsulted != value)
+            {
+                IsModified = true;
+            }
 
-    public RevenueFundingType RevenueFundingType { get; private set; }
+            _localCommissioningBodiesConsulted = value;
+        }
+    }
+
+    public YesNoType ShortStayAccommodation
+    {
+        get => _shortStayAccommodation;
+        private set
+        {
+            if (_shortStayAccommodation != value)
+            {
+                IsModified = true;
+            }
+
+            _shortStayAccommodation = value;
+        }
+    }
+
+    public RevenueFundingType RevenueFundingType
+    {
+        get => _revenueFundingType;
+        private set
+        {
+            if (_revenueFundingType != value)
+            {
+                IsModified = true;
+            }
+
+            _revenueFundingType = value;
+        }
+    }
 
     public void ChangeLocalCommissioningBodiesConsulted(YesNoType localCommissioningBodiesConsulted)
     {
@@ -42,6 +85,11 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
     public IHomeTypeSegmentEntity Duplicate()
     {
         return new SupportedHousingInformationEntity(LocalCommissioningBodiesConsulted, ShortStayAccommodation, RevenueFundingType);
+    }
+
+    public bool IsRequired(HousingType housingType)
+    {
+        return housingType is HousingType.HomesForOlderPeople or HousingType.HomesForDisabledAndVulnerablePeople;
     }
 
     public bool IsCompleted()

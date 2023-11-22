@@ -5,7 +5,6 @@ using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
@@ -27,6 +26,8 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
 
     private readonly IList<DesignPlanFileEntity> _filesToUpload = new List<DesignPlanFileEntity>();
 
+    private MoreInformation? _moreInformation;
+
     public DesignPlansSegmentEntity(
         ApplicationBasicInfo application,
         IEnumerable<HappiDesignPrincipleType>? designPrinciples = null,
@@ -34,14 +35,28 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
         IEnumerable<UploadedFile>? uploadedFiles = null)
     {
         _application = application;
-        _designPrinciples = designPrinciples?.ToList() ?? new List<HappiDesignPrincipleType>();
-        MoreInformation = moreInformation;
+        _designPrinciples = designPrinciples?.OrderBy(x => x).ToList() ?? new List<HappiDesignPrincipleType>();
+        _moreInformation = moreInformation;
         _uploadedFiles = uploadedFiles?.ToList() ?? new List<UploadedFile>();
     }
 
+    public bool IsModified { get; private set; }
+
     public IReadOnlyCollection<HappiDesignPrincipleType> DesignPrinciples => _designPrinciples;
 
-    public MoreInformation? MoreInformation { get; private set; }
+    public MoreInformation? MoreInformation
+    {
+        get => _moreInformation;
+        private set
+        {
+            if (_moreInformation != value)
+            {
+                IsModified = true;
+            }
+
+            _moreInformation = value;
+        }
+    }
 
     public bool CanRemoveDesignFiles => _application.Status != ApplicationStatus.Submitted;
 
@@ -49,7 +64,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
 
     public void ChangeDesignPrinciples(IEnumerable<HappiDesignPrincipleType> designPrinciples)
     {
-        var uniquePrinciples = designPrinciples.Distinct().ToList();
+        var uniquePrinciples = designPrinciples.Distinct().OrderBy(x => x).ToList();
         if (uniquePrinciples.Contains(HappiDesignPrincipleType.NoneOfThese) && uniquePrinciples.Count > 1)
         {
             OperationResult.New()
@@ -59,8 +74,12 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
                 .CheckErrors();
         }
 
-        _designPrinciples.Clear();
-        _designPrinciples.AddRange(uniquePrinciples);
+        if (!_designPrinciples.SequenceEqual(uniquePrinciples))
+        {
+            _designPrinciples.Clear();
+            _designPrinciples.AddRange(uniquePrinciples);
+            IsModified = true;
+        }
     }
 
     public void ChangeMoreInformation(string? moreInformation)
@@ -81,6 +100,8 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
         {
             _filesToUpload.Add(file);
         }
+
+        IsModified = true;
     }
 
     public void MarkFileToRemove(FileId fileId)
@@ -93,6 +114,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
         }
 
         _filesToRemove.Add(fileToRemove);
+        IsModified = true;
     }
 
     public async Task SaveFileChanges(IHomeTypeEntity homeType, IDesignFileService designFileService, CancellationToken cancellationToken)
@@ -112,15 +134,14 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
         }
     }
 
-    public void DiscardFileChanges()
-    {
-        _filesToUpload.Clear();
-        _filesToRemove.Clear();
-    }
-
     public IHomeTypeSegmentEntity Duplicate()
     {
         return new DesignPlansSegmentEntity(_application, DesignPrinciples, MoreInformation, new List<UploadedFile>());
+    }
+
+    public bool IsRequired(HousingType housingType)
+    {
+        return housingType is HousingType.HomesForOlderPeople or HousingType.HomesForOlderPeople;
     }
 
     public bool IsCompleted()

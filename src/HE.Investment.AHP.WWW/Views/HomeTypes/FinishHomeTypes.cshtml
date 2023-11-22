@@ -1,0 +1,38 @@
+@using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using tes = He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios;
+
+@model HE.Investment.AHP.WWW.Models.HomeTypes.FinishHomeTypeModel;
+
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+}
+
+<div class="govuk-grid-column-three-quarters">
+    <form asp-controller="HomeTypes" asp-action="FinishHomeTypes" asp-method="post" novalidate>
+        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.FinishHomeTypes"
+                                  application-id="@applicationId"
+                                  caption="@Model.ApplicationName - Home types"/>
+
+        <gds-field-set>
+            <gds-legend class="govuk-!-margin-bottom-0">
+                <gds-h1 class="govuk-!-margin-bottom-0">Have you added all of the home types for this application?</gds-h1>
+            </gds-legend>
+
+            <gds-radio govuk-formgroup-asp-for="FinishAnswer"
+                       asp-hiddenlabeltext="Have you added all of the home types for this application?"
+                       value="@Model.FinishAnswer"
+                       asp-selectlistitems="@HomeTypesFormOptions.FinishHomeTypes">
+            </gds-radio>
+
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                Save and continue
+            </button>
+
+        </gds-field-set>
+
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</div>

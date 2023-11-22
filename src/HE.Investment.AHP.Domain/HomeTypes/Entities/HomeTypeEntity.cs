@@ -11,6 +11,12 @@ public class HomeTypeEntity : IHomeTypeEntity
 {
     private readonly IDictionary<HomeTypeSegmentType, IHomeTypeSegmentEntity> _segments;
 
+    private bool _isModified;
+
+    private HousingType _housingType;
+
+    private HomeTypeName? _name;
+
     public HomeTypeEntity(
         ApplicationBasicInfo application,
         HomeTypeId? id = null,
@@ -20,8 +26,8 @@ public class HomeTypeEntity : IHomeTypeEntity
     {
         Application = application;
         Id = id;
-        ChangeName(name);
-        ChangeHousingType(housingType);
+        _name = name.IsNotProvided() ? null : new HomeTypeName(name);
+        _housingType = housingType;
         _segments = segments.ToDictionary(x => GetSegmentType(x.GetType()), x => x);
     }
 
@@ -29,9 +35,33 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public HomeTypeId? Id { get; set; }
 
-    public HomeTypeName? Name { get; private set; }
+    public HomeTypeName? Name
+    {
+        get => _name;
+        private set
+        {
+            if (_name != value)
+            {
+                _isModified = true;
+            }
 
-    public HousingType HousingType { get; private set; }
+            _name = value;
+        }
+    }
+
+    public HousingType HousingType
+    {
+        get => _housingType;
+        private set
+        {
+            if (_housingType != value)
+            {
+                _isModified = true;
+            }
+
+            _housingType = value;
+        }
+    }
 
     public HomeInformationSegmentEntity HomeInformation => GetRequiredSegment<HomeInformationSegmentEntity>();
 
@@ -45,12 +75,14 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public bool IsNew => Id.IsNotProvided();
 
+    public bool IsModified => _isModified || _segments.Any(x => x.Value.IsModified);
+
     // TODO: set this value when implementing Delivery Phases
     public bool IsUsedInDeliveryPhase => false;
 
     public void ChangeName(string? name)
     {
-        Name = name != null ? new HomeTypeName(name) : null;
+        Name = new HomeTypeName(name);
     }
 
     public void ChangeHousingType(HousingType newHousingType)
@@ -79,7 +111,9 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public bool IsCompleted()
     {
-        return Name.IsProvided() && _segments.All(x => x.Value.IsCompleted());
+        return HousingType != HousingType.Undefined
+               && Name.IsProvided()
+               && _segments.Where(x => x.Value.IsRequired(HousingType)).All(x => x.Value.IsCompleted());
     }
 
     public bool HasSegment(HomeTypeSegmentType segmentType)

@@ -6,6 +6,10 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 [HomeTypeSegmentType(HomeTypeSegmentType.DisabledAndVulnerablePeople)]
 public class DisabledPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
 {
+    private DisabledPeopleHousingType _housingType;
+
+    private DisabledPeopleClientGroupType _clientGroupType;
+
     public DisabledPeopleHomeTypeDetailsSegmentEntity(
         DisabledPeopleHousingType housingType = DisabledPeopleHousingType.Undefined,
         DisabledPeopleClientGroupType clientGroupType = DisabledPeopleClientGroupType.Undefined)
@@ -14,9 +18,35 @@ public class DisabledPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
         ClientGroupType = clientGroupType;
     }
 
-    public DisabledPeopleHousingType HousingType { get; private set; }
+    public bool IsModified { get; private set; }
 
-    public DisabledPeopleClientGroupType ClientGroupType { get; private set; }
+    public DisabledPeopleHousingType HousingType
+    {
+        get => _housingType;
+        private set
+        {
+            if (_housingType != value)
+            {
+                IsModified = true;
+            }
+
+            _housingType = value;
+        }
+    }
+
+    public DisabledPeopleClientGroupType ClientGroupType
+    {
+        get => _clientGroupType;
+        private set
+        {
+            if (_clientGroupType != value)
+            {
+                IsModified = true;
+            }
+
+            _clientGroupType = value;
+        }
+    }
 
     public void ChangeHousingType(DisabledPeopleHousingType housingType)
     {
@@ -31,6 +61,11 @@ public class DisabledPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
     public IHomeTypeSegmentEntity Duplicate()
     {
         return new DisabledPeopleHomeTypeDetailsSegmentEntity(HousingType, ClientGroupType);
+    }
+
+    public bool IsRequired(HousingType housingType)
+    {
+        return housingType == Contract.HomeTypes.Enums.HousingType.HomesForDisabledAndVulnerablePeople;
     }
 
     public bool IsCompleted()

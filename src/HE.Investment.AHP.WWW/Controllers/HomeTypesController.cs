@@ -58,6 +58,46 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         });
     }
 
+    [WorkflowState(HomeTypesWorkflowState.List)]
+    [HttpPost("List")]
+    public async Task<IActionResult> List([FromRoute] string applicationId, HomeTypeListModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new SaveFinishHomeTypesAnswerCommand(applicationId, FinishHomeTypesAnswer.Yes, true), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View(model);
+        }
+
+        return await Continue(new { applicationId });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.FinishHomeTypes)]
+    [HttpGet("FinishHomeTypes")]
+    public async Task<IActionResult> FinishHomeTypes([FromRoute] string applicationId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var answer = await _mediator.Send(new GetFinishHomesTypeAnswerQuery(applicationId), cancellationToken);
+
+        return View(new FinishHomeTypeModel(application.Name) { FinishAnswer = answer });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.FinishHomeTypes)]
+    [HttpPost("FinishHomeTypes")]
+    public async Task<IActionResult> FinishHomeTypes([FromRoute] string applicationId, FinishHomeTypeModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new SaveFinishHomeTypesAnswerCommand(applicationId, model.FinishAnswer), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View(model);
+        }
+
+        return model.FinishAnswer == FinishHomeTypesAnswer.Yes
+            ? RedirectToAction("TaskList", "Application", new { applicationId })
+            : await Back(new { applicationId });
+    }
+
     [HttpGet("{homeTypeId}/Duplicate")]
     public async Task<IActionResult> Duplicate([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
@@ -347,14 +387,19 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var applicationId = Request.GetRouteValue("applicationId")
                                 ?? routeData?.GetPropertyValue<string>("applicationId")
                                 ?? throw new NotFoundException($"{nameof(HomeTypesController)} required applicationId path parameter.");
-        var homeTypeId = Request.GetRouteValue("homeTypeId") ?? routeData?.GetPropertyValue<string>("homeTypeId");
-        if (string.IsNullOrEmpty(applicationId) || string.IsNullOrEmpty(homeTypeId))
+        if (string.IsNullOrEmpty(applicationId))
         {
             return new HomeTypesWorkflow();
         }
 
-        var homeTypes = await _mediator.Send(new GetHomeTypeQuery(applicationId, homeTypeId));
-        return new HomeTypesWorkflow(currentState, homeTypes);
+        var homeTypeId = Request.GetRouteValue("homeTypeId") ?? routeData?.GetPropertyValue<string>("homeTypeId");
+        if (string.IsNullOrEmpty(homeTypeId))
+        {
+            return new HomeTypesWorkflow(currentState, null);
+        }
+
+        var homeType = await _mediator.Send(new GetHomeTypeQuery(applicationId, homeTypeId));
+        return new HomeTypesWorkflow(currentState, homeType);
     }
 
     private static HousingType GetDefaultHousingType(Tenure applicationTenure)

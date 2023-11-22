@@ -6,12 +6,28 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 [HomeTypeSegmentType(HomeTypeSegmentType.OlderPeople)]
 public class OlderPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
 {
+    private OlderPeopleHousingType _housingType;
+
     public OlderPeopleHomeTypeDetailsSegmentEntity(OlderPeopleHousingType housingType = OlderPeopleHousingType.Undefined)
     {
-        HousingType = housingType;
+        _housingType = housingType;
     }
 
-    public OlderPeopleHousingType HousingType { get; private set; }
+    public bool IsModified { get; private set; }
+
+    public OlderPeopleHousingType HousingType
+    {
+        get => _housingType;
+        private set
+        {
+            if (_housingType != value)
+            {
+                IsModified = true;
+            }
+
+            _housingType = value;
+        }
+    }
 
     public void ChangeHousingType(OlderPeopleHousingType housingType)
     {
@@ -21,6 +37,11 @@ public class OlderPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
     public IHomeTypeSegmentEntity Duplicate()
     {
         return new OlderPeopleHomeTypeDetailsSegmentEntity(HousingType);
+    }
+
+    public bool IsRequired(HousingType housingType)
+    {
+        return housingType == Contract.HomeTypes.Enums.HousingType.HomesForOlderPeople;
     }
 
     public bool IsCompleted()
