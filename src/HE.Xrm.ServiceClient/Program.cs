@@ -37,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestHomeType(serviceClient);
+                    TestLoan(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -123,7 +123,7 @@ namespace HE.Xrm.ServiceClientExample
                 $"{nameof(invln_scheme.invln_fundingrequired).ToLower()},{nameof(invln_scheme.invln_noofhomes).ToLower()}," +
                 $"{nameof(invln_scheme.invln_discussionswithlocalstakeholders).ToLower()},{nameof(invln_scheme.invln_meetinglocalhousingneed).ToLower()}," +
                 $"{nameof(invln_scheme.invln_meetinglocalpriorities).ToLower()},{nameof(invln_scheme.invln_reducingenvironmentalimpact).ToLower()}," +
-                $"{nameof(invln_scheme.invln_schemename).ToLower()}";
+                $"{nameof(invln_scheme.invln_schemename).ToLower()},{nameof(invln_scheme.invln_lastexternalmodificationby).ToLower()},{nameof(invln_scheme.invln_lastexternalmodificationon).ToLower()}";
             var app = JsonSerializer.Serialize(applicationDtoToReturn);
             var req2 = new invln_setahpapplicationRequest() //get loan applications related to account and contact with given data
             {
@@ -132,7 +132,7 @@ namespace HE.Xrm.ServiceClientExample
                 invln_userid = "auth0|6548d4ef9e1110e85f1fef57",
                 invln_fieldstoupdate = fieldsToUpdate,
             };
-            var resp2 = (invln_setahpapplicationResponse)serviceClient.Execute(req2);
+           // var resp2 = (invln_setahpapplicationResponse)serviceClient.Execute(req2);
             var req3 = new invln_getahpapplicationRequest() //get loan applications related to account and contact with given data
             {
                 invln_appfieldstoretrieve = fieldsToUpdate,

@@ -51,11 +51,11 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactId, attributes, additionalFilters);
             if (applications.Any())
             {
-                var contact = _contactRepository.GetContactViaExternalId(contactId);
+                var contact = _contactRepository.GetContactViaExternalId(contactId, new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower() });
                 foreach (var application in applications)
                 {
                     var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application);
-                    if(application.invln_lastexternalmodificationby != null)
+                    if (application.invln_lastexternalmodificationby != null)
                     {
                         applicationDto.lastExternalModificationBy = new ContactDto()
                         {
