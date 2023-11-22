@@ -130,7 +130,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                 if (retrievedSiteDetail != null)
                 {
                     invln_localauthority localAuthority = null;
-                    if (retrievedSiteDetail.invln_LocalAuthorityRegion != null)
+                    if (retrievedSiteDetail.invln_LocalAuthorityID != null)
                     {
                         localAuthority = _localAuthorityRepository.GetById(retrievedSiteDetail.invln_LocalAuthorityID.Id);
                     }
