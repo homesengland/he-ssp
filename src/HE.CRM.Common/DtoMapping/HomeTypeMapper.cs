@@ -31,6 +31,7 @@ namespace HE.CRM.Common.DtoMapping
                 numberOfBedrooms = homeType.invln_numberofbedrooms,
                 maxOccupancy = homeType.invln_maxoccupancy,
                 numberOfStoreys = homeType.invln_numberofstoreys,
+                createdOn = homeType.CreatedOn,
                 buildingType = homeType.invln_buildingtype?.Value,
                 sharedFacilities = homeType.invln_facilities?.Value,
                 isMoveOnAccommodation = homeType.invln_homesusedformoveonaccommodation,

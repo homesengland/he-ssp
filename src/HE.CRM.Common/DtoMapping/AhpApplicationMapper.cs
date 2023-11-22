@@ -99,6 +99,7 @@ namespace HE.CRM.Common.DtoMapping
                 expectedAcquisitionCost = application.invln_expectedacquisitioncost?.Value,
                 actualAcquisitionCost = application.invln_actualacquisitioncost?.Value,
                 ownResources = application.invln_ownresources?.Value,
+                lastExternalModificationOn = application.invln_lastexternalmodificationon,
                 howMuchReceivedFromCountyCouncil = application.invln_grantsfromcountycouncil?.Value,
                 howMuchReceivedFromDhscExtraCareFunding = application.invln_grantsfromdhscextracare?.Value,
                 howMuchReceivedFromLocalAuthority1 = application.invln_grantsfromlocalauthority1?.Value,

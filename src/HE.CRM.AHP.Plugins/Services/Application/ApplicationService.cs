@@ -51,9 +51,19 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactId, attributes, additionalFilters);
             if (applications.Any())
             {
+                var contact = _contactRepository.GetContactViaExternalId(contactId, new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower() });
                 foreach (var application in applications)
                 {
-                    listOfApplications.Add(AhpApplicationMapper.MapRegularEntityToDto(application));
+                    var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application);
+                    if (application.invln_lastexternalmodificationby != null)
+                    {
+                        applicationDto.lastExternalModificationBy = new ContactDto()
+                        {
+                            firstName = contact.FirstName,
+                            lastName = contact.LastName,
+                        };
+                    }
+                    listOfApplications.Add(applicationDto);
                 }
             }
             return listOfApplications;
@@ -66,6 +76,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var applicationMapped = AhpApplicationMapper.MapDtoToRegularEntity(application, contact.Id.ToString(), organisationId);
             if (string.IsNullOrEmpty(application.id))
             {
+                applicationMapped.invln_lastexternalmodificationon = DateTime.UtcNow;
+                applicationMapped.invln_lastexternalmodificationby = contact.ToEntityReference();
                 return _applicationRepository.Create(applicationMapped);
             }
             else
@@ -90,6 +102,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     applicationToUpdateOrCreate = applicationMapped;
                 }
                 applicationToUpdateOrCreate.Id = new Guid(application.id);
+                applicationToUpdateOrCreate.invln_lastexternalmodificationon = DateTime.UtcNow;
+                applicationToUpdateOrCreate.invln_lastexternalmodificationby = contact.ToEntityReference();
                 _applicationRepository.Update(applicationToUpdateOrCreate);
                 return applicationToUpdateOrCreate.Id;
             }

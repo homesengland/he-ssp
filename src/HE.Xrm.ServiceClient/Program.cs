@@ -37,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestHomeType(serviceClient);
+                    TestUpdateSiteDetails(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -56,10 +56,10 @@ namespace HE.Xrm.ServiceClientExample
             var fieldsToUpdate = $"{nameof(invln_HomeType.invln_hometypename).ToLower()},{nameof(invln_HomeType.invln_typeofhousing).ToLower()}";
             var home = new HomeTypeDto()
             {
-                id = "84d1e48a-9b87-ee11-be36-002248004a06",
+                id = "7a34a4f9-1689-ee11-be36-0022480041cf",
                 numberOfHomes = 222,
                 applicationId = "a5b507b3-c27f-ee11-8179-002248004268",
-                homeTypeName = "test wwwwwwwW",
+                homeTypeName = "test adda",
                 housingType = (int)invln_Typeofhousing.Housingfordisabledandvulnerablepeople,
                 housingTypeForOlderPeople = (int)invln_typeofolderpeopleshousing.Housingforolderpeoplewithallspecialdesignfeatures,
                 housingTypeForVulnerable = (int)invln_typeofhousingfordisabledvulnerable.Designatedhousingfordisabledandvulnerablepeoplewithaccesstosupport,
@@ -71,16 +71,16 @@ namespace HE.Xrm.ServiceClientExample
             {
                 invln_hometype = serialized,
                 invln_fieldstoset = "invln_hometypename, invln_typeofhousing",
-                invln_organisationid = "e07c44ca-9657-ee11-be6f-002248c65419",
-                invln_userid = "itests|24b9d8b8-9723-49a1-80d6-2d10918e1ba5",
-                invln_applicationid = "0e49b28a-757d-ee11-8179-002248004a06",
+                invln_organisationid = "db0da27f-bcfb-ed11-8f6d-002248c653e1",
+                invln_userid = "auth0|6548d4ef9e1110e85f1fef57",
+                invln_applicationid = "49ab97e2-f882-ee11-8179-002248004f63",
             };
             var req3 = new invln_deletehometypeRequest()
             {
-                invln_applicationid = "0e49b28a-757d-ee11-8179-002248004a06",
-                invln_hometypeid = "84d1e48a-9b87-ee11-be36-002248004a06",
-                invln_organisationid = "e07c44ca-9657-ee11-be6f-002248c65419",
-                invln_userid = "itests|24b9d8b8-9723-49a1-80d6-2d10918e1ba5",
+                invln_hometypeid = "7a34a4f9-1689-ee11-be36-0022480041cf",
+                invln_organisationid = "db0da27f-bcfb-ed11-8f6d-002248c653e1",
+                invln_userid = "auth0|6548d4ef9e1110e85f1fef57",
+                invln_applicationid = "49ab97e2-f882-ee11-8179-002248004f63",
             };
             serviceClient.Execute(req3);
             Console.WriteLine("A web service connection was not established.");
@@ -88,54 +88,54 @@ namespace HE.Xrm.ServiceClientExample
 
         private static void TestLoan(ServiceClient serviceClient)
         {
-            //var applicationDtoToReturn = new AhpApplicationDto()
-            //{
-            //    name = "custom api test",
-            //    tenure = (int)invln_Tenure.Renttobuy,
-            //    schemeInformationSectionCompletionStatus = (int)invln_AHPSectioncompletionstatusSet.InProgress,
-            //    homeTypesSectionCompletionStatus = (int)invln_AHPSectioncompletionstatusSet.InProgress,
-            //    financialDetailsSectionCompletionStatus = (int)invln_AHPSectioncompletionstatusSet.InProgress,
-            //    deliveryPhasesSectionCompletionStatus = (int)invln_AHPSectioncompletionstatusSet.InProgress,
-            //    borrowingAgainstRentalIncomeFromThisScheme = 122,
-            //    fundingFromOpenMarketHomesOnThisScheme = 7777,
-            //    fundingFromOpenMarketHomesNotOnThisScheme = 6969,
-            //    //fundingGeneratedFromOtherSources = application.?.Value,
-            //    recycledCapitalGrantFund = 2137,
-            //    //transferValue = application.?.Value,
-            //    //totalInitialSalesIncome = application.?.Value,
-            //    //otherCapitalSources = application.?.Value,
-            //    id = "49ab97e2-f882-ee11-8179-002248004f63",
-            //    fundingRequested = 3333,
-            //    noOfHomes = 123,
-            //    affordabilityEvidence = "12312321",
-            //    discussionsWithLocalStakeholders = "ddasdasddsad",
-            //    meetingLocalHousingNeed = "housing need",
-            //    meetingLocalProrities = "2123dsadsa",
-            //    reducingEnvironmentalImpact = "yes",
-            //    sharedOwnershipSalesRisk = "ssssss"
-            //};
-            //var fieldsToUpdate = $"{nameof(invln_scheme.invln_totalhomes).ToLower()},{nameof(invln_scheme.invln_Tenure).ToLower()}," +
-            //    $"{nameof(invln_scheme.invln_schemeinformationsectioncompletionstatus).ToLower()},{nameof(invln_scheme.invln_deliveryphasessectioncompletionstatus).ToLower()}," +
-            //    $"{nameof(invln_scheme.invln_financialdetailssectioncompletionstatus).ToLower()},{nameof(invln_scheme.invln_hometypessectioncompletionstatus).ToLower()}," +
-            //    $"{nameof(invln_scheme.invln_borrowingagainstrentalincome).ToLower()},{nameof(invln_scheme.invln_fundingfromopenmarkethomesonthisscheme).ToLower()}," +
-            //    $"{nameof(invln_scheme.invln_fundingfromopenmarkethomesnotonthisscheme).ToLower()},{nameof(invln_scheme.invln_recycledcapitalgrantfund).ToLower()}," +
-            //    $"{nameof(invln_scheme.invln_borrowingagainstrentalincome).ToLower()},{nameof(invln_scheme.invln_fundingfromopenmarkethomesonthisscheme).ToLower()}," +
-            //    $"{nameof(invln_scheme.invln_fundingrequired).ToLower()},{nameof(invln_scheme.invln_noofhomes).ToLower()}," +
-            //    $"{nameof(invln_scheme.invln_discussionswithlocalstakeholders).ToLower()},{nameof(invln_scheme.invln_meetinglocalhousingneed).ToLower()}," +
-            //    $"{nameof(invln_scheme.invln_meetinglocalpriorities).ToLower()},{nameof(invln_scheme.invln_reducingenvironmentalimpact).ToLower()}," +
-            //    $"{nameof(invln_scheme.invln_sharedownershipsalesrisk).ToLower()}";
-            //var app = JsonSerializer.Serialize(applicationDtoToReturn);
-            //var req2 = new invln_setahpapplicationRequest() //get loan applications related to account and contact with given data
-            //{
-            //    invln_application = app,
-            //    invln_organisationid = "db0da27f-bcfb-ed11-8f6d-002248c653e1",
-            //    invln_userid = "auth0|6548d4ef9e1110e85f1fef57",
-            //    invln_fieldstoupdate = fieldsToUpdate,
-            //};
-         //   var resp2 = (invln_setahpapplicationResponse)serviceClient.Execute(req2);
+            var applicationDtoToReturn = new AhpApplicationDto()
+            {
+                name = "custom api testyttt",
+                tenure = (int)invln_Tenure.Renttobuy,
+                schemeInformationSectionCompletionStatus = (int)invln_AHPSectioncompletionstatusSet.InProgress,
+                homeTypesSectionCompletionStatus = (int)invln_AHPSectioncompletionstatusSet.InProgress,
+                financialDetailsSectionCompletionStatus = (int)invln_AHPSectioncompletionstatusSet.InProgress,
+                deliveryPhasesSectionCompletionStatus = (int)invln_AHPSectioncompletionstatusSet.InProgress,
+                borrowingAgainstRentalIncomeFromThisScheme = 122,
+                fundingFromOpenMarketHomesOnThisScheme = 7777,
+                fundingFromOpenMarketHomesNotOnThisScheme = 6969,
+                //fundingGeneratedFromOtherSources = application.?.Value,
+                recycledCapitalGrantFund = 2137,
+                //transferValue = application.?.Value,
+                //totalInitialSalesIncome = application.?.Value,
+                //otherCapitalSources = application.?.Value,
+                id = "49ab97e2-f882-ee11-8179-002248004f63",
+                fundingRequested = 3333,
+                noOfHomes = 123,
+                affordabilityEvidence = "12312321",
+                discussionsWithLocalStakeholders = "ddasdasddsad",
+                meetingLocalHousingNeed = "housing need",
+                meetingLocalProrities = "2123dsadsa",
+                reducingEnvironmentalImpact = "yes",
+                sharedOwnershipSalesRisk = "ssssss"
+            };
+            var fieldsToUpdate = $"{nameof(invln_scheme.invln_totalhomes).ToLower()},{nameof(invln_scheme.invln_Tenure).ToLower()}," +
+                $"{nameof(invln_scheme.invln_schemeinformationsectioncompletionstatus).ToLower()},{nameof(invln_scheme.invln_deliveryphasessectioncompletionstatus).ToLower()}," +
+                $"{nameof(invln_scheme.invln_financialdetailssectioncompletionstatus).ToLower()},{nameof(invln_scheme.invln_hometypessectioncompletionstatus).ToLower()}," +
+                $"{nameof(invln_scheme.invln_borrowingagainstrentalincome).ToLower()},{nameof(invln_scheme.invln_fundingfromopenmarkethomesonthisscheme).ToLower()}," +
+                $"{nameof(invln_scheme.invln_fundingfromopenmarkethomesnotonthisscheme).ToLower()},{nameof(invln_scheme.invln_recycledcapitalgrantfund).ToLower()}," +
+                $"{nameof(invln_scheme.invln_borrowingagainstrentalincome).ToLower()},{nameof(invln_scheme.invln_fundingfromopenmarkethomesonthisscheme).ToLower()}," +
+                $"{nameof(invln_scheme.invln_fundingrequired).ToLower()},{nameof(invln_scheme.invln_noofhomes).ToLower()}," +
+                $"{nameof(invln_scheme.invln_discussionswithlocalstakeholders).ToLower()},{nameof(invln_scheme.invln_meetinglocalhousingneed).ToLower()}," +
+                $"{nameof(invln_scheme.invln_meetinglocalpriorities).ToLower()},{nameof(invln_scheme.invln_reducingenvironmentalimpact).ToLower()}," +
+                $"{nameof(invln_scheme.invln_schemename).ToLower()},{nameof(invln_scheme.invln_lastexternalmodificationby).ToLower()},{nameof(invln_scheme.invln_lastexternalmodificationon).ToLower()}";
+            var app = JsonSerializer.Serialize(applicationDtoToReturn);
+            var req2 = new invln_setahpapplicationRequest() //get loan applications related to account and contact with given data
+            {
+                invln_application = app,
+                invln_organisationid = "db0da27f-bcfb-ed11-8f6d-002248c653e1",
+                invln_userid = "auth0|6548d4ef9e1110e85f1fef57",
+                invln_fieldstoupdate = fieldsToUpdate,
+            };
+           // var resp2 = (invln_setahpapplicationResponse)serviceClient.Execute(req2);
             var req3 = new invln_getahpapplicationRequest() //get loan applications related to account and contact with given data
             {
-                //invln_appfieldstoretrieve = fieldsToUpdate,
+                invln_appfieldstoretrieve = fieldsToUpdate,
                 invln_applicationid = "49ab97e2-f882-ee11-8179-002248004f63",
                 invln_organisationid = "db0da27f-bcfb-ed11-8f6d-002248c653e1",
                 invln_userid = "auth0|6548d4ef9e1110e85f1fef57",
@@ -371,10 +371,12 @@ namespace HE.Xrm.ServiceClientExample
                 valuationSource = "estateagentestimate",
                 whoProvided = "provided",
             };
-            var req1 = new invln_createsinglesitedetailRequest()
+            var req1 = new invln_updatesinglesitedetailsRequest()
             {
-                invln_sitedetails = JsonSerializer.Serialize(siteDetailsNewValues), //site details serialized DTO data
-                invln_loanapplicationid = "0beee88c-e540-ee11-bdf3-002248c652b4", // related loan application
+                invln_sitedetail = "{\"siteDetailsId\":\"1442e3bc-0668-ee11-9ae6-002248004a06\",\"currentValue\":null,\"dateOfPurchase\":null,\"existingLegalCharges\":false,\"existingLegalChargesInformation\":\"\",\"haveAPlanningReferenceNumber\":false,\"howMuch\":null,\"landRegistryTitleNumber\":\"s\",\"Name\":\"asd\",\"nameOfGrantFund\":null,\"numberOfAffordableHomes\":\"No\",\"numberOfHomes\":\"12\",\"otherTypeOfHomes\":null,\"planningReferenceNumber\":null,\"publicSectorFunding\":\"No\",\"reason\":null,\"siteCoordinates\":null,\"siteCost\":null,\"siteName\":null,\"siteOwnership\":false,\"typeOfHomes\":[\"extracareorassistedliving\"],\"typeOfSite\":\"brownfield\",\"valuationSource\":null,\"whoProvided\":null,\"planningPermissionStatus\":null,\"startDate\":null,\"affordableHousing\":false,\"completionStatus\":858110001,\"projectHasStartDate\":false,\"loanApplicationStatus\":null,\"localAuthority\":{\"onsCode\":\"E08000003\",\"name\":\"Manchester\"}}", //site details serialized DTO data
+                invln_loanapplicationid = "c541e3bc-0668-ee11-9ae6-002248004a06", // related loan application
+                invln_sitedetailsid = "1442e3bc-0668-ee11-9ae6-002248004a06",
+                invln_fieldstoupdate= "invln_name,invln_affordablehousing,invln_planningpermissionstatus,invln_haveaplanningreferencenumber,invln_planningreferencenumber,invln_sitecoordinates,invln_landregistrytitlenumber,invln_localauthorityid,invln_siteownership,invln_numberofhomes,invln_typeofsite,invln_typeofhomes,invln_othertypeofhomes,invln_projecthasstartdate,invln_startdate,invln_dateofpurchase,invln_sitecost,invln_currentvalue,invln_valuationsource,invln_publicsectorfunding,invln_whoprovided,invln_reason,invln_howmuch,invln_nameofgrantfund,invln_existinglegalcharges,invln_existinglegalchargesinformation,invln_completionstatus",
             };
             serviceClient.Execute(req1);
         }

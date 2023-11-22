@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
@@ -25,6 +24,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? numberOfBedrooms { get; set; }
         public int? maxOccupancy { get; set; }
         public int? numberOfStoreys { get; set; }
+        public System.DateTime? createdOn { get; set; }
         public int? buildingType { get; set; }
         public int? sharedFacilities { get; set; }
         public bool? isMoveOnAccommodation { get; set; }
