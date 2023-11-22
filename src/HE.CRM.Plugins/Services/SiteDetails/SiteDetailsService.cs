@@ -55,7 +55,7 @@ namespace HE.CRM.Plugins.Services.SiteDetails
                         foreach (var field in fields)
                         {
                             TracingService.Trace($"field {field}");
-                            if (field == nameof(invln_SiteDetails.invln_LocalAuthorityID).ToLower())
+                            if (field.ToLower() == nameof(invln_SiteDetails.invln_LocalAuthorityID).ToLower())
                             {
                                 siteDetailToUpdate.invln_LocalAuthorityID = siteDetailsMapped.invln_LocalAuthorityID;
                             }

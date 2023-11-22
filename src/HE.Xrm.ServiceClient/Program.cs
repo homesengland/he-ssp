@@ -37,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestLoan(serviceClient);
+                    TestUpdateSiteDetails(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -371,10 +371,12 @@ namespace HE.Xrm.ServiceClientExample
                 valuationSource = "estateagentestimate",
                 whoProvided = "provided",
             };
-            var req1 = new invln_createsinglesitedetailRequest()
+            var req1 = new invln_updatesinglesitedetailsRequest()
             {
-                invln_sitedetails = JsonSerializer.Serialize(siteDetailsNewValues), //site details serialized DTO data
-                invln_loanapplicationid = "0beee88c-e540-ee11-bdf3-002248c652b4", // related loan application
+                invln_sitedetail = "{\"siteDetailsId\":\"1442e3bc-0668-ee11-9ae6-002248004a06\",\"currentValue\":null,\"dateOfPurchase\":null,\"existingLegalCharges\":false,\"existingLegalChargesInformation\":\"\",\"haveAPlanningReferenceNumber\":false,\"howMuch\":null,\"landRegistryTitleNumber\":\"s\",\"Name\":\"asd\",\"nameOfGrantFund\":null,\"numberOfAffordableHomes\":\"No\",\"numberOfHomes\":\"12\",\"otherTypeOfHomes\":null,\"planningReferenceNumber\":null,\"publicSectorFunding\":\"No\",\"reason\":null,\"siteCoordinates\":null,\"siteCost\":null,\"siteName\":null,\"siteOwnership\":false,\"typeOfHomes\":[\"extracareorassistedliving\"],\"typeOfSite\":\"brownfield\",\"valuationSource\":null,\"whoProvided\":null,\"planningPermissionStatus\":null,\"startDate\":null,\"affordableHousing\":false,\"completionStatus\":858110001,\"projectHasStartDate\":false,\"loanApplicationStatus\":null,\"localAuthority\":{\"onsCode\":\"E08000003\",\"name\":\"Manchester\"}}", //site details serialized DTO data
+                invln_loanapplicationid = "c541e3bc-0668-ee11-9ae6-002248004a06", // related loan application
+                invln_sitedetailsid = "1442e3bc-0668-ee11-9ae6-002248004a06",
+                invln_fieldstoupdate= "invln_name,invln_affordablehousing,invln_planningpermissionstatus,invln_haveaplanningreferencenumber,invln_planningreferencenumber,invln_sitecoordinates,invln_landregistrytitlenumber,invln_localauthorityid,invln_siteownership,invln_numberofhomes,invln_typeofsite,invln_typeofhomes,invln_othertypeofhomes,invln_projecthasstartdate,invln_startdate,invln_dateofpurchase,invln_sitecost,invln_currentvalue,invln_valuationsource,invln_publicsectorfunding,invln_whoprovided,invln_reason,invln_howmuch,invln_nameofgrantfund,invln_existinglegalcharges,invln_existinglegalchargesinformation,invln_completionstatus",
             };
             serviceClient.Execute(req1);
         }
