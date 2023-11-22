@@ -16,7 +16,10 @@ namespace HE.CRM.Plugins.Plugins.ISPs
        "HE.CRM.Plugins.Plugins.Isps.SetFieldsOnSentForApprovalChangePlugin: Create of Isp",
        1,
        IsolationModeEnum.Sandbox,
-       Id = "fc06f2b3-c285-4f49-a8df-fbb79d9464a4")]
+       Id = "fc06f2b3-c285-4f49-a8df-fbb79d9464a4",
+       Image1Name = "PreImage",
+       Image1Attributes = "invln_sendforapproval",
+       Image1Type = ImageTypeEnum.PreImage)]
     [CrmPluginRegistration(
        MessageNameEnum.Update,
        invln_ISP.EntityLogicalName,
