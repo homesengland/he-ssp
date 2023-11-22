@@ -35,7 +35,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? marketValue { get; set; }
         public decimal? marketRent { get; set; }
         public decimal? prospectiveRent { get; set; }
-        public int? isWheelchairStandard { get; set; }
+        public bool? isWheelchairStandardMet { get; set; }
 
     }
 }
