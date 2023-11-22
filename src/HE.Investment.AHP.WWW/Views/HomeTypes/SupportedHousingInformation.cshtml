@@ -1,0 +1,66 @@
+@using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.Common
+@using HE.Investment.AHP.WWW.Models.HomeTypes
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@model HE.Investment.AHP.WWW.Models.HomeTypes.SupportedHousingInformationModel;
+
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+}
+
+<div class="govuk-grid-column-full">
+    <form asp-controller="HomeTypes" asp-action="SupportedHousingInformation" asp-method="post" novalidate>
+        <vc:home-type-form-header title="Supported housing information"
+                                  current-page="@HomeTypesWorkflowState.SupportedHousingInformation"
+                                  application-id="@applicationId"
+                                  home-type-id="@homeTypeId"
+                                  caption="@Model.Header"/>
+
+        <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
+            <gds-field-set>
+                <gds-legend>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Have local commissioning bodies been consulted about these homes?</gds-h2>
+                </gds-legend>
+
+                <gds-radio govuk-formgroup-asp-for="LocalCommissioningBodiesConsulted"
+                           asp-hiddenlabeltext="Local Commissioning Bodies Consulted"
+                           asp-hinttext="This is likely to be your local authority, but may include other commissioning groups depending on local arrangements."
+                           value="@Model.LocalCommissioningBodiesConsulted"
+                           asp-selectlistitems="@CommonFormOptions.YesNo"
+                           class="govuk-!-margin-bottom-8">
+                </gds-radio>
+
+                <gds-legend>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Will these homes be used as short stay accommodation?</gds-h2>
+                </gds-legend>
+
+                <gds-radio govuk-formgroup-asp-for="ShortStayAccommodation"
+                           asp-hiddenlabeltext="Short Stay Accommodation"
+                           value="@Model.ShortStayAccommodation"
+                           asp-selectlistitems="@CommonFormOptions.YesNo"
+                           class="govuk-!-margin-bottom-8">
+                </gds-radio>
+
+                <gds-legend>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Is revenue funding needed for these homes and has the source of this been identified?</gds-h2>
+                </gds-legend>
+
+                <gds-radio govuk-formgroup-asp-for="RevenueFundingType"
+                           asp-hiddenlabeltext="Revenue Funding Type"
+                           value="@Model.RevenueFundingType"
+                           asp-selectlistitems="@HomeTypesFormOptions.RevenueFundingTypes"
+                           class="govuk-!-margin-bottom-8">
+                </gds-radio>
+
+                <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                    Save and continue
+                </button>
+
+            </gds-field-set>
+            <vc:return-to-application-link application-id="@applicationId"/>
+        </gds-div-grid-column-two-thirds>
+    </form>
+</div>
