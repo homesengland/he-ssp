@@ -18,9 +18,9 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
         YesNoType shortStayAccommodation = YesNoType.Undefined,
         RevenueFundingType revenueFundingType = RevenueFundingType.Undefined)
     {
-        LocalCommissioningBodiesConsulted = localCommissioningBodiesConsulted;
-        ShortStayAccommodation = shortStayAccommodation;
-        RevenueFundingType = revenueFundingType;
+        _localCommissioningBodiesConsulted = localCommissioningBodiesConsulted;
+        _shortStayAccommodation = shortStayAccommodation;
+        _revenueFundingType = revenueFundingType;
     }
 
     public bool IsModified { get; private set; }

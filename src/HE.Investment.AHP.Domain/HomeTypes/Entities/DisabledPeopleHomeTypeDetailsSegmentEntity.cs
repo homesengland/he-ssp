@@ -14,8 +14,8 @@ public class DisabledPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
         DisabledPeopleHousingType housingType = DisabledPeopleHousingType.Undefined,
         DisabledPeopleClientGroupType clientGroupType = DisabledPeopleClientGroupType.Undefined)
     {
-        HousingType = housingType;
-        ClientGroupType = clientGroupType;
+        _housingType = housingType;
+        _clientGroupType = clientGroupType;
     }
 
     public bool IsModified { get; private set; }
