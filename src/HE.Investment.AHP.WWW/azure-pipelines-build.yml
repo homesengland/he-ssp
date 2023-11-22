@@ -34,4 +34,4 @@ resources:
     ref: 'master'
 
 stages:
-- template: azure-pipelines-ahp-www-build.yml@he-invst-deployment
+- template: azure-pipelines-ahp-portal-build.yml@he-invst-deployment
