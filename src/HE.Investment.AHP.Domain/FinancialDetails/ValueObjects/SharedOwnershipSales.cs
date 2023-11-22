@@ -24,6 +24,16 @@ public class SharedOwnershipSales : ValueObject
 
     public int Value { get; }
 
+    public static SharedOwnershipSales? From(decimal? value)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+
+        return new SharedOwnershipSales(value.ToWholeNumberString() ?? string.Empty);
+    }
+
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;

@@ -1,51 +1,78 @@
-using System.Collections.Concurrent;
+using System.Globalization;
+using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
-using HE.InvestmentLoans.Common.Exceptions;
+using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.Investments.Account.Shared;
 using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 
 public class FinancialDetailsRepository : IFinancialDetailsRepository
 {
-    private static readonly IDictionary<Guid, FinancialDetailsEntity> FinancialDetails = new ConcurrentDictionary<Guid, FinancialDetailsEntity>();
+    private readonly IApplicationCrmContext _applicationCrmContext;
 
-    public Task<FinancialDetailsEntity> GetById(ApplicationId applicationId, CancellationToken cancellationToken)
+    public FinancialDetailsRepository(IApplicationCrmContext applicationCrmContext)
     {
-        var financialDetails = Get(applicationId.Value);
-        if (financialDetails != null)
-        {
-            return Task.FromResult(financialDetails);
-        }
-
-        throw new NotFoundException(nameof(FinancialDetailsEntity), applicationId);
+        _applicationCrmContext = applicationCrmContext;
     }
 
-    public Task SaveAsync(FinancialDetailsEntity financialDetailsEntity, CancellationToken cancellationToken)
+    public async Task<FinancialDetailsEntity> GetById(ApplicationId id, CancellationToken cancellationToken)
     {
-        return Task.Run(() => Save(financialDetailsEntity), cancellationToken);
+        var application = await _applicationCrmContext.GetById(id.Value.ToString(), CrmFields.FinancialDetailsToRead, cancellationToken);
+
+        return CreateEntity(application);
     }
 
-    private FinancialDetailsEntity? Get(Guid financialDetailsId)
+    public async Task<FinancialDetailsEntity> Save(FinancialDetailsEntity financialDetails, CancellationToken cancellationToken)
     {
-        if (FinancialDetails.TryGetValue(financialDetailsId, out var financialDetails))
+        var dto = new AhpApplicationDto
         {
-            return financialDetails;
-        }
+            id = financialDetails.ApplicationId.Value.ToString(),
+            name = financialDetails.ApplicationName,
+            actualAcquisitionCost = financialDetails.ActualPurchasePrice?.Value,
+            expectedAcquisitionCost = financialDetails.ExpectedPurchasePrice?.Value,
+            isPublicLand = financialDetails.LandOwnership?.Value,
+            currentLandValue = financialDetails.LandValue?.Value,
+            expectedOnWorks = financialDetails.ExpectedWorksCosts?.Value,
+            expectedOnCosts = financialDetails.ExpectedOnCosts?.Value,
+            borrowingAgainstRentalIncomeFromThisScheme = financialDetails.RentalIncomeBorrowing?.Value,
+            fundingFromOpenMarketHomesOnThisScheme = financialDetails.SalesOfHomesOnThisScheme?.Value,
+            fundingFromOpenMarketHomesNotOnThisScheme = financialDetails.SalesOfHomesOnOtherSchemes?.Value,
+            ownResources = financialDetails.OwnResources?.Value,
+            recycledCapitalGrantFund = financialDetails.RCGFContribution?.Value,
+            otherCapitalSources = financialDetails.OtherCapitalSources?.Value,
+            totalInitialSalesIncome = financialDetails.SharedOwnershipSales?.Value,
+            transferValue = financialDetails.HomesTransferValue?.Value,
+        };
 
-        return null;
+        _ = await _applicationCrmContext.Save(dto, CrmFields.FinancialDetailsToUpdate, cancellationToken);
+
+        return financialDetails;
     }
 
-    private void Save(FinancialDetailsEntity financialDetailsEntity)
+    private static FinancialDetailsEntity CreateEntity(AhpApplicationDto application)
     {
-        if (FinancialDetails.TryGetValue(financialDetailsEntity.ApplicationId.Value, out var financialDetails))
-        {
-            var existingFinancialDetails = financialDetails;
-            if (existingFinancialDetails != null)
-            {
-                FinancialDetails.Remove(financialDetails.ApplicationId.Value);
-            }
-        }
-
-        FinancialDetails.Add(financialDetailsEntity.ApplicationId.Value, financialDetailsEntity);
+        return new FinancialDetailsEntity(
+            ApplicationId.From(application.id),
+            application.name ?? "Unknown",
+            ActualPurchasePrice.From(application.actualAcquisitionCost),
+            ExpectedPurchasePrice.From(application.expectedAcquisitionCost),
+            application.isPublicLand.HasValue ? new LandOwnership(application.isPublicLand.Value ? CommonResponse.Yes : CommonResponse.No) : null,
+            LandValue.From(application.currentLandValue),
+            ExpectedWorksCosts.From(application.expectedOnWorks),
+            ExpectedOnCosts.From(application.expectedOnCosts),
+            RentalIncomeBorrowing.From(application.borrowingAgainstRentalIncomeFromThisScheme),
+            SalesOfHomesOnThisScheme.From(application.fundingFromOpenMarketHomesOnThisScheme),
+            SalesOfHomesOnOtherSchemes.From(application.fundingFromOpenMarketHomesNotOnThisScheme),
+            OwnResources.From(application.ownResources),
+            RCGFContribution.From(application.recycledCapitalGrantFund),
+            OtherCapitalSources.From(application.otherCapitalSources),
+            SharedOwnershipSales.From(application.totalInitialSalesIncome),
+            HomesTransferValue.From(application.transferValue));
     }
 }

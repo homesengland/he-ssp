@@ -1,3 +1,4 @@
+using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
@@ -5,6 +6,7 @@ using HE.Investment.AHP.Domain.FinancialDetails;
 using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.InvestmentLoans.Common.Routing;
+using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
@@ -53,15 +55,16 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsLandStatusModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.PurchasePrice,
-            financialDetails.IsPurchasePriceKnown ?? false));
+            financialDetails.ActualPurchasePrice?.ToString(CultureInfo.InvariantCulture) ?? string.Empty,
+            financialDetails.ExpectedPurchasePrice?.ToString(CultureInfo.InvariantCulture) ?? string.Empty,
+            true));
     }
 
     [HttpPost("land-status")]
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
     public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvidePurchasePriceCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsPurchasePriceKnown), cancellationToken);
+        var result = await _mediator.Send(new ProvidePurchasePriceCommand(ApplicationId.From(applicationId), model.ActualPurchasePrice, model.ExpectedPurchasePrice), cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -78,11 +81,17 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     public async Task<IActionResult> LandValue(Guid applicationId)
     {
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
+
+        var isSchemeOnPublicLand =
+            financialDetails.IsSchemaOnPublicLand.HasValue ?
+            financialDetails.IsSchemaOnPublicLand.Value ? CommonResponse.Yes : CommonResponse.No :
+            string.Empty;
+
         return View(new FinancialDetailsLandValueModel(
             applicationId,
             financialDetails.ApplicationName,
             financialDetails.LandValue.ToString(),
-            financialDetails.IsSchemaOnPublicLand));
+            isSchemeOnPublicLand));
     }
 
     [HttpPost("land-value")]

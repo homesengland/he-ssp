@@ -12,7 +12,7 @@ public class SalesOfHomesOnOtherSchemes : ValueObject
         var operationResult = OperationResult.New();
 
         var intValue = NumericValidator
-            .For(value, FinancialDetailsValidationFieldNames.SalesOfHomesOnOtherSchemes, operationResult)
+            .For(value, FinancialDetailsValidationFieldNames.SaleOfHomesOnOtherSchemes, operationResult)
             .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
             .IsBetween(1, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError);
 
@@ -22,6 +22,16 @@ public class SalesOfHomesOnOtherSchemes : ValueObject
     }
 
     public int Value { get; }
+
+    public static SalesOfHomesOnOtherSchemes? From(decimal? value)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+
+        return new SalesOfHomesOnOtherSchemes(value.ToWholeNumberString() ?? string.Empty);
+    }
 
     protected override IEnumerable<object> GetAtomicValues()
     {

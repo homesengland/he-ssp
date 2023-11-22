@@ -23,6 +23,16 @@ public class HomesTransferValue : ValueObject
 
     public int Value { get; }
 
+    public static HomesTransferValue? From(decimal? value)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+
+        return new HomesTransferValue(value.ToWholeNumberString() ?? string.Empty);
+    }
+
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;
