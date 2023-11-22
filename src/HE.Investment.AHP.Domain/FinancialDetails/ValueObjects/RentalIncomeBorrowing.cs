@@ -23,6 +23,16 @@ public class RentalIncomeBorrowing : ValueObject
 
     public int Value { get; }
 
+    public static RentalIncomeBorrowing? From(decimal? value)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+
+        return new RentalIncomeBorrowing(value.ToWholeNumberString() ?? string.Empty);
+    }
+
     protected override IEnumerable<object> GetAtomicValues()
     {
         yield return Value;

@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.Investment.AHP.Contract.FinancialDetails;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
@@ -23,8 +24,8 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
         {
             ApplicationId = financialDetails.ApplicationId.Value,
             ApplicationName = financialDetails.ApplicationName,
-            IsPurchasePriceKnown = financialDetails.IsPurchasePriceKnown,
-            PurchasePrice = financialDetails.PurchasePrice?.Value.ToString(CultureInfo.InvariantCulture),
+            ActualPurchasePrice = financialDetails.ActualPurchasePrice?.Value,
+            ExpectedPurchasePrice = financialDetails.ExpectedPurchasePrice?.Value,
             IsSchemaOnPublicLand = financialDetails.LandOwnership?.Value,
             LandValue = financialDetails.LandValue?.Value,
             ExpectedWorkCost = financialDetails.ExpectedWorksCosts?.Value,

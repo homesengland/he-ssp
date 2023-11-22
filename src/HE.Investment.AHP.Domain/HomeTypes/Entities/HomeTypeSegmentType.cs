@@ -7,4 +7,5 @@ public enum HomeTypeSegmentType
     DisabledAndVulnerablePeople,
     OlderPeople,
     DesignPlans,
+    SupportedHousingInformation,
 }

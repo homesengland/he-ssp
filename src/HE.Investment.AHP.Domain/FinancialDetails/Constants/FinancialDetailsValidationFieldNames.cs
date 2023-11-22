@@ -3,7 +3,9 @@ using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 namespace HE.Investment.AHP.Domain.FinancialDetails.Constants;
 public static class FinancialDetailsValidationFieldNames
 {
-    public const string PurchasePrice = nameof(PurchasePrice);
+    public const string ActualPurchasePrice = nameof(ActualPurchasePrice);
+
+    public const string ExpectedPurchasePrice = nameof(ExpectedPurchasePrice);
 
     public const string LandOwnership = nameof(LandOwnership);
 
@@ -15,9 +17,9 @@ public static class FinancialDetailsValidationFieldNames
 
     public const string RentalIncomeBorrowing = nameof(RentalIncomeBorrowing);
 
-    public const string SalesOfHomesOnThisScheme = nameof(SalesOfHomesOnThisScheme);
+    public const string SaleOfHomesOnThisScheme = nameof(SaleOfHomesOnThisScheme);
 
-    public const string SalesOfHomesOnOtherSchemes = nameof(SalesOfHomesOnOtherSchemes);
+    public const string SaleOfHomesOnOtherSchemes = nameof(SaleOfHomesOnOtherSchemes);
 
     public const string OwnResources = nameof(OwnResources);
 

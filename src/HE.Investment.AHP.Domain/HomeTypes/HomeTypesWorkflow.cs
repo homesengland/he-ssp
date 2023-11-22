@@ -61,7 +61,7 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
         _machine.Configure(HomeTypesWorkflowState.HomeInformation)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeTypeDetails, () => _homeTypeModel.HousingType is HousingType.Undefined or HousingType.General)
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.DesignPlans, () => _homeTypeModel.HousingType is HousingType.HomesForDisabledAndVulnerablePeople or HousingType.HomesForOlderPeople);
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.SupportedHousingInformation, () => _homeTypeModel.HousingType is HousingType.HomesForDisabledAndVulnerablePeople or HousingType.HomesForOlderPeople);
 
         _machine.Configure(HomeTypesWorkflowState.HomesForDisabledPeople)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.DisabledPeopleClientGroup)
@@ -81,7 +81,11 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.DisabledPeopleClientGroup, () => _homeTypeModel.HousingType == HousingType.HomesForDisabledAndVulnerablePeople);
 
         _machine.Configure(HomeTypesWorkflowState.DesignPlans)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.HomeInformation)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.SupportedHousingInformation)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HappiDesignPrinciples);
+
+        _machine.Configure(HomeTypesWorkflowState.SupportedHousingInformation)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.HomeInformation)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.DesignPlans);
     }
 }

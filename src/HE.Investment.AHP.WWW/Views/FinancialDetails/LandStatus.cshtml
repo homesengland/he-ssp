@@ -22,43 +22,57 @@
             }
             else
             {
+                <div class="govuk-!-margin-bottom-9">
                 <strong>Land purchase negotiations underway</strong>
+                </div>
             }
         </div>
-        <div class="govuk-body-m govuk-!-margin-bottom-6">
-            If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.
-        </div>
+        @if (Model.IsPurchasePriceKnown)
+        {
+            <div class="govuk-body-m govuk-!-margin-bottom-6">
+                If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.
+            </div>
+        }
 
         <gds-field-set>
-            <gds-legend class="govuk-!-margin-bottom-0">
-
-                @if (Model.IsPurchasePriceKnown)
-                {
+            @if (Model.IsPurchasePriceKnown)
+            {
+                <gds-legend class="govuk-!-margin-bottom-0">
                     <gds-h2 class="govuk-!-margin-bottom-0">
                         Enter the purchase price of the land
                     </gds-h2>
-                }
-                else
-                {
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="ActualPurchasePrice"
+                           asp-hinttext="The purchase price must be backed by a valuation report from a qualified independent valuer, valid at the date of exchange of purchase contracts."
+                           class="govuk-input--width-5 govuk-!-margin-bottom-9"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="ActualPurchasePrice"
+                           name="ActualPurchasePrice"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.ActualPurchasePrice />
+            }
+            else
+            {
+                <gds-legend class="govuk-!-margin-bottom-0">
                     <gds-h2 class="govuk-!-margin-bottom-0">
                         Enter the expected purchase price of the land
                     </gds-h2>
-                }
-
-            </gds-legend>
-            <gds-input asp-hiddenlabeltext="PurchasePrice"
-                       asp-hinttext="The purchase price must be backed by a valuation report from a qualified independent valuer, valid at the date of exchange of purchase contracts."
-                       class="govuk-input--width-5"
-                       asp-labelclass="govuk-label"
-                       govuk-formgroup-asp-for="PurchasePrice"
-                       name="PurchasePrice"
-                       asp-prefixtext=@(GdsInputPrefixText.Pounds)
-                       value=@Model.PurchasePrice />
-
-            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="ExpectedPurchasePrice"
+                           asp-hinttext="The purchase price must be backed by a valuation report from a qualified independent valuer, valid at the date of exchange of purchase contracts."
+                           class="govuk-input--width-5 govuk-!-margin-bottom-9"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="ExpectedPurchasePrice"
+                           name="ExpectedPurchasePrice"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.ExpectedPurchasePrice />
+            }
+            
+            <button id="continue-button" class="govuk-button govuk-!-" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Save and continue
             </button>
 
+            @Html.HiddenFor(c => c.IsPurchasePriceKnown)
             @Html.HiddenFor(c => c.ApplicationId)
             @Html.HiddenFor(c => c.ApplicationName)
         </gds-field-set>
