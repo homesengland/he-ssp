@@ -42,7 +42,8 @@ namespace HE.CRM.Common.DtoMapping
                 marketValue = homeType.invln_marketvalue,
                 marketRent = homeType.invln_marketrent,
                 prospectiveRent = homeType.invln_prospectiverent,
-                isWheelchairStandardMet = homeType.invln_iswheelchairstandardmet
+                isWheelchairStandardMet = homeType.invln_iswheelchairstandardmet,
+                designPlansMoreInformation = homeType.invln_designplancomments,
             };
             if (homeType.Id != null)
             {
@@ -105,6 +106,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_marketrent = homeTypeDto.marketRent,
                 invln_prospectiverent = homeTypeDto.prospectiveRent,
                 invln_iswheelchairstandardmet = homeTypeDto.isWheelchairStandardMet,
+                invln_designplancomments = homeTypeDto.designPlansMoreInformation,
             };
             if (homeTypeDto.id != null)
             {
