@@ -3,11 +3,10 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-- none
+trigger: none
 
 pool: "vmss-ado-chs-nonprod-001"
-          
+
 resources:
   repositories:
   - repository: he-invst-deployment

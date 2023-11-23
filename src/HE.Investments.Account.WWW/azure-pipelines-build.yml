@@ -21,9 +21,9 @@ pr:
     exclude:
     - src/HE.DocumentService/*
     - src/HE.Investment.AHP*
-    
 
-pool: "vmss-ado-chs-nonprod-001"
+pool:
+  vmImage: 'ubuntu-22.04'
 
 resources:
   repositories:
