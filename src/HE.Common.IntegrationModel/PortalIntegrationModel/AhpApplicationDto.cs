@@ -1,3 +1,5 @@
+using System;
+
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
     public class AhpApplicationDto
@@ -28,6 +30,15 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public decimal? actualAcquisitionCost { get; set; }
         public decimal? expectedAcquisitionCost { get; set; }
         public decimal? ownResources { get; set; }
+        public decimal? howMuchReceivedFromCountyCouncil { get; set; }
+        public decimal? howMuchReceivedFromDhscExtraCareFunding { get; set; }
+        public decimal? howMuchReceivedFromLocalAuthority1 { get; set; }
+        public decimal? howMuchReceivedFromLocalAuthority2 { get; set; }
+        public decimal? howMuchReceivedFromSocialServices { get; set; }
+        public decimal? howMuchReceivedFromDepartmentOfHealth { get; set; }
+        public decimal? howMuchReceivedFromLotteryFunding { get; set; }
+        public decimal? howMuchReceivedFromOtherPublicBodies { get; set; }
+
 
         //schema
         public decimal? fundingRequested { get; set; }
@@ -42,5 +53,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         //other
         public string contactId { get; set; }
         public string organisationId { get; set; }
+        public DateTime? lastExternalModificationOn { get; set; }
+        public ContactDto lastExternalModificationBy { get; set; }
     }
 }

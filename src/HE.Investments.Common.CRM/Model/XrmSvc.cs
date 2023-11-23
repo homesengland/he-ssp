@@ -506,7 +506,10 @@ namespace HE.Investments.Common.CRM.Model
 		SocialServicesDepartment = 858110001,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		DrugsActionTeamHousingDepartment = 858110002,
+		DrugsActionTeam = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		HousingDepartment = 858110019,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		OtherLocalAuthoritySource = 858110003,
@@ -18997,6 +19000,24 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
+		/// 1:N invln_contact_invln_scheme_lastexternalmodificationby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_scheme_lastexternalmodificationby")]
+		public System.Collections.Generic.IEnumerable<HE.Investments.Common.CRM.Model.invln_scheme> invln_contact_invln_scheme_lastexternalmodificationby
+		{
+			get
+			{
+				return this.GetRelatedEntities<HE.Investments.Common.CRM.Model.invln_scheme>("invln_contact_invln_scheme_lastexternalmodificationby", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_scheme_lastexternalmodificationby");
+				this.SetRelatedEntities<HE.Investments.Common.CRM.Model.invln_scheme>("invln_contact_invln_scheme_lastexternalmodificationby", null, value);
+				this.OnPropertyChanged("invln_contact_invln_scheme_lastexternalmodificationby");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_loanapplication_contact
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_contact")]
@@ -19629,6 +19650,24 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_initialsale");
 				this.SetAttributeValue("invln_initialsale", value);
 				this.OnPropertyChanged("invln_initialsale");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_iswheelchairstandardmet")]
+		public System.Nullable<bool> invln_iswheelchairstandardmet
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_iswheelchairstandardmet");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_iswheelchairstandardmet");
+				this.SetAttributeValue("invln_iswheelchairstandardmet", value);
+				this.OnPropertyChanged("invln_iswheelchairstandardmet");
 			}
 		}
 		
@@ -23343,6 +23382,42 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastexternalmodificationby")]
+		public Microsoft.Xrm.Sdk.EntityReference invln_lastexternalmodificationby
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_lastexternalmodificationby");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_lastexternalmodificationby");
+				this.SetAttributeValue("invln_lastexternalmodificationby", value);
+				this.OnPropertyChanged("invln_lastexternalmodificationby");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastexternalmodificationon")]
+		public System.Nullable<System.DateTime> invln_lastexternalmodificationon
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_lastexternalmodificationon");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_lastexternalmodificationon");
+				this.SetAttributeValue("invln_lastexternalmodificationon", value);
+				this.OnPropertyChanged("invln_lastexternalmodificationon");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthoritylookup")]
 		public Microsoft.Xrm.Sdk.EntityReference invln_localauthoritylookup
 		{
@@ -24292,6 +24367,25 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanged("invln_contact_invln_scheme_contactid");
 			}
 		}
+		
+		/// <summary>
+		/// N:1 invln_contact_invln_scheme_lastexternalmodificationby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastexternalmodificationby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_contact_invln_scheme_lastexternalmodificationby")]
+		public HE.Investments.Common.CRM.Model.Contact invln_contact_invln_scheme_lastexternalmodificationby
+		{
+			get
+			{
+				return this.GetRelatedEntity<HE.Investments.Common.CRM.Model.Contact>("invln_contact_invln_scheme_lastexternalmodificationby", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_contact_invln_scheme_lastexternalmodificationby");
+				this.SetRelatedEntity<HE.Investments.Common.CRM.Model.Contact>("invln_contact_invln_scheme_lastexternalmodificationby", null, value);
+				this.OnPropertyChanged("invln_contact_invln_scheme_lastexternalmodificationby");
+			}
+		}
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -24723,6 +24817,39 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_localauthorityregion")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_region> invln_LocalAuthorityRegion
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_localauthorityregion");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_region)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_region), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_LocalAuthorityRegion");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_localauthorityregion", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_localauthorityregion", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_LocalAuthorityRegion");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_mspresent")]
 		public System.Nullable<bool> invln_MSPresent
 		{
@@ -25011,39 +25138,6 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_Reason");
 				this.SetAttributeValue("invln_reason", value);
 				this.OnPropertyChanged("invln_Reason");
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_region")]
-		public System.Nullable<HE.Investments.Common.CRM.Model.invln_region> invln_Region
-		{
-			get
-			{
-				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_region");
-				if ((optionSet != null))
-				{
-					return ((HE.Investments.Common.CRM.Model.invln_region)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_region), optionSet.Value)));
-				}
-				else
-				{
-					return null;
-				}
-			}
-			set
-			{
-				this.OnPropertyChanging("invln_Region");
-				if ((value == null))
-				{
-					this.SetAttributeValue("invln_region", null);
-				}
-				else
-				{
-					this.SetAttributeValue("invln_region", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
-				}
-				this.OnPropertyChanged("invln_Region");
 			}
 		}
 		

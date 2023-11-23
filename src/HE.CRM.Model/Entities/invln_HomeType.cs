@@ -77,6 +77,7 @@ namespace DataverseModel
 			public const string invln_hometypename = "invln_hometypename";
 			public const string invln_initialsale = "invln_initialsale";
 			public const string invln_invln_hometype_application_invln_scheme = "invln_invln_hometype_application_invln_scheme";
+			public const string invln_iswheelchairstandardmet = "invln_iswheelchairstandardmet";
 			public const string invln_localcommissioningbodiesconsulted = "invln_localcommissioningbodiesconsulted";
 			public const string invln_marketrent = "invln_marketrent";
 			public const string invln_marketvalue = "invln_marketvalue";
@@ -557,6 +558,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_initialsale");
 				this.SetAttributeValue("invln_initialsale", value);
 				this.OnPropertyChanged("invln_initialsale");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_iswheelchairstandardmet")]
+		public System.Nullable<bool> invln_iswheelchairstandardmet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_iswheelchairstandardmet");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_iswheelchairstandardmet");
+				this.SetAttributeValue("invln_iswheelchairstandardmet", value);
+				this.OnPropertyChanged("invln_iswheelchairstandardmet");
 			}
 		}
 		

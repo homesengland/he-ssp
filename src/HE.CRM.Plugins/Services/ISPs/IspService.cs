@@ -111,7 +111,7 @@ namespace HE.CRM.Plugins.Services.ISPs
 
         public void CreateDesAndHofRecords(invln_ISP preImage, invln_ISP target)
         {
-            if (preImage.invln_SendforApproval != true && target.invln_SendforApproval == true)
+            if ((preImage == null && target.invln_SendforApproval == true) || (preImage != null && preImage.invln_SendforApproval != true && target.invln_SendforApproval == true))
             {
                 var desReviews = _reviewApprovalRepository.GetReviewApprovalsForIsp(target.ToEntityReference(), invln_reviewerapproverset.DESReview);
                 var desReviewsNumber = desReviews.Count() > 0 ? (desReviews.Count() + 1).ToString() : "";
