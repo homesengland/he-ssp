@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.InvestmentLoans.Common.Exceptions;
 using MediatR;
+using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
 namespace HE.Investment.AHP.Domain.Scheme.QueryHandlers;
 
@@ -29,11 +30,17 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
                 entity.SalesRisk?.Value,
                 entity.HousingNeeds?.TypeAndTenureJustification,
                 entity.HousingNeeds?.SchemeAndProposalJustification,
-                entity.StakeholderDiscussions?.Report);
+                entity.StakeholderDiscussions?.Report,
+                entity.StakeholderDiscussionsFiles.UploadedFiles.Select(CreateFile).ToList());
         }
         catch (NotFoundException)
         {
             return null;
         }
+    }
+
+    private static UploadedFile CreateFile(HE.Investment.AHP.Domain.Common.UploadedFile file)
+    {
+        return new UploadedFile(file.Id.Value, file.Name.Value, file.UploadedOn, file.UploadedBy, true);
     }
 }

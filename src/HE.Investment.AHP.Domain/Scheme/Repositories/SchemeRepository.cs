@@ -2,7 +2,10 @@ using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
+using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Common.Entities;
 using HE.Investment.AHP.Domain.Data;
+using HE.Investment.AHP.Domain.Mock;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
@@ -16,11 +19,13 @@ public class SchemeRepository : ISchemeRepository
 {
     private readonly IApplicationCrmContext _repository;
     private readonly IAccountUserContext _accountUserContext;
+    private readonly IFileService _fileService;
 
-    public SchemeRepository(IApplicationCrmContext repository, IAccountUserContext accountUserContext)
+    public SchemeRepository(IApplicationCrmContext repository, IAccountUserContext accountUserContext, IFileService fileService)
     {
         _repository = repository;
         _accountUserContext = accountUserContext;
+        _fileService = fileService;
     }
 
     public async Task<SchemeEntity> GetByApplicationId(DomainApplicationId id, CancellationToken cancellationToken)
@@ -32,7 +37,9 @@ public class SchemeRepository : ISchemeRepository
             throw new NotFoundException("Scheme", $"application {id.Value}");
         }
 
-        return CreateEntity(application);
+        var stakeholderDiscussionsFiles = await _fileService.GetByApplicationId(id, cancellationToken);
+
+        return CreateEntity(application, stakeholderDiscussionsFiles);
     }
 
     public async Task<SchemeEntity> Save(SchemeEntity entity, CancellationToken cancellationToken)
@@ -54,10 +61,12 @@ public class SchemeRepository : ISchemeRepository
 
         await _repository.Save(dto, CrmFields.SchemeToUpdate, cancellationToken);
 
+        await entity.StakeholderDiscussionsFiles.SaveChanges(entity.Application.Id, _fileService, cancellationToken);
+
         return entity;
     }
 
-    private static SchemeEntity CreateEntity(AhpApplicationDto application)
+    private static SchemeEntity CreateEntity(AhpApplicationDto application, IReadOnlyCollection<UploadedFile> stakeholderDiscussionsFiles)
     {
         return new SchemeEntity(
             new ApplicationBasicDetails(new DomainApplicationId(application.id), new ApplicationName(application.name)),
@@ -66,6 +75,7 @@ public class SchemeRepository : ISchemeRepository
             new AffordabilityEvidence(application.affordabilityEvidence),
             new SalesRisk(application.sharedOwnershipSalesRisk),
             new HousingNeeds(application.meetingLocalProrities, application.meetingLocalHousingNeed),
-            new StakeholderDiscussions(application.discussionsWithLocalStakeholders));
+            new StakeholderDiscussions(application.discussionsWithLocalStakeholders),
+            new StakeholderDiscussionsFiles(stakeholderDiscussionsFiles));
     }
 }

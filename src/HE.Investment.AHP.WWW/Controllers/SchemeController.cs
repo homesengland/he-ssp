@@ -1,16 +1,19 @@
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.Contract.Scheme.Queries;
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Workflows;
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.InvestmentLoans.Common.Routing;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
@@ -142,12 +145,40 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpPost("stakeholder-discussions")]
     public async Task<IActionResult> StakeholderDiscussions(SchemeViewModel model, CancellationToken cancellationToken)
     {
-        return await ExecuteCommand(
-            new ChangeSchemeStakeholderDiscussionsCommand(model.ApplicationId, model.StakeholderDiscussionsReport),
-            model.ApplicationId,
-            nameof(StakeholderDiscussions),
-            model,
-            cancellationToken);
+        var filesToUpload = model.StakeholderDiscussionFiles.Select(x => new FileToUpload(x.FileName, x.Length, x.OpenReadStream())).ToList();
+
+        try
+        {
+            return await ExecuteCommand(
+                new ChangeSchemeStakeholderDiscussionsCommand(model.ApplicationId, model.StakeholderDiscussionsReport, filesToUpload),
+                model.ApplicationId,
+                nameof(StakeholderDiscussions),
+                model,
+                cancellationToken);
+        }
+        finally
+        {
+            foreach (var file in filesToUpload)
+            {
+                await file.Content.DisposeAsync();
+            }
+        }
+    }
+
+    [WorkflowState(SchemeWorkflowState.StakeholderDiscussions)]
+    [HttpGet("RemoveStakeholderDiscussionsFile")]
+    public async Task<IActionResult> RemoveStakeholderDiscussionsFile(
+        [FromRoute] string applicationId,
+        [FromQuery] string fileId,
+        CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new RemoveStakeholderDiscussionsFileCommand(applicationId, fileId), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            throw new DomainValidationException(result);
+        }
+
+        return RedirectToAction("StakeholderDiscussions", new { applicationId });
     }
 
     protected override async Task<IStateRouting<SchemeWorkflowState>> Routing(SchemeWorkflowState currentState, object routeData = null)
@@ -157,6 +188,11 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
     private SchemeViewModel CreateModel(string applicationId, string applicationName = null, Scheme scheme = null)
     {
+        string GetRemoveAction(string fileId) =>
+            Url.RouteUrl("section", new { controller = "scheme", action = "RemoveStakeholderDiscussionsFile", applicationId, fileId });
+
+        FileModel CreateFileModel(UploadedFile x) => new(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId));
+
         return new SchemeViewModel(
             applicationId,
             applicationName,
@@ -167,7 +203,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             scheme?.TypeAndTenureJustification,
             scheme?.SchemeAndProposalJustification,
             scheme?.StakeholderDiscussionsReport,
-            new List<FileModel>(),
+            scheme?.StakeholderDiscussionsFiles.Select(CreateFileModel).ToList(),
             new List<IFormFile>());
     }
 

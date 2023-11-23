@@ -13,7 +13,8 @@ public class SchemeEntity
         AffordabilityEvidence? affordabilityEvidence = null,
         SalesRisk? salesRisk = null,
         HousingNeeds? housingNeeds = null,
-        StakeholderDiscussions? stakeholderDiscussions = null)
+        StakeholderDiscussions? stakeholderDiscussions = null,
+        StakeholderDiscussionsFiles? stakeholderDiscussionsFiles = null)
     {
         Application = application;
         Funding = funding;
@@ -22,6 +23,7 @@ public class SchemeEntity
         SalesRisk = salesRisk;
         HousingNeeds = housingNeeds;
         StakeholderDiscussions = stakeholderDiscussions;
+        StakeholderDiscussionsFiles = stakeholderDiscussionsFiles ?? new StakeholderDiscussionsFiles();
     }
 
     public ApplicationBasicDetails Application { get; }
@@ -35,6 +37,8 @@ public class SchemeEntity
     public HousingNeeds? HousingNeeds { get; private set; }
 
     public StakeholderDiscussions? StakeholderDiscussions { get; private set; }
+
+    public StakeholderDiscussionsFiles StakeholderDiscussionsFiles { get; }
 
     public SectionStatus Status { get; private set; }
 
@@ -58,8 +62,9 @@ public class SchemeEntity
         HousingNeeds = housingNeeds;
     }
 
-    public void ChangeStakeholderDiscussions(StakeholderDiscussions stakeholderDiscussions)
+    public void ChangeStakeholderDiscussions(StakeholderDiscussions stakeholderDiscussions, IList<StakeholderDiscussionsFile> stakeholderDiscussionsFilesToAdd)
     {
         StakeholderDiscussions = stakeholderDiscussions;
+        StakeholderDiscussionsFiles.AddFilesToUpload(stakeholderDiscussionsFilesToAdd);
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace HE.Investments.Common.WWW.Components.TextArea;
+namespace HE.Investments.Common.WWW.TagHelpers;
 
 public class HeTextAreaTagHelper : InputTagHelper
 {

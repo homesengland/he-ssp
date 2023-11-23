@@ -17,7 +17,7 @@
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"/>
 
-        <vc:upload-file field-name ="File" description="Upload all relevant files." />
+        <vc:upload-file field-name ="File" description="Upload all relevant files." is-multiple="true" />
 
         <vc:files-table asp-for="@Model.UploadedFiles"/>
 
