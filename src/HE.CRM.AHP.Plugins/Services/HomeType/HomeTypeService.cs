@@ -140,5 +140,14 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             }
             return generatedAttribuesFetchXml;
         }
+
+        public void SetHappiPrinciplesValue(invln_HomeType target)
+        {
+            if (target.invln_happiprinciples != null && target.invln_happiprinciples.Any(x => x.Value == (int)invln_HAPPIprinciples.KNone))
+            {
+                target.invln_happiprinciples.Clear();
+                target.invln_happiprinciples.Add(new Microsoft.Xrm.Sdk.OptionSetValue((int)invln_HAPPIprinciples.KNone));
+            }
+        }
     }
 }
