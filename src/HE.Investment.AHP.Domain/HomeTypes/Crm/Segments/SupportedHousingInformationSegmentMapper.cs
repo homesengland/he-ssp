@@ -15,6 +15,7 @@ public class SupportedHousingInformationSegmentMapper : HomeTypeCrmSegmentMapper
             nameof(invln_HomeType.invln_localcommissioningbodiesconsulted),
             nameof(invln_HomeType.invln_homesusedforshortstay),
             nameof(invln_HomeType.invln_revenuefunding),
+            nameof(invln_HomeType.invln_revenuefundingsources),
         })
     {
     }
@@ -26,7 +27,8 @@ public class SupportedHousingInformationSegmentMapper : HomeTypeCrmSegmentMapper
         return new SupportedHousingInformationEntity(
             YesNoTypeMapper.Map(dto.localComissioningBodies),
             YesNoTypeMapper.Map(dto.shortStayAccommodation),
-            MapRevenueFunding(dto.revenueFunding));
+            MapRevenueFunding(dto.revenueFunding),
+            dto.fundingSources.Select(MapSources));
     }
 
     protected override SupportedHousingInformationEntity GetSegment(HomeTypeEntity entity) => entity.SupportedHousingInformation;
@@ -36,6 +38,7 @@ public class SupportedHousingInformationSegmentMapper : HomeTypeCrmSegmentMapper
         dto.localComissioningBodies = YesNoTypeMapper.Map(segment.LocalCommissioningBodiesConsulted);
         dto.shortStayAccommodation = YesNoTypeMapper.Map(segment.ShortStayAccommodation);
         dto.revenueFunding = MapRevenueFunding(segment.RevenueFundingType);
+        dto.fundingSources = segment.RevenueFundingSources.Select(MapSources).ToList();
     }
 
     private static int? MapRevenueFunding(RevenueFundingType? value)
@@ -57,6 +60,62 @@ public class SupportedHousingInformationSegmentMapper : HomeTypeCrmSegmentMapper
             (int)invln_revenuefunding.Revenuefundingisneededbuthasnotyetbeenidentified => RevenueFundingType.RevenueFundingNeededButNotIdentified,
             (int)invln_revenuefunding.Norevenuefundingisnotneeded => RevenueFundingType.RevenueFundingNotNeeded,
             _ => RevenueFundingType.Undefined,
+        };
+    }
+
+    private static int MapSources(RevenueFundingSourceType value)
+    {
+        return value switch
+        {
+            RevenueFundingSourceType.Charity => (int)invln_revenuefundingsources.Charity,
+            RevenueFundingSourceType.ClinicalCommissioningGroupLocalAreaTeam => (int)invln_revenuefundingsources.ClinicalCommissioningGroupLocalAreaTeam,
+            RevenueFundingSourceType.CrimeAndDisorderReductionPartnerships => (int)invln_revenuefundingsources.CrimeandDisorderReductionPartnerships,
+            RevenueFundingSourceType.DepartmentForEducation => (int)invln_revenuefundingsources.DepartmentforEducation,
+            RevenueFundingSourceType.DrugsActionTeam => (int)invln_revenuefundingsources.DrugsActionTeam,
+            RevenueFundingSourceType.HealthAndWellBeingBoard => (int)invln_revenuefundingsources.HealthandWellbeingBoard,
+            RevenueFundingSourceType.HomeOffice => (int)invln_revenuefundingsources.HomeOffice,
+            RevenueFundingSourceType.HousingDepartment => (int)invln_revenuefundingsources.HousingDepartment,
+            RevenueFundingSourceType.LocalAreaAgreements => (int)invln_revenuefundingsources.LocalAreaAgreements,
+            RevenueFundingSourceType.NationalLottery => (int)invln_revenuefundingsources.NationalLottery,
+            RevenueFundingSourceType.NhsEngland => (int)invln_revenuefundingsources.NHSEngland,
+            RevenueFundingSourceType.NhsTrust => (int)invln_revenuefundingsources.NHSTrust_egFoundationTrustMentalhealthTrust,
+            RevenueFundingSourceType.OtherHealthSource => (int)invln_revenuefundingsources.Otherhealthsource,
+            RevenueFundingSourceType.OtherLocalAuthoritySource => (int)invln_revenuefundingsources.OtherLocalAuthoritySource,
+            RevenueFundingSourceType.ProbationService => (int)invln_revenuefundingsources.ProbationService,
+            RevenueFundingSourceType.ProvidersReserves => (int)invln_revenuefundingsources.Providersreserves,
+            RevenueFundingSourceType.SocialServicesDepartment => (int)invln_revenuefundingsources.SocialServicesDepartment,
+            RevenueFundingSourceType.SupportingPeople => (int)invln_revenuefundingsources.SupportingPeople,
+            RevenueFundingSourceType.YouthOffendingTeams => (int)invln_revenuefundingsources.YouthOffendingTeams,
+            RevenueFundingSourceType.Other => (int)invln_revenuefundingsources.Other,
+            _ => throw new ArgumentOutOfRangeException(nameof(value), $"Value {value} is not supported by CRM mapping."),
+        };
+    }
+
+    private static RevenueFundingSourceType MapSources(int value)
+    {
+        return value switch
+        {
+            (int)invln_revenuefundingsources.Charity => RevenueFundingSourceType.Charity,
+            (int)invln_revenuefundingsources.ClinicalCommissioningGroupLocalAreaTeam => RevenueFundingSourceType.ClinicalCommissioningGroupLocalAreaTeam,
+            (int)invln_revenuefundingsources.CrimeandDisorderReductionPartnerships => RevenueFundingSourceType.CrimeAndDisorderReductionPartnerships,
+            (int)invln_revenuefundingsources.DepartmentforEducation => RevenueFundingSourceType.DepartmentForEducation,
+            (int)invln_revenuefundingsources.DrugsActionTeam => RevenueFundingSourceType.DrugsActionTeam,
+            (int)invln_revenuefundingsources.HealthandWellbeingBoard => RevenueFundingSourceType.HealthAndWellBeingBoard,
+            (int)invln_revenuefundingsources.HomeOffice => RevenueFundingSourceType.HomeOffice,
+            (int)invln_revenuefundingsources.HousingDepartment => RevenueFundingSourceType.HousingDepartment,
+            (int)invln_revenuefundingsources.LocalAreaAgreements => RevenueFundingSourceType.LocalAreaAgreements,
+            (int)invln_revenuefundingsources.NationalLottery => RevenueFundingSourceType.NationalLottery,
+            (int)invln_revenuefundingsources.NHSEngland => RevenueFundingSourceType.NhsEngland,
+            (int)invln_revenuefundingsources.NHSTrust_egFoundationTrustMentalhealthTrust => RevenueFundingSourceType.NhsTrust,
+            (int)invln_revenuefundingsources.Otherhealthsource => RevenueFundingSourceType.OtherHealthSource,
+            (int)invln_revenuefundingsources.OtherLocalAuthoritySource => RevenueFundingSourceType.OtherLocalAuthoritySource,
+            (int)invln_revenuefundingsources.ProbationService => RevenueFundingSourceType.ProbationService,
+            (int)invln_revenuefundingsources.Providersreserves => RevenueFundingSourceType.ProvidersReserves,
+            (int)invln_revenuefundingsources.SocialServicesDepartment => RevenueFundingSourceType.SocialServicesDepartment,
+            (int)invln_revenuefundingsources.SupportingPeople => RevenueFundingSourceType.SupportingPeople,
+            (int)invln_revenuefundingsources.YouthOffendingTeams => RevenueFundingSourceType.YouthOffendingTeams,
+            (int)invln_revenuefundingsources.Other => RevenueFundingSourceType.Other,
+            _ => throw new ArgumentOutOfRangeException(nameof(value), $"Value {value} is not supported by CRM mapping."),
         };
     }
 }

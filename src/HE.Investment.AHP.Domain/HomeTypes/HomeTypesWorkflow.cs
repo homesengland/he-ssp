@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.InvestmentLoans.Common.Routing;
@@ -88,7 +89,13 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .Permit(Trigger.Back, HomeTypesWorkflowState.HappiDesignPrinciples);
 
         _machine.Configure(HomeTypesWorkflowState.SupportedHousingInformation)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.HomeInformation)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.RevenueFunding, () => _homeTypeModel is { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededAndIdentified })
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeInformation, () => _homeTypeModel is not { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededAndIdentified })
             .Permit(Trigger.Back, HomeTypesWorkflowState.DesignPlans);
+
+        _machine.Configure(HomeTypesWorkflowState.RevenueFunding)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.SupportedHousingInformation, () => _homeTypeModel is not { Conditionals.ShortStayAccommodation: YesNoType.No }) // TODO change to TheMoveOnArrangements
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeInformation, () => _homeTypeModel is { Conditionals.ShortStayAccommodation: YesNoType.No }) // TODO change to typology
+            .Permit(Trigger.Back, HomeTypesWorkflowState.SupportedHousingInformation);
     }
 }

@@ -22,4 +22,6 @@ public static class HomeTypesFormOptions
     public static IEnumerable<SelectListItem> HappiDesignPrinciplesOnlyNone => new[] { SelectListHelper.FromEnum(HappiDesignPrincipleType.NoneOfThese) };
 
     public static IEnumerable<SelectListItem> RevenueFundingTypes => SelectListHelper.FromEnum<RevenueFundingType>();
+
+    public static IEnumerable<SelectListItem> RevenueFundingSourceTypes => SelectListHelper.FromEnum<RevenueFundingSourceType>();
 }

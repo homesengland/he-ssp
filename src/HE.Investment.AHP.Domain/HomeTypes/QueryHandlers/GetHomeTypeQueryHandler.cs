@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using MediatR;
@@ -21,7 +22,7 @@ internal sealed class GetHomeTypeQueryHandler : IRequestHandler<GetHomeTypeQuery
         var homeType = await _repository.GetById(
             new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId),
             new HomeTypeId(request.HomeTypeId),
-            HomeTypeSegmentTypes.None,
+            HomeTypeSegmentTypes.WorkflowConditionals,
             cancellationToken);
 
         return new HomeType
@@ -29,6 +30,7 @@ internal sealed class GetHomeTypeQueryHandler : IRequestHandler<GetHomeTypeQuery
             HomeTypeId = request.HomeTypeId,
             HomeTypeName = homeType.Name?.Value,
             HousingType = homeType.HousingType,
+            Conditionals = HomeTypeConditionalsMapper.Map(homeType),
         };
     }
 }

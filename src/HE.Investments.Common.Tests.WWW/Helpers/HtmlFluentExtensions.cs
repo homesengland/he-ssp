@@ -57,6 +57,20 @@ public static class HtmlFluentExtensions
         return htmlDocument;
     }
 
+    public static IHtmlDocument HasCheckedCheckboxes(this IHtmlDocument htmlDocument, string fieldName, IList<string> checkedValues)
+    {
+        var inputs = htmlDocument.GetElementsByName(fieldName);
+
+        foreach (var checkedValue in checkedValues)
+        {
+            var element = inputs?.Where(x => x.OuterHtml.Contains(checkedValue)).FirstOrDefault();
+            var isChecked = element?.IsChecked();
+            isChecked.Should().Be(true, $"{checkedValue} value should be checked");
+        }
+
+        return htmlDocument;
+    }
+
     public static IHtmlDocument IsEmpty(this IHtmlDocument htmlDocument)
     {
         var body = htmlDocument.GetElementsByTagName("body").FirstOrDefault();

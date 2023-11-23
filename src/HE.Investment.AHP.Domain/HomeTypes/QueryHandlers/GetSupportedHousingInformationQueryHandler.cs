@@ -28,6 +28,7 @@ internal sealed class GetSupportedHousingInformationQueryHandler : IRequestHandl
             homeType.Name?.Value,
             homeType.SupportedHousingInformation.LocalCommissioningBodiesConsulted,
             homeType.SupportedHousingInformation.ShortStayAccommodation,
-            homeType.SupportedHousingInformation.RevenueFundingType);
+            homeType.SupportedHousingInformation.RevenueFundingType,
+            homeType.SupportedHousingInformation.RevenueFundingSources.ToList());
     }
 }

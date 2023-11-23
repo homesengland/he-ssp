@@ -9,4 +9,6 @@ public class HomeType
     public string? HomeTypeName { get; set; }
 
     public HousingType HousingType { get; set; }
+
+    public HomeTypeConditionals Conditionals { get; set; }
 }
