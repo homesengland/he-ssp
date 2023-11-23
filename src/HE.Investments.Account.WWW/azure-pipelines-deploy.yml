@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- none
+  - none
 
 pool: "vmss-ado-chs-nonprod-001"
 
