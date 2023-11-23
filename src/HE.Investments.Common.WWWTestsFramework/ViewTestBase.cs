@@ -11,7 +11,7 @@ namespace HE.Investments.Common.WWWTestsFramework;
 
 public abstract class ViewTestBase
 {
-    protected async Task<IHtmlDocument> Render<TModel>(
+    protected virtual async Task<IHtmlDocument> Render<TModel>(
         string viewPath,
         TModel? model = null,
         Dictionary<string, object>? viewBagOrViewData = null,

@@ -9,6 +9,7 @@ using HE.InvestmentLoans.Common.Routing;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using MediatR;
@@ -145,7 +146,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpPost("stakeholder-discussions")]
     public async Task<IActionResult> StakeholderDiscussions(SchemeViewModel model, CancellationToken cancellationToken)
     {
-        var filesToUpload = model.StakeholderDiscussionFiles.Select(x => new FileToUpload(x.FileName, x.Length, x.OpenReadStream())).ToList();
+        var filesToUpload = (model.StakeholderDiscussionFiles ?? new List<IFormFile>())
+            .Select(x => new FileToUpload(x.FileName, x.Length, x.OpenReadStream()))
+            .ToList();
 
         try
         {
@@ -179,6 +182,15 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         }
 
         return RedirectToAction("StakeholderDiscussions", new { applicationId });
+    }
+
+    [WorkflowState(SchemeWorkflowState.Summary)]
+    [HttpGet("summary")]
+    public async Task<IActionResult> Summary([FromRoute] string applicationId, CancellationToken cancellationToken)
+    {
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+
+        return View("Summary", (scheme.ApplicationName, Items: CreateSummaryModel(scheme)));
     }
 
     protected override async Task<IStateRouting<SchemeWorkflowState>> Routing(SchemeWorkflowState currentState, object routeData = null)
@@ -224,4 +236,43 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
         return await Continue(new { applicationId });
     }
+
+    private IList<SectionSummaryItemModel> CreateSummaryModel(Scheme scheme)
+    {
+        return new List<SectionSummaryItemModel>
+        {
+            new(
+                "Funding requested",
+                new List<string> { scheme.RequiredFunding.ToString() },
+                ActionUrl: CreateActionUrl(nameof(Funding), scheme.ApplicationId)),
+            new(
+                "Number of homes",
+                new List<string> { scheme.HousesToDeliver.ToString() },
+                ActionUrl: CreateActionUrl(nameof(Funding), scheme.ApplicationId)),
+            new(
+                "Affordability od shared ownership",
+                new List<string> { scheme.AffordabilityEvidence },
+                ActionUrl: CreateActionUrl(nameof(Affordability), scheme.ApplicationId)),
+            new(
+                "Sales risk of shared ownership",
+                new List<string> { scheme.SalesRisk },
+                ActionUrl: CreateActionUrl(nameof(SalesRisk), scheme.ApplicationId)),
+            new(
+                "Type and tenure of homes",
+                new List<string> { scheme.TypeAndTenureJustification },
+                ActionUrl: CreateActionUrl(nameof(SalesRisk), scheme.ApplicationId)),
+            new(
+                "Locally identified housing need",
+                new List<string> { scheme.SchemeAndProposalJustification },
+                ActionUrl: CreateActionUrl(nameof(HousingNeeds), scheme.ApplicationId)),
+            new(
+                "Local stakeholder discussions",
+                new List<string> { scheme.StakeholderDiscussionsReport },
+                ActionUrl: CreateActionUrl(nameof(StakeholderDiscussions), scheme.ApplicationId),
+                Files: scheme.StakeholderDiscussionsFiles.ToDictionary(f => f.FileName, f => f.FileId)),
+        };
+    }
+
+    private string CreateActionUrl(string actionName, string applicationId) =>
+        Url.Action(actionName, "Scheme", new { applicationId });
 }
