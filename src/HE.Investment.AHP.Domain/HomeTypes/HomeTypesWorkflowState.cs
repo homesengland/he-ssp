@@ -14,4 +14,8 @@ public enum HomeTypesWorkflowState
     HappiDesignPrinciples,
     DesignPlans,
     SupportedHousingInformation,
+    RevenueFunding,
+    ExitPlan,
+    TheMoveOnArrangements,
+    TypologyLocationAndDesign,
 }

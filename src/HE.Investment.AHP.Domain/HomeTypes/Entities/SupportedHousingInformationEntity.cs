@@ -8,14 +8,18 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 [HomeTypeSegmentType(HomeTypeSegmentType.SupportedHousingInformation)]
 public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
 {
+    private readonly List<RevenueFundingSourceType> _revenueFundingSources;
+
     public SupportedHousingInformationEntity(
         YesNoType localCommissioningBodiesConsulted = YesNoType.Undefined,
         YesNoType shortStayAccommodation = YesNoType.Undefined,
-        RevenueFundingType revenueFundingType = RevenueFundingType.Undefined)
+        RevenueFundingType revenueFundingType = RevenueFundingType.Undefined,
+        IEnumerable<RevenueFundingSourceType>? revenueFundingSources = null)
     {
         LocalCommissioningBodiesConsulted = localCommissioningBodiesConsulted;
         ShortStayAccommodation = shortStayAccommodation;
         RevenueFundingType = revenueFundingType;
+        _revenueFundingSources = revenueFundingSources?.ToList() ?? new List<RevenueFundingSourceType>();
     }
 
     public YesNoType LocalCommissioningBodiesConsulted { get; private set; }
@@ -23,6 +27,8 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
     public YesNoType ShortStayAccommodation { get; private set; }
 
     public RevenueFundingType RevenueFundingType { get; private set; }
+
+    public IReadOnlyCollection<RevenueFundingSourceType> RevenueFundingSources => _revenueFundingSources;
 
     public void ChangeLocalCommissioningBodiesConsulted(YesNoType localCommissioningBodiesConsulted)
     {
@@ -39,15 +45,24 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
         RevenueFundingType = revenueFundingType;
     }
 
+    public void ChangeSources(IEnumerable<RevenueFundingSourceType> revenueFundingSources)
+    {
+        var uniqueRevenueFundingSources = revenueFundingSources.Distinct().ToList();
+
+        _revenueFundingSources.Clear();
+        _revenueFundingSources.AddRange(uniqueRevenueFundingSources);
+    }
+
     public IHomeTypeSegmentEntity Duplicate()
     {
-        return new SupportedHousingInformationEntity(LocalCommissioningBodiesConsulted, ShortStayAccommodation, RevenueFundingType);
+        return new SupportedHousingInformationEntity(LocalCommissioningBodiesConsulted, ShortStayAccommodation, RevenueFundingType, RevenueFundingSources);
     }
 
     public bool IsCompleted()
     {
         return LocalCommissioningBodiesConsulted != YesNoType.Undefined
                && ShortStayAccommodation != YesNoType.Undefined
-               && RevenueFundingType != RevenueFundingType.Undefined;
+               && RevenueFundingType != RevenueFundingType.Undefined
+               && RevenueFundingSources.Any();
     }
 }

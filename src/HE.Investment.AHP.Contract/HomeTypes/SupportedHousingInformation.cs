@@ -7,4 +7,5 @@ public record SupportedHousingInformation(
     string? HomeTypeName,
     YesNoType LocalCommissioningBodiesConsulted,
     YesNoType ShortStayAccommodation,
-    RevenueFundingType RevenueFundingType);
+    RevenueFundingType RevenueFundingType,
+    IList<RevenueFundingSourceType>? RevenueFundingSources);

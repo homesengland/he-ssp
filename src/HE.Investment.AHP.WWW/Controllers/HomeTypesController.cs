@@ -342,6 +342,35 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(HomeTypesWorkflowState.RevenueFunding)]
+    [HttpGet("{homeTypeId}/RevenueFunding")]
+    public async Task<IActionResult> RevenueFunding([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var supportedHousingInformation = await _mediator.Send(new GetSupportedHousingInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new RevenueFundingModel(application.Name, supportedHousingInformation.HomeTypeName)
+        {
+            Sources = supportedHousingInformation.RevenueFundingSources,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.RevenueFunding)]
+    [HttpPost("{homeTypeId}/RevenueFunding")]
+    public async Task<IActionResult> RevenueFunding(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        RevenueFundingModel model,
+        CancellationToken cancellationToken)
+    {
+        var revenueFundingSources = model.Sources ?? Array.Empty<RevenueFundingSourceType>();
+
+        return await SaveHomeTypeSegment(
+            new SaveRevenueFundingCommand(applicationId, homeTypeId, revenueFundingSources.ToList()),
+            model,
+            cancellationToken);
+    }
+
     protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object routeData = null)
     {
         var applicationId = Request.GetRouteValue("applicationId")
