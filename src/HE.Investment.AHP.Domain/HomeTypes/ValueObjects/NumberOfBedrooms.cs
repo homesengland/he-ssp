@@ -2,8 +2,19 @@ namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
 public class NumberOfBedrooms : RequiredIntValueObject
 {
+    private const string DisplayName = "How many bedrooms in each home";
+
+    private const int MinValue = 0;
+
+    private const int MaxValue = 999;
+
     public NumberOfBedrooms(string? value)
-        : base(value, nameof(NumberOfBedrooms), "How many bedrooms in each home", 0, 999)
+        : base(value, nameof(NumberOfBedrooms), DisplayName, MinValue, MaxValue)
+    {
+    }
+
+    public NumberOfBedrooms(int value)
+        : base(value, nameof(NumberOfBedrooms), DisplayName, MinValue, MaxValue)
     {
     }
 }

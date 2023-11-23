@@ -2,7 +2,9 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.CRM.Model;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
@@ -17,15 +19,17 @@ public class DesignPlansCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<DesignPl
 
     public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto)
     {
-        // TODO: map comments when available
-        return new DesignPlansSegmentEntity(application, dto.designPrinciples.Select(MapDesignPrinciple));
+        return new DesignPlansSegmentEntity(
+            application,
+            dto.designPrinciples.Select(MapDesignPrinciple),
+            dto.designPlansMoreInformation.IsProvided() ? new MoreInformation(dto.designPlansMoreInformation) : null);
     }
 
     protected override DesignPlansSegmentEntity GetSegment(HomeTypeEntity entity) => entity.DesignPlans;
 
     protected override void MapToDto(HomeTypeDto dto, DesignPlansSegmentEntity segment)
     {
-        // TODO: map comments when available
+        dto.designPlansMoreInformation = segment.MoreInformation?.Value;
         dto.designPrinciples = segment.DesignPrinciples.Select(MapDesignPrinciple).ToList();
     }
 

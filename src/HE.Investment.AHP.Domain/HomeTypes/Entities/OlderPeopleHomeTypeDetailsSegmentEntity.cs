@@ -1,37 +1,26 @@
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
+using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.OlderPeople)]
 public class OlderPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
 {
-    private OlderPeopleHousingType _housingType;
+    private readonly ModificationTracker _modificationTracker = new();
 
     public OlderPeopleHomeTypeDetailsSegmentEntity(OlderPeopleHousingType housingType = OlderPeopleHousingType.Undefined)
     {
-        _housingType = housingType;
+        HousingType = housingType;
     }
 
-    public bool IsModified { get; private set; }
+    public bool IsModified => _modificationTracker.IsModified;
 
-    public OlderPeopleHousingType HousingType
-    {
-        get => _housingType;
-        private set
-        {
-            if (_housingType != value)
-            {
-                IsModified = true;
-            }
-
-            _housingType = value;
-        }
-    }
+    public OlderPeopleHousingType HousingType { get; private set; }
 
     public void ChangeHousingType(OlderPeopleHousingType housingType)
     {
-        HousingType = housingType;
+        HousingType = _modificationTracker.Change(HousingType, housingType);
     }
 
     public IHomeTypeSegmentEntity Duplicate()
