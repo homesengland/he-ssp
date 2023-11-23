@@ -80,7 +80,7 @@ public class HomeTypeRepository : IHomeTypeRepository
                     _homeTypeCrmMapper.MapToDto(entity, segments),
                     _homeTypeCrmMapper.SaveCrmFields(entity, segments),
                     cancellationToken));
-            await _eventDispatcher.Publish(new HomeTypeHasBeenCreatedEvent(homeType.Application.Id.Value, entity.Name?.Value), cancellationToken);
+            await _eventDispatcher.Publish(new HomeTypeHasBeenCreatedEvent(homeType.Application.Id.Value, entity.Name.Value), cancellationToken);
         }
         else if (entity.IsModified)
         {
@@ -91,7 +91,9 @@ public class HomeTypeRepository : IHomeTypeRepository
             await _eventDispatcher.Publish(new HomeTypeHasBeenUpdatedEvent(homeType.Application.Id.Value, entity.Id!.Value), cancellationToken);
         }
 
-        if (segments.Contains(HomeTypeSegmentType.DesignPlans))
+        if (segments.Contains(HomeTypeSegmentType.DesignPlans)
+            && entity.HasSegment(HomeTypeSegmentType.DesignPlans)
+            && entity.DesignPlans.IsModified)
         {
             await homeType.DesignPlans.SaveFileChanges(homeType, _designFileService, cancellationToken);
         }

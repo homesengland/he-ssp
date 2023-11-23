@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Razor.Templating.Core;
 
-namespace HE.Investments.Common.Tests.WWW.Framework;
+namespace HE.Investments.Common.WWWTestsFramework.Framework;
 
 internal sealed class CustomRazorTemplateEngineRenderer : IRazorTemplateEngine
 {

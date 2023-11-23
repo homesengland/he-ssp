@@ -41,7 +41,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HE.Investments.Account.WWW\HE.Investments.Account.WWW.csproj"/>
-    <ProjectReference Include="..\HE.Investments.Common.Tests.WWW\HE.Investments.Common.Tests.WWW.csproj"/>
+    <ProjectReference Include="..\HE.Investments.Common.WWWTestsFramework\HE.Investments.Common.WWWTestsFramework.csproj" />
   </ItemGroup>
 
 

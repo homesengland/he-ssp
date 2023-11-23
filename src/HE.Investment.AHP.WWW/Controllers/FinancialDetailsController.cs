@@ -119,8 +119,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsOtherApplicationCostsModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.ExpectedWorkCost.ToString() ?? string.Empty,
-            financialDetails.ExpectedOnCost.ToString() ?? string.Empty));
+            financialDetails.ExpectedWorkCost.ToString() ?? Check.IfCanBeNull,
+            financialDetails.ExpectedOnCost.ToString() ?? Check.IfCanBeNull));
     }
 
     [HttpPost("other-application-costs")]

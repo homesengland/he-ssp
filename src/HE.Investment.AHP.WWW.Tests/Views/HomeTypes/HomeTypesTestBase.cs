@@ -1,13 +1,9 @@
-using AngleSharp;
 using AngleSharp.Html.Dom;
-using HE.Investments.Common.Services.Notifications;
-using HE.Investments.Common.Tests.WWW;
-using HE.Investments.Common.Tests.WWW.Framework;
-using HE.Investments.Common.Tests.WWW.Helpers;
+using HE.Investments.Common.WWWTestsFramework;
+using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using Moq;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 

@@ -1,7 +1,7 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.Account.Contract.Organisation;
-using HE.Investments.Common.Tests.WWW;
-using HE.Investments.Common.Tests.WWW.Helpers;
+using HE.Investments.Common.WWWTestsFramework;
+using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Xunit;
 
 namespace HE.InvestmentLoans.WWW.Tests.Views.Organisation;
