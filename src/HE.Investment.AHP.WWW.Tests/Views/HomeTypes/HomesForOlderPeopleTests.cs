@@ -13,7 +13,7 @@ public class HomesForOlderPeopleTests : HomeTypesTestBase
     public async Task ShouldRenderViewWithRadioButtons()
     {
         // given & when
-        var document = await Render(ViewPath, Model);
+        var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
         document

@@ -26,9 +26,14 @@ internal sealed class CustomRazorViewToStringRenderer
         _serviceProvider = serviceProvider;
     }
 
-    public async Task<string> RenderViewToStringAsync(string viewName, object? model, ViewDataDictionary viewDataDictionary, bool isMainPage = true)
+    public async Task<string> RenderViewToStringAsync(
+        string viewName,
+        object? model,
+        ViewDataDictionary viewDataDictionary,
+        RouteData? routeData = null,
+        bool isMainPage = true)
     {
-        var actionContext = GetActionContext();
+        var actionContext = GetActionContext(routeData);
         var view = FindView(actionContext, viewName, isMainPage);
 
         await using var output = new StringWriter();
@@ -76,7 +81,7 @@ internal sealed class CustomRazorViewToStringRenderer
         throw new InvalidOperationException(errorMessage);
     }
 
-    private ActionContext GetActionContext()
+    private ActionContext GetActionContext(RouteData? routeData)
     {
         var httpContext = new DefaultHttpContext { RequestServices = _serviceProvider };
         var app = new ApplicationBuilder(_serviceProvider);
@@ -87,7 +92,7 @@ internal sealed class CustomRazorViewToStringRenderer
             "{controller}/{action}/{id}",
             new RouteValueDictionary(new { id = "defaultid" }));
 
-        var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
+        var actionContext = new ActionContext(httpContext, routeData ?? new RouteData(), new ActionDescriptor());
         actionContext.RouteData.Routers.Add(routeBuilder.Build());
         return actionContext;
     }

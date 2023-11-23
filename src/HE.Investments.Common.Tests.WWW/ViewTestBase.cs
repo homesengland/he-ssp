@@ -4,6 +4,7 @@ using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Tests.WWW.Framework;
 using HE.Investments.Common.Tests.WWW.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 
@@ -16,6 +17,7 @@ public abstract class ViewTestBase
         TModel? model = null,
         Dictionary<string, object>? viewBagOrViewData = null,
         ModelStateDictionary? modelStateDictionary = null,
+        RouteData? routeData = null,
         Action<IServiceCollection>? mockDependencies = null)
         where TModel : class
     {
@@ -25,7 +27,7 @@ public abstract class ViewTestBase
             mockDependencies?.Invoke(services);
         };
 
-        var html = await CustomRazorTemplateEngine.RenderPartialAsync(viewPath, model, viewBagOrViewData, modelStateDictionary);
+        var html = await CustomRazorTemplateEngine.RenderPartialAsync(viewPath, model, viewBagOrViewData, modelStateDictionary, routeData);
 
         var document = await BrowsingContext.New().OpenAsync(r => r.Content(html), CancellationToken.None);
         return document as IHtmlDocument ?? throw new InvalidOperationException();
