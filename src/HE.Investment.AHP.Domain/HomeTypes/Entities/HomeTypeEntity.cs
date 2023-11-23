@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
@@ -11,23 +12,21 @@ public class HomeTypeEntity : IHomeTypeEntity
 {
     private readonly IDictionary<HomeTypeSegmentType, IHomeTypeSegmentEntity> _segments;
 
-    private bool _isModified;
-
-    private HousingType _housingType;
-
-    private HomeTypeName? _name;
+    private readonly ModificationTracker _modificationTracker = new();
 
     public HomeTypeEntity(
         ApplicationBasicInfo application,
+        string? name,
+        HousingType housingType,
         HomeTypeId? id = null,
-        string? name = null,
-        HousingType housingType = HousingType.Undefined,
+        DateTime? createdOn = null,
         params IHomeTypeSegmentEntity[] segments)
     {
         Application = application;
+        Name = new HomeTypeName(name);
+        HousingType = housingType;
         Id = id;
-        _name = name.IsNotProvided() ? null : new HomeTypeName(name);
-        _housingType = housingType;
+        CreatedOn = createdOn;
         _segments = segments.ToDictionary(x => GetSegmentType(x.GetType()), x => x);
     }
 
@@ -35,33 +34,11 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public HomeTypeId? Id { get; set; }
 
-    public HomeTypeName? Name
-    {
-        get => _name;
-        private set
-        {
-            if (_name != value)
-            {
-                _isModified = true;
-            }
+    public HomeTypeName Name { get; private set; }
 
-            _name = value;
-        }
-    }
+    public HousingType HousingType { get; private set; }
 
-    public HousingType HousingType
-    {
-        get => _housingType;
-        private set
-        {
-            if (_housingType != value)
-            {
-                _isModified = true;
-            }
-
-            _housingType = value;
-        }
-    }
+    public DateTime? CreatedOn { get; }
 
     public HomeInformationSegmentEntity HomeInformation => GetRequiredSegment<HomeInformationSegmentEntity>();
 
@@ -75,14 +52,14 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public bool IsNew => Id.IsNotProvided();
 
-    public bool IsModified => _isModified || _segments.Any(x => x.Value.IsModified);
+    public bool IsModified => _modificationTracker.IsModified || _segments.Any(x => x.Value.IsModified);
 
     // TODO: set this value when implementing Delivery Phases
     public bool IsUsedInDeliveryPhase => false;
 
     public void ChangeName(string? name)
     {
-        Name = new HomeTypeName(name);
+        Name = _modificationTracker.Change(Name, new HomeTypeName(name));
     }
 
     public void ChangeHousingType(HousingType newHousingType)
@@ -101,12 +78,12 @@ public class HomeTypeEntity : IHomeTypeEntity
             UpdateSegment(GetOptionalSegment<SupportedHousingInformationEntity>() ?? new SupportedHousingInformationEntity());
         }
 
-        HousingType = newHousingType;
+        HousingType = _modificationTracker.Change(HousingType, newHousingType);
     }
 
     public HomeTypeEntity Duplicate(HomeTypeName newName)
     {
-        return new HomeTypeEntity(Application, null, newName.Value, HousingType, _segments.Select(x => x.Value.Duplicate()).ToArray());
+        return new HomeTypeEntity(Application, newName.Value, HousingType, segments: _segments.Select(x => x.Value.Duplicate()).ToArray());
     }
 
     public bool IsCompleted()

@@ -31,7 +31,7 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
             invln_userid = account.UserGlobalId.ToString(),
             invln_organisationid = account.AccountId.ToString(),
             invln_applicationid = applicationId,
-            invln_appfieldstoretrieve = nameof(invln_scheme.invln_hometypessectioncompletionstatus),
+            invln_appfieldstoretrieve = nameof(invln_scheme.invln_hometypessectioncompletionstatus).ToLowerInvariant(),
         };
 
         var response = await _service.ExecuteAsync<invln_getahpapplicationRequest, invln_getahpapplicationResponse, IList<AhpApplicationDto>>(
@@ -51,7 +51,7 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
             invln_userid = account.UserGlobalId.ToString(),
             invln_organisationid = account.AccountId.ToString(),
             invln_application = JsonSerializer.Serialize(application),
-            invln_fieldstoupdate = nameof(invln_scheme.invln_hometypessectioncompletionstatus),
+            invln_fieldstoupdate = nameof(invln_scheme.invln_hometypessectioncompletionstatus).ToLowerInvariant(),
         };
 
         await _service.ExecuteAsync<invln_setahpapplicationRequest, invln_setahpapplicationResponse>(
@@ -68,7 +68,7 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
             invln_userid = account.UserGlobalId.ToString(),
             invln_organisationid = account.AccountId.ToString(),
             invln_applicationid = applicationId,
-            invln_fieldstoretrieve = string.Join(FieldNamesSeparator, fieldsToRetrieve),
+            invln_fieldstoretrieve = string.Join(FieldNamesSeparator, fieldsToRetrieve).ToLowerInvariant(),
         };
 
         return await _service.ExecuteAsync<invln_gettypeofhomeslistRequest, invln_gettypeofhomeslistResponse, IList<HomeTypeDto>>(
@@ -86,7 +86,7 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
             invln_organisationid = account.AccountId.ToString(),
             invln_applicationid = applicationId,
             invln_hometypeid = homeTypeId,
-            invln_fieldstoretrieve = string.Join(FieldNamesSeparator, fieldsToRetrieve),
+            invln_fieldstoretrieve = string.Join(FieldNamesSeparator, fieldsToRetrieve).ToLowerInvariant(),
         };
 
         return await _service.ExecuteAsync<invln_getsinglehometypeRequest, invln_getsinglehometypeResponse, HomeTypeDto?>(
@@ -121,7 +121,7 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
             invln_userid = account.UserGlobalId.ToString(),
             invln_applicationid = homeType.applicationId,
             invln_hometype = JsonSerializer.Serialize(homeType, _serializerOptions),
-            invln_fieldstoset = string.Join(FieldNamesSeparator, fieldsToSave),
+            invln_fieldstoset = string.Join(FieldNamesSeparator, fieldsToSave).ToLowerInvariant(),
         };
 
         return await _service.ExecuteAsync<invln_sethometypeRequest, invln_sethometypeResponse>(

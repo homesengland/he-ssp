@@ -4,7 +4,6 @@ using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Exceptions;
-using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
@@ -18,13 +17,13 @@ public class HomeTypesEntity
 
     private readonly ApplicationBasicInfo _application;
 
-    private SectionStatus _status;
+    private readonly ModificationTracker _statusModificationTracker = new();
 
     public HomeTypesEntity(ApplicationBasicInfo application, IEnumerable<HomeTypeEntity> homeTypes, SectionStatus status)
     {
         _application = application;
         _homeTypes = homeTypes.ToList();
-        _status = status;
+        Status = status;
     }
 
     public ApplicationId ApplicationId => _application.Id;
@@ -33,30 +32,13 @@ public class HomeTypesEntity
 
     public IEnumerable<IHomeTypeEntity> ToRemove => _toRemove;
 
-    public SectionStatus Status
+    public SectionStatus Status { get; private set; }
+
+    public bool IsStatusChanged => _statusModificationTracker.IsModified;
+
+    public IHomeTypeEntity CreateHomeType(string? name, HousingType housingType)
     {
-        get => _status;
-        private set
-        {
-            if (_status != value)
-            {
-                IsStatusChanged = true;
-            }
-
-            _status = value;
-        }
-    }
-
-    public bool IsStatusChanged { get; private set; }
-
-    public IHomeTypeEntity GetOrCreateNewHomeType(HomeTypeId? homeTypeId = null)
-    {
-        if (homeTypeId.IsProvided())
-        {
-            return GetEntityById(homeTypeId!);
-        }
-
-        var homeType = new HomeTypeEntity(_application);
+        var homeType = new HomeTypeEntity(_application, ValidateNameUniqueness(name), housingType);
         _homeTypes.Add(homeType);
 
         return homeType;
@@ -84,16 +66,7 @@ public class HomeTypesEntity
             $"Given {nameof(HomeTypeEntity)} does not belong to current {nameof(HomeTypesEntity)}",
             nameof(homeTypeEntity));
 
-        if (!string.IsNullOrEmpty(name) && _homeTypes.Except(new[] { entity }).Any(x => x.Name?.Value == name))
-        {
-            throw new DomainValidationException(
-                new OperationResult().AddValidationErrors(new List<ErrorItem>
-                {
-                    new(nameof(HomeTypeName), "Enter a different name. Home types cannot have the same name"),
-                }));
-        }
-
-        entity.ChangeName(name);
+        entity.ChangeName(ValidateNameUniqueness(name, entity));
     }
 
     public void CompleteSection(FinishHomeTypesAnswer finishAnswer)
@@ -113,20 +86,20 @@ public class HomeTypesEntity
             if (notCompletedHomeTypes.Any())
             {
                 throw new DomainValidationException(new OperationResult().AddValidationErrors(
-                    notCompletedHomeTypes.Select(x => new ErrorItem($"HomeType-{x.Id}", $"Complete {x.Name?.Value} to save and continue")).ToList()));
+                    notCompletedHomeTypes.Select(x => new ErrorItem($"HomeType-{x.Id}", $"Complete {x.Name.Value} to save and continue")).ToList()));
             }
 
-            Status = SectionStatus.Completed;
+            Status = _statusModificationTracker.Change(Status, SectionStatus.Completed);
         }
         else
         {
-            Status = SectionStatus.InProgress;
+            Status = _statusModificationTracker.Change(Status, SectionStatus.InProgress);
         }
     }
 
     public void MarkAsInProgress()
     {
-        Status = SectionStatus.InProgress;
+        Status = _statusModificationTracker.Change(Status, SectionStatus.InProgress);
     }
 
     public IHomeTypeEntity Duplicate(HomeTypeId homeTypeId)
@@ -137,13 +110,29 @@ public class HomeTypesEntity
         return homeType.Duplicate(newName);
     }
 
-    private HomeTypeEntity GetEntityById(HomeTypeId homeTypeId) => _homeTypes.SingleOrDefault(x => x.Id == homeTypeId)
+    public HomeTypeEntity GetEntityById(HomeTypeId homeTypeId) => _homeTypes.SingleOrDefault(x => x.Id == homeTypeId)
                                                                    ?? throw new NotFoundException(nameof(HomeTypeEntity), homeTypeId);
+
+    // ReSharper disable once ParameterOnlyUsedForPreconditionCheck.Local
+    private string? ValidateNameUniqueness(string? name, HomeTypeEntity? entity = null)
+    {
+        if ((entity == null && _homeTypes.Any(x => x.Name.Value == name))
+            || (entity != null && _homeTypes.Except(new[] { entity }).Any(x => x.Name.Value == name)))
+        {
+            throw new DomainValidationException(
+                new OperationResult().AddValidationErrors(new List<ErrorItem>
+                {
+                    new(nameof(HomeTypeName), "Enter a different name. Home types cannot have the same name"),
+                }));
+        }
+
+        return name;
+    }
 
     private HomeTypeName GenerateUniqueNameDuplicate(IHomeTypeEntity homeType)
     {
         var suffixIndex = 1;
-        var duplicatedName = homeType.Name ?? new HomeTypeName("Duplicate");
+        var duplicatedName = homeType.Name;
 
         while (_homeTypes.Any(x => x.Name == duplicatedName))
         {

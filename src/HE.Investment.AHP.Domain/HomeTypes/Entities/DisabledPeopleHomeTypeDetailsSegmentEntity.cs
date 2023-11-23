@@ -1,61 +1,36 @@
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
+using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.DisabledAndVulnerablePeople)]
 public class DisabledPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
 {
-    private DisabledPeopleHousingType _housingType;
-
-    private DisabledPeopleClientGroupType _clientGroupType;
+    private readonly ModificationTracker _modificationTracker = new();
 
     public DisabledPeopleHomeTypeDetailsSegmentEntity(
         DisabledPeopleHousingType housingType = DisabledPeopleHousingType.Undefined,
         DisabledPeopleClientGroupType clientGroupType = DisabledPeopleClientGroupType.Undefined)
     {
-        _housingType = housingType;
-        _clientGroupType = clientGroupType;
+        HousingType = housingType;
+        ClientGroupType = clientGroupType;
     }
 
-    public bool IsModified { get; private set; }
+    public bool IsModified => _modificationTracker.IsModified;
 
-    public DisabledPeopleHousingType HousingType
-    {
-        get => _housingType;
-        private set
-        {
-            if (_housingType != value)
-            {
-                IsModified = true;
-            }
+    public DisabledPeopleHousingType HousingType { get; private set; }
 
-            _housingType = value;
-        }
-    }
-
-    public DisabledPeopleClientGroupType ClientGroupType
-    {
-        get => _clientGroupType;
-        private set
-        {
-            if (_clientGroupType != value)
-            {
-                IsModified = true;
-            }
-
-            _clientGroupType = value;
-        }
-    }
+    public DisabledPeopleClientGroupType ClientGroupType { get; private set; }
 
     public void ChangeHousingType(DisabledPeopleHousingType housingType)
     {
-        HousingType = housingType;
+        HousingType = _modificationTracker.Change(HousingType, housingType);
     }
 
     public void ChangeClientGroupType(DisabledPeopleClientGroupType clientGroupType)
     {
-        ClientGroupType = clientGroupType;
+        ClientGroupType = _modificationTracker.Change(ClientGroupType, clientGroupType);
     }
 
     public IHomeTypeSegmentEntity Duplicate()
