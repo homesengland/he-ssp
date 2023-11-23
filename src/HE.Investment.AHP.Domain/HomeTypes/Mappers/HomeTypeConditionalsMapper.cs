@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 
-namespace HE.Investment.AHP.Domain.HomeTypes.Crm;
+namespace HE.Investment.AHP.Domain.HomeTypes.Mappers;
 
 public static class HomeTypeConditionalsMapper
 {

@@ -8,4 +8,4 @@ public record SupportedHousingInformation(
     YesNoType LocalCommissioningBodiesConsulted,
     YesNoType ShortStayAccommodation,
     RevenueFundingType RevenueFundingType,
-    IList<RevenueFundingSourceType>? RevenueFundingSources);
+    IList<RevenueFundingSourceType> RevenueFundingSources);
