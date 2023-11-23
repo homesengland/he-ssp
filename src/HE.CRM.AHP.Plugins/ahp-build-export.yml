@@ -1,9 +1,4 @@
-# Starter pipeline
-
-
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# AHP-CRM-Build & Export
 
 trigger:
 - none
@@ -26,4 +21,4 @@ resources:
     ref: 'main'
 
 stages:
-- template: azure-pipelines-crm-build-export.yml@he-invst-deployment
+- template: azure-pipelines-crm-ahp-build-export.yml@he-invst-deployment
