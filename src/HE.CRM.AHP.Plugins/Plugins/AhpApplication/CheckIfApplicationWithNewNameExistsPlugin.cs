@@ -5,7 +5,7 @@ using Microsoft.Xrm.Sdk;
 using System.Collections.Generic;
 using HE.CRM.AHP.Plugins.Handlers.AHPApplication;
 
-namespace HE.CRM.AHP.Plugins.Plugins.CustomApi
+namespace HE.CRM.AHP.Plugins.Plugins.AhpApplication
 {
     [CrmPluginRegistration(
       MessageNameEnum.Create,

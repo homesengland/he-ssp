@@ -1,0 +1,24 @@
+# AHP-CRM-Build & Export
+
+trigger:
+- none
+
+pool: 
+  vmImage: windows-latest
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  branch: 'master'
+
+
+resources:
+  repositories:
+  - repository: he-invst-deployment
+    type: git
+    name: 'Investments Programme/he-invst-deployment'
+    ref: 'main'
+
+stages:
+- template: azure-pipelines-crm-ahp-build-export.yml@he-invst-deployment
