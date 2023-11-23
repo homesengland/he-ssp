@@ -10,6 +10,7 @@ using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
@@ -112,7 +113,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var homeTypeDetails = await _mediator.Send(new GetHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View("RemoveHomeTypeConfirmation", new RemoveHomeTypeModel(application.Name, homeTypeDetails.Name));
+        return View("RemoveHomeTypeConfirmation", new RemoveHomeTypeModel(application.Name, homeTypeDetails.Name ?? string.Empty));
     }
 
     [WorkflowState(HomeTypesWorkflowState.RemoveHomeType)]
@@ -173,10 +174,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
         return View(new HomeInformationModel(application.Name, homeInformation.HomeTypeName)
         {
-            NumberOfHomes = homeInformation.NumberOfHomes?.ToString(CultureInfo.InvariantCulture),
-            NumberOfBedrooms = homeInformation.NumberOfBedrooms?.ToString(CultureInfo.InvariantCulture),
-            MaximumOccupancy = homeInformation.MaximumOccupancy?.ToString(CultureInfo.InvariantCulture),
-            NumberOfStoreys = homeInformation.NumberOfStoreys?.ToString(CultureInfo.InvariantCulture),
+            NumberOfHomes = homeInformation.NumberOfHomes?.ToString(CultureInfo.InvariantCulture) ?? string.Empty,
+            NumberOfBedrooms = homeInformation.NumberOfBedrooms?.ToString(CultureInfo.InvariantCulture) ?? string.Empty,
+            MaximumOccupancy = homeInformation.MaximumOccupancy?.ToString(CultureInfo.InvariantCulture) ?? string.Empty,
+            NumberOfStoreys = homeInformation.NumberOfStoreys?.ToString(CultureInfo.InvariantCulture) ?? string.Empty,
         });
     }
 
@@ -202,7 +203,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var disabledPeopleHomeType = await _mediator.Send(new GetDisabledPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
-        return View(new HomesForDisabledPeopleModel(application.Name, disabledPeopleHomeType.HomeTypeName)
+        return View(new HomesForDisabledPeopleModel(application.Name, disabledPeopleHomeType.HomeTypeName ?? string.Empty)
         {
             HousingType = disabledPeopleHomeType.HousingType,
         });
@@ -225,7 +226,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var disabledPeopleHomeType = await _mediator.Send(new GetDisabledPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
-        return View(new DisabledPeopleClientGroupModel(application.Name, disabledPeopleHomeType.HomeTypeName)
+        return View(new DisabledPeopleClientGroupModel(application.Name, disabledPeopleHomeType.HomeTypeName ?? string.Empty)
         {
             DisabledPeopleClientGroup = disabledPeopleHomeType.ClientGroupType,
         });
@@ -251,7 +252,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var olderPeopleHomeType = await _mediator.Send(new GetOlderPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
-        return View(new HomesForOlderPeopleModel(application.Name, olderPeopleHomeType.HomeTypeName) { HousingType = olderPeopleHomeType.HousingType, });
+        return View(new HomesForOlderPeopleModel(application.Name, olderPeopleHomeType.HomeTypeName ?? string.Empty) { HousingType = olderPeopleHomeType.HousingType, });
     }
 
     [WorkflowState(HomeTypesWorkflowState.HomesForOlderPeople)]
@@ -267,7 +268,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var designPlans = await _mediator.Send(new GetDesignPlansQuery(applicationId, homeTypeId), cancellationToken);
-        return View(new HappiDesignPrinciplesModel(application.Name, designPlans.HomeTypeName)
+        return View(new HappiDesignPrinciplesModel(application.Name, designPlans.HomeTypeName ?? string.Empty)
         {
             DesignPrinciples = designPlans.DesignPrinciples.ToList(),
             OtherPrinciples = designPlans.DesignPrinciples.ToList(),
@@ -298,10 +299,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var designPlans = await _mediator.Send(new GetDesignPlansQuery(applicationId, homeTypeId), cancellationToken);
 
-        string GetRemoveAction(string fileId) => Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "RemoveDesignPlansFile", applicationId, id = homeTypeId, fileId });
+        string GetRemoveAction(string fileId) => Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "RemoveDesignPlansFile", applicationId, id = homeTypeId, fileId }) ?? throw new InvalidOperationException();
         return View(new DesignPlansModel(application.Name, designPlans.HomeTypeName)
         {
-            MoreInformation = designPlans.MoreInformation,
+            MoreInformation = designPlans.MoreInformation ?? Check.IfCanBeNull,
             UploadedFiles = designPlans.UploadedFiles.Select(x => new FileModel(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId))).ToList(),
         });
     }
@@ -411,7 +412,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
-    protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object routeData = null)
+    protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object? routeData = null)
     {
         var applicationId = Request.GetRouteValue("applicationId")
                                 ?? routeData?.GetPropertyValue<string>("applicationId")
@@ -443,7 +444,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     private async Task<IActionResult> SaveHomeTypeDetails(
         string applicationId,
-        string homeTypeId,
+        string? homeTypeId,
         HomeTypeDetailsModel model,
         CancellationToken cancellationToken)
     {

@@ -5,8 +5,10 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Workflows;
 using HE.Investment.AHP.WWW.Models.Scheme;
+using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Models;
@@ -72,7 +74,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("affordability")]
     public async Task<IActionResult> Affordability([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken) ?? throw new NotFoundException(nameof(Scheme), applicationId);
 
         return View("Affordability", CreateModel(applicationId, scheme.ApplicationName, scheme));
     }
@@ -93,7 +95,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("sales-risk")]
     public async Task<IActionResult> SalesRisk([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken) ?? throw new NotFoundException(nameof(Scheme), applicationId);
 
         return View("SalesRisk", CreateModel(applicationId, scheme.ApplicationName, scheme));
     }
@@ -103,7 +105,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     public async Task<IActionResult> SalesRisk(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            new ChangeSchemeSalesRiskCommand(model.ApplicationId, model.SalesRisk),
+            new ChangeSchemeSalesRiskCommand(model.ApplicationId, model.SalesRisk ?? Check.IfCanBeNull),
             model.ApplicationId,
             nameof(SalesRisk),
             model,
@@ -114,7 +116,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("housing-needs")]
     public async Task<IActionResult> HousingNeeds([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken) ?? throw new NotFoundException(nameof(Scheme), applicationId);
 
         return View("HousingNeeds", CreateModel(applicationId, scheme.ApplicationName, scheme));
     }
@@ -124,7 +126,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     public async Task<IActionResult> HousingNeeds(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            new ChangeSchemeHousingNeedsCommand(model.ApplicationId, model.TypeAndTenureJustification, model.SchemeAndProposalJustification),
+            new ChangeSchemeHousingNeedsCommand(model.ApplicationId, model.TypeAndTenureJustification ?? Check.IfCanBeNull, model.SchemeAndProposalJustification ?? Check.IfCanBeNull),
             model.ApplicationId,
             nameof(HousingNeeds),
             model,
@@ -135,7 +137,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("stakeholder-discussions")]
     public async Task<IActionResult> StakeholderDiscussions([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken) ?? throw new NotFoundException(nameof(Scheme), applicationId);
 
         return View("StakeholderDiscussions", CreateModel(applicationId, scheme.ApplicationName, scheme));
     }
@@ -150,7 +152,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         try
         {
             return await ExecuteCommand(
-                new ChangeSchemeStakeholderDiscussionsCommand(model.ApplicationId, model.StakeholderDiscussionsReport, filesToUpload),
+                new ChangeSchemeStakeholderDiscussionsCommand(model.ApplicationId, model.StakeholderDiscussionsReport ?? Check.IfCanBeNull, filesToUpload),
                 model.ApplicationId,
                 nameof(StakeholderDiscussions),
                 model,
@@ -181,21 +183,21 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return RedirectToAction("StakeholderDiscussions", new { applicationId });
     }
 
-    protected override async Task<IStateRouting<SchemeWorkflowState>> Routing(SchemeWorkflowState currentState, object routeData = null)
+    protected override async Task<IStateRouting<SchemeWorkflowState>> Routing(SchemeWorkflowState currentState, object? routeData = null)
     {
         return await Task.FromResult(new SchemeWorkflow(currentState));
     }
 
-    private SchemeViewModel CreateModel(string applicationId, string applicationName = null, Scheme scheme = null)
+    private SchemeViewModel CreateModel(string applicationId, string? applicationName = null, Scheme? scheme = null)
     {
         string GetRemoveAction(string fileId) =>
-            Url.RouteUrl("section", new { controller = "scheme", action = "RemoveStakeholderDiscussionsFile", applicationId, fileId });
+            Url.RouteUrl("section", new { controller = "scheme", action = "RemoveStakeholderDiscussionsFile", applicationId, fileId }) ?? Check.IfCanBeNull;
 
         FileModel CreateFileModel(UploadedFile x) => new(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId));
 
         return new SchemeViewModel(
             applicationId,
-            applicationName,
+            applicationName!,
             scheme?.RequiredFunding.ToString(),
             scheme?.HousesToDeliver.ToString(),
             scheme?.AffordabilityEvidence,
@@ -203,8 +205,8 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             scheme?.TypeAndTenureJustification,
             scheme?.SchemeAndProposalJustification,
             scheme?.StakeholderDiscussionsReport,
-            scheme?.StakeholderDiscussionsFiles.Select(CreateFileModel).ToList(),
-            new List<IFormFile>());
+            scheme?.StakeholderDiscussionsFiles?.Select(CreateFileModel).ToArray() ?? Array.Empty<FileModel>(),
+            Array.Empty<IFormFile>());
     }
 
     private async Task<IActionResult> ExecuteCommand(

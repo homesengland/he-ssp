@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
@@ -26,7 +27,7 @@ internal sealed class GetHomeInformationQueryHandler : IRequestHandler<GetHomeIn
         var homeInformation = homeType.HomeInformation;
 
         return new HomeInformation(
-            homeType.Name?.Value,
+            homeType.Name?.Value ?? Check.IfCanBeNull,
             homeInformation.NumberOfHomes?.Value,
             homeInformation.NumberOfBedrooms?.Value,
             homeInformation.MaximumOccupancy?.Value,

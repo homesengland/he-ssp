@@ -5,11 +5,11 @@ using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.App
 namespace HE.Investment.AHP.Domain.FinancialDetails.Commands;
 public record ProvideContributionsCommand(
     ApplicationId ApplicationId,
-    string RentalIncomeBorrowing,
-    string SalesOfHomesOnThisScheme,
-    string SalesOfHomesOnOtherSchemes,
-    string OwnResources,
-    string RCGFContribution,
-    string OtherCapitalSources,
-    string SharedOwnershipSales,
-    string HomesTransferValue) : IRequest<OperationResult>;
+    string? RentalIncomeBorrowing,
+    string? SalesOfHomesOnThisScheme,
+    string? SalesOfHomesOnOtherSchemes,
+    string? OwnResources,
+    string? RCGFContribution,
+    string? OtherCapitalSources,
+    string? SharedOwnershipSales,
+    string? HomesTransferValue) : IRequest<OperationResult>;

@@ -10,9 +10,9 @@ public class FinancialDetailsFormHeader : ViewComponent
     public IViewComponentResult Invoke(
         FinancialDetailsWorkflowState currentPage,
         string applicationId,
-        string homeTypeId = null,
-        string title = null,
-        string caption = null)
+        string? homeTypeId = null,
+        string? title = null,
+        string? caption = null)
     {
         return View("FinancialDetailsFormHeader", (Title: title, Caption: caption, ApplicationId: applicationId, CurrentPage: currentPage));
     }
