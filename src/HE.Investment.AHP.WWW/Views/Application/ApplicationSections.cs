@@ -25,7 +25,7 @@ public static class ApplicationSections
                     "Home types",
                     "Complete information about the type of homes, information about the homes, home design and rent details.",
                     "Add homes types",
-                    "homeTypes"),
+                    sections.FirstOrDefault(x => x.SectionType == SectionType.HomeTypes)?.SectionStatus == SectionStatus.NotStarted ? "homeTypes" : "homeTypes/list"),
                 AddSection(
                     SectionType.FinancialDetails,
                     sections,

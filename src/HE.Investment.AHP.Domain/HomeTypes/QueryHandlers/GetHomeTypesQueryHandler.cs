@@ -22,6 +22,7 @@ internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQue
             new[] { HomeTypeSegmentType.HomeInformation },
             cancellationToken);
 
+        // TODO: descending order by createdOn when available
         return homeTypes.HomeTypes.Select(Map).OrderBy(x => x.Name).ToList();
     }
 
