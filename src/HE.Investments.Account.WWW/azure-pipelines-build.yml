@@ -37,4 +37,4 @@ resources:
     ref: 'master'
 
 stages:
-- template: azure-pipelines-account-www-build.yml@he-invst-deployment
+- template: azure-pipelines-account-mgmt-portal-build.yml@he-invst-deployment

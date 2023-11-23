@@ -20,4 +20,4 @@ resources:
     ref: 'master'
 
 stages:
-- template: azure-pipelines-www-deploy.yml@he-invst-deployment
+- template: azure-pipelines-loans-portal-deploy.yml@he-invst-deployment
