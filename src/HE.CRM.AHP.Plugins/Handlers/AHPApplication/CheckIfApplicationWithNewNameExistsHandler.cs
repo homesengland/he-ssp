@@ -4,7 +4,7 @@ using HE.CRM.AHP.Plugins.Services.Application;
 
 namespace HE.CRM.AHP.Plugins.Handlers.AHPApplication
 {
-    internal class CheckIfApplicationWithNewNameExistsHandler : CrmEntityHandlerBase<invln_scheme, DataverseContext>
+    public class CheckIfApplicationWithNewNameExistsHandler : CrmEntityHandlerBase<invln_scheme, DataverseContext>
     {
         #region Fields
 
