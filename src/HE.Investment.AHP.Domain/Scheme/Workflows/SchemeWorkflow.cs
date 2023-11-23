@@ -26,8 +26,12 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 
     private void ConfigureTransitions()
     {
+        _machine.Configure(SchemeWorkflowState.Index)
+            .Permit(Trigger.Continue, SchemeWorkflowState.Funding);
+
         _machine.Configure(SchemeWorkflowState.Funding)
-            .Permit(Trigger.Continue, SchemeWorkflowState.Affordability);
+            .Permit(Trigger.Continue, SchemeWorkflowState.Affordability)
+            .Permit(Trigger.Back, SchemeWorkflowState.Index);
 
         _machine.Configure(SchemeWorkflowState.Affordability)
             .Permit(Trigger.Continue, SchemeWorkflowState.SalesRisk)

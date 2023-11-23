@@ -8,7 +8,7 @@ public class SchemeEntity
 {
     public SchemeEntity(
         ApplicationBasicDetails application,
-        SchemeFunding funding,
+        SchemeFunding? funding = null,
         SectionStatus status = SectionStatus.InProgress,
         AffordabilityEvidence? affordabilityEvidence = null,
         SalesRisk? salesRisk = null,
@@ -28,7 +28,7 @@ public class SchemeEntity
 
     public ApplicationBasicDetails Application { get; }
 
-    public SchemeFunding Funding { get; private set; }
+    public SchemeFunding? Funding { get; private set; }
 
     public AffordabilityEvidence? AffordabilityEvidence { get; private set; }
 
@@ -45,26 +45,31 @@ public class SchemeEntity
     public void ChangeFunding(SchemeFunding funding)
     {
         Funding = funding;
+        Status = SectionStatus.InProgress;
     }
 
     public void ChangeAffordabilityEvidence(AffordabilityEvidence affordabilityEvidence)
     {
         AffordabilityEvidence = affordabilityEvidence;
+        Status = SectionStatus.InProgress;
     }
 
     public void ChangeSalesRisk(SalesRisk salesRisk)
     {
         SalesRisk = salesRisk;
+        Status = SectionStatus.InProgress;
     }
 
     public void ChangeHousingNeeds(HousingNeeds housingNeeds)
     {
         HousingNeeds = housingNeeds;
+        Status = SectionStatus.InProgress;
     }
 
     public void ChangeStakeholderDiscussions(StakeholderDiscussions stakeholderDiscussions, IList<StakeholderDiscussionsFile> stakeholderDiscussionsFilesToAdd)
     {
         StakeholderDiscussions = stakeholderDiscussions;
         StakeholderDiscussionsFiles.AddFilesToUpload(stakeholderDiscussionsFilesToAdd);
+        Status = SectionStatus.InProgress;
     }
 }

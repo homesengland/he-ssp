@@ -30,11 +30,6 @@ public class SchemeRepository : ISchemeRepository
     {
         var application = await _repository.GetById(id.Value, CrmFields.SchemeToRead, cancellationToken);
 
-        if (application.schemeInformationSectionCompletionStatus == null)
-        {
-            throw new NotFoundException("Scheme", $"application {id.Value}");
-        }
-
         var stakeholderDiscussionsFiles = await _fileService.GetByApplicationId(id, cancellationToken);
 
         return CreateEntity(application, stakeholderDiscussionsFiles);
@@ -48,8 +43,8 @@ public class SchemeRepository : ISchemeRepository
             id = entity.Application.Id.Value,
             organisationId = account.AccountId.ToString(),
             schemeInformationSectionCompletionStatus = SectionStatusMapper.ToDto(entity.Status),
-            fundingRequested = entity.Funding.RequiredFunding,
-            noOfHomes = entity.Funding.HousesToDeliver,
+            fundingRequested = entity.Funding?.RequiredFunding,
+            noOfHomes = entity.Funding?.HousesToDeliver,
             affordabilityEvidence = entity.AffordabilityEvidence?.Evidence,
             discussionsWithLocalStakeholders = entity.StakeholderDiscussions?.Report,
             meetingLocalProrities = entity.HousingNeeds?.SchemeAndProposalJustification,
@@ -66,14 +61,22 @@ public class SchemeRepository : ISchemeRepository
 
     private static SchemeEntity CreateEntity(AhpApplicationDto application, IReadOnlyCollection<UploadedFile> stakeholderDiscussionsFiles)
     {
+        var fundingExist = application.fundingRequested.HasValue || application.noOfHomes.HasValue;
+        var housingNeedsExist = application.meetingLocalProrities != null || application.meetingLocalHousingNeed != null;
+
         return new SchemeEntity(
             new ApplicationBasicDetails(new DomainApplicationId(application.id), new ApplicationName(application.name)),
-            new SchemeFunding(application.fundingRequested.ToWholeNumberString(), application.noOfHomes.ToString()),
+            Create(fundingExist, () => new SchemeFunding(application.fundingRequested.ToWholeNumberString(), application.noOfHomes.ToString())),
             SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus),
-            new AffordabilityEvidence(application.affordabilityEvidence),
-            new SalesRisk(application.sharedOwnershipSalesRisk),
-            new HousingNeeds(application.meetingLocalProrities, application.meetingLocalHousingNeed),
-            new StakeholderDiscussions(application.discussionsWithLocalStakeholders),
-            new StakeholderDiscussionsFiles(stakeholderDiscussionsFiles));
+            Create(application.affordabilityEvidence != null, () => new AffordabilityEvidence(application.affordabilityEvidence)),
+            Create(application.sharedOwnershipSalesRisk != null, () => new SalesRisk(application.sharedOwnershipSalesRisk)),
+            Create(housingNeedsExist, () => new HousingNeeds(application.meetingLocalProrities, application.meetingLocalHousingNeed)),
+            Create(application.discussionsWithLocalStakeholders != null, () => new StakeholderDiscussions(application.discussionsWithLocalStakeholders)),
+            Create(stakeholderDiscussionsFiles.Any(), () => new StakeholderDiscussionsFiles(stakeholderDiscussionsFiles)));
+    }
+
+    private static T? Create<T>(bool condition, Func<T> create)
+    {
+        return condition ? create() : default;
     }
 }
