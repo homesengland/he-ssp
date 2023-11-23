@@ -146,6 +146,7 @@
     <Compile Include="Handlers\CustomApi\UpdateSingleSiteDetailsHandler.cs" />
     <Compile Include="Handlers\CustomApi\UpdateUserProfileHandler.cs" />
     <Compile Include="Handlers\ISPs\CreateConditionRecordsOnHandler.cs" />
+    <Compile Include="Handlers\ISPs\CreateRecordsOnSentForApprovalChangeHandler.cs" />
     <Compile Include="Handlers\ISPs\PopulateFieldsOnCreateHandler.cs" />
     <Compile Include="Handlers\ISPs\SetFieldsOnSentForApprovalChangeHandler.cs" />
     <Compile Include="Handlers\LoanApplications\AssignLoanToTmTeamOnCreateHandler.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Plugins\Accounts\OnCurrentCrrFieldUpdatePlugin.cs" />
     <Compile Include="Plugins\CustomApi\UpdateUserProfilePlugin.cs" />
     <Compile Include="Plugins\ISPs\CreateConditionRecordsOnCreate.cs" />
+    <Compile Include="Plugins\ISPs\CreateRecordsOnSentForApprovalChangePlugin.cs" />
     <Compile Include="Plugins\ISPs\PopulateFieldsOnCreatePlugin.cs" />
     <Compile Include="Plugins\ISPs\SetFieldsOnSentForApprovalChangePlugin.cs" />
     <Compile Include="Plugins\LoanApplications\AssignLoanToTmTeamOnCreatePlugin.cs" />
