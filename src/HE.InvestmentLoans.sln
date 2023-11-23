@@ -90,7 +90,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Account.WWW.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Common.CRM", "HE.Investments.Common.CRM\HE.Investments.Common.CRM.csproj", "{33E006B9-6053-4A1C-BB7B-908D832BB23D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Common.Tests.WWW", "HE.Investments.Common.Tests.WWW\HE.Investments.Common.Tests.WWW.csproj", "{8619E600-0788-40E7-8901-6DF2C29E88A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HE.Investments.Common.WWWTestsFramework", "HE.Investments.Common.WWWTestsFramework\HE.Investments.Common.WWWTestsFramework.csproj", "{8619E600-0788-40E7-8901-6DF2C29E88A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HE.Investments.Common.Tests", "HE.Investments.Common.Tests\HE.Investments.Common.Tests.csproj", "{933FBB75-C838-4280-A39F-EE0C6B80734C}"
 EndProject

@@ -1,9 +1,9 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Tests.WWW;
-using HE.Investments.Common.Tests.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
+using HE.Investments.Common.WWWTestsFramework;
+using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Xunit;
 
 namespace HE.Investments.Account.WWW.Tests.Views.UserOrganisation;
