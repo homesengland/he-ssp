@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 
-namespace HE.Investments.Common.Tests.WWW.Framework;
+namespace HE.Investments.Common.WWWTestsFramework.Framework;
 
 internal sealed class CustomRazorViewToStringRenderer
 {

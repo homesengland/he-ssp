@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Routing;
 
-namespace HE.Investments.Common.Tests.WWW.Framework;
+namespace HE.Investments.Common.WWWTestsFramework.Framework;
 
 internal sealed class CustomRouter : IRouter
 {

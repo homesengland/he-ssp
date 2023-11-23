@@ -2,8 +2,8 @@ using AngleSharp.Html.Dom;
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
-using HE.Investments.Common.Tests.WWW;
-using HE.Investments.Common.Tests.WWW.Helpers;
+using HE.Investments.Common.WWWTestsFramework;
+using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.FinancialDetails;

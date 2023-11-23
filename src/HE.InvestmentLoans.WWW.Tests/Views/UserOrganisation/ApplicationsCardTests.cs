@@ -1,8 +1,8 @@
 using AngleSharp.Html.Dom;
 using HE.InvestmentLoans.WWW.Models.UserOrganisation;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Tests.WWW;
-using HE.Investments.Common.Tests.WWW.Helpers;
+using HE.Investments.Common.WWWTestsFramework;
+using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Xunit;
 
 namespace HE.InvestmentLoans.WWW.Tests.Views.UserOrganisation;
