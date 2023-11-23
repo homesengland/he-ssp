@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.Investments.Common.Tests.WWW.Helpers;
 
@@ -7,13 +8,14 @@ public class RevenueFundingTests : HomeTypesTestBase
 {
     private const string ViewPath = "/Views/HomeTypes/RevenueFunding.cshtml";
 
-    private static readonly RevenueFundingModel Model = new("My application", "My homes");
-
     [Fact]
     public async Task ShouldRenderViewWithCheckboxes()
     {
-        // given & when
-        var document = await Render(ViewPath, Model);
+        // given
+        var model = new RevenueFundingModel("My application", "My homes");
+
+        // when
+        var document = await Render(ViewPath, model);
 
         // then
         document
@@ -44,6 +46,39 @@ public class RevenueFundingTests : HomeTypesTestBase
                     "SupportingPeople",
                     "YouthOffendingTeams",
                     "Other",
+                })
+            .HasElementWithText("button", "Save and continue");
+    }
+
+    [Fact]
+    public async Task ShouldRenderViewWithCheckedCheckboxes()
+    {
+        // given
+        var model = new RevenueFundingModel("My application", "My homes")
+        {
+            Sources = new List<RevenueFundingSourceType>
+            {
+                RevenueFundingSourceType.SocialServicesDepartment,
+                RevenueFundingSourceType.Charity,
+                RevenueFundingSourceType.NationalLottery,
+            },
+        };
+
+        // when
+        var document = await Render(ViewPath, model);
+
+        // then
+        document
+            .HasElementWithText("span", "My application - My homes")
+            .HasElementWithText("h1", "Where are you receiving revenue funding from for these homes?")
+            .HasElementWithText("span", "Select all that apply")
+            .HasCheckedCheckboxes(
+                "Sources",
+                new[]
+                {
+                    "Charity",
+                    "NationalLottery",
+                    "SocialServicesDepartment",
                 })
             .HasElementWithText("button", "Save and continue");
     }
