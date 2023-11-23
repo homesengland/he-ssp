@@ -5,11 +5,11 @@ using HE.Investments.Common.Services.Notifications;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.EventHandlers;
 
-public class HomeTypeHasBeenCreatedEventHandler : IEventHandler<HomeTypeHasBeenCreatedEvent>
+public class SendHomeTypeHasBeenCreatedNotificationEventHandler : IEventHandler<HomeTypeHasBeenCreatedEvent>
 {
     private readonly INotificationService _notificationService;
 
-    public HomeTypeHasBeenCreatedEventHandler(INotificationService notificationService)
+    public SendHomeTypeHasBeenCreatedNotificationEventHandler(INotificationService notificationService)
     {
         _notificationService = notificationService;
     }

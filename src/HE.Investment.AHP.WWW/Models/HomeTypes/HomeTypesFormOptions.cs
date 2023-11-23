@@ -6,6 +6,8 @@ namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
 public static class HomeTypesFormOptions
 {
+    public static IEnumerable<SelectListItem> FinishHomeTypes => SelectListHelper.FromEnum<FinishHomeTypesAnswer>();
+
     public static IEnumerable<SelectListItem> HousingTypes => SelectListHelper.FromEnum<HousingType>();
 
     public static IEnumerable<SelectListItem> DisabledPeopleHousingTypes => SelectListHelper.FromEnum<DisabledPeopleHousingType>();

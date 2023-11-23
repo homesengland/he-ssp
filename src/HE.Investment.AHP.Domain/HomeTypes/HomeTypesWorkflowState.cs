@@ -5,6 +5,7 @@ public enum HomeTypesWorkflowState
     Index = 1,
     List,
     RemoveHomeType,
+    FinishHomeTypes,
     NewHomeTypeDetails,
     HomeTypeDetails,
     HomeInformation,

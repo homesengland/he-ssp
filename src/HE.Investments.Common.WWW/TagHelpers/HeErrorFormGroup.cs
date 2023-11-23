@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace HE.Investments.Common.WWW.Components.Errors;
+namespace HE.Investments.Common.WWW.TagHelpers;
 
 public class HeErrorFormGroup : TagHelper
 {

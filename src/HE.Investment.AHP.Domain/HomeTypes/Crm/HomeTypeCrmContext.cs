@@ -23,6 +23,43 @@ public class HomeTypeCrmContext : IHomeTypeCrmContext
         _accountUserContext = accountUserContext;
     }
 
+    public async Task<int?> GetHomeTypesStatus(string applicationId, CancellationToken cancellationToken)
+    {
+        var account = await _accountUserContext.GetSelectedAccount();
+        var request = new invln_getahpapplicationRequest
+        {
+            invln_userid = account.UserGlobalId.ToString(),
+            invln_organisationid = account.AccountId.ToString(),
+            invln_applicationid = applicationId,
+            invln_appfieldstoretrieve = nameof(invln_scheme.invln_hometypessectioncompletionstatus),
+        };
+
+        var response = await _service.ExecuteAsync<invln_getahpapplicationRequest, invln_getahpapplicationResponse, IList<AhpApplicationDto>>(
+            request,
+            r => r.invln_retrievedapplicationfields,
+            cancellationToken);
+
+        return response.FirstOrDefault()?.homeTypesSectionCompletionStatus;
+    }
+
+    public async Task SaveHomeTypesStatus(string applicationId, int homeTypesStatus, CancellationToken cancellationToken)
+    {
+        var application = new AhpApplicationDto { id = applicationId, homeTypesSectionCompletionStatus = homeTypesStatus };
+        var account = await _accountUserContext.GetSelectedAccount();
+        var request = new invln_setahpapplicationRequest
+        {
+            invln_userid = account.UserGlobalId.ToString(),
+            invln_organisationid = account.AccountId.ToString(),
+            invln_application = JsonSerializer.Serialize(application),
+            invln_fieldstoupdate = nameof(invln_scheme.invln_hometypessectioncompletionstatus),
+        };
+
+        await _service.ExecuteAsync<invln_setahpapplicationRequest, invln_setahpapplicationResponse>(
+            request,
+            x => x.invln_applicationid,
+            cancellationToken);
+    }
+
     public async Task<IList<HomeTypeDto>> GetAll(string applicationId, IEnumerable<string> fieldsToRetrieve, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();

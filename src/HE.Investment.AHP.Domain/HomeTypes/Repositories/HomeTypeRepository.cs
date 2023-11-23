@@ -43,8 +43,12 @@ public class HomeTypeRepository : IHomeTypeRepository
     {
         var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, cancellationToken);
         var homeTypes = await _homeTypeCrmContext.GetAll(applicationId.Value, _homeTypeCrmMapper.GetCrmFields(segments), cancellationToken);
+        var sectionStatus = await _homeTypeCrmContext.GetHomeTypesStatus(applicationId.Value, cancellationToken);
 
-        return new HomeTypesEntity(application, homeTypes.Select(x => _homeTypeCrmMapper.MapToDomain(application, x, segments)));
+        return new HomeTypesEntity(
+            application,
+            homeTypes.Select(x => _homeTypeCrmMapper.MapToDomain(application, x, segments)),
+            SectionStatusMapper.ToDomain(sectionStatus));
     }
 
     public async Task<IHomeTypeEntity> GetById(
@@ -69,15 +73,22 @@ public class HomeTypeRepository : IHomeTypeRepository
         CancellationToken cancellationToken)
     {
         var entity = (HomeTypeEntity)homeType;
-        var homeTypeId = await _homeTypeCrmContext.Save(
-            _homeTypeCrmMapper.MapToDto(entity, segments),
-            _homeTypeCrmMapper.SaveCrmFields(entity, segments),
-            cancellationToken);
-
         if (entity.IsNew)
         {
-            entity.Id = new HomeTypeId(homeTypeId);
-            await _eventDispatcher.Publish(new HomeTypeHasBeenCreatedEvent(entity.Name?.Value), cancellationToken);
+            entity.Id = new HomeTypeId(
+                await _homeTypeCrmContext.Save(
+                    _homeTypeCrmMapper.MapToDto(entity, segments),
+                    _homeTypeCrmMapper.SaveCrmFields(entity, segments),
+                    cancellationToken));
+            await _eventDispatcher.Publish(new HomeTypeHasBeenCreatedEvent(homeType.Application.Id.Value, entity.Name?.Value), cancellationToken);
+        }
+        else if (entity.IsModified)
+        {
+            await _homeTypeCrmContext.Save(
+                _homeTypeCrmMapper.MapToDto(entity, segments),
+                _homeTypeCrmMapper.SaveCrmFields(entity, segments),
+                cancellationToken);
+            await _eventDispatcher.Publish(new HomeTypeHasBeenUpdatedEvent(homeType.Application.Id.Value, entity.Id!.Value), cancellationToken);
         }
 
         if (segments.Contains(HomeTypeSegmentType.DesignPlans))
@@ -90,9 +101,17 @@ public class HomeTypeRepository : IHomeTypeRepository
 
     public async Task Save(HomeTypesEntity homeTypes, CancellationToken cancellationToken)
     {
+        if (homeTypes.IsStatusChanged)
+        {
+            await _homeTypeCrmContext.SaveHomeTypesStatus(homeTypes.ApplicationId.Value, SectionStatusMapper.ToDto(homeTypes.Status), cancellationToken);
+        }
+
         foreach (var homeTypeToRemove in homeTypes.ToRemove)
         {
             await _homeTypeCrmContext.Remove(homeTypes.ApplicationId.Value, homeTypeToRemove.Id!.Value, cancellationToken);
+            await _eventDispatcher.Publish(
+                new HomeTypeHasBeenUpdatedEvent(homeTypeToRemove.Application.Id.Value, homeTypeToRemove.Id!.Value),
+                cancellationToken);
         }
     }
 }

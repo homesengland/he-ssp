@@ -1,6 +1,8 @@
+using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -16,10 +18,13 @@ public class HomeTypesEntity
 
     private readonly ApplicationBasicInfo _application;
 
-    public HomeTypesEntity(ApplicationBasicInfo application, IEnumerable<HomeTypeEntity> homeTypes)
+    private SectionStatus _status;
+
+    public HomeTypesEntity(ApplicationBasicInfo application, IEnumerable<HomeTypeEntity> homeTypes, SectionStatus status)
     {
         _application = application;
         _homeTypes = homeTypes.ToList();
+        _status = status;
     }
 
     public ApplicationId ApplicationId => _application.Id;
@@ -27,6 +32,22 @@ public class HomeTypesEntity
     public IEnumerable<IHomeTypeEntity> HomeTypes => _homeTypes;
 
     public IEnumerable<IHomeTypeEntity> ToRemove => _toRemove;
+
+    public SectionStatus Status
+    {
+        get => _status;
+        private set
+        {
+            if (_status != value)
+            {
+                IsStatusChanged = true;
+            }
+
+            _status = value;
+        }
+    }
+
+    public bool IsStatusChanged { get; private set; }
 
     public IHomeTypeEntity GetOrCreateNewHomeType(HomeTypeId? homeTypeId = null)
     {
@@ -49,7 +70,7 @@ public class HomeTypesEntity
             throw new DomainValidationException(
                 new OperationResult().AddValidationErrors(new List<ErrorItem>
                 {
-                    new(nameof(HomeTypeEntity), "Home Type cannot be removed because it is used in Delivery Phase"),
+                    new($"HomeType-{homeTypeId}", "Home Type cannot be removed because it is used in Delivery Phase"),
                 }));
         }
 
@@ -73,6 +94,39 @@ public class HomeTypesEntity
         }
 
         entity.ChangeName(name);
+    }
+
+    public void CompleteSection(FinishHomeTypesAnswer finishAnswer)
+    {
+        if (finishAnswer == FinishHomeTypesAnswer.Yes)
+        {
+            if (!_homeTypes.Any())
+            {
+                throw new DomainValidationException(
+                    new OperationResult().AddValidationErrors(new List<ErrorItem>
+                    {
+                        new("HomeTypes", "Home Types cannot be completed because at least one Home Type needs to be added."),
+                    }));
+            }
+
+            var notCompletedHomeTypes = _homeTypes.Where(x => !x.IsCompleted()).ToList();
+            if (notCompletedHomeTypes.Any())
+            {
+                throw new DomainValidationException(new OperationResult().AddValidationErrors(
+                    notCompletedHomeTypes.Select(x => new ErrorItem($"HomeType-{x.Id}", $"Complete {x.Name?.Value} to save and continue")).ToList()));
+            }
+
+            Status = SectionStatus.Completed;
+        }
+        else
+        {
+            Status = SectionStatus.InProgress;
+        }
+    }
+
+    public void MarkAsInProgress()
+    {
+        Status = SectionStatus.InProgress;
     }
 
     public IHomeTypeEntity Duplicate(HomeTypeId homeTypeId)

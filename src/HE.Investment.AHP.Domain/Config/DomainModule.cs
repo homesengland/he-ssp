@@ -6,6 +6,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Crm;
 using HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
+using HE.Investment.AHP.Domain.Mock;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.InvestmentLoans.Common.Utils;
 using HE.Investments.Account.Shared.Config;
@@ -58,5 +59,8 @@ public static class DomainModule
     private static void AddScheme(IServiceCollection services)
     {
         services.AddScoped<ISchemeRepository, SchemeRepository>();
+
+        // TODO: change scope when file source implemented
+        services.AddSingleton<IFileService, FileService>();
     }
 }
