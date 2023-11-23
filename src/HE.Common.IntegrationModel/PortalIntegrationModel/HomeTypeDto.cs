@@ -16,9 +16,8 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public bool? localComissioningBodies { get; set; }
         public bool? shortStayAccommodation { get; set; }
         public int? revenueFunding { get; set; }
-        public string moveOnArrangementsForNoRevenueFunding { get; set; }
+        public string moveOnArrangements { get; set; }
         public List<int> fundingSources { get; set; }
-        public string moveOnArrangementsForRevenueFunding { get; set; }
         public string exitPlan { get; set; }
         public string typologyLocationAndDesign { get; set; }
         public int? numberOfBedrooms { get; set; }
