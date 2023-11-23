@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
@@ -8,13 +9,7 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 [HomeTypeSegmentType(HomeTypeSegmentType.HomeInformation)]
 public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
 {
-    private NumberOfHomes? _numberOfHomes;
-
-    private NumberOfBedrooms? _numberOfBedrooms;
-
-    private MaximumOccupancy? _maximumOccupancy;
-
-    private NumberOfStoreys? _numberOfStoreys;
+    private readonly ModificationTracker _modificationTracker = new();
 
     public HomeInformationSegmentEntity(
         NumberOfHomes? numberOfHomes = null,
@@ -22,96 +17,44 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         MaximumOccupancy? maximumOccupancy = null,
         NumberOfStoreys? numberOfStoreys = null)
     {
-        _numberOfHomes = numberOfHomes;
-        _numberOfBedrooms = numberOfBedrooms;
-        _maximumOccupancy = maximumOccupancy;
-        _numberOfStoreys = numberOfStoreys;
+        NumberOfHomes = numberOfHomes;
+        NumberOfBedrooms = numberOfBedrooms;
+        MaximumOccupancy = maximumOccupancy;
+        NumberOfStoreys = numberOfStoreys;
     }
 
-    public bool IsModified { get; private set; }
+    public bool IsModified => _modificationTracker.IsModified;
 
-    public NumberOfHomes? NumberOfHomes
-    {
-        get => _numberOfHomes;
-        private set
-        {
-            if (_numberOfHomes != value)
-            {
-                IsModified = true;
-            }
+    public NumberOfHomes? NumberOfHomes { get; private set; }
 
-            _numberOfHomes = value;
-        }
-    }
+    public NumberOfBedrooms? NumberOfBedrooms { get; private set; }
 
-    public NumberOfBedrooms? NumberOfBedrooms
-    {
-        get => _numberOfBedrooms;
-        private set
-        {
-            if (_numberOfBedrooms != value)
-            {
-                IsModified = true;
-            }
+    public MaximumOccupancy? MaximumOccupancy { get; private set; }
 
-            _numberOfBedrooms = value;
-        }
-    }
-
-    public MaximumOccupancy? MaximumOccupancy
-    {
-        get => _maximumOccupancy;
-        private set
-        {
-            if (_maximumOccupancy != value)
-            {
-                IsModified = true;
-            }
-
-            _maximumOccupancy = value;
-        }
-    }
-
-    public NumberOfStoreys? NumberOfStoreys
-    {
-        get => _numberOfStoreys;
-        private set
-        {
-            if (_numberOfStoreys != value)
-            {
-                IsModified = true;
-            }
-
-            _numberOfStoreys = value;
-        }
-    }
+    public NumberOfStoreys? NumberOfStoreys { get; private set; }
 
     public void ChangeNumberOfHomes(string? numberOfHomes)
     {
-        NumberOfHomes = numberOfHomes.IsProvided()
-            ? new NumberOfHomes(numberOfHomes)
-            : null;
+        var newValue = numberOfHomes.IsProvided() ? new NumberOfHomes(numberOfHomes) : null;
+        NumberOfHomes = _modificationTracker.Change(NumberOfHomes, newValue);
     }
 
     public void ChangeNumberOfBedrooms(string? numberOfBedrooms)
     {
-        NumberOfBedrooms = numberOfBedrooms.IsProvided()
-            ? new NumberOfBedrooms(numberOfBedrooms)
-            : null;
+        var newValue = numberOfBedrooms.IsProvided() ? new NumberOfBedrooms(numberOfBedrooms) : null;
+        NumberOfBedrooms = _modificationTracker.Change(NumberOfBedrooms, newValue);
     }
 
     public void ChangeMaximumOccupancy(string? maximumOccupancy)
     {
-        MaximumOccupancy = maximumOccupancy.IsProvided()
-            ? new MaximumOccupancy(maximumOccupancy)
-            : null;
+        var newValue = maximumOccupancy.IsProvided() ? new MaximumOccupancy(maximumOccupancy) : null;
+        MaximumOccupancy = _modificationTracker.Change(MaximumOccupancy, newValue);
     }
 
     public void ChangeNumberOfStoreys(string? numberOfStoreys)
     {
-        NumberOfStoreys = numberOfStoreys.IsProvided()
-            ? new NumberOfStoreys(numberOfStoreys)
-            : null;
+        var newValue = numberOfStoreys.IsProvided() ? new NumberOfStoreys(numberOfStoreys) : null;
+        NumberOfStoreys = _modificationTracker.Change(NumberOfStoreys, newValue);
     }
 
     public IHomeTypeSegmentEntity Duplicate()

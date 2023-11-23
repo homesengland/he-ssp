@@ -2,6 +2,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using MediatR;
@@ -13,9 +14,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
 {
     private readonly IHomeTypeRepository _repository;
 
-    public SaveHomeTypeDetailsCommandHandler(
-        IHomeTypeRepository repository,
-        ILogger<SaveHomeTypeDetailsCommand> logger)
+    public SaveHomeTypeDetailsCommandHandler(IHomeTypeRepository repository, ILogger<SaveHomeTypeDetailsCommand> logger)
         : base(logger)
     {
         _repository = repository;
@@ -25,8 +24,36 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
     {
         var applicationId = new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId);
         var homeTypes = await _repository.GetByApplicationId(applicationId, HomeTypeSegmentTypes.All, cancellationToken);
-        var homeType = homeTypes.GetOrCreateNewHomeType(request.HomeTypeId.IsProvided() ? new HomeTypeId(request.HomeTypeId!) : null);
 
+        return request.HomeTypeId.IsNotProvided()
+            ? await CreateNewHomeType(homeTypes, request, cancellationToken)
+            : await UpdateExistingHomeType(homeTypes, request, cancellationToken);
+    }
+
+    private async Task<OperationResult<HomeTypeId?>> CreateNewHomeType(
+        HomeTypesEntity homeTypes,
+        SaveHomeTypeDetailsCommand request,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var homeType = homeTypes.CreateHomeType(request.HomeTypeName, request.HousingType);
+            await _repository.Save(homeType, HomeTypeSegmentTypes.All, cancellationToken);
+
+            return new OperationResult<HomeTypeId?>(homeType.Id!);
+        }
+        catch (DomainValidationException domainValidationException)
+        {
+            return new OperationResult<HomeTypeId?>(domainValidationException.OperationResult.Errors, null);
+        }
+    }
+
+    private async Task<OperationResult<HomeTypeId?>> UpdateExistingHomeType(
+        HomeTypesEntity homeTypes,
+        SaveHomeTypeDetailsCommand request,
+        CancellationToken cancellationToken)
+    {
+        var homeType = homeTypes.GetEntityById(new HomeTypeId(request.HomeTypeId!));
         var validationErrors = PerformWithValidation(
             () => homeTypes.ChangeName(homeType, request.HomeTypeName),
             () => homeType.ChangeHousingType(request.HousingType));

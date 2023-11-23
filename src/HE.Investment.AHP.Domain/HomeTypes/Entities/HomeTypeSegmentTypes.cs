@@ -14,6 +14,7 @@ internal static class HomeTypeSegmentTypes
         HomeTypeSegmentType.HomeInformation,
         HomeTypeSegmentType.DisabledAndVulnerablePeople,
         HomeTypeSegmentType.OlderPeople,
+        HomeTypeSegmentType.DesignPlans,
         HomeTypeSegmentType.SupportedHousingInformation,
     };
 }

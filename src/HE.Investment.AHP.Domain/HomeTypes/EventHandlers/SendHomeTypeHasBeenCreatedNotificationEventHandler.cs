@@ -16,6 +16,6 @@ public class SendHomeTypeHasBeenCreatedNotificationEventHandler : IEventHandler<
 
     public async Task Handle(HomeTypeHasBeenCreatedEvent domainEvent, CancellationToken cancellationToken)
     {
-        await _notificationService.Publish(new HomeTypeHasBeenCreatedNotification(domainEvent.HomeTypeName ?? "Unknown Home Type"));
+        await _notificationService.Publish(new HomeTypeHasBeenCreatedNotification(domainEvent.HomeTypeName));
     }
 }
