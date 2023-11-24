@@ -10,5 +10,5 @@ public class ProvidedHomeTypeModelBase : HomeTypeModelBase
 
     public string HomeTypeName { get; set; }
 
-    public string Header => string.IsNullOrEmpty(HomeTypeName) ? ApplicationName : $"{ApplicationName} - {HomeTypeName}";
+    public string Header => $"{ApplicationName} - {HomeTypeName}";
 }

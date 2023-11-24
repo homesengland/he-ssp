@@ -117,7 +117,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
 
         for (var i = _filesToRemove.Count - 1; i >= 0; i--)
         {
-            await designFileService.RemoveFile(homeType.Application.Id, homeType.Id!, _filesToRemove[i].Id, cancellationToken);
+            await designFileService.RemoveFile(homeType.Application.Id, homeType.Id, _filesToRemove[i].Id, cancellationToken);
             _uploadedFiles.Remove(_filesToRemove[i]);
             _filesToRemove.RemoveAt(i);
         }

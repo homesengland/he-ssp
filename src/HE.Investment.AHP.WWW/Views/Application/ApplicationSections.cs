@@ -1,7 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Gds;
 using HE.Investments.Common.WWW.Models.TaskList;
 
 namespace HE.Investment.AHP.WWW.Views.Application;

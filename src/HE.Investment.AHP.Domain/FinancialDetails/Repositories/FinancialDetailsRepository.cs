@@ -1,12 +1,7 @@
-using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investment.AHP.Contract.Application;
-using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-using HE.Investments.Account.Shared;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
 

@@ -1,7 +1,6 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investments.Common.Domain;
 using MediatR;
 using ContractApplication = HE.Investment.AHP.Contract.Application.Application;
 

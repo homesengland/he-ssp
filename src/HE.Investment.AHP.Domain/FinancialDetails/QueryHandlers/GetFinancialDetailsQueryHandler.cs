@@ -1,5 +1,3 @@
-using System.Globalization;
-using HE.Investment.AHP.Contract.FinancialDetails;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using MediatR;

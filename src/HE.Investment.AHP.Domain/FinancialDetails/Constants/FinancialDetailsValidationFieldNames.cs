@@ -1,5 +1,3 @@
-using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-
 namespace HE.Investment.AHP.Domain.FinancialDetails.Constants;
 public static class FinancialDetailsValidationFieldNames
 {

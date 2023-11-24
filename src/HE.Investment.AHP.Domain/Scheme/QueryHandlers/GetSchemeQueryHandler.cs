@@ -22,10 +22,10 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
             var entity = await _repository.GetByApplicationId(new(request.ApplicationId), cancellationToken);
 
             return new Contract.Scheme.Scheme(
-                entity!.Application.Id.Value,
+                entity.Application.Id.Value,
                 entity.Application.Name.Name,
-                entity.Funding?.RequiredFunding,
-                entity.Funding?.HousesToDeliver,
+                entity.Funding.RequiredFunding,
+                entity.Funding.HousesToDeliver,
                 entity.AffordabilityEvidence?.Evidence,
                 entity.SalesRisk?.Value,
                 entity.HousingNeeds?.TypeAndTenureJustification,

@@ -52,12 +52,12 @@ public class DesignPlanFileEntity
             throw new InvalidOperationException($"Design File {_name} is already uploaded with Id {_id}.");
         }
 
-        if (homeType.Id.IsNotProvided())
+        if (homeType.Id.IsNew)
         {
             throw new InvalidOperationException($"Design File {_name} cannot be uploaded because home type is not saved yet.");
         }
 
-        var uploadedFile = await designFileService.UploadFile(homeType.Application.Id, homeType.Id!, _name, _content, cancellationToken);
+        var uploadedFile = await designFileService.UploadFile(homeType.Application.Id, homeType.Id, _name, _content, cancellationToken);
         _id = uploadedFile.Id;
 
         return uploadedFile;

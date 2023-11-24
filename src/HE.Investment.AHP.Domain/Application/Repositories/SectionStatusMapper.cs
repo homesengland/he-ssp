@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Application;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;

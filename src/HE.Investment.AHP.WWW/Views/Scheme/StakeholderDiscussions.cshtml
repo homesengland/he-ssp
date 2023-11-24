@@ -32,7 +32,7 @@
                     field-name="StakeholderDiscussionFiles"
                     description="This could be any correspondence, including an email chain. We only require one document."
                     max-file-size-in-mb="20"
-                    is-hidden="@Model.UploadedStakeholderDiscussionFiles.Any()"/>
+                    is-hidden="@(Model.UploadedStakeholderDiscussionFiles != null && Model.UploadedStakeholderDiscussionFiles.Any())"/>
             </gds-field-set>
         </div>
         <div class="govuk-grid-column-full">

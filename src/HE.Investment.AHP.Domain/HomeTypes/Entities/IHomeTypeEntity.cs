@@ -8,7 +8,7 @@ public interface IHomeTypeEntity
 {
     ApplicationBasicInfo Application { get; }
 
-    HomeTypeId? Id { get; }
+    HomeTypeId Id { get; }
 
     HomeTypeName Name { get; }
 
