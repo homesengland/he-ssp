@@ -118,13 +118,15 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .PermitIf(
                 Trigger.Continue,
                 HomeTypesWorkflowState.ExitPlan,
-                () => _homeTypeModel is ({ Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededButNotIdentified }
+                () => _homeTypeModel is (
+                { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededButNotIdentified }
                     or { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNotNeeded })
                     and { Conditionals.ShortStayAccommodation: YesNoType.No })
             .PermitIf(
                 Trigger.Continue,
                 HomeTypesWorkflowState.MoveOnArrangements,
-                () => _homeTypeModel is ({ Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededButNotIdentified }
+                () => _homeTypeModel is (
+                { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededButNotIdentified }
                     or { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNotNeeded })
                     and { Conditionals.ShortStayAccommodation: YesNoType.Yes })
             .PermitIf(
