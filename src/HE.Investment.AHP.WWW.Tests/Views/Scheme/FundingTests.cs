@@ -13,7 +13,7 @@ public class FundingTests : ViewTestBase
     private const string FundingError = "Funding error";
     private const string HousesError = "Houses error";
     private static readonly SchemeViewModel Model = TestSchemeViewModel.Test;
-    private readonly RouteData _routeData = new(new RouteValueDictionary { { "applicationId", "123" }, { "homeTypeId", "456" }, });
+    private readonly RouteData _routeData = new(new RouteValueDictionary { { "applicationId", "123" } });
 
     [Fact]
     public async Task ShouldDisplayView_WhenThereAreNoErrors()
