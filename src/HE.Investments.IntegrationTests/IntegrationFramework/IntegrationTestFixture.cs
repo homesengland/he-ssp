@@ -1,8 +1,8 @@
-using HE.InvestmentLoans.IntegrationTests.Config;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Auth;
-using HE.InvestmentLoans.IntegrationTests.Loans.Application.Order02Sections.CompanyStructureSection.Mock;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Services;
+using HE.Investments.Loans.IntegrationTests.Config;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Auth;
+using HE.Investments.Loans.IntegrationTests.Loans.Application.Order02Sections.CompanyStructureSection.Mock;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
+namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 
 public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
     where TProgram : class

@@ -1,10 +1,10 @@
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Loans.Common.Exceptions;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;

@@ -8,8 +8,8 @@ using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.Mock;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
-using HE.InvestmentLoans.Common.Utils;
 using HE.Investments.Account.Shared.Config;
+using HE.Investments.Loans.Common.Utils;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 

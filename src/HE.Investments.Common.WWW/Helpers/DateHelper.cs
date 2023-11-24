@@ -1,5 +1,5 @@
 using System.Globalization;
-using HE.InvestmentLoans.Common.Extensions;
+using HE.Investments.Loans.Common.Extensions;
 
 namespace HE.Investments.Common.WWW.Helpers;
 

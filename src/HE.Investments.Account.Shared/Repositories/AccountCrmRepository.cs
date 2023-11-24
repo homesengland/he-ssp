@@ -1,8 +1,8 @@
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Organisation.Services;
 using Microsoft.PowerPlatform.Dataverse.Client;
 

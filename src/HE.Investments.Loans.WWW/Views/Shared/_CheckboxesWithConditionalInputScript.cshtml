@@ -1,0 +1,12 @@
+@model HE.Investments.Loans.WWW.Models.ConditionalModel
+
+@{
+    var checkboxConditionalInputPairs = Model.Checkboxes;
+}
+
+@foreach (var (checkboxId, conditionalId) in checkboxConditionalInputPairs)
+{
+    @Html.Hidden("checkbox", Json.Serialize(new { checkboxId, conditionalId}));
+}
+
+<script src="/javascripts/checkboxes-with-conditional-input.js"></script>

@@ -2,7 +2,7 @@ using HE.Investments.DocumentService.Models.File;
 using HE.Investments.DocumentService.Models.Table;
 using HE.Investments.DocumentService.Services;
 
-namespace HE.InvestmentLoans.IntegrationTests.Loans.Application.Order02Sections.CompanyStructureSection.Mock;
+namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order02Sections.CompanyStructureSection.Mock;
 
 public class DocumentServiceMock : IHttpDocumentService
 {

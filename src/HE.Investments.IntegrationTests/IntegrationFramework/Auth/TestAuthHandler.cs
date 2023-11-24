@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Auth;
+namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework.Auth;
 
 public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {

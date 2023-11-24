@@ -1,9 +1,9 @@
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Assertions;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Assertions;
 
-namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
+namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework.Extensions;
 
 public static class HtmlFluentExtensions
 {

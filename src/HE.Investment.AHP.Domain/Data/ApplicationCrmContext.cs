@@ -1,9 +1,9 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
+using HE.Investments.Loans.Common.CrmCommunication.Serialization;
+using HE.Investments.Loans.Common.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Data;
 
