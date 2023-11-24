@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
@@ -15,12 +16,14 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         NumberOfHomes? numberOfHomes = null,
         NumberOfBedrooms? numberOfBedrooms = null,
         MaximumOccupancy? maximumOccupancy = null,
-        NumberOfStoreys? numberOfStoreys = null)
+        NumberOfStoreys? numberOfStoreys = null,
+        YesNoType intendedAsMoveOnAccommodation = YesNoType.Undefined)
     {
         NumberOfHomes = numberOfHomes;
         NumberOfBedrooms = numberOfBedrooms;
         MaximumOccupancy = maximumOccupancy;
         NumberOfStoreys = numberOfStoreys;
+        IntendedAsMoveOnAccommodation = intendedAsMoveOnAccommodation;
     }
 
     public bool IsModified => _modificationTracker.IsModified;
@@ -32,6 +35,8 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
     public MaximumOccupancy? MaximumOccupancy { get; private set; }
 
     public NumberOfStoreys? NumberOfStoreys { get; private set; }
+
+    public YesNoType IntendedAsMoveOnAccommodation { get; private set; }
 
     public void ChangeNumberOfHomes(string? numberOfHomes)
     {
@@ -55,6 +60,11 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
     {
         var newValue = numberOfStoreys.IsProvided() ? new NumberOfStoreys(numberOfStoreys) : null;
         NumberOfStoreys = _modificationTracker.Change(NumberOfStoreys, newValue);
+    }
+
+    public void ChangeIntendedAsMoveOnAccommodation(YesNoType intendedAsMoveOnAccommodation)
+    {
+        IntendedAsMoveOnAccommodation = _modificationTracker.Change(IntendedAsMoveOnAccommodation, intendedAsMoveOnAccommodation);
     }
 
     public IHomeTypeSegmentEntity Duplicate()

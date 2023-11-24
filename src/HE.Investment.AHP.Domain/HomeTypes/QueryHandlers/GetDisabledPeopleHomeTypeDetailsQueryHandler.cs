@@ -25,6 +25,7 @@ internal sealed class GetDisabledPeopleHomeTypeDetailsQueryHandler : IRequestHan
             cancellationToken);
 
         return new DisabledPeopleHomeTypeDetails(
+            homeType.Application.Name.Name,
             homeType.Name.Value,
             homeType.DisabledPeopleHomeTypeDetails.HousingType,
             homeType.DisabledPeopleHomeTypeDetails.ClientGroupType);

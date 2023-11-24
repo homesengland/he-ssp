@@ -35,7 +35,7 @@ public class ApplicationRepository : IApplicationRepository
     public async Task<ApplicationBasicInfo> GetApplicationBasicInfo(ApplicationId id, CancellationToken cancellationToken)
     {
         var application = await GetById(id, cancellationToken);
-        return new ApplicationBasicInfo(application.Id, application.Tenure?.Value ?? Tenure.Undefined, ApplicationStatus.Draft);
+        return new ApplicationBasicInfo(application.Id, application.Name, application.Tenure?.Value ?? Tenure.Undefined, ApplicationStatus.Draft);
     }
 
     public async Task<IList<ApplicationEntity>> GetAll(CancellationToken cancellationToken)

@@ -25,6 +25,7 @@ internal sealed class GetHomeTypeDetailsQueryHandler : IRequestHandler<GetHomeTy
             cancellationToken);
 
         return new HomeTypeDetails(
+            homeType.Application.Name.Name,
             request.HomeTypeId,
             homeType.Name.Value,
             homeType.HomeInformation.NumberOfHomes?.Value,
