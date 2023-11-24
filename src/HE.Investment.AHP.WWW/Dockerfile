@@ -15,7 +15,6 @@ ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
 
 COPY . .
 RUN ls
-WORKDIR "HE.Investment.AHP.WWW"
 RUN dotnet build "HE.Investment.AHP.WWW.csproj" -c Release -o /app/build
 
 FROM build AS publish
