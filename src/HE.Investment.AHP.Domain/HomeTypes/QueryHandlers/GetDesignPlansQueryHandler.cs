@@ -28,6 +28,7 @@ public class GetDesignPlansQueryHandler : IRequestHandler<GetDesignPlansQuery, D
         var designPlans = homeType.DesignPlans;
 
         return new DesignPlans(
+            homeType.Application.Name.Name,
             homeType.Name.Value,
             designPlans.DesignPrinciples.ToList(),
             designPlans.MoreInformation?.Value,

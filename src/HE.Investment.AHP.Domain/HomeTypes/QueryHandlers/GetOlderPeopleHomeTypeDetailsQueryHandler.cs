@@ -24,6 +24,6 @@ internal sealed class GetOlderPeopleHomeTypeDetailsQueryHandler : IRequestHandle
             new[] { HomeTypeSegmentType.OlderPeople },
             cancellationToken);
 
-        return new OlderPeopleHomeTypeDetails(homeType.Name.Value, homeType.OlderPeopleHomeTypeDetails.HousingType);
+        return new OlderPeopleHomeTypeDetails(homeType.Application.Name.Name, homeType.Name.Value, homeType.OlderPeopleHomeTypeDetails.HousingType);
     }
 }

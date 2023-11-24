@@ -1,4 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
@@ -16,6 +17,7 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             nameof(invln_HomeType.invln_numberofbedrooms),
             nameof(invln_HomeType.invln_maxoccupancy),
             nameof(invln_HomeType.invln_numberofstoreys),
+            nameof(invln_HomeType.invln_homesusedformoveonaccommodation),
         })
     {
     }
@@ -28,7 +30,8 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             dto.numberOfHomes.IsProvided() ? new NumberOfHomes(dto.numberOfHomes!.Value) : null,
             dto.numberOfBedrooms.IsProvided() ? new NumberOfBedrooms(dto.numberOfBedrooms!.Value) : null,
             dto.maxOccupancy.IsProvided() ? new MaximumOccupancy(dto.maxOccupancy!.Value) : null,
-            dto.numberOfStoreys.IsProvided() ? new NumberOfStoreys(dto.numberOfStoreys!.Value) : null);
+            dto.numberOfStoreys.IsProvided() ? new NumberOfStoreys(dto.numberOfStoreys!.Value) : null,
+            MapYesNoAnswer(dto.isMoveOnAccommodation));
     }
 
     protected override HomeInformationSegmentEntity GetSegment(HomeTypeEntity entity) => entity.HomeInformation;
@@ -39,5 +42,26 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
         dto.numberOfBedrooms = segment.NumberOfBedrooms?.Value;
         dto.maxOccupancy = segment.MaximumOccupancy?.Value;
         dto.numberOfStoreys = segment.NumberOfStoreys?.Value;
+        dto.isMoveOnAccommodation = MapYesNoAnswer(segment.IntendedAsMoveOnAccommodation);
+    }
+
+    private static bool? MapYesNoAnswer(YesNoType yesNoAnswer)
+    {
+        return yesNoAnswer switch
+        {
+            YesNoType.Yes => true,
+            YesNoType.No => false,
+            _ => null,
+        };
+    }
+
+    private static YesNoType MapYesNoAnswer(bool? yesNoAnswer)
+    {
+        return yesNoAnswer switch
+        {
+            true => YesNoType.Yes,
+            false => YesNoType.No,
+            null => YesNoType.Undefined,
+        };
     }
 }

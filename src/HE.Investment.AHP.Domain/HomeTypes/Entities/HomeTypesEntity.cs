@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Domain;
@@ -27,6 +28,8 @@ public class HomeTypesEntity
     }
 
     public ApplicationId ApplicationId => _application.Id;
+
+    public ApplicationName ApplicationName => _application.Name;
 
     public IEnumerable<IHomeTypeEntity> HomeTypes => _homeTypes;
 

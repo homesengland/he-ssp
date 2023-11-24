@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
@@ -8,7 +9,7 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
-public class GetFinishHomesTypeAnswerQueryHandler : IRequestHandler<GetFinishHomesTypeAnswerQuery, FinishHomeTypesAnswer>
+public class GetFinishHomesTypeAnswerQueryHandler : IRequestHandler<GetFinishHomesTypeAnswerQuery, ApplicationHomeTypesFinishAnswer>
 {
     private readonly IHomeTypeRepository _repository;
 
@@ -17,10 +18,12 @@ public class GetFinishHomesTypeAnswerQueryHandler : IRequestHandler<GetFinishHom
         _repository = repository;
     }
 
-    public async Task<FinishHomeTypesAnswer> Handle(GetFinishHomesTypeAnswerQuery request, CancellationToken cancellationToken)
+    public async Task<ApplicationHomeTypesFinishAnswer> Handle(GetFinishHomesTypeAnswerQuery request, CancellationToken cancellationToken)
     {
         var homeTypes = await _repository.GetByApplicationId(new ApplicationId(request.ApplicationId), HomeTypeSegmentTypes.None, cancellationToken);
 
-        return homeTypes.Status == SectionStatus.Completed ? FinishHomeTypesAnswer.Yes : FinishHomeTypesAnswer.Undefined;
+        return new ApplicationHomeTypesFinishAnswer(
+            homeTypes.ApplicationName.Name,
+            homeTypes.Status == SectionStatus.Completed ? FinishHomeTypesAnswer.Yes : FinishHomeTypesAnswer.Undefined);
     }
 }

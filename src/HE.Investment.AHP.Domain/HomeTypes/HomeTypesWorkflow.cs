@@ -75,7 +75,11 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .Permit(Trigger.Back, HomeTypesWorkflowState.List);
 
         _machine.Configure(HomeTypesWorkflowState.HomeInformation)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.MoveOnAccommodation,
+                () => _homeTypeModel is { HousingType: HousingType.Undefined or HousingType.General })
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.List, () => _homeTypeModel is not { HousingType: HousingType.Undefined or HousingType.General })
             .PermitIf(
                 Trigger.Back,
                 HomeTypesWorkflowState.HomeTypeDetails,
@@ -181,5 +185,9 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 Trigger.Back,
                 HomeTypesWorkflowState.RevenueFunding,
                 () => _homeTypeModel is { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededAndIdentified });
+
+        _machine.Configure(HomeTypesWorkflowState.MoveOnAccommodation)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.HomeInformation);
     }
 }

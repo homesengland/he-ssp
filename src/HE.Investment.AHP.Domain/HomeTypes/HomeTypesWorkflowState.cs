@@ -19,4 +19,5 @@ public enum HomeTypesWorkflowState
     ExitPlan,
     MoveOnArrangements,
     TypologyLocationAndDesign,
+    MoveOnAccommodation,
 }
