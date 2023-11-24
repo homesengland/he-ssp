@@ -208,7 +208,7 @@
     @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
            {
                { "Title", ProjectFieldNames.ChargesDebt },
-               { "Value", Model?.ChargesDebtInfo != null ? $"{ Model.ChargesDebt }, { Model.ChargesDebtInfo }" :  Model?.ChargesDebt },
+               { "Value", !string.IsNullOrEmpty(Model?.ChargesDebtInfo) ? $"{ Model.ChargesDebt }, { Model.ChargesDebtInfo }" :  Model?.ChargesDebt },
                { "Link", Url.Action("ChargesDebt", "Project", new { id = id, projectId = Model.ProjectId, redirect = "CheckAnswers" }) },
                { "LinkId", "charges-debt" },
                { "IsEditable", Model?.IsEditable() }
