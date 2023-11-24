@@ -19,14 +19,15 @@
 
             <gds-field-set class="govuk-!-margin-bottom-6">
                 <span class="govuk-caption-m govuk-!-margin-bottom-6">Select all that apply</span>
-
+                <FormHiddenLabel
+                    field-name="Sources"
+                    title="Revenue funding sources"/>
                 <gds-checkbox class="exclusive-checkbox-group"
                               govuk-formgroup-asp-for="@Model.Sources"
                               asp-selectlistitems="HomeTypesFormOptions.RevenueFundingSourceTypes"
                               asp-for="@Model.Sources"
-                              asp-excludelabel="true">
+                              asp-excludelabel>
                 </gds-checkbox>
-
             </gds-field-set>
 
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">

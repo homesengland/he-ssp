@@ -58,5 +58,9 @@
     <AdditionalFiles Include="Views\Shared\Errors\PageNotFound.cshtml" />
     <AdditionalFiles Include="Views\Shared\Errors\ProblemWithTheService.cshtml" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Shared\Components\FormHiddenLabel\FormHiddenLabel.cshtml" />
+  </ItemGroup>
   
 </Project>
