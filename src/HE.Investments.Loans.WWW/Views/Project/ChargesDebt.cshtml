@@ -1,0 +1,62 @@
+@using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Loans.Contract.Projects
+@using HE.Investments.Loans.Contract.Projects.ViewModels
+@using HE.Investments.Loans.WWW.Extensions
+@using HE.Investments.Loans.WWW.Views.Project.Consts
+@model HE.Investments.Loans.Contract.Projects.ViewModels.ProjectViewModel;
+@{
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.ChargesDebt));
+    var (conditionalInputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.ChargesDebtInfo));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Project" asp-action="ChargesDebt" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.ChargesDebt})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="radioInvalid">
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>
+                        @ProjectPageTitles.ChargesDebt
+                    </gds-fieldset-heading>
+                </gds-legend>
+                <gds-div-hint class="govuk-!-margin-bottom-6">
+                    There may be a legal charge over the development as security for funding any development activity or land purchase.
+                    Do not include any debentures.
+                </gds-div-hint>
+
+                <gds-radio-yes-no asp-for="@Model.ChargesDebt"
+                                  inner-input-for="@Model.ChargesDebtInfo"
+                                  with-yes-input
+                                  inner-input-text="Tell us more about any existing legal charges or debt secured on this land."
+                                  inner-input-value="@Model.ChargesDebtInfo"
+                                  class="govuk-!-margin-bottom-8"
+                                  is-conditional-input-invalid="@conditionalInputInvalid"
+                                  conditional-input-error="@inputErrors"
+                                  value="@Model.ChargesDebt">
+                </gds-radio-yes-no>
+
+                <gds-details-summary label="Help with debentures">
+                    A debenture is a legal document that provides loan security to the lender. It is a written agreement between a lender and a borrower which is registered at Companies House.
+                    It gives the lender security over the company's assets by securing those assets for the lender should the company default or become insolvent.
+                </gds-details-summary>
+            </gds-div-form-group>
+
+            @Html.HiddenFor(c => c.ProjectId)
+            @Html.HiddenFor(c => c.ApplicationId)
+
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Continue
+            </button>
+        </gds-field-set>
+
+    </form>
+
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>
+
+@await Html.YesNoConditionalInputScript(nameof(Model.ChargesDebt))

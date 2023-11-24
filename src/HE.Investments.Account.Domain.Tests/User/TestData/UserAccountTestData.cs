@@ -1,6 +1,6 @@
-using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Loans.Common.Tests.TestData;
 
 namespace HE.Investments.Account.Domain.Tests.User.TestData;
 

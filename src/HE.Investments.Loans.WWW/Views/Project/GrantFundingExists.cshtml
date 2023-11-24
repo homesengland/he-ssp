@@ -1,0 +1,57 @@
+@using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Loans.Contract.Projects
+@using HE.Investments.Loans.Contract.Projects.ViewModels
+@using HE.Investments.Loans.WWW.Views.Project.Consts
+@model HE.Investments.Loans.Contract.Projects.ViewModels.ProjectViewModel;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.GrantFundingStatus));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Project" asp-action="GrantFundingExists" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.GrantFunding})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="inputInvalid">
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>
+                        @ProjectPageTitles.GrantFundingExists
+                    </gds-fieldset-heading>
+                </gds-legend>
+                <gds-div-hint>
+                    This could include any previous Homes England funding.
+                </gds-div-hint>
+
+                <div class="govuk-!-margin-bottom-6 govuk-radios">
+                    <div class="govuk-radios__item">
+                        @Html.RadioButtonFor(m => m.GrantFundingStatus,"Yes", new { @class="govuk-radios__input", id="GrantFunding"} )
+                        <label class="govuk-label govuk-radios__label" for="GrantFunding">Yes</label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        @Html.RadioButtonFor(m => m.GrantFundingStatus,"No", new { @class="govuk-radios__input", id="GrantFunding-1"} )
+                        <label class="govuk-label govuk-radios__label" for="GrantFunding-1">No</label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        @Html.RadioButtonFor(m => m.GrantFundingStatus,"DoNotKnow", new { @class="govuk-radios__input", id="GrantFunding-2"} )
+                        <label class="govuk-label govuk-radios__label" for="GrantFunding-2">Do not know</label>
+                    </div>
+                </div>
+            </gds-div-form-group>
+
+            @Html.HiddenFor(c => c.ProjectId)
+            @Html.HiddenFor(c => c.ApplicationId)
+
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Continue
+            </button>
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>

@@ -1,8 +1,8 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Contract;
 using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Shared;
+using HE.Investments.Loans.Common.Exceptions;
+using HE.Investments.Loans.Contract;
 using HE.Investments.Organisation.Contract;
 using HE.Investments.Organisation.Services;
 using MediatR;

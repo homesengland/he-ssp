@@ -1,5 +1,3 @@
-using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Contract;
 using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Organisation.Repositories;
@@ -7,6 +5,8 @@ using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Loans.Common.Exceptions;
+using HE.Investments.Loans.Contract;
 using MediatR;
 using IContactRepository = HE.Investments.Account.Domain.Organisation.Repositories.IContactRepository;
 

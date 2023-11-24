@@ -1,8 +1,8 @@
 using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Loans.Common.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

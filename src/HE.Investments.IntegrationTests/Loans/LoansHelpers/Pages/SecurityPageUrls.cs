@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
+namespace HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
 internal sealed class SecurityPageUrls
 {
     public const string StartSuffix = "/security";

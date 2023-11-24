@@ -1,0 +1,64 @@
+@using HE.Investments.Loans.WWW.Helpers
+@using HE.Investments.Loans.WWW.Models
+@using HE.Investments.Loans.WWW.Extensions
+@model HE.Investments.Loans.Contract.Funding.FundingViewModel
+@{
+    var id = ViewContext.RouteData.Values["id"];
+}
+<gds-summary-list class="govuk-!-margin-bottom-9">
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+           {
+               { "Title", "Gross Development Value" },
+               { "Value", MoneyLabelHelper.Pounds(Model.GrossDevelopmentValue) },
+               { "Link", Url.Action("GrossDevelopmentValue", "FundingV2", new {id = id,  redirect = "CheckAnswers"}) },
+               { "LinkId", "gross-development-value-change"},
+               { "IsEditable", Model.IsEditable() }
+           })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+           {
+               { "Title", "Total project costs" },
+               { "Value", MoneyLabelHelper.Pounds(Model.TotalCosts) },
+               { "Link", Url.Action("EstimatedTotalCosts", "FundingV2", new {id = id,  redirect = "CheckAnswers"}) },
+               { "LinkId", "estimated-total-costs-change"},
+               { "IsEditable", Model.IsEditable() }
+
+           })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+           {
+               { "Title", "Abnormal costs" },
+               { "Value", LabelHelper.GetSummaryLabel(Model.AbnormalCosts, Model.AbnormalCostsInfo) },
+               { "Link", Url.Action("AbnormalCosts", "FundingV2", new {id = id,  redirect = "CheckAnswers"}) },
+               { "LinkId", "abnormal-costs-change"},
+               { "IsEditable", Model.IsEditable() }
+           })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+           {
+               { "Title", "Private sector funding" },
+               { "Value", LabelHelper.GetSummaryLabel(Model.PrivateSectorFunding, Model.PrivateSectorFunding == "Yes" ? Model.PrivateSectorFundingResult : Model.PrivateSectorFundingReason) },
+               { "Link", Url.Action("PrivateSectorFunding", "FundingV2", new {id = id,  redirect = "CheckAnswers"}) },
+               { "LinkId", "private-sector-funding-change"},
+               { "IsEditable", Model.IsEditable() }
+           })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+           {
+               { "Title", "Refinance or repay" },
+               { "Value", TemporaryFormOptions.LoanResolution.GetSummaryLabel(Model.Refinance, Model.RefinanceInfo) },
+               { "Link", Url.Action("RepaymentSystem", "FundingV2", new {id = id,  redirect = "CheckAnswers"}) },
+               { "LinkId", "repayment-system-change"},
+               { "IsEditable", Model.IsEditable() }
+           })
+
+    @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
+           {
+               { "Title", "Additional projects" },
+               { "Value", Model.AdditionalProjects },
+               { "Link", Url.Action("AdditionalProjects", "FundingV2", new {id = id,  redirect = "CheckAnswers"}) },
+               { "LinkId", "additional-projects-change"},
+               { "IsEditable", Model.IsEditable() }
+           })
+</gds-summary-list>

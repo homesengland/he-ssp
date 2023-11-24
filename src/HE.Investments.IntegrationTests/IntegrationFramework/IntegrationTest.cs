@@ -1,9 +1,10 @@
 using AngleSharp.Html.Dom;
-using HE.InvestmentLoans.IntegrationTests.Config;
-using HE.InvestmentLoans.IntegrationTests.Loans;
+using HE.Investments.Loans.IntegrationTests.Config;
+using HE.Investments.Loans.IntegrationTests.Loans;
+using HE.Investments.Loans.WWW;
 using Xunit;
 
-namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
+namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 
 [Collection(nameof(IntegrationTestSharedContext))]
 public class IntegrationTest

@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.IntegrationTests.Loans.Application.Order02Sections.CompanyStructureSection;
+namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order02Sections.CompanyStructureSection;
 
 public static class CompanyStructureFields
 {

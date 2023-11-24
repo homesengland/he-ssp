@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
-using HE.InvestmentLoans.Common.Routing;
+using HE.Investments.Loans.Common.Routing;
 using Stateless;
 
 namespace HE.Investment.AHP.Domain.HomeTypes;

@@ -4,11 +4,11 @@ using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
+using HE.Investments.Loans.Common.Exceptions;
 using ApplicationStatus = HE.Investment.AHP.Domain.Common.ApplicationStatus;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;

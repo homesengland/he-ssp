@@ -4,8 +4,8 @@ using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Loans.Common.Exceptions;
 using MediatR;
 using DomainApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
