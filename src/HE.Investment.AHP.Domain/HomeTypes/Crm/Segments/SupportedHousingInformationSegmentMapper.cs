@@ -3,7 +3,9 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.CRM.Model;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
@@ -16,6 +18,9 @@ public class SupportedHousingInformationSegmentMapper : HomeTypeCrmSegmentMapper
             nameof(invln_HomeType.invln_homesusedforshortstay),
             nameof(invln_HomeType.invln_revenuefunding),
             nameof(invln_HomeType.invln_revenuefundingsources),
+            nameof(invln_HomeType.invln_moveonarrangementsforshortstayhomes),
+            nameof(invln_HomeType.invln_typologylocationanddesing),
+            nameof(invln_HomeType.invln_supportedhousingexitplan),
         })
     {
     }
@@ -28,7 +33,10 @@ public class SupportedHousingInformationSegmentMapper : HomeTypeCrmSegmentMapper
             YesNoTypeMapper.Map(dto.localComissioningBodies),
             YesNoTypeMapper.Map(dto.shortStayAccommodation),
             MapRevenueFunding(dto.revenueFunding),
-            dto.fundingSources.Select(MapSources));
+            dto.fundingSources.Select(MapSources),
+            dto.moveOnArrangements.IsProvided() ? new MoreInformation(dto.moveOnArrangements) : null,
+            dto.typologyLocationAndDesign.IsProvided() ? new MoreInformation(dto.typologyLocationAndDesign) : null,
+            dto.exitPlan.IsProvided() ? new MoreInformation(dto.exitPlan) : null);
     }
 
     protected override SupportedHousingInformationEntity GetSegment(HomeTypeEntity entity) => entity.SupportedHousingInformation;
@@ -39,6 +47,9 @@ public class SupportedHousingInformationSegmentMapper : HomeTypeCrmSegmentMapper
         dto.shortStayAccommodation = YesNoTypeMapper.Map(segment.ShortStayAccommodation);
         dto.revenueFunding = MapRevenueFunding(segment.RevenueFundingType);
         dto.fundingSources = segment.RevenueFundingSources.Select(MapSources).ToList();
+        dto.moveOnArrangements = segment.MoveOnArrangements?.Value;
+        dto.typologyLocationAndDesign = segment.TypologyLocationAndDesign?.Value;
+        dto.exitPlan = segment.ExitPlan?.Value;
     }
 
     private static int? MapRevenueFunding(RevenueFundingType? value)

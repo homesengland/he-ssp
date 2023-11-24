@@ -182,6 +182,8 @@
     <Compile Include="Services\HomeType\IHomeTypeService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ahp-build-export.yml" />
+    <None Include="ahp-deploy.yml" />
     <None Include="app.config" />
     <None Include="bin\coretools\CrmSvcUtil.exe.config" />
     <None Include="bin\coretools\LicenseTerms.docx" />

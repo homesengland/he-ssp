@@ -17,7 +17,7 @@ public enum HomeTypesWorkflowState
     SupportedHousingInformation,
     RevenueFunding,
     ExitPlan,
-    TheMoveOnArrangements,
+    MoveOnArrangements,
     TypologyLocationAndDesign,
     MoveOnAccommodation,
 }

@@ -15,13 +15,13 @@ ENV VSS_NUGET_EXTERNAL_FEED_ENDPOINTS \
 
 COPY . .
 RUN ls
-WORKDIR "HE.Investments.Loans.WWW"
-RUN dotnet build "HE.Investments.Loans.WWW.csproj" -c Release -o /app/build
+WORKDIR "HE.Investments.Account.WWW"
+RUN dotnet build "HE.Investments.Account.WWW.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "HE.Investments.Loans.WWW.csproj" -c Release -o /app/publish --no-restore
+RUN dotnet publish "HE.Investments.Account.WWW.csproj" -c Release -o /app/publish --no-restore
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "HE.Investments.Loans.WWW.dll"]
+ENTRYPOINT ["dotnet", "HE.Investments.Account.WWW.dll"]

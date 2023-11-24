@@ -423,6 +423,87 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(HomeTypesWorkflowState.MoveOnArrangements)]
+    [HttpGet("{homeTypeId}/TheMoveOnArrangements")]
+    public async Task<IActionResult> MoveOnArrangements([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var supportedHousingInformation = await _mediator.Send(new GetSupportedHousingInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new MoreInformationModel(application.Name, supportedHousingInformation.HomeTypeName)
+        {
+            MoreInformation = supportedHousingInformation.MoveOnArrangements,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.MoveOnArrangements)]
+    [HttpPost("{homeTypeId}/TheMoveOnArrangements")]
+    public async Task<IActionResult> MoveOnArrangements(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        MoreInformationModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveMoveOnArrangementsCommand(applicationId, homeTypeId, model.MoreInformation),
+            model,
+            cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.TypologyLocationAndDesign)]
+    [HttpGet("{homeTypeId}/TypologyLocationAndDesign")]
+    public async Task<IActionResult> TypologyLocationAndDesign([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var supportedHousingInformation = await _mediator.Send(new GetSupportedHousingInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new MoreInformationModel(application.Name, supportedHousingInformation.HomeTypeName)
+        {
+            MoreInformation = supportedHousingInformation.TypologyLocationAndDesign,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.TypologyLocationAndDesign)]
+    [HttpPost("{homeTypeId}/TypologyLocationAndDesign")]
+    public async Task<IActionResult> TypologyLocationAndDesign(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        MoreInformationModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveTypologyLocationAndDesignCommand(applicationId, homeTypeId, model.MoreInformation),
+            model,
+            cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ExitPlan)]
+    [HttpGet("{homeTypeId}/ExitPlan")]
+    public async Task<IActionResult> ExitPlan([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+        var supportedHousingInformation = await _mediator.Send(new GetSupportedHousingInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new MoreInformationModel(application.Name, supportedHousingInformation.HomeTypeName)
+        {
+            MoreInformation = supportedHousingInformation.ExitPlan,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ExitPlan)]
+    [HttpPost("{homeTypeId}/ExitPlan")]
+    public async Task<IActionResult> ExitPlan(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        MoreInformationModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveExitPlanCommand(applicationId, homeTypeId, model.MoreInformation),
+            model,
+            cancellationToken);
+    }
+
     protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object? routeData = null)
     {
         var applicationId = Request.GetRouteValue("applicationId")
