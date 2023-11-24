@@ -2,6 +2,7 @@ using AngleSharp.Html.Dom;
 using HE.Investments.Common.WWWTestsFramework;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 
@@ -14,6 +15,7 @@ public abstract class ViewComponentTestBase : ViewTestBase
         TModel? model = default,
         Dictionary<string, object>? viewBagOrViewData = null,
         ModelStateDictionary? modelStateDictionary = null,
+        RouteData? routeData = null,
         Action<IServiceCollection>? mockDependencies = null)
         where TModel : class
     {
@@ -22,6 +24,7 @@ public abstract class ViewComponentTestBase : ViewTestBase
             model,
             viewBagOrViewData,
             modelStateDictionary,
+            routeData,
             services =>
             {
                 var assembly = typeof(ViewComponentTestBase).Assembly;

@@ -13,7 +13,7 @@ public class HappiDesignPrinciplesTests : HomeTypesTestBase
     public async Task ShouldRenderViewWithCheckboxes()
     {
         // given & when
-        var document = await Render(ViewPath, Model);
+        var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
         document

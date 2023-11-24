@@ -10,7 +10,7 @@ public static class ApplicationSections
 {
     public static IList<TaskListSectionModel> CreateSections(IList<ApplicationSection> sections)
     {
-        return new List<TaskListSectionModel>
+        return new List<TaskListSectionModel?>
             {
                 AddSection(
                     SectionType.Scheme,
@@ -43,10 +43,11 @@ public static class ApplicationSections
                     false),
             }
             .Where(i => i != null)
+            .Cast<TaskListSectionModel>()
             .ToList();
     }
 
-    private static TaskListSectionModel AddSection(
+    private static TaskListSectionModel? AddSection(
         SectionType sectionType,
         IList<ApplicationSection> sections,
         string header,

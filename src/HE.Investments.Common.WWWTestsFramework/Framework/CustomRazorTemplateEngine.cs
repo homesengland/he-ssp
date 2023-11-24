@@ -1,5 +1,6 @@
 using HE.Investments.Common.WWW.Partials;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HE.Investments.Common.WWWTestsFramework.Framework;
@@ -24,9 +25,10 @@ public static class CustomRazorTemplateEngine
         string viewName,
         object? viewModel = null,
         Dictionary<string, object>? viewBagOrViewData = null,
-        ModelStateDictionary? modelStateDictionary = null)
+        ModelStateDictionary? modelStateDictionary = null,
+        RouteData? routeData = null)
     {
-        return await Instance.Value.RenderPartialAsync(viewName, viewModel, viewBagOrViewData, modelStateDictionary).ConfigureAwait(false);
+        return await Instance.Value.RenderPartialAsync(viewName, viewModel, viewBagOrViewData, modelStateDictionary, routeData).ConfigureAwait(false);
     }
 
     private static CustomRazorTemplateEngineRenderer CreateInstance()

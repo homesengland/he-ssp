@@ -15,7 +15,7 @@ public class HomeTypeDetailsTests : HomeTypesTestBase
     public async Task ShouldDisplayView_WhenThereAreNoErrors()
     {
         // given & when
-        var document = await Render(ViewPath, Model);
+        var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
         AssertView(document);
@@ -30,7 +30,7 @@ public class HomeTypeDetailsTests : HomeTypesTestBase
         modelState.AddModelError(nameof(HomeTypeDetailsModel.HomeTypeName), ErrorMessage);
 
         // when
-        var document = await Render(ViewPath, Model, modelStateDictionary: modelState);
+        var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
 
         // then
         AssertView(document);

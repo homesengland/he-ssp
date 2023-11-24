@@ -15,7 +15,7 @@ public class RevenueFundingTests : HomeTypesTestBase
         var model = new RevenueFundingModel("My application", "My homes");
 
         // when
-        var document = await Render(ViewPath, model);
+        var document = await RenderHomeTypePage(ViewPath, model);
 
         // then
         document
@@ -65,7 +65,7 @@ public class RevenueFundingTests : HomeTypesTestBase
         };
 
         // when
-        var document = await Render(ViewPath, model);
+        var document = await RenderHomeTypePage(ViewPath, model);
 
         // then
         document
