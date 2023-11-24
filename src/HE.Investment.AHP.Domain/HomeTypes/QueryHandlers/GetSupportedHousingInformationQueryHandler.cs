@@ -25,6 +25,7 @@ internal sealed class GetSupportedHousingInformationQueryHandler : IRequestHandl
             cancellationToken);
 
         return new SupportedHousingInformation(
+            homeType.Application.Name.Name,
             homeType.Name.Value,
             homeType.SupportedHousingInformation.LocalCommissioningBodiesConsulted,
             homeType.SupportedHousingInformation.ShortStayAccommodation,
