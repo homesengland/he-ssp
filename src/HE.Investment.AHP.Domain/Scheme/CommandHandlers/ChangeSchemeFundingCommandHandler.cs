@@ -30,7 +30,7 @@ public class ChangeSchemeFundingCommandHandler : IRequestHandler<ChangeSchemeFun
         try
         {
             var scheme = await _repository.GetByApplicationId(applicationId, cancellationToken);
-            scheme!.ChangeFunding(funding);
+            scheme.ChangeFunding(funding);
             await _repository.Save(scheme, cancellationToken);
         }
         catch (NotFoundException)

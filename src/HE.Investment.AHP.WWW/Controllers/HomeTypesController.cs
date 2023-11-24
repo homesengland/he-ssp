@@ -10,7 +10,6 @@ using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.InvestmentLoans.Common.Exceptions;
 using HE.InvestmentLoans.Common.Routing;
 using HE.Investments.Account.Shared.Authorization.Attributes;
-using HE.Investments.Common;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
@@ -174,10 +173,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
         return View(new HomeInformationModel(application.Name, homeInformation.HomeTypeName)
         {
-            NumberOfHomes = homeInformation.NumberOfHomes?.ToString(CultureInfo.InvariantCulture) ?? Check.IfCanBeNull,
-            NumberOfBedrooms = homeInformation.NumberOfBedrooms?.ToString(CultureInfo.InvariantCulture) ?? Check.IfCanBeNull,
-            MaximumOccupancy = homeInformation.MaximumOccupancy?.ToString(CultureInfo.InvariantCulture) ?? Check.IfCanBeNull,
-            NumberOfStoreys = homeInformation.NumberOfStoreys?.ToString(CultureInfo.InvariantCulture) ?? Check.IfCanBeNull,
+            NumberOfHomes = homeInformation.NumberOfHomes?.ToString(CultureInfo.InvariantCulture),
+            NumberOfBedrooms = homeInformation.NumberOfBedrooms?.ToString(CultureInfo.InvariantCulture),
+            MaximumOccupancy = homeInformation.MaximumOccupancy?.ToString(CultureInfo.InvariantCulture),
+            NumberOfStoreys = homeInformation.NumberOfStoreys?.ToString(CultureInfo.InvariantCulture),
         });
     }
 
@@ -203,7 +202,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var disabledPeopleHomeType = await _mediator.Send(new GetDisabledPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
-        return View(new HomesForDisabledPeopleModel(application.Name, disabledPeopleHomeType.HomeTypeName ?? Check.IfCanBeNull)
+        return View(new HomesForDisabledPeopleModel(application.Name, disabledPeopleHomeType.HomeTypeName)
         {
             HousingType = disabledPeopleHomeType.HousingType,
         });
@@ -226,7 +225,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var disabledPeopleHomeType = await _mediator.Send(new GetDisabledPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
-        return View(new DisabledPeopleClientGroupModel(application.Name, disabledPeopleHomeType.HomeTypeName ?? Check.IfCanBeNull)
+        return View(new DisabledPeopleClientGroupModel(application.Name, disabledPeopleHomeType.HomeTypeName)
         {
             DisabledPeopleClientGroup = disabledPeopleHomeType.ClientGroupType,
         });
@@ -252,7 +251,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
         var olderPeopleHomeType = await _mediator.Send(new GetOlderPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
-        return View(new HomesForOlderPeopleModel(application.Name, olderPeopleHomeType.HomeTypeName ?? Check.IfCanBeNull) { HousingType = olderPeopleHomeType.HousingType, });
+        return View(new HomesForOlderPeopleModel(application.Name, olderPeopleHomeType.HomeTypeName) { HousingType = olderPeopleHomeType.HousingType, });
     }
 
     [WorkflowState(HomeTypesWorkflowState.HomesForOlderPeople)]
@@ -283,8 +282,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         HappiDesignPrinciplesModel model,
         CancellationToken cancellationToken)
     {
-        var designPrinciples = model.DesignPrinciples;
-        var otherDesignPrinciples = model.OtherPrinciples;
+        var designPrinciples = model.DesignPrinciples ?? Array.Empty<HappiDesignPrincipleType>();
+        var otherDesignPrinciples = model.OtherPrinciples ?? Array.Empty<HappiDesignPrincipleType>();
 
         return await SaveHomeTypeSegment(
             new SaveHappiDesignPrinciplesCommand(applicationId, homeTypeId, designPrinciples.Concat(otherDesignPrinciples).ToList()),
@@ -302,7 +301,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         string GetRemoveAction(string fileId) => Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "RemoveDesignPlansFile", applicationId, id = homeTypeId, fileId }) ?? throw new InvalidOperationException();
         return View(new DesignPlansModel(application.Name, designPlans.HomeTypeName)
         {
-            MoreInformation = designPlans.MoreInformation ?? Check.IfCanBeNull,
+            MoreInformation = designPlans.MoreInformation,
             UploadedFiles = designPlans.UploadedFiles.Select(x => new FileModel(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId))).ToList(),
         });
     }

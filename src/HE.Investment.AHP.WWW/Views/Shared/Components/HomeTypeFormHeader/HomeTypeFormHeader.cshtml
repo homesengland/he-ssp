@@ -1,6 +1,6 @@
 @model (string Title, string Caption, string ApplicationId, string HomeTypeId, HE.Investment.AHP.Domain.HomeTypes.HomeTypesWorkflowState CurrentPage)
 @{
-    object redirectParameters = Model.HomeTypeId == null
+    object redirectParameters = string.IsNullOrEmpty(Model.HomeTypeId)
         ? new { applicationId = Model.ApplicationId, currentPage = Model.CurrentPage }
         : new { applicationId = Model.ApplicationId, homeTypeId = Model.HomeTypeId, currentPage = Model.CurrentPage };
 }

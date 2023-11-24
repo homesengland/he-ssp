@@ -26,4 +26,15 @@ public static class RazorPageExtensions
 
         return homeTypeId!;
     }
+
+    public static string? GetOptionalHomeTypeIdFromRoute(this IRazorPage razorPage)
+    {
+        var homeTypeId = razorPage.ViewContext.RouteData.Values["homeTypeId"] as string;
+        if (homeTypeId.IsNotProvided())
+        {
+            return null;
+        }
+
+        return homeTypeId!;
+    }
 }

@@ -1,8 +1,6 @@
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
-using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Utils.Constants;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
@@ -54,12 +52,12 @@ public class DesignPlanFileEntity
             throw new InvalidOperationException($"Design File {_name} is already uploaded with Id {_id}.");
         }
 
-        if (homeType.Id.IsNotProvided())
+        if (homeType.Id.IsNew)
         {
             throw new InvalidOperationException($"Design File {_name} cannot be uploaded because home type is not saved yet.");
         }
 
-        var uploadedFile = await designFileService.UploadFile(homeType.Application.Id, homeType.Id!, _name, _content, cancellationToken);
+        var uploadedFile = await designFileService.UploadFile(homeType.Application.Id, homeType.Id, _name, _content, cancellationToken);
         _id = uploadedFile.Id;
 
         return uploadedFile;

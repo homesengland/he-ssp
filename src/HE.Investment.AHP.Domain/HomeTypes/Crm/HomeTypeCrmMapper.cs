@@ -51,7 +51,7 @@ public class HomeTypeCrmMapper : IHomeTypeCrmMapper
     {
         var homeTypeDto = new HomeTypeDto
         {
-            id = entity.Id?.Value,
+            id = entity.Id.IsNew ? null : entity.Id.Value,
             applicationId = entity.Application.Id.Value,
             homeTypeName = entity.Name.Value,
             housingType = MapHousingType(entity.HousingType),

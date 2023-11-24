@@ -12,11 +12,11 @@ public class HomeInformationModel : ProvidedHomeTypeModelBase
     {
     }
 
-    public string NumberOfHomes { get; set; }
+    public string? NumberOfHomes { get; set; }
 
-    public string NumberOfBedrooms { get; set; }
+    public string? NumberOfBedrooms { get; set; }
 
-    public string MaximumOccupancy { get; set; }
+    public string? MaximumOccupancy { get; set; }
 
-    public string NumberOfStoreys { get; set; }
+    public string? NumberOfStoreys { get; set; }
 }

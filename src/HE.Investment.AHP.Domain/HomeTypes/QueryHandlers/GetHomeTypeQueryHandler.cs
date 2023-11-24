@@ -28,7 +28,7 @@ internal sealed class GetHomeTypeQueryHandler : IRequestHandler<GetHomeTypeQuery
         return new HomeType
         {
             HomeTypeId = request.HomeTypeId,
-            HomeTypeName = homeType.Name?.Value,
+            HomeTypeName = homeType.Name.Value,
             HousingType = homeType.HousingType,
             Conditionals = HomeTypeConditionalsMapper.Map(homeType),
         };

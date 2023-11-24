@@ -17,5 +17,5 @@ public class DesignPlansModel : ProvidedHomeTypeModelBase
 
     public IList<FileModel> UploadedFiles { get; set; }
 
-    public string MoreInformation { get; set; }
+    public string? MoreInformation { get; set; }
 }
