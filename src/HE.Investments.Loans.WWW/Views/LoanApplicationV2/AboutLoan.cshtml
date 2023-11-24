@@ -1,0 +1,33 @@
+@using HE.Investments.Loans.BusinessLogic.LoanApplication
+@model HE.Investments.Loans.BusinessLogic.ViewModel.LoanApplicationViewModel
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="LoanApplicationV2" asp-action="AboutLoanPost" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.AboutLoan})" text="Back" class="govuk-!-margin-bottom-8"></gds-back-link>
+
+        <gds-h1 class="govuk-heading-xl">
+            What you need to know about the loan
+        </gds-h1>
+
+        <gds-p>Before continuing with your application, you must read the following information.</gds-p>
+
+        <gds-p>Homes England reserves the right to deny any application based on the information you provide us. Homes England cannot:</gds-p>
+        <gds-ul>
+            <gds-li>fund VAT on costs</gds-li>
+            <gds-li>fund leasehold schemes where the ground rent is greater than a peppercorn</gds-li>
+            <gds-li>fund any developments outside England</gds-li>
+        </gds-ul>
+
+        <gds-p>To secure any loan, Homes England also expects:</gds-p>
+        <gds-ul>
+            <gds-li>a first ranking debenture and first legal charge over the development site</gds-li>
+            <gds-li>any outstanding director or shareholder loans to be fully subordinated behind Homes England funding</gds-li>
+        </gds-ul>
+
+        <gds-p>By continuing, you are confirming that you have read and understood the information provided. You are also confirming that any information you provide is truthful and accurate to the best of your knowledge.</gds-p>
+
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+            Continue
+        </button>
+    </form>
+</gds-div-grid-column-two-thirds>

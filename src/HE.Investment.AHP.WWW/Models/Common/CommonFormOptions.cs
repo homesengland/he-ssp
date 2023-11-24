@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HE.Investment.AHP.WWW.Models.Common;

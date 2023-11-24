@@ -1,0 +1,28 @@
+@using HE.Investments.Common.Gds
+@using HE.Investments.Loans.Contract.Application.Helper
+@using HE.Investments.Loans.Contract.CompanyStructure
+@using HE.Investments.Loans.WWW.Views.CompanyStructureV2.Consts
+@model HE.Investments.Loans.Contract.CompanyStructure.CompanyStructureViewModel
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="CompanyStructureV2" asp-action="CheckAnswersPost" asp-route-id="@Model.LoanApplicationId" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.CheckAnswers})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <partial name="_ErrorSummaryPartial" model="null" />
+
+        <gds-h1 size="ControlSize.L">
+            @(ApplicationStatusDivision.GetAllStatusesAfterSubmit().Contains(Model.LoanApplicationStatus) ? @CompanyStructurePageTitles.ReadOnlyAnswers : @CompanyStructurePageTitles.CheckAnswers)
+        </gds-h1>
+
+        <partial name="Sections/_ReadOnlyAdditionalInformation" model="Model"/>
+
+        <gds-h1 size="ControlSize.M">
+            Company structure and experience
+        </gds-h1>
+
+        @await Html.PartialAsync("_CompanyStructureAnswers", Model)
+
+        <partial name="Sections/_HaveYouCompletedThisSection" model="Model"/>
+    </form>
+</gds-div-grid-column-two-thirds>

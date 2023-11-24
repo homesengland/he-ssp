@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.Common.Routing;
+using HE.Investments.Loans.Common.Routing;
 using Stateless;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails;

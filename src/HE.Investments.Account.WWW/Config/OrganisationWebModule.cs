@@ -1,6 +1,3 @@
-using HE.InvestmentLoans.Common.Infrastructure;
-using HE.InvestmentLoans.Common.Models.App;
-using HE.InvestmentLoans.Common.Utils;
 using HE.Investments.Account.Domain.Config;
 using HE.Investments.Account.Domain.User.QueryHandlers;
 using HE.Investments.Account.Shared.Routing;
@@ -10,6 +7,9 @@ using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
+using HE.Investments.Loans.Common.Infrastructure;
+using HE.Investments.Loans.Common.Models.App;
+using HE.Investments.Loans.Common.Utils;
 
 namespace HE.Investments.Account.WWW.Config;
 

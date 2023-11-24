@@ -1,11 +1,11 @@
-using HE.InvestmentLoans.Common.Infrastructure.Middlewares;
-using HE.InvestmentLoans.Common.Models.App;
 using HE.Investments.Account.WWW.Config;
 using HE.Investments.Account.WWW.Middlewares;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.Cache;
 using HE.Investments.Common.WWW.Partials;
+using HE.Investments.Loans.Common.Infrastructure.Middlewares;
+using HE.Investments.Loans.Common.Models.App;
 using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);

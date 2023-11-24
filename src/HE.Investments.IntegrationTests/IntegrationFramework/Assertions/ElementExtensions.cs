@@ -1,6 +1,6 @@
 using AngleSharp.Dom;
 
-namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Assertions;
+namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework.Assertions;
 
 public static class ElementExtensions
 {

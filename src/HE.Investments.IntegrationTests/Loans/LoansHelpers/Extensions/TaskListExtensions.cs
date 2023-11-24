@@ -1,8 +1,8 @@
 using System.Globalization;
 using AngleSharp.Html.Dom;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Assertions;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Assertions;
 
-namespace HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Extensions;
+namespace HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
 
 public static class TaskListExtensions
 {

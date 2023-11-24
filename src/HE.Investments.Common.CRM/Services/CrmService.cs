@@ -1,5 +1,5 @@
-using HE.InvestmentLoans.Common.CrmCommunication.Serialization;
-using HE.InvestmentLoans.Common.Exceptions;
+using HE.Investments.Loans.Common.CrmCommunication.Serialization;
+using HE.Investments.Loans.Common.Exceptions;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 

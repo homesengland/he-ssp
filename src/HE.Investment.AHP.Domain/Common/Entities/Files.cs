@@ -1,6 +1,6 @@
 using HE.Investment.AHP.Domain.Common.FilePolicies;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
-using HE.InvestmentLoans.Common.Exceptions;
+using HE.Investments.Loans.Common.Exceptions;
 using DomainApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Common.Entities;

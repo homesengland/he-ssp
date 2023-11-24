@@ -1,7 +1,6 @@
-using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Organisation.Services;
 using MediatR;
 
