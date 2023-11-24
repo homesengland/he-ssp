@@ -1,6 +1,6 @@
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
-using HE.InvestmentLoans.Common.Exceptions;
+using HE.Investments.Loans.Common.Exceptions;
 using MediatR;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 

@@ -1,16 +1,12 @@
 using AngleSharp.Html.Dom;
-using FluentAssertions;
-using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Radios;
-using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.IntegrationTests.Config;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Auth;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Exceptions;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Helpers;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Helpers.DataPackages;
 using HE.Investments.Common.Extensions;
-using Microsoft.CodeAnalysis.Operations;
+using HE.Investments.Loans.IntegrationTests.Config;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Auth;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Exceptions;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Helpers;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Helpers.DataPackages;
 
-namespace HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
+namespace HE.Investments.Loans.IntegrationTests.IntegrationFramework;
 
 public class IntegrationTestClient
 {

@@ -1,20 +1,20 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Common.Tests.TestData;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
-using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers;
-using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.InvestmentLoans.WWW.Views.FundingV2.Consts;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Loans.Common.Tests.TestData;
+using HE.Investments.Loans.Common.Utils.Constants.FormOption;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Extensions;
+using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers;
+using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
+using HE.Investments.Loans.WWW;
+using HE.Investments.Loans.WWW.Views.FundingV2.Consts;
 using Xunit;
 using Xunit.Extensions.Ordering;
-using CommonResponse = HE.InvestmentLoans.Common.Utils.Constants.FormOption.CommonResponse;
+using CommonResponse = HE.Investments.Loans.Common.Utils.Constants.FormOption.CommonResponse;
 
-namespace HE.InvestmentLoans.IntegrationTests.Loans.Application.Order02Sections.FundingSection;
+namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order02Sections.FundingSection;
 
 [Order(2)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]

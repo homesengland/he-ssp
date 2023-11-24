@@ -1,0 +1,49 @@
+@using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Loans.Contract.Projects
+@using HE.Investments.Loans.WWW.Views.Project.Consts
+
+@model HE.Investments.Loans.Contract.Projects.ViewModels.ProjectViewModel;
+@{
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors("ManyHomes");
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="Project" asp-action="ManyHomes" asp-route-id="@Model.ApplicationId" asp-route-projectId="@Model.ProjectId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+
+        <gds-back-link href="@Url.Action("Back","Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.ManyHomes})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="inputInvalid">
+                <legend>
+                    <gds-label-wrapper>
+                        <gds-label size="@ControlSize.L" for="ManyHomes">
+                            @ProjectPageTitles.ManyHomes
+                        </gds-label>
+                    </gds-label-wrapper>
+                </legend>
+                <gds-div-hint class="govuk-!-margin-bottom-6">
+                    Enter how many homes you are building or the nearest estimate.
+                </gds-div-hint>
+
+                <gds-input govuk-formgroup-asp-for="@Model.HomesCount" class="govuk-input--width-4" type="text" value=@Model?.HomesCount asp-excludelabel/>
+
+                <gds-div-inset-text>
+                    Homes England does not provide loans to developers building less than 5 homes.<br />
+                    If you have any questions, contact us via telephone: 0800...
+                </gds-div-inset-text>
+            </gds-div-form-group>
+
+            @Html.HiddenFor(c => c.ProjectId)
+            @Html.HiddenFor(c => c.ApplicationId)
+
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Continue
+            </button>
+        </gds-field-set>
+
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>

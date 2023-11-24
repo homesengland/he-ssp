@@ -1,17 +1,18 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
-using HE.InvestmentLoans.Common.Extensions;
-using HE.InvestmentLoans.Contract.Application.Enums;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
-using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers;
-using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Extensions;
-using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
+using HE.Investments.Loans.Common.Extensions;
+using HE.Investments.Loans.Contract.Application.Enums;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Extensions;
+using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers;
+using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Extensions;
+using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
+using HE.Investments.Loans.WWW;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
-namespace HE.InvestmentLoans.IntegrationTests.Loans.Application.Order01StartApplication;
+namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order01StartApplication;
 
 [Order(1)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]

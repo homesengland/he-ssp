@@ -1,0 +1,33 @@
+@using HE.Investments.Common.Gds
+@using HE.Investments.Loans.WWW.Views.Project.Consts
+@model HE.Investments.Loans.Contract.Projects.ViewModels.LocalAuthoritiesViewModel;
+@{
+    ViewData["Title"] = "Organization Select";
+    var redirect = Context.Request.Query["redirect"];
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthoritySearch", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, redirect })">Back</gds-back-link>
+
+        <gds-h1 size="ControlSize.L" class="govuk-!-margin-bottom-6">
+            @ProjectPageTitles.LocalAuthorityResult
+        </gds-h1>
+
+        <gds-ul non-bullet-list>
+            @foreach (var item in Model.Items)
+            {
+                <li>
+                    <gds-p><gds-link href="@Url.Action("LocalAuthorityConfirm", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, localAuthorityId = item.Id, localAuthorityName = item.Name, phrase = Model.Phrase, redirect})" id=@($"local-authority-link-{item.Id}")><b>@item.Name</b></gds-link></gds-p>
+                </li>
+            }
+        </gds-ul>
+
+        <gds-p class ="govuk-!-margin-bottom-9">
+            If your local authority is not listed above, your <gds-link href="@Url.Action("LocalAuthorityReset", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, redirect })">Transaction Manager can add this for you later.</gds-link>
+        </gds-p>
+
+        @Html.HiddenFor(c => c.ProjectId)
+        @Html.HiddenFor(c => c.ApplicationId)
+
+        <gds-pagination class="govuk-!-margin-top-8 local-authority-pagination" base-url="@Url.Action("LocalAuthorityResult", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, localAuthorityId = Model.LocalAuthorityId, phrase = Model.Phrase })" page="@Model.Page" items-per-page="@Model.PageSize" total-items="@Model.TotalItems"></gds-pagination>
+</gds-div-grid-column-two-thirds>

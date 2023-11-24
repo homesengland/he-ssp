@@ -1,7 +1,7 @@
 using He.AspNetCore.Mvc.Gds.Components.Constants;
 using He.AspNetCore.Mvc.Gds.Components.TagHelpers.Abstraction;
 
-namespace HE.InvestmentLoans.WWW.Controls
+namespace He.AspNetCore.Mvc.Gds.Components.TagHelpers.Summary.V2
 {
     /// <summary>
     /// Class GdsSummaryListKeyV2TagHelper.

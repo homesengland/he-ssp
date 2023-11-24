@@ -1,0 +1,47 @@
+@model HE.Investments.Loans.Contract.Funding.FundingViewModel
+@using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Loans.Contract.Funding
+@using HE.Investments.Loans.Contract.Funding.Enums
+@using HE.Investments.Loans.WWW.Views.FundingV2.Consts
+@inject ModelExpressionProvider modelProvider
+@{
+    var (radioInvalid, radioErrors) = @ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((FundingViewModel x) => x.AdditionalProjects));
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="FundingV2" asp-action="AdditionalProjectsPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <gds-back-link href="@Url.Action("Back","FundingV2", new {id = Model.LoanApplicationId, currentPage = FundingState.AdditionalProjects})" text="Back" class="govuk-!-margin-bottom-8">
+        </gds-back-link>
+
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="radioInvalid">
+                <gds-legend size="ControlSize.L">
+                    <gds-fieldset-heading>
+                        @FundingPageTitles.AdditionalProjects
+                    </gds-fieldset-heading>
+                </gds-legend>
+                <gds-div-hint>
+                    Include projects being undertaken by your group of companies, including SPVs.
+                </gds-div-hint>
+
+                @if (radioInvalid)
+                {
+                    <p class="govuk-error-message">
+                        <span class="govuk-visually-hidden">Error:</span> @radioErrors
+                    </p>
+                }
+                <gds-radio-yes-no asp-for="AdditionalProjects"
+                                  value="@Model.AdditionalProjects"
+                                  class="govuk-!-margin-bottom-8">
+                </gds-radio-yes-no>
+            </gds-div-form-group>
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")" id="continue-button">
+                Continue
+            </button>
+        </gds-field-set>
+    </form>
+
+    <partial name="_HomeAndCheckAnswersLinks" />
+</gds-div-grid-column-two-thirds>

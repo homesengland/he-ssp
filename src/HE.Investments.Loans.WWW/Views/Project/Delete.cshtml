@@ -1,0 +1,41 @@
+@using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects
+@using HE.Investments.Loans.Contract.Projects
+@using HE.Investments.Loans.Contract.Projects.ViewModels
+@using HE.Investments.Loans.WWW.Views.Project.Consts
+@model HE.Investments.Loans.Contract.Projects.ViewModels.ProjectViewModel;
+@{
+    var id = ViewContext.RouteData.Values["id"];
+
+    var (inputInvalid, inputErrors) = @ViewData.ModelState.GetErrors(nameof(ProjectViewModel.DeleteProject));
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link href="@Url.Action("Back", "Project", new {id = Model.ApplicationId, projectId = Model.ProjectId, currentPage = ProjectState.DeleteProject})" text="Back" class="govuk-!-margin-bottom-8">
+    </gds-back-link>
+
+    <form asp-controller="Project" asp-action="Delete" asp-route-id="@id" asp-route-project-id="@Model.ProjectId" asp-method="post" novalidate>
+        <partial name="_ErrorSummaryPartial" model="null" />
+        <gds-field-set>
+            <gds-div-form-group invalid="inputInvalid">
+                <gds-legend size="ControlSize.L" class="govuk-!-margin-bottom-1">
+                    <gds-fieldset-heading>
+                        @ProjectPageTitles.Delete(Model.ProjectName ?? ProjectName.Default.Value)
+                    </gds-fieldset-heading>
+                </gds-legend>
+
+                <gds-p class="govuk-!-margin-bottom-6">If you remove a project, you will lose all progress and it will be deleted permanently.</gds-p>
+
+                <gds-radio-yes-no asp-for="DeleteProject" class="govuk-!-margin-bottom-6"></gds-radio-yes-no>
+            </gds-div-form-group>
+
+            @Html.HiddenFor(c => c.ProjectId)
+            @Html.HiddenFor(c => c.ApplicationId)
+
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Continue
+            </button>
+        </gds-field-set>
+    </form>
+</gds-div-grid-column-two-thirds>
