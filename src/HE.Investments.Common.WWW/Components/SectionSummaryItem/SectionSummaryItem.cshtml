@@ -1,0 +1,52 @@
+@model (string name, IList<string> values, string actionUrl, Dictionary<string, string> files, bool isEditable, bool isVisible)
+
+@if (Model.isVisible)
+{
+    <div class="govuk-summary-list__row">
+        @if (Model.isEditable)
+        {
+            <dt class="govuk-summary-list__key">
+                @Model.name
+            </dt>
+        }
+        else
+        {
+            <dt class="govuk-summary-list__key govuk-!-width-one-half">
+                @Model.name
+            </dt>
+        }
+
+        <dd class="govuk-summary-list__value">
+            @if (Model.values.Any())
+            {
+                foreach (var value in Model.values)
+                {
+                    <p>@value</p>
+                }
+            }
+            else
+            {
+                <p>Not provided</p>
+            }
+
+            @foreach (var file in Model.files)
+            {
+                <a class="govuk-label govuk-label--s" href="@file.Value">
+                    @file.Key
+                </a>
+            }
+        </dd>
+
+        @if (Model.isEditable)
+        {
+            <dd class="govuk-summary-list__actions">
+                @if (!string.IsNullOrEmpty(Model.actionUrl))
+                {
+                    <gds-link href=@Model.actionUrl>
+                        Change
+                    </gds-link>
+                }
+            </dd>
+        }
+    </div>
+}

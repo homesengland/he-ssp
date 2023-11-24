@@ -63,7 +63,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View(model);
         }
 
-        return await Continue(new { applicationId = result.ReturnedData.Value });
+        return await Continue(new { applicationId = result.ReturnedData!.Value });
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
@@ -100,7 +100,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         return View("TaskList", model);
     }
 
-    protected override async Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object routeData = null)
+    protected override async Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)
     {
         return await Task.FromResult(new ApplicationWorkflow(currentState));
     }

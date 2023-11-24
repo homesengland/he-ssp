@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Razor.Templating.Core;
 
-namespace HE.Investments.Common.Tests.WWW.Framework;
+namespace HE.Investments.Common.WWWTestsFramework.Framework;
 
 internal sealed class CustomRazorTemplateEngineRenderer : IRazorTemplateEngine
 {
@@ -25,7 +26,7 @@ internal sealed class CustomRazorTemplateEngineRenderer : IRazorTemplateEngine
 
         using var serviceScope = _serviceProvider.CreateScope();
         var renderer = serviceScope.ServiceProvider.GetRequiredService<CustomRazorViewToStringRenderer>();
-        return await renderer.RenderViewToStringAsync(viewName, viewModel, viewDataDictionary, isMainPage: true).ConfigureAwait(false);
+        return await renderer.RenderViewToStringAsync(viewName, viewModel, viewDataDictionary, null, isMainPage: true).ConfigureAwait(false);
     }
 
     // ReSharper disable once MethodOverloadWithOptionalParameter
@@ -58,7 +59,12 @@ internal sealed class CustomRazorTemplateEngineRenderer : IRazorTemplateEngine
     }
 
     // ReSharper disable once MethodOverloadWithOptionalParameter
-    public async Task<string> RenderPartialAsync(string viewName, object? viewModel = null, Dictionary<string, object>? viewBagOrViewData = null, ModelStateDictionary? modelStateDictionary = null)
+    public async Task<string> RenderPartialAsync(
+        string viewName,
+        object? viewModel = null,
+        Dictionary<string, object>? viewBagOrViewData = null,
+        ModelStateDictionary? modelStateDictionary = null,
+        RouteData? routeData = null)
     {
         if (string.IsNullOrWhiteSpace(viewName))
         {
@@ -69,7 +75,7 @@ internal sealed class CustomRazorTemplateEngineRenderer : IRazorTemplateEngine
 
         using var serviceScope = _serviceProvider.CreateScope();
         var renderer = serviceScope.ServiceProvider.GetRequiredService<CustomRazorViewToStringRenderer>();
-        return await renderer.RenderViewToStringAsync(viewName, viewModel, viewDataDictionary, isMainPage: false).ConfigureAwait(false);
+        return await renderer.RenderViewToStringAsync(viewName, viewModel, viewDataDictionary, routeData, isMainPage: false).ConfigureAwait(false);
     }
 
     private static ViewDataDictionary GetViewDataDictionaryFromViewBagOrViewData(

@@ -63,6 +63,8 @@
     <EmbeddedResource Include="Components\WorkflowBackButton\WorkflowBackButton.cshtml" />
     <EmbeddedResource Include="Components\FilesTable\FilesTable.cshtml" />
     <EmbeddedResource Include="Components\UploadFile\UploadFile.cshtml" />
+    <EmbeddedResource Include="Components\SectionSummaryItem\SectionSummaryItem.cshtml" />
+    <EmbeddedResource Include="Components\SectionSummary\SectionSummary.cshtml" />
   </ItemGroup>
 
 </Project>

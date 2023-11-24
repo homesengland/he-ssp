@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisLevel>latest</AnalysisLevel>
@@ -57,10 +58,6 @@
   <ItemGroup>
     <AdditionalFiles Include="Views\Shared\Errors\PageNotFound.cshtml" />
     <AdditionalFiles Include="Views\Shared\Errors\ProblemWithTheService.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Shared\Components\FormHiddenLabel\FormHiddenLabel.cshtml" />
   </ItemGroup>
   
 </Project>

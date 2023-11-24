@@ -1,6 +1,6 @@
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.Tests.WWW.Helpers;
+using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -15,7 +15,7 @@ public class RevenueFundingTests : HomeTypesTestBase
         var model = new RevenueFundingModel("My application", "My homes");
 
         // when
-        var document = await Render(ViewPath, model);
+        var document = await RenderHomeTypePage(ViewPath, model);
 
         // then
         document
@@ -65,7 +65,7 @@ public class RevenueFundingTests : HomeTypesTestBase
         };
 
         // when
-        var document = await Render(ViewPath, model);
+        var document = await RenderHomeTypePage(ViewPath, model);
 
         // then
         document

@@ -4,12 +4,12 @@ namespace HE.Investments.Common.Extensions;
 
 public static class StringExtensions
 {
-    public static int? TryParseNullableInt(this string val)
+    public static int? TryParseNullableInt(this string? val)
     {
         return int.TryParse(val, out var outValue) ? outValue : null;
     }
 
-    public static decimal? TryParseNullableDecimal(this string val)
+    public static decimal? TryParseNullableDecimal(this string? val)
     {
         return decimal.TryParse(val, out var outValue) ? outValue : null;
     }

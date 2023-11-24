@@ -11,7 +11,7 @@
     <form asp-controller="FinancialDetails" asp-action="LandValue" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
         <vc:financial-details-form-header title="@FinancialDetailsPageTitles.LandValuePage"
                                           current-page="@FinancialDetailsWorkflowState.LandValue"
-                                          application-id="@Model.ApplicationId"
+                                          application-id="@Model.ApplicationId.ToString()"
                                           caption="@Model.ApplicationName - Financial details" />
         <div class="govuk-body-m govuk-!-margin-bottom-6">
             If your application concerns existing properties rather than land-led development, this section is still relevant to you. Where we say 'site' or 'land', read 'properties'.
@@ -52,6 +52,6 @@
             @Html.HiddenFor(c => c.ApplicationId)
             @Html.HiddenFor(c => c.ApplicationName)
         </gds-field-set>
-        <vc:return-to-application-link application-id="@Model.ApplicationId" />
+        <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" />
     </form>
 </div>

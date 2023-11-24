@@ -2,7 +2,7 @@ using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using FluentAssertions;
 
-namespace HE.Investments.Common.Tests.WWW.Helpers;
+namespace HE.Investments.Common.WWWTestsFramework.Helpers;
 
 public static class HtmlFluentExtensions
 {
