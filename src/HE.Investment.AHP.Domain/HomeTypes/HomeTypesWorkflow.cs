@@ -82,7 +82,7 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 () => _homeTypeModel is { HousingType: HousingType.Undefined or HousingType.General })
             .PermitIf(
                 Trigger.Back,
-                HomeTypesWorkflowState.SupportedHousingInformation,
+                HomeTypesWorkflowState.TypologyLocationAndDesign,
                 () => _homeTypeModel is { HousingType: HousingType.HomesForDisabledAndVulnerablePeople or HousingType.HomesForOlderPeople });
 
         _machine.Configure(HomeTypesWorkflowState.HomesForDisabledPeople)

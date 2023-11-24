@@ -75,21 +75,18 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
         }
     }
 
-    public void ChangeMoveOnArrangements(string? moveOnArrangements)
+    public void ChangeMoveOnArrangements(MoreInformation? newValue)
     {
-        var newValue = string.IsNullOrEmpty(moveOnArrangements) ? null : new MoreInformation(moveOnArrangements);
         MoveOnArrangements = _modificationTracker.Change(MoveOnArrangements, newValue);
     }
 
-    public void ChangeTypologyLocationAndDesign(string? typologyLocationAndDesign)
+    public void ChangeTypologyLocationAndDesign(MoreInformation? newValue)
     {
-        var newValue = string.IsNullOrEmpty(typologyLocationAndDesign) ? null : new MoreInformation(typologyLocationAndDesign);
         TypologyLocationAndDesign = _modificationTracker.Change(TypologyLocationAndDesign, newValue);
     }
 
-    public void ChangeExitPlan(string? exitPlan)
+    public void ChangeExitPlan(MoreInformation? newValue)
     {
-        var newValue = string.IsNullOrEmpty(exitPlan) ? null : new MoreInformation(exitPlan);
         ExitPlan = _modificationTracker.Change(ExitPlan, newValue);
     }
 
