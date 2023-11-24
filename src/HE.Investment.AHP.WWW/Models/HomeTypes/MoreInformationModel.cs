@@ -14,5 +14,5 @@ public class MoreInformationModel : ProvidedHomeTypeModelBase
     {
     }
 
-    public string MoreInformation { get; set; }
+    public string? MoreInformation { get; set; }
 }
