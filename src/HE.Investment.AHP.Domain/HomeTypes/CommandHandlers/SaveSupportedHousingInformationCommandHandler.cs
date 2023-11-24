@@ -17,7 +17,7 @@ public class SaveSupportedHousingInformationCommandHandler : SaveHomeTypeSegment
     protected override IEnumerable<Action<SaveSupportedHousingInformationCommand, IHomeTypeEntity>> SaveActions => new[]
     {
         (SaveSupportedHousingInformationCommand request, IHomeTypeEntity homeType) => homeType.SupportedHousingInformation.ChangeLocalCommissioningBodiesConsulted(request.LocalCommissioningBodiesConsulted),
-        (SaveSupportedHousingInformationCommand request, IHomeTypeEntity homeType) => homeType.SupportedHousingInformation.ChangeShortStayAccommodation(request.ShortStayAccommodation),
-        (SaveSupportedHousingInformationCommand request, IHomeTypeEntity homeType) => homeType.SupportedHousingInformation.ChangeRevenueFundingType(request.RevenueFundingType),
+        (request, homeType) => homeType.SupportedHousingInformation.ChangeShortStayAccommodation(request.ShortStayAccommodation),
+        (request, homeType) => homeType.SupportedHousingInformation.ChangeRevenueFundingType(request.RevenueFundingType),
     };
 }

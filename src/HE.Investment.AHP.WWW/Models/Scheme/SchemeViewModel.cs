@@ -12,5 +12,5 @@ public record SchemeViewModel(
     string? TypeAndTenureJustification,
     string? SchemeAndProposalJustification,
     string? StakeholderDiscussionsReport,
-    IList<FileModel> UploadedStakeholderDiscussionFiles,
-    IList<IFormFile> StakeholderDiscussionFiles);
+    IList<FileModel>? UploadedStakeholderDiscussionFiles,
+    IList<IFormFile>? StakeholderDiscussionFiles);

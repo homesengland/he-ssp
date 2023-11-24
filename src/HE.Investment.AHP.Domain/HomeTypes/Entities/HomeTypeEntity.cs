@@ -25,14 +25,14 @@ public class HomeTypeEntity : IHomeTypeEntity
         Application = application;
         Name = new HomeTypeName(name);
         HousingType = housingType;
-        Id = id;
+        Id = id ?? HomeTypeId.New();
         CreatedOn = createdOn;
         _segments = segments.ToDictionary(x => GetSegmentType(x.GetType()), x => x);
     }
 
     public ApplicationBasicInfo Application { get; }
 
-    public HomeTypeId? Id { get; set; }
+    public HomeTypeId Id { get; set; }
 
     public HomeTypeName Name { get; private set; }
 
@@ -50,7 +50,7 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public SupportedHousingInformationEntity SupportedHousingInformation => GetRequiredSegment<SupportedHousingInformationEntity>();
 
-    public bool IsNew => Id.IsNotProvided();
+    public bool IsNew => Id.IsNew;
 
     public bool IsModified => _modificationTracker.IsModified || _segments.Any(x => x.Value.IsModified);
 

@@ -88,7 +88,7 @@ public class HomeTypeRepository : IHomeTypeRepository
                 _homeTypeCrmMapper.MapToDto(entity, segments),
                 _homeTypeCrmMapper.SaveCrmFields(entity, segments),
                 cancellationToken);
-            await _eventDispatcher.Publish(new HomeTypeHasBeenUpdatedEvent(homeType.Application.Id.Value, entity.Id!.Value), cancellationToken);
+            await _eventDispatcher.Publish(new HomeTypeHasBeenUpdatedEvent(homeType.Application.Id.Value, entity.Id.Value), cancellationToken);
         }
 
         if (segments.Contains(HomeTypeSegmentType.DesignPlans)
@@ -110,9 +110,9 @@ public class HomeTypeRepository : IHomeTypeRepository
 
         foreach (var homeTypeToRemove in homeTypes.ToRemove)
         {
-            await _homeTypeCrmContext.Remove(homeTypes.ApplicationId.Value, homeTypeToRemove.Id!.Value, cancellationToken);
+            await _homeTypeCrmContext.Remove(homeTypes.ApplicationId.Value, homeTypeToRemove.Id.Value, cancellationToken);
             await _eventDispatcher.Publish(
-                new HomeTypeHasBeenUpdatedEvent(homeTypeToRemove.Application.Id.Value, homeTypeToRemove.Id!.Value),
+                new HomeTypeHasBeenUpdatedEvent(homeTypeToRemove.Application.Id.Value, homeTypeToRemove.Id.Value),
                 cancellationToken);
         }
     }

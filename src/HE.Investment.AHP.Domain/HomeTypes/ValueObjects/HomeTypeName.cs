@@ -1,5 +1,4 @@
 using System.Text.RegularExpressions;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.InvestmentLoans.Contract.Common;
 using HE.Investments.Common.Messages;
 

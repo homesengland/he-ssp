@@ -8,7 +8,7 @@
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
-    var homeTypeId = this.GetHomeTypeIdFromRoute();
+    var homeTypeId = this.GetOptionalHomeTypeIdFromRoute();
     var action = homeTypeId == null ? "NewHomeTypeDetails" : "HomeTypeDetails";
 }
 

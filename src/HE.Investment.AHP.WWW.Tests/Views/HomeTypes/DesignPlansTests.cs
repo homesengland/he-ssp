@@ -1,4 +1,3 @@
-using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWWTestsFramework.Helpers;

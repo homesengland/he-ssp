@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;

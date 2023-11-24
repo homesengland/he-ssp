@@ -40,7 +40,7 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
             var homeType = homeTypes.CreateHomeType(request.HomeTypeName, request.HousingType);
             await _repository.Save(homeType, HomeTypeSegmentTypes.All, cancellationToken);
 
-            return new OperationResult<HomeTypeId?>(homeType.Id!);
+            return new OperationResult<HomeTypeId?>(homeType.Id);
         }
         catch (DomainValidationException domainValidationException)
         {
@@ -64,6 +64,6 @@ public class SaveHomeTypeDetailsCommandHandler : HomeTypeCommandHandlerBase, IRe
 
         await _repository.Save(homeType, HomeTypeSegmentTypes.All, cancellationToken);
 
-        return new OperationResult<HomeTypeId?>(homeType.Id!);
+        return new OperationResult<HomeTypeId?>(homeType.Id);
     }
 }

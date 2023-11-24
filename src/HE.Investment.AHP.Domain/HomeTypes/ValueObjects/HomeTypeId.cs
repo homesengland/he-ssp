@@ -10,7 +10,16 @@ public class HomeTypeId : ValueObject
         Value = Guard.Argument(id, nameof(id)).NotEmpty().NotWhiteSpace();
     }
 
+    private HomeTypeId()
+    {
+        Value = string.Empty;
+    }
+
     public string Value { get; }
+
+    public bool IsNew => string.IsNullOrEmpty(Value);
+
+    public static HomeTypeId New() => new();
 
     public override string ToString()
     {
