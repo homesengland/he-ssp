@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
+using HE.Investments.Common;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
@@ -22,15 +23,14 @@ internal sealed class GetHomeTypesQueryHandler : IRequestHandler<GetHomeTypesQue
             new[] { HomeTypeSegmentType.HomeInformation },
             cancellationToken);
 
-        // TODO: descending order by createdOn when available
-        return homeTypes.HomeTypes.Select(Map).OrderBy(x => x.Name).ToList();
+        return homeTypes.HomeTypes.OrderByDescending(x => x.CreatedOn).Select(Map).ToList();
     }
 
     private static HomeTypeDetails Map(IHomeTypeEntity homeType)
     {
         return new HomeTypeDetails(
             homeType.Id!.Value,
-            homeType.Name?.Value,
+            homeType.Name?.Value ?? Check.IfCanBeNull,
             homeType.HomeInformation.NumberOfHomes?.Value,
             homeType.HousingType);
     }

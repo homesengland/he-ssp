@@ -1,5 +1,5 @@
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.Tests.WWW.Helpers;
+using HE.Investments.Common.WWWTestsFramework.Helpers;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
@@ -13,7 +13,7 @@ public class SupportedHousingInformationTests : HomeTypesTestBase
     public async Task ShouldRenderViewWithRadioButtons()
     {
         // given & when
-        var document = await Render(ViewPath, Model);
+        var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
         document

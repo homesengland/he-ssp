@@ -5,9 +5,11 @@ using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.InvestmentLoans.Common.Exceptions;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
+using ApplicationStatus = HE.Investment.AHP.Domain.Common.ApplicationStatus;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
@@ -26,7 +28,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
 
     private readonly IList<DesignPlanFileEntity> _filesToUpload = new List<DesignPlanFileEntity>();
 
-    private MoreInformation? _moreInformation;
+    private readonly ModificationTracker _modificationTracker = new();
 
     public DesignPlansSegmentEntity(
         ApplicationBasicInfo application,
@@ -36,27 +38,15 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
     {
         _application = application;
         _designPrinciples = designPrinciples?.OrderBy(x => x).ToList() ?? new List<HappiDesignPrincipleType>();
-        _moreInformation = moreInformation;
+        MoreInformation = moreInformation;
         _uploadedFiles = uploadedFiles?.ToList() ?? new List<UploadedFile>();
     }
 
-    public bool IsModified { get; private set; }
+    public bool IsModified => _modificationTracker.IsModified;
 
     public IReadOnlyCollection<HappiDesignPrincipleType> DesignPrinciples => _designPrinciples;
 
-    public MoreInformation? MoreInformation
-    {
-        get => _moreInformation;
-        private set
-        {
-            if (_moreInformation != value)
-            {
-                IsModified = true;
-            }
-
-            _moreInformation = value;
-        }
-    }
+    public MoreInformation? MoreInformation { get; private set; }
 
     public bool CanRemoveDesignFiles => _application.Status != ApplicationStatus.Submitted;
 
@@ -78,15 +68,14 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
         {
             _designPrinciples.Clear();
             _designPrinciples.AddRange(uniquePrinciples);
-            IsModified = true;
+            _modificationTracker.MarkAsModified();
         }
     }
 
     public void ChangeMoreInformation(string? moreInformation)
     {
-        MoreInformation = string.IsNullOrEmpty(moreInformation)
-            ? null
-            : new MoreInformation(moreInformation);
+        var newValue = string.IsNullOrEmpty(moreInformation) ? null : new MoreInformation(moreInformation);
+        MoreInformation = _modificationTracker.Change(MoreInformation, newValue);
     }
 
     public void AddFilesToUpload(IReadOnlyCollection<DesignPlanFileEntity> files)
@@ -101,7 +90,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
             _filesToUpload.Add(file);
         }
 
-        IsModified = true;
+        _modificationTracker.MarkAsModified();
     }
 
     public void MarkFileToRemove(FileId fileId)
@@ -114,7 +103,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
         }
 
         _filesToRemove.Add(fileToRemove);
-        IsModified = true;
+        _modificationTracker.MarkAsModified();
     }
 
     public async Task SaveFileChanges(IHomeTypeEntity homeType, IDesignFileService designFileService, CancellationToken cancellationToken)

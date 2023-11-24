@@ -7,7 +7,7 @@ public class FinancialDetails
 
     public Guid ApplicationId { get; set; }
 
-    public string? ApplicationName { get; set; }
+    public string ApplicationName { get; set; }
 
     public decimal? ActualPurchasePrice { get; set; }
 

@@ -10,9 +10,11 @@ public interface IHomeTypeEntity
 
     HomeTypeId? Id { get; }
 
-    HomeTypeName? Name { get; }
+    HomeTypeName Name { get; }
 
     HousingType HousingType { get; }
+
+    DateTime? CreatedOn { get; }
 
     HomeInformationSegmentEntity HomeInformation { get; }
 

@@ -10,7 +10,12 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Crm;
 
 public class HomeTypeCrmMapper : IHomeTypeCrmMapper
 {
-    private static readonly IList<string> BasicCrmFields = new[] { nameof(invln_HomeType.invln_typeofhousing), nameof(invln_HomeType.invln_hometypename) };
+    private static readonly IList<string> BasicCrmFields = new[]
+    {
+        nameof(invln_HomeType.invln_typeofhousing),
+        nameof(invln_HomeType.invln_hometypename),
+        nameof(invln_HomeType.CreatedOn),
+    };
 
     private readonly IList<IHomeTypeCrmSegmentMapper> _segmentMappers;
 
@@ -35,9 +40,10 @@ public class HomeTypeCrmMapper : IHomeTypeCrmMapper
 
         return new HomeTypeEntity(
             application,
-            new HomeTypeId(dto.id),
             dto.homeTypeName,
             MapHousingType(dto.housingType),
+            new HomeTypeId(dto.id),
+            dto.createdOn,
             segments: segmentEntities.ToArray());
     }
 
@@ -47,7 +53,7 @@ public class HomeTypeCrmMapper : IHomeTypeCrmMapper
         {
             id = entity.Id?.Value,
             applicationId = entity.Application.Id.Value,
-            homeTypeName = entity.Name?.Value,
+            homeTypeName = entity.Name.Value,
             housingType = MapHousingType(entity.HousingType),
         };
 

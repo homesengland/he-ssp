@@ -24,15 +24,20 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
 
     public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto)
     {
-        // TODO: map rest properties
-        return new HomeInformationSegmentEntity(dto.numberOfHomes.IsProvided() ? new NumberOfHomes(dto.numberOfHomes!.Value) : null);
+        return new HomeInformationSegmentEntity(
+            dto.numberOfHomes.IsProvided() ? new NumberOfHomes(dto.numberOfHomes!.Value) : null,
+            dto.numberOfBedrooms.IsProvided() ? new NumberOfBedrooms(dto.numberOfBedrooms!.Value) : null,
+            dto.maxOccupancy.IsProvided() ? new MaximumOccupancy(dto.maxOccupancy!.Value) : null,
+            dto.numberOfStoreys.IsProvided() ? new NumberOfStoreys(dto.numberOfStoreys!.Value) : null);
     }
 
     protected override HomeInformationSegmentEntity GetSegment(HomeTypeEntity entity) => entity.HomeInformation;
 
     protected override void MapToDto(HomeTypeDto dto, HomeInformationSegmentEntity segment)
     {
-        // TODO: map rest properties
         dto.numberOfHomes = segment.NumberOfHomes?.Value;
+        dto.numberOfBedrooms = segment.NumberOfBedrooms?.Value;
+        dto.maxOccupancy = segment.MaximumOccupancy?.Value;
+        dto.numberOfStoreys = segment.NumberOfStoreys?.Value;
     }
 }

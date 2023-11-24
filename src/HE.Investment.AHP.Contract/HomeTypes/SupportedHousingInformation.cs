@@ -4,7 +4,8 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 namespace HE.Investment.AHP.Contract.HomeTypes;
 
 public record SupportedHousingInformation(
-    string? HomeTypeName,
+    string HomeTypeName,
     YesNoType LocalCommissioningBodiesConsulted,
     YesNoType ShortStayAccommodation,
-    RevenueFundingType RevenueFundingType);
+    RevenueFundingType RevenueFundingType,
+    IList<RevenueFundingSourceType> RevenueFundingSources);

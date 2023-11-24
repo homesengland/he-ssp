@@ -8,6 +8,7 @@ using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.InvestmentLoans.Common.Routing;
 using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
@@ -90,7 +91,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsLandValueModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.LandValue.ToString(),
+            financialDetails.LandValue?.ToString(CultureInfo.InvariantCulture) ?? Check.IfCanBeNull,
             isSchemeOnPublicLand));
     }
 
@@ -118,8 +119,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsOtherApplicationCostsModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.ExpectedWorkCost.ToString(),
-            financialDetails.ExpectedOnCost.ToString()));
+            financialDetails.ExpectedWorkCost.ToString() ?? Check.IfCanBeNull,
+            financialDetails.ExpectedOnCost.ToString() ?? Check.IfCanBeNull));
     }
 
     [HttpPost("other-application-costs")]
@@ -198,7 +199,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return Back(currentPage, new { applicationId });
     }
 
-    protected override async Task<IStateRouting<FinancialDetailsWorkflowState>> Routing(FinancialDetailsWorkflowState currentState, object routeData = null)
+    protected override async Task<IStateRouting<FinancialDetailsWorkflowState>> Routing(FinancialDetailsWorkflowState currentState, object? routeData = null)
     {
         var applicationId = await Task.Run(() => Request.GetRouteValue("applicationId") ?? routeData?.GetPropertyValue<Guid>("applicationId").ToString());
         if (string.IsNullOrEmpty(applicationId))

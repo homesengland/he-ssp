@@ -42,6 +42,10 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
             .Permit(Trigger.Back, SchemeWorkflowState.SalesRisk);
 
         _machine.Configure(SchemeWorkflowState.StakeholderDiscussions)
+            .Permit(Trigger.Continue, SchemeWorkflowState.Summary)
             .Permit(Trigger.Back, SchemeWorkflowState.HousingNeeds);
+
+        _machine.Configure(SchemeWorkflowState.Summary)
+            .Permit(Trigger.Back, SchemeWorkflowState.StakeholderDiscussions);
     }
 }

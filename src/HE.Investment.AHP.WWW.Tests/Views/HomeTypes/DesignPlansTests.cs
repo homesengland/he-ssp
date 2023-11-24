@@ -1,7 +1,7 @@
 using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
-using HE.Investments.Common.Tests.WWW.Helpers;
 using HE.Investments.Common.WWW.Models;
+using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
@@ -20,7 +20,7 @@ public class DesignPlansTests : HomeTypesTestBase
     public async Task ShouldRenderViewListOfUploadedFiles()
     {
         // given & when
-        var document = await Render(ViewPath, Model);
+        var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
         document
@@ -43,7 +43,7 @@ public class DesignPlansTests : HomeTypesTestBase
         modelState.AddModelError("File", ErrorMessage);
 
         // when
-        var document = await Render(ViewPath, Model, modelStateDictionary: modelState);
+        var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
 
         // then
         AssertErrors(document, "File", true);

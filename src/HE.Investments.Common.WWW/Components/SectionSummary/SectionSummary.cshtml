@@ -1,0 +1,16 @@
+@using HE.Investments.Common.WWW.Components.SectionSummary;
+
+@model (string title, IList<SectionSummaryItemModel> items)
+<gds-h2>@Model.title</gds-h2>
+<gds-summary-list class="govuk-!-margin-bottom-9">
+    @foreach (var item in Model.items)
+    {
+        <vc:section-summary-item
+            name="@item.Name"
+            values="@item.Values"
+            action-url="@item.ActionUrl"
+            files="@item.Files"
+            is-editable="@item.IsEditable"
+            is-visible="@item.IsVisible"/>
+    }
+</gds-summary-list>
