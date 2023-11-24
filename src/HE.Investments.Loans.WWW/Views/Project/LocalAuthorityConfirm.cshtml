@@ -1,0 +1,45 @@
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Common.Gds
+@using HE.Investments.Common.WWW.Models
+@using HE.Investments.Loans.Contract.Projects.ViewModels
+@using HE.Investments.Loans.WWW.Views.Project.Consts
+@model HE.Investments.Common.WWW.Models.ConfirmModel<HE.Investments.Loans.Contract.Projects.ViewModels.LocalAuthoritiesViewModel>;
+
+@inject ModelExpressionProvider ModelProvider
+@{
+    ViewData["Title"] = "Confirm Your Local Authority";
+    var (radioInvalid, _) = ViewData.ModelState.GetErrors(ModelProvider.GetExpressionText((ConfirmModel<LocalAuthoritiesViewModel> x) => x.Response));
+    var redirect = Context.Request.Query["redirect"];
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthorityResult", "Project", new { id = Model.ViewModel.ApplicationId, projectId = Model.ViewModel.ProjectId, phrase = Model.ViewModel.Phrase, redirect })">Back</gds-back-link>
+
+    <partial name="_ErrorSummaryPartial" model="null"/>
+
+    <gds-h1 size="ControlSize.Xl" class="govuk-!-margin-bottom-6">
+        @ProjectPageTitles.LocalAuthorityConfirm
+    </gds-h1>
+    <gds-p><b>@Model.ViewModel.LocalAuthorityName</b></gds-p>
+    <form asp-controller="Project" asp-action="LocalAuthorityConfirm" asp-route-localAuthorityId=@(Model.ViewModel.LocalAuthorityId) asp-route-redirect=@redirect asp-method="post" novalidate>
+        <gds-div-form-group>
+            <gds-field-set>
+                <gds-legend class="govuk-fieldset__legend--m">
+                    Is this the correct local authority?
+                </gds-legend>
+
+                <gds-div-form-group invalid="radioInvalid">
+                    <gds-radio
+                        govuk-formgroup-asp-for="Response"
+                        asp-selectlistitems="FormOptions.YesNo"
+                        asp-isexcludeheader>
+                    </gds-radio>
+                </gds-div-form-group>
+            </gds-field-set>
+        </gds-div-form-group>
+
+        <button class="govuk-button govuk-!-margin-top-5" data-module="govuk-button" name="action" type="submit" id="continue-button">
+            Continue
+        </button>
+    </form>
+</gds-div-grid-column-two-thirds>

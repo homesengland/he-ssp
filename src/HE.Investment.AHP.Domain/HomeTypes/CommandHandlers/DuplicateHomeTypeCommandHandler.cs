@@ -24,6 +24,6 @@ public class DuplicateHomeTypeCommandHandler : IRequestHandler<DuplicateHomeType
 
         await _repository.Save(duplicatedHomeType, HomeTypeSegmentTypes.All, cancellationToken);
 
-        return OperationResult.Success(duplicatedHomeType.Id!);
+        return OperationResult.Success(duplicatedHomeType.Id);
     }
 }

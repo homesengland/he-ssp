@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers;
+namespace HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers;
 
 public static class TaskListFields
 {

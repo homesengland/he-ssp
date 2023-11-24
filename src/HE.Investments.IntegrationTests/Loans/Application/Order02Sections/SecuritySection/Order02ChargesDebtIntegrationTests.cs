@@ -1,18 +1,18 @@
 using System.Diagnostics.CodeAnalysis;
 using AngleSharp.Html.Dom;
-using He.AspNetCore.Mvc.Gds.Components.Constants;
-using HE.InvestmentLoans.Common.Tests.TestData;
-using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
-using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.InvestmentLoans.WWW.Views.Security.Consts;
 using HE.Investments.Common.Messages;
+using HE.Investments.Loans.Common.Tests.TestData;
+using HE.Investments.Loans.Common.Utils.Constants.FormOption;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Extensions;
+using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
+using HE.Investments.Loans.WWW;
+using HE.Investments.Loans.WWW.Views.Security.Consts;
 using Xunit;
 using Xunit.Extensions.Ordering;
-using FormOptions = HE.InvestmentLoans.Common.Utils.Constants.FormOption;
+using CommonResponse = He.AspNetCore.Mvc.Gds.Components.Constants.CommonResponse;
 
-namespace HE.InvestmentLoans.IntegrationTests.Loans.Application.Order02Sections.SecuritySection;
+namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order02Sections.SecuritySection;
 
 [Order(2)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]
@@ -61,7 +61,7 @@ public class Order02ChargesDebtIntegrationTests : IntegrationTest
         directorLoansPage
             .UrlEndWith(SecurityPageUrls.ChargesDebtSuffix)
             .HasTitle(SecurityPageTitles.ChargesDebt)
-            .ContainsOnlyOneValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FormOptions.FieldNameForInputLengthValidation.Debenture));
+            .ContainsOnlyOneValidationMessage(ValidationErrorMessage.LongInputLengthExceeded(FieldNameForInputLengthValidation.Debenture));
     }
 
     [Fact(Skip = LoansConfig.SkipTest)]

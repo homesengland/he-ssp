@@ -1,4 +1,4 @@
-using HE.InvestmentLoans.Common.Infrastructure.ErrorHandling;
+using HE.Investments.Loans.Common.Infrastructure.ErrorHandling;
 
 namespace HE.Investment.AHP.WWW.Utils;
 

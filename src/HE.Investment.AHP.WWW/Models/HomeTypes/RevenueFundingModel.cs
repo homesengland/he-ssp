@@ -14,5 +14,5 @@ public class RevenueFundingModel : ProvidedHomeTypeModelBase
     {
     }
 
-    public IList<RevenueFundingSourceType> Sources { get; set; }
+    public IList<RevenueFundingSourceType>? Sources { get; set; }
 }

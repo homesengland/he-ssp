@@ -1,16 +1,14 @@
-using System.Globalization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.Common.Entities;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.Mock;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
-using HE.InvestmentLoans.Common.Exceptions;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Loans.Common.Exceptions;
 using DomainApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Scheme.Repositories;

@@ -1,4 +1,4 @@
-namespace HE.InvestmentLoans.IntegrationTests.Loans;
+namespace HE.Investments.Loans.IntegrationTests.Loans;
 
 public static class SharedKeys
 {

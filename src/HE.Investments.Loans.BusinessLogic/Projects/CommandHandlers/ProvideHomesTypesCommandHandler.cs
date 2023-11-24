@@ -1,0 +1,40 @@
+using HE.Investments.Account.Shared;
+using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Validators;
+using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
+using HE.Investments.Loans.BusinessLogic.Projects.Repositories;
+using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;
+using HE.Investments.Loans.Contract.Projects.Commands;
+using MediatR;
+using Microsoft.Extensions.Logging;
+
+namespace HE.Investments.Loans.BusinessLogic.Projects.CommandHandlers;
+
+public class ProvideHomesTypesCommandHandler : ProjectCommandHandlerBase, IRequestHandler<ProvideHomesTypesCommand, OperationResult>
+{
+    public ProvideHomesTypesCommandHandler(
+        IApplicationProjectsRepository applicationProjectsRepository,
+        ILoanApplicationRepository loanApplicationRepository,
+        IAccountUserContext loanUserContext,
+        ILogger<ProjectCommandHandlerBase> logger)
+        : base(applicationProjectsRepository, loanApplicationRepository, loanUserContext, logger)
+    {
+    }
+
+    public async Task<OperationResult> Handle(ProvideHomesTypesCommand request, CancellationToken cancellationToken)
+    {
+        return await Perform(
+            project =>
+            {
+                if (request.HomesTypes.IsNotProvided())
+                {
+                    return;
+                }
+
+                project.ProvideHomesTypes(new HomesTypes(request.HomesTypes, request.OtherHomesTypes));
+            },
+            request.LoanApplicationId,
+            request.ProjectId,
+            cancellationToken);
+    }
+}

@@ -3,12 +3,11 @@ using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Workflows;
 using HE.Investment.AHP.WWW.Models.Application;
-using HE.InvestmentLoans.Common.Routing;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Loans.Common.Routing;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Controllers;
@@ -36,7 +35,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
     [HttpGet("name")]
     [HttpGet("{applicationId}/name")]
-    public async Task<IActionResult> Name(string applicationId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Name(string? applicationId, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(applicationId))
         {
@@ -77,9 +76,9 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
     [HttpPost("{applicationId}/tenure")]
-    public async Task<IActionResult> Tenure(ApplicationBasicModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> Tenure(string applicationId, ApplicationBasicModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new UpdateApplicationTenureCommand(model.Id, model.Tenure), cancellationToken);
+        var result = await _mediator.Send(new UpdateApplicationTenureCommand(applicationId, model.Tenure), cancellationToken);
 
         if (result.HasValidationErrors)
         {

@@ -1,13 +1,13 @@
 extern alias Org;
 
 using FluentAssertions;
-using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Tests.TestData;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 using HE.Investments.Account.Domain.Tests.User.TestData;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Loans.Common.Exceptions;
+using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 

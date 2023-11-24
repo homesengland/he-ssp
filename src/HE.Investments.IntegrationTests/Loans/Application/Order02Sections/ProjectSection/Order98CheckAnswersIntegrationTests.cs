@@ -1,19 +1,19 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using HE.InvestmentLoans.Common.Tests.TestData;
-using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework;
-using HE.InvestmentLoans.IntegrationTests.IntegrationFramework.Extensions;
-using HE.InvestmentLoans.IntegrationTests.Loans.LoansHelpers.Pages;
-using HE.InvestmentLoans.WWW.Extensions;
-using HE.InvestmentLoans.WWW.Models;
-using HE.InvestmentLoans.WWW.Views.Project.Consts;
 using HE.Investments.Common.Messages;
+using HE.Investments.Loans.Common.Tests.TestData;
+using HE.Investments.Loans.Common.Utils.Constants.FormOption;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework;
+using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Extensions;
+using HE.Investments.Loans.IntegrationTests.Loans.LoansHelpers.Pages;
+using HE.Investments.Loans.WWW;
+using HE.Investments.Loans.WWW.Extensions;
+using HE.Investments.Loans.WWW.Models;
+using HE.Investments.Loans.WWW.Views.Project.Consts;
 using Xunit;
 using Xunit.Extensions.Ordering;
 
-namespace HE.InvestmentLoans.IntegrationTests.Loans.Application.Order02Sections.ProjectSection;
+namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order02Sections.ProjectSection;
 
 [Order(2)]
 [SuppressMessage("xUnit", "xUnit1004", Justification = "Waits for DevOps configuration - #76791")]

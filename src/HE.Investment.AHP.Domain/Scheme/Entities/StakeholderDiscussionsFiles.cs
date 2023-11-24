@@ -13,7 +13,7 @@ public class StakeholderDiscussionsFiles : Files<StakeholderDiscussionsFile>
     {
     }
 
-    protected override IFilePolicy<int>? FilesCountPolicy => new FilesCountPolicy(nameof(StakeholderDiscussionsFiles));
+    protected override IFilePolicy<int> FilesCountPolicy => new FilesCountPolicy(nameof(StakeholderDiscussionsFiles));
 
     public async Task SaveChanges(DomainApplicationId applicationId, IFileService fileService, CancellationToken cancellationToken)
     {

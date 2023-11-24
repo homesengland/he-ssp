@@ -1,6 +1,6 @@
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
-using HE.InvestmentLoans.Common.Exceptions;
+using HE.Investments.Loans.Common.Exceptions;
 using MediatR;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
@@ -22,10 +22,10 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
             var entity = await _repository.GetByApplicationId(new(request.ApplicationId), cancellationToken);
 
             return new Contract.Scheme.Scheme(
-                entity!.Application.Id.Value,
+                entity.Application.Id.Value,
                 entity.Application.Name.Name,
-                entity.Funding?.RequiredFunding,
-                entity.Funding?.HousesToDeliver,
+                entity.Funding.RequiredFunding,
+                entity.Funding.HousesToDeliver,
                 entity.AffordabilityEvidence?.Evidence,
                 entity.SalesRisk?.Value,
                 entity.HousingNeeds?.TypeAndTenureJustification,

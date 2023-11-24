@@ -1,0 +1,36 @@
+@using HE.Investments.Common.Gds
+@using HE.Investments.Loans.WWW.Views.Project.Consts
+@model HE.Investments.Loans.Contract.Projects.ViewModels.LocalAuthoritiesViewModel;
+@{
+    ViewData["Title"] = "Local Authority Not Found";
+    var redirect = Context.Request.Query["redirect"];
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("LocalAuthoritySearch", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, redirect })">Back</gds-back-link>
+
+    <gds-h1 size="ControlSize.L">
+        @ProjectPageTitles.LocalAuthorityNoMatch
+    </gds-h1>
+
+    <gds-p>
+        We could not find the details you entered in our records.
+    </gds-p>
+
+    <gds-p>
+        If you think you have entered the wrong details, you can
+        <gds-link href="@Url.Action("LocalAuthoritySearch", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, redirect })" id="local-authority-search-link">
+            try again using a different name.
+        </gds-link>
+    </gds-p>
+
+    <gds-p>
+        If your local authority is not listed above, your
+        <gds-link href="@Url.Action("LocalAuthorityReset", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, redirect })" id="assign-empty-local-authority-link">
+            Transaction Manager can add this for you later.
+        </gds-link>
+    </gds-p>
+
+    @Html.HiddenFor(c => c.ProjectId)
+    @Html.HiddenFor(c => c.ApplicationId)
+</gds-div-grid-column-two-thirds>

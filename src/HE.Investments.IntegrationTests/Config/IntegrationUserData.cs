@@ -1,9 +1,8 @@
 using System.Globalization;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Account.Shared.User.ValueObjects;
 using HE.Investments.Common.Extensions;
 
-namespace HE.InvestmentLoans.IntegrationTests.Config;
+namespace HE.Investments.Loans.IntegrationTests.Config;
 
 public class IntegrationUserData
 {

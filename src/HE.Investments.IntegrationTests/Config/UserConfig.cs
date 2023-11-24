@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HE.InvestmentLoans.IntegrationTests.Config;
+namespace HE.Investments.Loans.IntegrationTests.Config;
 public class UserConfig
 {
     public bool UseConfigData { get; set; }

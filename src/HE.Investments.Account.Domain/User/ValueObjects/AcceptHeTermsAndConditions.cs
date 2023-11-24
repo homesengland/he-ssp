@@ -1,7 +1,7 @@
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
+using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 
 namespace HE.Investments.Account.Domain.User.ValueObjects;
 

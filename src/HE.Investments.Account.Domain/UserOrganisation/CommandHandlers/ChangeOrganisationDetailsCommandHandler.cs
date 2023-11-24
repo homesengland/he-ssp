@@ -1,7 +1,3 @@
-using HE.InvestmentLoans.Common.Exceptions;
-using HE.InvestmentLoans.Common.Utils.Constants;
-using HE.InvestmentLoans.Common.Utils.Constants.FormOption;
-using HE.InvestmentLoans.Contract;
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
 using HE.Investments.Account.Domain.Organisation.Entities;
 using HE.Investments.Account.Domain.Organisation.Repositories;
@@ -11,6 +7,10 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Validators;
+using HE.Investments.Loans.Common.Exceptions;
+using HE.Investments.Loans.Common.Utils.Constants;
+using HE.Investments.Loans.Common.Utils.Constants.FormOption;
+using HE.Investments.Loans.Contract;
 using MediatR;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.CommandHandlers;

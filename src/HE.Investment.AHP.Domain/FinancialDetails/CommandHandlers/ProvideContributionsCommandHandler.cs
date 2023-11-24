@@ -1,7 +1,6 @@
 using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-using HE.InvestmentLoans.Common.Extensions;
 using HE.Investments.Common;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;

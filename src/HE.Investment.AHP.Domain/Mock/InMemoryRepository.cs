@@ -1,5 +1,5 @@
 using System.Collections.Concurrent;
-using HE.InvestmentLoans.Common.Exceptions;
+using HE.Investments.Loans.Common.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Mock;
 

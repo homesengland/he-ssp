@@ -1,10 +1,6 @@
 namespace HE.Investment.AHP.Contract.FinancialDetails;
 public class FinancialDetails
 {
-    public FinancialDetails()
-    {
-    }
-
     public Guid ApplicationId { get; set; }
 
     public string ApplicationName { get; set; }
