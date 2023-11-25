@@ -1,16 +1,15 @@
-@using HE.Investment.AHP.WWW.Extensions
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormFieldTitle
 @using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.WorkflowBackButton
+@using HE.Investment.AHP.Domain.Scheme.Workflows
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 @{
     var title = "Funding details";
     ViewData["Title"] = title;
-    var applicationId = this.GetApplicationIdFromRoute();
 }
 <div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.Action("Index", "Scheme", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
-    </gds-back-link>
+     <vc:workflow-back-button action="@SchemeWorkflowState.Funding.ToString()"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Scheme" asp-action="Funding" asp-method="post" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>

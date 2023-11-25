@@ -2,7 +2,8 @@ namespace HE.Investment.AHP.Domain.Scheme.Workflows;
 
 public enum SchemeWorkflowState
 {
-    Funding = 1,
+    Index = 1,
+    Funding,
     Affordability,
     SalesRisk,
     HousingNeeds,

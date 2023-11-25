@@ -37,4 +37,9 @@ public static class StringExtensions
 
         return result;
     }
+
+    public static IList<string>? ToOneElementList(this string? val)
+    {
+        return val != null ? new List<string> { val } : null;
+    }
 }

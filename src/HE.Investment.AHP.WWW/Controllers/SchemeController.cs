@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Security.Policy;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.Contract.Scheme.Queries;
@@ -9,6 +10,7 @@ using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common;
 using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Models;
@@ -32,6 +34,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         _mediator = mediator;
     }
 
+    [WorkflowState(SchemeWorkflowState.Index)]
     [HttpGet]
     public async Task<IActionResult> Index([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
@@ -52,12 +55,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     {
         var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
-        if (scheme == null)
-        {
-            return View("Funding", CreateModel(applicationId));
-        }
-
-        return View("Funding", CreateModel(applicationId, scheme.ApplicationName, scheme));
+        return View("Funding", CreateModel(applicationId, scheme));
     }
 
     [WorkflowState(SchemeWorkflowState.Funding)]
@@ -76,9 +74,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("affordability")]
     public async Task<IActionResult> Affordability([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken) ?? throw new NotFoundException(nameof(Scheme), applicationId);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
-        return View("Affordability", CreateModel(applicationId, scheme.ApplicationName, scheme));
+        return View("Affordability", CreateModel(applicationId, scheme));
     }
 
     [WorkflowState(SchemeWorkflowState.Affordability)]
@@ -97,9 +95,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("sales-risk")]
     public async Task<IActionResult> SalesRisk([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken) ?? throw new NotFoundException(nameof(Scheme), applicationId);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
-        return View("SalesRisk", CreateModel(applicationId, scheme.ApplicationName, scheme));
+        return View("SalesRisk", CreateModel(applicationId, scheme));
     }
 
     [WorkflowState(SchemeWorkflowState.SalesRisk)]
@@ -118,9 +116,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("housing-needs")]
     public async Task<IActionResult> HousingNeeds([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken) ?? throw new NotFoundException(nameof(Scheme), applicationId);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
-        return View("HousingNeeds", CreateModel(applicationId, scheme.ApplicationName, scheme));
+        return View("HousingNeeds", CreateModel(applicationId, scheme));
     }
 
     [WorkflowState(SchemeWorkflowState.HousingNeeds)]
@@ -139,9 +137,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("stakeholder-discussions")]
     public async Task<IActionResult> StakeholderDiscussions([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken) ?? throw new NotFoundException(nameof(Scheme), applicationId);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
-        return View("StakeholderDiscussions", CreateModel(applicationId, scheme.ApplicationName, scheme));
+        return View("StakeholderDiscussions", CreateModel(applicationId, scheme));
     }
 
     [DisableRequestSizeLimit]
@@ -191,7 +189,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("summary")]
     public async Task<IActionResult> Summary([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken) ?? throw new NotFoundException(nameof(Scheme), applicationId);
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
         return View("Summary", (scheme.ApplicationName, Items: CreateSummaryModel(scheme)));
     }
@@ -201,7 +199,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return await Task.FromResult(new SchemeWorkflow(currentState));
     }
 
-    private SchemeViewModel CreateModel(string applicationId, string? applicationName = null, Scheme? scheme = null)
+    private SchemeViewModel CreateModel(string applicationId, Scheme scheme)
     {
         string GetRemoveAction(string fileId) =>
             Url.RouteUrl("section", new { controller = "scheme", action = "RemoveStakeholderDiscussionsFile", applicationId, fileId }) ?? Check.IfCanBeNull;
@@ -210,16 +208,16 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
         return new SchemeViewModel(
             applicationId,
-            applicationName ?? Check.IfCanBeNull,
-            scheme?.RequiredFunding.ToString(),
-            scheme?.HousesToDeliver.ToString(),
-            scheme?.AffordabilityEvidence,
-            scheme?.SalesRisk,
-            scheme?.TypeAndTenureJustification,
-            scheme?.SchemeAndProposalJustification,
-            scheme?.StakeholderDiscussionsReport,
-            scheme?.StakeholderDiscussionsFiles.Select(CreateFileModel).ToArray() ?? Array.Empty<FileModel>(),
-            Array.Empty<IFormFile>());
+            scheme.ApplicationName,
+            scheme.RequiredFunding.ToString(),
+            scheme.HousesToDeliver.ToString(),
+            scheme.AffordabilityEvidence,
+            scheme.SalesRisk,
+            scheme.TypeAndTenureJustification,
+            scheme.SchemeAndProposalJustification,
+            scheme.StakeholderDiscussionsReport,
+            scheme.StakeholderDiscussionsFiles.Select(CreateFileModel).ToList(),
+            new List<IFormFile>());
     }
 
     private async Task<IActionResult> ExecuteCommand(
@@ -246,31 +244,31 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         {
             new(
                 "Funding requested",
-                new List<string> { scheme.RequiredFunding?.ToString(CultureInfo.InvariantCulture) ?? Check.IfCanBeNull },
+                scheme.RequiredFunding?.ToString(CultureInfo.InvariantCulture).ToOneElementList(),
                 ActionUrl: CreateActionUrl(nameof(Funding), scheme.ApplicationId)),
             new(
                 "Number of homes",
-                new List<string> { scheme.HousesToDeliver.ToString() ?? Check.IfCanBeNull },
+                scheme.HousesToDeliver?.ToString(CultureInfo.InvariantCulture).ToOneElementList(),
                 ActionUrl: CreateActionUrl(nameof(Funding), scheme.ApplicationId)),
             new(
                 "Affordability od shared ownership",
-                new List<string> { scheme.AffordabilityEvidence ?? Check.IfCanBeNull },
+                scheme.AffordabilityEvidence.ToOneElementList(),
                 ActionUrl: CreateActionUrl(nameof(Affordability), scheme.ApplicationId)),
             new(
                 "Sales risk of shared ownership",
-                new List<string> { scheme.SalesRisk ?? Check.IfCanBeNull },
+                scheme.SalesRisk.ToOneElementList(),
                 ActionUrl: CreateActionUrl(nameof(SalesRisk), scheme.ApplicationId)),
             new(
                 "Type and tenure of homes",
-                new List<string> { scheme.TypeAndTenureJustification ?? Check.IfCanBeNull },
+                scheme.TypeAndTenureJustification.ToOneElementList(),
                 ActionUrl: CreateActionUrl(nameof(SalesRisk), scheme.ApplicationId)),
             new(
                 "Locally identified housing need",
-                new List<string> { scheme.SchemeAndProposalJustification ?? Check.IfCanBeNull },
+                scheme.SchemeAndProposalJustification.ToOneElementList(),
                 ActionUrl: CreateActionUrl(nameof(HousingNeeds), scheme.ApplicationId)),
             new(
                 "Local stakeholder discussions",
-                new List<string> { scheme.StakeholderDiscussionsReport ?? Check.IfCanBeNull },
+                scheme.StakeholderDiscussionsReport.ToOneElementList(),
                 ActionUrl: CreateActionUrl(nameof(StakeholderDiscussions), scheme.ApplicationId),
                 Files: scheme.StakeholderDiscussionsFiles.ToDictionary(f => f.FileName, f => f.FileId)),
         };

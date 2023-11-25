@@ -92,8 +92,8 @@ public class SectionSummaryItemTests : ViewComponentTestBase
         if (isValueVisible)
         {
             document
-                .HasElementWithText("p", model.Values[0], isValueVisible && isVisible)
-                .HasElementWithText("p", model.Values[1], isValueVisible && isVisible);
+                .HasElementWithText("p", model.Values![0]!, isValueVisible && isVisible)
+                .HasElementWithText("p", model.Values![1]!, isValueVisible && isVisible);
         }
 
         if (isFileVisible)
