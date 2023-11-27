@@ -137,4 +137,13 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
     {
         return DesignPrinciples.Any();
     }
+
+    public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
+    {
+        if (targetHousingType is HousingType.Undefined or HousingType.General)
+        {
+            ChangeDesignPrinciples(Enumerable.Empty<HappiDesignPrincipleType>());
+            ChangeMoreInformation(null);
+        }
+    }
 }

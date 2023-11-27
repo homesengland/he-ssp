@@ -12,7 +12,7 @@
     var action = homeTypeId == null ? "NewHomeTypeDetails" : "HomeTypeDetails";
 }
 
-<div class="govuk-grid-column-full">
+<div class="govuk-grid-column-two-thirds">
     <form asp-controller="HomeTypes" asp-action="@action" asp-method="post" novalidate>
         <vc:home-type-form-header title="Home type details"
                                   current-page="@HomeTypesWorkflowState.HomeTypeDetails"
@@ -21,37 +21,35 @@
 
         <div class="govuk-caption-m govuk-!-margin-bottom-6">Create a home type for each identical type of property. If there are any differences, create a new home type.</div>
 
-        <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
-            <gds-field-set>
-                <gds-legend class="govuk-!-margin-bottom-0">
-                    <gds-h2 class="govuk-!-margin-bottom-0">Home type name</gds-h2>
-                </gds-legend>
-                <gds-input
-                    asp-hiddenlabeltext="Home type name"
-                    asp-labelclass="govuk-label"
-                    asp-hinttext="Enter a unique name that will help you identify these homes in this application."
-                    govuk-formgroup-asp-for="HomeTypeName"
-                    name="HomeTypeName"
-                    value=@Model.HomeTypeName/>
+        <gds-field-set>
+            <gds-legend class="govuk-!-margin-bottom-0">
+                <gds-h2 class="govuk-!-margin-bottom-0">Home type name</gds-h2>
+            </gds-legend>
+            <gds-input
+                asp-hiddenlabeltext="Home type name"
+                asp-labelclass="govuk-label"
+                asp-hinttext="Enter a unique name that will help you identify these homes in this application."
+                govuk-formgroup-asp-for="HomeTypeName"
+                name="HomeTypeName"
+                value=@Model.HomeTypeName/>
 
-                <gds-legend>
-                    <gds-h2 class="govuk-!-margin-bottom-0">What type of homes are you delivering?</gds-h2>
-                </gds-legend>
+            <gds-legend>
+                <gds-h2 class="govuk-!-margin-bottom-0">What type of homes are you delivering?</gds-h2>
+            </gds-legend>
 
-                <gds-radio govuk-formgroup-asp-for="HousingType"
-                           asp-hiddenlabeltext="What type of homes are you delivering?"
-                           value="@Model.HousingType"
-                           asp-selectlistitems="@HomeTypesFormOptions.HousingTypes"
-                           class="govuk-!-margin-bottom-8">
-                </gds-radio>
+            <gds-radio govuk-formgroup-asp-for="HousingType"
+                       asp-hiddenlabeltext="What type of homes are you delivering?"
+                       value="@Model.HousingType"
+                       asp-selectlistitems="@HomeTypesFormOptions.HousingTypes"
+                       class="govuk-!-margin-bottom-8">
+            </gds-radio>
 
-                <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
-                    Save and continue
-                </button>
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                Save and continue
+            </button>
 
-            </gds-field-set>
+        </gds-field-set>
 
-            <vc:return-to-application-link application-id="@applicationId"/>
-        </gds-div-grid-column-two-thirds>
+        <vc:return-to-application-link application-id="@applicationId"/>
     </form>
 </div>

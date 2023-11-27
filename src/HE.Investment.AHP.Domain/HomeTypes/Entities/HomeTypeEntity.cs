@@ -64,18 +64,14 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public void ChangeHousingType(HousingType newHousingType)
     {
-        if (HousingType == HousingType.HomesForOlderPeople && newHousingType != HousingType.HomesForOlderPeople)
+        if (HousingType == newHousingType)
         {
-            UpdateSegment(new OlderPeopleHomeTypeDetailsSegmentEntity());
-            UpdateSegment(GetOptionalSegment<DesignPlansSegmentEntity>() ?? new DesignPlansSegmentEntity(Application));
-            UpdateSegment(GetOptionalSegment<SupportedHousingInformationEntity>() ?? new SupportedHousingInformationEntity());
+            return;
         }
 
-        if (HousingType == HousingType.HomesForDisabledAndVulnerablePeople && newHousingType != HousingType.HomesForDisabledAndVulnerablePeople)
+        foreach (var (_, segment) in _segments)
         {
-            UpdateSegment(new DisabledPeopleHomeTypeDetailsSegmentEntity());
-            UpdateSegment(GetOptionalSegment<DesignPlansSegmentEntity>() ?? new DesignPlansSegmentEntity(Application));
-            UpdateSegment(GetOptionalSegment<SupportedHousingInformationEntity>() ?? new SupportedHousingInformationEntity());
+            segment.HousingTypeChanged(HousingType, newHousingType);
         }
 
         HousingType = _modificationTracker.Change(HousingType, newHousingType);
@@ -112,18 +108,8 @@ public class HomeTypeEntity : IHomeTypeEntity
     private TSegment GetRequiredSegment<TSegment>()
         where TSegment : IHomeTypeSegmentEntity
     {
-        return GetOptionalSegment<TSegment>() ?? throw new InvalidOperationException($"Cannot get {typeof(TSegment).Name} segment because it does not exist.");
-    }
-
-    private TSegment? GetOptionalSegment<TSegment>()
-        where TSegment : IHomeTypeSegmentEntity
-    {
-        return _segments.TryGetValue(GetSegmentType(typeof(TSegment)), out var segment) ? (TSegment)segment : default;
-    }
-
-    private void UpdateSegment<TSegment>(TSegment segment)
-        where TSegment : IHomeTypeSegmentEntity
-    {
-        _segments[GetSegmentType(typeof(TSegment))] = segment;
+        return _segments.TryGetValue(GetSegmentType(typeof(TSegment)), out var segment)
+            ? (TSegment)segment
+            : throw new InvalidOperationException($"Cannot get {typeof(TSegment).Name} segment because it does not exist.");
     }
 }
