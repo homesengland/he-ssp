@@ -15,26 +15,19 @@
         "HOLD is a form of Shared Ownership that enable providers to purchase homes on the open market that meet the specific requirements of the homeowner.",
         "OPSO is a form of Shared Ownership for people aged 55 and over.",
     };
-
-    var (isTenureInvalid, tenureError) = ViewData.ModelState.GetErrors(nameof(ApplicationBasicModel.Tenure));
 }
 <gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("Name", "Application", new { applicationId = Model.Id  })" text="Back" class="govuk-!-margin-bottom-8">
-    </gds-back-link>
+    <vc:back-link-with-callback url="@Url.Action("Name", "Application", new { applicationId = Model.Id })"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Application" asp-action="Tenure" asp-method="post" novalidate>
+    <form asp-controller="Application" asp-action="Tenure" asp-method="post" asp-route-callbackUrl="@Context.Request.Query["callbackUrl"]" novalidate>
         <vc:form-header caption="@Model.Name" title="What is the tenure of the homes on this application?"/>
         <gds-field-set role="group">
-            <gds-div-form-group invalid="isTenureInvalid">
+            <gds-div-form-group>
 
                 @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.Name)
 
-                @if (isTenureInvalid)
-                {
-                    <span class="govuk-error-message" data-valmsg-for="Tenure">
-                        <span class="govuk-visually-hidden">Error:</span>@tenureError
-                    </span>
-                }
+                <vc:error-message asp-for="@Model.Tenure"/>
                 <gds-legend>
                     <he-custom-radio
                         asp-for="Tenure"

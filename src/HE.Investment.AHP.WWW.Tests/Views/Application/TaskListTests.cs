@@ -15,7 +15,7 @@ public class TaskListTests : ViewTestBase
     public async Task ShouldDisplayView_WhenSectionsAreMissing()
     {
         // given
-        var model = new ApplicationModel("some site", "application xyz", new List<ApplicationSection>());
+        var model = new ApplicationModel("A1", "some site", "application xyz", new List<ApplicationSection>());
 
         // when
         var document = await Render(_viewPath, model);
@@ -29,6 +29,7 @@ public class TaskListTests : ViewTestBase
     {
         // given
         var model = new ApplicationModel(
+            "A1",
             "some site",
             "application xyz",
             new List<ApplicationSection>
@@ -50,6 +51,7 @@ public class TaskListTests : ViewTestBase
     {
         // given
         var model = new ApplicationModel(
+            "A1",
             "some site",
             "application xyz",
             new List<ApplicationSection>

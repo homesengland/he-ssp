@@ -1,5 +1,7 @@
 using HE.Investment.AHP.Contract.Scheme.Queries;
+using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
+using HE.Investments.Common.Domain;
 using MediatR;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
@@ -21,18 +23,27 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
         return new Contract.Scheme.Scheme(
             entity.Application.Id.Value,
             entity.Application.Name.Name,
-            entity.Funding?.RequiredFunding,
-            entity.Funding?.HousesToDeliver,
-            entity.AffordabilityEvidence?.Evidence,
-            entity.SalesRisk?.Value,
-            entity.HousingNeeds?.TypeAndTenureJustification,
-            entity.HousingNeeds?.SchemeAndProposalJustification,
-            entity.StakeholderDiscussions?.Report,
-            entity.StakeholderDiscussionsFiles.UploadedFiles.Select(CreateFile).ToList());
+            entity.Application.Tenure?.Value,
+            entity.Status == SectionStatus.Completed,
+            entity.Funding.RequiredFunding,
+            entity.Funding.HousesToDeliver,
+            entity.AffordabilityEvidence.Evidence,
+            entity.SalesRisk.Value,
+            entity.HousingNeeds.TypeAndTenureJustification,
+            entity.HousingNeeds.SchemeAndProposalJustification,
+            entity.StakeholderDiscussions.Report,
+            CreateFile(entity.StakeholderDiscussionsFiles));
     }
 
-    private static UploadedFile CreateFile(HE.Investment.AHP.Domain.Common.UploadedFile file)
+    private static UploadedFile? CreateFile(StakeholderDiscussionsFiles files)
     {
+        if (!files.UploadedFiles.Any())
+        {
+            return null;
+        }
+
+        var file = files.UploadedFiles.First();
+
         return new UploadedFile(file.Id.Value, file.Name.Value, file.UploadedOn, file.UploadedBy, true);
     }
 }

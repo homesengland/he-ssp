@@ -12,8 +12,9 @@ public class UpdateApplicationTenureCommandHandler : UpdateApplicationCommandHan
     {
     }
 
-    protected override void Update(UpdateApplicationTenureCommand request, ApplicationEntity application)
+    protected override Task Update(UpdateApplicationTenureCommand request, ApplicationEntity application, CancellationToken cancellationToken)
     {
         application.ChangeTenure(new ApplicationTenure(request.Tenure));
+        return Task.CompletedTask;
     }
 }

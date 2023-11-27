@@ -1,5 +1,3 @@
-using System.Globalization;
-using System.Security.Policy;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.Contract.Scheme.Queries;
@@ -7,12 +5,12 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Workflows;
 using HE.Investment.AHP.WWW.Models.Scheme;
+using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investments.Account.Shared.Authorization.Attributes;
-using HE.Investments.Common;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
-using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Loans.Common.Exceptions;
@@ -28,10 +26,12 @@ namespace HE.Investment.AHP.WWW.Controllers;
 public class SchemeController : WorkflowController<SchemeWorkflowState>
 {
     private readonly IMediator _mediator;
+    private readonly ISchemeSummaryViewModelFactory _summaryViewModelFactory;
 
-    public SchemeController(IMediator mediator)
+    public SchemeController(IMediator mediator, ISchemeSummaryViewModelFactory summaryViewModelFactory)
     {
         _mediator = mediator;
+        _summaryViewModelFactory = summaryViewModelFactory;
     }
 
     [WorkflowState(SchemeWorkflowState.Index)]
@@ -105,7 +105,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     public async Task<IActionResult> SalesRisk(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            new ChangeSchemeSalesRiskCommand(model.ApplicationId, model.SalesRisk ?? Check.IfCanBeNull),
+            new ChangeSchemeSalesRiskCommand(model.ApplicationId, model.SalesRisk),
             model.ApplicationId,
             nameof(SalesRisk),
             model,
@@ -126,7 +126,10 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     public async Task<IActionResult> HousingNeeds(SchemeViewModel model, CancellationToken cancellationToken)
     {
         return await ExecuteCommand(
-            new ChangeSchemeHousingNeedsCommand(model.ApplicationId, model.TypeAndTenureJustification ?? Check.IfCanBeNull, model.SchemeAndProposalJustification ?? Check.IfCanBeNull),
+            new ChangeSchemeHousingNeedsCommand(
+                model.ApplicationId,
+                model.TypeAndTenureJustification,
+                model.SchemeAndProposalJustification),
             model.ApplicationId,
             nameof(HousingNeeds),
             model,
@@ -147,14 +150,20 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpPost("stakeholder-discussions")]
     public async Task<IActionResult> StakeholderDiscussions(SchemeViewModel model, CancellationToken cancellationToken)
     {
-        var filesToUpload = (model.StakeholderDiscussionFiles ?? new List<IFormFile>())
-            .Select(x => new FileToUpload(x.FileName, x.Length, x.OpenReadStream()))
-            .ToList();
+        var fileToUpload = model.StakeholderDiscussionFile == null
+            ? null
+            : new FileToUpload(
+                model.StakeholderDiscussionFile.FileName,
+                model.StakeholderDiscussionFile.Length,
+                model.StakeholderDiscussionFile.OpenReadStream());
 
         try
         {
             return await ExecuteCommand(
-                new ChangeSchemeStakeholderDiscussionsCommand(model.ApplicationId, model.StakeholderDiscussionsReport ?? Check.IfCanBeNull, filesToUpload),
+                new ChangeSchemeStakeholderDiscussionsCommand(
+                    model.ApplicationId,
+                    model.StakeholderDiscussionsReport,
+                    fileToUpload),
                 model.ApplicationId,
                 nameof(StakeholderDiscussions),
                 model,
@@ -162,15 +171,15 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         }
         finally
         {
-            foreach (var file in filesToUpload)
+            if (fileToUpload != null)
             {
-                await file.Content.DisposeAsync();
+                await fileToUpload.Content.DisposeAsync();
             }
         }
     }
 
     [WorkflowState(SchemeWorkflowState.StakeholderDiscussions)]
-    [HttpGet("RemoveStakeholderDiscussionsFile")]
+    [HttpGet("remove-stakeholder-discussions-file")]
     public async Task<IActionResult> RemoveStakeholderDiscussionsFile(
         [FromRoute] string applicationId,
         [FromQuery] string fileId,
@@ -185,39 +194,85 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return RedirectToAction("StakeholderDiscussions", new { applicationId });
     }
 
-    [WorkflowState(SchemeWorkflowState.Summary)]
-    [HttpGet("summary")]
-    public async Task<IActionResult> Summary([FromRoute] string applicationId, CancellationToken cancellationToken)
+    [WorkflowState(SchemeWorkflowState.StakeholderDiscussions)]
+    [HttpGet("download-stakeholder-discussions-file")]
+    public async Task<IActionResult> DownloadStakeholderDiscussionsFile(
+        [FromRoute] string applicationId,
+        [FromQuery] string fileId,
+        CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var response = await _mediator.Send(new GetStakeholderDiscussionsFileQuery(applicationId, fileId), cancellationToken);
 
-        return View("Summary", (scheme.ApplicationName, Items: CreateSummaryModel(scheme)));
+        return File(response.Content, "application/octet-stream", response.Name);
+    }
+
+    [WorkflowState(SchemeWorkflowState.CheckAnswers)]
+    [HttpGet("check-answers")]
+    public async Task<IActionResult> CheckAnswers([FromRoute] string applicationId, CancellationToken cancellationToken)
+    {
+        return View("CheckAnswers", await _summaryViewModelFactory.GetSchemeAndCreateSummary(Url, applicationId, cancellationToken));
+    }
+
+    [WorkflowState(SchemeWorkflowState.CheckAnswers)]
+    [HttpPost("complete")]
+    public async Task<IActionResult> Complete(SchemeSummaryViewModel model, CancellationToken cancellationToken)
+    {
+        if (model.IsCompleted == null)
+        {
+            ModelState.AddModelError(nameof(model.IsCompleted), "Select whether you have completed this section");
+            return View("CheckAnswers", await _summaryViewModelFactory.GetSchemeAndCreateSummary(Url, model.ApplicationId, cancellationToken));
+        }
+
+        if (model.IsCompleted.Value)
+        {
+            var result = await _mediator.Send(new CompleteSchemeCommand(model.ApplicationId), cancellationToken);
+            if (result.HasValidationErrors)
+            {
+                ModelState.AddModelError(nameof(model.IsCompleted), "You have not completed this section. Select no if you want to come back later");
+                return View("CheckAnswers", await _summaryViewModelFactory.GetSchemeAndCreateSummary(Url, model.ApplicationId, cancellationToken));
+            }
+        }
+
+        return RedirectToAction("TaskList", "Application", new { applicationId = model.ApplicationId });
     }
 
     protected override async Task<IStateRouting<SchemeWorkflowState>> Routing(SchemeWorkflowState currentState, object? routeData = null)
     {
-        return await Task.FromResult(new SchemeWorkflow(currentState));
+        var applicationId = Request.GetRouteValue("applicationId")
+                            ?? routeData?.GetPropertyValue<string>("applicationId")
+                            ?? throw new NotFoundException($"{nameof(SchemeController)} required applicationId path parameter.");
+
+        if (string.IsNullOrEmpty(applicationId))
+        {
+            return new SchemeWorkflow(currentState);
+        }
+
+        var isCheckAnswersMode = bool.TryParse(Request.Query["isCheckAnswersMode"], out var isSummary) && isSummary;
+
+        return await Task.FromResult(new SchemeWorkflow(currentState, isCheckAnswersMode));
     }
 
     private SchemeViewModel CreateModel(string applicationId, Scheme scheme)
     {
         string GetRemoveAction(string fileId) =>
-            Url.RouteUrl("section", new { controller = "scheme", action = "RemoveStakeholderDiscussionsFile", applicationId, fileId }) ?? Check.IfCanBeNull;
+            Url.Action("RemoveStakeholderDiscussionsFile", "Scheme", new { applicationId, fileId }) ?? string.Empty;
 
-        FileModel CreateFileModel(UploadedFile x) => new(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId));
+        IList<FileModel>? CreateFileModel(UploadedFile? x) =>
+            x == null
+                ? null
+                : new List<FileModel> { new(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId)) };
 
         return new SchemeViewModel(
             applicationId,
             scheme.ApplicationName,
-            scheme.RequiredFunding.ToString(),
+            scheme.RequiredFunding.ToWholeNumberString(),
             scheme.HousesToDeliver.ToString(),
             scheme.AffordabilityEvidence,
             scheme.SalesRisk,
             scheme.TypeAndTenureJustification,
             scheme.SchemeAndProposalJustification,
             scheme.StakeholderDiscussionsReport,
-            scheme.StakeholderDiscussionsFiles.Select(CreateFileModel).ToList(),
-            new List<IFormFile>());
+            CreateFileModel(scheme.StakeholderDiscussionsFile));
     }
 
     private async Task<IActionResult> ExecuteCommand(
@@ -237,43 +292,4 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
         return await Continue(new { applicationId });
     }
-
-    private IList<SectionSummaryItemModel> CreateSummaryModel(Scheme scheme)
-    {
-        return new List<SectionSummaryItemModel>
-        {
-            new(
-                "Funding requested",
-                scheme.RequiredFunding?.ToString(CultureInfo.InvariantCulture).ToOneElementList(),
-                ActionUrl: CreateActionUrl(nameof(Funding), scheme.ApplicationId)),
-            new(
-                "Number of homes",
-                scheme.HousesToDeliver?.ToString(CultureInfo.InvariantCulture).ToOneElementList(),
-                ActionUrl: CreateActionUrl(nameof(Funding), scheme.ApplicationId)),
-            new(
-                "Affordability od shared ownership",
-                scheme.AffordabilityEvidence.ToOneElementList(),
-                ActionUrl: CreateActionUrl(nameof(Affordability), scheme.ApplicationId)),
-            new(
-                "Sales risk of shared ownership",
-                scheme.SalesRisk.ToOneElementList(),
-                ActionUrl: CreateActionUrl(nameof(SalesRisk), scheme.ApplicationId)),
-            new(
-                "Type and tenure of homes",
-                scheme.TypeAndTenureJustification.ToOneElementList(),
-                ActionUrl: CreateActionUrl(nameof(SalesRisk), scheme.ApplicationId)),
-            new(
-                "Locally identified housing need",
-                scheme.SchemeAndProposalJustification.ToOneElementList(),
-                ActionUrl: CreateActionUrl(nameof(HousingNeeds), scheme.ApplicationId)),
-            new(
-                "Local stakeholder discussions",
-                scheme.StakeholderDiscussionsReport.ToOneElementList(),
-                ActionUrl: CreateActionUrl(nameof(StakeholderDiscussions), scheme.ApplicationId),
-                Files: scheme.StakeholderDiscussionsFiles.ToDictionary(f => f.FileName, f => f.FileId)),
-        };
-    }
-
-    private string CreateActionUrl(string actionName, string applicationId) =>
-        Url.Action(actionName, "Scheme", new { applicationId }) ?? throw new InvalidOperationException();
 }

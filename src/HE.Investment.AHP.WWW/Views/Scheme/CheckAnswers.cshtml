@@ -1,0 +1,42 @@
+@using HE.Investments.Common.WWW.Components.SectionSummary;
+@using HE.Investments.Common.WWW.Components.WorkflowBackButton
+@using HE.Investment.AHP.Domain.Scheme.Workflows
+@using HE.Investments.Common.WWW.Components.ErrorMessage
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.FormButton
+@model HE.Investment.AHP.WWW.Models.Scheme.SchemeSummaryViewModel
+
+@{
+    var title = "Check your answers before adding scheme information";
+    ViewData["Title"] = title;
+}
+
+<div class="govuk-grid-column-three-quarters">
+    <vc:workflow-back-button action="@SchemeWorkflowState.CheckAnswers.ToString()"/>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:form-header caption="@Model.ApplicationName" title="@title"/>
+    <vc:section-summary title="Scheme information" items="@Model.Items"/>
+
+    <form asp-controller="Scheme" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        <gds-field-set role="group">
+            <gds-legend>
+                <gds-h2>Have you completed this section?</gds-h2>
+            </gds-legend>
+            <gds-div-form-group>
+                <vc:error-message asp-for="@Model.IsCompleted"/>
+                <div class="govuk-!-margin-bottom-6 govuk-radios">
+                    <div class="govuk-radios__item">
+                        @Html.RadioButtonFor(m => m.IsCompleted, true, new { @class = "govuk-radios__input", id = "IsCompleted-True" })
+                        <label class="govuk-label govuk-radios__label" for="IsCompleted-True">Yes, I've completed this section</label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        @Html.RadioButtonFor(m => m.IsCompleted, false, new { @class = "govuk-radios__input", id = "IsCompleted-False" })
+                        <label class="govuk-label govuk-radios__label" for="IsCompleted-False">No, I'll come back later</label>
+                    </div>
+                </div>
+            </gds-div-form-group>
+        </gds-field-set>
+        <vc:form-button/>
+    </form>
+</div>

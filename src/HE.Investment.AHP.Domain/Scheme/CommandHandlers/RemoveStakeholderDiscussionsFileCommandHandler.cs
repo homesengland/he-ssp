@@ -14,6 +14,6 @@ public class RemoveStakeholderDiscussionsFileCommandHandler : UpdateSchemeComman
 
     protected override void Update(SchemeEntity scheme, RemoveStakeholderDiscussionsFileCommand request)
     {
-        scheme.StakeholderDiscussionsFiles.MarkFileToRemove(new FileId(request.FileId));
+        scheme.RemoveStakeholderDiscussionsFile(new FileId(request.FileId));
     }
 }

@@ -62,7 +62,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View(model);
         }
 
-        return await Continue(new { applicationId = result.ReturnedData!.Value });
+        return await RedirectOrContinue(result.ReturnedData!.Value);
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
@@ -86,7 +86,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View(model);
         }
 
-        return RedirectToAction("TaskList", new { applicationId = model.Id });
+        return await RedirectOrContinue(result.ReturnedData!.Value, nameof(TaskList));
     }
 
     [HttpGet("{applicationId}/task-list")]
@@ -94,7 +94,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
 
-        var model = new ApplicationModel(_siteName, application.Name, application.Sections);
+        var model = new ApplicationModel(applicationId, _siteName, application.Name, application.Sections);
 
         return View("TaskList", model);
     }
@@ -107,5 +107,20 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     private static ApplicationBasicModel CreateModel(Application application)
     {
         return new ApplicationBasicModel(application.Id, application.Name, application.Tenure);
+    }
+
+    private async Task<IActionResult> RedirectOrContinue(string applicationId, string? action = null)
+    {
+        if (!string.IsNullOrWhiteSpace(Request.Query["callbackUrl"]))
+        {
+            return Redirect(Request.Query["callbackUrl"]!);
+        }
+
+        if (!string.IsNullOrWhiteSpace(action))
+        {
+            return RedirectToAction(action, new { applicationId });
+        }
+
+        return await Continue(new { applicationId });
     }
 }

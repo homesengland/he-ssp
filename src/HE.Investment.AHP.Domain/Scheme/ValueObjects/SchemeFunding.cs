@@ -1,5 +1,7 @@
+using System.Globalization;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.Scheme.ValueObjects;
@@ -11,9 +13,14 @@ public class SchemeFunding : ValueObject
         Build(requiredFunding, housesToDeliver).CheckErrors();
     }
 
-    public long RequiredFunding { get; private set; }
+    public decimal? RequiredFunding { get; private set; }
 
-    public int HousesToDeliver { get; private set; }
+    public int? HousesToDeliver { get; private set; }
+
+    public void CheckIsComplete()
+    {
+        Build(RequiredFunding.ToWholeNumberString(), HousesToDeliver.ToString()).CheckErrors();
+    }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

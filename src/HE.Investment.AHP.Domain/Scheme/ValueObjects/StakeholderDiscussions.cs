@@ -12,17 +12,23 @@ public class StakeholderDiscussions : ValueObject
 
     public string Report { get; private set; }
 
+    public void CheckIsComplete()
+    {
+        Build(Report, true).CheckErrors();
+    }
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Report;
     }
 
-    private OperationResult Build(string? report)
+    private OperationResult Build(string? report, bool isCompleteCheck = false)
     {
         var operationResult = OperationResult.New();
 
         Report = Validator
             .For(report, "StakeholderDiscussionsReport", operationResult)
+            .IsProvidedIf(isCompleteCheck, "Local stakeholder discussions are missing")
             .IsLongInput();
 
         return operationResult;
