@@ -21,4 +21,5 @@ public enum HomeTypesWorkflowState
     TypologyLocationAndDesign,
     MoveOnAccommodation,
     PeopleGroupForSpecificDesignFeatures,
+    BuildingInformation,
 }

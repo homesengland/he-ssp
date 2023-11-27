@@ -8,7 +8,7 @@
     var homeTypeId = this.GetHomeTypeIdFromRoute();
 }
 
-<div class="govuk-grid-column-full">
+<div class="govuk-grid-column-two-thirds">
     <form asp-controller="HomeTypes" asp-action="RevenueFunding" asp-method="post" novalidate>
         <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
             <vc:home-type-form-header current-page="@HomeTypesWorkflowState.RevenueFunding"

@@ -521,6 +521,32 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(HomeTypesWorkflowState.BuildingInformation)]
+    [HttpGet("{homeTypeId}/BuildingInformation")]
+    public async Task<IActionResult> BuildingInformation([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new BuildingInformationModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
+        {
+            BuildingType = homeInformation.BuildingType,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.BuildingInformation)]
+    [HttpPost("{homeTypeId}/BuildingInformation")]
+    public async Task<IActionResult> BuildingInformation(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        BuildingInformationModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveBuildingInformationCommand(applicationId, homeTypeId, model.BuildingType),
+            model,
+            cancellationToken);
+    }
+
     protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object? routeData = null)
     {
         var applicationId = Request.GetRouteValue("applicationId")

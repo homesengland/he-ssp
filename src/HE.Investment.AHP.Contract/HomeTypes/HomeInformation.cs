@@ -11,4 +11,5 @@ public record HomeInformation(
     int? MaximumOccupancy,
     int? NumberOfStoreys,
     YesNoType IntendedAsMoveOnAccommodation,
-    PeopleGroupForSpecificDesignFeaturesType PeopleGroupForSpecificDesignFeatures);
+    PeopleGroupForSpecificDesignFeaturesType PeopleGroupForSpecificDesignFeatures,
+    BuildingType BuildingType);

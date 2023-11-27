@@ -20,6 +20,7 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             nameof(invln_HomeType.invln_numberofstoreys),
             nameof(invln_HomeType.invln_homesusedformoveonaccommodation),
             nameof(invln_HomeType.invln_homesdesignedforuseofparticular),
+            nameof(invln_HomeType.invln_buildingtype),
         })
     {
     }
@@ -34,7 +35,8 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             dto.maxOccupancy.IsProvided() ? new MaximumOccupancy(dto.maxOccupancy!.Value) : null,
             dto.numberOfStoreys.IsProvided() ? new NumberOfStoreys(dto.numberOfStoreys!.Value) : null,
             MapYesNoAnswer(dto.isMoveOnAccommodation),
-            MapPeopleGroupForSpecificDesignFeatures(dto.homesDesignedForUseOfParticularGroup));
+            MapPeopleGroupForSpecificDesignFeatures(dto.homesDesignedForUseOfParticularGroup),
+            MapBuildingType(dto.buildingType));
     }
 
     protected override HomeInformationSegmentEntity GetSegment(HomeTypeEntity entity) => entity.HomeInformation;
@@ -47,6 +49,7 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
         dto.numberOfStoreys = segment.NumberOfStoreys?.Value;
         dto.isMoveOnAccommodation = MapYesNoAnswer(segment.IntendedAsMoveOnAccommodation);
         dto.homesDesignedForUseOfParticularGroup = MapPeopleGroupForSpecificDesignFeatures(segment.PeopleGroupForSpecificDesignFeatures);
+        dto.buildingType = MapBuildingType(segment.BuildingType);
     }
 
     private static bool? MapYesNoAnswer(YesNoType yesNoAnswer)
@@ -96,6 +99,33 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             (int)invln_homesdesignedforuseofparticulargrou.Olderpeople => PeopleGroupForSpecificDesignFeaturesType.OlderPeople,
             (int)invln_homesdesignedforuseofparticulargrou.Noneoftheabove => PeopleGroupForSpecificDesignFeaturesType.NoneOfThese,
             _ => PeopleGroupForSpecificDesignFeaturesType.Undefined,
+        };
+    }
+
+    private static int? MapBuildingType(BuildingType buildingType)
+    {
+        return buildingType switch
+        {
+            BuildingType.House => (int)invln_buildingtype.House,
+            BuildingType.Flat => (int)invln_buildingtype.Flat,
+            BuildingType.Bedsit => (int)invln_buildingtype.Bedsit,
+            BuildingType.Bungalow => (int)invln_buildingtype.Bungalow,
+            BuildingType.Maisonette => (int)invln_buildingtype.Maisonette,
+            _ => null,
+
+        };
+    }
+
+    private static BuildingType MapBuildingType(int? buildingType)
+    {
+        return buildingType switch
+        {
+            (int)invln_buildingtype.House => BuildingType.House,
+            (int)invln_buildingtype.Flat => BuildingType.Flat,
+            (int)invln_buildingtype.Bedsit => BuildingType.Bedsit,
+            (int)invln_buildingtype.Bungalow => BuildingType.Bungalow,
+            (int)invln_buildingtype.Maisonette => BuildingType.Maisonette,
+            _ => BuildingType.Undefined,
         };
     }
 }
