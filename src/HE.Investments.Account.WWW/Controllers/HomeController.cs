@@ -1,16 +1,28 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
 [Route("home")]
-[AuthorizeWithCompletedProfile]
 public class HomeController : Controller
 {
+    private readonly IUserContext _userContext;
+
+    public HomeController(IUserContext userContext)
+    {
+        _userContext = userContext;
+    }
+
     [HttpGet("/")]
     public IActionResult Index()
     {
-        return RedirectToAction("Index", "UserOrganisation");
+        if (_userContext.IsAuthenticated)
+        {
+            return RedirectToAction("Index", "UserOrganisation");
+        }
+
+        return new ContentResult { Content = "Please login" };
     }
 
     [HttpGet("error")]
