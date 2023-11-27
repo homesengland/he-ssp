@@ -20,4 +20,5 @@ public enum HomeTypesWorkflowState
     MoveOnArrangements,
     TypologyLocationAndDesign,
     MoveOnAccommodation,
+    PeopleGroupForSpecificDesignFeatures,
 }

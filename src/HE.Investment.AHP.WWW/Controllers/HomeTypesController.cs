@@ -421,6 +421,28 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures)]
+    [HttpGet("{homeTypeId}/PeopleGroupForSpecificDesignFeatures")]
+    public async Task<IActionResult> PeopleGroupForSpecificDesignFeatures([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new PeopleGroupForSpecificDesignFeaturesModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
+        {
+            PeopleGroupForSpecificDesignFeatures = homeInformation.PeopleGroupForSpecificDesignFeatures,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures)]
+    [HttpPost("{homeTypeId}/PeopleGroupForSpecificDesignFeatures")]
+    public async Task<IActionResult> PeopleGroupForSpecificDesignFeatures([FromRoute] string applicationId, string homeTypeId, PeopleGroupForSpecificDesignFeaturesModel model, CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SavePeopleGroupForSpecificDesignFeaturesCommand(applicationId, homeTypeId, model.PeopleGroupForSpecificDesignFeatures),
+            model,
+            cancellationToken);
+    }
+
     [WorkflowState(HomeTypesWorkflowState.MoveOnArrangements)]
     [HttpGet("{homeTypeId}/MoveOnArrangements")]
     public async Task<IActionResult> MoveOnArrangements([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)

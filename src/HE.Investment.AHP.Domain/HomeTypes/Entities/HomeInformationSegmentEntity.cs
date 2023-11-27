@@ -17,13 +17,15 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         NumberOfBedrooms? numberOfBedrooms = null,
         MaximumOccupancy? maximumOccupancy = null,
         NumberOfStoreys? numberOfStoreys = null,
-        YesNoType intendedAsMoveOnAccommodation = YesNoType.Undefined)
+        YesNoType intendedAsMoveOnAccommodation = YesNoType.Undefined,
+        PeopleGroupForSpecificDesignFeaturesType peopleGroupForSpecificDesignFeatures = PeopleGroupForSpecificDesignFeaturesType.Undefined)
     {
         NumberOfHomes = numberOfHomes;
         NumberOfBedrooms = numberOfBedrooms;
         MaximumOccupancy = maximumOccupancy;
         NumberOfStoreys = numberOfStoreys;
         IntendedAsMoveOnAccommodation = intendedAsMoveOnAccommodation;
+        PeopleGroupForSpecificDesignFeatures = peopleGroupForSpecificDesignFeatures;
     }
 
     public bool IsModified => _modificationTracker.IsModified;
@@ -37,6 +39,8 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
     public NumberOfStoreys? NumberOfStoreys { get; private set; }
 
     public YesNoType IntendedAsMoveOnAccommodation { get; private set; }
+
+    public PeopleGroupForSpecificDesignFeaturesType PeopleGroupForSpecificDesignFeatures { get; private set; }
 
     public void ChangeNumberOfHomes(string? numberOfHomes)
     {
@@ -67,9 +71,20 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         IntendedAsMoveOnAccommodation = _modificationTracker.Change(IntendedAsMoveOnAccommodation, intendedAsMoveOnAccommodation);
     }
 
+    public void ChangePeopleGroupForSpecificDesignFeatures(PeopleGroupForSpecificDesignFeaturesType peopleGroupForSpecificDesignFeatures)
+    {
+        PeopleGroupForSpecificDesignFeatures = _modificationTracker.Change(PeopleGroupForSpecificDesignFeatures, peopleGroupForSpecificDesignFeatures);
+    }
+
     public IHomeTypeSegmentEntity Duplicate()
     {
-        return new HomeInformationSegmentEntity(NumberOfHomes, NumberOfBedrooms, MaximumOccupancy, NumberOfStoreys);
+        return new HomeInformationSegmentEntity(
+            NumberOfHomes,
+            NumberOfBedrooms,
+            MaximumOccupancy,
+            NumberOfStoreys,
+            IntendedAsMoveOnAccommodation,
+            PeopleGroupForSpecificDesignFeatures);
     }
 
     public bool IsRequired(HousingType housingType)
@@ -82,6 +97,20 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         return NumberOfHomes.IsProvided()
                && NumberOfBedrooms.IsProvided()
                && MaximumOccupancy.IsProvided()
-               && NumberOfStoreys.IsProvided();
+               && NumberOfStoreys.IsProvided()
+               && (IntendedAsMoveOnAccommodation != YesNoType.Undefined || PeopleGroupForSpecificDesignFeatures != PeopleGroupForSpecificDesignFeaturesType.Undefined);
+    }
+
+    public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
+    {
+        if (targetHousingType is HousingType.HomesForOlderPeople or HousingType.HomesForDisabledAndVulnerablePeople)
+        {
+            ChangeIntendedAsMoveOnAccommodation(YesNoType.Undefined);
+        }
+
+        if (targetHousingType is HousingType.Undefined or HousingType.General)
+        {
+            ChangePeopleGroupForSpecificDesignFeatures(PeopleGroupForSpecificDesignFeaturesType.Undefined);
+        }
     }
 }

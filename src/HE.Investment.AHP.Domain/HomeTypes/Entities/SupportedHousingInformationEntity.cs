@@ -115,6 +115,20 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
                && ConditionalRoutesAreCompleted();
     }
 
+    public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
+    {
+        if (targetHousingType is HousingType.Undefined or HousingType.General)
+        {
+            ChangeLocalCommissioningBodiesConsulted(YesNoType.Undefined);
+            ChangeShortStayAccommodation(YesNoType.Undefined);
+            ChangeRevenueFundingType(RevenueFundingType.Undefined);
+            ChangeSources(Enumerable.Empty<RevenueFundingSourceType>());
+            ChangeMoveOnArrangements(null);
+            ChangeTypologyLocationAndDesign(null);
+            ChangeExitPlan(null);
+        }
+    }
+
     private bool ConditionalRoutesAreCompleted()
     {
         if (RevenueFundingType == RevenueFundingType.RevenueFundingNeededAndIdentified && ShortStayAccommodation == YesNoType.Yes)

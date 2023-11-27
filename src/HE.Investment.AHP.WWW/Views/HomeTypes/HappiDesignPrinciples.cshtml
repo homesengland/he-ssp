@@ -8,52 +8,49 @@
     var homeTypeId = this.GetHomeTypeIdFromRoute();
 }
 
-<div class="govuk-grid-column-full">
+<div class="govuk-grid-column-two-thirds">
     <form asp-controller="HomeTypes" asp-action="HappiDesignPrinciples" asp-method="post" novalidate>
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.HappiDesignPrinciples"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header" />
 
-        <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
+        <gds-field-set class="govuk-!-margin-bottom-6">
+            <gds-legend>
+                <gds-h1>Which Housing our Ageing Population Panel for Innovation (HAPPI) design principles do the homes meet?</gds-h1>
+            </gds-legend>
 
-            <gds-field-set class="govuk-!-margin-bottom-6">
-                <gds-legend>
-                    <gds-h1>Which Housing our Ageing Population Panel for Innovation (HAPPI) design principles do the homes meet?</gds-h1>
-                </gds-legend>
+            <gds-details>
+                <gds-summary-details>What are the HAPPI design principles?</gds-summary-details>
+                <gds-div-details-text>
+                    They are 10 key design principles that support the provision of older people's housing to offer an alternative to the family home. They can be adapted over time. We also seek this information for disabled and vulnerable people.
+                    <a href="https://www.housinglin.org.uk/Topics/type/The-Housing-our-Ageing-Population-Panel-for-Innovation-HAPPI-Report-2009/">View the HAPPI principles for more information.</a>
+                </gds-div-details-text>
+            </gds-details>
 
-                <gds-details>
-                    <gds-summary-details>What are the HAPPI design principles?</gds-summary-details>
-                    <gds-div-details-text>
-                        They are 10 key design principles that support the provision of older people's housing to offer an alternative to the family home. They can be adapted over time. We also seek this information for disabled and vulnerable people.
-                        <a href="https://www.housinglin.org.uk/Topics/type/The-Housing-our-Ageing-Population-Panel-for-Innovation-HAPPI-Report-2009/">View the HAPPI principles for more information.</a>
-                    </gds-div-details-text>
-                </gds-details>
+            <span class="govuk-caption-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">Select all that apply</span>
 
-                <span class="govuk-caption-m govuk-!-margin-top-4 govuk-!-margin-bottom-4">Select all that apply</span>
+            <gds-checkbox class="exclusive-checkbox-group"
+                          govuk-formgroup-asp-for="@Model.DesignPrinciples"
+                          asp-selectlistitems="HomeTypesFormOptions.HappiDesignPrinciplesExceptNone"
+                          asp-for="@Model.DesignPrinciples"
+                          asp-excludelabel="true">
+            </gds-checkbox>
+            <p>Or</p>
+            <gds-checkbox class="exclusive-checkbox-group--exclusive-option"
+                          govuk-formgroup-asp-for="@Model.OtherPrinciples"
+                          asp-selectlistitems="HomeTypesFormOptions.HappiDesignPrinciplesOnlyNone"
+                          asp-for="@Model.OtherPrinciples"
+                          asp-excludelabel="true">
+            </gds-checkbox>
 
-                <gds-checkbox class="exclusive-checkbox-group"
-                              govuk-formgroup-asp-for="@Model.DesignPrinciples"
-                              asp-selectlistitems="HomeTypesFormOptions.HappiDesignPrinciplesExceptNone"
-                              asp-for="@Model.DesignPrinciples"
-                              asp-excludelabel="true">
-                </gds-checkbox>
-                <p>Or</p>
-                <gds-checkbox class="exclusive-checkbox-group--exclusive-option"
-                              govuk-formgroup-asp-for="@Model.OtherPrinciples"
-                              asp-selectlistitems="HomeTypesFormOptions.HappiDesignPrinciplesOnlyNone"
-                              asp-for="@Model.OtherPrinciples"
-                              asp-excludelabel="true">
-                </gds-checkbox>
+        </gds-field-set>
 
-            </gds-field-set>
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+            Save and continue
+        </button>
+        <br/>
 
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
-                Save and continue
-            </button>
-            <br/>
-
-            <vc:return-to-application-link application-id="@applicationId"/>
-        </gds-div-grid-column-two-thirds>
+        <vc:return-to-application-link application-id="@applicationId"/>
     </form>
 </div>

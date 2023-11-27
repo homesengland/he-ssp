@@ -48,4 +48,13 @@ public class DisabledPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
         return HousingType != DisabledPeopleHousingType.Undefined
                && ClientGroupType != DisabledPeopleClientGroupType.Undefined;
     }
+
+    public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
+    {
+        if (sourceHousingType is Contract.HomeTypes.Enums.HousingType.HomesForDisabledAndVulnerablePeople)
+        {
+            ChangeHousingType(DisabledPeopleHousingType.Undefined);
+            ChangeClientGroupType(DisabledPeopleClientGroupType.Undefined);
+        }
+    }
 }
