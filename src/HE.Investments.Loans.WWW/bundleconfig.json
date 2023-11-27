@@ -1,6 +1,6 @@
 [
   {
-    "outputFileName": "wwwroot/stylesheets/main.min.css",
+    "outputFileName": "wwwroot/loans/stylesheets/main.min.css",
     "inputFiles": [
       "wwwroot/stylesheets/*.css",
       "!wwwroot/stylesheets/*.min.css",
@@ -10,7 +10,7 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/stylesheets/main.css",
+    "outputFileName": "wwwroot/loans/stylesheets/main.css",
     "inputFiles": [
       "wwwroot/stylesheets/*.css",
       "!wwwroot/stylesheets/*.min.css",
@@ -23,7 +23,7 @@
     }
   },
   {
-    "outputFileName": "wwwroot/javascripts/site.min.js",
+    "outputFileName": "wwwroot/loans/javascripts/site.min.js",
     "inputFiles": [
       "wwwroot/javascripts/*.js",
       "!wwwroot/javascripts/*.min.js",
@@ -42,7 +42,7 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/javascripts/site.js",
+    "outputFileName": "wwwroot/loans/javascripts/site.js",
     "inputFiles": [
       "wwwroot/javascripts/*.js",
       "!wwwroot/javascripts/*.min.js",

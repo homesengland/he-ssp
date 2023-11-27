@@ -45,6 +45,8 @@ var mvcBuilder = builder.Services.AddControllersWithViews(x => x.Filters.Add<Exc
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 
 var app = builder.Build();
+const string globalRoutePrefix = "/loans";
+app.UsePathBase(globalRoutePrefix);
 
 if (!app.Environment.IsDevelopment())
 {
@@ -73,8 +75,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 
+app.UseStaticFiles();
 app.UseMiddleware<HeaderSecurityMiddleware>();
 app.UseCrossSiteScriptingSecurity();
 app.ConfigureAdditionalMiddlewares();
