@@ -5,7 +5,7 @@
     ViewData["Title"] = "Scheme details";
     var applicationId = this.GetApplicationIdFromRoute();
 }
-<div class="govuk-grid-column-full">
+<gds-div-grid-column-two-thirds>
     <gds-back-link href="@Url.Action("TaskList", "Application", new { applicationId })" text="Back" class="govuk-!-margin-bottom-8">
     </gds-back-link>
     <vc:form-header caption="@Model" title="Scheme details"/>
@@ -19,4 +19,4 @@
     <a href="@Url.RouteUrl("section", new { controller = "Scheme", action = "Funding", applicationId })">
         <gds-button type="button" >Continue</gds-button>
     </a>
-</div>
+</gds-div-grid-column-two-thirds>

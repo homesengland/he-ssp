@@ -4,11 +4,11 @@
 @{
     ViewData["Title"] = "Application name";
 }
-<div class="govuk-grid-column-full">
-    <gds-back-link href="@Url.Action("Index", "Application")" text="Back" class="govuk-!-margin-bottom-8">
-    </gds-back-link>
+<gds-div-grid-column-two-thirds>
+
+    <vc:back-link-with-callback url="@Url.Action("Index", "Application")"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Application" asp-action="Name" asp-method="post" novalidate>
+    <form asp-controller="Application" asp-action="Name" asp-method="post" asp-route-callbackUrl="@Context.Request.Query["callbackUrl"]" novalidate>
         <vc:form-header title="Name your application"/>
         <gds-field-set role="group">
             <legend>
@@ -29,4 +29,4 @@
         <vc:form-button text="Continue"/>
     </form>
 
-</div>
+</gds-div-grid-column-two-thirds>

@@ -3,4 +3,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Scheme.Commands;
 
-public record ChangeSchemeSalesRiskCommand(string ApplicationId, string SalesRisk) : IRequest<OperationResult>, IUpdateSchemeCommand;
+public record ChangeSchemeSalesRiskCommand(string ApplicationId, string? SalesRisk) : IRequest<OperationResult>, IUpdateSchemeCommand;

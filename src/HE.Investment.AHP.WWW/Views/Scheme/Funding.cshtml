@@ -8,10 +8,10 @@
     var title = "Funding details";
     ViewData["Title"] = title;
 }
-<div class="govuk-grid-column-full">
+<gds-div-grid-column-two-thirds>
      <vc:workflow-back-button action="@SchemeWorkflowState.Funding.ToString()"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Scheme" asp-action="Funding" asp-method="post" novalidate>
+    <form asp-controller="Scheme" asp-action="Funding" asp-method="post" asp-route-isCheckAnswersMode="@Context.Request.Query["isCheckAnswersMode"]" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
         <gds-field-set role="group">
@@ -43,4 +43,4 @@
 
         <vc:form-button/>
     </form>
-</div>
+</gds-div-grid-column-two-thirds>

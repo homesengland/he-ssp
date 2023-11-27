@@ -65,6 +65,7 @@
     <EmbeddedResource Include="Components\UploadFile\UploadFile.cshtml" />
     <EmbeddedResource Include="Components\SectionSummaryItem\SectionSummaryItem.cshtml" />
     <EmbeddedResource Include="Components\SectionSummary\SectionSummary.cshtml" />
+    <EmbeddedResource Include="Components\ErrorMessage\ErrorMessage.cshtml" />
+    <EmbeddedResource Include="Components\BackLinkWithCallback\BackLinkWithCallback.cshtml" />
   </ItemGroup>
-
 </Project>

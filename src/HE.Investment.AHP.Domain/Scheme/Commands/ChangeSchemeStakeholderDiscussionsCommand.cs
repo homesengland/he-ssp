@@ -4,4 +4,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Scheme.Commands;
 
-public record ChangeSchemeStakeholderDiscussionsCommand(string ApplicationId, string DiscussionReport, IList<FileToUpload> FilesToUpload) : IRequest<OperationResult>, IUpdateSchemeCommand;
+public record ChangeSchemeStakeholderDiscussionsCommand(string ApplicationId, string? DiscussionReport, FileToUpload? FileToUpload) : IRequest<OperationResult>, IUpdateSchemeCommand;

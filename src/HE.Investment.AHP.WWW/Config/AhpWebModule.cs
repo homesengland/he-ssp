@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
+using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Notifications;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Infrastructure.Events;
@@ -23,6 +24,7 @@ public static class AhpWebModule
         service.AddDomainModule();
         service.AddEventInfrastructure();
         service.AddNotifications(typeof(HomeTypeHasBeenCreatedDisplayNotificationFactory).Assembly);
+        AddViewModelFactories(service);
     }
 
     private static void AddConfiguration(IServiceCollection services, IConfiguration configuration)
@@ -31,5 +33,10 @@ public static class AhpWebModule
         services.Configure<ContactInfoOptions>(configuration.GetSection("AppConfiguration:ContactInfo"));
         services.AddSingleton<IDataverseConfig, DataverseConfig>(x =>
             x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:Dataverse").Get<DataverseConfig>());
+    }
+
+    private static void AddViewModelFactories(IServiceCollection services)
+    {
+        services.AddScoped<ISchemeSummaryViewModelFactory, SchemeSummaryViewModelFactory>();
     }
 }

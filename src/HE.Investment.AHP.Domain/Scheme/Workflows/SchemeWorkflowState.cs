@@ -8,5 +8,5 @@ public enum SchemeWorkflowState
     SalesRisk,
     HousingNeeds,
     StakeholderDiscussions,
-    Summary,
+    CheckAnswers,
 }

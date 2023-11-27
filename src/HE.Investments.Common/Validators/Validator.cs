@@ -35,6 +35,16 @@ public class Validator
         return this;
     }
 
+    public Validator IsProvidedIf(bool condition, string errorMessage)
+    {
+        if (condition && !_value.IsProvided())
+        {
+            AddError(_fieldName, errorMessage);
+        }
+
+        return this;
+    }
+
     public Validator IsShortInput(string? errorMessage = null)
     {
         if (_value.IsNotProvided())

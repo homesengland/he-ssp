@@ -18,13 +18,17 @@ public class ChangeSchemeStakeholderDiscussionsCommandHandler : UpdateSchemeComm
     {
         var operationResult = new OperationResult();
 
-        var files = new List<StakeholderDiscussionsFile>();
-        foreach (var file in request.FilesToUpload)
-        {
-            files.Add(operationResult.Aggregate(() => StakeholderDiscussionsFile.ForUpload(new FileName(file.Name), new FileSize(file.Lenght), file.Content)));
-        }
+        var discussion = operationResult.Aggregate(() => new StakeholderDiscussions(request.DiscussionReport));
 
-        scheme.ChangeStakeholderDiscussions(operationResult.Aggregate(() => new StakeholderDiscussions(request.DiscussionReport)), files);
+        var file = request.FileToUpload != null
+            ? operationResult.Aggregate(() =>
+                StakeholderDiscussionsFile.ForUpload(
+                    new FileName(request.FileToUpload.Name),
+                    new FileSize(request.FileToUpload.Lenght),
+                    request.FileToUpload.Content))
+            : null;
+
+        scheme.ChangeStakeholderDiscussions(discussion, file);
         operationResult.CheckErrors();
     }
 }

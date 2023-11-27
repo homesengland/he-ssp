@@ -2,6 +2,7 @@ using HE.Investment.AHP.Domain.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using MediatR;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
@@ -22,9 +23,7 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
         var name = new ApplicationName(request.Name);
         if (await _repository.IsExist(name, cancellationToken))
         {
-            return new OperationResult<ApplicationId?>(
-                new[] { new ErrorItem("Name", "There is already an application with this name. Enter a different name") },
-                null);
+            throw new FoundException("Name", "There is already an application with this name. Enter a different name");
         }
 
         var applicationToCreate = ApplicationEntity.New(name);

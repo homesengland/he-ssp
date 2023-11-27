@@ -1,3 +1,4 @@
+using System.Runtime.Serialization;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
@@ -7,8 +8,6 @@ using HE.Investment.AHP.Domain.Mock;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Extensions;
-using HE.Investments.Loans.Common.Exceptions;
 using DomainApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Scheme.Repositories;
@@ -32,11 +31,16 @@ public class SchemeRepository : ISchemeRepository
 
         var stakeholderDiscussionsFiles = await _fileService.GetByApplicationId(id, cancellationToken);
 
-        return CreateEntity(application, stakeholderDiscussionsFiles);
+        return CreateEntity(application, stakeholderDiscussionsFiles.Any() ? stakeholderDiscussionsFiles.First() : null);
     }
 
     public async Task<SchemeEntity> Save(SchemeEntity entity, CancellationToken cancellationToken)
     {
+        if (!entity.IsModified)
+        {
+            return entity;
+        }
+
         var account = await _accountUserContext.GetSelectedAccount();
         var dto = new AhpApplicationDto
         {
@@ -59,24 +63,36 @@ public class SchemeRepository : ISchemeRepository
         return entity;
     }
 
-    private static SchemeEntity CreateEntity(AhpApplicationDto application, IReadOnlyCollection<UploadedFile> stakeholderDiscussionsFiles)
+    private static SchemeEntity CreateEntity(AhpApplicationDto application, UploadedFile? stakeholderDiscussionsFile)
     {
-        var fundingExist = application.fundingRequested.HasValue || application.noOfHomes.HasValue;
-        var housingNeedsExist = application.meetingLocalProrities != null || application.meetingLocalHousingNeed != null;
-
         return new SchemeEntity(
-            new ApplicationBasicDetails(new DomainApplicationId(application.id), new ApplicationName(application.name)),
-            Create(fundingExist, () => new SchemeFunding(application.fundingRequested.ToWholeNumberString(), application.noOfHomes.ToString())),
+            new ApplicationBasicDetails(new DomainApplicationId(application.id), new ApplicationName(application.name), ApplicationTenureMapper.ToDomain(application.tenure)),
+            CreateRequiredFunding(application.fundingRequested, application.noOfHomes),
             SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus),
-            Create(application.affordabilityEvidence != null, () => new AffordabilityEvidence(application.affordabilityEvidence)),
-            Create(application.sharedOwnershipSalesRisk != null, () => new SalesRisk(application.sharedOwnershipSalesRisk)),
-            Create(housingNeedsExist, () => new HousingNeeds(application.meetingLocalProrities, application.meetingLocalHousingNeed)),
-            Create(application.discussionsWithLocalStakeholders != null, () => new StakeholderDiscussions(application.discussionsWithLocalStakeholders)),
-            Create(stakeholderDiscussionsFiles.Any(), () => new StakeholderDiscussionsFiles(stakeholderDiscussionsFiles)));
+            new AffordabilityEvidence(application.affordabilityEvidence),
+            new SalesRisk(application.sharedOwnershipSalesRisk),
+            new HousingNeeds(application.meetingLocalProrities, application.meetingLocalHousingNeed),
+            new StakeholderDiscussions(application.discussionsWithLocalStakeholders),
+            new StakeholderDiscussionsFiles(stakeholderDiscussionsFile));
     }
 
-    private static T? Create<T>(bool condition, Func<T> create)
+    private static SchemeFunding CreateRequiredFunding(decimal? fundingRequested, int? noOfHomes)
     {
-        return condition ? create() : default;
+        var funding = (SchemeFunding)FormatterServices.GetUninitializedObject(typeof(SchemeFunding));
+        SetPropertyValue(funding, nameof(SchemeFunding.RequiredFunding), fundingRequested);
+        SetPropertyValue(funding, nameof(SchemeFunding.HousesToDeliver), noOfHomes);
+
+        return funding;
+    }
+
+    private static void SetPropertyValue(SchemeFunding member, string propName, object? newValue)
+    {
+        var propertyInfo = typeof(SchemeFunding).GetProperty(propName);
+        if (propertyInfo == null)
+        {
+            return;
+        }
+
+        propertyInfo.SetValue(member, newValue);
     }
 }

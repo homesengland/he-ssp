@@ -31,7 +31,7 @@
     }
 </div>
 <div class="govuk-grid-column-two-thirds">
-    @await Html.PartialAsync("~/Partials/TaskList/_TaskList.cshtml", ApplicationSections.CreateSections(Model.Sections))
+    @await Html.PartialAsync("~/Partials/TaskList/_TaskList.cshtml", ApplicationSections.CreateSections(Model.ApplicationId, Url, Model.Sections))
 
     @if (incompleteSectionsCount > 0)
     {

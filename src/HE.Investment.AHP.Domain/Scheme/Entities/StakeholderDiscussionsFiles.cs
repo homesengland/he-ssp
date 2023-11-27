@@ -8,12 +8,12 @@ namespace HE.Investment.AHP.Domain.Scheme.Entities;
 
 public class StakeholderDiscussionsFiles : Files<StakeholderDiscussionsFile>
 {
-    public StakeholderDiscussionsFiles(IEnumerable<UploadedFile>? uploadedFiles = null)
-        : base(uploadedFiles)
+    public StakeholderDiscussionsFiles(UploadedFile? uploadedFile = null)
+        : base(uploadedFile == null ? null : new List<UploadedFile> { uploadedFile })
     {
     }
 
-    protected override IFilePolicy<int> FilesCountPolicy => new FilesCountPolicy(nameof(StakeholderDiscussionsFiles));
+    protected override IFilePolicy<int> FilesCountPolicy => new SingleFileCountPolicy(nameof(StakeholderDiscussionsFiles));
 
     public async Task SaveChanges(DomainApplicationId applicationId, IFileService fileService, CancellationToken cancellationToken)
     {

@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Scheme;
 using HE.Investments.Loans.Common.Routing;
 using Stateless;
 
@@ -5,10 +6,13 @@ namespace HE.Investment.AHP.Domain.Scheme.Workflows;
 
 public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
 {
+    private readonly bool _isCheckAnswersMode;
+
     private readonly StateMachine<SchemeWorkflowState, Trigger> _machine;
 
-    public SchemeWorkflow(SchemeWorkflowState currentWorkflowState)
+    public SchemeWorkflow(SchemeWorkflowState currentWorkflowState, bool isCheckAnswersMode = false)
     {
+        _isCheckAnswersMode = isCheckAnswersMode;
         _machine = new StateMachine<SchemeWorkflowState, Trigger>(currentWorkflowState);
         ConfigureTransitions();
     }
@@ -29,27 +33,25 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
         _machine.Configure(SchemeWorkflowState.Index)
             .Permit(Trigger.Continue, SchemeWorkflowState.Funding);
 
-        _machine.Configure(SchemeWorkflowState.Funding)
-            .Permit(Trigger.Continue, SchemeWorkflowState.Affordability)
-            .Permit(Trigger.Back, SchemeWorkflowState.Index);
-
-        _machine.Configure(SchemeWorkflowState.Affordability)
-            .Permit(Trigger.Continue, SchemeWorkflowState.SalesRisk)
-            .Permit(Trigger.Back, SchemeWorkflowState.Funding);
-
-        _machine.Configure(SchemeWorkflowState.SalesRisk)
-            .Permit(Trigger.Continue, SchemeWorkflowState.HousingNeeds)
-            .Permit(Trigger.Back, SchemeWorkflowState.Affordability);
-
-        _machine.Configure(SchemeWorkflowState.HousingNeeds)
-            .Permit(Trigger.Continue, SchemeWorkflowState.StakeholderDiscussions)
-            .Permit(Trigger.Back, SchemeWorkflowState.SalesRisk);
+        ConfigureStep(SchemeWorkflowState.Funding, SchemeWorkflowState.Affordability, SchemeWorkflowState.Index);
+        ConfigureStep(SchemeWorkflowState.Affordability, SchemeWorkflowState.SalesRisk, SchemeWorkflowState.Funding);
+        ConfigureStep(SchemeWorkflowState.SalesRisk, SchemeWorkflowState.HousingNeeds, SchemeWorkflowState.Affordability);
+        ConfigureStep(SchemeWorkflowState.HousingNeeds, SchemeWorkflowState.StakeholderDiscussions, SchemeWorkflowState.SalesRisk);
 
         _machine.Configure(SchemeWorkflowState.StakeholderDiscussions)
-            .Permit(Trigger.Continue, SchemeWorkflowState.Summary)
+            .Permit(Trigger.Continue, SchemeWorkflowState.CheckAnswers)
             .Permit(Trigger.Back, SchemeWorkflowState.HousingNeeds);
 
-        _machine.Configure(SchemeWorkflowState.Summary)
+        _machine.Configure(SchemeWorkflowState.CheckAnswers)
             .Permit(Trigger.Back, SchemeWorkflowState.StakeholderDiscussions);
+    }
+
+    private void ConfigureStep(SchemeWorkflowState current, SchemeWorkflowState next, SchemeWorkflowState previous)
+    {
+        _machine.Configure(current)
+            .PermitIf(Trigger.Continue, next, () => !_isCheckAnswersMode)
+            .PermitIf(Trigger.Continue, SchemeWorkflowState.CheckAnswers, () => _isCheckAnswersMode)
+            .PermitIf(Trigger.Back, previous, () => !_isCheckAnswersMode)
+            .PermitIf(Trigger.Back, SchemeWorkflowState.CheckAnswers, () => _isCheckAnswersMode);
     }
 }

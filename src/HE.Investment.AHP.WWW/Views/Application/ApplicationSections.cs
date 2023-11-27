@@ -1,12 +1,15 @@
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.WWW.Controllers;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.WWW.Models.TaskList;
+using HE.Investments.Common.WWW.Utils;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Views.Application;
 
 public static class ApplicationSections
 {
-    public static IList<TaskListSectionModel> CreateSections(IList<ApplicationSection> sections)
+    public static IList<TaskListSectionModel> CreateSections(string applicationId, IUrlHelper url, IList<ApplicationSection> sections)
     {
         return new List<TaskListSectionModel?>
             {
@@ -16,28 +19,28 @@ public static class ApplicationSections
                     "Scheme Information",
                     "Complete information about the tenure of your scheme, and other details about the funding you require and discussions you’ve had with local stakeholders.",
                     "Enter scheme information",
-                    "scheme"),
+                    section => GetAction(url, applicationId, typeof(SchemeController), section.SectionStatus == SectionStatus.NotStarted ? nameof(SchemeController.Index) : nameof(SchemeController.Funding))),
                 AddSection(
                     SectionType.HomeTypes,
                     sections,
                     "Home types",
                     "Complete information about the type of homes, information about the homes, home design and rent details.",
                     "Add homes types",
-                    sections.FirstOrDefault(x => x.SectionType == SectionType.HomeTypes)?.SectionStatus == SectionStatus.NotStarted ? "homeTypes" : "homeTypes/list"),
+                    section => GetAction(url, applicationId, typeof(HomeTypesController), section.SectionStatus == SectionStatus.NotStarted ? nameof(HomeTypesController.Index) : nameof(HomeTypesController.List))),
                 AddSection(
                     SectionType.FinancialDetails,
                     sections,
                     "Financial details",
                     "Complete information about your finances, scheme costs and expected contributions.",
                     "Enter financial details",
-                    "financial-details/start"),
+                    _ => "financial-details/start"),
                 AddSection(
                     SectionType.DeliveryPhases,
                     sections,
                     "Delivery phases",
                     "Complete information about your delivery phases and milestone dates.",
                     "Add delivery phases",
-                    "#",
+                    _ => "#",
                     false),
             }
             .Where(i => i != null)
@@ -51,7 +54,7 @@ public static class ApplicationSections
         string header,
         string description,
         string action,
-        string actionUrl,
+        Func<ApplicationSection, string> getActionUrl,
         bool isAvailable = true)
     {
         var section = sections.FirstOrDefault(s => s.SectionType == sectionType);
@@ -64,8 +67,18 @@ public static class ApplicationSections
             header,
             description,
             action,
-            actionUrl,
+            getActionUrl(section),
             section.SectionStatus,
             isAvailable);
+    }
+
+    private static string GetAction(IUrlHelper url, string applicationId, Type controller, string actionName)
+    {
+        if (controller == null)
+        {
+            throw new ArgumentNullException(nameof(controller));
+        }
+
+        return url.Action(actionName, new ControllerName(controller.Name).WithoutPrefix(), new { applicationId }) ?? string.Empty;
     }
 }
