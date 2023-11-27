@@ -30,6 +30,8 @@ var mvcBuilder = builder.Services
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 
 var app = builder.Build();
+const string globalRoutePrefix = "/ahp";
+app.UsePathBase(globalRoutePrefix);
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
