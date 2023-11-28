@@ -11,7 +11,7 @@ public class SocialServicesGrants : ValueObject
         var operationResult = OperationResult.New();
 
         var intValue = NumericValidator
-            .For(value, FinancialDetailsValidationFieldNames.RentalIncomeBorrowing, operationResult)
+            .For(value, FinancialDetailsValidationFieldNames.SocialServicesGrants, operationResult)
             .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
             .IsBetween(1, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError);
 

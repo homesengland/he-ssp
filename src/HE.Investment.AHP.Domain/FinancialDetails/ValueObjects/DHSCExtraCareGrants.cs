@@ -11,7 +11,7 @@ public class DHSCExtraCareGrants : ValueObject
         var operationResult = OperationResult.New();
 
         var intValue = NumericValidator
-            .For(value, FinancialDetailsValidationFieldNames.OtherCapitalSources, operationResult)
+            .For(value, FinancialDetailsValidationFieldNames.DHSCExtraCareGrants, operationResult)
             .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
             .IsBetween(1, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError);
 

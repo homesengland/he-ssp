@@ -8,23 +8,23 @@
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.ExpectedGrants;
 
-    // var (rentalIncomeInvalid, rentalIncomeErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.CountyCouncilGrants);
-    // var (saleOfHomesOnThisSchemeInvalid, saleOfHomesOnThisSchemeErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.DHSCExtraCareGrants);
-    // var (saleOfHomesOnOtherSchemeInvalid, saleOfHomesOnOtherSchemeErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.LocalAuthorityGrants);
-    // var (ownResourcesInvalid, ownResourcesErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.SocialServicesGrants);
-    // var (RCGFInvalid, RCGFErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.HeatlthRelatedGrants);
-    // var (otherCapitalSourcesInvalid, otherCapitalSourcesErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.LotteryGrants);
-    // var (sharedOwnersipSalesInvalid, sharedOwnershipSalesErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.OtherPublicBodiesGrants);
+     var (countyCouncilGrantsInvalid, countyCouncilGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.CountyCouncilGrants);
+     var (dHSCExtraCareGrantsInvalid, dHSCExtraCareGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.DHSCExtraCareGrants);
+     var (localAuthorityGrantsInvalid, localAuthorityErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.LocalAuthorityGrants);
+     var (socialServicesGrantsInvalid, socialServicesGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.SocialServicesGrants);
+     var (healthRelatedGrantsInvalid, healthRelatedGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.HeatlthRelatedGrants);
+     var (lotteryGrantsInvalid, lotteryGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.LotteryGrants);
+     var (otherPublicBodiesGrantsInvalid, otherPublicBodiesGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.OtherPublicBodiesGrants);
 
-    // var errorsList = new string[] {
-    //     rentalIncomeErrors,
-    //     saleOfHomesOnThisSchemeErrors,
-    //     saleOfHomesOnOtherSchemeErrors,
-    //     ownResourcesErrors,
-    //     RCGFErrors,
-    //     otherCapitalSourcesErrors,
-    //     sharedOwnershipSalesErrors
-    // };
+     var errorsList = new string[] {
+         countyCouncilGrantsErrors,
+         dHSCExtraCareGrantsErrors,
+         localAuthorityErrors,
+         socialServicesGrantsErrors,
+         healthRelatedGrantsErrors,
+         lotteryGrantsErrors,
+         otherPublicBodiesGrantsErrors
+     };
 }
 <div id="mainContainer" class="govuk-grid-three-quarters" role="main">
     <gds-div-grid-column-two-thirds>
