@@ -4,36 +4,15 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-public class CountyCouncilGrants : ValueObject
+public class CountyCouncilGrants : NumericValueObject
 {
     public CountyCouncilGrants(string value)
+        : base(FinancialDetailsValidationFieldNames.CountyCouncilGrants, value, FinancialDetailsValidationErrors.GenericAmountValidationError)
     {
-        var operationResult = OperationResult.New();
-
-        var intValue = NumericValidator
-            .For(value, FinancialDetailsValidationFieldNames.CountyCouncilGrants, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(1, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError);
-
-        operationResult.CheckErrors();
-
-        Value = intValue;
     }
-
-    public int Value { get; }
 
     public static CountyCouncilGrants? From(decimal? value)
     {
-        if (value == null)
-        {
-            return null;
-        }
-
-        return new CountyCouncilGrants(value.ToWholeNumberString() ?? string.Empty);
-    }
-
-    protected override IEnumerable<object> GetAtomicValues()
-    {
-        yield return Value;
+        return value.HasValue ? new CountyCouncilGrants(value.ToWholeNumberString() ?? string.Empty) : null;
     }
 }

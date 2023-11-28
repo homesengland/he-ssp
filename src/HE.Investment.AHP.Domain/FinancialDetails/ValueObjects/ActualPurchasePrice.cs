@@ -4,48 +4,15 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-public class ActualPurchasePrice : ValueObject
+public class ActualPurchasePrice : NumericValueObject
 {
-    private ActualPurchasePrice(int value)
+    public ActualPurchasePrice(string value)
+        : base(FinancialDetailsValidationFieldNames.ActualPurchasePrice, value, FinancialDetailsValidationErrors.InvalidActualPurchasePrice)
     {
-        if (value < 0)
-        {
-            OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.ActualPurchasePrice, FinancialDetailsValidationErrors.InvalidActualPurchasePrice)
-                .CheckErrors();
-        }
-
-        Value = value;
-    }
-
-    public int Value { get; }
-
-    public static ActualPurchasePrice From(string value)
-    {
-        if (!int.TryParse(value, out var parsedValue))
-        {
-            OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.ActualPurchasePrice, FinancialDetailsValidationErrors.InvalidActualPurchasePrice)
-                .CheckErrors();
-        }
-
-        return new ActualPurchasePrice(parsedValue);
     }
 
     public static ActualPurchasePrice? From(decimal? value)
     {
-        if (value == null)
-        {
-            return null;
-        }
-        else
-        {
-            return ActualPurchasePrice.From(value.ToWholeNumberString() ?? string.Empty);
-        }
-    }
-
-    protected override IEnumerable<object> GetAtomicValues()
-    {
-        yield return Value;
+        return value.HasValue ? new ActualPurchasePrice(value.ToWholeNumberString() ?? string.Empty) : null;
     }
 }
