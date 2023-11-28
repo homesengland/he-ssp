@@ -34,13 +34,13 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         _summaryViewModelFactory = summaryViewModelFactory;
     }
 
-    [WorkflowState(SchemeWorkflowState.Index)]
-    [HttpGet]
-    public async Task<IActionResult> Index([FromRoute] string applicationId, CancellationToken cancellationToken)
+    [WorkflowState(SchemeWorkflowState.Start)]
+    [HttpGet("start")]
+    public async Task<IActionResult> Start([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
 
-        return View("Index", application.Name);
+        return View("Start", application.Name);
     }
 
     [HttpGet("back")]
@@ -244,12 +244,12 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 
         if (string.IsNullOrEmpty(applicationId))
         {
-            return new SchemeWorkflow(currentState);
+            throw new InvalidOperationException("Cannot find applicationId.");
         }
 
-        var isCheckAnswersMode = bool.TryParse(Request.Query["isCheckAnswersMode"], out var isSummary) && isSummary;
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId));
 
-        return await Task.FromResult(new SchemeWorkflow(currentState, isCheckAnswersMode));
+        return await Task.FromResult(new SchemeWorkflow(currentState, scheme));
     }
 
     private SchemeViewModel CreateModel(string applicationId, Scheme scheme)
@@ -290,6 +290,6 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             return View(viewName, model);
         }
 
-        return await Continue(new { applicationId });
+        return await ContinueWithRedirect(new { applicationId });
     }
 }

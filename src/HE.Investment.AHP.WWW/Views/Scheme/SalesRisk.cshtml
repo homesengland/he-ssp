@@ -12,7 +12,7 @@
 <gds-div-grid-column-two-thirds>
     <vc:workflow-back-button action="@SchemeWorkflowState.SalesRisk.ToString()" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Scheme" asp-action="SalesRisk" asp-method="post" asp-route-isCheckAnswersMode="@Context.Request.Query["isCheckAnswersMode"]" novalidate>
+    <form asp-controller="Scheme" asp-action="SalesRisk" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
         <gds-field-set role="group">

@@ -2,6 +2,7 @@ using System.Globalization;
 using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.WWW.Controllers;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Utils;
@@ -66,11 +67,18 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
                 ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.StakeholderDiscussions)),
                 Files: ConvertFiles(urlHelper, applicationId, scheme.StakeholderDiscussionsFile)),
         };
-        return new SchemeSummaryViewModel(scheme.ApplicationId, scheme.ApplicationName, scheme.IsCompleted ? scheme.IsCompleted : null, items);
+        return new SchemeSummaryViewModel(scheme.ApplicationId, scheme.ApplicationName, scheme.Status == SectionStatus.Completed ? true : null, items);
     }
 
-    private string CreateSchemeActionUrl(IUrlHelper urlHelper, string applicationId, string actionName, bool allowWcagDuplicate = false) =>
-        $"{urlHelper.Action(actionName, new ControllerName(nameof(SchemeController)).WithoutPrefix(), new { applicationId, isCheckAnswersMode = true })}{(allowWcagDuplicate ? "#" : string.Empty)}";
+    private string CreateSchemeActionUrl(IUrlHelper urlHelper, string applicationId, string actionName, bool allowWcagDuplicate = false)
+    {
+        var action = urlHelper.Action(
+            actionName,
+            new ControllerName(nameof(SchemeController)).WithoutPrefix(),
+            new { applicationId, redirect = nameof(SchemeController.CheckAnswers) });
+
+        return $"{action}{(allowWcagDuplicate ? "#" : string.Empty)}";
+    }
 
     private string CreateApplicationActionUrl(IUrlHelper urlHelper, string applicationId, string actionName) =>
         urlHelper.Action(

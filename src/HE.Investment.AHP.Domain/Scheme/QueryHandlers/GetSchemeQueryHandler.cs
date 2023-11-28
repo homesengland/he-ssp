@@ -1,7 +1,6 @@
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
-using HE.Investments.Common.Domain;
 using MediatR;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
@@ -24,7 +23,7 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
             entity.Application.Id.Value,
             entity.Application.Name.Name,
             entity.Application.Tenure?.Value,
-            entity.Status == SectionStatus.Completed,
+            entity.Status,
             entity.Funding.RequiredFunding,
             entity.Funding.HousesToDeliver,
             entity.AffordabilityEvidence.Evidence,

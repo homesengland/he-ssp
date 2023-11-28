@@ -19,7 +19,7 @@ public static class ApplicationSections
                     "Scheme Information",
                     "Complete information about the tenure of your scheme, and other details about the funding you require and discussions you’ve had with local stakeholders.",
                     "Enter scheme information",
-                    section => GetAction(url, applicationId, typeof(SchemeController), section.SectionStatus == SectionStatus.NotStarted ? nameof(SchemeController.Index) : nameof(SchemeController.Funding))),
+                    section => GetAction(url, applicationId, typeof(SchemeController), nameof(SchemeController.Start))),
                 AddSection(
                     SectionType.HomeTypes,
                     sections,
