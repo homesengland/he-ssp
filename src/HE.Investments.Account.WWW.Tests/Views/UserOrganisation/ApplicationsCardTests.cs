@@ -35,9 +35,9 @@ public class ApplicationsCardTests : ViewTestBase
         // given
         var model = CreateTestModel(new[]
         {
-            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap1", ApplicationStatus.New),
-            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap2", ApplicationStatus.New),
-            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap3", ApplicationStatus.ApplicationDeclined),
+            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap1", ApplicationStatus.New, "http://localhost/app/"),
+            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap2", ApplicationStatus.New, "http://localhost/app/"),
+            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap3", ApplicationStatus.ApplicationDeclined, "http://localhost/app/"),
         });
 
         // when
@@ -80,13 +80,13 @@ public class ApplicationsCardTests : ViewTestBase
     {
         return new[]
         {
-            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap1", ApplicationStatus.New),
-            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap2", ApplicationStatus.New),
-            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap3", ApplicationStatus.ApplicationDeclined),
-            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap4", ApplicationStatus.New),
-            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap5", ApplicationStatus.Draft),
-            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap6", ApplicationStatus.New),
-            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap7", ApplicationStatus.New),
+            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap1", ApplicationStatus.New, "http://localhost/app/"),
+            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap2", ApplicationStatus.New, "http://localhost/app/"),
+            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap3", ApplicationStatus.ApplicationDeclined, "http://localhost/app/"),
+            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap4", ApplicationStatus.New, "http://localhost/app/"),
+            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap5", ApplicationStatus.Draft, "http://localhost/app/"),
+            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap6", ApplicationStatus.New, "http://localhost/app/"),
+            new ApplicationBasicDetailsModel(Guid.NewGuid().ToString(), "Ap7", ApplicationStatus.New, "http://localhost/app/"),
         };
     }
 
@@ -95,7 +95,6 @@ public class ApplicationsCardTests : ViewTestBase
         return new UserApplicationsModel(
             "Nagłówek",
             applications ?? ApplicationBasicDetailsModels(),
-            "A",
-            "C");
+            "A");
     }
 }

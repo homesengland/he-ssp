@@ -3,8 +3,8 @@ using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
-using HE.Investments.Account.WWW.Controllers.Consts;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
+using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
@@ -18,9 +18,12 @@ public class UserOrganisationController : Controller
 {
     private readonly IMediator _mediator;
 
-    public UserOrganisationController(IMediator mediator)
+    private readonly IProgrammes _programmes;
+
+    public UserOrganisationController(IMediator mediator, IProgrammes programmes)
     {
         _mediator = mediator;
+        _programmes = programmes;
     }
 
     [HttpGet(UserOrganisationAccountEndpoints.DashboardSuffix)]
@@ -33,13 +36,18 @@ public class UserOrganisationController : Controller
                 userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName,
                 userOrganisationResult.UserFirstName,
                 userOrganisationResult.IsLimitedUser,
-                userOrganisationResult.ProgrammesToAccess.Select(p => new ProgrammeToAccessModel(
-                        ProgrammesConsts.GetByType(p.Type),
+                userOrganisationResult.ProgrammesToAccess.Select(
+                    p => new ProgrammeToAccessModel(
+                        _programmes.GetProgramme(p.Type),
                         p.Applications.Select(a =>
-                                new ApplicationBasicDetailsModel(a.Id, a.ApplicationName, a.Status))
+                                new ApplicationBasicDetailsModel(
+                                        a.Id,
+                                        a.ApplicationName,
+                                        a.Status,
+                                        _programmes.GetApplicationUrl(p.Type, a.Id)))
                             .ToList()))
                     .ToList(),
-                userOrganisationResult.ProgrammesTypesToApply.Select(t => ProgrammesConsts.GetByType(t)).ToList(),
+                userOrganisationResult.ProgrammesTypesToApply.Select(t => _programmes.GetProgramme(t)).ToList(),
                 new List<Common.WWW.Models.ActionModel>
                 {
                     new($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation"),

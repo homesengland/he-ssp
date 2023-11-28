@@ -90,6 +90,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     }
 
     [HttpGet("{applicationId}/task-list")]
+    [HttpGet("{applicationId}")]
     public async Task<IActionResult> TaskList(string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);

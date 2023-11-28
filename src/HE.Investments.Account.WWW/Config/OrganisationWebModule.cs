@@ -32,6 +32,8 @@ public static class OrganisationWebModule
     private static void AddConfiguration(IServiceCollection services)
     {
         services.AddSingleton<IOrganisationAppConfig, OrganisationAppConfig>(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration").Get<OrganisationAppConfig>());
+        services.AddSingleton(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:ProgrammeUrl").Get<ProgrammeUrlConfig>());
+        services.AddSingleton<IProgrammes, Programmes>();
         services.AddSingleton<IDataverseConfig, DataverseConfig>(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:Dataverse").Get<DataverseConfig>());
     }
 
