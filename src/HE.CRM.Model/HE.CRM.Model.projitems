@@ -12,6 +12,7 @@
     <Content Include="$(MSBuildThisFileDirectory)Settings\EarlyBound.Settings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_changeahpapplicationstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_changeloanapplicationexternalstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifapplicationwithgivennameexists.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_checkifloanapplicationwithgivennameexists.cs" />

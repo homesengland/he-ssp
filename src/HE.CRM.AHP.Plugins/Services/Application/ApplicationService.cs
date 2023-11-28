@@ -21,6 +21,22 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
         }
 
+        public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus)
+        {
+            var additionalFilters = $"<condition attribute=\"invln_schemeid\" operator=\"eq\" value=\"{applicationId}\" />";
+            var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactId, null, additionalFilters);
+            if (applications.Any())
+            {
+                var application = applications.First();
+                var applicationToUpdate = new invln_scheme()
+                {
+                    Id = application.Id,
+                    StatusCode = new OptionSetValue(newStatus),
+                };
+                _applicationRepository.Update(applicationToUpdate);
+            }
+        }
+
         public bool CheckIfApplicationExists(string serializedApplication)
         {
             var applicationDto = JsonSerializer.Deserialize<AhpApplicationDto>(serializedApplication);

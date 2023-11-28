@@ -119,6 +119,7 @@
   "generateActions": true,
   "generateGlobalOptionSets": true,
   "messageNamesFilter": [
+    "invln_changeahpapplicationstatus*",
     "invln_changeloanapplicationexternalstatus*",
     "invln_checkifapplicationwithgivennameexists*",
     "invln_checkifloanapplicationwithgivennameexists*",
