@@ -19,18 +19,21 @@ public class DesignFileService : IDesignFileService
             .ToList());
     }
 
-    public Task<UploadedFile> UploadFile(ApplicationId applicationId, HomeTypeId homeTypeId, FileName name, Stream content, CancellationToken cancellationToken)
+    public async Task<UploadedFile> UploadFile(ApplicationId applicationId, HomeTypeId homeTypeId, FileName name, Stream content, CancellationToken cancellationToken)
     {
+        await Task.Delay(2000, cancellationToken);
+
         var fileId = new FileId(Guid.NewGuid().ToString());
         var uploadedFile = new UploadedFile(fileId, name, DateTime.Now, "Test User");
 
         Documents[$"{applicationId}-{homeTypeId.Value}-{fileId.Value}"] = uploadedFile;
-        return Task.FromResult(uploadedFile);
+        return uploadedFile;
     }
 
-    public Task RemoveFile(ApplicationId applicationId, HomeTypeId homeTypeId, FileId fileId, CancellationToken cancellationToken)
+    public async Task RemoveFile(ApplicationId applicationId, HomeTypeId homeTypeId, FileId fileId, CancellationToken cancellationToken)
     {
+        await Task.Delay(1000, cancellationToken);
+
         Documents.Remove($"{applicationId}-{homeTypeId.Value}-{fileId.Value}");
-        return Task.CompletedTask;
     }
 }

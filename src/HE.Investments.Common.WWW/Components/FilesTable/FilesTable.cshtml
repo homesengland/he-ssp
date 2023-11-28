@@ -1,40 +1,37 @@
-  @using HE.Investments.Common.WWW.Helpers
+@using HE.Investments.Common.WWW.Helpers
 @using HE.Investments.Common.WWW.Models
 
-  @model (string fieldName, IList<HE.Investments.Common.WWW.Models.FileModel> files)
+@model (string fieldName, IList<HE.Investments.Common.WWW.Models.FileModel> files)
 
-  @if (Model.files.Any())
+<table class="govuk-table">
+  <thead class="govuk-!-display-none"><tr><th>files</th></tr></thead>
+  <tbody class="govuk-table__body">
+  @for (var i = 0; i < Model.files.Count; i++)
   {
-      <table class="govuk-table">
-          <thead class="govuk-!-display-none"><tr><th>files</th></tr></thead>
-          <tbody class="govuk-table__body">
-          @for (var i = 0; i < Model.files.Count; i++)
-          {
-              var index = i;
-              @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.FileId)}", Model.files[index].FileId)
-              @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.FileName)}", Model.files[index].FileName)
-              @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.UploadedBy)}", Model.files[index].UploadedBy)
-              @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.UploadedOn)}", Model.files[index].UploadedOn)
-              @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.CanBeRemoved)}", Model.files[index].CanBeRemoved)
-              @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.RemoveAction)}", Model.files[index].RemoveAction)
+      var index = i;
+      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.FileId)}", Model.files[index].FileId)
+      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.FileName)}", Model.files[index].FileName)
+      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.UploadedBy)}", Model.files[index].UploadedBy)
+      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.UploadedOn)}", Model.files[index].UploadedOn)
+      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.CanBeRemoved)}", Model.files[index].CanBeRemoved)
+      @Html.Hidden($"{Model.fieldName}[{index}].{nameof(FileModel.RemoveAction)}", Model.files[index].RemoveAction)
 
-              <tr class="govuk-table__row">
-                  <td class="govuk-table__cell govuk-!-font-weight-bold">
-                      @Model.files[i].FileName
-                  </td>
-                  <td class="govuk-table__cell">
-                      uploaded @DateHelper.DisplayAsUkFormatDateTime(Model.files[i].UploadedOn) by @Model.files[i].UploadedBy
-                  </td>
-                  <td class="govuk-table__cell govuk-!-text-align-right">
-                      @if (Model.files[i].CanBeRemoved)
-                      {
-                          <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4" href="@Model.files[i].RemoveAction">
-                              Remove
-                          </gds-link>
-                      }
-                  </td>
-              </tr>
-          }
-          </tbody>
-      </table>
+      <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">
+              @Model.files[i].FileName
+          </td>
+          <td class="govuk-table__cell">
+              uploaded @DateHelper.DisplayAsUkFormatDateTime(Model.files[i].UploadedOn) by @Model.files[i].UploadedBy
+          </td>
+          <td class="govuk-table__cell govuk-!-text-align-right">
+              @if (Model.files[i].CanBeRemoved)
+              {
+                  <gds-link class="govuk-link--no-visited-state govuk-!-margin-left-4" href="@Model.files[i].RemoveAction">
+                      Remove
+                  </gds-link>
+              }
+          </td>
+      </tr>
   }
+  </tbody>
+</table>

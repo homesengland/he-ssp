@@ -296,6 +296,22 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         });
     }
 
+    [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
+    [HttpPost("{homeTypeId}/UploadDesignPlansFile")]
+    public async Task<IActionResult> UploadDesignPlansFile([FromRoute] string applicationId, string homeTypeId, [FromForm(Name = "File")] IFormFile file, CancellationToken cancellationToken)
+    {
+        var fileToUpload = new FileToUpload(file.FileName, file.Length, file.OpenReadStream());
+        try
+        {
+            var result = await _mediator.Send(new UploadDesignPlansFileCommand(applicationId, homeTypeId, fileToUpload), cancellationToken);
+            return result.HasValidationErrors ? new BadRequestObjectResult(result.Errors) : Ok(result.ReturnedData);
+        }
+        finally
+        {
+            await fileToUpload.Content.DisposeAsync();
+        }
+    }
+
     [DisableRequestSizeLimit]
     [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
     [HttpPost("{homeTypeId}/DesignPlans")]
