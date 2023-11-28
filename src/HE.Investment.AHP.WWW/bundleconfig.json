@@ -1,6 +1,6 @@
 [
   {
-    "outputFileName": "wwwroot/ahp/stylesheets/main.min.css",
+    "outputFileName": "wwwroot/stylesheets/main.min.css",
     "inputFiles": [
       "wwwroot/stylesheets/*.css",
       "!wwwroot/stylesheets/*.min.css",
@@ -10,7 +10,7 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/ahp/stylesheets/main.css",
+    "outputFileName": "wwwroot/stylesheets/main.css",
     "inputFiles": [
       "wwwroot/stylesheets/*.css",
       "!wwwroot/stylesheets/*.min.css",
@@ -23,7 +23,7 @@
     }
   },
   {
-    "outputFileName": "wwwroot/ahp/javascripts/site.min.js",
+    "outputFileName": "wwwroot/javascripts/site.min.js",
     "inputFiles": [
       "wwwroot/javascripts/*.js",
       "!wwwroot/javascripts/*.min.js",
@@ -42,7 +42,7 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/ahp/javascripts/site.js",
+    "outputFileName": "wwwroot/javascripts/site.js",
     "inputFiles": [
       "wwwroot/javascripts/*.js",
       "!wwwroot/javascripts/*.min.js",
