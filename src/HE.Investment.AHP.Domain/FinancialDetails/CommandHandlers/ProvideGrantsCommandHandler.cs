@@ -22,13 +22,13 @@ public class ProvideGrantsCommandHandler : FinancialDetailsCommandHandlerBase, I
             {
                 var aggregatedResults = OperationResult.New();
 
-                var countyCouncilGrants = request.CountyCouncilGrants.IsProvided() ? aggregatedResults.CatchResult(() => new CountyCouncilGrants(request.CountyCouncilGrants ?? Check.IfCanBeNull)) : null;
-                var dHSCExtraCareGrants = request.DHSCExtraCareGrants.IsProvided() ? aggregatedResults.CatchResult(() => new DHSCExtraCareGrants(request.DHSCExtraCareGrants ?? Check.IfCanBeNull)) : null;
-                var localAuthorityGrants = request.LocalAuthorityGrants.IsProvided() ? aggregatedResults.CatchResult(() => new LocalAuthorityGrants(request.LocalAuthorityGrants ?? Check.IfCanBeNull)) : null;
-                var socialServicesGrants = request.SocialServicesGrants.IsProvided() ? aggregatedResults.CatchResult(() => new SocialServicesGrants(request.SocialServicesGrants ?? Check.IfCanBeNull)) : null;
-                var healthRelatedGrants = request.HealthRelatedGrants.IsProvided() ? aggregatedResults.CatchResult(() => new HealthRelatedGrants(request.HealthRelatedGrants ?? Check.IfCanBeNull)) : null;
-                var lotteryGrants = request.LotteryGrants.IsProvided() ? aggregatedResults.CatchResult(() => new LotteryGrants(request.LotteryGrants ?? Check.IfCanBeNull)) : null;
-                var otherPublicGrants = request.OtherPublicBodiesGrants.IsProvided() ? aggregatedResults.CatchResult(() => new OtherPublicGrants(request.OtherPublicBodiesGrants ?? Check.IfCanBeNull)) : null;
+                var countyCouncilGrants = request.CountyCouncilGrants.IsProvided() ? aggregatedResults.CatchResult(() => new CountyCouncilGrants(request.CountyCouncilGrants ?? string.Empty)) : null;
+                var dHSCExtraCareGrants = request.DHSCExtraCareGrants.IsProvided() ? aggregatedResults.CatchResult(() => new DHSCExtraCareGrants(request.DHSCExtraCareGrants ?? string.Empty)) : null;
+                var localAuthorityGrants = request.LocalAuthorityGrants.IsProvided() ? aggregatedResults.CatchResult(() => new LocalAuthorityGrants(request.LocalAuthorityGrants ?? string.Empty)) : null;
+                var socialServicesGrants = request.SocialServicesGrants.IsProvided() ? aggregatedResults.CatchResult(() => new SocialServicesGrants(request.SocialServicesGrants ?? string.Empty)) : null;
+                var healthRelatedGrants = request.HealthRelatedGrants.IsProvided() ? aggregatedResults.CatchResult(() => new HealthRelatedGrants(request.HealthRelatedGrants ?? string.Empty)) : null;
+                var lotteryGrants = request.LotteryGrants.IsProvided() ? aggregatedResults.CatchResult(() => new LotteryGrants(request.LotteryGrants ?? string.Empty)) : null;
+                var otherPublicGrants = request.OtherPublicBodiesGrants.IsProvided() ? aggregatedResults.CatchResult(() => new OtherPublicGrants(request.OtherPublicBodiesGrants ?? string.Empty)) : null;
 
                 aggregatedResults.CheckErrors();
 
