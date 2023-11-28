@@ -51,6 +51,13 @@ public static class CrmFields
         nameof(invln_scheme.invln_totalinitialsalesincome),
         nameof(invln_scheme.invln_othercapitalsources),
         nameof(invln_scheme.invln_transfervalue),
+        nameof(invln_scheme.invln_grantsfromcountycouncil),
+        nameof(invln_scheme.invln_grantsfromdhscextracare),
+        nameof(invln_scheme.invln_grantsfromlocalauthority1),
+        nameof(invln_scheme.invln_grantsfromsocialservices),
+        nameof(invln_scheme.invln_grantsfromdhscnhsorotherhealth),
+        nameof(invln_scheme.invln_grantsfromthelottery),
+        nameof(invln_scheme.invln_grantsfromotherpublicbodies),
     };
 
     public static readonly IList<string> FinancialDetailsToRead = FinancialDetailsToUpdate

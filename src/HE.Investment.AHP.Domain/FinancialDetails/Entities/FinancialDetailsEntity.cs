@@ -27,7 +27,14 @@ public class FinancialDetailsEntity
         RCGFContribution? rCGFContribution,
         OtherCapitalSources? otherCapitalSources,
         SharedOwnershipSales? sharedOwnershipSales,
-        HomesTransferValue? homesTransferValue)
+        HomesTransferValue? homesTransferValue,
+        CountyCouncilGrants? countyCouncilGrants,
+        DHSCExtraCareGrants? dHSCExtraCareGrants,
+        LocalAuthorityGrants? localAuthorityGrants,
+        SocialServicesGrants? socialServicesGrants,
+        HealthRelatedGrants? healthRelatedGrants,
+        LotteryGrants? lotteryGrants,
+        OtherPublicGrants? otherPublicGrants)
     {
         ApplicationId = applicationId;
         ApplicationName = applicationName;
@@ -45,6 +52,13 @@ public class FinancialDetailsEntity
         OtherCapitalSources = otherCapitalSources;
         SharedOwnershipSales = sharedOwnershipSales;
         HomesTransferValue = homesTransferValue;
+        CountyCouncilGrants = countyCouncilGrants;
+        DHSCExtraCareGrants = dHSCExtraCareGrants;
+        LocalAuthorityGrants = localAuthorityGrants;
+        SocialServicesGrants = socialServicesGrants;
+        HealthRelatedGrants = healthRelatedGrants;
+        LotteryGrants = lotteryGrants;
+        OtherPublicGrants = otherPublicGrants;
     }
 
     public ApplicationId ApplicationId { get; private set; }
@@ -78,6 +92,20 @@ public class FinancialDetailsEntity
     public SharedOwnershipSales? SharedOwnershipSales { get; private set; }
 
     public HomesTransferValue? HomesTransferValue { get; private set; }
+
+    public CountyCouncilGrants? CountyCouncilGrants { get; private set; }
+
+    public DHSCExtraCareGrants? DHSCExtraCareGrants { get; private set; }
+
+    public LocalAuthorityGrants? LocalAuthorityGrants { get; private set; }
+
+    public SocialServicesGrants? SocialServicesGrants { get; private set; }
+
+    public HealthRelatedGrants? HealthRelatedGrants { get; private set; }
+
+    public LotteryGrants? LotteryGrants { get; private set; }
+
+    public OtherPublicGrants? OtherPublicGrants { get; private set; }
 
     public void ProvidePurchasePrice(ActualPurchasePrice? actualPurchasePrice, ExpectedPurchasePrice? expectedPurchasePrice)
     {
@@ -119,5 +147,23 @@ public class FinancialDetailsEntity
         OtherCapitalSources = otherCapitalSources;
         SharedOwnershipSales = sharedOwnershipSales;
         HomesTransferValue = homesTransferValue;
+    }
+
+    public void ProvideGrants(
+        CountyCouncilGrants? countyCouncilGrants,
+        DHSCExtraCareGrants? dHSCExtraCareGrants,
+        LocalAuthorityGrants? localAuthorityGrants,
+        SocialServicesGrants? socialServicesGrants,
+        HealthRelatedGrants? healthRelatedGrants,
+        LotteryGrants? lotteryGrants,
+        OtherPublicGrants? otherPublicGrants)
+    {
+        CountyCouncilGrants = countyCouncilGrants;
+        DHSCExtraCareGrants = dHSCExtraCareGrants;
+        LocalAuthorityGrants = localAuthorityGrants;
+        SocialServicesGrants = socialServicesGrants;
+        HealthRelatedGrants = healthRelatedGrants;
+        LotteryGrants = lotteryGrants;
+        OtherPublicGrants = otherPublicGrants;
     }
 }

@@ -193,6 +193,49 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return await Continue(new { applicationId });
     }
 
+    [HttpGet("grants")]
+    [WorkflowState(FinancialDetailsWorkflowState.Grants)]
+    public async Task<IActionResult> Grants(Guid applicationId)
+    {
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
+        return View(new FinancialDetailsGrantsModel(
+            applicationId,
+            financialDetails.ApplicationName,
+            financialDetails.CountyCouncilGrants.ToString(),
+            financialDetails.DHSCExtraCareGrants.ToString(),
+            financialDetails.LocalAuthorityGrants.ToString(),
+            financialDetails.SocialServicesGrants.ToString(),
+            financialDetails.HealthRelatedGrants.ToString(),
+            financialDetails.LotteryFunding.ToString(),
+            financialDetails.OtherPublicGrants.ToString()));
+    }
+
+    [HttpPost("grants")]
+    [WorkflowState(FinancialDetailsWorkflowState.Grants)]
+    public async Task<IActionResult> Grants(Guid applicationId, FinancialDetailsGrantsModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new ProvideGrantsCommand(
+            ApplicationId.From(applicationId),
+            model.CountyCouncilGrants,
+            model.DHSCExtraCareGrants,
+            model.LocalAuthorityGrants,
+            model.SocialServicesGrants,
+            model.HealthRelatedGrants,
+            model.LotteryGrants,
+            model.OtherPublicBodiesGrants),
+            cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("Grants", model);
+        }
+
+        return await Continue(new { applicationId });
+    }
+
     [HttpGet("back")]
     public Task<IActionResult> Back(FinancialDetailsWorkflowState currentPage, Guid applicationId)
     {
