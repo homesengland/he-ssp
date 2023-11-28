@@ -13,11 +13,6 @@
         routeData.Add("currentPage", Model.Action);
         routeData.Add("action", "Back");
 
-        if (bool.TryParse(Context.Request.Query["isCheckAnswersMode"], out var isCheckAnswersMode) && isCheckAnswersMode)
-        {
-            routeData.Add("isCheckAnswersMode", "True");
-        }
-
         if (isSubSection)
         {
             ViewContext.RouteData.Values.TryGetValue(Model.ParamName, out object? paramValue);

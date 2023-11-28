@@ -60,9 +60,12 @@ public abstract class WorkflowController<TState> : Controller
             return Task.FromResult(Change(redirect, routeData));
         }
 
-        var currentStateAttribute = CurrentActionStateAttribute(ControllerContext.ActionDescriptor) ?? throw WorkflowActionCannotBePerformedException.MethodHasNoState(Trigger.Continue, ControllerContext.ActionDescriptor.ActionName);
+        return Continue(routeData);
+    }
 
-        return Continue(currentStateAttribute.StateAs<TState>(), routeData);
+    public Task<IActionResult> ContinueWithRedirect(object routeData)
+    {
+        return Continue(Request.Query["redirect"].ToString(), routeData);
     }
 
     public IActionResult Change(string redirectToState, object routeData)

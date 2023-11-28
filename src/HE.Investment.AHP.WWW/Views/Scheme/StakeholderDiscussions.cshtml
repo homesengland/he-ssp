@@ -13,7 +13,7 @@
 <div class="govuk-grid-column-full">
     <vc:workflow-back-button action="@SchemeWorkflowState.StakeholderDiscussions.ToString()"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Scheme" asp-action="StakeholderDiscussions" asp-method="post" asp-route-isCheckAnswersMode="@Context.Request.Query["isCheckAnswersMode"]" enctype="multipart/form-data" novalidate>
+    <form asp-controller="Scheme" asp-action="StakeholderDiscussions" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" enctype="multipart/form-data" novalidate>
         <gds-div-grid-column-two-thirds>
             <vc:form-header caption="@Model.ApplicationName" title="@title"/>
             @Html.HiddenFor(m => Model.ApplicationName)
