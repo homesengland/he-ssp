@@ -61,7 +61,7 @@ https://design-patterns.service.justice.gov.uk/components/side-navigation/
   font-size: 16px;
   line-height: 1.25;
 
-  .moj-side-navigation .moj-side-navigation__list {
+  .moj-side-navigation__list {
     list-style: none;
     margin: 0 0 20px 0;
     padding: 0;
