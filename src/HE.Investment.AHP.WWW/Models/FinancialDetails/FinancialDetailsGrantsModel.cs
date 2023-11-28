@@ -24,7 +24,8 @@ public class FinancialDetailsGrantsModel : FinancialDetailsBaseModel
         string? socialServicesGrants,
         string? healthRelatedGrants,
         string? lotteryGrants,
-        string? otherPublicBodiesGrants)
+        string? otherPublicBodiesGrants,
+        string totalReceivedGrands)
         : base(applicationId, applicationName)
     {
         CountyCouncilGrants = countyCouncilGrants;
@@ -34,6 +35,7 @@ public class FinancialDetailsGrantsModel : FinancialDetailsBaseModel
         HealthRelatedGrants = healthRelatedGrants;
         LotteryGrants = lotteryGrants;
         OtherPublicBodiesGrants = otherPublicBodiesGrants;
+        TotalGrants = totalReceivedGrands;
     }
 
     public string? CountyCouncilGrants { get; set; }
@@ -50,20 +52,5 @@ public class FinancialDetailsGrantsModel : FinancialDetailsBaseModel
 
     public string? OtherPublicBodiesGrants { get; set; }
 
-    public string TotalGrants
-    {
-        get
-        {
-            decimal result = 0;
-            result += CountyCouncilGrants.TryParseNullableDecimal() ?? 0;
-            result += DHSCExtraCareGrants.TryParseNullableDecimal() ?? 0;
-            result += LocalAuthorityGrants.TryParseNullableDecimal() ?? 0;
-            result += SocialServicesGrants.TryParseNullableDecimal() ?? 0;
-            result += HealthRelatedGrants.TryParseNullableDecimal() ?? 0;
-            result += LotteryGrants.TryParseNullableDecimal() ?? 0;
-            result += OtherPublicBodiesGrants.TryParseNullableDecimal() ?? 0;
-
-            return ((decimal?)result).ToWholeNumberString() ?? "0";
-        }
-    }
+    public string TotalGrants { get; set; }
 }

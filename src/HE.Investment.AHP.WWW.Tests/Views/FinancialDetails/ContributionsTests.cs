@@ -26,7 +26,8 @@ public class ContributionsTests : ViewTestBase
             string.Empty,
             string.Empty,
             true,
-            true);
+            true,
+            "0");
 
         // given & when
         var document = await Render(_viewPath, model);
@@ -51,7 +52,8 @@ public class ContributionsTests : ViewTestBase
             string.Empty,
             string.Empty,
             true,
-            true);
+            true,
+            "0");
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
         modelState.AddModelError(FinancialDetailsValidationFieldNames.RentalIncomeBorrowing, errorMessage);

@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
@@ -163,7 +164,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             financialDetails.SharedOwnershipSalesContribution.ToString(),
             financialDetails.TransferValueOfHomes.ToString(),
             isSharedOwnership,
-            true)); // temporarly mocked - unregistered body account type
+            true,
+            financialDetails.TotalExpectedContributions.ToWholeNumberString()));
     }
 
     [HttpPost("contributions")]
@@ -207,7 +209,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             financialDetails.SocialServicesGrants.ToString(),
             financialDetails.HealthRelatedGrants.ToString(),
             financialDetails.LotteryFunding.ToString(),
-            financialDetails.OtherPublicGrants.ToString()));
+            financialDetails.OtherPublicGrants.ToString(),
+            financialDetails.TotalRecievedGrands.ToWholeNumberString()));
     }
 
     [HttpPost("grants")]
