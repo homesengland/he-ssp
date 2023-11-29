@@ -1,7 +1,7 @@
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
 
-namespace HE.Investments.Account.WWW.Routing;
+namespace HE.Investments.Account.WWW.Utils;
 
 public interface IProgrammes
 {

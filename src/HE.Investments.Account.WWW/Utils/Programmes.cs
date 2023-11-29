@@ -1,8 +1,9 @@
 using System.ComponentModel;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
+using HE.Investments.Account.WWW.Routing;
 
-namespace HE.Investments.Account.WWW.Routing;
+namespace HE.Investments.Account.WWW.Utils;
 
 public class Programmes : IProgrammes
 {
@@ -34,7 +35,9 @@ public class Programmes : IProgrammes
 
     public ProgrammeModel GetProgramme(ProgrammeType programmeType)
     {
-        return _programmes[programmeType] ?? throw new InvalidEnumArgumentException($"Programme for {programmeType} does not exist.");
+        return _programmes.TryGetValue(programmeType, out var programmeModel)
+            ? programmeModel
+            : throw new InvalidEnumArgumentException($"Programme for {programmeType} does not exist.");
     }
 
     public string GetApplicationUrl(ProgrammeType programmeType, string applicationId)
