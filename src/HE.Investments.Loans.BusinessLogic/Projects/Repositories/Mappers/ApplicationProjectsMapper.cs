@@ -1,4 +1,5 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investments.Common.CRM;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;

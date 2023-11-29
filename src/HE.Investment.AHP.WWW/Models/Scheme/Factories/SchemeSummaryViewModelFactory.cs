@@ -2,6 +2,7 @@ using System.Globalization;
 using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.WWW.Controllers;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;

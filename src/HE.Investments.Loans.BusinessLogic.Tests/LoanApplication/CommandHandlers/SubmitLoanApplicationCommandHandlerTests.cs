@@ -1,9 +1,9 @@
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
+using HE.Investments.Common.Contract;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.CommandHandlers;
 using HE.Investments.Loans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;
 using HE.Investments.Loans.Contract.Application.Commands;
-using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;

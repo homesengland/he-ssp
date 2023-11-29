@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Loans.BusinessLogic.Projects.Entities;
 using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects;

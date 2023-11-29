@@ -1,4 +1,4 @@
-using HE.Investments.Loans.Contract.Application.Enums;
+using HE.Investments.Common.Contract;
 
 namespace HE.Investments.Loans.Contract.Application.Helper;
 

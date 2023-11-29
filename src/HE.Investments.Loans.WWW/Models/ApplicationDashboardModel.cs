@@ -1,4 +1,4 @@
-using HE.Investments.Loans.Contract.Application.Enums;
+using HE.Investments.Common.Contract;
 using HE.Investments.Loans.Contract.Application.Helper;
 using HE.Investments.Loans.Contract.Application.Queries;
 using HE.Investments.Loans.Contract.Application.ValueObjects;

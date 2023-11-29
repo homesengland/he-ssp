@@ -1,14 +1,13 @@
 using AngleSharp.Html.Dom;
-using HE.Investments.Common.WWWTestsFramework;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 
-namespace HE.Investments.Common.WWW.Tests.Components;
+namespace HE.Investments.Common.WWWTestsFramework;
 
-public abstract class ViewComponentTestBase : ViewTestBase
+public abstract class ViewComponentTestBase<TTestClass> : ViewTestBase
 {
     protected override Task<IHtmlDocument> Render<TModel>(
         string viewPath,
@@ -27,7 +26,7 @@ public abstract class ViewComponentTestBase : ViewTestBase
             routeData,
             services =>
             {
-                var assembly = typeof(ViewComponentTestBase).Assembly;
+                var assembly = typeof(TTestClass).Assembly;
                 services.Configure<MvcRazorRuntimeCompilationOptions>(
                     options => options.FileProviders.Add(new EmbeddedFileProvider(assembly)));
 

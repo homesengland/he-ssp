@@ -4,13 +4,13 @@
 @using HE.Investments.Common.WWW.Components.HelpPanel
 @using Microsoft.Extensions.Options
 @using HE.Investment.AHP.WWW.Views.Application
+@using HE.Investments.Common.Contract
 @using HE.Investments.Common.Domain
-@model HE.Investment.AHP.WWW.Models.Application.ApplicationModel
+@model HE.Investment.AHP.WWW.Models.Application.ApplicationSectionsModel
 @inject IOptions<ContactInfoOptions> Options
 
 @{
     ViewData["Title"] = "Application details";
-    var totalSectionsCount = Model.Sections.Count;
     var incompleteSectionsCount = Model.Sections.Count(s => s.SectionStatus == SectionStatus.NotStarted || s.SectionStatus == SectionStatus.InProgress);
     var completeSectionsCount = Model.Sections.Count(s => s.SectionStatus == SectionStatus.Completed);
     ViewBag.Breadcrumbs = AhpBreadcrumbsBuilder
@@ -22,13 +22,14 @@
 <div class="govuk-grid-column-full govuk-!-padding-top-8">
     <vc:form-header caption="@Model.SiteName" title="@Model.Name"/>
 
-    @if (incompleteSectionsCount > 0)
-    {
-        <gds-h2 class="govuk-heading-s">
-            Application incomplete
-            <gds-p>You have completed @completeSectionsCount of @totalSectionsCount sections.</gds-p>
-        </gds-h2>
-    }
+    <vc:application-task-list-header
+        incomplete-sections-count="@incompleteSectionsCount"
+        complete-sections-count="completeSectionsCount"
+        total-sections-count="@Model.Sections.Count"
+        application-status="@Model.Status"
+        reference-number="@Model.ReferenceNumber"
+        last-modification-details="@Model.LastModificationDetails"
+        />
 </div>
 <div class="govuk-grid-column-two-thirds">
     @await Html.PartialAsync("~/Partials/TaskList/_TaskList.cshtml", ApplicationSections.CreateSections(Model.ApplicationId, Url, Model.Sections))
