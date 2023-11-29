@@ -39,7 +39,7 @@
   const inputFiledErrorSummaryMessage = (message) => `<li><a href="#${uploadControlId}">${message}</a></li>`;
 
   const fileTableRow = (fileId, fileName) => `<tr class="govuk-table__row" id="file-${fileId}">
-      <td class="govuk-table__cell govuk-!-font-weight-bold">${fileName}</td>
+      <td class="govuk-table__cell govuk-!-font-weight-bold">${sanitize(fileName)}</td>
       <td class="govuk-table__cell"></td>
       <td class="govuk-table__cell govuk-!-text-align-right">Queued</td>
     </tr>`;
@@ -205,6 +205,19 @@
     if (summaryValidationList.getElementsByTagName('a').length === 0) {
       document.getElementById(validationSummaryId).remove();
     }
+  }
+
+  const sanitize = string => {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      "/": '&#x2F;',
+    };
+    const reg = /[&<>"'/]/ig;
+    return string.replace(reg, (match)=>(map[match]));
   }
 
   document.addEventListener("DOMContentLoaded", function() {
