@@ -25,4 +25,6 @@ public enum HomeTypesWorkflowState
     BuildingInformationIneligible,
     CustomBuildProperty,
     TypeOfFacilities,
+    AccessibilityStandards,
+    AccessibilityCategory,
 }

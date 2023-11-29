@@ -624,6 +624,58 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(HomeTypesWorkflowState.AccessibilityStandards)]
+    [HttpGet("{homeTypeId}/AccessibilityStandards")]
+    public async Task<IActionResult> AccessibilityStandards([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new AccessibilityModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
+        {
+            AccessibilityStandards = homeInformation.AccessibilityStandards,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.AccessibilityStandards)]
+    [HttpPost("{homeTypeId}/AccessibilityStandards")]
+    public async Task<IActionResult> AccessibilityStandards(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        AccessibilityModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveAccessibilityStandardsCommand(applicationId, homeTypeId, model.AccessibilityStandards),
+            model,
+            cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.AccessibilityCategory)]
+    [HttpGet("{homeTypeId}/AccessibilityCategory")]
+    public async Task<IActionResult> AccessibilityCategory([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new AccessibilityModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
+        {
+            AccessibilityCategory = homeInformation.AccessibilityCategory,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.AccessibilityCategory)]
+    [HttpPost("{homeTypeId}/AccessibilityCategory")]
+    public async Task<IActionResult> AccessibilityCategory(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        AccessibilityModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveAccessibilityCategoryCommand(applicationId, homeTypeId, model.AccessibilityCategory),
+            model,
+            cancellationToken);
+    }
+
     protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object? routeData = null)
     {
         var applicationId = Request.GetRouteValue("applicationId")

@@ -36,6 +36,8 @@ internal sealed class GetHomeInformationQueryHandler : IRequestHandler<GetHomeIn
             homeInformation.PeopleGroupForSpecificDesignFeatures,
             homeInformation.BuildingType,
             homeInformation.CustomBuild,
-            homeInformation.FacilityType);
+            homeInformation.FacilityType,
+            homeInformation.AccessibilityStandards,
+            homeInformation.AccessibilityCategory);
     }
 }

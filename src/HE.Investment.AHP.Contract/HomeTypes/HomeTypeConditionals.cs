@@ -7,4 +7,5 @@ public record HomeTypeConditionals(
     YesNoType LocalCommissioningBodiesConsulted,
     YesNoType ShortStayAccommodation,
     RevenueFundingType RevenueFundingType,
-    BuildingType BuildingType);
+    BuildingType BuildingType,
+    YesNoType AccessibleStandards);
