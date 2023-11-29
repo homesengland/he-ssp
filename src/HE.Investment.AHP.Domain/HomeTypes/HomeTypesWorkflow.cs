@@ -164,13 +164,12 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 () => _homeTypeModel is { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededAndIdentified });
 
         _machine.Configure(HomeTypesWorkflowState.MoveOnAccommodation)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.BuildingInformation)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HomeInformation);
 
         _machine.Configure(HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.BuildingInformation)
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.MoveOnAccommodation, IsGeneralHomeType)
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeInformation, IsNotGeneralHomeType);
+            .Permit(Trigger.Back, HomeTypesWorkflowState.HomeInformation);
 
         _machine.Configure(HomeTypesWorkflowState.BuildingInformation)
             .PermitIf(
@@ -182,7 +181,8 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 Trigger.Continue,
                 HomeTypesWorkflowState.BuildingInformationIneligible,
                 () => IsGeneralHomeType() && _homeTypeModel is { Conditionals.BuildingType: BuildingType.Bedsit })
-            .Permit(Trigger.Back, HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures);
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures, IsNotGeneralHomeType)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.MoveOnAccommodation, IsGeneralHomeType);
 
         _machine.Configure(HomeTypesWorkflowState.BuildingInformationIneligible)
             .Permit(Trigger.Back, HomeTypesWorkflowState.BuildingInformation);
