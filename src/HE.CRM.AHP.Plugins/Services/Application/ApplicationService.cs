@@ -60,7 +60,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             {
                 RegardingObjectId = target.ToEntityReference(),
                 Name = $"Documents on AHP Application",
-                RelativeUrl = $"{target.invln_pplicationid}",
+                RelativeUrl = $"{target.invln_applicationid}",
                 ParentSiteOrLocation = documentLocation.ToEntityReference(),
             };
             _ = _sharepointDocumentLocationRepository.Create(documentToCreate);

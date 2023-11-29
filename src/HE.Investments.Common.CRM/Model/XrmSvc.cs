@@ -1289,6 +1289,9 @@ namespace HE.Investments.Common.CRM.Model
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotRequired = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Pending = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -22734,6 +22737,24 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_affordabilityevidence");
 				this.SetAttributeValue("invln_affordabilityevidence", value);
 				this.OnPropertyChanged("invln_affordabilityevidence");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_applicationid")]
+		public string invln_applicationid
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_applicationid");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_applicationid");
+				this.SetAttributeValue("invln_applicationid", value);
+				this.OnPropertyChanged("invln_applicationid");
 			}
 		}
 		

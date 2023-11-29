@@ -65,6 +65,7 @@ namespace DataverseModel
 			public const string invln_actualacquisitioncost = "invln_actualacquisitioncost";
 			public const string invln_actualacquisitioncost_Base = "invln_actualacquisitioncost_base";
 			public const string invln_affordabilityevidence = "invln_affordabilityevidence";
+			public const string invln_applicationid = "invln_applicationid";
 			public const string invln_borrowingagainstrentalincome = "invln_borrowingagainstrentalincome";
 			public const string invln_borrowingagainstrentalincome_Base = "invln_borrowingagainstrentalincome_base";
 			public const string invln_contact_invln_scheme_contactid = "invln_contact_invln_scheme_contactid";
@@ -351,6 +352,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_affordabilityevidence");
 				this.SetAttributeValue("invln_affordabilityevidence", value);
 				this.OnPropertyChanged("invln_affordabilityevidence");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_applicationid")]
+		public string invln_applicationid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_applicationid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_applicationid");
+				this.SetAttributeValue("invln_applicationid", value);
+				this.OnPropertyChanged("invln_applicationid");
 			}
 		}
 		
