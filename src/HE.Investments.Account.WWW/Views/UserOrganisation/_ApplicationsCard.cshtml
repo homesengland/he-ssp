@@ -20,7 +20,7 @@
                     <div class="govuk-summary-list__row">
                         <dt class="govuk-summary-list__key">
                             <strong>
-                                <a href="@Url.Action(Model.Action, Model.Controller, new { id = application.Id })">@application.ApplicationName</a>
+                                <a href="@application.ApplicationUrl">@application.ApplicationName</a>
                             </strong>
                         </dt>
                         <dd class="govuk-summary-list__actions">
@@ -35,8 +35,7 @@
                             @restItemsCount other(s)
                         </gds-p>
                     }
-                    @* TODO: Move it to configuration *@
-                    <a class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" href="@Url.Action("Index", "Home")">
+                    <a class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button" href="@Model.ViewAllApplicationsUrl">
                         View all
                     </a>
                 </div>
