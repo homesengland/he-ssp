@@ -2,14 +2,14 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class HappiDesignPrinciplesModel : ProvidedHomeTypeModelBase
+public class HappiDesignPrinciplesBasicModel : HomeTypeBasicModel
 {
-    public HappiDesignPrinciplesModel(string applicationName, string homeTypeName)
+    public HappiDesignPrinciplesBasicModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
     }
 
-    public HappiDesignPrinciplesModel()
+    public HappiDesignPrinciplesBasicModel()
         : this(string.Empty, string.Empty)
     {
     }

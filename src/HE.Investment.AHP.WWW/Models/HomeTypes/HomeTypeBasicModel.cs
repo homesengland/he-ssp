@@ -1,14 +1,14 @@
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class HomeTypeBasicModel : ProvidedHomeTypeModelBase
+public class HomeTypeBasicModel : HomeTypeModelBase
 {
     public HomeTypeBasicModel(string applicationName, string homeTypeName)
-        : base(applicationName, homeTypeName)
+        : base(applicationName)
     {
+        HomeTypeName = homeTypeName;
     }
 
-    public HomeTypeBasicModel()
-        : this(string.Empty, string.Empty)
-    {
-    }
+    public string HomeTypeName { get; set; }
+
+    public string Header => $"{ApplicationName} - {HomeTypeName}";
 }

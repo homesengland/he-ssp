@@ -2,15 +2,15 @@ using HE.Investments.Common.WWW.Models;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class DesignPlansModel : ProvidedHomeTypeModelBase
+public class DesignPlansBasicModel : HomeTypeBasicModel
 {
-    public DesignPlansModel(string applicationName, string homeTypeName)
+    public DesignPlansBasicModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
         UploadedFiles = new List<FileModel>();
     }
 
-    public DesignPlansModel()
+    public DesignPlansBasicModel()
         : this(string.Empty, string.Empty)
     {
     }

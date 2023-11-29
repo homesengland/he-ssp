@@ -2,14 +2,14 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class TypeOfFacilitiesModel : ProvidedHomeTypeModelBase
+public class TypeBasicOfFacilitiesModel : HomeTypeBasicModel
 {
-    public TypeOfFacilitiesModel(string applicationName, string homeTypeName)
+    public TypeBasicOfFacilitiesModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
     }
 
-    public TypeOfFacilitiesModel()
+    public TypeBasicOfFacilitiesModel()
         : this(string.Empty, string.Empty)
     {
     }

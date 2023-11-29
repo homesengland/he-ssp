@@ -7,13 +7,13 @@ public class HomesForDisabledPeopleTests : HomeTypesTestBase
 {
     private const string ViewPath = "/Views/HomeTypes/HomesForDisabledPeople.cshtml";
 
-    private static readonly HomesForDisabledPeopleModel Model = new("My application", "My homes");
+    private static readonly HomesForDisabledPeopleBasicModel BasicModel = new("My application", "My homes");
 
     [Fact]
     public async Task ShouldRenderViewWithRadioButtons()
     {
         // given & when
-        var document = await RenderHomeTypePage(ViewPath, Model);
+        var document = await RenderHomeTypePage(ViewPath, BasicModel);
 
         // then
         document

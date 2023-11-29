@@ -7,7 +7,7 @@ public class TypeOfFacilitiesTests : HomeTypesTestBase
 {
     private const string ViewPath = "/Views/HomeTypes/TypeOfFacilities.cshtml";
 
-    private static readonly TypeOfFacilitiesModel Model = new("My application", "My homes");
+    private static readonly TypeBasicOfFacilitiesModel Model = new("My application", "My homes");
 
     [Fact]
     public async Task ShouldRenderViewWithRadioButtons()
