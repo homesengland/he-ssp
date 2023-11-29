@@ -1,7 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Common.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.CRM.Model;
@@ -21,6 +21,8 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             nameof(invln_HomeType.invln_homesusedformoveonaccommodation),
             nameof(invln_HomeType.invln_homesdesignedforuseofparticular),
             nameof(invln_HomeType.invln_buildingtype),
+            nameof(invln_HomeType.invln_custombuild),
+            nameof(invln_HomeType.invln_facilities),
         })
     {
     }
@@ -34,9 +36,11 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             dto.numberOfBedrooms.IsProvided() ? new NumberOfBedrooms(dto.numberOfBedrooms!.Value) : null,
             dto.maxOccupancy.IsProvided() ? new MaximumOccupancy(dto.maxOccupancy!.Value) : null,
             dto.numberOfStoreys.IsProvided() ? new NumberOfStoreys(dto.numberOfStoreys!.Value) : null,
-            MapYesNoAnswer(dto.isMoveOnAccommodation),
+            YesNoTypeMapper.Map(dto.isMoveOnAccommodation),
             MapPeopleGroupForSpecificDesignFeatures(dto.homesDesignedForUseOfParticularGroup),
-            MapBuildingType(dto.buildingType));
+            MapBuildingType(dto.buildingType),
+            YesNoTypeMapper.Map(dto.areHomesCustomBuild),
+            MapFacilityType(dto.sharedFacilities));
     }
 
     protected override HomeInformationSegmentEntity GetSegment(HomeTypeEntity entity) => entity.HomeInformation;
@@ -47,29 +51,11 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
         dto.numberOfBedrooms = segment.NumberOfBedrooms?.Value;
         dto.maxOccupancy = segment.MaximumOccupancy?.Value;
         dto.numberOfStoreys = segment.NumberOfStoreys?.Value;
-        dto.isMoveOnAccommodation = MapYesNoAnswer(segment.IntendedAsMoveOnAccommodation);
+        dto.isMoveOnAccommodation = YesNoTypeMapper.Map(segment.IntendedAsMoveOnAccommodation);
         dto.homesDesignedForUseOfParticularGroup = MapPeopleGroupForSpecificDesignFeatures(segment.PeopleGroupForSpecificDesignFeatures);
         dto.buildingType = MapBuildingType(segment.BuildingType);
-    }
-
-    private static bool? MapYesNoAnswer(YesNoType yesNoAnswer)
-    {
-        return yesNoAnswer switch
-        {
-            YesNoType.Yes => true,
-            YesNoType.No => false,
-            _ => null,
-        };
-    }
-
-    private static YesNoType MapYesNoAnswer(bool? yesNoAnswer)
-    {
-        return yesNoAnswer switch
-        {
-            true => YesNoType.Yes,
-            false => YesNoType.No,
-            null => YesNoType.Undefined,
-        };
+        dto.areHomesCustomBuild = YesNoTypeMapper.Map(segment.CustomBuild);
+        dto.sharedFacilities = MapFacilityType(segment.FacilityType);
     }
 
     private static int? MapPeopleGroupForSpecificDesignFeatures(PeopleGroupForSpecificDesignFeaturesType peopleGroupForSpecificDesignFeatures)
@@ -126,6 +112,29 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             (int)invln_buildingtype.Bungalow => BuildingType.Bungalow,
             (int)invln_buildingtype.Maisonette => BuildingType.Maisonette,
             _ => BuildingType.Undefined,
+        };
+    }
+
+    private static int? MapFacilityType(FacilityType facilityType)
+    {
+        return facilityType switch
+        {
+            FacilityType.SelfContainedFacilities => (int)invln_facilities.Selfcontainedfacilities,
+            FacilityType.SharedFacilities => (int)invln_facilities.Sharedfacilities,
+            FacilityType.MixOfSelfContainedAndSharedFacilities => (int)invln_facilities.Mixofselfcontainedandsharedfacilities,
+            _ => null,
+
+        };
+    }
+
+    private static FacilityType MapFacilityType(int? facilityType)
+    {
+        return facilityType switch
+        {
+            (int)invln_facilities.Selfcontainedfacilities => FacilityType.SelfContainedFacilities,
+            (int)invln_facilities.Sharedfacilities => FacilityType.SharedFacilities,
+            (int)invln_facilities.Mixofselfcontainedandsharedfacilities => FacilityType.MixOfSelfContainedAndSharedFacilities,
+            _ => FacilityType.Undefined,
         };
     }
 }

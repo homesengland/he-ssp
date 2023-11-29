@@ -12,4 +12,6 @@ public record HomeInformation(
     int? NumberOfStoreys,
     YesNoType IntendedAsMoveOnAccommodation,
     PeopleGroupForSpecificDesignFeaturesType PeopleGroupForSpecificDesignFeatures,
-    BuildingType BuildingType);
+    BuildingType BuildingType,
+    YesNoType CustomBuild,
+    FacilityType FacilityType);

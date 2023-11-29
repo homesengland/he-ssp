@@ -17,33 +17,31 @@
     };
 }
 
-<div class="govuk-grid-column-two-thirds">
+<gds-div-grid-column-two-thirds>
     <form asp-controller="HomeTypes" asp-action="BuildingInformation" asp-method="post" novalidate>
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.BuildingInformation"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"
                                   title="Building information"/>
+        <gds-field-set role="group">
+            <gds-legend class="govuk-!-margin-bottom-6">
+                <gds-h2>What is the building type?</gds-h2>
+            </gds-legend>
 
-        <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
-            <gds-field-set>
-                <gds-legend>
-                    <gds-h1>What is the building type?</gds-h1>
-                </gds-legend>
+            <he-custom-radio
+                asp-for="BuildingType"
+                value="@Model.BuildingType"
+                radio-items="@HomeTypesFormOptions.BuildingType"
+                radio-hints="@hints"
+                class="govuk-!-margin-bottom-6">
+            </he-custom-radio>
 
-                <gds-radio govuk-formgroup-asp-for="BuildingType"
-                           asp-hiddenlabeltext="What type of homes will you be providing for disabled and vulnerable people?"
-                           value="@Model.BuildingType"
-                           asp-hinttext="@hints"
-                           asp-selectlistitems="@HomeTypesFormOptions.BuildingType">
-                </gds-radio>
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                Save and continue
+            </button>
+        </gds-field-set>
 
-                <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
-                    Save and continue
-                </button>
-            </gds-field-set>
-
-            <vc:return-to-application-link application-id="@applicationId"/>
-        </gds-div-grid-column-two-thirds>
+        <vc:return-to-application-link application-id="@applicationId"/>
     </form>
-</div>
+</gds-div-grid-column-two-thirds>

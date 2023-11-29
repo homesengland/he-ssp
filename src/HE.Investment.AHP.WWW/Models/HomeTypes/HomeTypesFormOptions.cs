@@ -27,4 +27,6 @@ public static class HomeTypesFormOptions
     public static IEnumerable<SelectListItem> RevenueFundingSourceTypes => SelectListHelper.FromEnum<RevenueFundingSourceType>();
 
     public static IEnumerable<SelectListItem> BuildingType => SelectListHelper.FromEnum<BuildingType>();
+
+    public static IEnumerable<SelectListItem> FacilityType => SelectListHelper.FromEnum<FacilityType>();
 }

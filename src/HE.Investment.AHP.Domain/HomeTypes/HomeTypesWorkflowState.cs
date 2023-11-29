@@ -22,4 +22,7 @@ public enum HomeTypesWorkflowState
     MoveOnAccommodation,
     PeopleGroupForSpecificDesignFeatures,
     BuildingInformation,
+    BuildingInformationIneligible,
+    CustomBuildProperty,
+    TypeOfFacilities,
 }
