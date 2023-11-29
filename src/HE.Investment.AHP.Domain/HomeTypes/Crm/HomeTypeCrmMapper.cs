@@ -34,9 +34,17 @@ public class HomeTypeCrmMapper : IHomeTypeCrmMapper
         return GetSegmentMappers(segments.Where(entity.HasSegment)).SelectMany(x => x.CrmFieldNames).Concat(BasicCrmFields);
     }
 
-    public HomeTypeEntity MapToDomain(ApplicationBasicInfo application, HomeTypeDto dto, IEnumerable<HomeTypeSegmentType> segments)
+    public HomeTypeEntity MapToDomain(
+        ApplicationBasicInfo application,
+        HomeTypeDto dto,
+        IEnumerable<HomeTypeSegmentType> segments,
+        IDictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>> uploadedFiles)
     {
-        var segmentEntities = GetSegmentMappers(segments).Select(x => x.MapToEntity(application, dto));
+        var segmentEntities = GetSegmentMappers(segments)
+            .Select(x => x.MapToEntity(
+                application,
+                dto,
+                uploadedFiles.TryGetValue(x.SegmentType, out var file) ? file : Array.Empty<UploadedFile>()));
 
         return new HomeTypeEntity(
             application,

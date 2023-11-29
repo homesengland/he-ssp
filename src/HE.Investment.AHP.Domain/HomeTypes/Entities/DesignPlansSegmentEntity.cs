@@ -87,6 +87,11 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
 
         foreach (var file in files)
         {
+            if (_uploadedFiles.Any(x => x.Name == file.Name) || _filesToUpload.Any(x => x.Name == file.Name))
+            {
+                OperationResult.New().AddValidationError("File", GenericValidationError.FileUniqueName).CheckErrors();
+            }
+
             _filesToUpload.Add(file);
         }
 

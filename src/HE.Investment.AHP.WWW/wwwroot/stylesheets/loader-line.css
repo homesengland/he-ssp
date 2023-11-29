@@ -1,7 +1,3 @@
-.govuk-breadcrumbs__link--inactive{
-  pointer-events: none;
-}
-
 .loader-line {
   width: 66px;
   height: 3px;

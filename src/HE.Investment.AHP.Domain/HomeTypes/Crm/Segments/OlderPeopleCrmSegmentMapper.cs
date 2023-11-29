@@ -15,7 +15,7 @@ public class OlderPeopleCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<OlderPeo
 
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.OlderPeople;
 
-    public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto)
+    public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
         return new OlderPeopleHomeTypeDetailsSegmentEntity(MapHousingType(dto.housingTypeForOlderPeople));
     }
