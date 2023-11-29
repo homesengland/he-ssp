@@ -15,10 +15,12 @@ namespace HE.CRM.AHP.Plugins.Services.Application
     {
         private readonly IAhpApplicationRepository _applicationRepository;
         private readonly IContactRepository _contactRepository;
+        private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
         public ApplicationService(CrmServiceArgs args) : base(args)
         {
             _applicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
+            _sharepointDocumentLocationRepository = CrmRepositoriesFactory.Get<ISharepointDocumentLocationRepository>();
         }
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus)
@@ -49,6 +51,28 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             {
                 throw new InvalidPluginExecutionException("Application with new name already exists.");
             }
+        }
+
+        public void CreateDocumentLocation(invln_scheme target)
+        {
+            var documentLocation = _sharepointDocumentLocationRepository.GetByAttribute(nameof(SharePointDocumentLocation.Name).ToLower(), "AHP Application Documents").FirstOrDefault();
+            var documentToCreate = new SharePointDocumentLocation()
+            {
+                RegardingObjectId = target.ToEntityReference(),
+                Name = $"Documents on AHP Application",
+                RelativeUrl = $"{target.invln_pplicationid}",
+                ParentSiteOrLocation = documentLocation.ToEntityReference(),
+            };
+            _ = _sharepointDocumentLocationRepository.Create(documentToCreate);
+        }
+        public string GetFileLocationForAhpApplication(string ahpApplicationId)
+        {
+            if (Guid.TryParse(ahpApplicationId, out Guid applicationGuid))
+            {
+                var relatedDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToRecordWithGivenGuid(applicationGuid);
+                return relatedDocumentLocation.RelativeUrl;
+            }
+            return string.Empty;
         }
 
         public List<AhpApplicationDto> GetApplication(string organisationId, string contactId, string fieldsToRetrieve = null, string applicationId = null)
