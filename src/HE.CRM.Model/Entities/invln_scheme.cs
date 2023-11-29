@@ -38,6 +38,9 @@ namespace DataverseModel
 		Active = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Deleted = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
 	}
 	

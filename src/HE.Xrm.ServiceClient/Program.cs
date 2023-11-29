@@ -37,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestUpdateSiteDetails(serviceClient);
+                    TestChangeStatus(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -49,6 +49,18 @@ namespace HE.Xrm.ServiceClientExample
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
+        }
+
+        private static void TestChangeStatus(ServiceClient serviceClient)
+        {
+            var req1 = new invln_changeahpapplicationstatusRequest()
+            {
+                invln_applicationid = "f3a79da3-2889-ee11-be36-002248004a06",
+                invln_newapplicationstatus = (int)invln_scheme_StatusCode.Active,
+                invln_organisationid = "10d9b271-f75d-ee11-8def-6045bd0d7d6d",
+                invln_userid = "auth0|651abbb7aac579f810ae0d5b",
+            };
+            serviceClient.Execute(req1);
         }
 
         private static void TestHomeType(ServiceClient serviceClient)

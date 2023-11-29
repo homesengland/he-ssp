@@ -7,6 +7,8 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string id { get; set; }
         public string name { get; set; }
         public int? tenure { get; set; }
+        public string referenceNumber { get; set; }
+        public int? applicationStatus { get; set; }
 
         //sections statuses
         public int? schemeInformationSectionCompletionStatus { get; set; }
