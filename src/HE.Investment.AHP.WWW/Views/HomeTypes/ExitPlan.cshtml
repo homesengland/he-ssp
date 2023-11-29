@@ -1,35 +1,33 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
-@model HE.Investment.AHP.WWW.Models.HomeTypes.MoreInformationModel;
+@model HE.Investment.AHP.WWW.Models.HomeTypes.MoreInformationBasicModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
 }
 
-<div class="govuk-grid-column-full">
+<gds-div-grid-column-two-thirds>
     <form asp-controller="HomeTypes" asp-action="ExitPlan" asp-method="post" novalidate>
-        <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
-            <vc:home-type-form-header current-page="@HomeTypesWorkflowState.ExitPlan"
-                                      application-id="@applicationId"
-                                      home-type-id="@homeTypeId"
-                                      caption="@Model.Header"
-                                      title="Tell us the exit plan or alternative use for these homes should commissioning priorities change in the future"/>
+        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.ExitPlan"
+                                  application-id="@applicationId"
+                                  home-type-id="@homeTypeId"
+                                  caption="@Model.Header"
+                                  title="Tell us the exit plan or alternative use for these homes should commissioning priorities change in the future"/>
 
-            <gds-field-set class="govuk-!-margin-bottom-6 govuk-!-margin-top-9">
-                <FormHiddenLabel
-                    field-name="MoreInformation"
-                    title="More information"/>
-                <he-text-area asp-for="MoreInformation" rows="7" class="govuk-!-margin-bottom-1" label="asd"></he-text-area>
-                <gds-span-hint>You can enter up to 1500 characters</gds-span-hint>
-            </gds-field-set>
+        <gds-field-set class="govuk-!-margin-bottom-6 govuk-!-margin-top-9">
+            <FormHiddenLabel
+                field-name="MoreInformation"
+                title="More information"/>
+            <he-text-area asp-for="MoreInformation" rows="7" class="govuk-!-margin-bottom-1" label="asd"></he-text-area>
+            <gds-span-hint>You can enter up to 1500 characters</gds-span-hint>
+        </gds-field-set>
 
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
-                Save and continue
-            </button>
-            <br/>
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+            Save and continue
+        </button>
+        <br/>
 
-            <vc:return-to-application-link application-id="@applicationId"/>
-        </gds-div-grid-column-two-thirds>
+        <vc:return-to-application-link application-id="@applicationId"/>
     </form>
-</div>
+</gds-div-grid-column-two-thirds>

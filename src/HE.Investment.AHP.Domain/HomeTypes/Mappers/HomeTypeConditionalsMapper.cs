@@ -10,6 +10,7 @@ public static class HomeTypeConditionalsMapper
         return new HomeTypeConditionals(
             homeType.SupportedHousingInformation.LocalCommissioningBodiesConsulted,
             homeType.SupportedHousingInformation.ShortStayAccommodation,
-            homeType.SupportedHousingInformation.RevenueFundingType);
+            homeType.SupportedHousingInformation.RevenueFundingType,
+            homeType.HomeInformation.BuildingType);
     }
 }

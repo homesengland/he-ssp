@@ -1,8 +1,8 @@
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class ProvidedHomeTypeModelBase : HomeTypeModelBase
+public class HomeTypeBasicModel : HomeTypeModelBase
 {
-    public ProvidedHomeTypeModelBase(string applicationName, string homeTypeName)
+    public HomeTypeBasicModel(string applicationName, string homeTypeName)
         : base(applicationName)
     {
         HomeTypeName = homeTypeName;

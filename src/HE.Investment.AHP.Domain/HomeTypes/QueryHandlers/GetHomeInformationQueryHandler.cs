@@ -33,6 +33,9 @@ internal sealed class GetHomeInformationQueryHandler : IRequestHandler<GetHomeIn
             homeInformation.MaximumOccupancy?.Value,
             homeInformation.NumberOfStoreys?.Value,
             homeInformation.IntendedAsMoveOnAccommodation,
-            homeInformation.PeopleGroupForSpecificDesignFeatures);
+            homeInformation.PeopleGroupForSpecificDesignFeatures,
+            homeInformation.BuildingType,
+            homeInformation.CustomBuild,
+            homeInformation.FacilityType);
     }
 }

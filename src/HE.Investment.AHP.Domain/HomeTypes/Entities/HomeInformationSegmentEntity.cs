@@ -18,7 +18,10 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         MaximumOccupancy? maximumOccupancy = null,
         NumberOfStoreys? numberOfStoreys = null,
         YesNoType intendedAsMoveOnAccommodation = YesNoType.Undefined,
-        PeopleGroupForSpecificDesignFeaturesType peopleGroupForSpecificDesignFeatures = PeopleGroupForSpecificDesignFeaturesType.Undefined)
+        PeopleGroupForSpecificDesignFeaturesType peopleGroupForSpecificDesignFeatures = PeopleGroupForSpecificDesignFeaturesType.Undefined,
+        BuildingType buildingType = BuildingType.Undefined,
+        YesNoType customBuild = YesNoType.Undefined,
+        FacilityType facilityType = FacilityType.Undefined)
     {
         NumberOfHomes = numberOfHomes;
         NumberOfBedrooms = numberOfBedrooms;
@@ -26,6 +29,9 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         NumberOfStoreys = numberOfStoreys;
         IntendedAsMoveOnAccommodation = intendedAsMoveOnAccommodation;
         PeopleGroupForSpecificDesignFeatures = peopleGroupForSpecificDesignFeatures;
+        BuildingType = buildingType;
+        CustomBuild = customBuild;
+        FacilityType = facilityType;
     }
 
     public bool IsModified => _modificationTracker.IsModified;
@@ -41,6 +47,12 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
     public YesNoType IntendedAsMoveOnAccommodation { get; private set; }
 
     public PeopleGroupForSpecificDesignFeaturesType PeopleGroupForSpecificDesignFeatures { get; private set; }
+
+    public BuildingType BuildingType { get; private set; }
+
+    public YesNoType CustomBuild { get; private set; }
+
+    public FacilityType FacilityType { get; private set; }
 
     public void ChangeNumberOfHomes(string? numberOfHomes)
     {
@@ -76,6 +88,21 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         PeopleGroupForSpecificDesignFeatures = _modificationTracker.Change(PeopleGroupForSpecificDesignFeatures, peopleGroupForSpecificDesignFeatures);
     }
 
+    public void ChangeBuildingType(BuildingType buildingType)
+    {
+        BuildingType = _modificationTracker.Change(BuildingType, buildingType);
+    }
+
+    public void ChangeCustomBuild(YesNoType customBuild)
+    {
+        CustomBuild = _modificationTracker.Change(CustomBuild, customBuild);
+    }
+
+    public void ChangeFacilityType(FacilityType facilityType)
+    {
+        FacilityType = _modificationTracker.Change(FacilityType, facilityType);
+    }
+
     public IHomeTypeSegmentEntity Duplicate()
     {
         return new HomeInformationSegmentEntity(
@@ -84,7 +111,10 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
             MaximumOccupancy,
             NumberOfStoreys,
             IntendedAsMoveOnAccommodation,
-            PeopleGroupForSpecificDesignFeatures);
+            PeopleGroupForSpecificDesignFeatures,
+            BuildingType,
+            CustomBuild,
+            FacilityType);
     }
 
     public bool IsRequired(HousingType housingType)
@@ -98,7 +128,10 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
                && NumberOfBedrooms.IsProvided()
                && MaximumOccupancy.IsProvided()
                && NumberOfStoreys.IsProvided()
-               && (IntendedAsMoveOnAccommodation != YesNoType.Undefined || PeopleGroupForSpecificDesignFeatures != PeopleGroupForSpecificDesignFeaturesType.Undefined);
+               && (IntendedAsMoveOnAccommodation != YesNoType.Undefined || PeopleGroupForSpecificDesignFeatures != PeopleGroupForSpecificDesignFeaturesType.Undefined)
+               && BuildingType != BuildingType.Undefined
+               && CustomBuild != YesNoType.Undefined
+               && FacilityType != FacilityType.Undefined;
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
@@ -111,6 +144,11 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         if (targetHousingType is HousingType.Undefined or HousingType.General)
         {
             ChangePeopleGroupForSpecificDesignFeatures(PeopleGroupForSpecificDesignFeaturesType.Undefined);
+        }
+
+        if (targetHousingType is HousingType.General && BuildingType is BuildingType.Bedsit)
+        {
+            ChangeBuildingType(BuildingType.Undefined);
         }
     }
 }

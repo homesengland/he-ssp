@@ -2,14 +2,14 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class RevenueFundingModel : ProvidedHomeTypeModelBase
+public class RevenueFundingBasicModel : HomeTypeBasicModel
 {
-    public RevenueFundingModel(string applicationName, string homeTypeName)
+    public RevenueFundingBasicModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
     }
 
-    public RevenueFundingModel()
+    public RevenueFundingBasicModel()
         : this(string.Empty, string.Empty)
     {
     }

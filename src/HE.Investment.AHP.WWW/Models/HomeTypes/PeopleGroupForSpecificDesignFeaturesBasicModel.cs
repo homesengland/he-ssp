@@ -2,14 +2,14 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class PeopleGroupForSpecificDesignFeaturesModel : ProvidedHomeTypeModelBase
+public class PeopleGroupForSpecificDesignFeaturesBasicModel : HomeTypeBasicModel
 {
-    public PeopleGroupForSpecificDesignFeaturesModel(string applicationName, string homeTypeName)
+    public PeopleGroupForSpecificDesignFeaturesBasicModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
     }
 
-    public PeopleGroupForSpecificDesignFeaturesModel()
+    public PeopleGroupForSpecificDesignFeaturesBasicModel()
         : this(string.Empty, string.Empty)
     {
     }

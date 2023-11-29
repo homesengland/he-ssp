@@ -12,7 +12,7 @@ public class RevenueFundingTests : HomeTypesTestBase
     public async Task ShouldRenderViewWithCheckboxes()
     {
         // given
-        var model = new RevenueFundingModel("My application", "My homes");
+        var model = new RevenueFundingBasicModel("My application", "My homes");
 
         // when
         var document = await RenderHomeTypePage(ViewPath, model);
@@ -54,7 +54,7 @@ public class RevenueFundingTests : HomeTypesTestBase
     public async Task ShouldRenderViewWithCheckedCheckboxes()
     {
         // given
-        var model = new RevenueFundingModel("My application", "My homes")
+        var model = new RevenueFundingBasicModel("My application", "My homes")
         {
             Sources = new List<RevenueFundingSourceType>
             {
