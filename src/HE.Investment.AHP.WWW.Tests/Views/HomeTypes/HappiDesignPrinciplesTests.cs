@@ -7,13 +7,13 @@ public class HappiDesignPrinciplesTests : HomeTypesTestBase
 {
     private const string ViewPath = "/Views/HomeTypes/HappiDesignPrinciples.cshtml";
 
-    private static readonly HappiDesignPrinciplesBasicModel BasicModel = new("My application", "My homes");
+    private static readonly HappiDesignPrinciplesModel Model = new("My application", "My homes");
 
     [Fact]
     public async Task ShouldRenderViewWithCheckboxes()
     {
         // given & when
-        var document = await RenderHomeTypePage(ViewPath, BasicModel);
+        var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
         document

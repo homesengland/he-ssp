@@ -1,16 +1,15 @@
 using HE.Investment.AHP.Contract.Common.Enums;
-using HE.Investment.AHP.Contract.HomeTypes.Enums;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class CustomBuildPropertyBasicModel : HomeTypeBasicModel
+public class CustomBuildPropertyModel : HomeTypeBasicModel
 {
-    public CustomBuildPropertyBasicModel(string applicationName, string homeTypeName)
+    public CustomBuildPropertyModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
     }
 
-    public CustomBuildPropertyBasicModel()
+    public CustomBuildPropertyModel()
         : this(string.Empty, string.Empty)
     {
     }

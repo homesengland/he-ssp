@@ -109,18 +109,18 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var homeTypeDetails = await _mediator.Send(new GetHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View("RemoveHomeTypeConfirmation", new RemoveHomeTypeBasicModel(homeTypeDetails.ApplicationName, homeTypeDetails.Name));
+        return View("RemoveHomeTypeConfirmation", new RemoveHomeTypeModel(homeTypeDetails.ApplicationName, homeTypeDetails.Name));
     }
 
     [WorkflowState(HomeTypesWorkflowState.RemoveHomeType)]
     [HttpPost("{homeTypeId}/Remove")]
-    public async Task<IActionResult> Remove([FromRoute] string applicationId, string homeTypeId, RemoveHomeTypeBasicModel basicModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> Remove([FromRoute] string applicationId, string homeTypeId, RemoveHomeTypeModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new RemoveHomeTypeCommand(applicationId, homeTypeId), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return View("RemoveHomeTypeConfirmation", basicModel);
+            return View("RemoveHomeTypeConfirmation", model);
         }
 
         return RedirectToAction("List", new { applicationId });
@@ -166,7 +166,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new HomeInformationBasicModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
+        return View(new HomeInformationModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
         {
             NumberOfHomes = homeInformation.NumberOfHomes?.ToString(CultureInfo.InvariantCulture),
             NumberOfBedrooms = homeInformation.NumberOfBedrooms?.ToString(CultureInfo.InvariantCulture),
@@ -177,17 +177,17 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     [WorkflowState(HomeTypesWorkflowState.HomeInformation)]
     [HttpPost("{homeTypeId}/HomeInformation")]
-    public async Task<IActionResult> HomeInformation([FromRoute] string applicationId, string homeTypeId, HomeInformationBasicModel basicModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> HomeInformation([FromRoute] string applicationId, string homeTypeId, HomeInformationModel model, CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
             new SaveHomeInformationCommand(
                 applicationId,
                 homeTypeId,
-                basicModel.NumberOfHomes,
-                basicModel.NumberOfBedrooms,
-                basicModel.MaximumOccupancy,
-                basicModel.NumberOfStoreys),
-            basicModel,
+                model.NumberOfHomes,
+                model.NumberOfBedrooms,
+                model.MaximumOccupancy,
+                model.NumberOfStoreys),
+            model,
             cancellationToken);
     }
 
@@ -196,7 +196,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> HomesForDisabledPeople([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
         var disabledPeopleHomeType = await _mediator.Send(new GetDisabledPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
-        return View(new HomesForDisabledPeopleBasicModel(disabledPeopleHomeType.ApplicationName, disabledPeopleHomeType.HomeTypeName)
+        return View(new HomesForDisabledPeopleModel(disabledPeopleHomeType.ApplicationName, disabledPeopleHomeType.HomeTypeName)
         {
             HousingType = disabledPeopleHomeType.HousingType,
         });
@@ -207,10 +207,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> HomesForDisabledPeople(
         [FromRoute] string applicationId,
         string homeTypeId,
-        HomesForDisabledPeopleBasicModel basicModel,
+        HomesForDisabledPeopleModel model,
         CancellationToken cancellationToken)
     {
-        return await SaveHomeTypeSegment(new SaveDisabledPeopleHousingTypeCommand(applicationId, homeTypeId, basicModel.HousingType), basicModel, cancellationToken);
+        return await SaveHomeTypeSegment(new SaveDisabledPeopleHousingTypeCommand(applicationId, homeTypeId, model.HousingType), model, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.DisabledPeopleClientGroup)]
@@ -218,7 +218,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> DisabledPeopleClientGroup([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
         var disabledPeopleHomeType = await _mediator.Send(new GetDisabledPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
-        return View(new DisabledPeopleClientGroupBasicModel(disabledPeopleHomeType.ApplicationName, disabledPeopleHomeType.HomeTypeName)
+        return View(new DisabledPeopleClientGroupModel(disabledPeopleHomeType.ApplicationName, disabledPeopleHomeType.HomeTypeName)
         {
             DisabledPeopleClientGroup = disabledPeopleHomeType.ClientGroupType,
         });
@@ -229,12 +229,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> DisabledPeopleClientGroup(
         [FromRoute] string applicationId,
         string homeTypeId,
-        DisabledPeopleClientGroupBasicModel basicModel,
+        DisabledPeopleClientGroupModel model,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
-            new SaveDisabledPeopleClientGroupTypeCommand(applicationId, homeTypeId, basicModel.DisabledPeopleClientGroup),
-            basicModel,
+            new SaveDisabledPeopleClientGroupTypeCommand(applicationId, homeTypeId, model.DisabledPeopleClientGroup),
+            model,
             cancellationToken);
     }
 
@@ -243,14 +243,14 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> HomesForOlderPeople([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
         var olderPeopleHomeType = await _mediator.Send(new GetOlderPeopleHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
-        return View(new HomesForOlderPeopleBasicModel(olderPeopleHomeType.ApplicationName, olderPeopleHomeType.HomeTypeName) { HousingType = olderPeopleHomeType.HousingType, });
+        return View(new HomesForOlderPeopleModel(olderPeopleHomeType.ApplicationName, olderPeopleHomeType.HomeTypeName) { HousingType = olderPeopleHomeType.HousingType, });
     }
 
     [WorkflowState(HomeTypesWorkflowState.HomesForOlderPeople)]
     [HttpPost("{homeTypeId}/HomesForOlderPeople")]
-    public async Task<IActionResult> HomesForOlderPeople([FromRoute] string applicationId, string homeTypeId, HomesForOlderPeopleBasicModel basicModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> HomesForOlderPeople([FromRoute] string applicationId, string homeTypeId, HomesForOlderPeopleModel model, CancellationToken cancellationToken)
     {
-        return await SaveHomeTypeSegment(new SaveOlderPeopleHousingTypeCommand(applicationId, homeTypeId, basicModel.HousingType), basicModel, cancellationToken);
+        return await SaveHomeTypeSegment(new SaveOlderPeopleHousingTypeCommand(applicationId, homeTypeId, model.HousingType), model, cancellationToken);
     }
 
     [WorkflowState(HomeTypesWorkflowState.HappiDesignPrinciples)]
@@ -258,7 +258,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> HappiDesignPrinciples([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
     {
         var designPlans = await _mediator.Send(new GetDesignPlansQuery(applicationId, homeTypeId), cancellationToken);
-        return View(new HappiDesignPrinciplesBasicModel(designPlans.ApplicationName, designPlans.HomeTypeName)
+        return View(new HappiDesignPrinciplesModel(designPlans.ApplicationName, designPlans.HomeTypeName)
         {
             DesignPrinciples = designPlans.DesignPrinciples.ToList(),
             OtherPrinciples = designPlans.DesignPrinciples.ToList(),
@@ -270,15 +270,15 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> HappiDesignPrinciples(
         [FromRoute] string applicationId,
         string homeTypeId,
-        HappiDesignPrinciplesBasicModel basicModel,
+        HappiDesignPrinciplesModel model,
         CancellationToken cancellationToken)
     {
-        var designPrinciples = basicModel.DesignPrinciples ?? Array.Empty<HappiDesignPrincipleType>();
-        var otherDesignPrinciples = basicModel.OtherPrinciples ?? Array.Empty<HappiDesignPrincipleType>();
+        var designPrinciples = model.DesignPrinciples ?? Array.Empty<HappiDesignPrincipleType>();
+        var otherDesignPrinciples = model.OtherPrinciples ?? Array.Empty<HappiDesignPrincipleType>();
 
         return await SaveHomeTypeSegment(
             new SaveHappiDesignPrinciplesCommand(applicationId, homeTypeId, designPrinciples.Concat(otherDesignPrinciples).ToList()),
-            basicModel,
+            model,
             cancellationToken);
     }
 
@@ -289,7 +289,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var designPlans = await _mediator.Send(new GetDesignPlansQuery(applicationId, homeTypeId), cancellationToken);
 
         string GetRemoveAction(string fileId) => Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "RemoveDesignPlansFile", applicationId, id = homeTypeId, fileId }) ?? throw new InvalidOperationException();
-        return View(new DesignPlansBasicModel(designPlans.ApplicationName, designPlans.HomeTypeName)
+        return View(new DesignPlansModel(designPlans.ApplicationName, designPlans.HomeTypeName)
         {
             MoreInformation = designPlans.MoreInformation,
             UploadedFiles = designPlans.UploadedFiles.Select(x => new FileModel(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId))).ToList(),
@@ -318,7 +318,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> DesignPlans(
         [FromRoute] string applicationId,
         string homeTypeId,
-        DesignPlansBasicModel basicModel,
+        DesignPlansModel model,
         [FromForm(Name = "File")] List<IFormFile> files,
         CancellationToken cancellationToken)
     {
@@ -326,7 +326,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
         try
         {
-            return await SaveHomeTypeSegment(new SaveDesignPlansCommand(applicationId, homeTypeId, basicModel.MoreInformation, filesToUpload), basicModel, cancellationToken);
+            return await SaveHomeTypeSegment(new SaveDesignPlansCommand(applicationId, homeTypeId, model.MoreInformation, filesToUpload), model, cancellationToken);
         }
         finally
         {
@@ -360,7 +360,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var supportedHousingInformation = await _mediator.Send(new GetSupportedHousingInformationQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new SupportedHousingInformationBasicModel(supportedHousingInformation.ApplicationName, supportedHousingInformation.HomeTypeName)
+        return View(new SupportedHousingInformationModel(supportedHousingInformation.ApplicationName, supportedHousingInformation.HomeTypeName)
         {
             LocalCommissioningBodiesConsulted = supportedHousingInformation.LocalCommissioningBodiesConsulted,
             ShortStayAccommodation = supportedHousingInformation.ShortStayAccommodation,
@@ -373,17 +373,17 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> SupportedHousingInformation(
         [FromRoute] string applicationId,
         string homeTypeId,
-        SupportedHousingInformationBasicModel basicModel,
+        SupportedHousingInformationModel model,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
             new SaveSupportedHousingInformationCommand(
                 applicationId,
                 homeTypeId,
-                basicModel.LocalCommissioningBodiesConsulted,
-                basicModel.ShortStayAccommodation,
-                basicModel.RevenueFundingType),
-            basicModel,
+                model.LocalCommissioningBodiesConsulted,
+                model.ShortStayAccommodation,
+                model.RevenueFundingType),
+            model,
             cancellationToken);
     }
 
@@ -393,7 +393,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var supportedHousingInformation = await _mediator.Send(new GetSupportedHousingInformationQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new RevenueFundingBasicModel(supportedHousingInformation.ApplicationName, supportedHousingInformation.HomeTypeName)
+        return View(new RevenueFundingModel(supportedHousingInformation.ApplicationName, supportedHousingInformation.HomeTypeName)
         {
             Sources = supportedHousingInformation.RevenueFundingSources,
         });
@@ -404,14 +404,14 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> RevenueFunding(
         [FromRoute] string applicationId,
         string homeTypeId,
-        RevenueFundingBasicModel basicModel,
+        RevenueFundingModel model,
         CancellationToken cancellationToken)
     {
-        var revenueFundingSources = basicModel.Sources ?? Array.Empty<RevenueFundingSourceType>();
+        var revenueFundingSources = model.Sources ?? Array.Empty<RevenueFundingSourceType>();
 
         return await SaveHomeTypeSegment(
             new SaveRevenueFundingCommand(applicationId, homeTypeId, revenueFundingSources.ToList()),
-            basicModel,
+            model,
             cancellationToken);
     }
 
@@ -421,7 +421,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new MoveOnAccommodationBasicModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
+        return View(new MoveOnAccommodationModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
         {
             IntendedAsMoveOnAccommodation = homeInformation.IntendedAsMoveOnAccommodation,
         });
@@ -429,11 +429,11 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     [WorkflowState(HomeTypesWorkflowState.MoveOnAccommodation)]
     [HttpPost("{homeTypeId}/MoveOnAccommodation")]
-    public async Task<IActionResult> MoveOnAccommodation([FromRoute] string applicationId, string homeTypeId, MoveOnAccommodationBasicModel basicModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> MoveOnAccommodation([FromRoute] string applicationId, string homeTypeId, MoveOnAccommodationModel model, CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
-            new SaveMoveOnAccommodationCommand(applicationId, homeTypeId, basicModel.IntendedAsMoveOnAccommodation),
-            basicModel,
+            new SaveMoveOnAccommodationCommand(applicationId, homeTypeId, model.IntendedAsMoveOnAccommodation),
+            model,
             cancellationToken);
     }
 
@@ -443,7 +443,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new PeopleGroupForSpecificDesignFeaturesBasicModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
+        return View(new PeopleGroupForSpecificDesignFeaturesModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
         {
             PeopleGroupForSpecificDesignFeatures = homeInformation.PeopleGroupForSpecificDesignFeatures,
         });
@@ -451,11 +451,11 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     [WorkflowState(HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures)]
     [HttpPost("{homeTypeId}/PeopleGroupForSpecificDesignFeatures")]
-    public async Task<IActionResult> PeopleGroupForSpecificDesignFeatures([FromRoute] string applicationId, string homeTypeId, PeopleGroupForSpecificDesignFeaturesBasicModel basicModel, CancellationToken cancellationToken)
+    public async Task<IActionResult> PeopleGroupForSpecificDesignFeatures([FromRoute] string applicationId, string homeTypeId, PeopleGroupForSpecificDesignFeaturesModel model, CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
-            new SavePeopleGroupForSpecificDesignFeaturesCommand(applicationId, homeTypeId, basicModel.PeopleGroupForSpecificDesignFeatures),
-            basicModel,
+            new SavePeopleGroupForSpecificDesignFeaturesCommand(applicationId, homeTypeId, model.PeopleGroupForSpecificDesignFeatures),
+            model,
             cancellationToken);
     }
 
@@ -465,7 +465,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var supportedHousingInformation = await _mediator.Send(new GetSupportedHousingInformationQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new MoreInformationBasicModel(supportedHousingInformation.ApplicationName, supportedHousingInformation.HomeTypeName)
+        return View(new MoreInformationModel(supportedHousingInformation.ApplicationName, supportedHousingInformation.HomeTypeName)
         {
             MoreInformation = supportedHousingInformation.MoveOnArrangements,
         });
@@ -476,12 +476,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> MoveOnArrangements(
         [FromRoute] string applicationId,
         string homeTypeId,
-        MoreInformationBasicModel basicModel,
+        MoreInformationModel model,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
-            new SaveMoveOnArrangementsCommand(applicationId, homeTypeId, basicModel.MoreInformation),
-            basicModel,
+            new SaveMoveOnArrangementsCommand(applicationId, homeTypeId, model.MoreInformation),
+            model,
             cancellationToken);
     }
 
@@ -491,7 +491,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var supportedHousingInformation = await _mediator.Send(new GetSupportedHousingInformationQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new MoreInformationBasicModel(supportedHousingInformation.ApplicationName, supportedHousingInformation.HomeTypeName)
+        return View(new MoreInformationModel(supportedHousingInformation.ApplicationName, supportedHousingInformation.HomeTypeName)
         {
             MoreInformation = supportedHousingInformation.TypologyLocationAndDesign,
         });
@@ -502,12 +502,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> TypologyLocationAndDesign(
         [FromRoute] string applicationId,
         string homeTypeId,
-        MoreInformationBasicModel basicModel,
+        MoreInformationModel model,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
-            new SaveTypologyLocationAndDesignCommand(applicationId, homeTypeId, basicModel.MoreInformation),
-            basicModel,
+            new SaveTypologyLocationAndDesignCommand(applicationId, homeTypeId, model.MoreInformation),
+            model,
             cancellationToken);
     }
 
@@ -517,7 +517,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var supportedHousingInformation = await _mediator.Send(new GetSupportedHousingInformationQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new MoreInformationBasicModel(supportedHousingInformation.ApplicationName, supportedHousingInformation.HomeTypeName)
+        return View(new MoreInformationModel(supportedHousingInformation.ApplicationName, supportedHousingInformation.HomeTypeName)
         {
             MoreInformation = supportedHousingInformation.ExitPlan,
         });
@@ -528,12 +528,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> ExitPlan(
         [FromRoute] string applicationId,
         string homeTypeId,
-        MoreInformationBasicModel basicModel,
+        MoreInformationModel model,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
-            new SaveExitPlanCommand(applicationId, homeTypeId, basicModel.MoreInformation),
-            basicModel,
+            new SaveExitPlanCommand(applicationId, homeTypeId, model.MoreInformation),
+            model,
             cancellationToken);
     }
 
@@ -543,7 +543,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new BuildingInformationBasicModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
+        return View(new BuildingInformationModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
         {
             BuildingType = homeInformation.BuildingType,
         });
@@ -554,12 +554,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> BuildingInformation(
         [FromRoute] string applicationId,
         string homeTypeId,
-        BuildingInformationBasicModel basicModel,
+        BuildingInformationModel model,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
-            new SaveBuildingInformationCommand(applicationId, homeTypeId, basicModel.BuildingType),
-            basicModel,
+            new SaveBuildingInformationCommand(applicationId, homeTypeId, model.BuildingType),
+            model,
             cancellationToken);
     }
 
@@ -578,7 +578,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
 
-        return View(new CustomBuildPropertyBasicModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
+        return View(new CustomBuildPropertyModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
         {
             CustomBuild = homeInformation.CustomBuild,
         });
@@ -589,12 +589,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     public async Task<IActionResult> CustomBuildProperty(
         [FromRoute] string applicationId,
         string homeTypeId,
-        CustomBuildPropertyBasicModel basicModel,
+        CustomBuildPropertyModel model,
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
-            new SaveCustomBuildPropertyCommand(applicationId, homeTypeId, basicModel.CustomBuild),
-            basicModel,
+            new SaveCustomBuildPropertyCommand(applicationId, homeTypeId, model.CustomBuild),
+            model,
             cancellationToken);
     }
 

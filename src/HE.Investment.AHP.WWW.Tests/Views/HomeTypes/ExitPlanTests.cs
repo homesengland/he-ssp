@@ -9,13 +9,13 @@ public class ExitPlanTests : HomeTypesTestBase
 {
     private const string ViewPath = "/Views/HomeTypes/ExitPlan.cshtml";
 
-    private static readonly MoreInformationBasicModel BasicModel = new("My application", "My homes") { MoreInformation = "My new important information" };
+    private static readonly MoreInformationModel Model = new("My application", "My homes") { MoreInformation = "My new important information" };
 
     [Fact]
     public async Task ShouldRenderViewWithTextArea()
     {
         // given & when
-        var document = await RenderHomeTypePage(ViewPath, BasicModel);
+        var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
         document
@@ -34,7 +34,7 @@ public class ExitPlanTests : HomeTypesTestBase
         modelState.AddModelError("MoreInformation", ErrorMessage);
 
         // when
-        var document = await RenderHomeTypePage(ViewPath, BasicModel, modelStateDictionary: modelState);
+        var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
 
         // then
         AssertErrors(document, true);
@@ -42,6 +42,6 @@ public class ExitPlanTests : HomeTypesTestBase
 
     private void AssertErrors(IHtmlDocument document, bool exist)
     {
-        document.HasSummaryErrorMessage(nameof(MoreInformationBasicModel.MoreInformation), ErrorMessage, exist);
+        document.HasSummaryErrorMessage(nameof(MoreInformationModel.MoreInformation), ErrorMessage, exist);
     }
 }
