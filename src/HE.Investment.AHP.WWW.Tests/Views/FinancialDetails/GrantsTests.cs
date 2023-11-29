@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.FinancialDetails;
 
-public class ContributionsTests : ViewTestBase
+public class GrantsTests : ViewTestBase
 {
-    private readonly string _viewPath = "/Views/FinancialDetails/Contributions.cshtml";
+    private readonly string _viewPath = "/Views/FinancialDetails/Grants.cshtml";
 
     [Fact]
     public async Task ShouldDisplayView()
     {
-        var model = new FinancialDetailsContributionsModel(
+        var model = new FinancialDetailsGrantsModel(
             Guid.NewGuid(),
             "TestApp",
             string.Empty,
@@ -24,9 +24,6 @@ public class ContributionsTests : ViewTestBase
             string.Empty,
             string.Empty,
             string.Empty,
-            string.Empty,
-            true,
-            true,
             "0");
 
         // given & when
@@ -40,7 +37,7 @@ public class ContributionsTests : ViewTestBase
     public async Task ShouldDisplayView_ForInvalid()
     {
         // given
-        var model = new FinancialDetailsContributionsModel(
+        var model = new FinancialDetailsGrantsModel(
             Guid.NewGuid(),
             "TestApp",
             string.Empty,
@@ -50,13 +47,10 @@ public class ContributionsTests : ViewTestBase
             string.Empty,
             string.Empty,
             string.Empty,
-            string.Empty,
-            true,
-            true,
             "0");
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
-        modelState.AddModelError(FinancialDetailsValidationFieldNames.RentalIncomeBorrowing, errorMessage);
+        modelState.AddModelError(FinancialDetailsValidationFieldNames.DHSCExtraCareGrants, errorMessage);
 
         // when
         var document = await Render(_viewPath, model, modelStateDictionary: modelState);
@@ -68,11 +62,11 @@ public class ContributionsTests : ViewTestBase
     private static void AssertView(IHtmlDocument document, string? errorMessage = null)
     {
         document
-            .HasElementWithText("h1", "Your expected contributions to the scheme")
-            .HasElementWithText("h2", "Enter how much you will contribute from borrowing against rental income for this scheme")
-            .HasElementWithText("span", "Total expected contributions to the scheme")
+            .HasElementWithText("h1", "Grants received from other public bodies")
+            .HasElementWithText("h2", "Enter how much you have received from the county council")
+            .HasElementWithText("span", "Total grants from other public bodies")
             .HasElementWithText("button", "Save and continue")
-            .HasSummaryErrorMessage(nameof(FinancialDetailsValidationFieldNames.RentalIncomeBorrowing), errorMessage, !string.IsNullOrEmpty(errorMessage))
-            .HasErrorMessage(nameof(FinancialDetailsValidationFieldNames.RentalIncomeBorrowing), errorMessage, !string.IsNullOrEmpty(errorMessage));
+            .HasSummaryErrorMessage(nameof(FinancialDetailsValidationFieldNames.DHSCExtraCareGrants), errorMessage, !string.IsNullOrEmpty(errorMessage))
+            .HasErrorMessage(nameof(FinancialDetailsValidationFieldNames.DHSCExtraCareGrants), errorMessage, !string.IsNullOrEmpty(errorMessage));
     }
 }

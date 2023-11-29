@@ -4,38 +4,15 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-public class LandValue : ValueObject
+public class LandValue : NumericValueObject
 {
     public LandValue(string value)
+        : base(FinancialDetailsValidationFieldNames.LandValue, value, FinancialDetailsValidationErrors.InvalidLandValue)
     {
-        var operationResult = OperationResult.New();
-
-        var intValue = NumericValidator
-            .For(value, FinancialDetailsValidationFieldNames.LandValue, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.InvalidLandValue)
-            .IsBetween(1, 999999999, FinancialDetailsValidationErrors.InvalidLandValue);
-
-        operationResult.CheckErrors();
-
-        Value = intValue;
     }
-
-    public int Value { get; }
 
     public static LandValue? From(decimal? value)
     {
-        if (value == null)
-        {
-            return null;
-        }
-        else
-        {
-            return new LandValue(value.ToWholeNumberString() ?? string.Empty);
-        }
-    }
-
-    protected override IEnumerable<object> GetAtomicValues()
-    {
-        yield return Value;
+        return value.HasValue ? new LandValue(value.ToWholeNumberString() ?? string.Empty) : null;
     }
 }

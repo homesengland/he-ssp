@@ -23,12 +23,12 @@ public class ProvidePurchasePriceCommandHandler : FinancialDetailsCommandHandler
                 ExpectedPurchasePrice? expectedPurchasePrice = null;
                 if (request.ActualPurchasePrice.IsProvided())
                 {
-                    actualPurchasePrice = ActualPurchasePrice.From(request.ActualPurchasePrice);
+                    actualPurchasePrice = new ActualPurchasePrice(request.ActualPurchasePrice);
                 }
 
                 if (request.ExpectedPurchasePrice.IsProvided())
                 {
-                    expectedPurchasePrice = ExpectedPurchasePrice.From(request.ExpectedPurchasePrice);
+                    expectedPurchasePrice = new ExpectedPurchasePrice(request.ExpectedPurchasePrice);
                 }
 
                 financialDetails.ProvidePurchasePrice(actualPurchasePrice, expectedPurchasePrice);

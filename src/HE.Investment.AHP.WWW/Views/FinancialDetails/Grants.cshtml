@@ -1,0 +1,137 @@
+@using HE.Investment.AHP.Domain.FinancialDetails.Constants;
+@using HE.Investment.AHP.WWW.Models.FinancialDetails;
+@using HE.Investment.AHP.Domain.FinancialDetails;
+@using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
+@using HE.Investments.Common.Gds;
+@using HE.Investments.Common.WWW.Extensions;
+@model FinancialDetailsGrantsModel;
+@{
+    ViewData["Title"] = FinancialDetailsPageTitles.ExpectedGrants;
+
+     var (countyCouncilGrantsInvalid, countyCouncilGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.CountyCouncilGrants);
+     var (dHSCExtraCareGrantsInvalid, dHSCExtraCareGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.DHSCExtraCareGrants);
+     var (localAuthorityGrantsInvalid, localAuthorityErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.LocalAuthorityGrants);
+     var (socialServicesGrantsInvalid, socialServicesGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.SocialServicesGrants);
+     var (healthRelatedGrantsInvalid, healthRelatedGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.HeatlthRelatedGrants);
+     var (lotteryGrantsInvalid, lotteryGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.LotteryGrants);
+     var (otherPublicBodiesGrantsInvalid, otherPublicBodiesGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.OtherPublicBodiesGrants);
+
+     var errorsList = new string[] {
+         countyCouncilGrantsErrors,
+         dHSCExtraCareGrantsErrors,
+         localAuthorityErrors,
+         socialServicesGrantsErrors,
+         healthRelatedGrantsErrors,
+         lotteryGrantsErrors,
+         otherPublicBodiesGrantsErrors
+     };
+}
+<div id="mainContainer" class="govuk-grid-three-quarters" role="main">
+    <gds-div-grid-column-two-thirds>
+        <form asp-controller="FinancialDetails" asp-action="Grants" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
+            <vc:financial-details-form-header title="@FinancialDetailsPageTitles.ExpectedGrants"
+                                              current-page="@FinancialDetailsWorkflowState.Grants"
+                                              application-id="@Model.ApplicationId"
+                                              caption="@Model.ApplicationName - Financial details" />
+
+            <div class="govuk-caption-m govuk-!-margin-bottom-6">
+                For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
+                Enter to the nearest pound. If you have not received any grants from other public bodies, enter 0.
+            </div>
+
+            <gds-field-set>
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you have received from the county council</gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="CountyCouncilGrants"
+                           class="govuk-input--width-5"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="CountyCouncilGrants"
+                           name="CountyCouncilGrants"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.CountyCouncilGrants />
+
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you have received from DHSC Extra Care funding</gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="DHSCExtraCareGrants"
+                           class="govuk-input--width-5"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="DHSCExtraCareGrants"
+                           name="DHSCExtraCareGrants"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.DHSCExtraCareGrants />
+
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you have received from local authority funding (not including social services)</gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="LocalAuthorityGrants"
+                           class="govuk-input--width-5"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="LocalAuthorityGrants"
+                           name="LocalAuthorityGrants"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.LocalAuthorityGrants />
+
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you have received from social services funding</gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="SocialServicesGrants"
+                           class="govuk-input--width-5"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="SocialServicesGrants"
+                           name="SocialServicesGrants"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.SocialServicesGrants />
+
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you have received from the Department of Health, NHS trust (including PCT) or other health-related bodies</gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="HealthRelatedGrants"
+                           class="govuk-input--width-5"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="HealthRelatedGrants"
+                           name="HealthRelatedGrants"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.HealthRelatedGrants />
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you have received from lottery funding</gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="LotteryGrants"
+                           class="govuk-input--width-5"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="LotteryGrants"
+                           name="LotteryGrants"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.LotteryGrants />
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you have received form other public bodies</gds-h2>
+                </gds-legend>
+                <gds-input asp-hiddenlabeltext="OtherPublicBodiesGrants"
+                           class="govuk-input--width-5"
+                           asp-labelclass="govuk-label"
+                           govuk-formgroup-asp-for="OtherPublicBodiesGrants"
+                           name="OtherPublicBodiesGrants"
+                           asp-prefixtext=@(GdsInputPrefixText.Pounds)
+                           value=@Model.OtherPublicBodiesGrants />
+               
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <span class="govuk-heading-m">Total grants from other public bodies</span>
+                    </div>
+                    <div class="govuk-grid-column-one-third">
+                        <span class="govuk-heading-m">£@Model.TotalGrants</span>
+                    </div>
+                </div>
+
+                <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                    Save and continue
+                </button>
+
+                @Html.HiddenFor(c => c.ApplicationId)
+                @Html.HiddenFor(c => c.ApplicationName)
+            </gds-field-set>
+            <vc:return-to-application-link application-id="@Model.ApplicationId" />
+        </form>
+    </gds-div-grid-column-two-thirds>
+</div>
