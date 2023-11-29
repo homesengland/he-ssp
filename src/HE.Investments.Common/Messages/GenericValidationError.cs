@@ -12,6 +12,8 @@ public static class GenericValidationError
 
     public const string NoValueProvided = "Value is not provided";
 
+    public const string FileUniqueName = "File with that name is already uploaded.";
+
     public static string InvalidFileType(string fileName, IEnumerable<string> allowedExtensions) => $"The selected file {fileName} must be a {FileExtensions(allowedExtensions)}";
 
     public static string FileTooBig(int maxSizeInMb) => $"The selected file must be smaller than {maxSizeInMb}MB";

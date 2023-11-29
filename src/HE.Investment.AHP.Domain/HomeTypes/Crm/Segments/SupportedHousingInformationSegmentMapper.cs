@@ -27,7 +27,7 @@ public class SupportedHousingInformationSegmentMapper : HomeTypeCrmSegmentMapper
 
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.SupportedHousingInformation;
 
-    public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto)
+    public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
         return new SupportedHousingInformationEntity(
             YesNoTypeMapper.Map(dto.localComissioningBodies),

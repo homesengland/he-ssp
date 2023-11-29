@@ -98,7 +98,8 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .PermitIf(
                 Trigger.Continue,
                 HomeTypesWorkflowState.ExitPlan,
-                () => _homeTypeModel is (
+                () =>
+                    _homeTypeModel is (
                 { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededButNotIdentified }
                     or { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNotNeeded })
                     and { Conditionals.ShortStayAccommodation: YesNoType.No })
@@ -163,12 +164,36 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 () => _homeTypeModel is { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededAndIdentified });
 
         _machine.Configure(HomeTypesWorkflowState.MoveOnAccommodation)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.BuildingInformation)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HomeInformation);
 
         _machine.Configure(HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.BuildingInformation)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HomeInformation);
+
+        _machine.Configure(HomeTypesWorkflowState.BuildingInformation)
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.CustomBuildProperty,
+                () => IsNotGeneralHomeType()
+                      || (IsGeneralHomeType() && _homeTypeModel is not { Conditionals.BuildingType: BuildingType.Bedsit }))
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.BuildingInformationIneligible,
+                () => IsGeneralHomeType() && _homeTypeModel is { Conditionals.BuildingType: BuildingType.Bedsit })
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures, IsNotGeneralHomeType)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.MoveOnAccommodation, IsGeneralHomeType);
+
+        _machine.Configure(HomeTypesWorkflowState.BuildingInformationIneligible)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.BuildingInformation);
+
+        _machine.Configure(HomeTypesWorkflowState.CustomBuildProperty)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.TypeOfFacilities)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.BuildingInformation);
+
+        _machine.Configure(HomeTypesWorkflowState.TypeOfFacilities)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.CustomBuildProperty);
     }
 
     private bool IsGeneralHomeType()

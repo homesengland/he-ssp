@@ -1,13 +1,11 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
-@model HE.Investment.AHP.WWW.Models.HomeTypes.DesignPlansModel;
+@model HE.Investment.AHP.WWW.Models.HomeTypes.DesignPlansBasicModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
 }
-
-@Html.Hidden("MaxFileSizeInMegabytes", 20)
 
 <div class="govuk-grid-column-full">
     <form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" novalidate>
@@ -19,7 +17,12 @@
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"/>
 
-        <vc:upload-file field-name="File" description="Upload all relevant files." is-multiple="true"/>
+        <vc:upload-file field-name="File"
+                        description="Upload all relevant files."
+                        is-multiple="true"
+                        max-file-size-in-mb="20"
+                        upload-one-file-url="@Url.Action("UploadDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId })"
+                        remove-file-url-template="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "RemoveDesignPlansFile", applicationId, id = homeTypeId, fileId = ":fileId" })"/>
 
         <vc:files-table asp-for="@Model.UploadedFiles"/>
 

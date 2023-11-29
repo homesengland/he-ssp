@@ -10,7 +10,11 @@ public interface IHomeTypeCrmMapper
 
     IEnumerable<string> SaveCrmFields(HomeTypeEntity entity, IEnumerable<HomeTypeSegmentType> segments);
 
-    HomeTypeEntity MapToDomain(ApplicationBasicInfo application, HomeTypeDto dto, IEnumerable<HomeTypeSegmentType> segments);
+    HomeTypeEntity MapToDomain(
+        ApplicationBasicInfo application,
+        HomeTypeDto dto,
+        IEnumerable<HomeTypeSegmentType> segments,
+        IDictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>> uploadedFiles);
 
     HomeTypeDto MapToDto(HomeTypeEntity entity, IEnumerable<HomeTypeSegmentType> segments);
 }

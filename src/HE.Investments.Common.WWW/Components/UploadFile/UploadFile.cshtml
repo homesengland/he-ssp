@@ -1,9 +1,20 @@
-@model (string title, string fieldName, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, string fileErrorMessage)
+@model (string title, string fieldName, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, string fileErrorMessage, string uploadOneFileUrl, string removeFileUrlTemplate)
 
 @if (!string.IsNullOrWhiteSpace(Model.title))
 {
     <gds-h2>@Model.title</gds-h2>
 }
+
+@if (!string.IsNullOrWhiteSpace(Model.uploadOneFileUrl))
+{
+    @Html.Hidden("upload-file-url", Model.uploadOneFileUrl)
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.removeFileUrlTemplate))
+{
+    @Html.Hidden("remove-file-url-template", Model.removeFileUrlTemplate)
+}
+
 <he-div-hint class="govuk-!-margin-bottom-6">@Model.description</he-div-hint>
 <div id="file-input-form-group" class="govuk-form-group @(Model.hasFileError ? "govuk-form-group--error" : string.Empty)">
 

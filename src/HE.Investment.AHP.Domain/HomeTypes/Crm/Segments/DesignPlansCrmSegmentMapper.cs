@@ -17,12 +17,13 @@ public class DesignPlansCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<DesignPl
 
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.DesignPlans;
 
-    public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto)
+    public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
         return new DesignPlansSegmentEntity(
             application,
             dto.designPrinciples.Select(MapDesignPrinciple),
-            dto.designPlansMoreInformation.IsProvided() ? new MoreInformation(dto.designPlansMoreInformation) : null);
+            dto.designPlansMoreInformation.IsProvided() ? new MoreInformation(dto.designPlansMoreInformation) : null,
+            uploadedFiles);
     }
 
     protected override DesignPlansSegmentEntity GetSegment(HomeTypeEntity entity) => entity.DesignPlans;

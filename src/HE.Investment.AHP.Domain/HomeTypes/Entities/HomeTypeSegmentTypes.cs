@@ -7,6 +7,7 @@ internal static class HomeTypeSegmentTypes
     public static readonly IReadOnlyCollection<HomeTypeSegmentType> WorkflowConditionals = new[]
     {
         HomeTypeSegmentType.SupportedHousingInformation,
+        HomeTypeSegmentType.HomeInformation,
     };
 
     public static readonly IReadOnlyCollection<HomeTypeSegmentType> All = new[]

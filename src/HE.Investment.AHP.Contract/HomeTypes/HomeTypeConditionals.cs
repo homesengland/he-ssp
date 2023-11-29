@@ -6,4 +6,5 @@ namespace HE.Investment.AHP.Contract.HomeTypes;
 public record HomeTypeConditionals(
     YesNoType LocalCommissioningBodiesConsulted,
     YesNoType ShortStayAccommodation,
-    RevenueFundingType RevenueFundingType);
+    RevenueFundingType RevenueFundingType,
+    BuildingType BuildingType);

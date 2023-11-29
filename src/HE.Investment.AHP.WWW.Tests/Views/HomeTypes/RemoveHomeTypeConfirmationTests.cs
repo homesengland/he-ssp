@@ -9,13 +9,13 @@ public class RemoveHomeTypeConfirmationTests : HomeTypesTestBase
 {
     private const string ViewPath = "/Views/HomeTypes/RemoveHomeTypeConfirmation.cshtml";
 
-    private static readonly RemoveHomeTypeModel Model = new("My application", "My homes");
+    private static readonly RemoveHomeTypeBasicModel BasicModel = new("My application", "My homes");
 
     [Fact]
     public async Task ShouldDisplayView_WhenThereAreNoErrors()
     {
         // given & when
-        var document = await RenderHomeTypePage(ViewPath, Model);
+        var document = await RenderHomeTypePage(ViewPath, BasicModel);
 
         // then
         AssertView(document);
@@ -30,7 +30,7 @@ public class RemoveHomeTypeConfirmationTests : HomeTypesTestBase
         modelState.AddModelError("HomeTypeEntity", ErrorMessage);
 
         // when
-        var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
+        var document = await RenderHomeTypePage(ViewPath, BasicModel, modelStateDictionary: modelState);
 
         // then
         AssertView(document);

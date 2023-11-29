@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
@@ -163,7 +164,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             financialDetails.SharedOwnershipSalesContribution.ToString(),
             financialDetails.TransferValueOfHomes.ToString(),
             isSharedOwnership,
-            true)); // temporarly mocked - unregistered body account type
+            true,
+            financialDetails.TotalExpectedContributions.ToWholeNumberString()));
     }
 
     [HttpPost("contributions")]
@@ -188,6 +190,50 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             ModelState.AddValidationErrors(result);
 
             return View("Contributions", model);
+        }
+
+        return await Continue(new { applicationId });
+    }
+
+    [HttpGet("grants")]
+    [WorkflowState(FinancialDetailsWorkflowState.Grants)]
+    public async Task<IActionResult> Grants(Guid applicationId)
+    {
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
+        return View(new FinancialDetailsGrantsModel(
+            applicationId,
+            financialDetails.ApplicationName,
+            financialDetails.CountyCouncilGrants.ToString(),
+            financialDetails.DHSCExtraCareGrants.ToString(),
+            financialDetails.LocalAuthorityGrants.ToString(),
+            financialDetails.SocialServicesGrants.ToString(),
+            financialDetails.HealthRelatedGrants.ToString(),
+            financialDetails.LotteryFunding.ToString(),
+            financialDetails.OtherPublicGrants.ToString(),
+            financialDetails.TotalRecievedGrands.ToWholeNumberString()));
+    }
+
+    [HttpPost("grants")]
+    [WorkflowState(FinancialDetailsWorkflowState.Grants)]
+    public async Task<IActionResult> Grants(Guid applicationId, FinancialDetailsGrantsModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(
+            new ProvideGrantsCommand(
+            ApplicationId.From(applicationId),
+            model.CountyCouncilGrants,
+            model.DHSCExtraCareGrants,
+            model.LocalAuthorityGrants,
+            model.SocialServicesGrants,
+            model.HealthRelatedGrants,
+            model.LotteryGrants,
+            model.OtherPublicBodiesGrants),
+            cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+
+            return View("Grants", model);
         }
 
         return await Continue(new { applicationId });

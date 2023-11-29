@@ -14,11 +14,7 @@ public class DesignPlanFileEntity
     private static readonly IList<FileExtension> AllowedExtensions =
         new[] { new FileExtension("jpg"), new FileExtension("png"), new FileExtension("pdf"), new FileExtension("docx") };
 
-    private readonly FileName _name;
-
     private readonly Stream _content;
-
-    private FileId? _id;
 
     private DesignPlanFileEntity(FileName name, FileSize size, Stream content)
     {
@@ -36,9 +32,13 @@ public class DesignPlanFileEntity
                 .CheckErrors();
         }
 
-        _name = name;
+        Name = name;
         _content = content;
     }
+
+    public FileId? Id { get; private set; }
+
+    public FileName Name { get; }
 
     public static DesignPlanFileEntity ForUpload(FileName name, FileSize size, Stream content) => new(name, size, content);
 
@@ -47,18 +47,18 @@ public class DesignPlanFileEntity
         IDesignFileService designFileService,
         CancellationToken cancellationToken)
     {
-        if (_id.IsProvided())
+        if (Id.IsProvided())
         {
-            throw new InvalidOperationException($"Design File {_name} is already uploaded with Id {_id}.");
+            throw new InvalidOperationException($"Design File {Name} is already uploaded with Id {Id}.");
         }
 
         if (homeType.Id.IsNew)
         {
-            throw new InvalidOperationException($"Design File {_name} cannot be uploaded because home type is not saved yet.");
+            throw new InvalidOperationException($"Design File {Name} cannot be uploaded because home type is not saved yet.");
         }
 
-        var uploadedFile = await designFileService.UploadFile(homeType.Application.Id, homeType.Id, _name, _content, cancellationToken);
-        _id = uploadedFile.Id;
+        var uploadedFile = await designFileService.UploadFile(homeType.Application.Id, homeType.Id, Name, _content, cancellationToken);
+        Id = uploadedFile.Id;
 
         return uploadedFile;
     }

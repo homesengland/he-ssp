@@ -20,7 +20,8 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
         string? initialSalesOfSharedHomes,
         string? homesTransferValue,
         bool isSharedOwnership,
-        bool isUnregisteredBodyAccount)
+        bool isUnregisteredBodyAccount,
+        string totalExpectedContributions)
         : base(applicationId, applicationName)
     {
         RentalIncomeBorrowing = rentalIncomeBorrowing;
@@ -33,6 +34,7 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
         HomesTransferValue = homesTransferValue;
         IsSharedOwnership = isSharedOwnership;
         IsUnregisteredBodyAccount = isUnregisteredBodyAccount;
+        TotalExpectedContributions = totalExpectedContributions;
     }
 
     public string? RentalIncomeBorrowing { get; set; }
@@ -55,21 +57,5 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
 
     public bool IsUnregisteredBodyAccount { get; set; }
 
-    public string TotalContributions
-    {
-        get
-        {
-            decimal result = 0;
-            result += RentalIncomeBorrowing.TryParseNullableDecimal() ?? 0;
-            result += SaleOfHomesOnThisScheme.TryParseNullableDecimal() ?? 0;
-            result += SaleOfHomesOnOtherSchemes.TryParseNullableDecimal() ?? 0;
-            result += OwnResources.TryParseNullableDecimal() ?? 0;
-            result += RCGFContribution.TryParseNullableDecimal() ?? 0;
-            result += OtherCapitalSources.TryParseNullableDecimal() ?? 0;
-            result += InitialSalesOfSharedHomes.TryParseNullableDecimal() ?? 0;
-            result += HomesTransferValue.TryParseNullableDecimal() ?? 0;
-
-            return result.ToString(CultureInfo.InvariantCulture);
-        }
-    }
+    public string TotalExpectedContributions { get; set; }
 }
