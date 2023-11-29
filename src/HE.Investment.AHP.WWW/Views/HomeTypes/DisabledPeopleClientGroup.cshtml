@@ -10,11 +10,13 @@
 
 <div class="govuk-grid-column-two-thirds">
     <form asp-controller="HomeTypes" asp-action="DisabledPeopleClientGroup" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header title="What client group are the homes for?"
                                   current-page="@HomeTypesWorkflowState.DisabledPeopleClientGroup"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
-                                  caption="@Model.Header" />
+                                  caption="@Model.Header"/>
 
         <gds-field-set>
             <gds-legend class="govuk-!-margin-bottom-6">

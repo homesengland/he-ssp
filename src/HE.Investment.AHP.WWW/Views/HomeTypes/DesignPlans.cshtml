@@ -11,13 +11,15 @@
 
 <div class="govuk-grid-column-full">
     <form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header title="Upload your design plans"
                                   current-page="@HomeTypesWorkflowState.DesignPlans"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"/>
 
-        <vc:upload-file field-name ="File" description="Upload all relevant files." is-multiple="true" />
+        <vc:upload-file field-name="File" description="Upload all relevant files." is-multiple="true"/>
 
         <vc:files-table asp-for="@Model.UploadedFiles"/>
 
