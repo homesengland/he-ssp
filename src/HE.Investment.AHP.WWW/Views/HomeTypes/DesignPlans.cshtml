@@ -1,6 +1,6 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
-@model HE.Investment.AHP.WWW.Models.HomeTypes.DesignPlansBasicModel;
+@model HE.Investment.AHP.WWW.Models.HomeTypes.DesignPlansModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
@@ -9,6 +9,8 @@
 
 <div class="govuk-grid-column-full">
     <form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header title="Upload your design plans"
                                   current-page="@HomeTypesWorkflowState.DesignPlans"
                                   application-id="@applicationId"

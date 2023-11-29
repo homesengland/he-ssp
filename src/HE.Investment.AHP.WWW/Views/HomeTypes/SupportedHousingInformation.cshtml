@@ -4,7 +4,7 @@
 @using HE.Investment.AHP.WWW.Models.HomeTypes
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
-@model HE.Investment.AHP.WWW.Models.HomeTypes.SupportedHousingInformationBasicModel;
+@model HE.Investment.AHP.WWW.Models.HomeTypes.SupportedHousingInformationModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
@@ -13,6 +13,8 @@
 
 <gds-div-grid-column-two-thirds>
     <form asp-controller="HomeTypes" asp-action="SupportedHousingInformation" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header title="Supported housing information"
                                   current-page="@HomeTypesWorkflowState.SupportedHousingInformation"
                                   application-id="@applicationId"

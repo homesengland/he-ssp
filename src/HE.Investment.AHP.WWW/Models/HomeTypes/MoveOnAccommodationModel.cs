@@ -2,14 +2,14 @@ using HE.Investment.AHP.Contract.Common.Enums;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class MoveOnAccommodationBasicModel : HomeTypeBasicModel
+public class MoveOnAccommodationModel : HomeTypeBasicModel
 {
-    public MoveOnAccommodationBasicModel(string applicationName, string homeTypeName)
+    public MoveOnAccommodationModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
     }
 
-    public MoveOnAccommodationBasicModel()
+    public MoveOnAccommodationModel()
         : this(string.Empty, string.Empty)
     {
     }

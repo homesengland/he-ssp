@@ -14,6 +14,7 @@
 
 <div class="govuk-grid-column-two-thirds">
     <form asp-controller="HomeTypes" asp-action="@action" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
         <vc:home-type-form-header title="Home type details"
                                   current-page="@HomeTypesWorkflowState.HomeTypeDetails"
                                   application-id="@applicationId"

@@ -3,14 +3,14 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class SupportedHousingInformationBasicModel : HomeTypeBasicModel
+public class SupportedHousingInformationModel : HomeTypeBasicModel
 {
-    public SupportedHousingInformationBasicModel(string applicationName, string homeTypeName)
+    public SupportedHousingInformationModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
     }
 
-    public SupportedHousingInformationBasicModel()
+    public SupportedHousingInformationModel()
         : this(string.Empty, string.Empty)
     {
     }

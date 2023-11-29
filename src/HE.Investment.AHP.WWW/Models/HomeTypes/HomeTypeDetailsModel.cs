@@ -14,7 +14,7 @@ public class HomeTypeDetailsModel : HomeTypeModelBase
     {
     }
 
-    public string HomeTypeName { get; set; }
+    public string? HomeTypeName { get; set; }
 
     public HousingType HousingType { get; set; }
 }

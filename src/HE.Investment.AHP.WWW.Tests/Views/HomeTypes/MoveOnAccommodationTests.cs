@@ -7,13 +7,13 @@ public class MoveOnAccommodationTests : HomeTypesTestBase
 {
     private const string ViewPath = "/Views/HomeTypes/MoveOnAccommodation.cshtml";
 
-    private static readonly MoveOnAccommodationBasicModel BasicModel = new("My application", "My homes");
+    private static readonly MoveOnAccommodationModel Model = new("My application", "My homes");
 
     [Fact]
     public async Task ShouldRenderViewWithRadioButton()
     {
         // given & when
-        var document = await RenderHomeTypePage(ViewPath, BasicModel);
+        var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
         document

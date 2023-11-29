@@ -7,13 +7,13 @@ public class CustomBuildPropertyTests : HomeTypesTestBase
 {
     private const string ViewPath = "/Views/HomeTypes/CustomBuildProperty.cshtml";
 
-    private static readonly CustomBuildPropertyBasicModel BasicModel = new("My application", "My homes");
+    private static readonly CustomBuildPropertyModel Model = new("My application", "My homes");
 
     [Fact]
     public async Task ShouldRenderViewWithRadioButtons()
     {
         // given & when
-        var document = await RenderHomeTypePage(ViewPath, BasicModel);
+        var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
         document

@@ -30,6 +30,15 @@ public class LongText : ValueObject
         Value = value;
     }
 
+    public LongText(string value, string fieldName, string fieldDisplayName)
+        : this(
+            value,
+            fieldName,
+            ValidationErrorMessage.MissingRequiredField(fieldDisplayName),
+            ValidationErrorMessage.LongInputLengthExceeded(fieldDisplayName))
+    {
+    }
+
     public string Value { get; }
 
     protected override IEnumerable<object> GetAtomicValues()

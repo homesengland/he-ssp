@@ -2,14 +2,14 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class HomesForDisabledPeopleBasicModel : HomeTypeBasicModel
+public class HomesForDisabledPeopleModel : HomeTypeBasicModel
 {
-    public HomesForDisabledPeopleBasicModel(string applicationName, string homeTypeName)
+    public HomesForDisabledPeopleModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
     }
 
-    public HomesForDisabledPeopleBasicModel()
+    public HomesForDisabledPeopleModel()
         : this(string.Empty, string.Empty)
     {
     }

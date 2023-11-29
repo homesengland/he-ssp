@@ -9,20 +9,20 @@ public class HomeInformationTests : HomeTypesTestBase
 {
     private const string ViewPath = "/Views/HomeTypes/HomeInformation.cshtml";
 
-    private static readonly HomeInformationBasicModel BasicModel = new("My application", "My homes");
+    private static readonly HomeInformationModel Model = new("My application", "My homes");
 
     [Fact]
     public async Task ShouldDisplayView_WhenThereAreNoErrors()
     {
         // given & when
-        var document = await RenderHomeTypePage(ViewPath, BasicModel);
+        var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
         AssertView(document);
-        AssertErrors(document, nameof(HomeInformationBasicModel.NumberOfHomes), false);
-        AssertErrors(document, nameof(HomeInformationBasicModel.NumberOfBedrooms), false);
-        AssertErrors(document, nameof(HomeInformationBasicModel.MaximumOccupancy), false);
-        AssertErrors(document, nameof(HomeInformationBasicModel.NumberOfStoreys), false);
+        AssertErrors(document, nameof(HomeInformationModel.NumberOfHomes), false);
+        AssertErrors(document, nameof(HomeInformationModel.NumberOfBedrooms), false);
+        AssertErrors(document, nameof(HomeInformationModel.MaximumOccupancy), false);
+        AssertErrors(document, nameof(HomeInformationModel.NumberOfStoreys), false);
     }
 
     [Fact]
@@ -30,20 +30,20 @@ public class HomeInformationTests : HomeTypesTestBase
     {
         // given
         var modelState = new ModelStateDictionary();
-        modelState.AddModelError(nameof(HomeInformationBasicModel.NumberOfHomes), ErrorMessage);
-        modelState.AddModelError(nameof(HomeInformationBasicModel.NumberOfBedrooms), ErrorMessage);
-        modelState.AddModelError(nameof(HomeInformationBasicModel.MaximumOccupancy), ErrorMessage);
-        modelState.AddModelError(nameof(HomeInformationBasicModel.NumberOfStoreys), ErrorMessage);
+        modelState.AddModelError(nameof(HomeInformationModel.NumberOfHomes), ErrorMessage);
+        modelState.AddModelError(nameof(HomeInformationModel.NumberOfBedrooms), ErrorMessage);
+        modelState.AddModelError(nameof(HomeInformationModel.MaximumOccupancy), ErrorMessage);
+        modelState.AddModelError(nameof(HomeInformationModel.NumberOfStoreys), ErrorMessage);
 
         // when
-        var document = await RenderHomeTypePage(ViewPath, BasicModel, modelStateDictionary: modelState);
+        var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
 
         // then
         AssertView(document);
-        AssertErrors(document, nameof(HomeInformationBasicModel.NumberOfHomes), true);
-        AssertErrors(document, nameof(HomeInformationBasicModel.NumberOfBedrooms), true);
-        AssertErrors(document, nameof(HomeInformationBasicModel.MaximumOccupancy), true);
-        AssertErrors(document, nameof(HomeInformationBasicModel.NumberOfStoreys), true);
+        AssertErrors(document, nameof(HomeInformationModel.NumberOfHomes), true);
+        AssertErrors(document, nameof(HomeInformationModel.NumberOfBedrooms), true);
+        AssertErrors(document, nameof(HomeInformationModel.MaximumOccupancy), true);
+        AssertErrors(document, nameof(HomeInformationModel.NumberOfStoreys), true);
     }
 
     private static void AssertView(IHtmlDocument document)

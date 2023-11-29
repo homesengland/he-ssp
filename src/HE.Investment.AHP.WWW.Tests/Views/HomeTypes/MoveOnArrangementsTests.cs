@@ -9,13 +9,13 @@ public class MoveOnArrangementsTests : HomeTypesTestBase
 {
     private const string ViewPath = "/Views/HomeTypes/MoveOnArrangements.cshtml";
 
-    private static readonly MoreInformationBasicModel BasicModel = new("My application", "My homes") { MoreInformation = "My new important information" };
+    private static readonly MoreInformationModel Model = new("My application", "My homes") { MoreInformation = "My new important information" };
 
     [Fact]
     public async Task ShouldRenderViewWithTextArea()
     {
         // given & when
-        var document = await RenderHomeTypePage(ViewPath, BasicModel);
+        var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
         document
@@ -34,7 +34,7 @@ public class MoveOnArrangementsTests : HomeTypesTestBase
         modelState.AddModelError("MoreInformation", ErrorMessage);
 
         // when
-        var document = await RenderHomeTypePage(ViewPath, BasicModel, modelStateDictionary: modelState);
+        var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
 
         // then
         AssertErrors(document, true);
@@ -42,6 +42,6 @@ public class MoveOnArrangementsTests : HomeTypesTestBase
 
     private void AssertErrors(IHtmlDocument document, bool exist)
     {
-        document.HasSummaryErrorMessage(nameof(MoreInformationBasicModel.MoreInformation), ErrorMessage, exist);
+        document.HasSummaryErrorMessage(nameof(MoreInformationModel.MoreInformation), ErrorMessage, exist);
     }
 }

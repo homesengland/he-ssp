@@ -9,7 +9,7 @@ public class DesignPlansTests : HomeTypesTestBase
 {
     private const string ViewPath = "/Views/HomeTypes/DesignPlans.cshtml";
 
-    private static readonly DesignPlansBasicModel BasicModel = new("My application", "My homes")
+    private static readonly DesignPlansModel Model = new("My application", "My homes")
     {
         MoreInformation = "Some details about my Design Plans",
         UploadedFiles = new[] { new FileModel("file-1", "My File", new DateTime(2022, 10, 11), "Test User", true, "#") },
@@ -19,7 +19,7 @@ public class DesignPlansTests : HomeTypesTestBase
     public async Task ShouldRenderViewListOfUploadedFiles()
     {
         // given & when
-        var document = await RenderHomeTypePage(ViewPath, BasicModel);
+        var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
         document
@@ -42,7 +42,7 @@ public class DesignPlansTests : HomeTypesTestBase
         modelState.AddModelError("File", ErrorMessage);
 
         // when
-        var document = await RenderHomeTypePage(ViewPath, BasicModel, modelStateDictionary: modelState);
+        var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
 
         // then
         AssertErrors(document, "File", true);

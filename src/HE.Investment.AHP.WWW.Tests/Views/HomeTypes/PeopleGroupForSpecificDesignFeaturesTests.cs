@@ -7,13 +7,13 @@ public class PeopleGroupForSpecificDesignFeaturesTests : HomeTypesTestBase
 {
     private const string ViewPath = "/Views/HomeTypes/PeopleGroupForSpecificDesignFeatures.cshtml";
 
-    private static readonly PeopleGroupForSpecificDesignFeaturesBasicModel BasicModel = new("My application", "My homes");
+    private static readonly PeopleGroupForSpecificDesignFeaturesModel Model = new("My application", "My homes");
 
     [Fact]
     public async Task ShouldRenderViewWithRadioButton()
     {
         // given & when
-        var document = await RenderHomeTypePage(ViewPath, BasicModel);
+        var document = await RenderHomeTypePage(ViewPath, Model);
 
         // then
         document
