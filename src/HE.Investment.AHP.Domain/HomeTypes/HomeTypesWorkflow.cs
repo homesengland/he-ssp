@@ -101,8 +101,8 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 () =>
                     _homeTypeModel is (
                 { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededButNotIdentified }
-                    or { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNotNeeded })
-                    and { Conditionals.ShortStayAccommodation: YesNoType.No })
+                        or { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNotNeeded })
+                        and { Conditionals.ShortStayAccommodation: YesNoType.No })
             .PermitIf(
                 Trigger.Continue,
                 HomeTypesWorkflowState.MoveOnArrangements,
@@ -192,8 +192,17 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .Permit(Trigger.Back, HomeTypesWorkflowState.BuildingInformation);
 
         _machine.Configure(HomeTypesWorkflowState.TypeOfFacilities)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.AccessibilityStandards)
             .Permit(Trigger.Back, HomeTypesWorkflowState.CustomBuildProperty);
+
+        _machine.Configure(HomeTypesWorkflowState.AccessibilityStandards)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.List, () => _homeTypeModel is not { Conditionals.AccessibleStandards: YesNoType.Yes })
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.AccessibilityCategory, () => _homeTypeModel is { Conditionals.AccessibleStandards: YesNoType.Yes })
+            .Permit(Trigger.Back, HomeTypesWorkflowState.TypeOfFacilities);
+
+        _machine.Configure(HomeTypesWorkflowState.AccessibilityCategory)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
     }
 
     private bool IsGeneralHomeType()

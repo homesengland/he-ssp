@@ -14,4 +14,6 @@ public record HomeInformation(
     PeopleGroupForSpecificDesignFeaturesType PeopleGroupForSpecificDesignFeatures,
     BuildingType BuildingType,
     YesNoType CustomBuild,
-    FacilityType FacilityType);
+    FacilityType FacilityType,
+    YesNoType AccessibilityStandards,
+    AccessibilityCategoryType AccessibilityCategory);

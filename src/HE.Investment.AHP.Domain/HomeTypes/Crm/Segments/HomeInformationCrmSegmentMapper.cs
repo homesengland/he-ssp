@@ -23,6 +23,8 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             nameof(invln_HomeType.invln_buildingtype),
             nameof(invln_HomeType.invln_custombuild),
             nameof(invln_HomeType.invln_facilities),
+            nameof(invln_HomeType.invln_iswheelchairstandardmet),
+            nameof(invln_HomeType.invln_accessibilitycategory),
         })
     {
     }
@@ -40,7 +42,9 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             MapPeopleGroupForSpecificDesignFeatures(dto.homesDesignedForUseOfParticularGroup),
             MapBuildingType(dto.buildingType),
             YesNoTypeMapper.Map(dto.areHomesCustomBuild),
-            MapFacilityType(dto.sharedFacilities));
+            MapFacilityType(dto.sharedFacilities),
+            YesNoTypeMapper.Map(dto.isWheelchairStandardMet),
+            MapAccessibilityCategory(dto.accessibilityCategory));
     }
 
     protected override HomeInformationSegmentEntity GetSegment(HomeTypeEntity entity) => entity.HomeInformation;
@@ -56,6 +60,8 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
         dto.buildingType = MapBuildingType(segment.BuildingType);
         dto.areHomesCustomBuild = YesNoTypeMapper.Map(segment.CustomBuild);
         dto.sharedFacilities = MapFacilityType(segment.FacilityType);
+        dto.isWheelchairStandardMet = YesNoTypeMapper.Map(segment.AccessibilityStandards);
+        dto.accessibilityCategory = MapAccessibilityCategory(segment.AccessibilityCategory);
     }
 
     private static int? MapPeopleGroupForSpecificDesignFeatures(PeopleGroupForSpecificDesignFeaturesType peopleGroupForSpecificDesignFeatures)
@@ -135,6 +141,28 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             (int)invln_facilities.Sharedfacilities => FacilityType.SharedFacilities,
             (int)invln_facilities.Mixofselfcontainedandsharedfacilities => FacilityType.MixOfSelfContainedAndSharedFacilities,
             _ => FacilityType.Undefined,
+        };
+    }
+
+    private static int? MapAccessibilityCategory(AccessibilityCategoryType accessibilityCategory)
+    {
+        return accessibilityCategory switch
+        {
+            AccessibilityCategoryType.VisitableDwellings => (int)invln_accessibilitycategoryset.Category1VisitableDwelling,
+            AccessibilityCategoryType.AccessibleAndAdaptableDwellings => (int)invln_accessibilitycategoryset.Category2Accessibleandacceptabledwelling,
+            AccessibilityCategoryType.WheelchairUserDwellings => (int)invln_accessibilitycategoryset.Category3Wheelchairuserdwellings,
+            _ => null,
+        };
+    }
+
+    private static AccessibilityCategoryType MapAccessibilityCategory(int? accessibilityCategory)
+    {
+        return accessibilityCategory switch
+        {
+            (int)invln_accessibilitycategoryset.Category1VisitableDwelling => AccessibilityCategoryType.VisitableDwellings,
+            (int)invln_accessibilitycategoryset.Category2Accessibleandacceptabledwelling => AccessibilityCategoryType.AccessibleAndAdaptableDwellings,
+            (int)invln_accessibilitycategoryset.Category3Wheelchairuserdwellings => AccessibilityCategoryType.WheelchairUserDwellings,
+            _ => AccessibilityCategoryType.Undefined,
         };
     }
 }
