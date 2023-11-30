@@ -22,7 +22,7 @@ public class HomeController : Controller
             return RedirectToAction("Index", "UserOrganisation");
         }
 
-        return new ContentResult { Content = "Please login" };
+        return RedirectToAction("SignIn", "HeIdentity");
     }
 
     [HttpGet("error")]

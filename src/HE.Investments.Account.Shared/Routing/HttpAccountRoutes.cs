@@ -23,7 +23,7 @@ public class HttpAccountRoutes : IAccountRoutes
 
     public IActionResult LandingPageForNotLoggedUser()
     {
-        throw new NotImplementedException("Redirection to guidance page should be here");
+        return new RedirectResult(_config.Url);
     }
 
     public IActionResult LandingPageForLoggedUser()
