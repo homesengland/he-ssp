@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Domain.Config;
 using HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
+using HE.Investment.AHP.WWW.Models.Application.Factories;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Notifications;
 using HE.Investments.Common.Config;
@@ -37,6 +38,7 @@ public static class AhpWebModule
 
     private static void AddViewModelFactories(IServiceCollection services)
     {
+        services.AddScoped<IApplicationSummaryViewModelFactory, ApplicationSummaryViewModelFactory>();
         services.AddScoped<ISchemeSummaryViewModelFactory, SchemeSummaryViewModelFactory>();
     }
 }

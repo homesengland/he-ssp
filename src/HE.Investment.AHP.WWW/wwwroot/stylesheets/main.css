@@ -2,6 +2,10 @@
   pointer-events: none;
 }
 
+.govuk-button--disabled{
+  pointer-events: none;
+}
+
 .loader-line {
   width: 66px;
   height: 3px;

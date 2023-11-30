@@ -15,7 +15,7 @@
     <vc:workflow-back-button action="@SchemeWorkflowState.CheckAnswers.ToString()"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:form-header caption="@Model.ApplicationName" title="@title"/>
-    <vc:section-summary title="Scheme information" items="@Model.Items"/>
+    <vc:section-summary title="@Model.Section.Title" items="@Model.Section.Items"/>
 
     <form asp-controller="Scheme" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)

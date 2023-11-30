@@ -118,8 +118,8 @@ public class TaskListTests : ViewTestBase
             .HasElementWithText("h1", sectionsModel.Name)
             .HasElementWithText("p", incompleteText, incompleteSectionsExist)
             .HasElementWithText("p", "Last saved on 29/11/2023 00:00:00 by Jan Kowalski", modificationDetailsExist)
-            .HasElementWithText("div", "You must complete all the sections before you can submit your application.", incompleteSectionsExist)
-            .HasElementWithText("button", "Return to applications");
+            .HasElementWithText("p", "You must complete all sections before you can submit your application.", incompleteSectionsExist)
+            .HasElementWithText("a", "Return to applications");
     }
 
     private static ApplicationSectionsModel CreateApplicationSectionsModel(

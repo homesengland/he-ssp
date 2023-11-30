@@ -28,18 +28,21 @@
         total-sections-count="@Model.Sections.Count"
         application-status="@Model.Status"
         reference-number="@Model.ReferenceNumber"
-        last-modification-details="@Model.LastModificationDetails"
-        />
+        last-modification-details="@Model.LastModificationDetails"/>
 </div>
 <div class="govuk-grid-column-two-thirds">
     @await Html.PartialAsync("~/Partials/TaskList/_TaskList.cshtml", ApplicationSections.CreateSections(Model.ApplicationId, Url, Model.Sections))
 
+    <gds-h2>Check and submit</gds-h2>
     @if (incompleteSectionsCount > 0)
     {
-        <gds-div-inset-text>
-            You must complete all the sections before you can submit your application.
-        </gds-div-inset-text>
+        <gds-p>You must complete all sections before you can submit your application.</gds-p>
     }
+    <link-button
+        action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
+        is-disabled="@(incompleteSectionsCount > 0)">
+        Check and submit application
+    </link-button>
 
     <link-button action-url="@Url.Action("Index", "Application")" is-secondary="true">Return to applications</link-button>
 </div>

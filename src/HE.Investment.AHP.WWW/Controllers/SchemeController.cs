@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.Scheme.Workflows;
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
@@ -210,7 +211,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("check-answers")]
     public async Task<IActionResult> CheckAnswers([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        return View("CheckAnswers", await _summaryViewModelFactory.GetSchemeAndCreateSummary(Url, applicationId, cancellationToken));
+        return View("CheckAnswers", await GetSchemeAndCreateSummary(Url, applicationId, cancellationToken));
     }
 
     [WorkflowState(SchemeWorkflowState.CheckAnswers)]
@@ -220,7 +221,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         if (model.IsCompleted == null)
         {
             ModelState.AddModelError(nameof(model.IsCompleted), "Select whether you have completed this section");
-            return View("CheckAnswers", await _summaryViewModelFactory.GetSchemeAndCreateSummary(Url, model.ApplicationId, cancellationToken));
+            return View("CheckAnswers", await GetSchemeAndCreateSummary(Url, model.ApplicationId, cancellationToken));
         }
 
         if (model.IsCompleted.Value)
@@ -229,7 +230,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             if (result.HasValidationErrors)
             {
                 ModelState.AddModelError(nameof(model.IsCompleted), "You have not completed this section. Select no if you want to come back later");
-                return View("CheckAnswers", await _summaryViewModelFactory.GetSchemeAndCreateSummary(Url, model.ApplicationId, cancellationToken));
+                return View("CheckAnswers", await GetSchemeAndCreateSummary(Url, model.ApplicationId, cancellationToken));
             }
         }
 
@@ -291,5 +292,17 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         }
 
         return await ContinueWithRedirect(new { applicationId });
+    }
+
+    private async Task<SchemeSummaryViewModel> GetSchemeAndCreateSummary(
+        IUrlHelper urlHelper,
+        string applicationId,
+        CancellationToken cancellationToken)
+    {
+        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+
+        var section = _summaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper);
+
+        return new SchemeSummaryViewModel(scheme.ApplicationId, scheme.ApplicationName, scheme.Status == SectionStatus.Completed ? true : null, section);
     }
 }

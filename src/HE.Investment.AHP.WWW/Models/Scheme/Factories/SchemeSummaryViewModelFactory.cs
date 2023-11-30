@@ -1,34 +1,19 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Common;
-using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.WWW.Controllers;
-using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
+using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Utils;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Models.Scheme.Factories;
 
 public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
 {
-    private readonly IMediator _mediator;
-
-    public SchemeSummaryViewModelFactory(IMediator mediator)
+    public SectionSummaryViewModel GetSchemeAndCreateSummary(string title, Contract.Scheme.Scheme scheme, IUrlHelper urlHelper)
     {
-        _mediator = mediator;
-    }
-
-    public async Task<SchemeSummaryViewModel> GetSchemeAndCreateSummary(
-        IUrlHelper urlHelper,
-        string applicationId,
-        CancellationToken cancellationToken)
-    {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
-
-        var items = new List<SectionSummaryItemModel>
+        return new SectionSummaryViewModel(title, new List<SectionSummaryItemModel>
         {
             new(
                 "Application name",
@@ -66,9 +51,8 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
                 "Local stakeholder discussions",
                 scheme.StakeholderDiscussionsReport.ToOneElementList(),
                 ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.StakeholderDiscussions)),
-                Files: ConvertFiles(urlHelper, applicationId, scheme.StakeholderDiscussionsFile)),
-        };
-        return new SchemeSummaryViewModel(scheme.ApplicationId, scheme.ApplicationName, scheme.Status == SectionStatus.Completed ? true : null, items);
+                Files: ConvertFiles(urlHelper, scheme.ApplicationId, scheme.StakeholderDiscussionsFile)),
+        });
     }
 
     private string CreateSchemeActionUrl(IUrlHelper urlHelper, string applicationId, string actionName, bool allowWcagDuplicate = false)
