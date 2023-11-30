@@ -5,7 +5,10 @@ namespace HE.Investment.AHP.Domain.Data;
 
 public static class CrmFields
 {
-    public static readonly IList<string> ApplicationToUpdate = new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), };
+    public static readonly IList<string> ApplicationToUpdate = new List<string>
+    {
+        nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), nameof(invln_scheme.statuscode),
+    };
 
     public static readonly IList<string> ApplicationToRead = ApplicationToUpdate
         .Append(new List<string>
@@ -33,11 +36,7 @@ public static class CrmFields
     };
 
     public static readonly IList<string> SchemeToRead = SchemeToUpdate
-        .Append(new List<string>
-        {
-            nameof(invln_scheme.invln_schemename),
-            nameof(invln_scheme.invln_Tenure),
-        });
+        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), });
 
     public static readonly IList<string> FinancialDetailsToUpdate = new List<string>
     {

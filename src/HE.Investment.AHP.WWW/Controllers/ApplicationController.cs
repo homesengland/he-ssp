@@ -111,6 +111,33 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         return View("CheckAnswers", applicationSummary);
     }
 
+    [HttpPost("{applicationId}/submit")]
+    public async Task<IActionResult> Submit(string applicationId, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new SubmitApplicationCommand(applicationId), cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(applicationId, Url, cancellationToken);
+
+            ModelState.AddValidationErrors(result);
+            return View("CheckAnswers", applicationSummary);
+        }
+
+        return RedirectToAction(nameof(Submitted), new { applicationId });
+    }
+
+    [HttpGet("{applicationId}/submitted")]
+    public async Task<IActionResult> Submitted(string applicationId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+
+        // TODO: set job role and contact details
+        return View(
+            "Submitted",
+            new ApplicationSubmittedViewModel(applicationId, application.ReferenceNumber ?? string.Empty, "[job role]", "[INSERT CONTACT DETAILS]"));
+    }
+
     protected override async Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)
     {
         return await Task.FromResult(new ApplicationWorkflow(currentState));
