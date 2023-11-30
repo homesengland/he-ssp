@@ -8956,6 +8956,21 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_accessibilitycategoryset
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category1VisitableDwelling = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category2Accessibleandacceptabledwelling = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category3Wheelchairuserdwellings = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum account_accountcategorycode
 	{
 		
@@ -19266,6 +19281,39 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("ImportSequenceNumber");
 				this.SetAttributeValue("importsequencenumber", value);
 				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_accessibilitycategory")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_accessibilitycategoryset> invln_accessibilitycategory
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_accessibilitycategory");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_accessibilitycategoryset)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_accessibilitycategoryset), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_accessibilitycategory");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_accessibilitycategory", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_accessibilitycategory", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_accessibilitycategory");
 			}
 		}
 		

@@ -152,6 +152,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\incidentUpdateafterresolution.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Incident_CaseOriginCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\InitialCommunication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AccessibilitycategorySet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Addressverificationtype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AHPSectioncompletionstatusSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ApprovalStatus.cs" />

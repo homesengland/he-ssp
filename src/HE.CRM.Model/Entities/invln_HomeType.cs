@@ -57,6 +57,7 @@ namespace DataverseModel
 			public const string CreatedOnBehalfBy = "createdonbehalfby";
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_accessibilitycategory = "invln_accessibilitycategory";
 			public const string invln_application = "invln_application";
 			public const string invln_applicationName = "invln_applicationname";
 			public const string invln_buildingtype = "invln_buildingtype";
@@ -243,6 +244,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("ImportSequenceNumber");
 				this.SetAttributeValue("importsequencenumber", value);
 				this.OnPropertyChanged("ImportSequenceNumber");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_accessibilitycategory")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_accessibilitycategory
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_accessibilitycategory");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_accessibilitycategory");
+				this.SetAttributeValue("invln_accessibilitycategory", value);
+				this.OnPropertyChanged("invln_accessibilitycategory");
 			}
 		}
 		
