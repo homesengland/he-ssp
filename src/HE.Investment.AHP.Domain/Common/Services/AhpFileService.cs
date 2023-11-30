@@ -52,17 +52,17 @@ public class AhpFileService : IAhpFileService
         }
     }
 
-    private static UploadedFile MapToUploadedFile(FileDetails<AhpFileMetadata> loansFile)
+    private static UploadedFile MapToUploadedFile(FileDetails<AhpFileMetadata> file)
     {
-        if (loansFile.Metadata.IsNotProvided())
+        if (file.Metadata.IsNotProvided())
         {
             throw new InvalidOperationException("AHP File returned from Document Service is missing required metadata.");
         }
 
         return new UploadedFile(
-            new FileId(loansFile.Metadata!.FileId),
-            new FileName(loansFile.FileName),
-            loansFile.Modified,
-            loansFile.Metadata!.CreatedBy);
+            new FileId(file.Metadata!.FileId),
+            new FileName(file.FileName),
+            file.Modified,
+            file.Metadata!.CreatedBy);
     }
 }

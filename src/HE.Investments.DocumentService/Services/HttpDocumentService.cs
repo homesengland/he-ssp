@@ -54,7 +54,7 @@ public class HttpDocumentService : IDocumentService
             x.Size,
             x.Editor,
             x.Modified,
-            string.IsNullOrEmpty(x.Metadata) ? null : JsonSerializer.Deserialize<TMetadata>(x.Metadata)));
+            string.IsNullOrEmpty(x.Metadata) ? null : JsonSerializer.Deserialize<TMetadata>(x.Metadata, _jsonSerializerOptions)));
     }
 
     public async Task UploadAsync<TMetadata>(FileLocation location, UploadFileData<TMetadata> file, bool overwrite = false, CancellationToken cancellationToken = default)
