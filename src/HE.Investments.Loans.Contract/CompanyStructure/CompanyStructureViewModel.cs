@@ -1,8 +1,7 @@
-using HE.Investments.Common.Domain;
+using HE.Investments.Common.Contract;
 using HE.Investments.DocumentService.Models.File;
 using HE.Investments.Loans.Contract.Application.Helper;
 using HE.Investments.Loans.Contract.ViewModels;
-using ApplicationStatus = HE.Investments.Loans.Contract.Application.Enums.ApplicationStatus;
 
 namespace HE.Investments.Loans.Contract.CompanyStructure;
 

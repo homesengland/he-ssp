@@ -41,7 +41,6 @@ namespace HE.CRM.Common.DtoMapping
                 invln_expectedacquisitioncost = MapNullableDecimalToMoney(applicationDto.expectedAcquisitionCost),
                 invln_actualacquisitioncost = MapNullableDecimalToMoney(applicationDto.actualAcquisitionCost),
                 invln_ownresources = MapNullableDecimalToMoney(applicationDto.ownResources),
-                invln_pplicationid = applicationDto.referenceNumber,
                 //home Information
                 invln_grantsfromcountycouncil = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromCountyCouncil),
                 invln_grantsfromdhscextracare = MapNullableDecimalToMoney(applicationDto.howMuchReceivedFromDhscExtraCareFunding),
@@ -109,7 +108,7 @@ namespace HE.CRM.Common.DtoMapping
                 howMuchReceivedFromDepartmentOfHealth = application.invln_grantsfromdhscnhsorotherhealth?.Value,
                 howMuchReceivedFromLotteryFunding = application.invln_grantsfromthelottery?.Value,
                 howMuchReceivedFromOtherPublicBodies = application.invln_grantsfromotherpublicbodies?.Value,
-                referenceNumber = application.invln_pplicationid,
+                referenceNumber = application.invln_applicationid,
                 applicationStatus = application.StatusCode?.Value,
             };
             if (application.Id != null)

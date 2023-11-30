@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.CRM;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
@@ -70,7 +71,13 @@ public class ApplicationRepository : IApplicationRepository
         return new ApplicationEntity(
             new ApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
+            ApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
+            new ApplicationReferenceNumber(application.referenceNumber),
             ApplicationTenureMapper.ToDomain(application.tenure),
+            new AuditEntry(
+                application.lastExternalModificationBy?.firstName,
+                application.lastExternalModificationBy?.lastName,
+                application.lastExternalModificationOn),
             new ApplicationSections(
                 SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus),
                 SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus),

@@ -128,6 +128,7 @@
     "invln_deletesitedetails*",
     "invln_generaterichtextdocument*",
     "invln_getahpapplication*",
+    "invln_getahpapplicationdocumentlocation*",
     "invln_getcontactrole*",
     "invln_getfilelocationforapplicationloan*",
     "invln_getloanapplicationsforaccountandcontact*",

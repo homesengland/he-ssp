@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deletesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_generaterichtextdocument.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplicationdocumentlocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getfilelocationforapplicationloan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\incidentUpdateafterresolution.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\Incident_CaseOriginCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\InitialCommunication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AccessibilitycategorySet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Addressverificationtype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AHPSectioncompletionstatusSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ApprovalStatus.cs" />

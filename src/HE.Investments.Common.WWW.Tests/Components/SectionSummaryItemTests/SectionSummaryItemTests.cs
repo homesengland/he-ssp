@@ -1,11 +1,12 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWWTestsFramework;
 using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Xunit;
 
 namespace HE.Investments.Common.WWW.Tests.Components.SectionSummaryItemTests;
 
-public class SectionSummaryItemTests : ViewComponentTestBase
+public class SectionSummaryItemTests : ViewComponentTestBase<SectionSummaryItemTests>
 {
     private const string ViewPath = "/Components/SectionSummaryItemTests/TestView.cshtml";
 

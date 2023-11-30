@@ -1,5 +1,5 @@
 using HE.Investment.AHP.Contract.Application;
-using HE.Investments.Common.Domain;
+using HE.Investments.Common.Contract;
 using UploadedFile = HE.Investment.AHP.Contract.Common.UploadedFile;
 
 namespace HE.Investment.AHP.Contract.Scheme;

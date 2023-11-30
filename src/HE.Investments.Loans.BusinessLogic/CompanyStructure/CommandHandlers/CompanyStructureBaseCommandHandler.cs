@@ -1,4 +1,5 @@
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;

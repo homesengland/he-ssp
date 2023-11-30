@@ -1,4 +1,4 @@
-using HE.Investments.Common.Domain;
+using HE.Investments.Common.Contract;
 
 namespace HE.Investment.AHP.Contract.Application;
 

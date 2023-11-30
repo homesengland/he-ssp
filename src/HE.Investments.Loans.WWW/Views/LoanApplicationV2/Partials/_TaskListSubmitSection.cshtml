@@ -1,5 +1,5 @@
 @using HE.Investments.Common.Gds
-@using HE.Investments.Loans.Contract.Application.Enums
+@using HE.Investments.Common.Contract
 
 @if (Model.Status is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
 {
@@ -7,7 +7,7 @@
     {
         <gds-h2 size="ControlSize.M">Submit application</gds-h2>
         <p>Your updated application will be sent to your Transaction Manager.</p>
-        <form asp-controller="LoanApplicationV2" asp-action="TaskListPost" asp-route-id="@Model.Id" asp-method="post" novalidate>
+        <form asp-controller="LoanApplicationV2" asp-action="Resubmit" asp-route-id="@Model.Id" asp-method="post" novalidate>
             @if (Model.CanBeSubmitted)
             {
                 <gds-button data-module="govuk-button" name="action" value="Continue" id="submit-application">

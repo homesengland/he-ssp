@@ -53,14 +53,12 @@ namespace HE.Xrm.ServiceClientExample
 
         private static void TestChangeStatus(ServiceClient serviceClient)
         {
-            var req1 = new invln_changeahpapplicationstatusRequest()
+            var req1 = new invln_getahpapplicationdocumentlocationRequest()
             {
-                invln_applicationid = "f3a79da3-2889-ee11-be36-002248004a06",
-                invln_newapplicationstatus = (int)invln_scheme_StatusCode.Active,
-                invln_organisationid = "10d9b271-f75d-ee11-8def-6045bd0d7d6d",
-                invln_userid = "auth0|651abbb7aac579f810ae0d5b",
+                invln_applicationid = "40c0dcbf-9c8e-ee11-be36-0022480041cf"
             };
-            serviceClient.Execute(req1);
+            var test = serviceClient.Execute(req1);
+            Console.WriteLine("A web service connection was not established.");
         }
 
         private static void TestHomeType(ServiceClient serviceClient)

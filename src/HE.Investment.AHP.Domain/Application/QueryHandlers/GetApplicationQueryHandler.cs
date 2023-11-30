@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investments.Common.Contract;
 using MediatR;
 using ContractApplication = HE.Investment.AHP.Contract.Application.Application;
 
@@ -23,6 +24,9 @@ public class GetApplicationQueryHandler : IRequestHandler<GetApplicationQuery, C
             application.Id.Value,
             application.Name.Name,
             application.Tenure?.Value ?? default,
+            application.Status,
+            application.ReferenceNumber.Value,
+            application.LastModified != null ? new ModificationDetails(application.LastModified.FirstName, application.LastModified.LastName, application.LastModified.ChangedOn) : null,
             new List<ApplicationSection>
             {
                 new(SectionType.Scheme, application.Sections.SchemeStatus),

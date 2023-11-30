@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace HE.Investments.Loans.Contract.Application.Enums;
+namespace HE.Investments.Common.Contract;
 
 public enum ApplicationStatus
 {
