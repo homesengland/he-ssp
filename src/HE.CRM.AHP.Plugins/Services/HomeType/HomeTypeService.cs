@@ -16,11 +16,13 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
         private readonly IHomeTypeRepository _homeTypeRepository;
         private readonly IAhpApplicationRepository _ahpApplicationRepository;
         private readonly IContactRepository _contactRepository;
+        private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
         public HomeTypeService(CrmServiceArgs args) : base(args)
         {
             _homeTypeRepository = CrmRepositoriesFactory.Get<IHomeTypeRepository>();
             _ahpApplicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
+            _sharepointDocumentLocationRepository = CrmRepositoriesFactory.Get<ISharepointDocumentLocationRepository>();
         }
 
         public void DeleteHomeType(string homeTypeId, string userId, string organisationId, string applicationId)
@@ -116,6 +118,32 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             return Guid.Empty;
         }
 
+        public void SetHappiPrinciplesValue(invln_HomeType target)
+        {
+            if (target.invln_happiprinciples != null && target.invln_happiprinciples.Any(x => x.Value == (int)invln_HAPPIprinciples.KNone))
+            {
+                target.invln_happiprinciples.Clear();
+                target.invln_happiprinciples.Add(new Microsoft.Xrm.Sdk.OptionSetValue((int)invln_HAPPIprinciples.KNone));
+            }
+        }
+
+        public void CreateDocumentLocation(invln_HomeType target)
+        {
+            if(target.invln_application != null)
+            {
+                var applicationDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToRecordWithGivenGuid(target.invln_application.Id);
+                var homeTypeLocation = _sharepointDocumentLocationRepository.GetHomeTypeDocumentLocationForGivenApplicationLocationRecord(applicationDocumentLocation.Id);
+                var locationToCreate = new SharePointDocumentLocation()
+                {
+                    RegardingObjectId = target.ToEntityReference(),
+                    Name = $"Home Type For Ahp Application",
+                    RelativeUrl = $"{target.invln_hometypename}",
+                    ParentSiteOrLocation = homeTypeLocation.ToEntityReference(),
+                };
+                _ = _sharepointDocumentLocationRepository.Create(locationToCreate);
+            }
+        }
+
         private void UpdateApplicationModificationFields(Guid applicationId, Guid contactId)
         {
             var applicationToUpdate = new invln_scheme()
@@ -141,13 +169,5 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             return generatedAttribuesFetchXml;
         }
 
-        public void SetHappiPrinciplesValue(invln_HomeType target)
-        {
-            if (target.invln_happiprinciples != null && target.invln_happiprinciples.Any(x => x.Value == (int)invln_HAPPIprinciples.KNone))
-            {
-                target.invln_happiprinciples.Clear();
-                target.invln_happiprinciples.Add(new Microsoft.Xrm.Sdk.OptionSetValue((int)invln_HAPPIprinciples.KNone));
-            }
-        }
     }
 }

@@ -21,5 +21,14 @@ namespace HE.CRM.Common.Repositories.Implementations
                     .Where(x => x.RegardingObjectId.Id == recordId).FirstOrDefault();
             }
         }
+
+        public SharePointDocumentLocation GetHomeTypeDocumentLocationForGivenApplicationLocationRecord(Guid documentLocation)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<SharePointDocumentLocation>()
+                    .Where(x => x.ParentSiteOrLocation.Id == documentLocation).FirstOrDefault();
+            }
+        }
     }
 }
