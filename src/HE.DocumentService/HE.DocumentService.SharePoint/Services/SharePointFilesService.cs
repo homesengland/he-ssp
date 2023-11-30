@@ -34,11 +34,16 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
                         <Query>
                             <Where>
                                 <And>
-                                    {GetCamlQueryForFolderPaths(filter.ListAlias, filter.FolderPaths)}
-                                    <Eq>
-                                        <FieldRef Name='FSObjType' />
-                                        <Value Type='FSObjType'>0</Value>
-                                    </Eq>
+                                    <And>
+                                        {GetCamlQueryForFolderPaths(filter.ListAlias, filter.FolderPaths)}
+                                        <Eq>
+                                            <FieldRef Name='FSObjType' />
+                                            <Value Type='FSObjType'>0</Value>
+                                        </Eq>
+                                    </And>
+                                    <IsNotNull>
+                                        <FieldRef Name='_ModerationComments' />
+                                    </IsNotNull>
                                 </And>
                             </Where>
                             <OrderBy><FieldRef Name='Modified' Ascending='false'/></OrderBy>
@@ -58,12 +63,9 @@ public class SharePointFilesService : BaseService, ISharePointFilesService
                 item => item["_ModerationComments"],
                 item => item["Editor"]),
                 items => items.ListItemCollectionPosition);
-        //_spContext.Load(listItems);
         await _spContext.ExecuteQueryRetryAsync(RETRY_COUNT);
 
-#pragma warning disable CA2000 // Dispose objects before losing scope
-        var data = listItems.MapDataTable();
-#pragma warning restore CA2000 // Dispose objects before losing scope
+        using var data = listItems.MapDataTable();
         var rows = _mapper.Map<List<FileTableRow>>(data.Rows);
 
         var chunkToRemove = $"{new Uri(_spConfig.SiteUrl).AbsolutePath}/{filter.ListAlias}/";

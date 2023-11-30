@@ -128,7 +128,7 @@ public class HomeTypeRepository : IHomeTypeRepository
         var uploadedFiles = new Dictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>>();
         if (segments.Contains(HomeTypeSegmentType.DesignPlans))
         {
-            var designFiles = await _designFileService.GetByHomeTypeId(applicationId, homeTypeId, cancellationToken);
+            var designFiles = await _designFileService.GetFiles(applicationId, homeTypeId, cancellationToken);
             uploadedFiles.Add(HomeTypeSegmentType.DesignPlans, designFiles);
         }
 

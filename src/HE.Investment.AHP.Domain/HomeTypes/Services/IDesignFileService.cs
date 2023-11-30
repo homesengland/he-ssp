@@ -7,14 +7,9 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Services;
 
 public interface IDesignFileService
 {
-    Task<IReadOnlyCollection<UploadedFile>> GetByHomeTypeId(ApplicationId applicationId, HomeTypeId homeTypeId, CancellationToken cancellationToken);
+    Task<IReadOnlyCollection<UploadedFile>> GetFiles(ApplicationId applicationId, HomeTypeId homeTypeId, CancellationToken cancellationToken);
 
-    Task<UploadedFile> UploadFile(
-        ApplicationId applicationId,
-        HomeTypeId homeTypeId,
-        FileName name,
-        Stream content,
-        CancellationToken cancellationToken);
+    Task<UploadedFile> UploadFile(ApplicationId applicationId, HomeTypeId homeTypeId, FileName name, Stream content, CancellationToken cancellationToken);
 
     Task RemoveFile(ApplicationId applicationId, HomeTypeId homeTypeId, FileId fileId, CancellationToken cancellationToken);
 }

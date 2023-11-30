@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investment.AHP.Domain.Common.Services;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Crm;
@@ -23,6 +24,7 @@ public static class DomainModule
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
 
         services.AddScoped<IApplicationCrmContext, ApplicationCrmContext>();
+        services.AddScoped<IAhpFileService, AhpFileService>();
 
         AddHomeTypes(services);
         AddFinancialDetails(services);
@@ -41,8 +43,7 @@ public static class DomainModule
         services.AddSingleton<IHomeTypeCrmSegmentMapper, DesignPlansCrmSegmentMapper>();
         services.AddSingleton<IHomeTypeCrmSegmentMapper, SupportedHousingInformationSegmentMapper>();
 
-        // TODO: change service do scoped after introducing integration with IHttpDocumentService
-        services.AddSingleton<IDesignFileService, DesignFileService>();
+        services.AddScoped<IDesignFileService, DesignFileService>();
     }
 
     private static void AddFinancialDetails(IServiceCollection services)

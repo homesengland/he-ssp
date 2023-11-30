@@ -5,6 +5,7 @@ using HE.Investment.AHP.WWW.Notifications;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
+using HE.Investments.DocumentService.Extensions;
 using HE.Investments.Loans.Common.Infrastructure;
 using HE.Investments.Loans.Common.Models.App;
 using HE.Investments.Organisation.Config;
@@ -24,6 +25,7 @@ public static class AhpWebModule
         service.AddDomainModule();
         service.AddEventInfrastructure();
         service.AddNotifications(typeof(HomeTypeHasBeenCreatedDisplayNotificationFactory).Assembly);
+        service.AddDocumentServiceModule();
         AddViewModelFactories(service);
     }
 

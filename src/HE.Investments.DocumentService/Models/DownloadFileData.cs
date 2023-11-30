@@ -1,8 +1,8 @@
-namespace HE.Investments.DocumentService.Models.File;
+namespace HE.Investments.DocumentService.Models;
 
-public sealed class FileData : IDisposable
+public sealed class DownloadFileData : IDisposable
 {
-    public FileData(string name, Stream content)
+    public DownloadFileData(string name, Stream content)
     {
         Name = name;
         Content = content;

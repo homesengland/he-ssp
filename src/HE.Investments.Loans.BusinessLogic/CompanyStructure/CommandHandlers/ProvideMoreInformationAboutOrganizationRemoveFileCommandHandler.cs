@@ -2,6 +2,7 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Validators;
 using HE.Investments.DocumentService.Configs;
+using HE.Investments.DocumentService.Models;
 using HE.Investments.DocumentService.Services;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Notifications;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
@@ -15,7 +16,7 @@ namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.CommandHandlers;
 public class ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler : CompanyStructureBaseCommandHandler,
     IRequestHandler<ProvideMoreInformationAboutOrganizationRemoveFileCommand, OperationResult>
 {
-    private readonly IHttpDocumentService _documentService;
+    private readonly IDocumentService _documentService;
     private readonly IDocumentServiceConfig _config;
     private readonly INotificationService _notificationService;
 
@@ -24,7 +25,7 @@ public class ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler : C
                 ILoanApplicationRepository loanApplicationRepository,
                 IAccountUserContext loanUserContext,
                 ILogger<CompanyStructureBaseCommandHandler> logger,
-                IHttpDocumentService documentService,
+                IDocumentService documentService,
                 IDocumentServiceConfig config,
                 INotificationService notificationService)
         : base(companyStructureRepository, loanApplicationRepository, loanUserContext, logger)
@@ -40,9 +41,9 @@ public class ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler : C
             async companyStructure =>
             {
                 await _documentService.DeleteAsync(
-                    _config.ListAlias,
-                    request.FolderPath,
-                    request.FileName);
+                    new FileLocation(_config.ListTitle, _config.ListAlias, request.FolderPath),
+                    request.FileName,
+                    cancellationToken);
 
                 await _notificationService.Publish(new FileRemovedSuccessfullyNotification(request.FileName));
             },

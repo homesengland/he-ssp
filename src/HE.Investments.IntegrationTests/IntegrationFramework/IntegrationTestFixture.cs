@@ -49,7 +49,7 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
                 })
                 .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(TestAuthHandler.AuthenticationScheme, _ => { });
 
-            x.AddSingleton<IHttpDocumentService, DocumentServiceMock>();
+            x.AddSingleton<IDocumentService, DocumentServiceMock>();
             x.AddSingleton<IDocumentServiceConfig>(new DocumentServiceConfig());
         });
 
