@@ -1,0 +1,26 @@
+@using HE.Investments.Common.WWW.Helpers
+@using HE.Investments.Common.Contract
+@model (int completeSectionsCount, int incompleteSectionsCount, int totalSectionsCount, HE.Investments.Common.Contract.ApplicationStatus applicationStatus,string referenceNumber,HE.Investments.Common.Contract.ModificationDetails LastModificationDetails)
+@{
+    #nullable enable
+    // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+    var lastModifiedBy = Model.LastModificationDetails != null ? $"{Model.LastModificationDetails.ChangedByFirstName} {Model.LastModificationDetails.ChangedByLastName}" : null;
+}
+
+
+<gds-h3 class="govuk-!-display-inline-block govuk-!-margin-bottom-1">ID @Model.referenceNumber</gds-h3>
+<application-status-tag application-status="@Model.applicationStatus" additional-classes="govuk-!-static-margin-left-3"></application-status-tag>
+
+<gds-h3 class="govuk-!-margin-bottom-1">AHP 21-26 CME</gds-h3>
+@if (Model.incompleteSectionsCount > 0)
+{
+    <gds-h3 class="govuk-!-margin-bottom-1">Application incomplete</gds-h3>
+    <gds-p class="govuk-body govuk-!-margin-bottom-0">You have completed @Model.completeSectionsCount of @Model.totalSectionsCount sections.</gds-p>
+}
+
+@if (Model.LastModificationDetails != null && Model.applicationStatus is ApplicationStatus.Draft or ApplicationStatus.ReferredBackToApplicant)
+{
+    <gds-p >
+        Last saved on @DateHelper.DisplayAsUkFormatDateTime(Model.LastModificationDetails.ChangedOn) @(!string.IsNullOrEmpty(lastModifiedBy) ? $"by {lastModifiedBy}" : string.Empty)
+    </gds-p>
+}

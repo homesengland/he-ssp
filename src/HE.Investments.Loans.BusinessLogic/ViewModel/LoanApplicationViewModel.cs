@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Loans.BusinessLogic.LoanApplication;
 using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.Loans.Contract.CompanyStructure;

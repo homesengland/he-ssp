@@ -1,11 +1,11 @@
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.CRM;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
-using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
 using HE.Investments.Loans.BusinessLogic.Tests.TestData;
 using HE.Investments.Loans.BusinessLogic.Tests.TestObjectBuilders;
-using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
 using Xunit;

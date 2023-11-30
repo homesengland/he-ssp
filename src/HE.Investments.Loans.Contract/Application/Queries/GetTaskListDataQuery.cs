@@ -1,7 +1,6 @@
-using HE.Investments.Common.Domain;
+using HE.Investments.Common.Contract;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using MediatR;
-using ApplicationStatus = HE.Investments.Loans.Contract.Application.Enums.ApplicationStatus;
 
 namespace HE.Investments.Loans.Contract.Application.Queries;
 

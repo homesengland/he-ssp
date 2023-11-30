@@ -1,7 +1,7 @@
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
+using HE.Investments.Common.Contract;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Entities;
 using HE.Investments.Loans.BusinessLogic.Tests.LoanApplication.TestObjectBuilders;
-using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 

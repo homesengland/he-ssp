@@ -1,9 +1,8 @@
 using HE.Investments.Account.Shared;
-using HE.Investments.Common.Domain;
+using HE.Investments.Common.Contract;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.Contract.Application.Queries;
 using MediatR;
-using ApplicationStatus = HE.Investments.Loans.Contract.Application.Enums.ApplicationStatus;
 
 namespace HE.Investments.Loans.BusinessLogic.LoanApplication.QueryHandlers;
 

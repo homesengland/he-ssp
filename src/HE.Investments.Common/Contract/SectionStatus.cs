@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace HE.Investments.Common.Domain;
+namespace HE.Investments.Common.Contract;
 
 public enum SectionStatus
 {

@@ -29,7 +29,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         var applications = await _mediator.Send(new GetApplicationsQuery(), cancellationToken);
 
-        return View("Index", new ApplicationsModel(_siteName, applications.Select(CreateModel).ToList()));
+        return View("Index", new ApplicationsModel(_siteName, applications));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
@@ -95,7 +95,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
 
-        var model = new ApplicationModel(applicationId, _siteName, application.Name, application.Sections);
+        var model = new ApplicationSectionsModel(applicationId, _siteName, application.Name, application.Status, application.ReferenceNumber, application.LastModificationDetails, application.Sections);
 
         return View("TaskList", model);
     }

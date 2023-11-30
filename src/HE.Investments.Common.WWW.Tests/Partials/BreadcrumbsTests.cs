@@ -1,9 +1,10 @@
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Common.WWWTestsFramework;
 using HE.Investments.Common.WWWTestsFramework.Helpers;
+using Xunit;
 
 #pragma warning disable CA1716
-namespace HE.Investment.AHP.WWW.Tests.Shared;
+namespace HE.Investments.Common.WWW.Tests.Partials;
 #pragma warning restore CA1716
 
 public class BreadcrumbsTests : ViewTestBase

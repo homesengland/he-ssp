@@ -14,6 +14,10 @@ public static class CrmFields
             nameof(invln_scheme.invln_hometypessectioncompletionstatus),
             nameof(invln_scheme.invln_financialdetailssectioncompletionstatus),
             nameof(invln_scheme.invln_deliveryphasessectioncompletionstatus),
+            nameof(invln_scheme.invln_lastexternalmodificationby),
+            nameof(invln_scheme.invln_lastexternalmodificationon),
+            nameof(invln_scheme.statuscode),
+            nameof(invln_scheme.invln_pplicationid),
         });
 
     public static readonly IList<string> SchemeToUpdate = new List<string>

@@ -1,5 +1,5 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
-using ApplicationStatus = HE.Investments.Loans.Contract.Application.Enums.ApplicationStatus;
 
 namespace HE.Investments.Loans.Contract.Application.ValueObjects;
 public class SubmitLoanApplication : ValueObject
