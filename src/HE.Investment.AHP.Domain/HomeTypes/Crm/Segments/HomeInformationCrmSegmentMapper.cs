@@ -24,7 +24,7 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             nameof(invln_HomeType.invln_custombuild),
             nameof(invln_HomeType.invln_facilities),
             nameof(invln_HomeType.invln_iswheelchairstandardmet),
-            nameof(invln_HomeType.invln_wheelchairstandard),
+            nameof(invln_HomeType.invln_accessibilitycategory),
         })
     {
     }
@@ -148,9 +148,9 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
     {
         return accessibilityCategory switch
         {
-            AccessibilityCategoryType.VisitableDwellings => (int)invln_wheelchairstandard.Category1VisitableDwelling,
-            AccessibilityCategoryType.AccessibleAndAdaptableDwellings => (int)invln_wheelchairstandard.Category2Accessibleandacceptabledwelling,
-            AccessibilityCategoryType.WheelchairUserDwellings => (int)invln_wheelchairstandard.Category3Wheelchairuserdwellings,
+            AccessibilityCategoryType.VisitableDwellings => (int)invln_accessibilitycategoryset.Category1VisitableDwelling,
+            AccessibilityCategoryType.AccessibleAndAdaptableDwellings => (int)invln_accessibilitycategoryset.Category2Accessibleandacceptabledwelling,
+            AccessibilityCategoryType.WheelchairUserDwellings => (int)invln_accessibilitycategoryset.Category3Wheelchairuserdwellings,
             _ => null,
         };
     }
@@ -159,9 +159,9 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
     {
         return accessibilityCategory switch
         {
-            (int)invln_wheelchairstandard.Category1VisitableDwelling => AccessibilityCategoryType.VisitableDwellings,
-            (int)invln_wheelchairstandard.Category2Accessibleandacceptabledwelling => AccessibilityCategoryType.AccessibleAndAdaptableDwellings,
-            (int)invln_wheelchairstandard.Category3Wheelchairuserdwellings => AccessibilityCategoryType.WheelchairUserDwellings,
+            (int)invln_accessibilitycategoryset.Category1VisitableDwelling => AccessibilityCategoryType.VisitableDwellings,
+            (int)invln_accessibilitycategoryset.Category2Accessibleandacceptabledwelling => AccessibilityCategoryType.AccessibleAndAdaptableDwellings,
+            (int)invln_accessibilitycategoryset.Category3Wheelchairuserdwellings => AccessibilityCategoryType.WheelchairUserDwellings,
             _ => AccessibilityCategoryType.Undefined,
         };
     }
