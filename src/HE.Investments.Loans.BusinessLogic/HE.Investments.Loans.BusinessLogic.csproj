@@ -32,7 +32,6 @@
     <Compile Remove="Routing\**" />
     <EmbeddedResource Remove="Routing\**" />
     <None Remove="Routing\**" />
-    <Compile Remove="LoanApplication\Repositories\Mapper\ApplicationStatusMapper.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Workflows;
 using HE.Investment.AHP.WWW.Models.Application;
+using HE.Investment.AHP.WWW.Models.Application.Factories;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
@@ -18,10 +19,12 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 {
     private readonly string _siteName = "Test Site";
     private readonly IMediator _mediator;
+    private readonly IApplicationSummaryViewModelFactory _applicationSummaryViewModelFactory;
 
-    public ApplicationController(IMediator mediator)
+    public ApplicationController(IMediator mediator, IApplicationSummaryViewModelFactory applicationSummaryViewModelFactory)
     {
         _mediator = mediator;
+        _applicationSummaryViewModelFactory = applicationSummaryViewModelFactory;
     }
 
     [HttpGet]
@@ -98,6 +101,14 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
         var model = new ApplicationSectionsModel(applicationId, _siteName, application.Name, application.Status, application.ReferenceNumber, application.LastModificationDetails, application.Sections);
 
         return View("TaskList", model);
+    }
+
+    [HttpGet("{applicationId}/check-answers")]
+    public async Task<IActionResult> CheckAnswers(string applicationId, CancellationToken cancellationToken)
+    {
+        var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(applicationId, Url, cancellationToken);
+
+        return View("CheckAnswers", applicationSummary);
     }
 
     protected override async Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)
