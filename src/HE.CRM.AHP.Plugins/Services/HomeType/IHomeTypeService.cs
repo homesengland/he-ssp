@@ -13,5 +13,6 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
         HomeTypeDto GetHomeType(string homeTypeId, string applicationId, string userId, string organisationId, string fieldsToRetrieve = null);
         void DeleteHomeType(string homeTypeId, string userId, string organisationId, string applicationId);
         void SetHappiPrinciplesValue(invln_HomeType target);
+        void CreateDocumentLocation(invln_HomeType target);
     }
 }
