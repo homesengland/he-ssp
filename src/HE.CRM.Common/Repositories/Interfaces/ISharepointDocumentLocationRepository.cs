@@ -6,6 +6,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
 {
     public interface ISharepointDocumentLocationRepository : ICrmEntityRepository<SharePointDocumentLocation, DataverseContext>
     {
-        SharePointDocumentLocation GetDocumentLocationRelatedToLoanApplication(Guid loanApplicationId);
+        SharePointDocumentLocation GetDocumentLocationRelatedToRecordWithGivenGuid(Guid recordId);
     }
 }

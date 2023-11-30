@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_deletesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_generaterichtextdocument.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getahpapplicationdocumentlocation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getcontactrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getfilelocationforapplicationloan.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getloanapplicationsforaccountandcontact.cs" />
