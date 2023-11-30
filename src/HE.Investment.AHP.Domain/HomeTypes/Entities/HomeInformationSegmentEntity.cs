@@ -21,7 +21,9 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         PeopleGroupForSpecificDesignFeaturesType peopleGroupForSpecificDesignFeatures = PeopleGroupForSpecificDesignFeaturesType.Undefined,
         BuildingType buildingType = BuildingType.Undefined,
         YesNoType customBuild = YesNoType.Undefined,
-        FacilityType facilityType = FacilityType.Undefined)
+        FacilityType facilityType = FacilityType.Undefined,
+        YesNoType accessibilityStandards = YesNoType.Undefined,
+        AccessibilityCategoryType accessibilityCategory = AccessibilityCategoryType.Undefined)
     {
         NumberOfHomes = numberOfHomes;
         NumberOfBedrooms = numberOfBedrooms;
@@ -32,6 +34,8 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         BuildingType = buildingType;
         CustomBuild = customBuild;
         FacilityType = facilityType;
+        AccessibilityStandards = accessibilityStandards;
+        AccessibilityCategory = accessibilityCategory;
     }
 
     public bool IsModified => _modificationTracker.IsModified;
@@ -53,6 +57,10 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
     public YesNoType CustomBuild { get; private set; }
 
     public FacilityType FacilityType { get; private set; }
+
+    public YesNoType AccessibilityStandards { get; private set; }
+
+    public AccessibilityCategoryType AccessibilityCategory { get; private set; }
 
     public void ChangeNumberOfHomes(string? numberOfHomes)
     {
@@ -103,6 +111,20 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         FacilityType = _modificationTracker.Change(FacilityType, facilityType);
     }
 
+    public void ChangeAccessibilityStandards(YesNoType accessibilityStandards)
+    {
+        AccessibilityStandards = _modificationTracker.Change(AccessibilityStandards, accessibilityStandards);
+        if (AccessibilityStandards != YesNoType.Yes)
+        {
+            AccessibilityCategory = AccessibilityCategoryType.Undefined;
+        }
+    }
+
+    public void ChangeAccessibilityCategory(AccessibilityCategoryType accessibilityCategory)
+    {
+        AccessibilityCategory = _modificationTracker.Change(AccessibilityCategory, accessibilityCategory);
+    }
+
     public IHomeTypeSegmentEntity Duplicate()
     {
         return new HomeInformationSegmentEntity(
@@ -114,7 +136,9 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
             PeopleGroupForSpecificDesignFeatures,
             BuildingType,
             CustomBuild,
-            FacilityType);
+            FacilityType,
+            AccessibilityStandards,
+            AccessibilityCategory);
     }
 
     public bool IsRequired(HousingType housingType)
@@ -128,10 +152,12 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
                && NumberOfBedrooms.IsProvided()
                && MaximumOccupancy.IsProvided()
                && NumberOfStoreys.IsProvided()
-               && (IntendedAsMoveOnAccommodation != YesNoType.Undefined || PeopleGroupForSpecificDesignFeatures != PeopleGroupForSpecificDesignFeaturesType.Undefined)
+               && (IntendedAsMoveOnAccommodation != YesNoType.Undefined ||
+                   PeopleGroupForSpecificDesignFeatures != PeopleGroupForSpecificDesignFeaturesType.Undefined)
                && BuildingType != BuildingType.Undefined
                && CustomBuild != YesNoType.Undefined
-               && FacilityType != FacilityType.Undefined;
+               && FacilityType != FacilityType.Undefined
+               && CheckAccessibilityCompletion();
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
@@ -150,5 +176,12 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         {
             ChangeBuildingType(BuildingType.Undefined);
         }
+    }
+
+    private bool CheckAccessibilityCompletion()
+    {
+        return AccessibilityStandards == YesNoType.Yes
+            ? AccessibilityCategory != AccessibilityCategoryType.Undefined
+            : AccessibilityStandards != YesNoType.Undefined;
     }
 }

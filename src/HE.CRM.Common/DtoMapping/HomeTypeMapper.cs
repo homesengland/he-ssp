@@ -37,7 +37,7 @@ namespace HE.CRM.Common.DtoMapping
                 needsOfParticularGroup = homeType.invln_homesdesignedforuseofparticulargroup,
                 homesDesignedForUseOfParticularGroup = homeType.invln_homesdesignedforuseofparticular?.Value,
                 areHomesCustomBuild = homeType.invln_custombuild,
-                //accessibilityCategory = homeType.invln_accessibilitycategory
+                accessibilityCategory = homeType.invln_accessibilitycategory?.Value,
                 marketValue = homeType.invln_marketvalue,
                 marketRent = homeType.invln_marketrent,
                 prospectiveRent = homeType.invln_prospectiverent,
@@ -99,7 +99,7 @@ namespace HE.CRM.Common.DtoMapping
                 invln_homesdesignedforuseofparticulargroup = homeTypeDto.needsOfParticularGroup,
                 invln_homesdesignedforuseofparticular = MapNullableIntToOptionSetValue(homeTypeDto.homesDesignedForUseOfParticularGroup),
                 invln_custombuild = homeTypeDto.areHomesCustomBuild,
-                //invln_accessibilitycategory = homeTypeDto.accessibilityCategory,
+                invln_accessibilitycategory = MapNullableIntToOptionSetValue(homeTypeDto.accessibilityCategory),
                 invln_marketvalue = homeTypeDto.marketValue,
                 invln_marketrent = homeTypeDto.marketRent,
                 invln_prospectiverent = homeTypeDto.prospectiveRent,
