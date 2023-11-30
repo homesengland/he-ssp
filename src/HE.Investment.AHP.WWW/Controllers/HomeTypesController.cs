@@ -6,6 +6,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
+using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Exceptions;
@@ -304,7 +305,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         try
         {
             var result = await _mediator.Send(new UploadDesignPlansFileCommand(applicationId, homeTypeId, fileToUpload), cancellationToken);
-            return result.HasValidationErrors ? new BadRequestObjectResult(result.Errors) : Ok(result.ReturnedData);
+            return result.HasValidationErrors ? new BadRequestObjectResult(result.Errors) : Ok(UploadedFileModel.FromUploadedFile(result.ReturnedData!));
         }
         finally
         {

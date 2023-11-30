@@ -10,14 +10,14 @@ namespace HE.Investments.Loans.BusinessLogic.LoanApplication.EventHandlers;
 
 public class LoanApplicationHasBeenStartedEventHandler : IEventHandler<LoanApplicationHasBeenStartedEvent>
 {
-    private readonly IHttpDocumentService _documentService;
+    private readonly IDocumentService _documentService;
 
     private readonly ICompanyStructureRepository _companyStructureRepository;
 
     private readonly IDocumentServiceConfig _documentServiceConfig;
 
     public LoanApplicationHasBeenStartedEventHandler(
-        IHttpDocumentService documentService,
+        IDocumentService documentService,
         ICompanyStructureRepository companyStructureRepository,
         IDocumentServiceConfig documentServiceConfig)
     {
@@ -29,10 +29,13 @@ public class LoanApplicationHasBeenStartedEventHandler : IEventHandler<LoanAppli
     public async Task Handle(LoanApplicationHasBeenStartedEvent domainEvent, CancellationToken cancellationToken)
     {
         var filesLocation = await _companyStructureRepository.GetFilesLocationAsync(new LoanApplicationId(domainEvent.LoanApplicationId), cancellationToken);
-        await _documentService.CreateFoldersAsync(_documentServiceConfig.ListTitle, new List<string>
-        {
-            $"{filesLocation}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
-            $"{filesLocation}{CompanyStructureConstants.MoreInformationAboutOrganizationInternal}",
-        });
+        await _documentService.CreateFoldersAsync(
+            _documentServiceConfig.ListTitle,
+            new List<string>
+            {
+                $"{filesLocation}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",
+                $"{filesLocation}{CompanyStructureConstants.MoreInformationAboutOrganizationInternal}",
+            },
+            cancellationToken);
     }
 }

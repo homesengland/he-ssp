@@ -13,12 +13,12 @@ public static class ServiceCollectionExtension
     {
         var retryPolicyNeedsTrueResponse = Policy.HandleResult<HttpResponseMessage>(ShouldRetry)
             .WaitAndRetryAsync(
-                3,
+                1,
                 _ => TimeSpan.FromSeconds(10),
                 onRetry: (_, _, _, _) => { });
 
         services.AddHttpClient("HE.Investments.DocumentService").AddPolicyHandler(retryPolicyNeedsTrueResponse);
-        services.AddSingleton<IHttpDocumentService, HttpDocumentService>();
+        services.AddSingleton<IDocumentService, HttpDocumentService>();
 
         services.AddSingleton<IDocumentServiceConfig>(x =>
             x.GetRequiredService<IConfiguration>().GetRequiredSection("AppConfiguration:DocumentService").Get<DocumentServiceConfig>());
@@ -26,6 +26,6 @@ public static class ServiceCollectionExtension
 
     private static bool ShouldRetry(HttpResponseMessage response)
     {
-        return response is { IsSuccessStatusCode: false, StatusCode: not (HttpStatusCode.Forbidden or HttpStatusCode.Unauthorized) };
+        return response.StatusCode >= HttpStatusCode.InternalServerError;
     }
 }

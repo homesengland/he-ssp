@@ -1,6 +1,6 @@
 using HE.Investments.Common.Contract;
-using HE.Investments.DocumentService.Models.File;
 using HE.Investments.Loans.Contract.Application.Helper;
+using HE.Investments.Loans.Contract.Documents;
 using HE.Investments.Loans.Contract.ViewModels;
 
 namespace HE.Investments.Loans.Contract.CompanyStructure;
@@ -32,7 +32,7 @@ public class CompanyStructureViewModel : ICompletedSectionViewModel
 
     public bool StateChanged { get; set; }
 
-    public IList<FileTableRow>? OrganisationMoreInformationFiles { get; set; }
+    public IList<LoansFileTableRow>? OrganisationMoreInformationFiles { get; set; }
 
     public IList<string> AllowedFileExtensions { get; set; }
 

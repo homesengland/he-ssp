@@ -109,9 +109,8 @@
   const uploadFileUrlId = 'upload-file-url';
   const removeFileUrlId = 'remove-file-url-template';
 
-  const uploadControlId = document.querySelectorAll(fileInputSelector)[0].id;
-
-  const inputFieldError = (message) => `<span id="${uploadControlId}-error" class="govuk-error-message field-validation-error" data-valmsg-for="${uploadControlId}" data-valmsg-replace="true"><span class="govuk-visually-hidden">Error:</span>${message}</span>`;
+  const getUploadControlId = () => document.querySelectorAll(fileInputSelector)[0].id;
+  const inputFieldError = (message) => `<span id="${getUploadControlId()}-error" class="govuk-error-message field-validation-error" data-valmsg-for="${getUploadControlId()}" data-valmsg-replace="true"><span class="govuk-visually-hidden">Error:</span>${message}</span>`;
   const emptyErrorSummary = () =>
     `<div aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary" id="${validationSummaryId}" class="govuk-error-summary">
       <h2 id="error-summary-title" class="govuk-error-summary__title">
@@ -123,7 +122,7 @@
         </div>
       </div>
     </div>`;
-  const inputFiledErrorSummaryMessage = (message) => `<li><a href="#${uploadControlId}">${message}</a></li>`;
+  const inputFiledErrorSummaryMessage = (message) => `<li><a href="#${getUploadControlId()}">${message}</a></li>`;
 
   const fileTableRow = (fileId, fileName) => `<tr class="govuk-table__row" id="file-${fileId}">
       <td class="govuk-table__cell govuk-!-font-weight-bold">${sanitize(fileName)}</td>
@@ -208,7 +207,7 @@
 
     return response.json()
       .then(uploadedFile => {
-        uploadedColumn.innerText = `uploaded ${formatDate(new Date(uploadedFile.uploadedOn))} by ${uploadedFile.uploadedBy}`;
+        uploadedColumn.innerText = uploadedFile.uploadDetails;
 
         const removeFileUrlElement = document.getElementById(removeFileUrlId);
         if (uploadedFile.canBeRemoved && removeFileUrlElement) {
@@ -218,10 +217,6 @@
           actionColumn.innerHTML = "";
         }
       });
-  }
-
-  const formatDate = (date) => {
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
   }
 
   const fileUploadFailed = async (fileId, response) => {
@@ -252,7 +247,7 @@
 
   const clearInputFieldError = () => {
     const formGroup = document.getElementById(fileInputFormGroupId);
-    const errorSpan = document.getElementById(`${uploadControlId}-error`);
+    const errorSpan = document.getElementById(`${getUploadControlId()}-error`);
     if (errorSpan){
       errorSpan.remove();
     }
@@ -275,7 +270,7 @@
   const removeInputFieldErrorSummaryMessages = (summaryValidationList) => {
     const errors = summaryValidationList.getElementsByTagName('a');
     for (let i = 0; i < errors.length; i++) {
-      if (errors[i].href.endsWith(`#${uploadControlId}`)) {
+      if (errors[i].href.endsWith(`#${getUploadControlId()}`)) {
         errors[i].parentNode.remove();
       }
     }
@@ -309,7 +304,7 @@
 
   document.addEventListener("DOMContentLoaded", function() {
     const fileInput = document.querySelectorAll(fileInputSelector)[0];
-    if (fileInput !== null) {
+    if (fileInput !== null && fileInput !== undefined) {
      fileInput.addEventListener("change", fileInputChanged);
     }
   });
