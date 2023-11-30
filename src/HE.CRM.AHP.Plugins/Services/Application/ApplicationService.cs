@@ -56,14 +56,21 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         public void CreateDocumentLocation(invln_scheme target)
         {
             var documentLocation = _sharepointDocumentLocationRepository.GetByAttribute(nameof(SharePointDocumentLocation.Name).ToLower(), "AHP Application Documents").FirstOrDefault();
-            var documentToCreate = new SharePointDocumentLocation()
+            var ahpApplicaitonDocumentToCreate = new SharePointDocumentLocation()
             {
                 RegardingObjectId = target.ToEntityReference(),
                 Name = $"Documents on AHP Application",
                 RelativeUrl = $"{target.invln_applicationid}",
                 ParentSiteOrLocation = documentLocation.ToEntityReference(),
             };
-            _ = _sharepointDocumentLocationRepository.Create(documentToCreate);
+            ahpApplicaitonDocumentToCreate.Id = _sharepointDocumentLocationRepository.Create(ahpApplicaitonDocumentToCreate);
+            var homeTypesFolderToCreate = new SharePointDocumentLocation()
+            {
+                Name = "Home Types",
+                ParentSiteOrLocation = ahpApplicaitonDocumentToCreate.ToEntityReference(),
+                RelativeUrl = "Home Types",
+            };
+            _ = _sharepointDocumentLocationRepository.Create(homeTypesFolderToCreate);
         }
         public string GetFileLocationForAhpApplication(string ahpApplicationId)
         {
