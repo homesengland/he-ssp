@@ -61,6 +61,7 @@ public static class CrmFields
         nameof(invln_scheme.invln_grantsfromdhscnhsorotherhealth),
         nameof(invln_scheme.invln_grantsfromthelottery),
         nameof(invln_scheme.invln_grantsfromotherpublicbodies),
+        nameof(invln_scheme.invln_financialdetailssectioncompletionstatus),
     };
 
     public static readonly IList<string> FinancialDetailsToRead = FinancialDetailsToUpdate

@@ -1,10 +1,9 @@
 namespace HE.Investment.AHP.Domain.FinancialDetails.Constants;
 public static class FinancialDetailsValidationFieldNames
 {
-    public const string ActualPurchasePrice = nameof(ActualPurchasePrice);
+    public const string PurchasePrice = nameof(PurchasePrice);
 
-    public const string ExpectedPurchasePrice = nameof(ExpectedPurchasePrice);
-
+    // Land value
     public const string LandOwnership = nameof(LandOwnership);
 
     public const string LandValue = nameof(LandValue);
@@ -45,4 +44,7 @@ public static class FinancialDetailsValidationFieldNames
     public const string LotteryGrants = nameof(LotteryGrants);
 
     public const string OtherPublicBodiesGrants = nameof(OtherPublicBodiesGrants);
+
+    // Check answers
+    public const string CostsAndFunding = nameof(CostsAndFunding);
 }

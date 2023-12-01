@@ -17,17 +17,7 @@ public class ProvideOtherApplicationCostsCommandHandler : FinancialDetailsComman
     public async Task<OperationResult> Handle(ProvideOtherApplicationCostsCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            financialDetails =>
-            {
-                var aggregatedResults = OperationResult.New();
-
-                var expectedWorksCost = request.ExpectedWorksCosts.IsProvided() ? aggregatedResults.CatchResult(() => new ExpectedWorksCosts(request.ExpectedWorksCosts)) : null;
-                var expectedOnCosts = request.ExpectedOnCosts.IsProvided() ? aggregatedResults.CatchResult(() => new ExpectedOnCosts(request.ExpectedOnCosts)) : null;
-
-                aggregatedResults.CheckErrors();
-
-                financialDetails.ProvideExpectedCosts(expectedWorksCost, expectedOnCosts);
-            },
+            financialDetails => financialDetails.ProvideExpectedCosts(new ExpectedCosts(request.ExpectedWorksCosts, request.ExpectedOnCosts)),
             request.ApplicationId,
             cancellationToken);
     }

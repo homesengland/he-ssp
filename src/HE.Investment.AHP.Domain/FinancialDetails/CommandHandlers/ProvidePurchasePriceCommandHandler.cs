@@ -19,19 +19,9 @@ public class ProvidePurchasePriceCommandHandler : FinancialDetailsCommandHandler
         return await Perform(
             financialDetails =>
             {
-                ActualPurchasePrice? actualPurchasePrice = null;
-                ExpectedPurchasePrice? expectedPurchasePrice = null;
-                if (request.ActualPurchasePrice.IsProvided())
-                {
-                    actualPurchasePrice = new ActualPurchasePrice(request.ActualPurchasePrice);
-                }
+                var purchasePrice = new PurchasePrice(request.IsFinal ? request.PurchasePrice : null, request.IsFinal ? null : request.PurchasePrice);
 
-                if (request.ExpectedPurchasePrice.IsProvided())
-                {
-                    expectedPurchasePrice = new ExpectedPurchasePrice(request.ExpectedPurchasePrice);
-                }
-
-                financialDetails.ProvidePurchasePrice(actualPurchasePrice, expectedPurchasePrice);
+                financialDetails.ProvidePurchasePrice(purchasePrice);
             },
             request.ApplicationId,
             cancellationToken);

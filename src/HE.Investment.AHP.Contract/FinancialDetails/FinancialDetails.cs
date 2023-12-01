@@ -5,9 +5,9 @@ public class FinancialDetails
 
     public string ApplicationName { get; set; }
 
-    public decimal? ActualPurchasePrice { get; set; }
+    public decimal? PurchasePrice { get; set; }
 
-    public decimal? ExpectedPurchasePrice { get; set; }
+    public bool? IsPurchasePriceFinal { get; set; }
 
     public bool? IsSchemaOnPublicLand { get; set; }
 
@@ -47,19 +47,29 @@ public class FinancialDetails
 
     public decimal? OtherPublicGrants { get; set; }
 
-    public decimal TotalExpectedContributions
+    public decimal TotalExpectedCosts
     {
         get
         {
             decimal result = 0;
-            result += RentalIncomeContribution ?? 0
-                + SubsidyFromSaleOnThisScheme ?? 0
-                + SubsidyFromSaleOnOtherSchemes ?? 0
-                + OwnResourcesContribution ?? 0
-                + RecycledCapitalGarntFundContribution ?? 0
-                + OtherCapitalContributions ?? 0
-                + SharedOwnershipSalesContribution ?? 0
-                + TransferValueOfHomes ?? 0;
+            result += (PurchasePrice ?? 0) + (ExpectedWorkCost ?? 0) + (ExpectedOnCost ?? 0);
+
+            return result;
+        }
+    }
+
+    public decimal TotalExpectedContributions
+    {
+        get
+        {
+            var result = (RentalIncomeContribution ?? 0)
+                + (SubsidyFromSaleOnThisScheme ?? 0)
+                + (SubsidyFromSaleOnOtherSchemes ?? 0)
+                + (OwnResourcesContribution ?? 0)
+                + (RecycledCapitalGarntFundContribution ?? 0)
+                + (OtherCapitalContributions ?? 0)
+                + (SharedOwnershipSalesContribution ?? 0)
+                + (TransferValueOfHomes ?? 0);
 
             return result;
         }
@@ -70,13 +80,13 @@ public class FinancialDetails
         get
         {
             decimal result = 0;
-            result += CountyCouncilGrants ?? 0
-                   + DHSCExtraCareGrants ?? 0
-                   + LocalAuthorityGrants ?? 0
-                   + SocialServicesGrants ?? 0
-                   + HealthRelatedGrants ?? 0
-                   + LotteryFunding ?? 0
-                   + OtherPublicGrants ?? 0;
+            result += (CountyCouncilGrants ?? 0)
+                   + (DHSCExtraCareGrants ?? 0)
+                   + (LocalAuthorityGrants ?? 0)
+                   + (SocialServicesGrants ?? 0)
+                   + (HealthRelatedGrants ?? 0)
+                   + (LotteryFunding ?? 0)
+                   + (OtherPublicGrants ?? 0);
 
             return result;
         }

@@ -5,17 +5,14 @@ public class FinancialDetailsLandStatusModel : FinancialDetailsBaseModel
     {
     }
 
-    public FinancialDetailsLandStatusModel(Guid applicationId, string applicationName, string actualPurchasePrice, string expectedPurchasePrice, bool isPurchasePriceKnown)
+    public FinancialDetailsLandStatusModel(Guid applicationId, string applicationName, string purchasePrice, bool isFinal)
         : base(applicationId, applicationName)
     {
-        ActualPurchasePrice = actualPurchasePrice;
-        ExpectedPurchasePrice = expectedPurchasePrice;
-        IsPurchasePriceKnown = isPurchasePriceKnown;
+        PurchasePrice = purchasePrice;
+        IsFinal = isFinal;
     }
 
-    public string ActualPurchasePrice { get; set; }
+    public string PurchasePrice { get; set; }
 
-    public string ExpectedPurchasePrice { get; set; }
-
-    public bool IsPurchasePriceKnown { get; set; }
+    public bool IsFinal { get; set; }
 }

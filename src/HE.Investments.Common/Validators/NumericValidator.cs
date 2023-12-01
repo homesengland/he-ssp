@@ -40,6 +40,16 @@ public class NumericValidator
         return this;
     }
 
+    public NumericValidator IsConditionallyRequired(bool condition, string? errorMessage = null)
+    {
+        if (condition && string.IsNullOrEmpty(_value))
+        {
+            AddError(_fieldName, errorMessage ?? $"Value for {_fieldName} is not provided.");
+        }
+
+        return this;
+    }
+
     public NumericValidator IsWholeNumber(string? errorMessage = null)
     {
         if (_value == null)

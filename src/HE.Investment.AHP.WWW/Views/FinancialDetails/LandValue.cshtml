@@ -7,7 +7,7 @@
     ViewData["Title"] = "Land value";
 }
 <div id="mainContainer" class="govuk-grid-three-quarters" role="main">
-    <form asp-controller="FinancialDetails" asp-action="LandValue" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
+    <form asp-controller="FinancialDetails" asp-action="LandValue" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:financial-details-form-header title="@FinancialDetailsPageTitles.LandValuePage"
                                           current-page="@FinancialDetailsWorkflowState.LandValue"
                                           application-id="@Model.ApplicationId.ToString()"

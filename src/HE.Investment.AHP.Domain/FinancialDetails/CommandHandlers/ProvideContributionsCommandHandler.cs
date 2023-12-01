@@ -20,28 +20,17 @@ public class ProvideContributionsCommandHandler : FinancialDetailsCommandHandler
         return await Perform(
             financialDetails =>
             {
-                var aggregatedResults = OperationResult.New();
+                var contributions = new Contributions(
+                    request.RentalIncomeBorrowing,
+                    request.SalesOfHomesOnThisScheme,
+                    request.SalesOfHomesOnOtherSchemes,
+                    request.OwnResources,
+                    request.RCGFContribution,
+                    request.OtherCapitalSources,
+                    request.SharedOwnershipSales,
+                    request.HomesTransferValue);
 
-                var rentalIncomeBorrowing = request.RentalIncomeBorrowing.IsProvided() ? aggregatedResults.CatchResult(() => new RentalIncomeBorrowing(request.RentalIncomeBorrowing ?? string.Empty)) : null;
-                var salesOfHomesOnThisScheme = request.SalesOfHomesOnThisScheme.IsProvided() ? aggregatedResults.CatchResult(() => new SalesOfHomesOnThisScheme(request.SalesOfHomesOnThisScheme ?? string.Empty)) : null;
-                var salesOfHomesOnOtherSchemes = request.SalesOfHomesOnOtherSchemes.IsProvided() ? aggregatedResults.CatchResult(() => new SalesOfHomesOnOtherSchemes(request.SalesOfHomesOnOtherSchemes ?? string.Empty)) : null;
-                var ownResources = request.OwnResources.IsProvided() ? aggregatedResults.CatchResult(() => new OwnResources(request.OwnResources ?? string.Empty)) : null;
-                var rCGFContribution = request.RCGFContribution.IsProvided() ? aggregatedResults.CatchResult(() => new RCGFContribution(request.RCGFContribution ?? string.Empty)) : null;
-                var otherCapitalSources = request.OtherCapitalSources.IsProvided() ? aggregatedResults.CatchResult(() => new OtherCapitalSources(request.OtherCapitalSources ?? string.Empty)) : null;
-                var sharedOwnershipSales = request.SharedOwnershipSales.IsProvided() ? aggregatedResults.CatchResult(() => new SharedOwnershipSales(request.SharedOwnershipSales ?? string.Empty)) : null;
-                var homesTransferValue = request.HomesTransferValue.IsProvided() ? aggregatedResults.CatchResult(() => new HomesTransferValue(request.HomesTransferValue ?? string.Empty)) : null;
-
-                aggregatedResults.CheckErrors();
-
-                financialDetails.ProvideContributions(
-                    rentalIncomeBorrowing,
-                    salesOfHomesOnThisScheme,
-                    salesOfHomesOnOtherSchemes,
-                    ownResources,
-                    rCGFContribution,
-                    otherCapitalSources,
-                    sharedOwnershipSales,
-                    homesTransferValue);
+                financialDetails.ProvideContributions(contributions);
             },
             request.ApplicationId,
             cancellationToken);

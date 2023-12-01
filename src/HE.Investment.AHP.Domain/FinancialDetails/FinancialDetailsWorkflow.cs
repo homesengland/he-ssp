@@ -43,18 +43,18 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
             .Permit(Trigger.Back, FinancialDetailsWorkflowState.LandStatus);
 
         _machine.Configure(FinancialDetailsWorkflowState.OtherApplicationCosts)
-           .Permit(Trigger.Continue, FinancialDetailsWorkflowState.ExpectedContributions)
+           .Permit(Trigger.Continue, FinancialDetailsWorkflowState.Contributions)
            .Permit(Trigger.Back, FinancialDetailsWorkflowState.LandValue);
 
-        _machine.Configure(FinancialDetailsWorkflowState.ExpectedContributions)
+        _machine.Configure(FinancialDetailsWorkflowState.Contributions)
            .Permit(Trigger.Continue, FinancialDetailsWorkflowState.Grants)
            .Permit(Trigger.Back, FinancialDetailsWorkflowState.OtherApplicationCosts);
 
         _machine.Configure(FinancialDetailsWorkflowState.Grants)
-           .Permit(Trigger.Continue, FinancialDetailsWorkflowState.CheckFinancialDetails)
-           .Permit(Trigger.Back, FinancialDetailsWorkflowState.ExpectedContributions);
+           .Permit(Trigger.Continue, FinancialDetailsWorkflowState.CheckAnswers)
+           .Permit(Trigger.Back, FinancialDetailsWorkflowState.Contributions);
 
-        _machine.Configure(FinancialDetailsWorkflowState.CheckFinancialDetails)
+        _machine.Configure(FinancialDetailsWorkflowState.CheckAnswers)
           .Permit(Trigger.Back, FinancialDetailsWorkflowState.Grants);
     }
 }
