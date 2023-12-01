@@ -18,7 +18,14 @@
 
       <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-font-weight-bold">
-              @Model.files[i].FileName
+              @if (!string.IsNullOrWhiteSpace(Model.files[index].DownloadAction))
+              {
+                  <gds-link href="@Model.files[index].DownloadAction">@Model.files[index].FileName</gds-link>
+              }
+              else
+              {
+                  @Model.files[index].FileName
+              }
           </td>
           <td class="govuk-table__cell">
               uploaded @DateHelper.DisplayAsUkFormatDateTime(Model.files[i].UploadedOn) by @Model.files[i].UploadedBy

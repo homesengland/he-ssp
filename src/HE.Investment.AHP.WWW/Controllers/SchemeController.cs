@@ -261,7 +261,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         IList<FileModel>? CreateFileModel(UploadedFile? x) =>
             x == null
                 ? null
-                : new List<FileModel> { new(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId)) };
+                : new List<FileModel> { new(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId), string.Empty) };
 
         return new SchemeViewModel(
             applicationId,

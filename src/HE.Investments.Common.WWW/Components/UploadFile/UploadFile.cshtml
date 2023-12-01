@@ -1,4 +1,4 @@
-@model (string title, string fieldName, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, string fileErrorMessage, string uploadOneFileUrl, string removeFileUrlTemplate)
+@model (string title, string fieldName, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, string fileErrorMessage, string uploadOneFileUrl, string removeFileUrlTemplate, string downloadFileUrlTemplate)
 
 @if (!string.IsNullOrWhiteSpace(Model.title))
 {
@@ -13,6 +13,11 @@
 @if (!string.IsNullOrWhiteSpace(Model.removeFileUrlTemplate))
 {
     @Html.Hidden("remove-file-url-template", Model.removeFileUrlTemplate)
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.downloadFileUrlTemplate))
+{
+    @Html.Hidden("download-file-url-template", Model.downloadFileUrlTemplate)
 }
 
 <he-div-hint class="govuk-!-margin-bottom-6">@Model.description</he-div-hint>
