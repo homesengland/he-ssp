@@ -40,12 +40,16 @@ public static class HtmlDocumentExtensions
         elementById.Should().NotBeNull($"Element with Id {id} should exist");
 
         var anchorElement = elementById as IHtmlAnchorElement;
-        anchorElement.Should().NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
+        anchorElement.Should().NotBeNull($"Element with Id {id} should be HtmlAnchorElement which contains GdsButton");
 
-        anchorElement!.GetElementsByClassName("govuk-button")
-            .SingleOrDefault()
-            .Should()
-            .NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
+        if (!anchorElement!.ClassList.Contains("govuk-button"))
+        {
+            anchorElement.GetElementsByClassName("govuk-button")
+                .SingleOrDefault()
+                .Should()
+                .NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
+        }
+
         return anchorElement;
     }
 
@@ -63,11 +67,14 @@ public static class HtmlDocumentExtensions
 
         var anchorElement = element as IHtmlAnchorElement;
         anchorElement.Should().NotBeNull($"Element with data-testid {testId} should be IHtmlAnchorElement");
-        var buttonElement = anchorElement!.GetElementsByTagName("button").FirstOrDefault() as IHtmlButtonElement;
-        buttonElement.Should().NotBeNull($"Child element of anchor with data-testid {testId} should be HtmlButtonElement");
 
-        buttonElement!.ClassName.Should()
-            .Contain("govuk-button", $"Button with data-testid {testId} should be HtmlButtonElement with govuk-button class name");
+        if (!anchorElement!.ClassList.Contains("govuk-button"))
+        {
+            anchorElement.GetElementsByClassName("govuk-button")
+                .SingleOrDefault()
+                .Should()
+                .NotBeNull($"Element with Id {testId} should be HtmlAnchorElement with GdsButton as child");
+        }
 
         return anchorElement;
     }

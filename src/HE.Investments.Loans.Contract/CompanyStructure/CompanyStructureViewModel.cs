@@ -34,7 +34,7 @@ public class CompanyStructureViewModel : ICompletedSectionViewModel
 
     public IList<LoansFileTableRow>? OrganisationMoreInformationFiles { get; set; }
 
-    public IList<string> AllowedFileExtensions { get; set; }
+    public string? AllowedExtensions { get; set; }
 
     public bool IsCompleted()
     {
