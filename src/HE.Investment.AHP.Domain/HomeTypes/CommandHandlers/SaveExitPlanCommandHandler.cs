@@ -19,7 +19,9 @@ public class SaveExitPlanCommandHandler : SaveHomeTypeSegmentCommandHandlerBase<
     {
         (SaveExitPlanCommand request, IHomeTypeEntity homeType) =>
         {
-            var exitPlan = string.IsNullOrEmpty(request.ExitPlan) ? null : new MoreInformation(request.ExitPlan);
+            var exitPlan = string.IsNullOrEmpty(request.ExitPlan)
+                ? null
+                : new MoreInformation(request.ExitPlan, "The exit plan or alternative use");
             homeType.SupportedHousingInformation.ChangeExitPlan(exitPlan);
         },
     };

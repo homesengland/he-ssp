@@ -19,7 +19,9 @@ public class SaveTypologyLocationAndDesignCommandHandler : SaveHomeTypeSegmentCo
     {
         (SaveTypologyLocationAndDesignCommand request, IHomeTypeEntity homeType) =>
         {
-            var typologyLocationAndDesign = string.IsNullOrEmpty(request.TypologyLocationAndDesign) ? null : new MoreInformation(request.TypologyLocationAndDesign);
+            var typologyLocationAndDesign = string.IsNullOrEmpty(request.TypologyLocationAndDesign)
+                ? null
+                : new MoreInformation(request.TypologyLocationAndDesign, "The typology, location and design of these homes");
             homeType.SupportedHousingInformation.ChangeTypologyLocationAndDesign(typologyLocationAndDesign);
         },
     };

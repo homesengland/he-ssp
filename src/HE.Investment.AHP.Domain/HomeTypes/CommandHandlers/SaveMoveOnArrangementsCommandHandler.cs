@@ -19,7 +19,9 @@ public class SaveMoveOnArrangementsCommandHandler : SaveHomeTypeSegmentCommandHa
     {
         (SaveMoveOnArrangementsCommand request, IHomeTypeEntity homeType) =>
         {
-            var moveOnArrangements = string.IsNullOrEmpty(request.MoveOnArrangements) ? null : new MoreInformation(request.MoveOnArrangements);
+            var moveOnArrangements = string.IsNullOrEmpty(request.MoveOnArrangements)
+                ? null
+                : new MoreInformation(request.MoveOnArrangements, "The move in arrangements");
             homeType.SupportedHousingInformation.ChangeMoveOnArrangements(moveOnArrangements);
         },
     };
