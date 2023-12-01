@@ -137,7 +137,7 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
                 {
                     RegardingObjectId = target.ToEntityReference(),
                     Name = $"Home Type For Ahp Application",
-                    RelativeUrl = $"{target.invln_hometypename}-{target.Id}",
+                    RelativeUrl = $"{target.Id}",
                     ParentSiteOrLocation = homeTypeLocation.ToEntityReference(),
                 };
                 _ = _sharepointDocumentLocationRepository.Create(locationToCreate);
