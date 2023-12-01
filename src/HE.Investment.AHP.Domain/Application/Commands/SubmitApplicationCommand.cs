@@ -4,4 +4,4 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 
 namespace HE.Investment.AHP.Domain.Application.Commands;
 
-public record UpdateApplicationNameCommand(string Id, string Name) : IRequest<OperationResult<ApplicationId>>, IUpdateApplicationCommand;
+public record SubmitApplicationCommand(string Id) : IRequest<OperationResult<ApplicationId>>, IUpdateApplicationCommand;

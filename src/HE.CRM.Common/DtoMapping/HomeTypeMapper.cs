@@ -43,6 +43,8 @@ namespace HE.CRM.Common.DtoMapping
                 prospectiveRent = homeType.invln_prospectiverent,
                 isWheelchairStandardMet = homeType.invln_iswheelchairstandardmet,
                 designPlansMoreInformation = homeType.invln_designplancomments,
+                RtSOExemption = homeType.invln_rtsoexempt,
+                initialSalePercent = homeType.invln_initialsale,
             };
             if (homeType.Id != null)
             {
@@ -105,6 +107,8 @@ namespace HE.CRM.Common.DtoMapping
                 invln_prospectiverent = homeTypeDto.prospectiveRent,
                 invln_iswheelchairstandardmet = homeTypeDto.isWheelchairStandardMet,
                 invln_designplancomments = homeTypeDto.designPlansMoreInformation,
+                invln_rtsoexempt = homeTypeDto.RtSOExemption,
+                invln_initialsale = homeTypeDto.initialSalePercent,
             };
             if (homeTypeDto.id != null)
             {

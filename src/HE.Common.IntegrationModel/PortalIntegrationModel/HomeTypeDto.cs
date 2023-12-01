@@ -36,6 +36,8 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public decimal? prospectiveRent { get; set; }
         public bool? isWheelchairStandardMet { get; set; }
         public string designPlansMoreInformation { get; set; }
+        public bool? RtSOExemption { get; set; }
+        public int? initialSalePercent { get; set; }
 
     }
 }
