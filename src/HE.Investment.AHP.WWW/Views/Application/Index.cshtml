@@ -1,22 +1,64 @@
-@model HE.Investment.AHP.WWW.Models.Application.ApplicationsModel
+@using HE.Investment.AHP.WWW.Views.Application
+@using HE.Investments.Common.Messages
+@model HE.Investment.AHP.WWW.Models.Application.ApplicationsListModel
 @{
-    ViewData["Title"] = "Applications";
+    ViewData["Title"] = ApplicationPageTitles.ApplicationList;
 }
-<gds-div-grid-column-two-thirds>
-    <gds-back-link href="@Url.Action("Index", "Home")" text="Back" class="govuk-!-margin-bottom-8">
-    </gds-back-link>
+<div class="govuk-grid-column-full">
+    <vc:form-header title="@ApplicationPageTitles.ApplicationList" caption="@Model.OrganisationName" additional-css-class="govuk-!-padding-top-8"></vc:form-header>
 
-    <vc:form-header title="@Model.SiteName"/>
-    <span class="govuk-caption-m">View and add applications to this site and submit them for review.</span>
+    <gds-h2 class="govuk-!-padding-top-8">
+        Your applications
+    </gds-h2>
 
     <div class="govuk-!-padding-bottom-8">
-        @foreach (var application in Model.Applications)
-        {
-            <gds-p>
-                <a href="@Url.Action("TaskList", "Application", new { applicationId = application.Id })"> @application.Name </a>
-            </gds-p>
-        }
+        <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header govuk-!-width-one-third">Name</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-eighth">Units</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-eighth">Grant</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-fifth">Local Authority</th>
+                <th scope="col" class="govuk-table__header govuk-!-width-one-fifth">Status</th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            @foreach (var application in Model.Applications)
+            {
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">
+                        <span class="app-task-list__task-name">
+                            <strong>
+                                <a href="@Url.Action("TaskList", "Application", new { applicationId = application.Id })"> @application.Name </a>
+                            </strong>
+                        </span>
+                    </td>
+
+                    <td class="govuk-table__cell">
+                        @(application.Unit ?? "-")
+                    </td>
+                    <td class="govuk-table__cell">
+                        @(application.Grant?.ToString() ?? "-")
+                    </td>
+                    <td class="govuk-table__cell">
+                        @(application.LocalAuthority ?? GenericMessages.NotProvided)
+                    </td>
+                    <td class="govuk-table__cell">
+                        <application-status-tag application-status="@application.Status"></application-status-tag>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
     </div>
 
-    <link-button action-url="@Url.Action("Name", "Application")">Create a new application</link-button>
-</gds-div-grid-column-two-thirds>
+    <div class="govuk-!-padding-top-8">
+        <gds-h2>
+            Affordable Homes Programme 2021-2026 CME
+        </gds-h2>
+        <p class="govuk-body govuk-!-margin-bottom-3">You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.</p>
+
+        <link-button action-url="@Url.Action("Name", "Application")">Start new application</link-button>
+
+    </div>
+</div>
