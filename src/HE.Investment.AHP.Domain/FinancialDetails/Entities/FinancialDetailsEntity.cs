@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
 using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
