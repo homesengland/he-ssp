@@ -11,7 +11,6 @@
 }
 
 @Html.Hidden("MaxFileSizeInMegabytes", config.MaxFileSizeInMegabytes)
-@Html.Hidden("AllowedExtensions", string.Join(';', Model.AllowedFileExtensions))
 
 <gds-div-grid-column-two-thirds>
     <form id="formWithFile" asp-controller="CompanyStructureV2" asp-action="MoreInformationAboutOrganizationPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" enctype="multipart/form-data" asp-method="post" novalidate>
@@ -21,6 +20,7 @@
         <partial name="_ErrorSummaryPartial" model="null" />
 
         @Html.HiddenFor(x => x.LoanApplicationId)
+        @Html.HiddenFor(x => x.AllowedExtensions)
         <gds-field-set>
             <gds-error-form-group asp-for="OrganisationMoreInformation">
                 <legend>

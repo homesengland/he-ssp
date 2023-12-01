@@ -19,7 +19,7 @@ public static class CompanyStructureViewModelMapper
             HomesBuilt = companyStructureEntity.HomesBuilt?.ToString(),
             CheckAnswers = companyStructureEntity.Status == SectionStatus.Completed ? CommonResponse.Yes : null,
             State = companyStructureEntity.Status,
-            AllowedFileExtensions = OrganisationMoreInformationFile.AllowedExtensions,
+            AllowedExtensions = string.Join(";", OrganisationMoreInformationFile.AllowedExtensions),
         };
     }
 
