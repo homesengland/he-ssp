@@ -2,6 +2,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
@@ -19,9 +20,9 @@ public class SaveTypologyLocationAndDesignCommandHandler : SaveHomeTypeSegmentCo
     {
         (SaveTypologyLocationAndDesignCommand request, IHomeTypeEntity homeType) =>
         {
-            var typologyLocationAndDesign = string.IsNullOrEmpty(request.TypologyLocationAndDesign)
+            var typologyLocationAndDesign = request.TypologyLocationAndDesign.IsNotProvided()
                 ? null
-                : new MoreInformation(request.TypologyLocationAndDesign, "The typology, location and design of these homes");
+                : new MoreInformation(request.TypologyLocationAndDesign!, "The typology, location and design of these homes");
             homeType.SupportedHousingInformation.ChangeTypologyLocationAndDesign(typologyLocationAndDesign);
         },
     };

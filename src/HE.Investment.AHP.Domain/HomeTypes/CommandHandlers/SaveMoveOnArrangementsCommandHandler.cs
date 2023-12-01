@@ -2,6 +2,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
@@ -19,9 +20,9 @@ public class SaveMoveOnArrangementsCommandHandler : SaveHomeTypeSegmentCommandHa
     {
         (SaveMoveOnArrangementsCommand request, IHomeTypeEntity homeType) =>
         {
-            var moveOnArrangements = string.IsNullOrEmpty(request.MoveOnArrangements)
+            var moveOnArrangements = request.MoveOnArrangements.IsNotProvided()
                 ? null
-                : new MoreInformation(request.MoveOnArrangements, "The move in arrangements");
+                : new MoreInformation(request.MoveOnArrangements!, "The move in arrangements");
             homeType.SupportedHousingInformation.ChangeMoveOnArrangements(moveOnArrangements);
         },
     };

@@ -2,6 +2,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
@@ -19,9 +20,9 @@ public class SaveExitPlanCommandHandler : SaveHomeTypeSegmentCommandHandlerBase<
     {
         (SaveExitPlanCommand request, IHomeTypeEntity homeType) =>
         {
-            var exitPlan = string.IsNullOrEmpty(request.ExitPlan)
+            var exitPlan = request.ExitPlan.IsNotProvided()
                 ? null
-                : new MoreInformation(request.ExitPlan, "The exit plan or alternative use");
+                : new MoreInformation(request.ExitPlan!, "The exit plan or alternative use");
             homeType.SupportedHousingInformation.ChangeExitPlan(exitPlan);
         },
     };
