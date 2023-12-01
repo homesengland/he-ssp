@@ -1,11 +1,12 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using HE.Investments.Common.WWWTestsFramework;
 using HE.Investments.Common.WWWTestsFramework.Helpers;
 using Xunit;
 
 namespace HE.Investments.Common.WWW.Tests.Components.SectionSummaryItemTests;
 
-public class SectionSummaryItemTests : ViewComponentTestBase
+public class SectionSummaryItemTests : ViewComponentTestBase<SectionSummaryItemTests>
 {
     private const string ViewPath = "/Components/SectionSummaryItemTests/TestView.cshtml";
 
@@ -92,8 +93,8 @@ public class SectionSummaryItemTests : ViewComponentTestBase
         if (isValueVisible)
         {
             document
-                .HasElementWithText("p", model.Values[0], isValueVisible && isVisible)
-                .HasElementWithText("p", model.Values[1], isValueVisible && isVisible);
+                .HasElementWithText("p", model.Values![0]!, isValueVisible && isVisible)
+                .HasElementWithText("p", model.Values![1]!, isValueVisible && isVisible);
         }
 
         if (isFileVisible)

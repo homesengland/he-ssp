@@ -78,6 +78,20 @@ public class OperationResult : IOperationResult
         }
     }
 
+    public void Aggregate(Action action)
+    {
+        try
+        {
+            action();
+        }
+        catch (DomainValidationException ex)
+        {
+            var result = ex.OperationResult;
+
+            AddValidationErrors(result.Errors);
+        }
+    }
+
     public OperationResult WithValidation(Action action)
     {
         try

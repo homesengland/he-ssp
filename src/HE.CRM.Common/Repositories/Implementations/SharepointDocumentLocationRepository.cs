@@ -13,12 +13,21 @@ namespace HE.CRM.Common.Repositories.Implementations
         {
         }
 
-        public SharePointDocumentLocation GetDocumentLocationRelatedToLoanApplication(Guid loanApplicationId)
+        public SharePointDocumentLocation GetDocumentLocationRelatedToRecordWithGivenGuid(Guid recordId)
         {
             using (var ctx = new OrganizationServiceContext(service))
             {
                 return ctx.CreateQuery<SharePointDocumentLocation>()
-                    .Where(x => x.RegardingObjectId.Id == loanApplicationId).FirstOrDefault();
+                    .Where(x => x.RegardingObjectId.Id == recordId).FirstOrDefault();
+            }
+        }
+
+        public SharePointDocumentLocation GetHomeTypeDocumentLocationForGivenApplicationLocationRecord(Guid documentLocation)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<SharePointDocumentLocation>()
+                    .Where(x => x.ParentSiteOrLocation.Id == documentLocation).FirstOrDefault();
             }
         }
     }

@@ -1,5 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.CRM;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
 using HE.Investments.Loans.BusinessLogic.Security.Mappers;

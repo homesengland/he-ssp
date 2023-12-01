@@ -1,34 +1,19 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.Application.ValueObjects;
 
 public class ApplicationSections : ValueObject
 {
-    public ApplicationSections(
-        SectionStatus schemeStatus = SectionStatus.NotStarted,
-        SectionStatus homeTypesStatus = SectionStatus.NotStarted,
-        SectionStatus financialDetailsStatus = SectionStatus.NotStarted,
-        SectionStatus deliveryPhasesStatus = SectionStatus.NotStarted)
+    public ApplicationSections(IList<ApplicationSection> sections)
     {
-        SchemeStatus = schemeStatus;
-        HomeTypesStatus = homeTypesStatus;
-        FinancialDetailsStatus = financialDetailsStatus;
-        DeliveryPhasesStatus = deliveryPhasesStatus;
+        Sections = sections;
     }
 
-    public SectionStatus SchemeStatus { get; }
-
-    public SectionStatus HomeTypesStatus { get; }
-
-    public SectionStatus FinancialDetailsStatus { get; }
-
-    public SectionStatus DeliveryPhasesStatus { get; }
+    public IList<ApplicationSection> Sections { get; }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
-        yield return SchemeStatus;
-        yield return HomeTypesStatus;
-        yield return FinancialDetailsStatus;
-        yield return DeliveryPhasesStatus;
+        yield return Sections;
     }
 }

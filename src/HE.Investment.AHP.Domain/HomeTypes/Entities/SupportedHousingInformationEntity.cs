@@ -1,7 +1,9 @@
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
@@ -16,12 +18,18 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
         YesNoType localCommissioningBodiesConsulted = YesNoType.Undefined,
         YesNoType shortStayAccommodation = YesNoType.Undefined,
         RevenueFundingType revenueFundingType = RevenueFundingType.Undefined,
-        IEnumerable<RevenueFundingSourceType>? revenueFundingSources = null)
+        IEnumerable<RevenueFundingSourceType>? revenueFundingSources = null,
+        MoreInformation? moveOnArrangements = null,
+        MoreInformation? typologyLocationAndDesign = null,
+        MoreInformation? exitPlan = null)
     {
         LocalCommissioningBodiesConsulted = localCommissioningBodiesConsulted;
         ShortStayAccommodation = shortStayAccommodation;
         RevenueFundingType = revenueFundingType;
         _revenueFundingSources = revenueFundingSources?.ToList() ?? new List<RevenueFundingSourceType>();
+        MoveOnArrangements = moveOnArrangements;
+        TypologyLocationAndDesign = typologyLocationAndDesign;
+        ExitPlan = exitPlan;
     }
 
     public bool IsModified => _modificationTracker.IsModified;
@@ -33,6 +41,12 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
     public RevenueFundingType RevenueFundingType { get; private set; }
 
     public IReadOnlyCollection<RevenueFundingSourceType> RevenueFundingSources => _revenueFundingSources;
+
+    public MoreInformation? MoveOnArrangements { get; private set; }
+
+    public MoreInformation? TypologyLocationAndDesign { get; private set; }
+
+    public MoreInformation? ExitPlan { get; private set; }
 
     public void ChangeLocalCommissioningBodiesConsulted(YesNoType localCommissioningBodiesConsulted)
     {
@@ -61,9 +75,31 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
         }
     }
 
+    public void ChangeMoveOnArrangements(MoreInformation? newValue)
+    {
+        MoveOnArrangements = _modificationTracker.Change(MoveOnArrangements, newValue);
+    }
+
+    public void ChangeTypologyLocationAndDesign(MoreInformation? newValue)
+    {
+        TypologyLocationAndDesign = _modificationTracker.Change(TypologyLocationAndDesign, newValue);
+    }
+
+    public void ChangeExitPlan(MoreInformation? newValue)
+    {
+        ExitPlan = _modificationTracker.Change(ExitPlan, newValue);
+    }
+
     public IHomeTypeSegmentEntity Duplicate()
     {
-        return new SupportedHousingInformationEntity(LocalCommissioningBodiesConsulted, ShortStayAccommodation, RevenueFundingType, RevenueFundingSources);
+        return new SupportedHousingInformationEntity(
+            LocalCommissioningBodiesConsulted,
+            ShortStayAccommodation,
+            RevenueFundingType,
+            RevenueFundingSources,
+            MoveOnArrangements,
+            TypologyLocationAndDesign,
+            ExitPlan);
     }
 
     public bool IsRequired(HousingType housingType)
@@ -76,6 +112,44 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
         return LocalCommissioningBodiesConsulted != YesNoType.Undefined
                && ShortStayAccommodation != YesNoType.Undefined
                && RevenueFundingType != RevenueFundingType.Undefined
-               && RevenueFundingSources.Any();
+               && ConditionalRoutesAreCompleted();
+    }
+
+    public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
+    {
+        if (targetHousingType is HousingType.Undefined or HousingType.General)
+        {
+            ChangeLocalCommissioningBodiesConsulted(YesNoType.Undefined);
+            ChangeShortStayAccommodation(YesNoType.Undefined);
+            ChangeRevenueFundingType(RevenueFundingType.Undefined);
+            ChangeSources(Enumerable.Empty<RevenueFundingSourceType>());
+            ChangeMoveOnArrangements(null);
+            ChangeTypologyLocationAndDesign(null);
+            ChangeExitPlan(null);
+        }
+    }
+
+    private bool ConditionalRoutesAreCompleted()
+    {
+        if (RevenueFundingType == RevenueFundingType.RevenueFundingNeededAndIdentified && ShortStayAccommodation == YesNoType.Yes)
+        {
+            return RevenueFundingSources.Any() && MoveOnArrangements.IsProvided() && ExitPlan.IsProvided() && TypologyLocationAndDesign.IsProvided();
+        }
+        else if (RevenueFundingType == RevenueFundingType.RevenueFundingNeededAndIdentified && ShortStayAccommodation == YesNoType.No)
+        {
+            return RevenueFundingSources.Any() && TypologyLocationAndDesign.IsProvided();
+        }
+        else if (RevenueFundingType != RevenueFundingType.RevenueFundingNeededAndIdentified && ShortStayAccommodation == YesNoType.No)
+        {
+            return ExitPlan.IsProvided() && TypologyLocationAndDesign.IsProvided();
+        }
+        else if (RevenueFundingType != RevenueFundingType.RevenueFundingNeededAndIdentified && ShortStayAccommodation == YesNoType.Yes)
+        {
+            return MoveOnArrangements.IsProvided() && ExitPlan.IsProvided() && TypologyLocationAndDesign.IsProvided();
+        }
+        else
+        {
+            return false;
+        }
     }
 }

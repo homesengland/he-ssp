@@ -6,11 +6,12 @@ public sealed class ModificationTracker
 
     public void MarkAsModified() => IsModified = true;
 
-    public T Change<T>(T currentValue, T newValue)
+    public T Change<T>(T currentValue, T newValue, Action? onChanged = null)
     {
         if (!EqualityComparer<T>.Default.Equals(currentValue, newValue))
         {
             MarkAsModified();
+            onChanged?.Invoke();
             return newValue;
         }
 

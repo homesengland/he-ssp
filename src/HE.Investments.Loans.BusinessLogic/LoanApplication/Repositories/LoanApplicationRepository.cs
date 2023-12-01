@@ -1,6 +1,8 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.CRM;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -14,7 +16,6 @@ using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Utils;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using Microsoft.PowerPlatform.Dataverse.Client;
-using ApplicationStatus = HE.Investments.Loans.Contract.Application.Enums.ApplicationStatus;
 
 namespace HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 

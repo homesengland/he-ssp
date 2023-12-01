@@ -1,8 +1,8 @@
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Common.Services;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
-using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
@@ -87,6 +87,11 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
 
         foreach (var file in files)
         {
+            if (_uploadedFiles.Any(x => x.Name == file.Name) || _filesToUpload.Any(x => x.Name == file.Name))
+            {
+                OperationResult.New().AddValidationError("File", GenericValidationError.FileUniqueName).CheckErrors();
+            }
+
             _filesToUpload.Add(file);
         }
 
@@ -106,7 +111,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
         _modificationTracker.MarkAsModified();
     }
 
-    public async Task SaveFileChanges(IHomeTypeEntity homeType, IDesignFileService designFileService, CancellationToken cancellationToken)
+    public async Task SaveFileChanges(IHomeTypeEntity homeType, IAhpFileService<DesignFileParams> designFileService, CancellationToken cancellationToken)
     {
         for (var i = _filesToUpload.Count - 1; i >= 0; i--)
         {
@@ -117,7 +122,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
 
         for (var i = _filesToRemove.Count - 1; i >= 0; i--)
         {
-            await designFileService.RemoveFile(homeType.Application.Id, homeType.Id, _filesToRemove[i].Id, cancellationToken);
+            await designFileService.RemoveFile(_filesToRemove[i].Id, new DesignFileParams(homeType.Application.Id, homeType.Id), cancellationToken);
             _uploadedFiles.Remove(_filesToRemove[i]);
             _filesToRemove.RemoveAt(i);
         }
@@ -136,5 +141,14 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
     public bool IsCompleted()
     {
         return DesignPrinciples.Any();
+    }
+
+    public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
+    {
+        if (targetHousingType is HousingType.Undefined or HousingType.General)
+        {
+            ChangeDesignPrinciples(Enumerable.Empty<HappiDesignPrincipleType>());
+            ChangeMoreInformation(null);
+        }
     }
 }

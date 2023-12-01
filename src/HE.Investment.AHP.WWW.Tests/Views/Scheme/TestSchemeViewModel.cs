@@ -17,6 +17,5 @@ public static class TestSchemeViewModel
             "type and tenure justification",
             "scheme and proposal justification",
             "stakeholders accepted everything",
-            new List<FileModel>(),
-            new List<IFormFile>());
+            new List<FileModel>());
 }

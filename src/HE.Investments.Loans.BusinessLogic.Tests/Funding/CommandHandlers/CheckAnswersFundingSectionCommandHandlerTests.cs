@@ -1,4 +1,5 @@
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Loans.BusinessLogic.Funding.CommandHandlers;
 using HE.Investments.Loans.BusinessLogic.Tests.Funding.TestObjectBuilders;

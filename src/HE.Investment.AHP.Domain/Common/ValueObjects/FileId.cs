@@ -12,6 +12,8 @@ public class FileId : ValueObject
 
     public string Value { get; }
 
+    public static FileId New() => new(Guid.NewGuid().ToString("N"));
+
     public override string ToString()
     {
         return Value;

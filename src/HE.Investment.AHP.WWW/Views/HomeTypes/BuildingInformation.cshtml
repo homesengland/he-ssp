@@ -1,0 +1,49 @@
+@using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.HomeTypes
+@model HE.Investment.AHP.WWW.Models.HomeTypes.BuildingInformationModel;
+
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+
+    var hints = new[]
+    {
+        "A single self-contained residential dwelling, usually of more than one storey.",
+        "A single self-contained residential dwelling, usually of one storey, withing a single structure containing multiple dwellings.",
+        "Single unit within a shared property.",
+        "A single self-contained residential dwelling that is only on one storey.",
+        "A single self-contained residential dwelling usually of two storeys with your own front door.",
+    };
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="HomeTypes" asp-action="BuildingInformation" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
+        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.BuildingInformation"
+                                  application-id="@applicationId"
+                                  home-type-id="@homeTypeId"
+                                  caption="@Model.Header"
+                                  title="Building information"/>
+        <gds-field-set role="group">
+            <gds-legend class="govuk-!-margin-bottom-6">
+                <gds-h2>What is the building type?</gds-h2>
+            </gds-legend>
+
+            <he-custom-radio
+                asp-for="BuildingType"
+                value="@Model.BuildingType"
+                radio-items="@HomeTypesFormOptions.BuildingType"
+                radio-hints="@hints"
+                class="govuk-!-margin-bottom-6">
+            </he-custom-radio>
+
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                Save and continue
+            </button>
+        </gds-field-set>
+
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</gds-div-grid-column-two-thirds>

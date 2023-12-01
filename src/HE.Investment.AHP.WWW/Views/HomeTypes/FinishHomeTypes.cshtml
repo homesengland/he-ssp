@@ -10,8 +10,9 @@
     var applicationId = this.GetApplicationIdFromRoute();
 }
 
-<div class="govuk-grid-column-three-quarters">
+<div class="govuk-grid-column-two-thirds">
     <form asp-controller="HomeTypes" asp-action="FinishHomeTypes" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.FinishHomeTypes"
                                   application-id="@applicationId"
                                   caption="@Model.ApplicationName - Home types"/>

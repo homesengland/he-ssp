@@ -10,19 +10,25 @@ public class AffordabilityEvidence : ValueObject
         Build(evidence).CheckErrors();
     }
 
-    public string Evidence { get; private set; }
+    public string? Evidence { get; private set; }
+
+    public void CheckIsComplete()
+    {
+        Build(Evidence, true).CheckErrors();
+    }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Evidence;
     }
 
-    private OperationResult Build(string? evidence)
+    private OperationResult Build(string? evidence, bool isCompleteCheck = false)
     {
         var operationResult = OperationResult.New();
 
         Evidence = Validator
             .For(evidence, "AffordabilityEvidence", operationResult)
+            .IsProvidedIf(isCompleteCheck, "Affordability of shared ownership is missing")
             .IsLongInput();
 
         return operationResult;

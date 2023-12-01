@@ -37,4 +37,12 @@ public class OlderPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
     {
         return HousingType != OlderPeopleHousingType.Undefined;
     }
+
+    public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
+    {
+        if (sourceHousingType is Contract.HomeTypes.Enums.HousingType.HomesForOlderPeople)
+        {
+            ChangeHousingType(OlderPeopleHousingType.Undefined);
+        }
+    }
 }

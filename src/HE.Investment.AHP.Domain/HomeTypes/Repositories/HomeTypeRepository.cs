@@ -1,8 +1,9 @@
 using HE.Investment.AHP.Contract.HomeTypes.Events;
 using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Common.Services;
 using HE.Investment.AHP.Domain.HomeTypes.Crm;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
-using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Loans.Common.Exceptions;
@@ -14,7 +15,7 @@ public class HomeTypeRepository : IHomeTypeRepository
 {
     private readonly IApplicationRepository _applicationRepository;
 
-    private readonly IDesignFileService _designFileService;
+    private readonly IAhpFileService<DesignFileParams> _designFileService;
 
     private readonly IHomeTypeCrmContext _homeTypeCrmContext;
 
@@ -24,7 +25,7 @@ public class HomeTypeRepository : IHomeTypeRepository
 
     public HomeTypeRepository(
         IApplicationRepository applicationRepository,
-        IDesignFileService designFileService,
+        IAhpFileService<DesignFileParams> designFileService,
         IHomeTypeCrmContext homeTypeCrmContext,
         IHomeTypeCrmMapper homeTypeCrmMapper,
         IEventDispatcher eventDispatcher)
@@ -47,7 +48,7 @@ public class HomeTypeRepository : IHomeTypeRepository
 
         return new HomeTypesEntity(
             application,
-            homeTypes.Select(x => _homeTypeCrmMapper.MapToDomain(application, x, segments)),
+            homeTypes.Select(x => _homeTypeCrmMapper.MapToDomain(application, x, segments, new Dictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>>())),
             SectionStatusMapper.ToDomain(sectionStatus));
     }
 
@@ -59,9 +60,10 @@ public class HomeTypeRepository : IHomeTypeRepository
     {
         var application = await _applicationRepository.GetApplicationBasicInfo(applicationId, cancellationToken);
         var homeType = await _homeTypeCrmContext.GetById(applicationId.Value, homeTypeId.Value, _homeTypeCrmMapper.GetCrmFields(segments), cancellationToken);
+        var uploadedFiles = await GetUploadedFiles(applicationId, homeTypeId, segments, cancellationToken);
         if (homeType != null)
         {
-            return _homeTypeCrmMapper.MapToDomain(application, homeType, segments);
+            return _homeTypeCrmMapper.MapToDomain(application, homeType, segments, uploadedFiles);
         }
 
         throw new NotFoundException(nameof(HomeTypeEntity), homeTypeId);
@@ -115,5 +117,21 @@ public class HomeTypeRepository : IHomeTypeRepository
                 new HomeTypeHasBeenUpdatedEvent(homeTypeToRemove.Application.Id.Value, homeTypeToRemove.Id.Value),
                 cancellationToken);
         }
+    }
+
+    private async Task<IDictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>>> GetUploadedFiles(
+        ApplicationId applicationId,
+        HomeTypeId homeTypeId,
+        IEnumerable<HomeTypeSegmentType> segments,
+        CancellationToken cancellationToken)
+    {
+        var uploadedFiles = new Dictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>>();
+        if (segments.Contains(HomeTypeSegmentType.DesignPlans))
+        {
+            var designFiles = await _designFileService.GetFiles(new DesignFileParams(applicationId, homeTypeId), cancellationToken);
+            uploadedFiles.Add(HomeTypeSegmentType.DesignPlans, designFiles);
+        }
+
+        return uploadedFiles;
     }
 }

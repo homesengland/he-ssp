@@ -1,6 +1,6 @@
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class RemoveHomeTypeModel : ProvidedHomeTypeModelBase
+public class RemoveHomeTypeModel : HomeTypeBasicModel
 {
     public RemoveHomeTypeModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)

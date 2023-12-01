@@ -1,0 +1,25 @@
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investments.Common.WWW.Components.BackLinkWithCallback
+@model HE.Investment.AHP.WWW.Models.Application.ApplicationSummaryViewModel
+@{
+    ViewData["Title"] = "Submit application";
+}
+<gds-div-grid-column-two-thirds>
+
+    <vc:back-link-with-callback url="@Url.Action("Index", "Application")"/>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+
+    <vc:form-header title="Check your answers before submitting your application"/>
+
+    @foreach (var item in Model.Sections)
+    {
+        <vc:section-summary title="@item.Title" items="@item.Items"/>
+    }
+
+    <form asp-controller="Application" asp-action="Submit" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
+        <vc:form-button text="Submit"/>
+    </form>
+
+</gds-div-grid-column-two-thirds>

@@ -26,10 +26,18 @@ internal sealed class GetHomeInformationQueryHandler : IRequestHandler<GetHomeIn
         var homeInformation = homeType.HomeInformation;
 
         return new HomeInformation(
+            homeType.Application.Name.Name,
             homeType.Name.Value,
             homeInformation.NumberOfHomes?.Value,
             homeInformation.NumberOfBedrooms?.Value,
             homeInformation.MaximumOccupancy?.Value,
-            homeInformation.NumberOfStoreys?.Value);
+            homeInformation.NumberOfStoreys?.Value,
+            homeInformation.IntendedAsMoveOnAccommodation,
+            homeInformation.PeopleGroupForSpecificDesignFeatures,
+            homeInformation.BuildingType,
+            homeInformation.CustomBuild,
+            homeInformation.FacilityType,
+            homeInformation.AccessibilityStandards,
+            homeInformation.AccessibilityCategory);
     }
 }

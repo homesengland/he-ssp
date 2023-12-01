@@ -11,7 +11,6 @@
 }
 
 @Html.Hidden("MaxFileSizeInMegabytes", config.MaxFileSizeInMegabytes)
-@Html.Hidden("AllowedExtensions", string.Join(';', Model.AllowedFileExtensions))
 
 <gds-div-grid-column-two-thirds>
     <form id="formWithFile" asp-controller="CompanyStructureV2" asp-action="MoreInformationAboutOrganizationPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" enctype="multipart/form-data" asp-method="post" novalidate>
@@ -21,6 +20,7 @@
         <partial name="_ErrorSummaryPartial" model="null" />
 
         @Html.HiddenFor(x => x.LoanApplicationId)
+        @Html.HiddenFor(x => x.AllowedExtensions)
         <gds-field-set>
             <gds-error-form-group asp-for="OrganisationMoreInformation">
                 <legend>
@@ -59,11 +59,11 @@
                             </div>
                             <label class="govuk-label" for="File">
                             uploaded @DateHelper.DisplayAsUkFormatDateTime(Model.OrganisationMoreInformationFiles[i].Modified)
-                                by @(Model.OrganisationMoreInformationFiles[i].FileMetadata?.Creator ?? Model.OrganisationMoreInformationFiles[i].Editor)
+                                by @(Model.OrganisationMoreInformationFiles[i].Creator ?? Model.OrganisationMoreInformationFiles[i].Editor)
                             </label>
                             @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].Editor)
                             @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].FolderPath)
-                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].Metadata)
+                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].Creator)
                             @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].Modified)
                         </div>
                     }

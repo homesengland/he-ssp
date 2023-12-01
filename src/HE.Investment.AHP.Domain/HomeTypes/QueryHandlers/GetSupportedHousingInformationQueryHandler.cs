@@ -25,10 +25,14 @@ internal sealed class GetSupportedHousingInformationQueryHandler : IRequestHandl
             cancellationToken);
 
         return new SupportedHousingInformation(
+            homeType.Application.Name.Name,
             homeType.Name.Value,
             homeType.SupportedHousingInformation.LocalCommissioningBodiesConsulted,
             homeType.SupportedHousingInformation.ShortStayAccommodation,
             homeType.SupportedHousingInformation.RevenueFundingType,
-            homeType.SupportedHousingInformation.RevenueFundingSources.ToList());
+            homeType.SupportedHousingInformation.RevenueFundingSources.ToList(),
+            homeType.SupportedHousingInformation.MoveOnArrangements?.Value,
+            homeType.SupportedHousingInformation.TypologyLocationAndDesign?.Value,
+            homeType.SupportedHousingInformation.ExitPlan?.Value);
     }
 }

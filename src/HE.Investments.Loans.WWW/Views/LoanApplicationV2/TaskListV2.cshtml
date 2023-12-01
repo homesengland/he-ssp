@@ -4,7 +4,7 @@
 @using HE.Investments.Common.WWW.Helpers
 @using HE.Investments.Loans.BusinessLogic.LoanApplication
 @using HE.Investments.Loans.BusinessLogic.Projects.ValueObjects
-@using HE.Investments.Loans.Contract.Application.Enums
+@using HE.Investments.Common.Contract
 
 <gds-back-link href="@Url.Action("Back", "LoanApplicationV2", new { currentPage = LoanApplicationWorkflow.State.TaskList, ApplicationId = Model.Id })" text="Back to application dashboard" class="govuk-!-margin-bottom-8 govuk-grid-column-full"></gds-back-link>
 
@@ -32,7 +32,7 @@
         </gds-div-hint>
     }
     <div>
-        <application-status-loans-tag application-status="@Model.Status" additional-classes="govuk-!-static-margin-left-3"></application-status-loans-tag>
+        <application-status-tag application-status="@Model.Status" additional-classes="govuk-!-static-margin-left-3"></application-status-tag>
     </div>
 
     @await Html.PartialAsync("Partials/_ApplicationUpdateInformation", Model.Status)

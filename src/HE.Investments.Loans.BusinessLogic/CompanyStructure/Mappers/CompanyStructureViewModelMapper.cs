@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using HE.Investments.Loans.Contract.CompanyStructure;
@@ -18,7 +19,7 @@ public static class CompanyStructureViewModelMapper
             HomesBuilt = companyStructureEntity.HomesBuilt?.ToString(),
             CheckAnswers = companyStructureEntity.Status == SectionStatus.Completed ? CommonResponse.Yes : null,
             State = companyStructureEntity.Status,
-            AllowedFileExtensions = OrganisationMoreInformationFile.AllowedExtensions,
+            AllowedExtensions = string.Join(";", OrganisationMoreInformationFile.AllowedExtensions),
         };
     }
 

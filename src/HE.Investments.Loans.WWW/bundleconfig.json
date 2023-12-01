@@ -5,7 +5,7 @@
       "wwwroot/stylesheets/*.css",
       "!wwwroot/stylesheets/*.min.css",
       "!wwwroot/stylesheets/main.css",
-      "!wwwroot/stylesheets/govuk-frontend-all.min.css",
+      "!wwwroot/stylesheets/govuk-frontend-all.css",
       "!wwwroot/stylesheets/govuk-frontend-extensions.min.css"
     ]
   },
@@ -14,13 +14,18 @@
     "inputFiles": [
       "wwwroot/stylesheets/*.css",
       "!wwwroot/stylesheets/*.min.css",
-      "!wwwroot/stylesheets/govuk-frontend-all.min.css",
-      "!wwwroot/stylesheets/govuk-frontend-extensions.min.css"
+      "!wwwroot/stylesheets/govuk-frontend-all.css"
     ],
     "minify": {
       "enabled": false,
       "renameLocals": false
     }
+  },
+  {
+    "outputFileName": "wwwroot/stylesheets/govuk-frontend-all.min.css",
+    "inputFiles": [
+      "wwwroot/stylesheets/govuk-frontend-all.css"
+    ]
   },
   {
     "outputFileName": "wwwroot/javascripts/site.min.js",

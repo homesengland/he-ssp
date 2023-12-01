@@ -2,7 +2,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class DisabledPeopleClientGroupModel : ProvidedHomeTypeModelBase
+public class DisabledPeopleClientGroupModel : HomeTypeBasicModel
 {
     public DisabledPeopleClientGroupModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)

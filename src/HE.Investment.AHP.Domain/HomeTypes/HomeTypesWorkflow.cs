@@ -51,21 +51,22 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .Permit(Trigger.Back, HomeTypesWorkflowState.List);
 
         _machine.Configure(HomeTypesWorkflowState.NewHomeTypeDetails)
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeInformation, () => _homeTypeModel is { HousingType: HousingType.Undefined or HousingType.General })
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomesForDisabledPeople, () => _homeTypeModel is { HousingType: HousingType.HomesForDisabledAndVulnerablePeople })
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomesForOlderPeople, () => _homeTypeModel is { HousingType: HousingType.HomesForOlderPeople })
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeInformation, IsGeneralHomeType)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomesForDisabledPeople, IsDisabledHomeType)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomesForOlderPeople, IsOlderHomeType)
             .Permit(Trigger.Back, HomeTypesWorkflowState.List);
 
         _machine.Configure(HomeTypesWorkflowState.HomeTypeDetails)
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeInformation, () => _homeTypeModel is { HousingType: HousingType.Undefined or HousingType.General })
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomesForDisabledPeople, () => _homeTypeModel is { HousingType: HousingType.HomesForDisabledAndVulnerablePeople })
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomesForOlderPeople, () => _homeTypeModel is { HousingType: HousingType.HomesForOlderPeople })
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeInformation, IsGeneralHomeType)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomesForDisabledPeople, IsDisabledHomeType)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomesForOlderPeople, IsOlderHomeType)
             .Permit(Trigger.Back, HomeTypesWorkflowState.List);
 
         _machine.Configure(HomeTypesWorkflowState.HomeInformation)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeTypeDetails, () => _homeTypeModel is { HousingType: HousingType.Undefined or HousingType.General })
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.SupportedHousingInformation, () => _homeTypeModel is { HousingType: HousingType.HomesForDisabledAndVulnerablePeople or HousingType.HomesForOlderPeople });
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.MoveOnAccommodation, IsGeneralHomeType)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures, IsNotGeneralHomeType)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomeTypeDetails, IsGeneralHomeType)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.TypologyLocationAndDesign, IsNotGeneralHomeType);
 
         _machine.Configure(HomeTypesWorkflowState.HomesForDisabledPeople)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.DisabledPeopleClientGroup)
@@ -81,21 +82,146 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
         _machine.Configure(HomeTypesWorkflowState.HappiDesignPrinciples)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.DesignPlans)
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomesForOlderPeople, () => _homeTypeModel is { HousingType: HousingType.HomesForOlderPeople })
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.DisabledPeopleClientGroup, () => _homeTypeModel is { HousingType: HousingType.HomesForDisabledAndVulnerablePeople });
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.HomesForOlderPeople, IsOlderHomeType)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.DisabledPeopleClientGroup, IsDisabledHomeType);
 
         _machine.Configure(HomeTypesWorkflowState.DesignPlans)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.SupportedHousingInformation)
             .Permit(Trigger.Back, HomeTypesWorkflowState.HappiDesignPrinciples);
 
         _machine.Configure(HomeTypesWorkflowState.SupportedHousingInformation)
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.RevenueFunding, () => _homeTypeModel is { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededAndIdentified })
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeInformation, () => _homeTypeModel is not { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededAndIdentified })
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.ExitPlan,
+                () => _homeTypeModel is { Conditionals.RevenueFundingType: RevenueFundingType.Undefined }
+                    or { Conditionals.ShortStayAccommodation: YesNoType.Undefined })
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.ExitPlan,
+                () =>
+                    _homeTypeModel is (
+                { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededButNotIdentified }
+                        or { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNotNeeded })
+                        and { Conditionals.ShortStayAccommodation: YesNoType.No })
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.MoveOnArrangements,
+                () => _homeTypeModel is (
+                { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededButNotIdentified }
+                    or { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNotNeeded })
+                    and { Conditionals.ShortStayAccommodation: YesNoType.Yes })
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.RevenueFunding,
+                () => _homeTypeModel is { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededAndIdentified }
+                    and not { Conditionals.ShortStayAccommodation: YesNoType.Undefined })
             .Permit(Trigger.Back, HomeTypesWorkflowState.DesignPlans);
 
         _machine.Configure(HomeTypesWorkflowState.RevenueFunding)
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.SupportedHousingInformation, () => _homeTypeModel is not { Conditionals.ShortStayAccommodation: YesNoType.No }) // TODO change to TheMoveOnArrangements
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.HomeInformation, () => _homeTypeModel is { Conditionals.ShortStayAccommodation: YesNoType.No }) // TODO change to typology
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.ExitPlan,
+                () => _homeTypeModel is not { Conditionals.ShortStayAccommodation: YesNoType.Yes })
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.MoveOnArrangements,
+                () => _homeTypeModel is { Conditionals.ShortStayAccommodation: YesNoType.Yes })
             .Permit(Trigger.Back, HomeTypesWorkflowState.SupportedHousingInformation);
+
+        _machine.Configure(HomeTypesWorkflowState.MoveOnArrangements)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.ExitPlan)
+            .PermitIf(
+                Trigger.Back,
+                HomeTypesWorkflowState.SupportedHousingInformation,
+                () => _homeTypeModel is not { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededAndIdentified })
+            .PermitIf(
+                Trigger.Back,
+                HomeTypesWorkflowState.RevenueFunding,
+                () => _homeTypeModel is { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededAndIdentified });
+
+        _machine.Configure(HomeTypesWorkflowState.ExitPlan)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.TypologyLocationAndDesign)
+            .PermitIf(
+                Trigger.Back,
+                HomeTypesWorkflowState.SupportedHousingInformation,
+                () => _homeTypeModel is not { Conditionals.ShortStayAccommodation: YesNoType.Yes }
+                    or { Conditionals.RevenueFundingType: RevenueFundingType.Undefined })
+            .PermitIf(
+                Trigger.Back,
+                HomeTypesWorkflowState.MoveOnArrangements,
+                () => _homeTypeModel is { Conditionals.ShortStayAccommodation: YesNoType.Yes }
+                    and not { Conditionals.RevenueFundingType: RevenueFundingType.Undefined });
+
+        _machine.Configure(HomeTypesWorkflowState.TypologyLocationAndDesign)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.HomeInformation)
+            .PermitIf(
+                Trigger.Back,
+                HomeTypesWorkflowState.ExitPlan,
+                () => _homeTypeModel is not { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededAndIdentified })
+            .PermitIf(
+                Trigger.Back,
+                HomeTypesWorkflowState.RevenueFunding,
+                () => _homeTypeModel is { Conditionals.RevenueFundingType: RevenueFundingType.RevenueFundingNeededAndIdentified });
+
+        _machine.Configure(HomeTypesWorkflowState.MoveOnAccommodation)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.BuildingInformation)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.HomeInformation);
+
+        _machine.Configure(HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.BuildingInformation)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.HomeInformation);
+
+        _machine.Configure(HomeTypesWorkflowState.BuildingInformation)
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.CustomBuildProperty,
+                () => IsNotGeneralHomeType()
+                      || (IsGeneralHomeType() && _homeTypeModel is not { Conditionals.BuildingType: BuildingType.Bedsit }))
+            .PermitIf(
+                Trigger.Continue,
+                HomeTypesWorkflowState.BuildingInformationIneligible,
+                () => IsGeneralHomeType() && _homeTypeModel is { Conditionals.BuildingType: BuildingType.Bedsit })
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures, IsNotGeneralHomeType)
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.MoveOnAccommodation, IsGeneralHomeType);
+
+        _machine.Configure(HomeTypesWorkflowState.BuildingInformationIneligible)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.BuildingInformation);
+
+        _machine.Configure(HomeTypesWorkflowState.CustomBuildProperty)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.TypeOfFacilities)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.BuildingInformation);
+
+        _machine.Configure(HomeTypesWorkflowState.TypeOfFacilities)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.AccessibilityStandards)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.CustomBuildProperty);
+
+        _machine.Configure(HomeTypesWorkflowState.AccessibilityStandards)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.List, () => _homeTypeModel is not { Conditionals.AccessibleStandards: YesNoType.Yes })
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.AccessibilityCategory, () => _homeTypeModel is { Conditionals.AccessibleStandards: YesNoType.Yes })
+            .Permit(Trigger.Back, HomeTypesWorkflowState.TypeOfFacilities);
+
+        _machine.Configure(HomeTypesWorkflowState.AccessibilityCategory)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
+    }
+
+    private bool IsGeneralHomeType()
+    {
+        return _homeTypeModel is { HousingType: HousingType.Undefined or HousingType.General };
+    }
+
+    private bool IsNotGeneralHomeType()
+    {
+        return _homeTypeModel is not { HousingType: HousingType.Undefined or HousingType.General };
+    }
+
+    private bool IsDisabledHomeType()
+    {
+        return _homeTypeModel is { HousingType: HousingType.HomesForDisabledAndVulnerablePeople };
+    }
+
+    private bool IsOlderHomeType()
+    {
+        return _homeTypeModel is { HousingType: HousingType.HomesForOlderPeople };
     }
 }

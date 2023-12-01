@@ -14,22 +14,29 @@ public class HousingNeeds : ValueObject
 
     public string SchemeAndProposalJustification { get; private set; }
 
+    public void CheckIsComplete()
+    {
+        Build(TypeAndTenureJustification, SchemeAndProposalJustification, true).CheckErrors();
+    }
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return TypeAndTenureJustification;
         yield return SchemeAndProposalJustification;
     }
 
-    private OperationResult Build(string? typeAndTenureJustification, string? schemeAndProposalJustification)
+    private OperationResult Build(string? typeAndTenureJustification, string? schemeAndProposalJustification, bool isCompleteCheck = false)
     {
         var operationResult = OperationResult.New();
 
         TypeAndTenureJustification = Validator
             .For(typeAndTenureJustification, nameof(TypeAndTenureJustification), operationResult)
+            .IsProvidedIf(isCompleteCheck, "Type and tenure of homes are missing")
             .IsLongInput();
 
         SchemeAndProposalJustification = Validator
             .For(schemeAndProposalJustification, nameof(SchemeAndProposalJustification), operationResult)
+            .IsProvidedIf(isCompleteCheck, "Locally identified housing needs are missing")
             .IsLongInput();
 
         return operationResult;

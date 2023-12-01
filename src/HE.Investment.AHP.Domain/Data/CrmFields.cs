@@ -5,7 +5,10 @@ namespace HE.Investment.AHP.Domain.Data;
 
 public static class CrmFields
 {
-    public static readonly IList<string> ApplicationToUpdate = new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), };
+    public static readonly IList<string> ApplicationToUpdate = new List<string>
+    {
+        nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), nameof(invln_scheme.statuscode),
+    };
 
     public static readonly IList<string> ApplicationToRead = ApplicationToUpdate
         .Append(new List<string>
@@ -14,6 +17,10 @@ public static class CrmFields
             nameof(invln_scheme.invln_hometypessectioncompletionstatus),
             nameof(invln_scheme.invln_financialdetailssectioncompletionstatus),
             nameof(invln_scheme.invln_deliveryphasessectioncompletionstatus),
+            nameof(invln_scheme.invln_lastexternalmodificationby),
+            nameof(invln_scheme.invln_lastexternalmodificationon),
+            nameof(invln_scheme.statuscode),
+            nameof(invln_scheme.invln_pplicationid),
         });
 
     public static readonly IList<string> SchemeToUpdate = new List<string>
@@ -29,7 +36,7 @@ public static class CrmFields
     };
 
     public static readonly IList<string> SchemeToRead = SchemeToUpdate
-        .Append(new List<string> { nameof(invln_scheme.invln_schemename) });
+        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure), });
 
     public static readonly IList<string> FinancialDetailsToUpdate = new List<string>
     {
@@ -47,6 +54,13 @@ public static class CrmFields
         nameof(invln_scheme.invln_totalinitialsalesincome),
         nameof(invln_scheme.invln_othercapitalsources),
         nameof(invln_scheme.invln_transfervalue),
+        nameof(invln_scheme.invln_grantsfromcountycouncil),
+        nameof(invln_scheme.invln_grantsfromdhscextracare),
+        nameof(invln_scheme.invln_grantsfromlocalauthority1),
+        nameof(invln_scheme.invln_grantsfromsocialservices),
+        nameof(invln_scheme.invln_grantsfromdhscnhsorotherhealth),
+        nameof(invln_scheme.invln_grantsfromthelottery),
+        nameof(invln_scheme.invln_grantsfromotherpublicbodies),
     };
 
     public static readonly IList<string> FinancialDetailsToRead = FinancialDetailsToUpdate

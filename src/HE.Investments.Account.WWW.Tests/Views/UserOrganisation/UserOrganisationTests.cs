@@ -1,5 +1,6 @@
 using AngleSharp.Html.Dom;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWWTestsFramework;
@@ -59,7 +60,7 @@ public class UserOrganisationTests : ViewTestBase
             programmesToAccess: new List<ProgrammeToAccessModel>
             {
                 new(
-                    new ProgrammeModel("P1", "Desc1", "C", "V", "Ct"),
+                    new ProgrammeModel("P1", "Desc1", "C", "V"),
                     new List<ApplicationBasicDetailsModel>()),
             });
 
@@ -124,8 +125,8 @@ public class UserOrganisationTests : ViewTestBase
         return new List<ProgrammeToAccessModel>
         {
             new(
-                new ProgrammeModel("P1", "Desc1", "C", "V", "Ct"),
-                new List<ApplicationBasicDetailsModel> { new("1", "AP1", ApplicationStatus.Withdrawn) }),
+                new ProgrammeModel("P1", "Desc1", "C", "V"),
+                new List<ApplicationBasicDetailsModel> { new("1", "AP1", ApplicationStatus.Withdrawn, "http://localhost/app/") }),
         };
     }
 
@@ -142,7 +143,7 @@ public class UserOrganisationTests : ViewTestBase
             userName ?? "Jan Muzykant",
             isLimitedUser,
             programmesToAccess ?? ProgrammesToToAccess(),
-            programmesToApply ?? new List<ProgrammeModel> { new ProgrammeModel("P2", "D2", "C", "V", "Ct") },
-            actions ?? new List<ActionModel> { new ActionModel("Action Name", "A", "C") });
+            programmesToApply ?? new List<ProgrammeModel> { new ProgrammeModel("P2", "D2", "C", "V") },
+            actions ?? new List<ActionModel> { new ActionModel("ViewAllApplicationsUrl Name", "A", "C") });
     }
 }

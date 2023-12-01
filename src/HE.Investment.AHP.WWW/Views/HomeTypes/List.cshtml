@@ -27,6 +27,7 @@
     </gds-p>
 
     <form asp-controller="HomeTypes" asp-action="List" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
         @if (Model.HomeTypes.Any())
         {
             <table class="govuk-table govuk-!-margin-bottom-0">

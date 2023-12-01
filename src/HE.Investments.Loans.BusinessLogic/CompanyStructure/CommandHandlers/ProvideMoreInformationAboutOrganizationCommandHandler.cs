@@ -1,10 +1,9 @@
-using System.Text.Json;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Validators;
 using HE.Investments.DocumentService.Configs;
-using HE.Investments.DocumentService.Models.File;
+using HE.Investments.DocumentService.Models;
 using HE.Investments.DocumentService.Services;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Constants;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Notifications;
@@ -13,6 +12,7 @@ using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure.Commands;
 using HE.Investments.Loans.Contract.CompanyStructure.ValueObjects;
+using HE.Investments.Loans.Contract.Documents;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -24,7 +24,7 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
 {
     private readonly IDocumentServiceConfig _config;
 
-    private readonly IHttpDocumentService _documentService;
+    private readonly IDocumentService _documentService;
 
     private readonly INotificationService _notificationService;
 
@@ -38,7 +38,7 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                 IAccountUserContext loanUserContext,
                 IDocumentServiceConfig config,
                 ILogger<CompanyStructureBaseCommandHandler> logger,
-                IHttpDocumentService documentService,
+                IDocumentService documentService,
                 INotificationService notificationService)
         : base(companyStructureRepository, loanApplicationRepository, loanUserContext, logger)
     {
@@ -80,20 +80,18 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
         var filesUploaded = string.Empty;
         var userDetails = await _loanUserContext.GetProfileDetails();
         var folderPath = $"{await _companyStructureRepository.GetFilesLocationAsync(loanApplicationId, cancellationToken)}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}";
-        var fileMetadata = JsonSerializer.Serialize(new FileMetadata { Creator = $"{userDetails.FirstName} {userDetails.LastName}" });
+        var fileMetadata = new LoansFileMetadata($"{userDetails.FirstName} {userDetails.LastName}");
 
         foreach (var file in files)
         {
             companyStructure.ProvideFileWithMoreInformation(new OrganisationMoreInformationFile(file.FileName, file.Length, _config.MaxFileSizeInMegabytes));
 
-            await _documentService.UploadAsync(new FileUploadModel
-            {
-                ListTitle = _config.ListTitle,
-                FolderPath = folderPath,
-                File = file,
-                Metadata = fileMetadata,
-                Overwrite = true,
-            });
+            await using var fileStream = file.OpenReadStream();
+            await _documentService.UploadAsync(
+                new FileLocation(_config.ListTitle, _config.ListAlias, folderPath),
+                new UploadFileData<LoansFileMetadata>(file.FileName, fileMetadata, fileStream),
+                true,
+                cancellationToken);
 
             filesUploaded += $"{file.FileName}, ";
         }

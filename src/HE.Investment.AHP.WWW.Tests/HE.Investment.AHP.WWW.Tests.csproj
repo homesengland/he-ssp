@@ -51,6 +51,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HE.Investment.AHP.WWW\HE.Investment.AHP.WWW.csproj" />
     <ProjectReference Include="..\HE.Investments.Common.WWWTestsFramework\HE.Investments.Common.WWWTestsFramework.csproj" />
+
   </ItemGroup>
 
 </Project>

@@ -7,26 +7,26 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 
-public abstract class UpdateApplicationCommandHandler<TRequest> : IRequestHandler<TRequest, OperationResult<ApplicationId?>>
-    where TRequest : IRequest<OperationResult<ApplicationId?>>, IUpdateApplicationCommand
+public abstract class UpdateApplicationCommandHandler<TRequest> : IRequestHandler<TRequest, OperationResult<ApplicationId>>
+    where TRequest : IRequest<OperationResult<ApplicationId>>, IUpdateApplicationCommand
 {
-    private readonly IApplicationRepository _repository;
-
     protected UpdateApplicationCommandHandler(IApplicationRepository repository)
     {
-        _repository = repository;
+        Repository = repository;
     }
 
-    public async Task<OperationResult<ApplicationId?>> Handle(TRequest request, CancellationToken cancellationToken)
+    protected IApplicationRepository Repository { get; }
+
+    public async Task<OperationResult<ApplicationId>> Handle(TRequest request, CancellationToken cancellationToken)
     {
-        var application = await _repository.GetById(new ApplicationId(request.Id), cancellationToken);
+        var application = await Repository.GetById(new ApplicationId(request.Id), cancellationToken);
 
-        Update(request, application);
+        await Update(request, application, cancellationToken);
 
-        await _repository.Save(application, cancellationToken);
+        await Repository.Save(application, cancellationToken);
 
-        return new OperationResult<ApplicationId?>(application.Id);
+        return new OperationResult<ApplicationId>(application.Id);
     }
 
-    protected abstract void Update(TRequest request, ApplicationEntity application);
+    protected abstract Task Update(TRequest request, ApplicationEntity application, CancellationToken cancellationToken);
 }

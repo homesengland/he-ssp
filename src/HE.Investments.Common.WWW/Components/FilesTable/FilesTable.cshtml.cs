@@ -8,6 +8,6 @@ public class FilesTable : ViewComponent
 {
     public IViewComponentResult Invoke(ModelExpression aspFor)
     {
-        return View("FilesTable", (aspFor.Name, aspFor.Model as IList<FileModel>));
+        return View("FilesTable", (aspFor.Name, aspFor.Model as IList<FileModel> ?? new List<FileModel>()));
     }
 }

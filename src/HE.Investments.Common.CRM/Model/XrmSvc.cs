@@ -1289,6 +1289,9 @@ namespace HE.Investments.Common.CRM.Model
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		NotRequired = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Pending = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -8949,6 +8952,21 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Hidden = 100000002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_accessibilitycategoryset
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category1VisitableDwelling = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category2Accessibleandacceptabledwelling = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category3Wheelchairuserdwellings = 858110002,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -19269,6 +19287,39 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_accessibilitycategory")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_accessibilitycategoryset> invln_accessibilitycategory
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_accessibilitycategory");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_accessibilitycategoryset)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_accessibilitycategoryset), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_accessibilitycategory");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_accessibilitycategory", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_accessibilitycategory", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_accessibilitycategory");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_application")]
 		public Microsoft.Xrm.Sdk.EntityReference invln_application
 		{
@@ -22572,6 +22623,9 @@ namespace HE.Investments.Common.CRM.Model
 		Active = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Deleted = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
 	}
 	
@@ -22731,6 +22785,24 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_affordabilityevidence");
 				this.SetAttributeValue("invln_affordabilityevidence", value);
 				this.OnPropertyChanged("invln_affordabilityevidence");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_applicationid")]
+		public string invln_applicationid
+		{
+			get
+			{
+				return this.GetAttributeValue<string>("invln_applicationid");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_applicationid");
+				this.SetAttributeValue("invln_applicationid", value);
+				this.OnPropertyChanged("invln_applicationid");
 			}
 		}
 		
@@ -28218,6 +28290,167 @@ namespace HE.Investments.Common.CRM.Model
 		
 		public invln_deletehometypeResponse()
 		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_changeahpapplicationstatus")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_changeahpapplicationstatusRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_applicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_applicationid"))
+				{
+					return ((string)(this.Parameters["invln_applicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_applicationid"] = value;
+			}
+		}
+		
+		public string invln_organisationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationid"))
+				{
+					return ((string)(this.Parameters["invln_organisationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationid"] = value;
+			}
+		}
+		
+		public string invln_userid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_userid"))
+				{
+					return ((string)(this.Parameters["invln_userid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_userid"] = value;
+			}
+		}
+		
+		public int invln_newapplicationstatus
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_newapplicationstatus"))
+				{
+					return ((int)(this.Parameters["invln_newapplicationstatus"]));
+				}
+				else
+				{
+					return default(int);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_newapplicationstatus"] = value;
+			}
+		}
+		
+		public invln_changeahpapplicationstatusRequest()
+		{
+			this.RequestName = "invln_changeahpapplicationstatus";
+			this.invln_applicationid = default(string);
+			this.invln_organisationid = default(string);
+			this.invln_userid = default(string);
+			this.invln_newapplicationstatus = default(int);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_changeahpapplicationstatus")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_changeahpapplicationstatusResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_changeahpapplicationstatusResponse()
+		{
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getahpapplicationdocumentlocation")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getahpapplicationdocumentlocationRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_applicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_applicationid"))
+				{
+					return ((string)(this.Parameters["invln_applicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_applicationid"] = value;
+			}
+		}
+		
+		public invln_getahpapplicationdocumentlocationRequest()
+		{
+			this.RequestName = "invln_getahpapplicationdocumentlocation";
+			this.invln_applicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getahpapplicationdocumentlocation")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getahpapplicationdocumentlocationResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getahpapplicationdocumentlocationResponse()
+		{
+		}
+		
+		public string invln_documentlocation
+		{
+			get
+			{
+				if (this.Results.Contains("invln_documentlocation"))
+				{
+					return ((string)(this.Results["invln_documentlocation"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
 		}
 	}
 }

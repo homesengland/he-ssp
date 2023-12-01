@@ -2,10 +2,11 @@ namespace HE.Investment.AHP.Domain.Scheme.Workflows;
 
 public enum SchemeWorkflowState
 {
-    Funding = 1,
+    Start = 1,
+    Funding,
     Affordability,
     SalesRisk,
     HousingNeeds,
     StakeholderDiscussions,
-    Summary,
+    CheckAnswers,
 }

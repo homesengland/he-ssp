@@ -8,31 +8,31 @@
     var homeTypeId = this.GetHomeTypeIdFromRoute();
 }
 
-<div class="govuk-grid-column-full">
+<div class="govuk-grid-column-two-thirds">
     <form asp-controller="HomeTypes" asp-action="HomesForOlderPeople" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.HomesForOlderPeople"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
-                                  caption="@Model.Header" />
+                                  caption="@Model.Header"/>
 
-        <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
-            <gds-field-set>
-                <gds-legend>
-                     <gds-h1 class="govuk-!-margin-bottom-0">What type of homes will you be providing for older people?</gds-h1>
-                </gds-legend>
+        <gds-field-set>
+            <gds-legend>
+                <gds-h1 class="govuk-!-margin-bottom-0">What type of homes will you be providing for older people?</gds-h1>
+            </gds-legend>
 
-                <gds-radio govuk-formgroup-asp-for="HousingType"
-                           asp-hiddenlabeltext="What type of homes will you be providing for older people?"
-                           value="@Model.HousingType"
-                           asp-selectlistitems="@HomeTypesFormOptions.OlderPeopleHousingTypes">
-                </gds-radio>
+            <gds-radio govuk-formgroup-asp-for="HousingType"
+                       asp-hiddenlabeltext="What type of homes will you be providing for older people?"
+                       value="@Model.HousingType"
+                       asp-selectlistitems="@HomeTypesFormOptions.OlderPeopleHousingTypes">
+            </gds-radio>
 
-                <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
-                    Save and continue
-                </button>
-            </gds-field-set>
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                Save and continue
+            </button>
+        </gds-field-set>
 
-            <vc:return-to-application-link application-id="@applicationId"/>
-        </gds-div-grid-column-two-thirds>
+        <vc:return-to-application-link application-id="@applicationId"/>
     </form>
 </div>

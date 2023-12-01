@@ -11,6 +11,11 @@ public static class DecimalExtensions
             return null;
         }
 
-        return Convert.ToInt64(Math.Truncate(val.Value), CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
+        return val.Value.ToWholeNumberString();
+    }
+
+    public static string ToWholeNumberString(this decimal val)
+    {
+        return Convert.ToInt64(Math.Truncate(val), CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
     }
 }

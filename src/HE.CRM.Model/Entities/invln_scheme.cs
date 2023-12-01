@@ -38,6 +38,9 @@ namespace DataverseModel
 		Active = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Deleted = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
 	}
 	
@@ -62,6 +65,7 @@ namespace DataverseModel
 			public const string invln_actualacquisitioncost = "invln_actualacquisitioncost";
 			public const string invln_actualacquisitioncost_Base = "invln_actualacquisitioncost_base";
 			public const string invln_affordabilityevidence = "invln_affordabilityevidence";
+			public const string invln_applicationid = "invln_applicationid";
 			public const string invln_borrowingagainstrentalincome = "invln_borrowingagainstrentalincome";
 			public const string invln_borrowingagainstrentalincome_Base = "invln_borrowingagainstrentalincome_base";
 			public const string invln_contact_invln_scheme_contactid = "invln_contact_invln_scheme_contactid";
@@ -129,6 +133,7 @@ namespace DataverseModel
 			public const string invln_recycledcapitalgrantfund = "invln_recycledcapitalgrantfund";
 			public const string invln_recycledcapitalgrantfund_Base = "invln_recycledcapitalgrantfund_base";
 			public const string invln_reducingenvironmentalimpact = "invln_reducingenvironmentalimpact";
+			public const string invln_scheme_SharePointDocumentLocations = "invln_scheme_SharePointDocumentLocations";
 			public const string invln_schemeId = "invln_schemeid";
 			public const string Id = "invln_schemeid";
 			public const string invln_schemeinformationsectioncompletionstatus = "invln_schemeinformationsectioncompletionstatus";
@@ -347,6 +352,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_affordabilityevidence");
 				this.SetAttributeValue("invln_affordabilityevidence", value);
 				this.OnPropertyChanged("invln_affordabilityevidence");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_applicationid")]
+		public string invln_applicationid
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("invln_applicationid");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_applicationid");
+				this.SetAttributeValue("invln_applicationid", value);
+				this.OnPropertyChanged("invln_applicationid");
 			}
 		}
 		
@@ -1845,6 +1867,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_hometype_application_invln_scheme");
 				this.SetRelatedEntities<DataverseModel.invln_HomeType>("invln_invln_hometype_application_invln_scheme", null, value);
 				this.OnPropertyChanged("invln_invln_hometype_application_invln_scheme");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_scheme_SharePointDocumentLocations
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_SharePointDocumentLocations")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointDocumentLocation> invln_scheme_SharePointDocumentLocations
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointDocumentLocation>("invln_scheme_SharePointDocumentLocations", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_SharePointDocumentLocations");
+				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("invln_scheme_SharePointDocumentLocations", null, value);
+				this.OnPropertyChanged("invln_scheme_SharePointDocumentLocations");
 			}
 		}
 		

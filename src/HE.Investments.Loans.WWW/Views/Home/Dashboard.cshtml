@@ -53,7 +53,7 @@
                     </td>
 
                     <td class="govuk-table__cell">
-                        <application-status-loans-tag application-status="@application.Status"></application-status-loans-tag>
+                        <application-status-tag application-status="@application.Status"></application-status-tag>
                     </td>
 
                     <td class="govuk-table__cell">@DateHelper.DisplayAsUkFormatDateTime(application.LastModificationDate) @(!string.IsNullOrEmpty(application.LastModifiedBy) ? $"by {application.LastModifiedBy}" : string.Empty)</td>

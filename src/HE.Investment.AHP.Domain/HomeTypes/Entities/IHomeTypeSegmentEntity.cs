@@ -11,4 +11,6 @@ public interface IHomeTypeSegmentEntity
     bool IsRequired(HousingType housingType);
 
     bool IsCompleted();
+
+    void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType);
 }

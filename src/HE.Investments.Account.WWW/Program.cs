@@ -28,7 +28,12 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/home/error");
     app.UsePageNotFound();
-    app.UseHsts();
+    app.Use((context, next) =>
+    {
+        // assume all non-development requests are https
+        context.Request.Scheme = "https";
+        return next();
+    });
 }
 
 app.UseHttpsRedirection();

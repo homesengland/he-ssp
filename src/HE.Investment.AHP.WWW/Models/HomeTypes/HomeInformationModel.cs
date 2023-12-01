@@ -1,6 +1,6 @@
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class HomeInformationModel : ProvidedHomeTypeModelBase
+public class HomeInformationModel : HomeTypeBasicModel
 {
     public HomeInformationModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)

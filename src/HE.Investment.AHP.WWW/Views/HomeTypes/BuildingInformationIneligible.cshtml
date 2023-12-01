@@ -1,0 +1,35 @@
+@using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Extensions
+@model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeBasicModel;
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+}
+
+<gds-div-grid-column-two-thirds>
+    <vc:home-type-form-header current-page="@HomeTypesWorkflowState.BuildingInformationIneligible"
+                              application-id="@applicationId"
+                              home-type-id="@homeTypeId"
+                              caption="@Model.Header"
+                              title="Contact your Growth Manager"/>
+    <gds-p>
+        You told us that your building type is a bedsit.
+        Funding is not available for bedsits unless you are building supported housing for a specific client group.
+    </gds-p>
+
+    <gds-p>
+        If you have answered this incorrectly, go back and try again.
+        If you have answered this correctly, contact your Growth Manager to discuss this further.
+    </gds-p>
+
+    <div class="govuk-!-margin-top-6">
+        <a class="govuk-button govuk-!-margin-right-4" data-module="govuk-button"
+           href="@Url.Action("BuildingInformation", "HomeTypes", new { applicationId, homeTypeId })" id="try-again-button">
+            Go back and try again
+        </a>
+        <a class="govuk-button govuk-button--secondary" data-module="govuk-button"
+           href="@Url.Action("List", "HomeTypes", new { applicationId, homeTypeId })" id="return-button">
+            Save and return to your account
+        </a>
+    </div>
+</gds-div-grid-column-two-thirds>

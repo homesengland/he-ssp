@@ -12,17 +12,23 @@ public class SalesRisk : ValueObject
 
     public string Value { get; private set; }
 
+    public void CheckIsComplete()
+    {
+        Build(Value, true).CheckErrors();
+    }
+
     protected override IEnumerable<object?> GetAtomicValues()
     {
         yield return Value;
     }
 
-    private OperationResult Build(string? evidence)
+    private OperationResult Build(string? evidence, bool isCompleteCheck = false)
     {
         var operationResult = OperationResult.New();
 
         Value = Validator
             .For(evidence, nameof(SalesRisk), operationResult)
+            .IsProvidedIf(isCompleteCheck, "Sales risk of shared ownership is missing")
             .IsLongInput();
 
         return operationResult;

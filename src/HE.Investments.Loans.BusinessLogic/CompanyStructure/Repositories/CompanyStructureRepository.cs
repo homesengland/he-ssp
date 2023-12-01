@@ -1,6 +1,7 @@
 using System.Text.Json;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.CRM;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Mappers;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;

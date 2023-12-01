@@ -3,6 +3,7 @@ using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Workflows;
 using HE.Investment.AHP.WWW.Models.Application;
+using HE.Investment.AHP.WWW.Models.Application.Factories;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
@@ -18,10 +19,12 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
 {
     private readonly string _siteName = "Test Site";
     private readonly IMediator _mediator;
+    private readonly IApplicationSummaryViewModelFactory _applicationSummaryViewModelFactory;
 
-    public ApplicationController(IMediator mediator)
+    public ApplicationController(IMediator mediator, IApplicationSummaryViewModelFactory applicationSummaryViewModelFactory)
     {
         _mediator = mediator;
+        _applicationSummaryViewModelFactory = applicationSummaryViewModelFactory;
     }
 
     [HttpGet]
@@ -29,7 +32,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     {
         var applications = await _mediator.Send(new GetApplicationsQuery(), cancellationToken);
 
-        return View("Index", new ApplicationsModel(_siteName, applications.Select(CreateModel).ToList()));
+        return View("Index", new ApplicationsModel(_siteName, applications));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
@@ -62,7 +65,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View(model);
         }
 
-        return await Continue(new { applicationId = result.ReturnedData!.Value });
+        return await RedirectOrContinue(result.ReturnedData!.Value);
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationTenure)]
@@ -86,17 +89,53 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
             return View(model);
         }
 
-        return RedirectToAction("TaskList", new { applicationId = model.Id });
+        return await RedirectOrContinue(result.ReturnedData!.Value, nameof(TaskList));
     }
 
     [HttpGet("{applicationId}/task-list")]
+    [HttpGet("{applicationId}")]
     public async Task<IActionResult> TaskList(string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
 
-        var model = new ApplicationModel(_siteName, application.Name, application.Sections);
+        var model = new ApplicationSectionsModel(applicationId, _siteName, application.Name, application.Status, application.ReferenceNumber, application.LastModificationDetails, application.Sections);
 
         return View("TaskList", model);
+    }
+
+    [HttpGet("{applicationId}/check-answers")]
+    public async Task<IActionResult> CheckAnswers(string applicationId, CancellationToken cancellationToken)
+    {
+        var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(applicationId, Url, cancellationToken);
+
+        return View("CheckAnswers", applicationSummary);
+    }
+
+    [HttpPost("{applicationId}/submit")]
+    public async Task<IActionResult> Submit(string applicationId, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new SubmitApplicationCommand(applicationId), cancellationToken);
+
+        if (result.HasValidationErrors)
+        {
+            var applicationSummary = await _applicationSummaryViewModelFactory.GetDataAndCreate(applicationId, Url, cancellationToken);
+
+            ModelState.AddValidationErrors(result);
+            return View("CheckAnswers", applicationSummary);
+        }
+
+        return RedirectToAction(nameof(Submitted), new { applicationId });
+    }
+
+    [HttpGet("{applicationId}/submitted")]
+    public async Task<IActionResult> Submitted(string applicationId, CancellationToken cancellationToken)
+    {
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
+
+        // TODO: set job role and contact details
+        return View(
+            "Submitted",
+            new ApplicationSubmittedViewModel(applicationId, application.ReferenceNumber ?? string.Empty, "[job role]", "[INSERT CONTACT DETAILS]"));
     }
 
     protected override async Task<IStateRouting<ApplicationWorkflowState>> Routing(ApplicationWorkflowState currentState, object? routeData = null)
@@ -107,5 +146,20 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     private static ApplicationBasicModel CreateModel(Application application)
     {
         return new ApplicationBasicModel(application.Id, application.Name, application.Tenure);
+    }
+
+    private async Task<IActionResult> RedirectOrContinue(string applicationId, string? action = null)
+    {
+        if (!string.IsNullOrWhiteSpace(Request.Query["callbackUrl"]))
+        {
+            return Redirect(Request.Query["callbackUrl"]!);
+        }
+
+        if (!string.IsNullOrWhiteSpace(action))
+        {
+            return RedirectToAction(action, new { applicationId });
+        }
+
+        return await Continue(new { applicationId });
     }
 }

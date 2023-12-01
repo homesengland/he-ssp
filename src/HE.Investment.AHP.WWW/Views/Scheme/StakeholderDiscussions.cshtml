@@ -13,8 +13,8 @@
 <div class="govuk-grid-column-full">
     <vc:workflow-back-button action="@SchemeWorkflowState.StakeholderDiscussions.ToString()"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <form asp-controller="Scheme" asp-action="StakeholderDiscussions" asp-method="post" enctype="multipart/form-data" novalidate>
-        <div class="govuk-grid-column-three-quarters">
+    <form asp-controller="Scheme" asp-action="StakeholderDiscussions" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" enctype="multipart/form-data" novalidate>
+        <gds-div-grid-column-two-thirds>
             <vc:form-header caption="@Model.ApplicationName" title="@title"/>
             @Html.HiddenFor(m => Model.ApplicationName)
             <gds-field-set role="group">
@@ -29,12 +29,12 @@
                 </HeErrorFormGroup>
                 <vc:upload-file
                     title="Upload any evidence you have of Local Authority support (optional)"
-                    field-name="StakeholderDiscussionFiles"
+                    field-name="StakeholderDiscussionFile"
                     description="This could be any correspondence, including an email chain. We only require one document."
                     max-file-size-in-mb="20"
                     is-hidden="@(Model.UploadedStakeholderDiscussionFiles != null && Model.UploadedStakeholderDiscussionFiles.Any())"/>
             </gds-field-set>
-        </div>
+        </gds-div-grid-column-two-thirds>
         <div class="govuk-grid-column-full">
             <vc:files-table asp-for="@Model.UploadedStakeholderDiscussionFiles"/>
             <vc:form-button/>

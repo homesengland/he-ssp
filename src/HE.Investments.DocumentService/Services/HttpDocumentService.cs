@@ -2,13 +2,13 @@ using System.Text;
 using System.Text.Json;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Exceptions;
-using HE.Investments.DocumentService.Models.File;
-using HE.Investments.DocumentService.Models.Table;
+using HE.Investments.DocumentService.Models;
+using HE.Investments.DocumentService.Services.Contract;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investments.DocumentService.Services;
 
-public class HttpDocumentService : IHttpDocumentService
+public class HttpDocumentService : IDocumentService
 {
     private readonly IHttpClientFactory _httpClient;
 
@@ -29,25 +29,42 @@ public class HttpDocumentService : IHttpDocumentService
         _logger = logger;
     }
 
-    public async Task<TableResult<FileTableRow>> GetTableRowsAsync(FileTableFilter filter)
+    public async Task<IEnumerable<FileDetails<TMetadata>>> GetFilesAsync<TMetadata>(GetFilesQuery query, CancellationToken cancellationToken)
+        where TMetadata : class
     {
-        var uri = new UriBuilder($"{_config.Url}{"/SharepointFiles/GetTableRows"}");
-        using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString())
+        var uri = new UriBuilder($"{_config.Url}/SharepointFiles/GetTableRows");
+        var content = new FileTableFilterContract
         {
-            Content = new StringContent(JsonSerializer.Serialize(filter), Encoding.UTF8, "application/json"),
+            ListTitle = query.ListTitle,
+            ListAlias = query.ListAlias,
+            FolderPaths = query.FolderPaths.ToList(),
+            PagingInfo = null,
         };
 
-        return await SendAsync<TableResult<FileTableRow>>(request);
+        using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString())
+        {
+            Content = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json"),
+        };
+
+        var result = await SendAsync<TableResultContract>(request, cancellationToken);
+        return result.Items.Select(x => new FileDetails<TMetadata>(
+            x.Id,
+            x.FileName,
+            x.FolderPath,
+            x.Size,
+            x.Editor,
+            x.Modified,
+            string.IsNullOrEmpty(x.Metadata) ? null : JsonSerializer.Deserialize<TMetadata>(x.Metadata, _jsonSerializerOptions)));
     }
 
-    public async Task UploadAsync(FileUploadModel item)
+    public async Task UploadAsync<TMetadata>(FileLocation location, UploadFileData<TMetadata> file, bool overwrite = false, CancellationToken cancellationToken = default)
     {
-        var uri = new UriBuilder($"{_config.Url}{"/SharepointFiles/Upload"}");
+        var uri = new UriBuilder($"{_config.Url}/SharepointFiles/Upload");
 
-        using var listTitleStringContent = new StringContent(item.ListTitle);
-        using var folderPathStringContent = new StringContent(item.FolderPath);
-        using var metadataStringContent = new StringContent(item.Metadata);
-        using var overwriteStringContent = new StringContent(item.Overwrite.HasValue ? item.Overwrite.Value.ToString() : string.Empty);
+        using var listTitleStringContent = new StringContent(location.ListTitle);
+        using var folderPathStringContent = new StringContent(location.FolderPath);
+        using var metadataStringContent = new StringContent(JsonSerializer.Serialize(file.Metadata, _jsonSerializerOptions));
+        using var overwriteStringContent = new StringContent(overwrite.ToString());
 
         using var multipartContent = new MultipartFormDataContent
         {
@@ -57,55 +74,52 @@ public class HttpDocumentService : IHttpDocumentService
             { overwriteStringContent, "Overwrite" },
         };
 
-        using var fileContent = new StreamContent(item.File.OpenReadStream());
-        multipartContent.Add(fileContent, "File", item.File.FileName);
+        using var fileContent = new StreamContent(file.Content);
+        multipartContent.Add(fileContent, "File", file.Name);
 
         using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString())
         {
             Content = multipartContent,
         };
-        using var response = await SendAsync(request);
+        using var response = await SendAsync(request, cancellationToken);
     }
 
-    public async Task DeleteAsync(string listAlias, string folderPath, string fileName)
+    public async Task DeleteAsync(FileLocation location, string fileName, CancellationToken cancellationToken)
     {
-        var queryParams = $"listAlias={listAlias}&folderPath={folderPath}&fileName={fileName}";
-        var uri = new UriBuilder($"{_config.Url}{"/SharepointFiles/Delete"}?{queryParams}");
+        var uri = new UriBuilder($"{_config.Url}/SharepointFiles/Delete?listAlias={location.ListAlias}&folderPath={location.FolderPath}&fileName={fileName}");
         using var request = new HttpRequestMessage(HttpMethod.Delete, uri.ToString());
-        using var response = await SendAsync(request);
+        using var response = await SendAsync(request, cancellationToken);
     }
 
-    public async Task<FileData> DownloadAsync(string listAlias, string folderPath, string fileName)
+    public async Task<DownloadFileData> DownloadAsync(FileLocation location, string fileName, CancellationToken cancellationToken)
     {
-        var queryParams = $"listAlias={listAlias}&folderPath={folderPath}&fileName={fileName}";
-        var uri = new UriBuilder($"{_config.Url}{"/SharepointFiles/Download"}?{queryParams}");
+        var uri = new UriBuilder($"{_config.Url}/SharepointFiles/Download?listAlias={location.ListAlias}&folderPath={location.FolderPath}&fileName={fileName}");
         using var request = new HttpRequestMessage(HttpMethod.Get, uri.ToString());
-        using var response = await SendAsync(request);
+        using var response = await SendAsync(request, cancellationToken);
 
-        var fileStream = await response.Content.ReadAsStreamAsync();
+        await using var fileStream = await response.Content.ReadAsStreamAsync(cancellationToken);
         var memoryStream = new MemoryStream();
-        await fileStream.CopyToAsync(memoryStream);
+        await fileStream.CopyToAsync(memoryStream, cancellationToken);
         memoryStream.Position = 0;
 
-        return new FileData(fileName, memoryStream);
+        return new DownloadFileData(fileName, memoryStream);
     }
 
-    public async Task CreateFoldersAsync(string listTitle, List<string> folderPaths)
+    public async Task CreateFoldersAsync(string listTitle, List<string> folderPaths, CancellationToken cancellationToken)
     {
-        var queryParams = $"listTitle={listTitle}";
-        var uri = new UriBuilder($"{_config.Url}{"/SharepointFiles/CreateFolders"}?{queryParams}");
-
+        var uri = new UriBuilder($"{_config.Url}/SharepointFiles/CreateFolders?listTitle={listTitle}");
         using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString())
         {
             Content = new StringContent(JsonSerializer.Serialize(folderPaths), Encoding.UTF8, "application/json"),
         };
-        using var response = await SendAsync(request);
+
+        using var response = await SendAsync(request, cancellationToken);
     }
 
-    private async Task<TResponse> SendAsync<TResponse>(HttpRequestMessage request)
+    private async Task<TResponse> SendAsync<TResponse>(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        using var response = await SendAsync(request);
-        var responseContent = await response.Content.ReadAsStringAsync();
+        using var response = await SendAsync(request, cancellationToken);
+        var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
         try
         {
             var serializedResponse = JsonSerializer.Deserialize<TResponse>(responseContent, _jsonSerializerOptions);
@@ -124,15 +138,15 @@ public class HttpDocumentService : IHttpDocumentService
         }
     }
 
-    private async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+    private async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         using var client = _httpClient.CreateClient("HE.Investments.DocumentService");
         client.Timeout = TimeSpan.FromMinutes(3);
 
-        var response = await client.SendAsync(request);
+        var response = await client.SendAsync(request, cancellationToken);
         if (!response.IsSuccessStatusCode)
         {
-            var errorContent = await response.Content.ReadAsStringAsync();
+            var errorContent = await response.Content.ReadAsStringAsync(cancellationToken);
             _logger.LogError(
                 "Document Service returned {StatusCode} for {Method} {Url} with content \"{Content}\".",
                 response.StatusCode,

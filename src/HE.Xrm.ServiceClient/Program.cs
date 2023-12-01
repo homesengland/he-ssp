@@ -37,7 +37,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    TestUpdateSiteDetails(serviceClient);
+                    TestChangeStatus(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -49,6 +49,16 @@ namespace HE.Xrm.ServiceClientExample
 
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
+        }
+
+        private static void TestChangeStatus(ServiceClient serviceClient)
+        {
+            var req1 = new invln_getahpapplicationdocumentlocationRequest()
+            {
+                invln_applicationid = "40c0dcbf-9c8e-ee11-be36-0022480041cf"
+            };
+            var test = serviceClient.Execute(req1);
+            Console.WriteLine("A web service connection was not established.");
         }
 
         private static void TestHomeType(ServiceClient serviceClient)

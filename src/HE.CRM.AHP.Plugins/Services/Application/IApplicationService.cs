@@ -12,5 +12,8 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         List<AhpApplicationDto> GetApplication(string organisationId, string contactId, string fieldsToRetrieve = null, string applicationId = null);
         bool CheckIfApplicationExists(string serializedApplication);
         void CheckIfApplicationWithNewNameExists(invln_scheme target, invln_scheme preImage);
+        void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus);
+        void CreateDocumentLocation(invln_scheme target);
+        string GetFileLocationForAhpApplication(string ahpApplicationId);
     }
 }

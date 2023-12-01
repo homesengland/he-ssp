@@ -4,6 +4,7 @@ using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.WWW.Middlewares;
 using HE.Investments.Account.WWW.Notifications;
 using HE.Investments.Account.WWW.Routing;
+using HE.Investments.Account.WWW.Utils;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
@@ -32,6 +33,8 @@ public static class OrganisationWebModule
     private static void AddConfiguration(IServiceCollection services)
     {
         services.AddSingleton<IOrganisationAppConfig, OrganisationAppConfig>(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration").Get<OrganisationAppConfig>());
+        services.AddSingleton(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:ProgrammeUrl").Get<ProgrammeUrlConfig>());
+        services.AddSingleton<IProgrammes, Programmes>();
         services.AddSingleton<IDataverseConfig, DataverseConfig>(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration:Dataverse").Get<DataverseConfig>());
     }
 

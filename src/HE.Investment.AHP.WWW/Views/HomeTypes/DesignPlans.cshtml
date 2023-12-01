@@ -7,22 +7,28 @@
     var homeTypeId = this.GetHomeTypeIdFromRoute();
 }
 
-@Html.Hidden("MaxFileSizeInMegabytes", 20)
-
 <div class="govuk-grid-column-full">
     <form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header title="Upload your design plans"
                                   current-page="@HomeTypesWorkflowState.DesignPlans"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"/>
 
-        <vc:upload-file field-name ="File" description="Upload all relevant files." is-multiple="true" />
+        <vc:upload-file field-name="File"
+                        description="Upload all relevant files."
+                        is-multiple="true"
+                        max-file-size-in-mb="20"
+                        upload-one-file-url="@Url.Action("UploadDesignPlansFile", "HomeTypes", new { applicationId, homeTypeId })"
+                        remove-file-url-template="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "RemoveDesignPlansFile", applicationId, id = homeTypeId, fileId = ":fileId" })"
+                        download-file-url-template="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "DownloadDesignPlansFile", applicationId, id = homeTypeId, fileId = ":fileId" })"/>
 
         <vc:files-table asp-for="@Model.UploadedFiles"/>
 
         <gds-field-set class="govuk-!-margin-bottom-4">
-            <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0 govuk-!-margin-top-8">
+            <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0 govuk-!-margin-top-8">
                 <gds-legend>
                     <gds-h3 class="govuk-!-margin-bottom-0">Tell us more about your design plans (optional)</gds-h3>
                 </gds-legend>
@@ -30,7 +36,7 @@
                 <gds-span-hint>Tell us any important information about the plans, or any additional information not included.</gds-span-hint>
                 <he-text-area asp-for="MoreInformation" rows="7"></he-text-area>
                 <gds-span-hint>You can enter up to 1500 characters</gds-span-hint>
-            </gds-div-grid-column-two-thirds>
+            </div>
         </gds-field-set>
 
         <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">

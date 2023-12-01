@@ -7,13 +7,15 @@
     var homeTypeId = this.GetHomeTypeIdFromRoute();
 }
 
-<div class="govuk-grid-column-full">
+<div class="govuk-grid-column-two-thirds">
     <form asp-controller="HomeTypes" asp-action="HomeInformation" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header title="Home information"
                                   current-page="@HomeTypesWorkflowState.HomeInformation"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
-                                  caption="@Model.Header" />
+                                  caption="@Model.Header"/>
 
         <gds-field-set>
             <gds-legend>

@@ -31,6 +31,13 @@ public abstract class Files<TFileEntity>
         }
     }
 
+    public void AddFileToUpload(TFileEntity file)
+    {
+        FilesCountPolicy?.Apply(UploadedFiles.Count + _filesToUpload.Count + 1 - _filesToRemove.Count);
+
+        _filesToUpload.Add(file);
+    }
+
     public void MarkFileToRemove(FileId fileId)
     {
         var fileToRemove = UploadedFiles.FirstOrDefault(x => x.Id == fileId) ?? throw new NotFoundException(nameof(FileEntity), fileId);

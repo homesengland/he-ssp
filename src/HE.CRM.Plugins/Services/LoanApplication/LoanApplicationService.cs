@@ -585,7 +585,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
         {
             if (Guid.TryParse(loanApplicationId, out Guid loanGuid))
             {
-                var relatedDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToLoanApplication(loanGuid);
+                var relatedDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToRecordWithGivenGuid(loanGuid);
                 return relatedDocumentLocation.RelativeUrl;
             }
             return string.Empty;

@@ -97,6 +97,9 @@
 // - on the top of the page there is placed '_ErrorSummaryPartial.cshtml' partial view
 // - page has submit button '.govuk-button[type="submit"]'
 // - maximum size of the file is in value of element with Id 'MaxFileSizeInMegabytes'
+// - URL to file upload is in value of element with id 'upload-file-url'
+// - URL to remove file is in value of element with id 'remove-file-url-template', URL contains {:fileId} template parameter
+// - URL to download file is in value of element with id 'download-file-url-template', URL contains {:fileId} template parameter
 (() => {
   const fileInputSelector = `.govuk-file-upload[type="file"]`;
   const fileInputFormGroupId = 'file-input-form-group';
@@ -104,10 +107,12 @@
   const validationSummaryListId = 'validation-error-list';
   const continueButtonSelector = `.govuk-button[type="submit"]`;
   const maxFileSizeId = 'MaxFileSizeInMegabytes';
+  const uploadFileUrlId = 'upload-file-url';
+  const removeFileUrlId = 'remove-file-url-template';
+  const downloadFileUrlId = 'download-file-url-template';
 
-  const uploadControlId = document.querySelectorAll(fileInputSelector)[0].id;
-
-  const inputFieldError = (message) => `<span id="${uploadControlId}-error" class="govuk-error-message field-validation-error" data-valmsg-for="${uploadControlId}" data-valmsg-replace="true"><span class="govuk-visually-hidden">Error:</span>${message}</span>`;
+  const getUploadControlId = () => document.querySelectorAll(fileInputSelector)[0].id;
+  const inputFieldError = (message) => `<span id="${getUploadControlId()}-error" class="govuk-error-message field-validation-error" data-valmsg-for="${getUploadControlId()}" data-valmsg-replace="true"><span class="govuk-visually-hidden">Error:</span>${message}</span>`;
   const emptyErrorSummary = () =>
     `<div aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary" id="${validationSummaryId}" class="govuk-error-summary">
       <h2 id="error-summary-title" class="govuk-error-summary__title">
@@ -119,27 +124,129 @@
         </div>
       </div>
     </div>`;
-  const inputFiledErrorSummaryMessage = (message) => `<li><a href="#${uploadControlId}">${message}</a></li>`;
+  const inputFiledErrorSummaryMessage = (message) => `<li><a href="#${getUploadControlId()}">${message}</a></li>`;
 
-  const fileInputChanged = () => {
+  const fileTableRow = (fileId, fileName) => `<tr class="govuk-table__row" id="file-${fileId}">
+      <td class="govuk-table__cell govuk-!-font-weight-bold">${sanitize(fileName)}</td>
+      <td class="govuk-table__cell"></td>
+      <td class="govuk-table__cell govuk-!-text-align-right">Queued</td>
+    </tr>`;
+
+  const removeFileLink = (removeFileUrl) => `<a class="govuk-link--no-visited-state govuk-!-margin-left-4 govuk-link" href="${removeFileUrl}">Remove</a>`;
+
+  const downloadFileLink = (fileName, downloadFileUrl) => `<a class="govuk-link" href="${downloadFileUrl}">${sanitize(fileName)}</a>`;
+
+  const fileInputChanged = async () => {
     const maxFileSizeInMegabytes = document.getElementById(maxFileSizeId).value;
     const maxFileSize = maxFileSizeInMegabytes * 1024 * 1024;
     const uploadControl = document.querySelectorAll(fileInputSelector)[0];
     const continueButton = document.querySelectorAll(continueButtonSelector)[0];
+    const uploadFileUrl = document.getElementById(uploadFileUrlId);
+    const token = document.querySelectorAll('input[name="__RequestVerificationToken"]')[0].value;
+    const invalidFiles = new DataTransfer();
+    const filesToUpload = {};
+    const shouldUpload = uploadFileUrl !== null && uploadFileUrl !== undefined;
 
-    continueButton.disabled = false;
+    for (let i = 0; i < uploadControl.files.length; i++) {
+      invalidFiles.items.add(uploadControl.files[i]);
+    }
+
+    continueButton.disabled = true;
+    uploadControl.disabled = shouldUpload;
+    let hasErrors = false;
     clearInputFieldError();
     clearInputFieldErrorSummary();
 
-    for (let i = 0; i < uploadControl.files.length; i++) {
-      if (uploadControl.files[i].size > maxFileSize) {
+    for (let i = invalidFiles.files.length - 1; i >= 0; i--) {
+      if (invalidFiles.files[i].size > maxFileSize) {
         const errorMessage = `The selected file must be smaller than ${maxFileSizeInMegabytes}MB`;
 
-        continueButton.disabled = true;
+        hasErrors = true;
         addInputFieldError(errorMessage);
         addInputFieldErrorSummary(errorMessage);
+      } else if (shouldUpload) {
+        const fileId = (Math.random() + 1).toString(36).substring(7);
+        fileUploadInitialized(fileId, invalidFiles.files[i]);
+        filesToUpload[fileId] = invalidFiles.files[i];
+        invalidFiles.items.remove(i);
       }
     }
+
+    if (shouldUpload) {
+      uploadControl.files = invalidFiles.files;
+
+      for(let fileId in filesToUpload) {
+        const url = uploadFileUrl.value;
+        const file = filesToUpload[fileId];
+        const formData = new FormData();
+        formData.append("__RequestVerificationToken", token);
+        formData.append("file", file);
+
+        fileUploadStarted(fileId);
+        await fetch(url, { method: "POST", body: formData })
+          .then(response => response.ok ? fileUploadFinished(fileId, file.name, response) : fileUploadFailed(fileId, response));
+      }
+    }
+
+    if (!hasErrors) {
+      continueButton.disabled = false;
+    }
+
+    uploadControl.disabled = false;
+  }
+
+  const fileUploadInitialized = (fileId, file) => {
+    const table = document.getElementsByClassName("govuk-table__body")[0];
+    table.innerHTML += fileTableRow(fileId, file.name);
+  }
+
+  const fileUploadStarted = (fileId) => {
+    const actionColumn = document.querySelector(`#file-${fileId} :nth-child(3)`);
+    actionColumn.innerHTML = '<div class="loader-line"></div>';
+  }
+
+  const fileUploadFinished = (fileId, fileName, response) => {
+    return response.json()
+      .then(uploadedFile => {
+        const fileNameColumn = document.querySelector(`#file-${fileId} :nth-child(1)`);
+        const uploadedColumn = document.querySelector(`#file-${fileId} :nth-child(2)`);
+        const actionColumn = document.querySelector(`#file-${fileId} :nth-child(3)`);
+
+        uploadedColumn.innerText = uploadedFile.uploadDetails;
+
+        const removeFileUrlElement = document.getElementById(removeFileUrlId);
+        if (uploadedFile.canBeRemoved && removeFileUrlElement) {
+          const removeUrl = removeFileUrlElement.value.replace('%3AfileId', uploadedFile.fileId);
+          actionColumn.innerHTML = removeFileLink(removeUrl);
+        } else {
+          actionColumn.innerHTML = "";
+        }
+
+        const downloadFileUrlElement = document.getElementById(downloadFileUrlId);
+        if (downloadFileUrlElement) {
+          const downloadUrl = downloadFileUrlElement.value.replace('%3AfileId', uploadedFile.fileId);
+          fileNameColumn.innerHTML = downloadFileLink(fileName, downloadUrl);
+        }
+      });
+  }
+
+  const fileUploadFailed = async (fileId, response) => {
+    const uploadedColumn = document.querySelector(`#file-${fileId} :nth-child(2)`);
+    const actionColumn = document.querySelector(`#file-${fileId} :nth-child(3)`);
+
+    uploadedColumn.innerText = "Upload failed";
+    actionColumn.innerHTML = "";
+
+    if (response.status === 400) {
+      return response.json()
+        .then(errors => {
+          if (Array.isArray(errors) && errors.length > 0 && errors[0].errorMessage){
+            uploadedColumn.innerText = errors[0].errorMessage;
+          }
+        });
+    }
+
+    return Promise.resolve();
   }
 
   const addInputFieldError = (message) => {
@@ -151,7 +258,7 @@
 
   const clearInputFieldError = () => {
     const formGroup = document.getElementById(fileInputFormGroupId);
-    const errorSpan = document.getElementById(`${uploadControlId}-error`);
+    const errorSpan = document.getElementById(`${getUploadControlId()}-error`);
     if (errorSpan){
       errorSpan.remove();
     }
@@ -174,7 +281,7 @@
   const removeInputFieldErrorSummaryMessages = (summaryValidationList) => {
     const errors = summaryValidationList.getElementsByTagName('a');
     for (let i = 0; i < errors.length; i++) {
-      if (errors[i].href.endsWith(`#${uploadControlId}`)) {
+      if (errors[i].href.endsWith(`#${getUploadControlId()}`)) {
         errors[i].parentNode.remove();
       }
     }
@@ -193,9 +300,22 @@
     }
   }
 
+  const sanitize = string => {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      "/": '&#x2F;',
+    };
+    const reg = /[&<>"'/]/ig;
+    return string.replace(reg, (match)=>(map[match]));
+  }
+
   document.addEventListener("DOMContentLoaded", function() {
     const fileInput = document.querySelectorAll(fileInputSelector)[0];
-    if (fileInput !== null) {
+    if (fileInput !== null && fileInput !== undefined) {
      fileInput.addEventListener("change", fileInputChanged);
     }
   });

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.QueryHandlers;
 
-public class GetApplicationsQueryHandler : IRequestHandler<GetApplicationsQuery, IList<Contract.Application.Application>>
+public class GetApplicationsQueryHandler : IRequestHandler<GetApplicationsQuery, IList<ApplicationBasicDetails>>
 {
     private readonly IApplicationRepository _repository;
 
@@ -14,15 +14,14 @@ public class GetApplicationsQueryHandler : IRequestHandler<GetApplicationsQuery,
         _repository = repository;
     }
 
-    public async Task<IList<Contract.Application.Application>> Handle(GetApplicationsQuery request, CancellationToken cancellationToken)
+    public async Task<IList<ApplicationBasicDetails>> Handle(GetApplicationsQuery request, CancellationToken cancellationToken)
     {
         var applications = await _repository.GetAll(cancellationToken);
 
-        return applications.Select(s => new Contract.Application.Application(
+        return applications.Select(s => new ApplicationBasicDetails(
                 s.Id.Value,
                 s.Name.Name,
-                s.Tenure?.Value ?? default,
-                new List<ApplicationSection>()))
+                s.Tenure?.Value ?? default))
             .ToList();
     }
 }

@@ -43,6 +43,13 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             otherCapitalSources = financialDetails.OtherCapitalSources?.Value,
             totalInitialSalesIncome = financialDetails.SharedOwnershipSales?.Value,
             transferValue = financialDetails.HomesTransferValue?.Value,
+            howMuchReceivedFromCountyCouncil = financialDetails.CountyCouncilGrants?.Value,
+            howMuchReceivedFromDhscExtraCareFunding = financialDetails.DHSCExtraCareGrants?.Value,
+            howMuchReceivedFromLocalAuthority1 = financialDetails.LocalAuthorityGrants?.Value,
+            howMuchReceivedFromSocialServices = financialDetails.SocialServicesGrants?.Value,
+            howMuchReceivedFromDepartmentOfHealth = financialDetails.HealthRelatedGrants?.Value,
+            howMuchReceivedFromLotteryFunding = financialDetails.LotteryGrants?.Value,
+            howMuchReceivedFromOtherPublicBodies = financialDetails.OtherPublicGrants?.Value,
         };
 
         _ = await _applicationCrmContext.Save(dto, CrmFields.FinancialDetailsToUpdate, cancellationToken);
@@ -68,6 +75,13 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             RCGFContribution.From(application.recycledCapitalGrantFund),
             OtherCapitalSources.From(application.otherCapitalSources),
             SharedOwnershipSales.From(application.totalInitialSalesIncome),
-            HomesTransferValue.From(application.transferValue));
+            HomesTransferValue.From(application.transferValue),
+            CountyCouncilGrants.From(application.howMuchReceivedFromCountyCouncil),
+            DHSCExtraCareGrants.From(application.howMuchReceivedFromDhscExtraCareFunding),
+            LocalAuthorityGrants.From(application.howMuchReceivedFromLocalAuthority1),
+            SocialServicesGrants.From(application.howMuchReceivedFromSocialServices),
+            HealthRelatedGrants.From(application.howMuchReceivedFromDepartmentOfHealth),
+            LotteryGrants.From(application.howMuchReceivedFromLotteryFunding),
+            OtherPublicGrants.From(application.howMuchReceivedFromOtherPublicBodies));
     }
 }

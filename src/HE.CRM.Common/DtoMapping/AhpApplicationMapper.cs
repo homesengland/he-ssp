@@ -108,6 +108,8 @@ namespace HE.CRM.Common.DtoMapping
                 howMuchReceivedFromDepartmentOfHealth = application.invln_grantsfromdhscnhsorotherhealth?.Value,
                 howMuchReceivedFromLotteryFunding = application.invln_grantsfromthelottery?.Value,
                 howMuchReceivedFromOtherPublicBodies = application.invln_grantsfromotherpublicbodies?.Value,
+                referenceNumber = application.invln_applicationid,
+                applicationStatus = application.StatusCode?.Value,
             };
             if (application.Id != null)
             {

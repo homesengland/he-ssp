@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investments.Common.WWW.Helpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -24,4 +25,10 @@ public static class HomeTypesFormOptions
     public static IEnumerable<SelectListItem> RevenueFundingTypes => SelectListHelper.FromEnum<RevenueFundingType>();
 
     public static IEnumerable<SelectListItem> RevenueFundingSourceTypes => SelectListHelper.FromEnum<RevenueFundingSourceType>();
+
+    public static IEnumerable<SelectListItem> BuildingType => SelectListHelper.FromEnum<BuildingType>();
+
+    public static IEnumerable<SelectListItem> FacilityType => SelectListHelper.FromEnum<FacilityType>();
+
+    public static IEnumerable<SelectListItem> AccessibilityCategoryType => SelectListHelper.FromEnum<AccessibilityCategoryType>();
 }

@@ -1,5 +1,5 @@
-using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories.Mapper;
-using HE.Investments.Loans.Contract.Application.Enums;
+using HE.Investments.Common.Contract;
+using HE.Investments.Common.CRM;
 
 namespace HE.Investments.Loans.BusinessLogic.Tests.Application.Mappers;
 

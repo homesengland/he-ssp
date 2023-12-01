@@ -8,7 +8,8 @@
   <EntityTypesFolder>..\Entities</EntityTypesFolder>
   <ExtensionConfig>
     <ActionPrefixesWhitelist />
-    <ActionsWhitelist>invln_changeloanapplicationexternalstatus|
+    <ActionsWhitelist>invln_changeahpapplicationstatus|
+invln_changeloanapplicationexternalstatus|
 invln_checkifapplicationwithgivennameexists|
 invln_checkifloanapplicationwithgivennameexists|
 invln_deletehometype|
@@ -16,6 +17,7 @@ invln_deleteloanapplication|
 invln_deletesitedetails|
 invln_generaterichtextdocument|
 invln_getahpapplication|
+invln_getahpapplicationdocumentlocation|
 invln_getcontactrole|
 invln_getfilelocationforapplicationloan|
 invln_getloanapplicationsforaccountandcontact|

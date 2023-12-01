@@ -30,10 +30,17 @@ var mvcBuilder = builder.Services
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 
 var app = builder.Build();
+const string globalRoutePrefix = "/ahp";
+app.UsePathBase(globalRoutePrefix);
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+    app.Use((context, next) =>
+    {
+        // assume all non-development requests are https
+        context.Request.Scheme = "https";
+        return next();
+    });
 }
 
 app.UseHttpsRedirection();

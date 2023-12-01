@@ -1,4 +1,5 @@
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.ValueObjects;
@@ -8,7 +9,6 @@ using HE.Investments.Loans.Contract.Application.Enums;
 using HE.Investments.Loans.Contract.Application.Events;
 using HE.Investments.Loans.Contract.Application.Helper;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
-using ApplicationStatus = HE.Investments.Loans.Contract.Application.Enums.ApplicationStatus;
 
 namespace HE.Investments.Loans.BusinessLogic.LoanApplication.Entities;
 

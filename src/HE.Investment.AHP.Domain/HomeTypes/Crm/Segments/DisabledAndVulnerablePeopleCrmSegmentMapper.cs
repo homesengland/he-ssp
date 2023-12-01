@@ -15,7 +15,7 @@ public class DisabledAndVulnerablePeopleCrmSegmentMapper : HomeTypeCrmSegmentMap
 
     public override HomeTypeSegmentType SegmentType => HomeTypeSegmentType.DisabledAndVulnerablePeople;
 
-    public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto)
+    public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
         return new DisabledPeopleHomeTypeDetailsSegmentEntity(MapHousingType(dto.housingTypeForVulnerable), MapClientGroup(dto.clientGroup));
     }

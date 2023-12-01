@@ -2,7 +2,7 @@ using HE.Investment.AHP.Contract.HomeTypes.Enums;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class RevenueFundingModel : ProvidedHomeTypeModelBase
+public class RevenueFundingModel : HomeTypeBasicModel
 {
     public RevenueFundingModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)

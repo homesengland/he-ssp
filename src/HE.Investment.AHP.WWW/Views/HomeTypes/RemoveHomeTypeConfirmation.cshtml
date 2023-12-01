@@ -9,6 +9,8 @@
 
 <div class="govuk-grid-column-three-quarters">
     <form asp-controller="HomeTypes" asp-action="Remove" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header title="Remove @Model.HomeTypeName Home type"
                                   current-page="@HomeTypesWorkflowState.RemoveHomeType"
                                   application-id="@applicationId"

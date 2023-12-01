@@ -5,7 +5,9 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.CRM;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
+using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
 
@@ -35,7 +37,7 @@ public class ApplicationRepository : IApplicationRepository
     public async Task<ApplicationBasicInfo> GetApplicationBasicInfo(ApplicationId id, CancellationToken cancellationToken)
     {
         var application = await GetById(id, cancellationToken);
-        return new ApplicationBasicInfo(application.Id, application.Tenure?.Value ?? Tenure.Undefined, ApplicationStatus.Draft);
+        return new ApplicationBasicInfo(application.Id, application.Name, application.Tenure?.Value ?? Tenure.Undefined, ApplicationStatus.Draft);
     }
 
     public async Task<IList<ApplicationEntity>> GetAll(CancellationToken cancellationToken)
@@ -47,6 +49,11 @@ public class ApplicationRepository : IApplicationRepository
 
     public async Task<ApplicationEntity> Save(ApplicationEntity application, CancellationToken cancellationToken)
     {
+        if (!application.IsModified)
+        {
+            return application;
+        }
+
         var account = await _accountUserContext.GetSelectedAccount();
         var dto = new AhpApplicationDto
         {
@@ -70,11 +77,20 @@ public class ApplicationRepository : IApplicationRepository
         return new ApplicationEntity(
             new ApplicationId(application.id),
             new ApplicationName(application.name ?? "Unknown"),
+            ApplicationStatusMapper.MapToPortalStatus(application.applicationStatus),
+            new ApplicationReferenceNumber(application.referenceNumber),
             ApplicationTenureMapper.ToDomain(application.tenure),
+            new AuditEntry(
+                application.lastExternalModificationBy?.firstName,
+                application.lastExternalModificationBy?.lastName,
+                application.lastExternalModificationOn),
             new ApplicationSections(
-                SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus),
-                SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus),
-                SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus),
-                SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus)));
+                new List<ApplicationSection>
+                {
+                    new(SectionType.Scheme, SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus)),
+                    new(SectionType.HomeTypes, SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus)),
+                    new(SectionType.FinancialDetails, SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus)),
+                    new(SectionType.DeliveryPhases, SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus)),
+                }));
     }
 }

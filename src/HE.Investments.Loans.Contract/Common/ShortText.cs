@@ -1,4 +1,5 @@
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
@@ -28,6 +29,15 @@ public class ShortText : ValueObject
         }
 
         Value = value;
+    }
+
+    public ShortText(string? value, string fieldName, string fieldDisplayName)
+        : this(
+            value,
+            fieldName,
+            ValidationErrorMessage.MissingRequiredField(fieldDisplayName),
+            ValidationErrorMessage.ShortInputLengthExceeded(fieldDisplayName))
+    {
     }
 
     public string Value { get; }

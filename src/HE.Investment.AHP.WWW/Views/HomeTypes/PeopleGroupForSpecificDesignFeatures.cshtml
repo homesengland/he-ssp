@@ -1,0 +1,67 @@
+@using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.WWW.Helpers
+@using HE.Investment.AHP.Contract.HomeTypes.Enums
+@model HE.Investment.AHP.WWW.Models.HomeTypes.PeopleGroupForSpecificDesignFeaturesModel;
+
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+
+    var radioIndex = 1;
+    var radioOptions = SelectListHelper.FromEnum<PeopleGroupForSpecificDesignFeaturesType>()
+        .Where(x => x.Value != PeopleGroupForSpecificDesignFeaturesType.NoneOfThese.ToString());
+    var noneOfTheseRationOption = SelectListHelper.FromEnum(PeopleGroupForSpecificDesignFeaturesType.NoneOfThese);
+}
+
+<div class="govuk-grid-column-two-thirds">
+    <form asp-controller="HomeTypes" asp-action="PeopleGroupForSpecificDesignFeatures" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
+        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures"
+                                  application-id="@applicationId"
+                                  home-type-id="@homeTypeId"
+                                  caption="@Model.Header"/>
+
+        <gds-field-set>
+            <gds-legend>
+                <gds-h1 class="govuk-!-margin-bottom-0">
+                    Do these homes incorporate specific design features or management arrangements to meet the needs of any of these groups?
+                </gds-h1>
+            </gds-legend>
+
+            <gds-p>
+                If these homes are designed specifically to meet the needs of more than one group, select the priority group. You can also create another home type for each group and enter them separately.
+            </gds-p>
+
+            <div class="govuk-radios govuk-!-margin-bottom-6" data-module="govuk-radios">
+                @foreach (var option in radioOptions)
+                {
+                    <div class="govuk-radios__item">
+                        @Html.RadioButtonFor(x => x.PeopleGroupForSpecificDesignFeatures, option.Value, new { id = $"PeopleGroupForSpecificDesignFeatures-{radioIndex}", @class = "govuk-radios__input" })
+                        <label class="govuk-label govuk-radios__label" for="PeopleGroupForSpecificDesignFeatures-@radioIndex">@option.Text</label>
+                    </div>
+
+                    {
+                        radioIndex += 1;
+                    }
+                }
+
+                <p class="govuk-!-margin-top-4">Or</p>
+
+                <div class="govuk-radios__item">
+                    @Html.RadioButtonFor(x => x.PeopleGroupForSpecificDesignFeatures, noneOfTheseRationOption.Value, new { id = $"PeopleGroupForSpecificDesignFeatures-{radioIndex}", @class = "govuk-radios__input" })
+                    <label class="govuk-label govuk-radios__label" for="PeopleGroupForSpecificDesignFeatures-@radioIndex">@noneOfTheseRationOption.Text</label>
+                </div>
+            </div>
+
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                Save and continue
+            </button>
+        </gds-field-set>
+
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</div>

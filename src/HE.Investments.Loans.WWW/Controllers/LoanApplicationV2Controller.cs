@@ -141,6 +141,7 @@ public class LoanApplicationV2Controller : WorkflowController<LoanApplicationWor
     }
 
     [HttpGet("{id}/task-list")]
+    [HttpGet("{id}")]
     [WorkflowState(LoanApplicationWorkflow.State.TaskList)]
     [WorkflowState(CompanyStructureState.Complete)]
     [WorkflowState(SecurityState.Complete)]

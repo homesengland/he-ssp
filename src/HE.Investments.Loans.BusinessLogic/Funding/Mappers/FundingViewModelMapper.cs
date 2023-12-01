@@ -1,3 +1,4 @@
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Loans.BusinessLogic.Funding.Entities;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
