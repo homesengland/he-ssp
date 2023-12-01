@@ -768,6 +768,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 applicationId,
                 id = homeTypeId,
                 fileId,
-            }) ?? throw new InvalidOperationException();
+            }) ?? string.Empty;
     }
 }
