@@ -22,10 +22,6 @@ public class PurchasePrice : ValueObject
 
             ActualPrice = price;
         }
-        else
-        {
-            ActualPrice = null;
-        }
 
         if (!string.IsNullOrWhiteSpace(expectedPurchasePrice))
         {
@@ -37,10 +33,6 @@ public class PurchasePrice : ValueObject
             }
 
             ExpectedPrice = price;
-        }
-        else
-        {
-            ExpectedPrice = null;
         }
     }
 

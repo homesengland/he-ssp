@@ -1,6 +1,6 @@
 @using HE.Investments.Common.WWW.Components.SectionSummary;
 
-@model (string title, IList<SectionSummaryItemModel> items, string? validationError)
+@model (string title, IList<SectionSummaryItemModel> items, string validationError)
 <gds-h2>@Model.title</gds-h2>
 @if (!string.IsNullOrWhiteSpace(Model.validationError))
 {

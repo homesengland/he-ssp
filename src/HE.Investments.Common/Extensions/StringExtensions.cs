@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.Investments.Common.Validators;
 
 namespace HE.Investments.Common.Extensions;
 
@@ -41,5 +42,19 @@ public static class StringExtensions
     public static IList<string>? ToOneElementList(this string? val)
     {
         return val != null ? new List<string> { val } : null;
+    }
+
+    public static int? TryParseNullableIntAndValidate(this string? value, string fieldName, string errorMsg, bool allowNull, int minValue, int maxValue, OperationResult operationResult)
+    {
+        if (string.IsNullOrWhiteSpace(value) && allowNull)
+        {
+            return null;
+        }
+
+        return NumericValidator
+            .For(value, fieldName, operationResult)
+            .IsWholeNumber(errorMsg)
+            .IsBetween(minValue, maxValue, errorMsg)
+            .IsConditionallyRequired(!allowNull);
     }
 }

@@ -1,7 +1,9 @@
+using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
+using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
 using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
@@ -50,6 +52,29 @@ public class FinancialDetailsEntity
     public Grants Grants { get; private set; }
 
     public SectionStatus SectionStatus { get; private set; }
+
+    public decimal TotalExpectedCost =>
+        (ExpectedCosts.WorksCosts ?? 0)
+        + (ExpectedCosts.OnCosts ?? 0);
+
+    public decimal TotalContributions =>
+        (Contributions.RentalIncomeBorrowing ?? 0) +
+        (Contributions.SalesOfHomesOnThisScheme ?? 0) +
+        (Contributions.SalesOfHomesOnOtherSchemes ?? 0) +
+        (Contributions.OwnResources ?? 0) +
+        (Contributions.RCGFContributions ?? 0) +
+        (Contributions.OtherCapitalSources ?? 0) +
+        (Contributions.SharedOwnershipSales ?? 0) +
+        (Contributions.HomesTransferValue ?? 0);
+
+    public decimal TotalGrants =>
+        (Grants.CountyCouncil ?? 0) +
+        (Grants.LocalAuthority ?? 0) +
+        (Grants.SocialServices ?? 0) +
+        (Grants.DHSCExtraCare ?? 0) +
+        (Grants.HealthRelated ?? 0) +
+        (Grants.Lottery ?? 0) +
+        (Grants.OtherPublicBodies ?? 0);
 
     public void ProvidePurchasePrice(PurchasePrice purchasePrice)
     {
@@ -115,6 +140,11 @@ public class FinancialDetailsEntity
         result.Aggregate(() => ExpectedCosts.CheckErrors());
         result.Aggregate(() => Contributions.CheckErrors());
         result.Aggregate(() => Grants.CheckErrors());
+        if (TotalContributions + TotalGrants != TotalExpectedCost + (PurchasePrice.ActualPrice ?? 0))
+        {
+            result.AddValidationError(FinancialDetailsValidationFieldNames.CostsAndFunding, FinancialDetailsValidationErrors.CostsAndFundingMismatch);
+        }
+
         result.CheckErrors();
 
         SectionStatus = SectionStatus.Completed;

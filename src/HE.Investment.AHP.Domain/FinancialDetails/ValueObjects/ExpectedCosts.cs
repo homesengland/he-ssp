@@ -39,18 +39,25 @@ public class ExpectedCosts : ValueObject
     {
         var operationResult = OperationResult.New();
 
-        WorksCosts = NumericValidator
-            .For(worksCosts, FinancialDetailsValidationFieldNames.ExpectedWorksCosts, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.InvalidExpectedWorksCosts)
-            .IsBetween(1, 999999999, FinancialDetailsValidationErrors.InvalidExpectedWorksCosts)
-            .IsConditionallyRequired(!allowNulls);
+        WorksCosts = CheckNullableIntValue(
+            worksCosts,
+            FinancialDetailsValidationFieldNames.ExpectedWorksCosts,
+            FinancialDetailsValidationErrors.InvalidExpectedWorksCosts,
+            allowNulls,
+            operationResult);
 
-        OnCosts = NumericValidator
-            .For(onCosts, FinancialDetailsValidationFieldNames.ExpectedOnCosts, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.InvalidExpectedOnCosts)
-            .IsBetween(1, 999999999, FinancialDetailsValidationErrors.InvalidExpectedOnCosts)
-            .IsConditionallyRequired(!allowNulls);
+        OnCosts = CheckNullableIntValue(
+            onCosts,
+            FinancialDetailsValidationFieldNames.ExpectedOnCosts,
+            FinancialDetailsValidationErrors.InvalidExpectedOnCosts,
+            allowNulls,
+            operationResult);
 
         return operationResult;
+    }
+
+    private int? CheckNullableIntValue(string? value, string fieldName, string errorMsg, bool allowNull, OperationResult operationResult)
+    {
+        return value.TryParseNullableIntAndValidate(fieldName, errorMsg, allowNull, 0, 999999999, operationResult);
     }
 }

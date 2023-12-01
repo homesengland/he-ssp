@@ -96,48 +96,60 @@ public class Grants : ValueObject
     {
         var operationResult = OperationResult.New();
 
-        CountyCouncil = NumericValidator
-            .For(countyCouncil, FinancialDetailsValidationFieldNames.CountyCouncilGrants, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        CountyCouncil = CheckNullableIntValue(
+            countyCouncil,
+            FinancialDetailsValidationFieldNames.CountyCouncilGrants,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
-        DHSCExtraCare = NumericValidator
-            .For(dHSCExtraCare, FinancialDetailsValidationFieldNames.DHSCExtraCareGrants, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        DHSCExtraCare = CheckNullableIntValue(
+            dHSCExtraCare,
+            FinancialDetailsValidationFieldNames.DHSCExtraCareGrants,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
-        LocalAuthority = NumericValidator
-            .For(localAuthority, FinancialDetailsValidationFieldNames.LocalAuthorityGrants, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        LocalAuthority = CheckNullableIntValue(
+            localAuthority,
+            FinancialDetailsValidationFieldNames.LocalAuthorityGrants,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
-        SocialServices = NumericValidator
-            .For(socialServices, FinancialDetailsValidationFieldNames.SocialServicesGrants, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        SocialServices = CheckNullableIntValue(
+            socialServices,
+            FinancialDetailsValidationFieldNames.SocialServicesGrants,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
-        HealthRelated = NumericValidator
-            .For(healthRelated, FinancialDetailsValidationFieldNames.HeatlthRelatedGrants, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        HealthRelated = CheckNullableIntValue(
+            healthRelated,
+            FinancialDetailsValidationFieldNames.HeatlthRelatedGrants,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
-        Lottery = NumericValidator
-            .For(lottery, FinancialDetailsValidationFieldNames.LotteryGrants, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        Lottery = CheckNullableIntValue(
+            lottery,
+            FinancialDetailsValidationFieldNames.LotteryGrants,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
-        OtherPublicBodies = NumericValidator
-            .For(otherPublicBodies, FinancialDetailsValidationFieldNames.OtherPublicBodiesGrants, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        OtherPublicBodies = CheckNullableIntValue(
+            otherPublicBodies,
+            FinancialDetailsValidationFieldNames.OtherPublicBodiesGrants,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
         return operationResult;
+    }
+
+    private int? CheckNullableIntValue(string? value, string fieldName, string errorMsg, bool allowNull, OperationResult operationResult)
+    {
+        return value.TryParseNullableIntAndValidate(fieldName, errorMsg, allowNull, 0, 999999999, operationResult);
     }
 }

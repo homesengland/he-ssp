@@ -22,6 +22,7 @@ using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Routing;
 using NuGet.Protocol;
 using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
@@ -276,6 +277,12 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
             if (result.HasValidationErrors)
             {
+                var error = result.Errors.FirstOrDefault(error => error.AffectedField == FinancialDetailsValidationFieldNames.CostsAndFunding);
+                if (error != null)
+                {
+                    ModelState.AddModelError(error.AffectedField, error.ErrorMessage);
+                }
+
                 ModelState.AddModelError(nameof(model.IsCompleted), "You have not completed this section. Select no if you want to come back later");
                 return View("CheckAnswers", await _financialDetailsSummaryModelFactory.GetFinancialDetailsAndCreateSummary(Url, applicationId, cancellationToken));
             }

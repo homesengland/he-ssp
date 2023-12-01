@@ -104,54 +104,67 @@ public class Contributions : ValueObject
     {
         var operationResult = OperationResult.New();
 
-        RentalIncomeBorrowing = NumericValidator
-            .For(rentalIncomeBorrowing, FinancialDetailsValidationFieldNames.RentalIncomeBorrowing, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        RentalIncomeBorrowing = CheckNullableIntValue(
+            rentalIncomeBorrowing,
+            FinancialDetailsValidationFieldNames.RentalIncomeBorrowing,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
-        SalesOfHomesOnThisScheme = NumericValidator
-            .For(salesOfHomesOnThisScheme, FinancialDetailsValidationFieldNames.SaleOfHomesOnThisScheme, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        SalesOfHomesOnThisScheme = CheckNullableIntValue(
+            salesOfHomesOnThisScheme,
+            FinancialDetailsValidationFieldNames.SaleOfHomesOnThisScheme,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
-        SalesOfHomesOnOtherSchemes = NumericValidator
-            .For(salesOfHomesOnOtherSchemes, FinancialDetailsValidationFieldNames.SaleOfHomesOnOtherSchemes, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        SalesOfHomesOnOtherSchemes = CheckNullableIntValue(
+            salesOfHomesOnOtherSchemes,
+            FinancialDetailsValidationFieldNames.SaleOfHomesOnOtherSchemes,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
-        OwnResources = NumericValidator
-            .For(ownResources, FinancialDetailsValidationFieldNames.OwnResources, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        OwnResources = CheckNullableIntValue(
+            ownResources,
+            FinancialDetailsValidationFieldNames.OwnResources,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
-        RCGFContributions = NumericValidator
-            .For(rCGFContributions, FinancialDetailsValidationFieldNames.RCGFContribution, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        RCGFContributions = CheckNullableIntValue(
+            rCGFContributions,
+            FinancialDetailsValidationFieldNames.RCGFContribution,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
-        OtherCapitalSources = NumericValidator
-            .For(otherCapitalSources, FinancialDetailsValidationFieldNames.OtherCapitalSources, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        OtherCapitalSources = CheckNullableIntValue(
+            otherCapitalSources,
+            FinancialDetailsValidationFieldNames.OtherCapitalSources,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
-        SharedOwnershipSales = NumericValidator
-            .For(sharedOwnershipSales, FinancialDetailsValidationFieldNames.SharedOwnershipSales, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        SharedOwnershipSales = CheckNullableIntValue(
+            sharedOwnershipSales,
+            FinancialDetailsValidationFieldNames.SharedOwnershipSales,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
-        HomesTransferValue = NumericValidator
-            .For(homesTransferValue, FinancialDetailsValidationFieldNames.HomesTransferValue, operationResult)
-            .IsWholeNumber(FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsBetween(0, 999999999, FinancialDetailsValidationErrors.GenericAmountValidationError)
-            .IsConditionallyRequired(!allowNulls);
+        HomesTransferValue = CheckNullableIntValue(
+            homesTransferValue,
+            FinancialDetailsValidationFieldNames.HomesTransferValue,
+            FinancialDetailsValidationErrors.GenericAmountValidationError,
+            allowNulls,
+            operationResult);
 
         return operationResult;
+    }
+
+    private int? CheckNullableIntValue(string? value, string fieldName, string errorMsg, bool allowNull, OperationResult operationResult)
+    {
+        return value.TryParseNullableIntAndValidate(fieldName, errorMsg, allowNull, 0, 999999999, operationResult);
     }
 }

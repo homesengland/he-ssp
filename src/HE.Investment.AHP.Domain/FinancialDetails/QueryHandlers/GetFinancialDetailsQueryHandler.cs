@@ -41,6 +41,9 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
             HealthRelatedGrants = financialDetails.Grants.HealthRelated,
             LotteryFunding = financialDetails.Grants.Lottery,
             OtherPublicGrants = financialDetails.Grants.OtherPublicBodies,
+            TotalExpectedCosts = financialDetails.TotalExpectedCost,
+            TotalExpectedContributions = financialDetails.TotalContributions,
+            TotalRecievedGrands = financialDetails.TotalGrants,
         };
     }
 }
