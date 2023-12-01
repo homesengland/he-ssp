@@ -1,9 +1,9 @@
 using HE.Investment.AHP.Contract.HomeTypes.Events;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Common.Services;
 using HE.Investment.AHP.Domain.HomeTypes.Crm;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
-using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Loans.Common.Exceptions;
@@ -15,7 +15,7 @@ public class HomeTypeRepository : IHomeTypeRepository
 {
     private readonly IApplicationRepository _applicationRepository;
 
-    private readonly IDesignFileService _designFileService;
+    private readonly IAhpFileService<DesignFileParams> _designFileService;
 
     private readonly IHomeTypeCrmContext _homeTypeCrmContext;
 
@@ -25,7 +25,7 @@ public class HomeTypeRepository : IHomeTypeRepository
 
     public HomeTypeRepository(
         IApplicationRepository applicationRepository,
-        IDesignFileService designFileService,
+        IAhpFileService<DesignFileParams> designFileService,
         IHomeTypeCrmContext homeTypeCrmContext,
         IHomeTypeCrmMapper homeTypeCrmMapper,
         IEventDispatcher eventDispatcher)
@@ -128,7 +128,7 @@ public class HomeTypeRepository : IHomeTypeRepository
         var uploadedFiles = new Dictionary<HomeTypeSegmentType, IReadOnlyCollection<UploadedFile>>();
         if (segments.Contains(HomeTypeSegmentType.DesignPlans))
         {
-            var designFiles = await _designFileService.GetFiles(applicationId, homeTypeId, cancellationToken);
+            var designFiles = await _designFileService.GetFiles(new DesignFileParams(applicationId, homeTypeId), cancellationToken);
             uploadedFiles.Add(HomeTypeSegmentType.DesignPlans, designFiles);
         }
 

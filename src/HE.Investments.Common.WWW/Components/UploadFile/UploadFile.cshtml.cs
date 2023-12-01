@@ -15,12 +15,13 @@ public class UploadFile : ViewComponent
         int? maxFileSizeInMb = null,
         string? title = null,
         string? uploadOneFileUrl = null,
-        string? removeFileUrlTemplate = null)
+        string? removeFileUrlTemplate = null,
+        string? downloadFileUrlTemplate = null)
     {
         var (hasFileError, fileErrorMessage) = ViewData.ModelState.GetErrors(fieldName);
         var multiple = isMultiple ? "multiple" : string.Empty;
         return View(
             "UploadFile",
-            (title, fieldName, maxFileSizeInMb, description, multiple, isHidden, hasFileError, fileErrorMessage, uploadOneFileUrl, removeFileUrlTemplate));
+            (title, fieldName, maxFileSizeInMb, description, multiple, isHidden, hasFileError, fileErrorMessage, uploadOneFileUrl, removeFileUrlTemplate, downloadFileUrlTemplate));
     }
 }

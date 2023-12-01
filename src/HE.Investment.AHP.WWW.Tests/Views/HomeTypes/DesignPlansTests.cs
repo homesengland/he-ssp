@@ -12,7 +12,7 @@ public class DesignPlansTests : HomeTypesTestBase
     private static readonly DesignPlansModel Model = new("My application", "My homes")
     {
         MoreInformation = "Some details about my Design Plans",
-        UploadedFiles = new[] { new FileModel("file-1", "My File", new DateTime(2022, 10, 11), "Test User", true, "#") },
+        UploadedFiles = new[] { new FileModel("file-1", "My File", new DateTime(2022, 10, 11), "Test User", true, "#", "#") },
     };
 
     [Fact]
@@ -26,7 +26,7 @@ public class DesignPlansTests : HomeTypesTestBase
             .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("h1", "Upload your design plans")
             .HasInput("File")
-            .HasElementWithText("td", "My File")
+            .HasElementWithText("a", "My File")
             .HasElementWithText("td", "uploaded 11/10/2022 01:00:00 by Test User")
             .HasElementWithText("h3", "Tell us more about your design plans (optional)")
             .HasElementWithText("span", "Tell us any important information about the plans, or any additional information not included.")

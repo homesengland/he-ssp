@@ -289,11 +289,15 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         var designPlans = await _mediator.Send(new GetDesignPlansQuery(applicationId, homeTypeId), cancellationToken);
 
-        string GetRemoveAction(string fileId) => Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "RemoveDesignPlansFile", applicationId, id = homeTypeId, fileId }) ?? throw new InvalidOperationException();
+        string GetRemoveAction(string fileId) => GetDesignFileAction("Remove", applicationId, homeTypeId, fileId);
+        string GetDownloadAction(string fileId) => GetDesignFileAction("Download", applicationId, homeTypeId, fileId);
+
         return View(new DesignPlansModel(designPlans.ApplicationName, designPlans.HomeTypeName)
         {
             MoreInformation = designPlans.MoreInformation,
-            UploadedFiles = designPlans.UploadedFiles.Select(x => new FileModel(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId))).ToList(),
+            UploadedFiles = designPlans.UploadedFiles
+                .Select(x => new FileModel(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId), GetDownloadAction(x.FileId)))
+                .ToList(),
         });
     }
 
@@ -353,6 +357,18 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         }
 
         return RedirectToAction("DesignPlans", new { applicationId, homeTypeId });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
+    [HttpGet("{homeTypeId}/DownloadDesignPlansFile")]
+    public async Task<IActionResult> DownloadDesignPlansFile(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        [FromQuery] string fileId,
+        CancellationToken cancellationToken)
+    {
+        var file = await _mediator.Send(new DownloadDesignFileQuery(applicationId, homeTypeId, fileId), cancellationToken);
+        return File(file.Content, "application/octet-stream", file.Name);
     }
 
     [WorkflowState(HomeTypesWorkflowState.SupportedHousingInformation)]
@@ -739,5 +755,19 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         }
 
         return await Continue(new { applicationId = command.ApplicationId, homeTypeId = command.HomeTypeId });
+    }
+
+    private string GetDesignFileAction(string actionName, string applicationId, string homeTypeId, string fileId)
+    {
+        return Url.RouteUrl(
+            "subSection",
+            new
+            {
+                controller = "HomeTypes",
+                action = $"{actionName}DesignPlansFile",
+                applicationId,
+                id = homeTypeId,
+                fileId,
+            }) ?? string.Empty;
     }
 }

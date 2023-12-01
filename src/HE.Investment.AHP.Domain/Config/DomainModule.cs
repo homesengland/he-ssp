@@ -6,6 +6,7 @@ using HE.Investment.AHP.Domain.HomeTypes.Crm;
 using HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Mock;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investments.Account.Shared.Config;
@@ -24,7 +25,6 @@ public static class DomainModule
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
 
         services.AddScoped<IApplicationCrmContext, ApplicationCrmContext>();
-        services.AddScoped<IAhpFileService, AhpFileService>();
 
         AddHomeTypes(services);
         AddFinancialDetails(services);
@@ -43,7 +43,7 @@ public static class DomainModule
         services.AddSingleton<IHomeTypeCrmSegmentMapper, DesignPlansCrmSegmentMapper>();
         services.AddSingleton<IHomeTypeCrmSegmentMapper, SupportedHousingInformationSegmentMapper>();
 
-        services.AddScoped<IDesignFileService, DesignFileService>();
+        services.AddScoped<IAhpFileService<DesignFileParams>, DesignFileService>();
     }
 
     private static void AddFinancialDetails(IServiceCollection services)

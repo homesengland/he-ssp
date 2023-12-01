@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Common.Services;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
-using HE.Investment.AHP.Domain.HomeTypes.Services;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
@@ -44,7 +45,7 @@ public class DesignPlanFileEntity
 
     public async Task<UploadedFile> Upload(
         IHomeTypeEntity homeType,
-        IDesignFileService designFileService,
+        IAhpFileService<DesignFileParams> designFileService,
         CancellationToken cancellationToken)
     {
         if (Id.IsProvided())
@@ -57,7 +58,7 @@ public class DesignPlanFileEntity
             throw new InvalidOperationException($"Design File {Name} cannot be uploaded because home type is not saved yet.");
         }
 
-        var uploadedFile = await designFileService.UploadFile(homeType.Application.Id, homeType.Id, Name, _content, cancellationToken);
+        var uploadedFile = await designFileService.UploadFile(Name, _content, new DesignFileParams(homeType.Application.Id, homeType.Id), cancellationToken);
         Id = uploadedFile.Id;
 
         return uploadedFile;

@@ -97,7 +97,7 @@ public class HttpDocumentService : IDocumentService
         using var request = new HttpRequestMessage(HttpMethod.Get, uri.ToString());
         using var response = await SendAsync(request, cancellationToken);
 
-        var fileStream = await response.Content.ReadAsStreamAsync(cancellationToken);
+        await using var fileStream = await response.Content.ReadAsStreamAsync(cancellationToken);
         var memoryStream = new MemoryStream();
         await fileStream.CopyToAsync(memoryStream, cancellationToken);
         memoryStream.Position = 0;
