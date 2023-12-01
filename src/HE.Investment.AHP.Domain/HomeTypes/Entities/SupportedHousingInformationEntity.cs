@@ -56,11 +56,13 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
     public void ChangeShortStayAccommodation(YesNoType shortStayAccommodation)
     {
         ShortStayAccommodation = _modificationTracker.Change(ShortStayAccommodation, shortStayAccommodation);
+        ClearConditionalRoutes();
     }
 
     public void ChangeRevenueFundingType(RevenueFundingType revenueFundingType)
     {
         RevenueFundingType = _modificationTracker.Change(RevenueFundingType, revenueFundingType);
+        ClearConditionalRoutes();
     }
 
     public void ChangeSources(IEnumerable<RevenueFundingSourceType> revenueFundingSources)
@@ -150,6 +152,19 @@ public class SupportedHousingInformationEntity : IHomeTypeSegmentEntity
         else
         {
             return false;
+        }
+    }
+
+    private void ClearConditionalRoutes()
+    {
+        if (RevenueFundingType != RevenueFundingType.RevenueFundingNeededAndIdentified)
+        {
+            RevenueFundingType = RevenueFundingType.Undefined;
+        }
+
+        if (ShortStayAccommodation != YesNoType.Yes)
+        {
+            MoveOnArrangements = null;
         }
     }
 }
