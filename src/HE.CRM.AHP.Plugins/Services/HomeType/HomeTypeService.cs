@@ -129,7 +129,7 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
 
         public void CreateDocumentLocation(invln_HomeType target)
         {
-            if(target.invln_application != null)
+            if (target.invln_application != null)
             {
                 var applicationDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToRecordWithGivenGuid(target.invln_application.Id);
                 var homeTypeLocation = _sharepointDocumentLocationRepository.GetHomeTypeDocumentLocationForGivenApplicationLocationRecord(applicationDocumentLocation.Id);
@@ -137,7 +137,7 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
                 {
                     RegardingObjectId = target.ToEntityReference(),
                     Name = $"Home Type For Ahp Application",
-                    RelativeUrl = $"{target.invln_hometypename}",
+                    RelativeUrl = $"{target.invln_hometypename}-{target.Id}",
                     ParentSiteOrLocation = homeTypeLocation.ToEntityReference(),
                 };
                 _ = _sharepointDocumentLocationRepository.Create(locationToCreate);

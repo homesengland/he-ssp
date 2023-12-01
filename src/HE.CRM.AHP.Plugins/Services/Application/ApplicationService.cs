@@ -77,7 +77,10 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             if (Guid.TryParse(ahpApplicationId, out Guid applicationGuid))
             {
                 var relatedDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToRecordWithGivenGuid(applicationGuid);
-                return relatedDocumentLocation.RelativeUrl;
+                if (relatedDocumentLocation != null)
+                {
+                    return relatedDocumentLocation.RelativeUrl;
+                }
             }
             return string.Empty;
         }
