@@ -40,12 +40,16 @@ public static class HtmlDocumentExtensions
         elementById.Should().NotBeNull($"Element with Id {id} should exist");
 
         var anchorElement = elementById as IHtmlAnchorElement;
-        anchorElement.Should().NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
+        anchorElement.Should().NotBeNull($"Element with Id {id} should be HtmlAnchorElement which contains GdsButton");
 
-        anchorElement!.GetElementsByClassName("govuk-button")
-            .SingleOrDefault()
-            .Should()
-            .NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
+        if (!anchorElement!.ClassList.Contains("govuk-button"))
+        {
+            anchorElement.GetElementsByClassName("govuk-button")
+                .SingleOrDefault()
+                .Should()
+                .NotBeNull($"Element with Id {id} should be HtmlAnchorElement with GdsButton as child");
+        }
+
         return anchorElement;
     }
 
