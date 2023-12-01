@@ -4,4 +4,4 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 
 namespace HE.Investment.AHP.Domain.Application.Commands;
 
-public record CreateApplicationCommand(string Name) : IRequest<OperationResult<ApplicationId?>>;
+public record CreateApplicationCommand(string Name) : IRequest<OperationResult<ApplicationId>>;

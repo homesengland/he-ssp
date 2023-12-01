@@ -9,7 +9,7 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 
-public class CreateApplicationCommandHandler : IRequestHandler<CreateApplicationCommand, OperationResult<ApplicationId?>>
+public class CreateApplicationCommandHandler : IRequestHandler<CreateApplicationCommand, OperationResult<ApplicationId>>
 {
     private readonly IApplicationRepository _repository;
 
@@ -18,7 +18,7 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
         _repository = repository;
     }
 
-    public async Task<OperationResult<ApplicationId?>> Handle(CreateApplicationCommand request, CancellationToken cancellationToken)
+    public async Task<OperationResult<ApplicationId>> Handle(CreateApplicationCommand request, CancellationToken cancellationToken)
     {
         var name = new ApplicationName(request.Name);
         if (await _repository.IsExist(name, cancellationToken))
@@ -29,6 +29,6 @@ public class CreateApplicationCommandHandler : IRequestHandler<CreateApplication
         var applicationToCreate = ApplicationEntity.New(name);
         var application = await _repository.Save(applicationToCreate, cancellationToken);
 
-        return new OperationResult<ApplicationId?>(application.Id);
+        return new OperationResult<ApplicationId>(application.Id);
     }
 }

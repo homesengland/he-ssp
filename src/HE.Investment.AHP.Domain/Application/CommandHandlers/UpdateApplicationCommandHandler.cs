@@ -7,8 +7,8 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 
 namespace HE.Investment.AHP.Domain.Application.CommandHandlers;
 
-public abstract class UpdateApplicationCommandHandler<TRequest> : IRequestHandler<TRequest, OperationResult<ApplicationId?>>
-    where TRequest : IRequest<OperationResult<ApplicationId?>>, IUpdateApplicationCommand
+public abstract class UpdateApplicationCommandHandler<TRequest> : IRequestHandler<TRequest, OperationResult<ApplicationId>>
+    where TRequest : IRequest<OperationResult<ApplicationId>>, IUpdateApplicationCommand
 {
     protected UpdateApplicationCommandHandler(IApplicationRepository repository)
     {
@@ -17,7 +17,7 @@ public abstract class UpdateApplicationCommandHandler<TRequest> : IRequestHandle
 
     protected IApplicationRepository Repository { get; }
 
-    public async Task<OperationResult<ApplicationId?>> Handle(TRequest request, CancellationToken cancellationToken)
+    public async Task<OperationResult<ApplicationId>> Handle(TRequest request, CancellationToken cancellationToken)
     {
         var application = await Repository.GetById(new ApplicationId(request.Id), cancellationToken);
 
@@ -25,7 +25,7 @@ public abstract class UpdateApplicationCommandHandler<TRequest> : IRequestHandle
 
         await Repository.Save(application, cancellationToken);
 
-        return new OperationResult<ApplicationId?>(application.Id);
+        return new OperationResult<ApplicationId>(application.Id);
     }
 
     protected abstract Task Update(TRequest request, ApplicationEntity application, CancellationToken cancellationToken);

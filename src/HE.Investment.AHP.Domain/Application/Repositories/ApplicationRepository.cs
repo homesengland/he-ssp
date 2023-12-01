@@ -7,6 +7,7 @@ using HE.Investment.AHP.Domain.Data;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.CRM;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
+using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
 namespace HE.Investment.AHP.Domain.Application.Repositories;
 
@@ -48,6 +49,11 @@ public class ApplicationRepository : IApplicationRepository
 
     public async Task<ApplicationEntity> Save(ApplicationEntity application, CancellationToken cancellationToken)
     {
+        if (!application.IsModified)
+        {
+            return application;
+        }
+
         var account = await _accountUserContext.GetSelectedAccount();
         var dto = new AhpApplicationDto
         {
@@ -79,9 +85,12 @@ public class ApplicationRepository : IApplicationRepository
                 application.lastExternalModificationBy?.lastName,
                 application.lastExternalModificationOn),
             new ApplicationSections(
-                SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus),
-                SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus),
-                SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus),
-                SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus)));
+                new List<ApplicationSection>
+                {
+                    new(SectionType.Scheme, SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus)),
+                    new(SectionType.HomeTypes, SectionStatusMapper.ToDomain(application.homeTypesSectionCompletionStatus)),
+                    new(SectionType.FinancialDetails, SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus)),
+                    new(SectionType.DeliveryPhases, SectionStatusMapper.ToDomain(application.deliveryPhasesSectionCompletionStatus)),
+                }));
     }
 }
