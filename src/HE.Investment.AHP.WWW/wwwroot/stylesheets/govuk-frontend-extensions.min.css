@@ -50,3 +50,35 @@
 .guidance-subpart-link {
     text-decoration: underline;
 }
+
+govuk-\!-width-one-fifth {
+  width: 100% !important;
+}
+
+@media (min-width: 40.0625em) {
+  .govuk-\!-width-one-fifth {
+    width: 20% !important;
+  }
+}
+
+.govuk-\!-width-one-sixth {
+    width: 100% !important;
+}
+
+@media (min-width: 40.0625em) {
+  .govuk-\!-width-one-sixth {
+    width: 16% !important;
+  }
+}
+
+.govuk-\!-width-one-eighth {
+  width: 100% !important;
+}
+
+@media (min-width: 40.0625em) {
+  .govuk-\!-width-one-eighth {
+    width: 12.5% !important;
+  }
+}
+
+

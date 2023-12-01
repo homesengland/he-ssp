@@ -1,15 +1,17 @@
-@model (string Caption, string Title)
+@model (string Caption, string Title, string CssClass)
 
-@if (!string.IsNullOrWhiteSpace(Model.Caption))
-{
-    <span class="govuk-caption-l">
-        @Model.Caption
-    </span>
-}
+<div class="@Model.CssClass">
+    @if (!string.IsNullOrWhiteSpace(Model.Caption))
+    {
+        <span class="govuk-caption-l">
+            @Model.Caption
+        </span>
+    }
 
-@if (!string.IsNullOrEmpty(Model.Title))
-{
-    <gds-h1 class="govuk-heading-xl">
-        @Model.Title
-    </gds-h1>
-}
+    @if (!string.IsNullOrEmpty(Model.Title))
+    {
+        <gds-h1 class="govuk-heading-xl">
+            @Model.Title
+        </gds-h1>
+    }
+</div>
