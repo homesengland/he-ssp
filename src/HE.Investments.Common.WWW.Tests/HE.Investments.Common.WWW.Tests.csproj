@@ -37,13 +37,11 @@
   </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="Components\SectionSummaryItemTests\TestView.cshtml" />
+      <EmbeddedResource Include="_ViewImports.cshtml" />
+      <EmbeddedResource Include="Components\SectionSummaryItemTests\SectionSummaryItemTests.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\HE.Investments.Common.WWWTestsFramework\HE.Investments.Common.WWWTestsFramework.csproj" />
-      <ProjectReference Include="..\HE.Investments.Common.WWW\HE.Investments.Common.WWW.csproj" />
     </ItemGroup>
-
-
 </Project>

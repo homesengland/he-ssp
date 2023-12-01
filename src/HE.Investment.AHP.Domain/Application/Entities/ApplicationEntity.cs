@@ -47,6 +47,8 @@ public class ApplicationEntity
 
     public bool IsModified => _modificationTracker.IsModified;
 
+    public bool IsNew => Id.IsEmpty();
+
     public static ApplicationEntity New(ApplicationName name) => new(
         ApplicationId.Empty(),
         name,
