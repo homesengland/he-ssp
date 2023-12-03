@@ -215,26 +215,26 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     }
 
     [WorkflowState(SchemeWorkflowState.CheckAnswers)]
-    [HttpPost("complete")]
-    public async Task<IActionResult> Complete(SchemeSummaryViewModel model, CancellationToken cancellationToken)
+    [HttpPost("check-answers")]
+    public async Task<IActionResult> Complete([FromRoute] string applicationId, [FromForm] bool? isCompleted, CancellationToken cancellationToken)
     {
-        if (model.IsCompleted == null)
+        if (isCompleted == null)
         {
-            ModelState.AddModelError(nameof(model.IsCompleted), "Select whether you have completed this section");
-            return View("CheckAnswers", await GetSchemeAndCreateSummary(Url, model.ApplicationId, cancellationToken));
+            ModelState.AddModelError(nameof(SchemeSummaryViewModel.IsCompleted), "Select whether you have completed this section");
+            return View("CheckAnswers", await GetSchemeAndCreateSummary(Url, applicationId, cancellationToken));
         }
 
-        if (model.IsCompleted.Value)
+        if (isCompleted.Value)
         {
-            var result = await _mediator.Send(new CompleteSchemeCommand(model.ApplicationId), cancellationToken);
+            var result = await _mediator.Send(new CompleteSchemeCommand(applicationId), cancellationToken);
             if (result.HasValidationErrors)
             {
-                ModelState.AddModelError(nameof(model.IsCompleted), "You have not completed this section. Select no if you want to come back later");
-                return View("CheckAnswers", await GetSchemeAndCreateSummary(Url, model.ApplicationId, cancellationToken));
+                ModelState.AddModelError(nameof(SchemeSummaryViewModel.IsCompleted), "You have not completed this section. Select no if you want to come back later");
+                return View("CheckAnswers", await GetSchemeAndCreateSummary(Url, applicationId, cancellationToken));
             }
         }
 
-        return RedirectToAction("TaskList", "Application", new { applicationId = model.ApplicationId });
+        return RedirectToAction("TaskList", "Application", new { applicationId });
     }
 
     protected override async Task<IStateRouting<SchemeWorkflowState>> Routing(SchemeWorkflowState currentState, object? routeData = null)
@@ -261,7 +261,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         IList<FileModel>? CreateFileModel(UploadedFile? x) =>
             x == null
                 ? null
-                : new List<FileModel> { new(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId)) };
+                : new List<FileModel> { new(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId), string.Empty) };
 
         return new SchemeViewModel(
             applicationId,

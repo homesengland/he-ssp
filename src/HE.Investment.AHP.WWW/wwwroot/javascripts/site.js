@@ -99,6 +99,7 @@
 // - maximum size of the file is in value of element with Id 'MaxFileSizeInMegabytes'
 // - URL to file upload is in value of element with id 'upload-file-url'
 // - URL to remove file is in value of element with id 'remove-file-url-template', URL contains {:fileId} template parameter
+// - URL to download file is in value of element with id 'download-file-url-template', URL contains {:fileId} template parameter
 (() => {
   const fileInputSelector = `.govuk-file-upload[type="file"]`;
   const fileInputFormGroupId = 'file-input-form-group';
@@ -108,6 +109,7 @@
   const maxFileSizeId = 'MaxFileSizeInMegabytes';
   const uploadFileUrlId = 'upload-file-url';
   const removeFileUrlId = 'remove-file-url-template';
+  const downloadFileUrlId = 'download-file-url-template';
 
   const getUploadControlId = () => document.querySelectorAll(fileInputSelector)[0].id;
   const inputFieldError = (message) => `<span id="${getUploadControlId()}-error" class="govuk-error-message field-validation-error" data-valmsg-for="${getUploadControlId()}" data-valmsg-replace="true"><span class="govuk-visually-hidden">Error:</span>${message}</span>`;
@@ -131,6 +133,8 @@
     </tr>`;
 
   const removeFileLink = (removeFileUrl) => `<a class="govuk-link--no-visited-state govuk-!-margin-left-4 govuk-link" href="${removeFileUrl}">Remove</a>`;
+
+  const downloadFileLink = (fileName, downloadFileUrl) => `<a class="govuk-link" href="${downloadFileUrl}">${sanitize(fileName)}</a>`;
 
   const fileInputChanged = async () => {
     const maxFileSizeInMegabytes = document.getElementById(maxFileSizeId).value;
@@ -180,7 +184,7 @@
 
         fileUploadStarted(fileId);
         await fetch(url, { method: "POST", body: formData })
-          .then(response => response.ok ? fileUploadFinished(fileId, response) : fileUploadFailed(fileId, response));
+          .then(response => response.ok ? fileUploadFinished(fileId, file.name, response) : fileUploadFailed(fileId, response));
       }
     }
 
@@ -201,12 +205,13 @@
     actionColumn.innerHTML = '<div class="loader-line"></div>';
   }
 
-  const fileUploadFinished = (fileId, response) => {
-    const uploadedColumn = document.querySelector(`#file-${fileId} :nth-child(2)`);
-    const actionColumn = document.querySelector(`#file-${fileId} :nth-child(3)`);
-
+  const fileUploadFinished = (fileId, fileName, response) => {
     return response.json()
       .then(uploadedFile => {
+        const fileNameColumn = document.querySelector(`#file-${fileId} :nth-child(1)`);
+        const uploadedColumn = document.querySelector(`#file-${fileId} :nth-child(2)`);
+        const actionColumn = document.querySelector(`#file-${fileId} :nth-child(3)`);
+
         uploadedColumn.innerText = uploadedFile.uploadDetails;
 
         const removeFileUrlElement = document.getElementById(removeFileUrlId);
@@ -215,6 +220,12 @@
           actionColumn.innerHTML = removeFileLink(removeUrl);
         } else {
           actionColumn.innerHTML = "";
+        }
+
+        const downloadFileUrlElement = document.getElementById(downloadFileUrlId);
+        if (downloadFileUrlElement) {
+          const downloadUrl = downloadFileUrlElement.value.replace('%3AfileId', uploadedFile.fileId);
+          fileNameColumn.innerHTML = downloadFileLink(fileName, downloadUrl);
         }
       });
   }

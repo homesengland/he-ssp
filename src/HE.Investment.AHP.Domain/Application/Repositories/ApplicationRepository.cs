@@ -49,7 +49,7 @@ public class ApplicationRepository : IApplicationRepository
 
     public async Task<ApplicationEntity> Save(ApplicationEntity application, CancellationToken cancellationToken)
     {
-        if (!application.IsModified)
+        if (application is { IsModified: false, IsNew: false })
         {
             return application;
         }

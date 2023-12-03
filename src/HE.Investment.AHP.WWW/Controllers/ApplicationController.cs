@@ -30,9 +30,9 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     [HttpGet]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
-        var applications = await _mediator.Send(new GetApplicationsQuery(), cancellationToken);
+        var applicationsQueryResult = await _mediator.Send(new GetApplicationsQuery(), cancellationToken);
 
-        return View("Index", new ApplicationsModel(_siteName, applications));
+        return View("Index", new ApplicationsListModel(applicationsQueryResult.OrganisationName, applicationsQueryResult.Applications));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]

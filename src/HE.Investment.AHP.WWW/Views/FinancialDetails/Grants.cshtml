@@ -31,7 +31,7 @@
         <form asp-controller="FinancialDetails" asp-action="Grants" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
             <vc:financial-details-form-header title="@FinancialDetailsPageTitles.ExpectedGrants"
                                               current-page="@FinancialDetailsWorkflowState.Grants"
-                                              application-id="@Model.ApplicationId"
+                                              application-id="@Model.ApplicationId.ToString()"
                                               caption="@Model.ApplicationName - Financial details" />
 
             <div class="govuk-caption-m govuk-!-margin-bottom-6">
@@ -131,7 +131,7 @@
                 @Html.HiddenFor(c => c.ApplicationId)
                 @Html.HiddenFor(c => c.ApplicationName)
             </gds-field-set>
-            <vc:return-to-application-link application-id="@Model.ApplicationId" />
+            <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" />
         </form>
     </gds-div-grid-column-two-thirds>
 </div>
