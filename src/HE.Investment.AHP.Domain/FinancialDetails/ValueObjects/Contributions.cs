@@ -3,6 +3,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 public class Contributions : ValueObject
@@ -44,6 +45,26 @@ public class Contributions : ValueObject
     public int? SharedOwnershipSales { get; private set; }
 
     public int? HomesTransferValue { get; private set; }
+
+    public int TotalContributions =>
+        (RentalIncomeBorrowing ?? 0) +
+        (SalesOfHomesOnThisScheme ?? 0) +
+        (SalesOfHomesOnOtherSchemes ?? 0) +
+        (OwnResources ?? 0) +
+        (RCGFContributions ?? 0) +
+        (OtherCapitalSources ?? 0) +
+        (SharedOwnershipSales ?? 0) +
+        (HomesTransferValue ?? 0);
+
+    public bool IsAnyValueNotNull =>
+        RentalIncomeBorrowing.HasValue ||
+        SalesOfHomesOnThisScheme.HasValue ||
+        SalesOfHomesOnOtherSchemes.HasValue ||
+        OwnResources.HasValue ||
+        RCGFContributions.HasValue ||
+        OtherCapitalSources.HasValue ||
+        SharedOwnershipSales.HasValue ||
+        HomesTransferValue.HasValue;
 
     public static Contributions From(
         decimal? rentalIncomeBorrowing,
@@ -107,63 +128,55 @@ public class Contributions : ValueObject
         RentalIncomeBorrowing = CheckNullableIntValue(
             rentalIncomeBorrowing,
             FinancialDetailsValidationFieldNames.RentalIncomeBorrowing,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         SalesOfHomesOnThisScheme = CheckNullableIntValue(
             salesOfHomesOnThisScheme,
             FinancialDetailsValidationFieldNames.SaleOfHomesOnThisScheme,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         SalesOfHomesOnOtherSchemes = CheckNullableIntValue(
             salesOfHomesOnOtherSchemes,
             FinancialDetailsValidationFieldNames.SaleOfHomesOnOtherSchemes,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         OwnResources = CheckNullableIntValue(
             ownResources,
             FinancialDetailsValidationFieldNames.OwnResources,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         RCGFContributions = CheckNullableIntValue(
             rCGFContributions,
             FinancialDetailsValidationFieldNames.RCGFContribution,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         OtherCapitalSources = CheckNullableIntValue(
             otherCapitalSources,
             FinancialDetailsValidationFieldNames.OtherCapitalSources,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         SharedOwnershipSales = CheckNullableIntValue(
             sharedOwnershipSales,
             FinancialDetailsValidationFieldNames.SharedOwnershipSales,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         HomesTransferValue = CheckNullableIntValue(
             homesTransferValue,
             FinancialDetailsValidationFieldNames.HomesTransferValue,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         return operationResult;
     }
 
-    private int? CheckNullableIntValue(string? value, string fieldName, string errorMsg, bool allowNull, OperationResult operationResult)
+    private int? CheckNullableIntValue(string? value, string fieldName, bool allowNull, OperationResult operationResult, string errorMsg = FinancialDetailsValidationErrors.GenericAmountValidationError)
     {
         return value.TryParseNullableIntAndValidate(fieldName, errorMsg, allowNull, 0, 999999999, operationResult);
     }

@@ -19,6 +19,11 @@ public class ExpectedCosts : ValueObject
 
     public int? OnCosts { get; private set; }
 
+    public decimal TotalCosts => (WorksCosts ?? 0) + (OnCosts ?? 0);
+
+    public bool IsAnyValueNotNull =>
+        WorksCosts.HasValue || OnCosts.HasValue;
+
     public static ExpectedCosts From(decimal? worksCosts, decimal? onCosts)
     {
         return new ExpectedCosts(worksCosts.ToWholeNumberString(), onCosts.ToWholeNumberString());

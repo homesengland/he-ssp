@@ -1,13 +1,9 @@
+@using HE.Investments.Common.WWW.Components.ErrorMessage;
 @using HE.Investments.Common.WWW.Components.SectionSummary;
 
-@model (string title, IList<SectionSummaryItemModel> items, string validationError)
+@model (string title, IList<SectionSummaryItemModel> items)
 <gds-h2>@Model.title</gds-h2>
-@if (!string.IsNullOrWhiteSpace(Model.validationError))
-{
-    <p id="event-name-error" class="govuk-error-message">
-        <span>Error:</span> validationError
-    </p>
-}
+
 <gds-summary-list class="govuk-!-margin-bottom-9">
     @foreach (var item in Model.items)
     {

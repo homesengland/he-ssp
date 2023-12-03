@@ -40,6 +40,8 @@ public class PurchasePrice : ValueObject
 
     public decimal? ExpectedPrice { get; private set; }
 
+    public bool IsAnyValueNotNull => ActualPrice.HasValue || ExpectedPrice.HasValue;
+
     public static PurchasePrice From(decimal? actualPurchasePrice, decimal? expectedPurchasePrice)
     {
         return new PurchasePrice(actualPurchasePrice.ToMoneyString(), expectedPurchasePrice.ToMoneyString());

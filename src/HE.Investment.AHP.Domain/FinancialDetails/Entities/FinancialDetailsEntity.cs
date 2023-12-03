@@ -53,83 +53,34 @@ public class FinancialDetailsEntity
 
     public SectionStatus SectionStatus { get; private set; }
 
-    public decimal TotalExpectedCost =>
-        (ExpectedCosts.WorksCosts ?? 0)
-        + (ExpectedCosts.OnCosts ?? 0);
-
-    public decimal TotalContributions =>
-        (Contributions.RentalIncomeBorrowing ?? 0) +
-        (Contributions.SalesOfHomesOnThisScheme ?? 0) +
-        (Contributions.SalesOfHomesOnOtherSchemes ?? 0) +
-        (Contributions.OwnResources ?? 0) +
-        (Contributions.RCGFContributions ?? 0) +
-        (Contributions.OtherCapitalSources ?? 0) +
-        (Contributions.SharedOwnershipSales ?? 0) +
-        (Contributions.HomesTransferValue ?? 0);
-
-    public decimal TotalGrants =>
-        (Grants.CountyCouncil ?? 0) +
-        (Grants.LocalAuthority ?? 0) +
-        (Grants.SocialServices ?? 0) +
-        (Grants.DHSCExtraCare ?? 0) +
-        (Grants.HealthRelated ?? 0) +
-        (Grants.Lottery ?? 0) +
-        (Grants.OtherPublicBodies ?? 0);
-
     public void ProvidePurchasePrice(PurchasePrice purchasePrice)
     {
         PurchasePrice = purchasePrice;
-        SectionStatus = SectionStatus.InProgress;
+        SetSectionStatus(purchasePrice.IsAnyValueNotNull);
     }
 
     public void ProvideLandValue(LandValue landValue)
     {
         LandValue = landValue;
-        if (landValue.Value.HasValue || landValue.IsLandPublic.HasValue)
-        {
-            SectionStatus = SectionStatus.InProgress;
-        }
+        SetSectionStatus(landValue.IsAnyValueNotNull);
     }
 
     public void ProvideExpectedCosts(ExpectedCosts expectedCosts)
     {
         ExpectedCosts = expectedCosts;
-        if (expectedCosts.WorksCosts.HasValue || expectedCosts.OnCosts.HasValue)
-        {
-            SectionStatus = SectionStatus.InProgress;
-        }
+        SetSectionStatus(expectedCosts.IsAnyValueNotNull);
     }
 
     public void ProvideContributions(Contributions contributions)
     {
         Contributions = contributions;
-        if (Contributions.RentalIncomeBorrowing != null
-            || Contributions.SalesOfHomesOnThisScheme != null
-            || Contributions.SalesOfHomesOnOtherSchemes != null
-            || Contributions.OwnResources != null
-            || Contributions.RCGFContributions != null
-            || Contributions.OtherCapitalSources != null
-            || Contributions.SharedOwnershipSales != null
-            || Contributions.HomesTransferValue != null)
-        {
-            SectionStatus = SectionStatus.InProgress;
-        }
+        SetSectionStatus(Contributions.IsAnyValueNotNull);
     }
 
     public void ProvideGrants(Grants grants)
     {
         Grants = grants;
-
-        if (Grants.CountyCouncil != null
-            || Grants.DHSCExtraCare != null
-            || Grants.LocalAuthority != null
-            || Grants.SocialServices != null
-            || Grants.HealthRelated != null
-            || Grants.Lottery != null
-            || Grants.OtherPublicBodies != null)
-        {
-            SectionStatus = SectionStatus.InProgress;
-        }
+        SetSectionStatus(Grants.IsAnyValueNotNull);
     }
 
     public void CompleteFinancialDetails()
@@ -140,7 +91,7 @@ public class FinancialDetailsEntity
         result.Aggregate(() => ExpectedCosts.CheckErrors());
         result.Aggregate(() => Contributions.CheckErrors());
         result.Aggregate(() => Grants.CheckErrors());
-        if (TotalContributions + TotalGrants != TotalExpectedCost + (PurchasePrice.ActualPrice ?? 0))
+        if (Contributions.TotalContributions + Grants.TotalGrants != ExpectedCosts.TotalCosts + (PurchasePrice.ActualPrice ?? 0))
         {
             result.AddValidationError(FinancialDetailsValidationFieldNames.CostsAndFunding, FinancialDetailsValidationErrors.CostsAndFundingMismatch);
         }
@@ -148,5 +99,13 @@ public class FinancialDetailsEntity
         result.CheckErrors();
 
         SectionStatus = SectionStatus.Completed;
+    }
+
+    private void SetSectionStatus(bool isAnyValueSet)
+    {
+        if (isAnyValueSet)
+        {
+            SectionStatus = SectionStatus.InProgress;
+        }
     }
 }

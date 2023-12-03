@@ -41,6 +41,24 @@ public class Grants : ValueObject
 
     public int? OtherPublicBodies { get; private set; }
 
+    public int TotalGrants =>
+        (CountyCouncil ?? 0) +
+        (DHSCExtraCare ?? 0) +
+        (LocalAuthority ?? 0) +
+        (SocialServices ?? 0) +
+        (HealthRelated ?? 0) +
+        (Lottery ?? 0) +
+        (OtherPublicBodies ?? 0);
+
+    public bool IsAnyValueNotNull =>
+        CountyCouncil.HasValue ||
+        DHSCExtraCare.HasValue ||
+        LocalAuthority.HasValue ||
+        SocialServices.HasValue ||
+        HealthRelated.HasValue ||
+        Lottery.HasValue ||
+        OtherPublicBodies.HasValue;
+
     public static Grants From(
         decimal? countyCouncil,
         decimal? dHSCExtraCare,
@@ -99,56 +117,49 @@ public class Grants : ValueObject
         CountyCouncil = CheckNullableIntValue(
             countyCouncil,
             FinancialDetailsValidationFieldNames.CountyCouncilGrants,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         DHSCExtraCare = CheckNullableIntValue(
             dHSCExtraCare,
             FinancialDetailsValidationFieldNames.DHSCExtraCareGrants,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         LocalAuthority = CheckNullableIntValue(
             localAuthority,
             FinancialDetailsValidationFieldNames.LocalAuthorityGrants,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         SocialServices = CheckNullableIntValue(
             socialServices,
             FinancialDetailsValidationFieldNames.SocialServicesGrants,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         HealthRelated = CheckNullableIntValue(
             healthRelated,
             FinancialDetailsValidationFieldNames.HeatlthRelatedGrants,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         Lottery = CheckNullableIntValue(
             lottery,
             FinancialDetailsValidationFieldNames.LotteryGrants,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         OtherPublicBodies = CheckNullableIntValue(
             otherPublicBodies,
             FinancialDetailsValidationFieldNames.OtherPublicBodiesGrants,
-            FinancialDetailsValidationErrors.GenericAmountValidationError,
             allowNulls,
             operationResult);
 
         return operationResult;
     }
 
-    private int? CheckNullableIntValue(string? value, string fieldName, string errorMsg, bool allowNull, OperationResult operationResult)
+    private int? CheckNullableIntValue(string? value, string fieldName, bool allowNull, OperationResult operationResult, string errorMsg = FinancialDetailsValidationErrors.GenericAmountValidationError)
     {
         return value.TryParseNullableIntAndValidate(fieldName, errorMsg, allowNull, 0, 999999999, operationResult);
     }

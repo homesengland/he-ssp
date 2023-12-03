@@ -43,6 +43,6 @@ public static class AhpWebModule
     {
         services.AddScoped<IApplicationSummaryViewModelFactory, ApplicationSummaryViewModelFactory>();
         services.AddScoped<ISchemeSummaryViewModelFactory, SchemeSummaryViewModelFactory>();
-        services.AddScoped<IFinancialDetailsSummaryModelFactory, FinancialDetailsSummaryModelFactory>();
+        services.AddScoped<IFinancialDetailsSummaryViewModelFactory, FinancialDetailsSummaryViewModelFactory>();
     }
 }

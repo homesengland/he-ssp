@@ -21,6 +21,8 @@ public class LandValue : ValueObject
 
     public bool? IsLandPublic { get; private set; }
 
+    public bool IsAnyValueNotNull => IsLandPublic.HasValue || Value.HasValue;
+
     public static LandValue From(bool? isLandPublic, decimal? value)
     {
         return new LandValue(isLandPublic.MapToCommonResponse(), value.HasValue ? value.ToWholeNumberString() : null);

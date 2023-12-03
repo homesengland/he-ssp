@@ -1,4 +1,6 @@
+using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.WWW.Components.SectionSummary;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace HE.Investment.AHP.WWW.Models.FinancialDetails;
 public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel
@@ -10,23 +12,29 @@ public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel
     public FinancialDetailsCheckAnswersModel(
         Guid applicationId,
         string applicationName,
-        IList<SectionSummaryItemModel>? landValueItems,
-        IList<SectionSummaryItemModel>? costItems,
-        IList<SectionSummaryItemModel>? contributionItems,
+        SectionSummaryViewModel landValueSummary,
+        SectionSummaryViewModel costsSummary,
+        SectionSummaryViewModel contributionsSummary,
         bool? isCompleted)
         : base(applicationId, applicationName)
     {
-        LandValueItems = landValueItems ?? new List<SectionSummaryItemModel>();
-        CostItems = costItems ?? new List<SectionSummaryItemModel>();
-        ContributionItems = contributionItems ?? new List<SectionSummaryItemModel>();
+        LandValueSummary = landValueSummary;
+        CostsSummary = costsSummary;
+        ContributionsSummary = contributionsSummary;
         IsCompleted = isCompleted;
     }
 
-    public IList<SectionSummaryItemModel>? LandValueItems { get; set; }
+    [ValidateNever]
+    public SectionSummaryViewModel LandValueSummary { get; set; }
 
-    public IList<SectionSummaryItemModel>? CostItems { get; set; }
+    [ValidateNever]
+    public SectionSummaryViewModel CostsSummary { get; set; }
 
-    public IList<SectionSummaryItemModel>? ContributionItems { get; set; }
+    [ValidateNever]
+    public SectionSummaryViewModel ContributionsSummary { get; set; }
+
+    [ValidateNever]
+    public bool? CostsAndFunding { get; set; }
 
     public bool? IsCompleted { get; set; }
 }

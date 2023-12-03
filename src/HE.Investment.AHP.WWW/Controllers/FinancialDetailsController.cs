@@ -34,12 +34,12 @@ namespace HE.Investment.AHP.WWW.Controllers;
 public class FinancialDetailsController : WorkflowController<FinancialDetailsWorkflowState>
 {
     private readonly IMediator _mediator;
-    private readonly IFinancialDetailsSummaryModelFactory _financialDetailsSummaryModelFactory;
+    private readonly IFinancialDetailsSummaryViewModelFactory _financialDetailsSummaryViewModelFactory;
 
-    public FinancialDetailsController(IMediator mediator, IFinancialDetailsSummaryModelFactory financialDetailsSummaryModelFactory)
+    public FinancialDetailsController(IMediator mediator, IFinancialDetailsSummaryViewModelFactory financialDetailsSummaryViewModelFactory)
     {
         _mediator = mediator;
-        _financialDetailsSummaryModelFactory = financialDetailsSummaryModelFactory;
+        _financialDetailsSummaryViewModelFactory = financialDetailsSummaryViewModelFactory;
     }
 
     [HttpGet("start")]
@@ -256,19 +256,19 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
     public async Task<IActionResult> CheckAnswers(Guid applicationId, CancellationToken cancellationToken)
     {
-        var model = await _financialDetailsSummaryModelFactory.GetFinancialDetailsAndCreateSummary(Url, applicationId, cancellationToken);
+        var model = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken);
 
         return View(model);
     }
 
     [HttpPost("check-answers")]
     [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
-    public async Task<IActionResult> CheckAnswers(Guid applicationId, FinancialDetailsCheckAnswersModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> Complete(Guid applicationId, FinancialDetailsCheckAnswersModel model, CancellationToken cancellationToken)
     {
         if (model.IsCompleted == null)
         {
             ModelState.AddModelError(nameof(model.IsCompleted), "Select whether you have completed this section");
-            return View("CheckAnswers", await _financialDetailsSummaryModelFactory.GetFinancialDetailsAndCreateSummary(Url, applicationId, cancellationToken));
+            return View("CheckAnswers", await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken));
         }
 
         if (model.IsCompleted.Value)
@@ -284,7 +284,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                 }
 
                 ModelState.AddModelError(nameof(model.IsCompleted), "You have not completed this section. Select no if you want to come back later");
-                return View("CheckAnswers", await _financialDetailsSummaryModelFactory.GetFinancialDetailsAndCreateSummary(Url, applicationId, cancellationToken));
+                return View("CheckAnswers", await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken));
             }
         }
 
