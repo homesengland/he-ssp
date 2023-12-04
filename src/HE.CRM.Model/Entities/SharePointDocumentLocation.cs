@@ -65,6 +65,7 @@ namespace DataverseModel
 			public const string ExchangeRate = "exchangerate";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string invln_conditions_SharePointDocumentLocations = "invln_conditions_SharePointDocumentLocations";
+			public const string invln_hometype_SharePointDocumentLocations = "invln_hometype_SharePointDocumentLocations";
 			public const string invln_loanapplication_SharePointDocumentLocations = "invln_loanapplication_SharePointDocumentLocations";
 			public const string invln_scheme_SharePointDocumentLocations = "invln_scheme_SharePointDocumentLocations";
 			public const string lk_sharepointdocumentlocationbase_createdby = "lk_sharepointdocumentlocationbase_createdby";
@@ -773,6 +774,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_conditions_SharePointDocumentLocations");
 				this.SetRelatedEntity<DataverseModel.invln_Conditions>("invln_conditions_SharePointDocumentLocations", null, value);
 				this.OnPropertyChanged("invln_conditions_SharePointDocumentLocations");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_hometype_SharePointDocumentLocations
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_hometype_SharePointDocumentLocations")]
+		public DataverseModel.invln_HomeType invln_hometype_SharePointDocumentLocations
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_HomeType>("invln_hometype_SharePointDocumentLocations", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_hometype_SharePointDocumentLocations");
+				this.SetRelatedEntity<DataverseModel.invln_HomeType>("invln_hometype_SharePointDocumentLocations", null, value);
+				this.OnPropertyChanged("invln_hometype_SharePointDocumentLocations");
 			}
 		}
 		

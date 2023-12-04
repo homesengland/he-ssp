@@ -7,4 +7,6 @@ public interface IWebRoleRepository
     List<Entity> GetContactWebrole(IOrganizationServiceAsync2 service, Guid contactId, string portalType);
 
     List<Entity> GetDefaultPortalRoles(IOrganizationServiceAsync2 service, string portalType);
+
+    Entity? GetContactWebroleForGivenOrganisationAndPortal(IOrganizationServiceAsync2 service, Guid organisationId, string portalType, Guid contactId);
 }

@@ -35,13 +35,79 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Active = 1,
+		ApplicationSubmitted = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Deleted = 858110000,
+		Approved = 858110022,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedContractExecuted = 858110021,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedContractPassedComplianceChecks = 858110020,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedContractReceivedBackToHE = 858110019,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedEngressmentIssued = 858110018,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedSubjecttoContract = 858110017,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Deleted = 858110024,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Draft = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InternallyApprovedSubjectToIPQ = 858110010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InternallyApprovedSubjectToIPQAndRegulatorySignOff = 858110012,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InternallyApprovedSubjectToRegulatorSignOff = 858110011,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InternallyRejected = 858110013,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OnHold = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ReferredBackToApplicant = 858110016,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Rejected = 858110014,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RequestedEditing = 858110015,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewGoingToBidClinic = 858110006,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewGoingToCMEModeration = 858110007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewGoingToSLT = 858110008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewInAssessment = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewInternallyApproved = 858110009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewPendingAssessment = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Withdrawn = 858110023,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -82,6 +148,7 @@ namespace DataverseModel
 			public const string invln_expectedoncosts_Base = "invln_expectedoncosts_base";
 			public const string invln_expectedonworks = "invln_expectedonworks";
 			public const string invln_expectedonworks_Base = "invln_expectedonworks_base";
+			public const string invln_ExternalStatus = "invln_externalstatus";
 			public const string invln_financialdetailssectioncompletionstatus = "invln_financialdetailssectioncompletionstatus";
 			public const string invln_fundingfromopenmarkethomesnotonthisscheme = "invln_fundingfromopenmarkethomesnotonthisscheme";
 			public const string invln_fundingfromopenmarkethomesnotonthisscheme_Base = "invln_fundingfromopenmarkethomesnotonthisscheme_base";
@@ -570,6 +637,23 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedonworks_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_ExternalStatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_externalstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ExternalStatus");
+				this.SetAttributeValue("invln_externalstatus", value);
+				this.OnPropertyChanged("invln_ExternalStatus");
 			}
 		}
 		

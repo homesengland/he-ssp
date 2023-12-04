@@ -59,4 +59,27 @@ public class WebRoleRepository : IWebRoleRepository
         var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
         return result.Entities.ToList();
     }
+
+    public Entity? GetContactWebroleForGivenOrganisationAndPortal(IOrganizationServiceAsync2 service, Guid organisationId, string portalType, Guid contactId)
+    {
+        var fetchXml = @"<fetch>
+                      <entity name=""invln_contactwebrole"">
+                        <attribute name=""invln_contactwebroleid"" />
+                        <filter>
+                          <condition attribute=""invln_contactid"" operator=""eq"" value=""" + contactId + @""" />
+                          <condition attribute=""invln_accountid"" operator=""eq"" value=""" + organisationId + @""" />
+                        </filter>
+                        <link-entity name=""invln_webrole"" from=""invln_webroleid"" to=""invln_webroleid"">
+                          <link-entity name=""invln_portal"" from=""invln_portalid"" to=""invln_portalid"">
+                            <filter>
+                              <condition attribute=""invln_portal"" operator=""eq"" value="" " + portalType + @""" />
+                            </filter>
+                          </link-entity>
+                        </link-entity>
+                      </entity>
+                    </fetch>";
+
+        var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
+        return result.Entities.FirstOrDefault();
+    }
 }
