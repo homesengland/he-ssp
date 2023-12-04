@@ -6,6 +6,7 @@ using HE.Investments.DocumentService.Models;
 using HE.Investments.DocumentService.Services;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Notifications;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
+using HE.Investments.Loans.BusinessLogic.Config;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.Contract.CompanyStructure.Commands;
 using MediatR;
@@ -17,7 +18,7 @@ public class ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler : C
     IRequestHandler<ProvideMoreInformationAboutOrganizationRemoveFileCommand, OperationResult>
 {
     private readonly IDocumentService _documentService;
-    private readonly IDocumentServiceConfig _config;
+    private readonly ILoansDocumentSettings _documentSettings;
     private readonly INotificationService _notificationService;
 
     public ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler(
@@ -26,12 +27,12 @@ public class ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler : C
                 IAccountUserContext loanUserContext,
                 ILogger<CompanyStructureBaseCommandHandler> logger,
                 IDocumentService documentService,
-                IDocumentServiceConfig config,
+                ILoansDocumentSettings documentSettings,
                 INotificationService notificationService)
         : base(companyStructureRepository, loanApplicationRepository, loanUserContext, logger)
     {
         _documentService = documentService;
-        _config = config;
+        _documentSettings = documentSettings;
         _notificationService = notificationService;
     }
 
@@ -41,7 +42,7 @@ public class ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler : C
             async companyStructure =>
             {
                 await _documentService.DeleteAsync(
-                    new FileLocation(_config.ListTitle, _config.ListAlias, request.FolderPath),
+                    new FileLocation(_documentSettings.ListTitle, _documentSettings.ListAlias, request.FolderPath),
                     request.FileName,
                     cancellationToken);
 

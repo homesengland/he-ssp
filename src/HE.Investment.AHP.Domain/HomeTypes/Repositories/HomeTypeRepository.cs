@@ -1,7 +1,7 @@
 using HE.Investment.AHP.Contract.HomeTypes.Events;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.Common.Services;
+using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.HomeTypes.Crm;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
@@ -82,7 +82,9 @@ public class HomeTypeRepository : IHomeTypeRepository
                     _homeTypeCrmMapper.MapToDto(entity, segments),
                     _homeTypeCrmMapper.SaveCrmFields(entity, segments),
                     cancellationToken));
-            await _eventDispatcher.Publish(new HomeTypeHasBeenCreatedEvent(homeType.Application.Id.Value, entity.Name.Value), cancellationToken);
+            await _eventDispatcher.Publish(
+                new HomeTypeHasBeenCreatedEvent(homeType.Application.Id.Value, entity.Id.Value, entity.Name.Value),
+                cancellationToken);
         }
         else if (entity.IsModified)
         {

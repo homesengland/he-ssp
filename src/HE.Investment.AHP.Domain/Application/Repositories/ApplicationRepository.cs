@@ -1,11 +1,13 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investment.AHP.Contract.Application;
+using HE.Investment.AHP.Contract.Application.Events;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.CRM;
+using HE.Investments.Common.Infrastructure.Events;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
@@ -15,11 +17,13 @@ public class ApplicationRepository : IApplicationRepository
 {
     private readonly IApplicationCrmContext _applicationCrmContext;
     private readonly IAccountUserContext _accountUserContext;
+    private readonly IEventDispatcher _eventDispatcher;
 
-    public ApplicationRepository(IApplicationCrmContext applicationCrmContext, IAccountUserContext accountUserContext)
+    public ApplicationRepository(IApplicationCrmContext applicationCrmContext, IAccountUserContext accountUserContext, IEventDispatcher eventDispatcher)
     {
         _applicationCrmContext = applicationCrmContext;
         _accountUserContext = accountUserContext;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<ApplicationEntity> GetById(ApplicationId id, CancellationToken cancellationToken)
@@ -67,6 +71,8 @@ public class ApplicationRepository : IApplicationRepository
         if (application.Id.IsEmpty())
         {
             application.SetId(new ApplicationId(id));
+
+            await _eventDispatcher.Publish(new ApplicationHasBeenCreatedEvent(id), cancellationToken);
         }
 
         return application;

@@ -1,7 +1,6 @@
 using System.Net;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Services;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 
@@ -18,14 +17,26 @@ public static class ServiceCollectionExtension
                 onRetry: (_, _, _, _) => { });
 
         services.AddHttpClient("HE.Investments.DocumentService").AddPolicyHandler(retryPolicyNeedsTrueResponse);
-        services.AddSingleton<IDocumentService, HttpDocumentService>();
+        services.AddSingleton<IDocumentServiceSettings, DocumentServiceSettings>();
+        services.AddSingleton<HttpDocumentService>();
+        services.AddSingleton<MockedDocumentService>();
 
-        services.AddSingleton<IDocumentServiceConfig>(x =>
-            x.GetRequiredService<IConfiguration>().GetRequiredSection("AppConfiguration:DocumentService").Get<DocumentServiceConfig>());
+        services.AddScoped(GetDocumentService);
     }
 
     private static bool ShouldRetry(HttpResponseMessage response)
     {
         return response.StatusCode >= HttpStatusCode.InternalServerError;
+    }
+
+    private static IDocumentService GetDocumentService(IServiceProvider serviceProvider)
+    {
+        var settings = serviceProvider.GetRequiredService<IDocumentServiceSettings>();
+        if (settings.UseMock)
+        {
+            return serviceProvider.GetRequiredService<MockedDocumentService>();
+        }
+
+        return serviceProvider.GetRequiredService<HttpDocumentService>();
     }
 }

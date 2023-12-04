@@ -12,7 +12,7 @@ public class HttpDocumentService : IDocumentService
 {
     private readonly IHttpClientFactory _httpClient;
 
-    private readonly IDocumentServiceConfig _config;
+    private readonly IDocumentServiceSettings _settings;
 
     private readonly ILogger<HttpDocumentService> _logger;
 
@@ -22,17 +22,17 @@ public class HttpDocumentService : IDocumentService
         PropertyNameCaseInsensitive = true,
     };
 
-    public HttpDocumentService(IHttpClientFactory httpClient, IDocumentServiceConfig config, ILogger<HttpDocumentService> logger)
+    public HttpDocumentService(IHttpClientFactory httpClient, IDocumentServiceSettings settings, ILogger<HttpDocumentService> logger)
     {
         _httpClient = httpClient;
-        _config = config;
+        _settings = settings;
         _logger = logger;
     }
 
     public async Task<IEnumerable<FileDetails<TMetadata>>> GetFilesAsync<TMetadata>(GetFilesQuery query, CancellationToken cancellationToken)
         where TMetadata : class
     {
-        var uri = new UriBuilder($"{_config.Url}/SharepointFiles/GetTableRows");
+        var uri = new UriBuilder($"{_settings.Url}/SharepointFiles/GetTableRows");
         var content = new FileTableFilterContract
         {
             ListTitle = query.ListTitle,
@@ -59,7 +59,7 @@ public class HttpDocumentService : IDocumentService
 
     public async Task UploadAsync<TMetadata>(FileLocation location, UploadFileData<TMetadata> file, bool overwrite = false, CancellationToken cancellationToken = default)
     {
-        var uri = new UriBuilder($"{_config.Url}/SharepointFiles/Upload");
+        var uri = new UriBuilder($"{_settings.Url}/SharepointFiles/Upload");
 
         using var listTitleStringContent = new StringContent(location.ListTitle);
         using var folderPathStringContent = new StringContent(location.FolderPath);
@@ -86,14 +86,14 @@ public class HttpDocumentService : IDocumentService
 
     public async Task DeleteAsync(FileLocation location, string fileName, CancellationToken cancellationToken)
     {
-        var uri = new UriBuilder($"{_config.Url}/SharepointFiles/Delete?listAlias={location.ListAlias}&folderPath={location.FolderPath}&fileName={fileName}");
+        var uri = new UriBuilder($"{_settings.Url}/SharepointFiles/Delete?listAlias={location.ListAlias}&folderPath={location.FolderPath}&fileName={fileName}");
         using var request = new HttpRequestMessage(HttpMethod.Delete, uri.ToString());
         using var response = await SendAsync(request, cancellationToken);
     }
 
     public async Task<DownloadFileData> DownloadAsync(FileLocation location, string fileName, CancellationToken cancellationToken)
     {
-        var uri = new UriBuilder($"{_config.Url}/SharepointFiles/Download?listAlias={location.ListAlias}&folderPath={location.FolderPath}&fileName={fileName}");
+        var uri = new UriBuilder($"{_settings.Url}/SharepointFiles/Download?listAlias={location.ListAlias}&folderPath={location.FolderPath}&fileName={fileName}");
         using var request = new HttpRequestMessage(HttpMethod.Get, uri.ToString());
         using var response = await SendAsync(request, cancellationToken);
 
@@ -107,7 +107,7 @@ public class HttpDocumentService : IDocumentService
 
     public async Task CreateFoldersAsync(string listTitle, List<string> folderPaths, CancellationToken cancellationToken)
     {
-        var uri = new UriBuilder($"{_config.Url}/SharepointFiles/CreateFolders?listTitle={listTitle}");
+        var uri = new UriBuilder($"{_settings.Url}/SharepointFiles/CreateFolders?listTitle={listTitle}");
         using var request = new HttpRequestMessage(HttpMethod.Post, uri.ToString())
         {
             Content = new StringContent(JsonSerializer.Serialize(folderPaths), Encoding.UTF8, "application/json"),

@@ -1,6 +1,8 @@
 using HE.Investment.AHP.Domain.Application.Repositories;
-using HE.Investment.AHP.Domain.Common.Services;
 using HE.Investment.AHP.Domain.Data;
+using HE.Investment.AHP.Domain.Documents.Config;
+using HE.Investment.AHP.Domain.Documents.Crm;
+using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Crm;
 using HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
@@ -9,6 +11,8 @@ using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investment.AHP.Domain.Mock;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
+using HE.Investment.AHP.Domain.Scheme.Services;
+using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared.Config;
 using HE.Investments.Loans.Common.Utils;
 using MediatR.Pipeline;
@@ -25,6 +29,8 @@ public static class DomainModule
         services.AddTransient(typeof(IRequestExceptionHandler<,,>), typeof(DomainValidationHandler<,,>));
 
         services.AddScoped<IApplicationCrmContext, ApplicationCrmContext>();
+        services.AddScoped<IDocumentsCrmContext, DocumentsCrmContext>();
+        services.AddSingleton<IAhpDocumentSettings, AhpDocumentSettings>();
 
         AddHomeTypes(services);
         AddFinancialDetails(services);
@@ -43,7 +49,8 @@ public static class DomainModule
         services.AddSingleton<IHomeTypeCrmSegmentMapper, DesignPlansCrmSegmentMapper>();
         services.AddSingleton<IHomeTypeCrmSegmentMapper, SupportedHousingInformationSegmentMapper>();
 
-        services.AddScoped<IAhpFileService<DesignFileParams>, DesignFileService>();
+        services.AddScoped<IAhpFileLocationProvider<DesignFileParams>, DesignFileLocationProvider>();
+        services.AddScoped<IAhpFileService<DesignFileParams>, AhpFileService<DesignFileParams>>();
     }
 
     private static void AddFinancialDetails(IServiceCollection services)
@@ -62,5 +69,7 @@ public static class DomainModule
 
         // TODO: change scope when file source implemented
         services.AddSingleton<IFileService, FileService>();
+        services.AddScoped<IAhpFileLocationProvider<LocalAuthoritySupportFileParams>, LocalAuthoritySupportFileLocationProvider>();
+        services.AddScoped<IAhpFileService<LocalAuthoritySupportFileParams>, AhpFileService<LocalAuthoritySupportFileParams>>();
     }
 }
