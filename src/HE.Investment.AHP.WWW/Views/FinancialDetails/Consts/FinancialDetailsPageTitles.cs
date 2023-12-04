@@ -13,4 +13,6 @@ public static class FinancialDetailsPageTitles
     public const string ExpectedContributions = "Your expected contributions to the scheme";
 
     public const string ExpectedGrants = "Grants received from other public bodies";
+
+    public const string CheckAnswers = "Check your answers";
 }

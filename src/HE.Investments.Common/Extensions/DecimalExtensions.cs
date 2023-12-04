@@ -18,4 +18,21 @@ public static class DecimalExtensions
     {
         return Convert.ToInt64(Math.Truncate(val), CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
     }
+
+    public static string? ToMoneyString(this decimal? val)
+    {
+        if (val == null)
+        {
+            return null;
+        }
+
+        var exactString = val.Value.ToString("0.00", CultureInfo.InvariantCulture);
+
+        return exactString;
+    }
+
+    public static string ToMoneyString(this decimal val)
+    {
+        return ToMoneyString((decimal?)val) ?? string.Empty;
+    }
 }

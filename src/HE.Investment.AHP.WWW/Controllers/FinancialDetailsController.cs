@@ -4,17 +4,27 @@ using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails;
 using HE.Investment.AHP.Domain.FinancialDetails.Commands;
+using HE.Investment.AHP.Domain.FinancialDetails.Constants;
+using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
+using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
+using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Common.Routing;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Routing;
+using NuGet.Protocol;
 using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.WWW.Controllers;
@@ -24,10 +34,12 @@ namespace HE.Investment.AHP.WWW.Controllers;
 public class FinancialDetailsController : WorkflowController<FinancialDetailsWorkflowState>
 {
     private readonly IMediator _mediator;
+    private readonly IFinancialDetailsSummaryViewModelFactory _financialDetailsSummaryViewModelFactory;
 
-    public FinancialDetailsController(IMediator mediator)
+    public FinancialDetailsController(IMediator mediator, IFinancialDetailsSummaryViewModelFactory financialDetailsSummaryViewModelFactory)
     {
         _mediator = mediator;
+        _financialDetailsSummaryViewModelFactory = financialDetailsSummaryViewModelFactory;
     }
 
     [HttpGet("start")]
@@ -53,20 +65,21 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
     public async Task<IActionResult> LandStatus(Guid applicationId)
     {
+        var siteLandStatus = false;
+
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
         return View(new FinancialDetailsLandStatusModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.ActualPurchasePrice?.ToString(CultureInfo.InvariantCulture) ?? string.Empty,
-            financialDetails.ExpectedPurchasePrice?.ToString(CultureInfo.InvariantCulture) ?? string.Empty,
-            true));
+            financialDetails.PurchasePrice?.ToString(CultureInfo.InvariantCulture) ?? string.Empty,
+            financialDetails.IsPurchasePriceFinal ?? siteLandStatus));
     }
 
     [HttpPost("land-status")]
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
     public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvidePurchasePriceCommand(ApplicationId.From(applicationId), model.ActualPurchasePrice, model.ExpectedPurchasePrice), cancellationToken);
+        var result = await _mediator.Send(new ProvidePurchasePriceCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal), cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -75,7 +88,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             return View("LandStatus", model);
         }
 
-        return await Continue(new { applicationId });
+        return await ContinueWithRedirect(new { applicationId });
     }
 
     [HttpGet("land-value")]
@@ -100,7 +113,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.LandValue)]
     public async Task<IActionResult> LandValue(Guid applicationId, FinancialDetailsLandValueModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideLandOwnershipAndValueCommand(ApplicationId.From(applicationId), model.IsOnPublicLand, model.LandValue), cancellationToken);
+        var result = await _mediator.Send(new ProvideLandValueCommand(ApplicationId.From(applicationId), model.IsOnPublicLand, model.LandValue), cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -109,7 +122,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             return View("LandValue", model);
         }
 
-        return await Continue(new { applicationId });
+        return await ContinueWithRedirect(new { applicationId });
     }
 
     [HttpGet("other-application-costs")]
@@ -137,11 +150,11 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             return View("OtherApplicationCosts", model);
         }
 
-        return await Continue(new { applicationId });
+        return await ContinueWithRedirect(new { applicationId });
     }
 
     [HttpGet("contributions")]
-    [WorkflowState(FinancialDetailsWorkflowState.ExpectedContributions)]
+    [WorkflowState(FinancialDetailsWorkflowState.Contributions)]
     public async Task<IActionResult> Contributions(Guid applicationId)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()));
@@ -169,7 +182,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     }
 
     [HttpPost("contributions")]
-    [WorkflowState(FinancialDetailsWorkflowState.ExpectedContributions)]
+    [WorkflowState(FinancialDetailsWorkflowState.Contributions)]
     public async Task<IActionResult> Contributions(Guid applicationId, FinancialDetailsContributionsModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
@@ -192,7 +205,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             return View("Contributions", model);
         }
 
-        return await Continue(new { applicationId });
+        return await ContinueWithRedirect(new { applicationId });
     }
 
     [HttpGet("grants")]
@@ -236,7 +249,46 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             return View("Grants", model);
         }
 
-        return await Continue(new { applicationId });
+        return await ContinueWithRedirect(new { applicationId });
+    }
+
+    [HttpGet("check-answers")]
+    [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
+    public async Task<IActionResult> CheckAnswers(Guid applicationId, CancellationToken cancellationToken)
+    {
+        var model = await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken);
+
+        return View(model);
+    }
+
+    [HttpPost("check-answers")]
+    [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
+    public async Task<IActionResult> Complete(Guid applicationId, FinancialDetailsCheckAnswersModel model, CancellationToken cancellationToken)
+    {
+        if (model.IsCompleted == null)
+        {
+            ModelState.AddModelError(nameof(model.IsCompleted), "Select whether you have completed this section");
+            return View("CheckAnswers", await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken));
+        }
+
+        if (model.IsCompleted.Value)
+        {
+            var result = await _mediator.Send(new CompleteFinancialDetailsCommand(ApplicationId.From(applicationId)), cancellationToken);
+
+            if (result.HasValidationErrors)
+            {
+                var error = result.Errors.FirstOrDefault(error => error.AffectedField == FinancialDetailsValidationFieldNames.CostsAndFunding);
+                if (error != null)
+                {
+                    ModelState.AddModelError(error.AffectedField, error.ErrorMessage);
+                }
+
+                ModelState.AddModelError(nameof(model.IsCompleted), "You have not completed this section. Select no if you want to come back later");
+                return View("CheckAnswers", await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken));
+            }
+        }
+
+        return RedirectToAction("TaskList", "Application", new { applicationId });
     }
 
     [HttpGet("back")]

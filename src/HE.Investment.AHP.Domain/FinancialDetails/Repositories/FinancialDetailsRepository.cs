@@ -1,8 +1,10 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
+
+using HE.Investments.Common.Domain;
 using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
@@ -29,27 +31,28 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         {
             id = financialDetails.ApplicationId.Value.ToString(),
             name = financialDetails.ApplicationName,
-            actualAcquisitionCost = financialDetails.ActualPurchasePrice?.Value,
-            expectedAcquisitionCost = financialDetails.ExpectedPurchasePrice?.Value,
-            isPublicLand = financialDetails.LandOwnership?.Value,
+            actualAcquisitionCost = financialDetails.PurchasePrice?.ActualPrice,
+            expectedAcquisitionCost = financialDetails.PurchasePrice?.ExpectedPrice,
+            isPublicLand = financialDetails.LandValue?.IsLandPublic,
             currentLandValue = financialDetails.LandValue?.Value,
-            expectedOnWorks = financialDetails.ExpectedWorksCosts?.Value,
-            expectedOnCosts = financialDetails.ExpectedOnCosts?.Value,
-            borrowingAgainstRentalIncomeFromThisScheme = financialDetails.RentalIncomeBorrowing?.Value,
-            fundingFromOpenMarketHomesOnThisScheme = financialDetails.SalesOfHomesOnThisScheme?.Value,
-            fundingFromOpenMarketHomesNotOnThisScheme = financialDetails.SalesOfHomesOnOtherSchemes?.Value,
-            ownResources = financialDetails.OwnResources?.Value,
-            recycledCapitalGrantFund = financialDetails.RCGFContribution?.Value,
-            otherCapitalSources = financialDetails.OtherCapitalSources?.Value,
-            totalInitialSalesIncome = financialDetails.SharedOwnershipSales?.Value,
-            transferValue = financialDetails.HomesTransferValue?.Value,
-            howMuchReceivedFromCountyCouncil = financialDetails.CountyCouncilGrants?.Value,
-            howMuchReceivedFromDhscExtraCareFunding = financialDetails.DHSCExtraCareGrants?.Value,
-            howMuchReceivedFromLocalAuthority1 = financialDetails.LocalAuthorityGrants?.Value,
-            howMuchReceivedFromSocialServices = financialDetails.SocialServicesGrants?.Value,
-            howMuchReceivedFromDepartmentOfHealth = financialDetails.HealthRelatedGrants?.Value,
-            howMuchReceivedFromLotteryFunding = financialDetails.LotteryGrants?.Value,
-            howMuchReceivedFromOtherPublicBodies = financialDetails.OtherPublicGrants?.Value,
+            expectedOnWorks = financialDetails.ExpectedCosts?.WorksCosts,
+            expectedOnCosts = financialDetails.ExpectedCosts?.OnCosts,
+            borrowingAgainstRentalIncomeFromThisScheme = financialDetails.Contributions.RentalIncomeBorrowing,
+            fundingFromOpenMarketHomesOnThisScheme = financialDetails.Contributions.SalesOfHomesOnThisScheme,
+            fundingFromOpenMarketHomesNotOnThisScheme = financialDetails.Contributions.SalesOfHomesOnOtherSchemes,
+            ownResources = financialDetails.Contributions.OwnResources,
+            recycledCapitalGrantFund = financialDetails.Contributions.RCGFContributions,
+            otherCapitalSources = financialDetails.Contributions.OtherCapitalSources,
+            totalInitialSalesIncome = financialDetails.Contributions.SharedOwnershipSales,
+            transferValue = financialDetails.Contributions.HomesTransferValue,
+            howMuchReceivedFromCountyCouncil = financialDetails.Grants?.CountyCouncil,
+            howMuchReceivedFromDhscExtraCareFunding = financialDetails.Grants?.DHSCExtraCare,
+            howMuchReceivedFromLocalAuthority1 = financialDetails.Grants?.LocalAuthority,
+            howMuchReceivedFromSocialServices = financialDetails.Grants?.SocialServices,
+            howMuchReceivedFromDepartmentOfHealth = financialDetails.Grants?.HealthRelated,
+            howMuchReceivedFromLotteryFunding = financialDetails.Grants?.Lottery,
+            howMuchReceivedFromOtherPublicBodies = financialDetails.Grants?.OtherPublicBodies,
+            financialDetailsSectionCompletionStatus = SectionStatusMapper.ToDto(financialDetails.SectionStatus),
         };
 
         _ = await _applicationCrmContext.Save(dto, CrmFields.FinancialDetailsToUpdate, cancellationToken);
@@ -62,26 +65,26 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         return new FinancialDetailsEntity(
             ApplicationId.From(application.id),
             application.name ?? "Unknown",
-            ActualPurchasePrice.From(application.actualAcquisitionCost),
-            ExpectedPurchasePrice.From(application.expectedAcquisitionCost),
-            application.isPublicLand.HasValue ? new LandOwnership(application.isPublicLand.Value ? CommonResponse.Yes : CommonResponse.No) : null,
-            LandValue.From(application.currentLandValue),
-            ExpectedWorksCosts.From(application.expectedOnWorks),
-            ExpectedOnCosts.From(application.expectedOnCosts),
-            RentalIncomeBorrowing.From(application.borrowingAgainstRentalIncomeFromThisScheme),
-            SalesOfHomesOnThisScheme.From(application.fundingFromOpenMarketHomesOnThisScheme),
-            SalesOfHomesOnOtherSchemes.From(application.fundingFromOpenMarketHomesNotOnThisScheme),
-            OwnResources.From(application.ownResources),
-            RCGFContribution.From(application.recycledCapitalGrantFund),
-            OtherCapitalSources.From(application.otherCapitalSources),
-            SharedOwnershipSales.From(application.totalInitialSalesIncome),
-            HomesTransferValue.From(application.transferValue),
-            CountyCouncilGrants.From(application.howMuchReceivedFromCountyCouncil),
-            DHSCExtraCareGrants.From(application.howMuchReceivedFromDhscExtraCareFunding),
-            LocalAuthorityGrants.From(application.howMuchReceivedFromLocalAuthority1),
-            SocialServicesGrants.From(application.howMuchReceivedFromSocialServices),
-            HealthRelatedGrants.From(application.howMuchReceivedFromDepartmentOfHealth),
-            LotteryGrants.From(application.howMuchReceivedFromLotteryFunding),
-            OtherPublicGrants.From(application.howMuchReceivedFromOtherPublicBodies));
+            PurchasePrice.From(application.actualAcquisitionCost, application.expectedAcquisitionCost),
+            LandValue.From(application.isPublicLand, application.currentLandValue),
+            ExpectedCosts.From(application.expectedOnWorks, application.expectedOnCosts),
+            Contributions.From(
+                application.borrowingAgainstRentalIncomeFromThisScheme,
+                application.fundingFromOpenMarketHomesOnThisScheme,
+                application.fundingFromOpenMarketHomesNotOnThisScheme,
+                application.ownResources,
+                application.recycledCapitalGrantFund,
+                application.otherCapitalSources,
+                application.totalInitialSalesIncome,
+                application.transferValue),
+            Grants.From(
+                application.howMuchReceivedFromCountyCouncil,
+                application.howMuchReceivedFromDhscExtraCareFunding,
+                application.howMuchReceivedFromLocalAuthority1,
+                application.howMuchReceivedFromSocialServices,
+                application.howMuchReceivedFromDepartmentOfHealth,
+                application.howMuchReceivedFromLotteryFunding,
+                application.howMuchReceivedFromOtherPublicBodies),
+            SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus));
     }
 }

@@ -28,7 +28,7 @@
 }
 <div id="mainContainer" class="govuk-grid-three-quarters" role="main">
     <gds-div-grid-column-two-thirds>
-        <form asp-controller="FinancialDetails" asp-action="Grants" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
+        <form asp-controller="FinancialDetails" asp-action="Grants" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
             <vc:financial-details-form-header title="@FinancialDetailsPageTitles.ExpectedGrants"
                                               current-page="@FinancialDetailsWorkflowState.Grants"
                                               application-id="@Model.ApplicationId.ToString()"

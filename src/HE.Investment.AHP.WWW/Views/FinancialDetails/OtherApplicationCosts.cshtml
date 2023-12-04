@@ -14,7 +14,7 @@
 }
 <div id="mainContainer" role="main">
     <div class="govuk-grid-column-full">
-        <form asp-controller="FinancialDetails" asp-action="OtherApplicationCosts" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
+        <form asp-controller="FinancialDetails" asp-action="OtherApplicationCosts" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
             <div id="backButton" role="navigation">
                 <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.OtherApplicationCosts, applicationId = @Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
                 </gds-back-link>

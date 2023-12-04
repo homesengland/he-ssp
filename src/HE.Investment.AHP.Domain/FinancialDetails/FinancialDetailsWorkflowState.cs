@@ -6,7 +6,7 @@ public enum FinancialDetailsWorkflowState
     LandStatus,
     LandValue,
     OtherApplicationCosts,
-    ExpectedContributions,
+    Contributions,
     Grants,
-    CheckFinancialDetails,
+    CheckAnswers,
 }
