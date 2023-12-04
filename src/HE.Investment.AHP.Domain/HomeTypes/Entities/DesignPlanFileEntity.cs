@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Domain.Common;
-using HE.Investment.AHP.Domain.Common.Services;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
+using HE.Investment.AHP.Domain.Documents.Config;
+using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
@@ -10,26 +11,21 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 public class DesignPlanFileEntity
 {
-    private const int MaxFileSizeInMegabytes = 20;
-
-    private static readonly IList<FileExtension> AllowedExtensions =
-        new[] { new FileExtension("jpg"), new FileExtension("png"), new FileExtension("pdf"), new FileExtension("docx") };
-
     private readonly Stream _content;
 
-    private DesignPlanFileEntity(FileName name, FileSize size, Stream content)
+    private DesignPlanFileEntity(FileName name, FileSize size, Stream content, IAhpDocumentSettings documentSettings)
     {
-        if (!AllowedExtensions.Contains(name.Extension))
+        if (!documentSettings.AllowedExtensions.Contains(name.Extension))
         {
             OperationResult.New()
-                .AddValidationError("File", GenericValidationError.InvalidFileType(name.Value, AllowedExtensions.Select(x => x.Value)))
+                .AddValidationError("File", GenericValidationError.InvalidFileType(name.Value, documentSettings.AllowedExtensions.Select(x => x.Value)))
                 .CheckErrors();
         }
 
-        if (size > FileSize.FromMegabytes(MaxFileSizeInMegabytes))
+        if (size > documentSettings.MaxFileSize)
         {
             OperationResult.New()
-                .AddValidationError("File", GenericValidationError.FileTooBig(MaxFileSizeInMegabytes))
+                .AddValidationError("File", GenericValidationError.FileTooBig(documentSettings.MaxFileSize.Megabytes))
                 .CheckErrors();
         }
 
@@ -41,7 +37,8 @@ public class DesignPlanFileEntity
 
     public FileName Name { get; }
 
-    public static DesignPlanFileEntity ForUpload(FileName name, FileSize size, Stream content) => new(name, size, content);
+    public static DesignPlanFileEntity ForUpload(FileName name, FileSize size, Stream content, IAhpDocumentSettings documentSettings) =>
+        new(name, size, content, documentSettings);
 
     public async Task<UploadedFile> Upload(
         IHomeTypeEntity homeType,

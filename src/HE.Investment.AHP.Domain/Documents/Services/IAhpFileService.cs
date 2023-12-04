@@ -1,7 +1,8 @@
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investments.DocumentService.Models;
 
-namespace HE.Investment.AHP.Domain.Common.Services;
+namespace HE.Investment.AHP.Domain.Documents.Services;
 
 public interface IAhpFileService<in TFileParams>
 {

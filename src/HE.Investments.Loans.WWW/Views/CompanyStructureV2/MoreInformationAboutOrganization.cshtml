@@ -1,16 +1,16 @@
 @using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Helpers
-@using HE.Investments.DocumentService.Configs;
+@using HE.Investments.Loans.BusinessLogic.Config
 @using HE.Investments.Loans.Contract.CompanyStructure
 @model HE.Investments.Loans.Contract.CompanyStructure.CompanyStructureViewModel
 @inject ModelExpressionProvider modelProvider
-@inject IDocumentServiceConfig config
+@inject ILoansDocumentSettings settings
 @{
     var (hasError, fileInputError) = ViewData.ModelState.GetErrors(modelProvider.GetExpressionText((CompanyStructureViewModel x) => x.OrganisationMoreInformationFile));
 }
 
-@Html.Hidden("MaxFileSizeInMegabytes", config.MaxFileSizeInMegabytes)
+@Html.Hidden("MaxFileSizeInMegabytes", settings.MaxFileSizeInMegabytes)
 
 <gds-div-grid-column-two-thirds>
     <form id="formWithFile" asp-controller="CompanyStructureV2" asp-action="MoreInformationAboutOrganizationPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" enctype="multipart/form-data" asp-method="post" novalidate>

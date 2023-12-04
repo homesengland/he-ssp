@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.Contract.Scheme.Queries;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Workflows;
 using HE.Investment.AHP.WWW.Models.Scheme;
@@ -28,11 +29,13 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
 {
     private readonly IMediator _mediator;
     private readonly ISchemeSummaryViewModelFactory _summaryViewModelFactory;
+    private readonly IAhpDocumentSettings _documentSettings;
 
-    public SchemeController(IMediator mediator, ISchemeSummaryViewModelFactory summaryViewModelFactory)
+    public SchemeController(IMediator mediator, ISchemeSummaryViewModelFactory summaryViewModelFactory, IAhpDocumentSettings documentSettings)
     {
         _mediator = mediator;
         _summaryViewModelFactory = summaryViewModelFactory;
+        _documentSettings = documentSettings;
     }
 
     [WorkflowState(SchemeWorkflowState.Start)]
@@ -273,7 +276,9 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             scheme.TypeAndTenureJustification,
             scheme.SchemeAndProposalJustification,
             scheme.StakeholderDiscussionsReport,
-            CreateFileModel(scheme.StakeholderDiscussionsFile));
+            CreateFileModel(scheme.StakeholderDiscussionsFile),
+            _documentSettings.MaxFileSize.Megabytes,
+            string.Join(", ", _documentSettings.AllowedExtensions.Select(x => x.Value.ToUpperInvariant())));
     }
 
     private async Task<IActionResult> ExecuteCommand(

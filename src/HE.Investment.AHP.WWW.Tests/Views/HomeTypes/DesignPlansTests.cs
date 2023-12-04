@@ -13,6 +13,8 @@ public class DesignPlansTests : HomeTypesTestBase
     {
         MoreInformation = "Some details about my Design Plans",
         UploadedFiles = new[] { new FileModel("file-1", "My File", new DateTime(2022, 10, 11), "Test User", true, "#", "#") },
+        MaxFileSizeInMegabytes = 20,
+        AllowedExtensions = "JPG, PDF",
     };
 
     [Fact]
@@ -25,6 +27,8 @@ public class DesignPlansTests : HomeTypesTestBase
         document
             .HasElementWithText("span", "My application - My homes")
             .HasElementWithText("h1", "Upload your design plans")
+            .HasElementWithText("span", "Upload a file (JPG, PDF)")
+            .HasElementWithText("span", "Maximum file size 20 MB")
             .HasInput("File")
             .HasElementWithText("a", "My File")
             .HasElementWithText("td", "uploaded 11/10/2022 01:00:00 by Test User")

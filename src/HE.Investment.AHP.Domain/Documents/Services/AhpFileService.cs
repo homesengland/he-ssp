@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
@@ -6,9 +7,9 @@ using HE.Investments.DocumentService.Services;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Utils;
 
-namespace HE.Investment.AHP.Domain.Common.Services;
+namespace HE.Investment.AHP.Domain.Documents.Services;
 
-public abstract class AhpFileServiceBase<TFileParams> : IAhpFileService<TFileParams>
+public class AhpFileService<TFileParams> : IAhpFileService<TFileParams>
 {
     private readonly IDocumentService _documentService;
 
@@ -16,16 +17,24 @@ public abstract class AhpFileServiceBase<TFileParams> : IAhpFileService<TFilePar
 
     private readonly IAccountUserContext _userContext;
 
-    protected AhpFileServiceBase(IDocumentService documentService, IDateTimeProvider dateTimeProvider, IAccountUserContext userContext)
+    private readonly IAhpFileLocationProvider<TFileParams> _fileLocationProvider;
+
+    public AhpFileService(
+        IDocumentService documentService,
+        IDateTimeProvider dateTimeProvider,
+        IAccountUserContext userContext,
+        IAhpFileLocationProvider<TFileParams> fileLocationProvider)
     {
         _documentService = documentService;
         _dateTimeProvider = dateTimeProvider;
         _userContext = userContext;
+        _fileLocationProvider = fileLocationProvider;
     }
 
     public async Task<IReadOnlyCollection<UploadedFile>> GetFiles(TFileParams fileParams, CancellationToken cancellationToken)
     {
-        return await GetFiles(GetFilesLocation(fileParams), cancellationToken);
+        var fileLocation = await _fileLocationProvider.GetFileLocation(fileParams, cancellationToken);
+        return await GetFiles(fileLocation, cancellationToken);
     }
 
     public async Task<UploadedFile> UploadFile(FileName name, Stream content, TFileParams fileParams, CancellationToken cancellationToken)
@@ -34,7 +43,7 @@ public abstract class AhpFileServiceBase<TFileParams> : IAhpFileService<TFilePar
         var profileDetails = await _userContext.GetProfileDetails();
         var createdBy = $"{profileDetails.FirstName} {profileDetails.LastName}";
         var fileData = new UploadFileData<AhpFileMetadata>(name.Value, new AhpFileMetadata(fileId.Value, createdBy), content);
-        var fileLocation = GetFilesLocation(fileParams);
+        var fileLocation = await _fileLocationProvider.GetFileLocation(fileParams, cancellationToken);
 
         await _documentService.UploadAsync(fileLocation, fileData, false, cancellationToken);
 
@@ -43,7 +52,7 @@ public abstract class AhpFileServiceBase<TFileParams> : IAhpFileService<TFilePar
 
     public async Task RemoveFile(FileId fileId, TFileParams fileParams, CancellationToken cancellationToken)
     {
-        var fileLocation = GetFilesLocation(fileParams);
+        var fileLocation = await _fileLocationProvider.GetFileLocation(fileParams, cancellationToken);
         var files = await GetFiles(fileLocation, cancellationToken);
         var file = files.FirstOrDefault(x => x.Id == fileId);
         if (file != null)
@@ -54,14 +63,12 @@ public abstract class AhpFileServiceBase<TFileParams> : IAhpFileService<TFilePar
 
     public async Task<DownloadFileData> DownloadFile(FileId fileId, TFileParams fileParams, CancellationToken cancellationToken)
     {
-        var fileLocation = GetFilesLocation(fileParams);
+        var fileLocation = await _fileLocationProvider.GetFileLocation(fileParams, cancellationToken);
         var files = await GetFiles(fileLocation, cancellationToken);
         var file = files.FirstOrDefault(x => x.Id == fileId) ?? throw new NotFoundException("File", fileId);
 
         return await _documentService.DownloadAsync(fileLocation, file.Name.Value, cancellationToken);
     }
-
-    protected abstract FileLocation GetFilesLocation(TFileParams fileParams);
 
     private static UploadedFile MapToUploadedFile(FileDetails<AhpFileMetadata> file)
     {
