@@ -136,7 +136,7 @@
 
   const downloadFileLink = (fileName, downloadFileUrl) => `<a class="govuk-link" href="${downloadFileUrl}">${sanitize(fileName)}</a>`;
 
-  const fileInputChanged = async () => {
+  const fileInputChanged = () => {
     const maxFileSizeInMegabytes = document.getElementById(maxFileSizeId).value;
     const maxFileSize = maxFileSizeInMegabytes * 1024 * 1024;
     const uploadControl = document.querySelectorAll(fileInputSelector)[0];
@@ -183,7 +183,7 @@
         formData.append("file", file);
 
         fileUploadStarted(fileId);
-        await fetch(url, { method: "POST", body: formData })
+        fetch(url, { method: "POST", body: formData })
           .then(response => response.ok ? fileUploadFinished(fileId, file.name, response) : fileUploadFailed(fileId, response));
       }
     }
@@ -230,7 +230,7 @@
       });
   }
 
-  const fileUploadFailed = async (fileId, response) => {
+  const fileUploadFailed = (fileId, response) => {
     const uploadedColumn = document.querySelector(`#file-${fileId} :nth-child(2)`);
     const actionColumn = document.querySelector(`#file-${fileId} :nth-child(3)`);
 
