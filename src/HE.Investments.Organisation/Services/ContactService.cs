@@ -118,14 +118,17 @@ public class ContactService : IContactService
 
     public async Task RemoveLinkBetweenContactAndOrganisation(IOrganizationServiceAsync2 service, string organizationNumber, string portalType, string contactExternalId)
     {
-
         var contact = _contactRepository.GetContactViaExternalId(service, contactExternalId);
         var organization = await _organizationRepository.SearchForOrganizationsByOrganizationId(service, organizationNumber);
         organization ??= _organizationRepository.GetOrganizationViaCompanyHouseNumber(service, organizationNumber);
-        var contactWebrole = _webRoleRepository.GetContactWebroleForGivenOrganisationAndPortal(service, organization.Id, portalType, contact.Id);
-        if (contactWebrole != null)
+        if (organization != null && contact != null)
         {
-            service.Delete("invln_contactwebrole", contactWebrole.Id);
+
+            var contactWebrole = _webRoleRepository.GetContactWebroleForGivenOrganisationAndPortal(service, organization.Id, portalType, contact.Id);
+            if (contactWebrole != null)
+            {
+                service.Delete("invln_contactwebrole", contactWebrole.Id);
+            }
         }
     }
 
