@@ -1,4 +1,4 @@
-@model (string title, string fieldName, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, string fileErrorMessage, string uploadOneFileUrl, string removeFileUrlTemplate, string downloadFileUrlTemplate)
+@model (string title, string fieldName, string allowedExtensions, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, string fileErrorMessage, string uploadOneFileUrl, string removeFileUrlTemplate, string downloadFileUrlTemplate)
 
 @if (!string.IsNullOrWhiteSpace(Model.title))
 {
@@ -26,7 +26,7 @@
     @if (!Model.isHidden)
     {
         <label class="govuk-label" for="@Model.fieldName">
-            Upload a file (JPG, PNG, PDF, DOCX)
+            <span>Upload a file (@Model.allowedExtensions)</span>
             @if (Model.maxFileSizeInMb.HasValue)
             {
                 <br/>

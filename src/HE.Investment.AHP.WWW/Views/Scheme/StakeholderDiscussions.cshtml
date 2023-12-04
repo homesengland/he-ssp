@@ -5,6 +5,7 @@
 @using HE.Investments.Common.WWW.Components.UploadFile
 @using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
+
 @{
     var title = "Local stakeholder discussions";
     ViewData["Title"] = title;
@@ -17,6 +18,9 @@
         <gds-div-grid-column-two-thirds>
             <vc:form-header caption="@Model.ApplicationName" title="@title"/>
             @Html.HiddenFor(m => Model.ApplicationName)
+            @Html.HiddenFor(x => x.AllowedExtensions)
+            @Html.HiddenFor(x => x.MaxFileSizeInMegabytes)
+
             <gds-field-set role="group">
                 <vc:form-field-title
                     field-name="StakeholderDiscussionsReport"
@@ -29,9 +33,10 @@
                 </HeErrorFormGroup>
                 <vc:upload-file
                     title="Upload any evidence you have of Local Authority support (optional)"
+                    allowed-extensions="@Model.AllowedExtensions"
                     field-name="StakeholderDiscussionFile"
                     description="This could be any correspondence, including an email chain. We only require one document."
-                    max-file-size-in-mb="20"
+                    max-file-size-in-mb="@Model.MaxFileSizeInMegabytes"
                     is-hidden="@(Model.UploadedStakeholderDiscussionFiles != null && Model.UploadedStakeholderDiscussionFiles.Any())"/>
             </gds-field-set>
         </gds-div-grid-column-two-thirds>

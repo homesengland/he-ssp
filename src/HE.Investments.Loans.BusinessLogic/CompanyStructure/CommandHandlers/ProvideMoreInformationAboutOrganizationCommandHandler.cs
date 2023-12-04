@@ -2,12 +2,12 @@ using HE.Investments.Account.Shared;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Validators;
-using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Models;
 using HE.Investments.DocumentService.Services;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Constants;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Notifications;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
+using HE.Investments.Loans.BusinessLogic.Config;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure.Commands;
@@ -22,7 +22,7 @@ namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.CommandHandlers;
 public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStructureBaseCommandHandler,
     IRequestHandler<ProvideMoreInformationAboutOrganizationCommand, OperationResult>
 {
-    private readonly IDocumentServiceConfig _config;
+    private readonly ILoansDocumentSettings _documentSettings;
 
     private readonly IDocumentService _documentService;
 
@@ -36,13 +36,13 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                 ICompanyStructureRepository companyStructureRepository,
                 ILoanApplicationRepository loanApplicationRepository,
                 IAccountUserContext loanUserContext,
-                IDocumentServiceConfig config,
+                ILoansDocumentSettings documentSettings,
                 ILogger<CompanyStructureBaseCommandHandler> logger,
                 IDocumentService documentService,
                 INotificationService notificationService)
         : base(companyStructureRepository, loanApplicationRepository, loanUserContext, logger)
     {
-        _config = config;
+        _documentSettings = documentSettings;
         _documentService = documentService;
         _notificationService = notificationService;
         _loanUserContext = loanUserContext;
@@ -84,11 +84,11 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
 
         foreach (var file in files)
         {
-            companyStructure.ProvideFileWithMoreInformation(new OrganisationMoreInformationFile(file.FileName, file.Length, _config.MaxFileSizeInMegabytes));
+            companyStructure.ProvideFileWithMoreInformation(new OrganisationMoreInformationFile(file.FileName, file.Length, _documentSettings.MaxFileSizeInMegabytes));
 
             await using var fileStream = file.OpenReadStream();
             await _documentService.UploadAsync(
-                new FileLocation(_config.ListTitle, _config.ListAlias, folderPath),
+                new FileLocation(_documentSettings.ListTitle, _documentSettings.ListAlias, folderPath),
                 new UploadFileData<LoansFileMetadata>(file.FileName, fileMetadata, fileStream),
                 true,
                 cancellationToken);

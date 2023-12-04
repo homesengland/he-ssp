@@ -12,6 +12,8 @@ public class FileSize : ValueObject
 
     public long Bytes { get; }
 
+    public int Megabytes => (int)(Bytes / 1024L / 1024L);
+
     public static bool operator >(FileSize left, FileSize right) => left.Bytes > right.Bytes;
 
     public static bool operator <(FileSize left, FileSize right) => left.Bytes < right.Bytes;

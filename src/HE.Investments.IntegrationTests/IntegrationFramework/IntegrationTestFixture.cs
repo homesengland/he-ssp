@@ -1,8 +1,6 @@
 using HE.Investments.DocumentService.Configs;
-using HE.Investments.DocumentService.Services;
 using HE.Investments.Loans.IntegrationTests.Config;
 using HE.Investments.Loans.IntegrationTests.IntegrationFramework.Auth;
-using HE.Investments.Loans.IntegrationTests.Loans.Application.Order02Sections.CompanyStructureSection.Mock;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -49,10 +47,16 @@ public class IntegrationTestFixture<TProgram> : WebApplicationFactory<TProgram>
                 })
                 .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(TestAuthHandler.AuthenticationScheme, _ => { });
 
-            x.AddSingleton<IDocumentService, DocumentServiceMock>();
-            x.AddSingleton<IDocumentServiceConfig>(new DocumentServiceConfig());
+            x.AddSingleton<IDocumentServiceSettings, MockedDocumentServiceSettings>();
         });
 
         base.ConfigureWebHost(builder);
+    }
+
+    private class MockedDocumentServiceSettings : IDocumentServiceSettings
+    {
+        public string Url => string.Empty;
+
+        public bool UseMock => true;
     }
 }

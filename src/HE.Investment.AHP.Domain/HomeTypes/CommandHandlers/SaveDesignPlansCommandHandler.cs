@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
+using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
@@ -10,9 +11,15 @@ namespace HE.Investment.AHP.Domain.HomeTypes.CommandHandlers;
 
 public class SaveDesignPlansCommandHandler : SaveHomeTypeSegmentCommandHandlerBase<SaveDesignPlansCommand>
 {
-    public SaveDesignPlansCommandHandler(IHomeTypeRepository homeTypeRepository, ILogger<SaveDesignPlansCommandHandler> logger)
+    private readonly IAhpDocumentSettings _documentSettings;
+
+    public SaveDesignPlansCommandHandler(
+        IHomeTypeRepository homeTypeRepository,
+        IAhpDocumentSettings documentSettings,
+        ILogger<SaveDesignPlansCommandHandler> logger)
         : base(homeTypeRepository, logger)
     {
+        _documentSettings = documentSettings;
     }
 
     protected override IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.DesignPlans };
@@ -23,9 +30,9 @@ public class SaveDesignPlansCommandHandler : SaveHomeTypeSegmentCommandHandlerBa
         SaveDesignPlanFiles,
     };
 
-    private static DesignPlanFileEntity CreateDesignFile(FileToUpload file)
+    private DesignPlanFileEntity CreateDesignFile(FileToUpload file)
     {
-        return DesignPlanFileEntity.ForUpload(new FileName(file.Name), new FileSize(file.Lenght), file.Content);
+        return DesignPlanFileEntity.ForUpload(new FileName(file.Name), new FileSize(file.Lenght), file.Content, _documentSettings);
     }
 
     private void SaveDesignPlanFiles(SaveDesignPlansCommand request, IHomeTypeEntity homeType)

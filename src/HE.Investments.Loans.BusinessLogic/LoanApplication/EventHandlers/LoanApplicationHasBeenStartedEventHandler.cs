@@ -1,8 +1,8 @@
 using HE.Investments.Common.Infrastructure.Events;
-using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Services;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Constants;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
+using HE.Investments.Loans.BusinessLogic.Config;
 using HE.Investments.Loans.Contract.Application.Events;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 
@@ -14,23 +14,23 @@ public class LoanApplicationHasBeenStartedEventHandler : IEventHandler<LoanAppli
 
     private readonly ICompanyStructureRepository _companyStructureRepository;
 
-    private readonly IDocumentServiceConfig _documentServiceConfig;
+    private readonly ILoansDocumentSettings _documentSettings;
 
     public LoanApplicationHasBeenStartedEventHandler(
         IDocumentService documentService,
         ICompanyStructureRepository companyStructureRepository,
-        IDocumentServiceConfig documentServiceConfig)
+        ILoansDocumentSettings documentSettings)
     {
         _documentService = documentService;
         _companyStructureRepository = companyStructureRepository;
-        _documentServiceConfig = documentServiceConfig;
+        _documentSettings = documentSettings;
     }
 
     public async Task Handle(LoanApplicationHasBeenStartedEvent domainEvent, CancellationToken cancellationToken)
     {
         var filesLocation = await _companyStructureRepository.GetFilesLocationAsync(new LoanApplicationId(domainEvent.LoanApplicationId), cancellationToken);
         await _documentService.CreateFoldersAsync(
-            _documentServiceConfig.ListTitle,
+            _documentSettings.ListTitle,
             new List<string>
             {
                 $"{filesLocation}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}",

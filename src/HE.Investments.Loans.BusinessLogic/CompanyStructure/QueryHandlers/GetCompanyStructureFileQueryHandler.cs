@@ -1,6 +1,6 @@
-using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Models;
 using HE.Investments.DocumentService.Services;
+using HE.Investments.Loans.BusinessLogic.Config;
 using HE.Investments.Loans.Contract.CompanyStructure.Queries;
 using MediatR;
 
@@ -9,20 +9,20 @@ namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.QueryHandlers;
 public class GetCompanyStructureFileQueryHandler : IRequestHandler<GetCompanyStructureFileQuery, DownloadFileData>
 {
     private readonly IDocumentService _documentService;
-    private readonly IDocumentServiceConfig _config;
+    private readonly ILoansDocumentSettings _documentSettings;
 
     public GetCompanyStructureFileQueryHandler(
         IDocumentService documentService,
-        IDocumentServiceConfig config)
+        ILoansDocumentSettings documentSettings)
     {
         _documentService = documentService;
-        _config = config;
+        _documentSettings = documentSettings;
     }
 
     public async Task<DownloadFileData> Handle(GetCompanyStructureFileQuery request, CancellationToken cancellationToken)
     {
         var result = await _documentService.DownloadAsync(
-            new FileLocation(_config.ListTitle, _config.ListAlias, request.FolderPath),
+            new FileLocation(_documentSettings.ListTitle, _documentSettings.ListAlias, request.FolderPath),
             request.FileName,
             cancellationToken);
 

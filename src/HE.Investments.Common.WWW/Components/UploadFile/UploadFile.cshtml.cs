@@ -10,6 +10,7 @@ public class UploadFile : ViewComponent
     public IViewComponentResult Invoke(
         string fieldName,
         string description,
+        string allowedExtensions,
         bool isMultiple = false,
         bool isHidden = false,
         int? maxFileSizeInMb = null,
@@ -22,6 +23,6 @@ public class UploadFile : ViewComponent
         var multiple = isMultiple ? "multiple" : string.Empty;
         return View(
             "UploadFile",
-            (title, fieldName, maxFileSizeInMb, description, multiple, isHidden, hasFileError, fileErrorMessage, uploadOneFileUrl, removeFileUrlTemplate, downloadFileUrlTemplate));
+            (title, fieldName, allowedExtensions, maxFileSizeInMb, description, multiple, isHidden, hasFileError, fileErrorMessage, uploadOneFileUrl, removeFileUrlTemplate, downloadFileUrlTemplate));
     }
 }

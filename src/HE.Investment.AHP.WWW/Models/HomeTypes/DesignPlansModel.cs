@@ -18,4 +18,8 @@ public class DesignPlansModel : HomeTypeBasicModel
     public IList<FileModel> UploadedFiles { get; set; }
 
     public string? MoreInformation { get; set; }
+
+    public int MaxFileSizeInMegabytes { get; set; }
+
+    public string AllowedExtensions { get; set; }
 }

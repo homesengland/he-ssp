@@ -1,5 +1,6 @@
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
+using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
@@ -16,9 +17,12 @@ public class UploadDesignPlansFileCommandHandler : IRequestHandler<UploadDesignP
 {
     private readonly IHomeTypeRepository _homeTypeRepository;
 
-    public UploadDesignPlansFileCommandHandler(IHomeTypeRepository homeTypeRepository)
+    private readonly IAhpDocumentSettings _documentSettings;
+
+    public UploadDesignPlansFileCommandHandler(IHomeTypeRepository homeTypeRepository, IAhpDocumentSettings documentSettings)
     {
         _homeTypeRepository = homeTypeRepository;
+        _documentSettings = documentSettings;
     }
 
     public async Task<OperationResult<UploadedFileContract?>> Handle(UploadDesignPlansFileCommand request, CancellationToken cancellationToken)
@@ -28,24 +32,28 @@ public class UploadDesignPlansFileCommandHandler : IRequestHandler<UploadDesignP
             new HomeTypeId(request.HomeTypeId),
             new[] { HomeTypeSegmentType.DesignPlans },
             cancellationToken);
-        DesignPlanFileEntity? designFile = null;
 
         try
         {
-            designFile = DesignPlanFileEntity.ForUpload(new FileName(request.File.Name), new FileSize(request.File.Lenght), request.File.Content);
+            var designFile = DesignPlanFileEntity.ForUpload(
+                new FileName(request.File.Name),
+                new FileSize(request.File.Lenght),
+                request.File.Content,
+                _documentSettings);
             homeType.DesignPlans.AddFilesToUpload(new[] { designFile });
+
+            await _homeTypeRepository.Save(homeType, new[] { HomeTypeSegmentType.DesignPlans }, cancellationToken);
+
+            var uploadedFile = homeType.DesignPlans.UploadedFiles.Single(x => x.Id == designFile.Id);
+            return OperationResult.Success<UploadedFileContract?>(Map(uploadedFile));
         }
         catch (DomainValidationException ex)
         {
             return new OperationResult<UploadedFileContract?>(ex.OperationResult.Errors, null);
         }
-
-        await _homeTypeRepository.Save(homeType, new[] { HomeTypeSegmentType.DesignPlans }, cancellationToken);
-
-        return OperationResult.Success(Map(homeType.DesignPlans.UploadedFiles.Single(x => x.Id == designFile.Id)));
     }
 
-    private static UploadedFileContract? Map(UploadedFile uploadedFile)
+    private static UploadedFileContract Map(UploadedFile uploadedFile)
     {
         return new UploadedFileContract(uploadedFile.Id.Value, uploadedFile.Name.Value, uploadedFile.UploadedOn, uploadedFile.UploadedBy, true);
     }

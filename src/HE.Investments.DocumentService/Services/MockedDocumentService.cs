@@ -1,9 +1,8 @@
 using HE.Investments.DocumentService.Models;
-using HE.Investments.DocumentService.Services;
 
-namespace HE.Investments.Loans.IntegrationTests.Loans.Application.Order02Sections.CompanyStructureSection.Mock;
+namespace HE.Investments.DocumentService.Services;
 
-public class DocumentServiceMock : IDocumentService
+public class MockedDocumentService : IDocumentService
 {
     public Task<IEnumerable<FileDetails<TMetadata>>> GetFilesAsync<TMetadata>(GetFilesQuery query, CancellationToken cancellationToken)
         where TMetadata : class
@@ -11,7 +10,11 @@ public class DocumentServiceMock : IDocumentService
         return Task.FromResult(Enumerable.Empty<FileDetails<TMetadata>>());
     }
 
-    public Task UploadAsync<TMetadata>(FileLocation location, UploadFileData<TMetadata> file, bool overwrite = false, CancellationToken cancellationToken = default)
+    public Task UploadAsync<TMetadata>(
+        FileLocation location,
+        UploadFileData<TMetadata> file,
+        bool overwrite = false,
+        CancellationToken cancellationToken = default)
     {
         return Task.CompletedTask;
     }

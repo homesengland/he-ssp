@@ -4,6 +4,7 @@ using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.WWW.Models.Common;
@@ -27,9 +28,12 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 {
     private readonly IMediator _mediator;
 
-    public HomeTypesController(IMediator mediator)
+    private readonly IAhpDocumentSettings _documentSettings;
+
+    public HomeTypesController(IMediator mediator, IAhpDocumentSettings documentSettings)
     {
         _mediator = mediator;
+        _documentSettings = documentSettings;
     }
 
     [WorkflowState(HomeTypesWorkflowState.Index)]
@@ -298,6 +302,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             UploadedFiles = designPlans.UploadedFiles
                 .Select(x => new FileModel(x.FileId, x.FileName, x.UploadedOn, x.UploadedBy, x.CanBeRemoved, GetRemoveAction(x.FileId), GetDownloadAction(x.FileId)))
                 .ToList(),
+            MaxFileSizeInMegabytes = _documentSettings.MaxFileSize.Megabytes,
+            AllowedExtensions = string.Join(", ", _documentSettings.AllowedExtensions.Select(x => x.Value.ToUpperInvariant())),
         });
     }
 
