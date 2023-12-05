@@ -2,7 +2,7 @@ namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
 public class NumberOfBedrooms : RequiredIntValueObject
 {
-    private const string DisplayName = "How many bedrooms in each home";
+    private const string DisplayName = "The number of bedrooms in each home";
 
     private const int MinValue = 0;
 
