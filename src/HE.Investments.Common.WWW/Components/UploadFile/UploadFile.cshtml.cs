@@ -9,10 +9,11 @@ public class UploadFile : ViewComponent
 {
     public IViewComponentResult Invoke(
         string fieldName,
-        string description,
-        string allowedExtensions,
+        string? description = null,
+        string? allowedExtensions = null,
         bool isMultiple = false,
         bool isHidden = false,
+        bool hideFileSize = false,
         int? maxFileSizeInMb = null,
         string? title = null,
         string? uploadOneFileUrl = null,
@@ -23,6 +24,6 @@ public class UploadFile : ViewComponent
         var multiple = isMultiple ? "multiple" : string.Empty;
         return View(
             "UploadFile",
-            (title, fieldName, allowedExtensions, maxFileSizeInMb, description, multiple, isHidden, hasFileError, fileErrorMessage, uploadOneFileUrl, removeFileUrlTemplate, downloadFileUrlTemplate));
+            (title, fieldName, allowedExtensions, hideFileSize, maxFileSizeInMb, description, multiple, isHidden, hasFileError, fileErrorMessage, uploadOneFileUrl, removeFileUrlTemplate, downloadFileUrlTemplate));
     }
 }

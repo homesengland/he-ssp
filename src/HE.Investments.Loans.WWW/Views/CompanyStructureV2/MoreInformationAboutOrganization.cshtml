@@ -1,6 +1,5 @@
 @using HE.Investments.Common.Gds
 @using HE.Investments.Common.WWW.Extensions
-@using HE.Investments.Common.WWW.Helpers
 @using HE.Investments.Loans.BusinessLogic.Config
 @using HE.Investments.Loans.Contract.CompanyStructure
 @model HE.Investments.Loans.Contract.CompanyStructure.CompanyStructureViewModel
@@ -12,85 +11,55 @@
 
 @Html.Hidden("MaxFileSizeInMegabytes", settings.MaxFileSizeInMegabytes)
 
-<gds-div-grid-column-two-thirds>
+<div class="govuk-grid-column-full">
     <form id="formWithFile" asp-controller="CompanyStructureV2" asp-action="MoreInformationAboutOrganizationPost" asp-route-id="@Model.LoanApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" enctype="multipart/form-data" asp-method="post" novalidate>
         <gds-back-link href="@Url.Action("Back","CompanyStructureV2", new { id = Model.LoanApplicationId, currentPage = CompanyStructureState.ExistingCompany})" text="Back" class="govuk-!-margin-bottom-8">
         </gds-back-link>
         <partial name="~/Partials/_Notification.cshtml" />
         <partial name="_ErrorSummaryPartial" model="null" />
-
         @Html.HiddenFor(x => x.LoanApplicationId)
         @Html.HiddenFor(x => x.AllowedExtensions)
-        <gds-field-set>
-            <gds-error-form-group asp-for="OrganisationMoreInformation">
-                <legend>
-                    <gds-label-wrapper>
-                        <gds-label size="@ControlSize.L" for="OrganisationMoreInformation">
-                            Provide more information about your organisation
-                        </gds-label>
-                    </gds-label-wrapper>
-                </legend>
-                <gds-div-hint>
-                    Tell us about your organisation structure, including if your organisation is or has a parent company, or is part of a group structure.
-                </gds-div-hint>
-                <gds-text-area
-                    asp-for="OrganisationMoreInformation"
-                    rows="5"></gds-text-area>
-            </gds-error-form-group>
-            <gds-error-form-group asp-for="OrganisationMoreInformationFile" id="file-error-form">
-                <gds-div-hint>
-                    You can also upload any relevant files such as company structure charts.
-                </gds-div-hint>
-                    @for (int i = 0; i < Model.OrganisationMoreInformationFiles?.Count; i++)
-                    {
-                        <div>
-                            <div class="govuk-grid-row">
-                                <div class="govuk-grid-column-two-thirds">
-                                    <a class="govuk-label govuk-label--s" href="@Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, folderPath = @Model.OrganisationMoreInformationFiles[i].FolderPath, fileName = @Model.OrganisationMoreInformationFiles[i].FileName })">
-                                        @Model.OrganisationMoreInformationFiles[i].FileName
-                                    </a>
-                                    @Html.HiddenFor(model => Model.OrganisationMoreInformationFiles[i].FileName)
-                                </div>
-                            <div class="govuk-grid-column-one-third govuk-!-text-align-right">
-                                    <a href="@Url.Action("MoreInformationAboutOrganizationRemoveFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, folderPath = @Model.OrganisationMoreInformationFiles[i].FolderPath, fileName = @Model.OrganisationMoreInformationFiles[i].FileName })">
-                                        Remove
-                                    </a>
-                                </div>
-                            </div>
-                            <label class="govuk-label" for="File">
-                            uploaded @DateHelper.DisplayAsUkFormatDateTime(Model.OrganisationMoreInformationFiles[i].Modified)
-                                by @(Model.OrganisationMoreInformationFiles[i].Creator ?? Model.OrganisationMoreInformationFiles[i].Editor)
-                            </label>
-                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].Editor)
-                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].FolderPath)
-                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].Creator)
-                            @Html.HiddenFor(x => Model.OrganisationMoreInformationFiles[i].Modified)
-                        </div>
-                    }
 
-                    <p class="govuk-error-message">
-                        <span class="govuk-visually-hidden">Error:</span>
-                        <span id="error-messages">
-                            @if (hasError)
-                            {
-                                @fileInputError
-                            }
-                        </span>
-                    </p>
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="File">
-                        Upload a file
-                    </label>
-                    <input class="govuk-file-upload" id="File" name="File" type="file" multiple>
-                </div>
+        <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
+            <gds-field-set>
+                <gds-error-form-group asp-for="OrganisationMoreInformation">
+                    <legend>
+                        <gds-label-wrapper>
+                            <gds-label size="@ControlSize.L" for="OrganisationMoreInformation">
+                                Provide more information about your organisation
+                            </gds-label>
+                        </gds-label-wrapper>
+                    </legend>
+                    <gds-div-hint>
+                        Tell us about your organisation structure, including if your organisation is or has a parent company, or is part of a group structure.
+                    </gds-div-hint>
+                    <gds-text-area
+                        asp-for="OrganisationMoreInformation"
+                        rows="5"></gds-text-area>
+                </gds-error-form-group>
+
+            </gds-field-set>
+            <gds-div-hint>
+                You can also upload any relevant files such as company structure charts.
+            </gds-div-hint>
+        </gds-div-grid-column-two-thirds>
+        <vc:files-table asp-for="@Model.OrganisationMoreInformationFiles"/>
+        <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
+            <gds-error-form-group asp-for="OrganisationMoreInformationFile">
+                <vc:upload-file field-name="OrganisationMoreInformationFile"
+                                is-multiple="true"
+                                hide-file-size="true"
+                                max-file-size-in-mb="@settings.MaxFileSizeInMegabytes"
+                                remove-file-url-template="@Url.RouteUrl(new { controller = "CompanyStructureV2", action = "MoreInformationAboutOrganizationRemoveFile", id = Model.LoanApplicationId, fileName = ":fileName" })"
+                                download-file-url-template="@Url.RouteUrl(new { controller = "CompanyStructureV2", action = "MoreInformationAboutOrganizationDownloadFile", id = Model.LoanApplicationId, fileName = ":fileName" })"
+                                upload-one-file-url="@Url.RouteUrl(new { controller = "CompanyStructureV2", action = "MoreInformationAboutOrganizationUploadFile", id = Model.LoanApplicationId })"/>
+
             </gds-error-form-group>
             <button class="govuk-button" id="continue-button" data-module="govuk-button" name="action" type="submit" value="@(Model.StateChanged?"Change":"Continue")">
                 Continue
             </button>
-        </gds-field-set>
+            <partial name="_HomeAndCheckAnswersLinks" />
+        </gds-div-grid-column-two-thirds>
     </form>
-
-    <partial name="_HomeAndCheckAnswersLinks" />
-</gds-div-grid-column-two-thirds>
-
+</div>
 <script src="/javascripts/file-helper.js"></script>

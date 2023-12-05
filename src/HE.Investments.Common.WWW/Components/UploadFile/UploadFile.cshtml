@@ -1,4 +1,4 @@
-@model (string title, string fieldName, string allowedExtensions, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, string fileErrorMessage, string uploadOneFileUrl, string removeFileUrlTemplate, string downloadFileUrlTemplate)
+@model (string title, string fieldName, string allowedExtensions, bool hideFileSize, int? maxFileSizeInMb, string description, string multiple, bool isHidden, bool hasFileError, string fileErrorMessage, string uploadOneFileUrl, string removeFileUrlTemplate, string downloadFileUrlTemplate)
 
 @if (!string.IsNullOrWhiteSpace(Model.title))
 {
@@ -20,17 +20,32 @@
     @Html.Hidden("download-file-url-template", Model.downloadFileUrlTemplate)
 }
 
-<he-div-hint class="govuk-!-margin-bottom-6">@Model.description</he-div-hint>
+@if (!string.IsNullOrWhiteSpace(Model.description))
+{
+    <he-div-hint class="govuk-!-margin-bottom-6">@Model.description</he-div-hint>
+}
+
 <div id="file-input-form-group" class="govuk-form-group @(Model.hasFileError ? "govuk-form-group--error" : string.Empty)">
 
     @if (!Model.isHidden)
     {
         <label class="govuk-label" for="@Model.fieldName">
-            <span>Upload a file (@Model.allowedExtensions)</span>
+            @if (string.IsNullOrWhiteSpace(Model.allowedExtensions))
+            {
+                <span>Upload a file</span>
+            }
+            else
+            {
+                <span>Upload a file (@Model.allowedExtensions)</span>
+            }
             @if (Model.maxFileSizeInMb.HasValue)
             {
-                <br/>
-                <span>Maximum file size @Model.maxFileSizeInMb MB</span>
+                @if (!Model.hideFileSize)
+                {
+                    <br/>
+                    <span>Maximum file size @Model.maxFileSizeInMb MB</span>
+                }
+
                 @Html.Hidden("MaxFileSizeInMegabytes", Model.maxFileSizeInMb)
             }
         </label>
@@ -48,11 +63,22 @@
     else
     {
         <div class="govuk-label">
-            Upload a file (JPG, PNG, PDF, DOCX)
+             @if (string.IsNullOrWhiteSpace(Model.allowedExtensions))
+             {
+                 <span>Upload a file</span>
+             }
+             else
+             {
+                 <span>Upload a file (@Model.allowedExtensions)</span>
+             }
             @if (Model.maxFileSizeInMb.HasValue)
             {
-                <br/>
-                <span>Maximum file size @Model.maxFileSizeInMb MB</span>
+                if (!Model.hideFileSize)
+                {
+                    <br/>
+                    <span>Maximum file size @Model.maxFileSizeInMb MB</span>
+                }
+
                 @Html.Hidden("MaxFileSizeInMegabytes", Model.maxFileSizeInMb)
             }
         </div>

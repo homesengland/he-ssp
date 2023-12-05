@@ -1,3 +1,4 @@
+using HE.Investments.Common.WWW.Models;
 using HE.Investments.DocumentService.Models;
 using HE.Investments.DocumentService.Services;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Constants;
@@ -9,7 +10,7 @@ using MediatR;
 
 namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.QueryHandlers;
 
-public class GetCompanyStructureFilesQueryHandler : IRequestHandler<GetCompanyStructureFilesQuery, LoansTableResult>
+public class GetCompanyStructureFilesQueryHandler : IRequestHandler<GetCompanyStructureFilesQuery, IList<FileModel>>
 {
     private readonly IDocumentService _documentService;
 
@@ -27,28 +28,17 @@ public class GetCompanyStructureFilesQueryHandler : IRequestHandler<GetCompanySt
         _repository = repository;
     }
 
-    public async Task<LoansTableResult> Handle(GetCompanyStructureFilesQuery request, CancellationToken cancellationToken)
+    public async Task<IList<FileModel>> Handle(GetCompanyStructureFilesQuery request, CancellationToken cancellationToken)
     {
         var path = await _repository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken);
-
         var folderPaths = new List<string> { $"{path}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}" };
-
         var result = await _documentService.GetFilesAsync<LoansFileMetadata>(
             new GetFilesQuery(_documentSettings.ListTitle, _documentSettings.ListAlias, folderPaths),
             cancellationToken);
 
-        return new LoansTableResult
-        {
-            Items = result.Select(
-                    x => new LoansFileTableRow
-                    {
-                        FileName = x.FileName,
-                        FolderPath = x.FolderPath,
-                        Editor = x.Editor,
-                        Modified = x.Modified,
-                        Creator = x.Metadata?.Creator,
-                    })
-                .ToList(),
-        };
+        return result
+            .OrderBy(x => x.Modified)
+            .Select(x => new FileModel(string.Empty, x.FileName, x.Modified, x.Metadata?.Creator ?? x.Editor, true, string.Empty, string.Empty))
+            .ToList();
     }
 }

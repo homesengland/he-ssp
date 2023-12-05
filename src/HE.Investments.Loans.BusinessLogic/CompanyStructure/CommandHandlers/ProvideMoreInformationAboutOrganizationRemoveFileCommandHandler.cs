@@ -4,6 +4,7 @@ using HE.Investments.Common.Validators;
 using HE.Investments.DocumentService.Configs;
 using HE.Investments.DocumentService.Models;
 using HE.Investments.DocumentService.Services;
+using HE.Investments.Loans.BusinessLogic.CompanyStructure.Constants;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Notifications;
 using HE.Investments.Loans.BusinessLogic.CompanyStructure.Repositories;
 using HE.Investments.Loans.BusinessLogic.Config;
@@ -17,6 +18,7 @@ namespace HE.Investments.Loans.BusinessLogic.CompanyStructure.CommandHandlers;
 public class ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler : CompanyStructureBaseCommandHandler,
     IRequestHandler<ProvideMoreInformationAboutOrganizationRemoveFileCommand, OperationResult>
 {
+    private readonly ICompanyStructureRepository _companyStructureRepository;
     private readonly IDocumentService _documentService;
     private readonly ILoansDocumentSettings _documentSettings;
     private readonly INotificationService _notificationService;
@@ -31,6 +33,7 @@ public class ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler : C
                 INotificationService notificationService)
         : base(companyStructureRepository, loanApplicationRepository, loanUserContext, logger)
     {
+        _companyStructureRepository = companyStructureRepository;
         _documentService = documentService;
         _documentSettings = documentSettings;
         _notificationService = notificationService;
@@ -41,8 +44,9 @@ public class ProvideMoreInformationAboutOrganizationRemoveFileCommandHandler : C
         return await Perform(
             async companyStructure =>
             {
+                var folderPath = $"{await _companyStructureRepository.GetFilesLocationAsync(request.LoanApplicationId, cancellationToken)}{CompanyStructureConstants.MoreInformationAboutOrganizationExternal}";
                 await _documentService.DeleteAsync(
-                    new FileLocation(_documentSettings.ListTitle, _documentSettings.ListAlias, request.FolderPath),
+                    new FileLocation(_documentSettings.ListTitle, _documentSettings.ListAlias, folderPath),
                     request.FileName,
                     cancellationToken);
 

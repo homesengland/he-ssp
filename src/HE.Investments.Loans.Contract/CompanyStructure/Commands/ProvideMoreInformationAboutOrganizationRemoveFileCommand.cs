@@ -4,7 +4,4 @@ using MediatR;
 
 namespace HE.Investments.Loans.Contract.CompanyStructure.Commands;
 
-public record ProvideMoreInformationAboutOrganizationRemoveFileCommand(
-                LoanApplicationId LoanApplicationId,
-                string FolderPath,
-                string FileName) : IRequest<OperationResult>;
+public record ProvideMoreInformationAboutOrganizationRemoveFileCommand(LoanApplicationId LoanApplicationId, string FileName) : IRequest<OperationResult>;

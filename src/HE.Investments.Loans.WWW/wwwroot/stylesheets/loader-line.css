@@ -1,7 +1,3 @@
-.govuk-breadcrumbs__link--inactive{
-  pointer-events: none;
-}
-
 .loader-line {
   width: 66px;
   height: 3px;
@@ -41,13 +37,4 @@
     left: 100%;
     width: 100%;
   }
-}
-
-.local-authority-pagination {
-  float: right;
-}
-
-.separator{
-  border-top: 2px solid #B1B4B6;
-  margin: 0px;
 }

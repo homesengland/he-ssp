@@ -13,7 +13,7 @@
     @{
         var files = Model.OrganisationMoreInformationFiles?.ToDictionary(
             key => key.FileName,
-            value => Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, folderPath = value.FolderPath, fileName = value.FileName })
+            value => Url.Action("MoreInformationAboutOrganizationDownloadFile", "CompanyStructureV2", new { id = Model.LoanApplicationId, fileName = value.FileName })
         );
         @await Html.PartialAsync("_CheckAnswersRow", new ViewDataDictionary(ViewData)
                {

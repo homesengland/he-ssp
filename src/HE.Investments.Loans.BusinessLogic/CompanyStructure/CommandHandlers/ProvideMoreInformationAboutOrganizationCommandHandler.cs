@@ -11,6 +11,7 @@ using HE.Investments.Loans.BusinessLogic.Config;
 using HE.Investments.Loans.BusinessLogic.LoanApplication.Repositories;
 using HE.Investments.Loans.Contract.Application.ValueObjects;
 using HE.Investments.Loans.Contract.CompanyStructure.Commands;
+using HE.Investments.Loans.Contract.CompanyStructure.Queries;
 using HE.Investments.Loans.Contract.CompanyStructure.ValueObjects;
 using HE.Investments.Loans.Contract.Documents;
 using MediatR;
@@ -28,6 +29,8 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
 
     private readonly INotificationService _notificationService;
 
+    private readonly IMediator _mediator;
+
     private readonly IAccountUserContext _loanUserContext;
 
     private readonly ICompanyStructureRepository _companyStructureRepository;
@@ -39,12 +42,14 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                 ILoansDocumentSettings documentSettings,
                 ILogger<CompanyStructureBaseCommandHandler> logger,
                 IDocumentService documentService,
-                INotificationService notificationService)
+                INotificationService notificationService,
+                IMediator mediator)
         : base(companyStructureRepository, loanApplicationRepository, loanUserContext, logger)
     {
         _documentSettings = documentSettings;
         _documentService = documentService;
         _notificationService = notificationService;
+        _mediator = mediator;
         _loanUserContext = loanUserContext;
         _companyStructureRepository = companyStructureRepository;
     }
@@ -62,7 +67,8 @@ public class ProvideMoreInformationAboutOrganizationCommandHandler : CompanyStru
                     return;
                 }
 
-                var filesCount = request.OrganisationMoreInformationFiles?.Count + request.FormFiles.Count;
+                var files = await _mediator.Send(new GetCompanyStructureFilesQuery(request.LoanApplicationId), cancellationToken);
+                var filesCount = files.Count + request.FormFiles.Count;
                 companyStructure.ProvideFilesWithMoreInformation(new OrganisationMoreInformationFiles(filesCount));
 
                 await UploadFiles(request.LoanApplicationId, companyStructure, request.FormFiles, cancellationToken);
