@@ -6,7 +6,7 @@ public class NumberOfStoreys : RequiredIntValueObject
 
     private const int MinValue = 0;
 
-    private const int MaxValue = 999;
+    private const int MaxValue = 99;
 
     public NumberOfStoreys(string? value)
         : base(value, nameof(NumberOfStoreys), DisplayName, MinValue, MaxValue)
