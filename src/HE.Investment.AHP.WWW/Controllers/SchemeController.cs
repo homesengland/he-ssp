@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Scheme;
 using HE.Investment.AHP.Contract.Scheme.Queries;
@@ -7,6 +8,7 @@ using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Workflows;
 using HE.Investment.AHP.WWW.Models.Scheme;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
+using HE.Investment.AHP.WWW.Utils;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Exceptions;
@@ -30,12 +32,18 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     private readonly IMediator _mediator;
     private readonly ISchemeSummaryViewModelFactory _summaryViewModelFactory;
     private readonly IAhpDocumentSettings _documentSettings;
+    private readonly ISchemeProvider _schemeProvider;
 
-    public SchemeController(IMediator mediator, ISchemeSummaryViewModelFactory summaryViewModelFactory, IAhpDocumentSettings documentSettings)
+    public SchemeController(
+        IMediator mediator,
+        ISchemeSummaryViewModelFactory summaryViewModelFactory,
+        IAhpDocumentSettings documentSettings,
+        ISchemeProvider schemeProvider)
     {
         _mediator = mediator;
         _summaryViewModelFactory = summaryViewModelFactory;
         _documentSettings = documentSettings;
+        _schemeProvider = schemeProvider;
     }
 
     [WorkflowState(SchemeWorkflowState.Start)]
@@ -57,7 +65,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("funding")]
     public async Task<IActionResult> Funding([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
         return View("Funding", CreateModel(applicationId, scheme));
     }
@@ -78,7 +86,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("affordability")]
     public async Task<IActionResult> Affordability([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
         return View("Affordability", CreateModel(applicationId, scheme));
     }
@@ -99,7 +107,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("sales-risk")]
     public async Task<IActionResult> SalesRisk([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
         return View("SalesRisk", CreateModel(applicationId, scheme));
     }
@@ -120,7 +128,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("housing-needs")]
     public async Task<IActionResult> HousingNeeds([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId), cancellationToken);
 
         return View("HousingNeeds", CreateModel(applicationId, scheme));
     }
@@ -144,7 +152,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
     [HttpGet("stakeholder-discussions")]
     public async Task<IActionResult> StakeholderDiscussions([FromRoute] string applicationId, CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId, true), cancellationToken);
 
         return View("StakeholderDiscussions", CreateModel(applicationId, scheme));
     }
@@ -251,7 +259,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             throw new InvalidOperationException("Cannot find applicationId.");
         }
 
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId));
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId), CancellationToken.None);
 
         return await Task.FromResult(new SchemeWorkflow(currentState, scheme));
     }
@@ -304,7 +312,7 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         string applicationId,
         CancellationToken cancellationToken)
     {
-        var scheme = await _mediator.Send(new GetApplicationSchemeQuery(applicationId), cancellationToken);
+        var scheme = await _schemeProvider.Get(new GetApplicationSchemeQuery(applicationId, true), cancellationToken);
 
         var section = _summaryViewModelFactory.GetSchemeAndCreateSummary("Scheme information", scheme, urlHelper);
 

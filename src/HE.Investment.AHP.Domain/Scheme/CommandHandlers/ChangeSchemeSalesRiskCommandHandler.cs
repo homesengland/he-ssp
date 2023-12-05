@@ -8,7 +8,7 @@ namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 public class ChangeSchemeSalesRiskCommandHandler : UpdateSchemeCommandHandler<ChangeSchemeSalesRiskCommand>
 {
     public ChangeSchemeSalesRiskCommandHandler(ISchemeRepository repository)
-        : base(repository)
+        : base(repository, false)
     {
     }
 

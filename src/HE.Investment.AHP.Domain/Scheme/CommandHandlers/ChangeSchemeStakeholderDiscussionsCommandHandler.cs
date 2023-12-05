@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.Common.ValueObjects;
+using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
@@ -9,26 +10,30 @@ namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 
 public class ChangeSchemeStakeholderDiscussionsCommandHandler : UpdateSchemeCommandHandler<ChangeSchemeStakeholderDiscussionsCommand>
 {
-    public ChangeSchemeStakeholderDiscussionsCommandHandler(ISchemeRepository repository)
-        : base(repository)
+    private readonly IAhpDocumentSettings _documentSettings;
+
+    public ChangeSchemeStakeholderDiscussionsCommandHandler(ISchemeRepository repository, IAhpDocumentSettings documentSettings)
+        : base(repository, true)
     {
+        _documentSettings = documentSettings;
     }
 
     protected override void Update(SchemeEntity scheme, ChangeSchemeStakeholderDiscussionsCommand request)
     {
         var operationResult = new OperationResult();
 
-        var discussion = operationResult.Aggregate(() => new StakeholderDiscussions(request.DiscussionReport));
+        var details = operationResult.Aggregate(() => new StakeholderDiscussionsDetails(request.DiscussionReport));
 
-        var file = request.FileToUpload != null
-            ? operationResult.Aggregate(() =>
-                StakeholderDiscussionsFile.ForUpload(
-                    new FileName(request.FileToUpload.Name),
-                    new FileSize(request.FileToUpload.Lenght),
-                    request.FileToUpload.Content))
-            : null;
+        var file = request.FileToUpload != null ?
+            operationResult.Aggregate(() =>
+                            new LocalAuthoritySupportFile(
+                                new FileName(request.FileToUpload.Name),
+                                new FileSize(request.FileToUpload.Lenght),
+                                request.FileToUpload.Content,
+                                _documentSettings))
+                : null;
 
-        scheme.ChangeStakeholderDiscussions(discussion, file);
+        scheme.ChangeStakeholderDiscussions(details, file);
         operationResult.CheckErrors();
     }
 }

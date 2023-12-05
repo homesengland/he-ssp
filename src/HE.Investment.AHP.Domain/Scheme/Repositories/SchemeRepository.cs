@@ -4,7 +4,7 @@ using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
-using HE.Investment.AHP.Domain.Mock;
+using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.Scheme.Entities;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
 using HE.Investments.Account.Shared;
@@ -16,22 +16,31 @@ public class SchemeRepository : ISchemeRepository
 {
     private readonly IApplicationCrmContext _repository;
     private readonly IAccountUserContext _accountUserContext;
-    private readonly IFileService _fileService;
+    private readonly IAhpFileService<LocalAuthoritySupportFileParams> _fileService;
 
-    public SchemeRepository(IApplicationCrmContext repository, IAccountUserContext accountUserContext, IFileService fileService)
+    public SchemeRepository(
+        IApplicationCrmContext repository,
+        IAccountUserContext accountUserContext,
+        IAhpFileService<LocalAuthoritySupportFileParams> fileService)
     {
         _repository = repository;
         _accountUserContext = accountUserContext;
         _fileService = fileService;
     }
 
-    public async Task<SchemeEntity> GetByApplicationId(DomainApplicationId id, CancellationToken cancellationToken)
+    public async Task<SchemeEntity> GetByApplicationId(DomainApplicationId id, bool includeFiles, CancellationToken cancellationToken)
     {
         var application = await _repository.GetById(id.Value, CrmFields.SchemeToRead, cancellationToken);
 
-        var stakeholderDiscussionsFiles = await _fileService.GetByApplicationId(id, cancellationToken);
+        UploadedFile? file = null;
+        if (includeFiles)
+        {
+            var stakeholderDiscussionsFiles = await _fileService.GetFiles(new LocalAuthoritySupportFileParams(id), cancellationToken);
 
-        return CreateEntity(application, stakeholderDiscussionsFiles.Any() ? stakeholderDiscussionsFiles.First() : null);
+            file = stakeholderDiscussionsFiles.Any() ? stakeholderDiscussionsFiles.First() : null;
+        }
+
+        return CreateEntity(application, file);
     }
 
     public async Task<SchemeEntity> Save(SchemeEntity entity, CancellationToken cancellationToken)
@@ -47,18 +56,18 @@ public class SchemeRepository : ISchemeRepository
             id = entity.Application.Id.Value,
             organisationId = account.AccountId.ToString(),
             schemeInformationSectionCompletionStatus = SectionStatusMapper.ToDto(entity.Status),
-            fundingRequested = entity.Funding?.RequiredFunding,
-            noOfHomes = entity.Funding?.HousesToDeliver,
-            affordabilityEvidence = entity.AffordabilityEvidence?.Evidence,
-            discussionsWithLocalStakeholders = entity.StakeholderDiscussions?.Report,
-            meetingLocalProrities = entity.HousingNeeds?.SchemeAndProposalJustification,
-            meetingLocalHousingNeed = entity.HousingNeeds?.TypeAndTenureJustification,
-            sharedOwnershipSalesRisk = entity.SalesRisk?.Value,
+            fundingRequested = entity.Funding.RequiredFunding,
+            noOfHomes = entity.Funding.HousesToDeliver,
+            affordabilityEvidence = entity.AffordabilityEvidence.Evidence,
+            discussionsWithLocalStakeholders = entity.StakeholderDiscussions.StakeholderDiscussionsDetails.Report,
+            meetingLocalProrities = entity.HousingNeeds.SchemeAndProposalJustification,
+            meetingLocalHousingNeed = entity.HousingNeeds.TypeAndTenureJustification,
+            sharedOwnershipSalesRisk = entity.SalesRisk.Value,
         };
 
         await _repository.Save(dto, CrmFields.SchemeToUpdate, cancellationToken);
 
-        await entity.StakeholderDiscussionsFiles.SaveChanges(entity.Application.Id, _fileService, cancellationToken);
+        await entity.StakeholderDiscussions.SaveChanges(entity.Application.Id, _fileService, cancellationToken);
 
         return entity;
     }
@@ -66,14 +75,18 @@ public class SchemeRepository : ISchemeRepository
     private static SchemeEntity CreateEntity(AhpApplicationDto application, UploadedFile? stakeholderDiscussionsFile)
     {
         return new SchemeEntity(
-            new ApplicationBasicDetails(new DomainApplicationId(application.id), new ApplicationName(application.name), ApplicationTenureMapper.ToDomain(application.tenure)),
+            new ApplicationBasicDetails(
+                new DomainApplicationId(application.id),
+                new ApplicationName(application.name),
+                ApplicationTenureMapper.ToDomain(application.tenure)),
             CreateRequiredFunding(application.fundingRequested, application.noOfHomes),
             SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus),
             new AffordabilityEvidence(application.affordabilityEvidence),
             new SalesRisk(application.sharedOwnershipSalesRisk),
             new HousingNeeds(application.meetingLocalProrities, application.meetingLocalHousingNeed),
-            new StakeholderDiscussions(application.discussionsWithLocalStakeholders),
-            new StakeholderDiscussionsFiles(stakeholderDiscussionsFile));
+            new StakeholderDiscussions(
+                new StakeholderDiscussionsDetails(application.discussionsWithLocalStakeholders),
+                new LocalAuthoritySupportFileContainer(stakeholderDiscussionsFile)));
     }
 
     private static SchemeFunding CreateRequiredFunding(decimal? fundingRequested, int? noOfHomes)

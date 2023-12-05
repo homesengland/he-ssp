@@ -4,6 +4,7 @@ using HE.Investment.AHP.WWW.Models.Application.Factories;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Notifications;
+using HE.Investment.AHP.WWW.Utils;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
@@ -29,6 +30,8 @@ public static class AhpWebModule
         service.AddNotifications(typeof(HomeTypeHasBeenCreatedDisplayNotificationFactory).Assembly);
         service.AddDocumentServiceModule();
         AddViewModelFactories(service);
+
+        service.AddScoped<ISchemeProvider, CachedSchemeProvider>();
     }
 
     private static void AddConfiguration(IServiceCollection services, IConfiguration configuration)
