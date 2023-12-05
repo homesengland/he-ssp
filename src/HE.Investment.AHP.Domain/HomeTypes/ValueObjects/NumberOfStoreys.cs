@@ -2,7 +2,7 @@ namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
 public class NumberOfStoreys : RequiredIntValueObject
 {
-    private const string DisplayName = "How many storeys in this home type";
+    private const string DisplayName = "The number of storeys";
 
     private const int MinValue = 0;
 
