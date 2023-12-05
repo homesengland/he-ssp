@@ -73,6 +73,7 @@ namespace DataverseModel
 			public const string invln_homesdesignedforuseofparticulargroup = "invln_homesdesignedforuseofparticulargroup";
 			public const string invln_homesusedformoveonaccommodation = "invln_homesusedformoveonaccommodation";
 			public const string invln_homesusedforshortstay = "invln_homesusedforshortstay";
+			public const string invln_hometype_SharePointDocumentLocations = "invln_hometype_SharePointDocumentLocations";
 			public const string invln_HomeTypeId = "invln_hometypeid";
 			public const string Id = "invln_hometypeid";
 			public const string invln_hometypename = "invln_hometypename";
@@ -1362,6 +1363,26 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_hometype_SharePointDocumentLocations
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_hometype_SharePointDocumentLocations")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointDocumentLocation> invln_hometype_SharePointDocumentLocations
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointDocumentLocation>("invln_hometype_SharePointDocumentLocations", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_hometype_SharePointDocumentLocations");
+				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("invln_hometype_SharePointDocumentLocations", null, value);
+				this.OnPropertyChanged("invln_hometype_SharePointDocumentLocations");
 			}
 		}
 		

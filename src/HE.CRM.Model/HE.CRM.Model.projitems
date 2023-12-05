@@ -154,6 +154,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\InitialCommunication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AccessibilitycategorySet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Addressverificationtype.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AHPInternalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AHPSectioncompletionstatusSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ApprovalStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_AssessedforBHL.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Developmenttype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Emailsendstatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_ExternalStatusAHP.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Facilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_FundingReason.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionSets\invln_Fundingtypeforadditionalprojects.cs" />

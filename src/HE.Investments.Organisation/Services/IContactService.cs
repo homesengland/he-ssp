@@ -12,4 +12,6 @@ public interface IContactService
     Task<ContactRolesDto?> GetContactRoles(IOrganizationServiceAsync2 service, string contactEmail, string portalType, string contactExternalId);
 
     Task<Guid> LinkContactWithOrganization(IOrganizationServiceAsync2 service, string contactExternalId, string organizationNumber, string portalType);
+
+    Task RemoveLinkBetweenContactAndOrganisation(IOrganizationServiceAsync2 service, string organizationNumber, string portalType, string contactExternalId);
 }

@@ -748,6 +748,141 @@ namespace HE.Investments.Common.CRM.Model
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_accessibilitycategoryset
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category1VisitableDwelling = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category2Accessibleandacceptabledwelling = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Category3Wheelchairuserdwellings = 858110002,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_externalstatusahp
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		New = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Draft = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationSubmitted = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Deleted = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OnHold = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Withdrawn = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReview = 858110006,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Rejected = 858110007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RequestedEditing = 858110008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ReferredBackToApplicant = 858110009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedSubjectToContract = 858110010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Approved = 858110011,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public enum invln_ahpinternalstatus
+	{
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Draft = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApplicationSubmitted = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Deleted = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OnHold = 858110003,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Withdrawn = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewPendingAssessment = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewInAssessment = 858110006,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewGoingToBidClinic = 858110007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewGoingToCMEModeration = 858110008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewGoingToSLT = 858110009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewInternallyApproved = 858110010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InternallyApprovedSubjectToIPQ = 858110011,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InternallyApprovedSubjectToRegulatorSignOff = 858110012,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InternallyApprovedSubjectToIPQAndRegulatorySignOff = 858110013,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InternallyRejected = 858110014,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Rejected = 858110015,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RequestedEditing = 858110016,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ReferredBackToApplicant = 858110017,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedSubjecttoContract = 858110018,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedEngressmentIssued = 858110019,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedContractReceivedBackToHE = 858110020,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedContractPassedComplianceChecks = 858110021,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedContractExecuted = 858110022,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Approved = 858110023,
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
 	public enum invln_typeofolderpeopleshousing
 	{
 		
@@ -7725,6 +7860,9 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		CustomAPIRoutetoQueue = 13,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ICDRouteToQueue = 20,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -8952,21 +9090,6 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Hidden = 100000002,
-	}
-	
-	[System.Runtime.Serialization.DataContractAttribute()]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
-	public enum invln_accessibilitycategoryset
-	{
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Category1VisitableDwelling = 858110000,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Category2Accessibleandacceptabledwelling = 858110001,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Category3Wheelchairuserdwellings = 858110002,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -22620,13 +22743,79 @@ namespace HE.Investments.Common.CRM.Model
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Active = 1,
+		Draft = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Deleted = 858110000,
+		ApplicationSubmitted = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Inactive = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OnHold = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewPendingAssessment = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewInAssessment = 858110005,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewGoingToBidClinic = 858110006,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewGoingToCMEModeration = 858110007,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewGoingToSLT = 858110008,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		UnderReviewInternallyApproved = 858110009,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InternallyApprovedSubjectToIPQ = 858110010,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InternallyApprovedSubjectToRegulatorSignOff = 858110011,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InternallyApprovedSubjectToIPQAndRegulatorySignOff = 858110012,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InternallyRejected = 858110013,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Rejected = 858110014,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		RequestedEditing = 858110015,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ReferredBackToApplicant = 858110016,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedSubjecttoContract = 858110017,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedEngressmentIssued = 858110018,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedContractReceivedBackToHE = 858110019,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedContractPassedComplianceChecks = 858110020,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		ApprovedContractExecuted = 858110021,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Approved = 858110022,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Withdrawn = 858110023,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Deleted = 858110024,
 	}
 	
 	/// <summary>
@@ -23022,6 +23211,39 @@ namespace HE.Investments.Common.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_expectedonworks_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_externalstatus")]
+		public System.Nullable<HE.Investments.Common.CRM.Model.invln_externalstatusahp> invln_ExternalStatus
+		{
+			get
+			{
+				Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_externalstatus");
+				if ((optionSet != null))
+				{
+					return ((HE.Investments.Common.CRM.Model.invln_externalstatusahp)(System.Enum.ToObject(typeof(HE.Investments.Common.CRM.Model.invln_externalstatusahp), optionSet.Value)));
+				}
+				else
+				{
+					return null;
+				}
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_ExternalStatus");
+				if ((value == null))
+				{
+					this.SetAttributeValue("invln_externalstatus", null);
+				}
+				else
+				{
+					this.SetAttributeValue("invln_externalstatus", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+				}
+				this.OnPropertyChanged("invln_ExternalStatus");
 			}
 		}
 		
