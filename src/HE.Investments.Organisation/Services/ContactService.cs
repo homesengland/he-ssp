@@ -123,7 +123,6 @@ public class ContactService : IContactService
         organization ??= _organizationRepository.GetOrganizationViaCompanyHouseNumber(service, organizationNumber);
         if (organization != null && contact != null)
         {
-
             var contactWebrole = _webRoleRepository.GetContactWebroleForGivenOrganisationAndPortal(service, organization.Id, portalType, contact.Id);
             if (contactWebrole != null)
             {
