@@ -6,7 +6,7 @@ using Microsoft.Xrm.Sdk.Query;
 namespace HE.Investments.Organisation.CrmRepository;
 public class ContactRepository : IContactRepository
 {
-    public List<Entity> GetContactsForOrganisation(IOrganizationServiceAsync2 service, Guid organisationId, string portalType)
+    public List<Entity> GetContactsForOrganisation(IOrganizationServiceAsync2 service, Guid organisationId, string? portalTypeFilter = null)
     {
         var fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
                       <entity name=""contact"">
@@ -19,11 +19,9 @@ public class ContactRepository : IContactRepository
                             <condition attribute=""invln_accountid"" operator=""eq"" value=""" + organisationId + @""" />
                           </filter>
                           <link-entity name=""invln_webrole"" from=""invln_webroleid"" to=""invln_webroleid"">
-                            <link-entity name=""invln_portal"" from=""invln_portalid"" to=""invln_portalid"">
-                              <filter>
-                                <condition attribute=""invln_portal"" operator=""eq"" value=""" + portalType + @""" />
-                              </filter>
-                            </link-entity>
+                            <link-entity name=""invln_portal"" from=""invln_portalid"" to=""invln_portalid"">" +
+                              portalTypeFilter
+                              + @"</link-entity>
                           </link-entity>
                         </link-entity>
                       </entity>
