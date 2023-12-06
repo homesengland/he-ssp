@@ -1,5 +1,6 @@
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
 
 namespace HE.Investments.Organisation.CrmRepository;
@@ -81,5 +82,55 @@ public class WebRoleRepository : IWebRoleRepository
 
         var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
         return result.Entities.FirstOrDefault();
+    }
+
+    public Entity? GetContactWebroleForOrganisation(IOrganizationServiceAsync2 service, Guid contactId, Guid organisationId)
+    {
+        var condition1 = new ConditionExpression("invln_accountid", ConditionOperator.Equal, organisationId);
+        var condition2 = new ConditionExpression("invln_contactid", ConditionOperator.Equal, contactId);
+        var filter1 = new FilterExpression()
+        {
+            Conditions =
+                {
+                    condition1,
+                    condition2,
+                },
+            FilterOperator = LogicalOperator.And,
+        };
+        var cols = new ColumnSet(true);
+
+        var query = new QueryExpression("invln_contactwebrole")
+        {
+            ColumnSet = cols,
+        };
+        query.Criteria.FilterOperator = LogicalOperator.And;
+        query.Criteria.AddFilter(filter1);
+
+        var result1 = service.RetrieveMultiple(query);
+        return result1.Entities.FirstOrDefault();
+    }
+
+    public Entity? GetWebroleByName(IOrganizationServiceAsync2 service, string webroleName)
+    {
+        var condition1 = new ConditionExpression("invln_name", ConditionOperator.Equal, webroleName);
+        var filter1 = new FilterExpression()
+        {
+            Conditions =
+                {
+                    condition1,
+                },
+            FilterOperator = LogicalOperator.Or,
+        };
+        var cols = new ColumnSet(true);
+
+        var query = new QueryExpression("invln_webrole")
+        {
+            ColumnSet = cols,
+        };
+        query.Criteria.FilterOperator = LogicalOperator.And;
+        query.Criteria.AddFilter(filter1);
+
+        var result1 = service.RetrieveMultiple(query);
+        return result1.Entities.FirstOrDefault();
     }
 }

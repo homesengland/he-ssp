@@ -131,6 +131,32 @@ public class ContactService : IContactService
         }
     }
 
+    public async Task UpdateContactWebrole(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, string newWebRoleName)
+    {
+        var contact = _contactRepository.GetContactViaExternalId(service, contactExternalId);
+        if (contact != null)
+        {
+            var currentRoleName = _webRoleRepository.GetContactWebroleForOrganisation(service, contact.Id, organisationGuid);
+            if (currentRoleName != null)
+            {
+                var webrole = _webRoleRepository.GetWebroleByName(service, newWebRoleName);
+                if (webrole != null)
+                {
+                    var contactWebroleToUpdate = new Entity("invln_contactwebrole")
+                    {
+                        Id = currentRoleName.Id,
+                        Attributes =
+                            {
+                                { "invln_webroleid", webrole.ToEntityReference() },
+                            },
+                    };
+
+                    await service.UpdateAsync(contactWebroleToUpdate);
+                }
+            }
+        }
+    }
+
     private ContactDto MapContactEntityToDto(Entity contact)
     {
         var contactDto = new ContactDto()
