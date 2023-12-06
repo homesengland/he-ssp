@@ -71,7 +71,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsLandStatusModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.PurchasePrice?.ToString(CultureInfo.InvariantCulture) ?? string.Empty,
+            financialDetails.PurchasePrice.ToPoundsString(),
             financialDetails.IsPurchasePriceFinal ?? siteLandStatus));
     }
 
@@ -79,7 +79,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
     public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvidePurchasePriceCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal), cancellationToken);
+        var result = await _mediator.Send(new ProvideLandStatusCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal), cancellationToken);
 
         if (result.HasValidationErrors)
         {

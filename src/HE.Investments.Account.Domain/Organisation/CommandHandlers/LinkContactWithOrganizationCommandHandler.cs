@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Errors;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Contract;
 using HE.Investments.Organisation.Contract;

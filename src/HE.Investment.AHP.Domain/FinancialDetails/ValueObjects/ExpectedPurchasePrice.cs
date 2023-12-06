@@ -6,18 +6,19 @@ using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-public class PurchasePrice : ValueObject
-{
-    public const string DisplayName = "The purchase price of the land";
 
-    public PurchasePrice(decimal value)
+public class ExpectedPurchasePrice : ValueObject
+{
+    public const string DisplayName = "The expected purchase price of the land";
+
+    public ExpectedPurchasePrice(decimal value)
     {
         Value = PoundsValidator.Validate(value, FinancialDetailsValidationFieldNames.PurchasePrice, DisplayName);
     }
 
     public decimal Value { get; }
 
-    public static PurchasePrice From(string value)
+    public static ExpectedPurchasePrice From(string value)
     {
         if (value.IsNotProvided())
         {
@@ -29,11 +30,11 @@ public class PurchasePrice : ValueObject
         if (!decimal.TryParse(value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue))
         {
             OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.PurchasePrice, FinancialDetailsValidationErrors.InvalidActualPurchasePrice)
+                .AddValidationError(FinancialDetailsValidationFieldNames.PurchasePrice, FinancialDetailsValidationErrors.InvalidExpectedPurchasePrice)
                 .CheckErrors();
         }
 
-        return new PurchasePrice(parsedValue);
+        return new ExpectedPurchasePrice(parsedValue);
     }
 
     protected override IEnumerable<object?> GetAtomicValues()

@@ -5,6 +5,7 @@ using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Domain.Organisation.CommandHandlers;
 using HE.Investments.Account.Domain.Tests.Organisation.TestObjectBuilder;
 using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
+using HE.Investments.Common.Errors;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Tests.Extensions.FluentAssertionsExtensions;
 using HE.Investments.Loans.Contract;

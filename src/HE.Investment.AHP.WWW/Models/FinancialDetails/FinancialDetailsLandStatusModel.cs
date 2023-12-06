@@ -5,14 +5,14 @@ public class FinancialDetailsLandStatusModel : FinancialDetailsBaseModel
     {
     }
 
-    public FinancialDetailsLandStatusModel(Guid applicationId, string applicationName, string purchasePrice, bool isFinal)
+    public FinancialDetailsLandStatusModel(Guid applicationId, string applicationName, string? purchasePrice, bool isFinal)
         : base(applicationId, applicationName)
     {
         PurchasePrice = purchasePrice;
         IsFinal = isFinal;
     }
 
-    public string PurchasePrice { get; set; }
+    public string? PurchasePrice { get; set; }
 
     public bool IsFinal { get; set; }
 }

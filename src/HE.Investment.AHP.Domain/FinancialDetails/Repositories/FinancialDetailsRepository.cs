@@ -32,8 +32,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         {
             id = financialDetails.ApplicationId.Value.ToString(),
             name = financialDetails.ApplicationName,
-            actualAcquisitionCost = financialDetails.PurchasePrice?.ActualPrice,
-            expectedAcquisitionCost = financialDetails.PurchasePrice?.ExpectedPrice,
+            actualAcquisitionCost = financialDetails.PurchasePrice?.Value,
+            expectedAcquisitionCost = financialDetails.ExpectedPurchasePrice?.Value,
             isPublicLand = financialDetails.IsPublicLand,
             currentLandValue = financialDetails.LandValue?.Value,
             expectedOnWorks = financialDetails.ExpectedCosts?.WorksCosts,
@@ -66,7 +66,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         return new FinancialDetailsEntity(
             ApplicationId.From(application.id),
             application.name ?? "Unknown",
-            PurchasePrice.From(application.actualAcquisitionCost, application.expectedAcquisitionCost),
+            application.actualAcquisitionCost.IsProvided() ? new PurchasePrice(application.actualAcquisitionCost!.Value) : null,
+            application.expectedAcquisitionCost.IsProvided() ? new ExpectedPurchasePrice(application.expectedAcquisitionCost!.Value) : null,
             application.currentLandValue.IsProvided() ? new CurrentLandValue(application.currentLandValue!.Value) : null,
             application.isPublicLand,
             ExpectedCosts.From(application.expectedOnWorks, application.expectedOnCosts),
