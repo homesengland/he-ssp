@@ -758,6 +758,15 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(HomeTypesWorkflowState.AffordableRentIneligible)]
+    [HttpGet("{homeTypeId}/AffordableRentIneligible")]
+    public async Task<IActionResult> AffordableRentIneligible([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new HomeTypeBasicModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName));
+    }
+
     [WorkflowState(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)]
     [HttpGet("{homeTypeId}/ExemptFromTheRightToSharedOwnership")]
     public async Task<IActionResult> ExemptFromTheRightToSharedOwnership([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
