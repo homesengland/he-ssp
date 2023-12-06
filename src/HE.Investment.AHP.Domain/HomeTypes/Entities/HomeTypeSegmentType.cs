@@ -8,4 +8,5 @@ public enum HomeTypeSegmentType
     OlderPeople,
     DesignPlans,
     SupportedHousingInformation,
+    TenureDetails,
 }

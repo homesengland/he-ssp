@@ -1,6 +1,8 @@
 using System.Globalization;
+using HE.Investment.AHP.Common.Utils;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.Common;
@@ -695,6 +697,63 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         return await SaveHomeTypeSegment(
             new SaveAccessibilityCategoryCommand(applicationId, homeTypeId, model.AccessibilityCategory),
+            model,
+            cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.AffordableRent)]
+    [HttpGet("{homeTypeId}/AffordableRent")]
+    public async Task<IActionResult> AffordableRent([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(applicationId, homeTypeId), cancellationToken);
+        var model = new AffordableRentModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
+        {
+            HomeMarketValue = tenureDetails.HomeMarketValue?.ToString(CultureInfo.InvariantCulture),
+            HomeWeeklyRent = tenureDetails.HomeWeeklyRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            AffordableWeeklyRent = tenureDetails.AffordableWeeklyRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            AffordableRentAsPercentageOfMarketRent = tenureDetails.CalculatedPercentage?.ToString("00.00", CultureInfo.InvariantCulture),
+            TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
+        };
+
+        return View(model);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.AffordableRent)]
+    [HttpPost("{homeTypeId}/AffordableRent")]
+    public async Task<IActionResult> AffordableRent(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        AffordableRentModel model,
+        string action,
+        CancellationToken cancellationToken)
+    {
+        model.AffordableRentAsPercentageOfMarketRent =
+            CalculationUtilities.CalculateAffordableRent(model.HomeWeeklyRent, model.AffordableWeeklyRent).ToString(CultureInfo.InvariantCulture);
+
+        if (action == CommonStrings.Calculate)
+        {
+            var operationResult = await _mediator.Send(
+                new CalculateAffordableRentQuery(
+                    applicationId,
+                    homeTypeId,
+                    model.HomeMarketValue,
+                    model.HomeWeeklyRent,
+                    model.AffordableWeeklyRent,
+                    model.TargetRentExceedMarketRent),
+                cancellationToken);
+            ModelState.AddValidationErrors(operationResult);
+
+            return View(model);
+        }
+
+        return await SaveHomeTypeSegment(
+            new SaveAffordableRentCommand(
+                applicationId,
+                homeTypeId,
+                model.HomeMarketValue,
+                model.HomeWeeklyRent,
+                model.AffordableWeeklyRent,
+                model.TargetRentExceedMarketRent),
             model,
             cancellationToken);
     }

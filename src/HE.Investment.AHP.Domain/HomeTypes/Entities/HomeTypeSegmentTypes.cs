@@ -8,6 +8,7 @@ internal static class HomeTypeSegmentTypes
     {
         HomeTypeSegmentType.SupportedHousingInformation,
         HomeTypeSegmentType.HomeInformation,
+        HomeTypeSegmentType.TenureDetails,
     };
 
     public static readonly IReadOnlyCollection<HomeTypeSegmentType> All = new[]
@@ -17,5 +18,6 @@ internal static class HomeTypeSegmentTypes
         HomeTypeSegmentType.OlderPeople,
         HomeTypeSegmentType.DesignPlans,
         HomeTypeSegmentType.SupportedHousingInformation,
+        HomeTypeSegmentType.TenureDetails,
     };
 }

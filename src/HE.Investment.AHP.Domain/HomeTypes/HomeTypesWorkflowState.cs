@@ -27,4 +27,9 @@ public enum HomeTypesWorkflowState
     TypeOfFacilities,
     AccessibilityStandards,
     AccessibilityCategory,
+    AffordableRent,
+    AffordableRentIneligible,
+    ExemptFromTheRightToSharedOwnership,
+    SharedOwnership,
+    SharedOwnershipIneligible,
 }

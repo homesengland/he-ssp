@@ -2,7 +2,7 @@ namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
 public class NumberOfHomes : RequiredIntValueObject
 {
-    private const string DisplayName = "The number of homes you are delivering";
+    private const string DisplayName = "number of homes you are delivering";
 
     private const int MinValue = 0;
 

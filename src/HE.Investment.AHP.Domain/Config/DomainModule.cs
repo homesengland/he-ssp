@@ -48,6 +48,7 @@ public static class DomainModule
         services.AddSingleton<IHomeTypeCrmSegmentMapper, OlderPeopleCrmSegmentMapper>();
         services.AddSingleton<IHomeTypeCrmSegmentMapper, DesignPlansCrmSegmentMapper>();
         services.AddSingleton<IHomeTypeCrmSegmentMapper, SupportedHousingInformationSegmentMapper>();
+        services.AddSingleton<IHomeTypeCrmSegmentMapper, TenureDetailsCrmSegmentMapper>();
 
         services.AddScoped<IAhpFileLocationProvider<DesignFileParams>, DesignFileLocationProvider>();
         services.AddScoped<IAhpFileService<DesignFileParams>, AhpFileService<DesignFileParams>>();

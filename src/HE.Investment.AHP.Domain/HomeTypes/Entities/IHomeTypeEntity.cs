@@ -25,4 +25,6 @@ public interface IHomeTypeEntity
     DesignPlansSegmentEntity DesignPlans { get; }
 
     SupportedHousingInformationEntity SupportedHousingInformation { get; }
+
+    TenureDetailsEntity TenureDetails { get; }
 }

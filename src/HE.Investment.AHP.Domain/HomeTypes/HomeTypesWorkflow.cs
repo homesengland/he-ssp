@@ -203,6 +203,10 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
         _machine.Configure(HomeTypesWorkflowState.AccessibilityCategory)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
             .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
+
+        _machine.Configure(HomeTypesWorkflowState.AffordableRent)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
     }
 
     private bool IsGeneralHomeType()
