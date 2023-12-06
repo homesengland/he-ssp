@@ -15,5 +15,7 @@ public interface IContactService
 
     Task RemoveLinkBetweenContactAndOrganisation(IOrganizationServiceAsync2 service, string organizationNumber, string portalType, string contactExternalId);
 
+    Task UpdateContactWebrole(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, string newWebRoleName);
+
     Task<List<ContactDto>> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, string organizationNumber, string portalType);
 }
