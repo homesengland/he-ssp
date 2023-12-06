@@ -11,16 +11,18 @@ public abstract class UpdateSchemeCommandHandler<TCommand> : IRequestHandler<TCo
     where TCommand : IUpdateSchemeCommand, IRequest<OperationResult>
 {
     private readonly ISchemeRepository _repository;
+    private readonly bool _includeFiles;
 
-    protected UpdateSchemeCommandHandler(ISchemeRepository repository)
+    protected UpdateSchemeCommandHandler(ISchemeRepository repository, bool includeFiles)
     {
         _repository = repository;
+        _includeFiles = includeFiles;
     }
 
     public async Task<OperationResult> Handle(TCommand request, CancellationToken cancellationToken)
     {
         var applicationId = new ApplicationId(request.ApplicationId);
-        var scheme = await _repository.GetByApplicationId(applicationId, cancellationToken);
+        var scheme = await _repository.GetByApplicationId(applicationId, _includeFiles, cancellationToken);
 
         Update(scheme, request);
 

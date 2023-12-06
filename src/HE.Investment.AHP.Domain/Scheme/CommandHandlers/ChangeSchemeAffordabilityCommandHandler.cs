@@ -8,7 +8,7 @@ namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 public class ChangeSchemeAffordabilityCommandHandler : UpdateSchemeCommandHandler<ChangeSchemeAffordabilityCommand>
 {
     public ChangeSchemeAffordabilityCommandHandler(ISchemeRepository repository)
-        : base(repository)
+        : base(repository, false)
     {
     }
 

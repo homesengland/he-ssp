@@ -5,25 +5,27 @@ using DomainApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Ap
 
 namespace HE.Investment.AHP.Domain.Common.Entities;
 
-public abstract class Files<TFileEntity>
-    where TFileEntity : FileEntity
+public class Files<TFileEntity>
 {
+    private readonly IFilePolicy<int>? _filesCountPolicy;
+
     private readonly IList<UploadedFile> _filesToRemove = new List<UploadedFile>();
 
     private readonly IList<TFileEntity> _filesToUpload = new List<TFileEntity>();
 
-    protected Files(IEnumerable<UploadedFile>? uploadedFiles = null)
+    public Files(IEnumerable<UploadedFile>? uploadedFiles = null, IFilePolicy<int>? filesCountPolicy = null)
     {
+        _filesCountPolicy = filesCountPolicy;
         UploadedFiles = uploadedFiles?.ToList() ?? new List<UploadedFile>();
     }
 
     public IList<UploadedFile> UploadedFiles { get; }
 
-    protected abstract IFilePolicy<int>? FilesCountPolicy { get; }
+    public bool IsModified => _filesToUpload.Any() | _filesToRemove.Any();
 
     public void AddFilesToUpload(IList<TFileEntity> files)
     {
-        FilesCountPolicy?.Apply(UploadedFiles.Count + _filesToUpload.Count + files.Count - _filesToRemove.Count);
+        _filesCountPolicy?.Apply(UploadedFiles.Count + _filesToUpload.Count + files.Count - _filesToRemove.Count);
 
         foreach (var file in files)
         {
@@ -33,9 +35,7 @@ public abstract class Files<TFileEntity>
 
     public void AddFileToUpload(TFileEntity file)
     {
-        FilesCountPolicy?.Apply(UploadedFiles.Count + _filesToUpload.Count + 1 - _filesToRemove.Count);
-
-        _filesToUpload.Add(file);
+        AddFilesToUpload(new List<TFileEntity> { file });
     }
 
     public void MarkFileToRemove(FileId fileId)
@@ -45,7 +45,7 @@ public abstract class Files<TFileEntity>
         _filesToRemove.Add(fileToRemove);
     }
 
-    protected async Task SaveChanges(Func<TFileEntity, Task<UploadedFile>> saveFile, Func<FileId, Task> removeFile)
+    public async Task SaveChanges(Func<TFileEntity, Task<UploadedFile>> saveFile, Func<FileId, Task> removeFile)
     {
         for (var i = _filesToUpload.Count - 1; i >= 0; i--)
         {

@@ -131,6 +131,26 @@ public class ContactService : IContactService
         }
     }
 
+    public async Task<List<ContactDto>> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, string organizationNumber, string portalType)
+    {
+        var organisation = await _organizationRepository.SearchForOrganizationsByOrganizationId(service, organizationNumber);
+        organisation ??= _organizationRepository.GetOrganizationViaCompanyHouseNumber(service, organizationNumber);
+        var contactList = new List<ContactDto>();
+        if (organisation != null)
+        {
+            var contacts = _contactRepository.GetContactsForOrganisation(service, organisation.Id, portalType);
+            if (contacts.Any())
+            {
+                foreach (var contact in contacts)
+                {
+                    contactList.Add(MapContactEntityToDto(contact));
+                }
+            }
+        }
+
+        return contactList;
+    }
+
     public async Task UpdateContactWebrole(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, string newWebRoleName)
     {
         var contact = _contactRepository.GetContactViaExternalId(service, contactExternalId);

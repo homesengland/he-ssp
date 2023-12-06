@@ -2,6 +2,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
 using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
@@ -21,7 +22,8 @@ public class FinancialDetailsEntity
         ApplicationId applicationId,
         string applicationName,
         PurchasePrice purchasePrice,
-        LandValue landValue,
+        CurrentLandValue? landValue,
+        bool? isPublicLand,
         ExpectedCosts expectedCosts,
         Contributions contributions,
         Grants grants,
@@ -31,6 +33,7 @@ public class FinancialDetailsEntity
         ApplicationName = applicationName;
         PurchasePrice = purchasePrice;
         LandValue = landValue;
+        IsPublicLand = isPublicLand;
         ExpectedCosts = expectedCosts;
         Contributions = contributions;
         Grants = grants;
@@ -43,7 +46,9 @@ public class FinancialDetailsEntity
 
     public PurchasePrice PurchasePrice { get; private set; }
 
-    public LandValue LandValue { get; private set; }
+    public CurrentLandValue? LandValue { get; private set; }
+
+    public bool? IsPublicLand { get; private set; }
 
     public ExpectedCosts ExpectedCosts { get; private set; }
 
@@ -59,10 +64,16 @@ public class FinancialDetailsEntity
         SetSectionStatus(purchasePrice.IsAnyValueNotNull);
     }
 
-    public void ProvideLandValue(LandValue landValue)
+    public void ProvideCurrentLandValue(CurrentLandValue? currentLandValue)
     {
-        LandValue = landValue;
-        SetSectionStatus(landValue.IsAnyValueNotNull);
+        LandValue = currentLandValue;
+        SetSectionStatus(currentLandValue.IsProvided());
+    }
+
+    public void ProvideIsPublicLand(bool? isPublicLand)
+    {
+        IsPublicLand = isPublicLand;
+        SetSectionStatus(isPublicLand.HasValue);
     }
 
     public void ProvideExpectedCosts(ExpectedCosts expectedCosts)
@@ -87,7 +98,9 @@ public class FinancialDetailsEntity
     {
         var result = OperationResult.New();
         result.Aggregate(() => PurchasePrice.CheckErrors());
-        result.Aggregate(() => LandValue.CheckErrors());
+
+        // Fix this
+        // result.Aggregate(() => LandValue.CheckErrors());
         result.Aggregate(() => ExpectedCosts.CheckErrors());
         result.Aggregate(() => Contributions.CheckErrors());
         result.Aggregate(() => Grants.CheckErrors());

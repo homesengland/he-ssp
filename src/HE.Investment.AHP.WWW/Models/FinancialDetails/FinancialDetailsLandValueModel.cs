@@ -5,14 +5,14 @@ public class FinancialDetailsLandValueModel : FinancialDetailsBaseModel
     {
     }
 
-    public FinancialDetailsLandValueModel(Guid applicationId, string applicationName, string landValue, string isOnPublicLand)
+    public FinancialDetailsLandValueModel(Guid applicationId, string applicationName, string? landValue, string? isOnPublicLand)
         : base(applicationId, applicationName)
     {
         LandValue = landValue;
         IsOnPublicLand = isOnPublicLand;
     }
 
-    public string LandValue { get; set; }
+    public string? LandValue { get; set; }
 
-    public string IsOnPublicLand { get; set; }
+    public string? IsOnPublicLand { get; set; }
 }

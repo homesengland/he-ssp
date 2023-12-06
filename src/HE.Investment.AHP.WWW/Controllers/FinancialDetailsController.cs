@@ -105,7 +105,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsLandValueModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.LandValue?.ToString(CultureInfo.InvariantCulture) ?? Check.IfCanBeNull,
+            financialDetails.LandValue.ToPoundsString(),
             isSchemeOnPublicLand));
     }
 

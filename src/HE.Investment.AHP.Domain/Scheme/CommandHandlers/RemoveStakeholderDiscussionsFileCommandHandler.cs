@@ -8,7 +8,7 @@ namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 public class RemoveStakeholderDiscussionsFileCommandHandler : UpdateSchemeCommandHandler<RemoveStakeholderDiscussionsFileCommand>
 {
     public RemoveStakeholderDiscussionsFileCommandHandler(ISchemeRepository repository)
-        : base(repository)
+        : base(repository, true)
     {
     }
 

@@ -3,14 +3,14 @@ using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.Scheme.ValueObjects;
 
-public class StakeholderDiscussions : ValueObject
+public class StakeholderDiscussionsDetails : ValueObject
 {
-    public StakeholderDiscussions(string? report)
+    public StakeholderDiscussionsDetails(string? report)
     {
         Build(report).CheckErrors();
     }
 
-    public string Report { get; private set; }
+    public string? Report { get; private set; }
 
     public void CheckIsComplete()
     {

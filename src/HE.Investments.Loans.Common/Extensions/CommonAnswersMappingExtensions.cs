@@ -3,7 +3,7 @@ using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 namespace HE.Investments.Loans.Common.Extensions;
 public static class CommonAnswersMappingExtensions
 {
-    public static bool? MapToBool(this string value)
+    public static bool? MapToBool(this string? value)
     {
         if (value == CommonResponse.Yes)
         {

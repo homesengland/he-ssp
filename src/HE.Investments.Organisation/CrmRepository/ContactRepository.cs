@@ -6,6 +6,33 @@ using Microsoft.Xrm.Sdk.Query;
 namespace HE.Investments.Organisation.CrmRepository;
 public class ContactRepository : IContactRepository
 {
+    public List<Entity> GetContactsForOrganisation(IOrganizationServiceAsync2 service, Guid organisationId, string portalType)
+    {
+        var fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
+                      <entity name=""contact"">
+                        <attribute name=""emailaddress1"" />
+                        <attribute name=""firstname"" />
+                        <attribute name=""jobtitle"" />
+                        <attribute name=""lastname"" />
+                        <link-entity name=""invln_contactwebrole"" from=""invln_contactid"" to=""contactid"">
+                          <filter>
+                            <condition attribute=""invln_accountid"" operator=""eq"" value=""" + organisationId + @""" />
+                          </filter>
+                          <link-entity name=""invln_webrole"" from=""invln_webroleid"" to=""invln_webroleid"">
+                            <link-entity name=""invln_portal"" from=""invln_portalid"" to=""invln_portalid"">
+                              <filter>
+                                <condition attribute=""invln_portal"" operator=""eq"" value=""" + portalType + @""" />
+                              </filter>
+                            </link-entity>
+                          </link-entity>
+                        </link-entity>
+                      </entity>
+                    </fetch>";
+
+        var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
+        return result.Entities.ToList();
+    }
+
     public Entity? GetContactViaExternalId(IOrganizationServiceAsync2 service, string contactExternalId, string[]? columnSet = null)
     {
         var keys = new KeyAttributeCollection

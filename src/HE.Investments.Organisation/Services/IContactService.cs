@@ -17,4 +17,5 @@ public interface IContactService
 
     Task UpdateContactWebrole(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, string newWebRoleName);
 
+    Task<List<ContactDto>> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, string organizationNumber, string portalType);
 }

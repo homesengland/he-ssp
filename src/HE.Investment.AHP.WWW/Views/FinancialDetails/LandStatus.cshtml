@@ -7,7 +7,7 @@
     var purchasePriceLabel = Model.IsFinal ? "Enter the purchase price of the land" : "Enter the expected purchase price of the land";
 }
 
-<div id="mainContainer" class="govuk-grid-three-quarters" role="main">
+<gds-div-grid-column-two-thirds>
     <form asp-controller="FinancialDetails" asp-action="LandStatus" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
         <vc:financial-details-form-header title="@FinancialDetailsPageTitles.LandStatusPage"
                                           current-page="@FinancialDetailsWorkflowState.LandStatus"
@@ -59,4 +59,4 @@
         </gds-field-set>
         <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" />
     </form>
-</div>
+</gds-div-grid-column-two-thirds>

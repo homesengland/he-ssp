@@ -10,9 +10,9 @@ public class HousingNeeds : ValueObject
         Build(typeAndTenureJustification, schemeAndProposalJustification).CheckErrors();
     }
 
-    public string TypeAndTenureJustification { get; private set; }
+    public string? TypeAndTenureJustification { get; private set; }
 
-    public string SchemeAndProposalJustification { get; private set; }
+    public string? SchemeAndProposalJustification { get; private set; }
 
     public void CheckIsComplete()
     {
