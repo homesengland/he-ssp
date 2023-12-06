@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Extensions;
 using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
@@ -33,7 +34,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             name = financialDetails.ApplicationName,
             actualAcquisitionCost = financialDetails.PurchasePrice?.ActualPrice,
             expectedAcquisitionCost = financialDetails.PurchasePrice?.ExpectedPrice,
-            isPublicLand = financialDetails.LandValue?.IsLandPublic,
+            isPublicLand = financialDetails.IsPublicLand,
             currentLandValue = financialDetails.LandValue?.Value,
             expectedOnWorks = financialDetails.ExpectedCosts?.WorksCosts,
             expectedOnCosts = financialDetails.ExpectedCosts?.OnCosts,
@@ -66,7 +67,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             ApplicationId.From(application.id),
             application.name ?? "Unknown",
             PurchasePrice.From(application.actualAcquisitionCost, application.expectedAcquisitionCost),
-            LandValue.From(application.isPublicLand, application.currentLandValue),
+            application.currentLandValue.IsProvided() ? new CurrentLandValue(application.currentLandValue!.Value) : null,
+            application.isPublicLand,
             ExpectedCosts.From(application.expectedOnWorks, application.expectedOnCosts),
             Contributions.From(
                 application.borrowingAgainstRentalIncomeFromThisScheme,

@@ -3,10 +3,12 @@ using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Loans.Common.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
+
 public class ProvideLandValueCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<ProvideLandValueCommand, OperationResult>
 {
     public ProvideLandValueCommandHandler(IFinancialDetailsRepository repository, ILogger<FinancialDetailsCommandHandlerBase> logger)
@@ -19,10 +21,8 @@ public class ProvideLandValueCommandHandler : FinancialDetailsCommandHandlerBase
         return await Perform(
             financialDetails =>
             {
-                if (request.LandOwnership.IsProvided() || request.LandValue.IsProvided())
-                {
-                    financialDetails.ProvideLandValue(new LandValue(request.LandOwnership, request.LandValue));
-                }
+                financialDetails.ProvideCurrentLandValue(request.LandValue.IsProvided() ? CurrentLandValue.From(request.LandValue!) : null);
+                financialDetails.ProvideIsPublicLand(request.LandOwnership.MapToBool());
             },
             request.ApplicationId,
             cancellationToken);

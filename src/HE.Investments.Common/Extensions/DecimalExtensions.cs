@@ -19,20 +19,14 @@ public static class DecimalExtensions
         return Convert.ToInt64(Math.Truncate(val), CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
     }
 
-    public static string? ToMoneyString(this decimal? val)
+    public static string? ToPoundsString(this decimal? val)
     {
-        if (val == null)
-        {
-            return null;
-        }
-
-        var exactString = val.Value.ToString("0.00", CultureInfo.InvariantCulture);
-
-        return exactString;
+        return val?.ToPoundsString();
     }
 
-    public static string ToMoneyString(this decimal val)
+    public static string? ToPoundsString(this decimal val)
     {
-        return ToMoneyString((decimal?)val) ?? string.Empty;
+        var exactString = val.ToString("0.00", CultureInfo.InvariantCulture).Replace(".00", string.Empty);
+        return exactString;
     }
 }
