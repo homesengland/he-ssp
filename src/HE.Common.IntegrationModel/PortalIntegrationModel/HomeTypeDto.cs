@@ -38,6 +38,8 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string designPlansMoreInformation { get; set; }
         public bool? RtSOExemption { get; set; }
         public int? initialSalePercent { get; set; }
+        public decimal? prospectiveRentAsPercentOfMarketRent { get; set; }
+        public bool? isCompleted { get; set; }
 
     }
 }

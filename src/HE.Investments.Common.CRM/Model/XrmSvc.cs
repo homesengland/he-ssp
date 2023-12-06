@@ -19830,6 +19830,24 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ishometypecompleted")]
+		public System.Nullable<bool> invln_ishometypecompleted
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_ishometypecompleted");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_ishometypecompleted");
+				this.SetAttributeValue("invln_ishometypecompleted", value);
+				this.OnPropertyChanged("invln_ishometypecompleted");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_iswheelchairstandardmet")]
 		public System.Nullable<bool> invln_iswheelchairstandardmet
 		{
@@ -20166,6 +20184,24 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_prospectiverent");
 				this.SetAttributeValue("invln_prospectiverent", value);
 				this.OnPropertyChanged("invln_prospectiverent");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_prospectiverentasofmarketrent")]
+		public System.Nullable<decimal> invln_prospectiverentasofmarketrent
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_prospectiverentasofmarketrent");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_prospectiverentasofmarketrent");
+				this.SetAttributeValue("invln_prospectiverentasofmarketrent", value);
+				this.OnPropertyChanged("invln_prospectiverentasofmarketrent");
 			}
 		}
 		
