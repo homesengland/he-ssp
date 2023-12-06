@@ -205,6 +205,10 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
 
         _machine.Configure(HomeTypesWorkflowState.AffordableRent)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
+
+        _machine.Configure(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
             .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
     }

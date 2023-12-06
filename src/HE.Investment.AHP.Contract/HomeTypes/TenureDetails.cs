@@ -9,4 +9,5 @@ public record TenureDetails(
     decimal? HomeWeeklyRent,
     decimal? AffordableWeeklyRent,
     decimal? CalculatedPercentage,
-    YesNoType TargetRentExceedMarketRent);
+    YesNoType TargetRentExceedMarketRent,
+    YesNoType ExemptFromTheRightToSharedOwnership);

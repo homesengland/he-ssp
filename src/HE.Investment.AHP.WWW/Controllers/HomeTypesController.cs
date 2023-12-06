@@ -758,6 +758,33 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)]
+    [HttpGet("{homeTypeId}/ExemptFromTheRightToSharedOwnership")]
+    public async Task<IActionResult> ExemptFromTheRightToSharedOwnership([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(applicationId, homeTypeId), cancellationToken);
+        var model = new ExemptFromTheRightToSharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
+        {
+            ExemptFromTheRightToSharedOwnership = tenureDetails.ExemptFromTheRightToSharedOwnership,
+        };
+
+        return View(model);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)]
+    [HttpPost("{homeTypeId}/ExemptFromTheRightToSharedOwnership")]
+    public async Task<IActionResult> ExemptFromTheRightToSharedOwnership(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        ExemptFromTheRightToSharedOwnershipModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveExemptFromTheRightToSharedOwnershipCommand(applicationId, homeTypeId, model.ExemptFromTheRightToSharedOwnership),
+            model,
+            cancellationToken);
+    }
+
     protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object? routeData = null)
     {
         var applicationId = Request.GetRouteValue("applicationId")
