@@ -8,16 +8,31 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="HomeTypes" asp-action="ExitPlan" asp-method="post" novalidate>
+    <form asp-controller="HomeTypes" asp-action="ExemptionJustification" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
-        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.ExitPlan"
+        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.ExemptionJustification"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"
-                                  title="Tell us the exit plan or alternative use for these homes should commissioning priorities change in the future"/>
+                                  title="Outline the criteria under which you intend to apply for an exemption to the Right to Shared Ownership"/>
 
         <gds-field-set class="govuk-!-margin-bottom-6 govuk-!-margin-top-9">
+            <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        What is the Right to Shared Ownership?
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    The Right to Shared Ownership applies to all new rented homes delivered through the Affordable Homes Programme 2021-26, with limited exceptions.
+                    <a class="govuk-link" target="_blank"
+                       href="https://www.gov.uk/government/publications/right-to-shared-ownership-initial-guidance-for-registered-providers/right-to-shared-ownership-initial-guidance-for-registered-providers">
+                        Read about the Right to Shared Ownership and the types of property that are in scope (opens in the new tab).
+                    </a>
+                </div>
+            </details>
+
             <FormHiddenLabel
                 field-name="MoreInformation"
                 title="More information"/>
