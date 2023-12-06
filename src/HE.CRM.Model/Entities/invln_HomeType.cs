@@ -79,6 +79,7 @@ namespace DataverseModel
 			public const string invln_hometypename = "invln_hometypename";
 			public const string invln_initialsale = "invln_initialsale";
 			public const string invln_invln_hometype_application_invln_scheme = "invln_invln_hometype_application_invln_scheme";
+			public const string invln_ishometypecompleted = "invln_ishometypecompleted";
 			public const string invln_iswheelchairstandardmet = "invln_iswheelchairstandardmet";
 			public const string invln_localcommissioningbodiesconsulted = "invln_localcommissioningbodiesconsulted";
 			public const string invln_marketrent = "invln_marketrent";
@@ -98,6 +99,7 @@ namespace DataverseModel
 			public const string invln_numberofhomeshometype = "invln_numberofhomeshometype";
 			public const string invln_numberofstoreys = "invln_numberofstoreys";
 			public const string invln_prospectiverent = "invln_prospectiverent";
+			public const string invln_prospectiverentasofmarketrent = "invln_prospectiverentasofmarketrent";
 			public const string invln_reasonsforrtsoexemption = "invln_reasonsforrtsoexemption";
 			public const string invln_revenuefunding = "invln_revenuefunding";
 			public const string invln_revenuefundingsources = "invln_revenuefundingsources";
@@ -580,6 +582,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ishometypecompleted")]
+		public System.Nullable<bool> invln_ishometypecompleted
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_ishometypecompleted");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ishometypecompleted");
+				this.SetAttributeValue("invln_ishometypecompleted", value);
+				this.OnPropertyChanged("invln_ishometypecompleted");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_iswheelchairstandardmet")]
 		public System.Nullable<bool> invln_iswheelchairstandardmet
 		{
@@ -900,6 +919,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_prospectiverent");
 				this.SetAttributeValue("invln_prospectiverent", value);
 				this.OnPropertyChanged("invln_prospectiverent");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_prospectiverentasofmarketrent")]
+		public System.Nullable<decimal> invln_prospectiverentasofmarketrent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_prospectiverentasofmarketrent");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_prospectiverentasofmarketrent");
+				this.SetAttributeValue("invln_prospectiverentasofmarketrent", value);
+				this.OnPropertyChanged("invln_prospectiverentasofmarketrent");
 			}
 		}
 		
