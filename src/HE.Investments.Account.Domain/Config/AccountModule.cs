@@ -1,6 +1,8 @@
+using HE.Investments.Account.Domain.Data;
 using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
+using HE.Investments.Account.Domain.Users.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Organisation.Config;
@@ -20,5 +22,7 @@ public static class AccountModule
         services.AddScoped<IAccountUserContext, AccountUserContext>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
         services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
+        services.AddScoped<IUsersCrmContext, UsersCrmContext>();
+        services.AddScoped<IUsersRepository, UsersRepository>();
     }
 }

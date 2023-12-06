@@ -1,0 +1,47 @@
+@model HE.Investments.Common.WWW.Components.Table.TableViewModel
+
+@{
+    string GetWidthClass(int? width) => width switch
+    {
+        50 => "govuk-!-width-one-half",
+        33 => "govuk-!-width-one-third",
+        25 => "govuk-!-width-one-quarter",
+        16 => "govuk-!-width-one-sixth",
+        12 => "govuk-!-width-one-eighth",
+        _ => string.Empty
+        };
+}
+
+<table class="govuk-table">
+    <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+        @foreach (var header in Model.Headers)
+        {
+            var headerClass = $"govuk-table__header";
+            headerClass += $" {GetWidthClass(header.Width)}";
+            headerClass += header.IsHidden? " govuk-table__header--hidden" : string.Empty;
+            <th scope="col" class="@headerClass">@header.Title</th>
+        }
+    </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    @foreach (var row in Model.Rows)
+    {
+        <tr class="govuk-table__row">
+            @foreach (var value in row.Values)
+            {
+                <td class="govuk-table__cell">
+                    @if (value.Component != null)
+                    {
+                        @await Component.InvokeAsync(value.Component.Name, value.Component.Arguments)
+                    }
+                    else
+                    {
+                        @(value.Value ?? "-")
+                    }
+                </td>
+            }
+        </tr>
+    }
+    </tbody>
+</table>
