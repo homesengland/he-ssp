@@ -10,7 +10,7 @@ public class SalesRisk : ValueObject
         Build(value).CheckErrors();
     }
 
-    public string Value { get; private set; }
+    public string? Value { get; private set; }
 
     public void CheckIsComplete()
     {

@@ -7,7 +7,7 @@ namespace HE.Investment.AHP.Domain.Scheme.CommandHandlers;
 public class CompleteSchemeCommandHandler : UpdateSchemeCommandHandler<CompleteSchemeCommand>
 {
     public CompleteSchemeCommandHandler(ISchemeRepository repository)
-        : base(repository)
+        : base(repository, false)
     {
     }
 

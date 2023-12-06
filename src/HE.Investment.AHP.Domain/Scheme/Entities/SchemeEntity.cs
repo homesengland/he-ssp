@@ -18,8 +18,7 @@ public class SchemeEntity
         AffordabilityEvidence affordabilityEvidence,
         SalesRisk salesRisk,
         HousingNeeds housingNeeds,
-        StakeholderDiscussions stakeholderDiscussions,
-        StakeholderDiscussionsFiles stakeholderDiscussionsFiles)
+        StakeholderDiscussions stakeholderDiscussions)
     {
         Status = status;
         Application = application;
@@ -28,7 +27,6 @@ public class SchemeEntity
         SalesRisk = salesRisk;
         HousingNeeds = housingNeeds;
         StakeholderDiscussions = stakeholderDiscussions;
-        StakeholderDiscussionsFiles = stakeholderDiscussionsFiles;
     }
 
     public ApplicationBasicDetails Application { get; }
@@ -41,13 +39,11 @@ public class SchemeEntity
 
     public HousingNeeds HousingNeeds { get; private set; }
 
-    public StakeholderDiscussions StakeholderDiscussions { get; private set; }
-
-    public StakeholderDiscussionsFiles StakeholderDiscussionsFiles { get; private set; }
+    public StakeholderDiscussions StakeholderDiscussions { get; }
 
     public SectionStatus Status { get; private set; }
 
-    public bool IsModified => _modificationTracker.IsModified;
+    public bool IsModified => _modificationTracker.IsModified || StakeholderDiscussions.IsModified;
 
     public void ChangeFunding(SchemeFunding funding)
     {
@@ -69,20 +65,24 @@ public class SchemeEntity
         HousingNeeds = _modificationTracker.Change(HousingNeeds, housingNeeds, SetInProgress);
     }
 
-    public void ChangeStakeholderDiscussions(StakeholderDiscussions stakeholderDiscussions, StakeholderDiscussionsFile? stakeholderDiscussionsFile)
+    public void ChangeStakeholderDiscussions(StakeholderDiscussionsDetails stakeholderDiscussionsDetails, LocalAuthoritySupportFile? localAuthoritySupportFile)
     {
-        StakeholderDiscussions = _modificationTracker.Change(StakeholderDiscussions, stakeholderDiscussions, SetInProgress);
-        if (stakeholderDiscussionsFile != null)
+        StakeholderDiscussions.ChangeStakeholderDiscussionsDetails(stakeholderDiscussionsDetails);
+        if (localAuthoritySupportFile != null)
         {
-            StakeholderDiscussionsFiles.AddFileToUpload(stakeholderDiscussionsFile);
-            _modificationTracker.MarkAsModified();
+            StakeholderDiscussions.ChangeLocalAuthoritySupportFile(localAuthoritySupportFile);
+        }
+
+        if (StakeholderDiscussions.IsModified)
+        {
+            SetInProgress();
         }
     }
 
     public void RemoveStakeholderDiscussionsFile(FileId fileId)
     {
-        StakeholderDiscussionsFiles.MarkFileToRemove(fileId);
-        _modificationTracker.MarkAsModified();
+        StakeholderDiscussions.MarkFileToRemove(fileId);
+        SetInProgress();
     }
 
     public void Complete()

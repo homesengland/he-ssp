@@ -15,9 +15,7 @@ public abstract class FileEntity
         Content = content;
     }
 
-    protected FileName Name { get; }
+    public FileName Name { get; }
 
-    protected Stream Content { get; }
-
-    protected FileId? Id { get; set; }
+    public Stream Content { get; }
 }

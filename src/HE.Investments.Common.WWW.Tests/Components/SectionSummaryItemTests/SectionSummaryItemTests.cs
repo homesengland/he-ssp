@@ -15,7 +15,7 @@ public class SectionSummaryItemTests : ViewComponentTestBase<SectionSummaryItemT
 #if DEBUG
     private const string? SkipTest = null;
 #else
-    public const string? SkipTest = "ViewComponents tests are failing on CI from time to time.";
+    private const string? SkipTest = "ViewComponents tests are failing on CI from time to time.";
 #endif
 
     [Fact(Skip = SkipTest)]

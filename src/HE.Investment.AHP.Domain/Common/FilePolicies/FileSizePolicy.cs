@@ -6,21 +6,21 @@ namespace HE.Investment.AHP.Domain.Common.FilePolicies;
 
 public class FileSizePolicy : IFilePolicy<FileSize>
 {
-    private const int MaxFileSizeInMegabytes = 20;
-
     private readonly string _fieldName;
+    private readonly FileSize _maxFileSize;
 
-    public FileSizePolicy(string fieldName)
+    public FileSizePolicy(string fieldName, FileSize maxFileSize)
     {
         _fieldName = fieldName;
+        _maxFileSize = maxFileSize;
     }
 
     public void Apply(FileSize value)
     {
-        if (value > FileSize.FromMegabytes(MaxFileSizeInMegabytes))
+        if (value > _maxFileSize)
         {
             OperationResult.New()
-                .AddValidationError(_fieldName, GenericValidationError.FileTooBig(MaxFileSizeInMegabytes))
+                .AddValidationError(_fieldName, GenericValidationError.FileTooBig(_maxFileSize.Megabytes))
                 .CheckErrors();
         }
     }

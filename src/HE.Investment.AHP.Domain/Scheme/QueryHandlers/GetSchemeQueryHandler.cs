@@ -17,7 +17,7 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
 
     public async Task<Contract.Scheme.Scheme> Handle(GetApplicationSchemeQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _repository.GetByApplicationId(new(request.ApplicationId), cancellationToken);
+        var entity = await _repository.GetByApplicationId(new(request.ApplicationId), request.IncludeFiles, cancellationToken);
 
         return new Contract.Scheme.Scheme(
             entity.Application.Id.Value,
@@ -30,19 +30,17 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
             entity.SalesRisk.Value,
             entity.HousingNeeds.TypeAndTenureJustification,
             entity.HousingNeeds.SchemeAndProposalJustification,
-            entity.StakeholderDiscussions.Report,
-            CreateFile(entity.StakeholderDiscussionsFiles));
+            entity.StakeholderDiscussions.StakeholderDiscussionsDetails.Report,
+            CreateFile(entity.StakeholderDiscussions.LocalAuthoritySupportFileContainer));
     }
 
-    private static UploadedFile? CreateFile(StakeholderDiscussionsFiles files)
+    private static UploadedFile? CreateFile(LocalAuthoritySupportFileContainer fileContainer)
     {
-        if (!files.UploadedFiles.Any())
+        if (fileContainer.File == null)
         {
             return null;
         }
 
-        var file = files.UploadedFiles.First();
-
-        return new UploadedFile(file.Id.Value, file.Name.Value, file.UploadedOn, file.UploadedBy, true);
+        return new UploadedFile(fileContainer.File.Id.Value, fileContainer.File.Name.Value, fileContainer.File.UploadedOn, fileContainer.File.UploadedBy, true);
     }
 }

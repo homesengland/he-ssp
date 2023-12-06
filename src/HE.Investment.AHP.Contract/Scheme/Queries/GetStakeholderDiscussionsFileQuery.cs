@@ -3,4 +3,4 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.Scheme.Queries;
 
-public record GetStakeholderDiscussionsFileQuery(string ApplicationId, string FileId) : IRequest<FileWithContent>;
+public record GetStakeholderDiscussionsFileQuery(string ApplicationId, string FileId) : IRequest<DownloadedFile>;
