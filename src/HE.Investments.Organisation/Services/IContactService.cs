@@ -14,4 +14,6 @@ public interface IContactService
     Task<Guid> LinkContactWithOrganization(IOrganizationServiceAsync2 service, string contactExternalId, string organizationNumber, string portalType);
 
     Task RemoveLinkBetweenContactAndOrganisation(IOrganizationServiceAsync2 service, string organizationNumber, string portalType, string contactExternalId);
+
+    Task<List<ContactDto>> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, string organizationNumber, string portalType);
 }
