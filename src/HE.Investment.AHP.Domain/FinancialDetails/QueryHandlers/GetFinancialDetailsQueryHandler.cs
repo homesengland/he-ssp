@@ -17,13 +17,13 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
     {
         var financialDetails = await _financialDetailsRepository.GetById(ApplicationId.From(request.ApplicationId), cancellationToken);
 
-        return new Contract.FinancialDetails.FinancialDetails()
+        return new Contract.FinancialDetails.FinancialDetails
         {
             ApplicationId = financialDetails.ApplicationId.Value,
             ApplicationName = financialDetails.ApplicationName,
             PurchasePrice = financialDetails.PurchasePrice.ActualPrice ?? financialDetails.PurchasePrice.ExpectedPrice,
-            IsSchemaOnPublicLand = financialDetails.LandValue.IsLandPublic,
-            LandValue = financialDetails.LandValue.Value,
+            IsSchemaOnPublicLand = financialDetails.IsPublicLand,
+            LandValue = financialDetails.LandValue?.Value,
             ExpectedWorkCost = financialDetails.ExpectedCosts?.WorksCosts,
             ExpectedOnCost = financialDetails.ExpectedCosts?.OnCosts,
             RentalIncomeContribution = financialDetails.Contributions.RentalIncomeBorrowing,

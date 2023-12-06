@@ -44,7 +44,7 @@ public class PurchasePrice : ValueObject
 
     public static PurchasePrice From(decimal? actualPurchasePrice, decimal? expectedPurchasePrice)
     {
-        return new PurchasePrice(actualPurchasePrice.ToMoneyString(), expectedPurchasePrice.ToMoneyString());
+        return new PurchasePrice(actualPurchasePrice.ToPoundsString(), expectedPurchasePrice.ToPoundsString());
     }
 
     public void CheckErrors()

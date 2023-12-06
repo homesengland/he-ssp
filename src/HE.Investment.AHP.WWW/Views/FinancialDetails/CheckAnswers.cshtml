@@ -14,7 +14,7 @@
     <form asp-controller="FinancialDetails" asp-action="CheckAnswers" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
         <vc:financial-details-form-header title="@FinancialDetailsPageTitles.CheckAnswers"
                                           current-page="@FinancialDetailsWorkflowState.CheckAnswers"
-                                          application-id="@Model.ApplicationId"
+                                          application-id="@Model.ApplicationId.ToString()"
                                           caption="@Model.ApplicationName - Financial details" />
 
         <vc:section-summary title="@Model.LandValueSummary.Title" items="@Model.LandValueSummary.Items" />
@@ -46,6 +46,6 @@
                 Save and continue
             </button>
         </gds-field-set>
-        <vc:return-to-application-link application-id="@Model.ApplicationId" />
+        <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" />
     </form>
 </div>
