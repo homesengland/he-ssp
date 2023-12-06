@@ -135,7 +135,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
 
     public bool IsRequired(HousingType housingType)
     {
-        return housingType is HousingType.HomesForOlderPeople or HousingType.HomesForOlderPeople;
+        return housingType is HousingType.HomesForOlderPeople or HousingType.HomesForDisabledAndVulnerablePeople;
     }
 
     public bool IsCompleted()

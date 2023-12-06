@@ -9,9 +9,9 @@ using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
-public class SupportedHousingInformationSegmentMapper : HomeTypeCrmSegmentMapperBase<SupportedHousingInformationEntity>
+public class SupportedHousingInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<SupportedHousingInformationSegmentEntity>
 {
-    public SupportedHousingInformationSegmentMapper()
+    public SupportedHousingInformationCrmSegmentMapper()
         : base(new[]
         {
             nameof(invln_HomeType.invln_localcommissioningbodiesconsulted),
@@ -29,7 +29,7 @@ public class SupportedHousingInformationSegmentMapper : HomeTypeCrmSegmentMapper
 
     public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
-        return new SupportedHousingInformationEntity(
+        return new SupportedHousingInformationSegmentEntity(
             YesNoTypeMapper.Map(dto.localComissioningBodies),
             YesNoTypeMapper.Map(dto.shortStayAccommodation),
             MapRevenueFunding(dto.revenueFunding),
@@ -39,9 +39,9 @@ public class SupportedHousingInformationSegmentMapper : HomeTypeCrmSegmentMapper
             dto.exitPlan.IsProvided() ? new MoreInformation(dto.exitPlan) : null);
     }
 
-    protected override SupportedHousingInformationEntity GetSegment(HomeTypeEntity entity) => entity.SupportedHousingInformation;
+    protected override SupportedHousingInformationSegmentEntity GetSegment(HomeTypeEntity entity) => entity.SupportedHousingInformation;
 
-    protected override void MapToDto(HomeTypeDto dto, SupportedHousingInformationEntity segment)
+    protected override void MapToDto(HomeTypeDto dto, SupportedHousingInformationSegmentEntity segment)
     {
         dto.localComissioningBodies = YesNoTypeMapper.Map(segment.LocalCommissioningBodiesConsulted);
         dto.shortStayAccommodation = YesNoTypeMapper.Map(segment.ShortStayAccommodation);

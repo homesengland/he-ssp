@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.Documents.Config;
@@ -6,6 +7,8 @@ using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Crm;
 using HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
+using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
@@ -47,7 +50,13 @@ public static class DomainModule
         services.AddSingleton<IHomeTypeCrmSegmentMapper, DisabledAndVulnerablePeopleCrmSegmentMapper>();
         services.AddSingleton<IHomeTypeCrmSegmentMapper, OlderPeopleCrmSegmentMapper>();
         services.AddSingleton<IHomeTypeCrmSegmentMapper, DesignPlansCrmSegmentMapper>();
-        services.AddSingleton<IHomeTypeCrmSegmentMapper, SupportedHousingInformationSegmentMapper>();
+        services.AddSingleton<IHomeTypeCrmSegmentMapper, SupportedHousingInformationCrmSegmentMapper>();
+
+        services.AddSingleton<IHomeTypeSegmentContractMapper<DesignPlansSegmentEntity, DesignPlans>, DesignPlansSegmentContractMapper>();
+        services.AddSingleton<IHomeTypeSegmentContractMapper<DisabledPeopleHomeTypeDetailsSegmentEntity, DisabledPeopleHomeTypeDetails>, DisabledPeopleHomeTypeDetailsSegmentContractMapper>();
+        services.AddSingleton<IHomeTypeSegmentContractMapper<HomeInformationSegmentEntity, HomeInformation>, HomeInformationSegmentContractMapper>();
+        services.AddSingleton<IHomeTypeSegmentContractMapper<OlderPeopleHomeTypeDetailsSegmentEntity, OlderPeopleHomeTypeDetails>, OlderPeopleHomeTypeDetailsSegmentContractMapper>();
+        services.AddSingleton<IHomeTypeSegmentContractMapper<SupportedHousingInformationSegmentEntity, SupportedHousingInformation>, SupportedHousingInformationSegmentContractMapper>();
 
         services.AddScoped<IAhpFileLocationProvider<DesignFileParams>, DesignFileLocationProvider>();
         services.AddScoped<IAhpFileService<DesignFileParams>, AhpFileService<DesignFileParams>>();

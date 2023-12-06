@@ -42,7 +42,7 @@ public class HomeTypesEntity
 
     public IHomeTypeEntity CreateHomeType(string? name, HousingType housingType)
     {
-        var homeType = new HomeTypeEntity(_application, ValidateNameUniqueness(name), housingType);
+        var homeType = new HomeTypeEntity(_application, ValidateNameUniqueness(name), housingType, SectionStatus.InProgress);
         _homeTypes.Add(homeType);
 
         return homeType;
@@ -86,7 +86,7 @@ public class HomeTypesEntity
                     }));
             }
 
-            var notCompletedHomeTypes = _homeTypes.Where(x => !x.IsCompleted()).ToList();
+            var notCompletedHomeTypes = _homeTypes.Where(x => x.Status != SectionStatus.Completed).ToList();
             if (notCompletedHomeTypes.Any())
             {
                 throw new DomainValidationException(new OperationResult().AddValidationErrors(
@@ -97,7 +97,7 @@ public class HomeTypesEntity
         }
         else
         {
-            Status = _statusModificationTracker.Change(Status, SectionStatus.InProgress);
+            MarkAsInProgress();
         }
     }
 

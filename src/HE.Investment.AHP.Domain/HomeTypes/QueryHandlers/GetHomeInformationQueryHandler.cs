@@ -1,43 +1,20 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
-internal sealed class GetHomeInformationQueryHandler : IRequestHandler<GetHomeInformationQuery, HomeInformation>
+internal sealed class GetHomeInformationQueryHandler :
+    GetHomeTypeSegmentQueryHandlerBase<GetHomeInformationQuery, HomeInformationSegmentEntity, HomeInformation>
 {
-    private readonly IHomeTypeRepository _repository;
-
-    public GetHomeInformationQueryHandler(IHomeTypeRepository repository)
+    public GetHomeInformationQueryHandler(IHomeTypeRepository repository, IHomeTypeSegmentContractMapper<HomeInformationSegmentEntity, HomeInformation> mapper)
+        : base(repository, mapper)
     {
-        _repository = repository;
     }
 
-    public async Task<HomeInformation> Handle(GetHomeInformationQuery request, CancellationToken cancellationToken)
-    {
-        var homeType = await _repository.GetById(
-            new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId),
-            new HomeTypeId(request.HomeTypeId),
-            new[] { HomeTypeSegmentType.HomeInformation },
-            cancellationToken);
-        var homeInformation = homeType.HomeInformation;
+    protected override IReadOnlyCollection<HomeTypeSegmentType> Segments => new[] { HomeTypeSegmentType.HomeInformation };
 
-        return new HomeInformation(
-            homeType.Application.Name.Name,
-            homeType.Name.Value,
-            homeInformation.NumberOfHomes?.Value,
-            homeInformation.NumberOfBedrooms?.Value,
-            homeInformation.MaximumOccupancy?.Value,
-            homeInformation.NumberOfStoreys?.Value,
-            homeInformation.IntendedAsMoveOnAccommodation,
-            homeInformation.PeopleGroupForSpecificDesignFeatures,
-            homeInformation.BuildingType,
-            homeInformation.CustomBuild,
-            homeInformation.FacilityType,
-            homeInformation.AccessibilityStandards,
-            homeInformation.AccessibilityCategory);
-    }
+    protected override HomeInformationSegmentEntity GetSegment(IHomeTypeEntity homeType) => homeType.HomeInformation;
 }

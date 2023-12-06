@@ -1,0 +1,52 @@
+@using HE.Investments.Common.WWW.Components.SectionSummary;
+@using HE.Investments.Common.WWW.Components.FormButton
+@using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.Common
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
+@model HE.Investment.AHP.WWW.Models.HomeTypes.HomeTypeSummaryModel
+
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+}
+
+<div>
+    <gds-div-grid-column-two-thirds>
+        <vc:home-type-form-header title="Check your answers before adding your home type"
+                                  current-page="@HomeTypesWorkflowState.CheckAnswers"
+                                  application-id="@applicationId"
+                                  home-type-id="@homeTypeId"
+                                  caption="@Model.Header"/>
+
+    </gds-div-grid-column-two-thirds>
+    <div class="govuk-grid-column-full">
+        @if (Model.Sections != null)
+        {
+            @foreach (var sectionSummary in Model.Sections)
+            {
+                <vc:section-summary title="@sectionSummary.Title" items="@sectionSummary.Items"/>
+            }
+        }
+    </div>
+
+    <gds-div-grid-column-two-thirds>
+        <form asp-controller="HomeTypes" asp-action="CheckAnswers" asp-method="post" novalidate>
+            @Html.HiddenFor(m => Model.ApplicationName)
+            @Html.HiddenFor(m => Model.HomeTypeName)
+
+            <gds-field-set role="group">
+                <gds-legend>
+                    <gds-h2>Have you completed this section?</gds-h2>
+                </gds-legend>
+                <gds-radio govuk-formgroup-asp-for="IsSectionCompleted"
+                           asp-hiddenlabeltext="Have you completed this section?"
+                           value="@Model.IsSectionCompleted"
+                           asp-selectlistitems="@CommonFormOptions.IsSectionCompleted">
+                </gds-radio>
+            </gds-field-set>
+            <vc:form-button/>
+        </form>
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </gds-div-grid-column-two-thirds>
+</div>

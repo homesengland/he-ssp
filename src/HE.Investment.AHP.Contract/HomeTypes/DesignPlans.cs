@@ -8,4 +8,4 @@ public record DesignPlans(
     string HomeTypeName,
     IList<HappiDesignPrincipleType> DesignPrinciples,
     string? MoreInformation,
-    IList<UploadedFile> UploadedFiles);
+    IList<UploadedFile> UploadedFiles) : HomeTypeSegmentBase(ApplicationName, HomeTypeName);

@@ -1,6 +1,7 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.Common;
@@ -9,6 +10,7 @@ using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
 using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
+using HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
@@ -30,10 +32,13 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     private readonly IAhpDocumentSettings _documentSettings;
 
-    public HomeTypesController(IMediator mediator, IAhpDocumentSettings documentSettings)
+    private readonly IHomeTypeSummaryViewModelFactory _summaryViewModelFactory;
+
+    public HomeTypesController(IMediator mediator, IAhpDocumentSettings documentSettings, IHomeTypeSummaryViewModelFactory summaryViewModelFactory)
     {
         _mediator = mediator;
         _documentSettings = documentSettings;
+        _summaryViewModelFactory = summaryViewModelFactory;
     }
 
     [WorkflowState(HomeTypesWorkflowState.Index)]
@@ -699,6 +704,27 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(HomeTypesWorkflowState.CheckAnswers)]
+    [HttpGet("{homeTypeId}/CheckAnswers")]
+    public async Task<IActionResult> CheckAnswers([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        return View(await GetHomeTypeAndCreateSummary(Url, applicationId, homeTypeId, cancellationToken));
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.CheckAnswers)]
+    [HttpPost("{homeTypeId}/CheckAnswers")]
+    public async Task<IActionResult> CheckAnswers([FromRoute] string applicationId, string homeTypeId, HomeTypeSummaryModel model, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new CompleteHomeTypeCommand(applicationId, homeTypeId, model.IsSectionCompleted), cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View("CheckAnswers", await GetHomeTypeAndCreateSummary(Url, applicationId, homeTypeId, cancellationToken));
+        }
+
+        return RedirectToAction("List", new { applicationId });
+    }
+
     protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object? routeData = null)
     {
         var applicationId = Request.GetRouteValue("applicationId")
@@ -775,5 +801,21 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 id = homeTypeId,
                 fileId,
             }) ?? string.Empty;
+    }
+
+    private async Task<HomeTypeSummaryModel> GetHomeTypeAndCreateSummary(
+        IUrlHelper urlHelper,
+        string applicationId,
+        string homeTypeId,
+        CancellationToken cancellationToken)
+    {
+        var homeType = await _mediator.Send(new GetFullHomeTypeQuery(applicationId, homeTypeId), cancellationToken);
+        var sections = _summaryViewModelFactory.CreateSummaryModel(homeType, urlHelper);
+
+        return new HomeTypeSummaryModel(homeType.ApplicationName, homeType.Name)
+        {
+            IsSectionCompleted = homeType.IsCompleted ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied,
+            Sections = sections.ToList(),
+        };
     }
 }

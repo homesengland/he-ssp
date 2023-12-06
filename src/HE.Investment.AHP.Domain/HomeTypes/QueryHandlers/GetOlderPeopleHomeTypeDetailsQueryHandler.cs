@@ -1,29 +1,22 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
-internal sealed class GetOlderPeopleHomeTypeDetailsQueryHandler : IRequestHandler<GetOlderPeopleHomeTypeDetailsQuery, OlderPeopleHomeTypeDetails>
+internal sealed class GetOlderPeopleHomeTypeDetailsQueryHandler
+    : GetHomeTypeSegmentQueryHandlerBase<GetOlderPeopleHomeTypeDetailsQuery, OlderPeopleHomeTypeDetailsSegmentEntity, OlderPeopleHomeTypeDetails>
 {
-    private readonly IHomeTypeRepository _repository;
-
-    public GetOlderPeopleHomeTypeDetailsQueryHandler(IHomeTypeRepository repository)
+    public GetOlderPeopleHomeTypeDetailsQueryHandler(
+        IHomeTypeRepository repository,
+        IHomeTypeSegmentContractMapper<OlderPeopleHomeTypeDetailsSegmentEntity, OlderPeopleHomeTypeDetails> mapper)
+        : base(repository, mapper)
     {
-        _repository = repository;
     }
 
-    public async Task<OlderPeopleHomeTypeDetails> Handle(GetOlderPeopleHomeTypeDetailsQuery request, CancellationToken cancellationToken)
-    {
-        var homeType = await _repository.GetById(
-            new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId),
-            new HomeTypeId(request.HomeTypeId),
-            new[] { HomeTypeSegmentType.OlderPeople },
-            cancellationToken);
+    protected override IReadOnlyCollection<HomeTypeSegmentType> Segments => new[] { HomeTypeSegmentType.OlderPeople };
 
-        return new OlderPeopleHomeTypeDetails(homeType.Application.Name.Name, homeType.Name.Value, homeType.OlderPeopleHomeTypeDetails.HousingType);
-    }
+    protected override OlderPeopleHomeTypeDetailsSegmentEntity GetSegment(IHomeTypeEntity homeType) => homeType.OlderPeopleHomeTypeDetails;
 }
