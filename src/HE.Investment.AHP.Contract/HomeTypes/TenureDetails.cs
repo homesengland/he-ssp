@@ -10,4 +10,5 @@ public record TenureDetails(
     decimal? AffordableWeeklyRent,
     decimal? CalculatedPercentage,
     YesNoType TargetRentExceedMarketRent,
-    YesNoType ExemptFromTheRightToSharedOwnership);
+    YesNoType ExemptFromTheRightToSharedOwnership,
+    string? ExemptionJustification);

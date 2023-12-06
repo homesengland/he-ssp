@@ -30,6 +30,7 @@ public enum HomeTypesWorkflowState
     AffordableRent,
     AffordableRentIneligible,
     ExemptFromTheRightToSharedOwnership,
+    ExemptionJustification,
     SharedOwnership,
     SharedOwnershipIneligible,
 }

@@ -35,6 +35,7 @@ internal sealed class GetTenureDetailsQueryHandler : IRequestHandler<GetTenureDe
             tenureDetails.AffordableWeeklyRent?.Value,
             tenureDetails.AffordableRentAsPercentageOfMarketRent?.Value,
             tenureDetails.TargetRentExceedMarketRent.IsNotProvided() ? YesNoType.Undefined : tenureDetails.TargetRentExceedMarketRent!.Value,
-            tenureDetails.ExemptFromTheRightToSharedOwnership);
+            tenureDetails.ExemptFromTheRightToSharedOwnership,
+            tenureDetails.ExemptionJustification?.Value);
     }
 }

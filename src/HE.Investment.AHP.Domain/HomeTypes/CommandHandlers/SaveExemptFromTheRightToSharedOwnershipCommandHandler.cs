@@ -17,6 +17,6 @@ public class SaveExemptFromTheRightToSharedOwnershipCommandHandler : SaveHomeTyp
     protected override IEnumerable<Action<SaveExemptFromTheRightToSharedOwnershipCommand, IHomeTypeEntity>> SaveActions => new[]
     {
         (SaveExemptFromTheRightToSharedOwnershipCommand request, IHomeTypeEntity entity) =>
-            entity.TenureDetails.ChangeIntendedAsMoveOnAccommodation(request.ExemptFromTheRightToSharedOwnership),
+            entity.TenureDetails.ChangeExemptFromTheRightToSharedOwnership(request.ExemptFromTheRightToSharedOwnership),
     };
 }

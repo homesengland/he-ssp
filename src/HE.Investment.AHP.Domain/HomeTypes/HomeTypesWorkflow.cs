@@ -204,11 +204,16 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
             .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
 
+        // todo all workflows below will be updated
         _machine.Configure(HomeTypesWorkflowState.AffordableRent)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)
             .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
 
         _machine.Configure(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.ExemptionJustification)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
+
+        _machine.Configure(HomeTypesWorkflowState.ExemptionJustification)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
             .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
     }

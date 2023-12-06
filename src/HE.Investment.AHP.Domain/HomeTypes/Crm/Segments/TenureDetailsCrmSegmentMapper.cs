@@ -19,6 +19,7 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
             nameof(invln_HomeType.invln_prospectiverentasofmarketrent),
             //nameof(invln_HomeType.invln_targetrentover80ofmarketrent), TODO wating for crm
             nameof(invln_HomeType.invln_rtsoexempt),
+            //nameof(invln_HomeType.invln_reasonsforrtsoexemption), TODO wating for crm
         })
     {
     }
@@ -34,7 +35,8 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
             dto.prospectiveRentAsPercentOfMarketRent.IsProvided() ? new AffordableRentAsPercentageOfMarketRent(dto.prospectiveRentAsPercentOfMarketRent!.Value) : null,
             //YesNoTypeMapper.Map(dto.target), TODO wating for crm
             YesNoTypeMapper.Map(dto.RtSOExemption), // todo
-            YesNoTypeMapper.Map(dto.RtSOExemption));
+            YesNoTypeMapper.Map(dto.RtSOExemption),
+            null); // todo
     }
 
     protected override TenureDetailsEntity GetSegment(HomeTypeEntity entity) => entity.TenureDetails;
@@ -47,5 +49,6 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
         dto.prospectiveRentAsPercentOfMarketRent = segment.AffordableRentAsPercentageOfMarketRent?.Value;
         //dto.target = YesNoTypeMapper.Map(segment.TargetRentExceedMarketRent?.Value); TODO wating for crm
         dto.RtSOExemption = YesNoTypeMapper.Map(segment.ExemptFromTheRightToSharedOwnership);
+        //dto.reasonsforrtsoexemption = segment.ExitPlan?.Value; TODO wating for crm
     }
 }

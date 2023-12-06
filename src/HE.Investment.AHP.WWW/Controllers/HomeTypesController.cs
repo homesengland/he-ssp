@@ -794,6 +794,32 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(HomeTypesWorkflowState.ExemptionJustification)]
+    [HttpGet("{homeTypeId}/ExemptionJustification")]
+    public async Task<IActionResult> ExemptionJustification([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new MoreInformationModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
+        {
+            MoreInformation = tenureDetails.ExemptionJustification,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ExemptionJustification)]
+    [HttpPost("{homeTypeId}/ExemptionJustification")]
+    public async Task<IActionResult> ExemptionJustification(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        MoreInformationModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveExemptionJustificationCommand(applicationId, homeTypeId, model.MoreInformation),
+            model,
+            cancellationToken);
+    }
+
     protected override async Task<IStateRouting<HomeTypesWorkflowState>> Routing(HomeTypesWorkflowState currentState, object? routeData = null)
     {
         var applicationId = Request.GetRouteValue("applicationId")
