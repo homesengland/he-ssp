@@ -93,6 +93,8 @@ public static class ValidationErrorMessage
 
     public static string MissingRequiredField(string displayName) => $"Enter {displayName}";
 
+    public static string MustBeNumber(string displayName) => $"{displayName} must be a number";
+
     public static string MustBeNumber(string displayName, int minValue, int maxValue) => $"{displayName} must be between {minValue} and {maxValue}";
 
     public static string StringLengthExceeded(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
