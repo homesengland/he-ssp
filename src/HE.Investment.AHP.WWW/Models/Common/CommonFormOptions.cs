@@ -1,13 +1,12 @@
-using HE.Investments.Loans.Common.Utils.Constants.FormOption;
+using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investments.Common.WWW.Helpers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HE.Investment.AHP.WWW.Models.Common;
 
 public static class CommonFormOptions
 {
-    public static IEnumerable<SelectListItem> YesNo => new List<SelectListItem>
-    {
-        new SelectListItem { Text = CommonResponse.Yes, Value = CommonResponse.Yes },
-        new SelectListItem { Text = CommonResponse.No, Value = CommonResponse.No },
-    };
+    public static IEnumerable<SelectListItem> YesNo => SelectListHelper.FromEnum<YesNoType>();
+
+    public static IEnumerable<SelectListItem> IsSectionCompleted => SelectListHelper.FromEnum<IsSectionCompleted>();
 }

@@ -1,38 +1,22 @@
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
-using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using MediatR;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
-internal sealed class GetSupportedHousingInformationQueryHandler : IRequestHandler<GetSupportedHousingInformationQuery, SupportedHousingInformation>
+internal sealed class GetSupportedHousingInformationQueryHandler
+    : GetHomeTypeSegmentQueryHandlerBase<GetSupportedHousingInformationQuery, SupportedHousingInformationSegmentEntity, SupportedHousingInformation>
 {
-    private readonly IHomeTypeRepository _repository;
-
-    public GetSupportedHousingInformationQueryHandler(IHomeTypeRepository repository)
+    public GetSupportedHousingInformationQueryHandler(
+        IHomeTypeRepository repository,
+        IHomeTypeSegmentContractMapper<SupportedHousingInformationSegmentEntity, SupportedHousingInformation> mapper)
+        : base(repository, mapper)
     {
-        _repository = repository;
     }
 
-    public async Task<SupportedHousingInformation> Handle(GetSupportedHousingInformationQuery request, CancellationToken cancellationToken)
-    {
-        var homeType = await _repository.GetById(
-            new Domain.Application.ValueObjects.ApplicationId(request.ApplicationId),
-            new HomeTypeId(request.HomeTypeId),
-            new[] { HomeTypeSegmentType.SupportedHousingInformation },
-            cancellationToken);
+    protected override IReadOnlyCollection<HomeTypeSegmentType> Segments => new[] { HomeTypeSegmentType.SupportedHousingInformation };
 
-        return new SupportedHousingInformation(
-            homeType.Application.Name.Name,
-            homeType.Name.Value,
-            homeType.SupportedHousingInformation.LocalCommissioningBodiesConsulted,
-            homeType.SupportedHousingInformation.ShortStayAccommodation,
-            homeType.SupportedHousingInformation.RevenueFundingType,
-            homeType.SupportedHousingInformation.RevenueFundingSources.ToList(),
-            homeType.SupportedHousingInformation.MoveOnArrangements?.Value,
-            homeType.SupportedHousingInformation.TypologyLocationAndDesign?.Value,
-            homeType.SupportedHousingInformation.ExitPlan?.Value);
-    }
+    protected override SupportedHousingInformationSegmentEntity GetSegment(IHomeTypeEntity homeType) => homeType.SupportedHousingInformation;
 }
