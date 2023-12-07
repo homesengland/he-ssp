@@ -18,7 +18,7 @@ public class ExpectedOnCostsTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MissingRequiredField(ExpectedOnCosts.Fields.DisplayName));
+            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MissingRequiredField(ExpectedOnCosts.Fields.DisplayName!));
     }
 
     [Fact]

@@ -18,7 +18,7 @@ public class CurrentLandValueTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MissingRequiredField(CurrentLandValue.Fields.DisplayName));
+            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MissingRequiredField(CurrentLandValue.Fields.DisplayName!));
     }
 
     [Fact]
