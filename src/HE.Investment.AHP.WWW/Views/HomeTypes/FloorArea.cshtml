@@ -1,0 +1,70 @@
+@using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.Common
+@using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
+@using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@model HE.Investment.AHP.WWW.Models.HomeTypes.FloorAreaModel;
+
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+}
+
+<gds-div-grid-column-two-thirds>
+    <form asp-controller="HomeTypes" asp-action="FloorArea" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
+        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.FloorArea"
+                                  application-id="@applicationId"
+                                  home-type-id="@homeTypeId"
+                                  caption="@Model.Header"/>
+        <gds-field-set>
+            <gds-legend>
+                <gds-h1>Floor Area</gds-h1>
+            </gds-legend>
+
+            <gds-legend>
+                <gds-h2 class="govuk-!-margin-bottom-0">Enter the internal floor area of this home type</gds-h2>
+            </gds-legend>
+            <gds-input
+                class="govuk-input--width-2"
+                asp-hiddenlabeltext="Enter the internal floor area of this home type"
+                govuk-formgroup-asp-for="InternalFloorArea"
+                name="InternalFloorArea"
+                asp-hinttext="Enter the internal floor area to two decimal places."
+                asp-suffixtext="GdsInputSuffixText.PerYear"
+                value=@Model.InternalFloorArea/>
+
+            <gds-legend>
+                <gds-h2 class="govuk-!-margin-bottom-0">Do all of the homes of this home type meet all of the Nationally Described Space Standards?</gds-h2>
+            </gds-legend>
+            <gds-radio govuk-formgroup-asp-for="MeetNationallyDescribedSpaceStandards"
+                       asp-hiddenlabeltext="Meet Nationally Describe dSpace Standards"
+                       value="@Model.MeetNationallyDescribedSpaceStandards"
+                       asp-selectlistitems="@CommonFormOptions.YesNo"
+                       class="govuk-!-margin-bottom-2">
+            </gds-radio>
+
+            <details class="govuk-details" data-module="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        What are the Nationally Described Space Standards?
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    The government's Nationally Described Space Standards relate to the internal space in new homes.
+                    <a class="govuk-link" target="_blank"
+                       href="https://www.gov.uk/government/publications/technical-housing-standards-nationally-described-space-standard/technical-housing-standards-nationally-described-space-standard">
+                        Read more about the Nationally Described Space Standards (opens in a new tab).
+                    </a>
+                </div>
+            </details>
+
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+                Save and continue
+            </button>
+
+        </gds-field-set>
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</gds-div-grid-column-two-thirds>

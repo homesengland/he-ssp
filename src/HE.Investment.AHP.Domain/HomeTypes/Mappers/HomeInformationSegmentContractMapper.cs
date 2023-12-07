@@ -22,6 +22,9 @@ public class HomeInformationSegmentContractMapper : IHomeTypeSegmentContractMapp
             segment.CustomBuild,
             segment.FacilityType,
             segment.AccessibilityStandards,
-            segment.AccessibilityCategory);
+            segment.AccessibilityCategory,
+            segment.InternalFloorArea?.Value,
+            segment.MeetNationallyDescribedSpaceStandards,
+            segment.NationallyDescribedSpaceStandards.ToList());
     }
 }

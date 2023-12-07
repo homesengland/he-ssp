@@ -1,0 +1,64 @@
+@using HE.Investment.AHP.Domain.HomeTypes
+@using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Models.HomeTypes
+@model HE.Investment.AHP.WWW.Models.HomeTypes.FloorAreaModel;
+
+@{
+    var applicationId = this.GetApplicationIdFromRoute();
+    var homeTypeId = this.GetHomeTypeIdFromRoute();
+}
+
+<div class="govuk-grid-column-two-thirds">
+    <form asp-controller="HomeTypes" asp-action="FloorAreaStandards" asp-method="post" novalidate>
+        @Html.HiddenFor(m => Model.ApplicationName)
+        @Html.HiddenFor(m => Model.HomeTypeName)
+        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.FloorAreaStandards"
+                                  application-id="@applicationId"
+                                  home-type-id="@homeTypeId"
+                                  caption="@Model.Header"
+                                  title="Floor area"/>
+
+        <gds-field-set class="govuk-!-margin-bottom-6">
+            <gds-legend>
+                <gds-h2>Which of these Nationally Described Space Standards do the homes meet?</gds-h2>
+            </gds-legend>
+            <span class="govuk-caption-m govuk-!-margin-bottom-4">Select all that apply</span>
+
+            <gds-checkbox class="exclusive-checkbox-group"
+                          govuk-formgroup-asp-for="@Model.NationallyDescribedSpaceStandards"
+                          asp-selectlistitems="HomeTypesFormOptions.NationallyDescribedSpaceStandardsExceptNone"
+                          asp-for="@Model.NationallyDescribedSpaceStandards"
+                          asp-excludelabel="true">
+            </gds-checkbox>
+            <p>or</p>
+            <gds-checkbox class="exclusive-checkbox-group--exclusive-option"
+                          govuk-formgroup-asp-for="@Model.OtherNationallyDescribedSpaceStandards"
+                          asp-selectlistitems="HomeTypesFormOptions.NationallyDescribedSpaceStandardsOnlyNone"
+                          asp-for="@Model.OtherNationallyDescribedSpaceStandards"
+                          asp-excludelabel="true">
+            </gds-checkbox>
+        </gds-field-set>
+
+        <details class="govuk-details" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                    What are the Nationally Described Space Standards?
+                </span>
+            </summary>
+            <div class="govuk-details__text">
+                The government's Nationally Described Space Standards relate to the internal space in new homes.
+                <a class="govuk-link" target="_blank"
+                   href="https://www.gov.uk/government/publications/technical-housing-standards-nationally-described-space-standard/technical-housing-standards-nationally-described-space-standard">
+                    Read more about the Nationally Described Space Standards (opens in a new tab).
+                </a>
+            </div>
+        </details>
+
+        <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
+            Save and continue
+        </button>
+        <br/>
+
+        <vc:return-to-application-link application-id="@applicationId"/>
+    </form>
+</div>

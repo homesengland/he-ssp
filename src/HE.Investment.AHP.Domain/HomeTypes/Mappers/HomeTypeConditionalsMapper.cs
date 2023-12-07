@@ -12,6 +12,7 @@ public static class HomeTypeConditionalsMapper
             homeType.SupportedHousingInformation.ShortStayAccommodation,
             homeType.SupportedHousingInformation.RevenueFundingType,
             homeType.HomeInformation.BuildingType,
-            homeType.HomeInformation.AccessibilityStandards);
+            homeType.HomeInformation.AccessibilityStandards,
+            homeType.HomeInformation.MeetNationallyDescribedSpaceStandards);
     }
 }

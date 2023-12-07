@@ -27,5 +27,7 @@ public enum HomeTypesWorkflowState
     TypeOfFacilities,
     AccessibilityStandards,
     AccessibilityCategory,
+    FloorArea,
+    FloorAreaStandards,
     CheckAnswers,
 }
