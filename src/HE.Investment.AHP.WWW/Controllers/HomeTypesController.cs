@@ -1,5 +1,4 @@
 using System.Globalization;
-using HE.Investment.AHP.Common.Utils;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Contract.Common;
@@ -9,6 +8,7 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
+using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.Investments.Account.Shared.Authorization.Attributes;
@@ -728,7 +728,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         CancellationToken cancellationToken)
     {
         model.AffordableRentAsPercentageOfMarketRent =
-            CalculationUtilities.CalculateAffordableRent(model.HomeWeeklyRent, model.AffordableWeeklyRent).ToString(CultureInfo.InvariantCulture);
+            TenureDetailsEntity.CalculateAffordableRent(model.HomeWeeklyRent, model.AffordableWeeklyRent).ToString(CultureInfo.InvariantCulture);
 
         if (action == CommonStrings.Calculate)
         {

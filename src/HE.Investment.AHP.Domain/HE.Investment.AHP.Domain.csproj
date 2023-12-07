@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HE.Investment.AHP.Common\HE.Investment.AHP.Common.csproj" />
     <ProjectReference Include="..\HE.Investment.AHP.Contract\HE.Investment.AHP.Contract.csproj"/>
     <ProjectReference Include="..\HE.Investments.Account.Shared\HE.Investments.Account.Shared.csproj"/>
     <ProjectReference Include="..\HE.Investments.Common.CRM\HE.Investments.Common.CRM.csproj"/>

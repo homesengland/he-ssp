@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Common.Utils;
+using System.Globalization;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
@@ -49,6 +49,22 @@ public class TenureDetailsEntity : IHomeTypeSegmentEntity
 
     public MoreInformation? ExemptionJustification { get; private set; }
 
+    public static decimal CalculateAffordableRent(string? homeWeeklyRent, string? affordableWeeklyRent)
+    {
+        var result = 00.00m;
+
+        if (decimal.TryParse(homeWeeklyRent!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedHomeWeeklyRent)
+            && decimal.TryParse(affordableWeeklyRent!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedAffordableWeeklyRent)
+            && decimal.Round(parsedHomeWeeklyRent, 2) == parsedHomeWeeklyRent
+            && decimal.Round(parsedAffordableWeeklyRent, 2) == parsedAffordableWeeklyRent)
+        {
+            result = parsedAffordableWeeklyRent / parsedHomeWeeklyRent * 100;
+            result = Math.Round(result, 2);
+        }
+
+        return result;
+    }
+
     public void ChangeHomeMarketValue(string? homeMarketValue, bool isCalculation = false)
     {
         var newValue = homeMarketValue.IsProvided() || isCalculation
@@ -78,7 +94,7 @@ public class TenureDetailsEntity : IHomeTypeSegmentEntity
 
     public void CalculateAffordableRentAsPercentageOfMarketRent(string? homeWeeklyRent, string? affordableWeeklyRent)
     {
-        var result = CalculationUtilities.CalculateAffordableRent(homeWeeklyRent, affordableWeeklyRent);
+        var result = CalculateAffordableRent(homeWeeklyRent, affordableWeeklyRent);
 
         var newValue = new AffordableRentAsPercentageOfMarketRent(result);
         AffordableRentAsPercentageOfMarketRent = _modificationTracker.Change(AffordableRentAsPercentageOfMarketRent, newValue);
