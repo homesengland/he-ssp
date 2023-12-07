@@ -47,6 +47,11 @@ namespace HE.CRM.Common.DtoMapping
                 initialSalePercent = homeType.invln_initialsale,
                 prospectiveRentAsPercentOfMarketRent = homeType.invln_prospectiverentasofmarketrent,
                 isCompleted = homeType.invln_ishometypecompleted,
+                exemptionJustification = homeType.invln_reasonsforrtsoexemption,
+                floorArea = homeType.invln_floorarea,
+                doAllHomesMeetNDSS = homeType.invln_doallhomesmeetNDSS,
+                whichNDSSStandardsHaveBeenMet = new List<int>(),
+                targetRentOver80PercentOfMarketRent = homeType.invln_targetrentover80ofmarketrent,
             };
             if (homeType.Id != null)
             {
@@ -71,6 +76,14 @@ namespace HE.CRM.Common.DtoMapping
                 foreach (var principle in homeType.invln_happiprinciples)
                 {
                     homeTypeDto.designPrinciples.Add(principle.Value);
+                }
+            }
+
+            if (homeType.invln_whichndssstandardshavebeenmet != null && homeType.invln_whichndssstandardshavebeenmet.Any())
+            {
+                foreach (var standard in homeType.invln_whichndssstandardshavebeenmet)
+                {
+                    homeTypeDto.whichNDSSStandardsHaveBeenMet.Add(standard.Value);
                 }
             }
             return homeTypeDto;
@@ -113,6 +126,11 @@ namespace HE.CRM.Common.DtoMapping
                 invln_initialsale = homeTypeDto.initialSalePercent,
                 invln_prospectiverentasofmarketrent = homeTypeDto.prospectiveRentAsPercentOfMarketRent,
                 invln_ishometypecompleted = homeTypeDto.isCompleted,
+                invln_reasonsforrtsoexemption = homeTypeDto.exemptionJustification,
+                invln_floorarea = homeTypeDto.floorArea,
+                invln_doallhomesmeetNDSS = homeTypeDto.doAllHomesMeetNDSS,
+                invln_whichndssstandardshavebeenmet = new OptionSetValueCollection(),
+                invln_targetrentover80ofmarketrent = homeTypeDto.targetRentOver80PercentOfMarketRent,
             };
             if (homeTypeDto.id != null)
             {
@@ -137,6 +155,14 @@ namespace HE.CRM.Common.DtoMapping
                 foreach (var principle in homeTypeDto.designPrinciples)
                 {
                     homeType.invln_happiprinciples.Add(new OptionSetValue(principle));
+                }
+            }
+
+            if (homeTypeDto.whichNDSSStandardsHaveBeenMet != null && homeTypeDto.whichNDSSStandardsHaveBeenMet.Any())
+            {
+                foreach (var principle in homeTypeDto.whichNDSSStandardsHaveBeenMet)
+                {
+                    homeType.invln_whichndssstandardshavebeenmet.Add(new OptionSetValue(principle));
                 }
             }
 

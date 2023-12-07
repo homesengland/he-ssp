@@ -40,6 +40,10 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public int? initialSalePercent { get; set; }
         public decimal? prospectiveRentAsPercentOfMarketRent { get; set; }
         public bool? isCompleted { get; set; }
-
+        public string exemptionJustification { get; set; }
+        public decimal? floorArea { get; set; }
+        public bool? doAllHomesMeetNDSS { get; set; }
+        public List<int> whichNDSSStandardsHaveBeenMet { get; set; }
+        public bool? targetRentOver80PercentOfMarketRent { get; set; }
     }
 }

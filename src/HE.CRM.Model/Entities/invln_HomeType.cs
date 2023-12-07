@@ -108,6 +108,7 @@ namespace DataverseModel
 			public const string invln_rtsoexempt = "invln_rtsoexempt";
 			public const string invln_storagespace = "invln_storagespace";
 			public const string invln_supportedhousingexitplan = "invln_supportedhousingexitplan";
+			public const string invln_targetrentover80ofmarketrent = "invln_targetrentover80ofmarketrent";
 			public const string invln_typeofhousing = "invln_typeofhousing";
 			public const string invln_typeofhousingfordisabledvulnerablepeople = "invln_typeofhousingfordisabledvulnerablepeople";
 			public const string invln_typeofolderpeopleshousing = "invln_typeofolderpeopleshousing";
@@ -1072,6 +1073,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_supportedhousingexitplan");
 				this.SetAttributeValue("invln_supportedhousingexitplan", value);
 				this.OnPropertyChanged("invln_supportedhousingexitplan");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_targetrentover80ofmarketrent")]
+		public System.Nullable<bool> invln_targetrentover80ofmarketrent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_targetrentover80ofmarketrent");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_targetrentover80ofmarketrent");
+				this.SetAttributeValue("invln_targetrentover80ofmarketrent", value);
+				this.OnPropertyChanged("invln_targetrentover80ofmarketrent");
 			}
 		}
 		

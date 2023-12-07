@@ -133,6 +133,18 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             {
                 var applicationDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToRecordWithGivenGuid(target.invln_application.Id);
                 var homeTypeLocation = _sharepointDocumentLocationRepository.GetHomeTypeDocumentLocationForGivenApplicationLocationRecord(applicationDocumentLocation.Id);
+                if (homeTypeLocation == null)
+                {
+                    homeTypeLocation = new SharePointDocumentLocation()
+                    {
+                        Name = "Home Types",
+                        ParentSiteOrLocation = applicationDocumentLocation.ToEntityReference(),
+                        RelativeUrl = "Home Types",
+                    };
+
+                    homeTypeLocation.Id = _sharepointDocumentLocationRepository.Create(homeTypeLocation);
+                }
+
                 var locationToCreate = new SharePointDocumentLocation()
                 {
                     RegardingObjectId = target.ToEntityReference(),
