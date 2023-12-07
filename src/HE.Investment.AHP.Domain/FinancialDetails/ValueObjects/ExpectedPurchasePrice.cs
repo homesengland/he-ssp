@@ -1,44 +1,22 @@
-using System.Globalization;
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Messages;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 
-public class ExpectedPurchasePrice : ValueObject
+public class ExpectedPurchasePrice : PoundsValueObject
 {
-    public const string DisplayName = "The expected purchase price of the land";
+    public static readonly UiFields Fields = new(FinancialDetailsValidationFieldNames.PurchasePrice, "The expected purchase price of the land");
 
-    public ExpectedPurchasePrice(decimal value)
+    public ExpectedPurchasePrice(decimal landValue)
+        : base(landValue)
     {
-        Value = PoundsValidator.Validate(value, FinancialDetailsValidationFieldNames.PurchasePrice, DisplayName);
     }
 
-    public decimal Value { get; }
-
-    public static ExpectedPurchasePrice From(string value)
+    public ExpectedPurchasePrice(string landValue)
+        : base(landValue, FinancialDetailsValidationErrors.InvalidExpectedPurchasePrice)
     {
-        if (value.IsNotProvided())
-        {
-            OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.PurchasePrice, ValidationErrorMessage.MissingRequiredField(DisplayName))
-                .CheckErrors();
-        }
-
-        if (!decimal.TryParse(value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue))
-        {
-            OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.PurchasePrice, FinancialDetailsValidationErrors.InvalidExpectedPurchasePrice)
-                .CheckErrors();
-        }
-
-        return new ExpectedPurchasePrice(parsedValue);
     }
 
-    protected override IEnumerable<object?> GetAtomicValues()
-    {
-        yield return Value;
-    }
+    public override UiFields UiFields => Fields;
 }

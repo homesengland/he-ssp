@@ -72,7 +72,7 @@ public class FinancialDetailsEntity
         if (purchasePrice.IsProvided() && expectedPurchasePrice.IsProvided())
         {
             throw new DomainException(
-                $"{PurchasePrice.DisplayName} cannot be provided together with {ExpectedPurchasePrice.DisplayName}",
+                $"{PurchasePrice.Fields.DisplayName} cannot be provided together with {ExpectedPurchasePrice.Fields.DisplayName}",
                 CommonErrorCodes.InvalidDomainOperation);
         }
 

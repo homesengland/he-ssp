@@ -1,43 +1,21 @@
-using System.Globalization;
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investments.Common.Domain;
-using HE.Investments.Common.Extensions;
-using HE.Investments.Common.Messages;
-using HE.Investments.Common.Validators;
+using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-public class PurchasePrice : ValueObject
+public class PurchasePrice : PoundsValueObject
 {
-    public const string DisplayName = "The purchase price of the land";
+    public static readonly UiFields Fields = new(FinancialDetailsValidationFieldNames.PurchasePrice, "The purchase price of the land");
 
-    public PurchasePrice(decimal value)
+    public PurchasePrice(decimal landValue)
+        : base(landValue)
     {
-        Value = PoundsValidator.Validate(value, FinancialDetailsValidationFieldNames.PurchasePrice, DisplayName);
     }
 
-    public decimal Value { get; }
-
-    public static PurchasePrice From(string value)
+    public PurchasePrice(string landValue)
+        : base(landValue, FinancialDetailsValidationErrors.InvalidActualPurchasePrice)
     {
-        if (value.IsNotProvided())
-        {
-            OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.PurchasePrice, ValidationErrorMessage.MissingRequiredField(DisplayName))
-                .CheckErrors();
-        }
-
-        if (!decimal.TryParse(value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue))
-        {
-            OperationResult.New()
-                .AddValidationError(FinancialDetailsValidationFieldNames.PurchasePrice, FinancialDetailsValidationErrors.InvalidActualPurchasePrice)
-                .CheckErrors();
-        }
-
-        return new PurchasePrice(parsedValue);
     }
 
-    protected override IEnumerable<object?> GetAtomicValues()
-    {
-        yield return Value;
-    }
+    public override UiFields UiFields => Fields;
 }
