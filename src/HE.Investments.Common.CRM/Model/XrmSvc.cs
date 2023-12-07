@@ -2181,6 +2181,9 @@ namespace HE.Investments.Common.CRM.Model
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		MLmodelbased = 192350001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		IntelligentConversationDistribution = 192350003,
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
@@ -20361,6 +20364,24 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_supportedhousingexitplan");
 				this.SetAttributeValue("invln_supportedhousingexitplan", value);
 				this.OnPropertyChanged("invln_supportedhousingexitplan");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_targetrentover80ofmarketrent")]
+		public System.Nullable<bool> invln_targetrentover80ofmarketrent
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_targetrentover80ofmarketrent");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_targetrentover80ofmarketrent");
+				this.SetAttributeValue("invln_targetrentover80ofmarketrent", value);
+				this.OnPropertyChanged("invln_targetrentover80ofmarketrent");
 			}
 		}
 		
