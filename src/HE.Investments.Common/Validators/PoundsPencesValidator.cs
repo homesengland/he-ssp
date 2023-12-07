@@ -2,7 +2,7 @@ using HE.Investments.Common.Messages;
 
 namespace HE.Investments.Common.Validators;
 
-public static class PoundsValidator
+public static class PoundsPencesValidator
 {
     public static decimal ValidateDeffer(decimal pounds, string fieldName, string displayName, OperationResult operationResult)
     {

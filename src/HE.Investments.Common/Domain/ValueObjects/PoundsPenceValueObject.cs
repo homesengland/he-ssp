@@ -7,14 +7,14 @@ using HE.Investments.Common.Validators;
 namespace HE.Investments.Common.Domain.ValueObjects;
 
 [SuppressMessage("ReSharper", "VirtualMemberCallInConstructor", Justification = "Required for ValueObject")]
-public abstract class PoundsValueObject : ValueObject
+public abstract class PoundsPenceValueObject : ValueObject
 {
-    protected PoundsValueObject(decimal value)
+    protected PoundsPenceValueObject(decimal value)
     {
-        Value = WholeNumberValidator.Validate(value, UiFields.FieldName, UiFields.DisplayName, ValidationErrorMessage.WholePoundInput(UiFields.DisplayName));
+        Value = PoundsPencesValidator.Validate(value, UiFields.FieldName, UiFields.DisplayName);
     }
 
-    protected PoundsValueObject(string value, string? invalidValueValidationMessage = null)
+    protected PoundsPenceValueObject(string value, string? invalidValueValidationMessage = null)
     {
         if (value.IsNotProvided())
         {
@@ -23,14 +23,14 @@ public abstract class PoundsValueObject : ValueObject
                 .CheckErrors();
         }
 
-        if (!decimal.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue))
+        if (!decimal.TryParse(value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue))
         {
             OperationResult.New()
-                .AddValidationError(UiFields.FieldName, invalidValueValidationMessage ?? ValidationErrorMessage.WholePoundInput(UiFields.DisplayName))
+                .AddValidationError(UiFields.FieldName, invalidValueValidationMessage ?? ValidationErrorMessage.PoundInput(UiFields.DisplayName))
                 .CheckErrors();
         }
 
-        Value = WholeNumberValidator.Validate(parsedValue, UiFields.FieldName, UiFields.DisplayName, invalidValueValidationMessage ?? ValidationErrorMessage.WholePoundInput(UiFields.DisplayName));
+        Value = PoundsPencesValidator.Validate(parsedValue, UiFields.FieldName, UiFields.DisplayName);
     }
 
     public abstract UiFields UiFields { get; }

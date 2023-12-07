@@ -87,6 +87,10 @@ public static class ValidationErrorMessage
 
     public static string PoundInput(string name) => new($"{name} must be entered as a number, in pounds and pence");
 
+    public static string WholePoundInput(string name) => new($"{name} must be entered as a whole number, in pounds");
+
+    public static string WholeNumberInput(string name) => new($"{name} must be entered as a whole number");
+
     public static string ShortInputLengthExceeded(string fieldName) => new($"{fieldName.TitleCaseFirstLetterInString()} must be 100 characters or less");
 
     public static string LongInputLengthExceeded(string fieldName) => new($"{fieldName.TitleCaseFirstLetterInString()} must be 1500 characters or less");

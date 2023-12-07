@@ -69,7 +69,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsLandStatusModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.PurchasePrice.ToPoundsString(),
+            financialDetails.PurchasePrice.ToPoundsPencesString(),
             financialDetails.IsPurchasePriceFinal ?? siteLandStatus));
     }
 
@@ -103,7 +103,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsLandValueModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.LandValue.ToPoundsString(),
+            financialDetails.LandValue.ToPoundsPencesString(),
             isSchemeOnPublicLand));
     }
 
@@ -131,8 +131,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsOtherApplicationCostsModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.ExpectedWorkCost.ToString() ?? Check.IfCanBeNull,
-            financialDetails.ExpectedOnCost.ToString() ?? Check.IfCanBeNull));
+            financialDetails.ExpectedWorkCost.ToWholeNumberString(),
+            financialDetails.ExpectedOnCost.ToWholeNumberString()));
     }
 
     [HttpPost("other-application-costs")]

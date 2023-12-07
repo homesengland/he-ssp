@@ -30,7 +30,8 @@ public class FinancialDetailsEntity
         ExpectedPurchasePrice? expectedPurchasePrice,
         CurrentLandValue? landValue,
         bool? isPublicLand,
-        ExpectedCosts expectedCosts,
+        ExpectedWorksCosts? expectedWorksCosts,
+        ExpectedOnCosts? expectedOnCosts,
         Contributions contributions,
         Grants grants,
         SectionStatus sectionStatus)
@@ -40,7 +41,8 @@ public class FinancialDetailsEntity
         PurchasePrice = purchasePrice;
         LandValue = landValue;
         IsPublicLand = isPublicLand;
-        ExpectedCosts = expectedCosts;
+        ExpectedWorksCosts = expectedWorksCosts;
+        ExpectedOnCosts = expectedOnCosts;
         ExpectedPurchasePrice = expectedPurchasePrice;
         Contributions = contributions;
         Grants = grants;
@@ -59,7 +61,9 @@ public class FinancialDetailsEntity
 
     public bool? IsPublicLand { get; private set; }
 
-    public ExpectedCosts ExpectedCosts { get; private set; }
+    public ExpectedWorksCosts? ExpectedWorksCosts { get; private set; }
+
+    public ExpectedOnCosts? ExpectedOnCosts { get; private set; }
 
     public Contributions Contributions { get; private set; }
 
@@ -93,10 +97,11 @@ public class FinancialDetailsEntity
         SetSectionStatus(isPublicLand.HasValue);
     }
 
-    public void ProvideExpectedCosts(ExpectedCosts expectedCosts)
+    public void ProvideOtherApplicationCosts(ExpectedWorksCosts? expectedWorksCosts, ExpectedOnCosts? expectedOnCosts)
     {
-        ExpectedCosts = expectedCosts;
-        SetSectionStatus(expectedCosts.IsAnyValueNotNull);
+        ExpectedWorksCosts = expectedWorksCosts;
+        ExpectedOnCosts = expectedOnCosts;
+        SetSectionStatus(expectedWorksCosts == null || expectedOnCosts == null);
     }
 
     public void ProvideContributions(Contributions contributions)
@@ -129,6 +134,8 @@ public class FinancialDetailsEntity
 
         SectionStatus = SectionStatus.Completed;
     }
+
+    public decimal ExpectedTotalCosts() => ExpectedWorksCosts?.Value ?? 0 + ExpectedOnCosts?.Value ?? 0;
 
     private void SetSectionStatus(bool isAnyValueSet)
     {

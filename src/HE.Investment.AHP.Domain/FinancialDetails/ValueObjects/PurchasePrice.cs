@@ -3,7 +3,7 @@ using HE.Investments.Common.Domain;
 using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-public class PurchasePrice : PoundsValueObject
+public class PurchasePrice : PoundsPenceValueObject
 {
     public static readonly UiFields Fields = new(FinancialDetailsValidationFieldNames.PurchasePrice, "The purchase price of the land");
 
