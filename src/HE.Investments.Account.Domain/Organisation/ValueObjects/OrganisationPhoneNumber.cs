@@ -32,7 +32,7 @@ public class OrganisationPhoneNumber : ValueObject
         PhoneNumber = Validator
             .For(phoneNumber, nameof(PhoneNumber), operationResult)
             .IsProvided(OrganisationErrorMessages.MissingPhoneNumber)
-            .IsShortInput(lengthErrorMessage);
+            .IsShortInput(lengthErrorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded("Phone number"));
 
         return operationResult;
     }

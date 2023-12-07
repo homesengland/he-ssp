@@ -54,7 +54,7 @@ public class Validator
 
         if (_value!.Length > MaximumInputLength.ShortInput)
         {
-            AddError(_fieldName, errorMessage ?? GenericValidationError.TextTooLong);
+            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded(_fieldName));
         }
 
         return this;
@@ -69,7 +69,7 @@ public class Validator
 
         if (_value!.Length > MaximumInputLength.LongInput)
         {
-            AddError(_fieldName, GenericValidationError.TextTooLong);
+            AddError(_fieldName, ValidationErrorMessage.LongInputLengthExceeded(_fieldName));
         }
 
         return this;

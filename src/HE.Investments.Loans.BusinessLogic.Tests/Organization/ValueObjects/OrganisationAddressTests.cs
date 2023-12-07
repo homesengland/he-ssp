@@ -72,7 +72,7 @@ public class OrganisationAddressTests
 
     [Theory]
     [InlineData("", OrganisationErrorMessages.MissingOrganisationAddress)]
-    [InlineData(TestData.StringLenght101, GenericValidationError.TextTooLong)]
+    [InlineData(TestData.StringLenght101, "Address Line 1 must be 100 characters or less")]
     public void ShouldThrowException_WhenAddressLine1IsInvalid(string addressLine1, string expectedErrorMessage)
     {
         // given & when
@@ -84,7 +84,7 @@ public class OrganisationAddressTests
 
     [Theory]
     [InlineData("", OrganisationErrorMessages.MissingOrganisationTownOrCity)]
-    [InlineData(TestData.StringLenght101, GenericValidationError.TextTooLong)]
+    [InlineData(TestData.StringLenght101, "Town or City must be 100 characters or less")]
     public void ShouldThrowException_WhenTownOrCityIsInvalid(string townOrCity, string expectedErrorMessage)
     {
         // given & when
