@@ -1,0 +1,27 @@
+@using HE.Investments.Common.WWW.Components.Table
+@model IList<HE.Investments.Account.Contract.Users.UserDetails>;
+@{
+    var usersDetails = new TableViewModel(
+        new List<TableHeaderViewModel>
+        {
+            new("First name"),
+            new("Last name"),
+            new("Email"),
+            new("Job title"),
+            new("Role"),
+            new("Remove", IsHidden: true),
+            new("Manage", IsHidden: true),
+        },
+        Model.Select(u => new TableRowViewModel(new List<TableValueViewModel>
+        {
+            new(u.FirstName),
+            new(u.LastName),
+            new(u.Email),
+            new(u.JobTitle),
+            new(u.Role),
+            new(Component: new("Link", new { text = "Remove", action = "Manage", controller = "Users", values = new { id = u.Id }} )),
+            new(Component: new("Link", new { text = "Manage", action = "Manage", controller = "Users", values = new { id = u.Id }} )),
+        })).ToList());
+}
+
+<vc:table model="@usersDetails"/>
