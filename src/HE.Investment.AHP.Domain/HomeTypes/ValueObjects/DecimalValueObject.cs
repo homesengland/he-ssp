@@ -1,5 +1,6 @@
 using System.Globalization;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
@@ -18,7 +19,7 @@ public abstract class DecimalValueObject : ValueObject
     {
         if (value.IsNotProvided() && !isCalculation)
         {
-            return;
+            throw new DomainValidationException(OperationResult.New());
         }
 
         if (value.IsNotProvided() && isCalculation)
