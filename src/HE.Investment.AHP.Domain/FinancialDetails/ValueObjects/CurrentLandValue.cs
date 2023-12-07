@@ -8,7 +8,7 @@ using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 
-public class CurrentLandValue : PoundsValueObject
+public class CurrentLandValue : PoundsPenceValueObject
 {
     public static readonly UiFields Fields = new(FinancialDetailsValidationFieldNames.LandValue, "Current Land Value");
 

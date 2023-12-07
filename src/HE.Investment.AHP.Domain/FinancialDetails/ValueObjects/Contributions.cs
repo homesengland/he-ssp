@@ -151,7 +151,7 @@ public class Contributions : ValueObject
 
         RCGFContributions = CheckNullableIntValue(
             rCGFContributions,
-            FinancialDetailsValidationFieldNames.RCGFContribution,
+            FinancialDetailsValidationFieldNames.RcgfContribution,
             allowNulls,
             operationResult);
 

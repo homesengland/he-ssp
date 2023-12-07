@@ -19,7 +19,7 @@ public static class FinancialDetailsValidationFieldNames
 
     public const string OwnResources = nameof(OwnResources);
 
-    public const string RCGFContribution = nameof(RCGFContribution);
+    public const string RcgfContribution = nameof(RcgfContribution);
 
     public const string OtherCapitalSources = nameof(OtherCapitalSources);
 

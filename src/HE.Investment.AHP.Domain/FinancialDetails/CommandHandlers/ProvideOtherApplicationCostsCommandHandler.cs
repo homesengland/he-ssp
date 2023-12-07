@@ -7,7 +7,9 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
-public class ProvideOtherApplicationCostsCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<ProvideOtherApplicationCostsCommand, OperationResult>
+
+public class ProvideOtherApplicationCostsCommandHandler : FinancialDetailsCommandHandlerBase,
+    IRequestHandler<ProvideOtherApplicationCostsCommand, OperationResult>
 {
     public ProvideOtherApplicationCostsCommandHandler(IFinancialDetailsRepository repository, ILogger<FinancialDetailsCommandHandlerBase> logger)
         : base(repository, logger)
@@ -17,7 +19,16 @@ public class ProvideOtherApplicationCostsCommandHandler : FinancialDetailsComman
     public async Task<OperationResult> Handle(ProvideOtherApplicationCostsCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            financialDetails => financialDetails.ProvideExpectedCosts(new ExpectedCosts(request.ExpectedWorksCosts, request.ExpectedOnCosts)),
+            financialDetails =>
+            {
+                var result = OperationResult.New();
+
+                var expectedWorksCosts = request.ExpectedWorksCosts.IsProvided() ? result.CatchResult(() => new ExpectedWorksCosts(request.ExpectedWorksCosts!)) : null;
+                var expectedOnCosts = request.ExpectedOnCosts.IsProvided() ? result.CatchResult(() => new ExpectedOnCosts(request.ExpectedOnCosts!)) : null;
+                result.CheckErrors();
+
+                financialDetails.ProvideOtherApplicationCosts(expectedWorksCosts, expectedOnCosts);
+            },
             request.ApplicationId,
             cancellationToken);
     }
