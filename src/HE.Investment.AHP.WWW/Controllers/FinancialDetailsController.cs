@@ -44,12 +44,10 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpGet("start")]
     [WorkflowState(FinancialDetailsWorkflowState.Index)]
-    public IActionResult Start(Guid applicationId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Start(Guid applicationId, CancellationToken cancellationToken)
     {
-        // temporarly mocked
-        // var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()), cancellationToken);
-        // return View("Index", new { applicationId, applicationName = application.Name });
-        return View("Index", new FinancialDetailsBaseModel(applicationId, "Some application"));
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()), cancellationToken);
+        return View("Index", new FinancialDetailsBaseModel(applicationId, application.Name));
     }
 
     [HttpPost("start")]
