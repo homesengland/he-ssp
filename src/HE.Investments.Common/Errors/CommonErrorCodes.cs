@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.Contract;
+namespace HE.Investments.Common.Errors;
 
 public static class CommonErrorCodes
 {
@@ -17,4 +17,6 @@ public static class CommonErrorCodes
     public const string LoanApplicationCannotBeWithdrawn = nameof(LoanApplicationCannotBeWithdrawn);
 
     public const string IncorrectOrganisationId = nameof(IncorrectOrganisationId);
+
+    public const string InvalidDomainOperation = nameof(InvalidDomainOperation);
 }

@@ -21,7 +21,7 @@ public class ProvideLandValueCommandHandler : FinancialDetailsCommandHandlerBase
         return await Perform(
             financialDetails =>
             {
-                financialDetails.ProvideCurrentLandValue(request.LandValue.IsProvided() ? CurrentLandValue.From(request.LandValue!) : null);
+                financialDetails.ProvideCurrentLandValue(request.LandValue.IsProvided() ? new CurrentLandValue(request.LandValue!) : null);
                 financialDetails.ProvideIsPublicLand(request.LandOwnership.MapToBool());
             },
             request.ApplicationId,

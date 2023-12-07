@@ -21,7 +21,7 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
         {
             ApplicationId = financialDetails.ApplicationId.Value,
             ApplicationName = financialDetails.ApplicationName,
-            PurchasePrice = financialDetails.PurchasePrice.ActualPrice ?? financialDetails.PurchasePrice.ExpectedPrice,
+            PurchasePrice = financialDetails.PurchasePrice?.Value ?? financialDetails.ExpectedPurchasePrice?.Value,
             IsSchemaOnPublicLand = financialDetails.IsPublicLand,
             LandValue = financialDetails.LandValue?.Value,
             ExpectedWorkCost = financialDetails.ExpectedCosts?.WorksCosts,

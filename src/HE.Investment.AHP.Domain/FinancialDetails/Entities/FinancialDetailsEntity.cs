@@ -2,8 +2,13 @@ using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Errors;
+using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Loans.Common.Exceptions;
+using HE.Investments.Loans.Common.Utils.Constants;
+using HE.Investments.Loans.Contract;
 using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
 using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
 
@@ -21,7 +26,8 @@ public class FinancialDetailsEntity
     public FinancialDetailsEntity(
         ApplicationId applicationId,
         string applicationName,
-        PurchasePrice purchasePrice,
+        PurchasePrice? purchasePrice,
+        ExpectedPurchasePrice? expectedPurchasePrice,
         CurrentLandValue? landValue,
         bool? isPublicLand,
         ExpectedCosts expectedCosts,
@@ -35,6 +41,7 @@ public class FinancialDetailsEntity
         LandValue = landValue;
         IsPublicLand = isPublicLand;
         ExpectedCosts = expectedCosts;
+        ExpectedPurchasePrice = expectedPurchasePrice;
         Contributions = contributions;
         Grants = grants;
         SectionStatus = sectionStatus;
@@ -44,7 +51,9 @@ public class FinancialDetailsEntity
 
     public string ApplicationName { get; private set; }
 
-    public PurchasePrice PurchasePrice { get; private set; }
+    public PurchasePrice? PurchasePrice { get; private set; }
+
+    public ExpectedPurchasePrice? ExpectedPurchasePrice { get; private set; }
 
     public CurrentLandValue? LandValue { get; private set; }
 
@@ -58,10 +67,18 @@ public class FinancialDetailsEntity
 
     public SectionStatus SectionStatus { get; private set; }
 
-    public void ProvidePurchasePrice(PurchasePrice purchasePrice)
+    public void ProvideLandStatus(PurchasePrice? purchasePrice, ExpectedPurchasePrice? expectedPurchasePrice)
     {
+        if (purchasePrice.IsProvided() && expectedPurchasePrice.IsProvided())
+        {
+            throw new DomainException(
+                $"{PurchasePrice.Fields.DisplayName} cannot be provided together with {ExpectedPurchasePrice.Fields.DisplayName}",
+                CommonErrorCodes.InvalidDomainOperation);
+        }
+
         PurchasePrice = purchasePrice;
-        SetSectionStatus(purchasePrice.IsAnyValueNotNull);
+        ExpectedPurchasePrice = expectedPurchasePrice;
+        SetSectionStatus(purchasePrice != null);
     }
 
     public void ProvideCurrentLandValue(CurrentLandValue? currentLandValue)
@@ -97,18 +114,17 @@ public class FinancialDetailsEntity
     public void CompleteFinancialDetails()
     {
         var result = OperationResult.New();
-        result.Aggregate(() => PurchasePrice.CheckErrors());
 
-        // Fix this
+        // Fix this when all fields will be refactored #84615
         // result.Aggregate(() => LandValue.CheckErrors());
-        result.Aggregate(() => ExpectedCosts.CheckErrors());
-        result.Aggregate(() => Contributions.CheckErrors());
-        result.Aggregate(() => Grants.CheckErrors());
-        if (Contributions.TotalContributions + Grants.TotalGrants != ExpectedCosts.TotalCosts + (PurchasePrice.ActualPrice ?? 0))
-        {
-            result.AddValidationError(FinancialDetailsValidationFieldNames.CostsAndFunding, FinancialDetailsValidationErrors.CostsAndFundingMismatch);
-        }
-
+        // result.Aggregate(() => PurchasePrice.CheckErrors());
+        // result.Aggregate(() => ExpectedCosts.CheckErrors());
+        // result.Aggregate(() => Contributions.CheckErrors());
+        // result.Aggregate(() => Grants.CheckErrors());
+        // if (Contributions.TotalContributions + Grants.TotalGrants != ExpectedCosts.TotalCosts + (PurchasePrice.ActualPrice ?? 0))
+        // {
+        //     result.AddValidationError(FinancialDetailsValidationFieldNames.CostsAndFunding, FinancialDetailsValidationErrors.CostsAndFundingMismatch);
+        // }
         result.CheckErrors();
 
         SectionStatus = SectionStatus.Completed;

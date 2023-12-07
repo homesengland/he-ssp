@@ -20,7 +20,7 @@ public static class ApplicationSections
                     "Scheme Information",
                     "Complete information about the tenure of your scheme, and other details about the funding you require and discussions you’ve had with local stakeholders.",
                     "Enter scheme information",
-                    section => GetAction(url, applicationId, typeof(SchemeController), nameof(SchemeController.Start))),
+                    _ => GetAction(url, applicationId, typeof(SchemeController), nameof(SchemeController.Start))),
                 AddSection(
                     SectionType.HomeTypes,
                     sections,
@@ -34,7 +34,7 @@ public static class ApplicationSections
                     "Financial details",
                     "Complete information about your finances, scheme costs and expected contributions.",
                     "Enter financial details",
-                    _ => "financial-details/start"),
+                    _ => GetAction(url, applicationId, typeof(FinancialDetailsController), nameof(FinancialDetailsController.Start))),
                 AddSection(
                     SectionType.DeliveryPhases,
                     sections,

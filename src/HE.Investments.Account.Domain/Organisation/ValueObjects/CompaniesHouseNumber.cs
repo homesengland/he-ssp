@@ -1,4 +1,5 @@
 using HE.Investments.Common.Domain;
+using HE.Investments.Common.Errors;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Contract;
 
