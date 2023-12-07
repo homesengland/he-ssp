@@ -13,7 +13,7 @@ public class ToPoundsStringTests
         decimal? val = null;
 
         // when
-        var result = val.ToPoundsString();
+        var result = val.ToPoundsPencesString();
 
         // then
         result.Should().BeNull();
@@ -25,7 +25,7 @@ public class ToPoundsStringTests
     public void ShouldReturnExactString_WhenDecimalIsNotNull(decimal input, string expected)
     {
         // given & when
-        var result = input.ToPoundsString();
+        var result = input.ToPoundsPencesString();
 
         // then
         result.Should().Be(expected);
@@ -38,7 +38,7 @@ public class ToPoundsStringTests
         decimal? val = 123;
 
         // when
-        var result = val.ToPoundsString();
+        var result = val.ToPoundsPencesString();
 
         // then
         result.Should().Be("123");
