@@ -3,7 +3,7 @@
 @using HE.Investment.AHP.WWW.Models.Common
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
-@using HE.Investment.AHP.Contract.Common
+@using HE.Investments.Common.Messages
 @model HE.Investment.AHP.WWW.Models.HomeTypes.AffordableRentModel;
 
 @{
@@ -105,11 +105,11 @@
                        class="govuk-!-margin-bottom-2">
             </gds-radio>
 
-            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@CommonStrings.Continue" id="continue-button">
+            <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="@GenericMessages.Continue" id="continue-button">
                 Save and continue
             </button>
 
-            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" name="action" type="submit" value="@CommonStrings.Calculate" id="calculate-button">
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" name="action" type="submit" value="@GenericMessages.Calculate" id="calculate-button">
                 Calculate
             </button>
 

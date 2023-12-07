@@ -4,11 +4,11 @@ using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
-public abstract class CalculateBaseQueryHandler
+public abstract class BaseQueryHandler
 {
     private readonly ILogger _logger;
 
-    protected CalculateBaseQueryHandler(ILogger logger)
+    protected BaseQueryHandler(ILogger logger)
     {
         _logger = logger;
     }

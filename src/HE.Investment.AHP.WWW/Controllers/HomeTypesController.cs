@@ -1,7 +1,6 @@
 using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
-using HE.Investment.AHP.Contract.Common;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.Common;
@@ -13,6 +12,7 @@ using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
@@ -730,7 +730,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         model.AffordableRentAsPercentageOfMarketRent =
             TenureDetailsEntity.CalculateAffordableRent(model.HomeWeeklyRent, model.AffordableWeeklyRent).ToString(CultureInfo.InvariantCulture);
 
-        if (action == CommonStrings.Calculate)
+        if (action == GenericMessages.Calculate)
         {
             var operationResult = await _mediator.Send(
                 new CalculateAffordableRentQuery(

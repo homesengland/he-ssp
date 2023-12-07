@@ -9,7 +9,7 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
-internal sealed class CalculateAffordableRentQueryHandler : CalculateBaseQueryHandler, IRequestHandler<CalculateAffordableRentQuery, OperationResult>
+internal sealed class CalculateAffordableRentQueryHandler : BaseQueryHandler, IRequestHandler<CalculateAffordableRentQuery, OperationResult>
 {
     private readonly IHomeTypeRepository _homeTypeRepository;
 
