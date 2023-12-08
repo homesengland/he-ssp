@@ -25,14 +25,14 @@ public abstract class RequiredIntValueObject : ValueObject
         if (!int.TryParse(value!, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue))
         {
             OperationResult.New()
-                .AddValidationError(fieldName, ValidationErrorMessage.MustBeNumber(displayName, minValue, maxValue))
+                .AddValidationError(fieldName, ValidationErrorMessage.MustBeNumberBetween(displayName, minValue, maxValue))
                 .CheckErrors();
         }
 
         if (parsedValue < minValue || parsedValue > maxValue)
         {
             OperationResult.New()
-                .AddValidationError(fieldName, ValidationErrorMessage.MustBeNumber(displayName, minValue, maxValue))
+                .AddValidationError(fieldName, ValidationErrorMessage.MustBeNumberBetween(displayName, minValue, maxValue))
                 .CheckErrors();
         }
 
@@ -49,7 +49,7 @@ public abstract class RequiredIntValueObject : ValueObject
         if (value < minValue || value > maxValue)
         {
             OperationResult.New()
-                .AddValidationError(fieldName, ValidationErrorMessage.MustBeNumber(displayName, minValue, maxValue))
+                .AddValidationError(fieldName, ValidationErrorMessage.MustBeNumberBetween(displayName, minValue, maxValue))
                 .CheckErrors();
         }
 

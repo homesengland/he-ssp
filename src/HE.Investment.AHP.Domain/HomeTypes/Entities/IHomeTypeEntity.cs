@@ -30,5 +30,7 @@ public interface IHomeTypeEntity
 
     SupportedHousingInformationSegmentEntity SupportedHousingInformation { get; }
 
+    TenureDetailsSegmentEntity TenureDetails { get; }
+
     void CompleteHomeType(IsSectionCompleted isSectionCompleted);
 }

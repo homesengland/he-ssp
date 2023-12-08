@@ -8,11 +8,13 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.HomeTypes;
 using HE.Investment.AHP.Domain.HomeTypes.Commands;
+using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.WWW.Models.Common;
 using HE.Investment.AHP.WWW.Models.HomeTypes;
 using HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Exceptions;
+using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Extensions;
@@ -719,6 +721,125 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
     {
         return await SaveHomeTypeSegment(
             new SaveAccessibilityCategoryCommand(applicationId, homeTypeId, model.AccessibilityCategory),
+            model,
+            cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.AffordableRent)]
+    [HttpGet("{homeTypeId}/AffordableRent")]
+    public async Task<IActionResult> AffordableRent([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(applicationId, homeTypeId), cancellationToken);
+        var model = new AffordableRentModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
+        {
+            HomeMarketValue = tenureDetails.HomeMarketValue?.ToString(CultureInfo.InvariantCulture),
+            HomeWeeklyRent = tenureDetails.HomeWeeklyRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            AffordableWeeklyRent = tenureDetails.AffordableWeeklyRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            AffordableRentAsPercentageOfMarketRent = tenureDetails.CalculatedPercentage?.ToString("00.00", CultureInfo.InvariantCulture),
+            TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
+        };
+
+        return View(model);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.AffordableRent)]
+    [HttpPost("{homeTypeId}/AffordableRent")]
+    public async Task<IActionResult> AffordableRent(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        AffordableRentModel model,
+        string action,
+        CancellationToken cancellationToken)
+    {
+        model.AffordableRentAsPercentageOfMarketRent =
+            TenureDetailsSegmentEntity.CalculateAffordableRent(model.HomeWeeklyRent, model.AffordableWeeklyRent).ToString(CultureInfo.InvariantCulture);
+
+        if (action == GenericMessages.Calculate)
+        {
+            var operationResult = await _mediator.Send(
+                new CalculateAffordableRentQuery(
+                    applicationId,
+                    homeTypeId,
+                    model.HomeMarketValue,
+                    model.HomeWeeklyRent,
+                    model.AffordableWeeklyRent,
+                    model.TargetRentExceedMarketRent),
+                cancellationToken);
+            ModelState.AddValidationErrors(operationResult);
+
+            return View(model);
+        }
+
+        return await SaveHomeTypeSegment(
+            new SaveAffordableRentCommand(
+                applicationId,
+                homeTypeId,
+                model.HomeMarketValue,
+                model.HomeWeeklyRent,
+                model.AffordableWeeklyRent,
+                model.TargetRentExceedMarketRent),
+            model,
+            cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.AffordableRentIneligible)]
+    [HttpGet("{homeTypeId}/AffordableRentIneligible")]
+    public async Task<IActionResult> AffordableRentIneligible([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new HomeTypeBasicModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName));
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)]
+    [HttpGet("{homeTypeId}/ExemptFromTheRightToSharedOwnership")]
+    public async Task<IActionResult> ExemptFromTheRightToSharedOwnership([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(applicationId, homeTypeId), cancellationToken);
+        var model = new ExemptFromTheRightToSharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
+        {
+            ExemptFromTheRightToSharedOwnership = tenureDetails.ExemptFromTheRightToSharedOwnership,
+        };
+
+        return View(model);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)]
+    [HttpPost("{homeTypeId}/ExemptFromTheRightToSharedOwnership")]
+    public async Task<IActionResult> ExemptFromTheRightToSharedOwnership(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        ExemptFromTheRightToSharedOwnershipModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveExemptFromTheRightToSharedOwnershipCommand(applicationId, homeTypeId, model.ExemptFromTheRightToSharedOwnership),
+            model,
+            cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ExemptionJustification)]
+    [HttpGet("{homeTypeId}/ExemptionJustification")]
+    public async Task<IActionResult> ExemptionJustification([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var tenureDetails = await _mediator.Send(new GetTenureDetailsQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new MoreInformationModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
+        {
+            MoreInformation = tenureDetails.ExemptionJustification,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.ExemptionJustification)]
+    [HttpPost("{homeTypeId}/ExemptionJustification")]
+    public async Task<IActionResult> ExemptionJustification(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        MoreInformationModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveExemptionJustificationCommand(applicationId, homeTypeId, model.MoreInformation),
             model,
             cancellationToken);
     }

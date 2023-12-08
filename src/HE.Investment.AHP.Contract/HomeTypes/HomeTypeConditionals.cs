@@ -9,4 +9,6 @@ public record HomeTypeConditionals(
     RevenueFundingType RevenueFundingType,
     BuildingType BuildingType,
     YesNoType AccessibleStandards,
-    YesNoType MeetNationallyDescribedSpaceStandards);
+    YesNoType MeetNationallyDescribedSpaceStandards,
+    YesNoType ExemptFromTheRightToSharedOwnership,
+    bool IsExceeding80PercentOfMarketRent);

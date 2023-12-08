@@ -97,9 +97,17 @@ public static class ValidationErrorMessage
 
     public static string MissingRequiredField(string displayName) => $"Enter {displayName}";
 
-    public static string MustBeNumber(string displayName) => $"{displayName} must be a number";
+    public static string MustBeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
 
-    public static string MustBeNumber(string displayName, int minValue, int maxValue) => $"{displayName} must be between {minValue} and {maxValue}";
+    public static string MustBeDecimalNumberBetween(string displayName, decimal minValue, decimal maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
+
+    public static string MustBeNumber(string displayName) => $"The {displayName} must be a number";
+
+    public static string MustBeProvidedForCalculation(string displayName) => $"Enter the {displayName} to calculate";
+
+    public static string MustBeSelectedForCalculation(string displayName) => $"Select if {displayName} to calculate";
+
+    public static string ProspectiveRentExceed80Percent() => $"Prospective Rent (inclusive of all charges) must not exceed 80% of market rent, except where the target rent acts as a floor. Please check your answers. If those are correct, please contact your Growth Manager to discuss your proposal before continuing.";
 
     public static string SquareMetersMustBeNumber() => "The square meterage in the internal floor each of each home must be a number, like 75.50";
 

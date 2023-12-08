@@ -60,6 +60,8 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public SupportedHousingInformationSegmentEntity SupportedHousingInformation => GetRequiredSegment<SupportedHousingInformationSegmentEntity>();
 
+    public TenureDetailsSegmentEntity TenureDetails => GetRequiredSegment<TenureDetailsSegmentEntity>();
+
     public bool IsNew => Id.IsNew;
 
     public bool IsModified => _modificationTracker.IsModified || _segments.Any(x => x.Value.IsModified);

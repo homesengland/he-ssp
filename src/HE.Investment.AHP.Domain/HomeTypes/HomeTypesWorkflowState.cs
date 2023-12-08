@@ -30,5 +30,9 @@ public enum HomeTypesWorkflowState
     AccessibilityCategory,
     FloorArea,
     FloorAreaStandards,
+    AffordableRent,
+    AffordableRentIneligible,
+    ExemptFromTheRightToSharedOwnership,
+    ExemptionJustification,
     CheckAnswers,
 }
