@@ -8,14 +8,12 @@ public class ExpectedWorksCosts : PoundsValueObject
     public static readonly UiFields Fields = new(FinancialDetailsValidationFieldNames.ExpectedWorksCosts, "The expected works costs");
 
     public ExpectedWorksCosts(decimal landValue)
-        : base(landValue)
+        : base(landValue, Fields)
     {
     }
 
     public ExpectedWorksCosts(string landValue)
-        : base(landValue, FinancialDetailsValidationErrors.InvalidExpectedWorksCosts)
+        : base(landValue, Fields, FinancialDetailsValidationErrors.InvalidExpectedWorksCosts)
     {
     }
-
-    public override UiFields UiFields => Fields;
 }

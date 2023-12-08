@@ -11,7 +11,7 @@ public abstract class PoundsPenceValueObject : ValueObject
 {
     protected PoundsPenceValueObject(decimal value)
     {
-        Value = PoundsPencesValidator.Validate(value, UiFields.FieldName, UiFields.DisplayName);
+        Value = PoundsPencesValidator.Validate(value, UiFields.FieldName, DisplayName);
     }
 
     protected PoundsPenceValueObject(string value, string? invalidValueValidationMessage = null)
@@ -19,23 +19,25 @@ public abstract class PoundsPenceValueObject : ValueObject
         if (value.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError(UiFields.FieldName, ValidationErrorMessage.MissingRequiredField(UiFields.DisplayName))
+                .AddValidationError(UiFields.FieldName, ValidationErrorMessage.MissingRequiredField(DisplayName))
                 .CheckErrors();
         }
 
         if (!decimal.TryParse(value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue))
         {
             OperationResult.New()
-                .AddValidationError(UiFields.FieldName, invalidValueValidationMessage ?? ValidationErrorMessage.PoundInput(UiFields.DisplayName))
+                .AddValidationError(UiFields.FieldName, invalidValueValidationMessage ?? ValidationErrorMessage.PoundInput(DisplayName))
                 .CheckErrors();
         }
 
-        Value = PoundsPencesValidator.Validate(parsedValue, UiFields.FieldName, UiFields.DisplayName);
+        Value = PoundsPencesValidator.Validate(parsedValue, UiFields.FieldName, DisplayName);
     }
 
     public abstract UiFields UiFields { get; }
 
     public decimal Value { get; }
+
+    private string DisplayName => UiFields.DisplayName ?? GenericMessages.PoundFieldDefaultName;
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

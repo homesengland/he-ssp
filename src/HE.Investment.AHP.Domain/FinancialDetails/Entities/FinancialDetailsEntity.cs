@@ -32,7 +32,7 @@ public class FinancialDetailsEntity
         bool? isPublicLand,
         ExpectedWorksCosts? expectedWorksCosts,
         ExpectedOnCosts? expectedOnCosts,
-        Contributions contributions,
+        ExpectedContributionsToScheme expectedContributionsToScheme,
         Grants grants,
         SectionStatus sectionStatus)
     {
@@ -44,7 +44,7 @@ public class FinancialDetailsEntity
         ExpectedWorksCosts = expectedWorksCosts;
         ExpectedOnCosts = expectedOnCosts;
         ExpectedPurchasePrice = expectedPurchasePrice;
-        Contributions = contributions;
+        ExpectedContributions = expectedContributionsToScheme;
         Grants = grants;
         SectionStatus = sectionStatus;
     }
@@ -65,7 +65,7 @@ public class FinancialDetailsEntity
 
     public ExpectedOnCosts? ExpectedOnCosts { get; private set; }
 
-    public Contributions Contributions { get; private set; }
+    public ExpectedContributionsToScheme ExpectedContributions { get; private set; }
 
     public Grants Grants { get; private set; }
 
@@ -104,10 +104,9 @@ public class FinancialDetailsEntity
         SetSectionStatus(expectedWorksCosts == null || expectedOnCosts == null);
     }
 
-    public void ProvideContributions(Contributions contributions)
+    public void ProvideExpectedContributions(ExpectedContributionsToScheme expectedContribution)
     {
-        Contributions = contributions;
-        SetSectionStatus(Contributions.IsAnyValueNotNull);
+        ExpectedContributions = expectedContribution;
     }
 
     public void ProvideGrants(Grants grants)

@@ -9,33 +9,41 @@ namespace HE.Investments.Common.Domain.ValueObjects;
 [SuppressMessage("ReSharper", "VirtualMemberCallInConstructor", Justification = "Required for ValueObject")]
 public abstract class PoundsValueObject : ValueObject
 {
-    protected PoundsValueObject(decimal value)
+    protected PoundsValueObject(decimal value, UiFields uiFields)
     {
-        Value = WholeNumberValidator.Validate(value, UiFields.FieldName, UiFields.DisplayName, ValidationErrorMessage.WholePoundInput(UiFields.DisplayName));
+        UiFields = uiFields;
+        Value = WholeNumberValidator.Validate(value, UiFields.FieldName, DisplayName, ValidationErrorMessage.WholePoundInput(DisplayName));
     }
 
-    protected PoundsValueObject(string value, string? invalidValueValidationMessage = null)
+    protected PoundsValueObject(string value, UiFields uiFields, string? invalidValueValidationMessage = null)
     {
+        UiFields = uiFields;
         if (value.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError(UiFields.FieldName, ValidationErrorMessage.MissingRequiredField(UiFields.DisplayName))
+                .AddValidationError(UiFields.FieldName, ValidationErrorMessage.MissingRequiredField(DisplayName))
                 .CheckErrors();
         }
 
         if (!decimal.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue))
         {
             OperationResult.New()
-                .AddValidationError(UiFields.FieldName, invalidValueValidationMessage ?? ValidationErrorMessage.WholePoundInput(UiFields.DisplayName))
+                .AddValidationError(UiFields.FieldName, invalidValueValidationMessage ?? ValidationErrorMessage.WholePoundInput(DisplayName))
                 .CheckErrors();
         }
 
-        Value = WholeNumberValidator.Validate(parsedValue, UiFields.FieldName, UiFields.DisplayName, invalidValueValidationMessage ?? ValidationErrorMessage.WholePoundInput(UiFields.DisplayName));
+        Value = WholeNumberValidator.Validate(
+            parsedValue,
+            UiFields.FieldName,
+            DisplayName,
+            invalidValueValidationMessage ?? ValidationErrorMessage.WholePoundInput(DisplayName));
     }
 
-    public abstract UiFields UiFields { get; }
+    public UiFields UiFields { get; }
 
     public decimal Value { get; }
+
+    private string DisplayName => UiFields.DisplayName ?? GenericMessages.PoundFieldDefaultName;
 
     protected override IEnumerable<object?> GetAtomicValues()
     {

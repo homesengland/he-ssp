@@ -9,14 +9,12 @@ public class ExpectedOnCosts : PoundsValueObject
     public static readonly UiFields Fields = new(FinancialDetailsValidationFieldNames.ExpectedOnCosts, "The expected on works costs");
 
     public ExpectedOnCosts(decimal landValue)
-        : base(landValue)
+        : base(landValue, Fields)
     {
     }
 
     public ExpectedOnCosts(string landValue)
-        : base(landValue, FinancialDetailsValidationErrors.InvalidExpectedOnCosts)
+        : base(landValue, Fields, FinancialDetailsValidationErrors.InvalidExpectedOnCosts)
     {
     }
-
-    public override UiFields UiFields => Fields;
 }

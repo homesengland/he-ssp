@@ -87,7 +87,7 @@ public static class ValidationErrorMessage
 
     public static string PoundInput(string name) => new($"{name} must be entered as a number, in pounds and pence");
 
-    public static string WholePoundInput(string name) => new($"{name} must be entered as a whole number, in pounds");
+    public static string WholePoundInput(string name) => new($"{name} must be entered as a number, in pounds");
 
     public static string WholeNumberInput(string name) => new($"{name} must be entered as a whole number");
 

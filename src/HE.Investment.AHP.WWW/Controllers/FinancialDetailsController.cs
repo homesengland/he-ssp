@@ -151,7 +151,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return await ContinueWithRedirect(new { applicationId });
     }
 
-    [HttpGet("contributions")]
+    [HttpGet("expected-contributions")]
     [WorkflowState(FinancialDetailsWorkflowState.Contributions)]
     public async Task<IActionResult> Contributions(Guid applicationId)
     {
@@ -179,12 +179,12 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             financialDetails.TotalExpectedContributions.ToWholeNumberString()));
     }
 
-    [HttpPost("contributions")]
+    [HttpPost("expected-contributions")]
     [WorkflowState(FinancialDetailsWorkflowState.Contributions)]
     public async Task<IActionResult> Contributions(Guid applicationId, FinancialDetailsContributionsModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new ProvideContributionsCommand(
+            new ProvideExpecteContributionsCommand(
             ApplicationId.From(applicationId),
             model.RentalIncomeBorrowing,
             model.SaleOfHomesOnThisScheme,

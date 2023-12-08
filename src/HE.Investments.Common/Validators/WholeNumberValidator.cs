@@ -7,7 +7,7 @@ public static class WholeNumberValidator
     public static decimal ValidateDeffer(decimal pounds, string fieldName, string displayName, OperationResult operationResult, string? validationMessage = null)
     {
         pounds = Math.Round(pounds, 0);
-        if (pounds < 0)
+        if (pounds is < 0 or > 999999999)
         {
             operationResult.AddValidationError(fieldName, validationMessage ?? ValidationErrorMessage.WholeNumberInput(displayName));
         }

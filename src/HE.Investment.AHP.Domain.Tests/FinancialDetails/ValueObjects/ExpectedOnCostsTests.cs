@@ -18,7 +18,7 @@ public class ExpectedOnCostsTests
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MissingRequiredField(ExpectedOnCosts.Fields.DisplayName));
+            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MissingRequiredField(ExpectedOnCosts.Fields.DisplayName!));
     }
 
     [Fact]
@@ -50,7 +50,7 @@ public class ExpectedOnCostsTests
     [Theory]
     [InlineData("0", 0)]
     [InlineData("100", 100)]
-    public void ShouldCreateLandValue_WhenValueIsValid(string input, decimal expectedValue)
+    public void ShouldCreateExpectedOnCosts_WhenValueIsValid(string input, decimal expectedValue)
     {
         // given && when
         var landValue = new ExpectedOnCosts(input);
