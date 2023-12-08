@@ -90,6 +90,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_VfT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\invln_Webrole.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\SharePointDocumentLocation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\SharePointSite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\SystemUser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Team.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\TransactionCurrency.cs" />

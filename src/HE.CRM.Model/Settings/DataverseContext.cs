@@ -327,6 +327,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.SharePointSite"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.SharePointSite> SharePointSiteSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.SharePointSite>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.SystemUser"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.SystemUser> SystemUserSet

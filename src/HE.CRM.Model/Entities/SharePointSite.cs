@@ -14,10 +14,10 @@ namespace DataverseModel
 	
 	
 	/// <summary>
-	/// Status of the SharePoint document location.
+	/// Status of the SharePoint site.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum sharepointdocumentlocationState
+	public enum sharepointsiteState
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -28,10 +28,10 @@ namespace DataverseModel
 	}
 	
 	/// <summary>
-	/// Reason for the status of the SharePoint document location.
+	/// Reason for the status of the SharePoint site.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum SharePointDocumentLocation_StatusCode
+	public enum SharePointSite_StatusCode
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -42,20 +42,19 @@ namespace DataverseModel
 	}
 	
 	/// <summary>
-	/// Document libraries or folders on a SharePoint server from where documents can be managed in Microsoft Dynamics 365.
+	/// SharePoint site from where documents can be managed in Microsoft Dynamics 365.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("sharepointdocumentlocation")]
-	public partial class SharePointDocumentLocation : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("sharepointsite")]
+	public partial class SharePointSite : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
 		/// <summary>
-		/// Available fields, a the time of codegen, for the sharepointdocumentlocation entity
+		/// Available fields, a the time of codegen, for the sharepointsite entity
 		/// </summary>
 		public static partial class Fields
 		{
 			public const string AbsoluteURL = "absoluteurl";
-			public const string Account_SharepointDocumentLocation = "Account_SharepointDocumentLocation";
 			public const string CreatedBy = "createdby";
 			public const string CreatedByName = "createdbyname";
 			public const string CreatedOn = "createdon";
@@ -63,22 +62,21 @@ namespace DataverseModel
 			public const string CreatedOnBehalfByName = "createdonbehalfbyname";
 			public const string Description = "description";
 			public const string ExchangeRate = "exchangerate";
+			public const string FolderStructureEntity = "folderstructureentity";
 			public const string ImportSequenceNumber = "importsequencenumber";
-			public const string invln_conditions_SharePointDocumentLocations = "invln_conditions_SharePointDocumentLocations";
-			public const string invln_hometype_SharePointDocumentLocations = "invln_hometype_SharePointDocumentLocations";
-			public const string invln_loanapplication_SharePointDocumentLocations = "invln_loanapplication_SharePointDocumentLocations";
-			public const string invln_scheme_SharePointDocumentLocations = "invln_scheme_SharePointDocumentLocations";
-			public const string lk_sharepointdocumentlocationbase_createdby = "lk_sharepointdocumentlocationbase_createdby";
-			public const string lk_sharepointdocumentlocationbase_createdonbehalfby = "lk_sharepointdocumentlocationbase_createdonbehalfby";
-			public const string lk_sharepointdocumentlocationbase_modifiedby = "lk_sharepointdocumentlocationbase_modifiedby";
-			public const string lk_sharepointdocumentlocationbase_modifiedonbehalfby = "lk_sharepointdocumentlocationbase_modifiedonbehalfby";
-			public const string LocationType = "locationtype";
+			public const string IsDefault = "isdefault";
+			public const string IsGridPresent = "isgridpresent";
+			public const string IsPowerBISite = "ispowerbisite";
+			public const string LastValidated = "lastvalidated";
+			public const string lk_sharepointsitebase_createdby = "lk_sharepointsitebase_createdby";
+			public const string lk_sharepointsitebase_createdonbehalfby = "lk_sharepointsitebase_createdonbehalfby";
+			public const string lk_sharepointsitebase_modifiedby = "lk_sharepointsitebase_modifiedby";
+			public const string lk_sharepointsitebase_modifiedonbehalfby = "lk_sharepointsitebase_modifiedonbehalfby";
 			public const string ModifiedBy = "modifiedby";
 			public const string ModifiedByName = "modifiedbyname";
 			public const string ModifiedOn = "modifiedon";
 			public const string ModifiedOnBehalfBy = "modifiedonbehalfby";
 			public const string ModifiedOnBehalfByName = "modifiedonbehalfbyname";
-			public const string msft_DataState = "msft_datastate";
 			public const string Name = "name";
 			public const string OverriddenCreatedOn = "overriddencreatedon";
 			public const string OwnerId = "ownerid";
@@ -89,27 +87,27 @@ namespace DataverseModel
 			public const string OwningTeamName = "owningteamname";
 			public const string OwningUser = "owninguser";
 			public const string OwningUserName = "owningusername";
-			public const string ParentSiteOrLocation = "parentsiteorlocation";
-			public const string ParentSiteOrLocationName = "parentsiteorlocationname";
-			public const string Referencedsharepointdocumentlocation_parent_sharepointdocumentlocation = "Referencedsharepointdocumentlocation_parent_sharepointdocumentlocation";
-			public const string RegardingObjectId = "regardingobjectid";
-			public const string RegardingObjectIdName = "regardingobjectidname";
+			public const string ParentSite = "parentsite";
+			public const string ParentSiteName = "parentsitename";
+			public const string Referencedsharepointsite_parentsite_sharepointsite = "Referencedsharepointsite_parentsite_sharepointsite";
 			public const string RelativeUrl = "relativeurl";
 			public const string ServiceType = "servicetype";
-			public const string Referencingsharepointdocumentlocation_parent_sharepointdocumentlocation = "sharepointdocumentlocation_parent_sharepointdocumentlocation";
 			public const string sharepointdocumentlocation_parent_sharepointsite = "sharepointdocumentlocation_parent_sharepointsite";
-			public const string SharePointDocumentLocationId = "sharepointdocumentlocationid";
-			public const string Id = "sharepointdocumentlocationid";
+			public const string Referencingsharepointsite_parentsite_sharepointsite = "sharepointsite_parentsite_sharepointsite";
+			public const string SharePointSiteId = "sharepointsiteid";
+			public const string Id = "sharepointsiteid";
 			public const string SiteCollectionId = "sitecollectionid";
 			public const string StateCode = "statecode";
 			public const string StatusCode = "statuscode";
-			public const string team_sharepointdocumentlocation = "team_sharepointdocumentlocation";
+			public const string team_sharepointsite = "team_sharepointsite";
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
 			public const string TransactionCurrencyId = "transactioncurrencyid";
 			public const string TransactionCurrencyIdName = "transactioncurrencyidname";
-			public const string user_sharepointdocumentlocation = "user_sharepointdocumentlocation";
+			public const string user_sharepointsite = "user_sharepointsite";
 			public const string UserId = "userid";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
+			public const string ValidationStatus = "validationstatus";
+			public const string ValidationStatusErrorCode = "validationstatuserrorcode";
 			public const string VersionNumber = "versionnumber";
 		}
 		
@@ -117,22 +115,22 @@ namespace DataverseModel
 		/// Default Constructor.
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public SharePointDocumentLocation() : 
+		public SharePointSite() : 
 				base(EntityLogicalName)
 		{
 		}
 		
-		public const string PrimaryIdAttribute = "sharepointdocumentlocationid";
+		public const string PrimaryIdAttribute = "sharepointsiteid";
 		
 		public const string PrimaryNameAttribute = "name";
 		
-		public const string EntitySchemaName = "SharePointDocumentLocation";
+		public const string EntitySchemaName = "SharePointSite";
 		
-		public const string EntityLogicalName = "sharepointdocumentlocation";
+		public const string EntityLogicalName = "sharepointsite";
 		
-		public const string EntityLogicalCollectionName = "sharePointdocumentlocations";
+		public const string EntityLogicalCollectionName = "sharepointsites";
 		
-		public const string EntitySetName = "sharepointdocumentlocations";
+		public const string EntitySetName = "sharepointsites";
 		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 		
@@ -157,7 +155,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Absolute URL of the SharePoint document location.
+		/// Absolute URL of the SharePoint site.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("absoluteurl")]
 		public string AbsoluteURL
@@ -177,7 +175,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Unique identifier of the user who created the SharePoint document location record.
+		/// Unique identifier of the user who created the SharePoint site record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
 		public Microsoft.Xrm.Sdk.EntityReference CreatedBy
@@ -190,7 +188,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Date and time when the SharePoint document location record was created.
+		/// Date and time when the SharePoint site record was created.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
 		public System.Nullable<System.DateTime> CreatedOn
@@ -203,7 +201,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Unique identifier of the delegate user who created the SharePoint document location record.
+		/// Unique identifier of the delegate user who created the SharePoint site record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
 		public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
@@ -223,7 +221,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Description of the SharePoint document location record.
+		/// Description of the SharePoint site record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("description")]
 		public string Description
@@ -243,7 +241,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Exchange rate between the currency associated with the SharePoint document location record and the base currency.
+		/// Exchange rate between the currency associated with the SharePoint site record and the base currency.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("exchangerate")]
 		public System.Nullable<decimal> ExchangeRate
@@ -256,7 +254,27 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Sequence number of the import that created the SharePoint document location record.
+		/// Entity on which the folder structure for Microsoft Dynamics 365 records will be created in SharePoint.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("folderstructureentity")]
+		public string FolderStructureEntity
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<string>("folderstructureentity");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("FolderStructureEntity");
+				this.SetAttributeValue("folderstructureentity", value);
+				this.OnPropertyChanged("FolderStructureEntity");
+			}
+		}
+		
+		/// <summary>
+		/// Sequence number of the import that created this record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
 		public System.Nullable<int> ImportSequenceNumber
@@ -276,27 +294,87 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Location type of the SharePoint document location.
+		/// Indicates whether the SharePoint site is the default site or not.
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("locationtype")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue LocationType
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isdefault")]
+		public System.Nullable<bool> IsDefault
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("locationtype");
+				return this.GetAttributeValue<System.Nullable<bool>>("isdefault");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("LocationType");
-				this.SetAttributeValue("locationtype", value);
-				this.OnPropertyChanged("LocationType");
+				this.OnPropertyChanging("IsDefault");
+				this.SetAttributeValue("isdefault", value);
+				this.OnPropertyChanged("IsDefault");
 			}
 		}
 		
 		/// <summary>
-		/// Unique identifier of the user who last modified the SharePoint document location record.
+		/// Indicates if SharePoint Grid is present or not.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isgridpresent")]
+		public System.Nullable<bool> IsGridPresent
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("isgridpresent");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("IsGridPresent");
+				this.SetAttributeValue("isgridpresent", value);
+				this.OnPropertyChanged("IsGridPresent");
+			}
+		}
+		
+		/// <summary>
+		/// Allows embedding of Power BI Reports available in this SharePoint site.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ispowerbisite")]
+		public System.Nullable<bool> IsPowerBISite
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("ispowerbisite");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("IsPowerBISite");
+				this.SetAttributeValue("ispowerbisite", value);
+				this.OnPropertyChanged("IsPowerBISite");
+			}
+		}
+		
+		/// <summary>
+		/// Date and time when the SharePoint site URL was last validated.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("lastvalidated")]
+		public System.Nullable<System.DateTime> LastValidated
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("lastvalidated");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("LastValidated");
+				this.SetAttributeValue("lastvalidated", value);
+				this.OnPropertyChanged("LastValidated");
+			}
+		}
+		
+		/// <summary>
+		/// Unique identifier of the user who last modified the SharePoint site record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
 		public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
@@ -309,7 +387,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Date and time when the SharePoint document location record was last modified.
+		/// Date and time when the SharePoint site record was last modified.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
 		public System.Nullable<System.DateTime> ModifiedOn
@@ -322,7 +400,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Unique identifier of the delegate user who modified the SharePoint document location record.
+		/// Unique identifier of the delegate user who modified the SharePoint site record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
 		public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
@@ -341,18 +419,8 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msft_datastate")]
-		public virtual Microsoft.Xrm.Sdk.OptionSetValue msft_DataState
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msft_datastate");
-			}
-		}
-		
 		/// <summary>
-		/// Name of the SharePoint document location record.
+		/// Name of the SharePoint site record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("name")]
 		public string Name
@@ -392,7 +460,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Unique identifier of the user or team who owns the SharePoint document location record.
+		/// Unique identifier of the user or team who owns the SharePoint site.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
 		public Microsoft.Xrm.Sdk.EntityReference OwnerId
@@ -412,7 +480,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Unique identifier of the business unit that owns the SharePoint document location record.
+		/// Unique identifier for the business unit that owns the document location record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningbusinessunit")]
 		public Microsoft.Xrm.Sdk.EntityReference OwningBusinessUnit
@@ -432,7 +500,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Unique identifier of the team who owns the SharePoint document location record.
+		/// Unique identifier of the team that owns the SharePoint site record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
 		public Microsoft.Xrm.Sdk.EntityReference OwningTeam
@@ -445,7 +513,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Unique identifier of the user who owns the SharePoint document location record.
+		/// Unique identifier of the user who owns the SharePoint site record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
 		public Microsoft.Xrm.Sdk.EntityReference OwningUser
@@ -458,47 +526,27 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Unique identifier of the parent site or location.
+		/// Unique identifier of the parent SharePoint site.
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentsiteorlocation")]
-		public Microsoft.Xrm.Sdk.EntityReference ParentSiteOrLocation
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentsite")]
+		public Microsoft.Xrm.Sdk.EntityReference ParentSite
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("parentsiteorlocation");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("parentsite");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("ParentSiteOrLocation");
-				this.SetAttributeValue("parentsiteorlocation", value);
-				this.OnPropertyChanged("ParentSiteOrLocation");
+				this.OnPropertyChanging("ParentSite");
+				this.SetAttributeValue("parentsite", value);
+				this.OnPropertyChanged("ParentSite");
 			}
 		}
 		
 		/// <summary>
-		/// Unique identifier of the object with which the SharePoint document location record is associated.
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		public Microsoft.Xrm.Sdk.EntityReference RegardingObjectId
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("regardingobjectid");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("RegardingObjectId");
-				this.SetAttributeValue("regardingobjectid", value);
-				this.OnPropertyChanged("RegardingObjectId");
-			}
-		}
-		
-		/// <summary>
-		/// Relative URL of the SharePoint document location.
+		/// Relative URL of the SharePoint site.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("relativeurl")]
 		public string RelativeUrl
@@ -518,7 +566,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Shows the service type of the SharePoint site.
+		/// Shows the service type of location of the SharePoint site.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("servicetype")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue ServiceType
@@ -538,21 +586,21 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Unique identifier of the SharePoint document location record.
+		/// Unique identifier of the SharePoint site in Dynamics 365
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("sharepointdocumentlocationid")]
-		public System.Nullable<System.Guid> SharePointDocumentLocationId
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("sharepointsiteid")]
+		public System.Nullable<System.Guid> SharePointSiteId
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<System.Nullable<System.Guid>>("sharepointdocumentlocationid");
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("sharepointsiteid");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("SharePointDocumentLocationId");
-				this.SetAttributeValue("sharepointdocumentlocationid", value);
+				this.OnPropertyChanging("SharePointSiteId");
+				this.SetAttributeValue("sharepointsiteid", value);
 				if (value.HasValue)
 				{
 					base.Id = value.Value;
@@ -561,11 +609,11 @@ namespace DataverseModel
 				{
 					base.Id = System.Guid.Empty;
 				}
-				this.OnPropertyChanged("SharePointDocumentLocationId");
+				this.OnPropertyChanged("SharePointSiteId");
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("sharepointdocumentlocationid")]
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("sharepointsiteid")]
 		public override System.Guid Id
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
@@ -576,7 +624,7 @@ namespace DataverseModel
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.SharePointDocumentLocationId = value;
+				this.SharePointSiteId = value;
 			}
 		}
 		
@@ -594,7 +642,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Status of the SharePoint document location record.
+		/// Status of the SharePoint site record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue StateCode
@@ -614,7 +662,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Reason for the status of the SharePoint document location record.
+		/// Reason for the status of the SharePoint site record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
 		public virtual Microsoft.Xrm.Sdk.OptionSetValue StatusCode
@@ -654,7 +702,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Unique identifier of the currency associated with the SharePoint document location record.
+		/// Unique identifier of the currency associated with the SharePoint site record.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("transactioncurrencyid")]
 		public Microsoft.Xrm.Sdk.EntityReference TransactionCurrencyId
@@ -667,7 +715,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// Choose the user who owns the SharePoint document location.
+		/// Choose the user who owns the SharePoint site.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("userid")]
 		public System.Nullable<System.Guid> UserId
@@ -706,6 +754,46 @@ namespace DataverseModel
 			}
 		}
 		
+		/// <summary>
+		/// Validation status of the SharePoint site URL.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("validationstatus")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue ValidationStatus
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("validationstatus");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("ValidationStatus");
+				this.SetAttributeValue("validationstatus", value);
+				this.OnPropertyChanged("ValidationStatus");
+			}
+		}
+		
+		/// <summary>
+		/// Reason for validation status of the URL
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("validationstatuserrorcode")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue ValidationStatusErrorCode
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("validationstatuserrorcode");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("ValidationStatusErrorCode");
+				this.SetAttributeValue("validationstatuserrorcode", value);
+				this.OnPropertyChanged("ValidationStatusErrorCode");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
 		public System.Nullable<long> VersionNumber
 		{
@@ -717,267 +805,161 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// 1:N sharepointdocumentlocation_parent_sharepointdocumentlocation
+		/// 1:N sharepointdocumentlocation_parent_sharepointsite
 		/// </summary>
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("sharepointdocumentlocation_parent_sharepointdocumentlocation", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
-		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointDocumentLocation> Referencedsharepointdocumentlocation_parent_sharepointdocumentlocation
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntities<DataverseModel.SharePointDocumentLocation>("sharepointdocumentlocation_parent_sharepointdocumentlocation", Microsoft.Xrm.Sdk.EntityRole.Referenced);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("Referencedsharepointdocumentlocation_parent_sharepointdocumentlocation");
-				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("sharepointdocumentlocation_parent_sharepointdocumentlocation", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
-				this.OnPropertyChanged("Referencedsharepointdocumentlocation_parent_sharepointdocumentlocation");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 Account_SharepointDocumentLocation
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("Account_SharepointDocumentLocation")]
-		public DataverseModel.Account Account_SharepointDocumentLocation
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.Account>("Account_SharepointDocumentLocation", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("Account_SharepointDocumentLocation");
-				this.SetRelatedEntity<DataverseModel.Account>("Account_SharepointDocumentLocation", null, value);
-				this.OnPropertyChanged("Account_SharepointDocumentLocation");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 invln_conditions_SharePointDocumentLocations
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_conditions_SharePointDocumentLocations")]
-		public DataverseModel.invln_Conditions invln_conditions_SharePointDocumentLocations
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.invln_Conditions>("invln_conditions_SharePointDocumentLocations", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_conditions_SharePointDocumentLocations");
-				this.SetRelatedEntity<DataverseModel.invln_Conditions>("invln_conditions_SharePointDocumentLocations", null, value);
-				this.OnPropertyChanged("invln_conditions_SharePointDocumentLocations");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 invln_hometype_SharePointDocumentLocations
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_hometype_SharePointDocumentLocations")]
-		public DataverseModel.invln_HomeType invln_hometype_SharePointDocumentLocations
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.invln_HomeType>("invln_hometype_SharePointDocumentLocations", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_hometype_SharePointDocumentLocations");
-				this.SetRelatedEntity<DataverseModel.invln_HomeType>("invln_hometype_SharePointDocumentLocations", null, value);
-				this.OnPropertyChanged("invln_hometype_SharePointDocumentLocations");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 invln_loanapplication_SharePointDocumentLocations
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_SharePointDocumentLocations")]
-		public DataverseModel.invln_Loanapplication invln_loanapplication_SharePointDocumentLocations
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_loanapplication_SharePointDocumentLocations", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_loanapplication_SharePointDocumentLocations");
-				this.SetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_loanapplication_SharePointDocumentLocations", null, value);
-				this.OnPropertyChanged("invln_loanapplication_SharePointDocumentLocations");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 invln_scheme_SharePointDocumentLocations
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_SharePointDocumentLocations")]
-		public DataverseModel.invln_scheme invln_scheme_SharePointDocumentLocations
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.invln_scheme>("invln_scheme_SharePointDocumentLocations", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_scheme_SharePointDocumentLocations");
-				this.SetRelatedEntity<DataverseModel.invln_scheme>("invln_scheme_SharePointDocumentLocations", null, value);
-				this.OnPropertyChanged("invln_scheme_SharePointDocumentLocations");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 lk_sharepointdocumentlocationbase_createdby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointdocumentlocationbase_createdby")]
-		public DataverseModel.SystemUser lk_sharepointdocumentlocationbase_createdby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_sharepointdocumentlocationbase_createdby", null);
-			}
-		}
-		
-		/// <summary>
-		/// N:1 lk_sharepointdocumentlocationbase_createdonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointdocumentlocationbase_createdonbehalfby")]
-		public DataverseModel.SystemUser lk_sharepointdocumentlocationbase_createdonbehalfby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_sharepointdocumentlocationbase_createdonbehalfby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_sharepointdocumentlocationbase_createdonbehalfby");
-				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_sharepointdocumentlocationbase_createdonbehalfby", null, value);
-				this.OnPropertyChanged("lk_sharepointdocumentlocationbase_createdonbehalfby");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 lk_sharepointdocumentlocationbase_modifiedby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointdocumentlocationbase_modifiedby")]
-		public DataverseModel.SystemUser lk_sharepointdocumentlocationbase_modifiedby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_sharepointdocumentlocationbase_modifiedby", null);
-			}
-		}
-		
-		/// <summary>
-		/// N:1 lk_sharepointdocumentlocationbase_modifiedonbehalfby
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointdocumentlocationbase_modifiedonbehalfby")]
-		public DataverseModel.SystemUser lk_sharepointdocumentlocationbase_modifiedonbehalfby
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_sharepointdocumentlocationbase_modifiedonbehalfby", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("lk_sharepointdocumentlocationbase_modifiedonbehalfby");
-				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_sharepointdocumentlocationbase_modifiedonbehalfby", null, value);
-				this.OnPropertyChanged("lk_sharepointdocumentlocationbase_modifiedonbehalfby");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 sharepointdocumentlocation_parent_sharepointdocumentlocation
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentsiteorlocation")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("sharepointdocumentlocation_parent_sharepointdocumentlocation", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
-		public DataverseModel.SharePointDocumentLocation Referencingsharepointdocumentlocation_parent_sharepointdocumentlocation
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.SharePointDocumentLocation>("sharepointdocumentlocation_parent_sharepointdocumentlocation", Microsoft.Xrm.Sdk.EntityRole.Referencing);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("Referencingsharepointdocumentlocation_parent_sharepointdocumentlocation");
-				this.SetRelatedEntity<DataverseModel.SharePointDocumentLocation>("sharepointdocumentlocation_parent_sharepointdocumentlocation", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
-				this.OnPropertyChanged("Referencingsharepointdocumentlocation_parent_sharepointdocumentlocation");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 sharepointdocumentlocation_parent_sharepointsite
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentsiteorlocation")]
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("sharepointdocumentlocation_parent_sharepointsite")]
-		public DataverseModel.SharePointSite sharepointdocumentlocation_parent_sharepointsite
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointDocumentLocation> sharepointdocumentlocation_parent_sharepointsite
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.SharePointSite>("sharepointdocumentlocation_parent_sharepointsite", null);
+				return this.GetRelatedEntities<DataverseModel.SharePointDocumentLocation>("sharepointdocumentlocation_parent_sharepointsite", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
 				this.OnPropertyChanging("sharepointdocumentlocation_parent_sharepointsite");
-				this.SetRelatedEntity<DataverseModel.SharePointSite>("sharepointdocumentlocation_parent_sharepointsite", null, value);
+				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("sharepointdocumentlocation_parent_sharepointsite", null, value);
 				this.OnPropertyChanged("sharepointdocumentlocation_parent_sharepointsite");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 team_sharepointdocumentlocation
+		/// 1:N sharepointsite_parentsite_sharepointsite
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_sharepointdocumentlocation")]
-		public DataverseModel.Team team_sharepointdocumentlocation
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("sharepointsite_parentsite_sharepointsite", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointSite> Referencedsharepointsite_parentsite_sharepointsite
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.Team>("team_sharepointdocumentlocation", null);
+				return this.GetRelatedEntities<DataverseModel.SharePointSite>("sharepointsite_parentsite_sharepointsite", Microsoft.Xrm.Sdk.EntityRole.Referenced);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencedsharepointsite_parentsite_sharepointsite");
+				this.SetRelatedEntities<DataverseModel.SharePointSite>("sharepointsite_parentsite_sharepointsite", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
+				this.OnPropertyChanged("Referencedsharepointsite_parentsite_sharepointsite");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 user_sharepointdocumentlocation
+		/// N:1 lk_sharepointsitebase_createdby
 		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_sharepointdocumentlocation")]
-		public DataverseModel.SystemUser user_sharepointdocumentlocation
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointsitebase_createdby")]
+		public DataverseModel.SystemUser lk_sharepointsitebase_createdby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("user_sharepointdocumentlocation", null);
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_sharepointsitebase_createdby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_sharepointsitebase_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointsitebase_createdonbehalfby")]
+		public DataverseModel.SystemUser lk_sharepointsitebase_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_sharepointsitebase_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_sharepointsitebase_createdonbehalfby");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_sharepointsitebase_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_sharepointsitebase_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_sharepointsitebase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointsitebase_modifiedby")]
+		public DataverseModel.SystemUser lk_sharepointsitebase_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_sharepointsitebase_modifiedby", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 lk_sharepointsitebase_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointsitebase_modifiedonbehalfby")]
+		public DataverseModel.SystemUser lk_sharepointsitebase_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("lk_sharepointsitebase_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_sharepointsitebase_modifiedonbehalfby");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("lk_sharepointsitebase_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_sharepointsitebase_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 sharepointsite_parentsite_sharepointsite
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentsite")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("sharepointsite_parentsite_sharepointsite", Microsoft.Xrm.Sdk.EntityRole.Referencing)]
+		public DataverseModel.SharePointSite Referencingsharepointsite_parentsite_sharepointsite
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SharePointSite>("sharepointsite_parentsite_sharepointsite", Microsoft.Xrm.Sdk.EntityRole.Referencing);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("Referencingsharepointsite_parentsite_sharepointsite");
+				this.SetRelatedEntity<DataverseModel.SharePointSite>("sharepointsite_parentsite_sharepointsite", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
+				this.OnPropertyChanged("Referencingsharepointsite_parentsite_sharepointsite");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 team_sharepointsite
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_sharepointsite")]
+		public DataverseModel.Team team_sharepointsite
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.Team>("team_sharepointsite", null);
+			}
+		}
+		
+		/// <summary>
+		/// N:1 user_sharepointsite
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_sharepointsite")]
+		public DataverseModel.SystemUser user_sharepointsite
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("user_sharepointsite", null);
 			}
 		}
 		
@@ -986,7 +968,7 @@ namespace DataverseModel
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public SharePointDocumentLocation(object anonymousType) : 
+		public SharePointSite(object anonymousType) : 
 				this()
 		{
             foreach (var p in anonymousType.GetType().GetProperties())
@@ -1004,9 +986,9 @@ namespace DataverseModel
                 {
                     case "id":
                         base.Id = (System.Guid)value;
-                        Attributes["sharepointdocumentlocationid"] = base.Id;
+                        Attributes["sharepointsiteid"] = base.Id;
                         break;
-                    case "sharepointdocumentlocationid":
+                    case "sharepointsiteid":
                         var id = (System.Nullable<System.Guid>) value;
                         if(id == null){ continue; }
                         base.Id = id.Value;
