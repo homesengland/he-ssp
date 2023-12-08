@@ -56,7 +56,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
 
     private static void MapExpectedContributions(ExpectedContributionsToScheme expectedContributionsToScheme, AhpApplicationDto dto)
     {
-        dto.borrowingAgainstRentalIncomeFromThisScheme = expectedContributionsToScheme.SalesOfHomesOnThisScheme?.Value;
+        dto.borrowingAgainstRentalIncomeFromThisScheme = expectedContributionsToScheme.RentalIncome?.Value;
+        dto.fundingFromOpenMarketHomesOnThisScheme = expectedContributionsToScheme.SalesOfHomesOnThisScheme?.Value;
         dto.fundingFromOpenMarketHomesNotOnThisScheme = expectedContributionsToScheme.SalesOfHomesOnOtherSchemes?.Value;
         dto.ownResources = expectedContributionsToScheme.OwnResources?.Value;
         dto.recycledCapitalGrantFund = expectedContributionsToScheme.RcgfContributions?.Value;

@@ -151,6 +151,7 @@
             @Html.HiddenFor(c => c.ApplicationId)
             @Html.HiddenFor(c => c.ApplicationName)
             @Html.HiddenFor(c => c.IsSharedOwnership)
+            @Html.HiddenFor(c => c.IsUnregisteredBodyAccount)
         </gds-field-set>
         <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()"/>
     </form>

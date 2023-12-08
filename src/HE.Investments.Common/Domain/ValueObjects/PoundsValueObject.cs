@@ -15,7 +15,7 @@ public abstract class PoundsValueObject : ValueObject
         Value = WholeNumberValidator.Validate(value, UiFields.FieldName, DisplayName, ValidationErrorMessage.WholePoundInput(DisplayName));
     }
 
-    protected PoundsValueObject(string value, UiFields uiFields, string? invalidValueValidationMessage = null)
+    protected PoundsValueObject(string value, UiFields uiFields)
     {
         UiFields = uiFields;
         if (value.IsNotProvided())
@@ -28,7 +28,7 @@ public abstract class PoundsValueObject : ValueObject
         if (!decimal.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue))
         {
             OperationResult.New()
-                .AddValidationError(UiFields.FieldName, invalidValueValidationMessage ?? ValidationErrorMessage.WholePoundInput(DisplayName))
+                .AddValidationError(UiFields.FieldName, UiFields.InvalidValueValidationMessage ?? ValidationErrorMessage.WholePoundInput(DisplayName))
                 .CheckErrors();
         }
 
@@ -36,7 +36,7 @@ public abstract class PoundsValueObject : ValueObject
             parsedValue,
             UiFields.FieldName,
             DisplayName,
-            invalidValueValidationMessage ?? ValidationErrorMessage.WholePoundInput(DisplayName));
+            UiFields.InvalidValueValidationMessage ?? ValidationErrorMessage.WholePoundInput(DisplayName));
     }
 
     public UiFields UiFields { get; }
