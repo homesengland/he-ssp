@@ -59,4 +59,14 @@ public class CurrentLandValueTests
         // then
         landValue.Value.Should().Be(expectedValue);
     }
+
+    [Fact]
+    public void ShouldCreateLandValue_WhenIntValueIsValid()
+    {
+        // given && when
+        var landValue = new CurrentLandValue(100);
+
+        // then
+        landValue.Value.Should().Be(100);
+    }
 }

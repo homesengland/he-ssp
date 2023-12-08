@@ -232,7 +232,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             new ProvideGrantsCommand(
             ApplicationId.From(applicationId),
             model.CountyCouncilGrants,
-            model.DHSCExtraCareGrants,
+            model.DhscExtraCareGrants,
             model.LocalAuthorityGrants,
             model.SocialServicesGrants,
             model.HealthRelatedGrants,

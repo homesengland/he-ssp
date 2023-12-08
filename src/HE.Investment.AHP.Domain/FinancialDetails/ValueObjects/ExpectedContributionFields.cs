@@ -11,5 +11,4 @@ public enum ExpectedContributionFields
     OtherCapitalSources,
     SharedOwnershipSales,
     HomesTransferValue,
-    Total,
 }
