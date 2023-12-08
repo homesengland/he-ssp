@@ -90,8 +90,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
 
     private static ExpectedContributionsToScheme MapToExpectedContributionsToScheme(AhpApplicationDto application)
     {
-        static ExpectedContribution? MapProvidedValues(decimal? value, ExpectedContributionFields field) => value.IsProvided()
-                ? new ExpectedContribution(field, value!.Value)
+        static ExpectedContributionValue? MapProvidedValues(decimal? value, ExpectedContributionFields field) => value.IsProvided()
+                ? new ExpectedContributionValue(field, value!.Value)
                 : null;
 
         return new ExpectedContributionsToScheme(

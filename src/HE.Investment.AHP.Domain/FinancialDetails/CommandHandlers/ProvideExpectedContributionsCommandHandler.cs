@@ -23,8 +23,8 @@ public class ProvideExpectedContributionsCommandHandler : FinancialDetailsComman
             {
                 var result = OperationResult.New();
 
-                ExpectedContribution? MapProvidedValues(string? value, ExpectedContributionFields field) => value.IsProvided()
-                    ? result.CatchResult(() => new ExpectedContribution(field, value!))
+                ExpectedContributionValue? MapProvidedValues(string? value, ExpectedContributionFields field) => value.IsProvided()
+                    ? result.CatchResult(() => new ExpectedContributionValue(field, value!))
                     : null;
 
                 var contributions = new ExpectedContributionsToScheme(

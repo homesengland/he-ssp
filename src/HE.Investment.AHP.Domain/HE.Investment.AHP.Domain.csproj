@@ -38,10 +38,6 @@
     </ProjectReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="FinancialDetails\ValueObjects\ExpectedContributionsToScheme\" />
-  </ItemGroup>
-
   <Import Project="..\HE.Common.IntegrationModel\HE.Common.IntegrationModel.projitems" Label="Shared"/>
 
 </Project>
