@@ -1,5 +1,6 @@
 namespace HE.Investment.AHP.Domain.HomeTypes;
 
+// States should be ordered the same as application screens. So state later in flow should have greater value.
 public enum HomeTypesWorkflowState
 {
     Index = 1,
@@ -8,7 +9,6 @@ public enum HomeTypesWorkflowState
     FinishHomeTypes,
     NewHomeTypeDetails,
     HomeTypeDetails,
-    HomeInformation,
     HomesForDisabledPeople,
     DisabledPeopleClientGroup,
     HomesForOlderPeople,
@@ -16,9 +16,10 @@ public enum HomeTypesWorkflowState
     DesignPlans,
     SupportedHousingInformation,
     RevenueFunding,
-    ExitPlan,
     MoveOnArrangements,
+    ExitPlan,
     TypologyLocationAndDesign,
+    HomeInformation,
     MoveOnAccommodation,
     PeopleGroupForSpecificDesignFeatures,
     BuildingInformation,

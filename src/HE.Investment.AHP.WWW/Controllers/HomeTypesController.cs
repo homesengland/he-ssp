@@ -14,6 +14,7 @@ using HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Validators;
+using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
@@ -21,6 +22,7 @@ using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Routing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
@@ -153,8 +155,25 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
     [WorkflowState(HomeTypesWorkflowState.HomeTypeDetails)]
     [HttpGet("{homeTypeId}/HomeTypeDetails")]
-    public async Task<IActionResult> HomeTypeDetails([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    public async Task<IActionResult> HomeTypeDetails(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        [FromQuery] bool redirect,
+        CancellationToken cancellationToken)
     {
+        if (redirect)
+        {
+            var homeType = await _mediator.Send(new GetFullHomeTypeQuery(applicationId, homeTypeId), cancellationToken);
+            var firstNotAnsweredQuestion = _summaryViewModelFactory
+                .CreateSummaryModel(homeType, Url)
+                .Where(x => x.Items != null)
+                .SelectMany(x => x.Items!)
+                .FirstOrDefault(x => x is { HasAnswer: false, HasRedirectAction: true });
+            return firstNotAnsweredQuestion != null
+                ? Redirect(firstNotAnsweredQuestion.ActionUrl!)
+                : RedirectToAction("CheckAnswers", new { applicationId, homeTypeId });
+        }
+
         var homeTypeDetails = await _mediator.Send(new GetHomeTypeDetailsQuery(applicationId, homeTypeId), cancellationToken);
         return View(new HomeTypeDetailsModel(homeTypeDetails.ApplicationName)
         {
@@ -742,7 +761,17 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         }
 
         var homeType = await _mediator.Send(new GetHomeTypeQuery(applicationId, homeTypeId));
-        return new HomeTypesWorkflow(currentState, homeType);
+        var workflow = new HomeTypesWorkflow(currentState, homeType);
+        if (TryGetWorkflowQueryParameter(out var lastEncodedWorkflow))
+        {
+            var lastWorkflow = new EncodedWorkflow<HomeTypesWorkflowState>(lastEncodedWorkflow);
+            var currentWorkflow = workflow.GetEncodedWorkflow();
+            var changedState = currentWorkflow.GetNextChangedWorkflowState(currentState, lastWorkflow);
+
+            return new HomeTypesWorkflow(changedState, homeType, true);
+        }
+
+        return workflow;
     }
 
     private static HousingType GetDefaultHousingType(Tenure applicationTenure)
@@ -770,7 +799,9 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             return View("HomeTypeDetails", model);
         }
 
-        return await Continue(new { applicationId, homeTypeId = result.ReturnedData!.Value });
+        return TryGetWorkflowQueryParameter(out var workflow)
+            ? await Continue(new { applicationId, homeTypeId = result.ReturnedData!.Value, workflow })
+            : await Continue(new { applicationId, homeTypeId = result.ReturnedData!.Value });
     }
 
     private async Task<IActionResult> SaveHomeTypeSegment<TModel, TSaveSegmentCommand>(
@@ -786,7 +817,9 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             return View(model);
         }
 
-        return await Continue(new { applicationId = command.ApplicationId, homeTypeId = command.HomeTypeId });
+        return TryGetWorkflowQueryParameter(out var workflow)
+            ? await Continue(new { applicationId = command.ApplicationId, homeTypeId = command.HomeTypeId, workflow })
+            : await Continue(new { applicationId = command.ApplicationId, homeTypeId = command.HomeTypeId });
     }
 
     private string GetDesignFileAction(string actionName, string applicationId, string homeTypeId, string fileId)
@@ -803,6 +836,18 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             }) ?? string.Empty;
     }
 
+    private bool TryGetWorkflowQueryParameter(out string workflow)
+    {
+        if (QueryHelpers.ParseQuery(Request.QueryString.Value).TryGetValue("workflow", out var lastEncodedWorkflow))
+        {
+            workflow = lastEncodedWorkflow.ToString();
+            return true;
+        }
+
+        workflow = string.Empty;
+        return false;
+    }
+
     private async Task<HomeTypeSummaryModel> GetHomeTypeAndCreateSummary(
         IUrlHelper urlHelper,
         string applicationId,
@@ -810,7 +855,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         CancellationToken cancellationToken)
     {
         var homeType = await _mediator.Send(new GetFullHomeTypeQuery(applicationId, homeTypeId), cancellationToken);
-        var sections = _summaryViewModelFactory.CreateSummaryModel(homeType, urlHelper);
+        var sections = _summaryViewModelFactory.CreateSummaryModel(homeType, urlHelper, true);
 
         return new HomeTypeSummaryModel(homeType.ApplicationName, homeType.Name)
         {

@@ -29,7 +29,15 @@ public abstract class WorkflowController<TState> : Controller
         var routing = await Routing(current);
         var targetState = routing.CurrentState(current);
 
-        if (targetState.Equals(current) && await routing.StateCanBeAccessed(current))
+        if (!await routing.StateCanBeAccessed(current))
+        {
+            var firstWorkflowPage = Enum.GetValues<TState>().First();
+            var firstWorkflowAction = GetWorkflowAction(firstWorkflowPage);
+            context.Result = new RedirectToActionResult(firstWorkflowAction.ActionName, firstWorkflowAction.ControllerName.WithoutPrefix(), context.RouteData.Values.Skip(2));
+            return;
+        }
+
+        if (targetState.Equals(current))
         {
             await base.OnActionExecutionAsync(context, next);
             return;

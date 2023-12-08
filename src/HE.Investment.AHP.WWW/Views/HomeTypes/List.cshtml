@@ -52,7 +52,7 @@
                     <tr class="govuk-table__row" id="HomeType-@Model.HomeTypes[index].HomeTypeId">
                         <td class="govuk-table__cell">
                             <gds-link class="govuk-link--no-visited-state"
-                                      href="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId, id = Model.HomeTypes[index].HomeTypeId })">
+                                      href="@Url.RouteUrl("subSection", new { controller = "HomeTypes", action = "HomeTypeDetails", applicationId, id = Model.HomeTypes[index].HomeTypeId, redirect = true })">
                                 @(Model.HomeTypes[index].HomeTypeName)
                             </gds-link>
                         </td>

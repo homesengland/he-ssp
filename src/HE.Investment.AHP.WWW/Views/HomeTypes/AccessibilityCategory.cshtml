@@ -11,7 +11,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="HomeTypes" asp-action="AccessibilityCategory" asp-method="post" novalidate>
+    <form asp-controller="HomeTypes" asp-action="AccessibilityCategory" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.AccessibilityCategory"

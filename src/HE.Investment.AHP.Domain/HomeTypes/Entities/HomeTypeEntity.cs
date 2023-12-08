@@ -33,6 +33,11 @@ public class HomeTypeEntity : IHomeTypeEntity
         Id = id ?? HomeTypeId.New();
         CreatedOn = createdOn;
         _segments = segments.ToDictionary(x => GetSegmentType(x.GetType()), x => x);
+
+        foreach (var segment in segments)
+        {
+            segment.SegmentModified += MarkAsNotCompleted;
+        }
     }
 
     public ApplicationBasicInfo Application { get; }
@@ -93,6 +98,7 @@ public class HomeTypeEntity : IHomeTypeEntity
     public void ChangeName(string? name)
     {
         Name = _modificationTracker.Change(Name, new HomeTypeName(name));
+        MarkAsNotCompleted();
     }
 
     public void ChangeHousingType(HousingType newHousingType)
@@ -108,6 +114,7 @@ public class HomeTypeEntity : IHomeTypeEntity
         }
 
         HousingType = _modificationTracker.Change(HousingType, newHousingType);
+        MarkAsNotCompleted();
     }
 
     public HomeTypeEntity Duplicate(HomeTypeName newName)
@@ -142,5 +149,10 @@ public class HomeTypeEntity : IHomeTypeEntity
         return _segments.TryGetValue(GetSegmentType(typeof(TSegment)), out var segment)
             ? (TSegment)segment
             : throw new InvalidOperationException($"Cannot get {typeof(TSegment).Name} segment because it does not exist.");
+    }
+
+    private void MarkAsNotCompleted()
+    {
+        Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
     }
 }

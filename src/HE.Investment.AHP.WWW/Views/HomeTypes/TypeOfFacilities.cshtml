@@ -15,7 +15,7 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="HomeTypes" asp-action="TypeOfFacilities" asp-method="post" novalidate>
+    <form asp-controller="HomeTypes" asp-action="TypeOfFacilities" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.TypeOfFacilities"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"

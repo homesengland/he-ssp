@@ -7,12 +7,15 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 [HomeTypeSegmentType(HomeTypeSegmentType.OlderPeople)]
 public class OlderPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
 {
-    private readonly ModificationTracker _modificationTracker = new();
+    private readonly ModificationTracker _modificationTracker;
 
     public OlderPeopleHomeTypeDetailsSegmentEntity(OlderPeopleHousingType housingType = OlderPeopleHousingType.Undefined)
     {
+        _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         HousingType = housingType;
     }
+
+    public event EntityModifiedEventHandler SegmentModified;
 
     public bool IsModified => _modificationTracker.IsModified;
 
