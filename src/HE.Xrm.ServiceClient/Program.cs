@@ -55,7 +55,7 @@ namespace HE.Xrm.ServiceClientExample
         {
             var req1 = new invln_getahpapplicationdocumentlocationRequest()
             {
-                invln_applicationid = "40c0dcbf-9c8e-ee11-be36-0022480041cf"
+                invln_applicationid = ""
             };
             var test = serviceClient.Execute(req1);
             Console.WriteLine("A web service connection was not established.");

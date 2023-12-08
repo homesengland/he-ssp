@@ -78,7 +78,7 @@ namespace HE.CRM.Plugins.Services.LoanApplication
                 var contact = _contactRepository.GetContactViaExternalId(externalContactId);
                 var role = _webroleRepository.GetContactWebRole(contact.Id, ((int)invln_Portal1.Loans).ToString());
                 List<invln_Loanapplication> loanApplicationsForAccountAndContact;
-                if (role.Any(x => x.Contains("pl.invln_permission") && ((OptionSetValue)((AliasedValue)x["pl.invln_permission"]).Value).Value == (int)invln_Permission.Accountadministrator) && loanApplicationId == null)
+                if (role.Any(x => x.Contains("pl.invln_permission") && ((OptionSetValue)((AliasedValue)x["pl.invln_permission"]).Value).Value == (int)invln_Permission.Admin) && loanApplicationId == null)
                 {
                     TracingService.Trace("admin");
                     loanApplicationsForAccountAndContact = _loanApplicationRepository.GetAccountLoans(accountGuid);

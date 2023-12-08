@@ -16,11 +16,13 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         private readonly IAhpApplicationRepository _applicationRepository;
         private readonly IContactRepository _contactRepository;
         private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
+        private readonly ISharepointSiteRepository _sharepointSiteRepository;
         public ApplicationService(CrmServiceArgs args) : base(args)
         {
             _applicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
             _sharepointDocumentLocationRepository = CrmRepositoriesFactory.Get<ISharepointDocumentLocationRepository>();
+            _sharepointSiteRepository = CrmRepositoriesFactory.Get<ISharepointSiteRepository>();
         }
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus)
@@ -58,21 +60,39 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var documentLocation = _sharepointDocumentLocationRepository.GetByAttribute(nameof(SharePointDocumentLocation.Name).ToLower(), "AHP Application Documents").FirstOrDefault();
             if (documentLocation != null)
             {
-                var ahpApplicaitonDocumentToCreate = new SharePointDocumentLocation()
+                foreach(var attr in documentLocation.Attributes)
                 {
-                    RegardingObjectId = target.ToEntityReference(),
-                    Name = $"Documents on AHP Application",
-                    RelativeUrl = $"{target.invln_applicationid}",
-                    ParentSiteOrLocation = documentLocation.ToEntityReference(),
-                };
-                ahpApplicaitonDocumentToCreate.Id = _sharepointDocumentLocationRepository.Create(ahpApplicaitonDocumentToCreate);
-                var homeTypesFolderToCreate = new SharePointDocumentLocation()
+                    TracingService.Trace($"attr: {attr.Key}, {attr.Value}");
+                }
+                TracingService.Trace("afer");
+                var mainDocumentLocation = _sharepointSiteRepository.GetById(documentLocation.ParentSiteOrLocation.Id, new string[] { nameof(SharePointSite.AbsoluteURL).ToLower() });
+                if(mainDocumentLocation != null)
                 {
-                    Name = "Home Types",
-                    ParentSiteOrLocation = ahpApplicaitonDocumentToCreate.ToEntityReference(),
-                    RelativeUrl = "Home Types",
-                };
-                _ = _sharepointDocumentLocationRepository.Create(homeTypesFolderToCreate);
+                    var relativeUrl = $"{target.invln_applicationid}";
+                    var absoluteUrl = $"{mainDocumentLocation.AbsoluteURL}/{relativeUrl}";
+                    var ahpApplicaitonDocumentToCreate = new SharePointDocumentLocation()
+                    {
+                        RegardingObjectId = target.ToEntityReference(),
+                        Name = $"Documents on AHP Application",
+                        RelativeUrl = relativeUrl,
+                        ParentSiteOrLocation = documentLocation.ToEntityReference(),
+                        AbsoluteURL = absoluteUrl,
+                    };
+                    ahpApplicaitonDocumentToCreate.Id = _sharepointDocumentLocationRepository.Create(ahpApplicaitonDocumentToCreate);
+                    var homeTypesRelativeUrl = "Home Types";
+                    var homeTypesFolderToCreate = new SharePointDocumentLocation()
+                    {
+                        Name = "Home Types",
+                        ParentSiteOrLocation = ahpApplicaitonDocumentToCreate.ToEntityReference(),
+                        RelativeUrl = homeTypesRelativeUrl,
+                        AbsoluteURL = $"{absoluteUrl}/{homeTypesRelativeUrl}",
+                    };
+                    _ = _sharepointDocumentLocationRepository.Create(homeTypesFolderToCreate);
+                }
+                else
+                {
+                    throw new InvalidPluginExecutionException("Sharepoint Site does not exists");
+                }
             }
             else
             {
@@ -86,7 +106,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 var relatedDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToRecordWithGivenGuid(applicationGuid);
                 if (relatedDocumentLocation != null)
                 {
-                    return relatedDocumentLocation.RelativeUrl;
+                    return relatedDocumentLocation.AbsoluteURL;
                 }
             }
             return string.Empty;

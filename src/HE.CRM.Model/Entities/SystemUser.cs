@@ -561,6 +561,10 @@ namespace DataverseModel
 			public const string lk_sharepointdocumentlocationbase_createdonbehalfby = "lk_sharepointdocumentlocationbase_createdonbehalfby";
 			public const string lk_sharepointdocumentlocationbase_modifiedby = "lk_sharepointdocumentlocationbase_modifiedby";
 			public const string lk_sharepointdocumentlocationbase_modifiedonbehalfby = "lk_sharepointdocumentlocationbase_modifiedonbehalfby";
+			public const string lk_sharepointsitebase_createdby = "lk_sharepointsitebase_createdby";
+			public const string lk_sharepointsitebase_createdonbehalfby = "lk_sharepointsitebase_createdonbehalfby";
+			public const string lk_sharepointsitebase_modifiedby = "lk_sharepointsitebase_modifiedby";
+			public const string lk_sharepointsitebase_modifiedonbehalfby = "lk_sharepointsitebase_modifiedonbehalfby";
 			public const string Referencinglk_systemuser_createdonbehalfby = "lk_systemuser_createdonbehalfby";
 			public const string Referencinglk_systemuser_modifiedonbehalfby = "lk_systemuser_modifiedonbehalfby";
 			public const string Referencinglk_systemuserbase_createdby = "lk_systemuserbase_createdby";
@@ -664,6 +668,7 @@ namespace DataverseModel
 			public const string user_invln_vft = "user_invln_vft";
 			public const string Referencinguser_parent_user = "user_parent_user";
 			public const string user_sharepointdocumentlocation = "user_sharepointdocumentlocation";
+			public const string user_sharepointsite = "user_sharepointsite";
 			public const string UserLicenseType = "userlicensetype";
 			public const string UserPuid = "userpuid";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
@@ -5782,6 +5787,86 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N lk_sharepointsitebase_createdby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointsitebase_createdby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointSite> lk_sharepointsitebase_createdby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointSite>("lk_sharepointsitebase_createdby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_sharepointsitebase_createdby");
+				this.SetRelatedEntities<DataverseModel.SharePointSite>("lk_sharepointsitebase_createdby", null, value);
+				this.OnPropertyChanged("lk_sharepointsitebase_createdby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_sharepointsitebase_createdonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointsitebase_createdonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointSite> lk_sharepointsitebase_createdonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointSite>("lk_sharepointsitebase_createdonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_sharepointsitebase_createdonbehalfby");
+				this.SetRelatedEntities<DataverseModel.SharePointSite>("lk_sharepointsitebase_createdonbehalfby", null, value);
+				this.OnPropertyChanged("lk_sharepointsitebase_createdonbehalfby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_sharepointsitebase_modifiedby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointsitebase_modifiedby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointSite> lk_sharepointsitebase_modifiedby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointSite>("lk_sharepointsitebase_modifiedby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_sharepointsitebase_modifiedby");
+				this.SetRelatedEntities<DataverseModel.SharePointSite>("lk_sharepointsitebase_modifiedby", null, value);
+				this.OnPropertyChanged("lk_sharepointsitebase_modifiedby");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N lk_sharepointsitebase_modifiedonbehalfby
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_sharepointsitebase_modifiedonbehalfby")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointSite> lk_sharepointsitebase_modifiedonbehalfby
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointSite>("lk_sharepointsitebase_modifiedonbehalfby", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("lk_sharepointsitebase_modifiedonbehalfby");
+				this.SetRelatedEntities<DataverseModel.SharePointSite>("lk_sharepointsitebase_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("lk_sharepointsitebase_modifiedonbehalfby");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N lk_systemuser_createdonbehalfby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_systemuser_createdonbehalfby", Microsoft.Xrm.Sdk.EntityRole.Referenced)]
@@ -6498,6 +6583,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("user_sharepointdocumentlocation");
 				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("user_sharepointdocumentlocation", null, value);
 				this.OnPropertyChanged("user_sharepointdocumentlocation");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N user_sharepointsite
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("user_sharepointsite")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.SharePointSite> user_sharepointsite
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.SharePointSite>("user_sharepointsite", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("user_sharepointsite");
+				this.SetRelatedEntities<DataverseModel.SharePointSite>("user_sharepointsite", null, value);
+				this.OnPropertyChanged("user_sharepointsite");
 			}
 		}
 		

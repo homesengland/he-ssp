@@ -86,6 +86,7 @@ invln_standardcondition|
 invln_vft|
 invln_webrole|
 sharepointdocumentlocation|
+sharepointsite|
 systemuser|
 team</EntitiesWhitelist>
     <EntityAttributeSpecifiedNames />
