@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
@@ -29,7 +30,7 @@ public interface IHomeTypeEntity
 
     SupportedHousingInformationSegmentEntity SupportedHousingInformation { get; }
 
-    TenureDetailsEntity TenureDetails { get; }
+    TenureDetailsSegmentEntity TenureDetails { get; }
 
     void CompleteHomeType(IsSectionCompleted isSectionCompleted);
 }

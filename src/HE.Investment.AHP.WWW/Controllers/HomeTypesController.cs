@@ -752,7 +752,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         CancellationToken cancellationToken)
     {
         model.AffordableRentAsPercentageOfMarketRent =
-            TenureDetailsEntity.CalculateAffordableRent(model.HomeWeeklyRent, model.AffordableWeeklyRent).ToString(CultureInfo.InvariantCulture);
+            TenureDetailsSegmentEntity.CalculateAffordableRent(model.HomeWeeklyRent, model.AffordableWeeklyRent).ToString(CultureInfo.InvariantCulture);
 
         if (action == GenericMessages.Calculate)
         {

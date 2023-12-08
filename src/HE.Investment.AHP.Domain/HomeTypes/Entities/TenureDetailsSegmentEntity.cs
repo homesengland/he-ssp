@@ -11,11 +11,11 @@ using HE.Investments.Common.Validators;
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.TenureDetails)]
-public class TenureDetailsEntity : IHomeTypeSegmentEntity
+public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 {
-    private readonly ModificationTracker _modificationTracker = new();
+    private readonly ModificationTracker _modificationTracker;
 
-    public TenureDetailsEntity(
+    public TenureDetailsSegmentEntity(
         HomeMarketValue? homeMarketValue = null,
         HomeWeeklyRent? homeWeeklyRent = null,
         AffordableWeeklyRent? affordableWeeklyRent = null,
@@ -24,6 +24,7 @@ public class TenureDetailsEntity : IHomeTypeSegmentEntity
         YesNoType exemptFromTheRightToSharedOwnership = YesNoType.Undefined,
         MoreInformation? exemptionJustification = null)
     {
+        _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         HomeMarketValue = homeMarketValue;
         HomeWeeklyRent = homeWeeklyRent;
         AffordableWeeklyRent = affordableWeeklyRent;
@@ -32,6 +33,8 @@ public class TenureDetailsEntity : IHomeTypeSegmentEntity
         ExemptFromTheRightToSharedOwnership = exemptFromTheRightToSharedOwnership;
         ExemptionJustification = exemptionJustification;
     }
+
+    public event EntityModifiedEventHandler? SegmentModified;
 
     public bool IsModified => _modificationTracker.IsModified;
 
@@ -128,7 +131,7 @@ public class TenureDetailsEntity : IHomeTypeSegmentEntity
 
     public IHomeTypeSegmentEntity Duplicate()
     {
-        return new TenureDetailsEntity(
+        return new TenureDetailsSegmentEntity(
             HomeMarketValue,
             HomeWeeklyRent,
             AffordableWeeklyRent,

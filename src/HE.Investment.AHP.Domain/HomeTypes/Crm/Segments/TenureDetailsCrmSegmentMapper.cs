@@ -8,7 +8,7 @@ using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 
-public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<TenureDetailsEntity>
+public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<TenureDetailsSegmentEntity>
 {
     public TenureDetailsCrmSegmentMapper()
         : base(new[]
@@ -28,7 +28,7 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
 
     public override IHomeTypeSegmentEntity MapToEntity(ApplicationBasicInfo application, HomeTypeDto dto, IReadOnlyCollection<UploadedFile> uploadedFiles)
     {
-        return new TenureDetailsEntity(
+        return new TenureDetailsSegmentEntity(
             dto.marketValue.IsProvided() ? new HomeMarketValue(dto.marketValue!.Value) : null,
             dto.marketRent.IsProvided() ? new HomeWeeklyRent(dto.marketRent!.Value) : null,
             dto.prospectiveRent.IsProvided() ? new AffordableWeeklyRent(dto.prospectiveRent!.Value) : null,
@@ -39,9 +39,9 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
             null); // todo
     }
 
-    protected override TenureDetailsEntity GetSegment(HomeTypeEntity entity) => entity.TenureDetails;
+    protected override TenureDetailsSegmentEntity GetSegment(HomeTypeEntity entity) => entity.TenureDetails;
 
-    protected override void MapToDto(HomeTypeDto dto, TenureDetailsEntity segment)
+    protected override void MapToDto(HomeTypeDto dto, TenureDetailsSegmentEntity segment)
     {
         dto.marketValue = segment.HomeMarketValue?.Value;
         dto.marketRent = segment.HomeWeeklyRent?.Value;

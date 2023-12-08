@@ -97,7 +97,7 @@ public static class ValidationErrorMessage
 
     public static string MissingRequiredField(string displayName) => $"Enter {displayName}";
 
-    public static string MustBeNumberBetween(string displayName, int minValue, int maxValue) => $"{displayName} must be between {minValue} and {maxValue}";
+    public static string MustBeNumberBetween(string displayName, int minValue, int maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
 
     public static string MustBeDecimalNumberBetween(string displayName, decimal minValue, decimal maxValue) => $"The {displayName} must be between {minValue} and {maxValue}";
 

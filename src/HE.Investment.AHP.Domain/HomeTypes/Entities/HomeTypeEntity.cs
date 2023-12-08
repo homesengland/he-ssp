@@ -60,7 +60,7 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public SupportedHousingInformationSegmentEntity SupportedHousingInformation => GetRequiredSegment<SupportedHousingInformationSegmentEntity>();
 
-    public TenureDetailsEntity TenureDetails => GetRequiredSegment<TenureDetailsEntity>();
+    public TenureDetailsSegmentEntity TenureDetails => GetRequiredSegment<TenureDetailsSegmentEntity>();
 
     public bool IsNew => Id.IsNew;
 
