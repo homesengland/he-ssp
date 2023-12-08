@@ -60,39 +60,22 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var documentLocation = _sharepointDocumentLocationRepository.GetByAttribute(nameof(SharePointDocumentLocation.Name).ToLower(), "AHP Application Documents").FirstOrDefault();
             if (documentLocation != null)
             {
-                foreach(var attr in documentLocation.Attributes)
+                var ahpApplicaitonDocumentToCreate = new SharePointDocumentLocation()
                 {
-                    TracingService.Trace($"attr: {attr.Key}, {attr.Value}");
-                }
-                TracingService.Trace("afer");
-                var mainDocumentLocation = _sharepointSiteRepository.GetById(documentLocation.ParentSiteOrLocation.Id, new string[] { nameof(SharePointSite.AbsoluteURL).ToLower() });
-                if(mainDocumentLocation != null)
+                    RegardingObjectId = target.ToEntityReference(),
+                    Name = $"Documents on AHP Application",
+                    RelativeUrl = $"{target.invln_applicationid}",
+                    ParentSiteOrLocation = documentLocation.ToEntityReference(),
+                };
+                ahpApplicaitonDocumentToCreate.Id = _sharepointDocumentLocationRepository.Create(ahpApplicaitonDocumentToCreate);
+                var homeTypesRelativeUrl = "Home Types";
+                var homeTypesFolderToCreate = new SharePointDocumentLocation()
                 {
-                    var relativeUrl = $"{target.invln_applicationid}";
-                    var absoluteUrl = $"{mainDocumentLocation.AbsoluteURL}/{relativeUrl}";
-                    var ahpApplicaitonDocumentToCreate = new SharePointDocumentLocation()
-                    {
-                        RegardingObjectId = target.ToEntityReference(),
-                        Name = $"Documents on AHP Application",
-                        RelativeUrl = relativeUrl,
-                        ParentSiteOrLocation = documentLocation.ToEntityReference(),
-                        AbsoluteURL = absoluteUrl,
-                    };
-                    ahpApplicaitonDocumentToCreate.Id = _sharepointDocumentLocationRepository.Create(ahpApplicaitonDocumentToCreate);
-                    var homeTypesRelativeUrl = "Home Types";
-                    var homeTypesFolderToCreate = new SharePointDocumentLocation()
-                    {
-                        Name = "Home Types",
-                        ParentSiteOrLocation = ahpApplicaitonDocumentToCreate.ToEntityReference(),
-                        RelativeUrl = homeTypesRelativeUrl,
-                        AbsoluteURL = $"{absoluteUrl}/{homeTypesRelativeUrl}",
-                    };
-                    _ = _sharepointDocumentLocationRepository.Create(homeTypesFolderToCreate);
-                }
-                else
-                {
-                    throw new InvalidPluginExecutionException("Sharepoint Site does not exists");
-                }
+                    Name = homeTypesRelativeUrl,
+                    ParentSiteOrLocation = ahpApplicaitonDocumentToCreate.ToEntityReference(),
+                    RelativeUrl = homeTypesRelativeUrl,
+                };
+                _ = _sharepointDocumentLocationRepository.Create(homeTypesFolderToCreate);
             }
             else
             {
@@ -101,15 +84,31 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         }
         public string GetFileLocationForAhpApplication(string ahpApplicationId)
         {
+            var urlToReturn = string.Empty;
             if (Guid.TryParse(ahpApplicationId, out Guid applicationGuid))
             {
                 var relatedDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToRecordWithGivenGuid(applicationGuid);
-                if (relatedDocumentLocation != null)
+                if (relatedDocumentLocation != null && relatedDocumentLocation.ParentSiteOrLocation != null)
                 {
-                    return relatedDocumentLocation.AbsoluteURL;
+                    TracingService.Trace("related document");
+                    urlToReturn = relatedDocumentLocation.RelativeUrl;
+                    var parentDocumentLocation = _sharepointDocumentLocationRepository.GetById(relatedDocumentLocation.ParentSiteOrLocation.Id,
+                        new string[] { nameof(SharePointDocumentLocation.RelativeUrl).ToLower(), nameof(SharePointDocumentLocation.ParentSiteOrLocation).ToLower() });;
+                   if (parentDocumentLocation != null && parentDocumentLocation.ParentSiteOrLocation != null)
+                    {
+                        TracingService.Trace("parent of related document");
+                        urlToReturn = urlToReturn.Insert(0, $"{parentDocumentLocation.RelativeUrl}/");
+                        var mainDocumentLocation = _sharepointSiteRepository.GetById(parentDocumentLocation.ParentSiteOrLocation.Id,
+                        new string[] { nameof(SharePointSite.AbsoluteURL).ToLower() });
+                        if (mainDocumentLocation != null)
+                        {
+                            TracingService.Trace("main document");
+                            urlToReturn = urlToReturn.Insert(0, $"{mainDocumentLocation.AbsoluteURL}/");
+                        }
+                    }
                 }
             }
-            return string.Empty;
+            return urlToReturn;
         }
 
         public List<AhpApplicationDto> GetApplication(string organisationId, string contactId, string fieldsToRetrieve = null, string applicationId = null)
