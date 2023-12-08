@@ -29,7 +29,7 @@ public class FinancialDetailsGrantsModel : FinancialDetailsBaseModel
         : base(applicationId, applicationName)
     {
         CountyCouncilGrants = countyCouncilGrants;
-        DHSCExtraCareGrants = dHSCExtraCreGrants;
+        DhscExtraCareGrants = dHSCExtraCreGrants;
         LocalAuthorityGrants = localAuthorityGrants;
         SocialServicesGrants = socialServicesGrants;
         HealthRelatedGrants = healthRelatedGrants;
@@ -40,7 +40,7 @@ public class FinancialDetailsGrantsModel : FinancialDetailsBaseModel
 
     public string? CountyCouncilGrants { get; set; }
 
-    public string? DHSCExtraCareGrants { get; set; }
+    public string? DhscExtraCareGrants { get; set; }
 
     public string? LocalAuthorityGrants { get; set; }
 
@@ -52,5 +52,5 @@ public class FinancialDetailsGrantsModel : FinancialDetailsBaseModel
 
     public string? OtherPublicBodiesGrants { get; set; }
 
-    public string TotalGrants { get; set; }
+    public string? TotalGrants { get; set; }
 }

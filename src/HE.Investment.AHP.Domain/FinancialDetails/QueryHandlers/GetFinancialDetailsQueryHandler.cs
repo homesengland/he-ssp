@@ -28,20 +28,25 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
             LandValue = financialDetails.LandValue?.Value,
             ExpectedWorkCost = financialDetails.ExpectedWorksCosts?.Value,
             ExpectedOnCost = financialDetails.ExpectedOnCosts?.Value,
-            CountyCouncilGrants = financialDetails.Grants.CountyCouncil,
-            DHSCExtraCareGrants = financialDetails.Grants.DHSCExtraCare,
-            LocalAuthorityGrants = financialDetails.Grants.LocalAuthority,
-            SocialServicesGrants = financialDetails.Grants.SocialServices,
-            HealthRelatedGrants = financialDetails.Grants.HealthRelated,
-            LotteryFunding = financialDetails.Grants.Lottery,
-            OtherPublicGrants = financialDetails.Grants.OtherPublicBodies,
             TotalExpectedCosts = financialDetails.ExpectedTotalCosts(),
-            TotalRecievedGrands = financialDetails?.Grants?.TotalGrants ?? 0,
         };
 
-        MapExpectedContributions(financialDetailsDto, financialDetails!.ExpectedContributions);
+        MapPublicGrants(financialDetailsDto, financialDetails!.PublicGrants);
+        MapExpectedContributions(financialDetailsDto, financialDetails.ExpectedContributions);
 
         return financialDetailsDto;
+    }
+
+    private static void MapPublicGrants(Contract.FinancialDetails.FinancialDetails financialDetailsDto, PublicGrants publicGrants)
+    {
+        financialDetailsDto.CountyCouncilGrants = publicGrants.CountyCouncil?.Value;
+        financialDetailsDto.DHSCExtraCareGrants = publicGrants.DhscExtraCare?.Value;
+        financialDetailsDto.LocalAuthorityGrants = publicGrants.LocalAuthority?.Value;
+        financialDetailsDto.SocialServicesGrants = publicGrants.SocialServices?.Value;
+        financialDetailsDto.HealthRelatedGrants = publicGrants.HealthRelated?.Value;
+        financialDetailsDto.LotteryFunding = publicGrants.Lottery?.Value;
+        financialDetailsDto.OtherPublicGrants = publicGrants.OtherPublicBodies?.Value;
+        financialDetailsDto.TotalRecievedGrands = publicGrants.CalculateTotal();
     }
 
     private static void MapExpectedContributions(

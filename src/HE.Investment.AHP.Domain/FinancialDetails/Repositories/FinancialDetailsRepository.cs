@@ -37,33 +37,16 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             currentLandValue = financialDetails.LandValue?.Value,
             expectedOnWorks = financialDetails.ExpectedWorksCosts?.Value,
             expectedOnCosts = financialDetails.ExpectedOnCosts?.Value,
-            howMuchReceivedFromCountyCouncil = financialDetails.Grants?.CountyCouncil,
-            howMuchReceivedFromDhscExtraCareFunding = financialDetails.Grants?.DHSCExtraCare,
-            howMuchReceivedFromLocalAuthority1 = financialDetails.Grants?.LocalAuthority,
-            howMuchReceivedFromSocialServices = financialDetails.Grants?.SocialServices,
-            howMuchReceivedFromDepartmentOfHealth = financialDetails.Grants?.HealthRelated,
-            howMuchReceivedFromLotteryFunding = financialDetails.Grants?.Lottery,
-            howMuchReceivedFromOtherPublicBodies = financialDetails.Grants?.OtherPublicBodies,
+
             financialDetailsSectionCompletionStatus = SectionStatusMapper.ToDto(financialDetails.SectionStatus),
         };
 
-        MapExpectedContributions(financialDetails.ExpectedContributions, dto);
+        MapFromExpectedContributions(financialDetails.ExpectedContributions, dto);
+        MapFromPublicGrants(financialDetails.PublicGrants, dto);
 
         _ = await _applicationCrmContext.Save(dto, CrmFields.FinancialDetailsToUpdate, cancellationToken);
 
         return financialDetails;
-    }
-
-    private static void MapExpectedContributions(ExpectedContributionsToScheme expectedContributionsToScheme, AhpApplicationDto dto)
-    {
-        dto.borrowingAgainstRentalIncomeFromThisScheme = expectedContributionsToScheme.RentalIncome?.Value;
-        dto.fundingFromOpenMarketHomesOnThisScheme = expectedContributionsToScheme.SalesOfHomesOnThisScheme?.Value;
-        dto.fundingFromOpenMarketHomesNotOnThisScheme = expectedContributionsToScheme.SalesOfHomesOnOtherSchemes?.Value;
-        dto.ownResources = expectedContributionsToScheme.OwnResources?.Value;
-        dto.recycledCapitalGrantFund = expectedContributionsToScheme.RcgfContributions?.Value;
-        dto.otherCapitalSources = expectedContributionsToScheme.OtherCapitalSources?.Value;
-        dto.totalInitialSalesIncome = expectedContributionsToScheme.SharedOwnershipSales?.Value;
-        dto.transferValue = expectedContributionsToScheme.HomesTransferValue?.Value;
     }
 
     private static FinancialDetailsEntity CreateEntity(AhpApplicationDto application)
@@ -78,15 +61,31 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             application.expectedOnWorks.IsProvided() ? new ExpectedWorksCosts(application.expectedOnWorks!.Value) : null,
             application.expectedOnCosts.IsProvided() ? new ExpectedOnCosts(application.expectedOnCosts!.Value) : null,
             MapToExpectedContributionsToScheme(application),
-            Grants.From(
-                application.howMuchReceivedFromCountyCouncil,
-                application.howMuchReceivedFromDhscExtraCareFunding,
-                application.howMuchReceivedFromLocalAuthority1,
-                application.howMuchReceivedFromSocialServices,
-                application.howMuchReceivedFromDepartmentOfHealth,
-                application.howMuchReceivedFromLotteryFunding,
-                application.howMuchReceivedFromOtherPublicBodies),
+            MapToPublicGrants(application),
             SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus));
+    }
+
+    private static void MapFromPublicGrants(PublicGrants publicGrants, AhpApplicationDto dto)
+    {
+        dto.howMuchReceivedFromCountyCouncil = publicGrants.CountyCouncil?.Value;
+        dto.howMuchReceivedFromDhscExtraCareFunding = publicGrants.DhscExtraCare?.Value;
+        dto.howMuchReceivedFromLocalAuthority1 = publicGrants.LocalAuthority?.Value;
+        dto.howMuchReceivedFromSocialServices = publicGrants.SocialServices?.Value;
+        dto.howMuchReceivedFromDepartmentOfHealth = publicGrants.HealthRelated?.Value;
+        dto.howMuchReceivedFromLotteryFunding = publicGrants.Lottery?.Value;
+        dto.howMuchReceivedFromOtherPublicBodies = publicGrants.OtherPublicBodies?.Value;
+    }
+
+    private static void MapFromExpectedContributions(ExpectedContributionsToScheme expectedContributionsToScheme, AhpApplicationDto dto)
+    {
+        dto.borrowingAgainstRentalIncomeFromThisScheme = expectedContributionsToScheme.RentalIncome?.Value;
+        dto.fundingFromOpenMarketHomesOnThisScheme = expectedContributionsToScheme.SalesOfHomesOnThisScheme?.Value;
+        dto.fundingFromOpenMarketHomesNotOnThisScheme = expectedContributionsToScheme.SalesOfHomesOnOtherSchemes?.Value;
+        dto.ownResources = expectedContributionsToScheme.OwnResources?.Value;
+        dto.recycledCapitalGrantFund = expectedContributionsToScheme.RcgfContributions?.Value;
+        dto.otherCapitalSources = expectedContributionsToScheme.OtherCapitalSources?.Value;
+        dto.totalInitialSalesIncome = expectedContributionsToScheme.SharedOwnershipSales?.Value;
+        dto.transferValue = expectedContributionsToScheme.HomesTransferValue?.Value;
     }
 
     private static ExpectedContributionsToScheme MapToExpectedContributionsToScheme(AhpApplicationDto application)
@@ -104,5 +103,21 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             MapProvidedValues(application.otherCapitalSources, ExpectedContributionFields.OtherCapitalSources),
             MapProvidedValues(application.totalInitialSalesIncome, ExpectedContributionFields.SharedOwnershipSales),
             MapProvidedValues(application.transferValue, ExpectedContributionFields.HomesTransferValue));
+    }
+
+    private static PublicGrants MapToPublicGrants(AhpApplicationDto application)
+    {
+        static PublicGrantValue? MapProvidedValues(decimal? value, PublicGrantFields field) => value.IsProvided()
+                ? new PublicGrantValue(field, value!.Value)
+                : null;
+
+        return new PublicGrants(
+            MapProvidedValues(application.howMuchReceivedFromCountyCouncil, PublicGrantFields.CountyCouncilGrants),
+            MapProvidedValues(application.howMuchReceivedFromDhscExtraCareFunding, PublicGrantFields.DhscExtraCareGrants),
+            MapProvidedValues(application.howMuchReceivedFromLocalAuthority1, PublicGrantFields.LocalAuthorityGrants),
+            MapProvidedValues(application.howMuchReceivedFromSocialServices, PublicGrantFields.SocialServicesGrants),
+            MapProvidedValues(application.howMuchReceivedFromDepartmentOfHealth, PublicGrantFields.HealthRelatedGrants),
+            MapProvidedValues(application.howMuchReceivedFromLotteryFunding, PublicGrantFields.LotteryGrants),
+            MapProvidedValues(application.howMuchReceivedFromOtherPublicBodies, PublicGrantFields.OtherPublicBodiesGrants));
     }
 }

@@ -33,7 +33,7 @@ public class FinancialDetailsEntity
         ExpectedWorksCosts? expectedWorksCosts,
         ExpectedOnCosts? expectedOnCosts,
         ExpectedContributionsToScheme expectedContributionsToScheme,
-        Grants grants,
+        PublicGrants publicGrants,
         SectionStatus sectionStatus)
     {
         ApplicationId = applicationId;
@@ -45,7 +45,7 @@ public class FinancialDetailsEntity
         ExpectedOnCosts = expectedOnCosts;
         ExpectedPurchasePrice = expectedPurchasePrice;
         ExpectedContributions = expectedContributionsToScheme;
-        Grants = grants;
+        PublicGrants = publicGrants;
         SectionStatus = sectionStatus;
     }
 
@@ -67,7 +67,7 @@ public class FinancialDetailsEntity
 
     public ExpectedContributionsToScheme ExpectedContributions { get; private set; }
 
-    public Grants Grants { get; private set; }
+    public PublicGrants PublicGrants { get; private set; }
 
     public SectionStatus SectionStatus { get; private set; }
 
@@ -109,10 +109,9 @@ public class FinancialDetailsEntity
         ExpectedContributions = expectedContribution;
     }
 
-    public void ProvideGrants(Grants grants)
+    public void ProvideGrants(PublicGrants publicGrants)
     {
-        Grants = grants;
-        SetSectionStatus(Grants.IsAnyValueNotNull);
+        PublicGrants = publicGrants;
     }
 
     public void CompleteFinancialDetails()
