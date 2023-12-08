@@ -9,9 +9,9 @@ namespace HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
 
 public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
 {
-    public IEnumerable<SectionSummaryViewModel> CreateSummaryModel(FullHomeType homeType, IUrlHelper urlHelper)
+    public IEnumerable<SectionSummaryViewModel> CreateSummaryModel(FullHomeType homeType, IUrlHelper urlHelper, bool useWorkflowRedirection = false)
     {
-        var factory = new HomeTypeQuestionFactory(homeType, urlHelper);
+        var factory = new HomeTypeQuestionFactory(homeType, urlHelper, useWorkflowRedirection);
 
         yield return CreateHomeTypeDetailsSection(homeType, factory);
 
@@ -27,7 +27,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
 
         if (homeType.DesignPlans != null)
         {
-            yield return CreateDesignPlansSection(homeType.DesignPlans, factory);
+            yield return CreateDesignPlansSection(homeType, homeType.DesignPlans, factory, urlHelper);
         }
 
         if (homeType.SupportedHousing != null)
@@ -43,42 +43,35 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
     {
         return SectionSummaryViewModel.New(
             "Home type details",
-            factory.Question("Home type name", nameof(Controller.HomeTypeDetails), Workflow.HomeTypeDetails, homeType.Name),
-            factory.Question("Type of home", nameof(Controller.HomeTypeDetails), Workflow.HomeTypeDetails, homeType.HousingType));
+            factory.Question("Home type name", nameof(Controller.HomeTypeDetails), homeType.Name),
+            factory.Question("Type of home", nameof(Controller.HomeTypeDetails), homeType.HousingType));
     }
 
     private static SectionSummaryViewModel CreateDisabledPeopleSection(DisabledPeopleHomeTypeDetails disabledPeople, DesignPlans? designPlans, HomeTypeQuestionFactory factory)
     {
         return SectionSummaryViewModel.New(
             "Disabled and vulnerable people",
-            factory.Question("Type of home", nameof(Controller.HomesForDisabledPeople), Workflow.HomesForDisabledPeople, disabledPeople.HousingType),
-            factory.Question("Client group", nameof(Controller.DisabledPeopleClientGroup), Workflow.DisabledPeopleClientGroup, disabledPeople.ClientGroupType),
-            factory.Question(
-                "HAPPI principles",
-                nameof(Controller.HappiDesignPrinciples),
-                Workflow.HappiDesignPrinciples,
-                designPlans?.DesignPrinciples.ToArray()));
+            factory.Question("Type of home", nameof(Controller.HomesForDisabledPeople), disabledPeople.HousingType),
+            factory.Question("Client group", nameof(Controller.DisabledPeopleClientGroup), disabledPeople.ClientGroupType),
+            factory.Question("HAPPI principles", nameof(Controller.HappiDesignPrinciples), designPlans?.DesignPrinciples.ToArray()));
     }
 
     private static SectionSummaryViewModel CreateOlderPeopleSection(OlderPeopleHomeTypeDetails olderPeople, DesignPlans? designPlans, HomeTypeQuestionFactory factory)
     {
         return SectionSummaryViewModel.New(
             "Older people",
-            factory.Question("Type of home", nameof(Controller.HomesForOlderPeople), Workflow.HomesForOlderPeople, olderPeople.HousingType),
-            factory.Question(
-                "HAPPI principles",
-                nameof(Controller.HappiDesignPrinciples),
-                Workflow.HappiDesignPrinciples,
-                designPlans?.DesignPrinciples.ToArray()));
+            factory.Question("Type of home", nameof(Controller.HomesForOlderPeople), olderPeople.HousingType),
+            factory.Question("HAPPI principles", nameof(Controller.HappiDesignPrinciples), designPlans?.DesignPrinciples.ToArray()));
     }
 
-    private static SectionSummaryViewModel CreateDesignPlansSection(DesignPlans designPlans, HomeTypeQuestionFactory factory)
+    private static SectionSummaryViewModel CreateDesignPlansSection(FullHomeType homeType, DesignPlans designPlans, HomeTypeQuestionFactory factory, IUrlHelper urlHelper)
     {
-        var files = designPlans.UploadedFiles.Select(x => x.FileName).ToArray();
+        var files = designPlans.UploadedFiles.ToDictionary(
+            x => x.FileName,
+            x => DownloadDesignFileUrl(urlHelper, homeType.ApplicationId, homeType.Id, x.FileName));
         return SectionSummaryViewModel.New(
             "Design Plans",
-            factory.Question("Document uploaded", nameof(Controller.DesignPlans), Workflow.DesignPlans, files),
-            factory.Question("More information", nameof(Controller.DesignPlans), Workflow.DesignPlans, designPlans.MoreInformation));
+            factory.FileQuestion("Design Plans", nameof(Controller.DesignPlans), designPlans.MoreInformation, files));
     }
 
     private static SectionSummaryViewModel CreateSupportedHousingSection(SupportedHousingInformation supportedHousing, HomeTypeQuestionFactory factory)
@@ -88,53 +81,27 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question(
                 "Local commissioning bodies consultation",
                 nameof(Controller.SupportedHousingInformation),
-                Workflow.SupportedHousingInformation,
                 supportedHousing.LocalCommissioningBodiesConsulted),
-            factory.Question(
-                "Short stay",
-                nameof(Controller.SupportedHousingInformation),
-                Workflow.SupportedHousingInformation,
-                supportedHousing.ShortStayAccommodation),
-            factory.Question(
-                "Revenue funding",
-                nameof(Controller.SupportedHousingInformation),
-                Workflow.SupportedHousingInformation,
-                supportedHousing.RevenueFundingType),
-            factory.Question(
-                "Sources of revenue funding",
-                nameof(HomeTypesController.RevenueFunding),
-                Workflow.RevenueFunding,
-                supportedHousing.RevenueFundingSources.ToArray()),
-            factory.Question(
-                "Move on arrangements in place",
-                nameof(Controller.MoveOnArrangements),
-                Workflow.MoveOnArrangements,
-                supportedHousing.MoveOnArrangements),
-            factory.Question("Exit plan or alternative use", nameof(Controller.ExitPlan), Workflow.ExitPlan, supportedHousing.ExitPlan),
-            factory.Question(
-                "Typology, location and design",
-                nameof(Controller.TypologyLocationAndDesign),
-                Workflow.TypologyLocationAndDesign,
-                supportedHousing.TypologyLocationAndDesign));
+            factory.Question("Short stay", nameof(Controller.SupportedHousingInformation), supportedHousing.ShortStayAccommodation),
+            factory.Question("Revenue funding", nameof(Controller.SupportedHousingInformation), supportedHousing.RevenueFundingType),
+            factory.Question("Sources of revenue funding", nameof(HomeTypesController.RevenueFunding), supportedHousing.RevenueFundingSources.ToArray()),
+            factory.Question("Move on arrangements in place", nameof(Controller.MoveOnArrangements), supportedHousing.MoveOnArrangements),
+            factory.Question("Exit plan or alternative use", nameof(Controller.ExitPlan), supportedHousing.ExitPlan),
+            factory.Question("Typology, location and design", nameof(Controller.TypologyLocationAndDesign), supportedHousing.TypologyLocationAndDesign));
     }
 
     private static SectionSummaryViewModel CreateHomeInformationSection(HomeInformation homeInformation, HomeTypeQuestionFactory factory)
     {
         return SectionSummaryViewModel.New(
             "Home information",
-            factory.Question("Number of homes", nameof(Controller.HomeInformation), Workflow.HomeInformation, homeInformation.NumberOfHomes),
-            factory.Question("Number of bedrooms", nameof(Controller.HomeInformation), Workflow.HomeInformation, homeInformation.NumberOfBedrooms),
-            factory.Question("Maximum occupancy", nameof(Controller.HomeInformation), Workflow.HomeInformation, homeInformation.MaximumOccupancy),
-            factory.Question("Number of storeys", nameof(Controller.HomeInformation), Workflow.HomeInformation, homeInformation.NumberOfStoreys),
-            factory.Question(
-                "Move on accommodation",
-                nameof(Controller.MoveOnAccommodation),
-                Workflow.MoveOnAccommodation,
-                homeInformation.IntendedAsMoveOnAccommodation),
+            factory.Question("Number of homes", nameof(Controller.HomeInformation), homeInformation.NumberOfHomes),
+            factory.Question("Number of bedrooms", nameof(Controller.HomeInformation), homeInformation.NumberOfBedrooms),
+            factory.Question("Maximum occupancy", nameof(Controller.HomeInformation), homeInformation.MaximumOccupancy),
+            factory.Question("Number of storeys", nameof(Controller.HomeInformation), homeInformation.NumberOfStoreys),
+            factory.Question("Move on accommodation", nameof(Controller.MoveOnAccommodation), homeInformation.IntendedAsMoveOnAccommodation),
             factory.Question(
                 "Particular group",
                 nameof(Controller.PeopleGroupForSpecificDesignFeatures),
-                Workflow.PeopleGroupForSpecificDesignFeatures,
                 homeInformation.PeopleGroupForSpecificDesignFeatures));
     }
 
@@ -142,10 +109,24 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
     {
         return SectionSummaryViewModel.New(
             "Building information",
-            factory.Question("Building type", nameof(Controller.BuildingInformation), Workflow.BuildingInformation, homeInformation.BuildingType),
-            factory.Question("Custom built", nameof(Controller.CustomBuildProperty), Workflow.CustomBuildProperty, homeInformation.CustomBuild),
-            factory.Question("Type of facilities", nameof(Controller.TypeOfFacilities), Workflow.TypeOfFacilities, homeInformation.FacilityType),
-            factory.Question("Accessibility categories met", nameof(Controller.AccessibilityStandards), Workflow.AccessibilityStandards, homeInformation.AccessibilityStandards),
-            factory.Question("Accessibility categories", nameof(Controller.AccessibilityCategory), Workflow.AccessibilityCategory, homeInformation.AccessibilityCategory));
+            factory.Question("Building type", nameof(Controller.BuildingInformation), homeInformation.BuildingType),
+            factory.Question("Custom built", nameof(Controller.CustomBuildProperty), homeInformation.CustomBuild),
+            factory.Question("Type of facilities", nameof(Controller.TypeOfFacilities), homeInformation.FacilityType),
+            factory.Question("Accessibility categories met", nameof(Controller.AccessibilityStandards), homeInformation.AccessibilityStandards),
+            factory.Question("Accessibility categories", nameof(Controller.AccessibilityCategory), homeInformation.AccessibilityCategory));
+    }
+
+    private static string DownloadDesignFileUrl(IUrlHelper urlHelper, string applicationId, string homeTypeId, string fileId)
+    {
+        return urlHelper.RouteUrl(
+            "subSection",
+            new
+            {
+                controller = "HomeTypes",
+                action = "DownloadDesignPlansFile",
+                applicationId,
+                id = homeTypeId,
+                fileId,
+            }) ?? string.Empty;
     }
 }

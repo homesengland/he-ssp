@@ -10,7 +10,7 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 [HomeTypeSegmentType(HomeTypeSegmentType.HomeInformation)]
 public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
 {
-    private readonly ModificationTracker _modificationTracker = new();
+    private readonly ModificationTracker _modificationTracker;
 
     public HomeInformationSegmentEntity(
         NumberOfHomes? numberOfHomes = null,
@@ -25,6 +25,7 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         YesNoType accessibilityStandards = YesNoType.Undefined,
         AccessibilityCategoryType accessibilityCategory = AccessibilityCategoryType.Undefined)
     {
+        _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         NumberOfHomes = numberOfHomes;
         NumberOfBedrooms = numberOfBedrooms;
         MaximumOccupancy = maximumOccupancy;
@@ -37,6 +38,8 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         AccessibilityStandards = accessibilityStandards;
         AccessibilityCategory = accessibilityCategory;
     }
+
+    public event EntityModifiedEventHandler SegmentModified;
 
     public bool IsModified => _modificationTracker.IsModified;
 

@@ -12,7 +12,7 @@ public class SupportedHousingInformationSegmentEntity : IHomeTypeSegmentEntity
 {
     private readonly List<RevenueFundingSourceType> _revenueFundingSources;
 
-    private readonly ModificationTracker _modificationTracker = new();
+    private readonly ModificationTracker _modificationTracker;
 
     public SupportedHousingInformationSegmentEntity(
         YesNoType localCommissioningBodiesConsulted = YesNoType.Undefined,
@@ -23,6 +23,7 @@ public class SupportedHousingInformationSegmentEntity : IHomeTypeSegmentEntity
         MoreInformation? typologyLocationAndDesign = null,
         MoreInformation? exitPlan = null)
     {
+        _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         LocalCommissioningBodiesConsulted = localCommissioningBodiesConsulted;
         ShortStayAccommodation = shortStayAccommodation;
         RevenueFundingType = revenueFundingType;
@@ -31,6 +32,8 @@ public class SupportedHousingInformationSegmentEntity : IHomeTypeSegmentEntity
         TypologyLocationAndDesign = typologyLocationAndDesign;
         ExitPlan = exitPlan;
     }
+
+    public event EntityModifiedEventHandler SegmentModified;
 
     public bool IsModified => _modificationTracker.IsModified;
 

@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
+using HE.Investments.Common.Workflow;
 using HE.Investments.Loans.Common.Routing;
 using Stateless;
 
@@ -12,10 +13,13 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
     private readonly StateMachine<HomeTypesWorkflowState, Trigger> _machine;
 
-    public HomeTypesWorkflow(HomeTypesWorkflowState currentHomeTypesWorkflowState, HomeType? homeTypeModel)
+    private readonly bool _isLocked;
+
+    public HomeTypesWorkflow(HomeTypesWorkflowState currentHomeTypesWorkflowState, HomeType? homeTypeModel, bool isLocked = false)
     {
         _homeTypeModel = homeTypeModel;
         _machine = new StateMachine<HomeTypesWorkflowState, Trigger>(currentHomeTypesWorkflowState);
+        _isLocked = isLocked;
         ConfigureTransitions();
     }
 
@@ -44,6 +48,11 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
     public async Task<HomeTypesWorkflowState> NextState(Trigger trigger)
     {
+        if (_isLocked)
+        {
+            return _machine.State;
+        }
+
         await _machine.FireAsync(trigger);
         return _machine.State;
     }
@@ -85,6 +94,11 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             HomeTypesWorkflowState.CheckAnswers => true,
             _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
+    }
+
+    public EncodedWorkflow<HomeTypesWorkflowState> GetEncodedWorkflow()
+    {
+        return new EncodedWorkflow<HomeTypesWorkflowState>(CanBeAccessed);
     }
 
     private void ConfigureTransitions()

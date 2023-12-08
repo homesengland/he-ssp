@@ -12,7 +12,6 @@ using HE.Investment.AHP.Domain.HomeTypes.Mappers;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
 using HE.Investment.AHP.Domain.HomeTypes.Services;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
-using HE.Investment.AHP.Domain.Mock;
 using HE.Investment.AHP.Domain.Scheme.Repositories;
 using HE.Investment.AHP.Domain.Scheme.Services;
 using HE.Investment.AHP.Domain.Scheme.ValueObjects;
@@ -76,8 +75,6 @@ public static class DomainModule
     {
         services.AddScoped<ISchemeRepository, SchemeRepository>();
 
-        // TODO: change scope when file source implemented
-        services.AddSingleton<IFileService, FileService>();
         services.AddScoped<IAhpFileLocationProvider<LocalAuthoritySupportFileParams>, LocalAuthoritySupportFileLocationProvider>();
         services.AddScoped<IAhpFileService<LocalAuthoritySupportFileParams>, AhpFileService<LocalAuthoritySupportFileParams>>();
     }
