@@ -723,6 +723,65 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             cancellationToken);
     }
 
+    [WorkflowState(HomeTypesWorkflowState.FloorArea)]
+    [HttpGet("{homeTypeId}/FloorArea")]
+    public async Task<IActionResult> FloorArea([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new FloorAreaModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
+        {
+            InternalFloorArea = homeInformation.InternalFloorArea?.ToString("0.##", CultureInfo.InvariantCulture),
+            MeetNationallyDescribedSpaceStandards = homeInformation.MeetNationallyDescribedSpaceStandards,
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.FloorArea)]
+    [HttpPost("{homeTypeId}/FloorArea")]
+    public async Task<IActionResult> FloorArea(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        FloorAreaModel model,
+        CancellationToken cancellationToken)
+    {
+        return await SaveHomeTypeSegment(
+            new SaveFloorAreaCommand(applicationId, homeTypeId, model.InternalFloorArea, model.MeetNationallyDescribedSpaceStandards),
+            model,
+            cancellationToken);
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.FloorAreaStandards)]
+    [HttpGet("{homeTypeId}/FloorAreaStandards")]
+    public async Task<IActionResult> FloorAreaStandards([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)
+    {
+        var homeInformation = await _mediator.Send(new GetHomeInformationQuery(applicationId, homeTypeId), cancellationToken);
+
+        return View(new FloorAreaModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
+        {
+            NationallyDescribedSpaceStandards = homeInformation.NationallyDescribedSpaceStandards.ToList(),
+            OtherNationallyDescribedSpaceStandards = homeInformation.NationallyDescribedSpaceStandards.ToList(),
+        });
+    }
+
+    [WorkflowState(HomeTypesWorkflowState.FloorAreaStandards)]
+    [HttpPost("{homeTypeId}/FloorAreaStandards")]
+    public async Task<IActionResult> FloorAreaStandards(
+        [FromRoute] string applicationId,
+        string homeTypeId,
+        FloorAreaModel model,
+        CancellationToken cancellationToken)
+    {
+        var nationallyDescribedSpaceStandards = model.NationallyDescribedSpaceStandards
+                                                ?? Array.Empty<NationallyDescribedSpaceStandardType>();
+        var otherNationallyDescribedSpaceStandards = model.OtherNationallyDescribedSpaceStandards
+                                                     ?? Array.Empty<NationallyDescribedSpaceStandardType>();
+
+        return await SaveHomeTypeSegment(
+            new SaveFloorAreaStandardsCommand(applicationId, homeTypeId, nationallyDescribedSpaceStandards.Concat(otherNationallyDescribedSpaceStandards).ToList()),
+            model,
+            cancellationToken);
+    }
+
     [WorkflowState(HomeTypesWorkflowState.CheckAnswers)]
     [HttpGet("{homeTypeId}/CheckAnswers")]
     public async Task<IActionResult> CheckAnswers([FromRoute] string applicationId, string homeTypeId, CancellationToken cancellationToken)

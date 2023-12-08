@@ -31,4 +31,9 @@ public static class HomeTypesFormOptions
     public static IEnumerable<SelectListItem> FacilityType => SelectListHelper.FromEnum<FacilityType>();
 
     public static IEnumerable<SelectListItem> AccessibilityCategoryType => SelectListHelper.FromEnum<AccessibilityCategoryType>();
+
+    public static IEnumerable<SelectListItem> NationallyDescribedSpaceStandardsExceptNone => SelectListHelper.FromEnum<NationallyDescribedSpaceStandardType>()
+        .Where(x => x.Value != NationallyDescribedSpaceStandardType.NoneOfThese.ToString());
+
+    public static IEnumerable<SelectListItem> NationallyDescribedSpaceStandardsOnlyNone => new[] { SelectListHelper.FromEnum(NationallyDescribedSpaceStandardType.NoneOfThese) };
 }

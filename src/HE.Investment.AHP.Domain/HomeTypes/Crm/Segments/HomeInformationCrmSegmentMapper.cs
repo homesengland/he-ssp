@@ -25,6 +25,9 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             nameof(invln_HomeType.invln_facilities),
             nameof(invln_HomeType.invln_iswheelchairstandardmet),
             nameof(invln_HomeType.invln_accessibilitycategory),
+            nameof(invln_HomeType.invln_floorarea),
+            nameof(invln_HomeType.invln_doallhomesmeetNDSS),
+            nameof(invln_HomeType.invln_whichndssstandardshavebeenmet),
         })
     {
     }
@@ -44,7 +47,10 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             YesNoTypeMapper.Map(dto.areHomesCustomBuild),
             MapFacilityType(dto.sharedFacilities),
             YesNoTypeMapper.Map(dto.isWheelchairStandardMet),
-            MapAccessibilityCategory(dto.accessibilityCategory));
+            MapAccessibilityCategory(dto.accessibilityCategory),
+            dto.floorArea.IsProvided() ? new FloorArea(dto.floorArea!.Value) : null,
+            YesNoTypeMapper.Map(dto.doAllHomesMeetNDSS),
+            dto.whichNDSSStandardsHaveBeenMet.Select(MapNationallyDescribedSpaceStandards));
     }
 
     protected override HomeInformationSegmentEntity GetSegment(HomeTypeEntity entity) => entity.HomeInformation;
@@ -62,6 +68,9 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
         dto.sharedFacilities = MapFacilityType(segment.FacilityType);
         dto.isWheelchairStandardMet = YesNoTypeMapper.Map(segment.AccessibilityStandards);
         dto.accessibilityCategory = MapAccessibilityCategory(segment.AccessibilityCategory);
+        dto.floorArea = segment.InternalFloorArea?.Value;
+        dto.doAllHomesMeetNDSS = YesNoTypeMapper.Map(segment.MeetNationallyDescribedSpaceStandards);
+        dto.whichNDSSStandardsHaveBeenMet = segment.NationallyDescribedSpaceStandards.Select(MapNationallyDescribedSpaceStandards).ToList();
     }
 
     private static int? MapPeopleGroupForSpecificDesignFeatures(PeopleGroupForSpecificDesignFeaturesType peopleGroupForSpecificDesignFeatures)
@@ -163,6 +172,30 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             (int)invln_accessibilitycategoryset.Category2Accessibleandacceptabledwelling => AccessibilityCategoryType.AccessibleAndAdaptableDwellings,
             (int)invln_accessibilitycategoryset.Category3Wheelchairuserdwellings => AccessibilityCategoryType.WheelchairUserDwellings,
             _ => AccessibilityCategoryType.Undefined,
+        };
+    }
+
+    private static int MapNationallyDescribedSpaceStandards(NationallyDescribedSpaceStandardType value)
+    {
+        return value switch
+        {
+            NationallyDescribedSpaceStandardType.BuiltInStorageSpaceSize => (int)invln_whichndssstandardshavebeenmet.Builtinstoragespacesize,
+            NationallyDescribedSpaceStandardType.BedroomAreas => (int)invln_whichndssstandardshavebeenmet.Bedroomareas,
+            NationallyDescribedSpaceStandardType.BedroomWidth => (int)invln_whichndssstandardshavebeenmet.Bedroomwidths,
+            NationallyDescribedSpaceStandardType.NoneOfThese => (int)invln_whichndssstandardshavebeenmet.Noneofthese,
+            _ => throw new ArgumentOutOfRangeException(nameof(value), $"Value {value} is not supported by CRM mapping."),
+        };
+    }
+
+    private static NationallyDescribedSpaceStandardType MapNationallyDescribedSpaceStandards(int value)
+    {
+        return value switch
+        {
+            (int)invln_whichndssstandardshavebeenmet.Builtinstoragespacesize => NationallyDescribedSpaceStandardType.BuiltInStorageSpaceSize,
+            (int)invln_whichndssstandardshavebeenmet.Bedroomareas => NationallyDescribedSpaceStandardType.BedroomAreas,
+            (int)invln_whichndssstandardshavebeenmet.Bedroomwidths => NationallyDescribedSpaceStandardType.BedroomWidth,
+            (int)invln_whichndssstandardshavebeenmet.Noneofthese => NationallyDescribedSpaceStandardType.NoneOfThese,
+            _ => throw new ArgumentOutOfRangeException(nameof(value), $"Value {value} is not supported by CRM mapping."),
         };
     }
 }

@@ -35,7 +35,8 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 homeType.SupportedHousing?.ShortStayAccommodation ?? YesNoType.Undefined,
                 homeType.SupportedHousing?.RevenueFundingType ?? RevenueFundingType.Undefined,
                 homeType.HomeInformation.BuildingType,
-                homeType.HomeInformation.AccessibilityStandards),
+                homeType.HomeInformation.AccessibilityStandards,
+                homeType.HomeInformation.MeetNationallyDescribedSpaceStandards),
         };
         _machine = new StateMachine<HomeTypesWorkflowState, Trigger>(HomeTypesWorkflowState.Index);
         ConfigureTransitions();
@@ -91,6 +92,8 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             HomeTypesWorkflowState.TypeOfFacilities => true,
             HomeTypesWorkflowState.AccessibilityStandards => true,
             HomeTypesWorkflowState.AccessibilityCategory => IsAccessibleStandards(),
+            HomeTypesWorkflowState.FloorArea => true,
+            HomeTypesWorkflowState.FloorAreaStandards => IsNotMeetNationallyDescribedSpaceStandards(),
             HomeTypesWorkflowState.CheckAnswers => true,
             _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
@@ -207,18 +210,28 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             .Permit(Trigger.Back, HomeTypesWorkflowState.CustomBuildProperty);
 
         _machine.Configure(HomeTypesWorkflowState.AccessibilityStandards)
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, () => !IsAccessibleStandards())
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.FloorArea, () => !IsAccessibleStandards())
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.AccessibilityCategory, IsAccessibleStandards)
             .Permit(Trigger.Back, HomeTypesWorkflowState.TypeOfFacilities);
 
         _machine.Configure(HomeTypesWorkflowState.AccessibilityCategory)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.FloorArea)
             .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
+
+        _machine.Configure(HomeTypesWorkflowState.FloorArea)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, () => !IsNotMeetNationallyDescribedSpaceStandards())
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards, () => !IsAccessibleStandards())
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.AccessibilityCategory, IsAccessibleStandards);
+
+        _machine.Configure(HomeTypesWorkflowState.FloorAreaStandards)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.FloorArea);
 
         _machine.Configure(HomeTypesWorkflowState.CheckAnswers)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards, () => !IsAccessibleStandards())
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.AccessibilityCategory, IsAccessibleStandards);
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
     }
 
     private bool IsGeneralHomeType() => _homeTypeModel is { HousingType: HousingType.Undefined or HousingType.General };
@@ -239,4 +252,6 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
     private bool IsBuildingInformationIneligible() => IsGeneralHomeType() && _homeTypeModel is { Conditionals.BuildingType: BuildingType.Bedsit };
 
     private bool IsAccessibleStandards() => _homeTypeModel is { Conditionals.AccessibleStandards: YesNoType.Yes };
+
+    private bool IsNotMeetNationallyDescribedSpaceStandards() => _homeTypeModel is { Conditionals.MeetNationallyDescribedSpaceStandards: YesNoType.No };
 }

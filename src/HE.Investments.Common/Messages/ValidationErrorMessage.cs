@@ -101,6 +101,8 @@ public static class ValidationErrorMessage
 
     public static string MustBeNumber(string displayName, int minValue, int maxValue) => $"{displayName} must be between {minValue} and {maxValue}";
 
+    public static string SquareMetersMustBeNumber() => "The square meterage in the internal floor each of each home must be a number, like 75.50";
+
     public static string StringLengthExceeded(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
 
     public static string ExclusiveOptionSelected(string displayName, string optionName) => $"{optionName.TitleCaseFirstLetterInString()} {displayName} option is exclusive and cannot be selected with any other option.";

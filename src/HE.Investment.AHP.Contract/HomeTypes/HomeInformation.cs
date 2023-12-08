@@ -16,5 +16,8 @@ public record HomeInformation(
         YesNoType CustomBuild,
         FacilityType FacilityType,
         YesNoType AccessibilityStandards,
-        AccessibilityCategoryType AccessibilityCategory)
+        AccessibilityCategoryType AccessibilityCategory,
+        decimal? InternalFloorArea,
+        YesNoType MeetNationallyDescribedSpaceStandards,
+        IList<NationallyDescribedSpaceStandardType> NationallyDescribedSpaceStandards)
     : HomeTypeSegmentBase(ApplicationName, HomeTypeName);

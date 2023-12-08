@@ -30,5 +30,16 @@ namespace He.AspNetCore.Mvc.Gds.Components.Enums
         /// </summary>
         [Display(Name = "years")]
         NumberOfYears,
+
+        /// <summary>
+        /// Peer week.
+        /// </summary>
+        [Display(Name = "per week")]
+        PerWeek,
+        /// <summary>
+        /// Square meters.
+        /// </summary>
+        [Display(Name = "square meters")]
+        SquareMeters,
     }
 }

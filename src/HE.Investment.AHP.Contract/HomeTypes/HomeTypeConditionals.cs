@@ -8,4 +8,5 @@ public record HomeTypeConditionals(
     YesNoType ShortStayAccommodation,
     RevenueFundingType RevenueFundingType,
     BuildingType BuildingType,
-    YesNoType AccessibleStandards);
+    YesNoType AccessibleStandards,
+    YesNoType MeetNationallyDescribedSpaceStandards);
