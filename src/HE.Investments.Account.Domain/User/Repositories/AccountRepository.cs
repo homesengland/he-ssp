@@ -9,7 +9,7 @@ using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace HE.Investments.Account.Domain.User.Repositories;
 
-public class AccountRepository : IUserRepository, IAccountRepository
+public class AccountRepository : IProfileRepository, IAccountRepository
 {
     private readonly IContactService _contactService;
 

@@ -9,19 +9,19 @@ namespace HE.Investments.Account.Domain.User.QueryHandlers;
 
 public class GetUserProfileInformationQueryHandler : IRequestHandler<GetUserProfileDetailsQuery, UserProfileDetailsModel>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IProfileRepository _profileRepository;
 
     private readonly IUserContext _userContext;
 
-    public GetUserProfileInformationQueryHandler(IUserRepository userRepository, IUserContext userContext)
+    public GetUserProfileInformationQueryHandler(IProfileRepository profileRepository, IUserContext userContext)
     {
-        _userRepository = userRepository;
+        _profileRepository = profileRepository;
         _userContext = userContext;
     }
 
     public async Task<UserProfileDetailsModel> Handle(GetUserProfileDetailsQuery request, CancellationToken cancellationToken)
     {
-        var userProfileInformation = await _userRepository.GetProfileDetails(UserGlobalId.From(_userContext.UserGlobalId));
+        var userProfileInformation = await _profileRepository.GetProfileDetails(UserGlobalId.From(_userContext.UserGlobalId));
 
         return new UserProfileDetailsModel
         {

@@ -200,6 +200,7 @@ public class ContactService : IContactService
             postcode = contact.Contains("address1_postalcode") ? contact["address1_postalcode"].ToString() : string.Empty,
             country = contact.Contains("address1_country") ? contact["address1_country"].ToString() : string.Empty,
             contactId = contact.Id.ToString(),
+            contactExternalId = contact.Contains("invln_externalid") ? contact["invln_externalid"].ToString() : string.Empty,
         };
 
         if (contact.Contains("invln_termsandconditionsaccepted") && bool.TryParse(contact["invln_termsandconditionsaccepted"].ToString(), out var termsAccepted))

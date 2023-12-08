@@ -1,0 +1,10 @@
+@model (string title, string value)
+
+<div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+        @Model.title
+    </dt>
+    <dd class="govuk-summary-list__value">
+        <p>@Model.value</p>
+    </dd>
+</div>

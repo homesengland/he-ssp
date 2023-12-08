@@ -67,10 +67,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="Views\Shared\Components\JoinRequestsTable\JoinRequestsTable.cshtml" />
     <EmbeddedResource Include="Views\Shared\Components\UsersTable\UsersTable.cshtml" />
   </ItemGroup>

@@ -1,9 +1,16 @@
+@model (string OrganisationName, HE.Investments.Account.Contract.Users.UserDetails UserDetails)
 @{
     ViewData["Title"] = "Manage users";
+    var title = $"Manage {Model.UserDetails.FirstName} {Model.UserDetails.LastName}'s role";
 }
 
 <gds-div-grid-column-two-thirds>
-
-    <span>TODO</span>
-
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Index", "Users")"></gds-back-link>
+    <vc:form-header title=@title caption="@Model.OrganisationName"/>
+    <gds-summary-list class="govuk-!-margin-bottom-9">
+        <vc:summary-item title="First name" value="@Model.UserDetails.FirstName"/>
+        <vc:summary-item title="Last name" value="@Model.UserDetails.LastName"/>
+        <vc:summary-item title="Job title" value="@Model.UserDetails.JobTitle"/>
+        <vc:summary-item title="Email" value="@Model.UserDetails.Email"/>
+    </gds-summary-list>
 </gds-div-grid-column-two-thirds>

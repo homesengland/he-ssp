@@ -69,5 +69,6 @@
     <EmbeddedResource Include="Components\BackLinkWithCallback\BackLinkWithCallback.cshtml" />
     <EmbeddedResource Include="Components\Table\Table.cshtml" />
     <EmbeddedResource Include="Components\Link\Link.cshtml" />
+    <EmbeddedResource Include="Components\SummaryItem\SummaryItem.cshtml" />
   </ItemGroup>
 </Project>

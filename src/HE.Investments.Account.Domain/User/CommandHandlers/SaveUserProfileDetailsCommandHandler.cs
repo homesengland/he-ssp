@@ -12,22 +12,22 @@ namespace HE.Investments.Account.Domain.User.CommandHandlers;
 
 public class SaveUserProfileDetailsCommandHandler : IRequestHandler<SaveUserProfileDetailsCommand, OperationResult>
 {
-    private readonly IUserRepository _userRepository;
+    private readonly IProfileRepository _profileRepository;
 
     private readonly IAccountUserContext _accountContext;
 
     private readonly ILogger<SaveUserProfileDetailsCommandHandler> _logger;
 
-    public SaveUserProfileDetailsCommandHandler(IUserRepository userRepository, IAccountUserContext accountContext, ILogger<SaveUserProfileDetailsCommandHandler> logger)
+    public SaveUserProfileDetailsCommandHandler(IProfileRepository profileRepository, IAccountUserContext accountContext, ILogger<SaveUserProfileDetailsCommandHandler> logger)
     {
-        _userRepository = userRepository;
+        _profileRepository = profileRepository;
         _logger = logger;
         _accountContext = accountContext;
     }
 
     public async Task<OperationResult> Handle(SaveUserProfileDetailsCommand request, CancellationToken cancellationToken)
     {
-        var userDetails = await _userRepository.GetProfileDetails(_accountContext.UserGlobalId);
+        var userDetails = await _profileRepository.GetProfileDetails(_accountContext.UserGlobalId);
 
         try
         {
@@ -45,7 +45,7 @@ public class SaveUserProfileDetailsCommandHandler : IRequestHandler<SaveUserProf
             return domainValidationException.OperationResult;
         }
 
-        await _userRepository.SaveAsync(userDetails, _accountContext.UserGlobalId, cancellationToken);
+        await _profileRepository.SaveAsync(userDetails, _accountContext.UserGlobalId, cancellationToken);
         await _accountContext.RefreshProfileDetails();
 
         return OperationResult.Success();

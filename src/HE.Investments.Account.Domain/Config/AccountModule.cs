@@ -16,13 +16,15 @@ public static class AccountModule
     {
         services.AddOrganizationsModule();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AccountModule).Assembly));
-        services.AddScoped<IUserRepository, AccountRepository>();
+        services.AddScoped<IProfileRepository, AccountRepository>();
         services.AddScoped<IContactRepository, ContactRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<IAccountUserContext, AccountUserContext>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+        services.AddScoped<ICurrentOrganisationRepository, CurrentOrganisationRepository>();
         services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
         services.AddScoped<IUsersCrmContext, UsersCrmContext>();
         services.AddScoped<IUsersRepository, UsersRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
     }
 }
