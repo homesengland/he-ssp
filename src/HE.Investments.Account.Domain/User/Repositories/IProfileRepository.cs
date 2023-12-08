@@ -3,7 +3,7 @@ using HE.Investments.Account.Shared.User.Entities;
 
 namespace HE.Investments.Account.Domain.User.Repositories;
 
-public interface IUserRepository
+public interface IProfileRepository
 {
     Task<UserProfileDetails> GetProfileDetails(UserGlobalId userGlobalId);
 

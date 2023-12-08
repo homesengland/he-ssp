@@ -1,6 +1,5 @@
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.Data;
-using HE.Investments.Account.Shared;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
 
@@ -15,7 +14,7 @@ public class UsersRepository : IUsersRepository
 
     public async Task<IList<UserDetails>> GetUsers()
     {
-        var users = await _usersCrmContext.GetUsers(PortalConstants.LoansPortalType);
+        var users = await _usersCrmContext.GetUsers();
 
         return users
             .Select(u => new UserDetails(u.contactExternalId, u.firstName, u.lastName, u.email, u.jobTitle, null, null))

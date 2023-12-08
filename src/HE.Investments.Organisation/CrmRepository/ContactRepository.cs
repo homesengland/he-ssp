@@ -14,6 +14,7 @@ public class ContactRepository : IContactRepository
                         <attribute name=""firstname"" />
                         <attribute name=""jobtitle"" />
                         <attribute name=""lastname"" />
+                        <attribute name=""invln_externalid"" />
                         <link-entity name=""invln_contactwebrole"" from=""invln_contactid"" to=""contactid"">
                           <filter>
                             <condition attribute=""invln_accountid"" operator=""eq"" value=""" + organisationId + @""" />

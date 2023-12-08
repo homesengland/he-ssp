@@ -18,12 +18,12 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
     private readonly IAccountUserContext _accountUserContext;
     private readonly IProgrammeRepository _programmeRepository;
     private readonly IOrganizationRepository _organizationRepository;
-    private readonly IUserRepository _userRepository;
+    private readonly IProfileRepository _profileRepository;
     private readonly IFeatureManager _featureManager;
 
     public GetUserOrganisationInformationQueryHandler(
         IOrganizationRepository organizationRepository,
-        IUserRepository userRepository,
+        IProfileRepository profileRepository,
         IAccountUserContext accountUserContext,
         IProgrammeRepository programmeRepository,
         IFeatureManager featureManager)
@@ -32,14 +32,14 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
         _programmeRepository = programmeRepository;
         _featureManager = featureManager;
         _organizationRepository = organizationRepository;
-        _userRepository = userRepository;
+        _profileRepository = profileRepository;
     }
 
     public async Task<GetUserOrganisationInformationQueryResponse> Handle(GetUserOrganisationInformationQuery request, CancellationToken cancellationToken)
     {
         var account = await _accountUserContext.GetSelectedAccount();
         var organisationDetails = await _organizationRepository.GetBasicInformation(account, cancellationToken);
-        var userDetails = await _userRepository.GetProfileDetails(_accountUserContext.UserGlobalId);
+        var userDetails = await _profileRepository.GetProfileDetails(_accountUserContext.UserGlobalId);
 
         if (await _featureManager.IsEnabledAsync(FeatureFlags.AhpProgram, account.AccountId.ToString()) is false)
         {

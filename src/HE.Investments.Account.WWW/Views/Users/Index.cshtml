@@ -1,23 +1,33 @@
+@using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Components.FormHeader
-@model HE.Investments.Account.Contract.Users.UsersAndJoinRequests;
+@model (HE.Investments.Account.Contract.Users.UsersAndJoinRequests usersAndJoinRequests, IDictionary<HE.Investments.Account.Contract.Users.UserRole, string> roles);
 @{
     ViewData["Title"] = "Manage users";
-    var title = $"Manage users at {Model.OrganisationName}";
+    var title = $"Manage users at {Model.usersAndJoinRequests.OrganisationName}";
 }
 
 <div class="govuk-grid-column-full">
     <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Index", "Home")"></gds-back-link>
     <vc:form-header title=@title/>
 
-    @if (Model.Users.Any())
+    @if (Model.usersAndJoinRequests.Users.Any())
     {
-        <vc:users-table users="@Model.Users"/>
+        <vc:users-table users="@Model.usersAndJoinRequests.Users"/>
     }
 
-    @if (Model.JoinRequests.Any())
+    @if (Model.usersAndJoinRequests.JoinRequests.Any())
     {
         <gds-h2>Manage requests to join your organisation</gds-h2>
         <gds-p>Manage users and accept or reject requests to join the organisation. </gds-p>
-        <vc:join-requests-table users="@Model.JoinRequests"/>
+        <vc:join-requests-table users="@Model.usersAndJoinRequests.JoinRequests"/>
     }
+
+    <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
+        <gds-h2>What each role can do</gds-h2>
+        @foreach (var role in Model.roles.Reverse())
+        {
+            <gds-p class="govuk-!-margin-bottom-0">@role.Key.GetDescription()</gds-p>
+            <gds-p>@role.Value</gds-p>
+        }
+    </gds-div-grid-column-two-thirds>
 </div>

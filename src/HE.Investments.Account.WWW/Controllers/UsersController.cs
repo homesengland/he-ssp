@@ -1,7 +1,7 @@
 using HE.Investments.Account.Contract.Users.Queries;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Account.WWW.Models.Users;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Account.WWW.Controllers;
@@ -22,12 +22,14 @@ public class UsersController : Controller
     {
         var model = await _mediator.Send(new GetUsersAndJoinRequestsQuery(), cancellationToken);
 
-        return View("Index", model);
+        return View("Index", (model, UserRoles.GetAll()));
     }
 
     [HttpGet("manage")]
-    public IActionResult Manage([FromQuery] string id)
+    public async Task<IActionResult> Manage([FromQuery] string id, CancellationToken cancellationToken)
     {
-        return View("Manage");
+        var model = await _mediator.Send(new GetUserDetailsQuery(id), cancellationToken);
+
+        return View("Manage", model);
     }
 }
