@@ -127,6 +127,15 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             }
         }
 
+        public void SetWhichNdssStandardsHaveBeenMetValue(invln_HomeType target)
+        {
+            if (target.invln_whichndssstandardshavebeenmet != null && target.invln_whichndssstandardshavebeenmet.Any(x => x.Value == (int)invln_WhichNDSSstandardshavebeenmet.Noneofthese))
+            {
+                target.invln_whichndssstandardshavebeenmet.Clear();
+                target.invln_whichndssstandardshavebeenmet.Add(new Microsoft.Xrm.Sdk.OptionSetValue((int)invln_WhichNDSSstandardshavebeenmet.Noneofthese));
+            }
+        }
+
         public void CreateDocumentLocation(invln_HomeType target)
         {
             if (target.invln_application != null)

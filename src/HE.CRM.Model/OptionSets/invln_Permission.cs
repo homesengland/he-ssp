@@ -18,10 +18,19 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Accountadministrator = 858110000,
+		Admin = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Enhanced = 858110004,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		InputOnly = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Limiteduser = 858110001,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Viewonly = 858110002,
 	}
 }
 #pragma warning restore CS1591
