@@ -21,7 +21,7 @@ internal sealed class CalculateAffordableRentQueryHandler : BaseQueryHandler, IR
 
     private IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.TenureDetails };
 
-    private IEnumerable<Action<CalculateAffordableRentQuery, IHomeTypeEntity>> SaveActions => new[]
+    private IEnumerable<Action<CalculateAffordableRentQuery, IHomeTypeEntity>> CalculateActions => new[]
     {
         (CalculateAffordableRentQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeHomeMarketValue(request.HomeMarketValue, true),
         (request, homeType) => homeType.TenureDetails.ChangeHomeWeeklyRent(request.HomeWeeklyRent, true),
@@ -39,7 +39,7 @@ internal sealed class CalculateAffordableRentQueryHandler : BaseQueryHandler, IR
             SegmentTypes,
             cancellationToken);
 
-        var errors = PerformWithValidation(SaveActions.Select<Action<CalculateAffordableRentQuery, IHomeTypeEntity>, Action>(x => () => x(request, homeType)).ToArray());
+        var errors = PerformWithValidation(CalculateActions.Select<Action<CalculateAffordableRentQuery, IHomeTypeEntity>, Action>(x => () => x(request, homeType)).ToArray());
 
         var result = errors.Any() ? new OperationResult(errors) : OperationResult.Success();
         return result;

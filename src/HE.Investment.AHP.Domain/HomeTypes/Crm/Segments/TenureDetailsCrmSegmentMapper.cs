@@ -17,9 +17,9 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
             nameof(invln_HomeType.invln_marketrent),
             nameof(invln_HomeType.invln_prospectiverent),
             nameof(invln_HomeType.invln_prospectiverentasofmarketrent),
-            //nameof(invln_HomeType.invln_targetrentover80ofmarketrent), TODO wating for crm
+            nameof(invln_HomeType.invln_targetrentover80ofmarketrent),
             nameof(invln_HomeType.invln_rtsoexempt),
-            //nameof(invln_HomeType.invln_reasonsforrtsoexemption), TODO wating for crm
+            nameof(invln_HomeType.invln_reasonsforrtsoexemption),
         })
     {
     }
@@ -33,10 +33,9 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
             dto.marketRent.IsProvided() ? new HomeWeeklyRent(dto.marketRent!.Value) : null,
             dto.prospectiveRent.IsProvided() ? new AffordableWeeklyRent(dto.prospectiveRent!.Value) : null,
             dto.prospectiveRentAsPercentOfMarketRent.IsProvided() ? new AffordableRentAsPercentageOfMarketRent(dto.prospectiveRentAsPercentOfMarketRent!.Value) : null,
-            //YesNoTypeMapper.Map(dto.target), TODO wating for crm
-            YesNoTypeMapper.Map(dto.RtSOExemption), // todo
+            YesNoTypeMapper.Map(dto.targetRentOver80PercentOfMarketRent),
             YesNoTypeMapper.Map(dto.RtSOExemption),
-            null); // todo
+            dto.exemptionJustification.IsProvided() ? new MoreInformation(dto.exemptionJustification) : null);
     }
 
     protected override TenureDetailsSegmentEntity GetSegment(HomeTypeEntity entity) => entity.TenureDetails;
@@ -47,8 +46,8 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
         dto.marketRent = segment.HomeWeeklyRent?.Value;
         dto.prospectiveRent = segment.AffordableWeeklyRent?.Value;
         dto.prospectiveRentAsPercentOfMarketRent = segment.AffordableRentAsPercentageOfMarketRent?.Value;
-        //dto.target = YesNoTypeMapper.Map(segment.TargetRentExceedMarketRent?.Value); TODO wating for crm
+        dto.targetRentOver80PercentOfMarketRent = YesNoTypeMapper.Map(segment.TargetRentExceedMarketRent?.Value);
         dto.RtSOExemption = YesNoTypeMapper.Map(segment.ExemptFromTheRightToSharedOwnership);
-        //dto.reasonsforrtsoexemption = segment.ExitPlan?.Value; TODO wating for crm
+        dto.exemptionJustification = segment.ExemptionJustification?.Value;
     }
 }

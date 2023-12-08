@@ -13,6 +13,8 @@ public static class HomeTypeConditionalsMapper
             homeType.SupportedHousingInformation.RevenueFundingType,
             homeType.HomeInformation.BuildingType,
             homeType.HomeInformation.AccessibilityStandards,
-            homeType.HomeInformation.MeetNationallyDescribedSpaceStandards);
+            homeType.HomeInformation.MeetNationallyDescribedSpaceStandards,
+            homeType.TenureDetails.ExemptFromTheRightToSharedOwnership,
+            homeType.TenureDetails.IsExceeding80PercentOfMarketRent);
     }
 }

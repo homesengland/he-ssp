@@ -52,6 +52,8 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public MoreInformation? ExemptionJustification { get; private set; }
 
+    public bool IsExceeding80PercentOfMarketRent { get; private set; }
+
     public static decimal CalculateAffordableRent(string? homeWeeklyRent, string? affordableWeeklyRent)
     {
         var result = 00.00m;
@@ -84,6 +86,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
             : null;
 
         HomeWeeklyRent = _modificationTracker.Change(HomeWeeklyRent, newValue);
+        CalculateAffordableRentAsPercentageOfMarketRent(HomeWeeklyRent?.ToString(), AffordableWeeklyRent?.ToString());
     }
 
     public void ChangeAffordableWeeklyRent(string? affordableWeeklyRent, bool isCalculation = false)
@@ -93,17 +96,20 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
             : null;
 
         AffordableWeeklyRent = _modificationTracker.Change(AffordableWeeklyRent, newValue);
+        CalculateAffordableRentAsPercentageOfMarketRent(HomeWeeklyRent?.ToString(), AffordableWeeklyRent?.ToString());
     }
 
     public void CalculateAffordableRentAsPercentageOfMarketRent(string? homeWeeklyRent, string? affordableWeeklyRent)
     {
+        const int exceed80PercentOfMarketRent = 80;
         var result = CalculateAffordableRent(homeWeeklyRent, affordableWeeklyRent);
 
         var newValue = new AffordableRentAsPercentageOfMarketRent(result);
         AffordableRentAsPercentageOfMarketRent = _modificationTracker.Change(AffordableRentAsPercentageOfMarketRent, newValue);
 
-        if (result > 80 && TargetRentExceedMarketRent?.Value == YesNoType.No)
+        if (result > exceed80PercentOfMarketRent && TargetRentExceedMarketRent?.Value == YesNoType.No)
         {
+            IsExceeding80PercentOfMarketRent = true;
             OperationResult.New()
                 .AddValidationError(nameof(AffordableRentAsPercentageOfMarketRent), ValidationErrorMessage.ProspectiveRentExceed80Percent())
                 .CheckErrors();
@@ -153,8 +159,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
                && AffordableWeeklyRent.IsProvided()
                && AffordableRentAsPercentageOfMarketRent.IsProvided()
                && TargetRentExceedMarketRent?.Value != YesNoType.Undefined
-               && ExemptFromTheRightToSharedOwnership != YesNoType.Undefined // todo to be change because there will be different workflows
-               && ExemptionJustification.IsProvided();  // todo to be change because there will be different workflows
+               && ExemptFromTheRightToSharedOwnershipCompletion();
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
@@ -169,5 +174,12 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
             ChangeExemptFromTheRightToSharedOwnership(YesNoType.Undefined);
             ChangeExemptionJustification(null);
         }
+    }
+
+    private bool ExemptFromTheRightToSharedOwnershipCompletion()
+    {
+        return ExemptFromTheRightToSharedOwnership == YesNoType.No
+            ? ExemptionJustification.IsProvided()
+            : ExemptFromTheRightToSharedOwnership != YesNoType.Undefined;
     }
 }

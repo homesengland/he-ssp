@@ -36,7 +36,9 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
                 homeType.SupportedHousing?.RevenueFundingType ?? RevenueFundingType.Undefined,
                 homeType.HomeInformation.BuildingType,
                 homeType.HomeInformation.AccessibilityStandards,
-                homeType.HomeInformation.MeetNationallyDescribedSpaceStandards),
+                homeType.HomeInformation.MeetNationallyDescribedSpaceStandards,
+                homeType.TenureDetails.ExemptFromTheRightToSharedOwnership,
+                homeType.TenureDetails.IsExceeding80PercentOfMarketRent),
         };
         _machine = new StateMachine<HomeTypesWorkflowState, Trigger>(HomeTypesWorkflowState.Index);
         ConfigureTransitions();
@@ -94,6 +96,10 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             HomeTypesWorkflowState.AccessibilityCategory => IsAccessibleStandards(),
             HomeTypesWorkflowState.FloorArea => true,
             HomeTypesWorkflowState.FloorAreaStandards => IsNotMeetNationallyDescribedSpaceStandards(),
+            HomeTypesWorkflowState.AffordableRent => true,
+            HomeTypesWorkflowState.AffordableRentIneligible => IsExceeding80PercentOfMarketRent(),
+            HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership => true,
+            HomeTypesWorkflowState.ExemptionJustification => IsExemptFromTheRightToSharedOwnership(),
             HomeTypesWorkflowState.CheckAnswers => true,
             _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
@@ -220,30 +226,35 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
 
         _machine.Configure(HomeTypesWorkflowState.FloorArea)
             .PermitIf(Trigger.Continue, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards)
-            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, () => !IsNotMeetNationallyDescribedSpaceStandards())
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.AffordableRent, () => !IsNotMeetNationallyDescribedSpaceStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards, () => !IsAccessibleStandards())
             .PermitIf(Trigger.Back, HomeTypesWorkflowState.AccessibilityCategory, IsAccessibleStandards);
 
         _machine.Configure(HomeTypesWorkflowState.FloorAreaStandards)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers)
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.AffordableRent)
             .Permit(Trigger.Back, HomeTypesWorkflowState.FloorArea);
 
         _machine.Configure(HomeTypesWorkflowState.AffordableRent)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership, () => !IsExceeding80PercentOfMarketRent())
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.AffordableRentIneligible, IsExceeding80PercentOfMarketRent)
             .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
+
+        _machine.Configure(HomeTypesWorkflowState.BuildingInformationIneligible)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.AffordableRent);
 
         _machine.Configure(HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.ExemptionJustification)
-            .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.ExemptionJustification, IsExemptFromTheRightToSharedOwnership)
+            .PermitIf(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers, () => !IsExemptFromTheRightToSharedOwnership())
+            .Permit(Trigger.Back, HomeTypesWorkflowState.AffordableRent);
 
         _machine.Configure(HomeTypesWorkflowState.ExemptionJustification)
-            .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
-            .Permit(Trigger.Back, HomeTypesWorkflowState.AccessibilityStandards);
+            .Permit(Trigger.Continue, HomeTypesWorkflowState.CheckAnswers)
+            .Permit(Trigger.Back, HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership);
 
         _machine.Configure(HomeTypesWorkflowState.CheckAnswers)
             .Permit(Trigger.Continue, HomeTypesWorkflowState.List)
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorArea, () => !IsNotMeetNationallyDescribedSpaceStandards())
-            .PermitIf(Trigger.Back, HomeTypesWorkflowState.FloorAreaStandards, IsNotMeetNationallyDescribedSpaceStandards);
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership, () => !IsExemptFromTheRightToSharedOwnership())
+            .PermitIf(Trigger.Back, HomeTypesWorkflowState.ExemptionJustification, IsExemptFromTheRightToSharedOwnership);
     }
 
     private bool IsGeneralHomeType() => _homeTypeModel is { HousingType: HousingType.Undefined or HousingType.General };
@@ -266,4 +277,8 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
     private bool IsAccessibleStandards() => _homeTypeModel is { Conditionals.AccessibleStandards: YesNoType.Yes };
 
     private bool IsNotMeetNationallyDescribedSpaceStandards() => _homeTypeModel is { Conditionals.MeetNationallyDescribedSpaceStandards: YesNoType.No };
+
+    private bool IsExemptFromTheRightToSharedOwnership() => _homeTypeModel is { Conditionals.ExemptFromTheRightToSharedOwnership: YesNoType.Yes };
+
+    private bool IsExceeding80PercentOfMarketRent() => _homeTypeModel is { Conditionals.IsExceeding80PercentOfMarketRent: true };
 }

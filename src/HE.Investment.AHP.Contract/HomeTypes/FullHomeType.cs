@@ -13,4 +13,5 @@ public record FullHomeType(
     DisabledPeopleHomeTypeDetails? DisabledPeople,
     DesignPlans? DesignPlans,
     SupportedHousingInformation? SupportedHousing,
-    HomeInformation HomeInformation);
+    HomeInformation HomeInformation,
+    TenureDetails TenureDetails);

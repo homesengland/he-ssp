@@ -11,4 +11,6 @@ public record TenureDetails(
     decimal? CalculatedPercentage,
     YesNoType TargetRentExceedMarketRent,
     YesNoType ExemptFromTheRightToSharedOwnership,
-    string? ExemptionJustification);
+    string? ExemptionJustification,
+    bool IsExceeding80PercentOfMarketRent)
+    : HomeTypeSegmentBase(ApplicationName, HomeTypeName);
