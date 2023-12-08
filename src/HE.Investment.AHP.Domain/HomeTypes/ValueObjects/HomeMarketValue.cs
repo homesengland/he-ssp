@@ -35,7 +35,7 @@ public class HomeMarketValue : ValueObject
                 .CheckErrors();
         }
 
-        if (parsedValue < MinValue || parsedValue > MaxValue)
+        if (parsedValue is < MinValue or > MaxValue)
         {
             OperationResult.New()
                 .AddValidationError(nameof(HomeMarketValue), ValidationErrorMessage.MustBeNumberBetween(DisplayName, MinValue, MaxValue))
@@ -47,7 +47,7 @@ public class HomeMarketValue : ValueObject
 
     public HomeMarketValue(int value)
     {
-        if (value < MinValue || value > MaxValue)
+        if (value is < MinValue or > MaxValue)
         {
             OperationResult.New()
                 .AddValidationError(nameof(HomeMarketValue), ValidationErrorMessage.MustBeNumberBetween(DisplayName, MinValue, MaxValue))
