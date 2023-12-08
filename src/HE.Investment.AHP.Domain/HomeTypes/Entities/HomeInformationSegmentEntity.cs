@@ -160,7 +160,7 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
             OperationResult.New()
                 .AddValidationError(
                     nameof(NationallyDescribedSpaceStandards),
-                    ValidationErrorMessage.ExclusiveOptionSelected("Nationally Described Space Standards", HappiDesignPrincipleType.NoneOfThese.GetDescription()))
+                    ValidationErrorMessage.ExclusiveOptionSelected("Nationally Described Space Standards", NationallyDescribedSpaceStandardType.NoneOfThese.GetDescription()))
                 .CheckErrors();
         }
 
