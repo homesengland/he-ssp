@@ -6,7 +6,10 @@ namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 
 public class ExpectedOnCosts : PoundsValueObject
 {
-    public static readonly UiFields Fields = new(FinancialDetailsValidationFieldNames.ExpectedOnCosts, "The expected on works costs");
+    public static readonly UiFields Fields = new(
+        FinancialDetailsValidationFieldNames.ExpectedOnCosts,
+        "The expected on works costs",
+        FinancialDetailsValidationErrors.InvalidExpectedOnCosts);
 
     public ExpectedOnCosts(decimal landValue)
         : base(landValue, Fields)
@@ -14,7 +17,7 @@ public class ExpectedOnCosts : PoundsValueObject
     }
 
     public ExpectedOnCosts(string landValue)
-        : base(landValue, Fields, FinancialDetailsValidationErrors.InvalidExpectedOnCosts)
+        : base(landValue, Fields)
     {
     }
 }
