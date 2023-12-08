@@ -44,12 +44,10 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpGet("start")]
     [WorkflowState(FinancialDetailsWorkflowState.Index)]
-    public IActionResult Start(Guid applicationId, CancellationToken cancellationToken)
+    public async Task<IActionResult> Start(Guid applicationId, CancellationToken cancellationToken)
     {
-        // temporarly mocked
-        // var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()), cancellationToken);
-        // return View("Index", new { applicationId, applicationName = application.Name });
-        return View("Index", new FinancialDetailsBaseModel(applicationId, "Some application"));
+        var application = await _mediator.Send(new GetApplicationQuery(applicationId.ToString()), cancellationToken);
+        return View("Index", new FinancialDetailsBaseModel(applicationId, application.Name));
     }
 
     [HttpPost("start")]
@@ -71,7 +69,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsLandStatusModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.PurchasePrice?.ToString(CultureInfo.InvariantCulture) ?? string.Empty,
+            financialDetails.PurchasePrice.ToPoundsPencesString(),
             financialDetails.IsPurchasePriceFinal ?? siteLandStatus));
     }
 
@@ -79,7 +77,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
     public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvidePurchasePriceCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal), cancellationToken);
+        var result = await _mediator.Send(new ProvideLandStatusCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal), cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -105,7 +103,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsLandValueModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.LandValue.ToPoundsString(),
+            financialDetails.LandValue.ToPoundsPencesString(),
             isSchemeOnPublicLand));
     }
 
@@ -133,8 +131,8 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return View(new FinancialDetailsOtherApplicationCostsModel(
             applicationId,
             financialDetails.ApplicationName,
-            financialDetails.ExpectedWorkCost.ToString() ?? Check.IfCanBeNull,
-            financialDetails.ExpectedOnCost.ToString() ?? Check.IfCanBeNull));
+            financialDetails.ExpectedWorkCost.ToWholeNumberString(),
+            financialDetails.ExpectedOnCost.ToWholeNumberString()));
     }
 
     [HttpPost("other-application-costs")]
@@ -153,7 +151,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         return await ContinueWithRedirect(new { applicationId });
     }
 
-    [HttpGet("contributions")]
+    [HttpGet("expected-contributions")]
     [WorkflowState(FinancialDetailsWorkflowState.Contributions)]
     public async Task<IActionResult> Contributions(Guid applicationId)
     {
@@ -181,12 +179,12 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
             financialDetails.TotalExpectedContributions.ToWholeNumberString()));
     }
 
-    [HttpPost("contributions")]
+    [HttpPost("expected-contributions")]
     [WorkflowState(FinancialDetailsWorkflowState.Contributions)]
     public async Task<IActionResult> Contributions(Guid applicationId, FinancialDetailsContributionsModel model, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new ProvideContributionsCommand(
+            new ProvideExpecteContributionsCommand(
             ApplicationId.From(applicationId),
             model.RentalIncomeBorrowing,
             model.SaleOfHomesOnThisScheme,

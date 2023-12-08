@@ -7,15 +7,18 @@ namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 [HomeTypeSegmentType(HomeTypeSegmentType.DisabledAndVulnerablePeople)]
 public class DisabledPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
 {
-    private readonly ModificationTracker _modificationTracker = new();
+    private readonly ModificationTracker _modificationTracker;
 
     public DisabledPeopleHomeTypeDetailsSegmentEntity(
         DisabledPeopleHousingType housingType = DisabledPeopleHousingType.Undefined,
         DisabledPeopleClientGroupType clientGroupType = DisabledPeopleClientGroupType.Undefined)
     {
+        _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         HousingType = housingType;
         ClientGroupType = clientGroupType;
     }
+
+    public event EntityModifiedEventHandler SegmentModified;
 
     public bool IsModified => _modificationTracker.IsModified;
 

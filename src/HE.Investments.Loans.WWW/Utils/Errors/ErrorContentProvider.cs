@@ -1,4 +1,5 @@
 using System.Globalization;
+using HE.Investments.Common.Errors;
 using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Common.Infrastructure.ErrorHandling;
 using HE.Investments.Loans.Contract;

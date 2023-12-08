@@ -87,6 +87,10 @@ public static class ValidationErrorMessage
 
     public static string PoundInput(string name) => new($"{name} must be entered as a number, in pounds and pence");
 
+    public static string WholePoundInput(string name) => new($"{name} must be entered as a number, in pounds");
+
+    public static string WholeNumberInput(string name) => new($"{name} must be entered as a whole number");
+
     public static string ShortInputLengthExceeded(string fieldName) => new($"{fieldName.TitleCaseFirstLetterInString()} must be 100 characters or less");
 
     public static string LongInputLengthExceeded(string fieldName) => new($"{fieldName.TitleCaseFirstLetterInString()} must be 1500 characters or less");
@@ -104,6 +108,8 @@ public static class ValidationErrorMessage
     public static string MustBeSelectedForCalculation(string displayName) => $"Select if {displayName} to calculate";
 
     public static string ProspectiveRentExceed80Percent() => $"Prospective Rent (inclusive of all charges) must not exceed 80% of market rent, except where the target rent acts as a floor. Please check your answers. If those are correct, please contact your Growth Manager to discuss your proposal before continuing.";
+
+    public static string SquareMetersMustBeNumber() => "The square meterage in the internal floor each of each home must be a number, like 75.50";
 
     public static string StringLengthExceeded(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
 

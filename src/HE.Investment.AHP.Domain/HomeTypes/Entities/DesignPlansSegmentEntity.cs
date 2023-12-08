@@ -28,7 +28,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
 
     private readonly IList<DesignPlanFileEntity> _filesToUpload = new List<DesignPlanFileEntity>();
 
-    private readonly ModificationTracker _modificationTracker = new();
+    private readonly ModificationTracker _modificationTracker;
 
     public DesignPlansSegmentEntity(
         ApplicationBasicInfo application,
@@ -36,11 +36,14 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
         MoreInformation? moreInformation = null,
         IEnumerable<UploadedFile>? uploadedFiles = null)
     {
+        _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         _application = application;
         _designPrinciples = designPrinciples?.OrderBy(x => x).ToList() ?? new List<HappiDesignPrincipleType>();
         MoreInformation = moreInformation;
         _uploadedFiles = uploadedFiles?.ToList() ?? new List<UploadedFile>();
     }
+
+    public event EntityModifiedEventHandler SegmentModified;
 
     public bool IsModified => _modificationTracker.IsModified;
 
@@ -135,7 +138,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
 
     public bool IsRequired(HousingType housingType)
     {
-        return housingType is HousingType.HomesForOlderPeople or HousingType.HomesForOlderPeople;
+        return housingType is HousingType.HomesForOlderPeople or HousingType.HomesForDisabledAndVulnerablePeople;
     }
 
     public bool IsCompleted()

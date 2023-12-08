@@ -131,14 +131,22 @@ public class ContactService : IContactService
         }
     }
 
-    public async Task<List<ContactDto>> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, string organizationNumber, string portalType)
+    public async Task<List<ContactDto>> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, string organizationNumber, string? portalType = null)
     {
         var organisation = await _organizationRepository.SearchForOrganizationsByOrganizationId(service, organizationNumber);
         organisation ??= _organizationRepository.GetOrganizationViaCompanyHouseNumber(service, organizationNumber);
         var contactList = new List<ContactDto>();
         if (organisation != null)
         {
-            var contacts = _contactRepository.GetContactsForOrganisation(service, organisation.Id, portalType);
+            var portalTypeFilter = string.Empty;
+            if (!string.IsNullOrEmpty(portalType))
+            {
+                portalTypeFilter = @"<filter>
+                                <condition attribute=""invln_portal"" operator=""eq"" value=""" + portalType + @""" />
+                              </filter>";
+            }
+
+            var contacts = _contactRepository.GetContactsForOrganisation(service, organisation.Id, portalTypeFilter);
             if (contacts.Any())
             {
                 foreach (var contact in contacts)

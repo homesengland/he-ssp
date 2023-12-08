@@ -1,10 +1,13 @@
 using System.Reflection;
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
@@ -18,6 +21,7 @@ public class HomeTypeEntity : IHomeTypeEntity
         ApplicationBasicInfo application,
         string? name,
         HousingType housingType,
+        SectionStatus status,
         HomeTypeId? id = null,
         DateTime? createdOn = null,
         params IHomeTypeSegmentEntity[] segments)
@@ -25,9 +29,15 @@ public class HomeTypeEntity : IHomeTypeEntity
         Application = application;
         Name = new HomeTypeName(name);
         HousingType = housingType;
+        Status = status;
         Id = id ?? HomeTypeId.New();
         CreatedOn = createdOn;
         _segments = segments.ToDictionary(x => GetSegmentType(x.GetType()), x => x);
+
+        foreach (var segment in segments)
+        {
+            segment.SegmentModified += MarkAsNotCompleted;
+        }
     }
 
     public ApplicationBasicInfo Application { get; }
@@ -48,7 +58,7 @@ public class HomeTypeEntity : IHomeTypeEntity
 
     public DesignPlansSegmentEntity DesignPlans => GetRequiredSegment<DesignPlansSegmentEntity>();
 
-    public SupportedHousingInformationEntity SupportedHousingInformation => GetRequiredSegment<SupportedHousingInformationEntity>();
+    public SupportedHousingInformationSegmentEntity SupportedHousingInformation => GetRequiredSegment<SupportedHousingInformationSegmentEntity>();
 
     public TenureDetailsEntity TenureDetails => GetRequiredSegment<TenureDetailsEntity>();
 
@@ -59,9 +69,38 @@ public class HomeTypeEntity : IHomeTypeEntity
     // TODO: set this value when implementing Delivery Phases
     public bool IsUsedInDeliveryPhase => false;
 
+    public SectionStatus Status { get; private set; }
+
+    public void CompleteHomeType(IsSectionCompleted isSectionCompleted)
+    {
+        if (isSectionCompleted == IsSectionCompleted.Undefied)
+        {
+            OperationResult.New().AddValidationError(nameof(IsSectionCompleted), "Select whether you have completed this section").CheckErrors();
+        }
+
+        if (isSectionCompleted == IsSectionCompleted.No)
+        {
+            Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
+            return;
+        }
+
+        var canBeCompleted = HousingType != HousingType.Undefined
+                             && Name.IsProvided()
+                             && _segments.Where(x => x.Value.IsRequired(HousingType)).All(x => x.Value.IsCompleted());
+        if (!canBeCompleted)
+        {
+            OperationResult.New()
+                .AddValidationError(nameof(IsSectionCompleted), "You have not completed this section. Select no if you want to come back later")
+                .CheckErrors();
+        }
+
+        Status = _modificationTracker.Change(Status, SectionStatus.Completed);
+    }
+
     public void ChangeName(string? name)
     {
         Name = _modificationTracker.Change(Name, new HomeTypeName(name));
+        MarkAsNotCompleted();
     }
 
     public void ChangeHousingType(HousingType newHousingType)
@@ -77,18 +116,17 @@ public class HomeTypeEntity : IHomeTypeEntity
         }
 
         HousingType = _modificationTracker.Change(HousingType, newHousingType);
+        MarkAsNotCompleted();
     }
 
     public HomeTypeEntity Duplicate(HomeTypeName newName)
     {
-        return new HomeTypeEntity(Application, newName.Value, HousingType, segments: _segments.Select(x => x.Value.Duplicate()).ToArray());
-    }
-
-    public bool IsCompleted()
-    {
-        return HousingType != HousingType.Undefined
-               && Name.IsProvided()
-               && _segments.Where(x => x.Value.IsRequired(HousingType)).All(x => x.Value.IsCompleted());
+        return new HomeTypeEntity(
+            Application,
+            newName.Value,
+            HousingType,
+            SectionStatus.InProgress,
+            segments: _segments.Select(x => x.Value.Duplicate()).ToArray());
     }
 
     public bool HasSegment(HomeTypeSegmentType segmentType)
@@ -113,5 +151,10 @@ public class HomeTypeEntity : IHomeTypeEntity
         return _segments.TryGetValue(GetSegmentType(typeof(TSegment)), out var segment)
             ? (TSegment)segment
             : throw new InvalidOperationException($"Cannot get {typeof(TSegment).Name} segment because it does not exist.");
+    }
+
+    private void MarkAsNotCompleted()
+    {
+        Status = _modificationTracker.Change(Status, SectionStatus.InProgress);
     }
 }

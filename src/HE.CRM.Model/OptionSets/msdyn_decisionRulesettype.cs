@@ -33,6 +33,12 @@ namespace DataverseModel
 		Declarative = 192350000,
 		
 		/// <summary>
+		/// Route conversations using an LLM model based prediction
+		/// </summary>
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		IntelligentConversationDistribution = 192350003,
+		
+		/// <summary>
 		/// Embellishing the work-item using ML model
 		/// </summary>
 		[System.Runtime.Serialization.EnumMemberAttribute()]

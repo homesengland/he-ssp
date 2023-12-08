@@ -7,13 +7,11 @@
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.OtherApplicationCosts;
 
-    var (expectedWorksCostsInvalid, expectedWorksCostsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.ExpectedWorksCosts);
-    var (expectedOnCostsInvalid, expectedWorksOnErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.ExpectedOnCosts);
+    var (expectedWorksCostsInvalid, _) = ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.ExpectedWorksCosts);
+    var (expectedOnCostsInvalid, _) = ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.ExpectedOnCosts);
 
-    var errorsList = new string[] { expectedWorksCostsErrors, expectedWorksOnErrors };
 }
-<div id="mainContainer" role="main">
-    <div class="govuk-grid-column-full">
+<gds-div-grid-column-two-thirds>
         <form asp-controller="FinancialDetails" asp-action="OtherApplicationCosts" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
             <div id="backButton" role="navigation">
                 <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.OtherApplicationCosts, applicationId = @Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
@@ -30,7 +28,7 @@
                     </gds-field-set>
                     <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=@expectedWorksCostsInvalid>
                         <gds-legend>
-                            <gds-h2 for="@Model.ExpectedWorksCosts">
+                            <gds-h2 class="govuk-!-margin-bottom-1" for="@Model.ExpectedWorksCosts">
                                 Enter your expected works costs
                             </gds-h2>
                         </gds-legend>
@@ -41,7 +39,7 @@
                     </gds-field-set>
                     <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=@expectedOnCostsInvalid>
                         <gds-legend>
-                            <gds-h2 for="@Model.ExpectedOnCosts">
+                            <gds-h2 class="govuk-!-margin-bottom-1" for="@Model.ExpectedOnCosts">
                                 Enter your expected on costs
                             </gds-h2>
                         </gds-legend>
@@ -53,7 +51,7 @@
                     <gds-details>
                         <gds-summary-details>What are works and on costs?</gds-summary-details>
                         <gds-div-details-text>
-                            Details of eligable work and on costs can be found in the
+                            Details of eligible work and on costs can be found in the
                             <a href="https://www.gov.uk/government/publications/grant-agreement-examples-for-the-affordable-homes-programme-2021-to-2026" target="_blank">
                                 published examples of the 21-26 AHP grant agreement (opens in a new tab)
                             </a>
@@ -74,5 +72,4 @@
             </gds-p>
 
         </form>
-    </div>
-</div>
+</gds-div-grid-column-two-thirds>

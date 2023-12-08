@@ -1,0 +1,23 @@
+@using HE.Investments.Common.WWW.Components.FormHeader
+@model HE.Investments.Account.Contract.Users.UsersAndJoinRequests;
+@{
+    ViewData["Title"] = "Manage users";
+    var title = $"Manage users at {Model.OrganisationName}";
+}
+
+<div class="govuk-grid-column-full">
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Index", "Home")"></gds-back-link>
+    <vc:form-header title=@title/>
+
+    @if (Model.Users.Any())
+    {
+        <vc:users-table users="@Model.Users"/>
+    }
+
+    @if (Model.JoinRequests.Any())
+    {
+        <gds-h2>Manage requests to join your organisation</gds-h2>
+        <gds-p>Manage users and accept or reject requests to join the organisation. </gds-p>
+        <vc:join-requests-table users="@Model.JoinRequests"/>
+    }
+</div>

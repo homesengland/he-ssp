@@ -12,20 +12,20 @@ public class CurrentLandValueTests
     public void ShouldThrowDomainValidationException_WhenValueIsEmpty()
     {
         // given && when
-        var action = () => CurrentLandValue.From(string.Empty);
+        var action = () => new CurrentLandValue(string.Empty);
 
         // then
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MissingRequiredField(CurrentLandValue.DisplayName));
+            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MissingRequiredField(CurrentLandValue.Fields.DisplayName!));
     }
 
     [Fact]
     public void ShouldThrowDomainValidationException_WhenValueIsNegative()
     {
         // given && when
-        var action = () => CurrentLandValue.From("-1");
+        var action = () => new CurrentLandValue("-1");
 
         // then
         action.Should()
@@ -38,7 +38,7 @@ public class CurrentLandValueTests
     public void ShouldThrowDomainValidationException_WhenValueIsNotANumber()
     {
         // given && when
-        var action = () => CurrentLandValue.From("abc");
+        var action = () => new CurrentLandValue("abc");
 
         // then
         action.Should()
@@ -54,7 +54,7 @@ public class CurrentLandValueTests
     public void ShouldCreateLandValue_WhenValueIsValid(string input, decimal expectedValue)
     {
         // given && when
-        var landValue = CurrentLandValue.From(input);
+        var landValue = new CurrentLandValue(input);
 
         // then
         landValue.Value.Should().Be(expectedValue);

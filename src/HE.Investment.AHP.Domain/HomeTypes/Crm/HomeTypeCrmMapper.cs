@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.HomeTypes.Crm.Segments;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM.Model;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Crm;
@@ -15,6 +16,7 @@ public class HomeTypeCrmMapper : IHomeTypeCrmMapper
         nameof(invln_HomeType.invln_typeofhousing),
         nameof(invln_HomeType.invln_hometypename),
         nameof(invln_HomeType.CreatedOn),
+        nameof(invln_HomeType.invln_ishometypecompleted),
     };
 
     private readonly IList<IHomeTypeCrmSegmentMapper> _segmentMappers;
@@ -50,6 +52,7 @@ public class HomeTypeCrmMapper : IHomeTypeCrmMapper
             application,
             dto.homeTypeName,
             MapHousingType(dto.housingType),
+            dto.isCompleted == true ? SectionStatus.Completed : SectionStatus.InProgress,
             new HomeTypeId(dto.id),
             dto.createdOn,
             segments: segmentEntities.ToArray());
@@ -63,6 +66,7 @@ public class HomeTypeCrmMapper : IHomeTypeCrmMapper
             applicationId = entity.Application.Id.Value,
             homeTypeName = entity.Name.Value,
             housingType = MapHousingType(entity.HousingType),
+            isCompleted = entity.Status == SectionStatus.Completed,
         };
 
         return GetSegmentMappers(segments).Aggregate(homeTypeDto, (dto, segmentMapper) => segmentMapper.MapToDto(dto, entity));

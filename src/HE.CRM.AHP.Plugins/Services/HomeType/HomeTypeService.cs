@@ -127,12 +127,33 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             }
         }
 
+        public void SetWhichNdssStandardsHaveBeenMetValue(invln_HomeType target)
+        {
+            if (target.invln_whichndssstandardshavebeenmet != null && target.invln_whichndssstandardshavebeenmet.Any(x => x.Value == (int)invln_WhichNDSSstandardshavebeenmet.Noneofthese))
+            {
+                target.invln_whichndssstandardshavebeenmet.Clear();
+                target.invln_whichndssstandardshavebeenmet.Add(new Microsoft.Xrm.Sdk.OptionSetValue((int)invln_WhichNDSSstandardshavebeenmet.Noneofthese));
+            }
+        }
+
         public void CreateDocumentLocation(invln_HomeType target)
         {
             if (target.invln_application != null)
             {
                 var applicationDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToRecordWithGivenGuid(target.invln_application.Id);
                 var homeTypeLocation = _sharepointDocumentLocationRepository.GetHomeTypeDocumentLocationForGivenApplicationLocationRecord(applicationDocumentLocation.Id);
+                if (homeTypeLocation == null)
+                {
+                    homeTypeLocation = new SharePointDocumentLocation()
+                    {
+                        Name = "Home Types",
+                        ParentSiteOrLocation = applicationDocumentLocation.ToEntityReference(),
+                        RelativeUrl = "Home Types",
+                    };
+
+                    homeTypeLocation.Id = _sharepointDocumentLocationRepository.Create(homeTypeLocation);
+                }
+
                 var locationToCreate = new SharePointDocumentLocation()
                 {
                     RegardingObjectId = target.ToEntityReference(),

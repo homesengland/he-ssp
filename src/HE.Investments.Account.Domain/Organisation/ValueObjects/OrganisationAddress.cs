@@ -61,20 +61,20 @@ public class OrganisationAddress : ValueObject
         AddressLine1 = Validator
             .For(line1, nameof(AddressLine1), operationResult)
             .IsProvided(OrganisationErrorMessages.MissingOrganisationAddress)
-            .IsShortInput(lengthErrorMessage);
+            .IsShortInput(lengthErrorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded("Address Line 1"));
 
         AddressLine2 = Validator
             .For(line2, nameof(AddressLine2), operationResult)
-            .IsShortInput(lengthErrorMessage);
+            .IsShortInput(lengthErrorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded("Address Line 2"));
 
         AddressLine3 = Validator
             .For(line3, nameof(AddressLine3), operationResult)
-            .IsShortInput(lengthErrorMessage);
+            .IsShortInput(lengthErrorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded("Address Line 3"));
 
         TownOrCity = Validator
             .For(city, nameof(TownOrCity), operationResult)
             .IsProvided(OrganisationErrorMessages.MissingOrganisationTownOrCity)
-            .IsShortInput(lengthErrorMessage);
+            .IsShortInput(lengthErrorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded("Town or City"));
 
         County = Validator
             .For(county, nameof(County), operationResult)

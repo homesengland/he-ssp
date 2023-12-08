@@ -57,5 +57,5 @@ public class FinancialDetailsContributionsModel : FinancialDetailsBaseModel
 
     public bool IsUnregisteredBodyAccount { get; set; }
 
-    public string TotalExpectedContributions { get; set; }
+    public string? TotalExpectedContributions { get; set; }
 }

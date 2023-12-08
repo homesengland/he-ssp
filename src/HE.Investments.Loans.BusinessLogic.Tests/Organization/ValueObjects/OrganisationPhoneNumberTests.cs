@@ -39,6 +39,6 @@ public class OrganisationPhoneNumberTests
         var result = () => CreatePhoneNumber(organisationPhoneNumber);
 
         // then
-        result.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(GenericValidationError.TextTooLong);
+        result.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("Phone number must be 100 characters or less");
     }
 }

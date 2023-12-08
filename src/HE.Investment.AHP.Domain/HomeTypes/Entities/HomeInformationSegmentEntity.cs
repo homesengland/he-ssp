@@ -4,13 +4,17 @@ using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
+using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
 [HomeTypeSegmentType(HomeTypeSegmentType.HomeInformation)]
 public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
 {
-    private readonly ModificationTracker _modificationTracker = new();
+    private readonly ModificationTracker _modificationTracker;
+
+    private readonly List<NationallyDescribedSpaceStandardType> _nationallyDescribedSpaceStandards;
 
     public HomeInformationSegmentEntity(
         NumberOfHomes? numberOfHomes = null,
@@ -23,8 +27,12 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         YesNoType customBuild = YesNoType.Undefined,
         FacilityType facilityType = FacilityType.Undefined,
         YesNoType accessibilityStandards = YesNoType.Undefined,
-        AccessibilityCategoryType accessibilityCategory = AccessibilityCategoryType.Undefined)
+        AccessibilityCategoryType accessibilityCategory = AccessibilityCategoryType.Undefined,
+        FloorArea? internalFloorArea = null,
+        YesNoType meetNationallyDescribedSpaceStandards = YesNoType.Undefined,
+        IEnumerable<NationallyDescribedSpaceStandardType>? nationallyDescribedSpaceStandards = null)
     {
+        _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         NumberOfHomes = numberOfHomes;
         NumberOfBedrooms = numberOfBedrooms;
         MaximumOccupancy = maximumOccupancy;
@@ -36,7 +44,12 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         FacilityType = facilityType;
         AccessibilityStandards = accessibilityStandards;
         AccessibilityCategory = accessibilityCategory;
+        InternalFloorArea = internalFloorArea;
+        MeetNationallyDescribedSpaceStandards = meetNationallyDescribedSpaceStandards;
+        _nationallyDescribedSpaceStandards = nationallyDescribedSpaceStandards?.ToList() ?? new List<NationallyDescribedSpaceStandardType>();
     }
+
+    public event EntityModifiedEventHandler SegmentModified;
 
     public bool IsModified => _modificationTracker.IsModified;
 
@@ -61,6 +74,12 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
     public YesNoType AccessibilityStandards { get; private set; }
 
     public AccessibilityCategoryType AccessibilityCategory { get; private set; }
+
+    public FloorArea? InternalFloorArea { get; private set; }
+
+    public YesNoType MeetNationallyDescribedSpaceStandards { get; private set; }
+
+    public IReadOnlyCollection<NationallyDescribedSpaceStandardType> NationallyDescribedSpaceStandards => _nationallyDescribedSpaceStandards;
 
     public void ChangeNumberOfHomes(string? numberOfHomes)
     {
@@ -125,6 +144,37 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         AccessibilityCategory = _modificationTracker.Change(AccessibilityCategory, accessibilityCategory);
     }
 
+    public void ChangeInternalFloorArea(string? internalFloorArea)
+    {
+        var newValue = internalFloorArea.IsProvided() ? new FloorArea(internalFloorArea) : null;
+        InternalFloorArea = _modificationTracker.Change(InternalFloorArea, newValue);
+    }
+
+    public void ChangeMeetNationallyDescribedSpaceStandards(YesNoType meetNationallyDescribedSpaceStandards)
+    {
+        MeetNationallyDescribedSpaceStandards = _modificationTracker.Change(MeetNationallyDescribedSpaceStandards, meetNationallyDescribedSpaceStandards);
+    }
+
+    public void ChangeNationallyDescribedSpaceStandards(IEnumerable<NationallyDescribedSpaceStandardType> nationallyDescribedSpaceStandards)
+    {
+        var uniqueNationallyDescribedSpaceStandards = nationallyDescribedSpaceStandards.Distinct().OrderBy(x => x).ToList();
+        if (uniqueNationallyDescribedSpaceStandards.Contains(NationallyDescribedSpaceStandardType.NoneOfThese) && uniqueNationallyDescribedSpaceStandards.Count > 1)
+        {
+            OperationResult.New()
+                .AddValidationError(
+                    nameof(NationallyDescribedSpaceStandards),
+                    ValidationErrorMessage.ExclusiveOptionSelected("Nationally Described Space Standards", NationallyDescribedSpaceStandardType.NoneOfThese.GetDescription()))
+                .CheckErrors();
+        }
+
+        if (!_nationallyDescribedSpaceStandards.SequenceEqual(uniqueNationallyDescribedSpaceStandards))
+        {
+            _nationallyDescribedSpaceStandards.Clear();
+            _nationallyDescribedSpaceStandards.AddRange(uniqueNationallyDescribedSpaceStandards);
+            _modificationTracker.MarkAsModified();
+        }
+    }
+
     public IHomeTypeSegmentEntity Duplicate()
     {
         return new HomeInformationSegmentEntity(
@@ -138,7 +188,10 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
             CustomBuild,
             FacilityType,
             AccessibilityStandards,
-            AccessibilityCategory);
+            AccessibilityCategory,
+            InternalFloorArea,
+            MeetNationallyDescribedSpaceStandards,
+            NationallyDescribedSpaceStandards);
     }
 
     public bool IsRequired(HousingType housingType)
@@ -157,7 +210,9 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
                && BuildingType != BuildingType.Undefined
                && CustomBuild != YesNoType.Undefined
                && FacilityType != FacilityType.Undefined
-               && CheckAccessibilityCompletion();
+               && CheckAccessibilityCompletion()
+               && InternalFloorArea.IsProvided()
+               && CheckFloorAreaCompletion();
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
@@ -183,5 +238,12 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         return AccessibilityStandards == YesNoType.Yes
             ? AccessibilityCategory != AccessibilityCategoryType.Undefined
             : AccessibilityStandards != YesNoType.Undefined;
+    }
+
+    private bool CheckFloorAreaCompletion()
+    {
+        return MeetNationallyDescribedSpaceStandards == YesNoType.No
+            ? NationallyDescribedSpaceStandards.Any()
+            : MeetNationallyDescribedSpaceStandards != YesNoType.Undefined;
     }
 }

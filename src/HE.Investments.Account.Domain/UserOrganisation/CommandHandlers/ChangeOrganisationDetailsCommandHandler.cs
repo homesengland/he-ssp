@@ -4,6 +4,7 @@ using HE.Investments.Account.Domain.Organisation.Repositories;
 using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Account.Domain.UserOrganisation.Notifications;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Errors;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.Validators;

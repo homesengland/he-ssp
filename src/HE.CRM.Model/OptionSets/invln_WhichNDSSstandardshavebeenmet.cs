@@ -25,6 +25,9 @@ namespace DataverseModel
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Builtinstoragespacesize = 858110000,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Noneofthese = 858110003,
 	}
 }
 #pragma warning restore CS1591
