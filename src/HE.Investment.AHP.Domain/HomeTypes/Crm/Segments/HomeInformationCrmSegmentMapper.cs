@@ -182,7 +182,7 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             NationallyDescribedSpaceStandardType.BuiltInStorageSpaceSize => (int)invln_whichndssstandardshavebeenmet.Builtinstoragespacesize,
             NationallyDescribedSpaceStandardType.BedroomAreas => (int)invln_whichndssstandardshavebeenmet.Bedroomareas,
             NationallyDescribedSpaceStandardType.BedroomWidth => (int)invln_whichndssstandardshavebeenmet.Bedroomwidths,
-            // NationallyDescribedSpaceStandardType.NoneOfThese => (int)invln_whichndssstandardshavebeenmet.Noneofthese, TODO waiting for crm
+            NationallyDescribedSpaceStandardType.NoneOfThese => (int)invln_whichndssstandardshavebeenmet.Noneofthese,
             _ => throw new ArgumentOutOfRangeException(nameof(value), $"Value {value} is not supported by CRM mapping."),
         };
     }
@@ -194,7 +194,7 @@ public class HomeInformationCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Home
             (int)invln_whichndssstandardshavebeenmet.Builtinstoragespacesize => NationallyDescribedSpaceStandardType.BuiltInStorageSpaceSize,
             (int)invln_whichndssstandardshavebeenmet.Bedroomareas => NationallyDescribedSpaceStandardType.BedroomAreas,
             (int)invln_whichndssstandardshavebeenmet.Bedroomwidths => NationallyDescribedSpaceStandardType.BedroomWidth,
-            // (int)invln_whichndssstandardshavebeenmet.Noneofthese => NationallyDescribedSpaceStandardType.NoneOfThese, TODO waiting for crm
+            (int)invln_whichndssstandardshavebeenmet.Noneofthese => NationallyDescribedSpaceStandardType.NoneOfThese,
             _ => throw new ArgumentOutOfRangeException(nameof(value), $"Value {value} is not supported by CRM mapping."),
         };
     }
