@@ -9,12 +9,17 @@ public static class CrmResponseSerializer
         return JsonSerializer.Serialize(dto);
     }
 
-    public static TResult Deserialize<TResult>(string crmResponse)
+    public static TResult? Deserialize<TResult>(string crmResponse)
     {
         var serializerOptions = new JsonSerializerOptions
         {
             Converters = { new BoolConverter() },
         };
+
+        if (string.IsNullOrEmpty(crmResponse))
+        {
+            return default;
+        }
 
         return JsonSerializer.Deserialize<TResult>(crmResponse, serializerOptions)!;
     }

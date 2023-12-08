@@ -7,18 +7,24 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace HE.Investments.Loans.Common.Infrastructure.ErrorHandling;
+namespace HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 
 public class ExceptionFilter : ExceptionFilterAttribute
 {
     private readonly IModelMetadataProvider _modelMetadataProvider;
     private readonly IHostEnvironment _hostEnvironment;
+    private readonly IErrorViewPaths _errorViewPaths;
     private readonly ILogger<ExceptionFilter> _logger;
 
-    public ExceptionFilter(IModelMetadataProvider modelMetadataProvider, IHostEnvironment hostEnvironment, ILogger<ExceptionFilter> logger)
+    public ExceptionFilter(
+        IModelMetadataProvider modelMetadataProvider,
+        IHostEnvironment hostEnvironment,
+        IErrorViewPaths errorViewPaths,
+        ILogger<ExceptionFilter> logger)
     {
         _modelMetadataProvider = modelMetadataProvider;
         _hostEnvironment = hostEnvironment;
+        _errorViewPaths = errorViewPaths;
         _logger = logger;
     }
 
@@ -53,10 +59,10 @@ public class ExceptionFilter : ExceptionFilterAttribute
     {
         return exception switch
         {
-            NotFoundException => ErrorViewPaths.PageNotFound,
-            UnauthorizedAccessException => ErrorViewPaths.PageNotFound,
-            DomainException => ErrorViewPaths.ProblemWithTheService,
-            _ => ErrorViewPaths.ProblemWithTheService,
+            NotFoundException => _errorViewPaths.PageNotFoundViewPath,
+            UnauthorizedAccessException => _errorViewPaths.PageNotFoundViewPath,
+            DomainException => _errorViewPaths.ProblemWithTheServiceViewPath,
+            _ => _errorViewPaths.ProblemWithTheServiceViewPath,
         };
     }
 

@@ -2,6 +2,8 @@ using HE.Investment.AHP.WWW.Config;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.Cache;
+using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
+using HE.Investments.Common.WWW.Infrastructure.Middlewares;
 using HE.Investments.Common.WWW.Partials;
 using HE.Investments.Loans.Common.Infrastructure.Middlewares;
 using HE.Investments.Loans.Common.Models.App;
@@ -22,7 +24,10 @@ builder.Services.AddCommonBuildingBlocks();
 
 var mvcBuilder = builder.Services
     .AddControllersWithViews(options =>
-        options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()))
+    {
+        options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+        options.Filters.Add<ExceptionFilter>();
+    })
     .AddMvcOptions(options =>
         options.Filters.Add(
             new ResponseCacheAttribute { NoStore = true, Location = ResponseCacheLocation.None }));
@@ -32,15 +37,13 @@ builder.AddIdentityProviderConfiguration(mvcBuilder);
 var app = builder.Build();
 const string globalRoutePrefix = "/ahp";
 app.UsePathBase(globalRoutePrefix);
+
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    app.Use((context, next) =>
-    {
-        // assume all non-development requests are https
-        context.Request.Scheme = "https";
-        return next();
-    });
+    var errorViewPaths = app.Services.GetRequiredService<IErrorViewPaths>();
+    app.UseExceptionHandler(errorViewPaths.ErrorRoute)
+        .UsePageNotFound(errorViewPaths.PageNotFoundRoute)
+        .UseHttps();
 }
 
 app.UseHttpsRedirection();
