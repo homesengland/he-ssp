@@ -6,55 +6,54 @@ using HE.Investments.Common.Messages;
 
 namespace HE.Investment.AHP.Domain.Tests.FinancialDetails.ValueObjects;
 
-public class CurrentLandValueTests
+public class ExpectedOnCostsTests
 {
     [Fact]
     public void ShouldThrowDomainValidationException_WhenValueIsEmpty()
     {
         // given && when
-        var action = () => new CurrentLandValue(string.Empty);
+        var action = () => new ExpectedOnCosts(string.Empty);
 
         // then
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MissingRequiredField(CurrentLandValue.Fields.DisplayName!));
+            .ContainSingle(x => x.ErrorMessage == ValidationErrorMessage.MissingRequiredField(ExpectedOnCosts.Fields.DisplayName!));
     }
 
     [Fact]
     public void ShouldThrowDomainValidationException_WhenValueIsNegative()
     {
         // given && when
-        var action = () => new CurrentLandValue("-1");
+        var action = () => new ExpectedOnCosts("-1");
 
         // then
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == FinancialDetailsValidationErrors.InvalidLandValue);
+            .ContainSingle(x => x.ErrorMessage == FinancialDetailsValidationErrors.InvalidExpectedOnCosts);
     }
 
     [Fact]
     public void ShouldThrowDomainValidationException_WhenValueIsNotANumber()
     {
         // given && when
-        var action = () => new CurrentLandValue("abc");
+        var action = () => new ExpectedOnCosts("abc");
 
         // then
         action.Should()
             .ThrowExactly<DomainValidationException>()
             .Which.OperationResult.Errors.Should()
-            .ContainSingle(x => x.ErrorMessage == FinancialDetailsValidationErrors.InvalidLandValue);
+            .ContainSingle(x => x.ErrorMessage == FinancialDetailsValidationErrors.InvalidExpectedOnCosts);
     }
 
     [Theory]
     [InlineData("0", 0)]
     [InlineData("100", 100)]
-    [InlineData("100.12366", 100.12)]
-    public void ShouldCreateLandValue_WhenValueIsValid(string input, decimal expectedValue)
+    public void ShouldCreateExpectedOnCosts_WhenValueIsValid(string input, decimal expectedValue)
     {
         // given && when
-        var landValue = new CurrentLandValue(input);
+        var landValue = new ExpectedOnCosts(input);
 
         // then
         landValue.Value.Should().Be(expectedValue);

@@ -7,17 +7,15 @@ using HE.Investments.Common.Validators;
 namespace HE.Investments.Common.Domain.ValueObjects;
 
 [SuppressMessage("ReSharper", "VirtualMemberCallInConstructor", Justification = "Required for ValueObject")]
-public abstract class PoundsValueObject : ValueObject
+public abstract class PoundsPenceValueObject : ValueObject
 {
-    protected PoundsValueObject(decimal value, UiFields uiFields)
+    protected PoundsPenceValueObject(decimal value)
     {
-        UiFields = uiFields;
-        Value = WholeNumberValidator.Validate(value, UiFields.FieldName, DisplayName, ValidationErrorMessage.WholePoundInput(DisplayName));
+        Value = PoundsPencesValidator.Validate(value, UiFields.FieldName, DisplayName);
     }
 
-    protected PoundsValueObject(string value, UiFields uiFields)
+    protected PoundsPenceValueObject(string value, string? invalidValueValidationMessage = null)
     {
-        UiFields = uiFields;
         if (value.IsNotProvided())
         {
             OperationResult.New()
@@ -25,21 +23,17 @@ public abstract class PoundsValueObject : ValueObject
                 .CheckErrors();
         }
 
-        if (!decimal.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue))
+        if (!decimal.TryParse(value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue))
         {
             OperationResult.New()
-                .AddValidationError(UiFields.FieldName, UiFields.InvalidValueValidationMessage ?? ValidationErrorMessage.WholePoundInput(DisplayName))
+                .AddValidationError(UiFields.FieldName, invalidValueValidationMessage ?? ValidationErrorMessage.PoundInput(DisplayName))
                 .CheckErrors();
         }
 
-        Value = WholeNumberValidator.Validate(
-            parsedValue,
-            UiFields.FieldName,
-            DisplayName,
-            UiFields.InvalidValueValidationMessage ?? ValidationErrorMessage.WholePoundInput(DisplayName));
+        Value = PoundsPencesValidator.Validate(parsedValue, UiFields.FieldName, DisplayName);
     }
 
-    public UiFields UiFields { get; }
+    public abstract UiFields UiFields { get; }
 
     public decimal Value { get; }
 

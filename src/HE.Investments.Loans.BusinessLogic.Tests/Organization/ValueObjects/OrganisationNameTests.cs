@@ -39,6 +39,6 @@ public class OrganisationNameTests
         var result = () => CreateName(organisationName);
 
         // then
-        result.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage(GenericValidationError.TextTooLong);
+        result.Should().Throw<DomainValidationException>().WithOnlyOneErrorMessage("Organisation name must be 100 characters or less");
     }
 }

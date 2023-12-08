@@ -5,14 +5,14 @@ public class FinancialDetailsOtherApplicationCostsModel : FinancialDetailsBaseMo
     {
     }
 
-    public FinancialDetailsOtherApplicationCostsModel(Guid applicationId, string applicationName, string expectedWorksCost, string expectedOnCosts)
+    public FinancialDetailsOtherApplicationCostsModel(Guid applicationId, string applicationName, string? expectedWorksCost, string? expectedOnCosts)
         : base(applicationId, applicationName)
     {
         ExpectedWorksCosts = expectedWorksCost;
         ExpectedOnCosts = expectedOnCosts;
     }
 
-    public string ExpectedWorksCosts { get; set; }
+    public string? ExpectedWorksCosts { get; set; }
 
-    public string ExpectedOnCosts { get; set; }
+    public string? ExpectedOnCosts { get; set; }
 }

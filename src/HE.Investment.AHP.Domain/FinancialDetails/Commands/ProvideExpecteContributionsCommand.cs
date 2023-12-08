@@ -3,7 +3,7 @@ using MediatR;
 using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Commands;
-public record ProvideContributionsCommand(
+public record ProvideExpecteContributionsCommand(
     ApplicationId ApplicationId,
     string? RentalIncomeBorrowing,
     string? SalesOfHomesOnThisScheme,

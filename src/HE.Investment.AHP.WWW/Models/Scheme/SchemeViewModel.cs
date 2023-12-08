@@ -14,5 +14,5 @@ public record SchemeViewModel(
     string? StakeholderDiscussionsReport,
     IList<FileModel>? UploadedStakeholderDiscussionFiles,
     int MaxFileSizeInMegabytes,
-    string AllowedExtensions,
+    string? AllowedExtensions,
     IFormFile? StakeholderDiscussionFile = null);

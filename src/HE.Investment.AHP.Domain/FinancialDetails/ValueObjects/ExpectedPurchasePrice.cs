@@ -4,7 +4,7 @@ using HE.Investments.Common.Domain.ValueObjects;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 
-public class ExpectedPurchasePrice : PoundsValueObject
+public class ExpectedPurchasePrice : PoundsPenceValueObject
 {
     public static readonly UiFields Fields = new(FinancialDetailsValidationFieldNames.PurchasePrice, "The expected purchase price of the land");
 
