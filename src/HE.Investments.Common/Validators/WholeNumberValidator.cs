@@ -9,7 +9,7 @@ public static class WholeNumberValidator
         pounds = Math.Round(pounds, 0);
         if (pounds is < 0 or > 999999999)
         {
-            operationResult.AddValidationError(fieldName, validationMessage ?? ValidationErrorMessage.WholeNumberInput(displayName));
+            operationResult.AddValidationError(fieldName, validationMessage ?? ValidationErrorMessage.MustBeWholeNumber(displayName));
         }
 
         return pounds;
