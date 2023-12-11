@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.Common.Utils.Constants;
+namespace HE.Investments.Common.Utils.Pagination;
 
 public static class DefaultPagination
 {

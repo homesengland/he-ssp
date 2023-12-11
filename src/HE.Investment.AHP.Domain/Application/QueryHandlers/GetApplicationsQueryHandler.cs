@@ -2,6 +2,7 @@ using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
 using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Utils.Pagination;
 using MediatR;
 
 namespace HE.Investment.AHP.Domain.Application.QueryHandlers;
@@ -20,18 +21,25 @@ public class GetApplicationsQueryHandler : IRequestHandler<GetApplicationsQuery,
 
     public async Task<GetApplicationsQueryResult> Handle(GetApplicationsQuery request, CancellationToken cancellationToken)
     {
-        var applications = await _repository.GetAll(cancellationToken);
+        var applicationsWithPagination = await _repository.GetApplicationsWithFundingDetails(request.PaginationRequest, cancellationToken);
         var organisationName = (await _accountUserContext.GetSelectedAccount()).AccountName;
 
-        var applicationsBasicDetails = applications.Select(s => new ApplicationBasicDetails(
-                s.Id.Value,
-                s.Name.Name,
+        var applicationsBasicDetails = applicationsWithPagination.Items
+            .Select(s => new ApplicationBasicDetails(
+                s.ApplicationId.Value,
+                s.ApplicationName,
                 s.Status,
                 null,
-                null,
-                null))
+                s.RequiredFunding,
+                s.HousesToDeliver))
             .ToList();
 
-        return new GetApplicationsQueryResult(organisationName, applicationsBasicDetails);
+        return new GetApplicationsQueryResult(
+            organisationName,
+            new PaginationResult<ApplicationBasicDetails>(
+                applicationsBasicDetails,
+                applicationsWithPagination.CurrentPage,
+                applicationsWithPagination.ItemsPerPage,
+                applicationsWithPagination.TotalItems));
     }
 }
