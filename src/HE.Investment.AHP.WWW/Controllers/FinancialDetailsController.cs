@@ -16,6 +16,7 @@ using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Extensions;
 using HE.Investments.Loans.Common.Routing;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
@@ -297,12 +298,16 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     protected override async Task<IStateRouting<FinancialDetailsWorkflowState>> Routing(FinancialDetailsWorkflowState currentState, object? routeData = null)
     {
-        var applicationId = await Task.Run(() => Request.GetRouteValue("applicationId") ?? routeData?.GetPropertyValue<Guid>("applicationId").ToString());
+        var applicationId = Request.GetRouteValue("applicationId")
+                            ?? routeData?.GetPropertyValue<string>("applicationId")
+                            ?? throw new NotFoundException($"{nameof(FinancialDetailsController)} required applicationId path parameter.");
+
         if (string.IsNullOrEmpty(applicationId))
         {
-            return new FinancialDetailsWorkflow();
+            throw new InvalidOperationException("Cannot find applicationId.");
         }
 
-        return new FinancialDetailsWorkflow(currentState);
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId));
+        return new FinancialDetailsWorkflow(currentState, financialDetails);
     }
 }

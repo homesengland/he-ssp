@@ -17,7 +17,7 @@ public class CalculateTotalTests
             new ExpectedContributionValue(ExpectedContributionFields.OwnResources, "4"),
             new ExpectedContributionValue(ExpectedContributionFields.RcgfContribution, "5"),
             new ExpectedContributionValue(ExpectedContributionFields.OtherCapitalSources, "6"),
-            new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, "7"),
+            new ExpectedContributionValue(ExpectedContributionFields.InitialSalesOfSharedHomes, "7"),
             new ExpectedContributionValue(ExpectedContributionFields.HomesTransferValue, "8"));
 
         // when
@@ -38,7 +38,7 @@ public class CalculateTotalTests
             new ExpectedContributionValue(ExpectedContributionFields.OwnResources, "4"),
             new ExpectedContributionValue(ExpectedContributionFields.RcgfContribution, "5"),
             new ExpectedContributionValue(ExpectedContributionFields.OtherCapitalSources, "6"),
-            new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, "7"),
+            new ExpectedContributionValue(ExpectedContributionFields.InitialSalesOfSharedHomes, "7"),
             null);
 
         // when

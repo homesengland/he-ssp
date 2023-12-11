@@ -41,6 +41,12 @@ public class ExpectedContributionsToScheme
 
     public ExpectedContributionValue? HomesTransferValue { get; private set; }
 
+    public bool AreAllQuestionsAnswered()
+    {
+        return RentalIncome.IsProvided() && SalesOfHomesOnThisScheme.IsProvided() && SalesOfHomesOnOtherSchemes.IsProvided() &&
+               OwnResources.IsProvided() && RcgfContributions.IsProvided() && OtherCapitalSources.IsProvided() && HomesTransferValue.IsProvided();
+    }
+
     public decimal CalculateTotal()
     {
         var totalExpectedContributions = RentalIncome.GetValueOrZero() + SalesOfHomesOnThisScheme.GetValueOrZero() +

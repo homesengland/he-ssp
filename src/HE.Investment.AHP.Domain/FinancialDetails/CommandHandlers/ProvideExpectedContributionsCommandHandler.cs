@@ -34,7 +34,7 @@ public class ProvideExpectedContributionsCommandHandler : FinancialDetailsComman
                     MapProvidedValues(request.OwnResources, ExpectedContributionFields.OwnResources),
                     MapProvidedValues(request.RCGFContribution, ExpectedContributionFields.RcgfContribution),
                     MapProvidedValues(request.OtherCapitalSources, ExpectedContributionFields.OtherCapitalSources),
-                    MapProvidedValues(request.SharedOwnershipSales, ExpectedContributionFields.SharedOwnershipSales),
+                    MapProvidedValues(request.SharedOwnershipSales, ExpectedContributionFields.InitialSalesOfSharedHomes),
                     MapProvidedValues(request.HomesTransferValue, ExpectedContributionFields.HomesTransferValue));
 
                 result.CheckErrors();

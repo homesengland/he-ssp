@@ -101,7 +101,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             MapProvidedValues(application.ownResources, ExpectedContributionFields.OwnResources),
             MapProvidedValues(application.recycledCapitalGrantFund, ExpectedContributionFields.RcgfContribution),
             MapProvidedValues(application.otherCapitalSources, ExpectedContributionFields.OtherCapitalSources),
-            MapProvidedValues(application.totalInitialSalesIncome, ExpectedContributionFields.SharedOwnershipSales),
+            MapProvidedValues(application.totalInitialSalesIncome, ExpectedContributionFields.InitialSalesOfSharedHomes),
             MapProvidedValues(application.transferValue, ExpectedContributionFields.HomesTransferValue));
     }
 

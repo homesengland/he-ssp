@@ -114,6 +114,17 @@ public class FinancialDetailsEntity
         PublicGrants = publicGrants;
     }
 
+    public bool AreAllQuestionsAnswered()
+    {
+        return PurchasePrice.IsProvided() &&
+               LandValue.IsProvided() &&
+               IsPublicLand.HasValue &&
+               ExpectedWorksCosts.IsProvided() &&
+               ExpectedOnCosts.IsProvided() &&
+               ExpectedContributions.AreAllQuestionsAnswered() &&
+               PublicGrants.AreAllQuestionsAnswered();
+    }
+
     public void CompleteFinancialDetails()
     {
         var result = OperationResult.New();
@@ -133,7 +144,9 @@ public class FinancialDetailsEntity
         SectionStatus = SectionStatus.Completed;
     }
 
-    public decimal ExpectedTotalCosts() => ExpectedWorksCosts?.Value ?? 0 + ExpectedOnCosts?.Value ?? 0;
+    public decimal ExpectedTotalCosts() => (ExpectedWorksCosts?.Value ?? 0) + (ExpectedOnCosts?.Value ?? 0);
+
+    public decimal ExpectedTotalContributions() => ExpectedContributions.CalculateTotal() + PublicGrants.CalculateTotal();
 
     private void SetSectionStatus(bool isAnyValueSet)
     {
