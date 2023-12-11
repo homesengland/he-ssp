@@ -4,5 +4,7 @@ namespace HE.Investments.Account.Domain.Users.Repositories;
 
 public interface IUserRepository
 {
-    Task<UserEntity> GetUser(string id);
+    Task<UserEntity> GetUser(string id, CancellationToken cancellationToken);
+
+    Task Save(UserEntity entity, CancellationToken cancellationToken);
 }

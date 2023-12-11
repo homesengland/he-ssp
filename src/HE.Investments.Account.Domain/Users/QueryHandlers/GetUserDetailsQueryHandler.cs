@@ -20,9 +20,9 @@ public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQuery, (
     public async Task<(string OrganisationName, UserDetails UserDetails)> Handle(GetUserDetailsQuery request, CancellationToken cancellationToken)
     {
         var organisation = await _organizationRepository.GetBasicInformation(cancellationToken);
-        var user = await _userRepository.GetUser(request.Id);
+        var user = await _userRepository.GetUser(request.Id, cancellationToken);
 
-        var contract = new UserDetails(user.Id.Value, user.FirstName, user.LastName, user.Email, user.JobTitle, null, null);
+        var contract = new UserDetails(user.Id.Value, user.FirstName, user.LastName, user.Email, user.JobTitle, user.Role, null);
 
         return (organisation.RegisteredCompanyName, contract);
     }
