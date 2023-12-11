@@ -1,5 +1,8 @@
 @using HE.Investment.AHP.WWW.Views.Application
+@using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Messages
+@using HE.Investments.Common.Utils.Pagination
+@using HE.Investments.Common.WWW.TagHelpers.Pagination
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationsListModel
 @{
     ViewData["Title"] = ApplicationPageTitles.ApplicationList;
@@ -23,7 +26,7 @@
             </tr>
             </thead>
             <tbody class="govuk-table__body">
-            @foreach (var application in Model.Applications)
+            @foreach (var application in Model.Result.Items)
             {
                 <tr class="govuk-table__row">
                     <td class="govuk-table__cell">
@@ -35,10 +38,10 @@
                     </td>
 
                     <td class="govuk-table__cell">
-                        @(application.Unit ?? "-")
+                        @(application.Unit?.ToString() ?? "-")
                     </td>
                     <td class="govuk-table__cell">
-                        @(application.Grant?.ToString() ?? "-")
+                        @(application.Grant.IsProvided() ? $"\u00a3{application.Grant.ToWholeNumberString()}" : "-")
                     </td>
                     <td class="govuk-table__cell">
                         @(application.LocalAuthority ?? GenericMessages.NotProvided)
@@ -50,15 +53,24 @@
             }
             </tbody>
         </table>
-    </div>
 
-    <div class="govuk-!-padding-top-8">
+        <he-pagination base-url="/application" page="@Model.Result.CurrentPage" items-per-page=@Model.Result.ItemsPerPage total-items="@Model.Result.TotalItems"></he-pagination>
+    </div>
+    <div>
         <gds-h2>
             Affordable Homes Programme 2021-2026 CME
         </gds-h2>
         <p class="govuk-body govuk-!-margin-bottom-3">You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.</p>
 
         <link-button action-url="@Url.Action("Name", "Application")">Start new application</link-button>
-
     </div>
+
+    <div class="govuk-!-padding-top-2">
+            <gds-h2>
+                View sites
+            </gds-h2>
+            <p class="govuk-body govuk-!-margin-bottom-3">View a list of your existing sites. New sites can be created as part of a new application.</p>
+
+            <link-button is-disabled="true" is-secondary="true" action-url="#">View sites</link-button>
+        </div>
 </div>

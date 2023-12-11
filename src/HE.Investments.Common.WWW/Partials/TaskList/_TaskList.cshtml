@@ -22,7 +22,14 @@
                             </a>
                         }
                     </span>
-                    <section-status-tag status=@item.Status additional-classes="app-task-list__tag"></section-status-tag>
+                    @if (!item.IsAvailable)
+                    {
+                        <strong class="govuk-tag govuk-tag--grey app-task-list__tag">Cannot start yet</strong>
+                    }
+                    else
+                    {
+                        <section-status-tag status=@item.Status additional-classes="app-task-list__tag"></section-status-tag>
+                    }
                 </li>
             </ul>
         </li>

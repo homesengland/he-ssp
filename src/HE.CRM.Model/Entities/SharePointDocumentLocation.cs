@@ -97,6 +97,7 @@ namespace DataverseModel
 			public const string RelativeUrl = "relativeurl";
 			public const string ServiceType = "servicetype";
 			public const string Referencingsharepointdocumentlocation_parent_sharepointdocumentlocation = "sharepointdocumentlocation_parent_sharepointdocumentlocation";
+			public const string sharepointdocumentlocation_parent_sharepointsite = "sharepointdocumentlocation_parent_sharepointsite";
 			public const string SharePointDocumentLocationId = "sharepointdocumentlocationid";
 			public const string Id = "sharepointdocumentlocationid";
 			public const string SiteCollectionId = "sitecollectionid";
@@ -928,6 +929,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("Referencingsharepointdocumentlocation_parent_sharepointdocumentlocation");
 				this.SetRelatedEntity<DataverseModel.SharePointDocumentLocation>("sharepointdocumentlocation_parent_sharepointdocumentlocation", Microsoft.Xrm.Sdk.EntityRole.Referencing, value);
 				this.OnPropertyChanged("Referencingsharepointdocumentlocation_parent_sharepointdocumentlocation");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 sharepointdocumentlocation_parent_sharepointsite
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("parentsiteorlocation")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("sharepointdocumentlocation_parent_sharepointsite")]
+		public DataverseModel.SharePointSite sharepointdocumentlocation_parent_sharepointsite
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.SharePointSite>("sharepointdocumentlocation_parent_sharepointsite", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("sharepointdocumentlocation_parent_sharepointsite");
+				this.SetRelatedEntity<DataverseModel.SharePointSite>("sharepointdocumentlocation_parent_sharepointsite", null, value);
+				this.OnPropertyChanged("sharepointdocumentlocation_parent_sharepointsite");
 			}
 		}
 		

@@ -5,10 +5,12 @@ using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
 using HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
 using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investment.AHP.WWW.Notifications;
+using HE.Investment.AHP.WWW.Routing;
 using HE.Investment.AHP.WWW.Utils;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
+using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.DocumentService.Extensions;
 using HE.Investments.Loans.Common.Infrastructure;
 using HE.Investments.Loans.Common.Models.App;
@@ -37,6 +39,7 @@ public static class AhpWebModule
 
     private static void AddConfiguration(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<IErrorViewPaths, AhpErrorViewPaths>();
         services.AddSingleton<IAhpAppConfig, AhpAppConfig>(x => x.GetRequiredService<IConfiguration>().GetSection("AppConfiguration").Get<AhpAppConfig>());
         services.Configure<ContactInfoOptions>(configuration.GetSection("AppConfiguration:ContactInfo"));
         services.AddSingleton<IDataverseConfig, DataverseConfig>(x =>

@@ -29,20 +29,25 @@ public class SchemeFunding : ValueObject
 
     private OperationResult Build(string? requiredFundingGbp, string? housesToDeliver)
     {
-        var operationResult = OperationResult.New();
+        var fundingOperationResult = OperationResult.New();
+        var housesOperationResult = OperationResult.New();
 
+        var requiredFundingName = "total funding you require";
         RequiredFunding = NumericValidator
-            .For(requiredFundingGbp, nameof(RequiredFunding), operationResult)
+            .For(requiredFundingGbp, nameof(RequiredFunding), requiredFundingName, fundingOperationResult)
             .IsProvided("Enter the total of funding you are requesting")
-            .IsWholeNumber(ValidationErrorMessage.MustBeNumber("total funding you require"))
-            .IsBetween(errorMessage: ValidationErrorMessage.StringLengthExceeded("total funding you require", 11));
+            .IsNumber()
+            .IsWholeNumber()
+            .IsBetween(1, 99999999999, ValidationErrorMessage.StringLengthExceeded(requiredFundingName, 11));
 
+        var housesToDeliverName = "number of homes this scheme will deliver";
         HousesToDeliver = NumericValidator
-            .For(housesToDeliver, nameof(HousesToDeliver), operationResult)
+            .For(housesToDeliver, nameof(HousesToDeliver), housesToDeliverName, housesOperationResult)
             .IsProvided("The number of homes this scheme will deliver must be a whole number above 0")
-            .IsWholeNumber(ValidationErrorMessage.MustBeNumber("number of homes this scheme will deliver"))
-            .IsBetween(errorMessage: ValidationErrorMessage.StringLengthExceeded("number of homes this scheme will deliver", 6));
+            .IsNumber()
+            .IsWholeNumber()
+            .IsBetween(1, 999999, ValidationErrorMessage.StringLengthExceeded(housesToDeliverName, 6));
 
-        return operationResult;
+        return fundingOperationResult.AddValidationErrors(housesOperationResult.Errors);
     }
 }

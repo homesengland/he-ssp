@@ -4,6 +4,7 @@ using HE.Investments.Common.Config;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
+using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Loans.BusinessLogic.Config;
 using HE.Investments.Loans.BusinessLogic.ViewModel;
 using HE.Investments.Loans.Common.Infrastructure;
@@ -29,5 +30,6 @@ public static class WebModule
         serviceCollections.AddEventInfrastructure();
         serviceCollections.AddHttpUserContext();
         serviceCollections.AddScoped<IAccountRoutes, LoansAccountRoutes>();
+        serviceCollections.AddSingleton<IErrorViewPaths, LoansErrorViewPaths>();
     }
 }

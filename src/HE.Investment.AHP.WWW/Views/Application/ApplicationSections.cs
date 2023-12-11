@@ -17,7 +17,7 @@ public static class ApplicationSections
                 AddSection(
                     SectionType.Scheme,
                     sections,
-                    "Scheme Information",
+                    "Scheme information",
                     "Complete information about the tenure of your scheme, and other details about the funding you require and discussions you’ve had with local stakeholders.",
                     "Enter scheme information",
                     _ => GetAction(url, applicationId, typeof(SchemeController), nameof(SchemeController.Start))),

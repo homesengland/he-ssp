@@ -13,7 +13,8 @@ public class CrmResponseSerializerTests
     {
         var result = CrmResponseSerializer.Deserialize<SerializationResult>("{\"BoolProperty\":\"True\"}");
 
-        result.BoolProperty.Should().BeTrue();
+        result.Should().NotBeNull();
+        result!.BoolProperty.Should().BeTrue();
     }
 
     [TestMethod]
@@ -21,7 +22,8 @@ public class CrmResponseSerializerTests
     {
         var result = CrmResponseSerializer.Deserialize<SerializationResult>("{\"BoolProperty\":\"False\"}");
 
-        result.BoolProperty.Should().BeFalse();
+        result.Should().NotBeNull();
+        result!.BoolProperty.Should().BeFalse();
     }
 }
 #pragma warning restore JSON002 // Probable JSON string detected

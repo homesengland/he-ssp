@@ -16,11 +16,13 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         private readonly IAhpApplicationRepository _applicationRepository;
         private readonly IContactRepository _contactRepository;
         private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
+        private readonly ISharepointSiteRepository _sharepointSiteRepository;
         public ApplicationService(CrmServiceArgs args) : base(args)
         {
             _applicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
             _sharepointDocumentLocationRepository = CrmRepositoriesFactory.Get<ISharepointDocumentLocationRepository>();
+            _sharepointSiteRepository = CrmRepositoriesFactory.Get<ISharepointSiteRepository>();
         }
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus)
@@ -66,11 +68,12 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                     ParentSiteOrLocation = documentLocation.ToEntityReference(),
                 };
                 ahpApplicaitonDocumentToCreate.Id = _sharepointDocumentLocationRepository.Create(ahpApplicaitonDocumentToCreate);
+                var homeTypesRelativeUrl = "Home Types";
                 var homeTypesFolderToCreate = new SharePointDocumentLocation()
                 {
-                    Name = "Home Types",
+                    Name = homeTypesRelativeUrl,
                     ParentSiteOrLocation = ahpApplicaitonDocumentToCreate.ToEntityReference(),
-                    RelativeUrl = "Home Types",
+                    RelativeUrl = homeTypesRelativeUrl,
                 };
                 _ = _sharepointDocumentLocationRepository.Create(homeTypesFolderToCreate);
             }
@@ -81,15 +84,31 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         }
         public string GetFileLocationForAhpApplication(string ahpApplicationId)
         {
+            var urlToReturn = string.Empty;
             if (Guid.TryParse(ahpApplicationId, out Guid applicationGuid))
             {
                 var relatedDocumentLocation = _sharepointDocumentLocationRepository.GetDocumentLocationRelatedToRecordWithGivenGuid(applicationGuid);
-                if (relatedDocumentLocation != null)
+                if (relatedDocumentLocation != null && relatedDocumentLocation.ParentSiteOrLocation != null)
                 {
-                    return relatedDocumentLocation.RelativeUrl;
+                    TracingService.Trace("related document");
+                    urlToReturn = relatedDocumentLocation.RelativeUrl;
+                    var parentDocumentLocation = _sharepointDocumentLocationRepository.GetById(relatedDocumentLocation.ParentSiteOrLocation.Id,
+                        new string[] { nameof(SharePointDocumentLocation.RelativeUrl).ToLower(), nameof(SharePointDocumentLocation.ParentSiteOrLocation).ToLower() });;
+                   if (parentDocumentLocation != null && parentDocumentLocation.ParentSiteOrLocation != null)
+                    {
+                        TracingService.Trace("parent of related document");
+                        urlToReturn = urlToReturn.Insert(0, $"{parentDocumentLocation.RelativeUrl}/");
+                        var mainDocumentLocation = _sharepointSiteRepository.GetById(parentDocumentLocation.ParentSiteOrLocation.Id,
+                        new string[] { nameof(SharePointSite.AbsoluteURL).ToLower() });
+                        if (mainDocumentLocation != null)
+                        {
+                            TracingService.Trace("main document");
+                            urlToReturn = urlToReturn.Insert(0, $"{mainDocumentLocation.AbsoluteURL}/");
+                        }
+                    }
                 }
             }
-            return string.Empty;
+            return urlToReturn;
         }
 
         public List<AhpApplicationDto> GetApplication(string organisationId, string contactId, string fieldsToRetrieve = null, string applicationId = null)

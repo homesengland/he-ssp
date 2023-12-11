@@ -35,6 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\LoanStatusChangeRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\NotificationSettingRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\PortalPermissionRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\implementations\SharepointSiteRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\SiteDetailsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\StandardConditionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Implementations\SystemUserRepository.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IProjectSpecificConditionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IReviewApprovalRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISharepointDocumentLocationRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)repositories\interfaces\ISharepointSiteRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISiteDetailsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\IStandardConditionsRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\Interfaces\ISystemUserRepository.cs" />

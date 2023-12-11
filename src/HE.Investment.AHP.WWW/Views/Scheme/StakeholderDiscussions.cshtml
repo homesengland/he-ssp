@@ -19,7 +19,7 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(x => x.AllowedExtensions)
         @Html.HiddenFor(x => x.MaxFileSizeInMegabytes)
-        <gds-div-grid-column-two-thirds>
+        <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
             <gds-field-set role="group">
                 <vc:form-field-title
                     field-name="StakeholderDiscussionsReport"
@@ -38,11 +38,15 @@
                     max-file-size-in-mb="@Model.MaxFileSizeInMegabytes"
                     is-hidden="@(Model.UploadedStakeholderDiscussionFiles != null && Model.UploadedStakeholderDiscussionFiles.Any())"/>
             </gds-field-set>
-        </gds-div-grid-column-two-thirds>
-        <div class="govuk-grid-column-full">
+        </div>
+        <div class="govuk-grid-column-full govuk-!-padding-left-0">
             <vc:files-table asp-for="@Model.UploadedStakeholderDiscussionFiles"/>
+        </div>
+        <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
             <vc:form-button/>
+            <div>
+                <vc:return-to-application-link application-id="@Model.ApplicationId"/>
+            </div>
         </div>
     </form>
-    <vc:return-to-application-link application-id="@Model.ApplicationId"/>
 </div>

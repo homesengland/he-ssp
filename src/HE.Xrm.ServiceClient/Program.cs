@@ -5,6 +5,7 @@ using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk;
 using System.Configuration;
 using System.Text.Json;
+using Microsoft.PowerPlatform.Dataverse.Client.Extensions;
 
 namespace HE.Xrm.ServiceClientExample
 {
@@ -55,9 +56,9 @@ namespace HE.Xrm.ServiceClientExample
         {
             var req1 = new invln_getahpapplicationdocumentlocationRequest()
             {
-                invln_applicationid = "40c0dcbf-9c8e-ee11-be36-0022480041cf"
+                invln_applicationid = "7ad49e6a-b495-ee11-be37-002248004f63"
             };
-            var test = serviceClient.Execute(req1);
+             var test = serviceClient.Execute(req1);
             Console.WriteLine("A web service connection was not established.");
         }
 

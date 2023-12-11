@@ -6,35 +6,45 @@ namespace HE.Investments.Common.Validators;
 public class NumericValidator
 {
     private readonly string? _value;
-    private readonly long? _parsedValue;
+    private readonly decimal? _parsedDecimalValue;
     private readonly string _fieldName;
+    private readonly string _fieldLabel;
     private readonly OperationResult _operationResult;
 
-    private NumericValidator(string? value, string fieldName, OperationResult operationResult)
+    private NumericValidator(string? value, string fieldName, string fieldLabel, OperationResult operationResult)
     {
         _value = value;
         _fieldName = fieldName;
+        _fieldLabel = fieldLabel;
         _operationResult = operationResult;
-        if (long.TryParse(_value!, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue))
+
+        if (!string.IsNullOrWhiteSpace(_value) &&
+            decimal.TryParse(
+                _value.Replace(",", "."),
+                NumberStyles.Any,
+                CultureInfo.InvariantCulture,
+                out var parsedDecimalValue))
         {
-            _parsedValue = parsedValue;
+            _parsedDecimalValue = parsedDecimalValue;
         }
     }
 
-    public static implicit operator long(NumericValidator v) => v._parsedValue ?? 0;
+    public static implicit operator decimal?(NumericValidator v) => v._parsedDecimalValue;
 
-    public static implicit operator int(NumericValidator v) => Convert.ToInt32(v._parsedValue ?? 0);
+    public static implicit operator long?(NumericValidator v) => ConvertToLong(v._parsedDecimalValue);
 
-    public static NumericValidator For(string? input, string fieldName, OperationResult? operationResult = null)
+    public static implicit operator int?(NumericValidator v) => ConvertToInt(v._parsedDecimalValue);
+
+    public static NumericValidator For(string? input, string fieldName, string fieldLabel, OperationResult? operationResult = null)
     {
-        return new NumericValidator(input, fieldName, operationResult ?? OperationResult.New());
+        return new NumericValidator(input, fieldName, fieldLabel, operationResult ?? OperationResult.New());
     }
 
     public NumericValidator IsProvided(string? errorMessage = null)
     {
         if (string.IsNullOrEmpty(_value))
         {
-            AddError(_fieldName, errorMessage ?? $"Value for {_fieldName} is not provided.");
+            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MissingRequiredField(_fieldLabel));
         }
 
         return this;
@@ -44,7 +54,22 @@ public class NumericValidator
     {
         if (condition && string.IsNullOrEmpty(_value))
         {
-            AddError(_fieldName, errorMessage ?? $"Value for {_fieldName} is not provided.");
+            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MissingRequiredField(_fieldLabel));
+        }
+
+        return this;
+    }
+
+    public NumericValidator IsNumber(string? errorMessage = null)
+    {
+        if (_value == null)
+        {
+            return this;
+        }
+
+        if (_parsedDecimalValue == null)
+        {
+            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MustBeNumber(_fieldLabel));
         }
 
         return this;
@@ -57,31 +82,68 @@ public class NumericValidator
             return this;
         }
 
-        if (!long.TryParse(_value!, NumberStyles.Integer, CultureInfo.InvariantCulture, out var _))
+        if (_parsedDecimalValue % 1 != 0)
         {
-            AddError(_fieldName, errorMessage ?? $"Value for {_fieldName} should be a number.");
+            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MustBeWholeNumber(_fieldLabel));
         }
 
         return this;
     }
 
-    public NumericValidator IsBetween(long minValue = 1, long maxValue = 99999999999, string? errorMessage = null)
+    public NumericValidator IsBetween(decimal minValue, decimal maxValue, string? errorMessage = null)
     {
         if (_value == null)
         {
             return this;
         }
 
-        if (_parsedValue < minValue || _parsedValue > maxValue)
+        if (_parsedDecimalValue < minValue || _parsedDecimalValue > maxValue)
         {
-            AddError(_fieldName, errorMessage ?? $"Value for {_fieldName} should be between {minValue} and {maxValue}.");
+            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MustBeDecimalNumberBetween(_fieldLabel, minValue, maxValue));
         }
 
         return this;
     }
 
+    private static long? ConvertToLong(decimal? value)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+
+        try
+        {
+            return Convert.ToInt64(Math.Floor(value.Value));
+        }
+        catch (OverflowException)
+        {
+            return long.MaxValue;
+        }
+    }
+
+    private static int? ConvertToInt(decimal? value)
+    {
+        if (value == null)
+        {
+            return null;
+        }
+
+        try
+        {
+            return Convert.ToInt32(Math.Floor(value.Value));
+        }
+        catch (OverflowException)
+        {
+            return int.MaxValue;
+        }
+    }
+
     private void AddError(string fieldName, string? errorMessage = null)
     {
-        _operationResult.AddValidationError(fieldName, errorMessage ?? ValidationErrorMessage.InvalidValue);
+        if (!_operationResult.HasValidationErrors)
+        {
+            _operationResult.AddValidationError(fieldName, errorMessage ?? ValidationErrorMessage.InvalidValue);
+        }
     }
 }

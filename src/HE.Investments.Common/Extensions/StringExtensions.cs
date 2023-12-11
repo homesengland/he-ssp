@@ -52,7 +52,7 @@ public static class StringExtensions
         }
 
         return NumericValidator
-            .For(value, fieldName, operationResult)
+            .For(value, fieldName, fieldName, operationResult)
             .IsWholeNumber(errorMsg)
             .IsBetween(minValue, maxValue, errorMsg)
             .IsConditionallyRequired(!allowNull);
