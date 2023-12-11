@@ -26,7 +26,7 @@
             </tr>
             </thead>
             <tbody class="govuk-table__body">
-            @foreach (var application in Model.Applications)
+            @foreach (var application in Model.Result.Items)
             {
                 <tr class="govuk-table__row">
                     <td class="govuk-table__cell">
@@ -54,15 +54,23 @@
             </tbody>
         </table>
 
-        <GdsPaginationTagHelper base-url="/application" page="@Model.PaginationParams.Page" items-per-page=@DefaultPagination.PageSize total-items="@Model.PaginationParams.TotalItems"></GdsPaginationTagHelper>
+        <gds-pagination base-url="/application" page="@Model.Result.CurrentPage" items-per-page=@Model.Result.ItemsPerPage total-items="@Model.Result.TotalItems"></gds-pagination>
     </div>
-    <div class="govuk-!-padding-top-8">
+    <div>
         <gds-h2>
             Affordable Homes Programme 2021-2026 CME
         </gds-h2>
         <p class="govuk-body govuk-!-margin-bottom-3">You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.</p>
 
         <link-button action-url="@Url.Action("Name", "Application")">Start new application</link-button>
-
     </div>
+
+    <div class="govuk-!-padding-top-2">
+            <gds-h2>
+                View sites
+            </gds-h2>
+            <p class="govuk-body govuk-!-margin-bottom-3">View a list of your existing sites. New sites can be created as part of a new application.</p>
+
+            <link-button is-disabled="true" is-secondary="true" action-url="#">View sites</link-button>
+        </div>
 </div>

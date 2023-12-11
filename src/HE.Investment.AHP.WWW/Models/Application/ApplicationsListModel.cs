@@ -4,4 +4,4 @@ using HE.Investments.Common.WWW.TagHelpers.Pagination;
 
 namespace HE.Investment.AHP.WWW.Models.Application;
 
-public record ApplicationsListModel(string OrganisationName, IList<ApplicationBasicDetails> Applications, PaginationParams PaginationParams);
+public record ApplicationsListModel(string OrganisationName, PaginationResult<ApplicationBasicDetails> Result);

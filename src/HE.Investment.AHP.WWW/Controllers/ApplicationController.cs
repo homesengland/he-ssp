@@ -29,11 +29,11 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index([FromQuery] int page, CancellationToken cancellationToken)
+    public async Task<IActionResult> Index([FromQuery] int? page, CancellationToken cancellationToken)
     {
-        var applicationsQueryResult = await _mediator.Send(new GetApplicationsQuery(), cancellationToken);
+        var applicationsQueryResult = await _mediator.Send(new GetApplicationsQuery(new PaginationRequest(page ?? 1)), cancellationToken);
 
-        return View("Index", new ApplicationsListModel(applicationsQueryResult.OrganisationName, applicationsQueryResult.Applications, new PaginationParams(applicationsQueryResult.TotalApplications, page, 10)));
+        return View("Index", new ApplicationsListModel(applicationsQueryResult.OrganisationName, applicationsQueryResult.PaginationResult));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]

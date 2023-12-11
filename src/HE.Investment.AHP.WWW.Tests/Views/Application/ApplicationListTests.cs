@@ -19,7 +19,7 @@ public class ApplicationListTests : ViewTestBase
     public async Task ShouldDisplayView_WhenThereIsNoApplications()
     {
         // given
-        var applicationListModel = new ApplicationsListModel("Organisation Name", new List<ApplicationBasicDetails>(), new PaginationParams());
+        var applicationListModel = new ApplicationsListModel("Organisation Name", PaginationResult(new List<ApplicationBasicDetails>()));
 
         // when
         var document = await Render(_viewPath, applicationListModel);
@@ -35,7 +35,7 @@ public class ApplicationListTests : ViewTestBase
         var application1 = new ApplicationBasicDetails("1", "Application 1", ApplicationStatus.ApplicationSubmitted, "Local Authority 1", 10, 12);
         var application2 = new ApplicationBasicDetails("2", "Application 2", ApplicationStatus.Draft, null, 20, null);
 
-        var applicationListModel = new ApplicationsListModel("Organisation Name", new List<ApplicationBasicDetails>() { application1, application2, }, new PaginationParams());
+        var applicationListModel = new ApplicationsListModel("Organisation Name", PaginationResult(new List<ApplicationBasicDetails> { application1, application2, }));
 
         // when
         var document = await Render(_viewPath, applicationListModel);
@@ -66,4 +66,6 @@ public class ApplicationListTests : ViewTestBase
                 "You can start a new Affordable Homes Programme application here. This will not affect any of your previous applications.")
             .HasElementWithText("a", "Start new application");
     }
+
+    private PaginationResult<ApplicationBasicDetails> PaginationResult(IList<ApplicationBasicDetails> items) => new(items, 1, 10, 100);
 }

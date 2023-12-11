@@ -1,9 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Text;
 using He.AspNetCore.Mvc.Gds.Components.TagConstructs;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace HE.Investments.Common.WWW.TagHelpers.Pagination;
 
+[SuppressMessage("Readability Rules", "SA1118", Justification = "Used to construct html")]
 public class GdsPaginationTagHelper : TagHelper
 {
     public GdsPaginationTagHelper()
@@ -113,7 +116,7 @@ public class GdsPaginationTagHelper : TagHelper
 
     private void AddNextButton(StringBuilder contentBuilder)
     {
-        contentBuilder.Append($@"
+        contentBuilder.Append(CultureInfo.InvariantCulture, $@"
                     <div class=""govuk-pagination__next"">
                         <a class=""govuk-link govuk-pagination__link"" href=""{PageRedirect(Page + 1)}"" rel=""next"">
                             <span class=""govuk-pagination__link-title"">Next</span>
@@ -127,7 +130,7 @@ public class GdsPaginationTagHelper : TagHelper
 
     private void AddPreviousButton(StringBuilder contentBuilder)
     {
-        contentBuilder.Append($@"
+        contentBuilder.Append(CultureInfo.InvariantCulture, $@"
                     <div class=""govuk-pagination__prev"">
                         <a class=""govuk-link govuk-pagination__link"" href=""{PageRedirect(Page - 1)}"" rel=""prev"">
                             <svg class=""govuk-pagination__icon govuk-pagination__icon--prev"" xmlns=""http://www.w3.org/2000/svg"" height=""13"" width=""15"" aria-hidden=""true"" focusable=""false"" viewBox=""0 0 15 13"">
@@ -141,7 +144,7 @@ public class GdsPaginationTagHelper : TagHelper
 
     private void AddSelectedPageItem(StringBuilder contentBuilder)
     {
-        contentBuilder.Append($@"
+        contentBuilder.Append(CultureInfo.InvariantCulture, $@"
                 <li class=""govuk-pagination__item govuk-pagination__item--current"">
                    <a class=""govuk-link govuk-pagination__link"" href=""{PageRedirect(Page)}"" aria-label=""Page {Page}"" aria-current=""page"">
                     {Page}
@@ -152,7 +155,7 @@ public class GdsPaginationTagHelper : TagHelper
 
     private void AddPageItem(StringBuilder contentBuilder, int pageNumber)
     {
-        contentBuilder.Append($@"
+        contentBuilder.Append(CultureInfo.InvariantCulture, $@"
                 <li class=""govuk-pagination__item"">
                    <a class=""govuk-link govuk-pagination__link"" href=""{PageRedirect(pageNumber)}"" aria-label=""Page {pageNumber}"">
                     {pageNumber}
