@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace HE.Investments.Common.WWW.TagHelpers.Pagination;
 
 [SuppressMessage("Readability Rules", "SA1118", Justification = "Used to construct html")]
-public class GdsPaginationTagHelper : TagHelper
+public class HePaginationTagHelper : TagHelper
 {
-    public GdsPaginationTagHelper()
+    public HePaginationTagHelper()
     {
     }
 

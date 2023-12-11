@@ -29,5 +29,5 @@
         @Html.HiddenFor(c => c.ProjectId)
         @Html.HiddenFor(c => c.ApplicationId)
 
-        <gds-pagination class="govuk-!-margin-top-8 local-authority-pagination" base-url="@Url.Action("LocalAuthorityResult", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, localAuthorityId = Model.LocalAuthorityId, phrase = Model.Phrase })" page="@Model.Page" items-per-page="@Model.PageSize" total-items="@Model.TotalItems"></gds-pagination>
+        <HePaginationTagHelper class="govuk-!-margin-top-8 local-authority-pagination" base-url="@Url.Action("LocalAuthorityResult", "Project", new { id = Model.ApplicationId, projectId = Model.ProjectId, localAuthorityId = Model.LocalAuthorityId, phrase = Model.Phrase })" page="@Model.Page" items-per-page="@Model.PageSize" total-items="@Model.TotalItems"></HePaginationTagHelper>
 </gds-div-grid-column-two-thirds>
