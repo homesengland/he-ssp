@@ -77,7 +77,6 @@ export class IspService {
         if (result != null && result.invln_securities != null) {
           var securitiesArray: string[] = result.invln_securities.split(",");
           securitiesArray.forEach(element => {
-            debugger;
             switch (element) {
               case Securities.debenture.toString():
                 this.hideDebentureFields(false);
