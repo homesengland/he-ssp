@@ -8,4 +8,4 @@ public record ApplicationBasicDetails(
     ApplicationStatus Status,
     string? LocalAuthority,
     decimal? Grant,
-    string? Unit);
+    int? Unit);

@@ -20,16 +20,16 @@ public class GetApplicationsQueryHandler : IRequestHandler<GetApplicationsQuery,
 
     public async Task<GetApplicationsQueryResult> Handle(GetApplicationsQuery request, CancellationToken cancellationToken)
     {
-        var applications = await _repository.GetAll(cancellationToken);
+        var applications = await _repository.GetApplicationsWithFundingDetails(cancellationToken);
         var organisationName = (await _accountUserContext.GetSelectedAccount()).AccountName;
 
         var applicationsBasicDetails = applications.Select(s => new ApplicationBasicDetails(
-                s.Id.Value,
-                s.Name.Name,
+                s.ApplicationId.Value,
+                s.ApplicationName,
                 s.Status,
                 null,
-                null,
-                null))
+                s.RequiredFunding,
+                s.HousesToDeliver))
             .ToList();
 
         return new GetApplicationsQueryResult(organisationName, applicationsBasicDetails);

@@ -13,7 +13,7 @@ public interface IApplicationRepository
 
     Task<ApplicationBasicInfo> GetApplicationBasicInfo(ApplicationId id, CancellationToken cancellationToken);
 
-    Task<IList<ApplicationEntity>> GetAll(CancellationToken cancellationToken);
+    Task<IList<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(CancellationToken cancellationToken);
 
     Task<ApplicationEntity> Save(ApplicationEntity application, CancellationToken cancellationToken);
 }

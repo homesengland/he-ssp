@@ -44,11 +44,19 @@ public class ApplicationRepository : IApplicationRepository
         return new ApplicationBasicInfo(application.Id, application.Name, application.Tenure?.Value ?? Tenure.Undefined, ApplicationStatus.Draft);
     }
 
-    public async Task<IList<ApplicationEntity>> GetAll(CancellationToken cancellationToken)
+    public async Task<IList<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(CancellationToken cancellationToken)
     {
-        var applications = await _applicationCrmContext.GetAll(CrmFields.ApplicationToRead, cancellationToken);
+        var applications = await _applicationCrmContext.GetAll(CrmFields.ApplicationListToRead, cancellationToken);
 
-        return applications.Select(CreateEntity).ToList();
+        return applications
+            .OrderByDescending(x => x.lastExternalModificationOn)
+            .Select(x => new ApplicationWithFundingDetails(
+                new ApplicationId(x.id),
+                x.name,
+                ApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
+                x.noOfHomes,
+                x.fundingRequested))
+            .ToList();
     }
 
     public async Task<ApplicationEntity> Save(ApplicationEntity application, CancellationToken cancellationToken)

@@ -45,7 +45,7 @@
         </gds-link>
     </gds-p>
 
-    <gds-pagination base-url="/organization/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.ItemsPerPage" total-items="@Model.TotalOrganizations"></gds-pagination>
+    <GdsPaginationTagHelper base-url="/organization/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.ItemsPerPage" total-items="@Model.TotalOrganizations"></GdsPaginationTagHelper>
 
 
 </gds-div-grid-column-two-thirds>

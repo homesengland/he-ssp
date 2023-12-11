@@ -5,6 +5,7 @@ using HE.Investment.AHP.Domain.Application.Workflows;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Common.Utils.Pagination;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Routing;
 using HE.Investments.Loans.Common.Routing;
@@ -28,11 +29,11 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(CancellationToken cancellationToken)
+    public async Task<IActionResult> Index([FromQuery] int page, CancellationToken cancellationToken)
     {
         var applicationsQueryResult = await _mediator.Send(new GetApplicationsQuery(), cancellationToken);
 
-        return View("Index", new ApplicationsListModel(applicationsQueryResult.OrganisationName, applicationsQueryResult.Applications));
+        return View("Index", new ApplicationsListModel(applicationsQueryResult.OrganisationName, applicationsQueryResult.Applications, new PaginationParams(applicationsQueryResult.TotalApplications, page, 10)));
     }
 
     [WorkflowState(ApplicationWorkflowState.ApplicationName)]
