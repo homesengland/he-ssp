@@ -1,4 +1,4 @@
-namespace HE.Investments.Loans.Common.Infrastructure.ErrorHandling;
+namespace HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 
 public class ErrorModel
 {

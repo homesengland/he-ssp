@@ -1,11 +1,13 @@
 using HE.Investments.Account.WWW.Config;
-using HE.Investments.Account.WWW.Middlewares;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.Cache;
+using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
+using HE.Investments.Common.WWW.Infrastructure.Middlewares;
 using HE.Investments.Common.WWW.Partials;
 using HE.Investments.Loans.Common.Infrastructure.Middlewares;
 using HE.Investments.Loans.Common.Models.App;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,20 +22,20 @@ builder.Services.AddCommonBuildingBlocks();
 builder.Services.AddCache(appConfig.Cache, appConfig.AppName!);
 builder.Services.AddCrmConnection();
 
-var mvcBuilder = builder.Services.AddControllersWithViews();
+var mvcBuilder = builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+    options.Filters.Add<ExceptionFilter>();
+});
 builder.AddIdentityProviderConfiguration(mvcBuilder);
 
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/home/error");
-    app.UsePageNotFound();
-    app.Use((context, next) =>
-    {
-        // assume all non-development requests are https
-        context.Request.Scheme = "https";
-        return next();
-    });
+    var errorViewPaths = app.Services.GetRequiredService<IErrorViewPaths>();
+    app.UseExceptionHandler(errorViewPaths.ErrorRoute)
+        .UsePageNotFound(errorViewPaths.PageNotFoundRoute)
+        .UseHttps();
 }
 
 app.UseHttpsRedirection();
