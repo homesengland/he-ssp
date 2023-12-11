@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared;
 using HE.Investments.Loans.Common.Exceptions;
@@ -45,5 +46,24 @@ public class UsersCrmContext : IUsersCrmContext
         }
 
         return user;
+    }
+
+    public async Task<string?> GetUserRole(string id, string email)
+    {
+        // TODO #86130: remove portal type after CRM changes
+        var roles = await _contactService.GetContactRoles(_organizationServiceAsync, email, PortalConstants.AhpPortalType, id);
+
+        return roles?.contactRoles.Select(r => r.webRoleName).FirstOrDefault();
+    }
+
+    public async Task ChangeUserRole(string userId, string role)
+    {
+        var account = await _accountUserContext.GetSelectedAccount();
+        if (account.AccountId == null)
+        {
+            throw new InvalidOperationException("Cannot assign role for user without linked organisation.");
+        }
+
+        await _contactService.UpdateContactWebrole(_organizationServiceAsync, userId, account.AccountId.Value, role);
     }
 }
