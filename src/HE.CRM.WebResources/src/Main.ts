@@ -5,6 +5,7 @@ import { Precomplete } from './events/Precomplete'
 import { Condition } from './events/Condition'
 import { LoanApplication } from './events/LoanApplication'
 import { ReviewApproval } from './events/ReviewApproval'
+import { AhpApplication } from './events/AhpApplication'
 
 export function initialize() {
   console.log('Initialize main library')
@@ -17,3 +18,4 @@ exports.Precomplete = Precomplete
 exports.Condition = Condition
 exports.LoanApplication = LoanApplication
 exports.ReviewApproval = ReviewApproval
+exports.AhpApplication = AhpApplication
