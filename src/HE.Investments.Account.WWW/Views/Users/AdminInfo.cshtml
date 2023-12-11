@@ -1,0 +1,24 @@
+@using HE.Investments.Common.WWW.Components.FormHeader
+@model (string OrganisationName, string UserId);
+@{
+    var title = "How to confirm a user as an admin";
+    ViewData["Title"] = title;
+    var action = Url.Action("Manage", "Users", new { id = Model.UserId });
+
+    var items = new List<string>
+    {
+        "Confirm the organisation’s authorised signatory. They must be a named signatory, such as Chief Executive or Chief Financial Officer.",
+        "Confirm the signatory by asking them to complete our Authorised Signatory form. Unless the authorised signatory details change, you will not need to complete this again.",
+        "The signatory will need to complete our Admin User form to set up an admin user.",
+        "If there are multiple admin users being registered, the signatory must complete a form for each user and confirm one as primary admin user.",
+        $"All forms should be emailed by the signatory, from their organisation email, to: onboarding@homesengland.gov.uk. The email subject line should be: CRM Admin User for {Model.OrganisationName}."
+    };
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@action"></gds-back-link>
+    <vc:form-header title=@title/>
+    <gds-p class="govuk-!-margin-bottom-8">To confirm a user as an admin, you must:</gds-p>
+    <he-ol class="govuk-!-margin-bottom-8" items="@items"></he-ol>
+    <link-button action-url="@action#">Continue</link-button>
+</gds-div-grid-column-two-thirds>

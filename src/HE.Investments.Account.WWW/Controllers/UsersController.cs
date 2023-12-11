@@ -1,3 +1,4 @@
+using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Contract.Users.Commands;
@@ -49,6 +50,11 @@ public class UsersController : Controller
         }
 
         OperationResult result;
+        if (role == UserRole.Admin)
+        {
+            return RedirectToAction("AdminInfo", new { id });
+        }
+
         if (role == UserRole.Undefined)
         {
             result = await _mediator.Send(new RemoveLinkBetweenUserAndOrganisationCommand(), cancellationToken);
@@ -67,5 +73,13 @@ public class UsersController : Controller
         }
 
         return RedirectToAction("Index");
+    }
+
+    [HttpGet("{id}/admin-info")]
+    public async Task<IActionResult> AdminInfo([FromRoute] string id, CancellationToken cancellationToken)
+    {
+        var model = await _mediator.Send(new GetOrganizationBasicInformationQuery(), cancellationToken);
+
+        return View("AdminInfo", (OrganisationName: model.OrganizationBasicInformation.RegisteredCompanyName, UserId: id));
     }
 }
