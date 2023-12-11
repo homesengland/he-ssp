@@ -152,7 +152,6 @@ public class WebRoleRepository : IWebRoleRepository
         return result.Entities.FirstOrDefault();
     }
 
-
     public List<Entity> GetWebrolesForPassedContacts(IOrganizationServiceAsync2 service, string contactExternalIds, Guid organisationGuid)
     {
         var fetchXml = @"<fetch>

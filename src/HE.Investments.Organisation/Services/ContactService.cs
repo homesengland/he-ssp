@@ -145,12 +145,9 @@ public class ContactService : IContactService
         var contactList = new List<ContactDto>();
         var portalTypeFilter = GeneratePortalTypeFilter(portalType);
         var contacts = _contactRepository.GetContactsForOrganisation(service, organisationGuid, portalTypeFilter);
-        if (contacts.Any())
+        foreach (var contact in contacts)
         {
-            foreach (var contact in contacts)
-            {
-                contactList.Add(MapContactEntityToDto(contact));
-            }
+            contactList.Add(MapContactEntityToDto(contact));
         }
 
         return Task.FromResult(contactList);
@@ -184,40 +181,44 @@ public class ContactService : IContactService
 
     public Task<List<ContactRolesDto>> GetContactRolesForOrganisationContacts(IOrganizationServiceAsync2 service, List<string> contactExternalId, Guid organisationGuid)
     {
-        var contactRolesList = new List<ContactRolesDto>();
-        if (contactExternalId.Any())
+        var contactExternalFilter = "<condition attribute=\"invln_externalid\" operator=\"in\">";
+        foreach (var contactExternal in contactExternalId)
         {
-            var contactExternalFilter = "<condition attribute=\"invln_externalid\" operator=\"in\">";
-            foreach (var contactExternal in contactExternalId)
-            {
-                contactExternalFilter += $"<value>{contactExternal}</value>";
-            }
-            contactExternalFilter += "</condition>";
+            contactExternalFilter += $"<value>{contactExternal}</value>";
+        }
 
-            var contactWebroles = _webRoleRepository.GetWebrolesForPassedContacts(service, contactExternalFilter, organisationGuid);
-            if (contactWebroles.Any())
+        contactExternalFilter += "</condition>";
+        var contactWebroles = _webRoleRepository.GetWebrolesForPassedContacts(service, contactExternalFilter, organisationGuid);
+        return Task.FromResult(GenerateContactRolesList(contactWebroles));
+    }
+
+    private List<ContactRolesDto> GenerateContactRolesList(List<Entity> contactWebroles)
+    {
+        var contactRolesList = new List<ContactRolesDto>();
+        foreach (var contactWebrole in contactWebroles)
+        {
+            contactRolesList.Add(new ContactRolesDto()
             {
-                foreach (var contactWebrole in contactWebroles)
-                {
-                    contactRolesList.Add(new ContactRolesDto()
-                    {
-                        contactRoles = new List<ContactRoleDto>()
+                contactRoles = new List<ContactRoleDto>()
                         {
                             new ContactRoleDto()
                             {
                                 accountId = contactWebrole.Contains("invln_accountid") && contactWebrole["invln_accountid"] != null ? ((EntityReference)contactWebrole["invln_accountid"]).Id : Guid.Empty,
-                                accountName = contactWebrole.Contains("acc.name") && contactWebrole["acc.name"] != null ? contactWebrole.GetAttributeValue<AliasedValue>("acc.name").Value.ToString() : string.Empty,
-                                permissionLevel = contactWebrole.Contains("ppl.invln_name") && contactWebrole["ppl.invln_name"] != null ? contactWebrole.GetAttributeValue<AliasedValue>("ppl.invln_name").Value.ToString() : null,
-                                webRoleName = contactWebrole.Contains("wr.invln_name") ? contactWebrole.GetAttributeValue<AliasedValue>("wr.invln_name").Value.ToString() : string.Empty,
+                                accountName = GetAliasedValueAsStringOrDefault(contactWebrole, "acc.name"),
+                                permissionLevel = GetAliasedValueAsStringOrDefault(contactWebrole, "ppl.invln_name"),
+                                webRoleName = GetAliasedValueAsStringOrDefault(contactWebrole, "wr.invln_name"),
                             },
                         },
-                        externalId = contactWebrole.Contains("cnt.invln_externalid") && contactWebrole["cnt.invln_externalid"] != null ? contactWebrole.GetAttributeValue<AliasedValue>("cnt.invln_externalid").Value.ToString() : string.Empty,
-                    });
-                }
-            }
+                externalId = GetAliasedValueAsStringOrDefault(contactWebrole, "cnt.invln_externalid"),
+            });
         }
 
-        return Task.FromResult(contactRolesList);
+        return contactRolesList;
+    }
+
+    private string? GetAliasedValueAsStringOrDefault(Entity entity, string attributeName)
+    {
+        return entity.Contains(attributeName) && entity[attributeName] != null ? entity.GetAttributeValue<AliasedValue>(attributeName).Value.ToString() : string.Empty;
     }
 
     private ContactDto MapContactEntityToDto(Entity contact)
