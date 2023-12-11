@@ -2,14 +2,14 @@ using HE.Investment.AHP.Contract.Common.Enums;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes;
 
-public class AffordableRentModel : HomeTypeBasicModel
+public class RentToBuyModel : HomeTypeBasicModel
 {
-    public AffordableRentModel(string applicationName, string homeTypeName)
+    public RentToBuyModel(string applicationName, string homeTypeName)
         : base(applicationName, homeTypeName)
     {
     }
 
-    public AffordableRentModel()
+    public RentToBuyModel()
         : this(string.Empty, string.Empty)
     {
     }
@@ -18,9 +18,9 @@ public class AffordableRentModel : HomeTypeBasicModel
 
     public string? MarketRent { get; set; }
 
-    public string? AffordableWeeklyRent { get; set; }
+    public string? ProspectiveRent { get; set; }
 
-    public string? AffordableRentAsPercentageOfMarketRent { get; set; }
+    public string? RentAsPercentageOfMarketRent { get; set; }
 
     public YesNoType TargetRentExceedMarketRent { get; set; }
 }

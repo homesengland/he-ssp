@@ -5,12 +5,16 @@ namespace HE.Investment.AHP.Contract.HomeTypes;
 public record TenureDetails(
     string ApplicationName,
     string HomeTypeName,
-    int? HomeMarketValue,
-    decimal? HomeWeeklyRent,
-    decimal? AffordableWeeklyRent,
-    decimal? CalculatedPercentage,
+    int? MarketValue,
+    decimal? MarketRent,
+    decimal? ProspectiveRent,
+    decimal? CalculatedProspectivePercentage,
     YesNoType TargetRentExceedMarketRent,
     YesNoType ExemptFromTheRightToSharedOwnership,
     string? ExemptionJustification,
-    bool IsExceeding80PercentOfMarketRent)
+    bool IsExceeding80PercentOfMarketRent,
+    decimal? InitialSalePercentage,
+    decimal? ExpectedFirstTranche,
+    decimal? SharedOwnershipRentAsPercentageOfTheUnsoldShare,
+    bool IsExceeding3PercentOfUnsoldShare)
     : HomeTypeSegmentBase(ApplicationName, HomeTypeName);

@@ -14,13 +14,17 @@ public class TenureDetailsSegmentContractMapper : IHomeTypeSegmentContractMapper
         return new TenureDetails(
             applicationName.Name,
             homeTypeName.Value,
-            segment.HomeMarketValue?.Value,
-            segment.HomeWeeklyRent?.Value,
-            segment.AffordableWeeklyRent?.Value,
-            segment.AffordableRentAsPercentageOfMarketRent?.Value,
+            segment.MarketValue?.Value,
+            segment.MarketRent?.Value,
+            segment.ProspectiveRent?.Value,
+            segment.ProspectiveRentAsPercentageOfMarketRent?.Value,
             segment.TargetRentExceedMarketRent.IsNotProvided() ? YesNoType.Undefined : segment.TargetRentExceedMarketRent!.Value,
             segment.ExemptFromTheRightToSharedOwnership,
             segment.ExemptionJustification?.Value,
-            segment.IsExceeding80PercentOfMarketRent);
+            segment.IsExceeding80PercentOfMarketRent,
+            segment.InitialSale?.Value,
+            segment.ExpectedFirstTranche?.Value,
+            segment.SharedOwnershipRentAsPercentageOfTheUnsoldShare?.Value,
+            segment.IsExceeding3PercentOfUnsoldShare);
     }
 }

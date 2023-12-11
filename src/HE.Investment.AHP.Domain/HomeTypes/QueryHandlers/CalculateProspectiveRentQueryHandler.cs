@@ -9,11 +9,11 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
-internal sealed class CalculateAffordableRentQueryHandler : BaseQueryHandler, IRequestHandler<CalculateAffordableRentQuery, OperationResult>
+internal sealed class CalculateProspectiveRentQueryHandler : BaseQueryHandler, IRequestHandler<CalculateProspectiveRentQuery, OperationResult>
 {
     private readonly IHomeTypeRepository _homeTypeRepository;
 
-    public CalculateAffordableRentQueryHandler(IHomeTypeRepository homeTypeRepository, ILogger<CalculateAffordableRentQueryHandler> logger)
+    public CalculateProspectiveRentQueryHandler(IHomeTypeRepository homeTypeRepository, ILogger<CalculateProspectiveRentQueryHandler> logger)
         : base(logger)
     {
         _homeTypeRepository = homeTypeRepository;
@@ -21,16 +21,16 @@ internal sealed class CalculateAffordableRentQueryHandler : BaseQueryHandler, IR
 
     private IReadOnlyCollection<HomeTypeSegmentType> SegmentTypes => new[] { HomeTypeSegmentType.TenureDetails };
 
-    private IEnumerable<Action<CalculateAffordableRentQuery, IHomeTypeEntity>> CalculateActions => new[]
+    private IEnumerable<Action<CalculateProspectiveRentQuery, IHomeTypeEntity>> CalculateActions => new[]
     {
-        (CalculateAffordableRentQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeHomeMarketValue(request.HomeMarketValue, true),
-        (request, homeType) => homeType.TenureDetails.ChangeHomeWeeklyRent(request.HomeWeeklyRent, true),
-        (request, homeType) => homeType.TenureDetails.ChangeAffordableWeeklyRent(request.AffordableWeeklyRent, true),
+        (CalculateProspectiveRentQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue, true),
+        (request, homeType) => homeType.TenureDetails.ChangeMarketRent(request.MarketRent, true),
+        (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.ProspectiveRent, true),
         (request, homeType) => homeType.TenureDetails.ChangeTargetRentExceedMarketRent(request.TargetRentExceedMarketRent, true),
-        (request, homeType) => homeType.TenureDetails.CalculateAffordableRentAsPercentageOfMarketRent(request.HomeWeeklyRent, request.AffordableWeeklyRent),
+        (request, homeType) => homeType.TenureDetails.ChangeProspectiveRentAsPercentageOfMarketRent(request.MarketRent, request.ProspectiveRent),
     };
 
-    public async Task<OperationResult> Handle(CalculateAffordableRentQuery request, CancellationToken cancellationToken)
+    public async Task<OperationResult> Handle(CalculateProspectiveRentQuery request, CancellationToken cancellationToken)
     {
         var applicationId = new ApplicationId(request.ApplicationId);
         var homeType = await _homeTypeRepository.GetById(
@@ -39,7 +39,7 @@ internal sealed class CalculateAffordableRentQueryHandler : BaseQueryHandler, IR
             SegmentTypes,
             cancellationToken);
 
-        var errors = PerformWithValidation(CalculateActions.Select<Action<CalculateAffordableRentQuery, IHomeTypeEntity>, Action>(x => () => x(request, homeType)).ToArray());
+        var errors = PerformWithValidation(CalculateActions.Select<Action<CalculateProspectiveRentQuery, IHomeTypeEntity>, Action>(x => () => x(request, homeType)).ToArray());
 
         var result = errors.Any() ? new OperationResult(errors) : OperationResult.Success();
         return result;
