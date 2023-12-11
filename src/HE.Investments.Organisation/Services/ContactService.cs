@@ -3,6 +3,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Organisation.CrmRepository;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
 
 namespace HE.Investments.Organisation.Services;
 public class ContactService : IContactService
@@ -98,68 +99,64 @@ public class ContactService : IContactService
         return Task.FromResult<ContactRolesDto?>(null);
     }
 
-    public async Task<Guid> LinkContactWithOrganization(IOrganizationServiceAsync2 service, string contactExternalId, string organizationNumber, string portalType)
+    public async Task<Guid> LinkContactWithOrganization(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, int portalType)
     {
         var contact = _contactRepository.GetContactViaExternalId(service, contactExternalId);
-        var organization = await _organizationRepository.SearchForOrganizationsByOrganizationId(service, organizationNumber);
-        organization ??= _organizationRepository.GetOrganizationViaCompanyHouseNumber(service, organizationNumber);
         var defaultRole = _webRoleRepository.GetDefaultPortalRoles(service, portalType);
-        var contactWebroleToCreate = new Entity("invln_contactwebrole")
+        if (contact != null)
         {
-            Attributes =
+            var contactWebroleExists = _webRoleRepository.GetContactWebroleForOrganisation(service, contact.Id, organisationGuid) != null;
+            if (!contactWebroleExists)
             {
-                { "invln_accountid", organization?.ToEntityReference() },
+                var contactWebroleToCreate = new Entity("invln_contactwebrole")
+                {
+                    Attributes =
+            {
+                { "invln_accountid", new EntityReference("account", organisationGuid) },
                 { "invln_contactid", contact?.ToEntityReference() },
                 { "invln_webroleid", defaultRole.First().ToEntityReference() },
             },
-        };
-        return service.Create(contactWebroleToCreate);
+                };
+                return await service.CreateAsync(contactWebroleToCreate);
+            }
+
+            throw new InvalidPluginExecutionException("Webrole for given contact and organisation already exists");
+        }
+
+        throw new InvalidPluginExecutionException("Contact with given external id not found in CRM");
     }
 
-    public async Task RemoveLinkBetweenContactAndOrganisation(IOrganizationServiceAsync2 service, string organizationNumber, string portalType, string contactExternalId)
+    public async Task RemoveLinkBetweenContactAndOrganisation(IOrganizationServiceAsync2 service, Guid organisationGuid, string contactExternalId, int? portalType = null)
     {
         var contact = _contactRepository.GetContactViaExternalId(service, contactExternalId);
-        var organization = await _organizationRepository.SearchForOrganizationsByOrganizationId(service, organizationNumber);
-        organization ??= _organizationRepository.GetOrganizationViaCompanyHouseNumber(service, organizationNumber);
-        if (organization != null && contact != null)
+        if (contact != null)
         {
-            var contactWebrole = _webRoleRepository.GetContactWebroleForGivenOrganisationAndPortal(service, organization.Id, portalType, contact.Id);
+            var portalTypeFilter = GeneratePortalTypeFilter(portalType);
+            var contactWebrole = _webRoleRepository.GetContactWebroleForGivenOrganisationAndPortal(service, organisationGuid, contact.Id, portalTypeFilter);
             if (contactWebrole != null)
             {
-                service.Delete("invln_contactwebrole", contactWebrole.Id);
+                await service.DeleteAsync("invln_contactwebrole", contactWebrole.Id);
             }
         }
     }
 
-    public async Task<List<ContactDto>> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, string organizationNumber, string? portalType = null)
+    public Task<List<ContactDto>> GetAllOrganisationContactsForPortal(IOrganizationServiceAsync2 service, Guid organisationGuid, int? portalType = null)
     {
-        var organisation = await _organizationRepository.SearchForOrganizationsByOrganizationId(service, organizationNumber);
-        organisation ??= _organizationRepository.GetOrganizationViaCompanyHouseNumber(service, organizationNumber);
         var contactList = new List<ContactDto>();
-        if (organisation != null)
+        var portalTypeFilter = GeneratePortalTypeFilter(portalType);
+        var contacts = _contactRepository.GetContactsForOrganisation(service, organisationGuid, portalTypeFilter);
+        if (contacts.Any())
         {
-            var portalTypeFilter = string.Empty;
-            if (!string.IsNullOrEmpty(portalType))
+            foreach (var contact in contacts)
             {
-                portalTypeFilter = @"<filter>
-                                <condition attribute=""invln_portal"" operator=""eq"" value=""" + portalType + @""" />
-                              </filter>";
-            }
-
-            var contacts = _contactRepository.GetContactsForOrganisation(service, organisation.Id, portalTypeFilter);
-            if (contacts.Any())
-            {
-                foreach (var contact in contacts)
-                {
-                    contactList.Add(MapContactEntityToDto(contact));
-                }
+                contactList.Add(MapContactEntityToDto(contact));
             }
         }
 
-        return contactList;
+        return Task.FromResult(contactList);
     }
 
-    public async Task UpdateContactWebrole(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, string newWebRoleName)
+    public async Task UpdateContactWebrole(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, int newWebRole)
     {
         var contact = _contactRepository.GetContactViaExternalId(service, contactExternalId);
         if (contact != null)
@@ -167,7 +164,7 @@ public class ContactService : IContactService
             var currentRoleName = _webRoleRepository.GetContactWebroleForOrganisation(service, contact.Id, organisationGuid);
             if (currentRoleName != null)
             {
-                var webrole = _webRoleRepository.GetWebroleByName(service, newWebRoleName);
+                var webrole = _webRoleRepository.GetWebroleByPermissionOptionSetValue(service, newWebRole);
                 if (webrole != null)
                 {
                     var contactWebroleToUpdate = new Entity("invln_contactwebrole")
@@ -183,6 +180,44 @@ public class ContactService : IContactService
                 }
             }
         }
+    }
+
+    public Task<List<ContactRolesDto>> GetContactRolesForOrganisationContacts(IOrganizationServiceAsync2 service, List<string> contactExternalId, Guid organisationGuid)
+    {
+        var contactRolesList = new List<ContactRolesDto>();
+        if (contactExternalId.Any())
+        {
+            var contactExternalFilter = "<condition attribute=\"invln_externalid\" operator=\"in\">";
+            foreach (var contactExternal in contactExternalId)
+            {
+                contactExternalFilter += $"<value>{contactExternal}</value>";
+            }
+            contactExternalFilter += "</condition>";
+
+            var contactWebroles = _webRoleRepository.GetWebrolesForPassedContacts(service, contactExternalFilter, organisationGuid);
+            if (contactWebroles.Any())
+            {
+                foreach (var contactWebrole in contactWebroles)
+                {
+                    contactRolesList.Add(new ContactRolesDto()
+                    {
+                        contactRoles = new List<ContactRoleDto>()
+                        {
+                            new ContactRoleDto()
+                            {
+                                accountId = contactWebrole.Contains("invln_accountid") && contactWebrole["invln_accountid"] != null ? ((EntityReference)contactWebrole["invln_accountid"]).Id : Guid.Empty,
+                                accountName = contactWebrole.Contains("acc.name") && contactWebrole["acc.name"] != null ? contactWebrole.GetAttributeValue<AliasedValue>("acc.name").Value.ToString() : string.Empty,
+                                permissionLevel = contactWebrole.Contains("ppl.invln_name") && contactWebrole["ppl.invln_name"] != null ? contactWebrole.GetAttributeValue<AliasedValue>("ppl.invln_name").Value.ToString() : null,
+                                webRoleName = contactWebrole.Contains("wr.invln_name") ? contactWebrole.GetAttributeValue<AliasedValue>("wr.invln_name").Value.ToString() : string.Empty,
+                            },
+                        },
+                        externalId = contactWebrole.Contains("cnt.invln_externalid") && contactWebrole["cnt.invln_externalid"] != null ? contactWebrole.GetAttributeValue<AliasedValue>("cnt.invln_externalid").Value.ToString() : string.Empty,
+                    });
+                }
+            }
+        }
+
+        return Task.FromResult(contactRolesList);
     }
 
     private ContactDto MapContactEntityToDto(Entity contact)
@@ -232,5 +267,17 @@ public class ContactService : IContactService
         }
 
         return entity;
+    }
+
+    private string GeneratePortalTypeFilter(int? portalType)
+    {
+        if (portalType != null)
+        {
+            return @"<filter>
+                        <condition attribute=""invln_portal"" operator=""eq"" value=""" + portalType + @""" />
+                   </filter>";
+        }
+
+        return string.Empty;
     }
 }
