@@ -32,11 +32,11 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
                 scheme.HousesToDeliver?.ToString(CultureInfo.InvariantCulture).ToOneElementList(),
                 ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.Funding), allowWcagDuplicate: true)),
             new(
-                "Affordability od shared ownership",
+                "Affordability od Shared Ownership",
                 scheme.AffordabilityEvidence.ToOneElementList(),
                 ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.Affordability))),
             new(
-                "Sales risk of shared ownership",
+                "Sales risk of Shared Ownership",
                 scheme.SalesRisk.ToOneElementList(),
                 ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.SalesRisk))),
             new(
