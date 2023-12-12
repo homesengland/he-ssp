@@ -5,7 +5,6 @@
 @model HE.Investments.Account.Contract.Organisation.Queries.OrganisationSearchModel;
 @{
     ViewData["Title"] = "Organization Search";
-
     var controllerName = new ControllerName(nameof(OrganisationController));
 }
 
@@ -51,7 +50,5 @@
             Enter details manually.
         </gds-link>
     </gds-p>
-
-    <GdsPaginationTagHelper base-url="/organization/search/result?searchPhrase=@Model.Name" page="@Model.Page" items-per-page="@Model.ItemsPerPage" total-items="@Model.TotalOrganizations"></GdsPaginationTagHelper>
 
 </gds-div-grid-column-two-thirds>
