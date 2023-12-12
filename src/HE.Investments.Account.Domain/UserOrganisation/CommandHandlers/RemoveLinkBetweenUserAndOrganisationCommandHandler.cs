@@ -14,10 +14,9 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
     // private readonly IOrganizationServiceAsync2 _organizationServiceAsync;
     // private readonly IContactService _contactService;
     public RemoveLinkBetweenUserAndOrganisationCommandHandler(
-        IAccountUserContext userContext)
-
-    // IOrganizationServiceAsync2 organizationServiceAsync,
-    // IContactService contactService
+        IAccountUserContext userContext,
+        IOrganizationServiceAsync2 organizationServiceAsync,
+        IContactService contactService)
     {
         _userContext = userContext;
 
