@@ -1,6 +1,7 @@
 using System.Reflection;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Utils;
+using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -31,10 +32,7 @@ public abstract class WorkflowController<TState> : Controller
 
         if (!await routing.StateCanBeAccessed(current))
         {
-            var firstWorkflowPage = Enum.GetValues<TState>().First();
-            var firstWorkflowAction = GetWorkflowAction(firstWorkflowPage);
-            context.Result = new RedirectToActionResult(firstWorkflowAction.ActionName, firstWorkflowAction.ControllerName.WithoutPrefix(), context.RouteData.Values.Skip(2));
-            return;
+            throw new NotFoundException("Page could not be accessed for current state of application.");
         }
 
         if (targetState.Equals(current))

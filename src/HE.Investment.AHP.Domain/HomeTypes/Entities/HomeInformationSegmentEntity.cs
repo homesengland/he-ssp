@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
@@ -199,20 +200,19 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         return true;
     }
 
-    public bool IsCompleted()
+    public bool IsCompleted(HousingType housingType, Tenure tenure)
     {
         return NumberOfHomes.IsProvided()
                && NumberOfBedrooms.IsProvided()
                && MaximumOccupancy.IsProvided()
                && NumberOfStoreys.IsProvided()
-               && (IntendedAsMoveOnAccommodation != YesNoType.Undefined ||
-                   PeopleGroupForSpecificDesignFeatures != PeopleGroupForSpecificDesignFeaturesType.Undefined)
                && BuildingType != BuildingType.Undefined
                && CustomBuild != YesNoType.Undefined
                && FacilityType != FacilityType.Undefined
-               && CheckAccessibilityCompletion()
+               && AccessibilityStandards != YesNoType.Undefined
                && InternalFloorArea.IsProvided()
-               && CheckFloorAreaCompletion();
+               && MeetNationallyDescribedSpaceStandards != YesNoType.Undefined
+               && BuildConditionalRouteCompletionPredicates(housingType).All(isCompleted => isCompleted());
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
@@ -233,17 +233,26 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         }
     }
 
-    private bool CheckAccessibilityCompletion()
+    private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates(HousingType housingType)
     {
-        return AccessibilityStandards == YesNoType.Yes
-            ? AccessibilityCategory != AccessibilityCategoryType.Undefined
-            : AccessibilityStandards != YesNoType.Undefined;
-    }
+        if (housingType is HousingType.Undefined or HousingType.General)
+        {
+            yield return () => IntendedAsMoveOnAccommodation != YesNoType.Undefined;
+        }
 
-    private bool CheckFloorAreaCompletion()
-    {
-        return MeetNationallyDescribedSpaceStandards == YesNoType.No
-            ? NationallyDescribedSpaceStandards.Any()
-            : MeetNationallyDescribedSpaceStandards != YesNoType.Undefined;
+        if (housingType is HousingType.HomesForOlderPeople or HousingType.HomesForDisabledAndVulnerablePeople)
+        {
+            yield return () => PeopleGroupForSpecificDesignFeatures != PeopleGroupForSpecificDesignFeaturesType.Undefined;
+        }
+
+        if (AccessibilityStandards == YesNoType.Yes)
+        {
+            yield return () => AccessibilityCategory != AccessibilityCategoryType.Undefined;
+        }
+
+        if (MeetNationallyDescribedSpaceStandards == YesNoType.No)
+        {
+            yield return () => NationallyDescribedSpaceStandards.Any();
+        }
     }
 }

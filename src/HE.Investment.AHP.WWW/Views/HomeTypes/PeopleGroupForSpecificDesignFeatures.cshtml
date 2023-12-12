@@ -9,6 +9,7 @@
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
+    var workflow = Context.Request.Query["workflow"];
 
     var radioIndex = 1;
     var radioOptions = SelectListHelper.FromEnum<PeopleGroupForSpecificDesignFeaturesType>()
@@ -17,7 +18,7 @@
 }
 
 <div class="govuk-grid-column-two-thirds">
-    <form asp-controller="HomeTypes" asp-action="PeopleGroupForSpecificDesignFeatures" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
+    <form asp-controller="HomeTypes" asp-action="PeopleGroupForSpecificDesignFeatures" asp-method="post" asp-route-workflow="@workflow" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.PeopleGroupForSpecificDesignFeatures"

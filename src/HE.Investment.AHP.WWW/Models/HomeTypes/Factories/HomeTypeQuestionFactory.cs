@@ -7,7 +7,6 @@ using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Workflow;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Routing;
-using HE.Investments.Loans.Common.Routing;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investment.AHP.WWW.Models.HomeTypes.Factories;
@@ -82,6 +81,17 @@ internal class HomeTypeQuestionFactory
             string.IsNullOrWhiteSpace(answer) ? null : new[] { answer },
             CreateActionUrl(controllerActionName),
             Files: files);
+    }
+
+    public SectionSummaryItemModel? DeadEnd(string controllerActionName)
+    {
+        var workflowState = GetWorkflowState(controllerActionName);
+        if (!_workflow.CanBeAccessed(workflowState))
+        {
+            return null;
+        }
+
+        return new SectionSummaryItemModel("Dead End", null, CreateActionUrl(controllerActionName), IsVisible: false);
     }
 
     private static HomeTypesWorkflowState GetWorkflowState(string controllerActionName)

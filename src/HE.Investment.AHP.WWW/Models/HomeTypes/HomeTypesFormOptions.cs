@@ -1,4 +1,3 @@
-using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investments.Common.WWW.Helpers;
 using Microsoft.AspNetCore.Mvc.Rendering;

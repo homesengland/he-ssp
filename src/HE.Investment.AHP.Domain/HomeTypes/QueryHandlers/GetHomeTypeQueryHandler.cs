@@ -25,12 +25,11 @@ internal sealed class GetHomeTypeQueryHandler : IRequestHandler<GetHomeTypeQuery
             HomeTypeSegmentTypes.WorkflowConditionals,
             cancellationToken);
 
-        return new HomeType
-        {
-            HomeTypeId = request.HomeTypeId,
-            HomeTypeName = homeType.Name.Value,
-            HousingType = homeType.HousingType,
-            Conditionals = HomeTypeConditionalsMapper.Map(homeType),
-        };
+        return new HomeType(
+            request.HomeTypeId,
+            homeType.Name.Value,
+            homeType.HousingType,
+            homeType.Application.Tenure,
+            HomeTypeConditionalsMapper.Map(homeType));
     }
 }

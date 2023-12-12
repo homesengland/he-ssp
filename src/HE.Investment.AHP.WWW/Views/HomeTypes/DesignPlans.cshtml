@@ -5,10 +5,11 @@
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
+    var workflow = Context.Request.Query["workflow"];
 }
 
 <div class="govuk-grid-column-full">
-    <form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
+    <form asp-controller="HomeTypes" asp-action="DesignPlans" asp-method="post" enctype="multipart/form-data" asp-route-workflow="@workflow" novalidate>
         <vc:home-type-form-header title="Upload your design plans"
                                   current-page="@HomeTypesWorkflowState.DesignPlans"
                                   application-id="@applicationId"

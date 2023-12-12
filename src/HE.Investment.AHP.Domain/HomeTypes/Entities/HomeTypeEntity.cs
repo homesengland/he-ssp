@@ -87,7 +87,7 @@ public class HomeTypeEntity : IHomeTypeEntity
 
         var canBeCompleted = HousingType != HousingType.Undefined
                              && Name.IsProvided()
-                             && _segments.Where(x => x.Value.IsRequired(HousingType)).All(x => x.Value.IsCompleted());
+                             && _segments.Where(x => x.Value.IsRequired(HousingType)).All(x => x.Value.IsCompleted(HousingType, Application.Tenure));
         if (!canBeCompleted)
         {
             OperationResult.New()
