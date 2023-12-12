@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace HE.Investments.Common.WWW.Infrastructure.Middlewares;
 
@@ -24,6 +25,20 @@ public static class MiddlewareExtensions
         return app.Use((context, next) =>
         {
             context.Request.Scheme = "https";
+            return next();
+        });
+    }
+
+    public static IApplicationBuilder UseCustomDisableRequestLimitSize(this IApplicationBuilder app, params string[] pathsWithDisabledRequestSizeLimit)
+    {
+        return app.Use((context, next) =>
+        {
+            var requestPath = context.Request.Path.Value ?? string.Empty;
+            if (pathsWithDisabledRequestSizeLimit.Any(x => requestPath.Contains(x)))
+            {
+                context.Features.Get<IHttpMaxRequestBodySizeFeature>()!.MaxRequestBodySize = null;
+            }
+
             return next();
         });
     }

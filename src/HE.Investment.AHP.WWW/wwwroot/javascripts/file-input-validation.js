@@ -13,7 +13,7 @@
 // - URL to file upload is in value of element with id 'upload-file-url'
 // - URL to remove file is in value of element with id 'remove-file-url-template', URL contains {:fileId} template parameter
 // - URL to download file is in value of element with id 'download-file-url-template', URL contains {:fileId} template parameter
-(() => {
+(async () => {
   const fileInputSelector = `.govuk-file-upload[type="file"]`;
   const fileInputFormGroupId = 'file-input-form-group';
   const validationSummaryId = 'validation-summary';
@@ -49,7 +49,7 @@
 
   const downloadFileLink = (fileName, downloadFileUrl) => `<a class="govuk-link" href="${downloadFileUrl}">${sanitize(fileName)}</a>`;
 
-  const fileInputChanged = () => {
+  const fileInputChanged = async () => {
     const maxFileSizeInMegabytes = document.getElementById(maxFileSizeId).value;
     const maxFileSize = maxFileSizeInMegabytes * 1024 * 1024;
     const uploadControl = document.querySelectorAll(fileInputSelector)[0];
@@ -96,8 +96,9 @@
         formData.append("file", file);
 
         fileUploadStarted(fileId);
-        fetch(url, { method: "POST", body: formData })
-          .then(response => response.ok ? fileUploadFinished(fileId, file.name, response) : fileUploadFailed(fileId, response));
+        await fetch(url, { method: "POST", body: formData })
+          .then(response => response.ok ? fileUploadFinished(fileId, file.name, response) : fileUploadFailed(fileId, response))
+          .catch(() => fileUploadFailed(fileId, undefined));
       }
     }
 
@@ -150,7 +151,7 @@
     uploadedColumn.innerText = "Upload failed";
     actionColumn.innerHTML = "";
 
-    if (response.status === 400) {
+    if (response !== undefined && response.status === 400) {
       return response.json()
         .then(errors => {
           if (Array.isArray(errors) && errors.length > 0 && errors[0].errorMessage){
@@ -229,7 +230,7 @@
   document.addEventListener("DOMContentLoaded", function() {
     const fileInput = document.querySelectorAll(fileInputSelector)[0];
     if (fileInput !== null && fileInput !== undefined) {
-     fileInput.addEventListener("change", fileInputChanged);
+      fileInput.addEventListener("change", fileInputChanged);
     }
   });
 })();
