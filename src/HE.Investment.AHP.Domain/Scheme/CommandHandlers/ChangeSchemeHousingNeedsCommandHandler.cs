@@ -14,6 +14,6 @@ public class ChangeSchemeHousingNeedsCommandHandler : UpdateSchemeCommandHandler
 
     protected override void Update(SchemeEntity scheme, ChangeSchemeHousingNeedsCommand request)
     {
-        scheme.ChangeHousingNeeds(new HousingNeeds(request.TypeAndTenureJustification, request.SchemeAndProposalJustification));
+        scheme.ChangeHousingNeeds(new HousingNeeds(request.MeetingLocalPriorities, request.MeetingLocalHousingNeed));
     }
 }

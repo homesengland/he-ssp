@@ -17,20 +17,19 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         <gds-field-set role="group">
             <vc:form-field-title
-                field-name="TypeAndTenureJustification"
+                field-name="MeetingLocalPriorities"
                 title="Tell us how this type and tenure of home meets the identified priorities for the local housing market"/>
-            <HeErrorFormGroup asp-for="TypeAndTenureJustification">
-                <he-text-area asp-for="TypeAndTenureJustification" rows="5" class="govuk-!-margin-bottom-2"></he-text-area>
+            <HeErrorFormGroup asp-for="MeetingLocalPriorities">
+                <he-text-area asp-for="MeetingLocalPriorities" rows="5" class="govuk-!-margin-bottom-2"></he-text-area>
                 <he-div-hint>
                     You can enter up to 1500 characters
                 </he-div-hint>
             </HeErrorFormGroup>
 
-            <vc:form-field-title
-                field-name="SchemeAndProposalJustification"
+            <vc:form-field-title field-name="MeetingLocalHousingNeed"
                 title="Tell us how this scheme and proposal contributes to a locally identified housing need"/>
-            <HeErrorFormGroup asp-for="SchemeAndProposalJustification">
-                <he-text-area asp-for="SchemeAndProposalJustification" rows="5" class="govuk-!-margin-bottom-2"></he-text-area>
+            <HeErrorFormGroup asp-for="MeetingLocalHousingNeed">
+                <he-text-area asp-for="MeetingLocalHousingNeed" rows="5" class="govuk-!-margin-bottom-2"></he-text-area>
                 <he-div-hint>
                     You can enter up to 1500 characters
                 </he-div-hint>

@@ -60,8 +60,8 @@ public class SchemeRepository : ISchemeRepository
             noOfHomes = entity.Funding.HousesToDeliver,
             affordabilityEvidence = entity.AffordabilityEvidence.Evidence,
             discussionsWithLocalStakeholders = entity.StakeholderDiscussions.StakeholderDiscussionsDetails.Report,
-            meetingLocalProrities = entity.HousingNeeds.SchemeAndProposalJustification,
-            meetingLocalHousingNeed = entity.HousingNeeds.TypeAndTenureJustification,
+            meetingLocalProrities = entity.HousingNeeds.MeetingLocalPriorities,
+            meetingLocalHousingNeed = entity.HousingNeeds.MeetingLocalHousingNeed,
             sharedOwnershipSalesRisk = entity.SalesRisk.Value,
         };
 
