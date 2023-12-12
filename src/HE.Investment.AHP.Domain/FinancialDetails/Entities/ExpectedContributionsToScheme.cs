@@ -1,10 +1,11 @@
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
 
-public class ExpectedContributionsToScheme
+public class ExpectedContributionsToScheme : ValueObject, IQuestion
 {
     public ExpectedContributionsToScheme(
         ExpectedContributionValue? rentalIncome,
@@ -48,8 +49,10 @@ public class ExpectedContributionsToScheme
 
     public bool IsAnswered()
     {
-        return RentalIncome.IsProvided() && SalesOfHomesOnThisScheme.IsProvided() && SalesOfHomesOnOtherSchemes.IsProvided() &&
-               OwnResources.IsProvided() && RcgfContributions.IsProvided() && OtherCapitalSources.IsProvided() && HomesTransferValue.IsProvided();
+        var isAnswered = RentalIncome.IsProvided() && SalesOfHomesOnThisScheme.IsProvided() && SalesOfHomesOnOtherSchemes.IsProvided() &&
+                         OwnResources.IsProvided() && RcgfContributions.IsProvided() && OtherCapitalSources.IsProvided() && HomesTransferValue.IsProvided();
+
+        return isAnswered && IsAnsweredForTenureSharedOwnership();
     }
 
     public decimal CalculateTotal()
@@ -59,5 +62,27 @@ public class ExpectedContributionsToScheme
                                          OtherCapitalSources.GetValueOrZero() + SharedOwnershipSales.GetValueOrZero() + HomesTransferValue.GetValueOrZero();
 
         return totalExpectedContributions;
+    }
+
+    protected override IEnumerable<object?> GetAtomicValues()
+    {
+        yield return RentalIncome;
+        yield return SalesOfHomesOnThisScheme;
+        yield return SalesOfHomesOnOtherSchemes;
+        yield return OwnResources;
+        yield return RcgfContributions;
+        yield return OtherCapitalSources;
+        yield return SharedOwnershipSales;
+        yield return HomesTransferValue;
+    }
+
+    private bool IsAnsweredForTenureSharedOwnership()
+    {
+        if (ApplicationTenure != Tenure.SharedOwnership)
+        {
+            return true;
+        }
+
+        return SharedOwnershipSales.IsProvided();
     }
 }

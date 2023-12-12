@@ -1,9 +1,10 @@
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
 
-public class PublicGrants
+public class PublicGrants : ValueObject, IQuestion
 {
     public PublicGrants(
         PublicGrantValue? countyCouncil,
@@ -23,19 +24,19 @@ public class PublicGrants
         OtherPublicBodies = otherPublicBodies;
     }
 
-    public PublicGrantValue? CountyCouncil { get; private set; }
+    public PublicGrantValue? CountyCouncil { get; }
 
-    public PublicGrantValue? DhscExtraCare { get; private set; }
+    public PublicGrantValue? DhscExtraCare { get; }
 
-    public PublicGrantValue? LocalAuthority { get; private set; }
+    public PublicGrantValue? LocalAuthority { get; }
 
-    public PublicGrantValue? SocialServices { get; private set; }
+    public PublicGrantValue? SocialServices { get; }
 
-    public PublicGrantValue? HealthRelated { get; private set; }
+    public PublicGrantValue? HealthRelated { get; }
 
-    public PublicGrantValue? Lottery { get; private set; }
+    public PublicGrantValue? Lottery { get; }
 
-    public PublicGrantValue? OtherPublicBodies { get; private set; }
+    public PublicGrantValue? OtherPublicBodies { get; }
 
     public bool IsAnswered()
     {
@@ -50,5 +51,16 @@ public class PublicGrants
                           HealthRelated.GetValueOrZero() + Lottery.GetValueOrZero() + OtherPublicBodies.GetValueOrZero();
 
         return totalGrants;
+    }
+
+    protected override IEnumerable<object?> GetAtomicValues()
+    {
+        yield return CountyCouncil;
+        yield return DhscExtraCare;
+        yield return LocalAuthority;
+        yield return SocialServices;
+        yield return HealthRelated;
+        yield return Lottery;
+        yield return OtherPublicBodies;
     }
 }

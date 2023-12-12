@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.FinancialDetails.Commands;
+using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Extensions;
@@ -22,7 +23,8 @@ public class ProvideLandStatusCommandHandler : FinancialDetailsCommandHandlerBas
             {
                 var purchasePrice = request.IsFinal && request.PurchasePrice.IsProvided() ? new PurchasePrice(request.PurchasePrice!) : null;
                 var expectedPurchasePrice = !request.IsFinal && request.PurchasePrice.IsProvided() ? new ExpectedPurchasePrice(request.PurchasePrice!) : null;
-                financialDetails.ProvideLandStatus(purchasePrice, expectedPurchasePrice);
+                var landStatus = new LandStatus(purchasePrice, expectedPurchasePrice);
+                financialDetails.ProvideLandStatus(landStatus);
             },
             request.ApplicationId,
             cancellationToken);

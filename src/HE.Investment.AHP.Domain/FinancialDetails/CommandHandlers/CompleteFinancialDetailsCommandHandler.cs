@@ -18,7 +18,7 @@ public class CompleteFinancialDetailsCommandHandler : FinancialDetailsCommandHan
     public async Task<OperationResult> Handle(CompleteFinancialDetailsCommand request, CancellationToken cancellationToken)
     {
         return await Perform(
-            financialDetails => financialDetails.CompleteFinancialDetails(),
+            financialDetails => financialDetails.CompleteFinancialDetails(request.IsSectionCompleted),
             request.ApplicationId,
             cancellationToken);
     }

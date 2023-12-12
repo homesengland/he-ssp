@@ -264,25 +264,11 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
     public async Task<IActionResult> Complete(Guid applicationId, FinancialDetailsCheckAnswersModel model, CancellationToken cancellationToken)
     {
-        if (model.IsSectionCompleted == IsSectionCompleted.Undefied)
-        {
-            ModelState.AddModelError(nameof(model.IsSectionCompleted), "Select whether you have completed this section");
-            return View(
-                "CheckAnswers",
-                await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken));
-        }
-
-        var result = await _mediator.Send(new CompleteFinancialDetailsCommand(ApplicationId.From(applicationId)), cancellationToken);
+        var result = await _mediator.Send(new CompleteFinancialDetailsCommand(ApplicationId.From(applicationId), model.IsSectionCompleted), cancellationToken);
 
         if (result.HasValidationErrors)
         {
-            var error = result.Errors.FirstOrDefault(error => error.AffectedField == FinancialDetailsValidationFieldNames.CostsAndFunding);
-            if (error != null)
-            {
-                ModelState.AddModelError(error.AffectedField, error.ErrorMessage);
-            }
-
-            ModelState.AddModelError(nameof(model.IsSectionCompleted), "You have not completed this section. Select no if you want to come back later");
+            ModelState.AddValidationErrors(result);
             return View(
                 "CheckAnswers",
                 await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken));

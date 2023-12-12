@@ -1,16 +1,14 @@
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
-using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Errors;
-using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
-using HE.Investments.Loans.Common.Exceptions;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
 
-public class FinancialDetailsEntity
+public class FinancialDetailsEntity : IQuestion
 {
     public FinancialDetailsEntity(ApplicationBasicInfo applicationBasicInfo)
     {
@@ -20,21 +18,17 @@ public class FinancialDetailsEntity
 
     public FinancialDetailsEntity(
         ApplicationBasicInfo applicationBasicInfo,
-        PurchasePrice? purchasePrice,
-        ExpectedPurchasePrice? expectedPurchasePrice,
-        CurrentLandValue? landValue,
-        bool? isPublicLand,
+        LandStatus landStatus,
+        LandValue landValue,
         OtherApplicationCosts otherApplicationCosts,
         ExpectedContributionsToScheme expectedContributionsToScheme,
         PublicGrants publicGrants,
         SectionStatus sectionStatus)
     {
         ApplicationBasicInfo = applicationBasicInfo;
-        PurchasePrice = purchasePrice;
+        LandStatus = landStatus;
         LandValue = landValue;
-        IsPublicLand = isPublicLand;
         OtherApplicationCosts = otherApplicationCosts;
-        ExpectedPurchasePrice = expectedPurchasePrice;
         ExpectedContributions = expectedContributionsToScheme;
         PublicGrants = publicGrants;
         SectionStatus = sectionStatus;
@@ -42,13 +36,9 @@ public class FinancialDetailsEntity
 
     public ApplicationBasicInfo ApplicationBasicInfo { get; }
 
-    public PurchasePrice? PurchasePrice { get; private set; }
+    public LandStatus LandStatus { get; private set; }
 
-    public ExpectedPurchasePrice? ExpectedPurchasePrice { get; private set; }
-
-    public CurrentLandValue? LandValue { get; private set; }
-
-    public bool? IsPublicLand { get; private set; }
+    public LandValue LandValue { get; private set; }
 
     public OtherApplicationCosts OtherApplicationCosts { get; private set; }
 
@@ -58,61 +48,63 @@ public class FinancialDetailsEntity
 
     public SectionStatus SectionStatus { get; private set; }
 
-    public void ProvideLandStatus(PurchasePrice? purchasePrice, ExpectedPurchasePrice? expectedPurchasePrice)
+    public void ProvideLandStatus(LandStatus landStatus)
     {
-        if (purchasePrice.IsProvided() && expectedPurchasePrice.IsProvided())
-        {
-            throw new DomainException(
-                $"{PurchasePrice.Fields.DisplayName} cannot be provided together with {ExpectedPurchasePrice.Fields.DisplayName}",
-                CommonErrorCodes.InvalidDomainOperation);
-        }
-
-        PurchasePrice = purchasePrice;
-        ExpectedPurchasePrice = expectedPurchasePrice;
+        ChangeStatus(LandStatus != landStatus);
+        LandStatus = landStatus;
     }
 
-    public void ProvideCurrentLandValue(CurrentLandValue? currentLandValue)
+    public void ProvideLandValue(LandValue landValue)
     {
-        LandValue = currentLandValue;
-    }
-
-    public void ProvideIsPublicLand(bool? isPublicLand)
-    {
-        IsPublicLand = isPublicLand;
+        ChangeStatus(LandValue != landValue);
+        LandValue = landValue;
     }
 
     public void ProvideOtherApplicationCosts(OtherApplicationCosts otherApplicationCosts)
     {
+        ChangeStatus(OtherApplicationCosts != otherApplicationCosts);
         OtherApplicationCosts = otherApplicationCosts;
     }
 
     public void ProvideExpectedContributions(ExpectedContributionsToScheme expectedContribution)
     {
+        ChangeStatus(ExpectedContributions != expectedContribution);
         ExpectedContributions = expectedContribution;
     }
 
     public void ProvideGrants(PublicGrants publicGrants)
     {
+        ChangeStatus(PublicGrants != publicGrants);
         PublicGrants = publicGrants;
     }
 
     public bool IsAnswered()
     {
-        return PurchasePrice.IsProvided() &&
-               LandValue.IsProvided() &&
-               IsPublicLand.HasValue &&
+        return LandStatus.IsAnswered() &&
+               LandValue.IsAnswered() &&
                OtherApplicationCosts.IsAnswered() &&
                ExpectedContributions.IsAnswered() &&
                PublicGrants.IsAnswered();
     }
 
-    public void CompleteFinancialDetails()
+    public void CompleteFinancialDetails(IsSectionCompleted isSectionCompleted)
     {
+        if (isSectionCompleted == IsSectionCompleted.Undefied)
+        {
+            OperationResult.New().AddValidationError(nameof(IsSectionCompleted), "Select whether you have completed this section").CheckErrors();
+        }
+
+        if (isSectionCompleted == IsSectionCompleted.No)
+        {
+            SectionStatus = SectionStatus.InProgress;
+            return;
+        }
+
         if (!IsAnswered())
         {
             OperationResult
                 .New()
-                .AddValidationError("IsSectionCompleted", ValidationErrorMessage.SectionIsNotCompleted).CheckErrors();
+                .AddValidationError(nameof(IsSectionCompleted), ValidationErrorMessage.SectionIsNotCompleted).CheckErrors();
         }
 
         if (ExpectedTotalCosts() != ExpectedTotalContributions())
@@ -129,4 +121,9 @@ public class FinancialDetailsEntity
     public decimal ExpectedTotalCosts() => OtherApplicationCosts.ExpectedTotalCosts();
 
     public decimal ExpectedTotalContributions() => ExpectedContributions.CalculateTotal() + PublicGrants.CalculateTotal();
+
+    private void ChangeStatus(bool isChanged)
+    {
+        SectionStatus = isChanged ? SectionStatus.InProgress : SectionStatus;
+    }
 }

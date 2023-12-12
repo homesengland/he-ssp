@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.Contract.FinancialDetails.Queries;
 
 public record GetFinancialCheckAnswersQuery(string ApplicationId) : IRequest<GetFinancialCheckAnswersResult>;
 
-public record GetFinancialCheckAnswersResult(string ApplicationName, bool AreAllQuestionsAnswered, LandValueSummary LandValue, TotalSchemeCost TotalSchemeCost, TotalContributions TotalContributions);
+public record GetFinancialCheckAnswersResult(string ApplicationName, SectionStatus SectionStatus, LandValueSummary LandValue, TotalSchemeCost TotalSchemeCost, TotalContributions TotalContributions);
 
 public record LandValueSummary(decimal? PurchasePrice, decimal? CurrentValue, bool? IsPublicLand);
 
