@@ -1,4 +1,5 @@
 ﻿using HE.Investment.AHP.Domain.FinancialDetails.Commands;
+using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Extensions;
@@ -21,8 +22,11 @@ public class ProvideLandValueCommandHandler : FinancialDetailsCommandHandlerBase
         return await Perform(
             financialDetails =>
             {
-                financialDetails.ProvideCurrentLandValue(request.LandValue.IsProvided() ? new CurrentLandValue(request.LandValue!) : null);
-                financialDetails.ProvideIsPublicLand(request.LandOwnership.MapToBool());
+                var landValue = new LandValue(
+                    request.LandValue.IsProvided() ? new CurrentLandValue(request.LandValue!) : null,
+                    request.LandOwnership.MapToBool());
+
+                financialDetails.ProvideLandValue(landValue);
             },
             request.ApplicationId,
             cancellationToken);
