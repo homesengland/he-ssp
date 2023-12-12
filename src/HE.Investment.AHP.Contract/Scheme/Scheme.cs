@@ -13,7 +13,7 @@ public record Scheme(
     int? HousesToDeliver,
     string? AffordabilityEvidence,
     string? SalesRisk,
-    string? TypeAndTenureJustification,
-    string? SchemeAndProposalJustification,
+    string? MeetingLocalPriorities,
+    string? MeetingLocalHousingNeed,
     string? StakeholderDiscussionsReport,
     UploadedFile? StakeholderDiscussionsFile);

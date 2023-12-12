@@ -43,8 +43,8 @@ public class SchemeWorkflow : IStateRouting<SchemeWorkflowState>
             { HousesToDeliver: var x } when x.IsNotProvided() => SchemeWorkflowState.Funding,
             { AffordabilityEvidence: var x } when x.IsNotProvided() => SchemeWorkflowState.Affordability,
             { SalesRisk: var x } when x.IsNotProvided() => SchemeWorkflowState.SalesRisk,
-            { TypeAndTenureJustification: var x } when x.IsNotProvided() => SchemeWorkflowState.HousingNeeds,
-            { SchemeAndProposalJustification: var x } when x.IsNotProvided() => SchemeWorkflowState.HousingNeeds,
+            { MeetingLocalPriorities: var x } when x.IsNotProvided() => SchemeWorkflowState.HousingNeeds,
+            { MeetingLocalHousingNeed: var x } when x.IsNotProvided() => SchemeWorkflowState.HousingNeeds,
             { StakeholderDiscussionsReport: var x } when x.IsNotProvided() => SchemeWorkflowState.StakeholderDiscussions,
             _ => SchemeWorkflowState.CheckAnswers,
         };

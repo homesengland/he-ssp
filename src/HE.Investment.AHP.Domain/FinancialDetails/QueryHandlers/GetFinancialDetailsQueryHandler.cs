@@ -22,9 +22,9 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
         var financialDetailsDto = new Contract.FinancialDetails.FinancialDetails
         {
             ApplicationName = financialDetails.ApplicationBasicInfo.Name.Name,
-            PurchasePrice = financialDetails.PurchasePrice?.Value ?? financialDetails.ExpectedPurchasePrice?.Value,
-            IsSchemaOnPublicLand = financialDetails.IsPublicLand,
-            LandValue = financialDetails.LandValue?.Value,
+            PurchasePrice = financialDetails.LandStatus.PurchasePrice?.Value ?? financialDetails.LandStatus.ExpectedPurchasePrice?.Value,
+            IsSchemaOnPublicLand = financialDetails.LandValue.IsPublicLand,
+            LandValue = financialDetails.LandValue.CurrentLandValue?.Value,
             ExpectedWorkCost = financialDetails.OtherApplicationCosts.ExpectedWorksCosts?.Value,
             ExpectedOnCost = financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
             TotalExpectedCosts = financialDetails.ExpectedTotalCosts(),

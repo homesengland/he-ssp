@@ -140,8 +140,8 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return await ExecuteCommand(
             new ChangeSchemeHousingNeedsCommand(
                 model.ApplicationId,
-                model.TypeAndTenureJustification,
-                model.SchemeAndProposalJustification),
+                model.MeetingLocalPriorities,
+                model.MeetingLocalHousingNeed),
             model.ApplicationId,
             nameof(HousingNeeds),
             model,
@@ -281,8 +281,8 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
             scheme.HousesToDeliver.ToString(),
             scheme.AffordabilityEvidence,
             scheme.SalesRisk,
-            scheme.TypeAndTenureJustification,
-            scheme.SchemeAndProposalJustification,
+            scheme.MeetingLocalPriorities,
+            scheme.MeetingLocalHousingNeed,
             scheme.StakeholderDiscussionsReport,
             CreateFileModel(scheme.StakeholderDiscussionsFile),
             _documentSettings.MaxFileSize.Megabytes,

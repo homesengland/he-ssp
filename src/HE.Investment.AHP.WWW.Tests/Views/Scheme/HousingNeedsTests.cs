@@ -9,8 +9,8 @@ namespace HE.Investment.AHP.WWW.Tests.Views.Scheme;
 public class HousingNeedsTests : ViewTestBase
 {
     private const string ViewPath = "/Views/Scheme/HousingNeeds.cshtml";
-    private const string TypeAndTenureJustificationError = "Test error";
-    private const string SchemeAndProposalJustificationError = "Second error";
+    private const string MeetingLocalPrioritiesError = "Test error";
+    private const string MeetingLocalHousingNeedError = "Second error";
     private static readonly SchemeViewModel Model = TestSchemeViewModel.Test;
 
     [Fact]
@@ -29,8 +29,8 @@ public class HousingNeedsTests : ViewTestBase
     {
         // given
         var modelState = new ModelStateDictionary();
-        modelState.AddModelError(nameof(SchemeViewModel.TypeAndTenureJustification), TypeAndTenureJustificationError);
-        modelState.AddModelError(nameof(SchemeViewModel.SchemeAndProposalJustification), SchemeAndProposalJustificationError);
+        modelState.AddModelError(nameof(SchemeViewModel.MeetingLocalPriorities), MeetingLocalPrioritiesError);
+        modelState.AddModelError(nameof(SchemeViewModel.MeetingLocalHousingNeed), MeetingLocalHousingNeedError);
 
         // when
         var document = await Render(ViewPath, Model, modelStateDictionary: modelState);
@@ -45,15 +45,15 @@ public class HousingNeedsTests : ViewTestBase
         document
             .HasPageHeader(Model.ApplicationName, "Local housing needs")
             .HasFormFieldLabel("Tell us how this type and tenure of home meets the identified priorities for the local housing market", "h2")
-            .HasInput("TypeAndTenureJustification", value: Model.TypeAndTenureJustification)
+            .HasInput("MeetingLocalPriorities", value: Model.MeetingLocalPriorities)
             .HasFormFieldLabel("Tell us how this scheme and proposal contributes to a locally identified housing need", "h2")
-            .HasInput("SchemeAndProposalJustification", value: Model.SchemeAndProposalJustification)
+            .HasInput("MeetingLocalHousingNeed", value: Model.MeetingLocalHousingNeed)
             .HasElementWithText("button", "Save and continue");
     }
 
     private void AssertErrors(IHtmlDocument document, bool exist)
     {
-        document.HasSummaryErrorMessage(nameof(SchemeViewModel.TypeAndTenureJustification), TypeAndTenureJustificationError, exist);
-        document.HasSummaryErrorMessage(nameof(SchemeViewModel.SchemeAndProposalJustification), SchemeAndProposalJustificationError, exist);
+        document.HasSummaryErrorMessage(nameof(SchemeViewModel.MeetingLocalPriorities), MeetingLocalPrioritiesError, exist);
+        document.HasSummaryErrorMessage(nameof(SchemeViewModel.MeetingLocalHousingNeed), MeetingLocalHousingNeedError, exist);
     }
 }

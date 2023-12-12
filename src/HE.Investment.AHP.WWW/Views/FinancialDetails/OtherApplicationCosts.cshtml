@@ -12,34 +12,34 @@
 
 }
 <gds-div-grid-column-two-thirds>
-        <form asp-controller="FinancialDetails" asp-action="OtherApplicationCosts" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
-            <div id="backButton" role="navigation">
-                <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.OtherApplicationCosts, applicationId = @Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
-                </gds-back-link>
-            </div>
-            @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-            <gds-field-set role="group">
-                <gds-div-form-group>
-                    <vc:form-header title="@FinancialDetailsPageTitles.OtherApplicationCosts" caption="@Model.ApplicationName - Finance details" />
-                    <gds-field-set role="group" invalid=false>
-                        <he-div-hint class="govuk-!-margin-bottom-6">
-                            For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
-                        </he-div-hint>
-                    </gds-field-set>
-                    <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=@expectedWorksCostsInvalid>
+    <form asp-controller="FinancialDetails" asp-action="OtherApplicationCosts" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
+        <div id="backButton" role="navigation">
+            <gds-back-link href="@Url.Action("Back", "FinancialDetails", new { currentPage = FinancialDetailsWorkflowState.OtherApplicationCosts, applicationId = @Model.ApplicationId })" text="Back" class="govuk-!-margin-bottom-8">
+            </gds-back-link>
+        </div>
+        @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+        <gds-field-set role="group">
+            <gds-div-form-group>
+                <vc:form-header title="@FinancialDetailsPageTitles.OtherApplicationCosts" caption="@Model.ApplicationName - Finance details" />
+                <gds-field-set role="group">
+                    <he-div-hint class="govuk-!-margin-bottom-6">
+                        For multi-tenure sites, ensure the costs and contributions are apportioned across the development and only those applicable to the homes on this application are recorded here.
+                    </he-div-hint>
+                </gds-field-set>
+                <gds-field-set class="govuk-!-margin-bottom-6" role="group">
+                    <he-error-form-group asp-for="ExpectedWorksCosts">
                         <gds-legend>
-                            <gds-h2 class="govuk-!-margin-bottom-1" for="@Model.ExpectedWorksCosts">
+                            <gds-h2 class="govuk-!-margin-bottom-1">
                                 Enter your expected works costs
                             </gds-h2>
                         </gds-legend>
-
                         <gds-input govuk-formgroup-asp-for="@Model.ExpectedWorksCosts" type="text"
                                    asp-hiddenlabeltext="Enter your expected works costs"
                                    asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.ExpectedWorksCosts />
-                    </gds-field-set>
-                    <gds-field-set class="govuk-!-margin-bottom-6" role="group" invalid=@expectedOnCostsInvalid>
+                    </he-error-form-group>
+                    <he-error-form-group asp-for="ExpectedOnCosts">
                         <gds-legend>
-                            <gds-h2 class="govuk-!-margin-bottom-1" for="@Model.ExpectedOnCosts">
+                            <gds-h2 class="govuk-!-margin-bottom-1">
                                 Enter your expected on costs
                             </gds-h2>
                         </gds-legend>
@@ -47,29 +47,30 @@
                         <gds-input govuk-formgroup-asp-for="@Model.ExpectedOnCosts" type="text"
                                    asp-hiddenlabeltext="Enter your expected on costs"
                                    asp-prefixtext=@(GdsInputPrefixText.Pounds) class="govuk-!-width-one-quarter" value=@Model?.ExpectedOnCosts />
-                    </gds-field-set>
-                    <gds-details>
-                        <gds-summary-details>What are works and on costs?</gds-summary-details>
-                        <gds-div-details-text>
-                            Details of eligible work and on costs can be found in the
-                            <a href="https://www.gov.uk/government/publications/grant-agreement-examples-for-the-affordable-homes-programme-2021-to-2026" target="_blank">
-                                published examples of the 21-26 AHP grant agreement (opens in a new tab)
-                            </a>
-                        </gds-div-details-text>
-                    </gds-details>
-                </gds-div-form-group>
+                    </he-error-form-group>
+                </gds-field-set>
+                <gds-details>
+                    <gds-summary-details>What are works and on costs?</gds-summary-details>
+                    <gds-div-details-text>
+                        Details of eligible work and on costs can be found in the
+                        <a href="https://www.gov.uk/government/publications/grant-agreement-examples-for-the-affordable-homes-programme-2021-to-2026" target="_blank">
+                            published examples of the 21-26 AHP grant agreement (opens in a new tab)
+                        </a>
+                    </gds-div-details-text>
+                </gds-details>
+            </gds-div-form-group>
 
-                @Html.HiddenFor(c => c.ApplicationId)
-                @Html.HiddenFor(c => c.ApplicationName)
+            @Html.HiddenFor(c => c.ApplicationId)
+            @Html.HiddenFor(c => c.ApplicationName)
 
-                <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
-                    Save and continue
-                </button>
+            <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
+                Save and continue
+            </button>
 
-            </gds-field-set>
-            <gds-p>
-                <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" />
-            </gds-p>
+        </gds-field-set>
+        <gds-p>
+            <vc:return-to-application-link application-id="@Model.ApplicationId.ToString()" />
+        </gds-p>
 
-        </form>
+    </form>
 </gds-div-grid-column-two-thirds>

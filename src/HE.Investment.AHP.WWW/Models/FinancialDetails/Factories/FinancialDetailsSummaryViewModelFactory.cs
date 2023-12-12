@@ -2,6 +2,7 @@
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investment.AHP.WWW.Models.Application;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Utils;
@@ -37,7 +38,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
             landValueSectionSummary,
             costsSectionSummary,
             contributionsSectionSummary,
-            IsSectionCompleted.Undefied);
+            result.SectionStatus == SectionStatus.Completed ? IsSectionCompleted.Yes : IsSectionCompleted.Undefied);
     }
 
     private string GetCurrencyStringWithPrefix(decimal? value)

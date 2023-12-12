@@ -34,10 +34,10 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         {
             id = financialDetails.ApplicationBasicInfo.Id.Value,
             name = financialDetails.ApplicationBasicInfo.Name.Name,
-            actualAcquisitionCost = financialDetails.PurchasePrice?.Value,
-            expectedAcquisitionCost = financialDetails.ExpectedPurchasePrice?.Value,
-            isPublicLand = financialDetails.IsPublicLand,
-            currentLandValue = financialDetails.LandValue?.Value,
+            actualAcquisitionCost = financialDetails.LandStatus.PurchasePrice?.Value,
+            expectedAcquisitionCost = financialDetails.LandStatus.ExpectedPurchasePrice?.Value,
+            isPublicLand = financialDetails.LandValue.IsPublicLand,
+            currentLandValue = financialDetails.LandValue.CurrentLandValue?.Value,
             expectedOnWorks = financialDetails.OtherApplicationCosts.ExpectedWorksCosts?.Value,
             expectedOnCosts = financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
             financialDetailsSectionCompletionStatus = SectionStatusMapper.ToDto(financialDetails.SectionStatus),
@@ -61,10 +61,12 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
 
         return new FinancialDetailsEntity(
             applicationBasicInfo,
-            application.actualAcquisitionCost.IsProvided() ? new PurchasePrice(application.actualAcquisitionCost!.Value) : null,
-            application.expectedAcquisitionCost.IsProvided() ? new ExpectedPurchasePrice(application.expectedAcquisitionCost!.Value) : null,
-            application.currentLandValue.IsProvided() ? new CurrentLandValue(application.currentLandValue!.Value) : null,
-            application.isPublicLand,
+            new LandStatus(
+                application.actualAcquisitionCost.IsProvided() ? new PurchasePrice(application.actualAcquisitionCost!.Value) : null,
+                application.expectedAcquisitionCost.IsProvided() ? new ExpectedPurchasePrice(application.expectedAcquisitionCost!.Value) : null),
+            new LandValue(
+                application.currentLandValue.IsProvided() ? new CurrentLandValue(application.currentLandValue!.Value) : null,
+                application.isPublicLand),
             MapToOtherApplicationCosts(application),
             MapToExpectedContributionsToScheme(application, applicationBasicInfo.Tenure),
             MapToPublicGrants(application),
