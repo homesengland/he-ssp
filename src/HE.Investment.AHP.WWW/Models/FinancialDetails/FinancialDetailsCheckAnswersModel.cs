@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
@@ -15,13 +16,13 @@ public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel
         SectionSummaryViewModel landValueSummary,
         SectionSummaryViewModel costsSummary,
         SectionSummaryViewModel contributionsSummary,
-        bool? isCompleted)
+        IsSectionCompleted isSectionCompleted)
         : base(applicationId, applicationName)
     {
         LandValueSummary = landValueSummary;
         CostsSummary = costsSummary;
         ContributionsSummary = contributionsSummary;
-        IsCompleted = isCompleted;
+        IsSectionCompleted = isSectionCompleted;
     }
 
     [ValidateNever]
@@ -36,5 +37,5 @@ public class FinancialDetailsCheckAnswersModel : FinancialDetailsBaseModel
     [ValidateNever]
     public bool? CostsAndFunding { get; set; }
 
-    public bool? IsCompleted { get; set; }
+    public IsSectionCompleted IsSectionCompleted { get; set; }
 }

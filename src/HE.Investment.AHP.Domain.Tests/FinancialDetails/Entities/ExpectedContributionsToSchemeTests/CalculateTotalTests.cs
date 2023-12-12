@@ -1,4 +1,5 @@
 using FluentAssertions;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 
@@ -17,8 +18,9 @@ public class CalculateTotalTests
             new ExpectedContributionValue(ExpectedContributionFields.OwnResources, "4"),
             new ExpectedContributionValue(ExpectedContributionFields.RcgfContribution, "5"),
             new ExpectedContributionValue(ExpectedContributionFields.OtherCapitalSources, "6"),
-            new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, "7"),
-            new ExpectedContributionValue(ExpectedContributionFields.HomesTransferValue, "8"));
+            new ExpectedContributionValue(ExpectedContributionFields.InitialSalesOfSharedHomes, "7"),
+            new ExpectedContributionValue(ExpectedContributionFields.HomesTransferValue, "8"),
+            Tenure.AffordableRent);
 
         // when
         var total = expectedContributionsToScheme.CalculateTotal();
@@ -38,8 +40,9 @@ public class CalculateTotalTests
             new ExpectedContributionValue(ExpectedContributionFields.OwnResources, "4"),
             new ExpectedContributionValue(ExpectedContributionFields.RcgfContribution, "5"),
             new ExpectedContributionValue(ExpectedContributionFields.OtherCapitalSources, "6"),
-            new ExpectedContributionValue(ExpectedContributionFields.SharedOwnershipSales, "7"),
-            null);
+            new ExpectedContributionValue(ExpectedContributionFields.InitialSalesOfSharedHomes, "7"),
+            null,
+            Tenure.AffordableRent);
 
         // when
         var total = expectedContributionsToScheme.CalculateTotal();
@@ -60,7 +63,8 @@ public class CalculateTotalTests
             null,
             null,
             null,
-            null);
+            null,
+            Tenure.AffordableRent);
 
         // when
         var total = expectedContributionsToScheme.CalculateTotal();

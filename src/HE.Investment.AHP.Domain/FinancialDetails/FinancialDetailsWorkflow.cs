@@ -1,3 +1,5 @@
+using HE.Investment.AHP.Domain.Scheme.Workflows;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Loans.Common.Routing;
 using Stateless;
 
@@ -5,23 +7,53 @@ namespace HE.Investment.AHP.Domain.FinancialDetails;
 
 public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowState>
 {
+    private readonly Contract.FinancialDetails.FinancialDetails _model;
+
     private readonly StateMachine<FinancialDetailsWorkflowState, Trigger> _machine;
 
-    public FinancialDetailsWorkflow(FinancialDetailsWorkflowState currentFinancialDetailsWorkflowState)
+    public FinancialDetailsWorkflow(FinancialDetailsWorkflowState currentFinancialDetailsWorkflowState, Contract.FinancialDetails.FinancialDetails model)
     {
+        _model = model;
         _machine = new StateMachine<FinancialDetailsWorkflowState, Trigger>(currentFinancialDetailsWorkflowState);
         ConfigureTransitions();
-    }
-
-    public FinancialDetailsWorkflow()
-        : this(FinancialDetailsWorkflowState.Index)
-    {
     }
 
     public async Task<FinancialDetailsWorkflowState> NextState(Trigger trigger)
     {
         await _machine.FireAsync(trigger);
         return _machine.State;
+    }
+
+    public FinancialDetailsWorkflowState CurrentState(FinancialDetailsWorkflowState targetState)
+    {
+        if (targetState != FinancialDetailsWorkflowState.Index)
+        {
+            return targetState;
+        }
+
+        return _model switch
+        {
+            { PurchasePrice: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.LandStatus,
+            { IsSchemaOnPublicLand: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.LandValue,
+            { LandValue: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.LandValue,
+            { ExpectedOnCost: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.OtherApplicationCosts,
+            { ExpectedWorkCost: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.OtherApplicationCosts,
+            { RentalIncomeContribution: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
+            { SubsidyFromSaleOnThisScheme: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
+            { SubsidyFromSaleOnOtherSchemes: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
+            { OwnResourcesContribution: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
+            { RecycledCapitalGarntFundContribution: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
+            { OtherCapitalContributions: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
+            { TransferValueOfHomes: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Contributions,
+            { CountyCouncilGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
+            { DHSCExtraCareGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
+            { LocalAuthorityGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
+            { SocialServicesGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
+            { HealthRelatedGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
+            { LotteryFunding: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
+            { OtherPublicGrants: var x } when x.IsNotProvided() => FinancialDetailsWorkflowState.Grants,
+            _ => FinancialDetailsWorkflowState.CheckAnswers,
+        };
     }
 
     public Task<bool> StateCanBeAccessed(FinancialDetailsWorkflowState nextState)

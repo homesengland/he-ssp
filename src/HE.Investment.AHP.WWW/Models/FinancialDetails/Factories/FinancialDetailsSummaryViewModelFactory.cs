@@ -1,21 +1,13 @@
-﻿using System.Globalization;
-using System.Security.Policy;
-using HE.Investment.AHP.Contract.Common;
+﻿using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
-using HE.Investment.AHP.Contract.Scheme;
-using HE.Investment.AHP.Contract.Scheme.Queries;
-using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investment.AHP.WWW.Models.Application;
-using HE.Investment.AHP.WWW.Models.FinancialDetails;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Utils;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
 
@@ -33,19 +25,19 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         IUrlHelper urlHelper,
         CancellationToken cancellationToken)
     {
-        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()), cancellationToken);
+        var result = await _mediator.Send(new GetFinancialCheckAnswersQuery(applicationId), cancellationToken);
 
-        var landValueSectionSummary = GetLandValueSectionSummary(financialDetails, urlHelper);
-        var costsSectionSummary = GetCostsSectionSummary(financialDetails, urlHelper);
-        var contributionsSectionSummary = GetContributionsSectionSummary(financialDetails, urlHelper);
+        var landValueSectionSummary = GetLandValueSectionSummary(result.LandValue, applicationId, urlHelper);
+        var costsSectionSummary = GetCostsSectionSummary(result.TotalSchemeCost, applicationId, urlHelper);
+        var contributionsSectionSummary = GetContributionsSectionSummary(result.TotalContributions, applicationId, urlHelper);
 
         return new FinancialDetailsCheckAnswersModel(
             Guid.Parse(applicationId),
-            financialDetails.ApplicationName,
+            result.ApplicationName,
             landValueSectionSummary,
             costsSectionSummary,
             contributionsSectionSummary,
-            null);
+            IsSectionCompleted.Undefied);
     }
 
     private string GetCurrencyStringWithPrefix(decimal? value)
@@ -63,28 +55,28 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         return $"{action}{(allowWcagDuplicate ? "#" : string.Empty)}";
     }
 
-    private SectionSummaryViewModel GetLandValueSectionSummary(Contract.FinancialDetails.FinancialDetails financialDetails, IUrlHelper urlHelper)
+    private SectionSummaryViewModel GetLandValueSectionSummary(LandValueSummary landValueSummary, string applicationId, IUrlHelper urlHelper)
     {
         var landValueItems = new List<SectionSummaryItemModel>
         {
             new SectionSummaryItemModel(
             "Purchase price",
-            new List<string>() { GetCurrencyStringWithPrefix(financialDetails.PurchasePrice) },
-            CreateFinancialDetailsActionUrl(urlHelper, financialDetails.ApplicationId.ToString(), nameof(FinancialDetailsController.LandStatus)),
+            new List<string>() { GetCurrencyStringWithPrefix(landValueSummary.PurchasePrice) },
+            CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandStatus)),
             null,
             true,
             true),
             new SectionSummaryItemModel(
             "Current value",
-            new List<string>() { GetCurrencyStringWithPrefix(financialDetails.LandValue) },
-            CreateFinancialDetailsActionUrl(urlHelper, financialDetails.ApplicationId.ToString(), nameof(FinancialDetailsController.LandValue)),
+            new List<string>() { GetCurrencyStringWithPrefix(landValueSummary.CurrentValue) },
+            CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandValue)),
             null,
             true,
             true),
             new SectionSummaryItemModel(
             "Public land",
-            new List<string>() { financialDetails.IsSchemaOnPublicLand.HasValue ? financialDetails.IsSchemaOnPublicLand.Value ? CommonResponse.Yes : CommonResponse.No : "Not provided" },
-            CreateFinancialDetailsActionUrl(urlHelper, financialDetails.ApplicationId.ToString(), nameof(FinancialDetailsController.LandValue)),
+            new List<string>() { landValueSummary.IsPublicLand.HasValue ? landValueSummary.IsPublicLand.Value ? CommonResponse.Yes : CommonResponse.No : "Not provided" },
+            CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandValue)),
             null,
             true,
             true),
@@ -95,34 +87,34 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         return result;
     }
 
-    private SectionSummaryViewModel GetCostsSectionSummary(Contract.FinancialDetails.FinancialDetails financialDetails, IUrlHelper urlHelper)
+    private SectionSummaryViewModel GetCostsSectionSummary(TotalSchemeCost totalSchemeCost, string applicationId, IUrlHelper urlHelper)
     {
         var costsItems = new List<SectionSummaryItemModel>
         {
         new SectionSummaryItemModel(
            "Purchase price",
-           new List<string>() { GetCurrencyStringWithPrefix(financialDetails.PurchasePrice) },
-           CreateFinancialDetailsActionUrl(urlHelper, financialDetails.ApplicationId.ToString(), nameof(FinancialDetailsController.LandStatus)),
+           new List<string>() { GetCurrencyStringWithPrefix(totalSchemeCost.PurchasePrice) },
+           CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandStatus)),
            null,
            true,
            true),
         new SectionSummaryItemModel(
             "Works costs",
-            new List<string>() { GetCurrencyStringWithPrefix(financialDetails.ExpectedWorkCost) },
-            CreateFinancialDetailsActionUrl(urlHelper, financialDetails.ApplicationId.ToString(), nameof(FinancialDetailsController.OtherApplicationCosts)),
+            new List<string>() { GetCurrencyStringWithPrefix(totalSchemeCost.WorkCosts) },
+            CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.OtherApplicationCosts)),
             null,
             true,
             true),
         new SectionSummaryItemModel(
             "On costs",
-            new List<string>() { GetCurrencyStringWithPrefix(financialDetails.ExpectedOnCost) },
-            CreateFinancialDetailsActionUrl(urlHelper, financialDetails.ApplicationId.ToString(), nameof(FinancialDetailsController.OtherApplicationCosts)),
+            new List<string>() { GetCurrencyStringWithPrefix(totalSchemeCost.OnCosts) },
+            CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.OtherApplicationCosts)),
             null,
             true,
             true),
         new SectionSummaryItemModel(
             "Total scheme costs",
-            new List<string>() { GetCurrencyStringWithPrefix(financialDetails.TotalExpectedCosts) },
+            new List<string>() { GetCurrencyStringWithPrefix(totalSchemeCost.Total) },
             string.Empty,
             null,
             false,
@@ -134,27 +126,27 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         return result;
     }
 
-    private SectionSummaryViewModel GetContributionsSectionSummary(Contract.FinancialDetails.FinancialDetails financialDetails, IUrlHelper urlHelper)
+    private SectionSummaryViewModel GetContributionsSectionSummary(TotalContributions totalContributions, string applicationId, IUrlHelper urlHelper)
     {
         var contributionsItems = new List<SectionSummaryItemModel>
         {
         new SectionSummaryItemModel(
            "Your contributions",
-           new List<string>() { GetCurrencyStringWithPrefix(financialDetails.TotalExpectedContributions) },
-           CreateFinancialDetailsActionUrl(urlHelper, financialDetails.ApplicationId.ToString(), nameof(FinancialDetailsController.Contributions)),
+           new List<string>() { GetCurrencyStringWithPrefix(totalContributions.YourContributions) },
+           CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.Contributions)),
            null,
            true,
            true),
         new SectionSummaryItemModel(
             "Grants from other public bodies",
-            new List<string>() { GetCurrencyStringWithPrefix(financialDetails.TotalRecievedGrands) },
-            CreateFinancialDetailsActionUrl(urlHelper, financialDetails.ApplicationId.ToString(), nameof(FinancialDetailsController.Grants)),
+            new List<string>() { GetCurrencyStringWithPrefix(totalContributions.GrantsFromOtherPublicBodies) },
+            CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.Grants)),
             null,
             true,
             true),
         new SectionSummaryItemModel(
             "Total contributions",
-            new List<string>() { GetCurrencyStringWithPrefix(financialDetails.TotalExpectedContributions + financialDetails.TotalRecievedGrands) },
+            new List<string>() { GetCurrencyStringWithPrefix(totalContributions.Total) },
             string.Empty,
             null,
             false,

@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.FinancialDetails.Commands;
+using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Extensions;
@@ -22,12 +23,11 @@ public class ProvideOtherApplicationCostsCommandHandler : FinancialDetailsComman
             financialDetails =>
             {
                 var result = OperationResult.New();
-
                 var expectedWorksCosts = request.ExpectedWorksCosts.IsProvided() ? result.CatchResult(() => new ExpectedWorksCosts(request.ExpectedWorksCosts!)) : null;
                 var expectedOnCosts = request.ExpectedOnCosts.IsProvided() ? result.CatchResult(() => new ExpectedOnCosts(request.ExpectedOnCosts!)) : null;
                 result.CheckErrors();
 
-                financialDetails.ProvideOtherApplicationCosts(expectedWorksCosts, expectedOnCosts);
+                financialDetails.ProvideOtherApplicationCosts(new OtherApplicationCosts(expectedWorksCosts, expectedOnCosts));
             },
             request.ApplicationId,
             cancellationToken);

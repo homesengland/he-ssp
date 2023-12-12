@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Extensions;
 
@@ -13,7 +14,8 @@ public class ExpectedContributionsToScheme
         ExpectedContributionValue? rcgfContributions,
         ExpectedContributionValue? otherCapitalSources,
         ExpectedContributionValue? sharedOwnershipSales,
-        ExpectedContributionValue? homesTransferValue)
+        ExpectedContributionValue? homesTransferValue,
+        Tenure tenure)
     {
         RentalIncome = rentalIncome;
         SalesOfHomesOnThisScheme = salesOfHomesOnThisScheme;
@@ -23,7 +25,10 @@ public class ExpectedContributionsToScheme
         OtherCapitalSources = otherCapitalSources;
         SharedOwnershipSales = sharedOwnershipSales;
         HomesTransferValue = homesTransferValue;
+        ApplicationTenure = tenure;
     }
+
+    public Tenure ApplicationTenure { get; }
 
     public ExpectedContributionValue? RentalIncome { get; private set; }
 
@@ -40,6 +45,12 @@ public class ExpectedContributionsToScheme
     public ExpectedContributionValue? SharedOwnershipSales { get; private set; }
 
     public ExpectedContributionValue? HomesTransferValue { get; private set; }
+
+    public bool IsAnswered()
+    {
+        return RentalIncome.IsProvided() && SalesOfHomesOnThisScheme.IsProvided() && SalesOfHomesOnOtherSchemes.IsProvided() &&
+               OwnResources.IsProvided() && RcgfContributions.IsProvided() && OtherCapitalSources.IsProvided() && HomesTransferValue.IsProvided();
+    }
 
     public decimal CalculateTotal()
     {

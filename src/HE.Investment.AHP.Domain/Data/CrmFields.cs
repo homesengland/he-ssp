@@ -75,5 +75,5 @@ public static class CrmFields
     };
 
     public static readonly IList<string> FinancialDetailsToRead = FinancialDetailsToUpdate
-        .Append(new List<string> { nameof(invln_scheme.invln_schemename) });
+        .Append(new List<string> { nameof(invln_scheme.invln_schemename), nameof(invln_scheme.invln_Tenure) });
 }

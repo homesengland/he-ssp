@@ -9,6 +9,6 @@ public enum ExpectedContributionFields
     OwnResources,
     RcgfContribution,
     OtherCapitalSources,
-    SharedOwnershipSales,
+    InitialSalesOfSharedHomes,
     HomesTransferValue,
 }

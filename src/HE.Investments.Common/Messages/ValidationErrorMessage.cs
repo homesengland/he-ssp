@@ -83,6 +83,8 @@ public static class ValidationErrorMessage
 
     public const string LocalAuthorityNameIsEmpty = "Enter the name of the local authority";
 
+    public const string SectionIsNotCompleted = "You have not completed this section. Select no if you want to come back later";
+
     public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
 
     public static string PoundInput(string name) => new($"{name} must be entered as a number, in pounds and pence");

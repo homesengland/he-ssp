@@ -8,27 +8,6 @@
 @model FinancialDetailsContributionsModel;
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.ExpectedContributions;
-
-    var (rentalIncomeInvalid, rentalIncomeErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.RentalIncomeBorrowing);
-    var (saleOfHomesOnThisSchemeInvalid, saleOfHomesOnThisSchemeErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.SaleOfHomesOnThisScheme);
-    var (saleOfHomesOnOtherSchemeInvalid, saleOfHomesOnOtherSchemeErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.SaleOfHomesOnOtherSchemes);
-    var (ownResourcesInvalid, ownResourcesErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.OwnResources);
-    var (RCGFInvalid, RCGFErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.RcgfContribution);
-    var (otherCapitalSourcesInvalid, otherCapitalSourcesErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.OtherCapitalSources);
-    var (sharedOwnersipSalesInvalid, sharedOwnershipSalesErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.SharedOwnershipSales);
-    var (homesTransferValueInvalid, homesTransferValueErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.HomesTransferValue);
-
-    var errorsList = new string[]
-    {
-        rentalIncomeErrors,
-        saleOfHomesOnThisSchemeErrors,
-        saleOfHomesOnOtherSchemeErrors,
-        ownResourcesErrors,
-        RCGFErrors,
-        otherCapitalSourcesErrors,
-        sharedOwnershipSalesErrors,
-        homesTransferValueErrors
-    };
 }
 <gds-div-grid-column-two-thirds>
     <form asp-controller="FinancialDetails" asp-action="Contributions" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
