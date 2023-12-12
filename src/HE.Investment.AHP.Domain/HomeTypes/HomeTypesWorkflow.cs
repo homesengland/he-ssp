@@ -101,6 +101,13 @@ public class HomeTypesWorkflow : IStateRouting<HomeTypesWorkflowState>
             HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership => true,
             HomeTypesWorkflowState.ExemptionJustification => IsExemptFromTheRightToSharedOwnership(),
             HomeTypesWorkflowState.CheckAnswers => true,
+
+            // TODO will be updated in the next PR
+            HomeTypesWorkflowState.SocialRent => true,
+            HomeTypesWorkflowState.RentToBuy => true,
+            HomeTypesWorkflowState.RentToBuyIneligible => true,
+            HomeTypesWorkflowState.SharedOwnership => true,
+            HomeTypesWorkflowState.SharedOwnershipIneligible => true,
             _ => throw new ArgumentOutOfRangeException(nameof(state), state, null),
         };
     }

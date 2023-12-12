@@ -4,7 +4,7 @@
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.Messages
-@model HE.Investment.AHP.WWW.Models.HomeTypes.AffordableRentModel;
+@model HE.Investment.AHP.WWW.Models.HomeTypes.RentToBuyModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
@@ -12,16 +12,16 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="HomeTypes" asp-action="AffordableRent" asp-method="post" novalidate>
+    <form asp-controller="HomeTypes" asp-action="RentToBuy" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
-        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.AffordableRent"
+        <vc:home-type-form-header current-page="@HomeTypesWorkflowState.RentToBuy"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
                                   caption="@Model.Header"/>
         <gds-field-set>
             <gds-legend>
-                <gds-h1 class="govuk-!-margin-bottom-2">Affordable Rent details</gds-h1>
+                <gds-h1 class="govuk-!-margin-bottom-2">Rent to Buy details</gds-h1>
             </gds-legend>
 
             <gds-legend>
@@ -58,29 +58,29 @@
                 asp-suffixtext="GdsInputSuffixText.PerWeek"/>
 
             <gds-legend>
-                <gds-h2 class="govuk-!-margin-bottom-0 govuk-!-margin-top-6">Enter the Affordable Rent per week</gds-h2>
+                <gds-h2 class="govuk-!-margin-bottom-0 govuk-!-margin-top-6">Enter the rent per week</gds-h2>
             </gds-legend>
             <gds-span-hint>
                 Enter the rent in pounds and pence. This is inclusive of all charges.
             </gds-span-hint>
             <gds-input
                 class="govuk-input--width-4"
-                asp-hiddenlabeltext="Enter the number of the Affordable Rent per week"
-                govuk-formgroup-asp-for="AffordableWeeklyRent"
-                name="AffordableWeeklyRent"
-                value=@Model.AffordableWeeklyRent
+                asp-hiddenlabeltext="Enter the number of the rent per week"
+                govuk-formgroup-asp-for="ProspectiveRent"
+                name="ProspectiveRent"
+                value=@Model.ProspectiveRent
                 asp-prefixtext="GdsInputPrefixText.Pounds"
                 asp-suffixtext="GdsInputSuffixText.PerWeek"/>
 
             <gds-legend>
-                <gds-h2 class="govuk-!-margin-bottom-0">Affordable Rent as percentage of market rent</gds-h2>
+                <gds-h2 class="govuk-!-margin-bottom-0">Rent as percentage of market rent</gds-h2>
             </gds-legend>
             <gds-span-hint>
                 This is inclusive of all charges.
             </gds-span-hint>
 
             <gds-p class="govuk-!-margin-top-2">
-                @(Model.AffordableRentAsPercentageOfMarketRent ?? "00.00")% [calculated on page]
+                @(Model.RentAsPercentageOfMarketRent ?? "00.00")% [calculated on page]
             </gds-p>
 
             <gds-legend>

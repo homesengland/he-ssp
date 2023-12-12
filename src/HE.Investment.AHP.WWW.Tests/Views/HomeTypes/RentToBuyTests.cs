@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HE.Investment.AHP.WWW.Tests.Views.HomeTypes;
 
-public class AffordableRentTests : HomeTypesTestBase
+public class RentToBuyTests : HomeTypesTestBase
 {
-    private const string ViewPath = "/Views/HomeTypes/AffordableRent.cshtml";
+    private const string ViewPath = "/Views/HomeTypes/RentToBuy.cshtml";
 
-    private static readonly AffordableRentModel Model = new("My application", "My homes");
+    private static readonly RentToBuyModel Model = new("My application", "My homes");
 
     [Fact]
     public async Task ShouldDisplayView_WhenThereAreNoErrors()
@@ -19,10 +19,10 @@ public class AffordableRentTests : HomeTypesTestBase
 
         // then
         AssertView(document);
-        AssertErrors(document, nameof(AffordableRentModel.MarketValue), false);
-        AssertErrors(document, nameof(AffordableRentModel.MarketRent), false);
-        AssertErrors(document, nameof(AffordableRentModel.AffordableWeeklyRent), false);
-        AssertErrors(document, nameof(AffordableRentModel.TargetRentExceedMarketRent), false);
+        AssertErrors(document, nameof(RentToBuyModel.MarketValue), false);
+        AssertErrors(document, nameof(RentToBuyModel.MarketRent), false);
+        AssertErrors(document, nameof(RentToBuyModel.ProspectiveRent), false);
+        AssertErrors(document, nameof(RentToBuyModel.TargetRentExceedMarketRent), false);
     }
 
     [Fact]
@@ -30,37 +30,37 @@ public class AffordableRentTests : HomeTypesTestBase
     {
         // given
         var modelState = new ModelStateDictionary();
-        modelState.AddModelError(nameof(AffordableRentModel.MarketValue), ErrorMessage);
-        modelState.AddModelError(nameof(AffordableRentModel.MarketRent), ErrorMessage);
-        modelState.AddModelError(nameof(AffordableRentModel.AffordableWeeklyRent), ErrorMessage);
-        modelState.AddModelError(nameof(AffordableRentModel.TargetRentExceedMarketRent), ErrorMessage);
+        modelState.AddModelError(nameof(RentToBuyModel.MarketValue), ErrorMessage);
+        modelState.AddModelError(nameof(RentToBuyModel.MarketRent), ErrorMessage);
+        modelState.AddModelError(nameof(RentToBuyModel.ProspectiveRent), ErrorMessage);
+        modelState.AddModelError(nameof(RentToBuyModel.TargetRentExceedMarketRent), ErrorMessage);
 
         // when
         var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
 
         // then
         AssertView(document);
-        AssertErrors(document, nameof(AffordableRentModel.MarketValue), true);
-        AssertErrors(document, nameof(AffordableRentModel.MarketRent), true);
-        AssertErrors(document, nameof(AffordableRentModel.AffordableWeeklyRent), true);
-        AssertErrors(document, nameof(AffordableRentModel.TargetRentExceedMarketRent), true);
+        AssertErrors(document, nameof(RentToBuyModel.MarketValue), true);
+        AssertErrors(document, nameof(RentToBuyModel.MarketRent), true);
+        AssertErrors(document, nameof(RentToBuyModel.ProspectiveRent), true);
+        AssertErrors(document, nameof(RentToBuyModel.TargetRentExceedMarketRent), true);
     }
 
     private static void AssertView(IHtmlDocument document)
     {
         document
             .HasElementWithText("span", "My application - My homes")
-            .HasElementWithText("h1", "Affordable Rent details")
+            .HasElementWithText("h1", "Rent to Buy details")
             .HasElementWithText("h2", "Enter the market value of each home")
             .HasElementWithText("span", "Enter the market value in pounds only.")
             .HasInput("MarketValue")
             .HasElementWithText("h2", "Enter the market rent per week")
             .HasElementWithText("span", "Enter the market rent in pounds and pence.")
             .HasInput("MarketRent")
-            .HasElementWithText("h2", "Enter the Affordable Rent per week")
+            .HasElementWithText("h2", "Enter the rent per week")
             .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
-            .HasInput("AffordableWeeklyRent")
-            .HasElementWithText("h2", "Affordable Rent as percentage of market rent")
+            .HasInput("ProspectiveRent")
+            .HasElementWithText("h2", "Rent as percentage of market rent")
             .HasElementWithText("h2", "Would the target rent plus service charge for these homes exceed 80% of market rent?")
             .HasElementWithText("span", "Help with target rent")
             .HasElementWithText("a", "Find out more information on our Rent Policy Statement (opens in the new tab).")

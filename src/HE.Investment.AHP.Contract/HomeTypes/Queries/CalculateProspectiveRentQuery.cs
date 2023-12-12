@@ -4,10 +4,10 @@ using MediatR;
 
 namespace HE.Investment.AHP.Contract.HomeTypes.Queries;
 
-public record CalculateAffordableRentQuery(
+public record CalculateProspectiveRentQuery(
     string ApplicationId,
     string HomeTypeId,
-    string? HomeMarketValue,
-    string? HomeWeeklyRent,
-    string? AffordableWeeklyRent,
+    string? MarketValue,
+    string? MarketRent,
+    string? ProspectiveRent,
     YesNoType TargetRentExceedMarketRent) : IRequest<OperationResult>;

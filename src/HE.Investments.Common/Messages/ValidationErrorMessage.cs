@@ -107,8 +107,6 @@ public static class ValidationErrorMessage
 
     public static string MustBeSelectedForCalculation(string displayName) => $"Select if {displayName} to calculate";
 
-    public static string ProspectiveRentExceed80Percent() => $"Prospective Rent (inclusive of all charges) must not exceed 80% of market rent, except where the target rent acts as a floor. Please check your answers. If those are correct, please contact your Growth Manager to discuss your proposal before continuing.";
-
     public static string SquareMetersMustBeNumber() => "The square meterage in the internal floor each of each home must be a number, like 75.50";
 
     public static string StringLengthExceeded(string displayName, int maxLength) => new($"{displayName.TitleCaseFirstLetterInString()} must be {maxLength} characters or less");
