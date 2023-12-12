@@ -560,6 +560,7 @@ namespace DataverseModel
 			public const string Company = "company";
 			public const string contact_customer_accounts = "contact_customer_accounts";
 			public const string Referencingcontact_customer_contacts = "contact_customer_contacts";
+			public const string contact_invln_Externalcommses = "contact_invln_Externalcommses";
 			public const string contact_invln_govnotifyemails = "contact_invln_govnotifyemails";
 			public const string Referencingcontact_master_contact = "contact_master_contact";
 			public const string contact_owning_user = "contact_owning_user";
@@ -5514,6 +5515,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("Referencedcontact_customer_contacts");
 				this.SetRelatedEntities<DataverseModel.Contact>("contact_customer_contacts", Microsoft.Xrm.Sdk.EntityRole.Referenced, value);
 				this.OnPropertyChanged("Referencedcontact_customer_contacts");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N contact_invln_Externalcommses
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_invln_Externalcommses")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Externalcomms> contact_invln_Externalcommses
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Externalcomms>("contact_invln_Externalcommses", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("contact_invln_Externalcommses");
+				this.SetRelatedEntities<DataverseModel.invln_Externalcomms>("contact_invln_Externalcommses", null, value);
+				this.OnPropertyChanged("contact_invln_Externalcommses");
 			}
 		}
 		

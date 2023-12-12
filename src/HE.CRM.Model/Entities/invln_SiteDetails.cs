@@ -94,6 +94,7 @@ namespace DataverseModel
 			public const string invln_Sitecoordinates = "invln_sitecoordinates";
 			public const string invln_Sitecost = "invln_sitecost";
 			public const string invln_sitecost_Base = "invln_sitecost_base";
+			public const string invln_sitedetails_invln_Externalcommses = "invln_sitedetails_invln_Externalcommses";
 			public const string invln_sitedetails_invln_govnotifyemails = "invln_sitedetails_invln_govnotifyemails";
 			public const string invln_sitedetails_Loanapplication = "invln_sitedetails_Loanapplication";
 			public const string invln_sitedetails_LocalAuthorityID_invln_locala = "invln_sitedetails_LocalAuthorityID_invln_locala";
@@ -1311,6 +1312,26 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_sitedetails_invln_Externalcommses
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_invln_Externalcommses")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Externalcomms> invln_sitedetails_invln_Externalcommses
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Externalcomms>("invln_sitedetails_invln_Externalcommses", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_sitedetails_invln_Externalcommses");
+				this.SetRelatedEntities<DataverseModel.invln_Externalcomms>("invln_sitedetails_invln_Externalcommses", null, value);
+				this.OnPropertyChanged("invln_sitedetails_invln_Externalcommses");
 			}
 		}
 		

@@ -78,6 +78,7 @@ namespace DataverseModel
 			public const string Id = "invln_hometypeid";
 			public const string invln_hometypename = "invln_hometypename";
 			public const string invln_initialsale = "invln_initialsale";
+			public const string invln_invln_homesindeliveryphase_hometypelookup = "invln_invln_homesindeliveryphase_hometypelookup";
 			public const string invln_invln_hometype_application_invln_scheme = "invln_invln_hometype_application_invln_scheme";
 			public const string invln_ishometypecompleted = "invln_ishometypecompleted";
 			public const string invln_iswheelchairstandardmet = "invln_iswheelchairstandardmet";
@@ -1437,6 +1438,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_hometype_SharePointDocumentLocations");
 				this.SetRelatedEntities<DataverseModel.SharePointDocumentLocation>("invln_hometype_SharePointDocumentLocations", null, value);
 				this.OnPropertyChanged("invln_hometype_SharePointDocumentLocations");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_homesindeliveryphase_hometypelookup
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_homesindeliveryphase_hometypelookup")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_homesindeliveryphase> invln_invln_homesindeliveryphase_hometypelookup
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_homesindeliveryphase>("invln_invln_homesindeliveryphase_hometypelookup", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_homesindeliveryphase_hometypelookup");
+				this.SetRelatedEntities<DataverseModel.invln_homesindeliveryphase>("invln_invln_homesindeliveryphase_hometypelookup", null, value);
+				this.OnPropertyChanged("invln_invln_homesindeliveryphase_hometypelookup");
 			}
 		}
 		

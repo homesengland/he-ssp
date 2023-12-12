@@ -14,7 +14,7 @@ namespace DataverseModel
 	
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_Programme
+	public enum invln_Programme1
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]

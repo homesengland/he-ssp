@@ -74,6 +74,61 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_ahpcontract"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_ahpcontract> invln_ahpcontractSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_ahpcontract>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_AHPStatusChange"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_AHPStatusChange> invln_AHPStatusChangeSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_AHPStatusChange>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_BorrowerPreviousSchemes"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_BorrowerPreviousSchemes> invln_BorrowerPreviousSchemesSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_BorrowerPreviousSchemes>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Cashflow"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_Cashflow> invln_CashflowSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_Cashflow>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_comment"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_comment> invln_commentSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_comment>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Conditions"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_Conditions> invln_ConditionsSet
@@ -81,6 +136,39 @@ namespace DataverseModel
 			get
 			{
 				return this.CreateQuery<DataverseModel.invln_Conditions>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Consortium"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_Consortium> invln_ConsortiumSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_Consortium>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_ConsortiumMember"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_ConsortiumMember> invln_ConsortiumMemberSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_ConsortiumMember>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_contact_invln_loanapplication"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_contact_invln_loanapplication> invln_contact_invln_loanapplicationSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_contact_invln_loanapplication>();
 			}
 		}
 		
@@ -107,6 +195,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_DeliveryPhase"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_DeliveryPhase> invln_DeliveryPhaseSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_DeliveryPhase>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Emailnotification"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_Emailnotification> invln_EmailnotificationSet
@@ -129,6 +228,28 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Externalcomms"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_Externalcomms> invln_ExternalcommsSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_Externalcomms>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_FinancialCovenants"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_FinancialCovenants> invln_FinancialCovenantsSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_FinancialCovenants>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_govnotifyemail"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_govnotifyemail> invln_govnotifyemailSet
@@ -136,6 +257,28 @@ namespace DataverseModel
 			get
 			{
 				return this.CreateQuery<DataverseModel.invln_govnotifyemail>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_grantbenchmark"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_grantbenchmark> invln_grantbenchmarkSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_grantbenchmark>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_homesindeliveryphase"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_homesindeliveryphase> invln_homesindeliveryphaseSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_homesindeliveryphase>();
 			}
 		}
 		
@@ -151,6 +294,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Housetype"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_Housetype> invln_HousetypeSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_Housetype>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_ISP"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_ISP> invln_ISPSet
@@ -158,6 +312,17 @@ namespace DataverseModel
 			get
 			{
 				return this.CreateQuery<DataverseModel.invln_ISP>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_KeyRisks"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_KeyRisks> invln_KeyRisksSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_KeyRisks>();
 			}
 		}
 		
@@ -195,6 +360,39 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_milestoneframeworkitem"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_milestoneframeworkitem> invln_milestoneframeworkitemSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_milestoneframeworkitem>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Milestones"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_Milestones> invln_MilestonesSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_Milestones>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_ndss"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_ndss> invln_ndssSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_ndss>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_notificationsetting"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_notificationsetting> invln_notificationsettingSet
@@ -217,6 +415,17 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_plot"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_plot> invln_plotSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_plot>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DataverseModel.invln_portal"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DataverseModel.invln_portal> invln_portalSet
@@ -235,6 +444,28 @@ namespace DataverseModel
 			get
 			{
 				return this.CreateQuery<DataverseModel.invln_portalpermissionlevel>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Precomplete"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_Precomplete> invln_PrecompleteSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_Precomplete>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_programme"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_programme> invln_programmeSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_programme>();
 			}
 		}
 		
@@ -279,6 +510,17 @@ namespace DataverseModel
 			get
 			{
 				return this.CreateQuery<DataverseModel.invln_SiteDetails>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="DataverseModel.invln_Sites"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DataverseModel.invln_Sites> invln_SitesSet
+		{
+			get
+			{
+				return this.CreateQuery<DataverseModel.invln_Sites>();
 			}
 		}
 		

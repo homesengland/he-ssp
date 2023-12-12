@@ -97,6 +97,7 @@
     <Compile Include="CrmPluginRegistrationAttribute.cs" />
     <Compile Include="Handlers\AHPApplication\CheckIfApplicationWithNewNameExistsHandler.cs" />
     <Compile Include="Handlers\AHPApplication\CreateDocumentLocationOnCreateHandler.cs" />
+    <Compile Include="Handlers\AhpStatusChange\SendNotificationOnCreateHandler.cs" />
     <Compile Include="Handlers\CustomApi\ChangeAhpApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\CheckIfApplicationWithGivenNameExistsHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteHomeTypeHandler.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="HE.Base\Services\ICrmServicesFactory.cs" />
     <Compile Include="Plugins\AhpApplication\CheckIfApplicationWithNewNameExistsPlugin.cs" />
     <Compile Include="Plugins\AhpApplication\CreateDocumentLocationOnCreatePlugin.cs" />
+    <Compile Include="Plugins\AhpStatusChange\SendNotificationOnCreatePlugin.cs" />
     <Compile Include="Plugins\CustomApi\ChangeAhpApplicationStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\CheckIfApplicationWithGivenNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteHomeTypePlugin.cs" />
@@ -186,8 +188,12 @@
     <Compile Include="Plugins\HomeType\SetHappiPrinciplesValuePlugin.cs" />
     <Compile Include="Plugins\HomeType\SetWhichNdssStandardsHaveBeenMetValuePlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AhpStatusChange\AhpStatusChangeService.cs" />
+    <Compile Include="Services\AhpStatusChange\IAhpStatusChangeService.cs" />
     <Compile Include="Services\Application\ApplicationService.cs" />
     <Compile Include="Services\Application\IApplicationService.cs" />
+    <Compile Include="Services\GovNotifyEmail\GovNotifyEmailService.cs" />
+    <Compile Include="Services\GovNotifyEmail\IGovNotifyEmailService.cs" />
     <Compile Include="Services\HomeType\HomeTypeService.cs" />
     <Compile Include="Services\HomeType\IHomeTypeService.cs" />
   </ItemGroup>

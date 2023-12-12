@@ -72,7 +72,7 @@ namespace HE.CRM.Plugins.Services.ISPs
                     var programme = string.Empty;
                     switch (siteDetailsRelatedToLoan.First().invln_Programme?.Value)
                     {
-                        case (int)invln_Programme.LevellingUpHomeBuildFund:
+                        case (int)invln_Programme1.LevellingUpHomeBuildFund:
                             programme = "Leveling Up Home Build Fund";
                             break;
                         default:

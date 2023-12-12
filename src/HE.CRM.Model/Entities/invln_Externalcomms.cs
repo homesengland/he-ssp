@@ -17,7 +17,7 @@ namespace DataverseModel
 	/// Status of the activity.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_govnotifyemailState
+	public enum invln_externalcommsState
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -37,27 +37,27 @@ namespace DataverseModel
 	/// Reason for the status of the activity.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_govnotifyemail_StatusCode
+	public enum invln_Externalcomms_StatusCode
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Canceled = 3,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Draft = 1,
+		Completed = 2,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Open = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Scheduled = 4,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		Sent = 2,
 	}
 	
 	/// <summary>
 	/// Priority of the activity.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_govnotifyemail_PriorityCode
+	public enum invln_Externalcomms_PriorityCode
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -74,7 +74,7 @@ namespace DataverseModel
 	/// Type of instance of a recurring series.
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
-	public enum invln_govnotifyemail_InstanceTypeCode
+	public enum invln_Externalcomms_InstanceTypeCode
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
@@ -94,16 +94,16 @@ namespace DataverseModel
 	}
 	
 	[System.Runtime.Serialization.DataContractAttribute()]
-	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_govnotifyemail")]
-	public partial class invln_govnotifyemail : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("invln_externalcomms")]
+	public partial class invln_Externalcomms : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
 		/// <summary>
-		/// Available fields, a the time of codegen, for the invln_govnotifyemail entity
+		/// Available fields, a the time of codegen, for the invln_externalcomms entity
 		/// </summary>
 		public static partial class Fields
 		{
-			public const string account_invln_govnotifyemails = "account_invln_govnotifyemails";
+			public const string account_invln_Externalcommses = "account_invln_Externalcommses";
 			public const string ActivityAdditionalParams = "activityadditionalparams";
 			public const string ActivityId = "activityid";
 			public const string Id = "activityid";
@@ -115,7 +115,7 @@ namespace DataverseModel
 			public const string Bcc = "bcc";
 			public const string Cc = "cc";
 			public const string Community = "community";
-			public const string contact_invln_govnotifyemails = "contact_invln_govnotifyemails";
+			public const string contact_invln_Externalcommses = "contact_invln_Externalcommses";
 			public const string CreatedBy = "createdby";
 			public const string CreatedByName = "createdbyname";
 			public const string CreatedOn = "createdon";
@@ -131,20 +131,17 @@ namespace DataverseModel
 			public const string From = "from";
 			public const string ImportSequenceNumber = "importsequencenumber";
 			public const string InstanceTypeCode = "instancetypecode";
-			public const string invln_body = "invln_body";
-			public const string invln_govnotifyemail_systemuser_createdby = "invln_govnotifyemail_systemuser_createdby";
-			public const string invln_govnotifyemail_systemuser_createdonbehalfby = "invln_govnotifyemail_systemuser_createdonbehalfby";
-			public const string invln_govnotifyemail_systemuser_modifiedby = "invln_govnotifyemail_systemuser_modifiedby";
-			public const string invln_govnotifyemail_systemuser_modifiedonbehalfby = "invln_govnotifyemail_systemuser_modifiedonbehalfby";
-			public const string invln_govnotifyemail_systemuser_owninguser = "invln_govnotifyemail_systemuser_owninguser";
-			public const string invln_govnotifyemail_team_owningteam = "invln_govnotifyemail_team_owningteam";
-			public const string invln_loanapplication_invln_govnotifyemails = "invln_loanapplication_invln_govnotifyemails";
-			public const string invln_notificationid = "invln_notificationid";
-			public const string invln_notificationsetting_invln_govnotifyemail_emailtemplate = "invln_notificationsetting_invln_govnotifyemail_emailtemplate";
-			public const string invln_notificationsettingid = "invln_notificationsettingid";
-			public const string invln_notificationsettingidName = "invln_notificationsettingidname";
-			public const string invln_scheme_invln_govnotifyemails = "invln_scheme_invln_govnotifyemails";
-			public const string invln_sitedetails_invln_govnotifyemails = "invln_sitedetails_invln_govnotifyemails";
+			public const string invln_externalcomms_systemuser_createdby = "invln_externalcomms_systemuser_createdby";
+			public const string invln_externalcomms_systemuser_createdonbehalfby = "invln_externalcomms_systemuser_createdonbehalfby";
+			public const string invln_externalcomms_systemuser_modifiedby = "invln_externalcomms_systemuser_modifiedby";
+			public const string invln_externalcomms_systemuser_modifiedonbehalfby = "invln_externalcomms_systemuser_modifiedonbehalfby";
+			public const string invln_externalcomms_systemuser_owninguser = "invln_externalcomms_systemuser_owninguser";
+			public const string invln_externalcomms_team_owningteam = "invln_externalcomms_team_owningteam";
+			public const string invln_loanapplication_invln_Externalcommses = "invln_loanapplication_invln_Externalcommses";
+			public const string invln_Message = "invln_message";
+			public const string invln_scheme_invln_Externalcommses = "invln_scheme_invln_Externalcommses";
+			public const string invln_sitedetails_invln_Externalcommses = "invln_sitedetails_invln_Externalcommses";
+			public const string invln_Type = "invln_type";
 			public const string IsBilled = "isbilled";
 			public const string IsMapiPrivate = "ismapiprivate";
 			public const string IsRegularActivity = "isregularactivity";
@@ -207,7 +204,7 @@ namespace DataverseModel
 		/// Default Constructor.
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public invln_govnotifyemail() : 
+		public invln_Externalcomms() : 
 				base(EntityLogicalName)
 		{
 		}
@@ -216,13 +213,13 @@ namespace DataverseModel
 		
 		public const string PrimaryNameAttribute = "subject";
 		
-		public const string EntitySchemaName = "invln_govnotifyemail";
+		public const string EntitySchemaName = "invln_Externalcomms";
 		
-		public const string EntityLogicalName = "invln_govnotifyemail";
+		public const string EntityLogicalName = "invln_externalcomms";
 		
-		public const string EntityLogicalCollectionName = "invln_govnotifyemails";
+		public const string EntityLogicalCollectionName = "invln_externalcommses";
 		
-		public const string EntitySetName = "invln_govnotifyemails";
+		public const string EntitySetName = "invln_externalcommses";
 		
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 		
@@ -731,54 +728,37 @@ namespace DataverseModel
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_body")]
-		public string invln_body
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_message")]
+		public string invln_Message
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<string>("invln_body");
+				return this.GetAttributeValue<string>("invln_message");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_body");
-				this.SetAttributeValue("invln_body", value);
-				this.OnPropertyChanged("invln_body");
+				this.OnPropertyChanging("invln_Message");
+				this.SetAttributeValue("invln_message", value);
+				this.OnPropertyChanged("invln_Message");
 			}
 		}
 		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_notificationid")]
-		public string invln_notificationid
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_type")]
+		public virtual Microsoft.Xrm.Sdk.OptionSetValue invln_Type
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetAttributeValue<string>("invln_notificationid");
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("invln_type");
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_notificationid");
-				this.SetAttributeValue("invln_notificationid", value);
-				this.OnPropertyChanged("invln_notificationid");
-			}
-		}
-		
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_notificationsettingid")]
-		public Microsoft.Xrm.Sdk.EntityReference invln_notificationsettingid
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("invln_notificationsettingid");
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_notificationsettingid");
-				this.SetAttributeValue("invln_notificationsettingid", value);
-				this.OnPropertyChanged("invln_notificationsettingid");
+				this.OnPropertyChanging("invln_Type");
+				this.SetAttributeValue("invln_type", value);
+				this.OnPropertyChanged("invln_Type");
 			}
 		}
 		
@@ -1675,226 +1655,205 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// N:1 account_invln_govnotifyemails
+		/// N:1 account_invln_Externalcommses
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_invln_govnotifyemails")]
-		public DataverseModel.Account account_invln_govnotifyemails
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_invln_Externalcommses")]
+		public DataverseModel.Account account_invln_Externalcommses
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.Account>("account_invln_govnotifyemails", null);
+				return this.GetRelatedEntity<DataverseModel.Account>("account_invln_Externalcommses", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("account_invln_govnotifyemails");
-				this.SetRelatedEntity<DataverseModel.Account>("account_invln_govnotifyemails", null, value);
-				this.OnPropertyChanged("account_invln_govnotifyemails");
+				this.OnPropertyChanging("account_invln_Externalcommses");
+				this.SetRelatedEntity<DataverseModel.Account>("account_invln_Externalcommses", null, value);
+				this.OnPropertyChanged("account_invln_Externalcommses");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 contact_invln_govnotifyemails
+		/// N:1 contact_invln_Externalcommses
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_invln_govnotifyemails")]
-		public DataverseModel.Contact contact_invln_govnotifyemails
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("contact_invln_Externalcommses")]
+		public DataverseModel.Contact contact_invln_Externalcommses
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.Contact>("contact_invln_govnotifyemails", null);
+				return this.GetRelatedEntity<DataverseModel.Contact>("contact_invln_Externalcommses", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("contact_invln_govnotifyemails");
-				this.SetRelatedEntity<DataverseModel.Contact>("contact_invln_govnotifyemails", null, value);
-				this.OnPropertyChanged("contact_invln_govnotifyemails");
+				this.OnPropertyChanging("contact_invln_Externalcommses");
+				this.SetRelatedEntity<DataverseModel.Contact>("contact_invln_Externalcommses", null, value);
+				this.OnPropertyChanged("contact_invln_Externalcommses");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 invln_govnotifyemail_systemuser_createdby
+		/// N:1 invln_externalcomms_systemuser_createdby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_govnotifyemail_systemuser_createdby")]
-		public DataverseModel.SystemUser invln_govnotifyemail_systemuser_createdby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_externalcomms_systemuser_createdby")]
+		public DataverseModel.SystemUser invln_externalcomms_systemuser_createdby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_govnotifyemail_systemuser_createdby", null);
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_externalcomms_systemuser_createdby", null);
 			}
 		}
 		
 		/// <summary>
-		/// N:1 invln_govnotifyemail_systemuser_createdonbehalfby
+		/// N:1 invln_externalcomms_systemuser_createdonbehalfby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_govnotifyemail_systemuser_createdonbehalfby")]
-		public DataverseModel.SystemUser invln_govnotifyemail_systemuser_createdonbehalfby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_externalcomms_systemuser_createdonbehalfby")]
+		public DataverseModel.SystemUser invln_externalcomms_systemuser_createdonbehalfby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_govnotifyemail_systemuser_createdonbehalfby", null);
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_externalcomms_systemuser_createdonbehalfby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_govnotifyemail_systemuser_createdonbehalfby");
-				this.SetRelatedEntity<DataverseModel.SystemUser>("invln_govnotifyemail_systemuser_createdonbehalfby", null, value);
-				this.OnPropertyChanged("invln_govnotifyemail_systemuser_createdonbehalfby");
+				this.OnPropertyChanging("invln_externalcomms_systemuser_createdonbehalfby");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("invln_externalcomms_systemuser_createdonbehalfby", null, value);
+				this.OnPropertyChanged("invln_externalcomms_systemuser_createdonbehalfby");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 invln_govnotifyemail_systemuser_modifiedby
+		/// N:1 invln_externalcomms_systemuser_modifiedby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_govnotifyemail_systemuser_modifiedby")]
-		public DataverseModel.SystemUser invln_govnotifyemail_systemuser_modifiedby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_externalcomms_systemuser_modifiedby")]
+		public DataverseModel.SystemUser invln_externalcomms_systemuser_modifiedby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_govnotifyemail_systemuser_modifiedby", null);
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_externalcomms_systemuser_modifiedby", null);
 			}
 		}
 		
 		/// <summary>
-		/// N:1 invln_govnotifyemail_systemuser_modifiedonbehalfby
+		/// N:1 invln_externalcomms_systemuser_modifiedonbehalfby
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_govnotifyemail_systemuser_modifiedonbehalfby")]
-		public DataverseModel.SystemUser invln_govnotifyemail_systemuser_modifiedonbehalfby
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_externalcomms_systemuser_modifiedonbehalfby")]
+		public DataverseModel.SystemUser invln_externalcomms_systemuser_modifiedonbehalfby
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_govnotifyemail_systemuser_modifiedonbehalfby", null);
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_externalcomms_systemuser_modifiedonbehalfby", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_govnotifyemail_systemuser_modifiedonbehalfby");
-				this.SetRelatedEntity<DataverseModel.SystemUser>("invln_govnotifyemail_systemuser_modifiedonbehalfby", null, value);
-				this.OnPropertyChanged("invln_govnotifyemail_systemuser_modifiedonbehalfby");
+				this.OnPropertyChanging("invln_externalcomms_systemuser_modifiedonbehalfby");
+				this.SetRelatedEntity<DataverseModel.SystemUser>("invln_externalcomms_systemuser_modifiedonbehalfby", null, value);
+				this.OnPropertyChanged("invln_externalcomms_systemuser_modifiedonbehalfby");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 invln_govnotifyemail_systemuser_owninguser
+		/// N:1 invln_externalcomms_systemuser_owninguser
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owninguser")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_govnotifyemail_systemuser_owninguser")]
-		public DataverseModel.SystemUser invln_govnotifyemail_systemuser_owninguser
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_externalcomms_systemuser_owninguser")]
+		public DataverseModel.SystemUser invln_externalcomms_systemuser_owninguser
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_govnotifyemail_systemuser_owninguser", null);
+				return this.GetRelatedEntity<DataverseModel.SystemUser>("invln_externalcomms_systemuser_owninguser", null);
 			}
 		}
 		
 		/// <summary>
-		/// N:1 invln_govnotifyemail_team_owningteam
+		/// N:1 invln_externalcomms_team_owningteam
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("owningteam")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_govnotifyemail_team_owningteam")]
-		public DataverseModel.Team invln_govnotifyemail_team_owningteam
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_externalcomms_team_owningteam")]
+		public DataverseModel.Team invln_externalcomms_team_owningteam
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.Team>("invln_govnotifyemail_team_owningteam", null);
+				return this.GetRelatedEntity<DataverseModel.Team>("invln_externalcomms_team_owningteam", null);
 			}
 		}
 		
 		/// <summary>
-		/// N:1 invln_loanapplication_invln_govnotifyemails
+		/// N:1 invln_loanapplication_invln_Externalcommses
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_invln_govnotifyemails")]
-		public DataverseModel.invln_Loanapplication invln_loanapplication_invln_govnotifyemails
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_loanapplication_invln_Externalcommses")]
+		public DataverseModel.invln_Loanapplication invln_loanapplication_invln_Externalcommses
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_loanapplication_invln_govnotifyemails", null);
+				return this.GetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_loanapplication_invln_Externalcommses", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_loanapplication_invln_govnotifyemails");
-				this.SetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_loanapplication_invln_govnotifyemails", null, value);
-				this.OnPropertyChanged("invln_loanapplication_invln_govnotifyemails");
+				this.OnPropertyChanging("invln_loanapplication_invln_Externalcommses");
+				this.SetRelatedEntity<DataverseModel.invln_Loanapplication>("invln_loanapplication_invln_Externalcommses", null, value);
+				this.OnPropertyChanged("invln_loanapplication_invln_Externalcommses");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 invln_notificationsetting_invln_govnotifyemail_emailtemplate
-		/// </summary>
-		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_notificationsettingid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_notificationsetting_invln_govnotifyemail_emailtemplate")]
-		public DataverseModel.invln_notificationsetting invln_notificationsetting_invln_govnotifyemail_emailtemplate
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.GetRelatedEntity<DataverseModel.invln_notificationsetting>("invln_notificationsetting_invln_govnotifyemail_emailtemplate", null);
-			}
-			[System.Diagnostics.DebuggerNonUserCode()]
-			set
-			{
-				this.OnPropertyChanging("invln_notificationsetting_invln_govnotifyemail_emailtemplate");
-				this.SetRelatedEntity<DataverseModel.invln_notificationsetting>("invln_notificationsetting_invln_govnotifyemail_emailtemplate", null, value);
-				this.OnPropertyChanged("invln_notificationsetting_invln_govnotifyemail_emailtemplate");
-			}
-		}
-		
-		/// <summary>
-		/// N:1 invln_scheme_invln_govnotifyemails
+		/// N:1 invln_scheme_invln_Externalcommses
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_invln_govnotifyemails")]
-		public DataverseModel.invln_scheme invln_scheme_invln_govnotifyemails
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_invln_Externalcommses")]
+		public DataverseModel.invln_scheme invln_scheme_invln_Externalcommses
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.invln_scheme>("invln_scheme_invln_govnotifyemails", null);
+				return this.GetRelatedEntity<DataverseModel.invln_scheme>("invln_scheme_invln_Externalcommses", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_scheme_invln_govnotifyemails");
-				this.SetRelatedEntity<DataverseModel.invln_scheme>("invln_scheme_invln_govnotifyemails", null, value);
-				this.OnPropertyChanged("invln_scheme_invln_govnotifyemails");
+				this.OnPropertyChanging("invln_scheme_invln_Externalcommses");
+				this.SetRelatedEntity<DataverseModel.invln_scheme>("invln_scheme_invln_Externalcommses", null, value);
+				this.OnPropertyChanged("invln_scheme_invln_Externalcommses");
 			}
 		}
 		
 		/// <summary>
-		/// N:1 invln_sitedetails_invln_govnotifyemails
+		/// N:1 invln_sitedetails_invln_Externalcommses
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
-		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_invln_govnotifyemails")]
-		public DataverseModel.invln_SiteDetails invln_sitedetails_invln_govnotifyemails
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_sitedetails_invln_Externalcommses")]
+		public DataverseModel.invln_SiteDetails invln_sitedetails_invln_Externalcommses
 		{
 			[System.Diagnostics.DebuggerNonUserCode()]
 			get
 			{
-				return this.GetRelatedEntity<DataverseModel.invln_SiteDetails>("invln_sitedetails_invln_govnotifyemails", null);
+				return this.GetRelatedEntity<DataverseModel.invln_SiteDetails>("invln_sitedetails_invln_Externalcommses", null);
 			}
 			[System.Diagnostics.DebuggerNonUserCode()]
 			set
 			{
-				this.OnPropertyChanging("invln_sitedetails_invln_govnotifyemails");
-				this.SetRelatedEntity<DataverseModel.invln_SiteDetails>("invln_sitedetails_invln_govnotifyemails", null, value);
-				this.OnPropertyChanged("invln_sitedetails_invln_govnotifyemails");
+				this.OnPropertyChanging("invln_sitedetails_invln_Externalcommses");
+				this.SetRelatedEntity<DataverseModel.invln_SiteDetails>("invln_sitedetails_invln_Externalcommses", null, value);
+				this.OnPropertyChanged("invln_sitedetails_invln_Externalcommses");
 			}
 		}
 		
@@ -1903,7 +1862,7 @@ namespace DataverseModel
 		/// <param name="anonymousType">LINQ anonymous type.</param>
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public invln_govnotifyemail(object anonymousType) : 
+		public invln_Externalcomms(object anonymousType) : 
 				this()
 		{
             foreach (var p in anonymousType.GetType().GetProperties())
