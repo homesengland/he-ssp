@@ -60,8 +60,8 @@ public class SchemeRepository : ISchemeRepository
             noOfHomes = entity.Funding.HousesToDeliver,
             affordabilityEvidence = entity.AffordabilityEvidence.Evidence,
             discussionsWithLocalStakeholders = entity.StakeholderDiscussions.StakeholderDiscussionsDetails.Report,
-            meetingLocalProrities = entity.HousingNeeds.SchemeAndProposalJustification,
-            meetingLocalHousingNeed = entity.HousingNeeds.TypeAndTenureJustification,
+            meetingLocalProrities = entity.HousingNeeds.MeetingLocalPriorities,
+            meetingLocalHousingNeed = entity.HousingNeeds.MeetingLocalHousingNeed,
             sharedOwnershipSalesRisk = entity.SalesRisk.Value,
         };
 
@@ -83,7 +83,7 @@ public class SchemeRepository : ISchemeRepository
             SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus),
             new AffordabilityEvidence(application.affordabilityEvidence),
             new SalesRisk(application.sharedOwnershipSalesRisk),
-            new HousingNeeds(application.meetingLocalHousingNeed, application.meetingLocalProrities),
+            new HousingNeeds(application.meetingLocalProrities, application.meetingLocalHousingNeed),
             new StakeholderDiscussions(
                 new StakeholderDiscussionsDetails(application.discussionsWithLocalStakeholders),
                 new LocalAuthoritySupportFileContainer(stakeholderDiscussionsFile)));

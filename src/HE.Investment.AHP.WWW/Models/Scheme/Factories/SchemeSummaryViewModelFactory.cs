@@ -41,11 +41,11 @@ public class SchemeSummaryViewModelFactory : ISchemeSummaryViewModelFactory
                 ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.SalesRisk))),
             new(
                 "Type and tenure of homes",
-                scheme.TypeAndTenureJustification.ToOneElementList(),
+                scheme.MeetingLocalPriorities.ToOneElementList(),
                 ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.HousingNeeds))),
             new(
                 "Locally identified housing need",
-                scheme.SchemeAndProposalJustification.ToOneElementList(),
+                scheme.MeetingLocalHousingNeed.ToOneElementList(),
                 ActionUrl: CreateSchemeActionUrl(urlHelper, scheme.ApplicationId, nameof(SchemeController.HousingNeeds), allowWcagDuplicate: true)),
             new(
                 "Local stakeholder discussions",

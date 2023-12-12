@@ -28,8 +28,8 @@ public class GetSchemeQueryHandler : IRequestHandler<GetApplicationSchemeQuery, 
             entity.Funding.HousesToDeliver,
             entity.AffordabilityEvidence.Evidence,
             entity.SalesRisk.Value,
-            entity.HousingNeeds.TypeAndTenureJustification,
-            entity.HousingNeeds.SchemeAndProposalJustification,
+            entity.HousingNeeds.MeetingLocalPriorities,
+            entity.HousingNeeds.MeetingLocalHousingNeed,
             entity.StakeholderDiscussions.StakeholderDiscussionsDetails.Report,
             CreateFile(entity.StakeholderDiscussions.LocalAuthoritySupportFileContainer));
     }

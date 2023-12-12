@@ -5,37 +5,37 @@ namespace HE.Investment.AHP.Domain.Scheme.ValueObjects;
 
 public class HousingNeeds : ValueObject
 {
-    public HousingNeeds(string? typeAndTenureJustification, string? schemeAndProposalJustification)
+    public HousingNeeds(string? meetingLocalPriorities, string? meetingLocalHousingNeed)
     {
-        Build(typeAndTenureJustification, schemeAndProposalJustification).CheckErrors();
+        Build(meetingLocalPriorities, meetingLocalHousingNeed).CheckErrors();
     }
 
-    public string? TypeAndTenureJustification { get; private set; }
+    public string? MeetingLocalPriorities { get; private set; }
 
-    public string? SchemeAndProposalJustification { get; private set; }
+    public string? MeetingLocalHousingNeed { get; private set; }
 
     public void CheckIsComplete()
     {
-        Build(TypeAndTenureJustification, SchemeAndProposalJustification, true).CheckErrors();
+        Build(MeetingLocalPriorities, MeetingLocalHousingNeed, true).CheckErrors();
     }
 
     protected override IEnumerable<object?> GetAtomicValues()
     {
-        yield return TypeAndTenureJustification;
-        yield return SchemeAndProposalJustification;
+        yield return MeetingLocalPriorities;
+        yield return MeetingLocalHousingNeed;
     }
 
-    private OperationResult Build(string? typeAndTenureJustification, string? schemeAndProposalJustification, bool isCompleteCheck = false)
+    private OperationResult Build(string? meetingLocalPriorities, string? meetingLocalHousingNeed, bool isCompleteCheck = false)
     {
         var operationResult = OperationResult.New();
 
-        TypeAndTenureJustification = Validator
-            .For(typeAndTenureJustification, nameof(TypeAndTenureJustification), operationResult)
+        MeetingLocalPriorities = Validator
+            .For(meetingLocalPriorities, nameof(MeetingLocalPriorities), operationResult)
             .IsProvidedIf(isCompleteCheck, "Type and tenure of homes are missing")
             .IsLongInput();
 
-        SchemeAndProposalJustification = Validator
-            .For(schemeAndProposalJustification, nameof(SchemeAndProposalJustification), operationResult)
+        MeetingLocalHousingNeed = Validator
+            .For(meetingLocalHousingNeed, nameof(MeetingLocalHousingNeed), operationResult)
             .IsProvidedIf(isCompleteCheck, "Locally identified housing needs are missing")
             .IsLongInput();
 
