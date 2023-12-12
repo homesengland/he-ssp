@@ -27,7 +27,7 @@
                 @Html.HiddenFor(m => m.Id)
                 @Html.HiddenFor(m => m.Name)
 
-                <vc:error-message asp-for="@Model.Tenure"/>
+                <vc:error-message field-name="Tenure"/>
                 <gds-legend>
                     <he-custom-radio
                         asp-for="Tenure"

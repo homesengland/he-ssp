@@ -6,9 +6,9 @@ namespace HE.Investments.Common.WWW.Components.ErrorMessage;
 
 public class ErrorMessage : ViewComponent
 {
-    public IViewComponentResult Invoke(ModelExpression aspFor)
+    public IViewComponentResult Invoke(string fieldName)
     {
-        var (isVisible, message) = ViewData.ModelState.GetErrors(aspFor.Name);
-        return View("ErrorMessage", (aspFor.Name, isVisible, message));
+        var (isVisible, message) = ViewData.ModelState.GetErrors(fieldName);
+        return View("ErrorMessage", (fieldName, isVisible, message));
     }
 }
