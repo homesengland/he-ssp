@@ -19,7 +19,7 @@
 
         <vc:section-summary title="@Model.LandValueSummary.Title" items="@Model.LandValueSummary.Items" />
         <div class="govuk-form-group @errorCssClass">
-            <vc:error-message asp-for="CostsAndFunding" />
+            <vc:error-message field-name="CostsAndFunding" />
             <vc:section-summary title="@Model.CostsSummary.Title" items="@Model.CostsSummary.Items" name="@FinancialDetailsValidationFieldNames.CostsAndFunding" />
             <vc:section-summary title="@Model.ContributionsSummary.Title" items="@Model.ContributionsSummary.Items" />
         </div>

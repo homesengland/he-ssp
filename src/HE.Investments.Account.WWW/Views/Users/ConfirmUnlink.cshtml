@@ -1,0 +1,25 @@
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.FormButton
+@model (string UserId, string OrganisationName, string UserFullName, string Redirect)
+@{
+    var title = $"Are you sure you want to remove {Model.UserFullName} from {Model.OrganisationName}?";
+    ViewData["Title"] = title;
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Index", "Users", new { id = Model.UserId })"></gds-back-link>
+
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:form-header title="@title"/>
+
+    <form asp-controller="Users" asp-action="Unlink" asp-route-id="@Model.UserId" asp-route-redirect="@Model.Redirect" asp-method="post" novalidate>
+        <gds-field-set>
+
+            <vc:radio-yes-no
+                field-name="Unlink"
+                hint="They will no longer be able to access information or applications for this organisation."/>
+
+        </gds-field-set>
+        <vc:form-button text="Continue"/>
+    </form>
+</gds-div-grid-column-two-thirds>

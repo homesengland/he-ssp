@@ -23,7 +23,7 @@
             new(u.JobTitle),
             new(u.Role?.GetDescription()),
             new(u.LastActiveAt == null ? "-" : DateHelper.DisplayAsUkFormatDateTime(u.LastActiveAt)),
-            new(Component: new("Link", new { text = "Remove", action = "Manage", controller = "Users", values = new { id = u.Id }} )),
+            new(Component: new("Link", new { text = "Remove", action = "ConfirmUnlink", controller = "Users", values = new { id = u.Id, redirect = "Index" }} )),
             new(Component: new("Link", new { text = "Manage", action = "Manage", controller = "Users", values = new { id = u.Id }} )),
         })).ToList());
 }

@@ -1,0 +1,17 @@
+@using HE.Investments.Common.WWW.Extensions
+@model (string fieldName, string hint)
+@{
+    var (hasError, radioErrors) = ViewData.ModelState.GetErrors(Model.fieldName);
+    var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
+}
+
+<gds-div-form-group class="@groupClass">
+    <gds-legend>
+        <he-div-hint>@Model.hint</he-div-hint>
+    </gds-legend>
+
+    <vc:error-message field-name="@Model.fieldName"/>
+
+    <gds-radio-yes-no name="@Model.fieldName"></gds-radio-yes-no>
+
+</gds-div-form-group>
