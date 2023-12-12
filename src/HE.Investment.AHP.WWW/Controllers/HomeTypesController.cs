@@ -349,7 +349,6 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         }
     }
 
-    [DisableRequestSizeLimit]
     [WorkflowState(HomeTypesWorkflowState.DesignPlans)]
     [HttpPost("{homeTypeId}/DesignPlans")]
     public async Task<IActionResult> DesignPlans(

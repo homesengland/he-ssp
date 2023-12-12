@@ -157,7 +157,6 @@ public class SchemeController : WorkflowController<SchemeWorkflowState>
         return View("StakeholderDiscussions", CreateModel(applicationId, scheme));
     }
 
-    [DisableRequestSizeLimit]
     [WorkflowState(SchemeWorkflowState.StakeholderDiscussions)]
     [HttpPost("stakeholder-discussions")]
     public async Task<IActionResult> StakeholderDiscussions(SchemeViewModel model, CancellationToken cancellationToken)
