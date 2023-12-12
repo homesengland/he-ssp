@@ -6,6 +6,7 @@ using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Utils.Pagination;

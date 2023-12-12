@@ -37,6 +37,13 @@ public class PublicGrants
 
     public PublicGrantValue? OtherPublicBodies { get; private set; }
 
+    public bool IsAnswered()
+    {
+        return CountyCouncil.IsProvided() && DhscExtraCare.IsProvided() && LocalAuthority.IsProvided() &&
+               SocialServices.IsProvided() && HealthRelated.IsProvided() && Lottery.IsProvided() &&
+               OtherPublicBodies.IsProvided();
+    }
+
     public decimal CalculateTotal()
     {
         var totalGrants = CountyCouncil.GetValueOrZero() + DhscExtraCare.GetValueOrZero() + LocalAuthority.GetValueOrZero() + SocialServices.GetValueOrZero() +

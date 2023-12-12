@@ -2,7 +2,7 @@ using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using MediatR;
-using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
+using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.QueryHandlers;
 
@@ -21,13 +21,12 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
 
         var financialDetailsDto = new Contract.FinancialDetails.FinancialDetails
         {
-            ApplicationId = financialDetails.ApplicationId.Value,
-            ApplicationName = financialDetails.ApplicationName,
+            ApplicationName = financialDetails.ApplicationBasicInfo.Name.Name,
             PurchasePrice = financialDetails.PurchasePrice?.Value ?? financialDetails.ExpectedPurchasePrice?.Value,
             IsSchemaOnPublicLand = financialDetails.IsPublicLand,
             LandValue = financialDetails.LandValue?.Value,
-            ExpectedWorkCost = financialDetails.ExpectedWorksCosts?.Value,
-            ExpectedOnCost = financialDetails.ExpectedOnCosts?.Value,
+            ExpectedWorkCost = financialDetails.OtherApplicationCosts.ExpectedWorksCosts?.Value,
+            ExpectedOnCost = financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
             TotalExpectedCosts = financialDetails.ExpectedTotalCosts(),
         };
 

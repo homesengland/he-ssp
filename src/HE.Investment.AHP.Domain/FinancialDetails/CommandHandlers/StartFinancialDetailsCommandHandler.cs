@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Domain.Application.Repositories;
 using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
@@ -7,14 +8,21 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
+
 public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<StartFinancialDetailsCommand, OperationResult>
 {
     private readonly IFinancialDetailsRepository _financialDetailsRepository;
 
-    public StartFinancialDetailsCommandHandler(IFinancialDetailsRepository financialDetailsRepository, ILogger<StartFinancialDetailsCommandHandler> logger)
+    private readonly IApplicationRepository _applicationRepository;
+
+    public StartFinancialDetailsCommandHandler(
+        IFinancialDetailsRepository financialDetailsRepository,
+        IApplicationRepository applicationRepository,
+        ILogger<StartFinancialDetailsCommandHandler> logger)
         : base(financialDetailsRepository, logger)
     {
         _financialDetailsRepository = financialDetailsRepository;
+        _applicationRepository = applicationRepository;
     }
 
     public async Task<OperationResult> Handle(StartFinancialDetailsCommand request, CancellationToken cancellationToken)
@@ -25,7 +33,8 @@ public class StartFinancialDetailsCommandHandler : FinancialDetailsCommandHandle
         }
         catch (NotFoundException)
         {
-            var financialDetails = new FinancialDetailsEntity(request.ApplicationId, request.ApplicationName);
+            var applicationBasicInfo = await _applicationRepository.GetApplicationBasicInfo(request.ApplicationId, cancellationToken);
+            var financialDetails = new FinancialDetailsEntity(applicationBasicInfo);
             await _financialDetailsRepository.Save(financialDetails, cancellationToken);
         }
 

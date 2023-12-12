@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.CommandHandlers;
+
 public class ProvideExpectedContributionsCommandHandler : FinancialDetailsCommandHandlerBase, IRequestHandler<ProvideExpecteContributionsCommand, OperationResult>
 {
     public ProvideExpectedContributionsCommandHandler(IFinancialDetailsRepository repository, ILogger<FinancialDetailsCommandHandlerBase> logger)
@@ -34,8 +35,9 @@ public class ProvideExpectedContributionsCommandHandler : FinancialDetailsComman
                     MapProvidedValues(request.OwnResources, ExpectedContributionFields.OwnResources),
                     MapProvidedValues(request.RCGFContribution, ExpectedContributionFields.RcgfContribution),
                     MapProvidedValues(request.OtherCapitalSources, ExpectedContributionFields.OtherCapitalSources),
-                    MapProvidedValues(request.SharedOwnershipSales, ExpectedContributionFields.SharedOwnershipSales),
-                    MapProvidedValues(request.HomesTransferValue, ExpectedContributionFields.HomesTransferValue));
+                    MapProvidedValues(request.SharedOwnershipSales, ExpectedContributionFields.InitialSalesOfSharedHomes),
+                    MapProvidedValues(request.HomesTransferValue, ExpectedContributionFields.HomesTransferValue),
+                    financialDetails.ApplicationBasicInfo.Tenure);
 
                 result.CheckErrors();
 

@@ -3,9 +3,9 @@ using HE.Investments.Common.Domain;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
-public class AffordableRentAsPercentageOfMarketRent : ValueObject
+public class ExpectedFirstTranche : ValueObject
 {
-    public AffordableRentAsPercentageOfMarketRent(decimal value)
+    public ExpectedFirstTranche(decimal value)
     {
         Value = value;
     }
@@ -14,7 +14,7 @@ public class AffordableRentAsPercentageOfMarketRent : ValueObject
 
     public override string ToString()
     {
-        return Value.ToString("00.00", CultureInfo.InvariantCulture);
+        return Value.ToString("0.00", CultureInfo.InvariantCulture);
     }
 
     protected override IEnumerable<object> GetAtomicValues()

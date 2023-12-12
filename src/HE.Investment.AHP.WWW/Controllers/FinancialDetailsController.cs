@@ -1,31 +1,23 @@
-using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Application.Queries;
+using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails;
 using HE.Investment.AHP.Domain.FinancialDetails.Commands;
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
-using HE.Investment.AHP.Domain.Scheme.Commands;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investment.AHP.WWW.Models.FinancialDetails.Factories;
-using HE.Investment.AHP.WWW.Models.Scheme.Factories;
 using HE.Investments.Account.Shared.Authorization.Attributes;
-using HE.Investments.Common;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
-using HE.Investments.Common.WWW.Components.SectionSummary;
 using HE.Investments.Common.WWW.Extensions;
 using HE.Investments.Common.WWW.Routing;
-using HE.Investments.Loans.Common.Extensions;
+using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Routing;
 using HE.Investments.Loans.Common.Utils.Constants.FormOption;
 using MediatR;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.Routing;
-using NuGet.Protocol;
-using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
+using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.WWW.Controllers;
 
@@ -77,7 +69,9 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.LandStatus)]
     public async Task<IActionResult> LandStatus(Guid applicationId, FinancialDetailsLandStatusModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideLandStatusCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal), cancellationToken);
+        var result = await _mediator.Send(
+            new ProvideLandStatusCommand(ApplicationId.From(applicationId), model.PurchasePrice, model.IsFinal),
+            cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -96,9 +90,9 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
         var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId.ToString()));
 
         var isSchemeOnPublicLand =
-            financialDetails.IsSchemaOnPublicLand.HasValue ?
-            financialDetails.IsSchemaOnPublicLand.Value ? CommonResponse.Yes : CommonResponse.No :
-            string.Empty;
+            financialDetails.IsSchemaOnPublicLand.HasValue
+                ? financialDetails.IsSchemaOnPublicLand.Value ? CommonResponse.Yes : CommonResponse.No
+                : string.Empty;
 
         return View(new FinancialDetailsLandValueModel(
             applicationId,
@@ -111,7 +105,9 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.LandValue)]
     public async Task<IActionResult> LandValue(Guid applicationId, FinancialDetailsLandValueModel model, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideLandValueCommand(ApplicationId.From(applicationId), model.IsOnPublicLand, model.LandValue), cancellationToken);
+        var result = await _mediator.Send(
+            new ProvideLandValueCommand(ApplicationId.From(applicationId), model.IsOnPublicLand, model.LandValue),
+            cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -137,9 +133,14 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     [HttpPost("other-application-costs")]
     [WorkflowState(FinancialDetailsWorkflowState.OtherApplicationCosts)]
-    public async Task<IActionResult> OtherApplicationCosts(Guid applicationId, FinancialDetailsOtherApplicationCostsModel model, CancellationToken cancellationToken)
+    public async Task<IActionResult> OtherApplicationCosts(
+        Guid applicationId,
+        FinancialDetailsOtherApplicationCostsModel model,
+        CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new ProvideOtherApplicationCostsCommand(ApplicationId.From(applicationId), model.ExpectedWorksCosts, model.ExpectedOnCosts), cancellationToken);
+        var result = await _mediator.Send(
+            new ProvideOtherApplicationCostsCommand(ApplicationId.From(applicationId), model.ExpectedWorksCosts, model.ExpectedOnCosts),
+            cancellationToken);
 
         if (result.HasValidationErrors)
         {
@@ -185,15 +186,15 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     {
         var result = await _mediator.Send(
             new ProvideExpecteContributionsCommand(
-            ApplicationId.From(applicationId),
-            model.RentalIncomeBorrowing,
-            model.SaleOfHomesOnThisScheme,
-            model.SaleOfHomesOnOtherSchemes,
-            model.OwnResources,
-            model.RCGFContribution,
-            model.OtherCapitalSources,
-            model.InitialSalesOfSharedHomes,
-            model.HomesTransferValue),
+                ApplicationId.From(applicationId),
+                model.RentalIncomeBorrowing,
+                model.SaleOfHomesOnThisScheme,
+                model.SaleOfHomesOnOtherSchemes,
+                model.OwnResources,
+                model.RCGFContribution,
+                model.OtherCapitalSources,
+                model.InitialSalesOfSharedHomes,
+                model.HomesTransferValue),
             cancellationToken);
 
         if (result.HasValidationErrors)
@@ -230,14 +231,14 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     {
         var result = await _mediator.Send(
             new ProvideGrantsCommand(
-            ApplicationId.From(applicationId),
-            model.CountyCouncilGrants,
-            model.DhscExtraCareGrants,
-            model.LocalAuthorityGrants,
-            model.SocialServicesGrants,
-            model.HealthRelatedGrants,
-            model.LotteryGrants,
-            model.OtherPublicBodiesGrants),
+                ApplicationId.From(applicationId),
+                model.CountyCouncilGrants,
+                model.DhscExtraCareGrants,
+                model.LocalAuthorityGrants,
+                model.SocialServicesGrants,
+                model.HealthRelatedGrants,
+                model.LotteryGrants,
+                model.OtherPublicBodiesGrants),
             cancellationToken);
 
         if (result.HasValidationErrors)
@@ -263,27 +264,28 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
     [WorkflowState(FinancialDetailsWorkflowState.CheckAnswers)]
     public async Task<IActionResult> Complete(Guid applicationId, FinancialDetailsCheckAnswersModel model, CancellationToken cancellationToken)
     {
-        if (model.IsCompleted == null)
+        if (model.IsSectionCompleted == IsSectionCompleted.Undefied)
         {
-            ModelState.AddModelError(nameof(model.IsCompleted), "Select whether you have completed this section");
-            return View("CheckAnswers", await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken));
+            ModelState.AddModelError(nameof(model.IsSectionCompleted), "Select whether you have completed this section");
+            return View(
+                "CheckAnswers",
+                await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken));
         }
 
-        if (model.IsCompleted.Value)
+        var result = await _mediator.Send(new CompleteFinancialDetailsCommand(ApplicationId.From(applicationId)), cancellationToken);
+
+        if (result.HasValidationErrors)
         {
-            var result = await _mediator.Send(new CompleteFinancialDetailsCommand(ApplicationId.From(applicationId)), cancellationToken);
-
-            if (result.HasValidationErrors)
+            var error = result.Errors.FirstOrDefault(error => error.AffectedField == FinancialDetailsValidationFieldNames.CostsAndFunding);
+            if (error != null)
             {
-                var error = result.Errors.FirstOrDefault(error => error.AffectedField == FinancialDetailsValidationFieldNames.CostsAndFunding);
-                if (error != null)
-                {
-                    ModelState.AddModelError(error.AffectedField, error.ErrorMessage);
-                }
-
-                ModelState.AddModelError(nameof(model.IsCompleted), "You have not completed this section. Select no if you want to come back later");
-                return View("CheckAnswers", await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken));
+                ModelState.AddModelError(error.AffectedField, error.ErrorMessage);
             }
+
+            ModelState.AddModelError(nameof(model.IsSectionCompleted), "You have not completed this section. Select no if you want to come back later");
+            return View(
+                "CheckAnswers",
+                await _financialDetailsSummaryViewModelFactory.GetFinancialDetailsAndCreateSummary(applicationId.ToString(), Url, cancellationToken));
         }
 
         return RedirectToAction("TaskList", "Application", new { applicationId });
@@ -297,12 +299,16 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
 
     protected override async Task<IStateRouting<FinancialDetailsWorkflowState>> Routing(FinancialDetailsWorkflowState currentState, object? routeData = null)
     {
-        var applicationId = await Task.Run(() => Request.GetRouteValue("applicationId") ?? routeData?.GetPropertyValue<Guid>("applicationId").ToString());
+        var applicationId = Request.GetRouteValue("applicationId")
+                            ?? routeData?.GetPropertyValue<string>("applicationId")
+                            ?? throw new NotFoundException($"{nameof(FinancialDetailsController)} required applicationId path parameter.");
+
         if (string.IsNullOrEmpty(applicationId))
         {
-            return new FinancialDetailsWorkflow();
+            throw new InvalidOperationException("Cannot find applicationId.");
         }
 
-        return new FinancialDetailsWorkflow(currentState);
+        var financialDetails = await _mediator.Send(new GetFinancialDetailsQuery(applicationId));
+        return new FinancialDetailsWorkflow(currentState, financialDetails);
     }
 }

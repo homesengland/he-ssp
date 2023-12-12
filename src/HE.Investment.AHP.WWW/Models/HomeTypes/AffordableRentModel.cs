@@ -14,9 +14,9 @@ public class AffordableRentModel : HomeTypeBasicModel
     {
     }
 
-    public string? HomeMarketValue { get; set; }
+    public string? MarketValue { get; set; }
 
-    public string? HomeWeeklyRent { get; set; }
+    public string? MarketRent { get; set; }
 
     public string? AffordableWeeklyRent { get; set; }
 

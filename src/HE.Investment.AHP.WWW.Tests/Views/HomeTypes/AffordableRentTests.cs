@@ -19,8 +19,8 @@ public class AffordableRentTests : HomeTypesTestBase
 
         // then
         AssertView(document);
-        AssertErrors(document, nameof(AffordableRentModel.HomeMarketValue), false);
-        AssertErrors(document, nameof(AffordableRentModel.HomeWeeklyRent), false);
+        AssertErrors(document, nameof(AffordableRentModel.MarketValue), false);
+        AssertErrors(document, nameof(AffordableRentModel.MarketRent), false);
         AssertErrors(document, nameof(AffordableRentModel.AffordableWeeklyRent), false);
         AssertErrors(document, nameof(AffordableRentModel.TargetRentExceedMarketRent), false);
     }
@@ -30,8 +30,8 @@ public class AffordableRentTests : HomeTypesTestBase
     {
         // given
         var modelState = new ModelStateDictionary();
-        modelState.AddModelError(nameof(AffordableRentModel.HomeMarketValue), ErrorMessage);
-        modelState.AddModelError(nameof(AffordableRentModel.HomeWeeklyRent), ErrorMessage);
+        modelState.AddModelError(nameof(AffordableRentModel.MarketValue), ErrorMessage);
+        modelState.AddModelError(nameof(AffordableRentModel.MarketRent), ErrorMessage);
         modelState.AddModelError(nameof(AffordableRentModel.AffordableWeeklyRent), ErrorMessage);
         modelState.AddModelError(nameof(AffordableRentModel.TargetRentExceedMarketRent), ErrorMessage);
 
@@ -40,8 +40,8 @@ public class AffordableRentTests : HomeTypesTestBase
 
         // then
         AssertView(document);
-        AssertErrors(document, nameof(AffordableRentModel.HomeMarketValue), true);
-        AssertErrors(document, nameof(AffordableRentModel.HomeWeeklyRent), true);
+        AssertErrors(document, nameof(AffordableRentModel.MarketValue), true);
+        AssertErrors(document, nameof(AffordableRentModel.MarketRent), true);
         AssertErrors(document, nameof(AffordableRentModel.AffordableWeeklyRent), true);
         AssertErrors(document, nameof(AffordableRentModel.TargetRentExceedMarketRent), true);
     }
@@ -53,10 +53,10 @@ public class AffordableRentTests : HomeTypesTestBase
             .HasElementWithText("h1", "Affordable Rent details")
             .HasElementWithText("h2", "Enter the market value of each home")
             .HasElementWithText("span", "Enter the market value in pounds only.")
-            .HasInput("HomeMarketValue")
+            .HasInput("MarketValue")
             .HasElementWithText("h2", "Enter the market rent per week")
             .HasElementWithText("span", "Enter the market rent in pounds and pence.")
-            .HasInput("HomeWeeklyRent")
+            .HasInput("MarketRent")
             .HasElementWithText("h2", "Enter the Affordable Rent per week")
             .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
             .HasInput("AffordableWeeklyRent")

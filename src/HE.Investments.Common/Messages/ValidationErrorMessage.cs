@@ -83,6 +83,8 @@ public static class ValidationErrorMessage
 
     public const string LocalAuthorityNameIsEmpty = "Enter the name of the local authority";
 
+    public const string SectionIsNotCompleted = "You have not completed this section. Select no if you want to come back later";
+
     public static string EstimatedPoundInput(string name) => PoundInput($"The estimated {name}");
 
     public static string PoundInput(string name) => new($"{name} must be entered as a number, in pounds and pence");
@@ -106,8 +108,6 @@ public static class ValidationErrorMessage
     public static string MustBeProvidedForCalculation(string displayName) => $"Enter the {displayName} to calculate";
 
     public static string MustBeSelectedForCalculation(string displayName) => $"Select if {displayName} to calculate";
-
-    public static string ProspectiveRentExceed80Percent() => $"Prospective Rent (inclusive of all charges) must not exceed 80% of market rent, except where the target rent acts as a floor. Please check your answers. If those are correct, please contact your Growth Manager to discuss your proposal before continuing.";
 
     public static string SquareMetersMustBeNumber() => "The square meterage in the internal floor each of each home must be a number, like 75.50";
 
