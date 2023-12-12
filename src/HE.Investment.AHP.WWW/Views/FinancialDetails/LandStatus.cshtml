@@ -23,7 +23,7 @@
             else
             {
                 <div class="govuk-!-margin-bottom-9">
-                <strong>Land purchase negotiations underway</strong>
+                    <strong>Land purchase negotiations underway</strong>
                 </div>
             }
         </div>
@@ -35,6 +35,7 @@
         }
 
         <gds-field-set>
+            <he-error-form-group asp-for="PurchasePrice">
                 <gds-legend class="govuk-!-margin-bottom-0">
                     <gds-h2 class="govuk-!-margin-bottom-0">
                         @purchasePriceLabel
@@ -48,7 +49,7 @@
                            name="PurchasePrice"
                            asp-prefixtext=@(GdsInputPrefixText.Pounds)
                            value=@Model.PurchasePrice />
-
+            </he-error-form-group>
             <button id="continue-button" class="govuk-button govuk-!-" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Save and continue
             </button>

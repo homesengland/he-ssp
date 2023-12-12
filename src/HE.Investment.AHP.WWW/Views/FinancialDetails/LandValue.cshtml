@@ -31,6 +31,7 @@
                        asp-selectlistitems="@CommonFormOptions.YesNo">
             </gds-radio>
 
+            <he-error-form-group asp-for="LandValue">
             <gds-legend class="govuk-!-margin-bottom-0">
                 <gds-h2 class="govuk-!-margin-bottom-1">
                     Enter the current value of the land
@@ -43,6 +44,7 @@
                        name="LandValue"
                        asp-prefixtext=@(GdsInputPrefixText.Pounds)
                        value=@Model.LandValue/>
+            </he-error-form-group>
 
             <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Save and continue
