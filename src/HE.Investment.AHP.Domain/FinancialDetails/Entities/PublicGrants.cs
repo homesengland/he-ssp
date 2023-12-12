@@ -37,7 +37,7 @@ public class PublicGrants
 
     public PublicGrantValue? OtherPublicBodies { get; private set; }
 
-    public bool AreAllQuestionsAnswered()
+    public bool IsAnswered()
     {
         return CountyCouncil.IsProvided() && DhscExtraCare.IsProvided() && LocalAuthority.IsProvided() &&
                SocialServices.IsProvided() && HealthRelated.IsProvided() && Lottery.IsProvided() &&

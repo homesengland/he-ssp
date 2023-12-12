@@ -1,4 +1,5 @@
-﻿using HE.Investment.AHP.Contract.FinancialDetails.Queries;
+﻿using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.WWW.Controllers;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investments.Common.Extensions;
@@ -36,7 +37,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
             landValueSectionSummary,
             costsSectionSummary,
             contributionsSectionSummary,
-            null);
+            IsSectionCompleted.Undefied);
     }
 
     private string GetCurrencyStringWithPrefix(decimal? value)

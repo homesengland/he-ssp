@@ -1,8 +1,10 @@
 using HE.Investment.AHP.Domain.Common;
+using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Contract;
 using HE.Investments.Common.Errors;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Loans.Common.Exceptions;
 
@@ -22,8 +24,7 @@ public class FinancialDetailsEntity
         ExpectedPurchasePrice? expectedPurchasePrice,
         CurrentLandValue? landValue,
         bool? isPublicLand,
-        ExpectedWorksCosts? expectedWorksCosts,
-        ExpectedOnCosts? expectedOnCosts,
+        OtherApplicationCosts otherApplicationCosts,
         ExpectedContributionsToScheme expectedContributionsToScheme,
         PublicGrants publicGrants,
         SectionStatus sectionStatus)
@@ -32,8 +33,7 @@ public class FinancialDetailsEntity
         PurchasePrice = purchasePrice;
         LandValue = landValue;
         IsPublicLand = isPublicLand;
-        ExpectedWorksCosts = expectedWorksCosts;
-        ExpectedOnCosts = expectedOnCosts;
+        OtherApplicationCosts = otherApplicationCosts;
         ExpectedPurchasePrice = expectedPurchasePrice;
         ExpectedContributions = expectedContributionsToScheme;
         PublicGrants = publicGrants;
@@ -50,9 +50,7 @@ public class FinancialDetailsEntity
 
     public bool? IsPublicLand { get; private set; }
 
-    public ExpectedWorksCosts? ExpectedWorksCosts { get; private set; }
-
-    public ExpectedOnCosts? ExpectedOnCosts { get; private set; }
+    public OtherApplicationCosts OtherApplicationCosts { get; private set; }
 
     public ExpectedContributionsToScheme ExpectedContributions { get; private set; }
 
@@ -71,26 +69,21 @@ public class FinancialDetailsEntity
 
         PurchasePrice = purchasePrice;
         ExpectedPurchasePrice = expectedPurchasePrice;
-        SetSectionStatus(purchasePrice != null);
     }
 
     public void ProvideCurrentLandValue(CurrentLandValue? currentLandValue)
     {
         LandValue = currentLandValue;
-        SetSectionStatus(currentLandValue.IsProvided());
     }
 
     public void ProvideIsPublicLand(bool? isPublicLand)
     {
         IsPublicLand = isPublicLand;
-        SetSectionStatus(isPublicLand.HasValue);
     }
 
-    public void ProvideOtherApplicationCosts(ExpectedWorksCosts? expectedWorksCosts, ExpectedOnCosts? expectedOnCosts)
+    public void ProvideOtherApplicationCosts(OtherApplicationCosts otherApplicationCosts)
     {
-        ExpectedWorksCosts = expectedWorksCosts;
-        ExpectedOnCosts = expectedOnCosts;
-        SetSectionStatus(expectedWorksCosts == null || expectedOnCosts == null);
+        OtherApplicationCosts = otherApplicationCosts;
     }
 
     public void ProvideExpectedContributions(ExpectedContributionsToScheme expectedContribution)
@@ -103,45 +96,37 @@ public class FinancialDetailsEntity
         PublicGrants = publicGrants;
     }
 
-    public bool AreAllQuestionsAnswered()
+    public bool IsAnswered()
     {
         return PurchasePrice.IsProvided() &&
                LandValue.IsProvided() &&
                IsPublicLand.HasValue &&
-               ExpectedWorksCosts.IsProvided() &&
-               ExpectedOnCosts.IsProvided() &&
-               ExpectedContributions.AreAllQuestionsAnswered() &&
-               PublicGrants.AreAllQuestionsAnswered();
+               OtherApplicationCosts.IsAnswered() &&
+               ExpectedContributions.IsAnswered() &&
+               PublicGrants.IsAnswered();
     }
 
     public void CompleteFinancialDetails()
     {
-        var result = OperationResult.New();
+        if (!IsAnswered())
+        {
+            OperationResult
+                .New()
+                .AddValidationError("IsSectionCompleted", ValidationErrorMessage.SectionIsNotCompleted).CheckErrors();
+        }
 
-        // Fix this when all fields will be refactored #84615
-        // result.Aggregate(() => LandValue.CheckErrors());
-        // result.Aggregate(() => PurchasePrice.CheckErrors());
-        // result.Aggregate(() => ExpectedCosts.CheckErrors());
-        // result.Aggregate(() => Contributions.CheckErrors());
-        // result.Aggregate(() => Grants.CheckErrors());
-        // if (Contributions.TotalContributions + Grants.TotalGrants != ExpectedCosts.TotalCosts + (PurchasePrice.ActualPrice ?? 0))
-        // {
-        //     result.AddValidationError(FinancialDetailsValidationFieldNames.CostsAndFunding, FinancialDetailsValidationErrors.CostsAndFundingMismatch);
-        // }
-        result.CheckErrors();
+        if (ExpectedTotalCosts() != ExpectedTotalContributions())
+        {
+            OperationResult
+                .New()
+                .AddValidationError(FinancialDetailsValidationFieldNames.CostsAndFunding, FinancialDetailsValidationErrors.CostsAndFundingMismatch)
+                .CheckErrors();
+        }
 
         SectionStatus = SectionStatus.Completed;
     }
 
-    public decimal ExpectedTotalCosts() => (ExpectedWorksCosts?.Value ?? 0) + (ExpectedOnCosts?.Value ?? 0);
+    public decimal ExpectedTotalCosts() => OtherApplicationCosts.ExpectedTotalCosts();
 
     public decimal ExpectedTotalContributions() => ExpectedContributions.CalculateTotal() + PublicGrants.CalculateTotal();
-
-    private void SetSectionStatus(bool isAnyValueSet)
-    {
-        if (isAnyValueSet)
-        {
-            SectionStatus = SectionStatus.InProgress;
-        }
-    }
 }

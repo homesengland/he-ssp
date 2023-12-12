@@ -19,14 +19,14 @@ public class GetFinancialCheckAnswersQueryHandler : IRequestHandler<GetFinancial
         var financialDetails = await _financialDetailsRepository.GetById(ApplicationId.From(request.ApplicationId), cancellationToken);
 
         var landValueSummary = new LandValueSummary(
-            financialDetails.PurchasePrice?.Value,
+            financialDetails.PurchasePrice?.Value ?? financialDetails.ExpectedPurchasePrice?.Value,
             financialDetails.LandValue?.Value,
             financialDetails.IsPublicLand);
 
         var totalSchemeCost = new TotalSchemeCost(
-            financialDetails.PurchasePrice?.Value,
-            financialDetails.ExpectedWorksCosts?.Value,
-            financialDetails.ExpectedOnCosts?.Value,
+            financialDetails.PurchasePrice?.Value ?? financialDetails.ExpectedPurchasePrice?.Value,
+            financialDetails.OtherApplicationCosts.ExpectedWorksCosts?.Value,
+            financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
             financialDetails.ExpectedTotalCosts());
 
         var totalContributions = new TotalContributions(
@@ -36,7 +36,7 @@ public class GetFinancialCheckAnswersQueryHandler : IRequestHandler<GetFinancial
 
         return new GetFinancialCheckAnswersResult(
             financialDetails.ApplicationBasicInfo.Name.Name,
-            financialDetails.AreAllQuestionsAnswered(),
+            financialDetails.IsAnswered(),
             landValueSummary,
             totalSchemeCost,
             totalContributions);

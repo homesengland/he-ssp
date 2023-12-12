@@ -46,7 +46,7 @@ public class ExpectedContributionsToScheme
 
     public ExpectedContributionValue? HomesTransferValue { get; private set; }
 
-    public bool AreAllQuestionsAnswered()
+    public bool IsAnswered()
     {
         return RentalIncome.IsProvided() && SalesOfHomesOnThisScheme.IsProvided() && SalesOfHomesOnOtherSchemes.IsProvided() &&
                OwnResources.IsProvided() && RcgfContributions.IsProvided() && OtherCapitalSources.IsProvided() && HomesTransferValue.IsProvided();

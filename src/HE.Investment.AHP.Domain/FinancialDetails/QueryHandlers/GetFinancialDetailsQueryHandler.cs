@@ -25,8 +25,8 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
             PurchasePrice = financialDetails.PurchasePrice?.Value ?? financialDetails.ExpectedPurchasePrice?.Value,
             IsSchemaOnPublicLand = financialDetails.IsPublicLand,
             LandValue = financialDetails.LandValue?.Value,
-            ExpectedWorkCost = financialDetails.ExpectedWorksCosts?.Value,
-            ExpectedOnCost = financialDetails.ExpectedOnCosts?.Value,
+            ExpectedWorkCost = financialDetails.OtherApplicationCosts.ExpectedWorksCosts?.Value,
+            ExpectedOnCost = financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
             TotalExpectedCosts = financialDetails.ExpectedTotalCosts(),
         };
 

@@ -38,9 +38,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             expectedAcquisitionCost = financialDetails.ExpectedPurchasePrice?.Value,
             isPublicLand = financialDetails.IsPublicLand,
             currentLandValue = financialDetails.LandValue?.Value,
-            expectedOnWorks = financialDetails.ExpectedWorksCosts?.Value,
-            expectedOnCosts = financialDetails.ExpectedOnCosts?.Value,
-
+            expectedOnWorks = financialDetails.OtherApplicationCosts.ExpectedWorksCosts?.Value,
+            expectedOnCosts = financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
             financialDetailsSectionCompletionStatus = SectionStatusMapper.ToDto(financialDetails.SectionStatus),
         };
 
@@ -66,8 +65,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             application.expectedAcquisitionCost.IsProvided() ? new ExpectedPurchasePrice(application.expectedAcquisitionCost!.Value) : null,
             application.currentLandValue.IsProvided() ? new CurrentLandValue(application.currentLandValue!.Value) : null,
             application.isPublicLand,
-            application.expectedOnWorks.IsProvided() ? new ExpectedWorksCosts(application.expectedOnWorks!.Value) : null,
-            application.expectedOnCosts.IsProvided() ? new ExpectedOnCosts(application.expectedOnCosts!.Value) : null,
+            MapToOtherApplicationCosts(application),
             MapToExpectedContributionsToScheme(application, applicationBasicInfo.Tenure),
             MapToPublicGrants(application),
             SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus));
@@ -82,6 +80,13 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         dto.howMuchReceivedFromDepartmentOfHealth = publicGrants.HealthRelated?.Value;
         dto.howMuchReceivedFromLotteryFunding = publicGrants.Lottery?.Value;
         dto.howMuchReceivedFromOtherPublicBodies = publicGrants.OtherPublicBodies?.Value;
+    }
+
+    private static OtherApplicationCosts MapToOtherApplicationCosts(AhpApplicationDto application)
+    {
+        return new OtherApplicationCosts(
+            application.expectedOnWorks.IsProvided() ? new ExpectedWorksCosts(application.expectedOnWorks!.Value) : null,
+            application.expectedOnCosts.IsProvided() ? new ExpectedOnCosts(application.expectedOnCosts!.Value) : null);
     }
 
     private static void MapFromExpectedContributions(ExpectedContributionsToScheme expectedContributionsToScheme, AhpApplicationDto dto)
@@ -99,8 +104,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
     private static ExpectedContributionsToScheme MapToExpectedContributionsToScheme(AhpApplicationDto application, Tenure tenure)
     {
         static ExpectedContributionValue? MapProvidedValues(decimal? value, ExpectedContributionFields field) => value.IsProvided()
-                ? new ExpectedContributionValue(field, value!.Value)
-                : null;
+            ? new ExpectedContributionValue(field, value!.Value)
+            : null;
 
         return new ExpectedContributionsToScheme(
             MapProvidedValues(application.borrowingAgainstRentalIncomeFromThisScheme, ExpectedContributionFields.RentalIncomeBorrowing),
@@ -117,8 +122,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
     private static PublicGrants MapToPublicGrants(AhpApplicationDto application)
     {
         static PublicGrantValue? MapProvidedValues(decimal? value, PublicGrantFields field) => value.IsProvided()
-                ? new PublicGrantValue(field, value!.Value)
-                : null;
+            ? new PublicGrantValue(field, value!.Value)
+            : null;
 
         return new PublicGrants(
             MapProvidedValues(application.howMuchReceivedFromCountyCouncil, PublicGrantFields.CountyCouncilGrants),

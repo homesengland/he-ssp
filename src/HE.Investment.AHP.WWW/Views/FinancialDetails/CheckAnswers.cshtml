@@ -29,19 +29,11 @@
             <gds-legend>
                 <gds-h2>Have you completed this section?</gds-h2>
             </gds-legend>
-            <gds-div-form-group>
-                <vc:error-message asp-for="@Model.IsCompleted" />
-                <div class="govuk-!-margin-bottom-6 govuk-radios">
-                    <div class="govuk-radios__item">
-                        @Html.RadioButtonFor(m => m.IsCompleted, true, new { @class = "govuk-radios__input", id = "IsCompleted-True" })
-                        <label class="govuk-label govuk-radios__label" for="IsCompleted-True">Yes</label>
-                    </div>
-                    <div class="govuk-radios__item">
-                        @Html.RadioButtonFor(m => m.IsCompleted, false, new { @class = "govuk-radios__input", id = "IsCompleted-False" })
-                        <label class="govuk-label govuk-radios__label" for="IsCompleted-False">No, I'll come back later</label>
-                    </div>
-                </div>
-            </gds-div-form-group>
+              <gds-radio govuk-formgroup-asp-for="IsSectionCompleted"
+                                      asp-hiddenlabeltext="Have you completed this section?"
+                                      value="@Model.IsSectionCompleted"
+                                      asp-selectlistitems="@CommonFormOptions.IsSectionCompleted">
+                           </gds-radio>
             <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Save and continue
             </button>
