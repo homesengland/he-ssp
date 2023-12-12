@@ -32,11 +32,11 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
         }
 
         // TODO #86130: remove portal type after CRM changes
-        await _contactService.RemoveLinkBetweenContactAndOrganisation(
-            _organizationServiceAsync,
-            account.AccountId.Value.ToString(),
-            PortalConstants.AhpPortalType,
-            account.UserGlobalId.Value);
+        //await _contactService.RemoveLinkBetweenContactAndOrganisation(
+        //    _organizationServiceAsync,
+        //    account.AccountId.Value.ToString(),
+        //    PortalConstants.AhpPortalType,
+        //    account.UserGlobalId.Value);
 
         return OperationResult.Success();
     }

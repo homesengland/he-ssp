@@ -34,7 +34,7 @@ public class UsersCrmContext : IUsersCrmContext
 
         return await _contactService.GetAllOrganisationContactsForPortal(
             _organizationServiceAsync,
-            account.AccountId.ToString()!);
+            account.AccountId.Value);
     }
 
     public async Task<ContactDto> GetUser(string id)
@@ -64,6 +64,6 @@ public class UsersCrmContext : IUsersCrmContext
             throw new InvalidOperationException("Cannot assign role for user without linked organisation.");
         }
 
-        await _contactService.UpdateContactWebrole(_organizationServiceAsync, userId, account.AccountId.Value, role);
+       // await _contactService.UpdateContactWebrole(_organizationServiceAsync, userId, account.AccountId.Value, role);
     }
 }
