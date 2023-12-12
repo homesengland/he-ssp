@@ -54,12 +54,13 @@ public class ContactService : IContactService
         }
     }
 
-    public Task<ContactRolesDto?> GetContactRoles(IOrganizationServiceAsync2 service, string contactEmail, string portalType, string contactExternalId)
+    public Task<ContactRolesDto?> GetContactRoles(IOrganizationServiceAsync2 service, string contactEmail, string contactExternalId, int? portalType = null)
     {
         var contact = _contactRepository.GetContactWithGivenEmailAndExternalId(service, contactEmail, contactExternalId);
         if (contact != null)
         {
-            var contactWebRole = _webRoleRepository.GetContactWebrole(service, contact.Id, portalType);
+            var portalTypeFilter = GeneratePortalTypeFilter(portalType);
+            var contactWebRole = _webRoleRepository.GetContactWebrole(service, contact.Id, portalTypeFilter);
             if (contactWebRole.Count == 0)
             {
                 return Task.FromResult<ContactRolesDto?>(null);
@@ -207,6 +208,7 @@ public class ContactService : IContactService
                                 accountName = GetAliasedValueAsStringOrDefault(contactWebrole, "acc.name"),
                                 permissionLevel = GetAliasedValueAsStringOrDefault(contactWebrole, "ppl.invln_name"),
                                 webRoleName = GetAliasedValueAsStringOrDefault(contactWebrole, "wr.invln_name"),
+                                permission = (GetAliasedValueAsObjectOrDefault(contactWebrole, "ppl.invln_permission") as OptionSetValue)?.Value,
                             },
                         },
                 externalId = GetAliasedValueAsStringOrDefault(contactWebrole, "cnt.invln_externalid"),
@@ -219,6 +221,11 @@ public class ContactService : IContactService
     private string? GetAliasedValueAsStringOrDefault(Entity entity, string attributeName)
     {
         return entity.Contains(attributeName) && entity[attributeName] != null ? entity.GetAttributeValue<AliasedValue>(attributeName).Value.ToString() : string.Empty;
+    }
+
+    private object? GetAliasedValueAsObjectOrDefault(Entity entity, string attributeName)
+    {
+        return entity.Contains(attributeName) && entity[attributeName] != null ? entity.GetAttributeValue<AliasedValue>(attributeName).Value : null;
     }
 
     private ContactDto MapContactEntityToDto(Entity contact)

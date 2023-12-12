@@ -23,7 +23,8 @@ public class AccountRepository : IProfileRepository, IAccountRepository
 
     public async Task<IList<UserAccount>> GetUserAccounts(UserGlobalId userGlobalId, string userEmail)
     {
-        var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, PortalConstants.LoansPortalType, userGlobalId.ToString());
+        // TODO #65730: create correct parameters 
+        var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, userGlobalId.ToString(), 858110001); //last parameter
 
         if (contactRoles is null)
         {

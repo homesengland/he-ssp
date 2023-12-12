@@ -50,8 +50,9 @@ public class UsersCrmContext : IUsersCrmContext
 
     public async Task<string?> GetUserRole(string id, string email)
     {
+        // TODO #65730: create correct parameters
         // TODO #86130: remove portal type after CRM changes
-        var roles = await _contactService.GetContactRoles(_organizationServiceAsync, email, PortalConstants.AhpPortalType, id);
+        var roles = await _contactService.GetContactRoles(_organizationServiceAsync, email, id, 858110000);
 
         return roles?.contactRoles.Select(r => r.webRoleName).FirstOrDefault();
     }
