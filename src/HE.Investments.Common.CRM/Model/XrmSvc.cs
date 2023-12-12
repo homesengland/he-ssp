@@ -1859,6 +1859,9 @@ namespace HE.Investments.Common.CRM.Model
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Common = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		AHP = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
