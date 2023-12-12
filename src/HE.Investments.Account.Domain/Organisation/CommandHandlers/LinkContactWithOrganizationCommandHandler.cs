@@ -2,6 +2,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.Organisation.Commands;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.Errors;
+using HE.Investments.Common.Extensions;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Contract;
 using HE.Investments.Organisation.Contract;
@@ -45,22 +46,24 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
         }
 
         var organization = result.Item ?? throw new NotFoundException(nameof(OrganisationSearchItem), request.CompaniesHouseNumber);
-
+        var organisationId = organization.OrganisationId;
         if (!organization.ExistsInCrm)
         {
-            _organizationService.CreateOrganization(new OrganizationDetailsDto
+            organisationId = _organizationService.CreateOrganization(new OrganizationDetailsDto
             {
                 registeredCompanyName = organization.Name,
                 addressLine1 = organization.Street,
                 city = organization.City,
                 companyRegistrationNumber = request.CompaniesHouseNumber,
                 postalcode = organization.PostalCode,
-            });
+            }).ToString();
         }
 
-        // TODO #65730: create correct parameters
-
-        // await _contactService.LinkContactWithOrganization(_organizationServiceAsync, _loanUserContext.UserGlobalId.ToString(), request.CompaniesHouseNumber, PortalConstants.LoansPortalType);
+        await _contactService.LinkContactWithOrganization(
+            _organizationServiceAsync,
+            _loanUserContext.UserGlobalId.ToString(),
+            Guid.Parse(organisationId!),
+            PortalConstants.LoansPortalTypeInt);
         await _loanUserContext.RefreshAccounts();
     }
 }
