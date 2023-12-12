@@ -11,8 +11,9 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
 {
     private readonly IAccountUserContext _userContext;
 
-    // private readonly IOrganizationServiceAsync2 _organizationServiceAsync;
-    // private readonly IContactService _contactService;
+    private readonly IOrganizationServiceAsync2 _organizationServiceAsync;
+    private readonly IContactService _contactService;
+
     public RemoveLinkBetweenUserAndOrganisationCommandHandler(
         IAccountUserContext userContext,
         IOrganizationServiceAsync2 organizationServiceAsync,
@@ -20,8 +21,8 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
     {
         _userContext = userContext;
 
-        // _organizationServiceAsync = organizationServiceAsync;
-        // _contactService = contactService;
+        _organizationServiceAsync = organizationServiceAsync;
+        _contactService = contactService;
     }
 
     public async Task<OperationResult> Handle(RemoveLinkBetweenUserAndOrganisationCommand request, CancellationToken cancellationToken)
@@ -32,13 +33,11 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
             throw new InvalidOperationException("Cannot find user linked with organisation.");
         }
 
-        // TODO #65730: create correct parameters
-        // TODO #86130: remove portal type after CRM changes
-        // await _contactService.RemoveLinkBetweenContactAndOrganisation(
-        //    _organizationServiceAsync,
-        //    account.AccountId.Value.ToString(),
-        //    PortalConstants.AhpPortalType,
-        //    account.UserGlobalId.Value);
+        await _contactService.RemoveLinkBetweenContactAndOrganisation(
+            _organizationServiceAsync,
+            account.AccountId.Value,
+            account.UserGlobalId.Value);
+
         return OperationResult.Success();
     }
 }
