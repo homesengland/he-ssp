@@ -153,9 +153,14 @@ namespace DataverseModel
 			public const string invln_interestshortfallmarginedsecurityk_Base = "invln_interestshortfallmarginedsecurityk_base";
 			public const string invln_InterestShortfallValuek = "invln_interestshortfallvaluek";
 			public const string invln_interestshortfallvaluek_Base = "invln_interestshortfallvaluek_base";
+			public const string invln_invln_borrowerpreviousschemes_ISP_invln_i = "invln_invln_borrowerpreviousschemes_ISP_invln_i";
+			public const string invln_invln_financialcovenants_ISP_invln_isp = "invln_invln_financialcovenants_ISP_invln_isp";
 			public const string invln_invln_isp_invln_conditions_ispid = "invln_invln_isp_invln_conditions_ispid";
+			public const string invln_invln_isp_invln_plot = "invln_invln_isp_invln_plot";
 			public const string invln_invln_isp_Loanapplication_invln_loanappli = "invln_invln_isp_Loanapplication_invln_loanappli";
 			public const string invln_invln_isp_TMName_contact = "invln_invln_isp_TMName_contact";
+			public const string invln_invln_keyrisks_ISP_invln_isp = "invln_invln_keyrisks_ISP_invln_isp";
+			public const string invln_invln_milestones_ISP_invln_isp = "invln_invln_milestones_ISP_invln_isp";
 			public const string invln_invln_projectspecificcondition_ISP_invln_ = "invln_invln_projectspecificcondition_ISP_invln_";
 			public const string invln_isp_invln_reviewapproval_ispid = "invln_isp_invln_reviewapproval_ispid";
 			public const string invln_isp_Name_contact = "invln_isp_Name_contact";
@@ -4828,6 +4833,46 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N invln_invln_borrowerpreviousschemes_ISP_invln_i
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_borrowerpreviousschemes_ISP_invln_i")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_BorrowerPreviousSchemes> invln_invln_borrowerpreviousschemes_ISP_invln_i
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_BorrowerPreviousSchemes>("invln_invln_borrowerpreviousschemes_ISP_invln_i", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_borrowerpreviousschemes_ISP_invln_i");
+				this.SetRelatedEntities<DataverseModel.invln_BorrowerPreviousSchemes>("invln_invln_borrowerpreviousschemes_ISP_invln_i", null, value);
+				this.OnPropertyChanged("invln_invln_borrowerpreviousschemes_ISP_invln_i");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_financialcovenants_ISP_invln_isp
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_financialcovenants_ISP_invln_isp")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FinancialCovenants> invln_invln_financialcovenants_ISP_invln_isp
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FinancialCovenants>("invln_invln_financialcovenants_ISP_invln_isp", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_financialcovenants_ISP_invln_isp");
+				this.SetRelatedEntities<DataverseModel.invln_FinancialCovenants>("invln_invln_financialcovenants_ISP_invln_isp", null, value);
+				this.OnPropertyChanged("invln_invln_financialcovenants_ISP_invln_isp");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_invln_isp_invln_conditions_ispid
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_isp_invln_conditions_ispid")]
@@ -4844,6 +4889,66 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_isp_invln_conditions_ispid");
 				this.SetRelatedEntities<DataverseModel.invln_Conditions>("invln_invln_isp_invln_conditions_ispid", null, value);
 				this.OnPropertyChanged("invln_invln_isp_invln_conditions_ispid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_isp_invln_plot
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_isp_invln_plot")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_plot> invln_invln_isp_invln_plot
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_plot>("invln_invln_isp_invln_plot", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_isp_invln_plot");
+				this.SetRelatedEntities<DataverseModel.invln_plot>("invln_invln_isp_invln_plot", null, value);
+				this.OnPropertyChanged("invln_invln_isp_invln_plot");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_keyrisks_ISP_invln_isp
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_keyrisks_ISP_invln_isp")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_KeyRisks> invln_invln_keyrisks_ISP_invln_isp
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_KeyRisks>("invln_invln_keyrisks_ISP_invln_isp", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_keyrisks_ISP_invln_isp");
+				this.SetRelatedEntities<DataverseModel.invln_KeyRisks>("invln_invln_keyrisks_ISP_invln_isp", null, value);
+				this.OnPropertyChanged("invln_invln_keyrisks_ISP_invln_isp");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_milestones_ISP_invln_isp
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_milestones_ISP_invln_isp")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Milestones> invln_invln_milestones_ISP_invln_isp
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Milestones>("invln_invln_milestones_ISP_invln_isp", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_milestones_ISP_invln_isp");
+				this.SetRelatedEntities<DataverseModel.invln_Milestones>("invln_invln_milestones_ISP_invln_isp", null, value);
+				this.OnPropertyChanged("invln_invln_milestones_ISP_invln_isp");
 			}
 		}
 		

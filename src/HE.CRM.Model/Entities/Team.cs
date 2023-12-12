@@ -82,6 +82,7 @@ namespace DataverseModel
 			public const string EMailAddress = "emailaddress";
 			public const string ExchangeRate = "exchangerate";
 			public const string ImportSequenceNumber = "importsequencenumber";
+			public const string invln_externalcomms_team_owningteam = "invln_externalcomms_team_owningteam";
 			public const string invln_govnotifyemail_team_owningteam = "invln_govnotifyemail_team_owningteam";
 			public const string IsDefault = "isdefault";
 			public const string IsSasTokenSet = "issastokenset";
@@ -114,24 +115,44 @@ namespace DataverseModel
 			public const string team_contacts = "team_contacts";
 			public const string team_environmentvariabledefinition = "team_environmentvariabledefinition";
 			public const string team_environmentvariablevalue = "team_environmentvariablevalue";
+			public const string team_invln_ahpcontract = "team_invln_ahpcontract";
+			public const string team_invln_ahpstatuschange = "team_invln_ahpstatuschange";
+			public const string team_invln_borrowerpreviousschemes = "team_invln_borrowerpreviousschemes";
+			public const string team_invln_cashflow = "team_invln_cashflow";
+			public const string team_invln_comment = "team_invln_comment";
 			public const string team_invln_conditions = "team_invln_conditions";
+			public const string team_invln_consortium = "team_invln_consortium";
+			public const string team_invln_consortiummember = "team_invln_consortiummember";
 			public const string team_invln_contactwebrole = "team_invln_contactwebrole";
 			public const string team_invln_contract = "team_invln_contract";
+			public const string team_invln_deliveryphase = "team_invln_deliveryphase";
 			public const string team_invln_emailnotification = "team_invln_emailnotification";
 			public const string team_invln_emailtemplate = "team_invln_emailtemplate";
+			public const string team_invln_financialcovenants = "team_invln_financialcovenants";
+			public const string team_invln_grantbenchmark = "team_invln_grantbenchmark";
+			public const string team_invln_homesindeliveryphase = "team_invln_homesindeliveryphase";
 			public const string team_invln_hometype = "team_invln_hometype";
+			public const string team_invln_housetype = "team_invln_housetype";
 			public const string team_invln_isp = "team_invln_isp";
+			public const string team_invln_keyrisks = "team_invln_keyrisks";
 			public const string team_invln_loanapplication = "team_invln_loanapplication";
 			public const string team_invln_loanstatuschange = "team_invln_loanstatuschange";
 			public const string team_invln_localauthority = "team_invln_localauthority";
+			public const string team_invln_milestoneframeworkitem = "team_invln_milestoneframeworkitem";
+			public const string team_invln_milestones = "team_invln_milestones";
+			public const string team_invln_ndss = "team_invln_ndss";
 			public const string team_invln_notificationsetting = "team_invln_notificationsetting";
 			public const string team_invln_organisationchangerequest = "team_invln_organisationchangerequest";
+			public const string team_invln_plot = "team_invln_plot";
 			public const string team_invln_portal = "team_invln_portal";
 			public const string team_invln_portalpermissionlevel = "team_invln_portalpermissionlevel";
+			public const string team_invln_precomplete = "team_invln_precomplete";
+			public const string team_invln_programme = "team_invln_programme";
 			public const string team_invln_projectspecificcondition = "team_invln_projectspecificcondition";
 			public const string team_invln_reviewapproval = "team_invln_reviewapproval";
 			public const string team_invln_scheme = "team_invln_scheme";
 			public const string team_invln_sitedetails = "team_invln_sitedetails";
+			public const string team_invln_sites = "team_invln_sites";
 			public const string team_invln_standardcondition = "team_invln_standardcondition";
 			public const string team_invln_vft = "team_invln_vft";
 			public const string team_sharepointdocumentlocation = "team_sharepointdocumentlocation";
@@ -805,6 +826,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N invln_externalcomms_team_owningteam
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_externalcomms_team_owningteam")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Externalcomms> invln_externalcomms_team_owningteam
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Externalcomms>("invln_externalcomms_team_owningteam", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_externalcomms_team_owningteam");
+				this.SetRelatedEntities<DataverseModel.invln_Externalcomms>("invln_externalcomms_team_owningteam", null, value);
+				this.OnPropertyChanged("invln_externalcomms_team_owningteam");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_govnotifyemail_team_owningteam
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_govnotifyemail_team_owningteam")]
@@ -905,6 +946,106 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N team_invln_ahpcontract
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_ahpcontract")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ahpcontract> team_invln_ahpcontract
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ahpcontract>("team_invln_ahpcontract", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_ahpcontract");
+				this.SetRelatedEntities<DataverseModel.invln_ahpcontract>("team_invln_ahpcontract", null, value);
+				this.OnPropertyChanged("team_invln_ahpcontract");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_ahpstatuschange
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_ahpstatuschange")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_AHPStatusChange> team_invln_ahpstatuschange
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_AHPStatusChange>("team_invln_ahpstatuschange", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_ahpstatuschange");
+				this.SetRelatedEntities<DataverseModel.invln_AHPStatusChange>("team_invln_ahpstatuschange", null, value);
+				this.OnPropertyChanged("team_invln_ahpstatuschange");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_borrowerpreviousschemes
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_borrowerpreviousschemes")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_BorrowerPreviousSchemes> team_invln_borrowerpreviousschemes
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_BorrowerPreviousSchemes>("team_invln_borrowerpreviousschemes", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_borrowerpreviousschemes");
+				this.SetRelatedEntities<DataverseModel.invln_BorrowerPreviousSchemes>("team_invln_borrowerpreviousschemes", null, value);
+				this.OnPropertyChanged("team_invln_borrowerpreviousschemes");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_cashflow
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_cashflow")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Cashflow> team_invln_cashflow
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Cashflow>("team_invln_cashflow", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_cashflow");
+				this.SetRelatedEntities<DataverseModel.invln_Cashflow>("team_invln_cashflow", null, value);
+				this.OnPropertyChanged("team_invln_cashflow");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_comment
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_comment")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_comment> team_invln_comment
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_comment>("team_invln_comment", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_comment");
+				this.SetRelatedEntities<DataverseModel.invln_comment>("team_invln_comment", null, value);
+				this.OnPropertyChanged("team_invln_comment");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N team_invln_conditions
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_conditions")]
@@ -921,6 +1062,46 @@ namespace DataverseModel
 				this.OnPropertyChanging("team_invln_conditions");
 				this.SetRelatedEntities<DataverseModel.invln_Conditions>("team_invln_conditions", null, value);
 				this.OnPropertyChanged("team_invln_conditions");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_consortium
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_consortium")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Consortium> team_invln_consortium
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Consortium>("team_invln_consortium", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_consortium");
+				this.SetRelatedEntities<DataverseModel.invln_Consortium>("team_invln_consortium", null, value);
+				this.OnPropertyChanged("team_invln_consortium");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_consortiummember
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_consortiummember")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ConsortiumMember> team_invln_consortiummember
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ConsortiumMember>("team_invln_consortiummember", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_consortiummember");
+				this.SetRelatedEntities<DataverseModel.invln_ConsortiumMember>("team_invln_consortiummember", null, value);
+				this.OnPropertyChanged("team_invln_consortiummember");
 			}
 		}
 		
@@ -965,6 +1146,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N team_invln_deliveryphase
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_deliveryphase")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_DeliveryPhase> team_invln_deliveryphase
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_DeliveryPhase>("team_invln_deliveryphase", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_deliveryphase");
+				this.SetRelatedEntities<DataverseModel.invln_DeliveryPhase>("team_invln_deliveryphase", null, value);
+				this.OnPropertyChanged("team_invln_deliveryphase");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N team_invln_emailnotification
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_emailnotification")]
@@ -1005,6 +1206,66 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N team_invln_financialcovenants
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_financialcovenants")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_FinancialCovenants> team_invln_financialcovenants
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_FinancialCovenants>("team_invln_financialcovenants", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_financialcovenants");
+				this.SetRelatedEntities<DataverseModel.invln_FinancialCovenants>("team_invln_financialcovenants", null, value);
+				this.OnPropertyChanged("team_invln_financialcovenants");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_grantbenchmark
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_grantbenchmark")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_grantbenchmark> team_invln_grantbenchmark
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_grantbenchmark>("team_invln_grantbenchmark", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_grantbenchmark");
+				this.SetRelatedEntities<DataverseModel.invln_grantbenchmark>("team_invln_grantbenchmark", null, value);
+				this.OnPropertyChanged("team_invln_grantbenchmark");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_homesindeliveryphase
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_homesindeliveryphase")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_homesindeliveryphase> team_invln_homesindeliveryphase
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_homesindeliveryphase>("team_invln_homesindeliveryphase", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_homesindeliveryphase");
+				this.SetRelatedEntities<DataverseModel.invln_homesindeliveryphase>("team_invln_homesindeliveryphase", null, value);
+				this.OnPropertyChanged("team_invln_homesindeliveryphase");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N team_invln_hometype
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_hometype")]
@@ -1025,6 +1286,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N team_invln_housetype
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_housetype")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Housetype> team_invln_housetype
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Housetype>("team_invln_housetype", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_housetype");
+				this.SetRelatedEntities<DataverseModel.invln_Housetype>("team_invln_housetype", null, value);
+				this.OnPropertyChanged("team_invln_housetype");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N team_invln_isp
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_isp")]
@@ -1041,6 +1322,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("team_invln_isp");
 				this.SetRelatedEntities<DataverseModel.invln_ISP>("team_invln_isp", null, value);
 				this.OnPropertyChanged("team_invln_isp");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_keyrisks
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_keyrisks")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_KeyRisks> team_invln_keyrisks
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_KeyRisks>("team_invln_keyrisks", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_keyrisks");
+				this.SetRelatedEntities<DataverseModel.invln_KeyRisks>("team_invln_keyrisks", null, value);
+				this.OnPropertyChanged("team_invln_keyrisks");
 			}
 		}
 		
@@ -1105,6 +1406,66 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N team_invln_milestoneframeworkitem
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_milestoneframeworkitem")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_milestoneframeworkitem> team_invln_milestoneframeworkitem
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_milestoneframeworkitem>("team_invln_milestoneframeworkitem", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_milestoneframeworkitem");
+				this.SetRelatedEntities<DataverseModel.invln_milestoneframeworkitem>("team_invln_milestoneframeworkitem", null, value);
+				this.OnPropertyChanged("team_invln_milestoneframeworkitem");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_milestones
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_milestones")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Milestones> team_invln_milestones
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Milestones>("team_invln_milestones", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_milestones");
+				this.SetRelatedEntities<DataverseModel.invln_Milestones>("team_invln_milestones", null, value);
+				this.OnPropertyChanged("team_invln_milestones");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_ndss
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_ndss")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ndss> team_invln_ndss
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ndss>("team_invln_ndss", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_ndss");
+				this.SetRelatedEntities<DataverseModel.invln_ndss>("team_invln_ndss", null, value);
+				this.OnPropertyChanged("team_invln_ndss");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N team_invln_notificationsetting
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_notificationsetting")]
@@ -1145,6 +1506,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N team_invln_plot
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_plot")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_plot> team_invln_plot
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_plot>("team_invln_plot", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_plot");
+				this.SetRelatedEntities<DataverseModel.invln_plot>("team_invln_plot", null, value);
+				this.OnPropertyChanged("team_invln_plot");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N team_invln_portal
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_portal")]
@@ -1181,6 +1562,46 @@ namespace DataverseModel
 				this.OnPropertyChanging("team_invln_portalpermissionlevel");
 				this.SetRelatedEntities<DataverseModel.invln_portalpermissionlevel>("team_invln_portalpermissionlevel", null, value);
 				this.OnPropertyChanged("team_invln_portalpermissionlevel");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_precomplete
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_precomplete")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Precomplete> team_invln_precomplete
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Precomplete>("team_invln_precomplete", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_precomplete");
+				this.SetRelatedEntities<DataverseModel.invln_Precomplete>("team_invln_precomplete", null, value);
+				this.OnPropertyChanged("team_invln_precomplete");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_programme
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_programme")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_programme> team_invln_programme
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_programme>("team_invln_programme", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_programme");
+				this.SetRelatedEntities<DataverseModel.invln_programme>("team_invln_programme", null, value);
+				this.OnPropertyChanged("team_invln_programme");
 			}
 		}
 		
@@ -1261,6 +1682,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("team_invln_sitedetails");
 				this.SetRelatedEntities<DataverseModel.invln_SiteDetails>("team_invln_sitedetails", null, value);
 				this.OnPropertyChanged("team_invln_sitedetails");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N team_invln_sites
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("team_invln_sites")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Sites> team_invln_sites
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Sites>("team_invln_sites", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("team_invln_sites");
+				this.SetRelatedEntities<DataverseModel.invln_Sites>("team_invln_sites", null, value);
+				this.OnPropertyChanged("team_invln_sites");
 			}
 		}
 		

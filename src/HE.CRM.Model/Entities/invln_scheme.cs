@@ -131,6 +131,7 @@ namespace DataverseModel
 			public const string invln_actualacquisitioncost = "invln_actualacquisitioncost";
 			public const string invln_actualacquisitioncost_Base = "invln_actualacquisitioncost_base";
 			public const string invln_affordabilityevidence = "invln_affordabilityevidence";
+			public const string invln_ahpstatuschange_AHPApplication_invln_sche = "invln_ahpstatuschange_AHPApplication_invln_sche";
 			public const string invln_applicationid = "invln_applicationid";
 			public const string invln_areaaveragedividedbytwo = "invln_areaaveragedividedbytwo";
 			public const string invln_borrowingagainstrentalincome = "invln_borrowingagainstrentalincome";
@@ -184,8 +185,11 @@ namespace DataverseModel
 			public const string invln_grantsfromthelottery = "invln_grantsfromthelottery";
 			public const string invln_grantsfromthelottery_Base = "invln_grantsfromthelottery_base";
 			public const string invln_hometypessectioncompletionstatus = "invln_hometypessectioncompletionstatus";
+			public const string invln_invln_comment_applicationlookup_invln_sch = "invln_invln_comment_applicationlookup_invln_sch";
 			public const string invln_invln_hometype_application_invln_scheme = "invln_invln_hometype_application_invln_scheme";
 			public const string invln_invln_scheme_localauthoritylookup_invln_l = "invln_invln_scheme_localauthoritylookup_invln_l";
+			public const string invln_invln_scheme_programmelookup_invln_progra = "invln_invln_scheme_programmelookup_invln_progra";
+			public const string invln_invln_scheme_Site_invln_sites = "invln_invln_scheme_Site_invln_sites";
 			public const string invln_lastexternalmodificationby = "invln_lastexternalmodificationby";
 			public const string invln_lastexternalmodificationbyName = "invln_lastexternalmodificationbyname";
 			public const string invln_lastexternalmodificationon = "invln_lastexternalmodificationon";
@@ -2202,6 +2206,46 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N invln_ahpstatuschange_AHPApplication_invln_sche
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_ahpstatuschange_AHPApplication_invln_sche")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_AHPStatusChange> invln_ahpstatuschange_AHPApplication_invln_sche
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_AHPStatusChange>("invln_ahpstatuschange_AHPApplication_invln_sche", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ahpstatuschange_AHPApplication_invln_sche");
+				this.SetRelatedEntities<DataverseModel.invln_AHPStatusChange>("invln_ahpstatuschange_AHPApplication_invln_sche", null, value);
+				this.OnPropertyChanged("invln_ahpstatuschange_AHPApplication_invln_sche");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_invln_comment_applicationlookup_invln_sch
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_comment_applicationlookup_invln_sch")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_comment> invln_invln_comment_applicationlookup_invln_sch
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_comment>("invln_invln_comment_applicationlookup_invln_sch", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_comment_applicationlookup_invln_sch");
+				this.SetRelatedEntities<DataverseModel.invln_comment>("invln_invln_comment_applicationlookup_invln_sch", null, value);
+				this.OnPropertyChanged("invln_invln_comment_applicationlookup_invln_sch");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N invln_invln_hometype_application_invln_scheme
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_hometype_application_invln_scheme")]
@@ -2342,6 +2386,48 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_scheme_localauthoritylookup_invln_l");
 				this.SetRelatedEntity<DataverseModel.invln_localauthority>("invln_invln_scheme_localauthoritylookup_invln_l", null, value);
 				this.OnPropertyChanged("invln_invln_scheme_localauthoritylookup_invln_l");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_invln_scheme_programmelookup_invln_progra
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_programmelookup")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_scheme_programmelookup_invln_progra")]
+		public DataverseModel.invln_programme invln_invln_scheme_programmelookup_invln_progra
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_programme>("invln_invln_scheme_programmelookup_invln_progra", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_scheme_programmelookup_invln_progra");
+				this.SetRelatedEntity<DataverseModel.invln_programme>("invln_invln_scheme_programmelookup_invln_progra", null, value);
+				this.OnPropertyChanged("invln_invln_scheme_programmelookup_invln_progra");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_invln_scheme_Site_invln_sites
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_site")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_invln_scheme_Site_invln_sites")]
+		public DataverseModel.invln_Sites invln_invln_scheme_Site_invln_sites
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_Sites>("invln_invln_scheme_Site_invln_sites", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_invln_scheme_Site_invln_sites");
+				this.SetRelatedEntity<DataverseModel.invln_Sites>("invln_invln_scheme_Site_invln_sites", null, value);
+				this.OnPropertyChanged("invln_invln_scheme_Site_invln_sites");
 			}
 		}
 		

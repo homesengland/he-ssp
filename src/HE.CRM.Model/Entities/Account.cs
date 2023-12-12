@@ -542,6 +542,7 @@ namespace DataverseModel
 		/// </summary>
 		public static partial class Fields
 		{
+			public const string account_invln_Externalcommses = "account_invln_Externalcommses";
 			public const string account_invln_govnotifyemails = "account_invln_govnotifyemails";
 			public const string Referencingaccount_master_account = "account_master_account";
 			public const string Referencingaccount_parent_account = "account_parent_account";
@@ -688,6 +689,8 @@ namespace DataverseModel
 			public const string invln_account_invln_organisationchangerequest_organisationid = "invln_account_invln_organisationchangerequest_organisationid";
 			public const string invln_account_invln_scheme_organisationid = "invln_account_invln_scheme_organisationid";
 			public const string invln_addressverificationtype = "invln_addressverificationtype";
+			public const string invln_consortium_LeadPartner_account = "invln_consortium_LeadPartner_account";
+			public const string invln_consortiummember_Partner_account = "invln_consortiummember_Partner_account";
 			public const string invln_CreditRatingAgency = "invln_creditratingagency";
 			public const string invln_CurrentCRR = "invln_currentcrr";
 			public const string invln_dateapproved = "invln_dateapproved";
@@ -4691,6 +4694,26 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
+		/// 1:N account_invln_Externalcommses
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_invln_Externalcommses")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Externalcomms> account_invln_Externalcommses
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Externalcomms>("account_invln_Externalcommses", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("account_invln_Externalcommses");
+				this.SetRelatedEntities<DataverseModel.invln_Externalcomms>("account_invln_Externalcommses", null, value);
+				this.OnPropertyChanged("account_invln_Externalcommses");
+			}
+		}
+		
+		/// <summary>
 		/// 1:N account_invln_govnotifyemails
 		/// </summary>
 		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("account_invln_govnotifyemails")]
@@ -4867,6 +4890,46 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_account_invln_scheme_organisationid");
 				this.SetRelatedEntities<DataverseModel.invln_scheme>("invln_account_invln_scheme_organisationid", null, value);
 				this.OnPropertyChanged("invln_account_invln_scheme_organisationid");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_consortium_LeadPartner_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_consortium_LeadPartner_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Consortium> invln_consortium_LeadPartner_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Consortium>("invln_consortium_LeadPartner_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_consortium_LeadPartner_account");
+				this.SetRelatedEntities<DataverseModel.invln_Consortium>("invln_consortium_LeadPartner_account", null, value);
+				this.OnPropertyChanged("invln_consortium_LeadPartner_account");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_consortiummember_Partner_account
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_consortiummember_Partner_account")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_ConsortiumMember> invln_consortiummember_Partner_account
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_ConsortiumMember>("invln_consortiummember_Partner_account", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_consortiummember_Partner_account");
+				this.SetRelatedEntities<DataverseModel.invln_ConsortiumMember>("invln_consortiummember_Partner_account", null, value);
+				this.OnPropertyChanged("invln_consortiummember_Partner_account");
 			}
 		}
 		
