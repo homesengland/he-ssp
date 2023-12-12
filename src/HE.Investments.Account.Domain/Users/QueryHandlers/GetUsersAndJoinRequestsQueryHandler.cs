@@ -25,11 +25,7 @@ public class GetUsersAndJoinRequestsQueryHandler : IRequestHandler<GetUsersAndJo
 
         return new UsersAndJoinRequests(
             organisation.RegisteredCompanyName,
-            users,
-            new List<UserDetails>
-            {
-                new("11", "Tomasz", "Kot", "kot@elo.pl", "nikt", UserRole.Limited, null),
-                new("12", "trer", "erer", "kot@elo.pl", "nikt", UserRole.Limited, null),
-            });
+            users.Where(u => u.Role != UserRole.Limited).ToList(),
+            users.Where(u => u.Role == UserRole.Limited).ToList());
     }
 }

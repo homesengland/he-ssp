@@ -8,7 +8,9 @@ public interface IUsersCrmContext
 
     Task<ContactDto> GetUser(string id);
 
-    Task<string?> GetUserRole(string id, string email);
+    Task<int?> GetUserRole(string id);
 
-    Task ChangeUserRole(string userId, string role);
+    Task<Dictionary<string, int?>> GetUsersRole(List<string> userIds);
+
+    Task ChangeUserRole(string userId, int role);
 }

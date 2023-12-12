@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared;
 using HE.Investments.Loans.Common.Exceptions;
@@ -25,16 +24,9 @@ public class UsersCrmContext : IUsersCrmContext
 
     public async Task<IList<ContactDto>> GetUsers()
     {
-        var account = await _accountUserContext.GetSelectedAccount();
-
-        if (account.AccountId == null)
-        {
-            throw new InvalidOperationException("Cannot fetch users for missing organisation.");
-        }
-
         return await _contactService.GetAllOrganisationContactsForPortal(
             _organizationServiceAsync,
-            account.AccountId.Value);
+            await TryGetOrganisationId());
     }
 
     public async Task<ContactDto> GetUser(string id)
@@ -48,24 +40,46 @@ public class UsersCrmContext : IUsersCrmContext
         return user;
     }
 
-    public async Task<string?> GetUserRole(string id, string email)
+    public async Task<int?> GetUserRole(string id)
     {
-        // TODO #65730: create correct parameters
-        // TODO #86130: remove portal type after CRM changes
-        var roles = await _contactService.GetContactRoles(_organizationServiceAsync, email, id, 858110000);
+        var roles = await _contactService.GetContactRolesForOrganisationContacts(
+            _organizationServiceAsync,
+            new List<string> { id },
+            await TryGetOrganisationId());
 
-        return roles?.contactRoles.Select(r => r.webRoleName).FirstOrDefault();
+        return roles.Select(GetUserRole).FirstOrDefault();
     }
 
-    public async Task ChangeUserRole(string userId, string role)
+    public async Task<Dictionary<string, int?>> GetUsersRole(List<string> userIds)
+    {
+        var roles = await _contactService.GetContactRolesForOrganisationContacts(
+            _organizationServiceAsync,
+            userIds,
+            await TryGetOrganisationId());
+
+        return roles.ToDictionary(c => c.externalId, GetUserRole);
+    }
+
+    public async Task ChangeUserRole(string userId, int role)
+    {
+        var organisationId = await TryGetOrganisationId();
+        await _contactService.UpdateContactWebrole(_organizationServiceAsync, userId, organisationId, role);
+    }
+
+    private static int? GetUserRole(ContactRolesDto dto)
+    {
+        return dto.contactRoles.Select(r => r.permission).FirstOrDefault();
+    }
+
+    private async Task<Guid> TryGetOrganisationId()
     {
         var account = await _accountUserContext.GetSelectedAccount();
+
         if (account.AccountId == null)
         {
-            throw new InvalidOperationException("Cannot assign role for user without linked organisation.");
-
-            // TODO #65730: create correct parameters
-            // await _contactService.UpdateContactWebrole(_organizationServiceAsync, userId, account.AccountId.Value, role);
+            throw new InvalidOperationException("User is not linked with any organisation.");
         }
+
+        return account.AccountId.Value;
     }
 }
