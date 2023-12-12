@@ -83,7 +83,7 @@ public class SchemeRepository : ISchemeRepository
             SectionStatusMapper.ToDomain(application.schemeInformationSectionCompletionStatus),
             new AffordabilityEvidence(application.affordabilityEvidence),
             new SalesRisk(application.sharedOwnershipSalesRisk),
-            new HousingNeeds(application.meetingLocalProrities, application.meetingLocalHousingNeed),
+            new HousingNeeds(application.meetingLocalHousingNeed, application.meetingLocalProrities),
             new StakeholderDiscussions(
                 new StakeholderDiscussionsDetails(application.discussionsWithLocalStakeholders),
                 new LocalAuthoritySupportFileContainer(stakeholderDiscussionsFile)));
