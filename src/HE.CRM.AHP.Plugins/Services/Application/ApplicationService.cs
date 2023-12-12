@@ -83,7 +83,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 throw new InvalidPluginExecutionException("Document Location record for AHP Application does not exists");
             }
         }
-        public string GetFileLocationForAhpApplication(string ahpApplicationId)
+        public string GetFileLocationForAhpApplication(string ahpApplicationId, bool isAbsolute)
         {
             var urlToReturn = string.Empty;
             if (Guid.TryParse(ahpApplicationId, out Guid applicationGuid))
@@ -93,18 +93,21 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 {
                     TracingService.Trace("related document");
                     urlToReturn = relatedDocumentLocation.RelativeUrl;
-                    var parentDocumentLocation = _sharepointDocumentLocationRepository.GetById(relatedDocumentLocation.ParentSiteOrLocation.Id,
-                        new string[] { nameof(SharePointDocumentLocation.RelativeUrl).ToLower(), nameof(SharePointDocumentLocation.ParentSiteOrLocation).ToLower() });;
-                   if (parentDocumentLocation != null && parentDocumentLocation.ParentSiteOrLocation != null)
+                    if (isAbsolute)
                     {
-                        TracingService.Trace("parent of related document");
-                        urlToReturn = urlToReturn.Insert(0, $"{parentDocumentLocation.RelativeUrl}/");
-                        var mainDocumentLocation = _sharepointSiteRepository.GetById(parentDocumentLocation.ParentSiteOrLocation.Id,
-                        new string[] { nameof(SharePointSite.AbsoluteURL).ToLower() });
-                        if (mainDocumentLocation != null)
+                        var parentDocumentLocation = _sharepointDocumentLocationRepository.GetById(relatedDocumentLocation.ParentSiteOrLocation.Id,
+                            new string[] { nameof(SharePointDocumentLocation.RelativeUrl).ToLower(), nameof(SharePointDocumentLocation.ParentSiteOrLocation).ToLower() });
+                        if (parentDocumentLocation != null && parentDocumentLocation.ParentSiteOrLocation != null)
                         {
-                            TracingService.Trace("main document");
-                            urlToReturn = urlToReturn.Insert(0, $"{mainDocumentLocation.AbsoluteURL}/");
+                            TracingService.Trace("parent of related document");
+                            urlToReturn = urlToReturn.Insert(0, $"{parentDocumentLocation.RelativeUrl}/");
+                            var mainDocumentLocation = _sharepointSiteRepository.GetById(parentDocumentLocation.ParentSiteOrLocation.Id,
+                            new string[] { nameof(SharePointSite.AbsoluteURL).ToLower() });
+                            if (mainDocumentLocation != null)
+                            {
+                                TracingService.Trace("main document");
+                                urlToReturn = urlToReturn.Insert(0, $"{mainDocumentLocation.AbsoluteURL}/");
+                            }
                         }
                     }
                 }

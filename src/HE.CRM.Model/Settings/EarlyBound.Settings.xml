@@ -16,6 +16,7 @@ invln_deletehometype|
 invln_deleteloanapplication|
 invln_deletesitedetails|
 invln_generaterichtextdocument|
+invln_getabsoluteahpapplicationfilelocation|
 invln_getahpapplication|
 invln_getahpapplicationdocumentlocation|
 invln_getcontactrole|
