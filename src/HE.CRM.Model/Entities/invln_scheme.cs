@@ -132,6 +132,7 @@ namespace DataverseModel
 			public const string invln_actualacquisitioncost_Base = "invln_actualacquisitioncost_base";
 			public const string invln_affordabilityevidence = "invln_affordabilityevidence";
 			public const string invln_applicationid = "invln_applicationid";
+			public const string invln_areaaveragedividedbytwo = "invln_areaaveragedividedbytwo";
 			public const string invln_borrowingagainstrentalincome = "invln_borrowingagainstrentalincome";
 			public const string invln_borrowingagainstrentalincome_Base = "invln_borrowingagainstrentalincome_base";
 			public const string invln_contact_invln_scheme_contactid = "invln_contact_invln_scheme_contactid";
@@ -158,6 +159,14 @@ namespace DataverseModel
 			public const string invln_fundinggeneratedfromothersources_Base = "invln_fundinggeneratedfromothersources_base";
 			public const string invln_fundingrequired = "invln_fundingrequired";
 			public const string invln_fundingrequired_Base = "invln_fundingrequired_base";
+			public const string invln_gpuasapercentageoftheregionalbenchmark = "invln_gpuasapercentageoftheregionalbenchmark";
+			public const string invln_gpuaspercentageofareaaverage = "invln_gpuaspercentageofareaaverage";
+			public const string invln_gpuaspercentageofareaaveragescore = "invln_gpuaspercentageofareaaveragescore";
+			public const string invln_grantasaoftotalschemecosts = "invln_grantasaoftotalschemecosts";
+			public const string invln_grantasapercentageoftotalschemecosts = "invln_grantasapercentageoftotalschemecosts";
+			public const string invln_grantasapercentageoftotalschemecostsScore = "invln_grantasapercentageoftotalschemecostsscore";
+			public const string invln_grantperunit = "invln_grantperunit";
+			public const string invln_grantperunit_Base = "invln_grantperunit_base";
 			public const string invln_grantsfromcountycouncil = "invln_grantsfromcountycouncil";
 			public const string invln_grantsfromcountycouncil_Base = "invln_grantsfromcountycouncil_base";
 			public const string invln_grantsfromdhscextracare = "invln_grantsfromdhscextracare";
@@ -200,6 +209,9 @@ namespace DataverseModel
 			public const string invln_recycledcapitalgrantfund = "invln_recycledcapitalgrantfund";
 			public const string invln_recycledcapitalgrantfund_Base = "invln_recycledcapitalgrantfund_base";
 			public const string invln_reducingenvironmentalimpact = "invln_reducingenvironmentalimpact";
+			public const string invln_regionalbenchmarkagainstthegrantperunit = "invln_regionalbenchmarkagainstthegrantperunit";
+			public const string invln_ruralbonusgrantperunitaspercentageofareaa = "invln_ruralbonusgrantperunitaspercentageofareaa";
+			public const string invln_scheme_invln_govnotifyemails = "invln_scheme_invln_govnotifyemails";
 			public const string invln_scheme_SharePointDocumentLocations = "invln_scheme_SharePointDocumentLocations";
 			public const string invln_schemeId = "invln_schemeid";
 			public const string Id = "invln_schemeid";
@@ -208,6 +220,7 @@ namespace DataverseModel
 			public const string invln_sharedownershipsalesrisk = "invln_sharedownershipsalesrisk";
 			public const string invln_Site = "invln_site";
 			public const string invln_SiteName = "invln_sitename";
+			public const string invln_supportedgpuaspercentageofareaaverage = "invln_supportedgpuaspercentageofareaaverage";
 			public const string invln_Tenure = "invln_tenure";
 			public const string invln_testcalculatedone = "invln_testcalculatedone";
 			public const string invln_testcalculatedthree = "invln_testcalculatedthree";
@@ -224,6 +237,9 @@ namespace DataverseModel
 			public const string invln_transfervalue_Base = "invln_transfervalue_base";
 			public const string invln_workscosts = "invln_workscosts";
 			public const string invln_workscosts_Base = "invln_workscosts_base";
+			public const string invln_workscostsm2 = "invln_workscostsm2";
+			public const string invln_workscostsm2asapercentoftheareaavgscore = "invln_workscostsm2asapercentoftheareaavgscore";
+			public const string invln_worksm2asapercentageofareaavg = "invln_worksm2asapercentageofareaavg";
 			public const string lk_invln_scheme_createdby = "lk_invln_scheme_createdby";
 			public const string lk_invln_scheme_createdonbehalfby = "lk_invln_scheme_createdonbehalfby";
 			public const string lk_invln_scheme_modifiedby = "lk_invln_scheme_modifiedby";
@@ -436,6 +452,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_applicationid");
 				this.SetAttributeValue("invln_applicationid", value);
 				this.OnPropertyChanged("invln_applicationid");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_areaaveragedividedbytwo")]
+		public System.Nullable<decimal> invln_areaaveragedividedbytwo
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_areaaveragedividedbytwo");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_areaaveragedividedbytwo");
+				this.SetAttributeValue("invln_areaaveragedividedbytwo", value);
+				this.OnPropertyChanged("invln_areaaveragedividedbytwo");
 			}
 		}
 		
@@ -791,6 +824,138 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_fundingrequired_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_gpuasapercentageoftheregionalbenchmark")]
+		public System.Nullable<decimal> invln_gpuasapercentageoftheregionalbenchmark
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_gpuasapercentageoftheregionalbenchmark");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_gpuasapercentageoftheregionalbenchmark");
+				this.SetAttributeValue("invln_gpuasapercentageoftheregionalbenchmark", value);
+				this.OnPropertyChanged("invln_gpuasapercentageoftheregionalbenchmark");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_gpuaspercentageofareaaverage")]
+		public System.Nullable<decimal> invln_gpuaspercentageofareaaverage
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_gpuaspercentageofareaaverage");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_gpuaspercentageofareaaverage");
+				this.SetAttributeValue("invln_gpuaspercentageofareaaverage", value);
+				this.OnPropertyChanged("invln_gpuaspercentageofareaaverage");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_gpuaspercentageofareaaveragescore")]
+		public System.Nullable<decimal> invln_gpuaspercentageofareaaveragescore
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_gpuaspercentageofareaaveragescore");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_gpuaspercentageofareaaveragescore");
+				this.SetAttributeValue("invln_gpuaspercentageofareaaveragescore", value);
+				this.OnPropertyChanged("invln_gpuaspercentageofareaaveragescore");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantasaoftotalschemecosts")]
+		public System.Nullable<decimal> invln_grantasaoftotalschemecosts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_grantasaoftotalschemecosts");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_grantasaoftotalschemecosts");
+				this.SetAttributeValue("invln_grantasaoftotalschemecosts", value);
+				this.OnPropertyChanged("invln_grantasaoftotalschemecosts");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantasapercentageoftotalschemecosts")]
+		public System.Nullable<decimal> invln_grantasapercentageoftotalschemecosts
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_grantasapercentageoftotalschemecosts");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_grantasapercentageoftotalschemecosts");
+				this.SetAttributeValue("invln_grantasapercentageoftotalschemecosts", value);
+				this.OnPropertyChanged("invln_grantasapercentageoftotalschemecosts");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantasapercentageoftotalschemecostsscore")]
+		public System.Nullable<decimal> invln_grantasapercentageoftotalschemecostsScore
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_grantasapercentageoftotalschemecostsscore");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_grantasapercentageoftotalschemecostsScore");
+				this.SetAttributeValue("invln_grantasapercentageoftotalschemecostsscore", value);
+				this.OnPropertyChanged("invln_grantasapercentageoftotalschemecostsScore");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantperunit")]
+		public Microsoft.Xrm.Sdk.Money invln_grantperunit
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_grantperunit");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_grantperunit");
+				this.SetAttributeValue("invln_grantperunit", value);
+				this.OnPropertyChanged("invln_grantperunit");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Grant per Unit in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantperunit_base")]
+		public Microsoft.Xrm.Sdk.Money invln_grantperunit_Base
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_grantperunit_base");
 			}
 		}
 		
@@ -1358,6 +1523,40 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_regionalbenchmarkagainstthegrantperunit")]
+		public System.Nullable<decimal> invln_regionalbenchmarkagainstthegrantperunit
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_regionalbenchmarkagainstthegrantperunit");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_regionalbenchmarkagainstthegrantperunit");
+				this.SetAttributeValue("invln_regionalbenchmarkagainstthegrantperunit", value);
+				this.OnPropertyChanged("invln_regionalbenchmarkagainstthegrantperunit");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ruralbonusgrantperunitaspercentageofareaa")]
+		public System.Nullable<decimal> invln_ruralbonusgrantperunitaspercentageofareaa
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_ruralbonusgrantperunitaspercentageofareaa");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_ruralbonusgrantperunitaspercentageofareaa");
+				this.SetAttributeValue("invln_ruralbonusgrantperunitaspercentageofareaa", value);
+				this.OnPropertyChanged("invln_ruralbonusgrantperunitaspercentageofareaa");
+			}
+		}
+		
 		/// <summary>
 		/// Unique identifier for entity instances
 		/// </summary>
@@ -1466,6 +1665,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Site");
 				this.SetAttributeValue("invln_site", value);
 				this.OnPropertyChanged("invln_Site");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_supportedgpuaspercentageofareaaverage")]
+		public System.Nullable<decimal> invln_supportedgpuaspercentageofareaaverage
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_supportedgpuaspercentageofareaaverage");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_supportedgpuaspercentageofareaaverage");
+				this.SetAttributeValue("invln_supportedgpuaspercentageofareaaverage", value);
+				this.OnPropertyChanged("invln_supportedgpuaspercentageofareaaverage");
 			}
 		}
 		
@@ -1686,6 +1902,57 @@ namespace DataverseModel
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_workscosts_base");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_workscostsm2")]
+		public System.Nullable<decimal> invln_workscostsm2
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_workscostsm2");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_workscostsm2");
+				this.SetAttributeValue("invln_workscostsm2", value);
+				this.OnPropertyChanged("invln_workscostsm2");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_workscostsm2asapercentoftheareaavgscore")]
+		public System.Nullable<decimal> invln_workscostsm2asapercentoftheareaavgscore
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_workscostsm2asapercentoftheareaavgscore");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_workscostsm2asapercentoftheareaavgscore");
+				this.SetAttributeValue("invln_workscostsm2asapercentoftheareaavgscore", value);
+				this.OnPropertyChanged("invln_workscostsm2asapercentoftheareaavgscore");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_worksm2asapercentageofareaavg")]
+		public System.Nullable<decimal> invln_worksm2asapercentageofareaavg
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_worksm2asapercentageofareaavg");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_worksm2asapercentageofareaavg");
+				this.SetAttributeValue("invln_worksm2asapercentageofareaavg", value);
+				this.OnPropertyChanged("invln_worksm2asapercentageofareaavg");
 			}
 		}
 		
@@ -1951,6 +2218,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_hometype_application_invln_scheme");
 				this.SetRelatedEntities<DataverseModel.invln_HomeType>("invln_invln_hometype_application_invln_scheme", null, value);
 				this.OnPropertyChanged("invln_invln_hometype_application_invln_scheme");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_scheme_invln_govnotifyemails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_invln_govnotifyemails")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_govnotifyemail> invln_scheme_invln_govnotifyemails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_govnotifyemail>("invln_scheme_invln_govnotifyemails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_invln_govnotifyemails");
+				this.SetRelatedEntities<DataverseModel.invln_govnotifyemail>("invln_scheme_invln_govnotifyemails", null, value);
+				this.OnPropertyChanged("invln_scheme_invln_govnotifyemails");
 			}
 		}
 		

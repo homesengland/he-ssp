@@ -66,6 +66,7 @@ namespace DataverseModel
 			public const string invln_designplancomments = "invln_designplancomments";
 			public const string invln_doallhomesmeetNDSS = "invln_doallhomesmeetndss";
 			public const string invln_doallunitsmeetndss = "invln_doallunitsmeetndss";
+			public const string invln_expectedfirsttranchesalereceipt = "invln_expectedfirsttranchesalereceipt";
 			public const string invln_facilities = "invln_facilities";
 			public const string invln_floorarea = "invln_floorarea";
 			public const string invln_happiprinciples = "invln_happiprinciples";
@@ -98,6 +99,7 @@ namespace DataverseModel
 			public const string invln_numberofbedrooms = "invln_numberofbedrooms";
 			public const string invln_numberofhomeshometype = "invln_numberofhomeshometype";
 			public const string invln_numberofstoreys = "invln_numberofstoreys";
+			public const string invln_proposedrentasaofunsoldshare = "invln_proposedrentasaofunsoldshare";
 			public const string invln_prospectiverent = "invln_prospectiverent";
 			public const string invln_prospectiverentasofmarketrent = "invln_prospectiverentasofmarketrent";
 			public const string invln_reasonsforrtsoexemption = "invln_reasonsforrtsoexemption";
@@ -384,6 +386,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_doallunitsmeetndss");
 				this.SetAttributeValue("invln_doallunitsmeetndss", value);
 				this.OnPropertyChanged("invln_doallunitsmeetndss");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedfirsttranchesalereceipt")]
+		public System.Nullable<decimal> invln_expectedfirsttranchesalereceipt
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_expectedfirsttranchesalereceipt");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_expectedfirsttranchesalereceipt");
+				this.SetAttributeValue("invln_expectedfirsttranchesalereceipt", value);
+				this.OnPropertyChanged("invln_expectedfirsttranchesalereceipt");
 			}
 		}
 		
@@ -903,6 +922,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_numberofstoreys");
 				this.SetAttributeValue("invln_numberofstoreys", value);
 				this.OnPropertyChanged("invln_numberofstoreys");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_proposedrentasaofunsoldshare")]
+		public System.Nullable<decimal> invln_proposedrentasaofunsoldshare
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_proposedrentasaofunsoldshare");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_proposedrentasaofunsoldshare");
+				this.SetAttributeValue("invln_proposedrentasaofunsoldshare", value);
+				this.OnPropertyChanged("invln_proposedrentasaofunsoldshare");
 			}
 		}
 		
