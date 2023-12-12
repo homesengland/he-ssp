@@ -8,6 +8,7 @@ using HE.Investments.Account.Domain.Tests.User.TestObjectBuilder;
 using HE.Investments.Common.Errors;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Loans.Common.Tests.Extensions.FluentAssertionsExtensions;
+using HE.Investments.Loans.Common.Tests.TestData;
 using HE.Investments.Loans.Contract;
 using HE.Investments.TestsUtils.TestFramework;
 using Moq;
@@ -144,6 +145,6 @@ public class LinkContactWithAccountTests : TestBase<LinkContactWithOrganizationC
 
     private OrganisationSearchItem OrganizationThatExistsInCrm()
     {
-        return new OrganisationSearchItem("12345", "anyName", "anyCity", "Any Street 1", "ABCD 123", "IdFromCrm123", true);
+        return new OrganisationSearchItem("12345", "anyName", "anyCity", "Any Street 1", "ABCD 123", GuidTestData.GuidTwo.ToString(), true);
     }
 }

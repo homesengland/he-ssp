@@ -22,8 +22,7 @@ public class AccountCrmRepository : IAccountRepository
 
     public async Task<IList<UserAccount>> GetUserAccounts(UserGlobalId userGlobalId, string userEmail)
     {
-        // TODO #65730: create correct parameters
-        var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, userGlobalId.ToString(), 858110001); //last parameter to change
+        var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, userGlobalId.ToString(), PortalConstants.LoansPortalTypeInt); //last parameter to change
 
         if (contactRoles is null)
         {

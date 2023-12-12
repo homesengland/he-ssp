@@ -50,7 +50,7 @@ public class CreateAndLinkOrganisationCommandHandler : IRequestHandler<CreateAnd
 
             var organisationId = await _repository.CreateOrganisation(organisation);
 
-            await _contactRepository.LinkOrganisation(organisationId.ToString(), PortalConstants.LoansPortalType);
+            await _contactRepository.LinkOrganisation(organisationId.ToString(), PortalConstants.LoansPortalTypeInt);
 
             return OperationResult.Success();
         }

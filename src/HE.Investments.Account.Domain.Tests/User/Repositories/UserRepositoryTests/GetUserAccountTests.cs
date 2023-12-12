@@ -8,30 +8,30 @@ namespace HE.Investments.Account.Domain.Tests.User.Repositories.UserRepositoryTe
 
 public class GetUserAccountTests : TestBase<AccountRepository>
 {
-    // TODO #65730: fix test
-    // [Fact]
-    // public async Task ShouldReturnUserAccounts_WhenUserGlobalIdAndEmailAreCorrect()
-    // {
-    //    // given
-    //    var contactRolesDto = ContactServiceMockTestBuilder
-    //        .New()
-    //        .Register(this)
-    //        .ContactRolesFromMock;
+    [Fact]
+    public async Task ShouldReturnUserAccounts_WhenUserGlobalIdAndEmailAreCorrect()
+    {
+        // given
+        var contactRolesDto = ContactServiceMockTestBuilder
+            .New()
+            .Register(this)
+            .ContactRolesFromMock;
 
-    // ContactServiceMockTestBuilder
-    //        .New()
-    //        .ReturnContactRolesDto(contactRolesDto)
-    //        .Register(this);
+        ContactServiceMockTestBuilder
+            .New()
+            .ReturnContactRolesDto(contactRolesDto)
+            .Register(this);
 
-    // // when
-    //    var result = await TestCandidate.GetUserAccounts(UserGlobalId.From(contactRolesDto.externalId), contactRolesDto.email);
+        // when
+        var result = await TestCandidate.GetUserAccounts(UserGlobalId.From(contactRolesDto.externalId), contactRolesDto.email);
 
-    // // then
-    //    var account = result.First();
-    //    account.UserGlobalId.Value.Should().Be(contactRolesDto.externalId);
-    //    account.UserEmail.Should().Be(contactRolesDto.email);
-    //    account.Roles.Should().ContainSingle(x => x.Role == contactRolesDto.contactRoles.First().webRoleName);
-    // }
+        // then
+        var account = result.First();
+        account.UserGlobalId.Value.Should().Be(contactRolesDto.externalId);
+        account.UserEmail.Should().Be(contactRolesDto.email);
+        account.Roles.Should().ContainSingle(x => x.Role == contactRolesDto.contactRoles.First().webRoleName);
+    }
+
     [Fact]
     public async Task ShouldReturnEmptyUserAccounts_WhenUserGlobalIdAndEmailAreFake()
     {
