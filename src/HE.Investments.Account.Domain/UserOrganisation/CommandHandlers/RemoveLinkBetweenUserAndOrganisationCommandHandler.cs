@@ -31,13 +31,13 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
             throw new InvalidOperationException("Cannot find user linked with organisation.");
         }
 
+        // TODO #65730: create correct parameters
         // TODO #86130: remove portal type after CRM changes
-        //await _contactService.RemoveLinkBetweenContactAndOrganisation(
+        // await _contactService.RemoveLinkBetweenContactAndOrganisation(
         //    _organizationServiceAsync,
         //    account.AccountId.Value.ToString(),
         //    PortalConstants.AhpPortalType,
         //    account.UserGlobalId.Value);
-
         return OperationResult.Success();
     }
 }

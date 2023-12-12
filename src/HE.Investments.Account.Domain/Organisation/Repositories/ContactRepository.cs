@@ -22,12 +22,12 @@ public class ContactRepository : IContactRepository
 
     public async Task LinkOrganisation(string organisationId, string portalType)
     {
-        //await _contactService.LinkContactWithOrganization(
+        // TODO #65730: create correct parameters
+        // await _contactService.LinkContactWithOrganization(
         //    _organizationServiceAsync,
         //    _loanUserContext.UserGlobalId.ToString(),
         //    organisationId,
         //    portalType);
-
         await _loanUserContext.RefreshProfileDetails();
     }
 }
