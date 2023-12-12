@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
@@ -50,22 +51,6 @@ public class SupportedHousingInformationSegmentEntity : IHomeTypeSegmentEntity
     public MoreInformation? TypologyLocationAndDesign { get; private set; }
 
     public MoreInformation? ExitPlan { get; private set; }
-
-    private IEnumerable<Predicate<SupportedHousingInformationSegmentEntity>> ConditionalRoutePredicates
-    {
-        get
-        {
-            if (RevenueFundingType == RevenueFundingType.RevenueFundingNeededAndIdentified)
-            {
-                yield return x => x.RevenueFundingSources.Any();
-            }
-
-            if (ShortStayAccommodation == YesNoType.Yes)
-            {
-                yield return x => x.MoveOnArrangements.IsProvided();
-            }
-        }
-    }
 
     public void ChangeLocalCommissioningBodiesConsulted(YesNoType localCommissioningBodiesConsulted)
     {
@@ -134,14 +119,14 @@ public class SupportedHousingInformationSegmentEntity : IHomeTypeSegmentEntity
         return housingType is HousingType.HomesForOlderPeople or HousingType.HomesForDisabledAndVulnerablePeople;
     }
 
-    public bool IsCompleted()
+    public bool IsCompleted(HousingType housingType, Tenure tenure)
     {
         return LocalCommissioningBodiesConsulted != YesNoType.Undefined
                && ShortStayAccommodation != YesNoType.Undefined
                && RevenueFundingType != RevenueFundingType.Undefined
-               && ConditionalRoutePredicates.All(predicate => predicate(this))
                && ExitPlan.IsProvided()
-               && TypologyLocationAndDesign.IsProvided();
+               && TypologyLocationAndDesign.IsProvided()
+               && BuildConditionalRouteCompletionPredicates().All(isCompleted => isCompleted());
     }
 
     public void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType)
@@ -155,6 +140,19 @@ public class SupportedHousingInformationSegmentEntity : IHomeTypeSegmentEntity
             ChangeMoveOnArrangements(null);
             ChangeTypologyLocationAndDesign(null);
             ChangeExitPlan(null);
+        }
+    }
+
+    private IEnumerable<Func<bool>> BuildConditionalRouteCompletionPredicates()
+    {
+        if (RevenueFundingType == RevenueFundingType.RevenueFundingNeededAndIdentified)
+        {
+            yield return () => RevenueFundingSources.Any();
+        }
+
+        if (ShortStayAccommodation == YesNoType.Yes)
+        {
+            yield return () => MoveOnArrangements.IsProvided();
         }
     }
 }

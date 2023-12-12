@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investments.Common.Domain;
 
@@ -13,7 +14,7 @@ public interface IHomeTypeSegmentEntity
 
     bool IsRequired(HousingType housingType);
 
-    bool IsCompleted();
+    bool IsCompleted(HousingType housingType, Tenure tenure);
 
     void HousingTypeChanged(HousingType sourceHousingType, HousingType targetHousingType);
 }

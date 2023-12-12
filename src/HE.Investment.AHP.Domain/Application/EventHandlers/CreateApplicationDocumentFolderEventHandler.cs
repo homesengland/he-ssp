@@ -1,6 +1,4 @@
 using HE.Investment.AHP.Contract.Application.Events;
-using HE.Investment.AHP.Domain.Application.ValueObjects;
-using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.Documents;
 using HE.Investment.AHP.Domain.Documents.Config;
 using HE.Investment.AHP.Domain.Documents.Crm;

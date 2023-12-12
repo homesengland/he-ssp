@@ -21,10 +21,10 @@ public class TenureDetailsSegmentContractMapper : IHomeTypeSegmentContractMapper
             segment.TargetRentExceedMarketRent.IsNotProvided() ? YesNoType.Undefined : segment.TargetRentExceedMarketRent!.Value,
             segment.ExemptFromTheRightToSharedOwnership,
             segment.ExemptionJustification?.Value,
-            segment.IsExceeding80PercentOfMarketRent,
+            segment.IsProspectiveRentIneligible,
             segment.InitialSale?.Value,
             segment.ExpectedFirstTranche?.Value,
             segment.SharedOwnershipRentAsPercentageOfTheUnsoldShare?.Value,
-            segment.IsExceeding3PercentOfUnsoldShare);
+            segment.IsSharedOwnershipIneligible);
     }
 }

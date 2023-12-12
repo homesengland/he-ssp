@@ -12,9 +12,9 @@ public record TenureDetails(
     YesNoType TargetRentExceedMarketRent,
     YesNoType ExemptFromTheRightToSharedOwnership,
     string? ExemptionJustification,
-    bool IsExceeding80PercentOfMarketRent,
+    bool IsProspectiveRentIneligible,
     decimal? InitialSalePercentage,
     decimal? ExpectedFirstTranche,
     decimal? SharedOwnershipRentAsPercentageOfTheUnsoldShare,
-    bool IsExceeding3PercentOfUnsoldShare)
+    bool IsSharedOwnershipIneligible)
     : HomeTypeSegmentBase(ApplicationName, HomeTypeName);

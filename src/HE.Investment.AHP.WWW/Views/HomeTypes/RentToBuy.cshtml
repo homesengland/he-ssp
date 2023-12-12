@@ -9,10 +9,11 @@
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
+    var workflow = Context.Request.Query["workflow"];
 }
 
 <gds-div-grid-column-two-thirds>
-    <form asp-controller="HomeTypes" asp-action="RentToBuy" asp-method="post" novalidate>
+    <form asp-controller="HomeTypes" asp-action="RentToBuy" asp-method="post" asp-route-workflow="@workflow" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(m => Model.HomeTypeName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.RentToBuy"

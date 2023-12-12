@@ -9,11 +9,12 @@
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetOptionalHomeTypeIdFromRoute();
+    var workflow = Context.Request.Query["workflow"];
     var action = homeTypeId == null ? "NewHomeTypeDetails" : "HomeTypeDetails";
 }
 
 <div class="govuk-grid-column-two-thirds">
-    <form asp-controller="HomeTypes" asp-action="@action" asp-method="post" asp-route-workflow="@Context.Request.Query["workflow"]" novalidate>
+    <form asp-controller="HomeTypes" asp-action="@action" asp-method="post" asp-route-workflow="@workflow" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         <vc:home-type-form-header title="Home type details"
                                   current-page="@HomeTypesWorkflowState.HomeTypeDetails"

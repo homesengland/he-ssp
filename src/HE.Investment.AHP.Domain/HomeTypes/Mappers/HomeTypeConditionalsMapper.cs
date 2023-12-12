@@ -8,13 +8,13 @@ public static class HomeTypeConditionalsMapper
     public static HomeTypeConditionals Map(IHomeTypeEntity homeType)
     {
         return new HomeTypeConditionals(
-            homeType.SupportedHousingInformation.LocalCommissioningBodiesConsulted,
             homeType.SupportedHousingInformation.ShortStayAccommodation,
             homeType.SupportedHousingInformation.RevenueFundingType,
             homeType.HomeInformation.BuildingType,
             homeType.HomeInformation.AccessibilityStandards,
             homeType.HomeInformation.MeetNationallyDescribedSpaceStandards,
             homeType.TenureDetails.ExemptFromTheRightToSharedOwnership,
-            homeType.TenureDetails.IsExceeding80PercentOfMarketRent);
+            homeType.TenureDetails.IsProspectiveRentIneligible,
+            homeType.TenureDetails.IsSharedOwnershipIneligible);
     }
 }

@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investments.Common.Domain;
@@ -46,7 +47,7 @@ public class DisabledPeopleHomeTypeDetailsSegmentEntity : IHomeTypeSegmentEntity
         return housingType == Contract.HomeTypes.Enums.HousingType.HomesForDisabledAndVulnerablePeople;
     }
 
-    public bool IsCompleted()
+    public bool IsCompleted(HousingType housingType, Tenure tenure)
     {
         return HousingType != DisabledPeopleHousingType.Undefined
                && ClientGroupType != DisabledPeopleClientGroupType.Undefined;

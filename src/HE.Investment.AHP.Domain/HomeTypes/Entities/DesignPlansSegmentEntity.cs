@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Common.ValueObjects;
@@ -141,7 +142,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
         return housingType is HousingType.HomesForOlderPeople or HousingType.HomesForDisabledAndVulnerablePeople;
     }
 
-    public bool IsCompleted()
+    public bool IsCompleted(HousingType housingType, Tenure tenure)
     {
         return DesignPrinciples.Any();
     }
