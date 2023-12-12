@@ -143,6 +143,7 @@ namespace DataverseModel
 			public const string invln_notificationsetting_invln_govnotifyemail_emailtemplate = "invln_notificationsetting_invln_govnotifyemail_emailtemplate";
 			public const string invln_notificationsettingid = "invln_notificationsettingid";
 			public const string invln_notificationsettingidName = "invln_notificationsettingidname";
+			public const string invln_scheme_invln_govnotifyemails = "invln_scheme_invln_govnotifyemails";
 			public const string invln_sitedetails_invln_govnotifyemails = "invln_sitedetails_invln_govnotifyemails";
 			public const string IsBilled = "isbilled";
 			public const string IsMapiPrivate = "ismapiprivate";
@@ -1852,6 +1853,27 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_notificationsetting_invln_govnotifyemail_emailtemplate");
 				this.SetRelatedEntity<DataverseModel.invln_notificationsetting>("invln_notificationsetting_invln_govnotifyemail_emailtemplate", null, value);
 				this.OnPropertyChanged("invln_notificationsetting_invln_govnotifyemail_emailtemplate");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 invln_scheme_invln_govnotifyemails
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_invln_govnotifyemails")]
+		public DataverseModel.invln_scheme invln_scheme_invln_govnotifyemails
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntity<DataverseModel.invln_scheme>("invln_scheme_invln_govnotifyemails", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_invln_govnotifyemails");
+				this.SetRelatedEntity<DataverseModel.invln_scheme>("invln_scheme_invln_govnotifyemails", null, value);
+				this.OnPropertyChanged("invln_scheme_invln_govnotifyemails");
 			}
 		}
 		

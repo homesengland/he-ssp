@@ -21,16 +21,16 @@ namespace DataverseModel
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		AADOfficeGroup = 3,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
-		AADSecurityGroup = 2,
-		
-		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Access = 1,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		OfficeGroup = 3,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Owner = 0,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
+		SecurityGroup = 2,
 	}
 	
 	/// <summary>
@@ -215,7 +215,7 @@ namespace DataverseModel
 		}
 		
 		/// <summary>
-		/// The Azure active directory object Id for a group.
+		/// The object Id for a group.
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("azureactivedirectoryobjectid")]
 		public System.Nullable<System.Guid> AzureActiveDirectoryObjectId

@@ -45,5 +45,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public bool? doAllHomesMeetNDSS { get; set; }
         public List<int> whichNDSSStandardsHaveBeenMet { get; set; }
         public bool? targetRentOver80PercentOfMarketRent { get; set; }
+        public decimal? expectedFirstTrancheSaleReceipt { get; set; }
+        public decimal? proposedRentAsPercentOfUnsoldShare { get; set; }
     }
 }

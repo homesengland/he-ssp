@@ -19614,6 +19614,24 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_expectedfirsttranchesalereceipt")]
+		public System.Nullable<decimal> invln_expectedfirsttranchesalereceipt
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_expectedfirsttranchesalereceipt");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_expectedfirsttranchesalereceipt");
+				this.SetAttributeValue("invln_expectedfirsttranchesalereceipt", value);
+				this.OnPropertyChanged("invln_expectedfirsttranchesalereceipt");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_facilities")]
 		public System.Nullable<HE.Investments.Common.CRM.Model.invln_facilities> invln_facilities
 		{
@@ -20181,6 +20199,24 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_numberofstoreys");
 				this.SetAttributeValue("invln_numberofstoreys", value);
 				this.OnPropertyChanged("invln_numberofstoreys");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_proposedrentasaofunsoldshare")]
+		public System.Nullable<decimal> invln_proposedrentasaofunsoldshare
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_proposedrentasaofunsoldshare");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_proposedrentasaofunsoldshare");
+				this.SetAttributeValue("invln_proposedrentasaofunsoldshare", value);
+				this.OnPropertyChanged("invln_proposedrentasaofunsoldshare");
 			}
 		}
 		
@@ -23067,6 +23103,24 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_areaaveragedividedbytwo")]
+		public System.Nullable<decimal> invln_areaaveragedividedbytwo
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_areaaveragedividedbytwo");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_areaaveragedividedbytwo");
+				this.SetAttributeValue("invln_areaaveragedividedbytwo", value);
+				this.OnPropertyChanged("invln_areaaveragedividedbytwo");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_borrowingagainstrentalincome")]
 		public Microsoft.Xrm.Sdk.Money invln_borrowingagainstrentalincome
 		{
@@ -23466,6 +23520,144 @@ namespace HE.Investments.Common.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_fundingrequired_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_gpuasapercentageoftheregionalbenchmark")]
+		public System.Nullable<decimal> invln_gpuasapercentageoftheregionalbenchmark
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_gpuasapercentageoftheregionalbenchmark");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_gpuasapercentageoftheregionalbenchmark");
+				this.SetAttributeValue("invln_gpuasapercentageoftheregionalbenchmark", value);
+				this.OnPropertyChanged("invln_gpuasapercentageoftheregionalbenchmark");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_gpuaspercentageofareaaverage")]
+		public System.Nullable<decimal> invln_gpuaspercentageofareaaverage
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_gpuaspercentageofareaaverage");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_gpuaspercentageofareaaverage");
+				this.SetAttributeValue("invln_gpuaspercentageofareaaverage", value);
+				this.OnPropertyChanged("invln_gpuaspercentageofareaaverage");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_gpuaspercentageofareaaveragescore")]
+		public System.Nullable<decimal> invln_gpuaspercentageofareaaveragescore
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_gpuaspercentageofareaaveragescore");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_gpuaspercentageofareaaveragescore");
+				this.SetAttributeValue("invln_gpuaspercentageofareaaveragescore", value);
+				this.OnPropertyChanged("invln_gpuaspercentageofareaaveragescore");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantasaoftotalschemecosts")]
+		public System.Nullable<decimal> invln_grantasaoftotalschemecosts
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_grantasaoftotalschemecosts");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_grantasaoftotalschemecosts");
+				this.SetAttributeValue("invln_grantasaoftotalschemecosts", value);
+				this.OnPropertyChanged("invln_grantasaoftotalschemecosts");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantasapercentageoftotalschemecosts")]
+		public System.Nullable<decimal> invln_grantasapercentageoftotalschemecosts
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_grantasapercentageoftotalschemecosts");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_grantasapercentageoftotalschemecosts");
+				this.SetAttributeValue("invln_grantasapercentageoftotalschemecosts", value);
+				this.OnPropertyChanged("invln_grantasapercentageoftotalschemecosts");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantasapercentageoftotalschemecostsscore")]
+		public System.Nullable<decimal> invln_grantasapercentageoftotalschemecostsScore
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_grantasapercentageoftotalschemecostsscore");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_grantasapercentageoftotalschemecostsScore");
+				this.SetAttributeValue("invln_grantasapercentageoftotalschemecostsscore", value);
+				this.OnPropertyChanged("invln_grantasapercentageoftotalschemecostsScore");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantperunit")]
+		public Microsoft.Xrm.Sdk.Money invln_grantperunit
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_grantperunit");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_grantperunit");
+				this.SetAttributeValue("invln_grantperunit", value);
+				this.OnPropertyChanged("invln_grantperunit");
+			}
+		}
+		
+		/// <summary>
+		/// Value of the Grant per Unit in base currency.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_grantperunit_base")]
+		public Microsoft.Xrm.Sdk.Money invln_grantperunit_Base
+		{
+			get
+			{
+				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_grantperunit_base");
 			}
 		}
 		
@@ -24061,6 +24253,42 @@ namespace HE.Investments.Common.CRM.Model
 		}
 		
 		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_regionalbenchmarkagainstthegrantperunit")]
+		public System.Nullable<decimal> invln_regionalbenchmarkagainstthegrantperunit
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_regionalbenchmarkagainstthegrantperunit");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_regionalbenchmarkagainstthegrantperunit");
+				this.SetAttributeValue("invln_regionalbenchmarkagainstthegrantperunit", value);
+				this.OnPropertyChanged("invln_regionalbenchmarkagainstthegrantperunit");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_ruralbonusgrantperunitaspercentageofareaa")]
+		public System.Nullable<decimal> invln_ruralbonusgrantperunitaspercentageofareaa
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_ruralbonusgrantperunitaspercentageofareaa");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_ruralbonusgrantperunitaspercentageofareaa");
+				this.SetAttributeValue("invln_ruralbonusgrantperunitaspercentageofareaa", value);
+				this.OnPropertyChanged("invln_ruralbonusgrantperunitaspercentageofareaa");
+			}
+		}
+		
+		/// <summary>
 		/// Unique identifier for entity instances
 		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_schemeid")]
@@ -24183,6 +24411,24 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_Site");
 				this.SetAttributeValue("invln_site", value);
 				this.OnPropertyChanged("invln_Site");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_supportedgpuaspercentageofareaaverage")]
+		public System.Nullable<decimal> invln_supportedgpuaspercentageofareaaverage
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_supportedgpuaspercentageofareaaverage");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_supportedgpuaspercentageofareaaverage");
+				this.SetAttributeValue("invln_supportedgpuaspercentageofareaaverage", value);
+				this.OnPropertyChanged("invln_supportedgpuaspercentageofareaaverage");
 			}
 		}
 		
@@ -24426,6 +24672,60 @@ namespace HE.Investments.Common.CRM.Model
 			get
 			{
 				return this.GetAttributeValue<Microsoft.Xrm.Sdk.Money>("invln_workscosts_base");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_workscostsm2")]
+		public System.Nullable<decimal> invln_workscostsm2
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_workscostsm2");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_workscostsm2");
+				this.SetAttributeValue("invln_workscostsm2", value);
+				this.OnPropertyChanged("invln_workscostsm2");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_workscostsm2asapercentoftheareaavgscore")]
+		public System.Nullable<decimal> invln_workscostsm2asapercentoftheareaavgscore
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_workscostsm2asapercentoftheareaavgscore");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_workscostsm2asapercentoftheareaavgscore");
+				this.SetAttributeValue("invln_workscostsm2asapercentoftheareaavgscore", value);
+				this.OnPropertyChanged("invln_workscostsm2asapercentoftheareaavgscore");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_worksm2asapercentageofareaavg")]
+		public System.Nullable<decimal> invln_worksm2asapercentageofareaavg
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<decimal>>("invln_worksm2asapercentageofareaavg");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_worksm2asapercentageofareaavg");
+				this.SetAttributeValue("invln_worksm2asapercentageofareaavg", value);
+				this.OnPropertyChanged("invln_worksm2asapercentageofareaavg");
 			}
 		}
 		
