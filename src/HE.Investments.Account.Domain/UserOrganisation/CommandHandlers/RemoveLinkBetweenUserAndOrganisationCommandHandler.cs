@@ -10,17 +10,19 @@ namespace HE.Investments.Account.Domain.UserOrganisation.CommandHandlers;
 public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandler<RemoveLinkBetweenUserAndOrganisationCommand, OperationResult>
 {
     private readonly IAccountUserContext _userContext;
-    private readonly IOrganizationServiceAsync2 _organizationServiceAsync;
-    private readonly IContactService _contactService;
 
+    // private readonly IOrganizationServiceAsync2 _organizationServiceAsync;
+    // private readonly IContactService _contactService;
     public RemoveLinkBetweenUserAndOrganisationCommandHandler(
-        IAccountUserContext userContext,
-        IOrganizationServiceAsync2 organizationServiceAsync,
-        IContactService contactService)
+        IAccountUserContext userContext)
+
+    // IOrganizationServiceAsync2 organizationServiceAsync,
+    // IContactService contactService
     {
         _userContext = userContext;
-        _organizationServiceAsync = organizationServiceAsync;
-        _contactService = contactService;
+
+        // _organizationServiceAsync = organizationServiceAsync;
+        // _contactService = contactService;
     }
 
     public async Task<OperationResult> Handle(RemoveLinkBetweenUserAndOrganisationCommand request, CancellationToken cancellationToken)
