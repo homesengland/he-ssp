@@ -1,5 +1,7 @@
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
 
@@ -37,7 +39,7 @@ public class WebRoleRepository : IWebRoleRepository
         return result.Entities.ToList();
     }
 
-    public List<Entity> GetDefaultPortalRoles(IOrganizationServiceAsync2 service, string portalType)
+    public List<Entity> GetDefaultPortalRoles(IOrganizationServiceAsync2 service, int portalType)
     {
         var fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
 									<entity name='invln_webrole'>
@@ -61,7 +63,7 @@ public class WebRoleRepository : IWebRoleRepository
         return result.Entities.ToList();
     }
 
-    public Entity? GetContactWebroleForGivenOrganisationAndPortal(IOrganizationServiceAsync2 service, Guid organisationId, string portalType, Guid contactId)
+    public Entity? GetContactWebroleForGivenOrganisationAndPortal(IOrganizationServiceAsync2 service, Guid organisationId, Guid contactId, string? portalTypeFiler = null)
     {
         var fetchXml = @"<fetch>
                       <entity name=""invln_contactwebrole"">
@@ -71,11 +73,9 @@ public class WebRoleRepository : IWebRoleRepository
                           <condition attribute=""invln_accountid"" operator=""eq"" value=""" + organisationId + @""" />
                         </filter>
                         <link-entity name=""invln_webrole"" from=""invln_webroleid"" to=""invln_webroleid"">
-                          <link-entity name=""invln_portal"" from=""invln_portalid"" to=""invln_portalid"">
-                            <filter>
-                              <condition attribute=""invln_portal"" operator=""eq"" value="" " + portalType + @""" />
-                            </filter>
-                          </link-entity>
+                          <link-entity name=""invln_portal"" from=""invln_portalid"" to=""invln_portalid"">"
+                            + portalTypeFiler +
+                          @"</link-entity>
                         </link-entity>
                       </entity>
                     </fetch>";
@@ -132,5 +132,59 @@ public class WebRoleRepository : IWebRoleRepository
 
         var result1 = service.RetrieveMultiple(query);
         return result1.Entities.FirstOrDefault();
+    }
+
+    public Entity? GetWebroleByPermissionOptionSetValue(IOrganizationServiceAsync2 service, int permission)
+    {
+        var fetchXml = @"<fetch>
+                          <entity name=""invln_webrole"">
+                            <attribute name=""invln_name"" />
+                            <attribute name=""invln_webroleid"" />
+                            <link-entity name=""invln_portalpermissionlevel"" from=""invln_portalpermissionlevelid"" to=""invln_portalpermissionlevelid"">
+                              <filter>
+                                <condition attribute=""invln_permission"" operator=""eq"" value=""" + permission + @""" />
+                              </filter>
+                            </link-entity>
+                          </entity>
+                        </fetch>";
+
+        var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
+        return result.Entities.FirstOrDefault();
+    }
+
+    public List<Entity> GetWebrolesForPassedContacts(IOrganizationServiceAsync2 service, string contactExternalIds, Guid organisationGuid)
+    {
+        var fetchXml = @"<fetch>
+                          <entity name=""invln_contactwebrole"">
+                            <attribute name=""invln_accountid"" />
+                            <attribute name=""invln_contactid"" />
+                            <attribute name=""invln_contactwebroleid"" />
+                            <attribute name=""invln_webroleid"" />
+                            <filter>
+                                  <condition attribute=""invln_accountid"" operator=""eq"" value=""" + organisationGuid + @""" />
+                                </filter>
+                            <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"" alias=""cnt"">
+                                <attribute name=""invln_externalid"" />
+                              <filter type=""or"">"
+                                + contactExternalIds +
+                              @"</filter>
+                            </link-entity>
+                            <link-entity name=""invln_webrole"" from=""invln_webroleid"" to=""invln_webroleid"" alias=""wr"">
+                              <attribute name=""invln_name"" />
+                              <attribute name=""invln_portalid"" />
+                              <link-entity name=""invln_portalpermissionlevel"" from=""invln_portalpermissionlevelid"" to=""invln_portalpermissionlevelid"" alias=""ppl"">
+                                <attribute name=""invln_name"" />
+                                <attribute name=""invln_permission"" />
+                                <attribute name=""invln_portalpermissionlevelid"" />
+                              </link-entity>
+                            </link-entity>
+                            <link-entity name=""account"" from=""accountid"" to=""invln_accountid"" alias=""acc"">
+                                  <attribute name=""name"" />
+                                </link-entity>
+                          </entity>
+                        </fetch>";
+
+        var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
+        return result.Entities.ToList();
     }
 }

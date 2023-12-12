@@ -58,7 +58,9 @@ public class LinkContactWithOrganizationCommandHandler : IRequestHandler<LinkCon
             });
         }
 
-        await _contactService.LinkContactWithOrganization(_organizationServiceAsync, _loanUserContext.UserGlobalId.ToString(), request.CompaniesHouseNumber, PortalConstants.LoansPortalType);
+        // TODO #65730: create correct parameters
+
+        // await _contactService.LinkContactWithOrganization(_organizationServiceAsync, _loanUserContext.UserGlobalId.ToString(), request.CompaniesHouseNumber, PortalConstants.LoansPortalType);
         await _loanUserContext.RefreshAccounts();
     }
 }
