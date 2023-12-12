@@ -25,11 +25,15 @@ export class ReviewApprovalService {
   }
 
   public onStateChange() {
-    var status = this.common.getAttributeValue("invln_status");
     var currentUserId = this.common.getUserId() as any;
     var currentUserName = this.common.getUserName() as any;
     this.common.setLookUpValue("invln_reviewedapprovedbyid", "systemuser", currentUserId, currentUserName);
     this.common.setAttributeValue("invln_reviewapprovaldate", new Date(Date.now()));
+    this.setStatusRequired();
+  }
+
+  public setStatusRequired() {
+    var status = this.common.getAttributeValue("invln_status");
     if (status == StatusReviewApproval.Rejected) {
       this.common.setControlRequiredV2("invln_reviewerapprovercomments", true);
     }

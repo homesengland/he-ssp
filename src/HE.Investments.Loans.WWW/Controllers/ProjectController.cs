@@ -1,8 +1,10 @@
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Extensions;
+using HE.Investments.Common.Utils.Pagination;
 using HE.Investments.Common.Validators;
 using HE.Investments.Common.WWW.Models;
 using HE.Investments.Common.WWW.Routing;
+using HE.Investments.Common.WWW.TagHelpers.Pagination;
 using HE.Investments.Common.WWW.Utils;
 using HE.Investments.Loans.BusinessLogic.Projects;
 using HE.Investments.Loans.Common.Routing;

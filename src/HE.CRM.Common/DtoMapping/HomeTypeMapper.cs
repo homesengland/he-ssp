@@ -52,6 +52,8 @@ namespace HE.CRM.Common.DtoMapping
                 doAllHomesMeetNDSS = homeType.invln_doallhomesmeetNDSS,
                 whichNDSSStandardsHaveBeenMet = new List<int>(),
                 targetRentOver80PercentOfMarketRent = homeType.invln_targetrentover80ofmarketrent,
+                proposedRentAsPercentOfUnsoldShare = homeType.invln_proposedrentasaofunsoldshare,
+                expectedFirstTrancheSaleReceipt = homeType.invln_expectedfirsttranchesalereceipt,
             };
             if (homeType.Id != null)
             {
@@ -131,6 +133,8 @@ namespace HE.CRM.Common.DtoMapping
                 invln_doallhomesmeetNDSS = homeTypeDto.doAllHomesMeetNDSS,
                 invln_whichndssstandardshavebeenmet = new OptionSetValueCollection(),
                 invln_targetrentover80ofmarketrent = homeTypeDto.targetRentOver80PercentOfMarketRent,
+                invln_expectedfirsttranchesalereceipt = homeTypeDto.expectedFirstTrancheSaleReceipt,
+                invln_proposedrentasaofunsoldshare = homeTypeDto.proposedRentAsPercentOfUnsoldShare,
             };
             if (homeTypeDto.id != null)
             {

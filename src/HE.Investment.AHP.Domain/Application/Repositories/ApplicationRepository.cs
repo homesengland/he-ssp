@@ -8,6 +8,7 @@ using HE.Investment.AHP.Domain.Data;
 using HE.Investments.Account.Shared;
 using HE.Investments.Common.CRM;
 using HE.Investments.Common.Infrastructure.Events;
+using HE.Investments.Common.Utils.Pagination;
 using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 using ApplicationSection = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationSection;
 
@@ -44,11 +45,23 @@ public class ApplicationRepository : IApplicationRepository
         return new ApplicationBasicInfo(application.Id, application.Name, application.Tenure?.Value ?? Tenure.Undefined, ApplicationStatus.Draft);
     }
 
-    public async Task<IList<ApplicationEntity>> GetAll(CancellationToken cancellationToken)
+    public async Task<PaginationResult<ApplicationWithFundingDetails>> GetApplicationsWithFundingDetails(PaginationRequest paginationRequest, CancellationToken cancellationToken)
     {
-        var applications = await _applicationCrmContext.GetAll(CrmFields.ApplicationToRead, cancellationToken);
+        var applications = await _applicationCrmContext.GetAll(CrmFields.ApplicationListToRead, cancellationToken);
 
-        return applications.Select(CreateEntity).ToList();
+        var filtered = applications
+            .OrderByDescending(x => x.lastExternalModificationOn)
+            .Skip(paginationRequest.ItemsPerPage * (paginationRequest.Page - 1))
+            .Take(paginationRequest.ItemsPerPage)
+            .Select(x => new ApplicationWithFundingDetails(
+                new ApplicationId(x.id),
+                x.name,
+                ApplicationStatusMapper.MapToPortalStatus(x.applicationStatus),
+                x.noOfHomes,
+                x.fundingRequested))
+            .ToList();
+
+        return new PaginationResult<ApplicationWithFundingDetails>(filtered, paginationRequest.Page, paginationRequest.ItemsPerPage, applications.Count);
     }
 
     public async Task<ApplicationEntity> Save(ApplicationEntity application, CancellationToken cancellationToken)

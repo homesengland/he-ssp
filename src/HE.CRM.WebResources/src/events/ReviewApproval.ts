@@ -18,7 +18,7 @@ export class ReviewApproval {
   public static onLoad(eCtx) {
     const eventLogic = new ReviewApproval(eCtx)
     eventLogic.registerEvents()
-    eventLogic.reviewApprovalService.onStateChange()
+    eventLogic.reviewApprovalService.setStatusRequired()
   }
 
   public static onStateChange(eCtx) {

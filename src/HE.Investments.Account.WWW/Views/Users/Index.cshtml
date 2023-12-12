@@ -24,7 +24,7 @@
 
     <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
         <gds-h2>What each role can do</gds-h2>
-        @foreach (var role in Model.roles.Reverse())
+        @foreach (var role in Model.roles)
         {
             <gds-p class="govuk-!-margin-bottom-0">@role.Key.GetDescription()</gds-p>
             <gds-p>@role.Value</gds-p>

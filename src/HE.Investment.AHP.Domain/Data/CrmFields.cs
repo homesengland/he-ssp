@@ -23,6 +23,16 @@ public static class CrmFields
             nameof(invln_scheme.invln_pplicationid),
         });
 
+    public static readonly IList<string> ApplicationListToRead = ApplicationToUpdate
+        .Append(new List<string>
+        {
+            nameof(invln_scheme.invln_fundingrequired),
+            nameof(invln_scheme.invln_noofhomes),
+            nameof(invln_scheme.invln_pplicationid),
+            nameof(invln_scheme.invln_lastexternalmodificationby),
+            nameof(invln_scheme.invln_lastexternalmodificationon),
+        });
+
     public static readonly IList<string> SchemeToUpdate = new List<string>
     {
         nameof(invln_scheme.invln_schemeinformationsectioncompletionstatus),
