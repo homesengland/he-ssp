@@ -78,12 +78,14 @@ public class ContactService : IContactService
 
                 var webroleReference = (EntityReference)contactRole["invln_webroleid"];
                 string webRoleName = webroleReference?.Name ?? (contactRole.Contains("ae.invln_name") ? ((dynamic)contactRole["ae.invln_name"]).Value : string.Empty);
+                var permission = permissionLevel != null && permissionLevel.Contains("invln_permission") && permissionLevel["invln_permission"] != null ? ((OptionSetValue)permissionLevel["invln_permission"])?.Value : null;
                 roles.Add(new ContactRoleDto()
                 {
                     accountId = contactRole.Contains("invln_accountid") && contactRole["invln_accountid"] != null ? ((EntityReference)contactRole["invln_accountid"]).Id : Guid.Empty,
                     accountName = contactRole.Contains("invln_accountid") && contactRole["invln_accountid"] != null ? ((EntityReference)contactRole["invln_accountid"]).Name : null,
-                    permissionLevel = permissionLevel != null && permissionLevel.Contains("invln_permission") && permissionLevel["invln_permission"] != null ? ((OptionSetValue)permissionLevel["invln_permission"]).Value.ToString(CultureInfo.InvariantCulture) : null,
+                    permissionLevel = permission?.ToString(CultureInfo.InvariantCulture),
                     webRoleName = webRoleName,
+                    permission = permission,
                 });
             }
 
