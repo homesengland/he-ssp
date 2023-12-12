@@ -1,6 +1,7 @@
 using HE.Investment.AHP.Contract.FinancialDetails.Queries;
 using HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 using MediatR;
+using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.QueryHandlers;
 
@@ -15,7 +16,7 @@ public class GetFinancialCheckAnswersQueryHandler : IRequestHandler<GetFinancial
 
     public async Task<GetFinancialCheckAnswersResult> Handle(GetFinancialCheckAnswersQuery request, CancellationToken cancellationToken)
     {
-        var financialDetails = await _financialDetailsRepository.GetById(ValueObjects.ApplicationId.From(request.ApplicationId), cancellationToken);
+        var financialDetails = await _financialDetailsRepository.GetById(ApplicationId.From(request.ApplicationId), cancellationToken);
 
         var landValueSummary = new LandValueSummary(
             financialDetails.PurchasePrice?.Value,
@@ -34,7 +35,7 @@ public class GetFinancialCheckAnswersQueryHandler : IRequestHandler<GetFinancial
             financialDetails.ExpectedTotalContributions());
 
         return new GetFinancialCheckAnswersResult(
-            financialDetails.ApplicationName,
+            financialDetails.ApplicationBasicInfo.Name.Name,
             financialDetails.AreAllQuestionsAnswered(),
             landValueSummary,
             totalSchemeCost,

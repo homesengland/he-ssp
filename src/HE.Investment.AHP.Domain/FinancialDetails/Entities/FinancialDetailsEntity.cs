@@ -1,31 +1,23 @@
-using HE.Investment.AHP.Domain.FinancialDetails.Constants;
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Contract;
-using HE.Investments.Common.Domain;
 using HE.Investments.Common.Errors;
-using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Validators;
 using HE.Investments.Loans.Common.Exceptions;
-using HE.Investments.Loans.Common.Utils.Constants;
-using HE.Investments.Loans.Contract;
-using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
-using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Entities;
 
 public class FinancialDetailsEntity
 {
-    public FinancialDetailsEntity(ApplicationId applicationId, string applicationName)
+    public FinancialDetailsEntity(ApplicationBasicInfo applicationBasicInfo)
     {
-        ApplicationId = applicationId;
-        ApplicationName = applicationName;
         SectionStatus = SectionStatus.NotStarted;
+        ApplicationBasicInfo = applicationBasicInfo;
     }
 
     public FinancialDetailsEntity(
-        ApplicationId applicationId,
-        string applicationName,
+        ApplicationBasicInfo applicationBasicInfo,
         PurchasePrice? purchasePrice,
         ExpectedPurchasePrice? expectedPurchasePrice,
         CurrentLandValue? landValue,
@@ -36,8 +28,7 @@ public class FinancialDetailsEntity
         PublicGrants publicGrants,
         SectionStatus sectionStatus)
     {
-        ApplicationId = applicationId;
-        ApplicationName = applicationName;
+        ApplicationBasicInfo = applicationBasicInfo;
         PurchasePrice = purchasePrice;
         LandValue = landValue;
         IsPublicLand = isPublicLand;
@@ -49,9 +40,7 @@ public class FinancialDetailsEntity
         SectionStatus = sectionStatus;
     }
 
-    public ApplicationId ApplicationId { get; private set; }
-
-    public string ApplicationName { get; private set; }
+    public ApplicationBasicInfo ApplicationBasicInfo { get; }
 
     public PurchasePrice? PurchasePrice { get; private set; }
 

@@ -1,11 +1,14 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Domain.Application.Repositories;
+using HE.Investment.AHP.Domain.Application.ValueObjects;
+using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.Data;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-using HE.Investments.Common.Domain;
+using HE.Investments.Common.CRM;
 using HE.Investments.Common.Extensions;
-using ApplicationId = HE.Investment.AHP.Domain.FinancialDetails.ValueObjects.ApplicationId;
+using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.ApplicationId;
 
 namespace HE.Investment.AHP.Domain.FinancialDetails.Repositories;
 
@@ -20,7 +23,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
 
     public async Task<FinancialDetailsEntity> GetById(ApplicationId id, CancellationToken cancellationToken)
     {
-        var application = await _applicationCrmContext.GetById(id.Value.ToString(), CrmFields.FinancialDetailsToRead, cancellationToken);
+        var application = await _applicationCrmContext.GetById(id.Value, CrmFields.FinancialDetailsToRead, cancellationToken);
 
         return CreateEntity(application);
     }
@@ -29,8 +32,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
     {
         var dto = new AhpApplicationDto
         {
-            id = financialDetails.ApplicationId.Value.ToString(),
-            name = financialDetails.ApplicationName,
+            id = financialDetails.ApplicationBasicInfo.Id.Value,
+            name = financialDetails.ApplicationBasicInfo.Name.Name,
             actualAcquisitionCost = financialDetails.PurchasePrice?.Value,
             expectedAcquisitionCost = financialDetails.ExpectedPurchasePrice?.Value,
             isPublicLand = financialDetails.IsPublicLand,
@@ -51,16 +54,21 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
 
     private static FinancialDetailsEntity CreateEntity(AhpApplicationDto application)
     {
-        return new FinancialDetailsEntity(
+        var applicationBasicInfo = new ApplicationBasicInfo(
             ApplicationId.From(application.id),
-            application.name ?? "Unknown",
+            new ApplicationName(application.name),
+            ApplicationTenureMapper.ToDomain(application.tenure)!.Value,
+            ApplicationStatusMapper.MapToPortalStatus(application.applicationStatus));
+
+        return new FinancialDetailsEntity(
+            applicationBasicInfo,
             application.actualAcquisitionCost.IsProvided() ? new PurchasePrice(application.actualAcquisitionCost!.Value) : null,
             application.expectedAcquisitionCost.IsProvided() ? new ExpectedPurchasePrice(application.expectedAcquisitionCost!.Value) : null,
             application.currentLandValue.IsProvided() ? new CurrentLandValue(application.currentLandValue!.Value) : null,
             application.isPublicLand,
             application.expectedOnWorks.IsProvided() ? new ExpectedWorksCosts(application.expectedOnWorks!.Value) : null,
             application.expectedOnCosts.IsProvided() ? new ExpectedOnCosts(application.expectedOnCosts!.Value) : null,
-            MapToExpectedContributionsToScheme(application),
+            MapToExpectedContributionsToScheme(application, applicationBasicInfo.Tenure),
             MapToPublicGrants(application),
             SectionStatusMapper.ToDomain(application.financialDetailsSectionCompletionStatus));
     }
@@ -88,7 +96,7 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
         dto.transferValue = expectedContributionsToScheme.HomesTransferValue?.Value;
     }
 
-    private static ExpectedContributionsToScheme MapToExpectedContributionsToScheme(AhpApplicationDto application)
+    private static ExpectedContributionsToScheme MapToExpectedContributionsToScheme(AhpApplicationDto application, Tenure tenure)
     {
         static ExpectedContributionValue? MapProvidedValues(decimal? value, ExpectedContributionFields field) => value.IsProvided()
                 ? new ExpectedContributionValue(field, value!.Value)
@@ -102,7 +110,8 @@ public class FinancialDetailsRepository : IFinancialDetailsRepository
             MapProvidedValues(application.recycledCapitalGrantFund, ExpectedContributionFields.RcgfContribution),
             MapProvidedValues(application.otherCapitalSources, ExpectedContributionFields.OtherCapitalSources),
             MapProvidedValues(application.totalInitialSalesIncome, ExpectedContributionFields.InitialSalesOfSharedHomes),
-            MapProvidedValues(application.transferValue, ExpectedContributionFields.HomesTransferValue));
+            MapProvidedValues(application.transferValue, ExpectedContributionFields.HomesTransferValue),
+            tenure);
     }
 
     private static PublicGrants MapToPublicGrants(AhpApplicationDto application)

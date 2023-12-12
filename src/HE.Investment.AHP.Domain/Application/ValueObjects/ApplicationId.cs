@@ -14,6 +14,10 @@ public class ApplicationId : ValueObject
 
     public static ApplicationId Empty() => new(Guid.Empty.ToString());
 
+    public static ApplicationId From(string value) => new(value);
+
+    public static ApplicationId From(Guid value) => new(value.ToString());
+
     public override string ToString()
     {
         return Value;

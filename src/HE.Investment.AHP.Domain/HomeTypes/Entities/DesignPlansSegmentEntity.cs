@@ -4,12 +4,12 @@ using HE.Investment.AHP.Domain.Common.ValueObjects;
 using HE.Investment.AHP.Domain.Documents.Services;
 using HE.Investment.AHP.Domain.HomeTypes.Attributes;
 using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
 using HE.Investments.Loans.Common.Exceptions;
-using ApplicationStatus = HE.Investment.AHP.Domain.Common.ApplicationStatus;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.Entities;
 
@@ -51,7 +51,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
 
     public MoreInformation? MoreInformation { get; private set; }
 
-    public bool CanRemoveDesignFiles => _application.Status != ApplicationStatus.Submitted;
+    public bool CanRemoveDesignFiles => _application.Status != ApplicationStatus.ApplicationSubmitted;
 
     public IEnumerable<UploadedFile> UploadedFiles => _uploadedFiles;
 
@@ -105,7 +105,7 @@ public class DesignPlansSegmentEntity : IHomeTypeSegmentEntity
     {
         var fileToRemove = _uploadedFiles.FirstOrDefault(x => x.Id == fileId) ?? throw new NotFoundException(nameof(DesignPlanFileEntity), fileId);
 
-        if (_application.Status == ApplicationStatus.Submitted)
+        if (_application.Status == ApplicationStatus.ApplicationSubmitted)
         {
             new OperationResult().AddValidationError("File", "File cannot be removed because Application is already Submitted.").CheckErrors();
         }
