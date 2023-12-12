@@ -100,6 +100,7 @@
     <Compile Include="Handlers\CustomApi\ChangeAhpApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\CheckIfApplicationWithGivenNameExistsHandler.cs" />
     <Compile Include="Handlers\CustomApi\DeleteHomeTypeHandler.cs" />
+    <Compile Include="Handlers\CustomApi\GetAbsoluteAhpApplicationFileLocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetAhpApplicationFileLocationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetMultipleApplicationsHandler.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Plugins\CustomApi\ChangeAhpApplicationStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\CheckIfApplicationWithGivenNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteHomeTypePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\GetAbsoluteAhpApplicationFileLocationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetAhpApplicationFileLocationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleApplicationsPlugin.cs" />

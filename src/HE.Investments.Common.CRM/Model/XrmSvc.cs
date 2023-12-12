@@ -29044,4 +29044,62 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.RequestProxyAttribute("invln_getabsoluteahpapplicationfilelocation")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getabsoluteahpapplicationfilelocationRequest : Microsoft.Xrm.Sdk.OrganizationRequest
+	{
+		
+		public string invln_applicationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_applicationid"))
+				{
+					return ((string)(this.Parameters["invln_applicationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_applicationid"] = value;
+			}
+		}
+		
+		public invln_getabsoluteahpapplicationfilelocationRequest()
+		{
+			this.RequestName = "invln_getabsoluteahpapplicationfilelocation";
+			this.invln_applicationid = default(string);
+		}
+	}
+	
+	[System.Runtime.Serialization.DataContractAttribute(Namespace="http://schemas.microsoft.com/xrm/2011/new/")]
+	[Microsoft.Xrm.Sdk.Client.ResponseProxyAttribute("invln_getabsoluteahpapplicationfilelocation")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.95")]
+	public partial class invln_getabsoluteahpapplicationfilelocationResponse : Microsoft.Xrm.Sdk.OrganizationResponse
+	{
+		
+		public invln_getabsoluteahpapplicationfilelocationResponse()
+		{
+		}
+		
+		public string invln_documentlocation
+		{
+			get
+			{
+				if (this.Results.Contains("invln_documentlocation"))
+				{
+					return ((string)(this.Results["invln_documentlocation"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+		}
+	}
 }

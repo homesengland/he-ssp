@@ -22,7 +22,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
         public override void DoWork()
         {
             TracingService.Trace("method");
-            var documentLocation = CrmServicesFactory.Get<IApplicationService>().GetFileLocationForAhpApplication(applicationId);
+            var documentLocation = CrmServicesFactory.Get<IApplicationService>().GetFileLocationForAhpApplication(applicationId, false);
             ExecutionData.SetOutputParameter(invln_getahpapplicationdocumentlocationResponse.Fields.invln_documentlocation, documentLocation);
         }
 
