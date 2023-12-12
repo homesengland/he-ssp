@@ -21,10 +21,8 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
             nameof(invln_HomeType.invln_rtsoexempt),
             nameof(invln_HomeType.invln_reasonsforrtsoexemption),
             nameof(invln_HomeType.invln_initialsale),
-
-            // TODO
-            // nameof(invln_HomeType.invln_firsttranchesalesreceipt),
-            // nameof(invln_HomeType.invln_rentasofunsoldshare),
+            nameof(invln_HomeType.invln_expectedfirsttranchesalereceipt),
+            nameof(invln_HomeType.invln_proposedrentasaofunsoldshare),
         })
     {
     }
@@ -41,11 +39,9 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
             YesNoTypeMapper.Map(dto.targetRentOver80PercentOfMarketRent),
             YesNoTypeMapper.Map(dto.RtSOExemption),
             dto.exemptionJustification.IsProvided() ? new MoreInformation(dto.exemptionJustification) : null,
-            dto.initialSalePercent.IsProvided() ? new InitialSale(dto.initialSalePercent!.Value) : null);
-
-        // TODO
-        // dto.firsttranchesalesreceipt.IsProvided() ? new ExpectedFirstTranche(dto.firsttranchesalesreceipt) : null);
-        // dto.invln_rentasofunsoldshare.IsProvided() ? new Percentage(dto.invln_rentasofunsoldshare) : null);
+            dto.initialSalePercent.IsProvided() ? new InitialSale(dto.initialSalePercent!.Value) : null,
+            dto.expectedFirstTrancheSaleReceipt.IsProvided() ? new ExpectedFirstTranche(dto.expectedFirstTrancheSaleReceipt!.Value) : null,
+            dto.proposedRentAsPercentOfUnsoldShare.IsProvided() ? new Percentage(dto.proposedRentAsPercentOfUnsoldShare!.Value) : null);
     }
 
     protected override TenureDetailsSegmentEntity GetSegment(HomeTypeEntity entity) => entity.TenureDetails;
@@ -60,9 +56,7 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
         dto.RtSOExemption = YesNoTypeMapper.Map(segment.ExemptFromTheRightToSharedOwnership);
         dto.exemptionJustification = segment.ExemptionJustification?.Value;
         dto.initialSalePercent = segment.InitialSale?.Value;
-
-        // TODO
-        // dto.firsttranchesalesreceipt = segment.ExpectedFirstTranche?.Value;
-        // dto.invln_rentasofunsoldshare = segment.SharedOwnershipRentAsPercentageOfTheUnsoldShare?.Value;
+        dto.expectedFirstTrancheSaleReceipt = segment.ExpectedFirstTranche?.Value;
+        dto.proposedRentAsPercentOfUnsoldShare = segment.SharedOwnershipRentAsPercentageOfTheUnsoldShare?.Value;
     }
 }

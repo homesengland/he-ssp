@@ -152,10 +152,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         var newValue = new Percentage(result);
         ProspectiveRentAsPercentageOfMarketRent = _modificationTracker.Change(ProspectiveRentAsPercentageOfMarketRent, newValue);
 
-        if (result > exceed80PercentOfMarketRent && TargetRentExceedMarketRent?.Value == YesNoType.No)
-        {
-            IsExceeding80PercentOfMarketRent = true;
-        }
+        IsExceeding80PercentOfMarketRent = result > exceed80PercentOfMarketRent && TargetRentExceedMarketRent?.Value == YesNoType.No;
     }
 
     public void ChangeTargetRentExceedMarketRent(YesNoType targetRentExceedMarketRent, bool isCalculation = false)
@@ -179,16 +176,13 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public void ChangeProspectiveRentAsPercentageOfTheUnsoldShare(string? marketValue, string? prospectiveRent, string? initialSalePercentage)
     {
-        const int exceed3PercentOfUnsoldShare = 80;
+        const int exceed3PercentOfUnsoldShare = 3;
         var result = CalculateProspectiveRentAsPercentageOfTheUnsoldShare(marketValue, prospectiveRent, initialSalePercentage);
 
         var newValue = new Percentage(result);
         SharedOwnershipRentAsPercentageOfTheUnsoldShare = _modificationTracker.Change(SharedOwnershipRentAsPercentageOfTheUnsoldShare, newValue);
 
-        if (result > exceed3PercentOfUnsoldShare)
-        {
-            IsExceeding3PercentOfUnsoldShare = true;
-        }
+        IsExceeding3PercentOfUnsoldShare = result > exceed3PercentOfUnsoldShare;
     }
 
     public void ChangeExpectedFirstTranche(string? marketValue, string? initialSalePercentage)
