@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Domain.Scheme.Constants;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
 
@@ -27,7 +28,7 @@ public class AffordabilityEvidence : ValueObject
         var operationResult = OperationResult.New();
 
         Evidence = Validator
-            .For(evidence, "AffordabilityEvidence", operationResult)
+            .For(evidence, SchemeValidationFieldNames.AffordabilityEvidence, operationResult)
             .IsProvidedIf(isCompleteCheck, "Affordability of shared ownership is missing")
             .IsLongInput();
 

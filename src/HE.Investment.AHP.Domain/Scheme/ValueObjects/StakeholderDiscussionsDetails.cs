@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Domain.Scheme.Constants;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
 
@@ -27,7 +28,7 @@ public class StakeholderDiscussionsDetails : ValueObject
         var operationResult = OperationResult.New();
 
         Report = Validator
-            .For(report, "StakeholderDiscussionsReport", operationResult)
+            .For(report, SchemeValidationFieldNames.StakeholderDiscussionsReport, operationResult)
             .IsProvidedIf(isCompleteCheck, "Local stakeholder discussions are missing")
             .IsLongInput();
 

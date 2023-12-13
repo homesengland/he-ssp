@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Domain.Scheme.Constants;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
 
@@ -27,7 +28,7 @@ public class SalesRisk : ValueObject
         var operationResult = OperationResult.New();
 
         Value = Validator
-            .For(evidence, nameof(SalesRisk), operationResult)
+            .For(evidence, SchemeValidationFieldNames.SalesRisk, operationResult)
             .IsProvidedIf(isCompleteCheck, "Sales risk of shared ownership is missing")
             .IsLongInput();
 

@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Domain.Scheme.Constants;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
 
@@ -30,12 +31,12 @@ public class HousingNeeds : ValueObject
         var operationResult = OperationResult.New();
 
         MeetingLocalPriorities = Validator
-            .For(meetingLocalPriorities, nameof(MeetingLocalPriorities), operationResult)
+            .For(meetingLocalPriorities, SchemeValidationFieldNames.MeetingLocalPriorities, operationResult)
             .IsProvidedIf(isCompleteCheck, "Type and tenure of homes are missing")
             .IsLongInput();
 
         MeetingLocalHousingNeed = Validator
-            .For(meetingLocalHousingNeed, nameof(MeetingLocalHousingNeed), operationResult)
+            .For(meetingLocalHousingNeed, SchemeValidationFieldNames.MeetingLocalHousingNeed, operationResult)
             .IsProvidedIf(isCompleteCheck, "Locally identified housing needs are missing")
             .IsLongInput();
 

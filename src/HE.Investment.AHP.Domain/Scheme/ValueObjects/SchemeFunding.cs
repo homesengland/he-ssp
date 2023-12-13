@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Domain.Scheme.Constants;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
@@ -34,7 +35,7 @@ public class SchemeFunding : ValueObject
 
         var requiredFundingName = "total funding you require";
         RequiredFunding = NumericValidator
-            .For(requiredFundingGbp, nameof(RequiredFunding), requiredFundingName, fundingOperationResult)
+            .For(requiredFundingGbp, SchemeValidationFieldNames.RequiredFunding, requiredFundingName, fundingOperationResult)
             .IsProvided("Enter the total of funding you are requesting")
             .IsNumber()
             .IsWholeNumber()
@@ -42,7 +43,7 @@ public class SchemeFunding : ValueObject
 
         var housesToDeliverName = "number of homes this scheme will deliver";
         HousesToDeliver = NumericValidator
-            .For(housesToDeliver, nameof(HousesToDeliver), housesToDeliverName, housesOperationResult)
+            .For(housesToDeliver, SchemeValidationFieldNames.HousesToDeliver, housesToDeliverName, housesOperationResult)
             .IsProvided("The number of homes this scheme will deliver must be a whole number above 0")
             .IsNumber()
             .IsWholeNumber()

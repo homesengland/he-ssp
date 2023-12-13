@@ -1,12 +1,15 @@
 @using HE.Investment.AHP.Domain.Scheme.Workflows
+@using HE.Investment.AHP.WWW.Views.Scheme.Const;
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormFieldTitle
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.WorkflowBackButton
+@using HE.Investments.Common.WWW.Extensions;
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
 @{
     var title = "Local housing needs";
     ViewData["Title"] = title;
+    ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(SchemeValidationFieldsOrder.HousingNeeds);
 }
 
 <gds-div-grid-column-two-thirds>
