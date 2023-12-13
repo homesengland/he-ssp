@@ -106,13 +106,6 @@ public class ContactService : IContactService
     {
         var contact = _contactRepository.GetContactViaExternalId(service, contactExternalId);
         var defaultRole = _webRoleRepository.GetDefaultPortalRoles(service, portalType);
-
-        if (!defaultRole.Any())
-        {
-            // TODO: remove, added when CRM does not return default role for Common portal type
-            defaultRole = _webRoleRepository.GetDefaultPortalRoles(service, 858110000);
-        }
-
         if (contact != null)
         {
             var contactWebroleExists = _webRoleRepository.GetContactWebroleForOrganisation(service, contact.Id, organisationGuid) != null;

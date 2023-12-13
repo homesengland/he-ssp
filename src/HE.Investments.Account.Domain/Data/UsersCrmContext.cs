@@ -65,7 +65,7 @@ public class UsersCrmContext : IUsersCrmContext
         var organisationId = await TryGetOrganisationId();
         await _contactService.UpdateContactWebrole(_organizationServiceAsync, userId, organisationId, role);
 
-        await _accountUserContext.RefreshProfileDetails();
+        await _accountUserContext.RefreshAccounts();
     }
 
     private static int? GetUserRole(ContactRolesDto dto)

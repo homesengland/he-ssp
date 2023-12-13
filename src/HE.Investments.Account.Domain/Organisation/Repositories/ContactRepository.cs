@@ -29,6 +29,6 @@ public class ContactRepository : IContactRepository
            _loanUserContext.UserGlobalId.ToString(),
            Guid.Parse(organisationId),
            portalType);
-        await _loanUserContext.RefreshProfileDetails();
+        await _loanUserContext.RefreshAccounts();
     }
 }
