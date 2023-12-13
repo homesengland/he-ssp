@@ -2,7 +2,6 @@ using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,10 +23,6 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
                 UserAccountRole.InputRole,
                 UserAccountRole.ViewOnlyRole,
                 UserAccountRole.LimitedRole,
-
-                // TODO: remove below roles
-                UserAccountRole.AdminLoans,
-                UserAccountRole.LimitedUserLoans,
             };
         }
         else
