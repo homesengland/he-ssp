@@ -107,4 +107,30 @@ public class UsersController : Controller
 
         return RedirectToAction(redirect, new { id });
     }
+
+    [HttpGet("invite")]
+    public async Task<IActionResult> Invite(CancellationToken cancellationToken)
+    {
+        var organisation = await _mediator.Send(new GetOrganizationBasicInformationQuery(), cancellationToken);
+
+        return View("Invite", new InviteUserViewModel(organisation.OrganizationBasicInformation.RegisteredCompanyName));
+    }
+
+    [HttpPost("invite")]
+    public async Task<IActionResult> Invite(InviteUserViewModel model, CancellationToken cancellationToken)
+    {
+        ModelState.AddModelError("FirstName", "test error");
+        ModelState.AddModelError("Role", "role error");
+        return await Invite(cancellationToken);
+
+        // TODO: Uncommet when backend inplemented
+        // var result = await _mediator.Send(new InviteUserCommand(model), cancellationToken);
+        // if (result.HasValidationErrors)
+        // {
+        //     ModelState.AddValidationErrors(result);
+        //     return View("Invite", model);
+        // }
+        //
+        // return RedirectToAction("Index");
+    }
 }

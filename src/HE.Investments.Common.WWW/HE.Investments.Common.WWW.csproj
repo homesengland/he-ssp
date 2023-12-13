@@ -72,5 +72,8 @@
     <EmbeddedResource Include="Components\SummaryItem\SummaryItem.cshtml" />
     <EmbeddedResource Include="Components\RadioListWithOr\RadioListWithOr.cshtml" />
     <EmbeddedResource Include="Components\RadioYesNo\RadioYesNo.cshtml" />
+    <EmbeddedResource Include="Components\RadioListContent\RadioListContent.cshtml" />
+    <EmbeddedResource Include="Components\RadioList\RadioList.cshtml" />
+    <EmbeddedResource Include="Components\TextInput\TextInput.cshtml" />
   </ItemGroup>
 </Project>

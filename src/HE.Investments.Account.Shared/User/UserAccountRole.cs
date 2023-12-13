@@ -10,9 +10,9 @@ public record UserAccountRole(string Role)
 
     public const string EnhancedRole = "Enhanced";
 
-    public const string InputRole = "Input Only";
+    public const string InputRole = "Input only";
 
-    public const string ViewOnlyRole = "View Only";
+    public const string ViewOnlyRole = "View only";
 
     public const string LimitedRole = "Limited User";
 

@@ -1,0 +1,30 @@
+@using HE.Investments.Common.WWW.Extensions
+@using HE.Investments.Common.WWW.Components.ErrorMessage
+@model (string fieldName, string label, string hint, string cssClass)
+@{
+    var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
+    var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
+    var inputErrorClass = $"govuk-input {Model.cssClass}";
+    inputErrorClass += hasError ? " govuk-input--error" : string.Empty;
+}
+<gds-div-form-group class="@groupClass">
+    @if (!string.IsNullOrWhiteSpace(Model.label))
+    {
+        <h1 class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--m" for="@Model.fieldName">
+                @Model.label
+            </label>
+        </h1>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.hint))
+    {
+        <div class="govuk-hint">
+            @Model.hint
+        </div>
+    }
+
+    <vc:error-message field-name="@Model.fieldName"/>
+
+    <input class="@inputErrorClass" id="@Model.fieldName" name="@Model.fieldName" type="text">
+</gds-div-form-group>
