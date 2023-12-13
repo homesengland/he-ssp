@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using DataverseModel;
 using HE.Base.Services;
+using HE.CRM.Common.Repositories.interfaces;
 using HE.CRM.Common.Repositories.Interfaces;
 using HE.CRM.Model.CrmSerialiedParameters;
 using Microsoft.Xrm.Sdk;
@@ -23,6 +24,8 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
         private readonly ILoanApplicationRepository _loanApplicationRepositoryAdmin;
         private readonly IContactRepository _contactRepositoryAdmin;
         private readonly IContactWebroleRepository _contactWebroleRepositoryAdmin;
+        private readonly IWebRoleRepository _webRoleRepository;
+        private readonly IPortalPermissionRepository _portalPermissionRepository;
 
         public GovNotifyEmailService(CrmServiceArgs args) : base(args)
         {
@@ -33,6 +36,8 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             _loanApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<ILoanApplicationRepository>();
             _contactRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IContactRepository>();
             _contactWebroleRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IContactWebroleRepository>();
+            _webRoleRepository = CrmRepositoriesFactory.GetSystem<IWebRoleRepository>();
+            _portalPermissionRepository = CrmRepositoriesFactory.GetSystem<IPortalPermissionRepository>();
         }
 
         //public void SendNotifications_EXTERNAL_APPLICATION_ACTION_REQUIRED(invln_AHPStatusChange statusChange, invln_scheme ahpApplication, string actionRequired)
@@ -72,7 +77,8 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             if (contactWebrole != null && contactWebrole.invln_Contactid != null)
             {
                 var contact = _contactRepositoryAdmin.GetById(contactWebrole.invln_Contactid.Id, nameof(Contact.OwnerId).ToLower(), nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
-                if (contact.OwnerId != null)
+
+                if (contact != null && contact.OwnerId != null)
                 {
                     this.TracingService.Trace("COMMON_CHANGE_EXTERNAL_USER_PERMISSIONS");
                     var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("COMMON_CHANGE_EXTERNAL_USER_PERMISSIONS");
@@ -98,6 +104,49 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                 }
             }
         }
+
+        public void SendNotifications_COMMON_GRANT_ORGANISATION_ADMIN_PERMISSIONS(EntityReference contactWebroleId)
+        {
+            var contactWebrole = _contactWebroleRepositoryAdmin.GetById(contactWebroleId.Id, nameof(invln_contactwebrole.invln_Contactid).ToLower(), nameof(invln_contactwebrole.invln_Webroleid).ToLower());
+            if (contactWebrole != null && contactWebrole.invln_Contactid != null && contactWebrole.invln_Webroleid != null)
+            {
+                var webrole = _webRoleRepository.GetById(contactWebrole.invln_Webroleid.Id, nameof(invln_Webrole.invln_Portalpermissionlevelid).ToLower());
+                if (webrole != null && webrole.invln_Portalpermissionlevelid != null)
+                {
+                    var portalPermission = _portalPermissionRepository.GetById(webrole.invln_Portalpermissionlevelid.Id, nameof(invln_portalpermissionlevel.invln_Permission).ToLower());
+                    if (portalPermission.invln_Permission != null && portalPermission.invln_Permission.Value == (int)invln_Permission.Admin)
+                    {
+                        this.Logger.Info("Granted Admin Permissions!");
+                        var contact = _contactRepositoryAdmin.GetById(contactWebrole.invln_Contactid.Id, nameof(Contact.OwnerId).ToLower(), nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
+                        if (contact != null && contact.OwnerId != null)
+                        {
+                            this.TracingService.Trace("COMMON_GRANT_ORGANISATION_ADMIN_PERMISSIONS");
+                            var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("COMMON_GRANT_ORGANISATION_ADMIN_PERMISSIONS");
+                            var govNotParams = new COMMON_GRANT_ORGANISATION_ADMIN_PERMISSIONS()
+                            {
+                                templateId = emailTemplate?.invln_templateid,
+                                personalisation = new parameters_COMMON_GRANT_ORGANISATION_ADMIN_PERMISSIONS()
+                                {
+                                    recipientEmail = contact.EMailAddress1,
+                                    username = contact.FullName ?? "NO NAME",
+                                    subject = emailTemplate.invln_subject,
+                                }
+                            };
+
+                            var options = new JsonSerializerOptions
+                            {
+                                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                                WriteIndented = true
+                            };
+
+                            var parameters = JsonSerializer.Serialize(govNotParams, options);
+                            this.SendGovNotifyEmail(contact.OwnerId, contact.ToEntityReference(), emailTemplate.invln_subject, parameters, emailTemplate);
+                        }
+                    }
+                }
+            }
+        }
+
 
         private string GetAhpApplicationUrl(EntityReference ahpApplicationId)
         {
