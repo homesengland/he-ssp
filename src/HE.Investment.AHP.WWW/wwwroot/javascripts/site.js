@@ -100,7 +100,7 @@
 // - URL to file upload is in value of element with id 'upload-file-url'
 // - URL to remove file is in value of element with id 'remove-file-url-template', URL contains {:fileId} template parameter
 // - URL to download file is in value of element with id 'download-file-url-template', URL contains {:fileId} template parameter
-(async () => {
+(() => {
   const fileInputSelector = `.govuk-file-upload[type="file"]`;
   const fileInputFormGroupId = 'file-input-form-group';
   const validationSummaryId = 'validation-summary';
@@ -109,7 +109,7 @@
   const maxFileSizeId = 'MaxFileSizeInMegabytes';
   const uploadFileUrlId = 'upload-file-url';
   const removeFileUrlId = 'remove-file-url-template';
-  const downloadFileUrlId = 'download-file-url-template';
+  const downloadFileUrlId = 'download-file-url-template-test';
 
   const getUploadControlId = () => document.querySelectorAll(fileInputSelector)[0].id;
   const inputFieldError = (message) => `<span id="${getUploadControlId()}-error" class="govuk-error-message field-validation-error" data-valmsg-for="${getUploadControlId()}" data-valmsg-replace="true"><span class="govuk-visually-hidden">Error:</span>${message}</span>`;
@@ -136,7 +136,7 @@
 
   const downloadFileLink = (fileName, downloadFileUrl) => `<a class="govuk-link" href="${downloadFileUrl}">${sanitize(fileName)}</a>`;
 
-  const fileInputChanged = async () => {
+  const fileInputChanged = () => {
     const maxFileSizeInMegabytes = document.getElementById(maxFileSizeId).value;
     const maxFileSize = maxFileSizeInMegabytes * 1024 * 1024;
     const uploadControl = document.querySelectorAll(fileInputSelector)[0];
@@ -174,26 +174,41 @@
 
     if (shouldUpload) {
       uploadControl.files = invalidFiles.files;
+      uploadFiles(filesToUpload, uploadFileUrl, token)
+        .finally(() => {
+          if (!hasErrors) {
+            continueButton.disabled = false;
+          }
 
-      for(let fileId in filesToUpload) {
-        const url = uploadFileUrl.value;
-        const file = filesToUpload[fileId];
-        const formData = new FormData();
-        formData.append("__RequestVerificationToken", token);
-        formData.append("file", file);
-
-        fileUploadStarted(fileId);
-        await fetch(url, { method: "POST", body: formData })
-          .then(response => response.ok ? fileUploadFinished(fileId, file.name, response) : fileUploadFailed(fileId, response))
-          .catch(() => fileUploadFailed(fileId, undefined));
+          uploadControl.disabled = false;
+        });
+    }
+    else {
+      if (!hasErrors) {
+        continueButton.disabled = false;
       }
+
+      uploadControl.disabled = false;
+    }
+  }
+
+  const uploadFiles = (filesToUpload, uploadFileUrl, token) => {
+    let promise = Promise.resolve();
+
+    for (let fileId in filesToUpload) {
+      const url = uploadFileUrl.value;
+      const file = filesToUpload[fileId];
+      const formData = new FormData();
+      formData.append("__RequestVerificationToken", token);
+      formData.append("file", file);
+
+      promise = promise.then(() => fileUploadStarted(fileId))
+        .then(() => fetch(url, {method: "POST", body: formData}))
+        .then(response => response.ok ? fileUploadFinished(fileId, file.name, response) : fileUploadFailed(fileId, response))
+        .catch(() => fileUploadFailed(fileId, undefined));
     }
 
-    if (!hasErrors) {
-      continueButton.disabled = false;
-    }
-
-    uploadControl.disabled = false;
+    return promise;
   }
 
   const fileUploadInitialized = (fileId, file) => {
