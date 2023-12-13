@@ -47,6 +47,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HE.Investment.AHP.Domain\HE.Investment.AHP.Domain.csproj" />
+    <ProjectReference Include="..\HE.Investments.Common.Tests\HE.Investments.Common.Tests.csproj" />
     <ProjectReference Include="..\HE.Investments.TestsUtils\HE.Investments.TestsUtils.csproj" />
   </ItemGroup>
 

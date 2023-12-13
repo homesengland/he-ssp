@@ -21,6 +21,10 @@ public class LandStatus : ValueObject, IQuestion
         ExpectedPurchasePrice = expectedPurchasePrice;
     }
 
+    public LandStatus()
+    {
+    }
+
     public PurchasePrice? PurchasePrice { get; }
 
     public ExpectedPurchasePrice? ExpectedPurchasePrice { get; }

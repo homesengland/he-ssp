@@ -12,6 +12,10 @@ public class OtherApplicationCosts : ValueObject, IQuestion
         ExpectedOnCosts = expectedOnCosts;
     }
 
+    public OtherApplicationCosts()
+    {
+    }
+
     public ExpectedWorksCosts? ExpectedWorksCosts { get; }
 
     public ExpectedOnCosts? ExpectedOnCosts { get; }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using HE.Investment.AHP.Domain.Application.Entities;
 using HE.Investment.AHP.Domain.Application.ValueObjects;
 using HE.Investments.Common.Contract;

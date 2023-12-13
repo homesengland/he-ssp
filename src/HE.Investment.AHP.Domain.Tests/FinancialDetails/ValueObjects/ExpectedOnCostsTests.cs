@@ -3,6 +3,7 @@ using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
 using HE.Investments.Common.Exceptions;
 using HE.Investments.Common.Messages;
+using Xunit;
 
 namespace HE.Investment.AHP.Domain.Tests.FinancialDetails.ValueObjects;
 
