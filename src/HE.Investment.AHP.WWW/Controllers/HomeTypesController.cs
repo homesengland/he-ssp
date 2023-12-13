@@ -732,7 +732,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
 
         return View(new FloorAreaModel(homeInformation.ApplicationName, homeInformation.HomeTypeName)
         {
-            InternalFloorArea = homeInformation.InternalFloorArea?.ToString("0.##", CultureInfo.InvariantCulture),
+            FloorArea = homeInformation.InternalFloorArea?.ToString("0.##", CultureInfo.InvariantCulture),
             MeetNationallyDescribedSpaceStandards = homeInformation.MeetNationallyDescribedSpaceStandards,
         });
     }
@@ -746,7 +746,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         CancellationToken cancellationToken)
     {
         return await SaveHomeTypeSegment(
-            new SaveFloorAreaCommand(applicationId, homeTypeId, model.InternalFloorArea, model.MeetNationallyDescribedSpaceStandards),
+            new SaveFloorAreaCommand(applicationId, homeTypeId, model.FloorArea, model.MeetNationallyDescribedSpaceStandards),
             model,
             cancellationToken);
     }

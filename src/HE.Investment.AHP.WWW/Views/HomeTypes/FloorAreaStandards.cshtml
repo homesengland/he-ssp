@@ -20,24 +20,26 @@
                                   title="Floor area"/>
 
         <gds-field-set class="govuk-!-margin-bottom-6">
-            <gds-legend>
-                <gds-h2>Which of these Nationally Described Space Standards do the homes meet?</gds-h2>
-            </gds-legend>
-            <span class="govuk-caption-m govuk-!-margin-bottom-4">Select all that apply</span>
+            <he-error-form-group asp-for="NationallyDescribedSpaceStandards">
+                <gds-legend>
+                    <gds-h2>Which of these Nationally Described Space Standards do the homes meet?</gds-h2>
+                </gds-legend>
+                <span class="govuk-caption-m govuk-!-margin-bottom-4">Select all that apply</span>
 
-            <gds-checkbox class="exclusive-checkbox-group"
-                          govuk-formgroup-asp-for="@Model.NationallyDescribedSpaceStandards"
-                          asp-selectlistitems="HomeTypesFormOptions.NationallyDescribedSpaceStandardsExceptNone"
-                          asp-for="@Model.NationallyDescribedSpaceStandards"
-                          asp-excludelabel="true">
-            </gds-checkbox>
-            <p>or</p>
-            <gds-checkbox class="exclusive-checkbox-group--exclusive-option"
-                          govuk-formgroup-asp-for="@Model.OtherNationallyDescribedSpaceStandards"
-                          asp-selectlistitems="HomeTypesFormOptions.NationallyDescribedSpaceStandardsOnlyNone"
-                          asp-for="@Model.OtherNationallyDescribedSpaceStandards"
-                          asp-excludelabel="true">
-            </gds-checkbox>
+                <gds-checkbox class="exclusive-checkbox-group"
+                              govuk-formgroup-asp-for="@Model.NationallyDescribedSpaceStandards"
+                              asp-selectlistitems="HomeTypesFormOptions.NationallyDescribedSpaceStandardsExceptNone"
+                              asp-for="@Model.NationallyDescribedSpaceStandards"
+                              asp-excludelabel="true">
+                </gds-checkbox>
+                <p>or</p>
+                <gds-checkbox class="exclusive-checkbox-group--exclusive-option"
+                              govuk-formgroup-asp-for="@Model.OtherNationallyDescribedSpaceStandards"
+                              asp-selectlistitems="HomeTypesFormOptions.NationallyDescribedSpaceStandardsOnlyNone"
+                              asp-for="@Model.OtherNationallyDescribedSpaceStandards"
+                              asp-excludelabel="true">
+                </gds-checkbox>
+            </he-error-form-group>
         </gds-field-set>
 
         <details class="govuk-details" data-module="govuk-details">
