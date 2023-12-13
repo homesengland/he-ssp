@@ -58,7 +58,7 @@ public class ContactService : IContactService
 
     public Task<ContactRolesDto?> GetContactRoles(IOrganizationServiceAsync2 service, string contactEmail, string contactExternalId, int? portalType = null)
     {
-        var contact = _contactRepository.GetContactWithGivenEmailAndExternalId(service, contactEmail, contactExternalId);
+        var contact = _contactRepository.GetContactWithGivenEmailOrExternalId(service, contactEmail, contactExternalId);
         if (contact != null)
         {
             var portalTypeFilter = GeneratePortalTypeFilter(portalType);
@@ -222,6 +222,24 @@ public class ContactService : IContactService
         _ = await service.CreateAsync(contactWebroleToCreate);
 
         return contactToCreate.Id;
+    }
+
+    public async Task ConnectingNotConnectedContactWithExternalId(IOrganizationServiceAsync2 service, string email, string contactExternalId)
+    {
+        var contact = _contactRepository.GetContactWithGivenEmailOrExternalId(service, email, contactExternalId);
+        if (contact != null && contact.Contains("invln_externalid") && contact["invln_externalid"] != null
+            && ((string)contact["invln_externalid"]).StartsWith('_'))
+        {
+            var contactToUpdate = new Entity("contact")
+            {
+                Id = contact.Id,
+                Attributes =
+                {
+                    ["invln_externalid"] = contactExternalId,
+                },
+            };
+            await service.UpdateAsync(contactToUpdate);
+        }
     }
 
     private List<ContactRolesDto> GenerateContactRolesList(List<Entity> contactWebroles)

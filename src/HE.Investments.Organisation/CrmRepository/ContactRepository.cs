@@ -63,16 +63,17 @@ public class ContactRepository : IContactRepository
         }
     }
 
-    public Entity? GetContactWithGivenEmailAndExternalId(IOrganizationServiceAsync2 service, string contactEmail, string contactExternalId)
+    public Entity? GetContactWithGivenEmailOrExternalId(IOrganizationServiceAsync2 service, string contactEmail, string contactExternalId)
     {
         var condition1 = new ConditionExpression("invln_externalid", ConditionOperator.Equal, contactExternalId);
+        var condition2 = new ConditionExpression("emailaddress1", ConditionOperator.Equal, contactEmail);
         var filter1 = new FilterExpression()
         {
             Conditions =
                 {
-                    condition1,
+                    condition1, condition2,
                 },
-            FilterOperator = LogicalOperator.And,
+            FilterOperator = LogicalOperator.Or,
         };
         var cols = new ColumnSet(true);
 
