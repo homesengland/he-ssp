@@ -109,7 +109,7 @@
   const maxFileSizeId = 'MaxFileSizeInMegabytes';
   const uploadFileUrlId = 'upload-file-url';
   const removeFileUrlId = 'remove-file-url-template';
-  const downloadFileUrlId = 'download-file-url-template-test';
+  const downloadFileUrlId = 'download-file-url-template';
 
   const getUploadControlId = () => document.querySelectorAll(fileInputSelector)[0].id;
   const inputFieldError = (message) => `<span id="${getUploadControlId()}-error" class="govuk-error-message field-validation-error" data-valmsg-for="${getUploadControlId()}" data-valmsg-replace="true"><span class="govuk-visually-hidden">Error:</span>${message}</span>`;
@@ -259,7 +259,8 @@
           if (Array.isArray(errors) && errors.length > 0 && errors[0].errorMessage){
             uploadedColumn.innerText = errors[0].errorMessage;
           }
-        });
+        })
+        .catch(error => console.log(error));
     }
 
     return Promise.resolve();
