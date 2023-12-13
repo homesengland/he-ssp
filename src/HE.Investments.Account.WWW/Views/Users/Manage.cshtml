@@ -36,20 +36,12 @@
 
     <form asp-controller="Users" asp-action="ChangeRole" asp-route-id="@Model.UserDetails.Id" asp-method="post" novalidate>
         <gds-field-set>
-            <gds-legend>
-                <gds-h2>
-                    Which role do you want to grant the user?
-                </gds-h2>
-            </gds-legend>
-            <he-div-hint>
-                This can be updated at any time.
-            </he-div-hint>
-
             <vc:radio-list-with-or
                 field-name="Role"
+                title="Which role do you want to grant the user?"
+                hint="This can be updated at any time."
                 available-options="@roles"
                 alternative-option=@undefinedRole/>
-
             <vc:form-button/>
         </gds-field-set>
     </form>
