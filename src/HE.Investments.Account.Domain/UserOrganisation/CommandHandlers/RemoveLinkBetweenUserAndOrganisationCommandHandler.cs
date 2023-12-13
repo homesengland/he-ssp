@@ -38,6 +38,8 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
             account.AccountId.Value,
             account.UserGlobalId.Value);
 
+        await _userContext.RefreshProfileDetails();
+
         return OperationResult.Success();
     }
 }

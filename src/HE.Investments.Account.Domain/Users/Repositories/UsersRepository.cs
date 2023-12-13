@@ -16,6 +16,11 @@ public class UsersRepository : IUsersRepository
     public async Task<IList<UserDetails>> GetUsers()
     {
         var users = await _usersCrmContext.GetUsers();
+        if (!users.Any())
+        {
+            return new List<UserDetails>();
+        }
+
         var roles = await _usersCrmContext.GetUsersRole(users.Select(u => u.contactExternalId).ToList());
 
         return users
