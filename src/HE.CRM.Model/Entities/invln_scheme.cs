@@ -215,6 +215,7 @@ namespace DataverseModel
 			public const string invln_reducingenvironmentalimpact = "invln_reducingenvironmentalimpact";
 			public const string invln_regionalbenchmarkagainstthegrantperunit = "invln_regionalbenchmarkagainstthegrantperunit";
 			public const string invln_ruralbonusgrantperunitaspercentageofareaa = "invln_ruralbonusgrantperunitaspercentageofareaa";
+			public const string invln_scheme_invln_Externalcommses = "invln_scheme_invln_Externalcommses";
 			public const string invln_scheme_invln_govnotifyemails = "invln_scheme_invln_govnotifyemails";
 			public const string invln_scheme_SharePointDocumentLocations = "invln_scheme_SharePointDocumentLocations";
 			public const string invln_schemeId = "invln_schemeid";
@@ -2262,6 +2263,26 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_invln_hometype_application_invln_scheme");
 				this.SetRelatedEntities<DataverseModel.invln_HomeType>("invln_invln_hometype_application_invln_scheme", null, value);
 				this.OnPropertyChanged("invln_invln_hometype_application_invln_scheme");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N invln_scheme_invln_Externalcommses
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("invln_scheme_invln_Externalcommses")]
+		public System.Collections.Generic.IEnumerable<DataverseModel.invln_Externalcomms> invln_scheme_invln_Externalcommses
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetRelatedEntities<DataverseModel.invln_Externalcomms>("invln_scheme_invln_Externalcommses", null);
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_scheme_invln_Externalcommses");
+				this.SetRelatedEntities<DataverseModel.invln_Externalcomms>("invln_scheme_invln_Externalcommses", null, value);
+				this.OnPropertyChanged("invln_scheme_invln_Externalcommses");
 			}
 		}
 		

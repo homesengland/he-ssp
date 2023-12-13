@@ -145,9 +145,9 @@ public class HomeInformationSegmentEntity : IHomeTypeSegmentEntity
         AccessibilityCategory = _modificationTracker.Change(AccessibilityCategory, accessibilityCategory);
     }
 
-    public void ChangeInternalFloorArea(string? internalFloorArea)
+    public void ChangeInternalFloorArea(string? floorArea)
     {
-        var newValue = internalFloorArea.IsProvided() ? new FloorArea(internalFloorArea) : null;
+        var newValue = floorArea.IsProvided() ? new FloorArea(floorArea) : null;
         InternalFloorArea = _modificationTracker.Change(InternalFloorArea, newValue);
     }
 

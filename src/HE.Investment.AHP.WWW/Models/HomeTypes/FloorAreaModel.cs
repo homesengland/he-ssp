@@ -15,7 +15,7 @@ public class FloorAreaModel : HomeTypeBasicModel
     {
     }
 
-    public string? InternalFloorArea { get; set; }
+    public string? FloorArea { get; set; }
 
     public YesNoType MeetNationallyDescribedSpaceStandards { get; set; }
 

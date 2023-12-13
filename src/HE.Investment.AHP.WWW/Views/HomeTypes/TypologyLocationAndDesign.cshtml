@@ -15,16 +15,20 @@
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.TypologyLocationAndDesign"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
-                                  caption="@Model.Header"
-                                  title="Tell us how the typology, location and design of these homes meet the needs of the intended residents"/>
+                                  caption="@Model.Header"/>
 
-        <gds-span-hint>Typology is the classification and characteristics of the homes you are building.</gds-span-hint>
-        <gds-field-set class="govuk-!-margin-bottom-4 govuk-!-margin-top-4">
-            <vc:form-hidden-label
-                field-name="MoreInformation"
-                title="More information"/>
-            <he-text-area asp-for="MoreInformation" rows="7" class="govuk-!-margin-bottom-1"></he-text-area>
-            <gds-span-hint>You can enter up to 1500 characters</gds-span-hint>
+        <gds-field-set class="govuk-!-margin-bottom-4">
+            <he-error-form-group asp-for="MoreInformation">
+                <gds-h1 class="govuk-heading-xl">
+                    Tell us how the typology, location and design of these homes meet the needs of the intended residents
+                </gds-h1>
+                <gds-span-hint>Typology is the classification and characteristics of the homes you are building.</gds-span-hint>
+                <vc:form-hidden-label
+                    field-name="MoreInformation"
+                    title="More information"/>
+                <he-text-area asp-for="MoreInformation" rows="7" class="govuk-!-margin-bottom-1"></he-text-area>
+                <gds-span-hint>You can enter up to 1500 characters</gds-span-hint>
+            </he-error-form-group>
         </gds-field-set>
 
         <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">

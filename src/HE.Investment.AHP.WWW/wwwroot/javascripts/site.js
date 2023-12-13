@@ -286,8 +286,8 @@
   const addInputFieldErrorSummary = (message) => {
     let summaryValidationList = document.getElementById(validationSummaryListId);
     if (!summaryValidationList) {
-      const forms = document.getElementsByTagName('form');
-      forms[0].children[0].insertAdjacentHTML('afterend', emptyErrorSummary());
+      const form = document.querySelectorAll(fileInputSelector)[0].closest('form');
+      form.children[0].insertAdjacentHTML('afterend', emptyErrorSummary());
 
       summaryValidationList = document.getElementById(validationSummaryListId);
     }

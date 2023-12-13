@@ -46,7 +46,7 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
             return new GetUserOrganisationInformationQueryResponse(
                 organisationDetails,
                 userDetails.FirstName?.Value,
-                account.Roles.All(r => r.Role == UserAccountRole.LimitedUser),
+                account.Roles.All(r => r.Role == UserAccountRole.LimitedRole),
                 await _programmeRepository.GetLoanProgrammes(account, cancellationToken),
                 new List<ProgrammeType> { ProgrammeType.Loans });
         }
@@ -54,7 +54,7 @@ public class GetUserOrganisationInformationQueryHandler : IRequestHandler<GetUse
         return new GetUserOrganisationInformationQueryResponse(
             organisationDetails,
             userDetails.FirstName?.Value,
-            account.Roles.All(r => r.Role == UserAccountRole.LimitedUser),
+            account.Roles.All(r => r.Role == UserAccountRole.LimitedRole),
             await _programmeRepository.GetAllProgrammes(account, cancellationToken),
             new List<ProgrammeType> { ProgrammeType.Loans, ProgrammeType.Ahp });
     }
