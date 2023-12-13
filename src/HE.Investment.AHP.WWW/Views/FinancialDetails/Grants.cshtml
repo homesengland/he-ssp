@@ -7,25 +7,7 @@
 @model FinancialDetailsGrantsModel;
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.ExpectedGrants;
-
-    var (countyCouncilGrantsInvalid, countyCouncilGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.CountyCouncilGrants);
-    var (dHSCExtraCareGrantsInvalid, dHSCExtraCareGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.DHSCExtraCareGrants);
-    var (localAuthorityGrantsInvalid, localAuthorityErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.LocalAuthorityGrants);
-    var (socialServicesGrantsInvalid, socialServicesGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.SocialServicesGrants);
-    var (healthRelatedGrantsInvalid, healthRelatedGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.HeatlthRelatedGrants);
-    var (lotteryGrantsInvalid, lotteryGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.LotteryGrants);
-    var (otherPublicBodiesGrantsInvalid, otherPublicBodiesGrantsErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.OtherPublicBodiesGrants);
-
-    var errorsList = new string[]
-    {
-        countyCouncilGrantsErrors,
-        dHSCExtraCareGrantsErrors,
-        localAuthorityErrors,
-        socialServicesGrantsErrors,
-        healthRelatedGrantsErrors,
-        lotteryGrantsErrors,
-        otherPublicBodiesGrantsErrors
-    };
+    ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(FinancialDetailsValidationFieldsOrder.Grants);
 }
 <gds-div-grid-column-two-thirds>
     <form asp-controller="FinancialDetails" asp-action="Grants" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
