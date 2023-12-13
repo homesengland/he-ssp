@@ -198,7 +198,7 @@ public class ContactService : IContactService
         return Task.FromResult(GenerateContactRolesList(contactWebroles));
     }
 
-    public async Task<Guid> CreateNotConnectedContact(IOrganizationServiceAsync2 service, ContactDto contact, Guid organisationGuid, int role, int? portalType = null)
+    public async Task<Guid> CreateNotConnectedContact(IOrganizationServiceAsync2 service, ContactDto contact, Guid organisationGuid, int role, string inviterExternalId, int? portalType = null)
     {
         var contactToCreate = MapContactDtoToEntity(contact);
         var contactGuid = Guid.NewGuid();
