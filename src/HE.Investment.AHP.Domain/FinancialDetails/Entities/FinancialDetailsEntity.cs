@@ -14,6 +14,11 @@ public class FinancialDetailsEntity : IQuestion
     {
         SectionStatus = SectionStatus.NotStarted;
         ApplicationBasicInfo = applicationBasicInfo;
+        LandStatus = new LandStatus();
+        LandValue = new LandValue();
+        OtherApplicationCosts = new OtherApplicationCosts();
+        ExpectedContributions = new ExpectedContributionsToScheme(applicationBasicInfo.Tenure);
+        PublicGrants = new PublicGrants();
     }
 
     public FinancialDetailsEntity(

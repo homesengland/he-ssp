@@ -24,6 +24,10 @@ public class PublicGrants : ValueObject, IQuestion
         OtherPublicBodies = otherPublicBodies;
     }
 
+    public PublicGrants()
+    {
+    }
+
     public PublicGrantValue? CountyCouncil { get; }
 
     public PublicGrantValue? DhscExtraCare { get; }

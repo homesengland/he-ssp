@@ -1,6 +1,7 @@
 using FluentAssertions;
 using HE.Investment.AHP.Domain.FinancialDetails.Entities;
 using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
+using Xunit;
 
 namespace HE.Investment.AHP.Domain.Tests.FinancialDetails.Entities.PublicGrantsTests;
 

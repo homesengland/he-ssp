@@ -29,6 +29,11 @@ public class ExpectedContributionsToScheme : ValueObject, IQuestion
         ApplicationTenure = tenure;
     }
 
+    public ExpectedContributionsToScheme(Tenure tenure)
+    {
+        ApplicationTenure = tenure;
+    }
+
     public Tenure ApplicationTenure { get; }
 
     public ExpectedContributionValue? RentalIncome { get; private set; }
@@ -59,7 +64,12 @@ public class ExpectedContributionsToScheme : ValueObject, IQuestion
     {
         var totalExpectedContributions = RentalIncome.GetValueOrZero() + SalesOfHomesOnThisScheme.GetValueOrZero() +
                                          SalesOfHomesOnOtherSchemes.GetValueOrZero() + OwnResources.GetValueOrZero() + RcgfContributions.GetValueOrZero() +
-                                         OtherCapitalSources.GetValueOrZero() + SharedOwnershipSales.GetValueOrZero() + HomesTransferValue.GetValueOrZero();
+                                         OtherCapitalSources.GetValueOrZero() + HomesTransferValue.GetValueOrZero();
+
+        if (ApplicationTenure == Tenure.SharedOwnership)
+        {
+            return totalExpectedContributions + SharedOwnershipSales.GetValueOrZero();
+        }
 
         return totalExpectedContributions;
     }

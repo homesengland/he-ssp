@@ -12,6 +12,10 @@ public class LandValue : ValueObject, IQuestion
         IsPublicLand = isPublicLand;
     }
 
+    public LandValue()
+    {
+    }
+
     public CurrentLandValue? CurrentLandValue { get; }
 
     public bool? IsPublicLand { get; }
