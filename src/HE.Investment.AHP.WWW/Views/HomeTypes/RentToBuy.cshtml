@@ -1,15 +1,18 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Common
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.Messages
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.HomeTypes.RentToBuyModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.RentToBuy);
 }
 
 <gds-div-grid-column-two-thirds>
@@ -19,94 +22,99 @@
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.RentToBuy"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
-                                  caption="@Model.Header"/>
+                                  caption="@Model.Header"
+                                  title="Rent to Buy details"/>
         <gds-field-set>
-            <gds-legend>
-                <gds-h1 class="govuk-!-margin-bottom-2">Rent to Buy details</gds-h1>
-            </gds-legend>
 
-            <gds-legend>
-                <gds-h2>Enter the market value of each home</gds-h2>
-            </gds-legend>
-            <div class="govuk-!-margin-bottom-6">
+            <he-error-form-group asp-for="MarketValue">
+                <gds-legend>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter the market value of each home</gds-h2>
+                </gds-legend>
                 <gds-span-hint>
                     Enter the market value in pounds only.
                 </gds-span-hint>
-            </div>
-            <gds-input
-                class="govuk-input--width-4"
-                asp-hiddenlabeltext="Enter the number of market value"
-                govuk-formgroup-asp-for="MarketValue"
-                name="MarketValue"
-                value=@Model.MarketValue
-                asp-prefixtext="GdsInputPrefixText.Pounds"/>
+                <gds-input
+                    class="govuk-input--width-4"
+                    asp-hiddenlabeltext="Enter the number of market value"
+                    govuk-formgroup-asp-for="MarketValue"
+                    name="MarketValue"
+                    value=@Model.MarketValue
+                    asp-prefixtext="GdsInputPrefixText.Pounds"/>
+            </he-error-form-group>
 
-            <gds-legend>
-                <gds-h2>Enter the market rent per week</gds-h2>
-            </gds-legend>
-            <div class="govuk-!-margin-bottom-6">
+            <he-error-form-group asp-for="MarketRent">
+                <gds-legend>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter the market rent per week</gds-h2>
+                </gds-legend>
                 <gds-span-hint>
                     Enter the market rent in pounds and pence.
                 </gds-span-hint>
-            </div>
-            <gds-input
-                class="govuk-input--width-4"
-                asp-hiddenlabeltext="Enter the number of market rent per week"
-                govuk-formgroup-asp-for="MarketRent"
-                name="MarketRent"
-                value=@Model.MarketRent
-                asp-prefixtext="GdsInputPrefixText.Pounds"
-                asp-suffixtext="GdsInputSuffixText.PerWeek"/>
+                <gds-input
+                    class="govuk-input--width-4"
+                    asp-hiddenlabeltext="Enter the number of market rent per week"
+                    govuk-formgroup-asp-for="MarketRent"
+                    name="MarketRent"
+                    value=@Model.MarketRent
+                    asp-prefixtext="GdsInputPrefixText.Pounds"
+                    asp-suffixtext="GdsInputSuffixText.PerWeek"/>
+            </he-error-form-group>
 
-            <gds-legend>
-                <gds-h2 class="govuk-!-margin-bottom-0 govuk-!-margin-top-6">Enter the rent per week</gds-h2>
-            </gds-legend>
-            <gds-span-hint>
-                Enter the rent in pounds and pence. This is inclusive of all charges.
-            </gds-span-hint>
-            <gds-input
-                class="govuk-input--width-4"
-                asp-hiddenlabeltext="Enter the number of the rent per week"
-                govuk-formgroup-asp-for="ProspectiveRent"
-                name="ProspectiveRent"
-                value=@Model.ProspectiveRent
-                asp-prefixtext="GdsInputPrefixText.Pounds"
-                asp-suffixtext="GdsInputSuffixText.PerWeek"/>
+            <he-error-form-group asp-for="ProspectiveRent">
+                <gds-legend>
+                    <gds-h2 class="govuk-!-margin-bottom-0 govuk-!-margin-top-6">Enter the rent per week</gds-h2>
+                </gds-legend>
+                <gds-span-hint>
+                    Enter the rent in pounds and pence. This is inclusive of all charges.
+                </gds-span-hint>
+                <gds-input
+                    class="govuk-input--width-4"
+                    asp-hiddenlabeltext="Enter the number of the rent per week"
+                    govuk-formgroup-asp-for="ProspectiveRent"
+                    name="ProspectiveRent"
+                    value=@Model.ProspectiveRent
+                    asp-prefixtext="GdsInputPrefixText.Pounds"
+                    asp-suffixtext="GdsInputSuffixText.PerWeek"/>
+            </he-error-form-group>
 
-            <gds-legend>
-                <gds-h2 class="govuk-!-margin-bottom-0">Rent as percentage of market rent</gds-h2>
-            </gds-legend>
-            <gds-span-hint>
-                This is inclusive of all charges.
-            </gds-span-hint>
+            <he-error-form-group asp-for="RentAsPercentageOfMarketRent">
+                <gds-legend>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Rent as percentage of market rent</gds-h2>
+                </gds-legend>
+                <gds-span-hint>
+                    This is inclusive of all charges.
+                </gds-span-hint>
 
-            <gds-p class="govuk-!-margin-top-2">
-                @(Model.RentAsPercentageOfMarketRent ?? "00.00")% [calculated on page]
-            </gds-p>
+                <gds-p class="govuk-!-margin-top-2">
+                    @(Model.RentAsPercentageOfMarketRent ?? "00.00")% [calculated on page]
+                </gds-p>
+            </he-error-form-group>
 
-            <gds-legend>
-                <gds-h2>Would the target rent plus service charge for these homes exceed 80% of market rent?</gds-h2>
-            </gds-legend>
-            <details class="govuk-details" data-module="govuk-details">
-                <summary class="govuk-details__summary">
-                    <span class="govuk-details__summary-text">
-                        Help with target rent
-                    </span>
-                </summary>
-                <div class="govuk-details__text">
-                    Target rent is also known as "formula rent".
-                    <a class="govuk-link" target="_blank"
-                       href="https://www.gov.uk/government/publications/direction-on-the-rent-standard-from-1-april-2020/policy-statement-on-rents-for-social-housing">
-                        Find out more information on our Rent Policy Statement (opens in the new tab).
-                    </a>
-                </div>
-            </details>
-            <gds-radio govuk-formgroup-asp-for="TargetRentExceedMarketRent"
-                       asp-hiddenlabeltext="Target rent exceed 80% of market rent"
-                       value="@Model.TargetRentExceedMarketRent"
-                       asp-selectlistitems="@CommonFormOptions.YesNo"
-                       class="govuk-!-margin-bottom-2">
-            </gds-radio>
+            <he-error-form-group asp-for="TargetRentExceedMarketRent">
+                <gds-legend>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Would the target rent plus service charge for these homes exceed 80% of market rent?</gds-h2>
+                </gds-legend>
+                <details class="govuk-details" data-module="govuk-details">
+                    <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text">
+                            Help with target rent
+                        </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                        Target rent is also known as "formula rent".
+                        <a class="govuk-link" target="_blank"
+                           href="https://www.gov.uk/government/publications/direction-on-the-rent-standard-from-1-april-2020/policy-statement-on-rents-for-social-housing">
+                            Find out more information on our Rent Policy Statement (opens in the new tab).
+                        </a>
+                    </div>
+                </details>
+                <gds-radio govuk-formgroup-asp-for="TargetRentExceedMarketRent"
+                           asp-hiddenlabeltext="Target rent exceed 80% of market rent"
+                           value="@Model.TargetRentExceedMarketRent"
+                           asp-selectlistitems="@CommonFormOptions.YesNo"
+                           class="govuk-!-margin-bottom-2">
+                </gds-radio>
+            </he-error-form-group>
+
             <div>
                 <button class="govuk-button govuk-button--secondary" data-module="govuk-button" name="action" type="submit" value="@GenericMessages.Calculate" id="calculate-button">
                     Calculate
