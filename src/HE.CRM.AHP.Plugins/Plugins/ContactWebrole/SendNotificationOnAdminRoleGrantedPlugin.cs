@@ -44,7 +44,7 @@ namespace HE.CRM.AHP.Plugins.Plugins.ContactWebrole
         #region Base Methods Overrides
         public override void RegisterHandlers(CrmHandlerFactory<DataverseContext> handlerFactory, IList<ICrmHandler> registeredHandlers)
         {
-            registeredHandlers.Add(handlerFactory.GetHandler<SendNotificationOnRoleModificationHandler>());
+            registeredHandlers.Add(handlerFactory.GetHandler<SendNotificationOnAdminRoleGrantedHandler>());
         }
         #endregion
     }
