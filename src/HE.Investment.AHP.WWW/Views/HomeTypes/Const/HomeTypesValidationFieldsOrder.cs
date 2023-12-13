@@ -13,7 +13,7 @@ public static class HomeTypesValidationFieldsOrder
     public static List<string> SocialRent => new()
     {
         HomeTypesValidationFieldNames.MarketValue,
-        HomeTypesValidationFieldNames.MarketRent,
+        HomeTypesValidationFieldNames.ProspectiveRent,
     };
 
     public static List<string> SharedOwnership => new()
