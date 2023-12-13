@@ -2,10 +2,6 @@ namespace HE.Investments.Account.Shared.User;
 
 public record UserAccountRole(string Role)
 {
-    public const string LimitedUserLoans = "Limited user";
-
-    public const string AdminLoans = "Account administrator";
-
     public const string AdminRole = "Admin";
 
     public const string EnhancedRole = "Enhanced";
@@ -14,7 +10,7 @@ public record UserAccountRole(string Role)
 
     public const string ViewOnlyRole = "View only";
 
-    public const string LimitedRole = "Limited User";
+    public const string LimitedRole = "Limited user";
 
     public static UserAccountRole AnLimitedUser() => new(LimitedRole);
 

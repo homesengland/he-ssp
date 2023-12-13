@@ -52,7 +52,8 @@ public class UserOrganisationController : Controller
                 new List<Common.WWW.Models.ActionModel>
                 {
                     new($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation"),
-                    new("Manage your account", string.Empty, "Dashboard"),
+                    new("Add or manage users at this Organisation", "Index", "Users"),
+                    new("Manage your account", "GetProfileDetails", "User"),
                 }));
     }
 
