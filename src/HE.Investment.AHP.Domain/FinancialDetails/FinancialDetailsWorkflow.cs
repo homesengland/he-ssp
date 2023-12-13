@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Domain.Scheme.Workflows;
+using HE.Investments.Common.Contract;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Loans.Common.Routing;
 using Stateless;
@@ -26,7 +27,7 @@ public class FinancialDetailsWorkflow : IStateRouting<FinancialDetailsWorkflowSt
 
     public FinancialDetailsWorkflowState CurrentState(FinancialDetailsWorkflowState targetState)
     {
-        if (targetState != FinancialDetailsWorkflowState.Index)
+        if (targetState != FinancialDetailsWorkflowState.Index || _model.SectionStatus == SectionStatus.NotStarted)
         {
             return targetState;
         }

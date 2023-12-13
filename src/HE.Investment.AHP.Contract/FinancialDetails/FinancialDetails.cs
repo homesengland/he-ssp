@@ -1,3 +1,5 @@
+using HE.Investments.Common.Contract;
+
 namespace HE.Investment.AHP.Contract.FinancialDetails;
 public class FinancialDetails
 {
@@ -52,4 +54,6 @@ public class FinancialDetails
     public decimal TotalExpectedContributions { get; set; }
 
     public decimal TotalRecievedGrands { get; set; }
+
+    public SectionStatus SectionStatus { get; set; }
 }
