@@ -28,6 +28,7 @@ public class GetFinancialDetailsQueryHandler : IRequestHandler<GetFinancialDetai
             ExpectedWorkCost = financialDetails.OtherApplicationCosts.ExpectedWorksCosts?.Value,
             ExpectedOnCost = financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
             TotalExpectedCosts = financialDetails.ExpectedTotalCosts(),
+            SectionStatus = financialDetails.SectionStatus,
         };
 
         MapPublicGrants(financialDetailsDto, financialDetails!.PublicGrants);
