@@ -1,5 +1,6 @@
-﻿using System.Text;
+using System.Text;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Hosting;
 
 namespace HE.Investments.Common.WWW.Extensions;
 
@@ -19,6 +20,30 @@ public static class ModelStateExtensions
         }
 
         return (true, modelState[key]!.GetErrorMessage());
+    }
+
+    public static Dictionary<string, string>? GetOrderedErrors(this ModelStateDictionary? modelState, List<string> orderedKeys)
+    {
+        if (modelState is null)
+        {
+            return null;
+        }
+
+        var result = new Dictionary<string, string>();
+
+        foreach (var key in orderedKeys)
+        {
+            var (hasError, errorMsg) = GetErrors(modelState, key);
+            if (hasError)
+            {
+                if (!result.ContainsKey(key))
+                {
+                    result.Add(key, errorMsg);
+                }
+            }
+        }
+
+        return result.Count > 0 ? result : null;
     }
 
     public static string GetErrorMessage(this ModelStateEntry? modelStateEntry)

@@ -1,10 +1,12 @@
 @using HE.Investment.AHP.Domain.FinancialDetails;
 @using HE.Investment.AHP.WWW.Models.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
+@using HE.Investments.Common.WWW.Extensions;
 @model FinancialDetailsLandStatusModel
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.LandStatusPage;
     var purchasePriceLabel = Model.IsFinal ? "Enter the purchase price of the land" : "Enter the expected purchase price of the land";
+    ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(FinancialDetailsValidationFieldsOrder.LandStatus);
 }
 
 <gds-div-grid-column-two-thirds>

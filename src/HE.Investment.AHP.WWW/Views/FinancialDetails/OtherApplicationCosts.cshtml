@@ -1,15 +1,12 @@
+@using HE.Investment.AHP.Domain.FinancialDetails;
 @using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 @using HE.Investment.AHP.WWW.Models.FinancialDetails;
-@using HE.Investment.AHP.Domain.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 @using HE.Investments.Common.WWW.Extensions;
 @model FinancialDetailsOtherApplicationCostsModel;
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.OtherApplicationCosts;
-
-    var (expectedWorksCostsInvalid, _) = ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.ExpectedWorksCosts);
-    var (expectedOnCostsInvalid, _) = ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.ExpectedOnCosts);
-
+    ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(FinancialDetailsValidationFieldsOrder.OtherSchemeCosts);
 }
 <gds-div-grid-column-two-thirds>
     <form asp-controller="FinancialDetails" asp-action="OtherApplicationCosts" asp-route-applicationId="@Model.ApplicationId" asp-route-redirect="@Context.Request.Query["redirect"]" asp-method="post" novalidate>
