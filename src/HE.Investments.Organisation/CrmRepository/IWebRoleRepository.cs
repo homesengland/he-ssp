@@ -15,7 +15,7 @@ public interface IWebRoleRepository
 
     Entity? GetWebroleByName(IOrganizationServiceAsync2 service, string webroleName);
 
-    Entity? GetWebroleByPermissionOptionSetValue(IOrganizationServiceAsync2 service, int permission);
+    Entity? GetWebroleByPermissionOptionSetValue(IOrganizationServiceAsync2 service, int permission, string portalTypeFilter);
 
     List<Entity> GetWebrolesForPassedContacts(IOrganizationServiceAsync2 service, string contactExternalIds, Guid organisationGuid);
 }
