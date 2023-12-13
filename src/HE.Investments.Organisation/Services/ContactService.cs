@@ -13,7 +13,7 @@ public class ContactService : IContactService
     private readonly IPortalPermissionRepository _permissionRepository;
     private readonly IOrganizationRepository _organizationRepository;
 
-    private readonly int commonPortalTypeOption = 858110002;
+    private readonly int _commonPortalTypeOption = 858110002;
 
     public ContactService(IContactRepository contactRepository, IWebRoleRepository webRoleRepository, IPortalPermissionRepository permissionRepository, IOrganizationRepository organizationRepository)
     {
@@ -310,7 +310,7 @@ public class ContactService : IContactService
 
     private string GeneratePortalTypeFilter(int? portalType)
     {
-        portalType ??= commonPortalTypeOption;
+        portalType ??= _commonPortalTypeOption;
         return @"<filter>
                         <condition attribute=""invln_portal"" operator=""eq"" value=""" + portalType + @""" />
                    </filter>";
