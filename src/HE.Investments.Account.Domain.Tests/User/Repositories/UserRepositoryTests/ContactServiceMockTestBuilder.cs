@@ -43,7 +43,7 @@ public class ContactServiceMockTestBuilder
            It.IsAny<IOrganizationServiceAsync2>(),
            contactRolesDto.email,
            It.IsAny<string>(),
-           It.IsAny<int>())).ReturnsAsync(contactRolesDto);
+           It.IsAny<int?>())).ReturnsAsync(contactRolesDto);
         return this;
     }
 
