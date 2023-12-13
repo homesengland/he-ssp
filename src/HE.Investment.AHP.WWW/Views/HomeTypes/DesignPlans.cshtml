@@ -34,13 +34,15 @@
 
         <gds-field-set class="govuk-!-margin-bottom-4">
             <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0 govuk-!-margin-top-8">
-                <gds-legend>
-                    <gds-h3 class="govuk-!-margin-bottom-0">Tell us more about your design plans (optional)</gds-h3>
-                </gds-legend>
+                <he-error-form-group asp-for="MoreInformation">
+                    <gds-legend>
+                        <gds-h3 class="govuk-!-margin-bottom-0">Tell us more about your design plans (optional)</gds-h3>
+                    </gds-legend>
 
-                <gds-span-hint>Tell us any important information about the plans, or any additional information not included.</gds-span-hint>
-                <he-text-area asp-for="MoreInformation" rows="7"></he-text-area>
-                <gds-span-hint>You can enter up to 1500 characters</gds-span-hint>
+                    <gds-span-hint>Tell us any important information about the plans, or any additional information not included.</gds-span-hint>
+                    <he-text-area asp-for="MoreInformation" rows="7"></he-text-area>
+                    <gds-span-hint>You can enter up to 1500 characters</gds-span-hint>
+                </he-error-form-group>
             </div>
         </gds-field-set>
 

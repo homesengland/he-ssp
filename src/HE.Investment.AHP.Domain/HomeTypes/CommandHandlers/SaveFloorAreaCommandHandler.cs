@@ -17,7 +17,7 @@ public class SaveFloorAreaCommandHandler : SaveHomeTypeSegmentCommandHandlerBase
     protected override IEnumerable<Action<SaveFloorAreaCommand, IHomeTypeEntity>> SaveActions => new[]
     {
         (SaveFloorAreaCommand request, IHomeTypeEntity entity) =>
-            entity.HomeInformation.ChangeInternalFloorArea(request.InternalFloorArea),
+            entity.HomeInformation.ChangeInternalFloorArea(request.FloorArea),
         (request, entity) =>
             entity.HomeInformation.ChangeMeetNationallyDescribedSpaceStandards(request.MeetNationallyDescribedSpaceStandards),
     };
