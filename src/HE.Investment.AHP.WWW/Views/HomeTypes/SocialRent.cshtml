@@ -40,7 +40,7 @@
                     asp-prefixtext="GdsInputPrefixText.Pounds"/>
             </he-error-form-group>
 
-            <he-error-form-group asp-for="MarketRent">
+            <he-error-form-group asp-for="ProspectiveRent">
                 <gds-legend>
                     <gds-h2 class="govuk-!-margin-bottom-0">Enter the market rent per week</gds-h2>
                 </gds-legend>
@@ -50,9 +50,9 @@
                 <gds-input
                     class="govuk-input--width-4"
                     asp-hiddenlabeltext="Enter the number of market rent per week"
-                    govuk-formgroup-asp-for="MarketRent"
-                    name="MarketRent"
-                    value=@Model.MarketRent
+                    govuk-formgroup-asp-for="ProspectiveRent"
+                    name="ProspectiveRent"
+                    value=@Model.ProspectiveRent
                     asp-prefixtext="GdsInputPrefixText.Pounds"
                     asp-suffixtext="GdsInputSuffixText.PerWeek"/>
             </he-error-form-group>

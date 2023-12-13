@@ -857,7 +857,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new SocialRentModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
-            MarketRent = tenureDetails.MarketRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
         };
 
         return View(model);
@@ -876,7 +876,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 applicationId,
                 homeTypeId,
                 model.MarketValue,
-                model.MarketRent),
+                model.ProspectiveRent),
             model,
             cancellationToken);
     }
