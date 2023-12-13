@@ -5,7 +5,7 @@ using Microsoft.Xrm.Sdk.Messages;
 namespace HE.Investments.Organisation.CrmRepository;
 public interface IWebRoleRepository
 {
-    List<Entity> GetContactWebrole(IOrganizationServiceAsync2 service, Guid contactId, string portalType);
+    List<Entity> GetContactWebrole(IOrganizationServiceAsync2 service, Guid contactId, string portalTypeFilter);
 
     List<Entity> GetDefaultPortalRoles(IOrganizationServiceAsync2 service, int portalType);
 

@@ -8,7 +8,7 @@ using Microsoft.Xrm.Sdk.Query;
 namespace HE.Investments.Organisation.CrmRepository;
 public class WebRoleRepository : IWebRoleRepository
 {
-    public List<Entity> GetContactWebrole(IOrganizationServiceAsync2 service, Guid contactId, string portalType)
+    public List<Entity> GetContactWebrole(IOrganizationServiceAsync2 service, Guid contactId, string portalTypeFilter)
     {
         var fetchXML = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
 	                                <entity name='invln_contactwebrole'>
@@ -26,11 +26,9 @@ public class WebRoleRepository : IWebRoleRepository
 		                                <link-entity name='invln_webrole' from='invln_webroleid' to='invln_webroleid' link-type='inner' alias='ae'>
 			                                <attribute name='invln_portalpermissionlevelid'/>
 			                                <attribute name='invln_name'/>
-			                                <link-entity name='invln_portal' from='invln_portalid' to='invln_portalid' link-type='inner' alias='ag'>
-				                                <filter type='and'>
-					                                <condition attribute='invln_portal' operator='eq' value='" + portalType + @"'/>
-				                                </filter>
-			                                </link-entity>
+			                               <link-entity name=""invln_portal"" from=""invln_portalid"" to=""invln_portalid"">"
+                                            + portalTypeFilter +
+                                          @"</link-entity>
 		                                </link-entity>
 	                                </entity>
                                 </fetch>";

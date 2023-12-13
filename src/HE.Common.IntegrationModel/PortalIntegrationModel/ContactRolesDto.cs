@@ -26,5 +26,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string permissionLevel { get; set; }
 
         public Guid contactWebroleId { get; set; }
+
+        public int? permission { get; set; }
     }
 }

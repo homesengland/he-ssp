@@ -40,11 +40,10 @@ public class ContactServiceMockTestBuilder
         ContactRolesFromMock = contactRolesDto;
 
         _mock.Setup(x => x.GetContactRoles(
-            It.IsAny<IOrganizationServiceAsync2>(),
-            contactRolesDto.email,
-            It.IsAny<string>(),
-            contactRolesDto.externalId)).ReturnsAsync(contactRolesDto);
-
+           It.IsAny<IOrganizationServiceAsync2>(),
+           contactRolesDto.email,
+           It.IsAny<string>(),
+           It.IsAny<int?>())).ReturnsAsync(contactRolesDto);
         return this;
     }
 

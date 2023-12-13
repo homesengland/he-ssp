@@ -21,6 +21,9 @@ namespace DataverseModel
 		AHP = 858110000,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
+		Common = 858110002,
+		
+		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Loans = 858110001,
 	}
 }
