@@ -24,7 +24,7 @@ public class GetFinancialCheckAnswersQueryHandler : IRequestHandler<GetFinancial
             financialDetails.LandValue.IsPublicLand);
 
         var totalSchemeCost = new TotalSchemeCost(
-            financialDetails.LandStatus.PurchasePrice?.Value ?? financialDetails.LandStatus.ExpectedPurchasePrice?.Value,
+            financialDetails.LandValue.CurrentLandValue?.Value,
             financialDetails.OtherApplicationCosts.ExpectedWorksCosts?.Value,
             financialDetails.OtherApplicationCosts.ExpectedOnCosts?.Value,
             financialDetails.ExpectedTotalCosts());

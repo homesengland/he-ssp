@@ -118,7 +118,7 @@ public class FinancialDetailsEntity : IQuestion
         SectionStatus = SectionStatus.Completed;
     }
 
-    public decimal ExpectedTotalCosts() => OtherApplicationCosts.ExpectedTotalCosts();
+    public decimal ExpectedTotalCosts() => OtherApplicationCosts.ExpectedTotalCosts() + (LandValue.CurrentLandValue?.Value ?? 0);
 
     public decimal ExpectedTotalContributions() => ExpectedContributions.CalculateTotal() + PublicGrants.CalculateTotal();
 

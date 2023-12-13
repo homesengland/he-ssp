@@ -1,6 +1,5 @@
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.WWW.Models.Application;
-using HE.Investments.Common.WWW.Components.SectionSummary;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace HE.Investment.AHP.WWW.Models.FinancialDetails;

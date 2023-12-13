@@ -9,6 +9,6 @@ public record GetFinancialCheckAnswersResult(string ApplicationName, SectionStat
 
 public record LandValueSummary(decimal? PurchasePrice, decimal? CurrentValue, bool? IsPublicLand);
 
-public record TotalSchemeCost(decimal? PurchasePrice, decimal? WorkCosts, decimal? OnCosts, decimal? Total);
+public record TotalSchemeCost(decimal? CurrentValue, decimal? WorkCosts, decimal? OnCosts, decimal? Total);
 
 public record TotalContributions(decimal? YourContributions, decimal? GrantsFromOtherPublicBodies, decimal? Total);
