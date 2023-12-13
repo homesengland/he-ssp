@@ -43,7 +43,7 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
 
     private string GetCurrencyStringWithPrefix(decimal? value)
     {
-        return "£" + value.ToWholeNumberString() ?? "Not provided";
+        return "£" + value.ToWholeNumberString();
     }
 
     private string CreateFinancialDetailsActionUrl(IUrlHelper urlHelper, string applicationId, string actionName, bool allowWcagDuplicate = false)
@@ -93,9 +93,9 @@ public class FinancialDetailsSummaryViewModelFactory : IFinancialDetailsSummaryV
         var costsItems = new List<SectionSummaryItemModel>
         {
         new SectionSummaryItemModel(
-           "Purchase price",
-           new List<string>() { GetCurrencyStringWithPrefix(totalSchemeCost.PurchasePrice) },
-           CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandStatus)),
+           "Current value",
+           new List<string>() { GetCurrencyStringWithPrefix(totalSchemeCost.CurrentValue) },
+           CreateFinancialDetailsActionUrl(urlHelper, applicationId, nameof(FinancialDetailsController.LandValue)),
            null,
            true,
            true),
