@@ -24,7 +24,7 @@ namespace DataverseModel
 		Enhanced = 858110004,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InputOnly = 858110003,
+		Inputonly = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Limiteduser = 858110001,
