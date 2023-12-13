@@ -1,7 +1,6 @@
-using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-using HE.Investment.AHP.Domain.HomeTypes.Commands;
+using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 
-namespace HE.Investment.AHP.Domain.FinancialDetails.Constants;
+namespace HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 public static class FinancialDetailsValidationFieldsOrder
 {
     public static List<string> LandStatus => new() { FinancialDetailsValidationFieldNames.PurchasePrice };
