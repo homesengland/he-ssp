@@ -1,20 +1,21 @@
-@using HE.Investments.Common.WWW.Extensions
 @using HE.Investment.AHP.WWW.Models.Application
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Components.BackLinkWithCallback
 @using HE.Investments.Common.WWW.Components.FormButton
 @using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Common.WWW.Components.RadioList
+@using HE.Investments.Common.WWW.Models
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationBasicModel
 
 @{
     ViewData["Title"] = "Application tenure";
-    var hints = new[]
-    {
-        "Homes let at below market rent by a registered provider. The rent, including service charge, is set at up to 80% of the local market rent for an equivalent home.",
-        "Social rent is low-cost rental social housing that is let at below market rent by a registered provider based on a formula set by the government.",
-        "Shared Ownership allows a customer to purchase a share of a home and pay rent on the remaining share.",
-        "Homes let to working households at a lower cost to give them the opportunity to save for a deposit to but their first home.",
-        "HOLD is a form of Shared Ownership that enable providers to purchase homes on the open market that meet the specific requirements of the homeowner.",
-        "OPSO is a form of Shared Ownership for people aged 55 and over.",
-    };
+    var tenures = Tenures.AvailableTenures
+        .Select(r => new ExtendedSelectListItem(
+            r.Key.GetDescription(),
+            r.Key.ToString(),
+            r.Key == Model.Tenure,
+            r.Value))
+        .ToList();
 }
 <gds-div-grid-column-two-thirds>
     <vc:back-link-with-callback url="@Url.Action("Name", "Application", new { applicationId = Model.Id })"/>
@@ -22,22 +23,13 @@
     <form asp-controller="Application" asp-action="Tenure" asp-method="post" asp-route-callbackUrl="@Context.Request.Query["callbackUrl"]" novalidate>
         <vc:form-header caption="@Model.Name" title="What is the tenure of the homes on this application?"/>
         <gds-field-set role="group">
-            <gds-div-form-group>
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.Name)
 
-                @Html.HiddenFor(m => m.Id)
-                @Html.HiddenFor(m => m.Name)
+            <vc:radio-list
+                field-name="@(nameof(Model.Tenure))"
+                available-options="@tenures"/>
 
-                <vc:error-message field-name="Tenure"/>
-                <gds-legend>
-                    <he-custom-radio
-                        asp-for="Tenure"
-                        value="@Model.Tenure"
-                        radio-items="Tenures.AvailableTenures"
-                        radio-hints="@hints"
-                        class="govuk-!-margin-bottom-2">
-                    </he-custom-radio>
-                </gds-legend>
-            </gds-div-form-group>
         </gds-field-set>
 
         <gds-details>

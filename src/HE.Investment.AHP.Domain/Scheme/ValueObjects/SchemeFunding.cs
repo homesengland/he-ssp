@@ -35,18 +35,18 @@ public class SchemeFunding : ValueObject
         var requiredFundingName = "total funding you require";
         RequiredFunding = NumericValidator
             .For(requiredFundingGbp, nameof(RequiredFunding), requiredFundingName, fundingOperationResult)
-            .IsProvided("Enter the total of funding you are requesting")
+            .IsProvided()
             .IsNumber()
             .IsWholeNumber()
-            .IsBetween(1, 99999999999, ValidationErrorMessage.StringLengthExceeded(requiredFundingName, 11));
+            .IsBetween(1, 99999999999);
 
         var housesToDeliverName = "number of homes this scheme will deliver";
         HousesToDeliver = NumericValidator
             .For(housesToDeliver, nameof(HousesToDeliver), housesToDeliverName, housesOperationResult)
-            .IsProvided("The number of homes this scheme will deliver must be a whole number above 0")
+            .IsProvided()
             .IsNumber()
             .IsWholeNumber()
-            .IsBetween(1, 999999, ValidationErrorMessage.StringLengthExceeded(housesToDeliverName, 6));
+            .IsBetween(1, 999999);
 
         return fundingOperationResult.AddValidationErrors(housesOperationResult.Errors);
     }

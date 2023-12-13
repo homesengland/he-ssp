@@ -1,6 +1,5 @@
 @using HE.Investment.AHP.Domain.Scheme.Workflows
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.Components.FormFieldTitle
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @model HE.Investment.AHP.WWW.Models.Scheme.SchemeViewModel
@@ -16,15 +15,12 @@
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
         <gds-field-set role="group">
-            <vc:form-field-title
-                field-name="SalesRisk"
-                title="Tell us your assessment of the sales risk and how you will mitigate this"/>
-            <HeErrorFormGroup asp-for="SalesRisk">
-                <he-text-area asp-for="SalesRisk" rows="5" class="govuk-!-margin-bottom-2"></he-text-area>
-                <he-div-hint>
-                    You can enter up to 1500 characters
-                </he-div-hint>
-            </HeErrorFormGroup>
+
+            <vc:text-area-input
+                field-name="@nameof(Model.SalesRisk)"
+                label="Tell us your assessment of the sales risk and how you will mitigate this"
+                value="@Model.SalesRisk"/>
+
         </gds-field-set>
         <vc:form-button/>
     </form>
