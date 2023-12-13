@@ -134,7 +134,7 @@ public class WebRoleRepository : IWebRoleRepository
         return result1.Entities.FirstOrDefault();
     }
 
-    public Entity? GetWebroleByPermissionOptionSetValue(IOrganizationServiceAsync2 service, int permission)
+    public Entity? GetWebroleByPermissionOptionSetValue(IOrganizationServiceAsync2 service, int permission, string portalTypeFilter)
     {
         var fetchXml = @"<fetch>
                           <entity name=""invln_webrole"">
@@ -145,6 +145,9 @@ public class WebRoleRepository : IWebRoleRepository
                                 <condition attribute=""invln_permission"" operator=""eq"" value=""" + permission + @""" />
                               </filter>
                             </link-entity>
+                            <link-entity name=""invln_portal"" from=""invln_portalid"" to=""invln_portalid"">"
+                            + portalTypeFilter +
+                          @"</link-entity>
                           </entity>
                         </fetch>";
 

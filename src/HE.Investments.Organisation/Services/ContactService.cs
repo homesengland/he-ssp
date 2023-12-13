@@ -13,6 +13,8 @@ public class ContactService : IContactService
     private readonly IPortalPermissionRepository _permissionRepository;
     private readonly IOrganizationRepository _organizationRepository;
 
+    private readonly int commonPortalTypeOption = 858110002;
+
     public ContactService(IContactRepository contactRepository, IWebRoleRepository webRoleRepository, IPortalPermissionRepository permissionRepository, IOrganizationRepository organizationRepository)
     {
         _contactRepository = contactRepository;
@@ -153,7 +155,7 @@ public class ContactService : IContactService
         return Task.FromResult(contactList);
     }
 
-    public async Task UpdateContactWebrole(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, int newWebRole)
+    public async Task UpdateContactWebrole(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, int newWebRole, int? portalType = null)
     {
         var contact = _contactRepository.GetContactViaExternalId(service, contactExternalId);
         if (contact != null)
@@ -161,7 +163,8 @@ public class ContactService : IContactService
             var currentRoleName = _webRoleRepository.GetContactWebroleForOrganisation(service, contact.Id, organisationGuid);
             if (currentRoleName != null)
             {
-                var webrole = _webRoleRepository.GetWebroleByPermissionOptionSetValue(service, newWebRole);
+                var portalTypeFilter = GeneratePortalTypeFilter(portalType);
+                var webrole = _webRoleRepository.GetWebroleByPermissionOptionSetValue(service, newWebRole, portalTypeFilter);
                 if (webrole != null)
                 {
                     var contactWebroleToUpdate = new Entity("invln_contactwebrole")
@@ -190,6 +193,32 @@ public class ContactService : IContactService
         contactExternalFilter += "</condition>";
         var contactWebroles = _webRoleRepository.GetWebrolesForPassedContacts(service, contactExternalFilter, organisationGuid);
         return Task.FromResult(GenerateContactRolesList(contactWebroles));
+    }
+
+    public async Task<Guid> CreateNotConnectedContact(IOrganizationServiceAsync2 service, ContactDto contact, Guid organisationGuid, int role, int? portalType = null)
+    {
+        var contactToCreate = MapContactDtoToEntity(contact);
+        var contactGuid = Guid.NewGuid();
+        contactToCreate.Id = contactGuid;
+        contactToCreate["invln_externalid"] = $"_{contactGuid}";
+
+        var portalTypeFilter = GeneratePortalTypeFilter(portalType);
+        var webrole = _webRoleRepository.GetWebroleByPermissionOptionSetValue(service, role, portalTypeFilter) ?? throw new InvalidPluginExecutionException("Given webrole does not exists");
+        var organisationEntityReference = new EntityReference("account", organisationGuid);
+
+        _ = await service.CreateAsync(contactToCreate);
+        var contactWebroleToCreate = new Entity("invln_contactwebrole")
+        {
+            Attributes =
+            {
+                ["invln_accountid"] = organisationEntityReference,
+                ["invln_contactid"] = contactToCreate.ToEntityReference(),
+                ["invln_webroleid"] = webrole?.ToEntityReference(),
+            },
+        };
+        _ = await service.CreateAsync(contactWebroleToCreate);
+
+        return contactToCreate.Id;
     }
 
     private List<ContactRolesDto> GenerateContactRolesList(List<Entity> contactWebroles)
@@ -272,13 +301,9 @@ public class ContactService : IContactService
 
     private string GeneratePortalTypeFilter(int? portalType)
     {
-        if (portalType != null)
-        {
-            return @"<filter>
+        portalType ??= commonPortalTypeOption;
+        return @"<filter>
                         <condition attribute=""invln_portal"" operator=""eq"" value=""" + portalType + @""" />
                    </filter>";
-        }
-
-        return string.Empty;
     }
 }
