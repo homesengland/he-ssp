@@ -34,6 +34,7 @@ public static class ModelStateExtensions
         foreach (var key in orderedKeys)
         {
             var (hasError, errorMsg) = GetErrors(modelState, key);
+
             if (hasError)
             {
                 if (!result.ContainsKey(key))
