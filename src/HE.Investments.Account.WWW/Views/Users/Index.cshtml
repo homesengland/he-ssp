@@ -20,12 +20,14 @@
         <link-button action-url="@Url.Action("Invite")">Invite a new user</link-button>
     </gds-div-grid-column-two-thirds>
 
-    @if (Model.usersAndJoinRequests.JoinRequests.Any())
-    {
-        <gds-h2>Manage requests to join your organisation</gds-h2>
-        <gds-p>Manage users and accept or reject requests to join the organisation. </gds-p>
-        <vc:join-requests-table users="@Model.usersAndJoinRequests.JoinRequests"/>
-    }
+    <div class="govuk-grid-column-full govuk-!-padding-left-0">
+        @if (Model.usersAndJoinRequests.JoinRequests.Any())
+        {
+            <gds-h2>Manage requests to join your organisation</gds-h2>
+            <gds-p>Manage users and accept or reject requests to join the organisation. </gds-p>
+            <vc:join-requests-table users="@Model.usersAndJoinRequests.JoinRequests"/>
+        }
+    </div>
 
     <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
         <gds-h2>What each role can do</gds-h2>

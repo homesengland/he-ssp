@@ -47,9 +47,9 @@ public class FundingTests : ViewTestBase
         document
             .HasElementWithText("span", Model.ApplicationName)
             .HasElementWithText("h1", "Funding details")
-            .HasElementWithText("h2", "Enter how much AHP CME 21-26 funding you require on this scheme")
+            .HasElementWithText("label", "Enter how much AHP CME 21-26 funding you require on this scheme")
             .HasInput("RequiredFunding")
-            .HasElementWithText("h2", "Enter how many homes you intend to deliver")
+            .HasElementWithText("label", "Enter how many homes you intend to deliver")
             .HasInput("HousesToDeliver")
             .HasElementWithText("button", "Save and continue");
     }

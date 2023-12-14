@@ -40,7 +40,7 @@ public class TenureTests : ViewTestBase
     private static void AssertView(IHtmlDocument document, ApplicationBasicModel model, string? errorMessage = null)
     {
         document
-            .HasElementWithText("span", model.Name)
+            .HasElementWithText("span", model.Name!)
             .HasElementWithText("h1", "What is the tenure of the homes on this application?")
             .HasSummaryDetails("Tenure refers to the conditions around ownership or rental of the properties")
             .HasElementWithText("button", "Save and continue")
