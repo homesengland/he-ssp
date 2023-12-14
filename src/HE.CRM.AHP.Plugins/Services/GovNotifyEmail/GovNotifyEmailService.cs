@@ -227,8 +227,8 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                 var contact = _contactRepositoryAdmin.GetById(contactId.Id, nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
                 var ahpApplication = _ahpApplicationRepositoryAdmin.GetById(ahpApplicationId.Id, nameof(Contact.OwnerId).ToLower());
 
-                this.TracingService.Trace("AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK");
-                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK");
+                this.TracingService.Trace("AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION");
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION");
                 var govNotParams = new AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION()
                 {
                     templateId = emailTemplate?.invln_templateid,
