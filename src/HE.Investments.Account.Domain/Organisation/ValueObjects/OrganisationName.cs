@@ -33,9 +33,9 @@ public class OrganisationName : ValueObject
         lengthErrorMessage = lengthErrorMessage != null ? ValidationErrorMessage.ShortInputLengthExceeded(lengthErrorMessage) : null;
 
         Name = Validator
-            .For(name, nameof(Name), operationResult)
+            .For(name, nameof(Name), "Organisation name", operationResult)
             .IsProvided(notProvidedErrorMessage)
-            .IsShortInput(lengthErrorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded("Organisation name"));
+            .IsShortInput(lengthErrorMessage);
 
         return operationResult;
     }

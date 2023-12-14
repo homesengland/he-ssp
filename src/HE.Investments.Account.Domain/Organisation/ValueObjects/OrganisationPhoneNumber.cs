@@ -30,9 +30,9 @@ public class OrganisationPhoneNumber : ValueObject
         lengthErrorMessage = lengthErrorMessage != null ? ValidationErrorMessage.ShortInputLengthExceeded(lengthErrorMessage) : null;
 
         PhoneNumber = Validator
-            .For(phoneNumber, nameof(PhoneNumber), operationResult)
+            .For(phoneNumber, nameof(PhoneNumber), "Phone number", operationResult)
             .IsProvided(OrganisationErrorMessages.MissingPhoneNumber)
-            .IsShortInput(lengthErrorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded("Phone number"));
+            .IsShortInput(lengthErrorMessage);
 
         return operationResult;
     }

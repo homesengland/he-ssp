@@ -1,0 +1,17 @@
+@model (string title, string hint)
+
+<gds-legend>
+    @if (!string.IsNullOrWhiteSpace(Model.title))
+    {
+        <gds-h2>
+            @Model.title
+        </gds-h2>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.hint))
+    {
+        <he-div-hint>
+            @Model.hint
+        </he-div-hint>
+    }
+</gds-legend>

@@ -9,8 +9,11 @@
         <label class="govuk-label govuk-radios__label" for="@id">
             @option.Text
         </label>
-        <he-div-hint class="govuk-!-padding-left-3">
-            @option.Hint
-        </he-div-hint>
+        @if (!string.IsNullOrWhiteSpace(option.Hint))
+        {
+            <he-div-hint class="govuk-!-padding-left-3">
+                @option.Hint
+            </he-div-hint>
+        }
     </div>
 }

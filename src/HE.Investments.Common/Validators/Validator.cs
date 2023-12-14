@@ -8,38 +8,40 @@ public class Validator
 {
     private readonly string? _value;
     private readonly string _fieldName;
+    private readonly string _fieldLabel;
     private readonly OperationResult _operationResult;
     private bool _isError;
 
-    private Validator(string? value, string fieldName, OperationResult operationResult)
+    private Validator(string? value, string fieldName, string fieldLabel, OperationResult operationResult)
     {
         _value = value;
         _fieldName = fieldName;
+        _fieldLabel = fieldLabel;
         _operationResult = operationResult;
     }
 
     public static implicit operator string(Validator v) => v._value!;
 
-    public static Validator For(string? input, string fieldName, OperationResult? operationResult = null)
+    public static Validator For(string? input, string fieldName, string fieldLabel, OperationResult? operationResult = null)
     {
-        return new Validator(input, fieldName, operationResult ?? OperationResult.New());
+        return new Validator(input, fieldName, fieldLabel, operationResult ?? OperationResult.New());
     }
 
     public Validator IsProvided(string? errorMessage = null)
     {
         if (!_value.IsProvided())
         {
-            AddError(_fieldName, errorMessage);
+            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MissingRequiredField(_fieldLabel));
         }
 
         return this;
     }
 
-    public Validator IsProvidedIf(bool condition, string errorMessage)
+    public Validator IsProvidedIf(bool condition, string? errorMessage = null)
     {
         if (condition && !_value.IsProvided())
         {
-            AddError(_fieldName, errorMessage);
+            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.MissingRequiredField(_fieldLabel));
         }
 
         return this;
@@ -54,13 +56,13 @@ public class Validator
 
         if (_value!.Length > MaximumInputLength.ShortInput)
         {
-            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded(_fieldName));
+            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded(_fieldLabel));
         }
 
         return this;
     }
 
-    public Validator IsLongInput()
+    public Validator IsLongInput(string? errorMessage = null)
     {
         if (_value.IsNotProvided())
         {
@@ -69,7 +71,7 @@ public class Validator
 
         if (_value!.Length > MaximumInputLength.LongInput)
         {
-            AddError(_fieldName, ValidationErrorMessage.LongInputLengthExceeded(_fieldName));
+            AddError(_fieldName, errorMessage ?? ValidationErrorMessage.LongInputLengthExceeded(_fieldLabel));
         }
 
         return this;

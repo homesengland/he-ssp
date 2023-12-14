@@ -9,21 +9,8 @@
 }
 
 <gds-div-form-group class="@groupClass">
-    <gds-legend>
-        @if (!string.IsNullOrWhiteSpace(Model.title))
-        {
-            <gds-h2>
-                @Model.title
-            </gds-h2>
-        }
-    </gds-legend>
 
-    @if (!string.IsNullOrWhiteSpace(Model.hint))
-    {
-        <div class="govuk-hint">
-            @Model.hint
-        </div>
-    }
+    <vc:radio-list-header title="@Model.title" hint="@Model.hint"/>
 
     <vc:error-message field-name="@Model.fieldName"/>
 

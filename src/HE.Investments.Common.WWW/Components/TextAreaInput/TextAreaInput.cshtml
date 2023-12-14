@@ -1,0 +1,24 @@
+@using HE.Investments.Common.WWW.Extensions
+@model (string fieldName, string label, string hint, string value, string cssClass, int rows, int maxLength)
+
+@{
+    var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
+    var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
+    var inputClass = $"govuk-textarea {Model.cssClass}";
+    inputClass += hasError ? " govuk-textarea--error" : string.Empty;
+}
+
+<gds-div-form-group class="@groupClass">
+    <vc:input-header
+        field-name="@Model.fieldName"
+        label="@Model.label"
+        hint="@Model.hint"/>
+
+    <vc:error-message field-name="@Model.fieldName"/>
+
+    <textarea class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" rows="@Model.rows" aria-describedby="more-detail-hint">@Model.value</textarea>
+
+    <he-div-hint>
+        You can enter up to @Model.maxLength characters
+    </he-div-hint>
+</gds-div-form-group>

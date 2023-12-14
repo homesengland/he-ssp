@@ -27,8 +27,8 @@ public class SalesRisk : ValueObject
         var operationResult = OperationResult.New();
 
         Value = Validator
-            .For(evidence, nameof(SalesRisk), operationResult)
-            .IsProvidedIf(isCompleteCheck, "Sales risk of shared ownership is missing")
+            .For(evidence, nameof(SalesRisk), "Sales risk of shared ownership", operationResult)
+            .IsProvidedIf(isCompleteCheck)
             .IsLongInput();
 
         return operationResult;
