@@ -14,5 +14,5 @@ public class SocialRentModel : HomeTypeBasicModel
 
     public string? MarketValue { get; set; }
 
-    public string? MarketRent { get; set; }
+    public string? ProspectiveRent { get; set; }
 }

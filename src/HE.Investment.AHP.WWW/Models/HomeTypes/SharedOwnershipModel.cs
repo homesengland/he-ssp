@@ -14,11 +14,11 @@ public class SharedOwnershipModel : HomeTypeBasicModel
 
     public string? MarketValue { get; set; }
 
-    public string? InitialSalePercentage { get; set; }
+    public string? InitialSale { get; set; }
 
     public string? ExpectedFirstTranche { get; set; }
 
-    public string? SharedOwnershipWeeklyRent { get; set; }
+    public string? ProspectiveRent { get; set; }
 
     public string? SharedOwnershipRentAsPercentageOfTheUnsoldShare { get; set; }
 }

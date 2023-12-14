@@ -22,28 +22,25 @@ public static class ModelStateExtensions
         return (true, modelState[key]!.GetErrorMessage());
     }
 
-    public static Dictionary<string, string>? GetOrderedErrors(this ModelStateDictionary? modelState, List<string> orderedKeys)
+    public static Dictionary<string, string> GetOrderedErrors(this ModelStateDictionary? modelState, List<string> orderedKeys)
     {
+        var result = new Dictionary<string, string>();
+
         if (modelState is null)
         {
-            return null;
+            return result;
         }
-
-        var result = new Dictionary<string, string>();
 
         foreach (var key in orderedKeys)
         {
             var (hasError, errorMsg) = GetErrors(modelState, key);
             if (hasError)
             {
-                if (!result.ContainsKey(key))
-                {
-                    result.Add(key, errorMsg);
-                }
+                result.TryAdd(key, errorMsg);
             }
         }
 
-        return result.Count > 0 ? result : null;
+        return result;
     }
 
     public static string GetErrorMessage(this ModelStateEntry? modelStateEntry)

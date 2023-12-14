@@ -9,12 +9,12 @@ public class InitialSale : RequiredIntForCalculationValueObject
     private const int MaxValue = 75;
 
     public InitialSale(string? value, bool isCalculation)
-        : base(value, nameof(MarketValue), DisplayName, MinValue, MaxValue, isCalculation)
+        : base(value, nameof(InitialSale), DisplayName, MinValue, MaxValue, isCalculation)
     {
     }
 
     public InitialSale(int value)
-        : base(value, nameof(MarketValue), DisplayName, MinValue, MaxValue)
+        : base(value, nameof(InitialSale), DisplayName, MinValue, MaxValue)
     {
     }
 }
