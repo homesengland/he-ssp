@@ -12,5 +12,11 @@ public static class HomeTypesValidationFieldNames
 
     public const string InitialSale = nameof(InitialSale);
 
-    public const string ExpectedFirstTranche = nameof(ExpectedFirstTranche);
+    public const string NumberOfHomes = nameof(NumberOfHomes);
+
+    public const string NumberOfBedrooms = nameof(NumberOfBedrooms);
+
+    public const string MaximumOccupancy = nameof(MaximumOccupancy);
+
+    public const string NumberOfStoreys = nameof(NumberOfStoreys);
 }

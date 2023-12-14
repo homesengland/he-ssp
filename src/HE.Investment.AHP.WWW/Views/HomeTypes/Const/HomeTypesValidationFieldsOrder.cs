@@ -30,4 +30,12 @@ public static class HomeTypesValidationFieldsOrder
         HomeTypesValidationFieldNames.ProspectiveRent,
         HomeTypesValidationFieldNames.TargetRentExceedMarketRent,
     };
+
+    public static List<string> HomeInformation => new()
+    {
+        HomeTypesValidationFieldNames.NumberOfHomes,
+        HomeTypesValidationFieldNames.NumberOfBedrooms,
+        HomeTypesValidationFieldNames.MaximumOccupancy,
+        HomeTypesValidationFieldNames.NumberOfStoreys,
+    };
 }
