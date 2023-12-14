@@ -68,7 +68,7 @@
                 <a href=@(ViewData["HomepageUrl"] ?? "/") class="govuk-header__link govuk-header__link--service-name">
                     @serviceName
                 </a>
-                    @if (User.Identity.IsAuthenticated)
+                    @if (User.Identity is {IsAuthenticated: true })
                     {
                         <a class="govuk-header__link govuk-header__signin govuk-link--no-visited-state" href="@signOutUrl">Sign out</a>
                     }

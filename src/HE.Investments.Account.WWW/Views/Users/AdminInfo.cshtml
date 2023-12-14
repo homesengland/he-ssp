@@ -3,7 +3,7 @@
 @{
     var title = "How to confirm a user as an admin";
     ViewData["Title"] = title;
-    var action = Url.Action("Manage", "Users", new { id = Model.UserId });
+    var action = Url.Action("Change", "Users", new { id = Model.UserId });
 
     var items = new List<string>
     {

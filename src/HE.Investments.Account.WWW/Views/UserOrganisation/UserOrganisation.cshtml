@@ -15,9 +15,12 @@
 
         <partial name="~/Partials/_Notification.cshtml" />
 
-        <gds-p class="govuk-!-margin-top-4 govuk-!-margin-bottom-0">
-            Welcome @Model?.UserName
-        </gds-p>
+        @if (!string.IsNullOrWhiteSpace(Model.UserName))
+        {
+            <gds-p class="govuk-!-margin-top-4 govuk-!-margin-bottom-0">
+                Welcome @Model?.UserName
+            </gds-p>
+        }
         <gds-h1 size="ControlSize.L" class="govuk-!-padding-top-0 govuk-!-margin-bottom-0">
             @Model.OrganisationName's Homes England account
         </gds-h1>

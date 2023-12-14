@@ -3,4 +3,4 @@ using MediatR;
 
 namespace HE.Investments.Account.Contract.UserOrganisation.Commands;
 
-public record RemoveLinkBetweenUserAndOrganisationCommand() : IRequest<OperationResult>;
+public record RemoveLinkBetweenUserAndOrganisationCommand(string UserId) : IRequest<OperationResult>;

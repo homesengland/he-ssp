@@ -1,6 +1,5 @@
 @using HE.Investment.AHP.Domain.Scheme.Workflows
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.Components.FormFieldTitle
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.UploadFile
 @using HE.Investments.Common.WWW.Components.WorkflowBackButton
@@ -20,20 +19,20 @@
         @Html.HiddenFor(x => x.AllowedExtensions)
         @Html.HiddenFor(x => x.MaxFileSizeInMegabytes)
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
-            <gds-field-set role="group">
-                <vc:text-area-input
-                    field-name="@nameof(Model.StakeholderDiscussionsReport)"
-                    label="Tell us about discussions you have had with local stakeholders"
-                    value="@Model.StakeholderDiscussionsReport"/>
 
-                <vc:upload-file
-                    title="Upload any evidence you have of Local Authority support (optional)"
-                    allowed-extensions="@Model.AllowedExtensions"
-                    field-name="StakeholderDiscussionFile"
-                    description="This could be any correspondence, including an email chain. We only require one document."
-                    max-file-size-in-mb="@Model.MaxFileSizeInMegabytes"
-                    is-hidden="@(Model.UploadedStakeholderDiscussionFiles != null && Model.UploadedStakeholderDiscussionFiles.Any())"/>
-            </gds-field-set>
+            <vc:text-area-input
+                field-name="@nameof(Model.StakeholderDiscussionsReport)"
+                label="Tell us about discussions you have had with local stakeholders"
+                value="@Model.StakeholderDiscussionsReport"/>
+
+            <vc:upload-file
+                title="Upload any evidence you have of Local Authority support (optional)"
+                allowed-extensions="@Model.AllowedExtensions"
+                field-name="StakeholderDiscussionFile"
+                description="This could be any correspondence, including an email chain. We only require one document."
+                max-file-size-in-mb="@Model.MaxFileSizeInMegabytes"
+                is-hidden="@(Model.UploadedStakeholderDiscussionFiles != null && Model.UploadedStakeholderDiscussionFiles.Any())"/>
+
         </div>
         <div class="govuk-grid-column-full govuk-!-padding-left-0">
             <vc:files-table asp-for="@Model.UploadedStakeholderDiscussionFiles"/>
