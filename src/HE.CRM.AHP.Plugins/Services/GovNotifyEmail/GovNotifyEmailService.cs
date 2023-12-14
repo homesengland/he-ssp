@@ -188,6 +188,41 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
         }
 
+        public void SendNotifications_COMMON_REQUEST_TO_ASSIGN_CONTACT_TO_EXISTING_ORGANISATION(EntityReference contactId, EntityReference associatingContactId)
+        {
+            if (contactId != null && associatingContactId != null)
+            {
+                var contact = _contactRepositoryAdmin.GetById(contactId.Id, nameof(Contact.OwnerId).ToLower(), nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
+                var associatingContact = _contactRepositoryAdmin.GetById(associatingContactId.Id, nameof(Contact.FullName).ToLower());
+
+                if (contact != null && contact.OwnerId != null && associatingContact != null)
+                {
+                    this.TracingService.Trace("COMMON_REQUEST_TO_ASSIGN_CONTACT_TO_EXISTING_ORGANISATION");
+                    var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("COMMON_REQUEST_TO_ASSIGN_CONTACT_TO_EXISTING_ORGANISATION");
+                    var govNotParams = new COMMON_REQUEST_TO_ASSIGN_CONTACT_TO_EXISTING_ORGANISATION()
+                    {
+                        templateId = emailTemplate?.invln_templateid,
+                        personalisation = new parameters_COMMON_REQUEST_TO_ASSIGN_CONTACT_TO_EXISTING_ORGANISATION()
+                        {
+                            recipientEmail = contact.EMailAddress1,
+                            username = contact.FullName ?? "NO NAME",
+                            subject = emailTemplate.invln_subject,
+                            associatinguser = associatingContact.FullName ?? "NO NAME",
+                        }
+                    };
+
+                    var options = new JsonSerializerOptions
+                    {
+                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                        WriteIndented = true
+                    };
+
+                    var parameters = JsonSerializer.Serialize(govNotParams, options);
+                    this.SendGovNotifyEmail(contact.OwnerId, contact.ToEntityReference(), emailTemplate.invln_subject, parameters, emailTemplate);
+                }
+            }
+        }
+
         public void SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK(EntityReference ahpApplicationId, EntityReference contactId)
         {
             if (ahpApplicationId != null && contactId != null)
@@ -206,6 +241,37 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
                         username = contact.FullName ?? "NO NAME",
                         subject = emailTemplate.invln_subject,
                         programmename = "CME"
+                    }
+                };
+
+                var options = new JsonSerializerOptions
+                {
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                    WriteIndented = true
+                };
+
+                var parameters = JsonSerializer.Serialize(govNotParams, options);
+                this.SendGovNotifyEmail(ahpApplication.OwnerId, ahpApplicationId, emailTemplate.invln_subject, parameters, emailTemplate);
+            }
+        }
+
+        public void SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION(EntityReference ahpApplicationId, EntityReference contactId)
+        {
+            if (ahpApplicationId != null && contactId != null)
+            {
+                var contact = _contactRepositoryAdmin.GetById(contactId.Id, nameof(Contact.FullName).ToLower(), nameof(Contact.EMailAddress1).ToLower());
+                var ahpApplication = _ahpApplicationRepositoryAdmin.GetById(ahpApplicationId.Id, nameof(Contact.OwnerId).ToLower());
+
+                this.TracingService.Trace("AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION");
+                var emailTemplate = _notificationSettingRepositoryAdmin.GetTemplateViaTypeName("AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION");
+                var govNotParams = new AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION()
+                {
+                    templateId = emailTemplate?.invln_templateid,
+                    personalisation = new parameters_AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION()
+                    {
+                        recipientEmail = contact.EMailAddress1,
+                        username = contact.FullName ?? "NO NAME",
+                        subject = emailTemplate.invln_subject,
                     }
                 };
 

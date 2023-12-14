@@ -5,7 +5,7 @@ namespace HE.Investment.AHP.Domain.Application.ValueObjects;
 
 public class ApplicationName : ValueObject
 {
-    public ApplicationName(string value)
+    public ApplicationName(string? value)
     {
         Build(value).CheckErrors();
     }
@@ -17,7 +17,7 @@ public class ApplicationName : ValueObject
         yield return Name;
     }
 
-    private OperationResult Build(string name)
+    private OperationResult Build(string? name)
     {
         var operationResult = OperationResult.New();
 

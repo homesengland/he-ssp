@@ -20,8 +20,8 @@
             new(u.Email),
             new(u.JobTitle),
             new(u.Role?.GetDescription()),
-            new(Component: new("Link", new { text = "Remove", action = "Manage", controller = "Users", values = new { id = u.Id }} )),
-            new(Component: new("Link", new { text = "Manage", action = "Manage", controller = "Users", values = new { id = u.Id }} )),
+            new(Component: new("Link", new { text = "Remove", action = "ConfirmUnlink", controller = "Users", values = new { id = u.Id }} )),
+            new(Component: new("Link", new { text = "Change", action = "Change", controller = "Users", values = new { id = u.Id }} )),
         })).ToList());
 }
 

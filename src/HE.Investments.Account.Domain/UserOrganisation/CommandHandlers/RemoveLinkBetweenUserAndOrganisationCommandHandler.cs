@@ -36,7 +36,7 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
         await _contactService.RemoveLinkBetweenContactAndOrganisation(
             _organizationServiceAsync,
             account.AccountId.Value,
-            account.UserGlobalId.Value);
+            request.UserId);
 
         await _userContext.RefreshAccounts();
 
