@@ -1,3 +1,4 @@
+using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Account.Shared;
 using HE.Investments.Organisation.Services;
 using Microsoft.PowerPlatform.Dataverse.Client;
@@ -22,12 +23,12 @@ public class ContactRepository : IContactRepository
         _contactService = contactService;
     }
 
-    public async Task LinkOrganisation(string organisationId, int portalType)
+    public async Task LinkOrganisation(OrganisationId organisationId, int portalType)
     {
         await _contactService.LinkContactWithOrganization(
            _organizationServiceAsync,
            _loanUserContext.UserGlobalId.ToString(),
-           Guid.Parse(organisationId),
+           organisationId.Value,
            portalType);
         await _loanUserContext.RefreshAccounts();
     }

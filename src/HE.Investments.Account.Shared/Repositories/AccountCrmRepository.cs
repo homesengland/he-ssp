@@ -22,8 +22,8 @@ public class AccountCrmRepository : IAccountRepository
 
     public async Task<IList<UserAccount>> GetUserAccounts(UserGlobalId userGlobalId, string userEmail)
     {
-        var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, userGlobalId.ToString());
-
+        var contactExternalId = userGlobalId.ToString();
+        var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, contactExternalId);
         if (contactRoles is null)
         {
             return Array.Empty<UserAccount>();
@@ -33,11 +33,11 @@ public class AccountCrmRepository : IAccountRepository
             .contactRoles
             .GroupBy(x => x.accountId)
             .Select(x => new UserAccount(
-                UserGlobalId.From(userGlobalId.ToString()),
+                UserGlobalId.From(contactExternalId),
                 userEmail,
                 x.Key,
                 x.FirstOrDefault(y => y.accountId == x.Key)?.accountName ?? string.Empty,
-                x.Select(x => new UserAccountRole(x.webRoleName)))).ToList();
+                x.Select(y => new UserAccountRole(y.webRoleName)))).ToList();
     }
 
     public async Task<UserProfileDetails> GetProfileDetails(UserGlobalId userGlobalId)

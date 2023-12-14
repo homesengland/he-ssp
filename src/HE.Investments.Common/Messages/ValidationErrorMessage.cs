@@ -13,8 +13,6 @@ public static class ValidationErrorMessage
 
     public const string ChooseYourAnswer = "Choose your answer";
 
-    public const string EnterMoreDetailsForRefinanceExitStrategy = "Enter more detail about your refinance exit strategy";
-
     public const string ManyHomesAmount = "The amount of homes must be a number containing no more than 4 digits (1 - 9999)";
 
     public const string TypeHomesOtherType = "Enter the type of home you are building";
@@ -28,12 +26,6 @@ public static class ValidationErrorMessage
     public const string InvalidStartDate = "Enter a valid date. The build start date must include a day, month and year";
 
     public const string NoPurchaseDate = "Enter the date you purchased this site";
-
-    public const string NoPurchaseDay = "The date you purchased this land must include a day";
-
-    public const string NoPurchaseMonth = "The date you purchased this land must include a month";
-
-    public const string NoPurchaseYear = "The date you purchased this land must include a year";
 
     public const string IncorrectPurchaseDate = "The date you purchased this land must be a real date";
 
@@ -64,14 +56,6 @@ public static class ValidationErrorMessage
     public const string IncorrectProjectValue = "The current value of the land must be entered as a number, in pounds and pence";
 
     public const string IncorrectGrantFundingAmount = "The amount of funding provided";
-
-    public const string EnterFirstName = "Enter your first name";
-
-    public const string EnterLastName = "Enter your last name";
-
-    public const string EnterJobTitle = "Enter your job title";
-
-    public const string EnterTelephoneNumber = "Enter your preferred telephone number";
 
     public const string EnterLoanApplicationName = "Enter a name for your application";
 
