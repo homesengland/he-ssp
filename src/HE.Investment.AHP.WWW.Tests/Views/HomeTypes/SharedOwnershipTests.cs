@@ -20,8 +20,8 @@ public class SharedOwnershipTests : HomeTypesTestBase
         // then
         AssertView(document);
         AssertErrors(document, nameof(SharedOwnershipModel.MarketValue), false);
-        AssertErrors(document, nameof(SharedOwnershipModel.InitialSalePercentage), false);
-        AssertErrors(document, nameof(SharedOwnershipModel.SharedOwnershipWeeklyRent), false);
+        AssertErrors(document, nameof(SharedOwnershipModel.InitialSale), false);
+        AssertErrors(document, nameof(SharedOwnershipModel.ProspectiveRent), false);
     }
 
     [Fact]
@@ -30,8 +30,8 @@ public class SharedOwnershipTests : HomeTypesTestBase
         // given
         var modelState = new ModelStateDictionary();
         modelState.AddModelError(nameof(SharedOwnershipModel.MarketValue), ErrorMessage);
-        modelState.AddModelError(nameof(SharedOwnershipModel.InitialSalePercentage), ErrorMessage);
-        modelState.AddModelError(nameof(SharedOwnershipModel.SharedOwnershipWeeklyRent), ErrorMessage);
+        modelState.AddModelError(nameof(SharedOwnershipModel.InitialSale), ErrorMessage);
+        modelState.AddModelError(nameof(SharedOwnershipModel.ProspectiveRent), ErrorMessage);
 
         // when
         var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
@@ -39,8 +39,8 @@ public class SharedOwnershipTests : HomeTypesTestBase
         // then
         AssertView(document);
         AssertErrors(document, nameof(SharedOwnershipModel.MarketValue), true);
-        AssertErrors(document, nameof(SharedOwnershipModel.InitialSalePercentage), true);
-        AssertErrors(document, nameof(SharedOwnershipModel.SharedOwnershipWeeklyRent), true);
+        AssertErrors(document, nameof(SharedOwnershipModel.InitialSale), true);
+        AssertErrors(document, nameof(SharedOwnershipModel.ProspectiveRent), true);
     }
 
     private static void AssertView(IHtmlDocument document)
@@ -53,11 +53,11 @@ public class SharedOwnershipTests : HomeTypesTestBase
             .HasInput("MarketValue")
             .HasElementWithText("h2", "Enter the average assumed first tranche sale percentage")
             .HasElementWithText("span", "This is the average percentage share that you are assuming your purchasers will buy in their initial purchase (must be between 10% nad 75%).")
-            .HasInput("InitialSalePercentage")
+            .HasInput("InitialSale")
             .HasElementWithText("h2", "Assumed first tranche sales receipt")
             .HasElementWithText("h2", "Enter the Shared Ownership rent per week")
             .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
-            .HasInput("SharedOwnershipWeeklyRent")
+            .HasInput("ProspectiveRent")
             .HasElementWithText("h2", "Shared Ownership rent as percentage of the unsold share")
             .HasElementWithText("button", "Save and continue")
             .HasElementWithText("button", "Calculate");

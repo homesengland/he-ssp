@@ -47,7 +47,6 @@ public class UserController : Controller
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-
             return View("ProfileDetails", viewModel);
         }
 

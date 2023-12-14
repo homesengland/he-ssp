@@ -28,7 +28,7 @@ public class Postcode : ValueObject
         var operationResult = OperationResult.New();
 
         Value = Validator
-            .For(value, nameof(Postcode), operationResult)
+            .For(value, nameof(Postcode), "Postcode", operationResult)
             .IsProvided(OrganisationErrorMessages.MissingOrganisationPostCode)
             .IsShortInput()
             .IsValidPostcode(OrganisationErrorMessages.InvalidOrganisationPostcode);

@@ -8,9 +8,11 @@ public class RadioListWithOr : ViewComponent
 {
     public IViewComponentResult Invoke(
         string fieldName,
+        string title,
+        string hint,
         IList<ExtendedSelectListItem> availableOptions,
         ExtendedSelectListItem alternativeOption)
     {
-        return View("RadioListWithOr", (fieldName, availableOptions, alternativeOption));
+        return View("RadioListWithOr", (fieldName, title, hint, availableOptions, alternativeOption));
     }
 }

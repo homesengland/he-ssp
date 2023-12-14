@@ -24,15 +24,11 @@
         @Html.HiddenFor(x => x.MaxFileSizeInMegabytes)
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
             <gds-field-set role="group">
-                <vc:form-field-title
-                    field-name="StakeholderDiscussionsReport"
-                    title="Tell us about discussions you have had with local stakeholders"/>
-                <HeErrorFormGroup asp-for="StakeholderDiscussionsReport">
-                    <he-text-area asp-for="StakeholderDiscussionsReport" rows="5" class="govuk-!-margin-bottom-2"></he-text-area>
-                    <he-div-hint>
-                        You can enter up to 1500 characters
-                    </he-div-hint>
-                </HeErrorFormGroup>
+                <vc:text-area-input
+                    field-name="@nameof(Model.StakeholderDiscussionsReport)"
+                    label="Tell us about discussions you have had with local stakeholders"
+                    value="@Model.StakeholderDiscussionsReport"/>
+
                 <vc:upload-file
                     title="Upload any evidence you have of Local Authority support (optional)"
                     allowed-extensions="@Model.AllowedExtensions"

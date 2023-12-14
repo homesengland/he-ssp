@@ -21,5 +21,7 @@ public interface IContactService
 
     Task<List<ContactRolesDto>> GetContactRolesForOrganisationContacts(IOrganizationServiceAsync2 service, List<string> contactExternalId, Guid organisationGuid);
 
-    Task<Guid> CreateNotConnectedContact(IOrganizationServiceAsync2 service, ContactDto contact, Guid organisationGuid, int role, int? portalType = null);
+    Task<Guid> CreateNotConnectedContact(IOrganizationServiceAsync2 service, ContactDto contact, Guid organisationGuid, int role, string inviterExternalId, int? portalType = null);
+
+    Task ConnectingNotConnectedContactWithExternalId(IOrganizationServiceAsync2 service, string email, string contactExternalId);
 }

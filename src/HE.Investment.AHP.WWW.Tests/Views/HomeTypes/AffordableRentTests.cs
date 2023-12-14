@@ -21,7 +21,7 @@ public class AffordableRentTests : HomeTypesTestBase
         AssertView(document);
         AssertErrors(document, nameof(AffordableRentModel.MarketValue), false);
         AssertErrors(document, nameof(AffordableRentModel.MarketRent), false);
-        AssertErrors(document, nameof(AffordableRentModel.AffordableWeeklyRent), false);
+        AssertErrors(document, nameof(AffordableRentModel.ProspectiveRent), false);
         AssertErrors(document, nameof(AffordableRentModel.TargetRentExceedMarketRent), false);
     }
 
@@ -32,7 +32,7 @@ public class AffordableRentTests : HomeTypesTestBase
         var modelState = new ModelStateDictionary();
         modelState.AddModelError(nameof(AffordableRentModel.MarketValue), ErrorMessage);
         modelState.AddModelError(nameof(AffordableRentModel.MarketRent), ErrorMessage);
-        modelState.AddModelError(nameof(AffordableRentModel.AffordableWeeklyRent), ErrorMessage);
+        modelState.AddModelError(nameof(AffordableRentModel.ProspectiveRent), ErrorMessage);
         modelState.AddModelError(nameof(AffordableRentModel.TargetRentExceedMarketRent), ErrorMessage);
 
         // when
@@ -42,7 +42,7 @@ public class AffordableRentTests : HomeTypesTestBase
         AssertView(document);
         AssertErrors(document, nameof(AffordableRentModel.MarketValue), true);
         AssertErrors(document, nameof(AffordableRentModel.MarketRent), true);
-        AssertErrors(document, nameof(AffordableRentModel.AffordableWeeklyRent), true);
+        AssertErrors(document, nameof(AffordableRentModel.ProspectiveRent), true);
         AssertErrors(document, nameof(AffordableRentModel.TargetRentExceedMarketRent), true);
     }
 
@@ -59,7 +59,7 @@ public class AffordableRentTests : HomeTypesTestBase
             .HasInput("MarketRent")
             .HasElementWithText("h2", "Enter the Affordable Rent per week")
             .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
-            .HasInput("AffordableWeeklyRent")
+            .HasInput("ProspectiveRent")
             .HasElementWithText("h2", "Affordable Rent as percentage of market rent")
             .HasElementWithText("h2", "Would the target rent plus service charge for these homes exceed 80% of market rent?")
             .HasElementWithText("span", "Help with target rent")

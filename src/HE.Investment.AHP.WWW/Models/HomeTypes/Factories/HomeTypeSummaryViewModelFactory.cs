@@ -184,7 +184,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
         return SectionSummaryViewModel.New(
             "Shared Ownership details",
             factory.Question("Market value of each home", nameof(Controller.SharedOwnership), ToPounds(tenure.MarketValue)),
-            factory.Question("Average first tranche sale percentage", nameof(Controller.SharedOwnership), ToPercentage(tenure.InitialSalePercentage)),
+            factory.Question("Average first tranche sale percentage", nameof(Controller.SharedOwnership), ToPercentage(tenure.InitialSale)),
             factory.Question("First tranche sales receipt", nameof(Controller.SharedOwnership), ToPoundsPences(tenure.ExpectedFirstTranche)),
             factory.Question("Shared Ownership rent per week", nameof(Controller.SharedOwnership), ToPoundsPences(tenure.ProspectiveRent)),
             factory.Question(

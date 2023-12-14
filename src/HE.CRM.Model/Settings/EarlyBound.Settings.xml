@@ -12,6 +12,7 @@
 invln_changeloanapplicationexternalstatus|
 invln_checkifapplicationwithgivennameexists|
 invln_checkifloanapplicationwithgivennameexists|
+invln_createsinglesitedetail|
 invln_deletehometype|
 invln_deleteloanapplication|
 invln_deletesitedetails|
@@ -37,6 +38,7 @@ invln_searchlocalauthority|
 invln_sendgovnotifyemail|
 invln_sendinternalcrmnotification|
 invln_sendinvestmentloansdatatocrm|
+invln_sendinvitecontacttojoinorganisation|
 invln_setahpapplication|
 invln_sethometype|
 invln_updatesingleloanapplication|

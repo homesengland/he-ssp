@@ -28,8 +28,8 @@ public class StakeholderDiscussionsDetails : ValueObject
         var operationResult = OperationResult.New();
 
         Report = Validator
-            .For(report, SchemeValidationFieldNames.StakeholderDiscussionsReport, operationResult)
-            .IsProvidedIf(isCompleteCheck, "Local stakeholder discussions are missing")
+            .For(report, "StakeholderDiscussionsReport", "Local stakeholder discussions", operationResult)
+            .IsProvidedIf(isCompleteCheck)
             .IsLongInput();
 
         return operationResult;

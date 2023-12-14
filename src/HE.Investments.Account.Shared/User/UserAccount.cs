@@ -5,4 +5,7 @@ public record UserAccount(
     string UserEmail,
     Guid? AccountId,
     string AccountName,
-    IEnumerable<UserAccountRole> Roles);
+    IEnumerable<UserAccountRole> Roles)
+{
+    public UserAccountRole Role() => Roles.FirstOrDefault() ?? throw new UnauthorizedAccessException();
+}

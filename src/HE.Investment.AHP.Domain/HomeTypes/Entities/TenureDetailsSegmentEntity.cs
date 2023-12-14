@@ -83,28 +83,28 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         return result;
     }
 
-    public static decimal CalculateExpectedFirstTranche(string? marketValue, string? initialSalePercentage)
+    public static decimal CalculateExpectedFirstTranche(string? marketValue, string? initialSale)
     {
         var result = 00.00m;
 
         if (decimal.TryParse(marketValue!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedMarketValue)
-            && decimal.TryParse(initialSalePercentage!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedInitialSalePercentage)
+            && decimal.TryParse(initialSale!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedInitialSale)
             && decimal.Round(parsedMarketValue, 2) == parsedMarketValue
-            && decimal.Round(parsedInitialSalePercentage, 2) == parsedInitialSalePercentage)
+            && decimal.Round(parsedInitialSale, 2) == parsedInitialSale)
         {
-            result = parsedMarketValue * parsedInitialSalePercentage / 100;
+            result = parsedMarketValue * parsedInitialSale / 100;
             result = Math.Round(result, 2);
         }
 
         return result;
     }
 
-    public static decimal CalculateProspectiveRentAsPercentageOfTheUnsoldShare(string? marketValue, string? prospectiveRent, string? initialSalePercentage)
+    public static decimal CalculateProspectiveRentAsPercentageOfTheUnsoldShare(string? marketValue, string? prospectiveRent, string? initialSale)
     {
         const int weeksAYear = 52;
         var result = 00.00m;
 
-        var expectedFirstTranche = CalculateExpectedFirstTranche(marketValue, initialSalePercentage);
+        var expectedFirstTranche = CalculateExpectedFirstTranche(marketValue, initialSale);
 
         if (decimal.TryParse(marketValue!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedMarketValue)
             && decimal.TryParse(prospectiveRent!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedProspectiveRent)
@@ -172,17 +172,17 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         ExemptionJustification = _modificationTracker.Change(ExemptionJustification, newValue);
     }
 
-    public void ChangeProspectiveRentAsPercentageOfTheUnsoldShare(string? marketValue, string? prospectiveRent, string? initialSalePercentage)
+    public void ChangeProspectiveRentAsPercentageOfTheUnsoldShare(string? marketValue, string? prospectiveRent, string? initialSale)
     {
-        var result = CalculateProspectiveRentAsPercentageOfTheUnsoldShare(marketValue, prospectiveRent, initialSalePercentage);
+        var result = CalculateProspectiveRentAsPercentageOfTheUnsoldShare(marketValue, prospectiveRent, initialSale);
         var newValue = new Percentage(result);
 
         SharedOwnershipRentAsPercentageOfTheUnsoldShare = _modificationTracker.Change(SharedOwnershipRentAsPercentageOfTheUnsoldShare, newValue);
     }
 
-    public void ChangeExpectedFirstTranche(string? marketValue, string? initialSalePercentage)
+    public void ChangeExpectedFirstTranche(string? marketValue, string? initialSale)
     {
-        var result = CalculateExpectedFirstTranche(marketValue, initialSalePercentage);
+        var result = CalculateExpectedFirstTranche(marketValue, initialSale);
 
         var newValue = new ExpectedFirstTranche(result);
         ExpectedFirstTranche = _modificationTracker.Change(ExpectedFirstTranche, newValue);

@@ -792,7 +792,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         {
             MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
             MarketRent = tenureDetails.MarketRent?.ToString("0.##", CultureInfo.InvariantCulture),
-            AffordableWeeklyRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
             AffordableRentAsPercentageOfMarketRent = tenureDetails.CalculatedProspectivePercentage?.ToString("00.00", CultureInfo.InvariantCulture),
             TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
         };
@@ -810,7 +810,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         CancellationToken cancellationToken)
     {
         model.AffordableRentAsPercentageOfMarketRent =
-            TenureDetailsSegmentEntity.CalculateProspectiveRent(model.MarketRent, model.AffordableWeeklyRent).ToString(CultureInfo.InvariantCulture);
+            TenureDetailsSegmentEntity.CalculateProspectiveRent(model.MarketRent, model.ProspectiveRent).ToString(CultureInfo.InvariantCulture);
 
         if (action == GenericMessages.Calculate)
         {
@@ -820,7 +820,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     homeTypeId,
                     model.MarketValue,
                     model.MarketRent,
-                    model.AffordableWeeklyRent,
+                    model.ProspectiveRent,
                     model.TargetRentExceedMarketRent),
                 cancellationToken);
             ModelState.AddValidationErrors(operationResult);
@@ -834,7 +834,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 homeTypeId,
                 model.MarketValue,
                 model.MarketRent,
-                model.AffordableWeeklyRent,
+                model.ProspectiveRent,
                 model.TargetRentExceedMarketRent),
             model,
             cancellationToken);
@@ -857,7 +857,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new SocialRentModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
-            MarketRent = tenureDetails.MarketRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
         };
 
         return View(model);
@@ -876,7 +876,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 applicationId,
                 homeTypeId,
                 model.MarketValue,
-                model.MarketRent),
+                model.ProspectiveRent),
             model,
             cancellationToken);
     }
@@ -889,9 +889,9 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         var model = new SharedOwnershipModel(tenureDetails.ApplicationName, tenureDetails.HomeTypeName)
         {
             MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
-            InitialSalePercentage = tenureDetails.InitialSalePercentage?.ToString(CultureInfo.InvariantCulture),
+            InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture),
-            SharedOwnershipWeeklyRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
+            ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
             SharedOwnershipRentAsPercentageOfTheUnsoldShare = tenureDetails.SharedOwnershipRentAsPercentageOfTheUnsoldShare?.ToString("00.00", CultureInfo.InvariantCulture),
         };
 
@@ -908,13 +908,13 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         CancellationToken cancellationToken)
     {
         model.ExpectedFirstTranche =
-            TenureDetailsSegmentEntity.CalculateExpectedFirstTranche(model.MarketValue, model.InitialSalePercentage).ToString(CultureInfo.InvariantCulture);
+            TenureDetailsSegmentEntity.CalculateExpectedFirstTranche(model.MarketValue, model.InitialSale).ToString(CultureInfo.InvariantCulture);
 
         model.SharedOwnershipRentAsPercentageOfTheUnsoldShare =
             TenureDetailsSegmentEntity.CalculateProspectiveRentAsPercentageOfTheUnsoldShare(
                 model.MarketValue,
-                model.SharedOwnershipWeeklyRent,
-                model.InitialSalePercentage)
+                model.ProspectiveRent,
+                model.InitialSale)
                 .ToString(CultureInfo.InvariantCulture);
 
         if (action == GenericMessages.Calculate)
@@ -924,8 +924,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     applicationId,
                     homeTypeId,
                     model.MarketValue,
-                    model.InitialSalePercentage,
-                    model.SharedOwnershipWeeklyRent),
+                    model.InitialSale,
+                    model.ProspectiveRent),
                 cancellationToken);
             ModelState.AddValidationErrors(operationResult);
 
@@ -937,8 +937,8 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                 applicationId,
                 homeTypeId,
                 model.MarketValue,
-                model.InitialSalePercentage,
-                model.SharedOwnershipWeeklyRent),
+                model.InitialSale,
+                model.ProspectiveRent),
             model,
             cancellationToken);
     }

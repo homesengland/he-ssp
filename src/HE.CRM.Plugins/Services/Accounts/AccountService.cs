@@ -21,7 +21,7 @@ namespace HE.CRM.Plugins.Services.Accounts
         private readonly IGovNotifyEmailService _govNotifyEmailService;
 
         private readonly string _youRequested = "You requested";
-        private readonly string _adminRoleName = "Account administrator";
+        private readonly string _adminRoleName = "Admin";
 
         #endregion
 

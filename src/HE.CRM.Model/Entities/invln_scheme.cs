@@ -190,6 +190,7 @@ namespace DataverseModel
 			public const string invln_invln_scheme_localauthoritylookup_invln_l = "invln_invln_scheme_localauthoritylookup_invln_l";
 			public const string invln_invln_scheme_programmelookup_invln_progra = "invln_invln_scheme_programmelookup_invln_progra";
 			public const string invln_invln_scheme_Site_invln_sites = "invln_invln_scheme_Site_invln_sites";
+			public const string invln_lastemailsenton = "invln_lastemailsenton";
 			public const string invln_lastexternalmodificationby = "invln_lastexternalmodificationby";
 			public const string invln_lastexternalmodificationbyName = "invln_lastexternalmodificationbyname";
 			public const string invln_lastexternalmodificationon = "invln_lastexternalmodificationon";
@@ -225,6 +226,7 @@ namespace DataverseModel
 			public const string invln_sharedownershipsalesrisk = "invln_sharedownershipsalesrisk";
 			public const string invln_Site = "invln_site";
 			public const string invln_SiteName = "invln_sitename";
+			public const string invln_stopreminderemail = "invln_stopreminderemail";
 			public const string invln_supportedgpuaspercentageofareaaverage = "invln_supportedgpuaspercentageofareaaverage";
 			public const string invln_Tenure = "invln_tenure";
 			public const string invln_testcalculatedone = "invln_testcalculatedone";
@@ -1221,6 +1223,23 @@ namespace DataverseModel
 			}
 		}
 		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastemailsenton")]
+		public System.Nullable<System.DateTime> invln_lastemailsenton
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_lastemailsenton");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_lastemailsenton");
+				this.SetAttributeValue("invln_lastemailsenton", value);
+				this.OnPropertyChanged("invln_lastemailsenton");
+			}
+		}
+		
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastexternalmodificationby")]
 		public Microsoft.Xrm.Sdk.EntityReference invln_lastexternalmodificationby
 		{
@@ -1670,6 +1689,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_Site");
 				this.SetAttributeValue("invln_site", value);
 				this.OnPropertyChanged("invln_Site");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_stopreminderemail")]
+		public System.Nullable<bool> invln_stopreminderemail
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_stopreminderemail");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_stopreminderemail");
+				this.SetAttributeValue("invln_stopreminderemail", value);
+				this.OnPropertyChanged("invln_stopreminderemail");
 			}
 		}
 		

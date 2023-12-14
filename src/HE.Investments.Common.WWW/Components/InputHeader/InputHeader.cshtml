@@ -1,0 +1,17 @@
+@model (string fieldName, string label, string hint)
+
+    @if (!string.IsNullOrWhiteSpace(Model.label))
+    {
+        <h1 class="govuk-label-wrapper">
+            <label class="govuk-label govuk-label--m" for="@Model.fieldName">
+                @Model.label
+            </label>
+        </h1>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.hint))
+    {
+        <he-div-hint>
+            @Model.hint
+        </he-div-hint>
+    }
