@@ -66,14 +66,13 @@ public class ContactRepository : IContactRepository
     public Entity? GetContactWithGivenEmailOrExternalId(IOrganizationServiceAsync2 service, string contactEmail, string contactExternalId)
     {
         var condition1 = new ConditionExpression("invln_externalid", ConditionOperator.Equal, contactExternalId);
-        var condition2 = new ConditionExpression("emailaddress1", ConditionOperator.Equal, contactEmail);
         var filter1 = new FilterExpression()
         {
             Conditions =
                 {
-                    condition1, condition2,
+                    condition1,
                 },
-            FilterOperator = LogicalOperator.Or,
+            FilterOperator = LogicalOperator.And,
         };
         var cols = new ColumnSet(true);
 
@@ -87,11 +86,37 @@ public class ContactRepository : IContactRepository
         var result1 = service.RetrieveMultiple(query);
         if (result1.Entities.Count == 0)
         {
-            var contactToCreate = new Entity("contact");
-            contactToCreate["emailaddress1"] = contactEmail;
-            contactToCreate["invln_externalid"] = contactExternalId;
-            contactToCreate.Id = service.Create(contactToCreate);
-            return contactToCreate;
+            var condition2 = new ConditionExpression("emailaddress1", ConditionOperator.Equal, contactEmail);
+            var filter2 = new FilterExpression()
+            {
+                Conditions =
+                {
+                    condition2,
+                },
+                FilterOperator = LogicalOperator.And,
+            };
+            var cols2 = new ColumnSet(true);
+
+            var query2 = new QueryExpression("contact")
+            {
+                ColumnSet = cols2,
+            };
+            query2.Criteria.FilterOperator = LogicalOperator.And;
+            query2.Criteria.AddFilter(filter2);
+
+            var result2 = service.RetrieveMultiple(query2);
+            if (result2.Entities.Count == 0)
+            {
+                var contactToCreate = new Entity("contact");
+                contactToCreate["emailaddress1"] = contactEmail;
+                contactToCreate["invln_externalid"] = contactExternalId;
+                contactToCreate.Id = service.Create(contactToCreate);
+                return contactToCreate;
+            }
+            else
+            {
+                return result2.Entities.FirstOrDefault();
+            }
         }
         else
         {

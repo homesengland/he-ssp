@@ -5,7 +5,7 @@
     @foreach (var action in Model)
     {
         <strong class="govuk-!-display-inline-block govuk-!-padding-top-3">
-            <a href="@(action.HasAccess ? Url.Action(action.Action, action.Controller) : null)">@action.Label</a>
+            <a href="@(action.HasAccess ? Url.Action(action.Action, action.Controller) : null)" class="@(action.HasAccess ? null : "disabled")">@action.Label</a>
         </strong>
     }
 }
