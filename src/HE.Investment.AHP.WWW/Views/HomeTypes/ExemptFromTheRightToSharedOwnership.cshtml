@@ -18,37 +18,38 @@
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.ExemptFromTheRightToSharedOwnership"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
-                                  caption="@Model.Header"/>
+                                  caption="@Model.Header" />
         <gds-field-set>
-            <gds-legend>
-                <gds-h1 class="govuk-!-margin-bottom-2">For any reason, are these homes considered exempt from the Right to Shared Ownership?</gds-h1>
-            </gds-legend>
-            <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
-                <summary class="govuk-details__summary">
-                    <span class="govuk-details__summary-text">
-                        Which properties are in scope for the Right to Shared Ownership?
-                    </span>
-                </summary>
-                <div class="govuk-details__text">
-                    The Right to Shared Ownership applies to all new rented homes delivered through the Affordable Homes Programme 2021-26, with limited exceptions.
-                    <a class="govuk-link" target="_blank"
-                       href="https://www.gov.uk/government/publications/right-to-shared-ownership-initial-guidance-for-registered-providers/right-to-shared-ownership-initial-guidance-for-registered-providers">
-                        Read about the Right to Shared Ownership and the types of property that are in scope (opens in the new tab).
-                    </a>
-                </div>
-            </details>
-            <gds-radio govuk-formgroup-asp-for="ExemptFromTheRightToSharedOwnership"
-                       asp-hiddenlabeltext="Exempt from the Right to Shared Ownership"
-                       value="@Model.ExemptFromTheRightToSharedOwnership"
-                       asp-selectlistitems="@CommonFormOptions.YesNo"
-                       class="govuk-!-margin-bottom-2">
-            </gds-radio>
-
+            <he-error-form-group asp-for="ExemptFromTheRightToSharedOwnership">
+                <gds-legend>
+                    <gds-h1 class="govuk-!-margin-bottom-2">For any reason, are these homes considered exempt from the Right to Shared Ownership?</gds-h1>
+                </gds-legend>
+                <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
+                    <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text">
+                            Which properties are in scope for the Right to Shared Ownership?
+                        </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                        The Right to Shared Ownership applies to all new rented homes delivered through the Affordable Homes Programme 2021-26, with limited exceptions.
+                        <a class="govuk-link" target="_blank"
+                           href="https://www.gov.uk/government/publications/right-to-shared-ownership-initial-guidance-for-registered-providers/right-to-shared-ownership-initial-guidance-for-registered-providers">
+                            Read about the Right to Shared Ownership and the types of property that are in scope (opens in the new tab).
+                        </a>
+                    </div>
+                </details>
+                <gds-radio govuk-formgroup-asp-for="ExemptFromTheRightToSharedOwnership"
+                           asp-hiddenlabeltext="Exempt from the Right to Shared Ownership"
+                           value="@Model.ExemptFromTheRightToSharedOwnership"
+                           asp-selectlistitems="@CommonFormOptions.YesNo"
+                           class="govuk-!-margin-bottom-2">
+                </gds-radio>
+            </he-error-form-group>
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
                 Save and continue
             </button>
 
         </gds-field-set>
-        <vc:return-to-application-link application-id="@applicationId"/>
+        <vc:return-to-application-link application-id="@applicationId" />
     </form>
 </gds-div-grid-column-two-thirds>

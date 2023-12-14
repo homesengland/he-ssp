@@ -17,25 +17,26 @@
                                   current-page="@HomeTypesWorkflowState.DisabledPeopleClientGroup"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
-                                  caption="@Model.Header"/>
+                                  caption="@Model.Header" />
 
         <gds-field-set>
-            <gds-legend class="govuk-!-margin-bottom-6">
-                If the homes will be housing people from different groups, select the priority client group. You can also create another home type for each group and enter them separately.
-            </gds-legend>
+            <he-error-form-group asp-for="DisabledPeopleClientGroup">
+                <gds-legend class="govuk-!-margin-bottom-6">
+                    If the homes will be housing people from different groups, select the priority client group. You can also create another home type for each group and enter them separately.
+                </gds-legend>
 
-            <gds-radio govuk-formgroup-asp-for="DisabledPeopleClientGroup"
-                       asp-hiddenlabeltext="What client group are the homes for?"
-                       value="@Model.DisabledPeopleClientGroup"
-                       asp-selectlistitems="@HomeTypesFormOptions.DisabledPeopleClientGroupTypes">
-            </gds-radio>
-
+                <gds-radio govuk-formgroup-asp-for="DisabledPeopleClientGroup"
+                           asp-hiddenlabeltext="What client group are the homes for?"
+                           value="@Model.DisabledPeopleClientGroup"
+                           asp-selectlistitems="@HomeTypesFormOptions.DisabledPeopleClientGroupTypes">
+                </gds-radio>
+            </he-error-form-group>
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
                 Save and continue
             </button>
 
         </gds-field-set>
 
-        <vc:return-to-application-link application-id="@applicationId"/>
+        <vc:return-to-application-link application-id="@applicationId" />
     </form>
 </div>

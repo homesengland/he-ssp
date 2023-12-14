@@ -15,6 +15,7 @@
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
         <gds-field-set role="group">
+            <he-error-form-group asp-for="RequiredFunding">
             <vc:form-field-title
                 field-name="RequiredFunding"
                 title="Enter how much AHP CME 21-26 funding you require on this scheme"/>
@@ -26,7 +27,9 @@
                            asp-excludelabel
                            type="text"/>
             </gds-input-wrapper>
+            </he-error-form-group>
 
+            <he-error-form-group asp-for="HousesToDeliver">
             <vc:form-field-title
                 field-name="HousesToDeliver"
                 title="Enter how many homes you intend to deliver"/>
@@ -38,7 +41,7 @@
                     asp-excludelabel
                     type="text"/>
             </gds-input-wrapper>
-
+            </he-error-form-group>
         </gds-field-set>
 
         <vc:form-button/>

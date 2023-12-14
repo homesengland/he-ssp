@@ -18,34 +18,35 @@
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.CustomBuildProperty"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
-                                  caption="@Model.Header"/>
+                                  caption="@Model.Header" />
         <gds-field-set>
-            <gds-legend>
-                <gds-h1>Are the properties custom build?</gds-h1>
-            </gds-legend>
-            <details class="govuk-details" data-module="govuk-details">
-                <summary class="govuk-details__summary">
-                    <span class="govuk-details__summary-text">
-                        What are custom build properties?
-                    </span>
-                </summary>
-                <div class="govuk-details__text">
-                    Custom build includes projects where individuals commission and are involved in building or managing the construction of their home.
-                    Visit our website for <gds-link href="https://www.gov.uk/guidance/self-build-and-custom-housebuilding">more information on custom build.</gds-link>
-                </div>
-            </details>
-            <gds-radio govuk-formgroup-asp-for="CustomBuild"
-                       asp-hiddenlabeltext="Custom build property"
-                       value="@Model.CustomBuild"
-                       asp-selectlistitems="@CommonFormOptions.YesNo"
-                       class="govuk-!-margin-bottom-2">
-            </gds-radio>
-
+            <he-error-form-group asp-for="CustomBuild">
+                <gds-legend>
+                    <gds-h1>Are the properties custom build?</gds-h1>
+                </gds-legend>
+                <details class="govuk-details" data-module="govuk-details">
+                    <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text">
+                            What are custom build properties?
+                        </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                        Custom build includes projects where individuals commission and are involved in building or managing the construction of their home.
+                        Visit our website for <gds-link href="https://www.gov.uk/guidance/self-build-and-custom-housebuilding">more information on custom build.</gds-link>
+                    </div>
+                </details>
+                <gds-radio govuk-formgroup-asp-for="CustomBuild"
+                           asp-hiddenlabeltext="Custom build property"
+                           value="@Model.CustomBuild"
+                           asp-selectlistitems="@CommonFormOptions.YesNo"
+                           class="govuk-!-margin-bottom-2">
+                </gds-radio>
+            </he-error-form-group>
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
                 Save and continue
             </button>
 
         </gds-field-set>
-        <vc:return-to-application-link application-id="@applicationId"/>
+        <vc:return-to-application-link application-id="@applicationId" />
     </form>
 </gds-div-grid-column-two-thirds>
