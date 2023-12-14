@@ -1,6 +1,7 @@
 using FluentAssertions;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Shared.User;
+using HE.Investments.Common.Tests.TestObjectBuilders;
 using HE.Investments.TestsUtils.TestFramework;
 using Xunit;
 
@@ -20,6 +21,11 @@ public class GetUserAccountTests : TestBase<AccountRepository>
         ContactServiceMockTestBuilder
             .New()
             .ReturnContactRolesDto(contactRolesDto)
+            .Register(this);
+
+        FeatureManagerBuilder
+            .New()
+            .AlwaysReturnsTrue()
             .Register(this);
 
         // when

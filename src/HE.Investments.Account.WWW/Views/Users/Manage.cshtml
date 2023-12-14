@@ -8,7 +8,7 @@
 @{
     ViewData["Title"] = "Manage users";
     var title = $"Manage {Model.UserDetails.FirstName} {Model.UserDetails.LastName}'s role";
-    var roles = UserRoles.ToAssign
+    var roles = UserRolesDescription.ToAssign
         .Select(r => new ExtendedSelectListItem(
             r.Key.GetDescription(),
             r.Key.ToString(),

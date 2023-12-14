@@ -144,6 +144,6 @@ public class UserOrganisationTests : ViewTestBase
             isLimitedUser,
             programmesToAccess ?? ProgrammesToToAccess(),
             programmesToApply ?? new List<ProgrammeModel> { new ProgrammeModel("P2", "D2", "C", "V") },
-            actions ?? new List<ActionModel> { new ActionModel("ViewAllApplicationsUrl Name", "A", "C") });
+            actions ?? new List<ActionModel> { new ActionModel("ViewAllApplicationsUrl Name", "A", "C", true) });
     }
 }
