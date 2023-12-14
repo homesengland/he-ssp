@@ -109,6 +109,8 @@
     <Compile Include="Handlers\CustomApi\GetMultipleApplicationsHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetSingleHomeTypeHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetTypeOfHomesListHandler.cs" />
+    <Compile Include="Handlers\CustomApi\SendReminderEmailForFinaliseDraftApplicationHandler.cs" />
+    <Compile Include="Handlers\CustomApi\SendReminderEmailForRefferedBackToApplicantHandler.cs" />
     <Compile Include="Handlers\CustomApi\SentInviteContactToJoinOrganisationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SetHomeTypeHandler.cs" />
@@ -183,12 +185,14 @@
     <Compile Include="Plugins\CustomApi\ChangeAhpApplicationStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\CheckIfApplicationWithGivenNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteHomeTypePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\SendReminderEmailForFinaliseDraftApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetAbsoluteAhpApplicationFileLocationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetAhpApplicationFileLocationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetMultipleApplicationsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetSingleHomeTypePlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetTypeOfHomesListPlugin.cs" />
+    <Compile Include="Plugins\CustomApi\SendReminderEmailForRefferedBackToApplicantPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SentInviteContactToJoinOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SetHomeTypePlugin.cs" />

@@ -173,6 +173,8 @@
     "invln_sendinternalcrmnotification*",
     "invln_sendinvestmentloansdatatocrm*",
     "invln_sendinvitecontacttojoinorganisation*",
+    "invln_sendreminderemailforrefferedbacktoapplicant*",
+    "invln_sendremindertofinalisadraftapplication*",
     "invln_setahpapplication*",
     "invln_sethometype*",
     "invln_updatesingleloanapplication*",

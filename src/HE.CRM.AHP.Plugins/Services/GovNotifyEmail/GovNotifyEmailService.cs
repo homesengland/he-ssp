@@ -220,6 +220,32 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
         }
 
+        public void SendReminderEmailForRefferedBackToApplicant(Guid applicationId)
+        {
+            var application = _ahpApplicationRepositoryAdmin.GetById(applicationId, new string[] { nameof(invln_scheme.invln_contactid).ToLower(), nameof(invln_scheme.invln_lastexternalmodificationby).ToLower() });
+            if (application != null)
+            {
+                if (application.invln_contactid != null)
+                {
+                    SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK(application.ToEntityReference(), application.invln_contactid);
+                }
+                if (application.invln_lastexternalmodificationby != null &&
+                    (application.invln_contactid == null || (application.invln_contactid != null && application.invln_lastexternalmodificationby.Id != application.invln_contactid.Id)))
+                {
+                    SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK(application.ToEntityReference(), application.invln_lastexternalmodificationby);
+                }
+            }
+        }
+
+        public void SendReminderEmailForFinaliseDraftApplication(Guid applicationId)
+        {
+            var application = _ahpApplicationRepositoryAdmin.GetById(applicationId, new string[] { nameof(invln_scheme.invln_contactid).ToLower()});
+            if (application != null && application.invln_contactid != null)
+            {
+                // send email
+            }
+        }
+
 
         private string GetAhpApplicationUrl(EntityReference ahpApplicationId)
         {
