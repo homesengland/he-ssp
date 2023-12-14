@@ -12,6 +12,11 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
 {
     private readonly IEnumerable<string> _allowedFor;
 
+    public AuthorizeWithCompletedProfile(string allowedFor)
+        : this(allowedFor.Split(','))
+    {
+    }
+
     public AuthorizeWithCompletedProfile(string[]? allowedFor = null)
     {
         if (allowedFor.IsNotProvided())

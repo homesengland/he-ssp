@@ -6,7 +6,7 @@
 @{
     var title = $"Invite a user to {Model.OrganisationName}";
     ViewData["Title"] = title;
-    var roles = UserRoles.ToInvite
+    var roles = UserRolesDescription.ToInvite
         .Select(r => new ExtendedSelectListItem(
             r.Key.GetDescription(),
             r.Key.ToString(),

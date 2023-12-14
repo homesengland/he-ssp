@@ -74,6 +74,12 @@ public class AccountUserContext : IAccountUserContext
         return _selectedAccount is not null;
     }
 
+    public async Task<bool> HasOneOfRole(UserAccountRole[] roles)
+    {
+        var selectedAccount = await GetSelectedAccount();
+        return roles.Contains(selectedAccount.Role());
+    }
+
     public async Task LoadUserAccounts()
     {
         _accounts = (await _cacheService.GetValueAsync(

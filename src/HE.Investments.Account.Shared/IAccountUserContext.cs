@@ -22,4 +22,6 @@ public interface IAccountUserContext
     Task<bool> IsProfileCompleted();
 
     Task<bool> IsLinkedWithOrganisation();
+
+    Task<bool> HasOneOfRole(UserAccountRole[] roles);
 }

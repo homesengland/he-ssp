@@ -2,7 +2,7 @@ using HE.Investments.Account.Contract.Users;
 
 namespace HE.Investments.Account.WWW.Models.Users;
 
-public static class UserRoles
+public static class UserRolesDescription
 {
     public static IDictionary<UserRole, string> All => new Dictionary<UserRole, string>
     {
