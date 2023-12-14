@@ -103,7 +103,11 @@ public static class ValidationErrorMessage
 
     public static string MustBeNumber(string displayName) => $"The {displayName} must be a number";
 
+    public static string MustBeNumberWithExample(string displayName) => $"The {displayName} must be a number, like 300.00";
+
     public static string MustBeWholeNumber(string displayName) => $"The {displayName} must be a whole number";
+
+    public static string MustBeWholeNumberWithExample(string displayName) => $"The {displayName} must be a whole number, like 300.";
 
     public static string MustBeProvidedForCalculation(string displayName) => $"Enter the {displayName} to calculate";
 
