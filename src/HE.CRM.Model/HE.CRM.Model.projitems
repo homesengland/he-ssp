@@ -56,6 +56,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\RetrieveEnvironmentVariableValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\UpsertMultiple.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_CHANGE_EXTERNAL_USER_PERMISSIONS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_GRANT_ORGANISATION_ADMIN_PERMISSIONS.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION.cs" />
