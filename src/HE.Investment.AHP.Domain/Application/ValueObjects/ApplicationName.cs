@@ -22,7 +22,7 @@ public class ApplicationName : ValueObject
         var operationResult = OperationResult.New();
 
         Name = Validator
-            .For(name, nameof(Name), "Application name", operationResult)
+            .For(name, nameof(Name), "application name", operationResult)
             .IsProvided()
             .IsShortInput();
 
