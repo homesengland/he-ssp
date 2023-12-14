@@ -28,8 +28,8 @@ public class AffordabilityEvidence : ValueObject
         var operationResult = OperationResult.New();
 
         Evidence = Validator
-            .For(evidence, SchemeValidationFieldNames.AffordabilityEvidence, operationResult)
-            .IsProvidedIf(isCompleteCheck, "Affordability of shared ownership is missing")
+            .For(evidence, "AffordabilityEvidence", "Affordability of shared ownership", operationResult)
+            .IsProvidedIf(isCompleteCheck)
             .IsLongInput();
 
         return operationResult;

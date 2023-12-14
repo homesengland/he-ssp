@@ -13,7 +13,7 @@ public record TenureDetails(
     YesNoType ExemptFromTheRightToSharedOwnership,
     string? ExemptionJustification,
     bool IsProspectiveRentIneligible,
-    decimal? InitialSalePercentage,
+    decimal? InitialSale,
     decimal? ExpectedFirstTranche,
     decimal? SharedOwnershipRentAsPercentageOfTheUnsoldShare,
     bool IsSharedOwnershipIneligible)

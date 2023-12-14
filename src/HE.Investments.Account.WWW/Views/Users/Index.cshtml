@@ -15,6 +15,11 @@
         <vc:users-table users="@Model.usersAndJoinRequests.Users"/>
     }
 
+    <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
+        <p>You can invite a user to your organisation. You'll have to provide their details, as well as deciding what role you want to grant the user.</p>
+        <link-button action-url="@Url.Action("Invite")">Invite a new user</link-button>
+    </gds-div-grid-column-two-thirds>
+
     @if (Model.usersAndJoinRequests.JoinRequests.Any())
     {
         <gds-h2>Manage requests to join your organisation</gds-h2>

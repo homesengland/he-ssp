@@ -20,7 +20,7 @@ public class SocialRentTests : HomeTypesTestBase
         // then
         AssertView(document);
         AssertErrors(document, nameof(SocialRentModel.MarketValue), false);
-        AssertErrors(document, nameof(SocialRentModel.MarketRent), false);
+        AssertErrors(document, nameof(SocialRentModel.ProspectiveRent), false);
     }
 
     [Fact]
@@ -29,7 +29,7 @@ public class SocialRentTests : HomeTypesTestBase
         // given
         var modelState = new ModelStateDictionary();
         modelState.AddModelError(nameof(SocialRentModel.MarketValue), ErrorMessage);
-        modelState.AddModelError(nameof(SocialRentModel.MarketRent), ErrorMessage);
+        modelState.AddModelError(nameof(SocialRentModel.ProspectiveRent), ErrorMessage);
 
         // when
         var document = await RenderHomeTypePage(ViewPath, Model, modelStateDictionary: modelState);
@@ -37,7 +37,7 @@ public class SocialRentTests : HomeTypesTestBase
         // then
         AssertView(document);
         AssertErrors(document, nameof(SocialRentModel.MarketValue), true);
-        AssertErrors(document, nameof(SocialRentModel.MarketRent), true);
+        AssertErrors(document, nameof(SocialRentModel.ProspectiveRent), true);
     }
 
     private static void AssertView(IHtmlDocument document)
@@ -50,7 +50,7 @@ public class SocialRentTests : HomeTypesTestBase
             .HasInput("MarketValue")
             .HasElementWithText("h2", "Enter the market rent per week")
             .HasElementWithText("span", "Enter the rent in pounds and pence. This is inclusive of all charges.")
-            .HasInput("MarketRent")
+            .HasInput("ProspectiveRent")
             .HasElementWithText("button", "Save and continue");
     }
 }

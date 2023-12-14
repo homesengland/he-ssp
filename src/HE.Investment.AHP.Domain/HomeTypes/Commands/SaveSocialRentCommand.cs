@@ -4,4 +4,4 @@ public record SaveSocialRentCommand(
     string ApplicationId,
     string HomeTypeId,
     string? MarketValue,
-    string? MarketRent) : SaveHomeTypeSegmentCommandBase(ApplicationId, HomeTypeId);
+    string? ProspectiveRent) : SaveHomeTypeSegmentCommandBase(ApplicationId, HomeTypeId);

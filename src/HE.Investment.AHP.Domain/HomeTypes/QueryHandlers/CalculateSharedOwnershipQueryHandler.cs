@@ -24,14 +24,14 @@ internal sealed class CalculateSharedOwnershipQueryHandler : BaseQueryHandler, I
     private IEnumerable<Action<CalculateSharedOwnershipQuery, IHomeTypeEntity>> CalculateActions => new[]
     {
         (CalculateSharedOwnershipQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue, true),
-        (request, homeType) => homeType.TenureDetails.ChangeInitialSale(request.InitialSalePercentage, true),
-        (request, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(request.MarketValue, request.InitialSalePercentage),
-        (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.SharedOwnershipWeeklyRent, true),
+        (request, homeType) => homeType.TenureDetails.ChangeInitialSale(request.InitialSale, true),
+        (request, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(request.MarketValue, request.InitialSale),
+        (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.ProspectiveRent, true),
         (request, homeType) =>
             homeType.TenureDetails.ChangeProspectiveRentAsPercentageOfTheUnsoldShare(
                 request.MarketValue,
-                request.SharedOwnershipWeeklyRent,
-                request.InitialSalePercentage),
+                request.ProspectiveRent,
+                request.InitialSale),
     };
 
     public async Task<OperationResult> Handle(CalculateSharedOwnershipQuery request, CancellationToken cancellationToken)

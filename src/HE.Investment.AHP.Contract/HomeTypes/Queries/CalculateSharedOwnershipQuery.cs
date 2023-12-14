@@ -7,5 +7,5 @@ public record CalculateSharedOwnershipQuery(
     string ApplicationId,
     string HomeTypeId,
     string? MarketValue,
-    string? InitialSalePercentage,
-    string? SharedOwnershipWeeklyRent) : IRequest<OperationResult>;
+    string? InitialSale,
+    string? ProspectiveRent) : IRequest<OperationResult>;

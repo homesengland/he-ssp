@@ -59,29 +59,29 @@ public class OrganisationAddress : ValueObject
         lengthErrorMessage = lengthErrorMessage != null ? ValidationErrorMessage.ShortInputLengthExceeded(lengthErrorMessage) : null;
 
         AddressLine1 = Validator
-            .For(line1, nameof(AddressLine1), operationResult)
+            .For(line1, nameof(AddressLine1), "Address Line 1", operationResult)
             .IsProvided(OrganisationErrorMessages.MissingOrganisationAddress)
-            .IsShortInput(lengthErrorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded("Address Line 1"));
+            .IsShortInput(lengthErrorMessage);
 
         AddressLine2 = Validator
-            .For(line2, nameof(AddressLine2), operationResult)
-            .IsShortInput(lengthErrorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded("Address Line 2"));
+            .For(line2, nameof(AddressLine2), "Address Line 2", operationResult)
+            .IsShortInput(lengthErrorMessage);
 
         AddressLine3 = Validator
-            .For(line3, nameof(AddressLine3), operationResult)
-            .IsShortInput(lengthErrorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded("Address Line 3"));
+            .For(line3, nameof(AddressLine3), "Address Line 3", operationResult)
+            .IsShortInput(lengthErrorMessage);
 
         TownOrCity = Validator
-            .For(city, nameof(TownOrCity), operationResult)
+            .For(city, nameof(TownOrCity), "Town or City", operationResult)
             .IsProvided(OrganisationErrorMessages.MissingOrganisationTownOrCity)
-            .IsShortInput(lengthErrorMessage ?? ValidationErrorMessage.ShortInputLengthExceeded("Town or City"));
+            .IsShortInput(lengthErrorMessage);
 
         County = Validator
-            .For(county, nameof(County), operationResult)
+            .For(county, nameof(County), "County", operationResult)
             .IsShortInput(lengthErrorMessage);
 
         Country = Validator
-            .For(country, nameof(Country), operationResult)
+            .For(country, nameof(Country), "Country", operationResult)
             .IsShortInput(lengthErrorMessage);
 
         Postcode = operationResult.Aggregate(() => new Postcode(postcode));

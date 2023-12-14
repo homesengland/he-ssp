@@ -1,0 +1,57 @@
+@using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Account.WWW.Models.Users
+@using HE.Investments.Common.Extensions
+@using HE.Investments.Common.WWW.Models
+@model InviteUserViewModel
+@{
+    var title = $"Invite a user to {Model.OrganisationName}";
+    ViewData["Title"] = title;
+    var roles = UserRolesDescription.ToInvite
+        .Select(r => new ExtendedSelectListItem(
+            r.Key.GetDescription(),
+            r.Key.ToString(),
+            false,
+            r.Value))
+        .ToList();
+}
+
+<gds-div-grid-column-two-thirds>
+    <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Index", "Users")"></gds-back-link>
+    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:form-header title=@title/>
+
+    <form asp-controller="Users" asp-action="Invite" asp-method="post" novalidate>
+        @Html.HiddenFor(m => m.OrganisationName)
+        <gds-field-set>
+            <vc:text-input
+                field-name="@(nameof(Model.FirstName))"
+                label="First name"
+                css-class="govuk-input--width-full"/>
+
+            <vc:text-input
+                field-name="@(nameof(Model.LastName))"
+                label="Last name"
+                css-class="govuk-input--width-full"/>
+
+            <vc:text-input
+                field-name="@(nameof(Model.Email))"
+                label="Email"
+                css-class="govuk-input--width-full"/>
+
+            <vc:text-input
+                field-name="@(nameof(Model.JobTitle))"
+                label="Job title"
+                css-class="govuk-input--width-full"/>
+
+            <vc:radio-list
+                field-name="@(nameof(Model.Role))"
+                title="Which role do you want to grant the user?"
+                hint="This can be updated at any time."
+                available-options="@roles"/>
+        </gds-field-set>
+
+        <vc:form-button/>
+
+    </form>
+    <gds-link href="@Url.Action("Index", "Users")">Cancel</gds-link>
+</gds-div-grid-column-two-thirds>

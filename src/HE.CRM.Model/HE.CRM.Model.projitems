@@ -43,6 +43,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendgovnotifyemail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinternalcrmnotification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinvestmentloansdatatocrm.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinvitecontacttojoinorganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setahpapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sethometype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesingleloanapplication.cs" />
@@ -52,6 +53,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\RetrieveEnvironmentVariableSecretValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\RetrieveEnvironmentVariableValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\UpsertMultiple.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_CHANGE_EXTERNAL_USER_PERMISSIONS.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_GRANT_ORGANISATION_ADMIN_PERMISSIONS.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\EXTERNAL_APPLICATION_ACTION_REQUIRED.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\EXTERNAL_APPLICATION_STATUS_CONFIRMATION.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CrmSerialiedParameters\EXTERNAL_APPLICATION_STATUS_INFORMATION.cs" />

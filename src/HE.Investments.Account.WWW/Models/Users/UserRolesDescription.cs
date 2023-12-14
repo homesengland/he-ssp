@@ -2,7 +2,7 @@ using HE.Investments.Account.Contract.Users;
 
 namespace HE.Investments.Account.WWW.Models.Users;
 
-public static class UserRoles
+public static class UserRolesDescription
 {
     public static IDictionary<UserRole, string> All => new Dictionary<UserRole, string>
     {
@@ -27,5 +27,9 @@ public static class UserRoles
 
     public static IDictionary<UserRole, string> ToAssign => All
         .Where(r => r.Key != UserRole.Limited)
+        .ToDictionary(r => r.Key, r => r.Value);
+
+    public static IDictionary<UserRole, string> ToInvite => All
+        .Where(r => r.Key is not UserRole.Limited and not UserRole.Admin)
         .ToDictionary(r => r.Key, r => r.Value);
 }

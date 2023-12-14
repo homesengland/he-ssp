@@ -17,13 +17,13 @@ public class SaveSharedOwnershipCommandHandler : SaveHomeTypeSegmentCommandHandl
     protected override IEnumerable<Action<SaveSharedOwnershipCommand, IHomeTypeEntity>> SaveActions => new[]
     {
         (SaveSharedOwnershipCommand request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue),
-        (request, homeType) => homeType.TenureDetails.ChangeInitialSale(request.InitialSalePercentage),
-        (request, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(request.MarketValue, request.InitialSalePercentage),
-        (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.SharedOwnershipWeeklyRent),
+        (request, homeType) => homeType.TenureDetails.ChangeInitialSale(request.InitialSale),
+        (request, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(request.MarketValue, request.InitialSale),
+        (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.ProspectiveRent),
         (request, homeType) =>
             homeType.TenureDetails.ChangeProspectiveRentAsPercentageOfTheUnsoldShare(
                 request.MarketValue,
-                request.SharedOwnershipWeeklyRent,
-                request.InitialSalePercentage),
+                request.ProspectiveRent,
+                request.InitialSale),
     };
 }

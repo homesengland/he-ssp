@@ -52,8 +52,9 @@ public class UserOrganisationController : BaseController
                     new ActionModel(
                         $"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details",
                         "Details",
-                        "UserOrganisation"),
-                    new ActionModel($"Manage your account", string.Empty, "Dashboard"),
+                        "UserOrganisation",
+                        true),
+                    new ActionModel($"Manage your account", string.Empty, "Dashboard", true),
                 }));
     }
 

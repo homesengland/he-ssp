@@ -10,7 +10,7 @@ public static class UserRoleMapper
     {
         { UserRole.Admin, invln_permission.Admin },
         { UserRole.Enhanced, invln_permission.Enhanced },
-        { UserRole.Input, invln_permission.InputOnly },
+        { UserRole.Input, invln_permission.Inputonly },
         { UserRole.ViewOnly, invln_permission.Viewonly },
         { UserRole.Limited, invln_permission.Limiteduser },
     };

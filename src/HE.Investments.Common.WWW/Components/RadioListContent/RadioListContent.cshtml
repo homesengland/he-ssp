@@ -1,0 +1,19 @@
+@using HE.Investments.Common.WWW.Models
+@model (string fieldName, IList<ExtendedSelectListItem> availableOptions)
+
+@foreach (var option in Model.availableOptions)
+{
+    var id = $"{Model.fieldName}-{option.Value}";
+    <div class="govuk-radios__item">
+        @Html.RadioButton(Model.fieldName, option.Value, option.Selected, new { id, @class = "govuk-radios__input" })
+        <label class="govuk-label govuk-radios__label" for="@id">
+            @option.Text
+        </label>
+        @if (!string.IsNullOrWhiteSpace(option.Hint))
+        {
+            <he-div-hint class="govuk-!-padding-left-3">
+                @option.Hint
+            </he-div-hint>
+        }
+    </div>
+}
