@@ -34,14 +34,14 @@ public abstract class DecimalValueObject : ValueObject
             if (!decimal.TryParse(value!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedValue))
             {
                 OperationResult.New()
-                    .AddValidationError(fieldName, ValidationErrorMessage.MustBeNumber(displayName))
+                    .AddValidationError(fieldName, ValidationErrorMessage.MustBeNumberWithExample(displayName))
                     .CheckErrors();
             }
 
             if (decimal.Round(parsedValue, 2) != parsedValue)
             {
                 OperationResult.New()
-                    .AddValidationError(fieldName, ValidationErrorMessage.MustBeNumber(displayName))
+                    .AddValidationError(fieldName, ValidationErrorMessage.MustBeNumberWithExample(displayName))
                     .CheckErrors();
             }
 
