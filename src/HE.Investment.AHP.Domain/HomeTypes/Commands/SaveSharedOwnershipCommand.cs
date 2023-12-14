@@ -4,5 +4,5 @@ public record SaveSharedOwnershipCommand(
     string ApplicationId,
     string HomeTypeId,
     string? MarketValue,
-    string? InitialSalePercentage,
-    string? SharedOwnershipWeeklyRent) : SaveHomeTypeSegmentCommandBase(ApplicationId, HomeTypeId);
+    string? InitialSale,
+    string? ProspectiveRent) : SaveHomeTypeSegmentCommandBase(ApplicationId, HomeTypeId);

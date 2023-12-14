@@ -5015,7 +5015,7 @@ namespace HE.Investments.Common.CRM.Model
 	{
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
-		InputOnly = 858110003,
+		Inputonly = 858110003,
 		
 		[System.Runtime.Serialization.EnumMemberAttribute()]
 		Enhanced = 858110004,

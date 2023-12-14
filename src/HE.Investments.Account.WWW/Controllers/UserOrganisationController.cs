@@ -1,15 +1,18 @@
 using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Account.Shared.Routing;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.WWW.Models.UserOrganisation;
-using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Account.WWW.Utils;
+using HE.Investments.Common;
 using HE.Investments.Common.WWW.Controllers;
 using HE.Investments.Common.WWW.Utils;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.FeatureManagement;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
@@ -21,16 +24,23 @@ public class UserOrganisationController : Controller
 
     private readonly IProgrammes _programmes;
 
-    public UserOrganisationController(IMediator mediator, IProgrammes programmes)
+    private readonly IAccountUserContext _accountUserContext;
+
+    private readonly IFeatureManager _featureManager;
+
+    public UserOrganisationController(IMediator mediator, IProgrammes programmes, IAccountUserContext accountUserContext, IFeatureManager featureManager)
     {
         _mediator = mediator;
         _programmes = programmes;
+        _accountUserContext = accountUserContext;
+        _featureManager = featureManager;
     }
 
     [HttpGet(UserOrganisationAccountEndpoints.DashboardSuffix)]
     public async Task<IActionResult> Index()
     {
         var userOrganisationResult = await _mediator.Send(new GetUserOrganisationInformationQuery());
+        var canViewOrganisationDetails = await _accountUserContext.HasOneOfRole(UserAccountRole.AccessOrganisation());
         return View(
             "UserOrganisation",
             new UserOrganisationModel(
@@ -51,8 +61,9 @@ public class UserOrganisationController : Controller
                 userOrganisationResult.ProgrammesTypesToApply.Select(t => _programmes.GetProgramme(t)).ToList(),
                 new List<Common.WWW.Models.ActionModel>
                 {
-                    new($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation"),
-                    new("Manage your account", string.Empty, "Dashboard"),
+                    new($"Manage {userOrganisationResult.OrganizationBasicInformation.RegisteredCompanyName} details", "Details", "UserOrganisation", canViewOrganisationDetails),
+                    new("Add or manage users at this Organisation", "Index", "Users", canViewOrganisationDetails),
+                    new("Manage your account", "GetProfileDetails", "User", true),
                 }));
     }
 
@@ -65,6 +76,7 @@ public class UserOrganisationController : Controller
     }
 
     [HttpGet("request-details-change")]
+    [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
     public async Task<IActionResult> ChangeOrganisationDetails()
     {
         var organisationResult = await _mediator.Send(new GetOrganisationDetailsQuery());
@@ -77,6 +89,7 @@ public class UserOrganisationController : Controller
     }
 
     [HttpPost("request-details-change")]
+    [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
     public async Task<IActionResult> ChangeOrganisationDetails(OrganisationDetailsViewModel viewModel, CancellationToken cancellationToken)
     {
         var command = new ChangeOrganisationDetailsCommand(

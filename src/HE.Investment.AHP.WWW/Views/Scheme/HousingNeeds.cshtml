@@ -13,30 +13,23 @@
 }
 
 <gds-div-grid-column-two-thirds>
-    <vc:workflow-back-button action="@SchemeWorkflowState.HousingNeeds.ToString()" />
+    <vc:workflow-back-button action="@SchemeWorkflowState.HousingNeeds.ToString()"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Scheme" asp-action="HousingNeeds" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
         <gds-field-set role="group">
-            <vc:form-field-title
-                field-name="MeetingLocalPriorities"
-                title="Tell us how this type and tenure of home meets the identified priorities for the local housing market"/>
-            <HeErrorFormGroup asp-for="MeetingLocalPriorities">
-                <he-text-area asp-for="MeetingLocalPriorities" rows="5" class="govuk-!-margin-bottom-2"></he-text-area>
-                <he-div-hint>
-                    You can enter up to 1500 characters
-                </he-div-hint>
-            </HeErrorFormGroup>
 
-            <vc:form-field-title field-name="MeetingLocalHousingNeed"
-                title="Tell us how this scheme and proposal contributes to a locally identified housing need"/>
-            <HeErrorFormGroup asp-for="MeetingLocalHousingNeed">
-                <he-text-area asp-for="MeetingLocalHousingNeed" rows="5" class="govuk-!-margin-bottom-2"></he-text-area>
-                <he-div-hint>
-                    You can enter up to 1500 characters
-                </he-div-hint>
-            </HeErrorFormGroup>
+            <vc:text-area-input
+                field-name="@nameof(Model.MeetingLocalPriorities)"
+                label="Tell us how this type and tenure of home meets the identified priorities for the local housing market"
+                value="@Model.MeetingLocalPriorities"/>
+
+            <vc:text-area-input
+                field-name="@nameof(Model.MeetingLocalHousingNeed)"
+                label="Tell us how this scheme and proposal contributes to a locally identified housing need"
+                value="@Model.MeetingLocalHousingNeed"/>
+
         </gds-field-set>
         <vc:form-button/>
     </form>

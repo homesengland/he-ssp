@@ -4,6 +4,7 @@ using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Contract.Users.Commands;
 using HE.Investments.Account.Contract.Users.Queries;
 using HE.Investments.Account.Shared.Authorization.Attributes;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.WWW.Models.Users;
 using HE.Investments.Common.Messages;
 using HE.Investments.Common.Validators;
@@ -13,8 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HE.Investments.Account.WWW.Controllers;
 
-[AuthorizeWithCompletedProfile]
 [Route("users")]
+[AuthorizeWithCompletedProfile(UserAccountRole.AccessOrganisationRoles)]
 public class UsersController : Controller
 {
     private readonly IMediator _mediator;
@@ -29,10 +30,11 @@ public class UsersController : Controller
     {
         var model = await _mediator.Send(new GetUsersAndJoinRequestsQuery(), cancellationToken);
 
-        return View("Index", (model, UserRoles.All));
+        return View("Index", (model, UserRolesDescription.All));
     }
 
     [HttpGet("{id}/manage")]
+    [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
     public async Task<IActionResult> Manage([FromRoute] string id, CancellationToken cancellationToken)
     {
         var model = await _mediator.Send(new GetUserDetailsQuery(id), cancellationToken);
@@ -41,6 +43,7 @@ public class UsersController : Controller
     }
 
     [HttpPost("{id}/manage")]
+    [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
     public async Task<IActionResult> ChangeRole([FromRoute] string id, [FromForm] UserRole? role, CancellationToken cancellationToken)
     {
         if (role == null)
@@ -70,6 +73,7 @@ public class UsersController : Controller
     }
 
     [HttpGet("{id}/admin-info")]
+    [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
     public async Task<IActionResult> AdminInfo([FromRoute] string id, CancellationToken cancellationToken)
     {
         var model = await _mediator.Send(new GetOrganizationBasicInformationQuery(), cancellationToken);
@@ -78,6 +82,7 @@ public class UsersController : Controller
     }
 
     [HttpGet("{id}/confirm-unlink")]
+    [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
     public async Task<IActionResult> ConfirmUnlink([FromRoute] string id, [FromQuery] string redirect, CancellationToken cancellationToken)
     {
         var model = await _mediator.Send(new GetUserDetailsQuery(id), cancellationToken);
@@ -86,6 +91,7 @@ public class UsersController : Controller
     }
 
     [HttpPost("{id}/confirm-unlink")]
+    [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
     public async Task<IActionResult> Unlink([FromRoute] string id, [FromForm] string unlink, [FromQuery] string redirect, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(unlink))
@@ -106,5 +112,33 @@ public class UsersController : Controller
         }
 
         return RedirectToAction(redirect, new { id });
+    }
+
+    [HttpGet("invite")]
+    [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
+    public async Task<IActionResult> Invite(CancellationToken cancellationToken)
+    {
+        var organisation = await _mediator.Send(new GetOrganizationBasicInformationQuery(), cancellationToken);
+
+        return View("Invite", new InviteUserViewModel(organisation.OrganizationBasicInformation.RegisteredCompanyName));
+    }
+
+    [HttpPost("invite")]
+    [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
+    public async Task<IActionResult> Invite(InviteUserViewModel model, CancellationToken cancellationToken)
+    {
+        ModelState.AddModelError("FirstName", "test error");
+        ModelState.AddModelError("Role", "role error");
+        return await Invite(cancellationToken);
+
+        // TODO: Uncommet when backend inplemented
+        // var result = await _mediator.Send(new InviteUserCommand(model), cancellationToken);
+        // if (result.HasValidationErrors)
+        // {
+        //     ModelState.AddValidationErrors(result);
+        //     return View("Invite", model);
+        // }
+        //
+        // return RedirectToAction("Index");
     }
 }

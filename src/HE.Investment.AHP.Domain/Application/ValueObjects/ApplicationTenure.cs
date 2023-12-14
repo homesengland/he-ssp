@@ -22,7 +22,7 @@ public class ApplicationTenure : ValueObject
     {
         var operationResult = OperationResult.New();
 
-        Value = EnumValidator<Tenure>.Required(value, nameof(Tenure), "Tenure type is required.", operationResult);
+        Value = EnumValidator<Tenure>.Required(value, nameof(Tenure), "Select the tenure you want to apply with.", operationResult);
 
         return operationResult;
     }

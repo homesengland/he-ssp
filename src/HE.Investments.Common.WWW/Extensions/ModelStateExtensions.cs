@@ -30,16 +30,12 @@ public static class ModelStateExtensions
         }
 
         var result = new Dictionary<string, string>();
-
         foreach (var key in orderedKeys)
         {
             var (hasError, errorMsg) = GetErrors(modelState, key);
             if (hasError)
             {
-                if (!result.ContainsKey(key))
-                {
-                    result.Add(key, errorMsg);
-                }
+               result.TryAdd(key, errorMsg);
             }
         }
 

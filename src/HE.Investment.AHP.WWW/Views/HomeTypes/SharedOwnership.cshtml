@@ -1,14 +1,17 @@
 @using HE.Investment.AHP.Domain.HomeTypes
 @using HE.Investment.AHP.WWW.Extensions
+@using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
 @using HE.Investments.Common.Messages
+@using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.HomeTypes.SharedOwnershipModel;
 
 @{
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
+    ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.SharedOwnership);
 }
 
 <gds-div-grid-column-two-thirds>
@@ -18,78 +21,81 @@
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.SharedOwnership"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
-                                  caption="@Model.Header"/>
+                                  caption="@Model.Header"
+                                  title="Shared Ownership details"/>
         <gds-field-set>
-            <gds-legend>
-                <gds-h1 class="govuk-!-margin-bottom-2">Shared Ownership details</gds-h1>
-            </gds-legend>
-
-            <gds-legend>
-                <gds-h2>Enter the market value of each home</gds-h2>
-            </gds-legend>
-            <div class="govuk-!-margin-bottom-6">
+            <he-error-form-group asp-for="MarketValue">
+                <gds-legend>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter the market value of each home</gds-h2>
+                </gds-legend>
                 <gds-span-hint>
                     Enter the market value in pounds only.
                 </gds-span-hint>
-            </div>
-            <gds-input
-                class="govuk-input--width-4"
-                asp-hiddenlabeltext="Enter the number of market value"
-                govuk-formgroup-asp-for="MarketValue"
-                name="MarketValue"
-                value=@Model.MarketValue
-                asp-prefixtext="GdsInputPrefixText.Pounds"/>
+                <gds-input
+                    class="govuk-input--width-4"
+                    asp-hiddenlabeltext="Enter the number of market value"
+                    govuk-formgroup-asp-for="MarketValue"
+                    name="MarketValue"
+                    value=@Model.MarketValue
+                    asp-prefixtext="GdsInputPrefixText.Pounds"/>
+            </he-error-form-group>
 
-            <gds-legend>
-                <gds-h2>Enter the average assumed first tranche sale percentage</gds-h2>
-            </gds-legend>
-            <div class="govuk-!-margin-bottom-6">
+            <he-error-form-group asp-for="InitialSale">
+                <gds-legend>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter the average assumed first tranche sale percentage</gds-h2>
+                </gds-legend>
                 <gds-span-hint>
                     This is the average percentage share that you are assuming your purchasers will buy in their initial purchase (must be between 10% nad 75%).
                 </gds-span-hint>
-            </div>
-            <gds-input
-                class="govuk-input--width-4"
-                asp-hiddenlabeltext="Enter the average assumed first tranche sale percentage"
-                govuk-formgroup-asp-for="InitialSalePercentage"
-                name="InitialSalePercentage"
-                value=@Model.InitialSalePercentage
-                asp-suffixtext="GdsInputSuffixText.Percent"/>
+                <gds-input
+                    class="govuk-input--width-4"
+                    asp-hiddenlabeltext="Enter the average assumed first tranche sale percentage"
+                    govuk-formgroup-asp-for="InitialSale"
+                    name="InitialSale"
+                    value=@Model.InitialSale
+                    asp-suffixtext="GdsInputSuffixText.Percent"/>
+            </he-error-form-group>
 
-            <gds-legend>
-                            <gds-h2 class="govuk-!-margin-bottom-4">Assumed first tranche sales receipt</gds-h2>
-                        </gds-legend>
+            <he-error-form-group asp-for="ExpectedFirstTranche">
+                <gds-legend>
+                    <gds-h2 class="govuk-!-margin-bottom-4">Assumed first tranche sales receipt</gds-h2>
+                </gds-legend>
 
-                        <gds-p class="govuk-!-margin-top-2">
-                            £@(Model.ExpectedFirstTranche ?? "") [calculated on page]
-                        </gds-p>
+                <gds-p class="govuk-!-margin-top-2">
+                    £@(Model.ExpectedFirstTranche ?? "") [calculated on page]
+                </gds-p>
+            </he-error-form-group>
 
-            <gds-legend>
-                <gds-h2 class="govuk-!-margin-bottom-0 govuk-!-margin-top-6">Enter the Shared Ownership rent per week</gds-h2>
-            </gds-legend>
-            <gds-span-hint>
-                Enter the rent in pounds and pence. This is inclusive of all charges.
-            </gds-span-hint>
-            <gds-input
-                class="govuk-input--width-4"
-                asp-hiddenlabeltext="Enter the Shared Ownership rent per week"
-                govuk-formgroup-asp-for="SharedOwnershipWeeklyRent"
-                name="SharedOwnershipWeeklyRent"
-                value=@Model.SharedOwnershipWeeklyRent
-                asp-prefixtext="GdsInputPrefixText.Pounds"
-                asp-suffixtext="GdsInputSuffixText.PerWeek"/>
+            <he-error-form-group asp-for="ProspectiveRent">
+                <gds-legend>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter the Shared Ownership rent per week</gds-h2>
+                </gds-legend>
+                <gds-span-hint>
+                    Enter the rent in pounds and pence. This is inclusive of all charges.
+                </gds-span-hint>
+                <gds-input
+                    class="govuk-input--width-4"
+                    asp-hiddenlabeltext="Enter the Shared Ownership rent per week"
+                    govuk-formgroup-asp-for="ProspectiveRent"
+                    name="ProspectiveRent"
+                    value=@Model.ProspectiveRent
+                    asp-prefixtext="GdsInputPrefixText.Pounds"
+                    asp-suffixtext="GdsInputSuffixText.PerWeek"/>
+            </he-error-form-group>
 
-            <gds-legend>
-                <gds-h2 class="govuk-!-margin-bottom-0">Shared Ownership rent as percentage of the unsold share</gds-h2>
-            </gds-legend>
-            <gds-span-hint>
-                This is calculated by dividing the rent by the market value of the home left after the assumed first tranche sale.
-                This must not be more than 3%.
-            </gds-span-hint>
+            <he-error-form-group asp-for="SharedOwnershipRentAsPercentageOfTheUnsoldShare">
+                <gds-legend>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Shared Ownership rent as percentage of the unsold share</gds-h2>
+                </gds-legend>
+                <gds-span-hint>
+                    This is calculated by dividing the rent by the market value of the home left after the assumed first tranche sale.
+                    This must not be more than 3%.
+                </gds-span-hint>
 
-            <gds-p class="govuk-!-margin-top-2">
-                @(Model.SharedOwnershipRentAsPercentageOfTheUnsoldShare ?? "00.00")% [calculated on page]
-            </gds-p>
+                <gds-p class="govuk-!-margin-top-2">
+                    @(Model.SharedOwnershipRentAsPercentageOfTheUnsoldShare ?? "00.00")% [calculated on page]
+                </gds-p>
+            </he-error-form-group>
 
             <div>
                 <button class="govuk-button govuk-button--secondary" data-module="govuk-button" name="action" type="submit" value="@GenericMessages.Calculate" id="calculate-button">

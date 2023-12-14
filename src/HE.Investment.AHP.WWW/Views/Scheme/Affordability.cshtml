@@ -1,7 +1,6 @@
 @using HE.Investment.AHP.Domain.Scheme.Workflows
 @using HE.Investment.AHP.WWW.Views.Scheme.Const;
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.Components.FormFieldTitle
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @using HE.Investments.Common.WWW.Extensions;
@@ -19,15 +18,12 @@
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
         <gds-field-set role="group">
-            <vc:form-field-title
-                field-name="AffordabilityEvidence"
-                title="Tell us about any evidence and analysis you have that the homes will be affordable to the target market"/>
-            <HeErrorFormGroup asp-for="AffordabilityEvidence">
-                <he-text-area asp-for="AffordabilityEvidence" rows="5" class="govuk-!-margin-bottom-2"></he-text-area>
-                <he-div-hint>
-                    You can enter up to 1500 characters
-                </he-div-hint>
-            </HeErrorFormGroup>
+
+            <vc:text-area-input
+                field-name="@nameof(Model.AffordabilityEvidence)"
+                label="Tell us about any evidence and analysis you have that the homes will be affordable to the target market"
+                value="@Model.AffordabilityEvidence"/>
+
         </gds-field-set>
         <vc:form-button/>
     </form>

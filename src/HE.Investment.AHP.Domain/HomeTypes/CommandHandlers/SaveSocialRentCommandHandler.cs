@@ -17,6 +17,6 @@ public class SaveSocialRentCommandHandler : SaveHomeTypeSegmentCommandHandlerBas
     protected override IEnumerable<Action<SaveSocialRentCommand, IHomeTypeEntity>> SaveActions => new[]
     {
         (SaveSocialRentCommand request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue),
-        (request, homeType) => homeType.TenureDetails.ChangeMarketRent(request.MarketRent),
+        (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.ProspectiveRent),
     };
 }

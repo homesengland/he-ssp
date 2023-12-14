@@ -2,7 +2,6 @@ using HE.Investments.Account.Shared.Routing;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,6 +11,11 @@ namespace HE.Investments.Account.Shared.Authorization.Attributes;
 public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFilter
 {
     private readonly IEnumerable<string> _allowedFor;
+
+    public AuthorizeWithCompletedProfile(string allowedFor)
+        : this(allowedFor.Split(','))
+    {
+    }
 
     public AuthorizeWithCompletedProfile(string[]? allowedFor = null)
     {
@@ -24,10 +28,6 @@ public class AuthorizeWithCompletedProfile : AuthorizeAttribute, IAsyncActionFil
                 UserAccountRole.InputRole,
                 UserAccountRole.ViewOnlyRole,
                 UserAccountRole.LimitedRole,
-
-                // TODO: remove below roles
-                UserAccountRole.AdminLoans,
-                UserAccountRole.LimitedUserLoans,
             };
         }
         else
