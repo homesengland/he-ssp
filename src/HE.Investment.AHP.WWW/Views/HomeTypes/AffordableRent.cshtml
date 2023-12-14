@@ -12,7 +12,7 @@
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
-    ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.AffordableRent);
+    ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.AffordableRent);
 }
 
 <gds-div-grid-column-two-thirds>

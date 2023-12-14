@@ -10,7 +10,7 @@
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
-    ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.HomeInformation);
+    ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.HomeInformation);
 }
 
 <div class="govuk-grid-column-two-thirds">

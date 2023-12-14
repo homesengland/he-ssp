@@ -11,7 +11,7 @@
     var applicationId = this.GetApplicationIdFromRoute();
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
-    ViewBag.validationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.SharedOwnership);
+    ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.SharedOwnership);
 }
 
 <gds-div-grid-column-two-thirds>
@@ -68,7 +68,7 @@
 
             <he-error-form-group asp-for="ProspectiveRent">
                 <gds-legend>
-                    <gds-h2 class="govuk-!-margin-bottom-0 govuk-!-margin-top-6">Enter the Shared Ownership rent per week</gds-h2>
+                    <gds-h2 class="govuk-!-margin-bottom-0">Enter the Shared Ownership rent per week</gds-h2>
                 </gds-legend>
                 <gds-span-hint>
                     Enter the rent in pounds and pence. This is inclusive of all charges.
