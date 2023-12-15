@@ -66,6 +66,48 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public bool IsSharedOwnershipIneligible => SharedOwnershipRentAsPercentageOfTheUnsoldShare?.Value > 3;
 
+    public static decimal? CalculateProspectiveRent(MarketRent? marketRent, ProspectiveRent? prospectiveRent)
+    {
+        if (marketRent.IsNotProvided() || prospectiveRent.IsNotProvided())
+        {
+            return null;
+        }
+
+        var result = prospectiveRent!.Value / marketRent!.Value * 100;
+        result = Math.Round(result, 0);
+
+        return result;
+    }
+
+    public static decimal? CalculateExpectedFirstTranche(MarketValue? marketValue, InitialSale? initialSale)
+    {
+        if (marketValue.IsNotProvided() || initialSale.IsNotProvided())
+        {
+            return null;
+        }
+
+        var result = (decimal)marketValue!.Value * initialSale!.Value / 100;
+        result = Math.Round(result, 2);
+
+        return result;
+    }
+
+    public static decimal? CalculateProspectiveRentAsPercentageOfTheUnsoldShare(MarketValue? marketValue, ProspectiveRent? prospectiveRent, InitialSale? initialSale)
+    {
+        const int weeksAYear = 52;
+        if (marketValue.IsNotProvided() || prospectiveRent.IsNotProvided() || initialSale.IsNotProvided())
+        {
+            return null;
+        }
+
+        var expectedFirstTranche = CalculateExpectedFirstTranche(marketValue, initialSale);
+
+        var result = prospectiveRent!.Value * weeksAYear / (marketValue!.Value - expectedFirstTranche!.Value);
+        result = Math.Round(result, 2);
+
+        return result;
+    }
+
     public void ChangeMarketValue(string? marketValue, bool isCalculation = false)
     {
         var newValue = marketValue.IsProvided() || isCalculation
@@ -228,47 +270,5 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
                && ProspectiveRent.IsProvided()
                && TargetRentExceedMarketRent?.Value != YesNoType.Undefined
                && !IsProspectiveRentIneligible;
-    }
-
-    private decimal? CalculateProspectiveRent(MarketRent? marketRent, ProspectiveRent? prospectiveRent)
-    {
-        if (marketRent.IsNotProvided() || prospectiveRent.IsNotProvided())
-        {
-            return null;
-        }
-
-        var result = prospectiveRent!.Value / marketRent!.Value * 100;
-        result = Math.Round(result, 0);
-
-        return result;
-    }
-
-    private decimal? CalculateExpectedFirstTranche(MarketValue? marketValue, InitialSale? initialSale)
-    {
-        if (marketValue.IsNotProvided() || initialSale.IsNotProvided())
-        {
-            return null;
-        }
-
-        var result = (decimal)marketValue!.Value * initialSale!.Value / 100;
-        result = Math.Round(result, 2);
-
-        return result;
-    }
-
-    private decimal? CalculateProspectiveRentAsPercentageOfTheUnsoldShare(MarketValue? marketValue, ProspectiveRent? prospectiveRent, InitialSale? initialSale)
-    {
-        const int weeksAYear = 52;
-        if (marketValue.IsNotProvided() || prospectiveRent.IsNotProvided() || initialSale.IsNotProvided())
-        {
-            return null;
-        }
-
-        var expectedFirstTranche = CalculateExpectedFirstTranche(marketValue, initialSale);
-
-        var result = prospectiveRent!.Value * weeksAYear / (marketValue!.Value - expectedFirstTranche!.Value);
-        result = Math.Round(result, 2);
-
-        return result;
     }
 }
