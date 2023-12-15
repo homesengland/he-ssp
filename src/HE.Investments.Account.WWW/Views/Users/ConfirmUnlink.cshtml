@@ -1,6 +1,6 @@
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.FormButton
-@model (string UserId, string OrganisationName, string UserFullName, string Redirect)
+@model (string UserId, string OrganisationName, string UserFullName)
 @{
     var title = $"Are you sure you want to remove {Model.UserFullName} from {Model.OrganisationName}?";
     ViewData["Title"] = title;
@@ -12,7 +12,7 @@
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <vc:form-header title="@title"/>
 
-    <form asp-controller="Users" asp-action="Unlink" asp-route-id="@Model.UserId" asp-route-redirect="@Model.Redirect" asp-method="post" novalidate>
+    <form asp-controller="Users" asp-action="Unlink" asp-route-id="@Model.UserId" asp-method="post" novalidate>
         <gds-field-set>
 
             <vc:radio-yes-no

@@ -28,7 +28,7 @@ public class AffordabilityEvidence : ValueObject
         var operationResult = OperationResult.New();
 
         Evidence = Validator
-            .For(evidence, "AffordabilityEvidence", "Affordability of shared ownership", operationResult)
+            .For(evidence, "AffordabilityEvidence", "affordability of shared ownership", operationResult)
             .IsProvidedIf(isCompleteCheck)
             .IsLongInput();
 

@@ -33,23 +33,23 @@ public class UsersController : Controller
         return View("Index", (model, UserRolesDescription.All));
     }
 
-    [HttpGet("{id}/manage")]
+    [HttpGet("{id}/change")]
     [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
-    public async Task<IActionResult> Manage([FromRoute] string id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Change([FromRoute] string id, CancellationToken cancellationToken)
     {
         var model = await _mediator.Send(new GetUserDetailsQuery(id), cancellationToken);
 
-        return View("Manage", model);
+        return View("Change", model);
     }
 
-    [HttpPost("{id}/manage")]
+    [HttpPost("{id}/change")]
     [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
     public async Task<IActionResult> ChangeRole([FromRoute] string id, [FromForm] UserRole? role, CancellationToken cancellationToken)
     {
         if (role == null)
         {
             ModelState.AddModelError("Role", "You have to select role.");
-            return await Manage(id, cancellationToken);
+            return await Change(id, cancellationToken);
         }
 
         if (role == UserRole.Admin)
@@ -59,14 +59,14 @@ public class UsersController : Controller
 
         if (role == UserRole.Undefined)
         {
-            return RedirectToAction("ConfirmUnlink", "Users", new { id, redirect = "Manage" });
+            return RedirectToAction("ConfirmUnlink", "Users", new { id });
         }
 
         var result = await _mediator.Send(new ChangeUserRoleCommand(id, role.Value), cancellationToken);
         if (result.HasValidationErrors)
         {
             ModelState.AddValidationErrors(result);
-            return await Manage(id, cancellationToken);
+            return await Change(id, cancellationToken);
         }
 
         return RedirectToAction("Index");
@@ -83,35 +83,35 @@ public class UsersController : Controller
 
     [HttpGet("{id}/confirm-unlink")]
     [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
-    public async Task<IActionResult> ConfirmUnlink([FromRoute] string id, [FromQuery] string redirect, CancellationToken cancellationToken)
+    public async Task<IActionResult> ConfirmUnlink([FromRoute] string id, CancellationToken cancellationToken)
     {
         var model = await _mediator.Send(new GetUserDetailsQuery(id), cancellationToken);
 
-        return View("ConfirmUnlink", (id, model.OrganisationName, $"{model.UserDetails.FirstName} {model.UserDetails.LastName}", redirect));
+        return View("ConfirmUnlink", (id, model.OrganisationName, $"{model.UserDetails.FirstName} {model.UserDetails.LastName}"));
     }
 
     [HttpPost("{id}/confirm-unlink")]
     [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
-    public async Task<IActionResult> Unlink([FromRoute] string id, [FromForm] string unlink, [FromQuery] string redirect, CancellationToken cancellationToken)
+    public async Task<IActionResult> Unlink([FromRoute] string id, [FromForm] string? unlink, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(unlink))
         {
             ModelState.AddModelError("Unlink", ValidationErrorMessage.ChooseYourAnswer);
-            return await ConfirmUnlink(id, redirect, cancellationToken);
+            return await ConfirmUnlink(id, cancellationToken);
         }
 
         if (unlink == YesNoAnswers.Yes.ToString())
         {
-            var result = await _mediator.Send(new RemoveLinkBetweenUserAndOrganisationCommand(), cancellationToken);
+            var result = await _mediator.Send(new RemoveLinkBetweenUserAndOrganisationCommand(id), cancellationToken);
 
             if (result.HasValidationErrors)
             {
                 ModelState.AddValidationErrors(result);
-                return await ConfirmUnlink(id, redirect, cancellationToken);
+                return await ConfirmUnlink(id, cancellationToken);
             }
         }
 
-        return RedirectToAction(redirect, new { id });
+        return RedirectToAction("Index");
     }
 
     [HttpGet("invite")]
@@ -127,18 +127,15 @@ public class UsersController : Controller
     [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
     public async Task<IActionResult> Invite(InviteUserViewModel model, CancellationToken cancellationToken)
     {
-        ModelState.AddModelError("FirstName", "test error");
-        ModelState.AddModelError("Role", "role error");
-        return await Invite(cancellationToken);
+        var result = await _mediator.Send(
+            new InviteUserToOrganisationCommand(model.FirstName, model.LastName, model.EmailAddress, model.JobTitle, model.Role),
+            cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View(model);
+        }
 
-        // TODO: Uncommet when backend inplemented
-        // var result = await _mediator.Send(new InviteUserCommand(model), cancellationToken);
-        // if (result.HasValidationErrors)
-        // {
-        //     ModelState.AddValidationErrors(result);
-        //     return View("Invite", model);
-        // }
-        //
-        // return RedirectToAction("Index");
+        return RedirectToAction("Index");
     }
 }

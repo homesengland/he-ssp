@@ -1,6 +1,5 @@
 @using HE.Investment.AHP.WWW.Views.Scheme.Const;
 @using HE.Investments.Common.WWW.Components.FormButton
-@using HE.Investments.Common.WWW.Components.FormFieldTitle
 @using HE.Investments.Common.WWW.Components.FormHeader
 @using HE.Investments.Common.WWW.Components.WorkflowBackButton
 @using HE.Investment.AHP.Domain.Scheme.Workflows
@@ -17,32 +16,19 @@
     <form asp-controller="Scheme" asp-action="Funding" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
-        <gds-field-set role="group">
-            <vc:form-field-title
-                field-name="RequiredFunding"
-                title="Enter how much AHP CME 21-26 funding you require on this scheme"/>
-            <gds-input-wrapper class="govuk-!-margin-bottom-6">
-                <gds-input asp-prefixtext="GdsInputPrefixText.Pounds"
-                           class="govuk-input--width-10"
-                           govuk-formgroup-asp-for="RequiredFunding"
-                           value="@Model.RequiredFunding"
-                           asp-excludelabel
-                           type="text"/>
-            </gds-input-wrapper>
 
-            <vc:form-field-title
-                field-name="HousesToDeliver"
-                title="Enter how many homes you intend to deliver"/>
-            <gds-input-wrapper class="govuk-!-margin-bottom-6">
-                <gds-input
-                    class="govuk-input--width-5"
-                    govuk-formgroup-asp-for="HousesToDeliver"
-                    value="@Model.HousesToDeliver"
-                    asp-excludelabel
-                    type="text"/>
-            </gds-input-wrapper>
+        <vc:numeric-text-input
+            field-name="@nameof(Model.RequiredFunding)"
+            value="@Model.RequiredFunding"
+            label="Enter how much AHP CME 21-26 funding you require on this scheme"
+            prefix="£"
+            css-class="govuk-input--width-10"/>
 
-        </gds-field-set>
+        <vc:numeric-text-input
+            field-name="@nameof(Model.HousesToDeliver)"
+            value="@Model.HousesToDeliver"
+            label="Enter how many homes you intend to deliver"
+            css-class="govuk-input--width-5"/>
 
         <vc:form-button/>
     </form>
