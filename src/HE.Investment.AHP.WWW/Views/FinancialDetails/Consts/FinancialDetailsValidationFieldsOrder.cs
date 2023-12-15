@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Domain.FinancialDetails.Constants;
+using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 
 namespace HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 public static class FinancialDetailsValidationFieldsOrder
@@ -28,10 +28,10 @@ public static class FinancialDetailsValidationFieldsOrder
     public static List<string> Grants => new()
     {
         FinancialDetailsValidationFieldNames.CountyCouncilGrants,
-        FinancialDetailsValidationFieldNames.DHSCExtraCareGrants,
+        FinancialDetailsValidationFieldNames.DhscExtraCareGrants,
         FinancialDetailsValidationFieldNames.LocalAuthorityGrants,
         FinancialDetailsValidationFieldNames.SocialServicesGrants,
-        FinancialDetailsValidationFieldNames.HeatlthRelatedGrants,
+        FinancialDetailsValidationFieldNames.HealthRelatedGrants,
         FinancialDetailsValidationFieldNames.LotteryGrants,
         FinancialDetailsValidationFieldNames.OtherPublicBodiesGrants,
     };

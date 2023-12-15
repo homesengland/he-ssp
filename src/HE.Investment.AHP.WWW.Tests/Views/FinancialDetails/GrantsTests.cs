@@ -1,4 +1,5 @@
 using AngleSharp.Html.Dom;
+using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investment.AHP.WWW.Models.FinancialDetails;
 using HE.Investments.Common.WWWTestsFramework;
@@ -50,7 +51,7 @@ public class GrantsTests : ViewTestBase
             "0");
         var errorMessage = "some test error";
         var modelState = new ModelStateDictionary();
-        modelState.AddModelError(FinancialDetailsValidationFieldNames.DHSCExtraCareGrants, errorMessage);
+        modelState.AddModelError(FinancialDetailsValidationFieldNames.DhscExtraCareGrants, errorMessage);
 
         // when
         var document = await Render(_viewPath, model, modelStateDictionary: modelState);
@@ -66,7 +67,7 @@ public class GrantsTests : ViewTestBase
             .HasElementWithText("h2", "Enter how much you have received from the county council")
             .HasElementWithText("span", "Total grants from other public bodies")
             .HasElementWithText("button", "Save and continue")
-            .HasSummaryErrorMessage(FinancialDetailsValidationFieldNames.DHSCExtraCareGrants, errorMessage, !string.IsNullOrEmpty(errorMessage))
-            .HasErrorMessage(FinancialDetailsValidationFieldNames.DHSCExtraCareGrants, errorMessage, !string.IsNullOrEmpty(errorMessage));
+            .HasSummaryErrorMessage(FinancialDetailsValidationFieldNames.DhscExtraCareGrants, errorMessage, !string.IsNullOrEmpty(errorMessage))
+            .HasErrorMessage(FinancialDetailsValidationFieldNames.DhscExtraCareGrants, errorMessage, !string.IsNullOrEmpty(errorMessage));
     }
 }

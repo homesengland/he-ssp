@@ -1,6 +1,7 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.Users;
 using HE.Investments.Account.Domain.Data;
+using HE.Investments.Account.Domain.Data.Extensions;
 
 namespace HE.Investments.Account.Domain.Users.Repositories;
 
@@ -24,7 +25,7 @@ public class UsersRepository : IUsersRepository
         var roles = await _usersCrmContext.GetUsersRole(users.Select(u => u.contactExternalId).ToList());
 
         return users
-            .Where(x => x.IsConnectedWithExternalIdentity)
+            .Where(x => x.IsConnectedWithExternalIdentity())
             .Select(u => CreateUserDetails(u, r => GetRole(r, roles)))
             .ToList();
     }

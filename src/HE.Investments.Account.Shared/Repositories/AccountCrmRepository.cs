@@ -43,7 +43,7 @@ public class AccountCrmRepository : IAccountRepository
                 userEmail,
                 x.Key,
                 x.FirstOrDefault(y => y.accountId == x.Key)?.accountName ?? string.Empty,
-                x.Select(y => new UserAccountRole(useNewRoles ? y.webRoleName : UserAccountRole.InputRole))))
+                x.Select(y => new UserAccountRole(useNewRoles ? y.webRoleName : UserAccountRole.AdminRole))))
             .ToList();
     }
 

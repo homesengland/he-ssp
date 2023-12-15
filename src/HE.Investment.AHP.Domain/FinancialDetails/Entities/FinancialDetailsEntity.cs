@@ -1,4 +1,5 @@
 using HE.Investment.AHP.Contract.Common.Enums;
+using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.Common;
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investments.Common.Contract;
