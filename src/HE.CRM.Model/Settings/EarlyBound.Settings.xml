@@ -31,6 +31,7 @@ invln_getsingleloanapplicationforaccountandcontact|
 invln_getsinglesitedetails|
 invln_gettemporaryportaldata|
 invln_gettypeofhomeslist|
+invln_invitecontacttojoinexistingorganisation|
 invln_linkcontactwithorganization|
 invln_returnuserprofile|
 invln_savetemporaryportaldata|
@@ -39,6 +40,9 @@ invln_sendgovnotifyemail|
 invln_sendinternalcrmnotification|
 invln_sendinvestmentloansdatatocrm|
 invln_sendinvitecontacttojoinorganisation|
+invln_sendreminderemailforrefferedbacktoapplicant|
+invln_sendremindertofinalisadraftapplication|
+invln_sendrequesttoassigncontacttoexistingorganisation|
 invln_setahpapplication|
 invln_sethometype|
 invln_updatesingleloanapplication|

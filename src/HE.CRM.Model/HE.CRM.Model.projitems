@@ -35,6 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_getsinglesitedetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettemporaryportaldata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_gettypeofhomeslist.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_invitecontacttojoinexistingorganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_linkcontactwithorganization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_returnuserprofile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_savetemporaryportaldata.cs" />
@@ -44,6 +45,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinternalcrmnotification.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinvestmentloansdatatocrm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinvitecontacttojoinorganisation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendreminderemailforrefferedbacktoapplicant.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendremindertofinalisadraftapplication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendrequesttoassigncontacttoexistingorganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setahpapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sethometype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesingleloanapplication.cs" />

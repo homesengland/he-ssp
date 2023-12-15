@@ -126,5 +126,20 @@ namespace HE.CRM.Common.Repositories.Implementations
 
             }
         }
+
+        public List<Contact> GetOrganisationAdministrators(Guid organisationId)
+        {
+            using (DataverseContext ctx = new DataverseContext(service))
+            {
+                return (from cnt in ctx.ContactSet
+                        join cwr in ctx.invln_contactwebroleSet on cnt.ContactId equals cwr.invln_Contactid.Id
+                        join acc in ctx.AccountSet on cwr.invln_Accountid.Id equals acc.Id
+                        join wr in ctx.invln_WebroleSet on cwr.invln_Webroleid.Id equals wr.Id
+                        join ppl in ctx.invln_portalpermissionlevelSet on wr.invln_Portalpermissionlevelid.Id equals ppl.Id
+                        where acc.AccountId == organisationId && ppl.invln_Permission.Value == (int)invln_Permission.Admin
+                        select cnt).ToList();
+
+            }
+        }
     }
 }

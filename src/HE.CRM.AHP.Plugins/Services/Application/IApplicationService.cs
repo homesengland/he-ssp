@@ -15,5 +15,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus);
         void CreateDocumentLocation(invln_scheme target);
         string GetFileLocationForAhpApplication(string ahpApplicationId, bool isAbsolute);
+        void SendReminderEmailForRefferedBackToApplicant(Guid applicationId);
+        void SendReminderEmailForFinaliseDraftApplication(Guid applicationId);
     }
 }
