@@ -20,6 +20,7 @@ public static class AccountModule
         services.AddScoped<IContactRepository, ContactRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<IAccountUserContext, AccountUserContext>();
+        services.AddScoped<IAccountAccessContext, AccountAccessContext>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
         services.AddScoped<ICurrentOrganisationRepository, CurrentOrganisationRepository>();
         services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
