@@ -1,5 +1,6 @@
 using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Shared;
+using HE.Investments.Account.Shared.User;
 using HE.Investments.Common.CRM.Model;
 using HE.Investments.Common.CRM.Services;
 using HE.Investments.Loans.Common.CrmCommunication.Serialization;
@@ -20,8 +21,8 @@ public class ApplicationCrmContext : IApplicationCrmContext
 
     public async Task<AhpApplicationDto> GetById(string id, IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
-        var request = new invln_getahpapplicationRequest()
+        var account = await TryGetUserAccountForSelectedOrganisation();
+        var request = new invln_getahpapplicationRequest
         {
             invln_userid = account.UserGlobalId.ToString(),
             invln_organisationid = account.AccountId.ToString(),
@@ -44,6 +45,8 @@ public class ApplicationCrmContext : IApplicationCrmContext
 
     public async Task<bool> IsExist(string applicationName, CancellationToken cancellationToken)
     {
+        var account = await TryGetUserAccountForSelectedOrganisation();
+
         var dto = new AhpApplicationDto
         {
             name = applicationName,
@@ -52,6 +55,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
         var request = new invln_checkifapplicationwithgivennameexistsRequest
         {
             invln_application = CrmResponseSerializer.Serialize(dto),
+            invln_organisationid = account.AccountId.ToString(),
         };
 
         var response = await _service.ExecuteAsync<invln_checkifapplicationwithgivennameexistsRequest, invln_checkifapplicationwithgivennameexistsResponse>(
@@ -64,7 +68,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
 
     public async Task<IList<AhpApplicationDto>> GetAll(IList<string> fieldsToRetrieve, CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
+        var account = await TryGetUserAccountForSelectedOrganisation();
         var request = new invln_getmultipleahpapplicationsRequest
         {
             inlvn_userid = account.UserGlobalId.ToString(),
@@ -80,7 +84,7 @@ public class ApplicationCrmContext : IApplicationCrmContext
 
     public async Task<string> Save(AhpApplicationDto dto, IList<string> fieldsToUpdate, CancellationToken cancellationToken)
     {
-        var account = await _accountUserContext.GetSelectedAccount();
+        var account = await TryGetUserAccountForSelectedOrganisation();
         var request = new invln_setahpapplicationRequest
         {
             invln_userid = account.UserGlobalId.ToString(),
@@ -98,5 +102,17 @@ public class ApplicationCrmContext : IApplicationCrmContext
     private static string FormatFields(IList<string> fieldsToRetrieve)
     {
         return string.Join(",", fieldsToRetrieve.Select(f => f.ToLowerInvariant()));
+    }
+
+    private async Task<UserAccount> TryGetUserAccountForSelectedOrganisation()
+    {
+        var account = await _accountUserContext.GetSelectedAccount();
+
+        if (account.AccountId == null)
+        {
+            throw new InvalidOperationException("User is not linked with any organisation.");
+        }
+
+        return account;
     }
 }
