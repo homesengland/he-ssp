@@ -119,11 +119,18 @@ public class ContactService : IContactService
                     Attributes =
             {
                 { "invln_accountid", new EntityReference("account", organisationGuid) },
-                { "invln_contactid", contact?.ToEntityReference() },
+                { "invln_contactid", contact.ToEntityReference() },
                 { "invln_webroleid", defaultRole.First().ToEntityReference() },
             },
                 };
-                return await service.CreateAsync(contactWebroleToCreate);
+                contactWebroleToCreate.Id = await service.CreateAsync(contactWebroleToCreate);
+                var req = new OrganizationRequest("invln_sendrequesttoassigncontacttoexistingorganisation")
+                {
+                    ["invln_organisationid"] = organisationGuid.ToString(),
+                    ["invln_contactid"] = contact.Id,
+                };
+                service.Execute(req);
+                return contactWebroleToCreate.Id;
             }
 
             throw new InvalidPluginExecutionException("Webrole for given contact and organisation already exists");

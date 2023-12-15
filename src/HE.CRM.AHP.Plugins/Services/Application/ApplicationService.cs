@@ -226,13 +226,12 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
         public void SendRequestToAssignContactToExistingOrganisation(Guid organisationId, Guid contactId)
         {
-            var accountEntityReference = new EntityReference(Account.EntityLogicalName, organisationId);
             var organisationAdministartors = _contactRepository.GetOrganisationAdministrators(organisationId);
             if (organisationAdministartors.Any())
             {
-                foreach(var admin in organisationAdministartors)
+                foreach (var admin in organisationAdministartors)
                 {
-                    _govNotifyEmailService
+                    _govNotifyEmailService.SendNotifications_COMMON_REQUEST_TO_ASSIGN_CONTACT_TO_EXISTING_ORGANISATION(admin.ToEntityReference(), new EntityReference(Contact.EntityLogicalName, contactId));
                 }
             }
         }
