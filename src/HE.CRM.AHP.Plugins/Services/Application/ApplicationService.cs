@@ -48,15 +48,17 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             }
         }
 
-        public bool CheckIfApplicationExists(string serializedApplication)
+        public bool CheckIfApplicationExists(string serializedApplication, Guid organisationId)
         {
             var applicationDto = JsonSerializer.Deserialize<AhpApplicationDto>(serializedApplication);
-            return _applicationRepository.ApplicationWithGivenNameExists(applicationDto.name);
+            return _applicationRepository.ApplicationWithGivenNameAndOrganisationExists(applicationDto.name, organisationId);
         }
 
         public void CheckIfApplicationWithNewNameExists(invln_scheme target, invln_scheme preImage)
         {
-            if ((preImage == null || (preImage != null && preImage.invln_schemename != target.invln_schemename)) && _applicationRepository.ApplicationWithGivenNameExists(target.invln_schemename))
+            var organisationId = target.invln_organisationid == null ? preImage.invln_organisationid.Id : target.invln_organisationid.Id;
+            if ((preImage == null || (preImage != null && preImage.invln_schemename != target.invln_schemename)) &&
+                _applicationRepository.ApplicationWithGivenNameAndOrganisationExists(target.invln_schemename, organisationId))
             {
                 throw new InvalidPluginExecutionException("Application with new name already exists.");
             }
