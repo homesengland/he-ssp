@@ -3,7 +3,7 @@
 @model HE.Investments.Account.Contract.Organisation.OrganisationDetailsViewModel
 
 @* TODO: remove HE.InvestmentLoans.WWW.Notifications.ChangeOrganisationDetailsRequestedNotificationMapper class when removing this view! *@
-<gds-div-grid-column-full>
+<div class="govuk-grid-column-full">
     <form asp-controller="UserOrganisation" asp-action="Details" asp-method="post" novalidate>
 
         <gds-back-link href="@Url.Action("Index", "UserOrganisation", new { })" text="Back" class="govuk-!-margin-bottom-8">
@@ -69,4 +69,4 @@
             </gds-p>
         }
     </form>
-</gds-div-grid-column-full>
+</div>

@@ -6,12 +6,12 @@
 }
 @if (showRow)
 {
-    <gds-summary-list-row-v2>
+    <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key govuk-!-width-one-half">
             @ViewData["Title"]
         </dt>
 
-        <gds-summary-list-value-v2>
+        <dd class="govuk-summary-list__value">
             @if (valueList != null)
             {
                 foreach (var line in valueList)
@@ -30,6 +30,6 @@
                     <p>Not provided</p>
                 }
             }
-        </gds-summary-list-value-v2>
-    </gds-summary-list-row-v2>
+        </dd>
+    </div>
 }
