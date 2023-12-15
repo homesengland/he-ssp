@@ -11,5 +11,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         List<invln_scheme> GetApplicationsForOrganisationAndContact(string organisationId, string contactId, string attributes, string additionalRecordFilters);
         bool ApplicationWithGivenNameExists(string name);
         bool ApplicationWithGivenIdExistsForOrganisationAndContract(Guid applicationId, Guid organisationId, string userId);
+        bool ApplicationWithGivenNameAndOrganisationExists(string name, Guid organisationId);
     }
 }

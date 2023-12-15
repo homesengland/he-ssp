@@ -28,6 +28,15 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
+        public bool ApplicationWithGivenNameAndOrganisationExists(string name, Guid organisationId)
+        {
+            using (var ctx = new OrganizationServiceContext(service))
+            {
+                return ctx.CreateQuery<invln_scheme>()
+                    .Where(x => x.invln_schemename == name && x.invln_organisationid.Id == organisationId).AsEnumerable().Any();
+            }
+        }
+
         public bool ApplicationWithGivenNameExists(string name)
         {
             using(var ctx = new OrganizationServiceContext(service))
