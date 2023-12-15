@@ -4,6 +4,7 @@ using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Account.Domain.UserOrganisation.Entities;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Organisation.Extensions;
 using HE.Investments.Organisation.Services;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
@@ -27,8 +28,8 @@ public class OrganisationUsersRepository : IOrganisationUsersRepository
     public async Task<OrganisationUsersEntity> GetOrganisationUsers(OrganisationId organisationId, CancellationToken cancellationToken)
     {
         var contacts = await _contactService.GetAllOrganisationContactsForPortal(_organizationServiceAsync, organisationId.Value);
-        var activeUsers = contacts.Where(x => x.IsConnectedWithExternalIdentity).Select(x => new EmailAddress(x.email));
-        var invitedUsers = contacts.Where(x => !x.IsConnectedWithExternalIdentity).Select(x => new EmailAddress(x.email));
+        var activeUsers = contacts.Where(x => x.IsConnectedWithExternalIdentity()).Select(x => new EmailAddress(x.email));
+        var invitedUsers = contacts.Where(x => !x.IsConnectedWithExternalIdentity()).Select(x => new EmailAddress(x.email));
 
         return new OrganisationUsersEntity(organisationId, activeUsers, invitedUsers);
     }
