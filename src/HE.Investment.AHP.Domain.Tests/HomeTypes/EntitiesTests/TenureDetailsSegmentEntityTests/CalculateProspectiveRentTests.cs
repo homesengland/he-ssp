@@ -1,25 +1,29 @@
-using System.Globalization;
 using FluentAssertions;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
+using HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
+using HE.Investments.Common.Exceptions;
 
 namespace HE.Investment.AHP.Domain.Tests.HomeTypes.EntitiesTests.TenureDetailsSegmentEntityTests;
 
 public class CalculateProspectiveRentTests
 {
     [Theory]
-    [InlineData("10", "8", "80")]
-    [InlineData("20", "5", "25")]
-    [InlineData("5", "20", "400")]
-    [InlineData("1450", "1200", "82.76")]
-    [InlineData("980", "1250", "127.55")]
-    public void ShouldReturnCalculatedResult_WhenMarketRentAndProspectiveRentAreNumbers(string marketRent, string prospectiveRent, string expectedResult)
+    [InlineData(10, 8, 80)]
+    [InlineData(20, 5, 25)]
+    [InlineData(5, 20, 400)]
+    [InlineData(1450, 1200, 83)]
+    [InlineData(980, 1250, 128)]
+    public void ShouldReturnCalculatedResult_WhenMarketRentAndProspectiveRentAreNumbers(decimal marketRent, decimal prospectiveRent, decimal expectedResult)
     {
-        // given && when
-        decimal.TryParse(expectedResult, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedExpectedResult);
-        var result = TenureDetailsSegmentEntity.CalculateProspectiveRent(marketRent, prospectiveRent);
+        // given
+        var marketRentVO = new MarketRent(marketRent);
+        var prospectiveRentVO = new ProspectiveRent(prospectiveRent);
+
+        // when
+        var result = TenureDetailsSegmentEntity.CalculateProspectiveRent(marketRentVO, prospectiveRentVO);
 
         // then
-        result.Should().Be(parsedExpectedResult);
+        result.Should().Be(expectedResult);
     }
 
     [Theory]
@@ -31,10 +35,11 @@ public class CalculateProspectiveRentTests
     public void ShouldReturnZero_WhenMarketRentOrProspectiveRentIsNotANumber(string marketRent, string prospectiveRent)
     {
         // given && when
-        var expectedResult = 0.00m;
-        var result = TenureDetailsSegmentEntity.CalculateProspectiveRent(marketRent, prospectiveRent);
+        Action action = () => _ = TenureDetailsSegmentEntity.CalculateProspectiveRent(
+            new MarketRent(marketRent, true),
+            new ProspectiveRent(prospectiveRent, true));
 
         // then
-        result.Should().Be(expectedResult);
+        action.Should().Throw<DomainValidationException>();
     }
 }

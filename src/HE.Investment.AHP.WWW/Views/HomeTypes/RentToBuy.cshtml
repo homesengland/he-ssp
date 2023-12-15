@@ -4,6 +4,7 @@
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Messages
 @using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.HomeTypes.RentToBuyModel;
@@ -13,6 +14,7 @@
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
     ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.RentToBuy);
+    var (prospectiveRentAsPercentageInvalid, prospectiveRentAsPercentageError) = @ViewData.ModelState.GetErrors("ProspectiveRentAsPercentageOfMarketRent");
 }
 
 <gds-div-grid-column-two-thirds>
@@ -33,7 +35,7 @@
                     Enter the market value in pounds only.
                 </gds-span-hint>
                 <gds-input
-                    class="govuk-input--width-4"
+                    class="govuk-input--width-5"
                     asp-hiddenlabeltext="Enter the number of market value"
                     govuk-formgroup-asp-for="MarketValue"
                     name="MarketValue"
@@ -75,7 +77,7 @@
                     asp-suffixtext="GdsInputSuffixText.PerWeek"/>
             </he-error-form-group>
 
-            <he-error-form-group asp-for="RentAsPercentageOfMarketRent">
+            <he-error-form-group asp-for="ProspectiveRentAsPercentageOfMarketRent">
                 <gds-legend>
                     <gds-h2 class="govuk-!-margin-bottom-0">Rent as percentage of market rent</gds-h2>
                 </gds-legend>
@@ -83,9 +85,18 @@
                     This is inclusive of all charges.
                 </gds-span-hint>
 
-                <gds-p class="govuk-!-margin-top-2">
-                    @(Model.RentAsPercentageOfMarketRent ?? "00.00")% [calculated on page]
+                @if (prospectiveRentAsPercentageInvalid)
+                {
+                    <p class="govuk-error-message field-validation-error govuk-!-margin-top-1">
+                        <span class="govuk-visually-hidden">Error:</span> @prospectiveRentAsPercentageError
+                    </p>
+                }
+
+                <gds-p class="govuk-!-margin-top-1">
+                    @(Model.ProspectiveRentAsPercentageOfMarketRent.IsProvided() ? $"{Model.ProspectiveRentAsPercentageOfMarketRent}%"
+                        : "To calculate the rent as percentage of market rent, enter the market rent per week and the rent per week. Then select the calculate button.")
                 </gds-p>
+
             </he-error-form-group>
 
             <he-error-form-group asp-for="TargetRentExceedMarketRent">

@@ -8,7 +8,7 @@ public record TenureDetails(
     int? MarketValue,
     decimal? MarketRent,
     decimal? ProspectiveRent,
-    decimal? CalculatedProspectivePercentage,
+    decimal? ProspectiveRentAsPercentageOfMarketRent,
     YesNoType TargetRentExceedMarketRent,
     YesNoType ExemptFromTheRightToSharedOwnership,
     string? ExemptionJustification,

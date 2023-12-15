@@ -10,4 +10,4 @@ public record CalculateProspectiveRentQuery(
     string? MarketValue,
     string? MarketRent,
     string? ProspectiveRent,
-    YesNoType TargetRentExceedMarketRent) : IRequest<OperationResult>;
+    YesNoType TargetRentExceedMarketRent) : IRequest<(OperationResult OperationResult, CalculationResult CalculationResult)>;

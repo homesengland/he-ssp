@@ -35,13 +35,13 @@ public class TenureDetailsCrmSegmentMapper : HomeTypeCrmSegmentMapperBase<Tenure
             dto.marketValue.IsProvided() ? new MarketValue(dto.marketValue!.Value) : null,
             dto.marketRent.IsProvided() ? new MarketRent(dto.marketRent!.Value) : null,
             dto.prospectiveRent.IsProvided() ? new ProspectiveRent(dto.prospectiveRent!.Value) : null,
-            dto.prospectiveRentAsPercentOfMarketRent.IsProvided() ? new Percentage(dto.prospectiveRentAsPercentOfMarketRent!.Value) : null,
+            dto.prospectiveRentAsPercentOfMarketRent.IsProvided() ? new ProspectiveRentPercentage(dto.prospectiveRentAsPercentOfMarketRent!.Value) : null,
             YesNoTypeMapper.Map(dto.targetRentOver80PercentOfMarketRent),
             YesNoTypeMapper.Map(dto.RtSOExemption),
             dto.exemptionJustification.IsProvided() ? new MoreInformation(dto.exemptionJustification) : null,
             dto.initialSalePercent.IsProvided() ? new InitialSale(dto.initialSalePercent!.Value) : null,
             dto.expectedFirstTrancheSaleReceipt.IsProvided() ? new ExpectedFirstTranche(dto.expectedFirstTrancheSaleReceipt!.Value) : null,
-            dto.proposedRentAsPercentOfUnsoldShare.IsProvided() ? new Percentage(dto.proposedRentAsPercentOfUnsoldShare!.Value) : null);
+            dto.proposedRentAsPercentOfUnsoldShare.IsProvided() ? new ProspectiveRentPercentage(dto.proposedRentAsPercentOfUnsoldShare!.Value) : null);
     }
 
     protected override TenureDetailsSegmentEntity GetSegment(HomeTypeEntity entity) => entity.TenureDetails;

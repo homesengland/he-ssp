@@ -20,6 +20,6 @@ public class SaveProspectiveRentCommandHandler : SaveHomeTypeSegmentCommandHandl
         (request, homeType) => homeType.TenureDetails.ChangeMarketRent(request.MarketRent),
         (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.ProspectiveRent),
         (request, homeType) => homeType.TenureDetails.ChangeTargetRentExceedMarketRent(request.TargetRentExceedMarketRent),
-        (request, homeType) => homeType.TenureDetails.ChangeProspectiveRentAsPercentageOfMarketRent(request.MarketRent, request.ProspectiveRent),
+        (_, homeType) => homeType.TenureDetails.ChangeProspectiveRentAsPercentageOfMarketRent(),
     };
 }

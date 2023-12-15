@@ -7,6 +7,7 @@ public static class HomeTypesValidationFieldsOrder
         HomeTypesValidationFieldNames.MarketValue,
         HomeTypesValidationFieldNames.MarketRent,
         HomeTypesValidationFieldNames.ProspectiveRent,
+        HomeTypesValidationFieldNames.ProspectiveRentAsPercentageOfMarketRent,
         HomeTypesValidationFieldNames.TargetRentExceedMarketRent,
     };
 
@@ -20,7 +21,9 @@ public static class HomeTypesValidationFieldsOrder
     {
         HomeTypesValidationFieldNames.MarketValue,
         HomeTypesValidationFieldNames.InitialSale,
+        HomeTypesValidationFieldNames.ExpectedFirstTranche,
         HomeTypesValidationFieldNames.ProspectiveRent,
+        HomeTypesValidationFieldNames.SharedOwnershipRentAsPercentageOfTheUnsoldShare,
     };
 
     public static List<string> RentToBuy => new()
@@ -28,6 +31,7 @@ public static class HomeTypesValidationFieldsOrder
         HomeTypesValidationFieldNames.MarketValue,
         HomeTypesValidationFieldNames.MarketRent,
         HomeTypesValidationFieldNames.ProspectiveRent,
+        HomeTypesValidationFieldNames.ProspectiveRentAsPercentageOfMarketRent,
         HomeTypesValidationFieldNames.TargetRentExceedMarketRent,
     };
 

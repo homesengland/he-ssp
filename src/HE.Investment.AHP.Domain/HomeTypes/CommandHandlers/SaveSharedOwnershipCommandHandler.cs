@@ -18,12 +18,8 @@ public class SaveSharedOwnershipCommandHandler : SaveHomeTypeSegmentCommandHandl
     {
         (SaveSharedOwnershipCommand request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue),
         (request, homeType) => homeType.TenureDetails.ChangeInitialSale(request.InitialSale),
-        (request, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(request.MarketValue, request.InitialSale),
+        (_, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(),
         (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.ProspectiveRent),
-        (request, homeType) =>
-            homeType.TenureDetails.ChangeProspectiveRentAsPercentageOfTheUnsoldShare(
-                request.MarketValue,
-                request.ProspectiveRent,
-                request.InitialSale),
+        (_, homeType) => homeType.TenureDetails.ChangeProspectiveRentAsPercentageOfTheUnsoldShare(),
     };
 }

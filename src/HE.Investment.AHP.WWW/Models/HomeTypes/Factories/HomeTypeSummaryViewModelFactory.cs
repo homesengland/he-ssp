@@ -156,7 +156,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question("Market value of each home", nameof(Controller.AffordableRent), ToPounds(tenure.MarketValue)),
             factory.Question("Market rent per week", nameof(Controller.AffordableRent), ToPoundsPences(tenure.MarketRent)),
             factory.Question("Affordable rent per week", nameof(Controller.AffordableRent), ToPoundsPences(tenure.ProspectiveRent)),
-            factory.Question("Affordable rent as percentage of market rent", nameof(Controller.AffordableRent), ToPercentage(tenure.CalculatedProspectivePercentage)),
+            factory.Question("Affordable rent as percentage of market rent", nameof(Controller.AffordableRent), ToPercentage(tenure.ProspectiveRentAsPercentageOfMarketRent)),
             factory.Question("Target rent exceeded 80% of market rent", nameof(Controller.AffordableRent), tenure.TargetRentExceedMarketRent),
             factory.DeadEnd(nameof(Controller.AffordableRentIneligible)),
             factory.Question(
@@ -201,7 +201,7 @@ public class HomeTypeSummaryViewModelFactory : IHomeTypeSummaryViewModelFactory
             factory.Question("Market value of each home", nameof(Controller.RentToBuy), ToPounds(tenure.MarketValue)),
             factory.Question("Market rent per week", nameof(Controller.RentToBuy), ToPoundsPences(tenure.MarketRent)),
             factory.Question("Rent per week", nameof(Controller.RentToBuy), ToPoundsPences(tenure.ProspectiveRent)),
-            factory.Question("Rent as percentage of market rent", nameof(Controller.RentToBuy), ToPercentage(tenure.CalculatedProspectivePercentage)),
+            factory.Question("Rent as percentage of market rent", nameof(Controller.RentToBuy), ToPercentage(tenure.ProspectiveRentAsPercentageOfMarketRent)),
             factory.Question("Target rent exceed 80% of market rent", nameof(Controller.RentToBuy), tenure.TargetRentExceedMarketRent),
             factory.DeadEnd(nameof(Controller.RentToBuyIneligible)));
     }

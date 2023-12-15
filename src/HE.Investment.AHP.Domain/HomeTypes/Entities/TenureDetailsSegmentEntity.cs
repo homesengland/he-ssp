@@ -1,4 +1,3 @@
-using System.Globalization;
 using HE.Investment.AHP.Contract.Application;
 using HE.Investment.AHP.Contract.Common.Enums;
 using HE.Investment.AHP.Contract.HomeTypes.Enums;
@@ -18,13 +17,13 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         MarketValue? marketValue = null,
         MarketRent? marketRent = null,
         ProspectiveRent? prospectiveRent = null,
-        Percentage? prospectiveRentAsPercentageOfMarketRent = null,
+        ProspectiveRentPercentage? prospectiveRentAsPercentageOfMarketRent = null,
         YesNoType targetRentExceedMarketRent = YesNoType.Undefined,
         YesNoType exemptFromTheRightToSharedOwnership = YesNoType.Undefined,
         MoreInformation? exemptionJustification = null,
         InitialSale? initialSale = null,
         ExpectedFirstTranche? expectedFirstTranche = null,
-        Percentage? sharedOwnershipRentAsPercentageOfTheUnsoldShare = null)
+        ProspectiveRentPercentage? sharedOwnershipRentAsPercentageOfTheUnsoldShare = null)
     {
         _modificationTracker = new ModificationTracker(() => SegmentModified?.Invoke());
         MarketValue = marketValue;
@@ -49,7 +48,7 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public ProspectiveRent? ProspectiveRent { get; private set; }
 
-    public Percentage? ProspectiveRentAsPercentageOfMarketRent { get; private set; }
+    public ProspectiveRentPercentage? ProspectiveRentAsPercentageOfMarketRent { get; private set; }
 
     public TargetRentExceedMarketRent? TargetRentExceedMarketRent { get; private set; }
 
@@ -63,57 +62,48 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
 
     public ExpectedFirstTranche? ExpectedFirstTranche { get; private set; }
 
-    public Percentage? SharedOwnershipRentAsPercentageOfTheUnsoldShare { get; private set; }
+    public ProspectiveRentPercentage? SharedOwnershipRentAsPercentageOfTheUnsoldShare { get; private set; }
 
     public bool IsSharedOwnershipIneligible => SharedOwnershipRentAsPercentageOfTheUnsoldShare?.Value > 3;
 
-    public static decimal CalculateProspectiveRent(string? marketRent, string? prospectiveRent)
+    public static decimal? CalculateProspectiveRent(MarketRent? marketRent, ProspectiveRent? prospectiveRent)
     {
-        var result = 00.00m;
-
-        if (decimal.TryParse(marketRent!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedMarketRent)
-            && decimal.TryParse(prospectiveRent!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedProspectiveRent)
-            && decimal.Round(parsedMarketRent, 2) == parsedMarketRent
-            && decimal.Round(parsedProspectiveRent, 2) == parsedProspectiveRent)
+        if (marketRent.IsNotProvided() || prospectiveRent.IsNotProvided())
         {
-            result = parsedProspectiveRent / parsedMarketRent * 100;
-            result = Math.Round(result, 2);
+            return null;
         }
+
+        var result = prospectiveRent!.Value / marketRent!.Value * 100;
+        result = Math.Round(result, 0);
 
         return result;
     }
 
-    public static decimal CalculateExpectedFirstTranche(string? marketValue, string? initialSale)
+    public static decimal? CalculateExpectedFirstTranche(MarketValue? marketValue, InitialSale? initialSale)
     {
-        var result = 00.00m;
-
-        if (decimal.TryParse(marketValue!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedMarketValue)
-            && decimal.TryParse(initialSale!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedInitialSale)
-            && decimal.Round(parsedMarketValue, 2) == parsedMarketValue
-            && decimal.Round(parsedInitialSale, 2) == parsedInitialSale)
+        if (marketValue.IsNotProvided() || initialSale.IsNotProvided())
         {
-            result = parsedMarketValue * parsedInitialSale / 100;
-            result = Math.Round(result, 2);
+            return null;
         }
+
+        var result = (decimal)marketValue!.Value * initialSale!.Value / 100;
+        result = Math.Round(result, 2);
 
         return result;
     }
 
-    public static decimal CalculateProspectiveRentAsPercentageOfTheUnsoldShare(string? marketValue, string? prospectiveRent, string? initialSale)
+    public static decimal? CalculateProspectiveRentAsPercentageOfTheUnsoldShare(MarketValue? marketValue, ProspectiveRent? prospectiveRent, InitialSale? initialSale)
     {
         const int weeksAYear = 52;
-        var result = 00.00m;
+        if (marketValue.IsNotProvided() || prospectiveRent.IsNotProvided() || initialSale.IsNotProvided())
+        {
+            return null;
+        }
 
         var expectedFirstTranche = CalculateExpectedFirstTranche(marketValue, initialSale);
 
-        if (decimal.TryParse(marketValue!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedMarketValue)
-            && decimal.TryParse(prospectiveRent!, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsedProspectiveRent)
-            && decimal.Round(parsedMarketValue, 2) == parsedMarketValue
-            && decimal.Round(parsedProspectiveRent, 2) == parsedProspectiveRent)
-        {
-            result = parsedProspectiveRent * weeksAYear / (parsedMarketValue - expectedFirstTranche);
-            result = Math.Round(result, 2);
-        }
+        var result = prospectiveRent!.Value * weeksAYear / (marketValue!.Value - expectedFirstTranche!.Value);
+        result = Math.Round(result, 2);
 
         return result;
     }
@@ -145,10 +135,10 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         ProspectiveRent = _modificationTracker.Change(ProspectiveRent, newValue);
     }
 
-    public void ChangeProspectiveRentAsPercentageOfMarketRent(string? marketRent, string? prospectiveRent)
+    public void ChangeProspectiveRentAsPercentageOfMarketRent()
     {
-        var result = CalculateProspectiveRent(marketRent, prospectiveRent);
-        var newValue = new Percentage(result);
+        var result = CalculateProspectiveRent(MarketRent, ProspectiveRent);
+        var newValue = new ProspectiveRentPercentage(result, nameof(ProspectiveRentAsPercentageOfMarketRent));
 
         ProspectiveRentAsPercentageOfMarketRent = _modificationTracker.Change(ProspectiveRentAsPercentageOfMarketRent, newValue);
     }
@@ -172,17 +162,17 @@ public class TenureDetailsSegmentEntity : IHomeTypeSegmentEntity
         ExemptionJustification = _modificationTracker.Change(ExemptionJustification, newValue);
     }
 
-    public void ChangeProspectiveRentAsPercentageOfTheUnsoldShare(string? marketValue, string? prospectiveRent, string? initialSale)
+    public void ChangeProspectiveRentAsPercentageOfTheUnsoldShare()
     {
-        var result = CalculateProspectiveRentAsPercentageOfTheUnsoldShare(marketValue, prospectiveRent, initialSale);
-        var newValue = new Percentage(result);
+        var result = CalculateProspectiveRentAsPercentageOfTheUnsoldShare(MarketValue, ProspectiveRent, InitialSale);
+        var newValue = new ProspectiveRentPercentage(result, nameof(SharedOwnershipRentAsPercentageOfTheUnsoldShare));
 
         SharedOwnershipRentAsPercentageOfTheUnsoldShare = _modificationTracker.Change(SharedOwnershipRentAsPercentageOfTheUnsoldShare, newValue);
     }
 
-    public void ChangeExpectedFirstTranche(string? marketValue, string? initialSale)
+    public void ChangeExpectedFirstTranche()
     {
-        var result = CalculateExpectedFirstTranche(marketValue, initialSale);
+        var result = CalculateExpectedFirstTranche(MarketValue, InitialSale);
 
         var newValue = new ExpectedFirstTranche(result);
         ExpectedFirstTranche = _modificationTracker.Change(ExpectedFirstTranche, newValue);

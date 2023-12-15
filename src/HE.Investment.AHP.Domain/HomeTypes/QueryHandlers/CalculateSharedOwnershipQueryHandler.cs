@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.HomeTypes;
 using HE.Investment.AHP.Contract.HomeTypes.Queries;
 using HE.Investment.AHP.Domain.HomeTypes.Entities;
 using HE.Investment.AHP.Domain.HomeTypes.Repositories;
@@ -9,7 +10,7 @@ using ApplicationId = HE.Investment.AHP.Domain.Application.ValueObjects.Applicat
 
 namespace HE.Investment.AHP.Domain.HomeTypes.QueryHandlers;
 
-internal sealed class CalculateSharedOwnershipQueryHandler : BaseQueryHandler, IRequestHandler<CalculateSharedOwnershipQuery, OperationResult>
+internal sealed class CalculateSharedOwnershipQueryHandler : BaseQueryHandler, IRequestHandler<CalculateSharedOwnershipQuery, (OperationResult OperationResult, CalculationResult CalculationResult)>
 {
     private readonly IHomeTypeRepository _homeTypeRepository;
 
@@ -25,16 +26,13 @@ internal sealed class CalculateSharedOwnershipQueryHandler : BaseQueryHandler, I
     {
         (CalculateSharedOwnershipQuery request, IHomeTypeEntity homeType) => homeType.TenureDetails.ChangeMarketValue(request.MarketValue, true),
         (request, homeType) => homeType.TenureDetails.ChangeInitialSale(request.InitialSale, true),
-        (request, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(request.MarketValue, request.InitialSale),
+        (request, homeType) => homeType.TenureDetails.ChangeExpectedFirstTranche(),
         (request, homeType) => homeType.TenureDetails.ChangeProspectiveRent(request.ProspectiveRent, true),
         (request, homeType) =>
-            homeType.TenureDetails.ChangeProspectiveRentAsPercentageOfTheUnsoldShare(
-                request.MarketValue,
-                request.ProspectiveRent,
-                request.InitialSale),
+            homeType.TenureDetails.ChangeProspectiveRentAsPercentageOfTheUnsoldShare(),
     };
 
-    public async Task<OperationResult> Handle(CalculateSharedOwnershipQuery request, CancellationToken cancellationToken)
+    public async Task<(OperationResult OperationResult, CalculationResult CalculationResult)> Handle(CalculateSharedOwnershipQuery request, CancellationToken cancellationToken)
     {
         var applicationId = new ApplicationId(request.ApplicationId);
         var homeType = await _homeTypeRepository.GetById(
@@ -47,7 +45,11 @@ internal sealed class CalculateSharedOwnershipQueryHandler : BaseQueryHandler, I
             .Select<Action<CalculateSharedOwnershipQuery, IHomeTypeEntity>, Action>(x => () => x(request, homeType))
             .ToArray());
 
-        var result = errors.Any() ? new OperationResult(errors) : OperationResult.Success();
-        return result;
+        var operationResult = errors.Any() ? new OperationResult(errors) : OperationResult.Success();
+        var calculationResult = new CalculationResult(
+            homeType.TenureDetails.SharedOwnershipRentAsPercentageOfTheUnsoldShare?.Value,
+            homeType.TenureDetails.ExpectedFirstTranche?.Value);
+
+        return (operationResult, calculationResult);
     }
 }
