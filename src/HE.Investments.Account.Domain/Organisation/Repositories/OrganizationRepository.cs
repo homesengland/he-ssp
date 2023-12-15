@@ -2,6 +2,7 @@ using HE.Common.IntegrationModel.PortalIntegrationModel;
 using HE.Investments.Account.Contract.Organisation;
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Domain.Organisation.Entities;
+using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Loans.Common.Exceptions;
 using HE.Investments.Organisation.Services;
@@ -56,7 +57,7 @@ public class OrganizationRepository : IOrganizationRepository
         return OrganisationChangeRequestState.PendingRequestByOthers;
     }
 
-    public async Task<Guid> CreateOrganisation(OrganisationEntity organisation)
+    public async Task<OrganisationId> CreateOrganisation(OrganisationEntity organisation)
     {
         var id = _organizationService.CreateOrganization(new OrganizationDetailsDto
         {
@@ -70,7 +71,7 @@ public class OrganizationRepository : IOrganizationRepository
             county = organisation.Address.County,
         });
 
-        return await Task.FromResult(id);
+        return await Task.FromResult(new OrganisationId(id));
     }
 
     public async Task Save(OrganisationEntity organisation, UserAccount userAccount, CancellationToken cancellationToken)

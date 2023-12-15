@@ -1,5 +1,4 @@
 using HE.Investments.Account.Domain.User.Repositories.Mappers;
-using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Repositories;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Account.Shared.User.Entities;
@@ -28,8 +27,8 @@ public class AccountRepository : IProfileRepository, IAccountRepository
 
     public async Task<IList<UserAccount>> GetUserAccounts(UserGlobalId userGlobalId, string userEmail)
     {
-        var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, userGlobalId.ToString());
-
+        var contactExternalId = userGlobalId.ToString();
+        var contactRoles = await _contactService.GetContactRoles(_serviceClient, userEmail, contactExternalId);
         if (contactRoles is null)
         {
             return Array.Empty<UserAccount>();
@@ -40,11 +39,12 @@ public class AccountRepository : IProfileRepository, IAccountRepository
             .contactRoles
             .GroupBy(x => x.accountId)
             .Select(x => new UserAccount(
-                UserGlobalId.From(userGlobalId.ToString()),
+                UserGlobalId.From(contactExternalId),
                 userEmail,
                 x.Key,
                 x.FirstOrDefault(y => y.accountId == x.Key)?.accountName ?? string.Empty,
-                x.Select(x => new UserAccountRole(useNewRoles ? x.webRoleName : UserAccountRole.AdminRole)))).ToList();
+                x.Select(y => new UserAccountRole(useNewRoles ? y.webRoleName : UserAccountRole.AdminRole))))
+            .ToList();
     }
 
     public async Task<UserProfileDetails> GetProfileDetails(UserGlobalId userGlobalId)

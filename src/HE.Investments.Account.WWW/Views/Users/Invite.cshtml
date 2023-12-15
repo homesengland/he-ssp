@@ -25,21 +25,25 @@
         <gds-field-set>
             <vc:text-input
                 field-name="@(nameof(Model.FirstName))"
+                value="@Model.FirstName"
                 label="First name"
                 css-class="govuk-input--width-full"/>
 
             <vc:text-input
                 field-name="@(nameof(Model.LastName))"
+                value="@Model.LastName"
                 label="Last name"
                 css-class="govuk-input--width-full"/>
 
             <vc:text-input
-                field-name="@(nameof(Model.Email))"
+                field-name="@(nameof(Model.EmailAddress))"
+                value="@Model.EmailAddress"
                 label="Email"
                 css-class="govuk-input--width-full"/>
 
             <vc:text-input
                 field-name="@(nameof(Model.JobTitle))"
+                value="@Model.JobTitle"
                 label="Job title"
                 css-class="govuk-input--width-full"/>
 

@@ -33,7 +33,7 @@ public abstract class RequiredIntForCalculationValueObject : ValueObject
         if (!int.TryParse(value!, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedValue))
         {
             OperationResult.New()
-                .AddValidationError(fieldName, ValidationErrorMessage.MustBeNumber(displayName))
+                .AddValidationError(fieldName, ValidationErrorMessage.MustBeWholeNumberWithExample(displayName))
                 .CheckErrors();
         }
 
