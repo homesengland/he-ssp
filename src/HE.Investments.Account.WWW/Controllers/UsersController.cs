@@ -92,7 +92,7 @@ public class UsersController : Controller
 
     [HttpPost("{id}/confirm-unlink")]
     [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
-    public async Task<IActionResult> Unlink([FromRoute] string id, [FromForm] string unlink, CancellationToken cancellationToken)
+    public async Task<IActionResult> Unlink([FromRoute] string id, [FromForm] string? unlink, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(unlink))
         {

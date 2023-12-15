@@ -27,7 +27,7 @@ public class StakeholderDiscussionsDetails : ValueObject
         var operationResult = OperationResult.New();
 
         Report = Validator
-            .For(report, "StakeholderDiscussionsReport", "Local stakeholder discussions", operationResult)
+            .For(report, "StakeholderDiscussionsReport", "local stakeholder discussions", operationResult)
             .IsProvidedIf(isCompleteCheck)
             .IsLongInput();
 

@@ -30,12 +30,12 @@ public class HousingNeeds : ValueObject
         var operationResult = OperationResult.New();
 
         MeetingLocalPriorities = Validator
-            .For(meetingLocalPriorities, nameof(MeetingLocalPriorities), "Type and tenure of homes", operationResult)
+            .For(meetingLocalPriorities, nameof(MeetingLocalPriorities), "type and tenure of homes", operationResult)
             .IsProvidedIf(isCompleteCheck)
             .IsLongInput();
 
         MeetingLocalHousingNeed = Validator
-            .For(meetingLocalHousingNeed, nameof(MeetingLocalHousingNeed), "Locally identified housing needs", operationResult)
+            .For(meetingLocalHousingNeed, nameof(MeetingLocalHousingNeed), "locally identified housing need", operationResult)
             .IsProvidedIf(isCompleteCheck)
             .IsLongInput();
 
