@@ -12,15 +12,12 @@
     <vc:workflow-back-button action="@SchemeWorkflowState.SalesRisk.ToString()"/>
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
     <form asp-controller="Scheme" asp-action="SalesRisk" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
-        <vc:form-header caption="@Model.ApplicationName" title="@title"/>
+        <vc:form-header caption="@Model.ApplicationName" title="@title" />
         @Html.HiddenFor(m => Model.ApplicationName)
-
-        <vc:text-area-input
-            field-name="@nameof(Model.SalesRisk)"
-            label="Tell us your assessment of the sales risk and how you will mitigate this"
-            value="@Model.SalesRisk"/>
-
-        <vc:form-button/>
+        <vc:text-area-input field-name="@nameof(Model.SalesRisk)"
+                            label="Tell us your assessment of the sales risk and how you will mitigate this"
+                            value="@Model.SalesRisk" />
+        <vc:form-button />
     </form>
-    <vc:return-to-application-link application-id="@Model.ApplicationId"/>
+    <vc:return-to-application-link application-id="@Model.ApplicationId" />
 </gds-div-grid-column-two-thirds>

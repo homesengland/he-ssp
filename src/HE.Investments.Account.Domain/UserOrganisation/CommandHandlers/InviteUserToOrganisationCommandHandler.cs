@@ -49,10 +49,10 @@ public class InviteUserToOrganisationCommandHandler : IRequestHandler<InviteUser
     private static OperationResult<UserInvitationEntity?> CreateInvitation(InviteUserToOrganisationCommand request)
     {
         var operationResult = OperationResult.New();
-        var firstName = operationResult.Aggregate(() => new FirstName(request.FirstName, "first name"));
-        var lastName = operationResult.Aggregate(() => new LastName(request.LastName, "last name"));
+        var firstName = operationResult.Aggregate(() => new FirstName(request.FirstName));
+        var lastName = operationResult.Aggregate(() => new LastName(request.LastName));
         var email = operationResult.Aggregate(() => new EmailAddress(request.Email));
-        var jobTitle = operationResult.Aggregate(() => new JobTitle(request.JobTitle, "job title"));
+        var jobTitle = operationResult.Aggregate(() => new JobTitle(request.JobTitle));
         var invitation = operationResult.Aggregate(() => new UserInvitationEntity(firstName, lastName, email, jobTitle, request.NewRole));
 
         return new OperationResult<UserInvitationEntity?>(operationResult.Errors, invitation);

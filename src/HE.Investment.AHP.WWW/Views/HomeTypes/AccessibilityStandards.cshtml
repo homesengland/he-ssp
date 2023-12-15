@@ -18,37 +18,38 @@
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.AccessibilityStandards"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
-                                  caption="@Model.Header"/>
+                                  caption="@Model.Header" />
         <gds-field-set>
-            <gds-legend>
-                <gds-h1 class="govuk-!-margin-bottom-2">Do these homes meet any of the Building Regulations Part M accessibility categories?</gds-h1>
-            </gds-legend>
-            <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
-                <summary class="govuk-details__summary">
-                    <span class="govuk-details__summary-text">
-                        What are the accessibility categories?
-                    </span>
-                </summary>
-                <div class="govuk-details__text">
-                    The Building Regulations Part M cover the accessibility of homes.
-                    <a class="govuk-link" target="_blank"
-                       href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/540330/BR_PDF_AD_M1_2015_with_2016_amendments_V3.pdf">
-                        Read the Building Regulations to find out more (opens in the new tab).
-                    </a>
-                </div>
-            </details>
-            <gds-radio govuk-formgroup-asp-for="AccessibilityStandards"
-                       asp-hiddenlabeltext="Accessibility Standards"
-                       value="@Model.AccessibilityStandards"
-                       asp-selectlistitems="@CommonFormOptions.YesNo"
-                       class="govuk-!-margin-bottom-2">
-            </gds-radio>
-
+            <he-error-form-group asp-for="AccessibilityStandards">
+                <gds-legend>
+                    <gds-h1 class="govuk-!-margin-bottom-2">Do these homes meet any of the Building Regulations Part M accessibility categories?</gds-h1>
+                </gds-legend>
+                <details class="govuk-details govuk-!-margin-bottom-2" data-module="govuk-details">
+                    <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text">
+                            What are the accessibility categories?
+                        </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                        The Building Regulations Part M cover the accessibility of homes.
+                        <a class="govuk-link" target="_blank"
+                           href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/540330/BR_PDF_AD_M1_2015_with_2016_amendments_V3.pdf">
+                            Read the Building Regulations to find out more (opens in the new tab).
+                        </a>
+                    </div>
+                </details>
+                <gds-radio govuk-formgroup-asp-for="AccessibilityStandards"
+                           asp-hiddenlabeltext="Accessibility Standards"
+                           value="@Model.AccessibilityStandards"
+                           asp-selectlistitems="@CommonFormOptions.YesNo"
+                           class="govuk-!-margin-bottom-2">
+                </gds-radio>
+            </he-error-form-group>
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
                 Save and continue
             </button>
 
         </gds-field-set>
-        <vc:return-to-application-link application-id="@applicationId"/>
+        <vc:return-to-application-link application-id="@applicationId" />
     </form>
 </gds-div-grid-column-two-thirds>

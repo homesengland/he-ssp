@@ -21,21 +21,18 @@
 }
 
 <div class="govuk-grid-column-three-quarters">
-    <vc:workflow-back-button action="@SchemeWorkflowState.CheckAnswers.ToString()"/>
+    <vc:workflow-back-button action="@SchemeWorkflowState.CheckAnswers.ToString()" />
     @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
-    <vc:form-header caption="@Model.ApplicationName" title="@title"/>
-    <vc:section-summary title="@Model.Section.Title" items="@Model.Section.Items"/>
+    <vc:form-header caption="@Model.ApplicationName" title="@title" />
+    <vc:section-summary title="@Model.Section.Title" items="@Model.Section.Items" />
 
     <form asp-controller="Scheme" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         <gds-field-set role="group">
-
-             <vc:radio-list
-                 field-name="@(nameof(Model.IsCompleted))"
-                 title="Have you completed this section?"
-                 available-options="@values"/>
-
+            <vc:radio-list field-name="@(nameof(Model.IsCompleted))"
+                           title="Have you completed this section?"
+                           available-options="@values" />
         </gds-field-set>
-        <vc:form-button/>
+        <vc:form-button />
     </form>
 </div>
