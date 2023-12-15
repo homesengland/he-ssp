@@ -1,7 +1,9 @@
 @using HE.Investments.Common.WWW.Components.SectionSummary;
 
-@model (string title, IList<SectionSummaryItemModel> items)
+@model (string title, IList<SectionSummaryItemModel> items, string name)
 <gds-h2>@Model.title</gds-h2>
+
+<vc:error-message field-name="@Model.name" />
 
 <gds-summary-list class="govuk-!-margin-bottom-9">
     @foreach (var item in Model.items)

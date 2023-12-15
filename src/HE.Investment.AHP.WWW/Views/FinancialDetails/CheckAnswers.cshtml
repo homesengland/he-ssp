@@ -18,9 +18,14 @@
                                           application-id="@Model.ApplicationId.ToString()"
                                           caption="@Model.ApplicationName - Finance details" />
 
+        <gds-p>
+            Total scheme costs and total contributions must match for you to continue.
+        </gds-p>
+        <gds-p>
+            You can edit this page until figures match. You can save and return to this section later if you do not have the correct figures.
+        </gds-p>
         <vc:section-summary title="@Model.LandValueSummary.Title" items="@Model.LandValueSummary.Items" />
         <div class="govuk-form-group @errorCssClass">
-            <vc:error-message field-name="CostsAndFunding" />
             <vc:section-summary title="@Model.CostsSummary.Title" items="@Model.CostsSummary.Items" name="@FinancialDetailsValidationFieldNames.CostsAndFunding" />
             <vc:section-summary title="@Model.ContributionsSummary.Title" items="@Model.ContributionsSummary.Items" />
         </div>
