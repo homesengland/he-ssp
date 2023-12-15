@@ -17,7 +17,7 @@
                                   current-page="@HomeTypesWorkflowState.CheckAnswers"
                                   application-id="@applicationId"
                                   home-type-id="@homeTypeId"
-                                  caption="@Model.Header"/>
+                                  caption="@Model.Header" />
 
     </gds-div-grid-column-two-thirds>
     <div class="govuk-grid-column-full">
@@ -25,7 +25,7 @@
         {
             @foreach (var sectionSummary in Model.Sections)
             {
-                <vc:section-summary title="@sectionSummary.Title" items="@sectionSummary.Items"/>
+                <vc:section-summary title="@sectionSummary.Title" items="@sectionSummary.Items" />
             }
         }
     </div>
@@ -36,17 +36,19 @@
             @Html.HiddenFor(m => Model.HomeTypeName)
 
             <gds-field-set role="group">
-                <gds-legend>
-                    <gds-h2>Have you completed this section?</gds-h2>
-                </gds-legend>
-                <gds-radio govuk-formgroup-asp-for="IsSectionCompleted"
-                           asp-hiddenlabeltext="Have you completed this section?"
-                           value="@Model.IsSectionCompleted"
-                           asp-selectlistitems="@CommonFormOptions.IsSectionCompleted">
-                </gds-radio>
+                <he-error-form-group asp-for="IsSectionCompleted">
+                    <gds-legend>
+                        <gds-h2>Have you completed this section?</gds-h2>
+                    </gds-legend>
+                    <gds-radio govuk-formgroup-asp-for="IsSectionCompleted"
+                               asp-hiddenlabeltext="Have you completed this section?"
+                               value="@Model.IsSectionCompleted"
+                               asp-selectlistitems="@CommonFormOptions.IsSectionCompleted">
+                    </gds-radio>
+                </he-error-form-group>
             </gds-field-set>
-            <vc:form-button/>
+            <vc:form-button />
         </form>
-        <vc:return-to-application-link application-id="@applicationId"/>
+        <vc:return-to-application-link application-id="@applicationId" />
     </gds-div-grid-column-two-thirds>
 </div>

@@ -15,25 +15,26 @@
         @Html.HiddenFor(m => Model.ApplicationName)
         <vc:home-type-form-header current-page="@HomeTypesWorkflowState.FinishHomeTypes"
                                   application-id="@applicationId"
-                                  caption="@Model.ApplicationName - Home types"/>
+                                  caption="@Model.ApplicationName - Home types" />
 
         <gds-field-set>
-            <gds-legend class="govuk-!-margin-bottom-0">
-                <gds-h1 class="govuk-!-margin-bottom-0">Have you added all of the home types for this application?</gds-h1>
-            </gds-legend>
+            <he-error-form-group asp-for="FinishAnswer">
+                <gds-legend class="govuk-!-margin-bottom-0">
+                    <gds-h1 class="govuk-!-margin-bottom-0">Have you added all of the home types for this application?</gds-h1>
+                </gds-legend>
 
-            <gds-radio govuk-formgroup-asp-for="FinishAnswer"
-                       asp-hiddenlabeltext="Have you added all of the home types for this application?"
-                       value="@Model.FinishAnswer"
-                       asp-selectlistitems="@HomeTypesFormOptions.FinishHomeTypes">
-            </gds-radio>
-
+                <gds-radio govuk-formgroup-asp-for="FinishAnswer"
+                           asp-hiddenlabeltext="Have you added all of the home types for this application?"
+                           value="@Model.FinishAnswer"
+                           asp-selectlistitems="@HomeTypesFormOptions.FinishHomeTypes">
+                </gds-radio>
+            </he-error-form-group>
             <button class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue" id="continue-button">
                 Save and continue
             </button>
 
         </gds-field-set>
 
-        <vc:return-to-application-link application-id="@applicationId"/>
+        <vc:return-to-application-link application-id="@applicationId" />
     </form>
 </div>

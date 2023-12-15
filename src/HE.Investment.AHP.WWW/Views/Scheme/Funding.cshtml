@@ -13,19 +13,16 @@
     <form asp-controller="Scheme" asp-action="Funding" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" novalidate>
         <vc:form-header caption="@Model.ApplicationName" title="@title"/>
         @Html.HiddenFor(m => Model.ApplicationName)
+        <vc:numeric-text-input field-name="@nameof(Model.RequiredFunding)"
+                               value="@Model.RequiredFunding"
+                               label="Enter how much AHP CME 21-26 funding you require on this scheme"
+                               prefix="£"
+                               css-class="govuk-input--width-10" />
 
-        <vc:numeric-text-input
-            field-name="@nameof(Model.RequiredFunding)"
-            value="@Model.RequiredFunding"
-            label="Enter how much AHP CME 21-26 funding you require on this scheme"
-            prefix="£"
-            css-class="govuk-input--width-10"/>
-
-        <vc:numeric-text-input
-            field-name="@nameof(Model.HousesToDeliver)"
-            value="@Model.HousesToDeliver"
-            label="Enter how many homes you intend to deliver"
-            css-class="govuk-input--width-5"/>
+        <vc:numeric-text-input field-name="@nameof(Model.HousesToDeliver)"
+                               value="@Model.HousesToDeliver"
+                               label="Enter how many homes you intend to deliver"
+                               css-class="govuk-input--width-5" />
 
         <vc:form-button/>
     </form>
