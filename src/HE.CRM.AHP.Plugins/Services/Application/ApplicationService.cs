@@ -9,7 +9,6 @@ using HE.CRM.AHP.Plugins.Services.GovNotifyEmail;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Client;
 
 namespace HE.CRM.AHP.Plugins.Services.Application
 {
@@ -20,7 +19,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
         private readonly ISharepointSiteRepository _sharepointSiteRepository;
         private readonly IAhpApplicationRepository _ahpApplicationRepositoryAdmin;
-        private readonly IAccountRepository _accountRepository;
 
         private readonly IGovNotifyEmailService _govNotifyEmailService;
         public ApplicationService(CrmServiceArgs args) : base(args)
@@ -30,7 +28,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             _sharepointDocumentLocationRepository = CrmRepositoriesFactory.Get<ISharepointDocumentLocationRepository>();
             _sharepointSiteRepository = CrmRepositoriesFactory.Get<ISharepointSiteRepository>();
             _ahpApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IAhpApplicationRepository>();
-            _accountRepository = CrmRepositoriesFactory.GetSystem<IAccountRepository>();
 
             _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
         }
@@ -221,18 +218,6 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             if (application != null && application.invln_contactid != null)
             {
                 _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION(application.ToEntityReference(), application.invln_contactid);
-            }
-        }
-
-        public void SendRequestToAssignContactToExistingOrganisation(Guid organisationId, Guid contactId)
-        {
-            var organisationAdministartors = _contactRepository.GetOrganisationAdministrators(organisationId);
-            if (organisationAdministartors.Any())
-            {
-                foreach (var admin in organisationAdministartors)
-                {
-                    _govNotifyEmailService.SendNotifications_COMMON_REQUEST_TO_ASSIGN_CONTACT_TO_EXISTING_ORGANISATION(admin.ToEntityReference(), new EntityReference(Contact.EntityLogicalName, contactId));
-                }
             }
         }
 

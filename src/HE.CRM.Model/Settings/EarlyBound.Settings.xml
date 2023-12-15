@@ -31,6 +31,7 @@ invln_getsingleloanapplicationforaccountandcontact|
 invln_getsinglesitedetails|
 invln_gettemporaryportaldata|
 invln_gettypeofhomeslist|
+invln_invitecontacttojoinexistingorganisation|
 invln_linkcontactwithorganization|
 invln_returnuserprofile|
 invln_savetemporaryportaldata|

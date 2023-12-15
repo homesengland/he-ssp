@@ -109,6 +109,7 @@
     <Compile Include="Handlers\CustomApi\GetMultipleApplicationsHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetSingleHomeTypeHandler.cs" />
     <Compile Include="Handlers\CustomApi\GetTypeOfHomesListHandler.cs" />
+    <Compile Include="Handlers\CustomApi\InviteContactToJoinExistingOrganisationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendReminderEmailForFinaliseDraftApplicationHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendReminderEmailForRefferedBackToApplicantHandler.cs" />
     <Compile Include="Handlers\CustomApi\SendRequestToAssignContactToExistingOrganisationHandler.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Plugins\CustomApi\ChangeAhpApplicationStatusPlugin.cs" />
     <Compile Include="Plugins\CustomApi\CheckIfApplicationWithGivenNameExistsPlugin.cs" />
     <Compile Include="Plugins\CustomApi\DeleteHomeTypePlugin.cs" />
+    <Compile Include="Plugins\CustomApi\InviteContactToJoinExistingOrganisationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\SendReminderEmailForFinaliseDraftApplicationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetAbsoluteAhpApplicationFileLocationPlugin.cs" />
     <Compile Include="Plugins\CustomApi\GetAhpApplicationFileLocationPlugin.cs" />
@@ -206,6 +208,8 @@
     <Compile Include="Services\AhpStatusChange\IAhpStatusChangeService.cs" />
     <Compile Include="Services\Application\ApplicationService.cs" />
     <Compile Include="Services\Application\IApplicationService.cs" />
+    <Compile Include="Services\Contacts\ContactService.cs" />
+    <Compile Include="Services\Contacts\IContactService.cs" />
     <Compile Include="Services\GovNotifyEmail\GovNotifyEmailService.cs" />
     <Compile Include="Services\GovNotifyEmail\IGovNotifyEmailService.cs" />
     <Compile Include="Services\HomeType\HomeTypeService.cs" />

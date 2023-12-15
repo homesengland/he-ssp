@@ -1,7 +1,7 @@
 using System;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
-using HE.CRM.AHP.Plugins.Services.Application;
+using HE.CRM.AHP.Plugins.Services.Contacts;
 
 namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
 {
@@ -25,7 +25,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
             TracingService.Trace("SendReminderEmailForRefferedBackToApplicantHandler");
             if (Guid.TryParse(organisationId, out var applicationGuid) && Guid.TryParse(contactId, out var contactGuid))
             {
-                CrmServicesFactory.Get<IApplicationService>().SendRequestToAssignContactToExistingOrganisation(applicationGuid, contactGuid);
+                CrmServicesFactory.Get<IContactService>().SendRequestToAssignContactToExistingOrganisation(applicationGuid, contactGuid);
             }
         }
 

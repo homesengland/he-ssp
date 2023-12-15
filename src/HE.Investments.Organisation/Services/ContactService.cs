@@ -208,6 +208,8 @@ public class ContactService : IContactService
 
     public async Task<Guid> CreateNotConnectedContact(IOrganizationServiceAsync2 service, ContactDto contact, Guid organisationGuid, int role, string inviterExternalId, int? portalType = null)
     {
+        var inviter = _contactRepository.GetContactViaExternalId(service, inviterExternalId) ?? throw new InvalidPluginExecutionException("Inviter with given external ID does not exists");
+
         var contactToCreate = MapContactDtoToEntity(contact);
         var contactGuid = Guid.NewGuid();
         contactToCreate.Id = contactGuid;
@@ -229,6 +231,13 @@ public class ContactService : IContactService
         };
         _ = await service.CreateAsync(contactWebroleToCreate);
 
+        var req = new OrganizationRequest("invln_invitecontacttojoinexistingorganisation")
+        {
+            ["invln_invitedcontactid"] = contactToCreate.Id.ToString(),
+            ["invln_organisationid"] = organisationGuid.ToString(),
+            ["invln_invitercontactid"] = inviter.Id.ToString(),
+        };
+        service.Execute(req);
         return contactToCreate.Id;
     }
 

@@ -17,6 +17,5 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         string GetFileLocationForAhpApplication(string ahpApplicationId, bool isAbsolute);
         void SendReminderEmailForRefferedBackToApplicant(Guid applicationId);
         void SendReminderEmailForFinaliseDraftApplication(Guid applicationId);
-        void SendRequestToAssignContactToExistingOrganisation(Guid organisationId, Guid contactId);
     }
 }
