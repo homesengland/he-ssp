@@ -19,4 +19,10 @@ public static class HomeTypesValidationFieldNames
     public const string MaximumOccupancy = nameof(MaximumOccupancy);
 
     public const string NumberOfStoreys = nameof(NumberOfStoreys);
+
+    public const string ProspectiveRentAsPercentageOfMarketRent = nameof(ProspectiveRentAsPercentageOfMarketRent);
+
+    public const string ExpectedFirstTranche = nameof(ExpectedFirstTranche);
+
+    public const string SharedOwnershipRentAsPercentageOfTheUnsoldShare = nameof(SharedOwnershipRentAsPercentageOfTheUnsoldShare);
 }

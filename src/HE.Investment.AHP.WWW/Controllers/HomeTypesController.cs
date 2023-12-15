@@ -793,7 +793,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
             MarketRent = tenureDetails.MarketRent?.ToString("0.##", CultureInfo.InvariantCulture),
             ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
-            AffordableRentAsPercentageOfMarketRent = tenureDetails.CalculatedProspectivePercentage?.ToString("00.00", CultureInfo.InvariantCulture),
+            ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent?.ToString("0", CultureInfo.InvariantCulture),
             TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
         };
 
@@ -809,12 +809,9 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         string action,
         CancellationToken cancellationToken)
     {
-        model.AffordableRentAsPercentageOfMarketRent =
-            TenureDetailsSegmentEntity.CalculateProspectiveRent(model.MarketRent, model.ProspectiveRent).ToString(CultureInfo.InvariantCulture);
-
         if (action == GenericMessages.Calculate)
         {
-            var operationResult = await _mediator.Send(
+            var (operationResult, calculationResult) = await _mediator.Send(
                 new CalculateProspectiveRentQuery(
                     applicationId,
                     homeTypeId,
@@ -824,7 +821,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     model.TargetRentExceedMarketRent),
                 cancellationToken);
             ModelState.AddValidationErrors(operationResult);
-
+            model.ProspectiveRentAsPercentageOfMarketRent = calculationResult.ProspectiveRentPercentage?.ToString("0", CultureInfo.InvariantCulture);
             return View(model);
         }
 
@@ -892,7 +889,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             InitialSale = tenureDetails.InitialSale?.ToString(CultureInfo.InvariantCulture),
             ExpectedFirstTranche = tenureDetails.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture),
             ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
-            SharedOwnershipRentAsPercentageOfTheUnsoldShare = tenureDetails.SharedOwnershipRentAsPercentageOfTheUnsoldShare?.ToString("00.00", CultureInfo.InvariantCulture),
+            SharedOwnershipRentAsPercentageOfTheUnsoldShare = tenureDetails.SharedOwnershipRentAsPercentageOfTheUnsoldShare?.ToString("0.##", CultureInfo.InvariantCulture),
         };
 
         return View(model);
@@ -907,19 +904,9 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         string action,
         CancellationToken cancellationToken)
     {
-        model.ExpectedFirstTranche =
-            TenureDetailsSegmentEntity.CalculateExpectedFirstTranche(model.MarketValue, model.InitialSale).ToString(CultureInfo.InvariantCulture);
-
-        model.SharedOwnershipRentAsPercentageOfTheUnsoldShare =
-            TenureDetailsSegmentEntity.CalculateProspectiveRentAsPercentageOfTheUnsoldShare(
-                model.MarketValue,
-                model.ProspectiveRent,
-                model.InitialSale)
-                .ToString(CultureInfo.InvariantCulture);
-
         if (action == GenericMessages.Calculate)
         {
-            var operationResult = await _mediator.Send(
+            var (operationResult, calculationResult) = await _mediator.Send(
                 new CalculateSharedOwnershipQuery(
                     applicationId,
                     homeTypeId,
@@ -927,6 +914,10 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     model.InitialSale,
                     model.ProspectiveRent),
                 cancellationToken);
+
+            model.ExpectedFirstTranche = calculationResult.ExpectedFirstTranche?.ToString("0.##", CultureInfo.InvariantCulture);
+            model.SharedOwnershipRentAsPercentageOfTheUnsoldShare = calculationResult.ProspectiveRentPercentage?.ToString("0.##", CultureInfo.InvariantCulture);
+
             ModelState.AddValidationErrors(operationResult);
 
             return View(model);
@@ -962,7 +953,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
             MarketValue = tenureDetails.MarketValue?.ToString(CultureInfo.InvariantCulture),
             MarketRent = tenureDetails.MarketRent?.ToString("0.##", CultureInfo.InvariantCulture),
             ProspectiveRent = tenureDetails.ProspectiveRent?.ToString("0.##", CultureInfo.InvariantCulture),
-            RentAsPercentageOfMarketRent = tenureDetails.CalculatedProspectivePercentage?.ToString("00.00", CultureInfo.InvariantCulture),
+            ProspectiveRentAsPercentageOfMarketRent = tenureDetails.ProspectiveRentAsPercentageOfMarketRent?.ToString("00.00", CultureInfo.InvariantCulture),
             TargetRentExceedMarketRent = tenureDetails.TargetRentExceedMarketRent,
         };
 
@@ -978,12 +969,9 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
         string action,
         CancellationToken cancellationToken)
     {
-        model.RentAsPercentageOfMarketRent =
-            TenureDetailsSegmentEntity.CalculateProspectiveRent(model.MarketRent, model.ProspectiveRent).ToString(CultureInfo.InvariantCulture);
-
         if (action == GenericMessages.Calculate)
         {
-            var operationResult = await _mediator.Send(
+            var (operationResult, calculationResult) = await _mediator.Send(
                 new CalculateProspectiveRentQuery(
                     applicationId,
                     homeTypeId,
@@ -993,6 +981,7 @@ public class HomeTypesController : WorkflowController<HomeTypesWorkflowState>
                     model.TargetRentExceedMarketRent),
                 cancellationToken);
             ModelState.AddValidationErrors(operationResult);
+            model.ProspectiveRentAsPercentageOfMarketRent = calculationResult.ProspectiveRentPercentage?.ToString("0", CultureInfo.InvariantCulture);
 
             return View(model);
         }

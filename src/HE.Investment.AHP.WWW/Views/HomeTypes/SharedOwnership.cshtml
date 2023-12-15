@@ -3,6 +3,7 @@
 @using HE.Investment.AHP.WWW.Views.HomeTypes.Const
 @using HE.Investment.AHP.WWW.Views.Shared.Components.HomeTypeFormHeader
 @using HE.Investment.AHP.WWW.Views.Shared.Components.ReturnToApplicationLink
+@using HE.Investments.Common.Extensions
 @using HE.Investments.Common.Messages
 @using HE.Investments.Common.WWW.Extensions
 @model HE.Investment.AHP.WWW.Models.HomeTypes.SharedOwnershipModel;
@@ -12,6 +13,8 @@
     var homeTypeId = this.GetHomeTypeIdFromRoute();
     var workflow = Context.Request.Query["workflow"];
     ViewBag.ValidationErrors = ViewData.ModelState.GetOrderedErrors(HomeTypesValidationFieldsOrder.SharedOwnership);
+    var (expectedFirstTrancheInvalid, expectedFirstTrancheError) = @ViewData.ModelState.GetErrors("ExpectedFirstTranche");
+    var (sharedOwnershipRentAsPercentageOfTheUnsoldShareInvalid, sharedOwnershipRentAsPercentageOfTheUnsoldShareError) = @ViewData.ModelState.GetErrors("SharedOwnershipRentAsPercentageOfTheUnsoldShare");
 }
 
 <gds-div-grid-column-two-thirds>
@@ -32,7 +35,7 @@
                     Enter the market value in pounds only.
                 </gds-span-hint>
                 <gds-input
-                    class="govuk-input--width-4"
+                    class="govuk-input--width-5"
                     asp-hiddenlabeltext="Enter the number of market value"
                     govuk-formgroup-asp-for="MarketValue"
                     name="MarketValue"
@@ -48,7 +51,7 @@
                     This is the average percentage share that you are assuming your purchasers will buy in their initial purchase (must be between 10% nad 75%).
                 </gds-span-hint>
                 <gds-input
-                    class="govuk-input--width-4"
+                    class="govuk-input--width-2"
                     asp-hiddenlabeltext="Enter the average assumed first tranche sale percentage"
                     govuk-formgroup-asp-for="InitialSale"
                     name="InitialSale"
@@ -61,8 +64,16 @@
                     <gds-h2 class="govuk-!-margin-bottom-4">Assumed first tranche sales receipt</gds-h2>
                 </gds-legend>
 
-                <gds-p class="govuk-!-margin-top-2">
-                    £@(Model.ExpectedFirstTranche ?? "") [calculated on page]
+                @if (expectedFirstTrancheInvalid)
+                {
+                    <p class="govuk-error-message field-validation-error govuk-!-margin-top-1">
+                        <span class="govuk-visually-hidden">Error:</span> @expectedFirstTrancheError
+                    </p>
+                }
+
+                <gds-p class="govuk-!-margin-top-1">
+                    @(Model.ExpectedFirstTranche.IsProvided() ? $"£{Model.ExpectedFirstTranche}"
+                        : "To calculate the assumed first tranche sales receipt, enter the market value of each home and the average assumed first tranche sale. Then select the calculate button.")
                 </gds-p>
             </he-error-form-group>
 
@@ -87,13 +98,23 @@
                 <gds-legend>
                     <gds-h2 class="govuk-!-margin-bottom-0">Shared Ownership rent as percentage of the unsold share</gds-h2>
                 </gds-legend>
-                <gds-span-hint>
-                    This is calculated by dividing the rent by the market value of the home left after the assumed first tranche sale.
-                    This must not be more than 3%.
-                </gds-span-hint>
+                <div class="govuk-!-margin-bottom-2">
+                    <gds-span-hint>
+                        This is calculated by dividing the rent by the market value of the home left after the assumed first tranche sale.
+                        This must not be more than 3%.
+                    </gds-span-hint>
+                </div>
 
-                <gds-p class="govuk-!-margin-top-2">
-                    @(Model.SharedOwnershipRentAsPercentageOfTheUnsoldShare ?? "00.00")% [calculated on page]
+                @if (sharedOwnershipRentAsPercentageOfTheUnsoldShareInvalid)
+                {
+                    <p class="govuk-error-message field-validation-error govuk-!-margin-top-1">
+                        <span class="govuk-visually-hidden">Error:</span> @sharedOwnershipRentAsPercentageOfTheUnsoldShareError
+                    </p>
+                }
+
+                <gds-p class="govuk-!-margin-top-1">
+                    @(Model.SharedOwnershipRentAsPercentageOfTheUnsoldShare.IsProvided() ? $"{Model.SharedOwnershipRentAsPercentageOfTheUnsoldShare}%"
+                        : "To calculate the Shared Ownership rent as percentage of the unsold share, enter the rent per week once you have found the assumed first tranche sales receipt. Then select the calculate button.")
                 </gds-p>
             </he-error-form-group>
 

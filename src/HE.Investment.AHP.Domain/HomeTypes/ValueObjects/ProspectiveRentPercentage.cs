@@ -6,21 +6,21 @@ using HE.Investments.Common.Validators;
 
 namespace HE.Investment.AHP.Domain.HomeTypes.ValueObjects;
 
-public class ExpectedFirstTranche : ValueObject
+public class ProspectiveRentPercentage : ValueObject
 {
-    public ExpectedFirstTranche(decimal? value)
+    public ProspectiveRentPercentage(decimal? value, string fieldName)
     {
         if (value.IsNotProvided())
         {
             OperationResult.New()
-                .AddValidationError(nameof(ExpectedFirstTranche), ValidationErrorMessage.CouldNotCalculate)
+                .AddValidationError(fieldName, ValidationErrorMessage.CouldNotCalculate)
                 .CheckErrors();
         }
 
         Value = value!.Value;
     }
 
-    public ExpectedFirstTranche(decimal value)
+    public ProspectiveRentPercentage(decimal value)
     {
         Value = value;
     }
@@ -29,7 +29,7 @@ public class ExpectedFirstTranche : ValueObject
 
     public override string ToString()
     {
-        return Value.ToString("0.00", CultureInfo.InvariantCulture);
+        return Value.ToString("0", CultureInfo.InvariantCulture);
     }
 
     protected override IEnumerable<object> GetAtomicValues()
