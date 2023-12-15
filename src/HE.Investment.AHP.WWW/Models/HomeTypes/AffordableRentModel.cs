@@ -20,7 +20,7 @@ public class AffordableRentModel : HomeTypeBasicModel
 
     public string? ProspectiveRent { get; set; }
 
-    public string? AffordableRentAsPercentageOfMarketRent { get; set; }
+    public string? ProspectiveRentAsPercentageOfMarketRent { get; set; }
 
     public YesNoType TargetRentExceedMarketRent { get; set; }
 }

@@ -2,21 +2,21 @@
 @using HE.Investments.Loans.Common.Utils.Constants.ViewName
 @model HE.Investments.Account.Contract.Organisation.OrganisationDetailsViewModel
 
-<gds-div-grid-column-full>
+<div class="govuk-grid-column-full">
     <form asp-controller="UserOrganisation" asp-action="Details" asp-method="post" novalidate>
 
-        <gds-back-link href="@Url.Action("Index", "UserOrganisation", new { })" text="Back" class="govuk-!-margin-bottom-8">
+        <gds-back-link href="@Url.Action("Index", "UserOrganisation", new { })" class="govuk-!-margin-bottom-8">
         </gds-back-link>
 
         <partial name="~/Partials/_Notification.cshtml" />
 
-        <gds-h1 class="govuk-heading-xl govuk-!-margin-bottom-9">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-9">
             Manage @Model.Name details
-        </gds-h1>
+        </h1>
 
-        <gds-h3 class="govuk-heading-l" data-testid="user-organisation-details">
+        <h3 class="govuk-heading-m" data-testid="user-organisation-details">
             Organisation details
-        </gds-h3>
+        </h3>
 
         <gds-summary-list class="govuk-!-margin-bottom-9">
 
@@ -68,4 +68,4 @@
             </gds-p>
         }
     </form>
-</gds-div-grid-column-full>
+</div>

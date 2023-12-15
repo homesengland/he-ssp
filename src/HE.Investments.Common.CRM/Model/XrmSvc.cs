@@ -23376,6 +23376,24 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_finalisedraftapplicationflag")]
+		public System.Nullable<bool> invln_fInalisedraftapplicationflag
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_finalisedraftapplicationflag");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_fInalisedraftapplicationflag");
+				this.SetAttributeValue("invln_finalisedraftapplicationflag", value);
+				this.OnPropertyChanged("invln_fInalisedraftapplicationflag");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_financialdetailssectioncompletionstatus")]
 		public System.Nullable<HE.Investments.Common.CRM.Model.invln_ahpsectioncompletionstatusset> invln_financialdetailssectioncompletionstatus
 		{
@@ -23940,6 +23958,24 @@ namespace HE.Investments.Common.CRM.Model
 		/// <summary>
 		/// 
 		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastemailsenton")]
+		public System.Nullable<System.DateTime> invln_lastemailsenton
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.DateTime>>("invln_lastemailsenton");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_lastemailsenton");
+				this.SetAttributeValue("invln_lastemailsenton", value);
+				this.OnPropertyChanged("invln_lastemailsenton");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
 		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_lastexternalmodificationby")]
 		public Microsoft.Xrm.Sdk.EntityReference invln_lastexternalmodificationby
 		{
@@ -24414,6 +24450,24 @@ namespace HE.Investments.Common.CRM.Model
 				this.OnPropertyChanging("invln_Site");
 				this.SetAttributeValue("invln_site", value);
 				this.OnPropertyChanged("invln_Site");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_stopreminderemail")]
+		public System.Nullable<bool> invln_stopreminderemail
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_stopreminderemail");
+			}
+			set
+			{
+				this.OnPropertyChanging("invln_stopreminderemail");
+				this.SetAttributeValue("invln_stopreminderemail", value);
+				this.OnPropertyChanged("invln_stopreminderemail");
 			}
 		}
 		
@@ -28477,10 +28531,30 @@ namespace HE.Investments.Common.CRM.Model
 			}
 		}
 		
+		public string invln_organisationid
+		{
+			get
+			{
+				if (this.Parameters.Contains("invln_organisationid"))
+				{
+					return ((string)(this.Parameters["invln_organisationid"]));
+				}
+				else
+				{
+					return default(string);
+				}
+			}
+			set
+			{
+				this.Parameters["invln_organisationid"] = value;
+			}
+		}
+		
 		public invln_checkifapplicationwithgivennameexistsRequest()
 		{
 			this.RequestName = "invln_checkifapplicationwithgivennameexists";
 			this.invln_application = default(string);
+			this.invln_organisationid = default(string);
 		}
 	}
 	

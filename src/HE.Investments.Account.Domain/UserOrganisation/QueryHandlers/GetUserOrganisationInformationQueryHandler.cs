@@ -1,13 +1,11 @@
 using HE.Investments.Account.Contract.Organisation.Queries;
 using HE.Investments.Account.Contract.UserOrganisation;
 using HE.Investments.Account.Domain.Organisation.Repositories;
-using HE.Investments.Account.Domain.User;
 using HE.Investments.Account.Domain.User.Repositories;
 using HE.Investments.Account.Domain.UserOrganisation.Repositories;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User;
 using HE.Investments.Common;
-using HE.Investments.Common.User;
 using MediatR;
 using Microsoft.FeatureManagement;
 

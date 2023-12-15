@@ -286,7 +286,6 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
             }
         }
 
-
         private string GetAhpApplicationUrl(EntityReference ahpApplicationId)
         {
             if (ahpApplicationId != null)

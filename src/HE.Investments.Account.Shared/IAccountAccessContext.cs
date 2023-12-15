@@ -8,5 +8,5 @@ public interface IAccountAccessContext
 
     Task<bool> CanSubmitApplication();
 
-    Task<bool> CanManageApplication();
+    Task<bool> CanEditApplication();
 }

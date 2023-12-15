@@ -151,6 +151,7 @@ namespace DataverseModel
 			public const string invln_expectedonworks = "invln_expectedonworks";
 			public const string invln_expectedonworks_Base = "invln_expectedonworks_base";
 			public const string invln_ExternalStatus = "invln_externalstatus";
+			public const string invln_fInalisedraftapplicationflag = "invln_finalisedraftapplicationflag";
 			public const string invln_financialdetailssectioncompletionstatus = "invln_financialdetailssectioncompletionstatus";
 			public const string invln_fundingfromopenmarkethomesnotonthisscheme = "invln_fundingfromopenmarkethomesnotonthisscheme";
 			public const string invln_fundingfromopenmarkethomesnotonthisscheme_Base = "invln_fundingfromopenmarkethomesnotonthisscheme_base";
@@ -694,6 +695,23 @@ namespace DataverseModel
 				this.OnPropertyChanging("invln_ExternalStatus");
 				this.SetAttributeValue("invln_externalstatus", value);
 				this.OnPropertyChanged("invln_ExternalStatus");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("invln_finalisedraftapplicationflag")]
+		public System.Nullable<bool> invln_fInalisedraftapplicationflag
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<bool>>("invln_finalisedraftapplicationflag");
+			}
+			[System.Diagnostics.DebuggerNonUserCode()]
+			set
+			{
+				this.OnPropertyChanging("invln_fInalisedraftapplicationflag");
+				this.SetAttributeValue("invln_finalisedraftapplicationflag", value);
+				this.OnPropertyChanged("invln_fInalisedraftapplicationflag");
 			}
 		}
 		

@@ -15,5 +15,6 @@ namespace HE.CRM.Common.Repositories.Interfaces
         Contact GetContactViaExternalId(string contactExternalId, string[] columnSet = null);
         AssociateResponse ExecuteAssociateRequest(AssociateRequest request);
         List<Contact> GetContactsForOrganisation(Guid organisationId);
+        List<Contact> GetOrganisationAdministrators(Guid organisationId);
     }
 }

@@ -8,4 +8,4 @@ public record CalculateSharedOwnershipQuery(
     string HomeTypeId,
     string? MarketValue,
     string? InitialSale,
-    string? ProspectiveRent) : IRequest<OperationResult>;
+    string? ProspectiveRent) : IRequest<(OperationResult OperationResult, CalculationResult CalculationResult)>;
