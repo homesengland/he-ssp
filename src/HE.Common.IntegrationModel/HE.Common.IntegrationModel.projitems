@@ -9,7 +9,6 @@
     <Import_RootNamespace>HE.Common.IntegrationModel</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ContactExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\AhpApplicationDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ContactDto.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PortalIntegrationModel\ContactRolesDto.cs" />
