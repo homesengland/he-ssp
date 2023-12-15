@@ -20,7 +20,5 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
         public string country { get; set; }
         public bool? isTermsAndConditionsAccepted { get; set; }
         public string contactExternalId { get; set; }
-
-        public bool IsConnectedWithExternalIdentity => !contactExternalId.StartsWith("_");
     }
 }

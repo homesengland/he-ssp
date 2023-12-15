@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.Scheme.Constants;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Extensions;
 using HE.Investments.Common.Messages;
