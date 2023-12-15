@@ -22,7 +22,7 @@ public static class ModelStateExtensions
         return (true, modelState[key]!.GetErrorMessage());
     }
 
-    public static Dictionary<string, string> GetOrderedErrors(this ModelStateDictionary? modelState, List<string> orderedKeys)
+    public static Dictionary<string, string>? GetOrderedErrors(this ModelStateDictionary? modelState, List<string> orderedKeys)
     {
         var result = new Dictionary<string, string>();
 

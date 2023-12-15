@@ -1,3 +1,4 @@
+using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Domain.ValueObjects;
