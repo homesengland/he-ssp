@@ -29,11 +29,9 @@
     <form asp-controller="Scheme" asp-action="Complete" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
         @Html.HiddenFor(m => Model.ApplicationName)
         <gds-field-set role="group">
-            <<he-error-form-group asp-for="IsCompleted">
-                <vc:radio-list field-name="@(nameof(Model.IsCompleted))"
-                               title="Have you completed this section?"
-                               available-options="@values" />
-            </he-error-form-group>
+            <vc:radio-list field-name="@(nameof(Model.IsCompleted))"
+                           title="Have you completed this section?"
+                           available-options="@values" />
         </gds-field-set>
         <vc:form-button />
     </form>
