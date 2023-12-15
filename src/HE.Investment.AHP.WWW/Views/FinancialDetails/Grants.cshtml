@@ -1,5 +1,5 @@
+@using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 @using HE.Investment.AHP.Domain.FinancialDetails;
-@using HE.Investment.AHP.Domain.FinancialDetails.Constants;
 @using HE.Investment.AHP.WWW.Models.FinancialDetails;
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 @using HE.Investments.Common.Gds;
@@ -43,7 +43,7 @@
                            class="govuk-input--width-5"
                            asp-labelclass="govuk-label"
                            govuk-formgroup-asp-for="DhscExtraCareGrants"
-                           name=@FinancialDetailsValidationFieldNames.DHSCExtraCareGrants
+                           name=@FinancialDetailsValidationFieldNames.DhscExtraCareGrants
                            asp-prefixtext=@(GdsInputPrefixText.Pounds)
                            value=@Model.DhscExtraCareGrants />
             </he-error-form-group>
@@ -82,7 +82,7 @@
                            class="govuk-input--width-5"
                            asp-labelclass="govuk-label"
                            govuk-formgroup-asp-for="HealthRelatedGrants"
-                           name=@FinancialDetailsValidationFieldNames.HeatlthRelatedGrants
+                           name=@FinancialDetailsValidationFieldNames.HealthRelatedGrants
                            asp-prefixtext=@(GdsInputPrefixText.Pounds)
                            value=@Model.HealthRelatedGrants />
             </he-error-form-group>

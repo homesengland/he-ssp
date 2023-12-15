@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Domain.Scheme.Constants;
+using HE.Investment.AHP.Contract.Scheme.Constants;
 using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
 

@@ -1,6 +1,4 @@
-using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-
-namespace HE.Investment.AHP.Domain.Scheme.Constants;
+namespace HE.Investment.AHP.Contract.Scheme.Constants;
 public static class SchemeValidationFieldNames
 {
     public const string AffordabilityEvidence = nameof(AffordabilityEvidence);

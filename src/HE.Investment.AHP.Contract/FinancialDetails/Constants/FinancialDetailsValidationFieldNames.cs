@@ -1,6 +1,4 @@
-using HE.Investment.AHP.Domain.FinancialDetails.ValueObjects;
-
-namespace HE.Investment.AHP.Domain.FinancialDetails.Constants;
+namespace HE.Investment.AHP.Contract.FinancialDetails.Constants;
 public static class FinancialDetailsValidationFieldNames
 {
     public const string PurchasePrice = nameof(PurchasePrice);
@@ -29,19 +27,19 @@ public static class FinancialDetailsValidationFieldNames
 
     public const string HomesTransferValue = nameof(HomesTransferValue);
 
-    public const string CountyCouncilGrants = nameof(PublicGrantFields.CountyCouncilGrants);
+    public const string CountyCouncilGrants = nameof(CountyCouncilGrants);
 
-    public const string DHSCExtraCareGrants = nameof(PublicGrantFields.DhscExtraCareGrants);
+    public const string DhscExtraCareGrants = nameof(DhscExtraCareGrants);
 
-    public const string LocalAuthorityGrants = nameof(PublicGrantFields.LocalAuthorityGrants);
+    public const string LocalAuthorityGrants = nameof(LocalAuthorityGrants);
 
-    public const string SocialServicesGrants = nameof(PublicGrantFields.SocialServicesGrants);
+    public const string SocialServicesGrants = nameof(SocialServicesGrants);
 
-    public const string HeatlthRelatedGrants = nameof(PublicGrantFields.HealthRelatedGrants);
+    public const string HealthRelatedGrants = nameof(HealthRelatedGrants);
 
-    public const string LotteryGrants = nameof(PublicGrantFields.LotteryGrants);
+    public const string LotteryGrants = nameof(LotteryGrants);
 
-    public const string OtherPublicBodiesGrants = nameof(PublicGrantFields.OtherPublicBodiesGrants);
+    public const string OtherPublicBodiesGrants = nameof(OtherPublicBodiesGrants);
 
     public const string CostsAndFunding = nameof(CostsAndFunding);
 }

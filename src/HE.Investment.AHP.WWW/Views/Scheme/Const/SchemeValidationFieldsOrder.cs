@@ -1,4 +1,4 @@
-using HE.Investment.AHP.Domain.Scheme.Constants;
+using HE.Investment.AHP.Contract.Scheme.Constants;
 
 namespace HE.Investment.AHP.WWW.Views.Scheme.Const;
 public static class SchemeValidationFieldsOrder
