@@ -1,9 +1,12 @@
 @using HE.Investments.Common.Extensions
 @using HE.Investments.Common.WWW.Components.FormHeader
+@using HE.Investments.Account.Shared
+@inject IAccountAccessContext AccountAccessContext
 @model (HE.Investments.Account.Contract.Users.UsersAndJoinRequests usersAndJoinRequests, IDictionary<HE.Investments.Account.Contract.Users.UserRole, string> roles);
 @{
     ViewData["Title"] = "Manage users";
     var title = $"Manage users at {Model.usersAndJoinRequests.OrganisationName}";
+    var canManageUsers = await AccountAccessContext.CanManageUsers();
 }
 
 <div class="govuk-grid-column-full">
@@ -15,10 +18,13 @@
         <vc:users-table users="@Model.usersAndJoinRequests.Users"/>
     }
 
-    <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
-        <p>You can invite a user to your organisation. You'll have to provide their details, as well as deciding what role you want to grant the user.</p>
-        <link-button action-url="@Url.Action("Invite")">Invite a new user</link-button>
-    </gds-div-grid-column-two-thirds>
+    @if (canManageUsers)
+    {
+        <gds-div-grid-column-two-thirds class="govuk-!-padding-left-0">
+            <p>You can invite a user to your organisation. You'll have to provide their details, as well as deciding what role you want to grant the user.</p>
+            <link-button action-url="@Url.Action("Invite")">Invite a new user</link-button>
+        </gds-div-grid-column-two-thirds>
+    }
 
     <div class="govuk-grid-column-full govuk-!-padding-left-0">
         @if (Model.usersAndJoinRequests.JoinRequests.Any())

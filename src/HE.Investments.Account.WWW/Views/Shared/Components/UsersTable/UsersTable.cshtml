@@ -1,31 +1,50 @@
 @using HE.Investments.Common.WWW.Components.Table
 @using HE.Investments.Common.WWW.Helpers
 @using HE.Investments.Common.Extensions
+@using HE.Investments.Account.Shared
+
+@inject IAccountAccessContext AccountAccessContext
 @model IList<HE.Investments.Account.Contract.Users.UserDetails>;
 @{
+    var canManageUsers = await AccountAccessContext.CanManageUsers();
+    var tableHeaders = new List<TableHeaderViewModel>
+    {
+        new("First name"),
+        new("Last name"),
+        new("Email"),
+        new("Job title"),
+        new("Role"),
+        new("Last active"),
+    };
+
+    if (canManageUsers)
+    {
+        tableHeaders.Add(new("Remove", IsHidden: true));
+        tableHeaders.Add(new("Manage", IsHidden: true));
+    }
+
     var usersDetails = new TableViewModel(
-        new List<TableHeaderViewModel>
+        tableHeaders,
+        Model.Select(u =>
         {
-            new("First name"),
-            new("Last name"),
-            new("Email"),
-            new("Job title"),
-            new("Role"),
-            new("Last active"),
-            new("Remove", IsHidden: true),
-            new("Manage", IsHidden: true),
-        },
-        Model.Select(u => new TableRowViewModel(new List<TableValueViewModel>
-        {
-            new(u.FirstName),
-            new(u.LastName),
-            new(u.Email),
-            new(u.JobTitle),
-            new(u.Role?.GetDescription()),
-            new(u.LastActiveAt == null ? "-" : DateHelper.DisplayAsUkFormatDateTime(u.LastActiveAt)),
-            new(Component: new("Link", new { text = "Remove", action = "ConfirmUnlink", controller = "Users", values = new { id = u.Id }} )),
-            new(Component: new("Link", new { text = "Change", action = "Change", controller = "Users", values = new { id = u.Id }} )),
-        })).ToList());
+            var tableItems = new List<TableValueViewModel>
+            {
+                new(u.FirstName),
+                new(u.LastName),
+                new(u.Email),
+                new(u.JobTitle),
+                new(u.Role?.GetDescription()),
+                new(u.LastActiveAt == null ? "-" : DateHelper.DisplayAsUkFormatDateTime(u.LastActiveAt))
+            };
+
+            if (canManageUsers)
+            {
+                tableItems.Add(new(Component: new("Link", new { text = "Remove", action = "Remove", controller = "Users", values = new { id = u.Id } })));
+                tableItems.Add(new(Component: new("Link", new { text = "Change", action = "Change", controller = "Users", values = new { id = u.Id } }))) ;
+            }
+
+            return new TableRowViewModel(tableItems);
+        }).ToList());
 }
 
 <vc:table model="@usersDetails"/>

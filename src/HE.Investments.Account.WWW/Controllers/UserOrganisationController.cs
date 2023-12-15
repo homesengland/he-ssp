@@ -24,23 +24,20 @@ public class UserOrganisationController : Controller
 
     private readonly IProgrammes _programmes;
 
-    private readonly IAccountUserContext _accountUserContext;
+    private readonly IAccountAccessContext _accountAccessContext;
 
-    private readonly IFeatureManager _featureManager;
-
-    public UserOrganisationController(IMediator mediator, IProgrammes programmes, IAccountUserContext accountUserContext, IFeatureManager featureManager)
+    public UserOrganisationController(IMediator mediator, IProgrammes programmes, IAccountAccessContext accountAccessContext)
     {
         _mediator = mediator;
         _programmes = programmes;
-        _accountUserContext = accountUserContext;
-        _featureManager = featureManager;
+        _accountAccessContext = accountAccessContext;
     }
 
     [HttpGet(UserOrganisationAccountEndpoints.DashboardSuffix)]
     public async Task<IActionResult> Index()
     {
         var userOrganisationResult = await _mediator.Send(new GetUserOrganisationInformationQuery());
-        var canViewOrganisationDetails = await _accountUserContext.HasOneOfRole(UserAccountRole.AccessOrganisation());
+        var canViewOrganisationDetails = await _accountAccessContext.CanAccessOrganisationView();
         return View(
             "UserOrganisation",
             new UserOrganisationModel(
