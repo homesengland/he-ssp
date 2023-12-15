@@ -127,18 +127,15 @@ public class UsersController : Controller
     [AuthorizeWithCompletedProfile(UserAccountRole.AdminRole)]
     public async Task<IActionResult> Invite(InviteUserViewModel model, CancellationToken cancellationToken)
     {
-        ModelState.AddModelError("FirstName", "test error");
-        ModelState.AddModelError("Role", "role error");
-        return await Invite(cancellationToken);
+        var result = await _mediator.Send(
+            new InviteUserToOrganisationCommand(model.FirstName, model.LastName, model.EmailAddress, model.JobTitle, model.Role),
+            cancellationToken);
+        if (result.HasValidationErrors)
+        {
+            ModelState.AddValidationErrors(result);
+            return View(model);
+        }
 
-        // TODO: Uncommet when backend inplemented
-        // var result = await _mediator.Send(new InviteUserCommand(model), cancellationToken);
-        // if (result.HasValidationErrors)
-        // {
-        //     ModelState.AddValidationErrors(result);
-        //     return View("Invite", model);
-        // }
-        //
-        // return RedirectToAction("Index");
+        return RedirectToAction("Index");
     }
 }
