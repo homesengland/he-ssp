@@ -1,6 +1,6 @@
 @using HE.Investments.Common.WWW.Extensions
 @using HE.Investments.Common.WWW.Components.ErrorMessage
-@model (string fieldName, string label, string hint, string cssClass)
+@model (string fieldName, string value, string label, string hint, string cssClass)
 @{
     var (hasError, errors) = ViewData.ModelState.GetErrors(Model.fieldName);
     var groupClass = hasError ? "govuk-form-group--error" : string.Empty;
@@ -15,5 +15,5 @@
 
     <vc:error-message field-name="@Model.fieldName"/>
 
-    <input class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" type="text">
+    <input class="@inputClass" id="@Model.fieldName" name="@Model.fieldName" type="text" value="@Model.value">
 </gds-div-form-group>

@@ -56,16 +56,17 @@ public class ContactService : IContactService
         }
     }
 
-    public Task<ContactRolesDto?> GetContactRoles(IOrganizationServiceAsync2 service, string contactEmail, string contactExternalId, int? portalType = null)
+    public async Task<ContactRolesDto?> GetContactRoles(IOrganizationServiceAsync2 service, string contactEmail, string contactExternalId, int? portalType = null)
     {
         var contact = _contactRepository.GetContactWithGivenEmailOrExternalId(service, contactEmail, contactExternalId);
         if (contact != null)
         {
+            await ConnectingNotConnectedContactWithExternalId(service, contact, contactExternalId);
             var portalTypeFilter = GeneratePortalTypeFilter(portalType);
             var contactWebRole = _webRoleRepository.GetContactWebrole(service, contact.Id, portalTypeFilter);
             if (contactWebRole.Count == 0)
             {
-                return Task.FromResult<ContactRolesDto?>(null);
+                return null;
             }
 
             var roles = new List<ContactRoleDto>();
@@ -98,10 +99,10 @@ public class ContactService : IContactService
                 contactRoles = roles,
             };
 
-            return Task.FromResult<ContactRolesDto?>(contactRolesDto);
+            return contactRolesDto;
         }
 
-        return Task.FromResult<ContactRolesDto?>(null);
+        return null;
     }
 
     public async Task<Guid> LinkContactWithOrganization(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, int portalType)
@@ -224,10 +225,9 @@ public class ContactService : IContactService
         return contactToCreate.Id;
     }
 
-    public async Task ConnectingNotConnectedContactWithExternalId(IOrganizationServiceAsync2 service, string email, string contactExternalId)
+    private async Task ConnectingNotConnectedContactWithExternalId(IOrganizationServiceAsync2 service, Entity contact, string contactExternalId)
     {
-        var contact = _contactRepository.GetContactWithGivenEmailOrExternalId(service, email, contactExternalId);
-        if (contact != null && contact.Contains("invln_externalid") && contact["invln_externalid"] != null
+        if (contact.Contains("invln_externalid") && contact["invln_externalid"] != null
             && ((string)contact["invln_externalid"]).StartsWith('_'))
         {
             var contactToUpdate = new Entity("contact")

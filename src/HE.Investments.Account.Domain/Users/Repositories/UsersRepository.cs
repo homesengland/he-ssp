@@ -24,6 +24,7 @@ public class UsersRepository : IUsersRepository
         var roles = await _usersCrmContext.GetUsersRole(users.Select(u => u.contactExternalId).ToList());
 
         return users
+            .Where(x => x.IsConnectedWithExternalIdentity)
             .Select(u => CreateUserDetails(u, r => GetRole(r, roles)))
             .ToList();
     }
