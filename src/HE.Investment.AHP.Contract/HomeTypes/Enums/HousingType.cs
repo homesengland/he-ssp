@@ -9,9 +9,9 @@ public enum HousingType
     [Description("General")]
     General,
 
-    [Description("Housing for older people")]
+    [Description("Homes for older people")]
     HomesForOlderPeople,
 
-    [Description("Housing for disabled and vulnerable people")]
+    [Description("Homes for disabled and vulnerable people")]
     HomesForDisabledAndVulnerablePeople,
 }

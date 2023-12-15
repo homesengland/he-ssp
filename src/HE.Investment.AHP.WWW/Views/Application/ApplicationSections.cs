@@ -26,7 +26,7 @@ public static class ApplicationSections
                     sections,
                     "Home types",
                     "Complete information about the type of homes, information about the homes, home design and rent details.",
-                    "Add homes types",
+                    "Add home type",
                     section => GetAction(url, applicationId, typeof(HomeTypesController), section.SectionStatus == SectionStatus.NotStarted ? nameof(HomeTypesController.Index) : nameof(HomeTypesController.List))),
                 AddSection(
                     SectionType.FinancialDetails,
