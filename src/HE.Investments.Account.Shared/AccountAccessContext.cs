@@ -8,6 +8,10 @@ public class AccountAccessContext : IAccountAccessContext
 
     public const string ManageUsers = $"{UserAccountRole.AdminRole}";
 
+    public const string ManageApplications = $"{UserAccountRole.AdminRole},{UserAccountRole.EnhancedRole},{UserAccountRole.InputRole},{UserAccountRole.LimitedRole}";
+
+    public const string SubmitApplication = $"{UserAccountRole.AdminRole},{UserAccountRole.EnhancedRole},{UserAccountRole.LimitedRole}";
+
     private readonly IAccountUserContext _accountUserContext;
 
     public AccountAccessContext(IAccountUserContext accountUserContext)
@@ -20,9 +24,19 @@ public class AccountAccessContext : IAccountAccessContext
         return await _accountUserContext.HasOneOfRole(ToUserAccountRoles(ManageUsers));
     }
 
+    public async Task<bool> CanSubmitApplication()
+    {
+        return await _accountUserContext.HasOneOfRole(ToUserAccountRoles(SubmitApplication));
+    }
+
     public async Task<bool> CanAccessOrganisationView()
     {
         return await _accountUserContext.HasOneOfRole(ToUserAccountRoles(OrganisationView));
+    }
+
+    public async Task<bool> CanManageApplication()
+    {
+        return await _accountUserContext.HasOneOfRole(ToUserAccountRoles(ManageApplications));
     }
 
     private static UserAccountRole[] ToUserAccountRoles(string roles)
