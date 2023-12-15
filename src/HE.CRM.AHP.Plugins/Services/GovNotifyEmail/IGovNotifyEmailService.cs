@@ -18,7 +18,5 @@ namespace HE.CRM.AHP.Plugins.Services.GovNotifyEmail
         void SendNotifications_COMMON_INVITE_CONTACT_TO_JOIN_ORGANIZATION(EntityReference invitedContactId, EntityReference _inviterContactId, EntityReference organisationId);
         void SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK(EntityReference ahpApplicationId, EntityReference contactId);
         void SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION(EntityReference ahpApplicationId, EntityReference contactId);
-        void SendReminderEmailForRefferedBackToApplicant(Guid applicationId);
-        void SendReminderEmailForFinaliseDraftApplication(Guid applicationId);
     }
 }

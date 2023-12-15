@@ -5,6 +5,7 @@ using System.Text.Json;
 using DataverseModel;
 using HE.Base.Services;
 using HE.Common.IntegrationModel.PortalIntegrationModel;
+using HE.CRM.AHP.Plugins.Services.GovNotifyEmail;
 using HE.CRM.Common.DtoMapping;
 using HE.CRM.Common.Repositories.Interfaces;
 using Microsoft.Xrm.Sdk;
@@ -18,12 +19,20 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         private readonly IContactRepository _contactRepository;
         private readonly ISharepointDocumentLocationRepository _sharepointDocumentLocationRepository;
         private readonly ISharepointSiteRepository _sharepointSiteRepository;
+        private readonly IAhpApplicationRepository _ahpApplicationRepositoryAdmin;
+        private readonly IAccountRepository _accountRepository;
+
+        private readonly IGovNotifyEmailService _govNotifyEmailService;
         public ApplicationService(CrmServiceArgs args) : base(args)
         {
             _applicationRepository = CrmRepositoriesFactory.Get<IAhpApplicationRepository>();
             _contactRepository = CrmRepositoriesFactory.Get<IContactRepository>();
             _sharepointDocumentLocationRepository = CrmRepositoriesFactory.Get<ISharepointDocumentLocationRepository>();
             _sharepointSiteRepository = CrmRepositoriesFactory.Get<ISharepointSiteRepository>();
+            _ahpApplicationRepositoryAdmin = CrmRepositoriesFactory.GetSystem<IAhpApplicationRepository>();
+            _accountRepository = CrmRepositoriesFactory.GetSystem<IAccountRepository>();
+
+            _govNotifyEmailService = CrmServicesFactory.Get<IGovNotifyEmailService>();
         }
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus)
@@ -189,6 +198,45 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             }
         }
 
+        public void SendReminderEmailForRefferedBackToApplicant(Guid applicationId)
+        {
+            var application = _ahpApplicationRepositoryAdmin.GetById(applicationId, new string[] { nameof(invln_scheme.invln_contactid).ToLower(), nameof(invln_scheme.invln_lastexternalmodificationby).ToLower() });
+            if (application != null)
+            {
+                if (application.invln_contactid != null)
+                {
+                    _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK(application.ToEntityReference(), application.invln_contactid);
+                }
+                if (application.invln_lastexternalmodificationby != null &&
+                    (application.invln_contactid == null || (application.invln_contactid != null && application.invln_lastexternalmodificationby.Id != application.invln_contactid.Id)))
+                {
+                    _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_APPLICATION_REFERRED_BACK(application.ToEntityReference(), application.invln_lastexternalmodificationby);
+                }
+            }
+        }
+
+        public void SendReminderEmailForFinaliseDraftApplication(Guid applicationId)
+        {
+            var application = _ahpApplicationRepositoryAdmin.GetById(applicationId, new string[] { nameof(invln_scheme.invln_contactid).ToLower() });
+            if (application != null && application.invln_contactid != null)
+            {
+                _govNotifyEmailService.SendNotifications_AHP_EXTERNAL_REMINDER_TO_FINALIZE_DRAFT_APPLICATION(application.ToEntityReference(), application.invln_contactid);
+            }
+        }
+
+        public void SendRequestToAssignContactToExistingOrganisation(Guid organisationId, Guid contactId)
+        {
+            var accountEntityReference = new EntityReference(Account.EntityLogicalName, organisationId);
+            var organisationAdministartors = _contactRepository.GetOrganisationAdministrators(organisationId);
+            if (organisationAdministartors.Any())
+            {
+                foreach(var admin in organisationAdministartors)
+                {
+                    _govNotifyEmailService
+                }
+            }
+        }
+
         private string GenerateFetchXmlAttributes(string fieldsToRetrieve)
         {
             var fields = fieldsToRetrieve.Split(',');
@@ -202,6 +250,5 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             }
             return generatedAttribuesFetchXml;
         }
-
     }
 }

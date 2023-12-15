@@ -1,7 +1,7 @@
 using System;
 using DataverseModel;
 using HE.Base.Plugins.Handlers;
-using HE.CRM.AHP.Plugins.Services.GovNotifyEmail;
+using HE.CRM.AHP.Plugins.Services.Application;
 
 namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
 {
@@ -24,7 +24,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
             TracingService.Trace("SendReminderEmailForRefferedBackToApplicantHandler");
             if (Guid.TryParse(applicationId, out var applicationGuid))
             {
-                CrmServicesFactory.Get<IGovNotifyEmailService>().SendReminderEmailForRefferedBackToApplicant(applicationGuid);
+                CrmServicesFactory.Get<IApplicationService>().SendReminderEmailForRefferedBackToApplicant(applicationGuid);
             }
         }
 

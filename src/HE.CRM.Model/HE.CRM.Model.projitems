@@ -46,6 +46,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendinvitecontacttojoinorganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendreminderemailforrefferedbacktoapplicant.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendremindertofinalisadraftapplication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sendrequesttoassigncontacttoexistingorganisation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_setahpapplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_sethometype.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Actions\invln_updatesingleloanapplication.cs" />
