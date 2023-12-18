@@ -139,16 +139,18 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactId, attributes, additionalFilters);
             if (applications.Any())
             {
-                var contact = _contactRepository.GetContactViaExternalId(contactId, new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower() });
+                var contact = _contactRepository.GetContactViaExternalId(contactId, new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower(), nameof(Contact.invln_externalid).ToLower() });
                 foreach (var application in applications)
                 {
-                    var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contactId);
+                    var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid);
                     if (application.invln_lastexternalmodificationby != null)
                     {
+                        var lastExternalModificationBy = _contactRepository.GetById(application.invln_lastexternalmodificationby.Id,
+                            new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower() });
                         applicationDto.lastExternalModificationBy = new ContactDto()
                         {
-                            firstName = contact.FirstName,
-                            lastName = contact.LastName,
+                            firstName = lastExternalModificationBy.FirstName,
+                            lastName = lastExternalModificationBy.LastName,
                         };
                     }
                     listOfApplications.Add(applicationDto);
