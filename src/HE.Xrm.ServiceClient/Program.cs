@@ -39,7 +39,7 @@ namespace HE.Xrm.ServiceClientExample
             {
                 if (serviceClient.IsReady)
                 {
-                    LinkContactWithOrganization(serviceClient, "itests|ff9f2272-1a1e-47c8-9023-4755f818bf8d", new Guid("270e3b18-0553-ee11-be6f-002248c653e1"), (int)invln_Portal1.Common);
+                    TestChangeStatus(serviceClient);
                     //TestCustomApiCallingPath(serviceClient);
                     //TestUpdateLoanApplication(serviceClient); //method to call
                 }
@@ -52,122 +52,15 @@ namespace HE.Xrm.ServiceClientExample
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
         }
-        public static Guid LinkContactWithOrganization(IOrganizationServiceAsync2 service, string contactExternalId, Guid organisationGuid, int portalType)
-        {
-            var contact = GetContactViaExternalId(service, contactExternalId);
-            var defaultRole = GetDefaultPortalRoles(service, portalType);
-            if (contact != null)
-            {
-                var contactWebroleExists = GetContactWebroleForOrganisation(service, contact.Id, organisationGuid) != null;
-                if (!contactWebroleExists)
-                {
-                    var contactWebroleToCreate = new Entity("invln_contactwebrole")
-                    {
-                        Attributes =
-            {
-                { "invln_accountid", new EntityReference("account", organisationGuid) },
-                { "invln_contactid", contact.ToEntityReference() },
-                { "invln_webroleid", defaultRole.First().ToEntityReference() },
-            },
-                    };
-                    contactWebroleToCreate.Id = service.Create(contactWebroleToCreate);
-                    var req = new OrganizationRequest("invln_sendrequesttoassigncontacttoexistingorganisation")
-                    {
-                        ["invln_organisationid"] = organisationGuid.ToString(),
-                        ["invln_contactid"] = contact.Id.ToString(),
-                    };
-                    service.Execute(req);
-                    return contactWebroleToCreate.Id;
-                }
-
-                throw new InvalidPluginExecutionException("Webrole for given contact and organisation already exists");
-            }
-
-            throw new InvalidPluginExecutionException("Contact with given external id not found in CRM");
-        }
-        public static Entity? GetContactWebroleForOrganisation(IOrganizationServiceAsync2 service, Guid contactId, Guid organisationId)
-        {
-            var condition1 = new ConditionExpression("invln_accountid", ConditionOperator.Equal, organisationId);
-            var condition2 = new ConditionExpression("invln_contactid", ConditionOperator.Equal, contactId);
-            var filter1 = new FilterExpression()
-            {
-                Conditions =
-                {
-                    condition1,
-                    condition2,
-                },
-                FilterOperator = LogicalOperator.And,
-            };
-            var cols = new ColumnSet(true);
-
-            var query = new QueryExpression("invln_contactwebrole")
-            {
-                ColumnSet = cols,
-            };
-            query.Criteria.FilterOperator = LogicalOperator.And;
-            query.Criteria.AddFilter(filter1);
-
-            var result1 = service.RetrieveMultiple(query);
-            return result1.Entities.FirstOrDefault();
-        }
-        public static Entity? GetContactViaExternalId(IOrganizationServiceAsync2 service, string contactExternalId, string[]? columnSet = null)
-        {
-            var keys = new KeyAttributeCollection
-                {
-                    { "invln_externalid", contactExternalId },
-                };
-
-            var request = new RetrieveRequest
-            {
-                ColumnSet = new ColumnSet(columnSet),
-                Target = new EntityReference("contact", keys),
-            };
-
-            try
-            {
-                var response = (RetrieveResponse)service.Execute(request);
-                if (response != null)
-                {
-                    return response.Entity;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception)
-            {
-                throw new InvalidPluginExecutionException("Contact with invln_externalid: " + contactExternalId + " does not extst in CRM");
-            }
-        }
-        public static List<Entity> GetDefaultPortalRoles(IOrganizationServiceAsync2 service, int portalType)
-        {
-            var fetchXml = @"<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='false'>
-									<entity name='invln_webrole'>
-										<attribute name='invln_webroleid'/>
-										<attribute name='invln_portalpermissionlevelid'/>
-										<attribute name='invln_name'/>
-										<attribute name='createdon'/>
-										<order attribute='invln_name' descending='false'/>
-										<filter type='and'>
-											<condition attribute='invln_isdefaultrole' operator='eq' value='1'/>
-										</filter>
-										<link-entity name='invln_portal' from='invln_portalid' to='invln_portalid' link-type='inner' alias='ad'>
-											<filter type='and'>
-												<condition attribute='invln_portal' operator='eq' value='" + portalType + @"'/>
-											</filter>
-										</link-entity>
-									</entity>
-								</fetch>";
-
-            var result = service.RetrieveMultiple(new FetchExpression(fetchXml));
-            return result.Entities.ToList();
-        }
+        
         private static void TestChangeStatus(ServiceClient serviceClient)
         {
-            var req1 = new invln_getahpapplicationdocumentlocationRequest()
+            var req1 = new invln_getsinglehometypeRequest()
             {
-                invln_applicationid = "7ad49e6a-b495-ee11-be37-002248004f63"
+                invln_organisationid = "0461e384-494e-ee11-be6f-002248c65419",
+                invln_userid = "",
+                invln_applicationid = "5ce22b24-d898-ee11-be37-002248004f63",
+                invln_hometypeid = "a811d7ad-e198-ee11-be37-002248004f63",
             };
              var test = serviceClient.Execute(req1);
             Console.WriteLine("A web service connection was not established.");

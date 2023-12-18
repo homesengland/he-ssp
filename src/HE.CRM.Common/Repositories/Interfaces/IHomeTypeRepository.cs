@@ -8,8 +8,8 @@ namespace HE.CRM.Common.Repositories.Interfaces
 
     public interface IHomeTypeRepository : ICrmEntityRepository<invln_HomeType, DataverseContext>
     {
-        List<invln_HomeType> GetHomeTypesForUserAndOrganisationRelatedToApplication(string applicationId, string userId, string organisationId, string attributes = null);
-        invln_HomeType GetHomeTypeForUserAndOrganisationByIdAndApplicationId(string homeTypeId, string applicationId, string userId, string organisationId, string attributes = null);
+        List<invln_HomeType> GetHomeTypesForNullableUserAndOrganisationRelatedToApplication(string applicationId, string userId, string organisationId, string attributes = null);
+        invln_HomeType GetHomeTypeForNullableUserAndOrganisationByIdAndApplicationId(string homeTypeId, string applicationId, string userId, string organisationId, string attributes = null);
         bool CheckIfGivenHomeTypeIsAssignedToGivenUserAndOrganisationAndApplication(Guid homeTypeId, string userId, Guid organisationId, Guid applicationId);
     }
 }

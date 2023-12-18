@@ -19,7 +19,7 @@ namespace HE.CRM.AHP.Plugins.Handlers.CustomApi
         #region Base Methods Overrides
         public override bool CanWork()
         {
-            return applicationId != null && organisationId != null && userId != null;
+            return applicationId != null && organisationId != null;
         }
 
         public override void DoWork()

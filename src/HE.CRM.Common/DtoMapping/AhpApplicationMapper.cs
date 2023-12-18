@@ -66,7 +66,7 @@ namespace HE.CRM.Common.DtoMapping
             return applicationToReturn;
         }
 
-        public static AhpApplicationDto MapRegularEntityToDto(invln_scheme application)
+        public static AhpApplicationDto MapRegularEntityToDto(invln_scheme application, string contactExternalId = null)
         {
             var applicationDtoToReturn = new AhpApplicationDto()
             {
@@ -110,6 +110,7 @@ namespace HE.CRM.Common.DtoMapping
                 howMuchReceivedFromOtherPublicBodies = application.invln_grantsfromotherpublicbodies?.Value,
                 referenceNumber = application.invln_applicationid,
                 applicationStatus = application.StatusCode?.Value,
+                contactExternalId = contactExternalId,
             };
             if (application.Id != null)
             {

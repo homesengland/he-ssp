@@ -1,4 +1,5 @@
 using System;
+using System.Web;
 
 namespace HE.Common.IntegrationModel.PortalIntegrationModel
 {
@@ -54,6 +55,7 @@ namespace HE.Common.IntegrationModel.PortalIntegrationModel
 
         //other
         public string contactId { get; set; }
+        public string contactExternalId { get; set; }
         public string organisationId { get; set; }
         public DateTime? lastExternalModificationOn { get; set; }
         public ContactDto lastExternalModificationBy { get; set; }

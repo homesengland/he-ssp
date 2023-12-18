@@ -34,8 +34,10 @@ namespace HE.CRM.AHP.Plugins.Services.Application
 
         public void ChangeApplicationStatus(string organisationId, string contactId, string applicationId, int newStatus)
         {
-            var additionalFilters = $"<condition attribute=\"invln_schemeid\" operator=\"eq\" value=\"{applicationId}\" />";
-            var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactId, null, additionalFilters);
+            var additionalFilters = GetFetchXmlConditionForGivenField(applicationId, nameof(invln_scheme.invln_schemeId).ToLower());
+            var contactExternalFilter = GetFetchXmlConditionForGivenField(contactId, nameof(Contact.invln_externalid).ToLower());
+            contactExternalFilter = GenerateFilterMarksForCondition(contactExternalFilter);
+            var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactExternalFilter, null, additionalFilters);
             if (applications.Any())
             {
                 var application = applications.First();
@@ -123,32 +125,36 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             return urlToReturn;
         }
 
-        public List<AhpApplicationDto> GetApplication(string organisationId, string contactId, string fieldsToRetrieve = null, string applicationId = null)
+        public List<AhpApplicationDto> GetApplication(string organisationId, string contactId = null, string fieldsToRetrieve = null, string applicationId = null)
         {
             var listOfApplications = new List<AhpApplicationDto>();
-            var additionalFilters = string.Empty;
-            if (!string.IsNullOrEmpty(applicationId))
-            {
-                additionalFilters = $"<condition attribute=\"invln_schemeid\" operator=\"eq\" value=\"{applicationId}\" />";
-            }
+            var additionalFilters = GetFetchXmlConditionForGivenField(applicationId, nameof(invln_scheme.invln_schemeId).ToLower());
+
+            var contactExternalIdFilter = GetFetchXmlConditionForGivenField(contactId, nameof(Contact.invln_externalid).ToLower());
+            contactExternalIdFilter = GenerateFilterMarksForCondition(contactExternalIdFilter);
             string attributes = null;
             if (!string.IsNullOrEmpty(fieldsToRetrieve))
             {
                 attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
             }
-            var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactId, attributes, additionalFilters);
+            TracingService.Trace($"contact-{contactExternalIdFilter}-filter");
+            var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactExternalIdFilter, attributes, additionalFilters);
             if (applications.Any())
             {
-                var contact = _contactRepository.GetContactViaExternalId(contactId, new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower() });
+                TracingService.Trace("applications exists");
                 foreach (var application in applications)
                 {
-                    var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application);
+                    var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower(), nameof(Contact.invln_externalid).ToLower() });
+
+                    var applicationDto = AhpApplicationMapper.MapRegularEntityToDto(application, contact.invln_externalid);
                     if (application.invln_lastexternalmodificationby != null)
                     {
+                        var lastExternalModificationBy = _contactRepository.GetById(application.invln_lastexternalmodificationby.Id,
+                            new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower() });
                         applicationDto.lastExternalModificationBy = new ContactDto()
                         {
-                            firstName = contact.FirstName,
-                            lastName = contact.LastName,
+                            firstName = lastExternalModificationBy.FirstName,
+                            lastName = lastExternalModificationBy.LastName,
                         };
                     }
                     listOfApplications.Add(applicationDto);
@@ -235,6 +241,24 @@ namespace HE.CRM.AHP.Plugins.Services.Application
                 }
             }
             return generatedAttribuesFetchXml;
+        }
+
+        private string GetFetchXmlConditionForGivenField(string fieldValue, string fieldName)
+        {
+            if (!string.IsNullOrEmpty(fieldValue))
+            {
+                return $"<condition attribute=\"{fieldName}\" operator=\"eq\" value=\"{fieldValue}\" />";
+            }
+            return string.Empty;
+        }
+
+        private string GenerateFilterMarksForCondition(string condition)
+        {
+            if (!string.IsNullOrEmpty(condition))
+            {
+                return $"<filter>{condition}</filter>";
+            }
+            return string.Empty;
         }
     }
 }
