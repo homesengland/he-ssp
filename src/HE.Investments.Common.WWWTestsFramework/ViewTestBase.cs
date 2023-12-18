@@ -1,5 +1,6 @@
 using AngleSharp;
 using AngleSharp.Html.Dom;
+using HE.Investments.Account.Shared;
 using HE.Investments.Common.Services.Notifications;
 using HE.Investments.Common.WWWTestsFramework.Framework;
 using HE.Investments.Common.WWWTestsFramework.Helpers;
@@ -24,6 +25,7 @@ public abstract class ViewTestBase
         CustomRazorTemplateEngine.RegisterDependencies = services =>
         {
             services.AddTransient<INotificationService>(_ => new Mock<INotificationService>().Object);
+            services.AddTransient<IAccountAccessContext>(_ => new Mock<IAccountAccessContext>().Object);
             mockDependencies?.Invoke(services);
         };
 

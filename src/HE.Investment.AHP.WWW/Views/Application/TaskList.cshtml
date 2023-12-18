@@ -4,10 +4,12 @@
 @using HE.Investments.Common.WWW.Components.HelpPanel
 @using Microsoft.Extensions.Options
 @using HE.Investment.AHP.WWW.Views.Application
+@using HE.Investments.Account.Shared
 @using HE.Investments.Common.Contract
 @using HE.Investments.Common.Domain
 @model HE.Investment.AHP.WWW.Models.Application.ApplicationSectionsModel
 @inject IOptions<ContactInfoOptions> Options
+@inject IAccountAccessContext AccountAccessContext
 
 @{
     ViewData["Title"] = "Application details";
@@ -18,6 +20,8 @@
         .WithSites()
         .WithSchemes()
         .Build();
+
+    var canSubmitApplication = await AccountAccessContext.CanSubmitApplication();
 }
 <div class="govuk-grid-column-full govuk-!-padding-top-8">
     <vc:form-header caption="@Model.SiteName" title="@Model.Name"/>
@@ -40,7 +44,7 @@
     }
     <link-button
         action-url="@Url.Action("CheckAnswers", "Application", new { applicationId = Model.ApplicationId })"
-        is-disabled="@(incompleteSectionsCount > 0)">
+        is-disabled="@(incompleteSectionsCount > 0 || !canSubmitApplication)">
         Check and submit application
     </link-button>
 

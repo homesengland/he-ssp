@@ -4,6 +4,7 @@ using HE.Investment.AHP.Domain.Application.Commands;
 using HE.Investment.AHP.Domain.Application.Workflows;
 using HE.Investment.AHP.WWW.Models.Application;
 using HE.Investment.AHP.WWW.Models.Application.Factories;
+using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.Authorization.Attributes;
 using HE.Investments.Common.Utils.Pagination;
 using HE.Investments.Common.Validators;
@@ -113,6 +114,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     }
 
     [HttpPost("{applicationId}/submit")]
+    [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
     public async Task<IActionResult> Submit(string applicationId, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(new SubmitApplicationCommand(applicationId), cancellationToken);
@@ -129,6 +131,7 @@ public class ApplicationController : WorkflowController<ApplicationWorkflowState
     }
 
     [HttpGet("{applicationId}/submitted")]
+    [AuthorizeWithCompletedProfile(AccountAccessContext.SubmitApplication)]
     public async Task<IActionResult> Submitted(string applicationId, CancellationToken cancellationToken)
     {
         var application = await _mediator.Send(new GetApplicationQuery(applicationId), cancellationToken);
