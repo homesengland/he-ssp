@@ -128,8 +128,7 @@ namespace HE.CRM.AHP.Plugins.Services.Application
         public List<AhpApplicationDto> GetApplication(string organisationId, string contactId = null, string fieldsToRetrieve = null, string applicationId = null)
         {
             var listOfApplications = new List<AhpApplicationDto>();
-            //var additionalFilters = GetFetchXmlConditionForGivenField(applicationId, nameof(invln_scheme.invln_schemeId).ToLower());
-            var additionalFilters = $"<condition attribute=\"invln_schemeid\" operator=\"eq\" value=\"{applicationId}\" />";
+            var additionalFilters = GetFetchXmlConditionForGivenField(applicationId, nameof(invln_scheme.invln_schemeId).ToLower());
 
             var contactExternalIdFilter = GetFetchXmlConditionForGivenField(contactId, nameof(Contact.invln_externalid).ToLower());
             contactExternalIdFilter = GenerateFilterMarksForCondition(contactExternalIdFilter);
