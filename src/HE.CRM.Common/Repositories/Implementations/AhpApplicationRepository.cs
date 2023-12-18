@@ -46,7 +46,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        public List<invln_scheme> GetApplicationsForOrganisationAndContact(string organisationId, string contactId, string attributes, string additionalRecordFilters)
+        public List<invln_scheme> GetApplicationsForOrganisationAndContact(string organisationId, string contactFilter, string attributes, string additionalRecordFilters)
         {
             var fetchXml = @"<fetch>
                               <entity name=""invln_scheme"">"
@@ -55,11 +55,9 @@ namespace HE.CRM.Common.Repositories.Implementations
                                   <condition attribute=""invln_organisationid"" operator=""eq"" value=""" + organisationId + @""" />"
                                     + additionalRecordFilters +
                                 @"</filter>
-                                    <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">
-                                          <filter>
-                                            <condition attribute=""invln_externalid"" operator=""eq"" value=""" + contactId + @""" />
-                                          </filter>
-                                        </link-entity>
+                                    <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">"
+                                             + contactFilter +
+                                          @"</link-entity>
                                 </entity>
                             </fetch>";
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));

@@ -31,24 +31,22 @@ namespace HE.CRM.Common.Repositories.Implementations
             }
         }
 
-        public invln_HomeType GetHomeTypeForUserAndOrganisationByIdAndApplicationId(string homeTypeId, string applicationId, string userId, string organisationId, string attributes = null)
+        public invln_HomeType GetHomeTypeForNullableUserAndOrganisationByIdAndApplicationId(string homeTypeId, string applicationId, string userId, string organisationId, string attributes = null)
         {
             var fetchXml = @"<fetch>
                   <entity name=""invln_hometype"">"
                     + attributes +
                     @"<filter>
-                      <condition attribute=""invln_hometypeid"" operator=""eq"" value=""" + homeTypeId + @""" />
+                    <condition attribute=""invln_hometypeid"" operator=""eq"" value=""" + homeTypeId + @""" />
                       <condition attribute=""invln_application"" operator=""eq"" value=""" + applicationId + @""" />
                     </filter>
                     <link-entity name=""invln_scheme"" from=""invln_schemeid"" to=""invln_application"">
-                             <filter>
+                          <filter>
                             <condition attribute=""invln_organisationid"" operator=""eq"" value=""" + organisationId + @""" />
                           </filter>
-                          <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">
-                            <filter>
-                              <condition attribute=""invln_externalid"" operator=""eq"" value=""" + userId + @""" />
-                            </filter>
-                          </link-entity>
+                          <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">"
+                             + GenerateContactFilter(userId) +
+                          @"</link-entity>
                         </link-entity>
                   </entity>
                 </fetch>";
@@ -56,7 +54,7 @@ namespace HE.CRM.Common.Repositories.Implementations
             return result.Entities.Select(x => x.ToEntity<invln_HomeType>()).AsEnumerable().FirstOrDefault();
         }
 
-        public List<invln_HomeType> GetHomeTypesForUserAndOrganisationRelatedToApplication(string applicationId, string userId, string organisationId, string attributes = null)
+        public List<invln_HomeType> GetHomeTypesForNullableUserAndOrganisationRelatedToApplication(string applicationId, string userId, string organisationId, string attributes = null)
         {
             var fetchXml = @"<fetch>
                   <entity name=""invln_hometype"">"
@@ -68,16 +66,25 @@ namespace HE.CRM.Common.Repositories.Implementations
                           <filter>
                             <condition attribute=""invln_organisationid"" operator=""eq"" value=""" + organisationId + @""" />
                           </filter>
-                          <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">
-                            <filter>
-                              <condition attribute=""invln_externalid"" operator=""eq"" value=""" + userId + @""" />
-                            </filter>
-                          </link-entity>
+                          <link-entity name=""contact"" from=""contactid"" to=""invln_contactid"">"
+                             + GenerateContactFilter(userId) +
+                          @"</link-entity>
                         </link-entity>
                   </entity>
                 </fetch>";
             EntityCollection result = service.RetrieveMultiple(new FetchExpression(fetchXml));
             return result.Entities.Select(x => x.ToEntity<invln_HomeType>()).ToList();
+        }
+
+        private string GenerateContactFilter(string userId)
+        {
+            if (!string.IsNullOrEmpty(userId))
+            {
+                return @"<filter>
+                              <condition attribute=""invln_externalid"" operator=""eq"" value=""" + userId + @""" />
+                            </filter>";
+            }
+            return string.Empty;
         }
     }
 }

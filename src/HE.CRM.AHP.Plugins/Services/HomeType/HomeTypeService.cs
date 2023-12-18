@@ -47,7 +47,7 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             {
                 attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
             }
-            var homeTypes = _homeTypeRepository.GetHomeTypesForUserAndOrganisationRelatedToApplication(applicationId, userId, organisationId, attributes);
+            var homeTypes = _homeTypeRepository.GetHomeTypesForNullableUserAndOrganisationRelatedToApplication(applicationId, userId, organisationId, attributes);
             if (homeTypes.Any())
             {
                 foreach (var homeType in homeTypes)
@@ -66,7 +66,7 @@ namespace HE.CRM.AHP.Plugins.Services.HomeType
             {
                 attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
             }
-            var homeType = _homeTypeRepository.GetHomeTypeForUserAndOrganisationByIdAndApplicationId(homeTypeId, applicationId, userId, organisationId, attributes);
+            var homeType = _homeTypeRepository.GetHomeTypeForNullableUserAndOrganisationByIdAndApplicationId(homeTypeId, applicationId, userId, organisationId, attributes);
             if (homeType != null)
             {
                 homeTypeDto = HomeTypeMapper.MapRegularEntityToDto(homeType);
