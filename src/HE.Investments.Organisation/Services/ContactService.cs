@@ -127,7 +127,7 @@ public class ContactService : IContactService
                 var req = new OrganizationRequest("invln_sendrequesttoassigncontacttoexistingorganisation")
                 {
                     ["invln_organisationid"] = organisationGuid.ToString(),
-                    ["invln_contactid"] = contact.Id,
+                    ["invln_contactid"] = contact.Id.ToString(),
                 };
                 service.Execute(req);
                 return contactWebroleToCreate.Id;
