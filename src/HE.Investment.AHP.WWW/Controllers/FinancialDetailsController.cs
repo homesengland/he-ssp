@@ -193,7 +193,7 @@ public class FinancialDetailsController : WorkflowController<FinancialDetailsWor
                 model.OwnResources,
                 model.RCGFContribution,
                 model.OtherCapitalSources,
-                model.InitialSalesOfSharedHomes,
+                model.SharedOwnershipSales,
                 model.HomesTransferValue),
             cancellationToken);
 

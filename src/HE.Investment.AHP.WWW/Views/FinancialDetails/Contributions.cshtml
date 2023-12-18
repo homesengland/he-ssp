@@ -99,17 +99,17 @@
             </he-error-form-group>
             @if (Model.IsSharedOwnership)
             {
-                <he-error-form-group asp-for="InitialSalesOfSharedHomes">
+                <he-error-form-group asp-for="SharedOwnershipSales">
                     <gds-legend class="govuk-!-margin-bottom-0">
                         <gds-h2 class="govuk-!-margin-bottom-0">Enter how much you will contribute from initial sales receipts from shared ownership homes</gds-h2>
                     </gds-legend>
-                    <gds-input asp-hiddenlabeltext="InitialSalesOfSharedHomes"
+                    <gds-input asp-hiddenlabeltext="SharedOwnershipSales"
                                class="govuk-input--width-5"
                                asp-labelclass="govuk-label"
-                               govuk-formgroup-asp-for="InitialSalesOfSharedHomes"
-                               name="InitialSalesOfSharedHomes"
+                               govuk-formgroup-asp-for="SharedOwnershipSales"
+                               name="SharedOwnershipSales"
                                asp-prefixtext=@(GdsInputPrefixText.Pounds)
-                               value=@Model.InitialSalesOfSharedHomes />
+                               value=@Model.SharedOwnershipSales />
                 </he-error-form-group>
             }
             @if (Model.IsUnregisteredBodyAccount)
