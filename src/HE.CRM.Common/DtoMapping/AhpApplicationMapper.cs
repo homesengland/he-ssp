@@ -118,11 +118,11 @@ namespace HE.CRM.Common.DtoMapping
             }
             if (application.invln_organisationid != null)
             {
-                applicationDtoToReturn.organisationId = application.invln_organisationid.ToString();
+                applicationDtoToReturn.organisationId = application.invln_organisationid.Id.ToString();
             }
             if (application.invln_contactid != null)
             {
-                applicationDtoToReturn.contactId = application.invln_contactid.ToString();
+                applicationDtoToReturn.contactId = application.invln_contactid.Id.ToString();
             }
             return applicationDtoToReturn;
         }
