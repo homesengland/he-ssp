@@ -5,6 +5,8 @@ using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Account.Domain.UserOrganisation.Entities;
 using HE.Investments.Account.Shared;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Domain;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Organisation.Services;
 using Microsoft.PowerPlatform.Dataverse.Client;
 
@@ -18,11 +20,14 @@ public class OrganisationUsersRepository : IOrganisationUsersRepository
 
     private readonly IAccountUserContext _userContext;
 
-    public OrganisationUsersRepository(IOrganizationServiceAsync2 organizationServiceAsync, IContactService contactService, IAccountUserContext userContext)
+    private readonly IEventDispatcher _eventDispatcher;
+
+    public OrganisationUsersRepository(IOrganizationServiceAsync2 organizationServiceAsync, IContactService contactService, IAccountUserContext userContext, IEventDispatcher eventDispatcher)
     {
         _organizationServiceAsync = organizationServiceAsync;
         _contactService = contactService;
         _userContext = userContext;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<OrganisationUsersEntity> GetOrganisationUsers(OrganisationId organisationId, CancellationToken cancellationToken)
@@ -54,5 +59,12 @@ public class OrganisationUsersRepository : IOrganisationUsersRepository
 
             organisationUsers.InvitationSent(invitation);
         }
+
+        await DispatchEvents(organisationUsers, cancellationToken);
+    }
+
+    private async Task DispatchEvents(DomainEntity domainEntity, CancellationToken cancellationToken)
+    {
+        await _eventDispatcher.Publish(domainEntity, cancellationToken);
     }
 }

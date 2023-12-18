@@ -6,6 +6,7 @@ using HE.Investments.Account.WWW.Routing;
 using HE.Investments.Account.WWW.Utils;
 using HE.Investments.Common.Config;
 using HE.Investments.Common.CRM;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.WWW.Infrastructure.Authorization;
 using HE.Investments.Common.WWW.Infrastructure.ErrorHandling;
 using HE.Investments.Loans.Common.Infrastructure;
@@ -24,6 +25,7 @@ public static class OrganisationWebModule
         services.AddHttpUserContext();
         services.AddCrmConnection();
         services.AddAccountModule();
+        services.AddEventInfrastructure();
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUserProfileInformationQueryHandler).Assembly));
         services.AddNotifications(typeof(ChangeOrganisationDetailsRequestedDisplayNotificationFactory).Assembly);
         services.AddScoped<IAccountRoutes, AccountRoutes>();

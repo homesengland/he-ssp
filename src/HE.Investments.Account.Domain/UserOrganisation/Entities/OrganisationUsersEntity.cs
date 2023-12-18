@@ -1,10 +1,12 @@
+using HE.Investments.Account.Contract.UserOrganisation.Events;
 using HE.Investments.Account.Domain.Organisation.ValueObjects;
 using HE.Investments.Account.Shared.User.ValueObjects;
+using HE.Investments.Common.Domain;
 using HE.Investments.Common.Validators;
 
 namespace HE.Investments.Account.Domain.UserOrganisation.Entities;
 
-public class OrganisationUsersEntity
+public class OrganisationUsersEntity : DomainEntity
 {
     private readonly IReadOnlyCollection<EmailAddress> _activeUserEmails;
 
@@ -44,6 +46,7 @@ public class OrganisationUsersEntity
         }
 
         _pendingInvitations.Add(invitation);
+        Publish(new UserInvitedEvent(invitation.FirstName.Value, invitation.LastName.Value));
     }
 
     public void InvitationSent(UserInvitationEntity pendingInvitation)

@@ -12,6 +12,7 @@
 <div class="govuk-grid-column-full">
     <gds-back-link class="govuk-!-margin-bottom-8" href="@Url.Action("Index", "Home")"></gds-back-link>
     <vc:form-header title=@title/>
+    <partial name="~/Partials/_Notification.cshtml" />
 
     @if (Model.usersAndJoinRequests.Users.Any())
     {

@@ -1,5 +1,7 @@
 using HE.Investments.Account.Contract.UserOrganisation.Commands;
+using HE.Investments.Account.Contract.UserOrganisation.Events;
 using HE.Investments.Account.Shared;
+using HE.Investments.Common.Infrastructure.Events;
 using HE.Investments.Common.Validators;
 using HE.Investments.Organisation.Services;
 using MediatR;
@@ -13,16 +15,19 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
 
     private readonly IOrganizationServiceAsync2 _organizationServiceAsync;
     private readonly IContactService _contactService;
+    private readonly IEventDispatcher _eventDispatcher;
 
     public RemoveLinkBetweenUserAndOrganisationCommandHandler(
         IAccountUserContext userContext,
         IOrganizationServiceAsync2 organizationServiceAsync,
-        IContactService contactService)
+        IContactService contactService,
+        IEventDispatcher eventDispatcher)
     {
         _userContext = userContext;
 
         _organizationServiceAsync = organizationServiceAsync;
         _contactService = contactService;
+        _eventDispatcher = eventDispatcher;
     }
 
     public async Task<OperationResult> Handle(RemoveLinkBetweenUserAndOrganisationCommand request, CancellationToken cancellationToken)
@@ -33,12 +38,20 @@ public class RemoveLinkBetweenUserAndOrganisationCommandHandler : IRequestHandle
             throw new InvalidOperationException("Cannot find user linked with organisation.");
         }
 
+        var user = await _contactService.RetrieveUserProfile(_organizationServiceAsync, request.UserId);
+        if (user == null)
+        {
+            throw new InvalidOperationException($"Cannot find user for given id {request.UserId}.");
+        }
+
         await _contactService.RemoveLinkBetweenContactAndOrganisation(
             _organizationServiceAsync,
             account.AccountId.Value,
             request.UserId);
 
         await _userContext.RefreshAccounts();
+
+        await _eventDispatcher.Publish(new UserUnlinkedEvent(user.firstName, user.lastName), cancellationToken);
 
         return OperationResult.Success();
     }

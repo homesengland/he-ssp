@@ -14,32 +14,34 @@
 }
 
 <div class="govuk-grid-column-full">
-    <vc:workflow-back-button action="@SchemeWorkflowState.StakeholderDiscussions.ToString()" />
-    @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+    <vc:workflow-back-button action="@SchemeWorkflowState.StakeholderDiscussions.ToString()"/>
     <form asp-controller="Scheme" asp-action="StakeholderDiscussions" asp-method="post" asp-route-redirect="@Context.Request.Query["redirect"]" enctype="multipart/form-data" novalidate>
-        <vc:form-header caption="@Model.ApplicationName" title="@title" />
+        <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
+            @await Html.PartialAsync("~/Partials/Errors/_ErrorSummaryPartial.cshtml")
+        </div>
         @Html.HiddenFor(m => Model.ApplicationName)
         @Html.HiddenFor(x => x.AllowedExtensions)
         @Html.HiddenFor(x => x.MaxFileSizeInMegabytes)
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
+            <vc:form-header caption="@Model.ApplicationName" title="@title"/>
             <vc:text-area-input field-name="@nameof(Model.StakeholderDiscussionsReport)"
                                 label="Tell us about discussions you have had with local stakeholders"
-                                value="@Model.StakeholderDiscussionsReport" />
+                                value="@Model.StakeholderDiscussionsReport"/>
 
             <vc:upload-file title="Upload any evidence you have of Local Authority support (optional)"
                             allowed-extensions="@Model.AllowedExtensions"
                             field-name="StakeholderDiscussionFile"
                             description="This could be any correspondence, including an email chain. We only require one document."
                             max-file-size-in-mb="@Model.MaxFileSizeInMegabytes"
-                            is-hidden="@(Model.UploadedStakeholderDiscussionFiles != null && Model.UploadedStakeholderDiscussionFiles.Any())" />
+                            is-hidden="@(Model.UploadedStakeholderDiscussionFiles != null && Model.UploadedStakeholderDiscussionFiles.Any())"/>
         </div>
         <div class="govuk-grid-column-full govuk-!-padding-left-0">
-            <vc:files-table asp-for="@Model.UploadedStakeholderDiscussionFiles" />
+            <vc:files-table asp-for="@Model.UploadedStakeholderDiscussionFiles"/>
         </div>
         <div class="govuk-grid-column-two-thirds govuk-!-padding-left-0">
-            <vc:form-button />
+            <vc:form-button/>
             <div>
-                <vc:return-to-application-link application-id="@Model.ApplicationId" />
+                <vc:return-to-application-link application-id="@Model.ApplicationId"/>
             </div>
         </div>
     </form>
