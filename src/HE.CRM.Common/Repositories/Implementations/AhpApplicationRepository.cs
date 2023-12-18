@@ -49,7 +49,8 @@ namespace HE.CRM.Common.Repositories.Implementations
         public List<invln_scheme> GetApplicationsForOrganisationAndContact(string organisationId, string contactFilter, string attributes, string additionalRecordFilters)
         {
             var fetchXml = @"<fetch>
-                              <entity name=""invln_scheme"">"
+                              <entity name=""invln_scheme"">
+                        <attribute name=""invln_contactid"" />"
                                 + attributes +
                               @"<filter>
                                   <condition attribute=""invln_organisationid"" operator=""eq"" value=""" + organisationId + @""" />"

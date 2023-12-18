@@ -137,11 +137,9 @@ namespace HE.CRM.AHP.Plugins.Services.Application
             {
                 attributes = GenerateFetchXmlAttributes(fieldsToRetrieve);
             }
-            TracingService.Trace($"contact-{contactExternalIdFilter}-filter");
             var applications = _applicationRepository.GetApplicationsForOrganisationAndContact(organisationId, contactExternalIdFilter, attributes, additionalFilters);
             if (applications.Any())
             {
-                TracingService.Trace("applications exists");
                 foreach (var application in applications)
                 {
                     var contact = _contactRepository.GetById(application.invln_contactid.Id, new string[] { nameof(Contact.FirstName).ToLower(), nameof(Contact.LastName).ToLower(), nameof(Contact.invln_externalid).ToLower() });
