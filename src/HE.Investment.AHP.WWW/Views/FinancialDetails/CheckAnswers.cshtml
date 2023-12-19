@@ -1,3 +1,4 @@
+@using HE.Investment.AHP.Contract.Common.Enums;
 @using HE.Investment.AHP.Contract.FinancialDetails.Constants;
 @using HE.Investment.AHP.Domain.FinancialDetails;
 @using HE.Investment.AHP.WWW.Models.Common;
@@ -5,12 +6,20 @@
 @using HE.Investment.AHP.WWW.Views.FinancialDetails.Consts;
 @using HE.Investments.Common.WWW.Components.RadioList
 @using HE.Investments.Common.WWW.Extensions;
+@using HE.Investments.Common.WWW.Models;
 @model FinancialDetailsCheckAnswersModel
 @{
     ViewData["Title"] = FinancialDetailsPageTitles.CheckAnswers;
     var (costsAndFundingAreInvalid, costAndFundingErrors) = @ViewData.ModelState.GetErrors(FinancialDetailsValidationFieldNames.CostsAndFunding);
     var errorCssClass = costsAndFundingAreInvalid ? "govuk-form-group--error" : string.Empty;
     var customBackLinkUrl = Model.IsReadOnly ? @Url.Action("TaskList", "Application", new { applicationId = Model.ApplicationId }) : null;
+
+    var values = CommonFormOptions.IsSectionCompleted
+        .Select(r => new ExtendedSelectListItem(
+            r.Text,
+            r.Value,
+            (r.Value == Model.IsSectionCompleted.ToString()) && (Model.IsSectionCompleted == IsSectionCompleted.Yes) ? true : false ))
+        .ToList();
 }
 <div class="govuk-grid-column-full">
     <form asp-controller="FinancialDetails" asp-action="CheckAnswers" asp-route-applicationId="@Model.ApplicationId" asp-method="post" novalidate>
@@ -38,7 +47,7 @@
         <gds-field-set role="group" hidden="@Model.IsReadOnly">
             <vc:radio-list field-name="IsSectionCompleted"
                            title="Have you completed this section?"
-                           available-options="@CommonFormOptions.IsSectionCompletedExtended.ToList()"/>
+                           available-options="@values"/>
             <button id="continue-button" class="govuk-button" data-module="govuk-button" name="action" type="submit" value="Continue">
                 Save and continue
             </button>
